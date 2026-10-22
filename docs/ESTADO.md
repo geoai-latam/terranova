@@ -9,7 +9,7 @@
 | Spec F0 | Estado |
 |---|---|
 | F0.1 Repo y estructura | ✅ `pyproject` (uv, Python 3.13), ruff y mypy estricto fijados, pytest, pre-commit, CI; `make check` verde |
-| F0.2 ADR aceptadas | 🟡 0001 (repo público) y 0020 (gratuito) aceptadas; las demás, **propuestas** |
+| F0.2 ADR aceptadas | ✅ las 20 aceptadas el 2026-10-21, con su validación escrita; 0005, 0007, 0010, 0014, 0018 y 0019 se corrigieron al revisarlas |
 | F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ✅ las tres pruebas de ADR-0003 pasan; salto p95 3,1 ms ([informe](spikes/F0.3-protocolo.md)) |
 | F0.4 Spike GeoResult en GEO Copilot | ⬜ |
 | F0.5 Licencias de las fuentes M1 | ⬜ (humano) |
@@ -25,21 +25,20 @@
 - Hitos: **M1** (puerta, contrato, catálogo, ficha, GEO Copilot como cliente, sobre las fuentes que
   ya existen) y **M2** (las ~139 herramientas de [FUENTES_OBJETIVO.md](FUENTES_OBJETIVO.md), lotes,
   trabajos lentos).
-- Personas por cédula o nombre: fuera. Captchas y backends sin permiso: nunca.
+- Personas por cédula o nombre: fuera. Captchas y backends sin permiso: nunca, en ningún plan (ADR-0018).
+- Cuota agotada: 429 `saldo_agotado`, sin 402 (ADR-0010). Licencia `por_verificar`: solo llaves de evaluación (ADR-0007).
+- Escaneo de secretos (gitleaks) en CI, sobre toda la historia (ADR-0001).
 - Boletines de Contraloría y BDME: se evalúan con asesoría legal antes de incluirlos.
 
 ## Pendiente de decidir
 
-1. Aceptar o cambiar las ADR 0002–0019.
-2. Open-Meteo (GloFAS y ERA5): su API gratis es solo no comercial. Mientras Terranova sea gratis puede
+1. Open-Meteo (GloFAS y ERA5): su API gratis es solo no comercial. Mientras Terranova sea gratis puede
    valer; si pasa a una empresa, hay que suscribirse o ir directo a Copernicus.
 
 ## Siguiente paso concreto
 
 1. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de `igac_predio_en_punto`, verificado en
    el navegador. La puerta ya devuelve el `geo_result` del conector tal cual.
-2. **F0.2:** revisar y aceptar (o cambiar) las ADR 0002–0019. ADR-0002 y ADR-0003 ya tienen su
-   confirmación medida en el informe del spike.
 
 Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (contrato y catálogo).
 
