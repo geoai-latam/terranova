@@ -27,4 +27,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {codigo_vereda: "25175000000000005", nombre_vereda: YERBABUENA, municipio_divipola: "25175"}
+  campos: [codigo_vereda, codigo_vereda_anterior, municipio_divipola, nombre_vereda]
   latencia_max_ms: 5000

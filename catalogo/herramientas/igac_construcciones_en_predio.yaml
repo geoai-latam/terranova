@@ -39,4 +39,5 @@ canario:
     numero_construcciones: 2
     tipo_construccion: CONVENCIONAL
     numero_pisos: 3
+  campos: [codigo_predial, identificador_construccion, numero_construcciones, numero_mezanines, numero_pisos, numero_semisotanos, numero_sotanos, tipo_construccion, zona]
   latencia_max_ms: 5000

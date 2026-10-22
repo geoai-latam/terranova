@@ -84,6 +84,28 @@ services:
       retries: 20
     networks: [interna]
 
+  # F7.3 (ADR-0015): pg_dump diario de llaves, uso, canarios y el dataset curado; guarda 14 días en
+  # TERRANOVA_RESPALDOS, que se copia FUERA de la VM. Restaurar: docs/RUNBOOK.md §4.
+  respaldo:
+    image: postgis/postgis:17-3.5-alpine  # la misma versión de pg_dump que el servidor
+    restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        while true; do
+        f=/respaldos/terranova-$$(date -u +%Y%m%dT%H%MZ).dump;
+        if pg_dump -h postgres -U terranova -d terranova -Fc -f "$$f.parcial"; then
+        mv "$$f.parcial" "$$f" && echo "respaldo $$f";
+        else rm -f "$$f.parcial"; echo "RESPALDO FALLÓ" >&2; fi;
+        find /respaldos -name 'terranova-*.dump' -mtime +14 -delete;
+        sleep 86400; done
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["${TERRANOVA_RESPALDOS:-./respaldos}:/respaldos"]
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [interna]
+
   redis:
     image: redis:7-alpine
     restart: unless-stopped

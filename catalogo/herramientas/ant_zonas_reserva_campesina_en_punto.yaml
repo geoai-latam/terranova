@@ -26,4 +26,5 @@ canario:
   # ZRC de Cabrera (Cundinamarca); medido el 2026-10-21 en la capa 0 (punto), 0,6 s.
   entrada: {lon: -74.46, lat: 3.88}
   verdad: {nombre: Cabrera, acto_administrativo: "Resolución 046 de 2000"}
+  campos: [acto_administrativo, area_ha, departamento, fecha_constitucion, municipios, nombre]
   latencia_max_ms: 5000

@@ -30,4 +30,5 @@ creditos: 20
 canario:
   entrada: {lon: -74.152, lat: 4.628}
   verdad: {codigo_clase_dominante: 50, clase_dominante: Construido}
+  campos: [area_clase_km2, clase_cobertura, clase_dominante, codigo_clase, codigo_clase_dominante, porcentaje_area]
   latencia_max_ms: 20000

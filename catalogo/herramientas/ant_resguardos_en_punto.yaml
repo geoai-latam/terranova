@@ -26,4 +26,5 @@ canario:
   # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
   entrada: {lon: -70.5, lat: 0.8}
   verdad: {nombre: "Resguardo Indígena Vaupes", municipio_divipola: "97001", numero_acto: "378"}
+  campos: [area_ha_actos, departamento_divipola, fecha_acto, municipio_divipola, nombre, numero_acto, pueblo, tipo_acto]
   latencia_max_ms: 5000

@@ -29,4 +29,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {codigo_predial: "251750000000000050067000000000", zona: rural, municipio_divipola: "25175"}
+  campos: [codigo_predial, codigo_predial_anterior, municipio_divipola, zona]
   latencia_max_ms: 5000

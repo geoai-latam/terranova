@@ -28,4 +28,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0721, lat: 4.711, desde: "2023-01-01", hasta: "2023-01-31"}
   verdad: {precipitacion_total_mm: 91.5, temperatura_media_c: 12.0, elevacion_modelo_m: 2557.0, dias: 31}
+  campos: [dias, elevacion_modelo_m, precipitacion_total_mm, temperatura_media_c]
   latencia_max_ms: 8000

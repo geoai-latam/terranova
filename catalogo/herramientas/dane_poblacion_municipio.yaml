@@ -22,4 +22,5 @@ creditos: 10
 canario:
   entrada: {municipio_divipola: "11001"}
   verdad: {municipio_divipola: "11001", poblacion_censada: 7181469, viviendas: 2523519, hogares: 2514482}
+  campos: [departamento, hogares, municipio, municipio_divipola, poblacion_censada, viviendas]
   latencia_max_ms: 10000

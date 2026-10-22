@@ -24,4 +24,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {unidad_conflicto: U2, tipo_conflicto: "Subutilización moderada"}
+  campos: [tipo_conflicto, unidad_conflicto]
   latencia_max_ms: 5000

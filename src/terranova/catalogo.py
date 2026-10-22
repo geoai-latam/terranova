@@ -237,6 +237,9 @@ class Canario(_Ficha):
     entrada: dict[str, Any]
     verdad: dict[str, Any] = Field(default_factory=dict)
     minimos: dict[str, float] = Field(default_factory=dict)
+    # los que trae la respuesta grabada (`scripts/campos_canario.py`); si uno deja de llegar, la
+    # fuente cambió su esquema (F7.3)
+    campos: list[str] = Field(default_factory=list)
     latencia_max_ms: int = Field(ge=1)
 
     @model_validator(mode="after")

@@ -37,4 +37,5 @@ canario:
   # 4315,86 ha; el primero por `consecutiv` es el 19 (Mayor a 250 - hasta 300, Condicionada).
   entrada: {municipio_divipola: "25214"}
   verdad: {municipio: Cota, departamento: Cundinamarca, poligonos: 116, area_ha_total: 4315.86}
+  campos: [area_ha, area_ha_total, categoria_mercado, codigo_rango_precio, consecutivo, departamento, municipio, municipio_divipola, poligonos, rango_precio]
   latencia_max_ms: 5000

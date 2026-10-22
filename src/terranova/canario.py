@@ -28,6 +28,18 @@ def _igual(esperado: Any, obtenido: Any) -> bool:
     return bool(esperado == obtenido) or str(esperado) == str(obtenido)
 
 
+PREFIJO_ESQUEMA = "ya no llega el campo"
+
+
+def campos_presentes(sobre: Sobre) -> set[str]:
+    """Los campos que trajo el sobre: los de `datos` y los de cualquiera de sus elementos."""
+    presentes = {k for k in sobre.datos if k != "elementos"}
+    for e in sobre.datos.get("elementos") or []:
+        if isinstance(e, dict):
+            presentes |= set(e)
+    return presentes
+
+
 def comprobar(h: Herramienta, sobre: Sobre) -> list[str]:
     """Las diferencias con la verdad del canario; vacío si coincide."""
     problemas = []
@@ -41,4 +53,9 @@ def comprobar(h: Herramienta, sobre: Sobre) -> list[str]:
         obtenido = _buscar(sobre.datos, clave)
         if not isinstance(obtenido, int | float) or obtenido < minimo:
             problemas.append(f"{clave}: se esperaba ≥ {minimo}, vino {obtenido!r}")
+    # F7.3: un campo renombrado en la fuente sale de la lista blanca sin error; aquí se nota
+    presentes = campos_presentes(sobre)
+    for campo in h.canario.campos:
+        if campo not in presentes:
+            problemas.append(f"{PREFIJO_ESQUEMA} «{campo}»: ¿la fuente cambió su esquema?")
     return problemas

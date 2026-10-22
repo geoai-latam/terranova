@@ -24,4 +24,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {unidad_capacidad: "2c", descripcion_capacidad: "Capacidad alta para agricultura"}
+  campos: [descripcion_capacidad, unidad_capacidad]
   latencia_max_ms: 5000

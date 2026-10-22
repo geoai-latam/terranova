@@ -36,4 +36,5 @@ canario:
     valor: 2602628368
     fecha_firma: "2023-06-26"
     estado: Cerrado
+  campos: [contratista, departamento, entidad, estado, fecha_actualizacion, fecha_fin, fecha_firma, fecha_inicio, id_contrato, id_proceso, modalidad, municipio, nit_entidad, objeto, referencia, tipo_contrato, tipo_documento_contratista, url_proceso, valor, valor_pagado]
   latencia_max_ms: 5000

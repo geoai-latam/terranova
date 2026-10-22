@@ -38,4 +38,5 @@ canario:
     municipio: Chía
     estado: Activa
     entidad_propietaria: "INSTITUTO DE HIDROLOGÍA METEOROLOGÍA Y ESTUDIOS AMBIENTALES"
+  campos: [altitud_m, categoria, codigo_estacion, departamento, entidad_propietaria, estado, fecha_instalacion, lat, lon, municipio, nombre, tecnologia]
   latencia_max_ms: 5000
