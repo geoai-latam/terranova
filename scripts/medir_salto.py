@@ -4,7 +4,7 @@ Necesita el conector `arcgis-mcp` y la puerta levantados (ver docs/spikes/F0.3-p
 El salto se mide con `ping` y `tools/list`, que no tocan la fuente; a la fuente solo van
 `--llamadas` consultas (5 por defecto): nunca se hace carga contra servidores del Estado.
 
-Uso: TERRANOVA_ARCGIS_MCP_KEY=… uv run scripts/medir_salto.py
+Uso: TERRANOVA_CONECTOR_LLAVE=… uv run scripts/medir_salto.py
 """
 
 import argparse
@@ -44,7 +44,7 @@ def _informe(nombre: str, muestras: list[float]) -> None:
 
 
 async def main(args: argparse.Namespace) -> int:
-    conector = ConectorMCP(args.conector, os.environ["TERRANOVA_ARCGIS_MCP_KEY"])
+    conector = ConectorMCP(args.conector, os.environ["TERRANOVA_CONECTOR_LLAVE"])
     await conector.abrir()
     try:
         print(f"puerta → conector: protocolo {conector.cliente.protocol_version}")

@@ -1,0 +1,2754 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:51:49+00:00",
+ "herramienta": "usgs_sismos_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -79.1,
+     -4.3,
+     -66.8,
+     13.5
+    ],
+    "desde": "2024-01-01",
+    "hasta": "2025-01-01",
+    "magnitud_min": 4.0
+   },
+   "conector": "amenazas-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "bbox": [
+        -79.0534,
+        -4.1655,
+        4.838,
+        -68.7586,
+        12.3764,
+        197.728
+       ],
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -75.8481,
+           4.7429
+          ],
+          "type": "Point"
+         },
+         "id": "us6000m4n2",
+         "properties": {
+          "fecha": "2024-01-19 11:26 UTC",
+          "mag": 5.6,
+          "magType": "mww",
+          "place": "7 km E of Cartago, Colombia",
+          "profundidad_km": 65.067,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000m4n2"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.671,
+           -3.8928
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mt41",
+         "properties": {
+          "fecha": "2024-06-18 02:22 UTC",
+          "mag": 5.5,
+          "magType": "mww",
+          "place": "53 km SSW of Alianza Cristiana, Peru",
+          "profundidad_km": 106.228,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mt41"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.4738,
+           -1.4492
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nqkx",
+         "properties": {
+          "fecha": "2024-11-08 10:37 UTC",
+          "mag": 5.1,
+          "magType": "mww",
+          "place": "58 km E of Puyo, Ecuador",
+          "profundidad_km": 190.812,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nqkx"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.298,
+           7.3229
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pfmi",
+         "properties": {
+          "fecha": "2024-12-26 00:52 UTC",
+          "mag": 5,
+          "magType": "mww",
+          "place": "10 km ENE of Valdivia, Colombia",
+          "profundidad_km": 52.19,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pfmi"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.462,
+           5.3197
+          ],
+          "type": "Point"
+         },
+         "id": "us7000npzi",
+         "properties": {
+          "fecha": "2024-11-05 03:14 UTC",
+          "mag": 5,
+          "magType": "mww",
+          "place": "41 km NNW of Pizarro, Colombia",
+          "profundidad_km": 31.25,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000npzi"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -79.0178,
+           2.5123
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n077",
+         "properties": {
+          "fecha": "2024-05-22 05:34 UTC",
+          "mag": 5,
+          "magType": "mww",
+          "place": "63 km W of Mosquera, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n077"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0286,
+           6.7852
+          ],
+          "type": "Point"
+         },
+         "id": "us6000m59q",
+         "properties": {
+          "fecha": "2024-01-21 17:19 UTC",
+          "mag": 5,
+          "magType": "mww",
+          "place": "6 km WNW of Cepitá, Colombia",
+          "profundidad_km": 154.112,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000m59q"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.8321,
+           6.3181
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pfhr",
+         "properties": {
+          "fecha": "2024-12-24 20:33 UTC",
+          "mag": 4.9,
+          "magType": "mb",
+          "place": "13 km SW of Caracolí, Colombia",
+          "profundidad_km": 73.999,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pfhr"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.492,
+           11.8345
+          ],
+          "type": "Point"
+         },
+         "id": "us6000my1s",
+         "properties": {
+          "fecha": "2024-05-12 10:19 UTC",
+          "mag": 4.9,
+          "magType": "mb",
+          "place": "65 km NNW of Dibulla, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000my1s"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.5722,
+           0.4474
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mwpy",
+         "properties": {
+          "fecha": "2024-05-06 15:17 UTC",
+          "mag": 4.9,
+          "magType": "mww",
+          "place": "32 km ESE of San Gabriel, Ecuador",
+          "profundidad_km": 4.838,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mwpy"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.3758,
+           5.4555
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m9g0",
+         "properties": {
+          "fecha": "2024-04-02 23:16 UTC",
+          "mag": 4.9,
+          "magType": "mb",
+          "place": "13 km N of Yopal, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m9g0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.977,
+           9.6383
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m8nn",
+         "properties": {
+          "fecha": "2024-03-28 23:23 UTC",
+          "mag": 4.9,
+          "magType": "mb",
+          "place": "26 km SW of El Tocuyo, Venezuela",
+          "profundidad_km": 10.208,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m8nn"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0526,
+           6.6903
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n9a9",
+         "properties": {
+          "fecha": "2024-06-30 03:46 UTC",
+          "mag": 4.8,
+          "magType": "mb",
+          "place": "3 km W of Aratoca, Colombia",
+          "profundidad_km": 160.601,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n9a9"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.5688,
+           0.4825
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mwq2",
+         "properties": {
+          "fecha": "2024-05-06 15:32 UTC",
+          "mag": 4.8,
+          "magType": "mww",
+          "place": "31 km ESE of San Gabriel, Ecuador",
+          "profundidad_km": 8.031,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mwq2"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.6488,
+           -1.7319
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lzcf",
+         "properties": {
+          "fecha": "2024-02-15 06:45 UTC",
+          "mag": 4.8,
+          "magType": "mb",
+          "place": "35 km E of Palora, Ecuador",
+          "profundidad_km": 166.527,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lzcf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.8678,
+           7.3271
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nnx8",
+         "properties": {
+          "fecha": "2024-10-29 21:49 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "44 km NE of Cubará, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nnx8"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0217,
+           6.7061
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ng6u",
+         "properties": {
+          "fecha": "2024-09-21 21:31 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "1 km NNW of Aratoca, Colombia",
+          "profundidad_km": 157.575,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ng6u"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1171,
+           6.7214
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nh2v",
+         "properties": {
+          "fecha": "2024-09-29 07:05 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "2 km WSW of Jordán, Colombia",
+          "profundidad_km": 157.274,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nh2v"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.7223,
+           9.897
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nfng",
+         "properties": {
+          "fecha": "2024-07-25 14:11 UTC",
+          "mag": 4.7,
+          "magType": "mwr",
+          "place": "23 km ENE of Mene Grande, Venezuela",
+          "profundidad_km": 18.897,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nfng"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.4987,
+           -3.0689
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nfje",
+         "properties": {
+          "fecha": "2024-07-25 05:44 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "45 km N of Alianza Cristiana, Peru",
+          "profundidad_km": 117.89,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nfje"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.5829,
+           3.7915
+          ],
+          "type": "Point"
+         },
+         "id": "us7000my8v",
+         "properties": {
+          "fecha": "2024-07-10 09:53 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "142 km N of Mosquera, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000my8v"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -79.0534,
+           2.5004
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n08a",
+         "properties": {
+          "fecha": "2024-05-22 08:44 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "66 km W of Mosquera, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n08a"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.0477,
+           7.0504
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lzgv",
+         "properties": {
+          "fecha": "2024-02-15 18:27 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "26 km WNW of Murindó, Colombia",
+          "profundidad_km": 38.654,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lzgv"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0861,
+           6.8566
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lt0d",
+         "properties": {
+          "fecha": "2024-01-22 19:05 UTC",
+          "mag": 4.7,
+          "magType": "mb",
+          "place": "13 km N of Jordán, Colombia",
+          "profundidad_km": 152.431,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lt0d"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.7586,
+           10.7353
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pff9",
+         "properties": {
+          "fecha": "2024-12-24 09:11 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "17 km NNW of Yumare, Venezuela",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pff9"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0998,
+           6.7154
+          ],
+          "type": "Point"
+         },
+         "id": "us6000p7iv",
+         "properties": {
+          "fecha": "2024-11-25 04:51 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "1 km SSW of Jordán, Colombia",
+          "profundidad_km": 160.779,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000p7iv"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.8664,
+           7.0174
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nnla",
+         "properties": {
+          "fecha": "2024-10-28 07:08 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "6 km NW of Murindó, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nnla"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.3798,
+           5.4511
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nmzv",
+         "properties": {
+          "fecha": "2024-10-24 20:31 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "125 km WNW of Pizarro, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nmzv"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.4917,
+           11.7919
+          ],
+          "type": "Point"
+         },
+         "id": "us6000p020",
+         "properties": {
+          "fecha": "2024-09-28 19:13 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "60 km NNW of Dibulla, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000p020"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.1997,
+           10.7573
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nj29",
+         "properties": {
+          "fecha": "2024-08-09 11:22 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "48 km NW of Aroa, Venezuela",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nj29"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.0329,
+           6.848
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n84y",
+         "properties": {
+          "fecha": "2024-06-25 19:03 UTC",
+          "mag": 4.6,
+          "magType": "mwr",
+          "place": "27 km WSW of Murindó, Colombia",
+          "profundidad_km": 41.197,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n84y"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.2246,
+           -2.1885
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mt8i",
+         "properties": {
+          "fecha": "2024-06-18 17:11 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "98 km ESE of Palora, Ecuador",
+          "profundidad_km": 144.004,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mt8i"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.219,
+           8.8767
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mqep",
+         "properties": {
+          "fecha": "2024-06-05 03:31 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "11 km SSE of Tucaní, Venezuela",
+          "profundidad_km": 17.142,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mqep"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0834,
+           6.6912
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n17w",
+         "properties": {
+          "fecha": "2024-05-27 05:12 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "4 km SSE of Jordán, Colombia",
+          "profundidad_km": 159.324,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n17w"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.5013,
+           11.8046
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mxzf",
+         "properties": {
+          "fecha": "2024-05-12 01:01 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "62 km NNW of Dibulla, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mxzf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.7936,
+           9.6863
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mvzi",
+         "properties": {
+          "fecha": "2024-05-03 12:04 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "49 km SSW of Machiques, Venezuela",
+          "profundidad_km": 12.168,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mvzi"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.0626,
+           4.9949
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mv7u",
+         "properties": {
+          "fecha": "2024-04-30 15:44 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "6 km W of La Celia, Colombia",
+          "profundidad_km": 126.48,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mv7u"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5912,
+           6.3253
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mfkh",
+         "properties": {
+          "fecha": "2024-02-28 07:05 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "3 km WSW of Bello, Colombia",
+          "profundidad_km": 17.79,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mfkh"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0893,
+           6.6747
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m0pr",
+         "properties": {
+          "fecha": "2024-02-22 04:05 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "6 km S of Jordán, Colombia",
+          "profundidad_km": 162,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m0pr"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0181,
+           6.7875
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m0g8",
+         "properties": {
+          "fecha": "2024-02-20 23:23 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "6 km NW of Cepitá, Colombia",
+          "profundidad_km": 156.388,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m0g8"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0637,
+           6.6953
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m0a2",
+         "properties": {
+          "fecha": "2024-02-20 01:38 UTC",
+          "mag": 4.6,
+          "magType": "mb",
+          "place": "4 km W of Aratoca, Colombia",
+          "profundidad_km": 165.776,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m0a2"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.3585,
+           11.5228
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pgmd",
+         "properties": {
+          "fecha": "2024-12-31 08:59 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "28 km N of Dibulla, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pgmd"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.7263,
+           7.1166
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pfet",
+         "properties": {
+          "fecha": "2024-12-24 06:39 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "7 km SE of Ituango, Colombia",
+          "profundidad_km": 49.827,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pfet"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.4979,
+           -4.1655
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nqyh",
+         "properties": {
+          "fecha": "2024-11-10 06:44 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "119 km N of Lagunas, Peru",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nqyh"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.4642,
+           11.8435
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nh0q",
+         "properties": {
+          "fecha": "2024-09-28 19:12 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "65 km NNW of Dibulla, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nh0q"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.0653,
+           3.9409
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nn57",
+         "properties": {
+          "fecha": "2024-08-28 00:49 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "85 km WSW of Santa Genoveva de Docordó, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nn57"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.6496,
+           4.8749
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nday",
+         "properties": {
+          "fecha": "2024-08-20 06:52 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "18 km NW of Ubalá, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nday"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0791,
+           6.6946
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nn5s",
+         "properties": {
+          "fecha": "2024-08-28 03:03 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "4 km SSE of Jordán, Colombia",
+          "profundidad_km": 164.104,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nn5s"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.8093,
+           9.8803
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nni0",
+         "properties": {
+          "fecha": "2024-08-29 14:19 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "13 km ENE of Mene Grande, Venezuela",
+          "profundidad_km": 17.254,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nni0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.9858,
+           6.6727
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mzxt",
+         "properties": {
+          "fecha": "2024-07-18 01:09 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "4 km ESE of Aratoca, Colombia",
+          "profundidad_km": 160.309,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mzxt"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.695,
+           -1.9579
+          ],
+          "type": "Point"
+         },
+         "id": "us7000msuc",
+         "properties": {
+          "fecha": "2024-06-16 17:32 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "41 km SE of Palora, Ecuador",
+          "profundidad_km": 13.734,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000msuc"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.9119,
+           4.3193
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mqwq",
+         "properties": {
+          "fecha": "2024-06-07 07:55 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "6 km NNE of Sevilla, Colombia",
+          "profundidad_km": 11.719,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mqwq"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -79.0209,
+           4.1934
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n073",
+         "properties": {
+          "fecha": "2024-05-22 04:51 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "183 km W of Santa Genoveva de Docordó, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n073"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.3563,
+           8.0283
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mwpt",
+         "properties": {
+          "fecha": "2024-05-06 15:01 UTC",
+          "mag": 4.5,
+          "magType": "mwr",
+          "place": "8 km NE of Montelíbano, Colombia",
+          "profundidad_km": 54.489,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mwpt"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.9997,
+           6.6676
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ma4w",
+         "properties": {
+          "fecha": "2024-04-05 12:07 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "3 km SE of Aratoca, Colombia",
+          "profundidad_km": 166.421,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ma4w"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1701,
+           6.8504
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mbfp",
+         "properties": {
+          "fecha": "2024-04-03 02:32 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "11 km ENE of Zapatoca, Colombia",
+          "profundidad_km": 157.268,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mbfp"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0481,
+           6.7778
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mfn5",
+         "properties": {
+          "fecha": "2024-02-23 14:45 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "7 km NE of Jordán, Colombia",
+          "profundidad_km": 156.009,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mfn5"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.2307,
+           6.8709
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m1gm",
+         "properties": {
+          "fecha": "2024-02-25 07:51 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "7 km WSW of Uramita, Colombia",
+          "profundidad_km": 49.262,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m1gm"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.7456,
+           6.3284
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mfie",
+         "properties": {
+          "fecha": "2024-02-27 22:41 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "29 km SSE of Bellavista, Colombia",
+          "profundidad_km": 51.878,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mfie"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.4767,
+           7.3556
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m0zk",
+         "properties": {
+          "fecha": "2024-02-23 00:47 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "11 km NW of Valdivia, Colombia",
+          "profundidad_km": 53.05,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m0zk"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.6843,
+           -3.1744
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ltcs",
+         "properties": {
+          "fecha": "2024-01-24 01:42 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "95 km SE of Sucúa, Ecuador",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ltcs"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.5807,
+           6.2056
+          ],
+          "type": "Point"
+         },
+         "id": "us7000luhv",
+         "properties": {
+          "fecha": "2024-01-28 08:17 UTC",
+          "mag": 4.5,
+          "magType": "mb",
+          "place": "19 km W of Bahía Solano, Colombia",
+          "profundidad_km": 21.804,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000luhv"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.9319,
+           -1.6086
+          ],
+          "type": "Point"
+         },
+         "id": "us6000pfdr",
+         "properties": {
+          "fecha": "2024-12-23 23:00 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "10 km NNE of Palora, Ecuador",
+          "profundidad_km": 181.076,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pfdr"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0625,
+           6.3981
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ny84",
+         "properties": {
+          "fecha": "2024-12-12 18:11 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "9 km NE of Ocamonte, Colombia",
+          "profundidad_km": 189.047,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ny84"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.8792,
+           8.7389
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nmfd",
+         "properties": {
+          "fecha": "2024-10-01 03:44 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "19 km NW of Tibú, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nmfd"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0851,
+           6.6663
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nv23",
+         "properties": {
+          "fecha": "2024-11-30 04:22 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "7 km NNW of Curití, Colombia",
+          "profundidad_km": 162.202,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nv23"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.2195,
+           8.2334
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nrzm",
+         "properties": {
+          "fecha": "2024-10-28 07:45 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "12 km SW of Ayapel, Colombia",
+          "profundidad_km": 59.292,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nrzm"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.991,
+           12.3764
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nsn0",
+         "properties": {
+          "fecha": "2024-10-31 23:39 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "73 km WNW of Dorp Rincon, Bonaire, Saint Eustatius and Saba ",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nsn0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.5465,
+           9.9218
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ngex",
+         "properties": {
+          "fecha": "2024-09-01 07:47 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "42 km ENE of Mene Grande, Venezuela",
+          "profundidad_km": 10.616,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ngex"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.8171,
+           6.6837
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nd8m",
+         "properties": {
+          "fecha": "2024-09-12 08:34 UTC",
+          "mag": 4.4,
+          "magType": "mwr",
+          "place": "2 km ENE of Yalí, Colombia",
+          "profundidad_km": 76.378,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nd8m"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.6956,
+           -1.5846
+          ],
+          "type": "Point"
+         },
+         "id": "us6000npn5",
+         "properties": {
+          "fecha": "2024-09-04 13:57 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "32 km ENE of Palora, Ecuador",
+          "profundidad_km": 184.843,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000npn5"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0714,
+           6.6974
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nnti",
+         "properties": {
+          "fecha": "2024-08-31 03:10 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "4 km SE of Jordán, Colombia",
+          "profundidad_km": 160.692,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nnti"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.531,
+           -2.3806
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ni3u",
+         "properties": {
+          "fecha": "2024-08-04 23:42 UTC",
+          "mag": 4.4,
+          "magType": "mwr",
+          "place": "65 km E of Macas, Ecuador",
+          "profundidad_km": 39.929,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ni3u"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.6111,
+           -3.7868
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ni0m",
+         "properties": {
+          "fecha": "2024-08-04 06:57 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "17 km ENE of Yantzaza, Ecuador",
+          "profundidad_km": 103.103,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ni0m"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.2865,
+           -0.1306
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mxti",
+         "properties": {
+          "fecha": "2024-07-01 05:27 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "8 km NE of Oyambarillo, Ecuador",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mxti"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.7316,
+           4.6492
+          ],
+          "type": "Point"
+         },
+         "id": "us6000na3m",
+         "properties": {
+          "fecha": "2024-06-26 23:41 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "24 km WSW of Ubalá, Colombia",
+          "profundidad_km": 9.723,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000na3m"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.7579,
+           -2.4551
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mtr3",
+         "properties": {
+          "fecha": "2024-06-21 06:02 UTC",
+          "mag": 4.4,
+          "magType": "mwr",
+          "place": "23 km ENE of Cañar, Ecuador",
+          "profundidad_km": 98.435,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mtr3"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.9871,
+           6.8079
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mqnd",
+         "properties": {
+          "fecha": "2024-05-30 14:37 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "6 km NNW of Cepitá, Colombia",
+          "profundidad_km": 155.391,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mqnd"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.5039,
+           4.2454
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mrik",
+         "properties": {
+          "fecha": "2024-06-03 11:52 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "3 km SW of Cumaral, Colombia",
+          "profundidad_km": 9.966,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mrik"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.0665,
+           11.8202
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n0z8",
+         "properties": {
+          "fecha": "2024-05-25 18:01 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "48 km NE of Puerto Cumarebo, Venezuela",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n0z8"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.027,
+           2.0194
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mwfa",
+         "properties": {
+          "fecha": "2024-05-05 06:11 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "3 km NNE of Saladoblanco, Colombia",
+          "profundidad_km": 12.009,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mwfa"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.8395,
+           -2.8696
+          ],
+          "type": "Point"
+         },
+         "id": "us6000myjz",
+         "properties": {
+          "fecha": "2024-05-14 16:39 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "58 km SE of Sucúa, Ecuador",
+          "profundidad_km": 30.205,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000myjz"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.8008,
+           11.436
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mvna",
+         "properties": {
+          "fecha": "2024-05-02 07:34 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "16 km SE of Riohacha, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mvna"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0152,
+           6.6333
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mcrm",
+         "properties": {
+          "fecha": "2024-04-17 20:50 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "6 km ENE of Curití, Colombia",
+          "profundidad_km": 161.851,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mcrm"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.0365,
+           8.3606
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m01m",
+         "properties": {
+          "fecha": "2024-02-18 17:42 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "28 km WSW of Necoclí, Colombia",
+          "profundidad_km": 50.379,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m01m"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.1372,
+           5.4232
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m8pn",
+         "properties": {
+          "fecha": "2024-03-29 04:38 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "20 km WSW of Pie de Pató, Colombia",
+          "profundidad_km": 41.556,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m8pn"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0243,
+           6.7838
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mfut",
+         "properties": {
+          "fecha": "2024-02-24 23:49 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "6 km WNW of Cepitá, Colombia",
+          "profundidad_km": 157.159,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mfut"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.2688,
+           6.7417
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m46g",
+         "properties": {
+          "fecha": "2024-03-04 22:25 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "15 km WSW of Frontino, Colombia",
+          "profundidad_km": 37.524,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m46g"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1205,
+           6.8523
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m3sa",
+         "properties": {
+          "fecha": "2024-03-06 21:12 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "13 km NNW of Jordán, Colombia",
+          "profundidad_km": 146.029,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m3sa"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.4052,
+           12.2395
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mfn8",
+         "properties": {
+          "fecha": "2024-02-23 12:44 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "94 km NW of Riohacha, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mfn8"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.752,
+           5.7787
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lwas",
+         "properties": {
+          "fecha": "2024-01-28 06:10 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "53 km W of Nuquí, Colombia",
+          "profundidad_km": 17.402,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lwas"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.3853,
+           9.3386
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ltnw",
+         "properties": {
+          "fecha": "2024-01-25 09:41 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "6 km ESE of Trujillo, Venezuela",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ltnw"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.9339,
+           1.2167
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lxnx",
+         "properties": {
+          "fecha": "2024-02-08 02:36 UTC",
+          "mag": 4.4,
+          "magType": "mb",
+          "place": "6 km ESE of Valdez, Ecuador",
+          "profundidad_km": 77.318,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lxnx"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.2878,
+           -2.3757
+          ],
+          "type": "Point"
+         },
+         "id": "us6000p7cc",
+         "properties": {
+          "fecha": "2024-11-24 00:56 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "15 km NW of Sucúa, Ecuador",
+          "profundidad_km": 112.431,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000p7cc"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.9334,
+           7.1019
+          ],
+          "type": "Point"
+         },
+         "id": "us6000p6wi",
+         "properties": {
+          "fecha": "2024-11-22 00:03 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "11 km SSE of Tona, Colombia",
+          "profundidad_km": 183.216,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000p6wi"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1054,
+           6.8484
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ns6u",
+         "properties": {
+          "fecha": "2024-11-16 18:25 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "12 km N of Jordán, Colombia",
+          "profundidad_km": 147.606,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ns6u"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0424,
+           6.7111
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nnts",
+         "properties": {
+          "fecha": "2024-10-08 18:42 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "3 km NW of Aratoca, Colombia",
+          "profundidad_km": 153.622,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nnts"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.9723,
+           6.7988
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nnkf",
+         "properties": {
+          "fecha": "2024-10-28 04:03 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "4 km N of Cepitá, Colombia",
+          "profundidad_km": 153.555,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nnkf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.6778,
+           5.3148
+          ],
+          "type": "Point"
+         },
+         "id": "us7000ngk9",
+         "properties": {
+          "fecha": "2024-09-22 00:58 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "3 km ENE of Lenguazaque, Colombia",
+          "profundidad_km": 163.486,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000ngk9"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1251,
+           6.7026
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ntmm",
+         "properties": {
+          "fecha": "2024-09-22 07:21 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "4 km SW of Jordán, Colombia",
+          "profundidad_km": 159.092,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ntmm"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0255,
+           6.7459
+          ],
+          "type": "Point"
+         },
+         "id": "us6000njzx",
+         "properties": {
+          "fecha": "2024-08-14 04:14 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "5 km W of Cepitá, Colombia",
+          "profundidad_km": 162.088,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000njzx"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -79.0382,
+           2.6312
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n12v",
+         "properties": {
+          "fecha": "2024-05-26 10:24 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "66 km WNW of Mosquera, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n12v"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0808,
+           6.7791
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ng7y",
+         "properties": {
+          "fecha": "2024-07-26 18:54 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "5 km NNE of Jordán, Colombia",
+          "profundidad_km": 162.67,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ng7y"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0799,
+           6.7902
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n957",
+         "properties": {
+          "fecha": "2024-06-29 09:16 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "6 km NNE of Jordán, Colombia",
+          "profundidad_km": 151.808,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n957"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.5066,
+           6.8392
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n00i",
+         "properties": {
+          "fecha": "2024-05-21 09:58 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "31 km SW of Dabeiba, Colombia",
+          "profundidad_km": 48.925,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n00i"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0523,
+           6.8313
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m9p7",
+         "properties": {
+          "fecha": "2024-03-28 21:36 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "11 km NNE of Jordán, Colombia",
+          "profundidad_km": 156.698,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m9p7"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0908,
+           6.7884
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mk83",
+         "properties": {
+          "fecha": "2024-03-16 18:58 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "6 km N of Jordán, Colombia",
+          "profundidad_km": 159.68,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mk83"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.9313,
+           6.0205
+          ],
+          "type": "Point"
+         },
+         "id": "us7000masg",
+         "properties": {
+          "fecha": "2024-04-01 01:09 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "23 km SW of Municipio Hato Corozal, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000masg"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.904,
+           9.5397
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m8pf",
+         "properties": {
+          "fecha": "2024-03-29 03:02 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "29 km SSW of El Tocuyo, Venezuela",
+          "profundidad_km": 13.324,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m8pf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.5175,
+           -3.5036
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mjsq",
+         "properties": {
+          "fecha": "2024-03-13 09:23 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "118 km E of Gualaquiza, Ecuador",
+          "profundidad_km": 10.582,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mjsq"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.9969,
+           4.8447
+          ],
+          "type": "Point"
+         },
+         "id": "us6000m4n6",
+         "properties": {
+          "fecha": "2024-01-19 11:47 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "5 km N of Ansermanuevo, Colombia",
+          "profundidad_km": 76.307,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000m4n6"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1499,
+           6.8935
+          ],
+          "type": "Point"
+         },
+         "id": "us6000m3qt",
+         "properties": {
+          "fecha": "2024-01-15 11:23 UTC",
+          "mag": 4.3,
+          "magType": "mb",
+          "place": "14 km E of Betulia, Colombia",
+          "profundidad_km": 151.315,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000m3qt"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1458,
+           6.7518
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ph1t",
+         "properties": {
+          "fecha": "2024-12-11 06:43 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "5 km WNW of Jordán, Colombia",
+          "profundidad_km": 157.623,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ph1t"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.6689,
+           5.2739
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nvyp",
+         "properties": {
+          "fecha": "2024-12-04 18:02 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "5 km SE of Lenguazaque, Colombia",
+          "profundidad_km": 158.03,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nvyp"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1198,
+           6.851
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nr2x",
+         "properties": {
+          "fecha": "2024-11-11 00:39 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "13 km NNW of Jordán, Colombia",
+          "profundidad_km": 151.447,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nr2x"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -78.0185,
+           -2.4513
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nqcu",
+         "properties": {
+          "fecha": "2024-11-07 05:59 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "17 km E of Sucúa, Ecuador",
+          "profundidad_km": 113.059,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nqcu"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.007,
+           6.6603
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nymq",
+         "properties": {
+          "fecha": "2024-09-12 00:17 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "3 km SSE of Aratoca, Colombia",
+          "profundidad_km": 165.506,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nymq"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.075,
+           6.7626
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nwur",
+         "properties": {
+          "fecha": "2024-10-06 08:07 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "4 km NE of Jordán, Colombia",
+          "profundidad_km": 154.22,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nwur"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1242,
+           6.8784
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nwlu",
+         "properties": {
+          "fecha": "2024-10-04 19:36 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "14 km SW of Piedecuesta, Colombia",
+          "profundidad_km": 147.571,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nwlu"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.7983,
+           -2.4687
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ntv6",
+         "properties": {
+          "fecha": "2024-09-23 14:40 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "39 km ESE of Macas, Ecuador",
+          "profundidad_km": 120.537,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ntv6"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.4333,
+           -1.3059
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ni0h",
+         "properties": {
+          "fecha": "2024-08-04 06:00 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "54 km SE of Tena, Ecuador",
+          "profundidad_km": 197.728,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ni0h"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.3109,
+           3.3996
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ngu2",
+         "properties": {
+          "fecha": "2024-07-30 05:32 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "29 km W of Mesetas, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ngu2"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.2879,
+           -4.0785
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mths",
+         "properties": {
+          "fecha": "2024-06-19 22:15 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "107 km NW of Barranca, Peru",
+          "profundidad_km": 117.775,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mths"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1092,
+           6.8081
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mrix",
+         "properties": {
+          "fecha": "2024-06-03 22:48 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "8 km N of Jordán, Colombia",
+          "profundidad_km": 159.344,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mrix"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.8294,
+           7.8033
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mz6p",
+         "properties": {
+          "fecha": "2024-05-11 17:25 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "6 km WNW of San Carlos, Colombia",
+          "profundidad_km": 71.332,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mz6p"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0627,
+           6.8165
+          ],
+          "type": "Point"
+         },
+         "id": "us6000n0q5",
+         "properties": {
+          "fecha": "2024-05-18 07:42 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "9 km NNE of Jordán, Colombia",
+          "profundidad_km": 152.088,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000n0q5"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.9499,
+           4.786
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lyam",
+         "properties": {
+          "fecha": "2024-02-10 13:57 UTC",
+          "mag": 4.2,
+          "magType": "mb",
+          "place": "5 km ESE of Ansermanuevo, Colombia",
+          "profundidad_km": 89.291,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lyam"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0416,
+           6.7566
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nvtk",
+         "properties": {
+          "fecha": "2024-12-04 06:34 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "6 km ENE of Jordán, Colombia",
+          "profundidad_km": 157.068,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nvtk"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -72.3377,
+           11.035
+          ],
+          "type": "Point"
+         },
+         "id": "us7000nrgp",
+         "properties": {
+          "fecha": "2024-11-13 01:42 UTC",
+          "mag": 4.1,
+          "magType": "mwr",
+          "place": "31 km ESE of Albania, Colombia",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nrgp"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0129,
+           6.7359
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nu30",
+         "properties": {
+          "fecha": "2024-09-20 03:22 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "4 km N of Aratoca, Colombia",
+          "profundidad_km": 161.791,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nu30"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0492,
+           6.8439
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mzkf",
+         "properties": {
+          "fecha": "2024-07-08 08:36 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "12 km NW of Cepitá, Colombia",
+          "profundidad_km": 151.923,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mzkf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.1113,
+           6.8
+          ],
+          "type": "Point"
+         },
+         "id": "us6000nhvf",
+         "properties": {
+          "fecha": "2024-08-03 10:31 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "7 km NNW of Jordán, Colombia",
+          "profundidad_km": 150.293,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000nhvf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0861,
+           6.7942
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mzca",
+         "properties": {
+          "fecha": "2024-05-18 01:43 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "6 km N of Jordán, Colombia",
+          "profundidad_km": 156.26,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mzca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.0616,
+           9.3413
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m1nl",
+         "properties": {
+          "fecha": "2024-02-21 03:40 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "22 km ENE of Boconó, Venezuela",
+          "profundidad_km": 10,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m1nl"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0575,
+           6.877
+          ],
+          "type": "Point"
+         },
+         "id": "us7000lwxf",
+         "properties": {
+          "fecha": "2024-02-04 13:04 UTC",
+          "mag": 4.1,
+          "magType": "mb",
+          "place": "12 km S of Piedecuesta, Colombia",
+          "profundidad_km": 151.984,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000lwxf"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.012,
+           6.7526
+          ],
+          "type": "Point"
+         },
+         "id": "us6000ngp7",
+         "properties": {
+          "fecha": "2024-07-17 05:35 UTC",
+          "mag": 4,
+          "magType": "mb",
+          "place": "4 km W of Cepitá, Colombia",
+          "profundidad_km": 154.52,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000ngp7"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0577,
+           6.8911
+          ],
+          "type": "Point"
+         },
+         "id": "us7000mcg1",
+         "properties": {
+          "fecha": "2024-04-07 12:28 UTC",
+          "mag": 4,
+          "magType": "mb",
+          "place": "10 km S of Piedecuesta, Colombia",
+          "profundidad_km": 150.844,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mcg1"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.061,
+           6.8548
+          ],
+          "type": "Point"
+         },
+         "id": "us7000m9ww",
+         "properties": {
+          "fecha": "2024-03-29 13:58 UTC",
+          "mag": 4,
+          "magType": "mb",
+          "place": "14 km NNE of Jordán, Colombia",
+          "profundidad_km": 151.045,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000m9ww"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.0474,
+           6.829
+          ],
+          "type": "Point"
+         },
+         "id": "us6000mk1f",
+         "properties": {
+          "fecha": "2024-03-15 06:19 UTC",
+          "mag": 4,
+          "magType": "mb",
+          "place": "11 km NW of Cepitá, Colombia",
+          "profundidad_km": 152.662,
+          "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000mk1f"
+         },
+         "type": "Feature"
+        }
+       ],
+       "metadata": {
+        "api": "2.8.2",
+        "generated": 1792641108000,
+        "limit": 2000,
+        "offset": 1,
+        "status": 200,
+        "title": "USGS Earthquakes",
+        "url": "https://earthquake.usgs.gov/fdsnws/event/1/query?starttime=2024-01-01&endtime=2025-01-01&minlatitude=-4.3&maxlatitude=13.5&minlongitude=-79.1&maxlongitude=-66.8&minmagnitude=4.0&format=geojson&orderby=magnitude&limit=2000"
+       },
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Sismos M≥4"
+     }
+    ],
+    "facts": {
+     "completo": true,
+     "en_el_catalogo": 139,
+     "fuente": "USGS (catálogo mundial; en Colombia la red oficial es la del SGC)",
+     "magnitud_min": 4.0,
+     "mayores": [
+      {
+       "fecha": "2024-01-19 11:26 UTC",
+       "mag": 5.6,
+       "magType": "mww",
+       "place": "7 km E of Cartago, Colombia",
+       "profundidad_km": 65.067,
+       "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000m4n2"
+      },
+      {
+       "fecha": "2024-06-18 02:22 UTC",
+       "mag": 5.5,
+       "magType": "mww",
+       "place": "53 km SSW of Alianza Cristiana, Peru",
+       "profundidad_km": 106.228,
+       "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000mt41"
+      },
+      {
+       "fecha": "2024-11-08 10:37 UTC",
+       "mag": 5.1,
+       "magType": "mww",
+       "place": "58 km E of Puyo, Ecuador",
+       "profundidad_km": 190.812,
+       "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000nqkx"
+      },
+      {
+       "fecha": "2024-12-26 00:52 UTC",
+       "mag": 5,
+       "magType": "mww",
+       "place": "10 km ENE of Valdivia, Colombia",
+       "profundidad_km": 52.19,
+       "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000pfmi"
+      },
+      {
+       "fecha": "2024-11-05 03:14 UTC",
+       "mag": 5,
+       "magType": "mww",
+       "place": "41 km NNW of Pizarro, Colombia",
+       "profundidad_km": 31.25,
+       "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us7000npzi"
+      }
+     ],
+     "periodo": [
+      "2024-01-01",
+      "2025-01-01"
+     ],
+     "sismos": 139,
+     "zona_consultada_bbox": [
+      -79.1,
+      -4.3,
+      -66.8,
+      13.5
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "amenazas_sismos"
+  }
+ ]
+}

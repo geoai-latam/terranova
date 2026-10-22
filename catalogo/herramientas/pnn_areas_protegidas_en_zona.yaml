@@ -15,6 +15,7 @@ consulta:
   tool: arcgis_query_features
   capas: [0]
   argumentos:
+    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
     url: "{url_capa}"
     bbox: "{bbox}"
     out_fields: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
@@ -22,7 +23,8 @@ consulta:
   campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
 salida: AreasProtegidasEnZona
 # `total` es el de `completitud` (returnCountOnly del servicio), no un campo de cada área.
-derivados: [total]
+derivados:
+  total: {de: completitud_total, tipo: int}
 creditos: 20
 canario:
   # Bbox de la prueba de ogc_mcp en GEO Copilot (Bogotá y alrededores). Medido el 2026-10-21 con

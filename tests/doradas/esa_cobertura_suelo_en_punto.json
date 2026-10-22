@@ -1,0 +1,98 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:54:02+00:00",
+ "herramienta": "esa_cobertura_suelo_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "aoi_geojson": {
+     "coordinates": [
+      -74.152,
+      4.628
+     ],
+     "type": "Point"
+    }
+   },
+   "conector": "imagery-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "items": [
+       {
+        "label": "Construido",
+        "unit": "%",
+        "value": 90.83
+       },
+       {
+        "label": "Pastizal",
+        "unit": "%",
+        "value": 5.23
+       },
+       {
+        "label": "Árboles",
+        "unit": "%",
+        "value": 2.69
+       },
+       {
+        "label": "Cultivos",
+        "unit": "%",
+        "value": 1.08
+       },
+       {
+        "label": "Suelo desnudo / escasa vegetación",
+        "unit": "%",
+        "value": 0.17
+       }
+      ],
+      "kind": "stats",
+      "name": "Cobertura del suelo (WorldCover 2021)"
+     }
+    ],
+    "facts": {
+     "area_km2": 1.227,
+     "clases": [
+      {
+       "clase": "Construido",
+       "codigo": 50,
+       "color": "#fa0000",
+       "km2": 1.114,
+       "porcentaje": 90.83
+      },
+      {
+       "clase": "Pastizal",
+       "codigo": 30,
+       "color": "#ffff4c",
+       "km2": 0.064,
+       "porcentaje": 5.23
+      },
+      {
+       "clase": "Árboles",
+       "codigo": 10,
+       "color": "#006400",
+       "km2": 0.033,
+       "porcentaje": 2.69
+      },
+      {
+       "clase": "Cultivos",
+       "codigo": 40,
+       "color": "#f096ff",
+       "km2": 0.013,
+       "porcentaje": 1.08
+      },
+      {
+       "clase": "Suelo desnudo / escasa vegetación",
+       "codigo": 60,
+       "color": "#b4b4b4",
+       "km2": 0.002,
+       "porcentaje": 0.17
+      }
+     ],
+     "fuente": "ESA WorldCover v200 (2021, 10 m)",
+     "resolucion_m": 9
+    },
+    "geo_result": "1"
+   },
+   "tool": "imagery_land_cover"
+  }
+ ]
+}

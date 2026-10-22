@@ -13,6 +13,9 @@ class ClienteFalso:
         self.resultado = resultado
         self.excepcion = excepcion
 
+    def is_connected(self) -> bool:
+        return True
+
     async def call_tool(self, *_: Any, **__: Any) -> Any:
         if self.excepcion is not None:
             raise self.excepcion
@@ -72,3 +75,12 @@ async def test_sin_conexion_es_fuente_no_disponible() -> None:
 async def test_respuesta_buena_pasa_tal_cual() -> None:
     bueno = SimpleNamespace(is_error=False, structured_content={"geo_result": "1"}, content=[])
     assert await _conector(ClienteFalso(bueno)).llamar("t", {}) == {"geo_result": "1"}
+
+
+@pytest.mark.anyio
+async def test_tiempo_agotado_es_fuente_lenta() -> None:
+    with pytest.raises(ErrorConector) as exc:
+        await _conector(
+            ClienteFalso(excepcion=TimeoutError("Request 'tools/call' timed out"))
+        ).llamar("t", {})
+    assert exc.value.codigo == "fuente_lenta"

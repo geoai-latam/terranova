@@ -1,0 +1,2955 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T04:00:50+00:00",
+ "herramienta": "pnn_areas_protegidas_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.5,
+     4.0,
+     -73.5,
+     5.0
+    ],
+    "geometria": "simplificada",
+    "max_features": 1000,
+    "out_fields": [
+     "ap_nombre",
+     "ap_categoria",
+     "organizacion",
+     "area_ha_total_resolucion",
+     "fecha_inscrita"
+    ],
+    "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94854,
+           4.54432
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Villa Paz",
+          "area_ha_total_resolucion": 36.4178,
+          "fecha_inscrita": 1470891600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.31307,
+           4.61282
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Chicaque",
+          "area_ha_total_resolucion": 194.8028,
+          "fecha_inscrita": 1311224400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09361,
+           4.43238
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bosques De Chipaque",
+          "area_ha_total_resolucion": 169.2967,
+          "fecha_inscrita": 1311656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.85292,
+           4.61381
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Esperanza",
+          "area_ha_total_resolucion": 101.5512,
+          "fecha_inscrita": 1311656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.84743,
+           4.78522
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parque Nacional Natural",
+          "ap_nombre": "Chingaza",
+          "area_ha_total_resolucion": 77289.97,
+          "fecha_inscrita": 1309410000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20758,
+           4.28946
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parque Nacional Natural",
+          "ap_nombre": "Sumapaz",
+          "area_ha_total_resolucion": 210738.764,
+          "fecha_inscrita": 1310014800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.3839,
+           4.69413
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Altos De Pedro Palo",
+          "area_ha_total_resolucion": 7.1301,
+          "fecha_inscrita": 1452142800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.3877,
+           4.69011
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Poza Mansa De Pedro Palo",
+          "area_ha_total_resolucion": 4.6598,
+          "fecha_inscrita": 1447390800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.37987,
+           4.68703
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Granja De Pedro Palo",
+          "area_ha_total_resolucion": 6.4,
+          "fecha_inscrita": 1452056400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38416,
+           4.68857
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Finca De Pedro Palo",
+          "area_ha_total_resolucion": 8.33,
+          "fecha_inscrita": 1447390800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38784,
+           4.68764
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Cabaña de Pedro Palo",
+          "area_ha_total_resolucion": 3.1987,
+          "fecha_inscrita": 1516078800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38548,
+           4.68719
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Hostal De Pedro Palo",
+          "area_ha_total_resolucion": 3.972,
+          "fecha_inscrita": 1447390800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.39283,
+           4.69585
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Tenasucá De Pedro Palo",
+          "area_ha_total_resolucion": 38.1229,
+          "fecha_inscrita": 1447390800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.31426,
+           4.53585
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bosques y Montes del Soche II",
+          "area_ha_total_resolucion": 67.3487,
+          "fecha_inscrita": 1331010000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38645,
+           4.69022
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Kilimanjaro De Pedro Palo",
+          "area_ha_total_resolucion": 3.3084,
+          "fecha_inscrita": 1452142800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.31637,
+           4.53166
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bosques y Montes de Soche",
+          "area_ha_total_resolucion": 167.0745,
+          "fecha_inscrita": 1473656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.32556,
+           4.53018
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Reserva Hídrica El Soche - San Rafael",
+          "area_ha_total_resolucion": 176.344,
+          "fecha_inscrita": 1331096400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11891,
+           4.89765
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Célula Verde",
+          "area_ha_total_resolucion": 8.93,
+          "fecha_inscrita": 1331010000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.302,
+           4.94302
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Lote 5",
+          "area_ha_total_resolucion": 7.3533,
+          "fecha_inscrita": 1331010000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02563,
+           4.57529
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Horadado De San Alejo",
+          "area_ha_total_resolucion": 19.2,
+          "fecha_inscrita": 1311656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.83242,
+           4.55865
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "VillaLuz",
+          "area_ha_total_resolucion": 18,
+          "fecha_inscrita": 1311656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.81628,
+           4.56277
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Reserva",
+          "area_ha_total_resolucion": 245,
+          "fecha_inscrita": 1311656400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.59457,
+           4.12894
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos de Conservación de Suelos",
+          "ap_nombre": "Kirpas Pinilla la Cuerera",
+          "area_ha_total_resolucion": 307.07,
+          "fecha_inscrita": 1316494800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.60254,
+           4.14738
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Parque Ecologico Humedal Coroncoro",
+          "area_ha_total_resolucion": 30.32,
+          "fecha_inscrita": 1337835600000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.61173,
+           4.12511
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Parque Ecologico Humedal Charco  Oasis",
+          "area_ha_total_resolucion": 10.74,
+          "fecha_inscrita": 1316494800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.59996,
+           4.13776
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Parque Ecologico Humedal Calatrava",
+          "area_ha_total_resolucion": 7.08,
+          "fecha_inscrita": 1316494800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.62919,
+           4.08916
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Parque Ecologico Humedal Caracoli",
+          "area_ha_total_resolucion": 33.22,
+          "fecha_inscrita": 1316494800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.62355,
+           4.06382
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Parque Ecologico Humedal Zuria",
+          "area_ha_total_resolucion": 67.88,
+          "fecha_inscrita": 1316494800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.6101,
+           4.56249
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Río Rucio",
+          "area_ha_total_resolucion": 1360,
+          "fecha_inscrita": 1316754000000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.78382,
+           4.33124
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Páramo El Atravesado",
+          "area_ha_total_resolucion": 2928.58,
+          "fecha_inscrita": 1321851600000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12525,
+           4.90374
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Cerro de Juaica",
+          "area_ha_total_resolucion": 882.12,
+          "fecha_inscrita": 1316754000000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.9258,
+           4.87424
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Cerros Pionono y las Águilas",
+          "area_ha_total_resolucion": 611,
+          "fecha_inscrita": 1317013200000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.68578,
+           4.89848
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Cuenca Alta de Los Ríos Salinero y Moquentiva",
+          "area_ha_total_resolucion": 2922,
+          "fecha_inscrita": 1317013200000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.74018,
+           4.82715
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Cuenca Alta del Río Zaque",
+          "area_ha_total_resolucion": 1869,
+          "fecha_inscrita": 1317013200000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09363,
+           5.0667
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Rio Subachoque y Pantano de Arce",
+          "area_ha_total_resolucion": 4205.397,
+          "fecha_inscrita": 1316754000000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.3141,
+           4.89541
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Cuchilla el Chuscal",
+          "area_ha_total_resolucion": 2246.85,
+          "fecha_inscrita": 1319000400000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.41129,
+           4.88895
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Sector Salto del Tequendama y Cerro Manjuí",
+          "area_ha_total_resolucion": 10422,
+          "fecha_inscrita": 1319000400000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92675,
+           4.92243
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Pionono",
+          "area_ha_total_resolucion": 721.156,
+          "fecha_inscrita": 1410325200000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.10572,
+           5.01312
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Quebrada Paramillo y Queceros",
+          "area_ha_total_resolucion": 249.2266,
+          "fecha_inscrita": 1318914000000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.21832,
+           4.42171
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Futuras Generaciones de Sibaté I y II",
+          "area_ha_total_resolucion": 160,
+          "fecha_inscrita": 1319000400000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20485,
+           4.69551
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos de Conservación de Suelos",
+          "ap_nombre": "Tibaitatá",
+          "area_ha_total_resolucion": 564,
+          "fecha_inscrita": 1319000400000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.79927,
+           4.43667
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Ríos Blanco y Negro",
+          "area_ha_total_resolucion": 12386.9,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03079,
+           4.82479
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Bosque Oriental de Bogotá",
+          "area_ha_total_resolucion": 13123.44,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.68104,
+           4.74244
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "La Bolsa",
+          "area_ha_total_resolucion": 2700,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.73754,
+           4.78237
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Ríos Chorrera y Concepción",
+          "area_ha_total_resolucion": 4450,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.49229,
+           4.35381
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Cerro Quinini",
+          "area_ha_total_resolucion": 1800,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.62078,
+           4.19427
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Cerro Vanguardia",
+          "area_ha_total_resolucion": 200,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.6149,
+           4.18987
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Cuenca Alta del Caño Vanguardia",
+          "area_ha_total_resolucion": 520,
+          "fecha_inscrita": 1332478800000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.6614,
+           4.14187
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Quebrada Honda y Caños Parrado y Buque",
+          "area_ha_total_resolucion": 1206.83,
+          "fecha_inscrita": 1332478800000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.82684,
+           4.77479
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Páramo Grande",
+          "area_ha_total_resolucion": 4000,
+          "fecha_inscrita": 1338440400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.32111,
+           4.42491
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Mistela",
+          "area_ha_total_resolucion": 98.23,
+          "fecha_inscrita": 1325480400000,
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.79872,
+           4.50269
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Hoya Hernando",
+          "area_ha_total_resolucion": 133,
+          "fecha_inscrita": 1317099600000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.59438,
+           4.56041
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "La Siberia",
+          "area_ha_total_resolucion": 668,
+          "fecha_inscrita": 1317099600000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.59438,
+           4.56041
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Pozo Azul",
+          "area_ha_total_resolucion": 211.69,
+          "fecha_inscrita": 1317186000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.53377,
+           4.60481
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Palosqui",
+          "area_ha_total_resolucion": 226,
+          "fecha_inscrita": 1392094800000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.76598,
+           4.78409
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Carpatos",
+          "area_ha_total_resolucion": 563,
+          "fecha_inscrita": 1317099600000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.80263,
+           4.77839
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "El Espino Corcovado",
+          "area_ha_total_resolucion": 215,
+          "fecha_inscrita": 1392094800000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.85694,
+           4.76916
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Santa Maria de las Lagunas",
+          "area_ha_total_resolucion": 74.36,
+          "fecha_inscrita": 1317186000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.73778,
+           4.66891
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Montebello",
+          "area_ha_total_resolucion": 95,
+          "fecha_inscrita": 1392094800000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.73208,
+           4.73452
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Marruecos",
+          "area_ha_total_resolucion": 94,
+          "fecha_inscrita": 1317186000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.51849,
+           4.70369
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "El Porvenir  el Guadual",
+          "area_ha_total_resolucion": 3,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.58565,
+           4.58158
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "La Vitilia la Palma",
+          "area_ha_total_resolucion": 119.74,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.67793,
+           4.60814
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Colombia",
+          "area_ha_total_resolucion": 277,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.67015,
+           4.7353
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "El Desierto - El Patio Bonito",
+          "area_ha_total_resolucion": 54,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.5453,
+           4.78307
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Concepción",
+          "area_ha_total_resolucion": 160,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.5453,
+           4.78307
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "La Sabana de las Delicias",
+          "area_ha_total_resolucion": 117,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.53377,
+           4.60481
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Jerico, Libano y Sebastopol",
+          "area_ha_total_resolucion": 467.6686,
+          "fecha_inscrita": 1317618000000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.96197,
+           4.94811
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bioparque Wakatá",
+          "area_ha_total_resolucion": 59.4251,
+          "fecha_inscrita": 1392872400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.30253,
+           4.52903
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Hacienda Sabaneta",
+          "area_ha_total_resolucion": 137.4489,
+          "fecha_inscrita": 1447304400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.36805,
+           4.57403
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Cuchilla de Peñas Blancas y del Subia",
+          "area_ha_total_resolucion": 5985.7098,
+          "fecha_inscrita": 1410325200000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.89767,
+           4.93989
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Carrisal",
+          "area_ha_total_resolucion": 22.3033,
+          "fecha_inscrita": 1513054800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.21532,
+           4.78617
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Humedales de Gualí Tres Esquinas y Lagunas del Funzhé",
+          "area_ha_total_resolucion": 1188.286,
+          "fecha_inscrita": 1410325200000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.89608,
+           4.77599
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Jikuri",
+          "area_ha_total_resolucion": 123.654,
+          "fecha_inscrita": 1451883600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.56088,
+           4.28368
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Rancho Camaná",
+          "area_ha_total_resolucion": 1.7209,
+          "fecha_inscrita": 1451970000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.65497,
+           4.19206
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Halcón Colorado Lote 1",
+          "area_ha_total_resolucion": 10,
+          "fecha_inscrita": 1478235600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38227,
+           4.55832
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Aves del Tequendama",
+          "area_ha_total_resolucion": 7.0924,
+          "fecha_inscrita": 1487739600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.91156,
+           4.79778
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "EL Encenillo",
+          "area_ha_total_resolucion": 184.7985,
+          "fecha_inscrita": 1452229200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04498,
+           4.65788
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Umbral Cultural Horizontes",
+          "area_ha_total_resolucion": 3.1329,
+          "fecha_inscrita": 1645678800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.71318,
+           4.31452
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parques Naturales Regionales",
+          "ap_nombre": "Quebrada Honda",
+          "area_ha_total_resolucion": 4885.24,
+          "fecha_inscrita": 1529643600000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.21869,
+           4.95791
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Hacienda La Laja",
+          "area_ha_total_resolucion": 126.36,
+          "fecha_inscrita": 1496898000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.35748,
+           4.7071
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Travesías",
+          "area_ha_total_resolucion": 38.4,
+          "fecha_inscrita": 1497330000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.61631,
+           4.72736
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Chinchorro",
+          "area_ha_total_resolucion": 1800.3,
+          "fecha_inscrita": 1473051600000,
+          "organizacion": "Corporación Autónoma Regional del Guavio"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.36156,
+           4.94584
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Cuchilla San Cayetano",
+          "area_ha_total_resolucion": 8993.6,
+          "fecha_inscrita": 1501736400000,
+          "organizacion": "Corporación Autónoma Regional de Chivor"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95958,
+           4.94754
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Ecoparque Sabana",
+          "area_ha_total_resolucion": 47.113,
+          "fecha_inscrita": 1505192400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.66859,
+           4.75553
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Páramo",
+          "area_ha_total_resolucion": 9.7472,
+          "fecha_inscrita": 1511326800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.8732,
+           4.5071
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Paraíso",
+          "area_ha_total_resolucion": 7.68,
+          "fecha_inscrita": 1511413200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.66808,
+           4.7554
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Cerrito",
+          "area_ha_total_resolucion": 3.7364,
+          "fecha_inscrita": 1511326800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.8855,
+           4.52227
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Gachaquín",
+          "area_ha_total_resolucion": 12.0533,
+          "fecha_inscrita": 1511326800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.65091,
+           5.07104
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parques Naturales Regionales",
+          "ap_nombre": "Vista Hermosa de Monquentiva",
+          "area_ha_total_resolucion": 13437,
+          "fecha_inscrita": 1507784400000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.91938,
+           4.66589
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Los Ángeles de Quisquiza",
+          "area_ha_total_resolucion": 1.5963,
+          "fecha_inscrita": 1514437200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95742,
+           4.55364
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Colibrí",
+          "area_ha_total_resolucion": 19.1747,
+          "fecha_inscrita": 1514523600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95311,
+           4.55399
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Sol y Luna",
+          "area_ha_total_resolucion": 6.933,
+          "fecha_inscrita": 1514523600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.71158,
+           4.35041
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Cumbre",
+          "area_ha_total_resolucion": 2.0494,
+          "fecha_inscrita": 1515128400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.66377,
+           4.75206
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Cabaña",
+          "area_ha_total_resolucion": 8.0032,
+          "fecha_inscrita": 1515128400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13579,
+           4.80837
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Aldea",
+          "area_ha_total_resolucion": 51.9384,
+          "fecha_inscrita": 1515474000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.46954,
+           4.73187
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "África",
+          "area_ha_total_resolucion": 4.3099,
+          "fecha_inscrita": 1524632400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.86289,
+           4.79273
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Chochal de Siecha",
+          "area_ha_total_resolucion": 6.4,
+          "fecha_inscrita": 1525064400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.70582,
+           4.35363
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Los Sauces",
+          "area_ha_total_resolucion": 7.1928,
+          "fecha_inscrita": 1564290000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.64713,
+           4.79861
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Providencia",
+          "area_ha_total_resolucion": 2.2,
+          "fecha_inscrita": 1537333200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.90369,
+           4.80318
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Betania",
+          "area_ha_total_resolucion": 15.3273,
+          "fecha_inscrita": 1537246800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.7856,
+           4.77999
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Páramo",
+          "area_ha_total_resolucion": 54.3418,
+          "fecha_inscrita": 1538024400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.73336,
+           5.00112
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Los Alisos",
+          "area_ha_total_resolucion": 3.8673,
+          "fecha_inscrita": 1537246800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.89525,
+           4.72464
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Ganesh",
+          "area_ha_total_resolucion": 4.5209,
+          "fecha_inscrita": 1538024400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.35014,
+           4.99928
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Refugio",
+          "area_ha_total_resolucion": 0.381,
+          "fecha_inscrita": 1532581200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.86746,
+           4.50044
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Descanso del Río Negro",
+          "area_ha_total_resolucion": 9.5141,
+          "fecha_inscrita": 1542776400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.97644,
+           4.64688
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Frailejón",
+          "area_ha_total_resolucion": 18.3472,
+          "fecha_inscrita": 1544504400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05135,
+           4.88597
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Sauce",
+          "area_ha_total_resolucion": 0.5577,
+          "fecha_inscrita": 1544504400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.97789,
+           4.52743
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Los Laureles",
+          "area_ha_total_resolucion": 1.1725,
+          "fecha_inscrita": 1564290000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.87583,
+           4.7785
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bosque de Niebla",
+          "area_ha_total_resolucion": 4.4718,
+          "fecha_inscrita": 1564290000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.88865,
+           4.15005
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parques Naturales Regionales",
+          "ap_nombre": "Bosque de Los Guayupes",
+          "area_ha_total_resolucion": 18218.63,
+          "fecha_inscrita": 1545886800000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.26452,
+           4.72012
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Piedra Petaca",
+          "area_ha_total_resolucion": 53.1293,
+          "fecha_inscrita": 1581051600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.194,
+           4.83965
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Naser",
+          "area_ha_total_resolucion": 1.1437,
+          "fecha_inscrita": 1559538000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.19417,
+           4.83909
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Nuestra Señora de Fátima",
+          "area_ha_total_resolucion": 1.1481,
+          "fecha_inscrita": 1564203600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.26551,
+           4.70977
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Serrezuela",
+          "area_ha_total_resolucion": 17.6252,
+          "fecha_inscrita": 1582693200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.19222,
+           4.84128
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Encuentro",
+          "area_ha_total_resolucion": 1.2102,
+          "fecha_inscrita": 1575522000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.90237,
+           4.91519
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Jardín Colibrí una Escuela de Vida",
+          "area_ha_total_resolucion": 1.28,
+          "fecha_inscrita": 1585544400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.00716,
+           4.48136
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bochica",
+          "area_ha_total_resolucion": 2.556,
+          "fecha_inscrita": 1581051600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20229,
+           4.8309
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Medialuna",
+          "area_ha_total_resolucion": 9.3049,
+          "fecha_inscrita": 1581051600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15957,
+           4.8779
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Ecoshezuá",
+          "area_ha_total_resolucion": 1.7391,
+          "fecha_inscrita": 1566450000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.68975,
+           4.35081
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Cubarral",
+          "area_ha_total_resolucion": 2.1363,
+          "fecha_inscrita": 1575954000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13658,
+           4.8863
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Sion",
+          "area_ha_total_resolucion": 2.917,
+          "fecha_inscrita": 1586926800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92425,
+           4.82234
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Monte",
+          "area_ha_total_resolucion": 0.2983,
+          "fecha_inscrita": 1623819600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92356,
+           4.82153
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Monte",
+          "area_ha_total_resolucion": 0.6025,
+          "fecha_inscrita": 1619845200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.77905,
+           4.98411
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Laguna del Cacique Guatavita y Cuchilla de Peña Blanca",
+          "area_ha_total_resolucion": 661.55,
+          "fecha_inscrita": 1659330000000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.40494,
+           4.68874
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Reserva",
+          "area_ha_total_resolucion": 0.462,
+          "fecha_inscrita": 1623819600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.96761,
+           4.96627
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Gualamana  y Gualamana II",
+          "area_ha_total_resolucion": 24.1066,
+          "fecha_inscrita": 1623819600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.19258,
+           4.84105
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Esperanza",
+          "area_ha_total_resolucion": 0.7353,
+          "fecha_inscrita": 1623819600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.67356,
+           4.16757
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Nakua",
+          "area_ha_total_resolucion": 2.2406,
+          "fecha_inscrita": 1653282000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94599,
+           4.51429
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Presente",
+          "area_ha_total_resolucion": 2.5866,
+          "fecha_inscrita": 1632978000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95836,
+           4.52769
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Comarca",
+          "area_ha_total_resolucion": 4.5,
+          "fecha_inscrita": 1653282000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.39987,
+           4.69252
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Nacedero",
+          "area_ha_total_resolucion": 0.8118,
+          "fecha_inscrita": 1635570000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.10276,
+           4.99767
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Reserva Natural Rodamonte",
+          "area_ha_total_resolucion": 10.3763,
+          "fecha_inscrita": 1639112400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.76254,
+           4.06339
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Limonal y San Pedro",
+          "area_ha_total_resolucion": 26.8207,
+          "fecha_inscrita": 1639026000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.91647,
+           4.74459
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Ariel Campestre Juisingueka",
+          "area_ha_total_resolucion": 1.9102,
+          "fecha_inscrita": 1645592400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95925,
+           4.64223
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Loma De Dos Quebradas",
+          "area_ha_total_resolucion": 13.8083,
+          "fecha_inscrita": 1648530000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.91141,
+           4.5435
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Baita",
+          "area_ha_total_resolucion": 9.6756,
+          "fecha_inscrita": 1655182800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.91329,
+           4.55314
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Refugio De Las Aves",
+          "area_ha_total_resolucion": 2.9432,
+          "fecha_inscrita": 1659330000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09376,
+           4.96064
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Romero B y Cia",
+          "area_ha_total_resolucion": 1.9171,
+          "fecha_inscrita": 1659330000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.93947,
+           4.51387
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Cuchavira",
+          "area_ha_total_resolucion": 1.3877,
+          "fecha_inscrita": 1659330000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09363,
+           5.0667
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Macizo El Tablazo",
+          "area_ha_total_resolucion": 16477.61,
+          "fecha_inscrita": 1659502800000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95898,
+           4.5261
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Cha Ma Chia",
+          "area_ha_total_resolucion": 1,
+          "fecha_inscrita": 1660798800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.83036,
+           4.84361
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Zoque",
+          "area_ha_total_resolucion": 0.6399,
+          "fecha_inscrita": 1671512400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92042,
+           4.85398
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Conjunto De Reservas Naturales De Sumicol Sas",
+          "area_ha_total_resolucion": 16.631,
+          "fecha_inscrita": 1665896400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.00714,
+           4.73217
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Huisyzuca",
+          "area_ha_total_resolucion": 11.1378,
+          "fecha_inscrita": 1671512400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.83104,
+           4.8439
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Porvenir",
+          "area_ha_total_resolucion": 0.3814,
+          "fecha_inscrita": 1684904400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92998,
+           4.65746
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Muquiche",
+          "area_ha_total_resolucion": 20.9208,
+          "fecha_inscrita": 1686718800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12369,
+           4.82234
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Buenos Aires",
+          "area_ha_total_resolucion": 6.4864,
+          "fecha_inscrita": 1749099600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.61671,
+           4.12104
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Áreas de Recreación",
+          "ap_nombre": "Humedal Aguas Claras",
+          "area_ha_total_resolucion": 7.98,
+          "fecha_inscrita": 1701234000000,
+          "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.83926,
+           4.99303
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Ramada",
+          "area_ha_total_resolucion": 31.7555,
+          "fecha_inscrita": 1701925200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.28854,
+           4.59956
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "La Constancia",
+          "area_ha_total_resolucion": 6.9943,
+          "fecha_inscrita": 1708318800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94932,
+           4.61289
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Yataro",
+          "area_ha_total_resolucion": 1.2713,
+          "fecha_inscrita": 1716440400000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.97935,
+           4.90388
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Reserva El Portete",
+          "area_ha_total_resolucion": 42.6,
+          "fecha_inscrita": 1716958800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16479,
+           4.86867
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Retiro",
+          "area_ha_total_resolucion": 0.6672,
+          "fecha_inscrita": 1718686800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94873,
+           4.52789
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Charquito",
+          "area_ha_total_resolucion": 3.2111,
+          "fecha_inscrita": 1758258000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.78054,
+           4.22878
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Refugio Del Tororoi",
+          "area_ha_total_resolucion": 20,
+          "fecha_inscrita": 1724389200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.42277,
+           4.4084
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Palacea",
+          "area_ha_total_resolucion": 10.4892,
+          "fecha_inscrita": 1724389200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.95385,
+           4.50728
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Tejanu",
+          "area_ha_total_resolucion": 18.2359,
+          "fecha_inscrita": 1757566800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94546,
+           4.51623
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bagüe",
+          "area_ha_total_resolucion": 2.2264,
+          "fecha_inscrita": 1757566800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.93354,
+           4.51367
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "El Silencio",
+          "area_ha_total_resolucion": 2.4771,
+          "fecha_inscrita": 1757566800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.86133,
+           4.79512
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Renasie",
+          "area_ha_total_resolucion": 16.2358,
+          "fecha_inscrita": 1724907600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15536,
+           4.88424
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Las Dos Lunas",
+          "area_ha_total_resolucion": 2.0554,
+          "fecha_inscrita": 1735275600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.41115,
+           4.93016
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Mox",
+          "area_ha_total_resolucion": 34.4616,
+          "fecha_inscrita": 1747285200000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.19922,
+           4.8386
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Lan",
+          "area_ha_total_resolucion": 9.8452,
+          "fecha_inscrita": 1751518800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.34624,
+           4.86845
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Reserva Moravia",
+          "area_ha_total_resolucion": 207.9124,
+          "fecha_inscrita": 1752123600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.89254,
+           4.57345
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Ananda",
+          "area_ha_total_resolucion": 2.25,
+          "fecha_inscrita": 1753419600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15186,
+           4.88728
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Reserva Covarachía",
+          "area_ha_total_resolucion": 0.8493,
+          "fecha_inscrita": 1765515600000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.28252,
+           4.58679
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reserva Natural de la Sociedad Civil",
+          "ap_nombre": "Bosque Renace",
+          "area_ha_total_resolucion": 361.57,
+          "fecha_inscrita": 1772686800000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.36198,
+           4.91471
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Peñas del Aserradero",
+          "area_ha_total_resolucion": 991.77,
+          "fecha_inscrita": 1766034000000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.38276,
+           4.68337
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Regionales",
+          "ap_nombre": "Laguna de Tenasuca Pedro Palo",
+          "area_ha_total_resolucion": 124.35,
+          "fecha_inscrita": 1770613200000,
+          "organizacion": "Corporación Autónoma Regional de Cundinamarca"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Registro Unico Nacional AP"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.5,
+      4.0,
+      -73.5,
+      5.0
+     ],
+     "capa": "Registro Unico Nacional AP",
+     "completitud": {
+      "total": 169,
+      "truncado": false,
+      "vistos": 169
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.5,
+       4.0,
+       -73.5,
+       5.0
+      ],
+      "max_features": 1000,
+      "out_fields": [
+       "ap_nombre",
+       "ap_categoria",
+       "organizacion",
+       "area_ha_total_resolucion",
+       "fecha_inscrita"
+      ],
+      "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 169,
+     "traidos": 169,
+     "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

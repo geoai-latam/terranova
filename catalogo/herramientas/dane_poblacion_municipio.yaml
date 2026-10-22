@@ -12,6 +12,7 @@ entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo
   tool: dane_municipios
+  filas_en: facts.municipios
   argumentos:
     codigo: "{municipio_divipola}"
   campos: [codigo, municipio, departamento, personas, viviendas, hogares]

@@ -1,0 +1,1207 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:51:45+00:00",
+ "herramienta": "upra_precio_tierra_rural_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "rttb-pk7n",
+    "max_filas": 5000,
+    "order": "consecutiv",
+    "portal": "datos.gov.co",
+    "select": "cod_dane_m, municipio, departamen, categoria_, rango_prec, cod_precio, area_ha, consecutiv",
+    "where": "cod_dane_m = '25214'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "area_ha",
+       "categoria_",
+       "cod_dane_m",
+       "cod_precio",
+       "consecutiv",
+       "departamen",
+       "municipio",
+       "rango_prec"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "area_ha": "0.03247318",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "19",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.56279179",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "195",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.37347056",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "196",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "1.84384547",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "209",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.10677652",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "210",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "17.68752091",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "211",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.75473418",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "212",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.3415981",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "213",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "3.33549156",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "214",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.2044351",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "215",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "27.38961305",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "216",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.55818181",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "217",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "1.90868725",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "218",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.12368756",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "219",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.16509921",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "220",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.24533088",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "221",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.03052988",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "222",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.58408356",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "223",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.31611948",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "224",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.53430938",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "225",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.25886402",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "226",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "28.39653936",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "227",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "20.24660732",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "228",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.04819213",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "229",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.0041597",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "230",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.03139989",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "231",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "6.391119",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "232",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "2.24871258",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "233",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "7.74480177",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "234",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.38471176",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "235",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "3.81692932",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "237",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "3.06758719",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "238",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "17.20890504",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "239",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "4.5300668",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "240",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "5.59019754",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "241",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "8.62089274",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "242",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "17.00830969",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "243",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "50.56552635",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "244",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "29.6967969",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "245",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.00714459",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "246",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.04361734",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "247",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.00243761",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "248",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "7.37554663",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "249",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "1.64519196",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "250",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.07373142",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "251",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "4.04643035",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "252",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "2.52825303",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "253",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "2.97866271",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "254",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "25.2711647",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "255",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "14.44925072",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "256",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "8.2894436",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "257",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "1.15327554",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "259",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "6.31148805",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "260",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "3.68381258",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "261",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "47.80795841",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "262",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "1.29008011",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "263",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "0.35070243",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "264",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.01488149",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "265",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.00855233",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "266",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "1.41542278",
+        "categoria_": "Condicionada",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "267",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "1.75791807",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "832",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "1251.71710256",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "838",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "4.03161198",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "855",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.23110456",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "885",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.78269854",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "895",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.307051",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "921",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.9756355",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "935",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.0005073",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "971",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.27708644",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "976",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.05234661",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1013",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.0205079",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1015",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.77211918",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1030",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "397.52300185",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1031",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.77659228",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1032",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "2.10457238",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1033",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.06760587",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1034",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.04060155",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1035",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.32657853",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1036",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.07391451",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1037",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "389.75987619",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1038",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.02329521",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1039",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.03418219",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1040",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.16673985",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1041",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.07455467",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1042",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.01097706",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1043",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.06092404",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1044",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "0.00606983",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "CA",
+        "consecutiv": "1045",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "CA"
+       },
+       {
+        "area_ha": "1.32133209",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1046",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.08285475",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1047",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.03923648",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "1048",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "56.65861169",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1049",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "87.80584749",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1050",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "329.85821376",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1051",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "192.58897417",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1052",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.0227441",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1053",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "1.97902652",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1054",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "173.40609007",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "40",
+        "consecutiv": "1055",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 2200 - hasta 2600"
+       },
+       {
+        "area_ha": "0.00130198",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1056",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "6.41606104",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1057",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.08601255",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1058",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "2.61810019",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1059",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "50.51739887",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1060",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "21.48019569",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1061",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "25.31596483",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1062",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "4.44899128",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1063",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "483.4230797",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "22",
+        "consecutiv": "1064",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 250 - hasta 300"
+       },
+       {
+        "area_ha": "0.27060112",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "1065",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "189.25463469",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "1066",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "1.35206741",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "1067",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "0.76819913",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "1068",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "76.943294",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "1069",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "17.98795276",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "1070",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "118.7194991",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "23",
+        "consecutiv": "1071",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 300 - hasta 350"
+       },
+       {
+        "area_ha": "0.03218979",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "13",
+        "consecutiv": "1072",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "Mayor a 60 - hasta 70"
+       },
+       {
+        "area_ha": "28.77563635",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "1073",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       },
+       {
+        "area_ha": "0.00373334",
+        "categoria_": "Incluida",
+        "cod_dane_m": "25214",
+        "cod_precio": "ZU",
+        "consecutiv": "1074",
+        "departamen": "Cundinamarca",
+        "municipio": "Cota",
+        "rango_prec": "ZU"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completo": true,
+     "conjunto": "rttb-pk7n",
+     "cumplen_en_el_portal": 116,
+     "filas": 116,
+     "filtro_soql": "(cod_dane_m = '25214')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

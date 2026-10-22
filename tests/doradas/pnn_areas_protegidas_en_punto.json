@@ -1,0 +1,99 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T04:00:48+00:00",
+ "herramienta": "pnn_areas_protegidas_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -73.75,
+     4.55,
+     -73.75,
+     4.55
+    ],
+    "geometria": "simplificada",
+    "max_features": 20,
+    "out_fields": [
+     "ap_nombre",
+     "ap_categoria",
+     "organizacion",
+     "area_ha_total_resolucion",
+     "fecha_inscrita"
+    ],
+    "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.84743,
+           4.78522
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Parque Nacional Natural",
+          "ap_nombre": "Chingaza",
+          "area_ha_total_resolucion": 77289.97,
+          "fecha_inscrita": 1309410000000,
+          "organizacion": "Parques Nacionales Naturales de Colombia"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Registro Unico Nacional AP"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.75,
+      4.55,
+      -73.75,
+      4.55
+     ],
+     "capa": "Registro Unico Nacional AP",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.75,
+       4.55,
+       -73.75,
+       4.55
+      ],
+      "max_features": 20,
+      "out_fields": [
+       "ap_nombre",
+       "ap_categoria",
+       "organizacion",
+       "area_ha_total_resolucion",
+       "fecha_inscrita"
+      ],
+      "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

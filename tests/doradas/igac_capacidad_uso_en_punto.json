@@ -1,0 +1,90 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T04:00:38+00:00",
+ "herramienta": "igac_capacidad_uso_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "geometria": "simplificada",
+    "max_features": 5,
+    "out_fields": [
+     "UCCapacida",
+     "Descripcio"
+    ],
+    "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.00737,
+           4.90282
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad alta para agricultura",
+          "UCCapacida": "2c"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Correlación_Capacidad_Uso_100k"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "Correlación_Capacidad_Uso_100k",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "UCCapacida",
+       "Descripcio"
+      ],
+      "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

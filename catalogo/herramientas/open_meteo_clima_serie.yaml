@@ -12,6 +12,7 @@ entrada: {lon: float, lat: float, desde: fecha, hasta: fecha}
 consulta:
   operacion: serie
   tool: clima_serie
+  completo_por_construccion: true
   argumentos:
     lon: "{lon}"
     lat: "{lat}"

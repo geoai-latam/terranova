@@ -13,6 +13,7 @@ consulta:
   tool: arcgis_query_features
   capas: [0]
   argumentos:
+    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
     url: "{url_capa}"
     bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
     out_fields: [UCConfli, T_Conflicto]

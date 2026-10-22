@@ -22,7 +22,9 @@ consulta:
   campos: [CODIGO, CODIGO_ANTERIOR]
 salida: PredioPorCodigo
 # `zona` sale de la capa que respondió; `municipio_divipola`, de los 5 primeros dígitos del código.
-derivados: [zona, municipio_divipola]
+derivados:
+  zona: {de: capa, valores: {"14": rural, "7": urbano}}
+  municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
 creditos: 10
 canario:
   entrada: {codigo: "251750000000000050067000000000"}
