@@ -24,6 +24,7 @@ redis = ["redis>=5,<7"]
 # Ruff y mypy fijados, en la misma versión que GEO Copilot: una versión nueva no pone el CI en rojo
 # sola. Si se sube aquí, se sube también en .pre-commit-config.yaml.
 dev = [
+    "fakeredis[lua]>=2.26",
     "httpx>=0.28",
     "hypothesis>=6.120",
     "jsonschema>=4.23",

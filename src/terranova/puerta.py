@@ -7,6 +7,7 @@ llama salen del catálogo; el sobre `rt/1` y sus errores, del contrato.
 from __future__ import annotations
 
 import os
+import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from typing import Any
@@ -22,6 +23,7 @@ from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import Sobre
+from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import Principal, Registro, registro_desde_entorno
@@ -146,22 +148,40 @@ async def ejecutar(
             raise ErrorEjecucion("sin_permiso", f"la llave no tiene el scope «{h.familia}»")
     plan = principal.plan if principal is not None else plan_actual()
     ejecutor = Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION)
-    return await ejecutor.ejecutar(ficha, entrada, plan=plan)
+    if cuota is None or principal is None or h is None:
+        return await ejecutor.ejecutar(ficha, entrada, plan=plan)
+    # ADR-0010: se reserva el costo antes de llamar y se devuelve lo que no se cobró
+    reservado, _ = await cuota.reservar(principal.org, principal.nivel, h.creditos)
+    if not reservado:
+        raise ErrorEjecucion(
+            "saldo_agotado",
+            f"la organización {principal.org} agotó sus créditos del mes",
+            segundos_hasta_el_mes_siguiente(time.time()),
+        )
+    try:
+        sobre = await ejecutor.ejecutar(ficha, entrada, plan=plan)
+    except BaseException:
+        await cuota.devolver(principal.org, h.creditos)
+        raise
+    await cuota.devolver(principal.org, h.creditos - sobre.creditos)
+    return sobre
 
 
 _iniciados: dict[str, Conector] = {}
 registro: Registro | None = None  # None = sin identidad (solo pruebas en memoria)
+cuota: Cuota | None = None
 
 
 async def iniciar() -> None:
-    """Conectores, caché y protección para toda la puerta. Si ya hay conectores (las pruebas los
-    inyectan), no hace nada."""
-    global _almacen, registro
+    """Conectores, caché, cuota y protección para toda la puerta. Si ya hay conectores (las pruebas
+    los inyectan), no hace nada."""
+    global _almacen, registro, cuota
     if _conectores is not None:
         return
     registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
+    cuota = cuota_desde_entorno(redis_url)
     _iniciados.update(conectores_desde_entorno())
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
@@ -170,12 +190,13 @@ async def iniciar() -> None:
 
 
 async def detener() -> None:
-    global _almacen, registro
+    global _almacen, registro, cuota
     if not _iniciados:
         return
     usar_conectores(None)
     _almacen = None
     registro = None
+    cuota = None
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.cerrar()

@@ -6,6 +6,7 @@ mismo sobre `rt/1`, mismos errores (RFC 9457 en REST, `isError` en MCP, ADR-0011
 
 from __future__ import annotations
 
+import math
 import os
 from collections.abc import Awaitable, Callable, MutableMapping
 from contextlib import AsyncExitStack
@@ -25,6 +26,8 @@ from terranova.identidad import bearer
 Scope = MutableMapping[str, Any]
 
 TITULOS = {
+    "limite_tasa": "Demasiadas consultas seguidas",
+    "saldo_agotado": "Créditos del mes agotados",
     "no_autenticado": "Falta una llave válida",
     "sin_permiso": "La llave no tiene permiso para esta familia",
     "parametro_invalido": "Parámetro inválido",
@@ -183,6 +186,27 @@ def crear_api() -> FastAPI:
     return api
 
 
+def _cabeceras_tasa(cuota: Any, quedan: int, espera: float) -> list[tuple[bytes, bytes]]:
+    """Cabeceras RateLimit (draft IETF): política y lo que queda."""
+    por_minuto = round(cuota.ritmo * 60)
+    return [
+        (
+            b"ratelimit-policy",
+            f'"rafaga";q={cuota.capacidad};w=60, "minuto";q={por_minuto};w=60'.encode(),
+        ),
+        (b"ratelimit", f'"rafaga";r={quedan};t={math.ceil(espera)}'.encode()),
+    ]
+
+
+def _con_cabeceras(send: Any, extra: list[tuple[bytes, bytes]]) -> Any:
+    async def enviar(mensaje: dict[str, Any]) -> None:
+        if mensaje["type"] == "http.response.start":
+            mensaje = {**mensaje, "headers": [*mensaje.get("headers", []), *extra]}
+        await send(mensaje)
+
+    return enviar
+
+
 class Aplicacion:
     """Reparte por ruta: las de MCP a su servidor; el resto, a la API. Un solo arranque."""
 
@@ -208,6 +232,17 @@ class Aplicacion:
                     )(scope, receive, send)
                     return
                 scope.setdefault("state", {})["principal"] = principal
+                if puerta.cuota is not None:
+                    permitido, quedan, espera = await puerta.cuota.tomar_ficha(principal.llave_id)
+                    tasa = _cabeceras_tasa(puerta.cuota, quedan, espera)
+                    if not permitido:
+                        await problema(
+                            "limite_tasa",
+                            "demasiadas consultas seguidas con esta llave",
+                            reintentar=max(1, math.ceil(espera)),
+                        )(scope, receive, _con_cabeceras(send, tasa))
+                        return
+                    send = _con_cabeceras(send, tasa)
         await app(scope, receive, send)
 
     async def _ciclo(self, receive: Any, send: Any) -> None:

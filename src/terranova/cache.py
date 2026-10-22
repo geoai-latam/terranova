@@ -9,6 +9,7 @@ más tiempo (`RETENCION`) para un solo uso: si la fuente cae, servirlo como `obs
 from __future__ import annotations
 
 import hashlib
+import importlib
 import json
 import time
 from typing import Any, Protocol
@@ -43,8 +44,7 @@ class AlmacenRedis:
     """Redis compartido entre réplicas (ADR-0015). Se importa solo si se usa."""
 
     def __init__(self, url: str) -> None:
-        import redis.asyncio as redis  # type: ignore[import-not-found,unused-ignore]
-
+        redis: Any = importlib.import_module("redis.asyncio")  # extra opcional, sin tipos
         self._r = redis.from_url(url, decode_responses=True)
 
     async def leer(self, clave: str) -> dict[str, Any] | None:

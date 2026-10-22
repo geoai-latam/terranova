@@ -3,6 +3,7 @@
     terranova llaves crear --org geoai --scopes territorio,ambiente [--prueba] [--expira 2027-01-01]
     terranova llaves revocar llv_…
     terranova llaves listar [--org geoai]
+    terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
 
 La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 """
@@ -56,6 +57,10 @@ def main() -> None:
     argumentos = sys.argv[1:]
     if argumentos[:1] == ["llaves"]:
         sys.exit(llaves(argumentos[1:]))
+    if argumentos[:2] == ["orgs", "nivel"] and len(argumentos) == 4:
+        registro_desde_entorno().fijar_nivel(argumentos[2], argumentos[3])
+        print(f"{argumentos[2]}: nivel {argumentos[3]}")
+        sys.exit(0)
     from terranova.app import main as servir
 
     servir()
