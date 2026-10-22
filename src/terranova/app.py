@@ -12,7 +12,7 @@ from collections.abc import Awaitable, Callable, MutableMapping
 from contextlib import AsyncExitStack
 from typing import Annotated, Any
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, create_model
@@ -88,17 +88,30 @@ def problema(
 def _ruta(h: Herramienta) -> Callable[..., Awaitable[Any]]:
     Entrada = modelo_entrada(h)
 
-    async def herramienta(entrada: Entrada, request: Request) -> Any:  # type: ignore[valid-type]
+    async def herramienta(entrada: Entrada, request: Request, response: Response) -> Any:  # type: ignore[valid-type]
         try:
             principal = getattr(request.state, "principal", None)
-            return await puerta.ejecutar(h.id, entrada.model_dump(), principal)  # type: ignore[attr-defined]
+            sobre, repetido = await puerta.ejecutar_idempotente(
+                h.id,
+                entrada.model_dump(),  # type: ignore[attr-defined]
+                principal,
+                request.headers.get("idempotency-key"),
+            )
+            if repetido:
+                response.headers["Idempotent-Replayed"] = "true"
+            return sobre
         except ErrorEntrada as exc:
             return problema("parametro_invalido", str(exc), param=exc.param)
         except ErrorEjecucion as exc:
             return problema(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
 
     # el modelo se crea en tiempo de ejecución: la anotación debe ser el tipo, no su nombre
-    herramienta.__annotations__ = {"entrada": Entrada, "request": Request, "return": Any}
+    herramienta.__annotations__ = {
+        "entrada": Entrada,
+        "request": Request,
+        "response": Response,
+        "return": Any,
+    }
     return herramienta
 
 
