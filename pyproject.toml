@@ -15,6 +15,10 @@ dependencies = [
     "pyyaml>=6.0.3",
 ]
 
+[project.optional-dependencies]
+# Caché compartida entre réplicas (ADR-0015); sin ella, la puerta usa caché en memoria.
+redis = ["redis>=5,<7"]
+
 [dependency-groups]
 # Ruff y mypy fijados, en la misma versión que GEO Copilot: una versión nueva no pone el CI en rojo
 # sola. Si se sube aquí, se sube también en .pre-commit-config.yaml.

@@ -4,7 +4,7 @@
 
 ## Dónde estamos
 
-**Gates F0 y F1 cerrados.** F2.1 hecho: ejecutor genérico, puerta generada del catálogo (20 herramientas MCP) y pruebas doradas. Siguen F2.2 (compuerta de licencia), F2.3 (caché) y F2.4 (cortacircuitos).
+**Gates F0, F1 y F2 cerrados.** El núcleo está completo: ejecutor genérico, puerta generada del catálogo (20 herramientas MCP), compuerta de licencia, caché con `obsoleto` y cortacircuitos. Sigue **F3 · Puerta** (adaptador REST, identidad, cuota, medición).
 
 | Spec F0 | Estado |
 |---|---|
@@ -32,9 +32,9 @@
 | Spec F2 | Estado |
 |---|---|
 | F2.1 Ejecutor: catálogo → conector → lista blanca → `rt/1` | ✅ `src/terranova/ejecutor.py` + puerta generada (una herramienta MCP por ficha). Las 20 doradas se grabaron en vivo con su canario en verde (`scripts/grabar_doradas.py`) y se reproducen sin red; verificadas por mutación. E2E por MCP: 16/20, porque RUNAP estaba caído y ANT dio un error pasajero |
-| F2.2 Compuerta de licencia y saneamiento | 🟡 el saneamiento (control, bidi, largo) ya está en el ejecutor; falta la compuerta por plan de llave |
-| F2.3 Caché con frescura y `obsoleto` | ⬜ |
-| F2.4 Cortacircuitos y bulkhead por fuente | ⬜ |
+| F2.2 Compuerta de licencia y saneamiento | ✅ el ejecutor recibe el plan: `por_verificar` da `licencia_no_habilitada` sin llamar a la fuente salvo con plan `evaluacion`; NC con aviso; E2E-14 (texto malicioso y campo no declarado) en prueba; guarda contra caracteres invisibles en el código. El plan sale de `TERRANOVA_PLAN` hasta la identidad de F3.2 |
+| F2.3 Caché con frescura y `obsoleto` | ✅ `src/terranova/cache.py`: el TTL es el `frescura.ttl_cache_s` de la fuente y un acierto no descuenta. Con la fuente caída sale `obsoleto`, con su `consultado_en` original y aviso; `frescura=estricta` prefiere el error; un error de la petición no se tapa con caché. Redis si hay `TERRANOVA_REDIS_URL` y, si no, memoria |
+| F2.4 Cortacircuitos y bulkhead por fuente | ✅ `src/terranova/proteccion.py`: tras 3 caídas el circuito de esa fuente se abre 30 s y `fuente_no_disponible` sale en menos de 1 s sin tocarla (con copia, `obsoleto`); medio abierto; un reintento con jitter solo ante «no disponible»; 4 llamadas simultáneas por fuente |
 
 ## Decisiones tomadas
 
@@ -55,10 +55,10 @@
 
 ## Siguiente paso concreto
 
-1. **F2.2:** compuerta de licencia (ADR-0007): `por_verificar` solo para llaves de evaluación. Con la
-   identidad de F3 se cierra de punta a punta; antes queda el punto de decisión en el ejecutor y sus pruebas.
-2. **F2.3 y F2.4:** caché con frescura y `obsoleto`, y cortacircuitos por fuente (RUNAP se cayó
-   durante el E2E: el caso existe).
+1. **F3.1:** adaptador REST generado del catálogo (`POST /v1/co/{familia}/{herramienta}`) con
+   paridad REST ≡ MCP en CI.
+2. **F3.2 a F3.4:** identidad (orgs, llaves `rt_live_…` con HMAC y pimienta, scopes, revocación), cuota
+   (Redis, 429) y medición (outbox).
 3. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.

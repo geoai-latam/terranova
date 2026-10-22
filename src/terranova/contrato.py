@@ -54,7 +54,7 @@ HTTP_DE: dict[str, int] = {
 }
 
 Huella = Annotated[str, Field(pattern=r"^sha256:[0-9a-f]{64}$")]
-_BIDI = {"؜", "‎", "‏", *(chr(c) for c in range(0x202A, 0x202F))}
+_BIDI = {"\u061c", "\u200e", "\u200f", *(chr(c) for c in range(0x202A, 0x202F))}
 _BIDI |= {chr(c) for c in range(0x2066, 0x206A)}
 
 

@@ -25,7 +25,7 @@ from terranova.contrato import (
 ESQUEMA = json.loads(Path("esquemas/rt1.sobre.schema.json").read_text(encoding="utf-8"))
 
 texto_limpio = st.text(
-    alphabet=st.characters(blacklist_categories=("Cc", "Cs"), blacklist_characters="؜"),
+    alphabet=st.characters(blacklist_categories=("Cc", "Cs"), blacklist_characters="\u061c"),
     max_size=40,
 ).filter(texto_es_limpio)
 valor_dato = st.one_of(
@@ -298,7 +298,7 @@ def test_regla_8_9377_solo_si_se_pide() -> None:
 # --- regla 9: texto de la fuente limpio y acotado -------------------------------------------
 
 
-@pytest.mark.parametrize("sucio", ["a‮b", "a\u0000b", "x⁦y", "\u001b[31mrojo"])
+@pytest.mark.parametrize("sucio", ["a\u202eb", "a\u0000b", "x\u2066y", "\u001b[31mrojo"])
 def test_regla_9_control_y_bidi(sucio: str) -> None:
     _rompe(_minimo(datos={"nombre": sucio}), "regla 9")
     s = _minimo(geo_crs="EPSG:4326")

@@ -51,7 +51,9 @@ async def test_dorada(herramienta: str) -> None:
     h = CATALOGO.herramientas[herramienta]
     fuente = CATALOGO.fuentes[h.fuente]
     grabado = json.loads((DORADAS / f"{herramienta}.json").read_text(encoding="utf-8"))
-    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(herramienta, h.canario.entrada)
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(
+        herramienta, h.canario.entrada, plan="evaluacion"
+    )
 
     Sobre.model_validate(sobre.model_dump(mode="json"))  # reglas 1-9, ida y vuelta por JSON
     assert comprobar(h, sobre) == [], "la verdad medida del canario no coincide"

@@ -11,12 +11,15 @@ from __future__ import annotations
 import asyncio
 import math
 import re
+import time
 import unicodedata
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any
+from typing import Any, Literal
 
+from terranova.cache import RETENCION_S, Almacen
+from terranova.cache import clave as clave_cache
 from terranova.catalogo import (
     MARCADOR,
     PATRONES_ENTRADA,
@@ -42,25 +45,11 @@ from terranova.contrato import (
     nueva_solicitud_id,
     texto_es_limpio,
 )
+from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.proteccion import Proteccion
 
 MAX_TEXTO_LIBRE = 200
-
-
-class ErrorEntrada(Exception):
-    """Entrada que no cumple su tipo: `parametro_invalido`, no se llama a la fuente."""
-
-    def __init__(self, param: str, mensaje: str) -> None:
-        super().__init__(f"{param}: {mensaje}")
-        self.param = param
-
-
-class ErrorEjecucion(Exception):
-    """Fallo total: no hay sobre, hay un error con código estable (spec 01, §6.3)."""
-
-    def __init__(self, codigo: str, mensaje: str, reintentar_en_s: int | None = None) -> None:
-        super().__init__(mensaje)
-        self.codigo = codigo
-        self.reintentar_en_s = reintentar_en_s
+Plan = Literal["evaluacion", "normal"]
 
 
 # --- entrada ---------------------------------------------------------------------------------
@@ -130,7 +119,9 @@ def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
 
 # --- salida ----------------------------------------------------------------------------------
 
-_BIDI_Y_CONTROL = re.compile("[؜‎‏‪-‮⁦-⁩]|[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]")
+_BIDI_Y_CONTROL = re.compile(
+    "[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]|[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]"
+)
 
 
 def sanear(texto: str) -> str:
@@ -305,7 +296,9 @@ async def cobertura_catastral(
             "out_fields": ["divipola"],
             "max_features": 1,
         }
-        sc = await ej.llamar("arcgis-mcp", "arcgis_query_features", argumentos)
+        sc = await ej.llamar(
+            "arcgis-mcp", "arcgis_query_features", argumentos, fuente_id="igac.catastro.gestores"
+        )
         rasgos = ((sc.get("artifacts") or [{}])[0].get("data") or {}).get("features") or []
         divipola = str(rasgos[0]["properties"].get("divipola") or "") if rasgos else None
         procedencia.append(
@@ -350,10 +343,24 @@ COBERTURAS: dict[str, Cobertura] = {"cobertura_catastral": cobertura_catastral}
 # --- ejecutor --------------------------------------------------------------------------------
 
 
+Frescura = Literal["normal", "estricta"]
+CODIGOS_DE_CAIDA = frozenset({"fuente_no_disponible", "fuente_lenta"})
+
+
 class Ejecutor:
-    def __init__(self, catalogo: Catalogo, conectores: dict[str, Conector]) -> None:
+    def __init__(
+        self,
+        catalogo: Catalogo,
+        conectores: dict[str, Conector],
+        almacen: Almacen | None = None,
+        reloj: Callable[[], float] = time.time,
+        proteccion: Proteccion | None = None,
+    ) -> None:
         self.catalogo = catalogo
         self.conectores = conectores
+        self.almacen = almacen
+        self.proteccion = proteccion
+        self.reloj = reloj
         self._indices: dict[str, dict[str, Any]] = {}
 
     def indice(self, nombre: str) -> dict[str, Any]:
@@ -361,23 +368,87 @@ class Ejecutor:
             self._indices[nombre] = cargar_cobertura(nombre)
         return self._indices[nombre]
 
-    async def llamar(self, conector: str, tool: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+    async def llamar(
+        self, conector: str, tool: str, argumentos: dict[str, Any], *, fuente_id: str | None = None
+    ) -> dict[str, Any]:
         c = self.conectores.get(conector)
         if c is None:
             raise ErrorEjecucion(
                 "fuente_no_disponible", f"el conector {conector} no está configurado"
             )
-        try:
-            return await c.llamar(tool, argumentos)
-        except ErrorConector as exc:
-            raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
 
-    async def ejecutar(self, herramienta: str, entrada: dict[str, Any]) -> Sobre:
+        async def una() -> dict[str, Any]:
+            try:
+                return await c.llamar(tool, argumentos)
+            except ErrorConector as exc:
+                raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
+
+        if self.proteccion is None:
+            return await una()
+        return await self.proteccion.llamar(fuente_id or conector, una)
+
+    async def ejecutar(
+        self,
+        herramienta: str,
+        entrada: dict[str, Any],
+        *,
+        plan: Plan = "normal",
+        frescura: Frescura = "normal",
+    ) -> Sobre:
         h = self.catalogo.herramientas.get(herramienta)
         if h is None:
             raise ErrorEjecucion("no_existe", f"no hay herramienta {herramienta}")
         fuente = self.catalogo.fuentes[h.fuente]
+        # ADR-0007: sin licencia verificada, la fuente solo responde a llaves de evaluación
+        if fuente.uso_comercial == "por_verificar" and plan != "evaluacion":
+            raise ErrorEjecucion(
+                "licencia_no_habilitada",
+                f"{fuente.id}: licencia por verificar; solo responde a llaves de evaluación",
+            )
         valores = validar_entrada(h, entrada)
+
+        # ADR-0008: caché por frescura de la fuente; con la fuente caída, la copia vieja sale como
+        # «obsoleto» y lo dice. `frescura=estricta` nunca usa caché.
+        k = clave_cache(h.id, h.version, valores)
+        guardado = None
+        if self.almacen is not None and frescura == "normal":
+            guardado = await self.almacen.leer(k)
+            if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
+                return self._desde_cache(guardado, "cache")
+        try:
+            sobre = await self._desde_fuente(h, fuente, valores)
+        except ErrorEjecucion as exc:
+            if guardado and exc.codigo in CODIGOS_DE_CAIDA:
+                return self._desde_cache(guardado, "obsoleto", exc.codigo)
+            raise
+        if self.almacen is not None and sobre.estado != "parcial":
+            await self.almacen.guardar(
+                k,
+                {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
+                RETENCION_S,
+            )
+        return sobre
+
+    def _desde_cache(
+        self, guardado: dict[str, Any], modo: Literal["cache", "obsoleto"], causa: str | None = None
+    ) -> Sobre:
+        crudo = guardado["sobre"]
+        edad = max(0, int(self.reloj() - guardado["guardado_en"]))
+        for p in crudo["procedencia"]:
+            p["servido_desde"] = modo  # `consultado_en` queda el original (regla 6)
+            p["cache"] = {"acierto": True, "edad_s": edad}
+        avisos = list(crudo["avisos"])
+        if modo == "obsoleto":
+            fecha = crudo["procedencia"][0]["consultado_en"]
+            avisos.append(
+                f"La fuente no respondió ({causa}): este dato es del {fecha}, no es actual."
+            )
+        # ADR-0010: lo que sale de caché no descuenta
+        return Sobre.model_validate(
+            {**crudo, "solicitud_id": nueva_solicitud_id(), "avisos": avisos, "creditos": 0}
+        )
+
+    async def _desde_fuente(self, h: Herramienta, fuente: Fuente, valores: dict[str, Any]) -> Sobre:
         consultado_en = ahora()
 
         capas: list[str | None] = [str(c) for c in h.consulta.capas] or [None]
@@ -486,7 +557,7 @@ class Ejecutor:
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]
     ) -> Respuesta:
-        sc = await self.llamar(conector, h.consulta.tool, argumentos)
+        sc = await self.llamar(conector, h.consulta.tool, argumentos, fuente_id=h.fuente)
         return separar(h, capa, argumentos, sc)
 
     def _procedencia(
