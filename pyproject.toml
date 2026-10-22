@@ -22,6 +22,12 @@ redis = ["redis>=5,<7"]
 postgres = [
     "psycopg[binary]>=3.2,<4",
 ]
+datasets = [
+    "geopandas>=1.0",
+    "pandera[geopandas]>=0.20",
+    "pyarrow>=17",
+    "pyogrio>=0.9",
+]
 
 [dependency-groups]
 # Ruff y mypy fijados, en la misma versión que GEO Copilot: una versión nueva no pone el CI en rojo
@@ -57,6 +63,11 @@ select = ["E", "W", "F", "I", "B", "C4", "UP", "BLE", "RUF"]
 python_version = "3.13"
 strict = true
 files = ["src", "tests", "tests_lentos", "scripts"]
+
+[[tool.mypy.overrides]]
+# extra opcional `datasets`: sin tipos publicados
+module = ["geopandas.*", "pandas.*", "pandera.*", "shapely.*", "pyogrio.*", "pyarrow.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
