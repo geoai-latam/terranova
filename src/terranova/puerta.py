@@ -17,6 +17,7 @@ from fastmcp.tools import Tool, ToolResult
 from mcp.types import TextContent, ToolAnnotations
 from pydantic import PrivateAttr
 
+from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import Sobre
@@ -42,6 +43,7 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
 }
 
 _conectores: dict[str, Conector] | None = None
+_almacen: Almacen | None = None
 
 
 def usar_conectores(conectores: dict[str, Conector] | None) -> None:
@@ -101,7 +103,7 @@ class HerramientaDelCatalogo(Tool):
         if _conectores is None:
             raise ToolError("error_interno: la puerta no tiene conectores")
         try:
-            sobre = await Ejecutor(CATALOGO, _conectores).ejecutar(
+            sobre = await Ejecutor(CATALOGO, _conectores, _almacen).ejecutar(
                 self._ficha, arguments, plan=plan_actual()
             )
         except ErrorEntrada as exc:
@@ -120,6 +122,9 @@ async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
     if _conectores is not None:
         yield
         return
+    global _almacen
+    redis_url = os.environ.get("TERRANOVA_REDIS_URL")
+    _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
     conectores = conectores_desde_entorno()
     for c in conectores.values():
         if isinstance(c, ConectorMCP):
@@ -129,6 +134,7 @@ async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
         yield
     finally:
         usar_conectores(None)
+        _almacen = None
         for c in conectores.values():
             if isinstance(c, ConectorMCP):
                 await c.cerrar()

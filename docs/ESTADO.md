@@ -33,7 +33,7 @@
 |---|---|
 | F2.1 Ejecutor: catálogo → conector → lista blanca → `rt/1` | ✅ `src/terranova/ejecutor.py` + puerta generada (una herramienta MCP por ficha). Las 20 doradas se grabaron en vivo con su canario en verde (`scripts/grabar_doradas.py`) y se reproducen sin red; verificadas por mutación. E2E por MCP: 16/20, porque RUNAP estaba caído y ANT dio un error pasajero |
 | F2.2 Compuerta de licencia y saneamiento | ✅ el ejecutor recibe el plan: `por_verificar` da `licencia_no_habilitada` sin llamar a la fuente salvo con plan `evaluacion`; NC con aviso; E2E-14 (texto malicioso y campo no declarado) en prueba; guarda contra caracteres invisibles en el código. El plan sale de `TERRANOVA_PLAN` hasta la identidad de F3.2 |
-| F2.3 Caché con frescura y `obsoleto` | ⬜ |
+| F2.3 Caché con frescura y `obsoleto` | ✅ `src/terranova/cache.py`: el TTL es el `frescura.ttl_cache_s` de la fuente y un acierto no descuenta. Con la fuente caída sale `obsoleto`, con su `consultado_en` original y aviso; `frescura=estricta` prefiere el error; un error de la petición no se tapa con caché. Redis si hay `TERRANOVA_REDIS_URL` y, si no, memoria |
 | F2.4 Cortacircuitos y bulkhead por fuente | ⬜ |
 
 ## Decisiones tomadas

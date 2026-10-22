@@ -11,12 +11,15 @@ from __future__ import annotations
 import asyncio
 import math
 import re
+import time
 import unicodedata
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Literal
 
+from terranova.cache import RETENCION_S, Almacen
+from terranova.cache import clave as clave_cache
 from terranova.catalogo import (
     MARCADOR,
     PATRONES_ENTRADA,
@@ -353,10 +356,22 @@ COBERTURAS: dict[str, Cobertura] = {"cobertura_catastral": cobertura_catastral}
 # --- ejecutor --------------------------------------------------------------------------------
 
 
+Frescura = Literal["normal", "estricta"]
+CODIGOS_DE_CAIDA = frozenset({"fuente_no_disponible", "fuente_lenta"})
+
+
 class Ejecutor:
-    def __init__(self, catalogo: Catalogo, conectores: dict[str, Conector]) -> None:
+    def __init__(
+        self,
+        catalogo: Catalogo,
+        conectores: dict[str, Conector],
+        almacen: Almacen | None = None,
+        reloj: Callable[[], float] = time.time,
+    ) -> None:
         self.catalogo = catalogo
         self.conectores = conectores
+        self.almacen = almacen
+        self.reloj = reloj
         self._indices: dict[str, dict[str, Any]] = {}
 
     def indice(self, nombre: str) -> dict[str, Any]:
@@ -376,7 +391,12 @@ class Ejecutor:
             raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
 
     async def ejecutar(
-        self, herramienta: str, entrada: dict[str, Any], *, plan: Plan = "normal"
+        self,
+        herramienta: str,
+        entrada: dict[str, Any],
+        *,
+        plan: Plan = "normal",
+        frescura: Frescura = "normal",
     ) -> Sobre:
         h = self.catalogo.herramientas.get(herramienta)
         if h is None:
@@ -389,6 +409,49 @@ class Ejecutor:
                 f"{fuente.id}: licencia por verificar; solo responde a llaves de evaluación",
             )
         valores = validar_entrada(h, entrada)
+
+        # ADR-0008: caché por frescura de la fuente; con la fuente caída, la copia vieja sale como
+        # «obsoleto» y lo dice. `frescura=estricta` nunca usa caché.
+        k = clave_cache(h.id, h.version, valores)
+        guardado = None
+        if self.almacen is not None and frescura == "normal":
+            guardado = await self.almacen.leer(k)
+            if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
+                return self._desde_cache(guardado, "cache")
+        try:
+            sobre = await self._desde_fuente(h, fuente, valores)
+        except ErrorEjecucion as exc:
+            if guardado and exc.codigo in CODIGOS_DE_CAIDA:
+                return self._desde_cache(guardado, "obsoleto", exc.codigo)
+            raise
+        if self.almacen is not None and sobre.estado != "parcial":
+            await self.almacen.guardar(
+                k,
+                {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
+                RETENCION_S,
+            )
+        return sobre
+
+    def _desde_cache(
+        self, guardado: dict[str, Any], modo: Literal["cache", "obsoleto"], causa: str | None = None
+    ) -> Sobre:
+        crudo = guardado["sobre"]
+        edad = max(0, int(self.reloj() - guardado["guardado_en"]))
+        for p in crudo["procedencia"]:
+            p["servido_desde"] = modo  # `consultado_en` queda el original (regla 6)
+            p["cache"] = {"acierto": True, "edad_s": edad}
+        avisos = list(crudo["avisos"])
+        if modo == "obsoleto":
+            fecha = crudo["procedencia"][0]["consultado_en"]
+            avisos.append(
+                f"La fuente no respondió ({causa}): este dato es del {fecha}, no es actual."
+            )
+        # ADR-0010: lo que sale de caché no descuenta
+        return Sobre.model_validate(
+            {**crudo, "solicitud_id": nueva_solicitud_id(), "avisos": avisos, "creditos": 0}
+        )
+
+    async def _desde_fuente(self, h: Herramienta, fuente: Fuente, valores: dict[str, Any]) -> Sobre:
         consultado_en = ahora()
 
         capas: list[str | None] = [str(c) for c in h.consulta.capas] or [None]
