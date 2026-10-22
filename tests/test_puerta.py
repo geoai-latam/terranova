@@ -38,7 +38,7 @@ PREDIO_CHIA = {
 
 
 class ConectorFalso:
-    def __init__(self, por_capa: dict[int, list[dict[str, Any]]], falla: bool = False) -> None:
+    def __init__(self, por_capa: dict[int, list[dict[str, Any]]], falla: str | None = None) -> None:
         self.por_capa = por_capa
         self.falla = falla
         self.llamadas: list[dict[str, Any]] = []
@@ -46,7 +46,7 @@ class ConectorFalso:
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         self.llamadas.append({"herramienta": herramienta, **argumentos})
         if self.falla:
-            raise ErrorConector("conexión rechazada")
+            raise ErrorConector("la fuente no respondió", self.falla)
         capa = int(argumentos["url"].rsplit("/", 1)[1])
         return _respuesta(self.por_capa.get(capa, []))
 
@@ -118,7 +118,7 @@ async def test_sin_predio_es_no_encontrado(cliente_con: Client[Any]) -> None:
 
 
 @pytest.mark.anyio
-@_con(ConectorFalso({}, falla=True))
+@_con(ConectorFalso({}, falla="fuente_no_disponible"))
 async def test_conector_caido_es_error_y_no_sobre(cliente_con: Client[Any]) -> None:
     with pytest.raises(ToolError, match="fuente_no_disponible"):
         await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
@@ -138,3 +138,10 @@ async def test_la_herramienta_publica_output_schema(cliente_con: Client[Any]) ->
     assert herramienta.name == "igac_predio_en_punto"
     assert herramienta.output_schema is not None
     assert "procedencia" in herramienta.output_schema["properties"]
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({}, falla="fuente_lenta"))
+async def test_el_codigo_del_conector_llega_al_cliente(cliente_con: Client[Any]) -> None:
+    with pytest.raises(ToolError, match=r"^fuente_lenta: "):
+        await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})

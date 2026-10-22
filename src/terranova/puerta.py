@@ -140,7 +140,7 @@ async def igac_predio_en_punto(
             *(_consultar_capa(conector, zona, lon, lat) for zona in CAPAS_TERRENO)
         )
     except ErrorConector as exc:
-        raise ToolError(f"fuente_no_disponible: {exc}") from exc
+        raise ToolError(f"{exc.codigo}: {exc}") from exc
 
     datos: dict[str, Any] = {}
     geo_result: GeoResult | None = None
@@ -154,7 +154,8 @@ async def igac_predio_en_punto(
         if datos_capa and not datos:
             datos = datos_capa
             geo_result = GeoResult.model_validate(_geo_result_limpio(capa["zona"], artefactos[0]))
-        total = hechos.get("total_en_servicio")
+        # el bloque `completitud` del kit (F1.3) manda; los conectores viejos solo traen el total
+        total = (hechos.get("completitud") or {}).get("total", hechos.get("total_en_servicio"))
         procedencia.append(
             Procedencia(
                 fuente_id=f"igac.catastro.terreno_{capa['zona']}",
