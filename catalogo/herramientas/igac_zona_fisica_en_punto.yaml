@@ -1,0 +1,38 @@
+id: igac_zona_fisica_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.zona_fisica
+pregunta: "¿Qué características físicas tiene la zona homogénea del IGAC en este punto?"
+descripcion: >
+  Zona homogénea física (IGAC) que contiene un punto: su código, área homogénea de tierra,
+  disponibilidad de agua, influencia vial, uso actual del suelo, norma de uso (POT) y vigencia (en
+  lo urbano, topografía, servicios públicos y tipificación de la construcción). Los usos y
+  disponibilidades vienen como códigos del IGAC. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [15, 16]  # rural, urbana
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    geometria: ninguna
+    max_features: 5
+  campos: [CODIGO, CODIGO_ZONA_FISICA, AREA_HOMOGENEA_TIERRA, DISPONIBILIDAD_AGUA, TOPOGRAFIA, SERVICIO_PUBLICO, INFLUENCIA_VIAL, USO_ACTUAL_SUELO, NORMA_USO_SUELO, TIPIFICACION_CONSTRUCCION, VIGENCIA]
+salida: ZonaFisicaEnPunto
+derivados:
+  zona: {de: capa, valores: {"15": rural, "16": urbano}}
+  municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona física 035
+  verdad:
+    codigo_zona_fisica: "035"
+    area_homogenea_tierra: FH67c
+    norma_uso_suelo: "ZJM- Zona Jardín de Uso Múltiple"
+    zona: rural
+    municipio_divipola: "25175"
+  campos: [area_homogenea_tierra, codigo_municipio_zona, codigo_zona_fisica, disponibilidad_agua, influencia_vial, municipio_divipola, norma_uso_suelo, uso_actual_suelo, vigencia, zona]
+  latencia_max_ms: 5000

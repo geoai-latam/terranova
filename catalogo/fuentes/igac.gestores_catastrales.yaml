@@ -1,0 +1,33 @@
+id: igac.gestores_catastrales
+titulo: Gestores catastrales de Colombia (quién hace el catastro de cada municipio)
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: autoridad reguladora catastral; habilita a los gestores (Decreto 148 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/bhcx-bx97.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Gestores Catastrales de Colombia. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/bhcx-bx97.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+# `responsabl` y `contacto` (personas responsables y su contacto) quedan fuera de la lista blanca
+# (ADR-0014), igual que la geometría del municipio.
+datos_personales: filtrados
+estado: publicada
+campos:
+  divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  departamen: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
+  gestor_cat: {nombre: gestor_catastral, tipo: str, desc: "entidad que hace el catastro del municipio"}
+  gestor_con: {nombre: tipo_gestor, tipo: str, desc: "tipo de gestor (GESTOR IGAC, GESTOR…)"}
+  estado_act: {nombre: estado, tipo: str, desc: "estado de la gestión (EN OPERACION…)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: irregular}

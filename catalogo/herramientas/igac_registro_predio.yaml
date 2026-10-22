@@ -1,0 +1,36 @@
+id: igac_registro_predio
+version: 1
+familia: territorio
+fuente: igac.catastro.registro1
+pregunta: "¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC?"
+descripcion: >
+  Registro 1 catastral (IGAC) de un predio por su número predial nacional de 30 dígitos:
+  dirección (o nombre del predio rural), destino económico, área del terreno y área construida.
+  No trae nombres ni documentos de propietarios. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {codigo: codigo_predial}
+consulta:
+  operacion: por_codigo
+  tool: arcgis_query_features
+  capas: [17]  # REGISTRO_1
+  argumentos:
+    url: "{url_capa}"
+    where: "NUMERO_PREDIAL = '{codigo}'"
+    out_fields: [NUMERO_PREDIAL, NUMERO_PREDIAL_ANTERIOR, DIRECCION, DESTINO_ECONOMICO, AREA_TERRENO, AREA_CONSTRUIDA]
+    max_features: 5
+  campos: [NUMERO_PREDIAL, NUMERO_PREDIAL_ANTERIOR, DIRECCION, DESTINO_ECONOMICO, AREA_TERRENO, AREA_CONSTRUIDA]
+salida: RegistroPredio
+derivados:
+  municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
+creditos: 10
+canario:
+  entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_1, corte 06_2026
+  verdad:
+    codigo_predial: "251750000000000050067000000000"
+    destino_economico: G
+    area_terreno_m2: 56069.0
+    area_construida_m2: 6572.0
+    municipio_divipola: "25175"
+  campos: [area_construida_m2, area_terreno_m2, codigo_predial, destino_economico, direccion, municipio_divipola]
+  latencia_max_ms: 15000  # REGISTRO_1/2 son tablas de ~7 M filas: 7 s medidos

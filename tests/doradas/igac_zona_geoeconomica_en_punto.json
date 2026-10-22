@@ -1,0 +1,151 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:31:20+00:00",
+ "herramienta": "igac_zona_geoeconomica_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/13"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_ZONA_HOMOGENEA_GEOECONOMICA"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "U_ZONA_HOMOGENEA_GEOECONOMICA",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/13",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/13"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/11"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "CODIGO": "2517500",
+          "CODIGO_DEPARTAMENTO": null,
+          "CODIGO_ZONA_GEOECONOMICA": "006",
+          "GLOBALID": "efe7b88d-1179-4e8f-98ed-ebacc03d7606",
+          "OBJECTID": 135682,
+          "SUBZONA_FISICA": "001, 003, 004, 016, 017, 018, 024, 030, 032, 035, 043, 047, 048, 060, 067, 068, 069, 070, 071, 074, 085, 086, 114, 115, 117, 118",
+          "Shape__Area": 3208949.8271484375,
+          "Shape__Length": 31554.63500529727,
+          "VALOR_HECTAREA": "7000000000",
+          "VIGENCIA": null,
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_ZONA_HOMOGENEA_GEOECONOMICA"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "R_ZONA_HOMOGENEA_GEOECONOMICA",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/11",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/11"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

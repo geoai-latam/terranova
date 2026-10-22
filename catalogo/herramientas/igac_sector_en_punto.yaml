@@ -1,0 +1,31 @@
+id: igac_sector_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.sector
+pregunta: "¿En qué sector catastral del IGAC está este punto?"
+descripcion: >
+  Sector catastral (IGAC) urbano o rural que contiene un punto: código del sector, zona y
+  municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [16, 8]  # R_SECTOR, U_SECTOR: la zona sale de la capa que responde
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [CODIGO]
+    max_features: 5
+  campos: [CODIGO]
+salida: SectorEnPunto
+derivados:
+  zona: {de: capa, valores: {"16": rural, "8": urbano}}
+  municipio_divipola: {de: prefijo, campo: codigo_sector, n: 5}
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía
+  verdad: {codigo_sector: "251750000", zona: rural, municipio_divipola: "25175"}
+  campos: [codigo_sector, municipio_divipola, zona]
+  latencia_max_ms: 5000

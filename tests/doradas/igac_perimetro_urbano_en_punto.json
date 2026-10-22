@@ -1,0 +1,98 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:02:21+00:00",
+ "herramienta": "igac_perimetro_urbano_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0587,
+     4.8633,
+     -74.0587,
+     4.8633
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "NOMBRE_GEOGRAFICO",
+     "CODIGO_NOMBRE",
+     "TIPO_AVALUO",
+     "DEPARTAMENTO_CODIGO",
+     "MUNICIPIO_CODIGO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/2"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0585296,
+           4.8717554
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_NOMBRE": "Corregimiento",
+          "DEPARTAMENTO_CODIGO": "25",
+          "MUNICIPIO_CODIGO": "175",
+          "NOMBRE_GEOGRAFICO": "CHIA",
+          "TIPO_AVALUO": "01"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_PERIMETRO"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0587,
+      4.8633,
+      -74.0587,
+      4.8633
+     ],
+     "capa": "U_PERIMETRO",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0587,
+       4.8633,
+       -74.0587,
+       4.8633
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "NOMBRE_GEOGRAFICO",
+       "CODIGO_NOMBRE",
+       "TIPO_AVALUO",
+       "DEPARTAMENTO_CODIGO",
+       "MUNICIPIO_CODIGO"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/2",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/2"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

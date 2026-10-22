@@ -1,0 +1,28 @@
+id: igac_perimetro_urbano_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.perimetro
+pregunta: "¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál?"
+descripcion: >
+  Perímetro urbano catastral (IGAC) que contiene un punto: nombre del casco urbano o centro
+  poblado, su tipo y los códigos del departamento y del municipio. Fuera de los perímetros (suelo rural) no responde. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [2]  # U_PERIMETRO
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [NOMBRE_GEOGRAFICO, CODIGO_NOMBRE, TIPO_AVALUO, DEPARTAMENTO_CODIGO, MUNICIPIO_CODIGO]
+    max_features: 5
+  campos: [NOMBRE_GEOGRAFICO, CODIGO_NOMBRE, TIPO_AVALUO, DEPARTAMENTO_CODIGO, MUNICIPIO_CODIGO]
+salida: PerimetroUrbanoEnPunto
+creditos: 10
+canario:
+  entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
+  verdad: {nombre_centro_poblado: CHIA, tipo_avaluo: "01", departamento_divipola: "25", municipio_codigo: "175"}
+  campos: [departamento_divipola, municipio_codigo, nombre_centro_poblado, tipo_avaluo, tipo_centro_poblado]
+  latencia_max_ms: 5000

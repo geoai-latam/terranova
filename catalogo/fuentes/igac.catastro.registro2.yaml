@@ -1,0 +1,44 @@
+id: igac.catastro.registro2
+titulo: Registro 2 (unidades de construcción y zonas homogéneas del predio) de la base catastral pública del gestor IGAC
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/6ca71458728f45988e2cd7aa5305a663?f=json
+  cita: "Este producto adopta la licencia pública internacional de Reconocimiento-CompartirIgual 4.0 de Creative Commons"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Base catastral pública del gestor"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# El nombre del servicio cambia cada mes (Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>); el
+# corte vigente lo descubre `scripts/corte_igac.py` (G2). Tabla: 18 REGISTRO_2 (una fila por grupo de unidades).
+url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  excluye:
+    - "11001 Bogotá (UAECD)"
+    - "05001 Medellín (gestor propio)"
+    - "76001 Cali (gestor propio)"
+  indice: cobertura_catastral
+datos_personales: ninguno
+estado: publicada
+campos:
+  NUMERO_PREDIAL: {nombre: codigo_predial, tipo: str, desc: "número predial nacional, 30 dígitos"}
+  ZONA_FISICA_1: {nombre: zona_fisica, tipo: str, desc: "código de la zona homogénea física"}
+  ZONA_ECONOMICA_1: {nombre: zona_economica, tipo: str, desc: "código de la zona homogénea geoeconómica"}
+  AREA_TERRENO_1: {nombre: area_terreno_m2, tipo: float, desc: "área de terreno en esa zona, m²"}
+  AREA_CONSTRUIDA_1: {nombre: area_construida_m2, tipo: float, desc: "área construida de la unidad, m²"}
+  USO_1: {nombre: uso_construccion, tipo: int, desc: "código de uso de la construcción (IGAC)"}
+  PISOS_1: {nombre: pisos, tipo: int, desc: "número de pisos"}
+  HABITACIONES_1: {nombre: habitaciones, tipo: int, desc: "habitaciones"}
+  BANOS_1: {nombre: banos, tipo: int, desc: "baños"}
+  LOCALES_1: {nombre: locales, tipo: int, desc: "locales"}
+  PUNTAJE_1: {nombre: puntaje_calificacion, tipo: int, desc: "puntaje de calificación de la construcción"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}

@@ -43,7 +43,8 @@ el estado.
 - Canario rojo con `verdad_distinta`, si cambió un valor o su formato.
 - `fuente_respuesta_invalida`: la respuesta no tiene la forma esperada.
 - En IGAC: el corte mensual de la base catastral cambia de nombre
-  (`Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>`).
+  (`Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>`). `uv run scripts/corte_igac.py` dice cuál es el
+  vigente; con `--escribir` actualiza las fichas (luego se regraban las doradas).
 
 **Qué revisar.** El detalle del canario (`/v1/estado`) dice qué campo falta. Se compara la respuesta
 actual del conector con la grabada en `tests/doradas/<herramienta>.json`.

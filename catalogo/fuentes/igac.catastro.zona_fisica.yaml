@@ -1,0 +1,44 @@
+id: igac.catastro.zona_fisica
+titulo: Zonas homogéneas físicas del gestor catastral IGAC
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/11a9e1d7e4184a0b83cee631d5ce2d04?f=json
+  cita: "Este producto adopta la licencia pública internacional de Reconocimiento-CompartirIgual 4.0 de Creative Commons"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Zonas homogéneas del gestor catastral IGAC, vigencia 2026"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Servicio anual (`…_Vigencias_<AAAA>`): no sigue el corte mensual de la base catastral. Capas: 15 R_ZONA_HOMOGENEA_FISICA, 16 U_ZONA_HOMOGENEA_FISICA.
+# `codigo_municipio` de la fuente no se usa: para Chía dice 23175 (medido el 2026-10-22).
+url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye:
+    - "11001 Bogotá (UAECD)"
+    - "05001 Medellín (gestor propio)"
+    - "76001 Cali (gestor propio)"
+  indice: cobertura_catastral
+datos_personales: ninguno
+estado: publicada
+campos:
+  CODIGO: {nombre: codigo_municipio_zona, tipo: str, desc: "municipio y zona catastral, 7 dígitos"}
+  CODIGO_ZONA_FISICA: {nombre: codigo_zona_fisica, tipo: str, desc: "código de la zona homogénea física"}
+  AREA_HOMOGENEA_TIERRA: {nombre: area_homogenea_tierra, tipo: str, desc: "área homogénea de tierra (rural)"}
+  DISPONIBILIDAD_AGUA: {nombre: disponibilidad_agua, tipo: int, desc: "código de disponibilidad de agua (rural)"}
+  TOPOGRAFIA: {nombre: topografia, tipo: str, desc: "topografía (urbana)"}
+  SERVICIO_PUBLICO: {nombre: servicios_publicos, tipo: int, desc: "código de servicios públicos (urbana)"}
+  INFLUENCIA_VIAL: {nombre: influencia_vial, tipo: int, desc: "código de influencia vial"}
+  USO_ACTUAL_SUELO: {nombre: uso_actual_suelo, tipo: int, desc: "código de uso actual del suelo"}
+  NORMA_USO_SUELO: {nombre: norma_uso_suelo, tipo: str, desc: "norma de uso del suelo (POT)"}
+  TIPIFICACION_CONSTRUCCION: {nombre: tipificacion_construccion, tipo: int, desc: "código de tipificación de la construcción (urbana)"}
+  VIGENCIA: {nombre: vigencia, tipo: date, desc: "fecha de vigencia de la zona"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}

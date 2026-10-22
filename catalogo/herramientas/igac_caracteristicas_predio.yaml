@@ -1,0 +1,32 @@
+id: igac_caracteristicas_predio
+version: 1
+familia: territorio
+fuente: igac.catastro.registro2
+pregunta: "¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC?"
+descripcion: >
+  Registro 2 catastral (IGAC) de un predio por su número predial de 30 dígitos: un elemento por
+  grupo de unidades, con zona homogénea física y geoeconómica, área de terreno y construida, uso,
+  pisos, habitaciones, baños, locales y puntaje de calificación. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {codigo: codigo_predial}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: arcgis_query_features
+  capas: [18]  # REGISTRO_2
+  argumentos:
+    url: "{url_capa}"
+    where: "NUMERO_PREDIAL = '{codigo}'"
+    out_fields: [NUMERO_PREDIAL, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, AREA_CONSTRUIDA_1, USO_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1]
+    max_features: 200
+  campos: [NUMERO_PREDIAL, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, AREA_CONSTRUIDA_1, USO_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1]
+salida: CaracteristicasPredio
+derivados:
+  numero_unidades: {de: conteo, tipo: int}
+creditos: 10
+canario:
+  entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_2, corte 06_2026
+  verdad: {numero_unidades: 2, zona_economica: "006"}
+  campos: [area_construida_m2, area_terreno_m2, banos, codigo_predial, habitaciones, locales, numero_unidades, pisos, puntaje_calificacion, uso_construccion, zona_economica, zona_fisica]
+  latencia_max_ms: 15000  # REGISTRO_1/2 son tablas de ~7 M filas: 7 s medidos

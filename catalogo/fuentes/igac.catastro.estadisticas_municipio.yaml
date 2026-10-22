@@ -1,0 +1,40 @@
+id: igac.catastro.estadisticas_municipio
+titulo: Estadísticas catastrales por municipio del IGAC (predios, áreas y avalúos por año y zona)
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
+acto: null
+# El ítem de ArcGIS Online no declara licencia (consultado el 2026-10-22). Queda en evaluación
+# (ADR-0019) hasta que el IGAC la confirme por escrito (F0.8).
+licencia:
+  spdx: null
+  url: null
+  verificada: null
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/61b10dc94329461094419a32e129415e?f=json
+  cita: "licenseInfo vacío"
+uso_comercial: por_verificar
+clase_acceso: api
+atribucion: "Fuente: IGAC, Estadísticas catastrales municipales"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Formato largo: una fila por año de reporte, indicador, zona y estado catastral. Un mismo año puede
+# traer un bloque «Actualizado» y otro «Desactualizado» (Chía 2025): no se suman sin mirar el estado.
+url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Municipios_Estadisticas/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura: {pais: CO}
+datos_personales: ninguno  # agregados municipales
+estado: borrador
+campos:
+  MpCodigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  MUNICIPIO: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  GESTOR_CATASTRAL: {nombre: gestor_catastral, tipo: str, desc: "gestor catastral que reporta"}
+  VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_: {nombre: anio_reporte, tipo: int, desc: "año del reporte"}
+  Indicador: {nombre: indicador, tipo: str, desc: "PREDIOS, ÁREA DE TERRENO (m2 o ha), ÁREA GEOGRÁFICA (ha), ÁREA CONSTRUIDA (m2) o AVALÚO ($)"}
+  Zona: {nombre: zona, tipo: str, desc: "Rural o Urbano"}
+  Valor: {nombre: valor, tipo: float, desc: "valor del indicador, en la unidad que dice el indicador"}
+  ESTADO_CATASTRAL_RURAL: {nombre: estado_catastral_rural, tipo: str, desc: "estado de la formación o actualización rural"}
+  ESTADO_CATASTRAL_URBANO: {nombre: estado_catastral_urbano, tipo: str, desc: "estado de la formación o actualización urbana"}
+  VIGENCIA_DE_ACTUALIZACIÓN_RURAL: {nombre: vigencia_actualizacion_rural, tipo: int, desc: "año de la última actualización rural"}
+  VIGENCIA_DE_ACTUALIZACIÓN_URBANA: {nombre: vigencia_actualizacion_urbana, tipo: int, desc: "año de la última actualización urbana"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
