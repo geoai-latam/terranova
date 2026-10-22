@@ -104,12 +104,8 @@ class HerramientaDelCatalogo(Tool):
         return herramienta
 
     async def run(self, arguments: dict[str, Any]) -> ToolResult:
-        if _conectores is None:
-            raise ToolError("error_interno: la puerta no tiene conectores")
         try:
-            sobre = await Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION).ejecutar(
-                self._ficha, arguments, plan=plan_actual()
-            )
+            sobre = await ejecutar(self._ficha, arguments)
         except ErrorEntrada as exc:
             raise ToolError(f"parametro_invalido: {exc}") from exc
         except ErrorEjecucion as exc:
@@ -121,45 +117,68 @@ class HerramientaDelCatalogo(Tool):
         )
 
 
-@asynccontextmanager
-async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
-    if _conectores is not None:
-        yield
-        return
+async def ejecutar(ficha: str, entrada: dict[str, Any]) -> Sobre:
+    """El mismo camino para MCP y REST (ADR-0004): misma entrada, mismo sobre."""
+    if _conectores is None:
+        raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
+    ejecutor = Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION)
+    return await ejecutor.ejecutar(ficha, entrada, plan=plan_actual())
+
+
+_iniciados: dict[str, Conector] = {}
+
+
+async def iniciar() -> None:
+    """Conectores, caché y protección para toda la puerta. Si ya hay conectores (las pruebas los
+    inyectan), no hace nada."""
     global _almacen
+    if _conectores is not None:
+        return
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
-    conectores = conectores_desde_entorno()
-    for c in conectores.values():
+    _iniciados.update(conectores_desde_entorno())
+    for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.abrir()
-    usar_conectores(conectores)
+    usar_conectores(dict(_iniciados))
+
+
+async def detener() -> None:
+    global _almacen
+    if not _iniciados:
+        return
+    usar_conectores(None)
+    _almacen = None
+    for c in _iniciados.values():
+        if isinstance(c, ConectorMCP):
+            await c.cerrar()
+    _iniciados.clear()
+
+
+@asynccontextmanager
+async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
+    await iniciar()
     try:
         yield
     finally:
-        usar_conectores(None)
-        _almacen = None
-        for c in conectores.values():
-            if isinstance(c, ConectorMCP):
-                await c.cerrar()
+        await detener()
 
 
-puerta = FastMCP(
-    "terranova",
-    instructions=(
-        "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
-        "(contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la "
-        "licencia."
-    ),
-    lifespan=_ciclo,
+INSTRUCCIONES = (
+    "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
+    "(contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la licencia."
 )
-for _h in CATALOGO.herramientas.values():
-    puerta.add_tool(HerramientaDelCatalogo.desde(_h))
 
 
-def main() -> None:
-    puerta.run(
-        transport="http",
-        host="127.0.0.1",
-        port=int(os.environ.get("TERRANOVA_PUERTO", "8100")),
-    )
+def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> FastMCP:
+    """`/mcp` con todo o un perfil por familia (`/mcp/territorio`…, ADR-0006)."""
+    nombre = "terranova" if familia is None else f"terranova-{familia}"
+    servidor = FastMCP(nombre, instructions=INSTRUCCIONES, lifespan=_ciclo if con_ciclo else None)
+    for h in CATALOGO.herramientas.values():
+        if familia is None or h.familia == familia:
+            servidor.add_tool(HerramientaDelCatalogo.desde(h))
+    return servidor
+
+
+FAMILIAS = sorted({h.familia for h in CATALOGO.herramientas.values()})
+puerta = crear_servidor()

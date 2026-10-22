@@ -36,6 +36,18 @@
 | F2.3 Caché con frescura y `obsoleto` | ✅ `src/terranova/cache.py`: el TTL es el `frescura.ttl_cache_s` de la fuente y un acierto no descuenta. Con la fuente caída sale `obsoleto`, con su `consultado_en` original y aviso; `frescura=estricta` prefiere el error; un error de la petición no se tapa con caché. Redis si hay `TERRANOVA_REDIS_URL` y, si no, memoria |
 | F2.4 Cortacircuitos y bulkhead por fuente | ✅ `src/terranova/proteccion.py`: tras 3 caídas el circuito de esa fuente se abre 30 s y `fuente_no_disponible` sale en menos de 1 s sin tocarla (con copia, `obsoleto`); medio abierto; un reintento con jitter solo ante «no disponible»; 4 llamadas simultáneas por fuente |
 
+## F3 · Puerta
+
+| Spec F3 | Estado |
+|---|---|
+| F3.1 Adaptadores REST + MCP desde el catálogo; perfiles por familia | ✅ `src/terranova/app.py`: una ruta `POST /v1/co/{familia}/{herramienta}` por ficha (`operationId` = herramienta, entrada con patrones), errores problem+json con `Retry-After`, catálogo público en `/v1/fuentes` y `/v1/herramientas`; MCP en `/mcp` y en un perfil por familia; **paridad REST ≡ MCP en las 20 herramientas** en CI. Verificado en vivo con uvicorn |
+| F3.2 Identidad: orgs, llaves, scopes, CLI | ⬜ |
+| F3.3 Cuota (Redis) y saldo | ⬜ |
+| F3.4 Medición (outbox) | ⬜ |
+| F3.5 Errores RFC 9457 y Schemathesis | 🟡 el formato ya sale en REST y MCP; falta Schemathesis |
+| F3.6 OpenAPI, `llms.txt`, server card | 🟡 OpenAPI generado; faltan `llms.txt` y la server card |
+| F3.7 Compose de despliegue | ⬜ |
+
 ## Decisiones tomadas
 
 - Nombre **Terranova**; repo público `geoai-latam/terranova`.
@@ -55,11 +67,9 @@
 
 ## Siguiente paso concreto
 
-1. **F3.1:** adaptador REST generado del catálogo (`POST /v1/co/{familia}/{herramienta}`) con
-   paridad REST ≡ MCP en CI.
-2. **F3.2 a F3.4:** identidad (orgs, llaves `rt_live_…` con HMAC y pimienta, scopes, revocación), cuota
+1. **F3.2 a F3.4:** identidad (orgs, llaves `rt_live_…` con HMAC y pimienta, scopes, revocación), cuota
    (Redis, 429) y medición (outbox).
-3. **En paralelo:**
+2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
    - **F0.7:** banco de 40 verdades medidas en la fuente.
