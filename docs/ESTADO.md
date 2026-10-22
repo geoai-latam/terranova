@@ -22,7 +22,7 @@
 | Spec F1 | Estado |
 |---|---|
 | F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 38 pruebas (propiedades y casos), verificadas por mutación |
-| F1.2 Modelos del catálogo + validador CI | ⬜ |
+| F1.2 Modelos del catálogo + validador CI | ✅ `src/terranova/catalogo.py` + `scripts/validar_catalogo.py` en `make check`; 19 reglas rotas probadas; semilla: `igac.catastro.terreno` e `igac_predio_en_punto` |
 | F1.3 Códigos de error y completitud en el kit (GEO Copilot) | ⬜ |
 | F1.4 Catálogo inicial M1 (~25 herramientas) | ⬜ |
 | F1.5 Índice de cobertura catastral | ⬜ |
@@ -46,9 +46,10 @@
 
 ## Siguiente paso concreto
 
-1. **F1.2:** modelos del catálogo y validador en CI. `catalogo/licencias/m1.yaml` pasa a las fichas
-   de fuente.
-2. **En paralelo:**
+1. **F1.3** (en GEO Copilot, `geo_mcp_kit`): códigos de error estables en `ToolRunner` y el bloque
+   `consulta`/`completitud` en los `facts`.
+2. **F1.4:** catálogo M1 (~25 herramientas) a partir de `catalogo/licencias/m1.yaml`.
+3. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
    - **F0.7:** banco de 40 verdades medidas en la fuente.

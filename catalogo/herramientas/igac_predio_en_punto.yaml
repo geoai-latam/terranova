@@ -1,0 +1,21 @@
+id: igac_predio_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.terreno
+pregunta: "¿Qué predio del catastro IGAC hay en este punto?"
+descripcion: >
+  Predio catastral (IGAC) que contiene un punto: número predial nacional, número anterior, zona
+  (rural o urbana) y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta: {operacion: en_punto, capas: [14, 7], campos: [CODIGO, CODIGO_ANTERIOR]}
+salida: PredioEnPunto
+# `zona` sale de la capa que respondió; `municipio_divipola`, de los 5 primeros dígitos del código
+# (el `codigo_municipio` de la fuente viene errado: Chía sale 23175).
+derivados: [zona, municipio_divipola]
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {codigo_predial: "251750000000000050067000000000", zona: rural, municipio_divipola: "25175"}
+  latencia_max_ms: 5000
