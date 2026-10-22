@@ -4,7 +4,7 @@
 
 ## Dónde estamos
 
-**Gates F0 a F3 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-06 pasan contra el compose. Sigue **F4 · Ficha y dataset de restricciones**.
+**Gates F0 a F3 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-06 pasan contra el compose. En **F4**, el dataset de restricciones (F4.1) y la ficha (F4.2) están listos; falta el p95 en vivo (F4.3).
 
 | Spec F0 | Estado |
 |---|---|
@@ -53,8 +53,8 @@
 | Spec F4 | Estado |
 |---|---|
 | F4.1 Dataset de restricciones v0 | ✅ `src/terranova/datasets/restricciones.py` + `scripts/dataset_restricciones.py`: RUNAP (1934) + resguardos (989) + zonas de reserva campesina (30) = 2953 filas, CC BY-SA 4.0; pandera, GeoParquet, PostGIS (`curado.restricciones`) y contrato ODCS. **Misma huella tras volver a descargar** (`sha256:fc56a228…`). Ley 2.ª fuera por licencia |
-| F4.2 `ficha_lugar` | ⬜ |
-| F4.3 Rendimiento de la ficha | ⬜ |
+| F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
+| F4.3 Rendimiento de la ficha | 🟨 con caché p95 0,01 s ✓ (< 2 s). En vivo, p95 20 s ✗ (< 15 s): las corridas van de 9 a 20 s, y lo que pesa es el arranque en frío de la agrología del IGAC (~45 s en la primera consulta, 1 a 2 s después). Salida: `copia` de la agrología (ADR-0008), que es estática (P1Y) y CC BY 4.0 |
 
 ## Decisiones tomadas
 
@@ -76,7 +76,9 @@
 
 ## Siguiente paso concreto
 
-1. **F4.2 y F4.3:** `ficha_lugar` con sus partes en paralelo y estado `parcial`; p95 < 15 s en vivo.
+1. **F4.3:** `copia` de la agrología del IGAC (vocación, capacidad y conflictos) si hay descarga
+   masiva oficial con licencia clara; con eso, repetir `scripts/e2e_ficha.py` hasta p95 < 15 s en
+   vivo y cerrar el gate F4 (E2E-07 y E2E-08). Fusionar antes geo-copilot#49 (tools en hilo).
 2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
@@ -123,6 +125,11 @@
   Ahora se pide `geometria: simplificada` (geo-copilot#48) y RUNAP en punto tarda 1,2 s.
 - `datos-abiertos-mcp`: un `count`/`sum` con `$order=:id` daba HTTP 400 (geo-copilot#47).
 - Tras un timeout, la sesión MCP con el conector quedaba inservible; `ConectorMCP` ahora la reabre.
+- Conectores de GEO Copilot (mcp 1.28): una tool `def` corría dentro del bucle de eventos y una fuente
+  lenta dejaba el servidor sin atender nada, ni siquiera un `GET`. Ahora corren en un hilo
+  (geo-copilot#49). En vivo, la ficha pasó de caer entera por tiempo a 13 s.
+- Agrología del IGAC (`mapas.igac.gov.co`): arranque en frío de ~45 s en la primera consulta después
+  de un rato; luego 1 a 2 s. Es lo que hoy impide cumplir el p95 en vivo de la ficha.
 - Compose: un conector caído al arrancar tumbaba la puerta, que entraba en un ciclo de reinicios.
   Ahora arranca igual. La primera llamada con el conector caído tarda unos 7 s (DNS de Docker más 3 s
   de sesión); tras 3 caídas se abre el circuito y la respuesta baja a menos de 1 s.

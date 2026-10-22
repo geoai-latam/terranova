@@ -18,9 +18,11 @@ from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse, PlainTextResponse
-from pydantic import BaseModel, ConfigDict, Field, create_model
+from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
+from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from terranova import ficha as ficha_lugar
 from terranova import puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
@@ -92,15 +94,36 @@ def problema(
     )
 
 
-def _ruta(h: Herramienta) -> Callable[..., Awaitable[Any]]:
-    Entrada = modelo_entrada(h)
+class FichaEntrada(BaseModel):
+    """Un punto (`lon`, `lat`) o un número predial (`codigo`), no los dos."""
 
+    model_config = ConfigDict(
+        extra="forbid",
+        strict=True,
+        json_schema_extra={"oneOf": ficha_lugar.ESQUEMA_ENTRADA["oneOf"]},
+    )
+    # sin `null` en el esquema: un campo ausente se omite, no se manda vacío (Schemathesis)
+    lon: Annotated[float, Field(ge=-180, le=180)] | SkipJsonSchema[None] = None
+    lat: Annotated[float, Field(ge=-90, le=90)] | SkipJsonSchema[None] = None
+    codigo: (
+        Annotated[str, Field(pattern=PATRONES_ENTRADA["codigo_predial"])] | SkipJsonSchema[None]
+    ) = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _sin_nulos(cls, datos: Any) -> Any:
+        if isinstance(datos, dict) and (nulos := [k for k, v in datos.items() if v is None]):
+            raise ValueError(f"{', '.join(nulos)}: se omite, no se manda null")
+        return datos
+
+
+def _ruta(ficha: str, Entrada: type[BaseModel]) -> Callable[..., Awaitable[Any]]:
     async def herramienta(entrada: Entrada, request: Request, response: Response) -> Any:  # type: ignore[valid-type]
         try:
             principal = getattr(request.state, "principal", None)
             sobre, repetido = await puerta.ejecutar_idempotente(
-                h.id,
-                entrada.model_dump(),  # type: ignore[attr-defined]
+                ficha,
+                entrada.model_dump(exclude_none=True),  # type: ignore[attr-defined]
                 principal,
                 request.headers.get("idempotency-key"),
             )
@@ -166,7 +189,7 @@ def crear_api() -> FastAPI:
     for h in puerta.CATALOGO.herramientas.values():
         api.add_api_route(
             f"/v1/co/{h.familia}/{h.id}",
-            _ruta(h),
+            _ruta(h.id, modelo_entrada(h)),
             methods=["POST"],
             response_model=Sobre,
             operation_id=h.id,
@@ -179,6 +202,22 @@ def crear_api() -> FastAPI:
             },
             openapi_extra={"security": [{"llave": []}]},
         )
+
+    api.add_api_route(
+        "/v1/fichas",
+        _ruta(ficha_lugar.HERRAMIENTA, FichaEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=ficha_lugar.HERRAMIENTA,
+        summary=ficha_lugar.PREGUNTA,
+        description=ficha_lugar.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
 
     @api.get(
         "/v1/uso",
@@ -316,7 +355,7 @@ class Aplicacion:
             return
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
-        protegida = ruta.startswith("/v1/co/") or ruta == "/v1/uso"
+        protegida = ruta.startswith("/v1/co/") or ruta in ("/v1/uso", "/v1/fichas")
         if scope["type"] == "http" and (app is not self.api or protegida):
             # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
             if puerta.registro is not None:

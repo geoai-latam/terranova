@@ -10,6 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 from terranova import __version__
+from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo, Fuente, Herramienta
 
 REPO = "https://github.com/geoai-latam/terranova"
@@ -40,6 +41,11 @@ def llms_txt(c: Catalogo) -> str:
         "Estados: `encontrado`, `no_encontrado`, `fuera_de_cobertura` (no descuenta), `parcial`. "
         "Errores en problem+json con un código estable (p. ej. `fuente_no_disponible`).",
         "Catálogo público en `/v1/fuentes`.",
+        "",
+        "## Ficha de un lugar",
+        "",
+        f"- [{ficha_lugar.HERRAMIENTA}](/v1/fichas): {ficha_lugar.DESCRIPCION} "
+        f"Hasta {ficha_lugar.TOPE_CREDITOS} créditos (la suma de las partes).",
         "",
     ]
     for familia, hs in _familias(c).items():
@@ -76,7 +82,11 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
         "repository": REPO,
         "transport": {"type": "streamable-http", "endpoint": "/mcp"},
         "profiles": [
-            {"name": familia, "endpoint": f"/mcp/{familia}", "tools": len(hs)}
+            {
+                "name": familia,
+                "endpoint": f"/mcp/{familia}",
+                "tools": len(hs) + (familia == ficha_lugar.FAMILIA),
+            }
             for familia, hs in familias.items()
         ],
         "protocolVersions": PROTOCOLOS,
@@ -86,6 +96,14 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
             {"name": h.id, "title": h.pregunta, "family": h.familia, "credits": h.creditos}
             for hs in familias.values()
             for h in hs
+        ]
+        + [
+            {
+                "name": ficha_lugar.HERRAMIENTA,
+                "title": ficha_lugar.PREGUNTA,
+                "family": ficha_lugar.FAMILIA,
+                "credits": ficha_lugar.TOPE_CREDITOS,
+            }
         ],
     }
 
@@ -106,4 +124,12 @@ def herramientas_md(c: Catalogo) -> str:
                 f"| `{h.id}` | {h.pregunta} | {f.entidad} | {_licencia(f)} | {h.creditos} |"
             )
         lineas.append("")
+    lineas += [
+        "## Ficha de un lugar",
+        "",
+        f"`{ficha_lugar.HERRAMIENTA}` (MCP en `/mcp` y `/mcp/{ficha_lugar.FAMILIA}`; REST en "
+        f"`POST /v1/fichas`): {ficha_lugar.DESCRIPCION} Cuesta la suma de las partes que "
+        f"respondieron, hasta {ficha_lugar.TOPE_CREDITOS} créditos.",
+        "",
+    ]
     return "\n".join(lineas)
