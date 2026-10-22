@@ -70,11 +70,11 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `banrep_dtf_recientes` | ¿Cuál es la DTF? | Banco de la República | por verificar | 2 |
-| `banrep_ibr_recientes` | ¿Cómo va el IBR en sus distintos plazos? | Banco de la República | por verificar | 2 |
-| `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | por verificar | 2 |
-| `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | por verificar | 2 |
-| `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | por verificar | 2 |
+| `banrep_dtf_recientes` | ¿Cuál es la DTF? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `banrep_ibr_recientes` | ¿Cómo va el IBR en sus distintos plazos? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |

@@ -5,9 +5,9 @@ fuente: banrep.uvr
 pregunta: "¿Cuánto vale y cómo varía la UVR?"
 descripcion: >
   Unidad de valor real (UVR) del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
-  fecha y serie, con la unidad (dos series: el valor y su variación (SUBJECT y UNIT_MEASURE lo dicen)). Sale del servicio SDMX oficial; mientras la licencia no
-  esté confirmada, solo responde con llaves de evaluación.
-  (Fuente: Banco de la República; licencia: por verificar.)
+  fecha y serie, con la unidad (dos series: el valor y su variación (SUBJECT y UNIT_MEASURE lo dicen)). Sale del servicio SDMX oficial; se cita con la fecha de
+  consulta, como pide el aviso legal del Banco.
+  (Fuente: Banco de la República; licencia: aviso legal del BanRep.)
 entrada: {ultimas: int}
 consulta:
   operacion: serie

@@ -3,16 +3,17 @@ titulo: "Indicador bancario de referencia (IBR) (Banco de la República, SDMX)"
 entidad: Banco de la República
 competencia: autoridad monetaria (Constitución, art. 371; Ley 31 de 1992)
 acto: null
-# Licencia: el aviso legal del BanRep permite la reproducción sin alterar, citando la fuente y la
-# fecha (investigación del 2026-10-21). Hoy esa página pide un reto anti-bots y no se puede releer en
-# automático: queda por verificar (ADR-0019) hasta que una persona la confirme en el navegador.
+# Aviso legal del BanRep (última modificación: 3 de junio de 2026), §2: la información estadística,
+# incluida la expuesta por SDMX, se puede reproducir libremente sin alterarla, indicando la fuente y la
+# fecha de consulta (la procedencia lleva `consultado_en`). No cubre datos de terceros (Bloomberg,
+# Refinitiv): estas series son del Banco. Confirmado por el dueño en el navegador el 2026-10-22.
 licencia:
-  spdx: null
+  spdx: LicenseRef-banrep-aviso-legal
   url: https://www.banrep.gov.co/es/aviso-legal
-  verificada: null
+  verificada: 2026-10-22
   evidencia: https://www.banrep.gov.co/es/aviso-legal
-  cita: "reproducción libre, sin alterar, citando la fuente y la fecha (por confirmar)"
-uso_comercial: por_verificar
+  cita: "puede ser reproducida o divulgada libremente por cualquier persona, siempre que no se altere o modifique su contenido, se indique su fuente y se mencione la fecha en que se consultó el portal"
+uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Banco de la República, Indicador bancario de referencia (IBR)"
 protocolo: api_propia
@@ -24,7 +25,7 @@ modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
 cobertura: {pais: CO}
 datos_personales: ninguno
-estado: borrador
+estado: publicada
 campos:
   TIME_PERIOD: {nombre: fecha, tipo: str, desc: "fecha de la observación, AAAAMMDD"}
   OBS_VALUE: {nombre: valor, tipo: float, desc: "valor (tasa; cada plazo y modalidad es una serie (SUBJECT))"}

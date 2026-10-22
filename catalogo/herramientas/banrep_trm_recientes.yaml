@@ -5,9 +5,9 @@ fuente: banrep.trm
 pregunta: "¿Cuál ha sido la TRM (dólar en pesos) de los últimos días?"
 descripcion: >
   Tasa representativa del mercado (TRM) del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
-  fecha y serie, con la unidad (pesos por dólar). Sale del servicio SDMX oficial; mientras la licencia no
-  esté confirmada, solo responde con llaves de evaluación.
-  (Fuente: Banco de la República; licencia: por verificar.)
+  fecha y serie, con la unidad (pesos por dólar). Sale del servicio SDMX oficial; se cita con la fecha de
+  consulta, como pide el aviso legal del Banco.
+  (Fuente: Banco de la República; licencia: aviso legal del BanRep.)
 entrada: {ultimas: int}
 consulta:
   operacion: serie
