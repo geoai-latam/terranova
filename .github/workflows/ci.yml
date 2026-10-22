@@ -45,3 +45,24 @@ jobs:
       # ADR-0001: el repo es público; ningún secreto en toda la historia.
       - name: gitleaks
         run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.21.2 git /repo --redact -v
+
+  schemathesis:
+    name: schemathesis (OpenAPI publicado)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version-file: .python-version
+
+      - name: Instalar uv
+        run: python -m pip install uv==0.12.5
+
+      - name: Dependencias
+        run: uv sync --locked
+
+      # F3.5: sin 5xx ni respuestas fuera de esquema, con entradas generadas (sin red)
+      - name: Schemathesis
+        run: uv run pytest tests_lentos -q -p schemathesis

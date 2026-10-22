@@ -16,6 +16,7 @@ from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, create_model
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
@@ -61,7 +62,8 @@ def _tipo(nombre: str, tipo: str) -> Any:
 def modelo_entrada(h: Herramienta) -> type[BaseModel]:
     campos: dict[str, Any] = {n: (_tipo(n, t), ...) for n, t in h.entrada.items()}
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
-    return create_model(nombre, __config__=ConfigDict(extra="forbid"), **campos)
+    # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
+    return create_model(nombre, __config__=ConfigDict(extra="forbid", strict=True), **campos)
 
 
 def problema(
@@ -126,6 +128,26 @@ def crear_api() -> FastAPI:
         lifespan=None,
     )
 
+    @api.exception_handler(StarletteHTTPException)
+    async def _http(_: Request, exc: StarletteHTTPException) -> JSONResponse:
+        """Todo error HTTP de FastAPI/Starlette también sale como problem+json (ADR-0011)."""
+        if exc.status_code == 400:
+            return problema("parametro_invalido", str(exc.detail), param="body")
+        if exc.status_code == 404:
+            return problema("no_existe", str(exc.detail))
+        return JSONResponse(
+            {
+                "type": "about:blank",
+                "title": str(exc.detail),
+                "status": exc.status_code,
+                "code": "error_interno" if exc.status_code >= 500 else "parametro_invalido",
+                "solicitud_id": nueva_solicitud_id(),
+            },
+            status_code=exc.status_code,
+            media_type="application/problem+json",
+            headers=getattr(exc, "headers", None),  # p. ej. `Allow` en un 405 (RFC 9110)
+        )
+
     @api.exception_handler(RequestValidationError)
     async def _validacion(_: Request, exc: RequestValidationError) -> JSONResponse:
         primero = exc.errors()[0] if exc.errors() else {}
@@ -133,7 +155,7 @@ def crear_api() -> FastAPI:
         return problema(
             "parametro_invalido",
             str(primero.get("msg", "entrada inválida")),
-            param=".".join(ruta) or None,
+            param=".".join(ruta) or "body",  # sin cuerpo, el parámetro que falta es el cuerpo
         )
 
     for h in puerta.CATALOGO.herramientas.values():
@@ -189,7 +211,11 @@ def crear_api() -> FastAPI:
         return [_publica(fid) for fid in sorted(puerta.CATALOGO.fuentes)]
 
     @api.get(
-        "/v1/fuentes/{fuente_id}", tags=["catálogo"], operation_id="ver_fuente", response_model=None
+        "/v1/fuentes/{fuente_id}",
+        tags=["catálogo"],
+        operation_id="ver_fuente",
+        response_model=None,
+        responses={404: {"model": Problema, "content": {"application/problem+json": {}}}},
     )
     async def fuente(fuente_id: str) -> dict[str, Any] | JSONResponse:
         if fuente_id not in puerta.CATALOGO.fuentes:
