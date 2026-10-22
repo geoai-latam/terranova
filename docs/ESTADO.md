@@ -21,7 +21,7 @@
 
 | Spec F1 | Estado |
 |---|---|
-| F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 28 pruebas de propiedad y casos, verificadas por mutación |
+| F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 38 pruebas (propiedades y casos), verificadas por mutación |
 | F1.2 Modelos del catálogo + validador CI | ⬜ |
 | F1.3 Códigos de error y completitud en el kit (GEO Copilot) | ⬜ |
 | F1.4 Catálogo inicial M1 (~25 herramientas) | ⬜ |
