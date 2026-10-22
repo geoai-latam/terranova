@@ -223,8 +223,9 @@ class AlmacenCopias:
     def _c(self) -> Any:
         """La conexión, abierta al primer uso: la puerta arranca aunque la base no esté."""
         if self._conexion is None:
-            import psycopg
+            import importlib
 
+            psycopg: Any = importlib.import_module("psycopg")  # extra opcional `postgres`
             self._conexion = psycopg.connect(self._url, autocommit=True)
         return self._conexion
 

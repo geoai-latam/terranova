@@ -155,8 +155,7 @@ async def test_sin_copia_construida_es_fuente_no_disponible() -> None:
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
 def test_construir_publicar_buscar_y_podar() -> None:
     assert URL_PG
-    import psycopg
-
+    psycopg = pytest.importorskip("psycopg")
     with psycopg.connect(URL_PG, autocommit=True) as c:  # base de pruebas: se parte de cero
         c.execute("DROP SCHEMA IF EXISTS copia CASCADE")
     almacen = AlmacenCopias(URL_PG)
@@ -190,3 +189,18 @@ def test_construir_publicar_buscar_y_podar() -> None:
     assert almacen.consultar(plan) == ([], 0)  # la vista ya apunta a la versión nueva
     almacen.construir(SECOP, iter([[fila(8, "y otra")]]), None)
     assert almacen.podar("secop_contratos") == [v1.version]  # quedan la vigente y la anterior
+
+
+@pytest.mark.anyio
+async def test_una_copia_que_no_dice_su_fecha_no_se_sirve_como_actual() -> None:
+    from terranova.ejecutor import Ejecutor
+    from terranova.errores import ErrorEjecucion
+
+    class SinFecha:
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            return {"artifacts": [{"kind": "table", "rows": [{"id_contrato": "x"}]}], "facts": {}}
+
+    ej = Ejecutor(CATALOGO, {"copia": SinFecha()})
+    with pytest.raises(ErrorEjecucion) as exc:
+        await ej.ejecutar("secop_contratos_buscar", {"texto": "farmacia"}, plan="evaluacion")
+    assert exc.value.codigo == "fuente_respuesta_invalida"

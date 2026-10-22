@@ -581,7 +581,7 @@ class Ejecutor:
         servido_desde: ServidoDesde = "fuente"
         if fuente.modo == "copia":  # ADR-0024: la fecha es la de la copia, no la de la pregunta
             servido_desde = "obsoleto" if r.hechos.get("servido_desde") == "obsoleto" else "copia"
-            consultado_en = datetime.fromisoformat(str(r.hechos["consultado_en"]))
+            consultado_en = _fecha_de_copia(r.hechos)
         return Procedencia(
             fuente_id=fuente.id,
             entidad=fuente.entidad,
@@ -598,6 +598,14 @@ class Ejecutor:
             conector=fuente.conector,
             huella=huella({"elementos": mapeadas}),
         )
+
+
+def _fecha_de_copia(hechos: dict[str, Any]) -> datetime:
+    """Sin la fecha de la copia no se sabe qué tan vieja es: no se responde como si fuera actual."""
+    try:
+        return datetime.fromisoformat(str(hechos["consultado_en"]))
+    except (KeyError, ValueError) as exc:
+        raise ErrorEjecucion("fuente_respuesta_invalida", "la copia no dijo de cuándo es") from exc
 
 
 def _aviso_de_copia(hechos: dict[str, Any]) -> str:

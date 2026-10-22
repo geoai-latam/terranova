@@ -20,10 +20,18 @@ class Vacio:
         return {"geo_result": "1", "artifacts": [], "facts": {}}
 
 
-VACIOS = {
+class CopiaVacia:
+    """El conector interno `copia` (ADR-0024) sin filas, pero con la fecha de la copia."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        hechos = {"servido_desde": "copia", "consultado_en": "2026-10-22T00:00:00+00:00"}
+        return {"artifacts": [{"kind": "table", "rows": []}], "facts": hechos}
+
+
+VACIOS: dict[str, Any] = {
     n: Vacio()
     for n in ("arcgis-mcp", "datos-abiertos-mcp", "dane-mcp", "amenazas-mcp", "imagery-mcp")
-}
+} | {"copia": CopiaVacia()}
 REGISTRO = RegistroSql(":memory:", "p" * 40)
 LLAVE = REGISTRO.crear("schemathesis", {"*"}, prueba=True, expira=None)
 # antes de cargar el esquema: el arranque de la app ve conectores inyectados y no busca secretos
