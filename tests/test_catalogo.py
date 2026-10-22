@@ -66,6 +66,13 @@ CASOS = [
     (FUENTE, _set(id="igac.otra"), "debe llamarse"),
     (HERRAMIENTA, _set(fuente="igac.no_existe"), "no existe"),
     (HERRAMIENTA, _set(consulta__campos=["CODIGO", "GLOBALID"]), "lista blanca"),
+    (
+        HERRAMIENTA,
+        _set(consulta__argumentos={"where": "MUNICIPIO = '{municipio}'"}),
+        "marcadores sin entrada",
+    ),
+    (HERRAMIENTA, _set(consulta__capas=[]), "no declara capas"),
+    (HERRAMIENTA, _set(consulta__tool="Arcgis Query"), "tool"),
     (HERRAMIENTA, _set(canario__verdad={"propietario": "x"}), "no salen"),
     (HERRAMIENTA, _set(descripcion="Predio en un punto."), "cerrar con"),
     (

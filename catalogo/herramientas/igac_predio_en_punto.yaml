@@ -9,7 +9,16 @@ descripcion: >
   Medellín, Cali y otros gestores no están en esta fuente.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
-consulta: {operacion: en_punto, capas: [14, 7], campos: [CODIGO, CODIGO_ANTERIOR]}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [14, 7]  # R_TERRENO, U_TERRENO: la zona sale de la capa que responde
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [CODIGO, CODIGO_ANTERIOR]
+    max_features: 5
+  campos: [CODIGO, CODIGO_ANTERIOR]
 salida: PredioEnPunto
 # `zona` sale de la capa que respondió; `municipio_divipola`, de los 5 primeros dígitos del código
 # (el `codigo_municipio` de la fuente viene errado: Chía sale 23175).
