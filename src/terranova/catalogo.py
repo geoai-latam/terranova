@@ -6,6 +6,7 @@ rompe el CI (`scripts/check.py`).
 
 from __future__ import annotations
 
+import json
 import re
 from datetime import date
 from pathlib import Path
@@ -118,10 +119,27 @@ class Fuente(_Ficha):
         return {c.nombre for c in self.campos.values()}
 
 
+MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
+MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
+
+
 class Consulta(_Ficha):
+    """Cómo se responde la pregunta con un conector. El ejecutor (F2.1) la sigue tal cual.
+
+    `argumentos` es una plantilla: `{lon}` toma la entrada `lon` y conserva su tipo si el valor es
+    solo el marcador; `{url_capa}` es la url de la fuente + `/<capa>` (una llamada por capa) y
+    `{url_fuente}`, la url de la fuente.
+    """
+
     operacion: Literal["en_punto", "en_zona", "por_codigo", "buscar", "serie"]
+    tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$", description="herramienta del conector")
     capas: list[int | str] = Field(default_factory=list)
+    argumentos: dict[str, Any]
     campos: list[str] = Field(min_length=1, description="campos de la fuente que se piden")
+
+    @property
+    def marcadores(self) -> set[str]:
+        return set(MARCADOR.findall(json.dumps(self.argumentos, ensure_ascii=False)))
 
 
 class Canario(_Ficha):
@@ -206,6 +224,10 @@ def validar(catalogo: Catalogo) -> list[str]:
         if fuente is None:
             errores.append(f"{donde}: la fuente {h.fuente} no existe")
             continue
+        if sueltos := h.consulta.marcadores - set(h.entrada) - MARCADORES_DE_LA_PUERTA:
+            errores.append(f"{donde}: la consulta usa marcadores sin entrada: {sorted(sueltos)}")
+        if "url_capa" in h.consulta.marcadores and not h.consulta.capas:
+            errores.append(f"{donde}: usa {{url_capa}} pero no declara capas")
         if faltan := set(h.consulta.campos) - set(fuente.campos):
             errores.append(f"{donde}: pide campos fuera de la lista blanca: {sorted(faltan)}")
         salen = fuente.nombres_rt | set(h.derivados)
