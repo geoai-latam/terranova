@@ -10,7 +10,8 @@ from terranova.cache import AlmacenMemoria
 from terranova.catalogo import cargar
 from terranova.conector import ErrorConector
 from terranova.contrato import Sobre
-from terranova.ejecutor import Ejecutor, ErrorEjecucion
+from terranova.ejecutor import Ejecutor
+from terranova.errores import ErrorEjecucion
 
 CATALOGO = cargar()
 H = CATALOGO.herramientas["igac_predio_en_punto"]

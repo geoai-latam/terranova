@@ -45,26 +45,11 @@ from terranova.contrato import (
     nueva_solicitud_id,
     texto_es_limpio,
 )
+from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.proteccion import Proteccion
 
 MAX_TEXTO_LIBRE = 200
 Plan = Literal["evaluacion", "normal"]
-
-
-class ErrorEntrada(Exception):
-    """Entrada que no cumple su tipo: `parametro_invalido`, no se llama a la fuente."""
-
-    def __init__(self, param: str, mensaje: str) -> None:
-        super().__init__(f"{param}: {mensaje}")
-        self.param = param
-
-
-class ErrorEjecucion(Exception):
-    """Fallo total: no hay sobre, hay un error con código estable (spec 01, §6.3)."""
-
-    def __init__(self, codigo: str, mensaje: str, reintentar_en_s: int | None = None) -> None:
-        super().__init__(mensaje)
-        self.codigo = codigo
-        self.reintentar_en_s = reintentar_en_s
 
 
 # --- entrada ---------------------------------------------------------------------------------
@@ -311,7 +296,9 @@ async def cobertura_catastral(
             "out_fields": ["divipola"],
             "max_features": 1,
         }
-        sc = await ej.llamar("arcgis-mcp", "arcgis_query_features", argumentos)
+        sc = await ej.llamar(
+            "arcgis-mcp", "arcgis_query_features", argumentos, fuente_id="igac.catastro.gestores"
+        )
         rasgos = ((sc.get("artifacts") or [{}])[0].get("data") or {}).get("features") or []
         divipola = str(rasgos[0]["properties"].get("divipola") or "") if rasgos else None
         procedencia.append(
@@ -367,10 +354,12 @@ class Ejecutor:
         conectores: dict[str, Conector],
         almacen: Almacen | None = None,
         reloj: Callable[[], float] = time.time,
+        proteccion: Proteccion | None = None,
     ) -> None:
         self.catalogo = catalogo
         self.conectores = conectores
         self.almacen = almacen
+        self.proteccion = proteccion
         self.reloj = reloj
         self._indices: dict[str, dict[str, Any]] = {}
 
@@ -379,16 +368,24 @@ class Ejecutor:
             self._indices[nombre] = cargar_cobertura(nombre)
         return self._indices[nombre]
 
-    async def llamar(self, conector: str, tool: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+    async def llamar(
+        self, conector: str, tool: str, argumentos: dict[str, Any], *, fuente_id: str | None = None
+    ) -> dict[str, Any]:
         c = self.conectores.get(conector)
         if c is None:
             raise ErrorEjecucion(
                 "fuente_no_disponible", f"el conector {conector} no está configurado"
             )
-        try:
-            return await c.llamar(tool, argumentos)
-        except ErrorConector as exc:
-            raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
+
+        async def una() -> dict[str, Any]:
+            try:
+                return await c.llamar(tool, argumentos)
+            except ErrorConector as exc:
+                raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
+
+        if self.proteccion is None:
+            return await una()
+        return await self.proteccion.llamar(fuente_id or conector, una)
 
     async def ejecutar(
         self,
@@ -560,7 +557,7 @@ class Ejecutor:
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]
     ) -> Respuesta:
-        sc = await self.llamar(conector, h.consulta.tool, argumentos)
+        sc = await self.llamar(conector, h.consulta.tool, argumentos, fuente_id=h.fuente)
         return separar(h, capa, argumentos, sc)
 
     def _procedencia(

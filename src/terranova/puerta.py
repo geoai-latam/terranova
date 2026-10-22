@@ -21,7 +21,9 @@ from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import Sobre
-from terranova.ejecutor import Ejecutor, ErrorEjecucion, ErrorEntrada, Plan
+from terranova.ejecutor import Ejecutor, Plan
+from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.proteccion import Proteccion
 
 CATALOGO: Catalogo = cargar()
 ESQUEMA_SOBRE = Sobre.model_json_schema(mode="serialization")
@@ -44,6 +46,8 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
 
 _conectores: dict[str, Conector] | None = None
 _almacen: Almacen | None = None
+# El estado de los cortacircuitos vive lo que vive la puerta (una por réplica).
+PROTECCION = Proteccion()
 
 
 def usar_conectores(conectores: dict[str, Conector] | None) -> None:
@@ -103,7 +107,7 @@ class HerramientaDelCatalogo(Tool):
         if _conectores is None:
             raise ToolError("error_interno: la puerta no tiene conectores")
         try:
-            sobre = await Ejecutor(CATALOGO, _conectores, _almacen).ejecutar(
+            sobre = await Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION).ejecutar(
                 self._ficha, arguments, plan=plan_actual()
             )
         except ErrorEntrada as exc:

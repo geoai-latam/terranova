@@ -6,7 +6,8 @@ import pytest
 
 from terranova.catalogo import cargar
 from terranova.contrato import MAX_TEXTO, texto_es_limpio
-from terranova.ejecutor import ErrorEntrada, convertir, renderizar, sanear, validar_entrada
+from terranova.ejecutor import convertir, renderizar, sanear, validar_entrada
+from terranova.errores import ErrorEntrada
 
 CATALOGO = cargar()
 

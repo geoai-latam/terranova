@@ -8,7 +8,8 @@ import pytest
 
 from terranova.catalogo import cargar
 from terranova.contrato import texto_es_limpio
-from terranova.ejecutor import Ejecutor, ErrorEjecucion
+from terranova.ejecutor import Ejecutor
+from terranova.errores import ErrorEjecucion
 
 CATALOGO = cargar()
 DORADAS = Path(__file__).parent / "doradas"
