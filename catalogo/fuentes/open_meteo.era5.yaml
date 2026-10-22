@@ -1,0 +1,34 @@
+id: open_meteo.era5
+titulo: Reanálisis ERA5 (Copernicus) por el API histórico de Open-Meteo
+entidad: Open-Meteo (datos de Copernicus Climate Change Service, ERA5)
+competencia: null
+acto: null
+# ADR-0021: datos CC BY 4.0; el API gratis es solo no comercial, por eso uso_comercial es «no» y la
+# respuesta lleva el aviso en `procedencia` mientras rija ADR-0020.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-21
+  evidencia: https://open-meteo.com/en/terms
+  cita: "You may only use the free API services for non-commercial purposes."
+uso_comercial: "no"
+clase_acceso: api
+atribucion: "Weather data by Open-Meteo.com (https://open-meteo.com/). Generated using Copernicus Climate Change Service information"
+protocolo: api_propia
+conector: amenazas-mcp
+# amenazas-mcp (`clima_serie`, fuente era5) pide temperature_2m_mean/max/min y precipitation_sum
+# diarios con timezone America/Bogota y entrega los totales del periodo con los nombres de abajo.
+url: https://archive-api.open-meteo.com/v1/archive
+modo: en_vivo
+# Las series históricas no cambian: caché larga (ADR-0021). ERA5 llega con unos días de rezago.
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P7D}
+cobertura: {pais: GLOBAL}
+datos_personales: ninguno
+estado: publicada
+campos:
+  precipitacion_total_periodo_mm: {nombre: precipitacion_total_mm, tipo: float, desc: "precipitación acumulada del periodo, mm", origen: hecho}
+  t_media_periodo_c: {nombre: temperatura_media_c, tipo: float, desc: "temperatura media a 2 m del periodo, °C", origen: hecho}
+  elevacion_modelo_m: {nombre: elevacion_modelo_m, tipo: float, desc: "elevación de la celda del modelo, m (no la del punto)", origen: hecho}
+  dias: {nombre: dias, tipo: int, desc: "días con dato en el periodo", origen: hecho}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: Open-Meteo, theme: clima, accrualPeriodicity: daily}

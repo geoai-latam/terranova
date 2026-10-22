@@ -1,0 +1,34 @@
+id: pnn.runap
+titulo: Registro Único Nacional de Áreas Protegidas (RUNAP)
+entidad: Parques Nacionales Naturales de Colombia (PNN)
+competencia: administra el RUNAP (Decreto 1076 de 2015, que compila el Decreto 2372 de 2010)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/4a673b3d51c146abab5fd462992dd2c0?f=json
+  cita: "RUNAP © 2025 por Parques Nacionales Naturales licenciado bajo CC BY-SA 4.0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Parques Nacionales Naturales de Colombia, RUNAP"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# MapServer del propio PNN (la url que da el ítem del dueño). Capa 0: polígonos del RUNAP, de todas
+# las categorías (parques, reservas forestales protectoras, DMI, RNSC…).
+url: https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  ap_nombre: {nombre: nombre, tipo: str, desc: "nombre del área protegida"}
+  ap_categoria: {nombre: categoria, tipo: str, desc: "categoría de manejo (p. ej. Parque Nacional Natural)"}
+  organizacion: {nombre: autoridad_ambiental, tipo: str, desc: "autoridad ambiental que la administra"}
+  area_ha_total_resolucion: {nombre: area_ha_resolucion, tipo: float, desc: "área total en hectáreas según el acto de declaratoria"}
+  fecha_inscrita: {nombre: fecha_inscripcion, tipo: date, desc: "fecha de inscripción en el RUNAP"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: PNN, theme: areas_protegidas}

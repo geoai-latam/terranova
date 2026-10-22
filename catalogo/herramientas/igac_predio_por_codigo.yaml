@@ -1,0 +1,34 @@
+id: igac_predio_por_codigo
+version: 1
+familia: territorio
+fuente: igac.catastro.terreno
+pregunta: "¿Qué predio del catastro IGAC tiene este número predial?"
+descripcion: >
+  Predio catastral (IGAC) a partir de su número predial nacional de 30 dígitos: número anterior,
+  zona (rural o urbana) y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+# La puerta debe validar que `codigo` sean 30 dígitos (^[0-9]{30}$) antes de armar el where.
+entrada: {codigo: codigo_predial}
+consulta:
+  operacion: por_codigo
+  tool: arcgis_query_features
+  capas: [14, 7]  # R_TERRENO, U_TERRENO: la zona sale de la capa que responde
+  argumentos:
+    url: "{url_capa}"
+    where: "CODIGO = '{codigo}'"
+    out_fields: [CODIGO, CODIGO_ANTERIOR]
+    max_features: 1
+  campos: [CODIGO, CODIGO_ANTERIOR]
+salida: PredioPorCodigo
+# `zona` sale de la capa que respondió; `municipio_divipola`, de los 5 primeros dígitos del código.
+derivados: [zona, municipio_divipola]
+creditos: 10
+canario:
+  entrada: {codigo: "251750000000000050067000000000"}
+  verdad:
+    codigo_predial: "251750000000000050067000000000"
+    codigo_predial_anterior: "25175000000050067000"
+    zona: rural
+    municipio_divipola: "25175"
+  latencia_max_ms: 5000

@@ -145,3 +145,30 @@ async def test_la_herramienta_publica_output_schema(cliente_con: Client[Any]) ->
 async def test_el_codigo_del_conector_llega_al_cliente(cliente_con: Client[Any]) -> None:
     with pytest.raises(ToolError, match=r"^fuente_lenta: "):
         await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
+
+
+def _municipio(divipola: str) -> dict[str, Any]:
+    return {"type": "Feature", "geometry": None, "properties": {"divipola": divipola}}
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({1: [_municipio("11001")]}))
+async def test_bogota_esta_fuera_de_cobertura_y_no_descuenta(cliente_con: Client[Any]) -> None:
+    """F1.5: Bogotá la gestiona la UAECD; la base pública del IGAC no la cubre."""
+    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0817, "lat": 4.6097})
+    sobre = r.structured_content
+    assert sobre is not None
+    Sobre.model_validate(sobre)
+    assert sobre["estado"] == "fuera_de_cobertura" and sobre["creditos"] == 0
+    assert sobre["datos"] == {} and sobre["geo_result"] is None
+    assert any("UAECD" in a for a in sobre["avisos"])
+    assert "igac.catastro.gestores" in {p["fuente_id"] for p in sobre["procedencia"]}
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({1: [_municipio("25175")]}))
+async def test_sin_predio_en_municipio_cubierto_es_no_encontrado(cliente_con: Client[Any]) -> None:
+    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.03, "lat": 4.86})
+    assert r.structured_content is not None
+    assert r.structured_content["estado"] == "no_encontrado"
+    assert r.structured_content["creditos"] == 10

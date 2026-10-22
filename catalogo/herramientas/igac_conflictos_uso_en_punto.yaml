@@ -1,0 +1,26 @@
+id: igac_conflictos_uso_en_punto
+version: 1
+familia: territorio
+fuente: igac.agrologia.conflictos_uso
+pregunta: "¿Hay conflicto de uso de la tierra en este punto?"
+descripcion: >
+  Conflicto de uso de las tierras (IGAC, 2012, escala 1:100.000) en un punto: unidad y tipo de
+  conflicto con su intensidad (p. ej. subutilización moderada). Cobertura nacional continental, sin San Andrés y Providencia; a esa escala no sirve para un predio.
+  (Fuente: IGAC; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [UCConfli, T_Conflicto]
+    max_features: 5
+  campos: [UCConfli, T_Conflicto]
+salida: ConflictosUsoEnPunto
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {unidad_conflicto: U2, tipo_conflicto: "Subutilización moderada"}
+  latencia_max_ms: 5000

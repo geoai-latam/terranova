@@ -1,0 +1,28 @@
+id: ant_zonas_reserva_campesina_en_punto
+version: 1
+familia: ambiente
+fuente: ant.zonas_reserva_campesina
+pregunta: "¿En qué zona de reserva campesina constituida cae este punto?"
+descripcion: >
+  Zona de reserva campesina constituida que contiene un punto: nombre, departamento, municipios,
+  acto de constitución, fecha y área. Cubre todo el país, solo las zonas ya constituidas; las que
+  están en trámite no están en esta fuente.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
+    max_features: 5
+  campos: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
+salida: ZonaReservaCampesinaEnPunto
+creditos: 10
+canario:
+  # ZRC de Cabrera (Cundinamarca); medido el 2026-10-21 en la capa 0 (punto), 0,6 s.
+  entrada: {lon: -74.46, lat: 3.88}
+  verdad: {nombre: Cabrera, acto_administrativo: "Resolución 046 de 2000"}
+  latencia_max_ms: 5000

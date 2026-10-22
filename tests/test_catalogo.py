@@ -21,7 +21,7 @@ def test_el_catalogo_versionado_es_valido() -> None:
 
 def _catalogo_con(tmp_path: Path, ruta: str, cambio: Callable[[dict[str, Any]], None]) -> Path:
     raiz = tmp_path / "catalogo"
-    for carpeta in ("fuentes", "herramientas"):
+    for carpeta in ("fuentes", "herramientas", "cobertura"):
         shutil.copytree(RAIZ / carpeta, raiz / carpeta)
     archivo = raiz / ruta
     ficha = yaml.safe_load(archivo.read_text(encoding="utf-8"))
@@ -64,6 +64,7 @@ CASOS = [
     (FUENTE, _set(frescura__sla_actualizacion="mensual"), "sla_actualizacion"),
     (FUENTE, _set(campo_inventado=1), "campo_inventado"),
     (FUENTE, _set(id="igac.otra"), "debe llamarse"),
+    (FUENTE, _set(cobertura__indice="cobertura_inventada"), "no existe en catalogo/cobertura"),
     (HERRAMIENTA, _set(fuente="igac.no_existe"), "no existe"),
     (HERRAMIENTA, _set(consulta__campos=["CODIGO", "GLOBALID"]), "lista blanca"),
     (
@@ -82,7 +83,18 @@ CASOS = [
     ),
     (HERRAMIENTA, _set(canario__entrada={"lon": -74.0}), "entrada del canario"),
     (HERRAMIENTA, _set(familia="deportes"), "familia"),
-    (HERRAMIENTA, _set(canario__verdad={}), "verdad"),
+    (HERRAMIENTA, _set(canario__verdad={}), "verdad o minimos"),
+    (HERRAMIENTA, _set(canario__minimos={"codigo_predial": 1}), "a la vez en verdad y minimos"),
+    (HERRAMIENTA, _set(canario__minimos={"inventado": 1}), "no salen"),
+    (HERRAMIENTA, _set(entrada={"lon": "texto_libre", "lat": "float"}), "entrada"),
+    (FUENTE, _set(cobertura__pais="Colombia"), "pais"),
+    (
+        FUENTE,
+        _set(
+            campos__CODIGO={"nombre": "codigo_predial", "tipo": "str", "desc": "x", "origen": "x"}
+        ),
+        "origen",
+    ),
 ]
 
 
@@ -110,3 +122,47 @@ def test_permiso_escrito_habilita_backend_interno(tmp_path: Path) -> None:
         tmp_path, FUENTE, _set(clase_acceso="interno_con_permiso", permiso=permiso)
     )
     assert cargar(raiz).fuentes["igac.catastro.terreno"].permiso is not None
+
+
+POR_CODIGO = "herramientas/igac_predio_por_codigo.yaml"
+
+
+def test_un_str_libre_dentro_de_un_where_es_inyeccion(tmp_path: Path) -> None:
+    """`CODIGO = '{codigo}'` con `codigo: str` dejaría pasar `' OR 1=1 --`."""
+    raiz = _catalogo_con(
+        tmp_path, POR_CODIGO, _set(entrada={"codigo": "str"}, canario__entrada={"codigo": "x"})
+    )
+    with pytest.raises(CatalogoInvalido, match="inyección"):
+        cargar(raiz)
+
+
+def test_un_marcador_que_es_el_valor_entero_no_es_inyeccion(tmp_path: Path) -> None:
+    """`"{lon}"` se reemplaza por el número tal cual: no se arma texto, no hay inyección."""
+    assert cargar().herramientas["igac_predio_en_punto"].entrada["lon"] == "float"
+
+
+def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
+    import re
+
+    from terranova.catalogo import PATRONES_ENTRADA
+
+    malos = [
+        "' OR 1=1 --",
+        "2517500000000000500670000000; DROP",
+        "Chía' --",
+        "CO1.PCCNTR.1' or '1'='1",
+    ]
+    for tipo, patron in PATRONES_ENTRADA.items():
+        for malo in malos:
+            assert re.fullmatch(patron, malo) is None, (tipo, malo)
+    assert re.fullmatch(PATRONES_ENTRADA["codigo_predial"], "251750000000000050067000000000")
+    assert re.fullmatch(PATRONES_ENTRADA["nombre"], "Chía")
+    assert re.fullmatch(PATRONES_ENTRADA["id_secop"], "CO1.PCCNTR.5141215")
+
+
+def test_licencias_legibles() -> None:
+    catalogo = cargar()
+    assert (
+        "licencia: dominio público de Estados Unidos.)"
+        in catalogo.herramientas["usgs_sismos_en_zona"].descripcion
+    )

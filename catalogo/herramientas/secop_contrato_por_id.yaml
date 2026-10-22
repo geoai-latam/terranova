@@ -1,0 +1,39 @@
+id: secop_contrato_por_id
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Qué dice este contrato de SECOP II?"
+descripcion: >
+  Un contrato de SECOP II por su identificador (CO1.PCCNTR.…): entidad contratante, contratista,
+  objeto, tipo y modalidad, valor y valor pagado, fechas de firma, inicio y fin, estado y enlace al
+  proceso. Del contratista sale el nombre y el tipo de documento, nunca el número de documento ni
+  sus datos de contacto.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  tool: datos_consultar
+  argumentos:
+    id: jbjy-vk9h
+    portal: datos.gov.co
+    select: "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso"
+    where: "id_contrato = '{id_contrato}'"
+    max_filas: 2  # si vinieran dos, la puerta lo dice: el id debería ser único
+  campos: [id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso]
+salida: ContratoSecop
+creditos: 2
+canario:
+  # Medido el 2026-10-21 (22:17 hora de Colombia) en https://www.datos.gov.co/resource/jbjy-vk9h.json
+  # ?$where=id_contrato='CO1.PCCNTR.5141215' (0,6 s). Contrato cerrado de 2023 con persona jurídica:
+  # no debería cambiar.
+  entrada: {id_contrato: CO1.PCCNTR.5141215}
+  verdad:
+    id_contrato: CO1.PCCNTR.5141215
+    referencia: "CD 51 DE 2023"
+    entidad: IDUVI
+    contratista: DAVAN SAS
+    tipo_documento_contratista: NIT
+    valor: 2602628368
+    fecha_firma: "2023-06-26"
+    estado: Cerrado
+  latencia_max_ms: 5000

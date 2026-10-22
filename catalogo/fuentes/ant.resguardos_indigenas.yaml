@@ -1,0 +1,37 @@
+id: ant.resguardos_indigenas
+titulo: Resguardos indígenas formalizados
+entidad: Agencia Nacional de Tierras (ANT)
+competencia: constituye, amplía y sanea los resguardos indígenas (Decreto 2363 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/8944116ccfd34a7189c4bc44b8e19186?f=json
+  cita: "Este conjunto de datos se distribuye bajo la Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Tierras, Dirección de Asuntos Étnicos"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem del dueño `Datos_Abiertos_ANT`; su url es el proxy público de ArcGIS Online hacia el servidor
+# de la ANT. Capa 0: polígonos de los resguardos.
+url: https://utility.arcgis.com/usrsvcs/servers/8944116ccfd34a7189c4bc44b8e19186/rest/services/DatosAbiertos/Resguardo_Indigena_Formalizado/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  NOMBRE: {nombre: nombre, tipo: str, desc: "nombre del resguardo"}
+  PUEBLO: {nombre: pueblo, tipo: str, desc: "pueblo o pueblos indígenas del resguardo"}
+  DEPARTAMENTO: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento"}
+  MUNICIPIO: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  ULTIMO_TIPO_ACTO_ADMIN: {nombre: tipo_acto, tipo: str, desc: "tipo del último acto administrativo (acuerdo, resolución)"}
+  ULTIMO_NUMERO_ACTO_ADMIN: {nombre: numero_acto, tipo: str, desc: "número del último acto administrativo"}
+  ULTIMA_FECHA_ACTO_ADMIN: {nombre: fecha_acto, tipo: date, desc: "fecha del último acto administrativo"}
+  AREA_TOTAL_ACTOS_ADMIN: {nombre: area_ha_actos, tipo: float, desc: "área total en hectáreas según los actos administrativos"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: ANT, theme: territorios_etnicos}

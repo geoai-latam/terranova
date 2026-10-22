@@ -1,0 +1,29 @@
+id: igac_manzana_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.manzana
+pregunta: "¿En qué manzana urbana del catastro IGAC está este punto?"
+descripcion: >
+  Manzana urbana catastral (IGAC) que contiene un punto: código de la manzana, código del barrio,
+  código anterior y municipio. Solo zona urbana; en suelo rural no responde. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [5]  # U_MANZANA
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [CODIGO, BARRIO_CODIGO, CODIGO_ANTERIOR]
+    max_features: 5
+  campos: [CODIGO, BARRIO_CODIGO, CODIGO_ANTERIOR]
+salida: ManzanaEnPunto
+# `municipio_divipola`, de los 5 primeros dígitos del código de la manzana.
+derivados: [municipio_divipola]
+creditos: 10
+canario:
+  entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
+  verdad: {codigo_manzana: "25175010000000043", codigo_barrio: "2517501000000", municipio_divipola: "25175"}
+  latencia_max_ms: 5000

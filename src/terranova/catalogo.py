@@ -20,6 +20,31 @@ ID_FUENTE = r"^[a-z0-9_]+(\.[a-z0-9_]+)+$"
 ID_HERRAMIENTA = r"^[a-z][a-z0-9]*(_[a-z0-9]+)+$"
 DURACION_ISO = r"^P(?:\d+[YMWD])+(?:T(?:\d+[HMS])+)?$|^PT(?:\d+[HMS])+$"
 
+# Tipos de entrada. Los que tienen patrón los valida la puerta antes de llamar; solo esos y los
+# numéricos se pueden meter dentro de un texto de la consulta (un `where`): un `str` libre ahí sería
+# inyección SQL/SoQL.
+PATRONES_ENTRADA: dict[str, str] = {
+    "codigo_predial": r"^[0-9]{30}$",
+    "divipola": r"^[0-9]{5}$",
+    "id_secop": r"^CO1\.[A-Z]+\.[0-9]+$",
+    "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+    "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
+}
+TipoEntrada = Literal[
+    "float",
+    "int",
+    "str",
+    "bool",
+    "bbox",
+    "geojson",
+    "codigo_predial",
+    "divipola",
+    "id_secop",
+    "fecha",
+    "nombre",
+]
+SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
+
 Familia = Literal[
     "territorio", "contratacion", "empresas", "normativa", "justicia", "estadisticas", "ambiente"
 ]
@@ -52,6 +77,10 @@ class Permiso(_Ficha):
 class Campo(_Ficha):
     nombre: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"]
+    origen: Literal["fila", "hecho"] = Field(
+        default="fila",
+        description="fila: propiedad de cada elemento; hecho: dato del resultado (facts)",
+    )
     desc: str
 
 
@@ -61,7 +90,7 @@ class Frescura(_Ficha):
 
 
 class Cobertura(_Ficha):
-    pais: str = Field(pattern=r"^[A-Z]{2}$")
+    pais: str = Field(pattern=r"^([A-Z]{2}|GLOBAL)$")
     excluye: list[str] = Field(default_factory=list)
     indice: str | None = None
 
@@ -143,9 +172,21 @@ class Consulta(_Ficha):
 
 
 class Canario(_Ficha):
+    """Verdad medida en la fuente. `verdad` es exacta; `minimos` (≥) sirve para lo que solo crece
+    (contratos de un municipio); un dato que cambia sin dirección necesita una entrada fija."""
+
     entrada: dict[str, Any]
-    verdad: dict[str, Any] = Field(min_length=1)
+    verdad: dict[str, Any] = Field(default_factory=dict)
+    minimos: dict[str, float] = Field(default_factory=dict)
     latencia_max_ms: int = Field(ge=1)
+
+    @model_validator(mode="after")
+    def _algo_que_comprobar(self) -> Self:
+        if not self.verdad and not self.minimos:
+            raise ValueError("el canario necesita verdad o minimos")
+        if comunes := set(self.verdad) & set(self.minimos):
+            raise ValueError(f"campos a la vez en verdad y minimos: {sorted(comunes)}")
+        return self
 
 
 class Herramienta(_Ficha):
@@ -155,9 +196,7 @@ class Herramienta(_Ficha):
     fuente: str = Field(pattern=ID_FUENTE)
     pregunta: str
     descripcion: str
-    entrada: dict[str, Literal["float", "int", "str", "bool", "bbox", "geojson"]] = Field(
-        min_length=1
-    )
+    entrada: dict[str, TipoEntrada] = Field(min_length=1)
     consulta: Consulta
     salida: str
     derivados: list[str] = Field(
@@ -179,6 +218,7 @@ _CIERRE = re.compile(r"\(Fuente: (?P<fuente>[^;]+); licencia: (?P<licencia>[^)]+
 class Catalogo(BaseModel):
     fuentes: dict[str, Fuente]
     herramientas: dict[str, Herramienta]
+    coberturas: set[str] = Field(default_factory=set, description="índices en catalogo/cobertura/")
 
 
 class CatalogoInvalido(Exception):
@@ -208,7 +248,8 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
             if ficha.id in destino:
                 errores.append(f"{nombre}: id repetido {ficha.id}")
             destino[ficha.id] = ficha  # type: ignore[assignment]
-    catalogo = Catalogo(fuentes=fuentes, herramientas=herramientas)
+    coberturas = {ruta.stem for ruta in (raiz / "cobertura").glob("*.yaml")}
+    catalogo = Catalogo(fuentes=fuentes, herramientas=herramientas, coberturas=coberturas)
     errores += validar(catalogo)
     if errores:
         raise CatalogoInvalido(errores)
@@ -218,6 +259,12 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
 def validar(catalogo: Catalogo) -> list[str]:
     """Reglas entre fichas (spec 02, §7.3)."""
     errores = []
+    for f in catalogo.fuentes.values():
+        if f.cobertura.indice and f.cobertura.indice not in catalogo.coberturas:
+            errores.append(
+                f"fuentes/{f.id}.yaml: el índice de cobertura {f.cobertura.indice} no existe "
+                "en catalogo/cobertura/"
+            )
     for h in catalogo.herramientas.values():
         donde = f"herramientas/{h.id}.yaml"
         fuente = catalogo.fuentes.get(h.fuente)
@@ -226,12 +273,18 @@ def validar(catalogo: Catalogo) -> list[str]:
             continue
         if sueltos := h.consulta.marcadores - set(h.entrada) - MARCADORES_DE_LA_PUERTA:
             errores.append(f"{donde}: la consulta usa marcadores sin entrada: {sorted(sueltos)}")
+        for marcador in sorted(_interpolados(h.consulta.argumentos) & set(h.entrada)):
+            if h.entrada[marcador] not in SEGUROS_EN_TEXTO:
+                errores.append(
+                    f"{donde}: «{marcador}» ({h.entrada[marcador]}) va dentro de un texto de la "
+                    "consulta: inyección. Usa un tipo con patrón (codigo_predial, divipola…)"
+                )
         if "url_capa" in h.consulta.marcadores and not h.consulta.capas:
             errores.append(f"{donde}: usa {{url_capa}} pero no declara capas")
         if faltan := set(h.consulta.campos) - set(fuente.campos):
             errores.append(f"{donde}: pide campos fuera de la lista blanca: {sorted(faltan)}")
         salen = fuente.nombres_rt | set(h.derivados)
-        if fuera := set(h.canario.verdad) - salen:
+        if fuera := (set(h.canario.verdad) | set(h.canario.minimos)) - salen:
             errores.append(
                 f"{donde}: la verdad del canario usa campos que no salen: {sorted(fuera)}"
             )
@@ -248,9 +301,37 @@ def validar(catalogo: Catalogo) -> list[str]:
     return errores
 
 
+def _interpolados(valor: Any) -> set[str]:
+    """Marcadores metidos dentro de un texto más largo (`"CODIGO = '{codigo}'"`), no los que son
+    el valor entero (`"{lon}"`, que conserva su tipo)."""
+    if isinstance(valor, str):
+        return set() if MARCADOR.fullmatch(valor) else set(MARCADOR.findall(valor))
+    if isinstance(valor, dict):
+        return set().union(*(_interpolados(v) for v in valor.values())) if valor else set()
+    if isinstance(valor, list):
+        return set().union(*(_interpolados(v) for v in valor)) if valor else set()
+    return set()
+
+
+LICENCIAS_LEGIBLES = {
+    "CC0-1.0": "CC0 1.0",
+    "LicenseRef-dominio-publico-EEUU": "dominio público de Estados Unidos",
+}
+
+
 def _licencia_legible(fuente: Fuente) -> str:
     spdx = fuente.licencia.spdx
     if spdx is None:
         return "por verificar"
+    if spdx in LICENCIAS_LEGIBLES:
+        return LICENCIAS_LEGIBLES[spdx]
     legible = re.sub(r"^CC-(BY(?:-SA|-NC|-ND)*)-(\d\.\d)$", lambda m: f"CC {m[1]} {m[2]}", spdx)
     return legible
+
+
+def cargar_cobertura(indice: str, raiz: Path = RAIZ) -> dict[str, Any]:
+    """Un índice de cobertura (`catalogo/cobertura/<indice>.yaml`)."""
+    datos = yaml.safe_load((raiz / "cobertura" / f"{indice}.yaml").read_text(encoding="utf-8"))
+    if not isinstance(datos, dict) or "municipios" not in datos:
+        raise CatalogoInvalido([f"cobertura/{indice}.yaml: falta `municipios`"])
+    return datos

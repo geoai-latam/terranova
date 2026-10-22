@@ -1,0 +1,39 @@
+id: igac_construcciones_en_predio
+version: 1
+familia: territorio
+fuente: igac.catastro.construccion
+pregunta: "¿Qué construcciones tiene registradas este predio en el catastro IGAC?"
+descripcion: >
+  Construcciones catastrales (IGAC) de un predio, a partir de su número predial nacional de 30
+  dígitos: identificador de cada unidad, tipo (convencional o no) y número de pisos, sótanos,
+  semisótanos y mezanines. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+# Por código y no por punto: un punto casi nunca cae sobre una construcción (en el punto de Chía
+# -74.0262, 4.8619 la capa 12 no devuelve nada) y el predio de ese punto tiene 19.
+# La puerta debe validar que `codigo` sean 30 dígitos (^[0-9]{30}$) antes de armar el where.
+entrada: {codigo: codigo_predial}
+consulta:
+  operacion: por_codigo
+  tool: arcgis_query_features
+  capas: [12, 3]  # R_CONSTRUCCION, U_CONSTRUCCION
+  argumentos:
+    url: "{url_capa}"
+    where: "TERRENO_CODIGO = '{codigo}'"
+    out_fields: [TERRENO_CODIGO, IDENTIFICADOR, TIPO_CONSTRUCCION, NUMERO_PISOS, NUMERO_SOTANOS, NUMERO_SEMISOTANOS, NUMERO_MEZANINES]
+    max_features: 200
+  campos: [TERRENO_CODIGO, IDENTIFICADOR, TIPO_CONSTRUCCION, NUMERO_PISOS, NUMERO_SOTANOS, NUMERO_SEMISOTANOS, NUMERO_MEZANINES]
+salida: ConstruccionesEnPredio
+# `zona` sale de la capa que respondió; `numero_construcciones`, del conteo de unidades.
+derivados: [zona, numero_construcciones]
+creditos: 10
+canario:
+  # Predio urbano de Chía (el de -74.0587, 4.8633): dos unidades, ambas «A», convencionales, 3 pisos.
+  entrada: {codigo: "251750100000000430026000000000"}
+  verdad:
+    codigo_predial: "251750100000000430026000000000"
+    zona: urbana
+    numero_construcciones: 2
+    tipo_construccion: CONVENCIONAL
+    numero_pisos: 3
+  latencia_max_ms: 5000

@@ -1,0 +1,32 @@
+id: pnn_areas_protegidas_en_zona
+version: 1
+familia: ambiente
+fuente: pnn.runap
+pregunta: "¿Qué áreas protegidas del RUNAP tocan esta zona?"
+descripcion: >
+  Áreas protegidas inscritas en el RUNAP que se cruzan con un rectángulo (bbox en EPSG:4326):
+  nombre, categoría de manejo, autoridad ambiental, área según el acto y fecha de inscripción. Cubre
+  todo el país y todas las categorías del SINAP; un área declarada que aún no esté inscrita no
+  aparece. Se cruza con el rectángulo, no con un polígono, y el total dice cuántas hay.
+  (Fuente: PNN; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    out_fields: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+    max_features: 1000
+  campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+salida: AreasProtegidasEnZona
+# `total` es el de `completitud` (returnCountOnly del servicio), no un campo de cada área.
+derivados: [total]
+creditos: 20
+canario:
+  # Bbox de la prueba de ogc_mcp en GEO Copilot (Bogotá y alrededores). Medido el 2026-10-21 con
+  # returnCountOnly sobre la capa 0 (envelope, esriSpatialRelIntersects): 169, 1,3 s.
+  entrada: {bbox: [-74.5, 4.0, -73.5, 5.0]}
+  verdad: {total: 169}
+  latencia_max_ms: 8000

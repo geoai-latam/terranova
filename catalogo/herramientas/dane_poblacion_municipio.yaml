@@ -1,0 +1,24 @@
+id: dane_poblacion_municipio
+version: 1
+familia: estadisticas
+fuente: dane.cnpv2018.municipio
+pregunta: "¿Cuánta gente vive en este municipio según el censo 2018?"
+descripcion: >
+  Totales oficiales del Censo Nacional de Población y Vivienda 2018 de un municipio, por su código
+  DIVIPOLA de 5 dígitos: personas, viviendas y hogares censados. Es población censada en 2018, no
+  una proyección a hoy.
+  (Fuente: DANE; licencia: por verificar.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  tool: dane_municipios
+  argumentos:
+    codigo: "{municipio_divipola}"
+  campos: [codigo, municipio, departamento, personas, viviendas, hogares]
+salida: PoblacionMunicipio
+creditos: 10
+# Medido el 2026-10-22 (UTC) en la capa 800 del servicio, where MPIO_CDPMP='11001'.
+canario:
+  entrada: {municipio_divipola: "11001"}
+  verdad: {municipio_divipola: "11001", poblacion_censada: 7181469, viviendas: 2523519, hogares: 2514482}
+  latencia_max_ms: 10000

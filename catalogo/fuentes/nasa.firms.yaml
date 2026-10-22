@@ -1,0 +1,33 @@
+id: nasa.firms
+titulo: Focos de calor activos de NASA FIRMS (VIIRS y MODIS), últimos 7 días
+entidad: NASA (LANCE/FIRMS)
+competencia: null
+acto: null
+licencia:
+  spdx: CC0-1.0
+  url: https://creativecommons.org/publicdomain/zero/1.0/
+  verificada: 2026-10-21
+  evidencia: https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance
+  cita: "Creative Commons Zero (CC0)"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "NASA FIRMS"
+protocolo: archivo
+conector: amenazas-mcp
+# CSV regionales sin clave (South_America, 24h/48h/7d) que amenazas-mcp filtra por la zona. Solo hay
+# los últimos 7 días: no hay una verdad fija para un canario exacto, así que la herramienta aún no
+# entra al catálogo (falta un canario de rango o de estructura).
+url: https://firms.modaps.eosdis.nasa.gov/data/active_fire
+modo: en_vivo
+frescura: {ttl_cache_s: 1800, sla_actualizacion: PT3H}
+cobertura: {pais: GLOBAL}
+datos_personales: ninguno
+estado: borrador
+campos:
+  fecha: {nombre: fecha, tipo: date, desc: "fecha de la detección (acq_date)"}
+  hora_utc: {nombre: hora_utc, tipo: str, desc: "hora de la detección, HHMM UTC (acq_time)"}
+  confianza: {nombre: confianza, tipo: str, desc: "confianza de la detección (VIIRS: l, n, h; MODIS: 0-100)"}
+  frp_mw: {nombre: potencia_radiativa_mw, tipo: float, desc: "potencia radiativa del fuego (FRP), MW"}
+  focos: {nombre: focos, tipo: int, desc: "focos de calor en la zona y el periodo"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: NASA, theme: amenazas, accrualPeriodicity: continuous}
