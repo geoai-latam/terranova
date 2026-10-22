@@ -17,6 +17,12 @@
     - Ninguno declara licencia por ítem. La Res. IGAC 616 de 2020 adopta CC BY 4.0 en general,
       pero su enlace oficial está caído, y los ítems catastrales del IGAC en ArcGIS Online dicen
       BY-SA.
+  - Alternativa evaluada (2026-10-22): el IGAC aloja en su ArcGIS Online una capa nacional de
+    capacidad de uso (`capacidadusodelatierra`, 64 220 polígonos) que responde en 0,6 s. No se
+    adopta: trae «Clase II / Subclase c» en lugar de la unidad «2c» y su descripción, sale de
+    estudios departamentales (Cundinamarca 2001) y no de la correlación nacional del MapServer, y no
+    declara licencia. Además, solo resolvería una de las tres capas: vocación y conflictos no están
+    alojadas a escala nacional.
   - Paginar los 57 000, 64 000 y 548 000 polígonos del MapServer sería carga contra un servidor
     del Estado: no se hace.
 - **Decisión:**
