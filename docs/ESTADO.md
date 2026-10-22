@@ -4,11 +4,11 @@
 
 ## Dónde estamos
 
-**Fase F0 · Cimientos y decisiones**, recién empezada. No hay código todavía.
+**Fase F0 · Cimientos y decisiones.** Esqueleto Python listo (F0.1); todavía sin lógica.
 
 | Spec F0 | Estado |
 |---|---|
-| F0.1 Repo y estructura | 🟡 repo creado con documentos; falta `pyproject`, ruff, mypy, pytest, pre-commit, CI |
+| F0.1 Repo y estructura | ✅ `pyproject` (uv, Python 3.13), ruff y mypy estricto fijados, pytest, pre-commit, CI; `make check` verde |
 | F0.2 ADR aceptadas | 🟡 0001 (repo público) y 0020 (gratuito) aceptadas; las demás, **propuestas** |
 | F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ⬜ |
 | F0.4 Spike GeoResult en GEO Copilot | ⬜ |
@@ -36,14 +36,12 @@
 
 ## Siguiente paso concreto
 
-1. **F0.1:** esqueleto Python (`pyproject` con uv, `src/terranova/`, ruff, mypy, pytest, pre-commit,
-   CI de GitHub Actions) y `make check` verde.
-2. **F0.3:** spike de protocolo, en este orden:
+1. **F0.3:** spike de protocolo, en este orden:
    1. Puerta FastMCP 4.1 mínima con una herramienta (`igac_predio_en_punto`) que llama a `ogc-mcp` o
       `arcgis-mcp` de GEO Copilot.
    2. Conectarla desde Claude Code y MCP Inspector.
    3. Medir el salto interno (p95 < 50 ms).
-3. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de esa respuesta, verificado en el
+2. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de esa respuesta, verificado en el
    navegador.
 
 Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (contrato y catálogo).
@@ -67,3 +65,8 @@ Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (co
 | FastMCP | 4.1.3 |
 | SDK `mcp` (Python) | 2.3.0 (los conectores de GEO Copilot siguen en 1.28.1) |
 | Herramientas en los conectores de GEO Copilot | 49, en 12 servicios |
+
+## Cómo correr las comprobaciones
+
+`make check` (CI, Linux) o `uv run scripts/check.py` (Windows sin `make`): ruff, formato, mypy y
+pytest. `make instalar` sincroniza dependencias e instala los ganchos de pre-commit.
