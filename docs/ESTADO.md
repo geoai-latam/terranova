@@ -27,13 +27,12 @@
   trabajos lentos).
 - Personas por cédula o nombre: fuera. Captchas y backends sin permiso: nunca, en ningún plan (ADR-0018).
 - Cuota agotada: 429 `saldo_agotado`, sin 402 (ADR-0010). Licencia `por_verificar`: solo llaves de evaluación (ADR-0007).
+- Open-Meteo: API gratis mientras Terranova sea gratuito, con caché y tope propio; salida a Copernicus directo (ADR-0021).
 - Escaneo de secretos (gitleaks) en CI, sobre toda la historia (ADR-0001).
 - Boletines de Contraloría y BDME: se evalúan con asesoría legal antes de incluirlos.
 
 ## Pendiente de decidir
 
-1. Open-Meteo (GloFAS y ERA5): su API gratis es solo no comercial. Mientras Terranova sea gratis puede
-   valer; si pasa a una empresa, hay que suscribirse o ir directo a Copernicus.
 
 ## Siguiente paso concreto
 

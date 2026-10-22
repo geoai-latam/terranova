@@ -24,6 +24,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0018 | Política de acceso: API/bulk sí, HTML público con cortesía, backend interno solo con permiso escrito (en ningún plan sin él), captcha nunca | **aceptada** |
 | 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | **aceptada** |
 | 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | **aceptada** |
+| 0021 | Open-Meteo (GloFAS, ERA5) con el API gratis mientras sea gratuito; salida a Copernicus directo | **aceptada** |
 
 - [ADR-0001 · Repo público `terranova`](0001-repo-publico-terranova.md)
 - [ADR-0002 · La puerta llama a los conectores por MCP en red interna](0002-la-puerta-llama-a-los-conectores-por-mcp-en-red-interna.md)
@@ -45,3 +46,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0018 · Política de acceso a las fuentes](0018-politica-de-acceso-a-las-fuentes.md)
 - [ADR-0019 · Licencias por ítem y BY-SA por defecto](0019-licencias-por-item-y-by-sa-por-defecto.md)
 - [ADR-0020 · Gratuito al inicio](0020-gratuito-al-inicio.md)
+- [ADR-0021 · Open-Meteo mientras Terranova sea gratuito](0021-open-meteo-mientras-sea-gratuito.md)
