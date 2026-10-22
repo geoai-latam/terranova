@@ -1,0 +1,37 @@
+id: cce.secop1.paa_detalle
+titulo: "SECOP I, plan anual de adquisiciones (detalle)"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/azeg-sgqg.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP I, plan anual de adquisiciones (detalle). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# `contacto_responsable_adquisicion` no sale: es una persona (ADR-0014).
+url: https://www.datos.gov.co/resource/azeg-sgqg.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  idpaa: {nombre: id_paa, tipo: str, desc: "identificador del plan"}
+  id: {nombre: id_item, tipo: str, desc: "identificador del ítem"}
+  codigo_unspsc: {nombre: codigo_unspsc, tipo: str, desc: "código UNSPSC"}
+  descripcio_item: {nombre: descripcion, tipo: str, desc: "descripción del ítem"}
+  fecha_inicio: {nombre: fecha_inicio, tipo: str, desc: "fecha estimada de inicio (texto de la fuente)"}
+  duracion_estimada: {nombre: duracion, tipo: str, desc: "duración estimada"}
+  modalidad: {nombre: modalidad, tipo: str, desc: "modalidad"}
+  fuente_de_recursos: {nombre: fuente_recursos, tipo: str, desc: "fuente de los recursos"}
+  valor_estimado: {nombre: valor_estimado, tipo: float, desc: "valor estimado, en pesos"}
+  valor_estimado_vig_actual: {nombre: valor_vigencia_actual, tipo: float, desc: "valor estimado en la vigencia"}
+  requiere_vigencias_futuras: {nombre: vigencias_futuras, tipo: str, desc: "si requiere vigencias futuras"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
