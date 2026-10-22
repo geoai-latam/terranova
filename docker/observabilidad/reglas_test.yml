@@ -1,0 +1,42 @@
+# promtool test rules reglas_test.yml (también en CI): las alertas disparan cuando deben.
+rule_files:
+  - reglas.yml
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'rt_canario{fuente="pnn.runap", resultado="rojo"}'
+        values: '2x90'
+      - series: 'rt_canario{fuente="igac.catastro.terreno", resultado="verde"}'
+        values: '8x90'
+      - series: 'rt_circuito_abierto{fuente="usgs.sismos"}'
+        values: '1x20'
+      - series: 'rt_circuito_abierto{fuente="pnn.runap"}'
+        values: '0x20'
+    alert_rule_test:
+      # 8 de 10 verdes = 80 % < 95 % durante más de 1 h
+      - eval_time: 70m
+        alertname: CanariosBajoSLO
+        exp_alerts:
+          - exp_labels: {severidad: alta}
+            exp_annotations: {resumen: "Menos del 95 % de los canarios en verde"}
+      - eval_time: 15m
+        alertname: CircuitoAbierto
+        exp_alerts:
+          - exp_labels: {severidad: media, fuente: usgs.sismos}
+            exp_annotations: {resumen: "Cortacircuitos abierto para usgs.sismos hace más de 10 min"}
+  - interval: 1m
+    input_series:
+      # 1000 solicitudes por minuto, de las cuales 10 son error_interno: 99 % < 99,5 %
+      - series: 'rt_solicitudes_total{herramienta="igac_predio_en_punto", estado="encontrado", codigo=""}'
+        values: '0+990x90'
+      - series: 'rt_solicitudes_total{herramienta="igac_predio_en_punto", estado="error", codigo="error_interno"}'
+        values: '0+10x90'
+      - series: 'rt_solicitudes_total{herramienta="pnn_areas_protegidas_en_punto", estado="error", codigo="fuente_no_disponible"}'
+        values: '0+500x90'
+    alert_rule_test:
+      - eval_time: 70m
+        alertname: DisponibilidadBajoSLO
+        exp_alerts:
+          - exp_labels: {severidad: alta}
+            exp_annotations: {resumen: "Disponibilidad de la puerta bajo 99,5 % (errores propios)"}

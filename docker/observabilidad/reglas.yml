@@ -1,0 +1,71 @@
+# Alertas de los SLO (docs/specs/05-metricas-slo.md §12.1) y de operación (§12.2).
+# Ventanas cortas a propósito: con poco tráfico, una sola hora mala ya se ve.
+groups:
+  - name: terranova-slo
+    rules:
+      - alert: DisponibilidadBajoSLO
+        # errores propios (500); los 502/504 de una fuente no cuentan como nuestros
+        expr: |
+          1 - (
+            sum(rate(rt_solicitudes_total{codigo="error_interno"}[30m]))
+            / clamp_min(sum(rate(rt_solicitudes_total[30m])), 1e-9)
+          ) < 0.995
+        for: 30m
+        labels: {severidad: alta}
+        annotations:
+          resumen: "Disponibilidad de la puerta bajo 99,5 % (errores propios)"
+      - alert: LatenciaConCacheAlta
+        expr: |
+          histogram_quantile(0.95, sum by (le) (
+            rate(rt_latencia_segundos_bucket{servido_desde=~"cache|copia|curado"}[15m])
+          )) > 0.3
+        for: 15m
+        labels: {severidad: media}
+        annotations:
+          resumen: "p95 de respuestas desde caché, copia o curado sobre 300 ms"
+      - alert: LatenciaEnVivoAlta
+        expr: |
+          histogram_quantile(0.95, sum by (le, herramienta) (
+            rate(rt_latencia_segundos_bucket{servido_desde="fuente", herramienta!="ficha_lugar"}[30m])
+          )) > 5
+        for: 30m
+        labels: {severidad: media}
+        annotations:
+          resumen: "p95 en vivo de {{ $labels.herramienta }} sobre 5 s"
+      - alert: FichaLenta
+        expr: |
+          histogram_quantile(0.95, sum by (le) (
+            rate(rt_latencia_segundos_bucket{herramienta="ficha_lugar"}[1h])
+          )) > 15
+        for: 1h
+        labels: {severidad: media}
+        annotations:
+          resumen: "p95 de la ficha de un lugar sobre 15 s"
+      - alert: CanariosBajoSLO
+        expr: |
+          sum(rt_canario{resultado="verde"}) / clamp_min(sum(rt_canario), 1) < 0.95
+        for: 1h
+        labels: {severidad: alta}
+        annotations:
+          resumen: "Menos del 95 % de los canarios en verde"
+
+  - name: terranova-operacion
+    rules:
+      - alert: CircuitoAbierto
+        expr: rt_circuito_abierto == 1
+        for: 10m
+        labels: {severidad: media}
+        annotations:
+          resumen: "Cortacircuitos abierto para {{ $labels.fuente }} hace más de 10 min"
+      - alert: OutboxAtascado
+        expr: rt_outbox_pendientes > 1000
+        for: 15m
+        labels: {severidad: baja}
+        annotations:
+          resumen: "Más de 1000 eventos de uso sin enviar"
+      - alert: PuertaSinMetricas
+        expr: up{job="terranova"} == 0
+        for: 5m
+        labels: {severidad: alta}
+        annotations:
+          resumen: "Prometheus no puede leer {{ $labels.instance }}"

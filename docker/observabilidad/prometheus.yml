@@ -1,0 +1,14 @@
+# Prometheus de Terranova (F7.2): lee /metrics de cada réplica por la red interna (Caddy no lo deja
+# salir) y evalúa las alertas de los SLO de docs/specs/05-metricas-slo.md.
+global:
+  scrape_interval: 30s
+  evaluation_interval: 1m
+
+rule_files:
+  - /etc/prometheus/reglas.yml
+
+scrape_configs:
+  - job_name: terranova
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["puerta-a:8100", "puerta-b:8100"]

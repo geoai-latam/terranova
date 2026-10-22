@@ -22,6 +22,7 @@ from mcp.types import TextContent, ToolAnnotations
 from pydantic import PrivateAttr
 
 from terranova import ficha as ficha_lugar
+from terranova import metricas
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
@@ -170,14 +171,21 @@ async def ejecutar(
     Con identidad (la aplicación), el plan y los scopes salen de la llave; sin ella (pruebas en
     memoria), el plan sale de `TERRANOVA_PLAN`. Cada solicitud deja un evento de uso (F3.4).
     """
+    etiqueta = (
+        ficha if ficha in CATALOGO.herramientas or ficha == ficha_lugar.HERRAMIENTA else "otra"
+    )
+    inicio = time.monotonic()
     try:
         sobre = await _ejecutar(ficha, entrada, principal)
     except (ErrorEjecucion, ErrorEntrada) as exc:
         codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
         _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
+        metricas.SOLICITUDES.labels(etiqueta, "error", codigo).inc()
         raise
     servido = sobre.procedencia[0].servido_desde if sobre.procedencia else None
     _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
+    metricas.SOLICITUDES.labels(etiqueta, sobre.estado, "").inc()
+    metricas.LATENCIA.labels(etiqueta, servido or "ninguno").observe(time.monotonic() - inicio)
     return sobre
 
 
@@ -263,6 +271,7 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
         await cuota.devolver(principal.org, costo)
         raise
     await cuota.devolver(principal.org, costo - sobre.creditos)
+    metricas.CREDITOS.labels(principal.nivel).inc(sobre.creditos)
     return sobre
 
 
@@ -288,6 +297,7 @@ async def iniciar() -> None:
     outbox = OutboxSql(bd)
     canarios = RegistroCanarios(bd)
     curado = restricciones_desde_entorno()
+    _medir_al_raspar()
     _iniciados.update(conectores_desde_entorno())
     for nombre, c in _iniciados.items():
         if isinstance(c, ConectorMCP):
@@ -298,6 +308,19 @@ async def iniciar() -> None:
                 # fuente_no_disponible y el cortacircuitos protege
                 logger.warning("conector %s no disponible al arrancar", nombre, exc_info=True)
     usar_conectores(dict(_iniciados))
+
+
+def _medir_al_raspar() -> None:
+    """Lo que `/metrics` lee al momento: circuitos, último canario y outbox pendiente."""
+    metricas.AL_RASPAR.circuitos = lambda: [
+        (f, PROTECCION.abierto(f)) for f in sorted(PROTECCION.circuitos)
+    ]
+    metricas.AL_RASPAR.canarios = lambda: (
+        [(r.fuente_id, r.ok) for r in canarios.ultimos()] if canarios is not None else []
+    )
+    metricas.AL_RASPAR.outbox = lambda: (
+        outbox.pendientes() if isinstance(outbox, OutboxSql) else None
+    )
 
 
 async def detener() -> None:
