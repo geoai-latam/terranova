@@ -1,0 +1,151 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T20:59:53+00:00",
+ "herramienta": "igac_sector_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "CODIGO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/8"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_SECTOR"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "U_SECTOR",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CODIGO"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/8",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/8"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "CODIGO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/16"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.006835,
+           4.9137932
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO": "251750000"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_SECTOR"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "R_SECTOR",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CODIGO"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/16",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/16"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

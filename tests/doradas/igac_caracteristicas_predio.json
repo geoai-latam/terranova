@@ -1,0 +1,110 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:01:14+00:00",
+ "herramienta": "igac_caracteristicas_predio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "max_features": 200,
+    "out_fields": [
+     "NUMERO_PREDIAL",
+     "ZONA_FISICA_1",
+     "ZONA_ECONOMICA_1",
+     "AREA_TERRENO_1",
+     "AREA_CONSTRUIDA_1",
+     "USO_1",
+     "PISOS_1",
+     "HABITACIONES_1",
+     "BANOS_1",
+     "LOCALES_1",
+     "PUNTAJE_1"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/18",
+    "where": "NUMERO_PREDIAL = '251750000000000050067000000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "AREA_CONSTRUIDA_1": 2265,
+          "AREA_TERRENO_1": 37109.59,
+          "BANOS_1": 0,
+          "HABITACIONES_1": 0,
+          "LOCALES_1": 0,
+          "NUMERO_PREDIAL": "251750000000000050067000000000",
+          "PISOS_1": 3,
+          "PUNTAJE_1": 76,
+          "USO_1": 28,
+          "ZONA_ECONOMICA_1": "006",
+          "ZONA_FISICA_1": "035"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": null,
+         "properties": {
+          "AREA_CONSTRUIDA_1": 179.8,
+          "AREA_TERRENO_1": 1836.09,
+          "BANOS_1": 0,
+          "HABITACIONES_1": 0,
+          "LOCALES_1": 0,
+          "NUMERO_PREDIAL": "251750000000000050067000000000",
+          "PISOS_1": 1,
+          "PUNTAJE_1": 61,
+          "USO_1": 6,
+          "ZONA_ECONOMICA_1": "006",
+          "ZONA_FISICA_1": "069"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "REGISTRO_2"
+     }
+    ],
+    "facts": {
+     "capa": "REGISTRO_2",
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 200,
+      "out_fields": [
+       "NUMERO_PREDIAL",
+       "ZONA_FISICA_1",
+       "ZONA_ECONOMICA_1",
+       "AREA_TERRENO_1",
+       "AREA_CONSTRUIDA_1",
+       "USO_1",
+       "PISOS_1",
+       "HABITACIONES_1",
+       "BANOS_1",
+       "LOCALES_1",
+       "PUNTAJE_1"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/18",
+      "where": "NUMERO_PREDIAL = '251750000000000050067000000000'"
+     },
+     "filtro": "NUMERO_PREDIAL = '251750000000000050067000000000'",
+     "tipo_geometria": "tabla",
+     "total_en_servicio": 2,
+     "traidos": 2,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/18"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

@@ -166,3 +166,22 @@ def test_licencias_legibles() -> None:
         "licencia: dominio público de Estados Unidos.)"
         in catalogo.herramientas["usgs_sismos_en_zona"].descripcion
     )
+
+
+def test_corte_igac_se_lee_de_la_descripcion_no_del_nombre() -> None:
+    """G2: `…_IGAC_de_octubre` es el corte de octubre de 2025, aunque parezca el más nuevo."""
+    import importlib.util
+    from datetime import date
+    from pathlib import Path
+
+    ruta = Path(__file__).resolve().parents[1] / "scripts" / "corte_igac.py"
+    spec = importlib.util.spec_from_file_location("corte_igac", ruta)
+    assert spec is not None and spec.loader is not None
+    corte_igac = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(corte_igac)
+    leer = corte_igac.fecha_de_corte
+    assert leer("Información catastral a corte de 31 de octubre de 2025") == date(2025, 10, 31)
+    assert leer("… a corte de 30 de junio de 2026") == date(2026, 6, 30)
+    assert leer("sin fecha") is None and leer("corte de 3 de brumario de 2026") is None
+    fichas = corte_igac.fichas_catastrales()
+    assert len(fichas) >= 8 and len(set(fichas.values())) == 1  # todas en el mismo corte

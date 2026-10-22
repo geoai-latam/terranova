@@ -1,0 +1,78 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:01:21+00:00",
+ "herramienta": "igac_registro_predio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "max_features": 5,
+    "out_fields": [
+     "NUMERO_PREDIAL",
+     "NUMERO_PREDIAL_ANTERIOR",
+     "DIRECCION",
+     "DESTINO_ECONOMICO",
+     "AREA_TERRENO",
+     "AREA_CONSTRUIDA"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/17",
+    "where": "NUMERO_PREDIAL = '251750000000000050067000000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "AREA_CONSTRUIDA": 6572,
+          "AREA_TERRENO": 56069,
+          "DESTINO_ECONOMICO": "G",
+          "DIRECCION": "KASTILO",
+          "NUMERO_PREDIAL": "251750000000000050067000000000",
+          "NUMERO_PREDIAL_ANTERIOR": null
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "REGISTRO_1"
+     }
+    ],
+    "facts": {
+     "capa": "REGISTRO_1",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 5,
+      "out_fields": [
+       "NUMERO_PREDIAL",
+       "NUMERO_PREDIAL_ANTERIOR",
+       "DIRECCION",
+       "DESTINO_ECONOMICO",
+       "AREA_TERRENO",
+       "AREA_CONSTRUIDA"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/17",
+      "where": "NUMERO_PREDIAL = '251750000000000050067000000000'"
+     },
+     "filtro": "NUMERO_PREDIAL = '251750000000000050067000000000'",
+     "tipo_geometria": "tabla",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/17"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

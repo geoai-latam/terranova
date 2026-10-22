@@ -56,6 +56,16 @@
 | F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
 | F4.3 Rendimiento de la ficha | ✅ Las restricciones salen del dataset curado (PostGIS, `servido_desde: curado`). Tope de la ficha en 12 s (ADR-0023): lo que no llega sale `fuente_lenta` y sigue en segundo plano para la caché. En vivo (2026-10-22, 10 puntos nuevos en serie): p95 12,2 s ✓ (< 15 s), 7 de 10 `parcial` por la agrología del IGAC y la lentitud del catastro ese día; con caché, p95 0,02 s ✓ |
 
+## F5 · Expansión hasta las fuentes objetivo
+
+Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **24 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
+
+| Pieza u ola | Estado |
+|---|---|
+| G2 Corte mensual del IGAC | ✅ `scripts/corte_igac.py`: lee la fecha de corte de la descripción de cada servicio, no del nombre (`…_IGAC_de_octubre` es el corte de octubre de **2025**); con `--escribir` actualiza las fichas catastrales. Vigente al 2026-10-22: `06_2026` |
+| G5 Herramientas de la fábrica | 🟨 `docker/compose.desarrollo.yml` expone los conectores en 127.0.0.1 para grabar doradas desde el host |
+| Ola 1 · IGAC base catastral | 🟨 4 nuevas: `igac_registro_predio` (REGISTRO_1: dirección, destino económico, áreas), `igac_caracteristicas_predio` (REGISTRO_2: unidades y zonas homogéneas), `igac_perimetro_urbano_en_punto`, `igac_sector_en_punto`. Las tablas necesitan que arcgis-mcp las consulte (geo-copilot, rama `feat/arcgis-tablas`). En la fuente, `codigo_municipio` del perímetro está mal (Chía = 23175): se usan `DEPARTAMENTO_CODIGO` y `MUNICIPIO_CODIGO` |
+
 ## F7 · Operación (en paralelo desde F3)
 
 | Spec F7 | Estado |

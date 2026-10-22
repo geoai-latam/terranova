@@ -34,11 +34,15 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
+| `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_conflictos_uso_en_punto` | ¿Hay conflicto de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_construcciones_en_predio` | ¿Qué construcciones tiene registradas este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_manzana_en_punto` | ¿En qué manzana urbana del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_perimetro_urbano_en_punto` | ¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_predio_en_punto` | ¿Qué predio del catastro IGAC hay en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_registro_predio` | ¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_sector_en_punto` | ¿En qué sector catastral del IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vereda_en_punto` | ¿En qué vereda del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vocacion_uso_en_punto` | ¿Cuál es la vocación de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 

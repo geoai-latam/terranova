@@ -1,0 +1,34 @@
+id: igac.catastro.sector
+titulo: Sectores catastrales urbanos y rurales de la base catastral pública del gestor IGAC
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/6ca71458728f45988e2cd7aa5305a663?f=json
+  cita: "Este producto adopta la licencia pública internacional de Reconocimiento-CompartirIgual 4.0 de Creative Commons"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Base catastral pública del gestor"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# El nombre del servicio cambia cada mes (Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>); el
+# corte vigente lo descubre `scripts/corte_igac.py` (G2). Capas: 16 R_SECTOR, 8 U_SECTOR.
+url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  excluye:
+    - "11001 Bogotá (UAECD)"
+    - "05001 Medellín (gestor propio)"
+    - "76001 Cali (gestor propio)"
+  indice: cobertura_catastral
+datos_personales: ninguno
+estado: publicada
+campos:
+  CODIGO: {nombre: codigo_sector, tipo: str, desc: "código del sector catastral, 9 dígitos (municipio + zona + sector)"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
