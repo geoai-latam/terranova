@@ -33,6 +33,7 @@ class Principal:
     llave_id: str
     plan: Plan
     scopes: frozenset[str]
+    nivel: str = "con_llave"  # saldo mensual (ADR-0010): con_llave o ampliado
 
     def puede(self, familia: str) -> bool:
         return "*" in self.scopes or familia in self.scopes
@@ -55,6 +56,7 @@ class Registro(Protocol):
     def revocar(self, llave_id: str) -> bool: ...
     def listar(self, org: str | None = None) -> list[Llave]: ...
     def verificar(self, llave: str) -> Principal | None: ...
+    def fijar_nivel(self, org: str, nivel: str) -> None: ...
 
 
 def _ahora() -> str:
@@ -78,6 +80,21 @@ class RegistroSqlite:
                 plan TEXT NOT NULL, scopes TEXT NOT NULL, creada TEXT NOT NULL,
                 expira TEXT, revocada TEXT, ultimo_uso TEXT)"""
         )
+        self._bd.execute(
+            "CREATE TABLE IF NOT EXISTS orgs (org TEXT PRIMARY KEY, nivel TEXT NOT NULL)"
+        )
+
+    def fijar_nivel(self, org: str, nivel: str) -> None:
+        from terranova.cuota import NIVELES
+
+        if nivel not in NIVELES:
+            raise ValueError(f"nivel: uno de {sorted(NIVELES)}")
+        with self._candado:
+            self._bd.execute(
+                "INSERT INTO orgs VALUES (?, ?) "
+                "ON CONFLICT(org) DO UPDATE SET nivel = excluded.nivel",
+                (org, nivel),
+            )
 
     def _huella(self, llave: str) -> str:
         return hmac.new(self._pimienta, llave.encode(), hashlib.sha256).hexdigest()
@@ -142,7 +159,9 @@ class RegistroSqlite:
             self._bd.execute(
                 "UPDATE llaves SET ultimo_uso = ? WHERE llave_id = ?", (_ahora(), fila[0])
             )
-        return Principal(fila[1], fila[0], fila[2], frozenset(fila[3].split(",")))
+            nivel = self._bd.execute("SELECT nivel FROM orgs WHERE org = ?", (fila[1],)).fetchone()
+        org_nivel = nivel[0] if nivel else "con_llave"
+        return Principal(fila[1], fila[0], fila[2], frozenset(fila[3].split(",")), org_nivel)
 
 
 def registro_desde_entorno() -> RegistroSqlite:

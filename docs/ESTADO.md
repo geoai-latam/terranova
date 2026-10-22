@@ -42,7 +42,7 @@
 |---|---|
 | F3.1 Adaptadores REST + MCP desde el catálogo; perfiles por familia | ✅ `src/terranova/app.py`: una ruta `POST /v1/co/{familia}/{herramienta}` por ficha (`operationId` = herramienta, entrada con patrones), errores problem+json con `Retry-After`, catálogo público en `/v1/fuentes` y `/v1/herramientas`; MCP en `/mcp` y en un perfil por familia; **paridad REST ≡ MCP en las 20 herramientas** en CI. Verificado en vivo con uvicorn |
 | F3.2 Identidad: orgs, llaves, scopes, CLI | ✅ `src/terranova/identidad.py` y `terranova llaves crear/revocar/listar`: `rt_live_` (normal) y `rt_test_` (evaluación); solo se guarda el HMAC-SHA256 con pimienta; scopes por familia; vencimiento y `ultimo_uso`; la revocación surte efecto en la siguiente petición. REST y MCP sin llave dan 401 y sin scope 403; el catálogo es público. SQLite por ahora (Postgres con F3.7). Verificado en vivo |
-| F3.3 Cuota (Redis) y saldo | ⬜ |
+| F3.3 Cuota (Redis) y saldo | ✅ `src/terranova/cuota.py`: token bucket por llave (20 de ráfaga, 60/min; 429 `limite_tasa` con `Retry-After` y `RateLimit-*`) y saldo mensual por organización (con_llave 20 000, ampliado 200 000; `terranova orgs nivel`). El costo se reserva antes de llamar y se devuelve lo no cobrado. **50 llamadas simultáneas sin sobreconsumo**, en memoria y en Redis (Lua atómico, probado con fakeredis) |
 | F3.4 Medición (outbox) | ⬜ |
 | F3.5 Errores RFC 9457 y Schemathesis | 🟡 el formato ya sale en REST y MCP; falta Schemathesis |
 | F3.6 OpenAPI, `llms.txt`, server card | 🟡 OpenAPI generado; faltan `llms.txt` y la server card |
