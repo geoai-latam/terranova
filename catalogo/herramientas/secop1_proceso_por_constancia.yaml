@@ -1,0 +1,35 @@
+id: secop1_proceso_por_constancia
+version: 1
+familia: contratacion
+fuente: cce.secop1.procesos
+pregunta: "¿Qué es este proceso de SECOP I y a quién se adjudicó?"
+descripcion: >
+  Proceso de SECOP I por su número de constancia (p. ej. 19-12-10176235): entidad, modalidad,
+  estado, objeto, tipo, cuantía, contratista (con su documento, como lo publica la fuente:
+  ADR-0025), fechas, valor con adiciones y enlace. Una fila por adjudicación.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {constancia: constancia_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: f789-7hwg
+    portal: datos.gov.co
+    select: "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i"
+    where: "numero_de_constancia = '{constancia}'"
+    order: "uid"
+    max_filas: 1000
+  campos: [uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i]
+salida: Secop1ProcesoPorConstancia
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en f789-7hwg (numero_de_constancia = 19-12-10176235): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {constancia: "19-12-10176235"}
+  verdad: {constancia: "19-12-10176235", nit_entidad: "891855735", id_adjudicacion: "9296788"}
+  minimos: {numero_registros: 1}
+  campos: [constancia, contratista, cuantia_proceso, departamento, documento_contratista, entidad, estado, fecha_firma, id_adjudicacion, modalidad, municipio, nit_entidad, numero_contrato, numero_proceso, numero_registros, objeto, tipo_contrato, tipo_documento_contratista, uid, url_proceso, valor_con_adiciones, valor_contrato]
+  latencia_max_ms: 20000

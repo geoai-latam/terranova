@@ -1,0 +1,34 @@
+id: secop_convenio_interadministrativo
+version: 1
+familia: contratacion
+fuente: cce.secop.convenios
+pregunta: "¿Qué es este convenio interadministrativo de SECOP?"
+descripcion: >
+  Convenio interadministrativo (entre entidades públicas) de SECOP I o II por su identificador:
+  entidad, contratista (otra entidad), objeto, valor con adiciones, fechas, estado y enlace.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: contrato_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: s484-c9k3
+    portal: datos.gov.co
+    select: "id_contrato, id_proceso, nombre_entidad, departamento, municipio, modalidad_contratacion, tipo_de_contrato, objeto_contractual, valor_con_adiciones, contratista, identificacion_contratista, fecha_firma, estado_contrato, link"
+    where: "id_contrato = '{id_contrato}'"
+    order: "id_contrato"
+    max_filas: 1000
+  campos: [id_contrato, id_proceso, nombre_entidad, departamento, municipio, modalidad_contratacion, tipo_de_contrato, objeto_contractual, valor_con_adiciones, contratista, identificacion_contratista, fecha_firma, estado_contrato, link]
+salida: SecopConvenioInteradministrativo
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en s484-c9k3 (id_contrato = 26-22-117970): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_contrato: "26-22-117970"}
+  verdad: {id_contrato: "26-22-117970", entidad: "TOLIMA - ALCALDÍA MUNICIPIO DE ORTEGA"}
+  minimos: {numero_registros: 1}
+  campos: [contratista, departamento, documento_contratista, entidad, estado, fecha_firma, id_contrato, id_proceso, modalidad, municipio, numero_registros, objeto, tipo_contrato, url, valor_con_adiciones]
+  latencia_max_ms: 10000

@@ -1,0 +1,34 @@
+id: secop_compromisos_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.compromisos
+pregunta: "¿Qué compromisos presupuestales respaldan este contrato de SECOP II?"
+descripcion: >
+  Compromisos presupuestales (registros en SIIF) de un contrato de SECOP II: tipo, ítem,
+  valor, fecha, estado de la integración, balance y valor a liberar.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: skc9-met7
+    portal: datos.gov.co
+    select: "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar"
+    where: "id_contrato = '{id_contrato}'"
+    order: "fecha_registro_item, identificador_nico, c_digo_item"
+    max_filas: 1000
+  campos: [id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar]
+salida: SecopCompromisosContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en skc9-met7 (id_contrato = CO1.PCCNTR.100201): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_contrato: "CO1.PCCNTR.100201"}
+  verdad: {id_contrato: "CO1.PCCNTR.100201", id_compromiso: "CO1.SIIFC.100004"}
+  minimos: {numero_registros: 1}
+  campos: [balance, codigo_item, estado_integracion, fecha_registro, id_compromiso, id_contrato, numero_registros, tipo, valor_a_liberar, valor_item]
+  latencia_max_ms: 10000

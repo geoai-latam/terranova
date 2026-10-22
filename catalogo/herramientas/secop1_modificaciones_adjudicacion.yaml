@@ -1,0 +1,34 @@
+id: secop1_modificaciones_adjudicacion
+version: 1
+familia: contratacion
+fuente: cce.secop1.modificaciones_adjudicaciones
+pregunta: "¿Qué cambios tuvo esta adjudicación de SECOP I?"
+descripcion: >
+  Modificaciones de una adjudicación de SECOP I: campo, valor anterior y nuevo, fecha y
+  justificación.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_adjudicacion: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: u5b4-ae3s
+    portal: datos.gov.co
+    select: "id_adjudicacion, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio"
+    where: "id_adjudicacion = '{id_adjudicacion}'"
+    order: "fecha_modificacion, id_modificacion"
+    max_filas: 1000
+  campos: [id_adjudicacion, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio]
+salida: Secop1ModificacionesAdjudicacion
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en u5b4-ae3s (id_adjudicacion = 10878821): 3
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_adjudicacion: 10878821}
+  verdad: {id_adjudicacion: "10878821", id_modificacion: "1880943"}
+  minimos: {numero_registros: 3}
+  campos: [campo, fecha, id_adjudicacion, id_modificacion, justificacion, numero_registros, valor_anterior, valor_nuevo]
+  latencia_max_ms: 10000

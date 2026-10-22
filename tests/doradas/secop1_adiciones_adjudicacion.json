@@ -1,0 +1,63 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:08+00:00",
+ "herramienta": "secop1_adiciones_adjudicacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "7fix-nd37",
+    "max_filas": 1000,
+    "order": "fecha_firma, adicion_en_valor",
+    "portal": "datos.gov.co",
+    "select": "id_adjudicacion, adicion_en_valor, adicion_en_dias, adicion_en_meses, fecha_firma",
+    "where": "id_adjudicacion = '9378960'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "adicion_en_dias",
+       "adicion_en_meses",
+       "adicion_en_valor",
+       "fecha_firma",
+       "id_adjudicacion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "adicion_en_dias": "0",
+        "adicion_en_meses": "6",
+        "adicion_en_valor": "5000000",
+        "fecha_firma": "2019-12-19T00:00:00.000",
+        "id_adjudicacion": "9378960"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "7fix-nd37",
+     "consulta": {
+      "conjunto": "7fix-nd37",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_adjudicacion, adicion_en_valor, adicion_en_dias, adicion_en_meses, fecha_firma",
+      "where": "(id_adjudicacion = '9378960')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_adjudicacion = '9378960')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

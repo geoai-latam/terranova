@@ -1,0 +1,109 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:24+00:00",
+ "herramienta": "secop_facturas_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "ibyt-yi2f",
+    "max_filas": 1000,
+    "order": "fecha_factura, id_pago",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, id_pago, numero_de_factura, fecha_factura, valor_neto, valor_total, valor_a_pagar, estado, pago_confirmado, fecha_estiamda_de_pago",
+    "where": "id_contrato = 'CO1.PCCNTR.6232610'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estado",
+       "fecha_estiamda_de_pago",
+       "fecha_factura",
+       "id_contrato",
+       "id_pago",
+       "numero_de_factura",
+       "pago_confirmado",
+       "valor_a_pagar",
+       "valor_neto",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estado": "Pagado",
+        "fecha_estiamda_de_pago": "2024-05-01 18:00:00.0000000",
+        "fecha_factura": "2024-04-30 19:11:00.0000000",
+        "id_contrato": "CO1.PCCNTR.6232610",
+        "id_pago": "1",
+        "numero_de_factura": "01",
+        "pago_confirmado": true,
+        "valor_a_pagar": "738000",
+        "valor_neto": "738000",
+        "valor_total": "738000"
+       },
+       {
+        "estado": "Pagado",
+        "fecha_estiamda_de_pago": "2024-06-01 23:00:00.0000000",
+        "fecha_factura": "2024-05-30 14:02:00.0000000",
+        "id_contrato": "CO1.PCCNTR.6232610",
+        "id_pago": "2",
+        "numero_de_factura": "002",
+        "pago_confirmado": true,
+        "valor_a_pagar": "1845000",
+        "valor_neto": "1845000",
+        "valor_total": "1845000"
+       },
+       {
+        "estado": "Pagado",
+        "fecha_estiamda_de_pago": "2024-07-02 05:00:00.0000000",
+        "fecha_factura": "2024-06-28 23:00:00.0000000",
+        "id_contrato": "CO1.PCCNTR.6232610",
+        "id_pago": "3",
+        "numero_de_factura": "PAGO 003",
+        "pago_confirmado": true,
+        "valor_a_pagar": "1845000",
+        "valor_neto": "1845000",
+        "valor_total": "1845000"
+       },
+       {
+        "estado": "Pagado",
+        "fecha_estiamda_de_pago": "2024-08-01 19:00:00.0000000",
+        "fecha_factura": "2024-07-30 16:32:00.0000000",
+        "id_contrato": "CO1.PCCNTR.6232610",
+        "id_pago": "4",
+        "numero_de_factura": "PAGO 004",
+        "pago_confirmado": true,
+        "valor_a_pagar": "1107000",
+        "valor_neto": "1107000",
+        "valor_total": "1107000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "completo": true,
+     "conjunto": "ibyt-yi2f",
+     "consulta": {
+      "conjunto": "ibyt-yi2f",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, id_pago, numero_de_factura, fecha_factura, valor_neto, valor_total, valor_a_pagar, estado, pago_confirmado, fecha_estiamda_de_pago",
+      "where": "(id_contrato = 'CO1.PCCNTR.6232610')"
+     },
+     "cumplen_en_el_portal": 4,
+     "filas": 4,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.6232610')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

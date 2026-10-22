@@ -1,0 +1,33 @@
+id: secop1_origen_recursos_adjudicacion
+version: 1
+familia: contratacion
+fuente: cce.secop1.origen_recursos
+pregunta: "¿De dónde salen los recursos de esta adjudicación de SECOP I?"
+descripcion: >
+  Origen de los recursos de una adjudicación de SECOP I: fuente, BPIN, año, descripción y valor.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_adjudicacion: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 3xwx-53wt
+    portal: datos.gov.co
+    select: "id_adjudicacion, orig_rec_nombre, codigo_bpin, anno_bpin, descripcion_otros_recursos, valor"
+    where: "id_adjudicacion = '{id_adjudicacion}'"
+    order: "orig_rec_nombre, valor"
+    max_filas: 1000
+  campos: [id_adjudicacion, orig_rec_nombre, codigo_bpin, anno_bpin, descripcion_otros_recursos, valor]
+salida: Secop1OrigenRecursosAdjudicacion
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en 3xwx-53wt (id_adjudicacion = 10639119): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_adjudicacion: 10639119}
+  verdad: {id_adjudicacion: "10639119", origen: "Otros recursos"}
+  minimos: {numero_registros: 1}
+  campos: [anio_bpin, codigo_bpin, descripcion, id_adjudicacion, numero_registros, origen, valor]
+  latencia_max_ms: 20000

@@ -1,0 +1,33 @@
+id: secop_ubicaciones_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.ubicaciones
+pregunta: "¿Dónde se ejecuta este contrato de SECOP II?"
+descripcion: >
+  Lugares de ejecución de un contrato de SECOP II, con la entidad.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: gra4-pcp2
+    portal: datos.gov.co
+    select: "id_contrato, localizaci_n, nombre_entidad, nit_entidad"
+    where: "id_contrato = '{id_contrato}'"
+    order: "localizaci_n"
+    max_filas: 1000
+  campos: [id_contrato, localizaci_n, nombre_entidad, nit_entidad]
+salida: SecopUbicacionesContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en gra4-pcp2 (id_contrato = CO1.PCCNTR.3795896): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_contrato: "CO1.PCCNTR.3795896"}
+  verdad: {id_contrato: "CO1.PCCNTR.3795896", localizacion: "Colombia;  Valle del Cauca ;  Cali"}
+  minimos: {numero_registros: 1}
+  campos: [entidad, id_contrato, localizacion, nit_entidad, numero_registros]
+  latencia_max_ms: 10000

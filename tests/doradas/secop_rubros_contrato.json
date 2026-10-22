@@ -1,0 +1,65 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:26+00:00",
+ "herramienta": "secop_rubros_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "cwhv-7fnp",
+    "max_filas": 1000,
+    "order": "anno, codigo, identificador_compromiso",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, codigo, nombre, valor_actual, anno, identificador_compromiso",
+    "where": "id_contrato = 'CO1.PCCNTR.2514090'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anno",
+       "codigo",
+       "id_contrato",
+       "identificador_compromiso",
+       "nombre",
+       "valor_actual"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anno": "0",
+        "codigo": "No Definido",
+        "id_contrato": "CO1.PCCNTR.2514090",
+        "identificador_compromiso": "CO1.SIIFC.16494693",
+        "nombre": "NO DEFINIDO",
+        "valor_actual": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "cwhv-7fnp",
+     "consulta": {
+      "conjunto": "cwhv-7fnp",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, codigo, nombre, valor_actual, anno, identificador_compromiso",
+      "where": "(id_contrato = 'CO1.PCCNTR.2514090')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.2514090')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

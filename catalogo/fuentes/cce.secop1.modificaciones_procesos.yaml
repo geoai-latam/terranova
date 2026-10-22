@@ -1,0 +1,32 @@
+id: cce.secop1.modificaciones_procesos
+titulo: "SECOP I, modificaciones a procesos"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/36vw-pbq2.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP I, modificaciones a procesos. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/36vw-pbq2.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_proceso: {nombre: constancia, tipo: str, desc: "constancia del proceso"}
+  id_modificacion: {nombre: id_modificacion, tipo: str, desc: "identificador de la modificación"}
+  fecha_modificacion: {nombre: fecha, tipo: date, desc: "fecha"}
+  campo_modificado: {nombre: campo, tipo: str, desc: "campo modificado"}
+  valor_anterior: {nombre: valor_anterior, tipo: str, desc: "valor anterior"}
+  valor_nuevo: {nombre: valor_nuevo, tipo: str, desc: "valor nuevo"}
+  justificacion_cambio: {nombre: justificacion, tipo: str, desc: "justificación"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

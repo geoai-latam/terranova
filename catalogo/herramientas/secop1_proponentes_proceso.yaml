@@ -1,0 +1,34 @@
+id: secop1_proponentes_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop1.proponentes
+pregunta: "¿Quiénes se presentaron a este proceso de SECOP I y quién ganó?"
+descripcion: >
+  Proponentes de un proceso de SECOP I por su constancia: nombre, tipo y número de documento
+  (como los publica la fuente: ADR-0025), calificación y si fue adjudicado.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {constancia: constancia_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: tauh-5jvn
+    portal: datos.gov.co
+    select: "id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato"
+    where: "id_proceso = '{constancia}'"
+    order: "proponente"
+    max_filas: 1000
+  campos: [id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato]
+salida: Secop1ProponentesProceso
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en tauh-5jvn (id_proceso = 09-1-47723): 3
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {constancia: "09-1-47723"}
+  verdad: {constancia: "09-1-47723", proponente: "CORPORACION EDUCATIVA MINUTO DE DIOS"}
+  minimos: {numero_registros: 3}
+  campos: [adjudicado, calificacion, constancia, documento, numero_contrato, numero_registros, proponente, tipo_documento]
+  latencia_max_ms: 10000
