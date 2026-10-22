@@ -1,0 +1,829 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:12:24+00:00",
+ "herramienta": "supersociedades_caratula",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "6hqw-m3dm",
+    "max_filas": 1000,
+    "order": "fecha_corte, concepto, periodo",
+    "portal": "datos.gov.co",
+    "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+    "where": "nit = '830010665'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "concepto",
+       "fecha_corte",
+       "nit",
+       "numero_radicado",
+       "periodo",
+       "punto_entrada",
+       "taxonomia",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "concepto": "Celular corporativo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3134224588"
+       },
+       {
+        "concepto": "Ciudad de la direcci�n del domicilio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Ciudad de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Clasificaci�n Industrial Internacional Uniforme Versi�n 4 A.C",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "L6810 - Actividades inmobiliarias realizadas con bienes propios o arrendados"
+       },
+       {
+        "concepto": "Concepto del Revisor fiscal en su informe",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "03. LIMPIO"
+       },
+       {
+        "concepto": "Corte de cuentas seg�n estatutos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "01. ANUAL"
+       },
+       {
+        "concepto": "Departamento de la direcci�n del domicilio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Departamento de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Direcci�n del domicilio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "Calle 33 # 6 B 24 oficina 504"
+       },
+       {
+        "concepto": "Direcci�n de notificaci�n judicial registrada en C�mara de Comercio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "Calle 33 # 6 b 24 oficina 504"
+       },
+       {
+        "concepto": "El M�ximo �rgano Social aprob� distribuir utilidades del ejercicio inmediatamente anterior",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "SI"
+       },
+       {
+        "concepto": "El Revisor fiscal pertenece a una firma?",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "NO"
+       },
+       {
+        "concepto": "E-mail de la sociedad",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "hmelo@credicorpcapital.com"
+       },
+       {
+        "concepto": "Estado actual",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "ACTIVA"
+       },
+       {
+        "concepto": "Fecha de constituci�n (Aaaa-Mm-Dd)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1995-11-01"
+       },
+       {
+        "concepto": "Fecha de Corte",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2016-12-31"
+       },
+       {
+        "concepto": "La compa��a est� obligada a tener Revisor fiscal?",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "SI"
+       },
+       {
+        "concepto": "La sociedad es",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "05. ACTIVIDAD ECON�MICA DIFERENTE A LAS ANTERIORES"
+       },
+       {
+        "concepto": "Matricula mercantil n�mero",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "00671212"
+       },
+       {
+        "concepto": "NIT",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "830010665"
+       },
+       {
+        "concepto": "Objeto social principal",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "ACTIVIDADES INMOBILIARIAS"
+       },
+       {
+        "concepto": "Raz�n social de la sociedad",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "SECOLINSA S.A.S"
+       },
+       {
+        "concepto": "Tel�fono del domicilio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2325804"
+       },
+       {
+        "concepto": "Tipo societario",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "08. SOCIEDAD POR ACCIONES SIMPLIFICADA SAS"
+       },
+       {
+        "concepto": "Valor de las utilidades decretadas en miles de pesos (ejercicio inmediatamente anterior)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "0"
+       },
+       {
+        "concepto": "Celular corporativo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "3134224588"
+       },
+       {
+        "concepto": "Ciudad de la direcci�n del domicilio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Ciudad de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Clasificaci�n Industrial Internacional Uniforme Versi�n 4 A.C",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "L6810 - Actividades inmobiliarias realizadas con bienes propios o arrendados"
+       },
+       {
+        "concepto": "Concepto del Revisor fiscal en su informe",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "03. LIMPIO"
+       },
+       {
+        "concepto": "Corte de cuentas seg�n estatutos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "01. ANUAL"
+       },
+       {
+        "concepto": "Departamento de la direcci�n del domicilio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Departamento de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Direcci�n del domicilio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "CALLE 34 # 6-65"
+       },
+       {
+        "concepto": "Direcci�n de notificaci�n judicial registrada en C�mara de Comercio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "CALLE 34 # 6-65"
+       },
+       {
+        "concepto": "El M�ximo �rgano Social aprob� distribuir utilidades del ejercicio inmediatamente anterior",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "false"
+       },
+       {
+        "concepto": "El Revisor fiscal pertenece a una firma?",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "false"
+       },
+       {
+        "concepto": "E-mail de la sociedad",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "hmelo@credicorpcapital.com"
+       },
+       {
+        "concepto": "Estado actual",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "ACTIVA"
+       },
+       {
+        "concepto": "Fecha de constituci�n (Aaaa-Mm-Dd)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1995-11-01"
+       },
+       {
+        "concepto": "Fecha de Corte",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2017-12-31"
+       },
+       {
+        "concepto": "La compa��a est� obligada a tener Revisor fiscal?",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "true"
+       },
+       {
+        "concepto": "La sociedad es",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "07. ACTIVIDAD ECON�MICA DIFERENTE A LAS ANTERIORES"
+       },
+       {
+        "concepto": "Los estados financieros presentan informaci�n reexpresada?",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "true"
+       },
+       {
+        "concepto": "Matricula mercantil n�mero",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "00671212"
+       },
+       {
+        "concepto": "NIT",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "830010665"
+       },
+       {
+        "concepto": "Objeto social principal",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "ACTIVIDADES INMOBILIARIAS"
+       },
+       {
+        "concepto": "Raz�n social de la sociedad",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "SECOLINSA S.A.S."
+       },
+       {
+        "concepto": "Tel�fono del domicilio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "3394400"
+       },
+       {
+        "concepto": "Tipo societario",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "08. SOCIEDAD POR ACCIONES SIMPLIFICADA SAS"
+       },
+       {
+        "concepto": "Celular corporativo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "3134224588"
+       },
+       {
+        "concepto": "Ciudad de la direcci�n del domicilio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Ciudad de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "BOGOTA-D.C.-BOGOTA D.C."
+       },
+       {
+        "concepto": "Clasificaci�n Industrial Internacional Uniforme Versi�n 4 A.C",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "L6810 - Actividades inmobiliarias realizadas con bienes propios o arrendados"
+       },
+       {
+        "concepto": "Concepto del Revisor fiscal en su informe",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "03. LIMPIO"
+       },
+       {
+        "concepto": "Corte de cuentas seg�n estatutos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "01. ANUAL"
+       },
+       {
+        "concepto": "Departamento de la direcci�n del domicilio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Departamento de la direcci�n de notificaci�n judicial",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "BOGOTA D.C."
+       },
+       {
+        "concepto": "Direcci�n del domicilio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "CALLE 34 # 6-65"
+       },
+       {
+        "concepto": "Direcci�n de notificaci�n judicial registrada en C�mara de Comercio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "CALLE 34 # 6-65"
+       },
+       {
+        "concepto": "El M�ximo �rgano Social aprob� distribuir utilidades del ejercicio inmediatamente anterior",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "true"
+       },
+       {
+        "concepto": "El Revisor fiscal pertenece a una firma?",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "false"
+       },
+       {
+        "concepto": "E-mail de la sociedad",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "hmelo@credicorpcapital.com"
+       },
+       {
+        "concepto": "Estado actual",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "ACTIVA"
+       },
+       {
+        "concepto": "Estos estados financieros presentan informaci�n reexpresada?",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "true"
+       },
+       {
+        "concepto": "Fecha de constituci�n (Aaaa-Mm-Dd)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1995-11-01"
+       },
+       {
+        "concepto": "Fecha de Corte",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2018-12-31"
+       },
+       {
+        "concepto": "La compa��a est� obligada a tener Revisor fiscal?",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "true"
+       },
+       {
+        "concepto": "La informaci�n reexpresada corresponde a:",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1. Modificaci�n informaci�n corte anterior"
+       },
+       {
+        "concepto": "La sociedad es",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "07. ACTIVIDAD ECON�MICA DIFERENTE A LAS ANTERIORES"
+       },
+       {
+        "concepto": "Matricula mercantil n�mero",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "00671212"
+       },
+       {
+        "concepto": "NIT",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "830010665"
+       },
+       {
+        "concepto": "Objeto social principal",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "ACTIVIDADES INMOBILIARIAS"
+       },
+       {
+        "concepto": "Raz�n social de la sociedad",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "SECOLINSA S.A.S."
+       },
+       {
+        "concepto": "Tel�fono del domicilio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "3394400"
+       },
+       {
+        "concepto": "Tipo societario",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "08. SOCIEDAD POR ACCIONES SIMPLIFICADA SAS"
+       },
+       {
+        "concepto": "Valor de las utilidades decretadas en miles de pesos (ejercicio inmediatamente anterior)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01 - Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1275172"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 77,
+      "truncado": false,
+      "vistos": 77
+     },
+     "completo": true,
+     "conjunto": "6hqw-m3dm",
+     "consulta": {
+      "conjunto": "6hqw-m3dm",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+      "where": "(nit = '830010665')"
+     },
+     "cumplen_en_el_portal": 77,
+     "filas": 77,
+     "filtro_soql": "(nit = '830010665')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

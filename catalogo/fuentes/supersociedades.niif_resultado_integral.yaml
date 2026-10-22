@@ -1,0 +1,33 @@
+id: supersociedades.niif_resultado_integral
+titulo: "Estados financieros NIIF: Estado de resultado integral"
+entidad: Superintendencia de Sociedades
+competencia: recibe los estados financieros de las sociedades que vigila (Decreto 1736 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/prwj-nzxa.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Supersociedades, Estados financieros NIIF: Estado de resultado integral. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/prwj-nzxa.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  nit: {nombre: nit, tipo: str, desc: "NIT de la sociedad"}
+  fecha_corte: {nombre: fecha_corte, tipo: date, desc: "fecha de corte del reporte"}
+  periodo: {nombre: periodo, tipo: str, desc: "periodo al que corresponde el valor (texto de la fuente)"}
+  concepto: {nombre: concepto, tipo: str, desc: "concepto contable (taxonomía XBRL)"}
+  valor: {nombre: valor, tipo: float, desc: "valor tal como lo reporta la sociedad; la unidad la fija la taxonomía del reporte"}
+  punto_entrada: {nombre: punto_entrada, tipo: str, desc: "tipo de reporte (NIIF plenas, pymes, individuales…)"}
+  taxonomia: {nombre: taxonomia, tipo: str, desc: "taxonomía del reporte"}
+  numero_radicado: {nombre: radicado, tipo: str, desc: "número de radicado"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Supersociedades, theme: comercio, accrualPeriodicity: daily}

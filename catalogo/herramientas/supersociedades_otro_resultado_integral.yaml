@@ -1,0 +1,35 @@
+id: supersociedades_otro_resultado_integral
+version: 1
+familia: empresas
+fuente: supersociedades.niif_otro_resultado_integral
+pregunta: "¿Qué otro resultado integral reportó esta sociedad?"
+descripcion: >
+  Otro resultado integral de una sociedad vigilada por Supersociedades, por su NIT: concepto, periodo y valor
+  de cada reporte NIIF, del corte más antiguo al más reciente (hasta 1000 filas). La unidad la
+  fija la taxonomía de cada reporte. Las sociedades vigiladas por otra superintendencia no salen.
+  (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
+entrada: {nit: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: y3gh-x5g7
+    portal: datos.gov.co
+    select: "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado"
+    where: "nit = '{nit}'"
+    order: "fecha_corte, concepto, periodo"
+    max_filas: 1000
+  campos: [nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado]
+salida: SupersociedadesOtroResultadoIntegral
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en y3gh-x5g7 (nit = 830010665): 6
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {nit: 830010665}
+  verdad: {nit: "830010665", concepto: "Ganancia (p�rdida)", periodo: "2015"}
+  minimos: {numero_registros: 6}
+  campos: [concepto, fecha_corte, nit, numero_registros, periodo, punto_entrada, radicado, taxonomia, valor]
+  latencia_max_ms: 20000

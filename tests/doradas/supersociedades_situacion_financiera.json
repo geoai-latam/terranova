@@ -1,0 +1,1809 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:12:29+00:00",
+ "herramienta": "supersociedades_situacion_financiera",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "pfdp-zks5",
+    "max_filas": 1000,
+    "order": "fecha_corte, concepto, periodo",
+    "portal": "datos.gov.co",
+    "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+    "where": "nit = '830010665'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "concepto",
+       "fecha_corte",
+       "nit",
+       "numero_radicado",
+       "periodo",
+       "punto_entrada",
+       "taxonomia",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "concepto": "Activos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "438610"
+       },
+       {
+        "concepto": "Activos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "121705"
+       },
+       {
+        "concepto": "Activos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4654792"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2251"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3413"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1422"
+       },
+       {
+        "concepto": "Activos por impuestos corrientes, corriente",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "9160"
+       },
+       {
+        "concepto": "Activos por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "72728"
+       },
+       {
+        "concepto": "Activos por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "96793"
+       },
+       {
+        "concepto": "Activos por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "83143"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "42988"
+       },
+       {
+        "concepto": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "5326"
+       },
+       {
+        "concepto": "Cuentas comerciales por pagar y otras cuentas por pagar no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1209968"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "14924"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "89"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "30069"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "344742"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "76352"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6848"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-1266736"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-1490371"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-219827"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "191628"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "499428"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "286183"
+       },
+       {
+        "concepto": "Otros activos financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "640"
+       },
+       {
+        "concepto": "Otros activos financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "191145"
+       },
+       {
+        "concepto": "Otros activos financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2170233"
+       },
+       {
+        "concepto": "Otros activos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "41720"
+       },
+       {
+        "concepto": "Otros activos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "39387"
+       },
+       {
+        "concepto": "Otros activos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4647944"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "16133"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "12411"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "16625"
+       },
+       {
+        "concepto": "Otros pasivos financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2513466"
+       },
+       {
+        "concepto": "Otros pasivos financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "413498"
+       },
+       {
+        "concepto": "Otros pasivos financieros no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1505714"
+       },
+       {
+        "concepto": "Otros pasivos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6086"
+       },
+       {
+        "concepto": "Otros pasivos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "41308"
+       },
+       {
+        "concepto": "Otros pasivos no financieros corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "7328"
+       },
+       {
+        "concepto": "Pasivo por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "987655"
+       },
+       {
+        "concepto": "Pasivo por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1079659"
+       },
+       {
+        "concepto": "Pasivo por impuestos diferidos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "781"
+       },
+       {
+        "concepto": "Pasivos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "216673"
+       },
+       {
+        "concepto": "Pasivos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "90431"
+       },
+       {
+        "concepto": "Pasivos corrientes totales",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "498672"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "195663"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "49034"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "461275"
+       },
+       {
+        "concepto": "Patrimonio total",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3481592"
+       },
+       {
+        "concepto": "Patrimonio total",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3565757"
+       },
+       {
+        "concepto": "Patrimonio total",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4623056"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6478519"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3939500"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1872241"
+       },
+       {
+        "concepto": "Propiedades, planta y equipo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "15258"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "438610"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "121705"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4654792"
+       },
+       {
+        "concepto": "Total de activos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "7199386"
+       },
+       {
+        "concepto": "Total de activos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6359313"
+       },
+       {
+        "concepto": "Total de activos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6628223"
+       },
+       {
+        "concepto": "Total de activos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6760776"
+       },
+       {
+        "concepto": "Total de activos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6237608"
+       },
+       {
+        "concepto": "Total de activos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1973431"
+       },
+       {
+        "concepto": "Total de pasivos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3501121"
+       },
+       {
+        "concepto": "Total de pasivos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2703125"
+       },
+       {
+        "concepto": "Total de pasivos no corrientes",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1506495"
+       },
+       {
+        "concepto": "Total de patrimonio y pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "7199386"
+       },
+       {
+        "concepto": "Total de patrimonio y pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6359313"
+       },
+       {
+        "concepto": "Total de patrimonio y pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6628223"
+       },
+       {
+        "concepto": "Total pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "3717794"
+       },
+       {
+        "concepto": "Total pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2793556"
+       },
+       {
+        "concepto": "Total pasivos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2005167"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "216673"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015-ene-01",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "90431"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "498672"
+       },
+       {
+        "concepto": "Activos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "6628223"
+       },
+       {
+        "concepto": "Activos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1915992"
+       },
+       {
+        "concepto": "Activos corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "4654792"
+       },
+       {
+        "concepto": "Activos corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "50573"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1422"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "866"
+       },
+       {
+        "concepto": "Activos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1973431"
+       },
+       {
+        "concepto": "Activos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1865419"
+       },
+       {
+        "concepto": "Activos por impuestos diferidos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "83143"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "116"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "30069"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1480"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "6848"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "50457"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-219827"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-3840406"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "286183"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "303451"
+       },
+       {
+        "concepto": "Otros activos no financieros corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "4647944"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "16625"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "17104"
+       },
+       {
+        "concepto": "Otros pasivos financieros no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1505714"
+       },
+       {
+        "concepto": "Otros pasivos financieros no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "390377"
+       },
+       {
+        "concepto": "Otros pasivos no financieros corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "7328"
+       },
+       {
+        "concepto": "Parte no corriente de pr�stamos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1505714"
+       },
+       {
+        "concepto": "Parte no corriente de pr�stamos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "390377"
+       },
+       {
+        "concepto": "Pasivo por impuestos diferidos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "781"
+       },
+       {
+        "concepto": "Pasivos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2005167"
+       },
+       {
+        "concepto": "Pasivos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "896247"
+       },
+       {
+        "concepto": "Pasivos corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "498672"
+       },
+       {
+        "concepto": "Pasivos corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "505870"
+       },
+       {
+        "concepto": "Pasivos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1506495"
+       },
+       {
+        "concepto": "Pasivos no corrientes",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "390377"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "461275"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "504390"
+       },
+       {
+        "concepto": "Patrimonio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "4623056"
+       },
+       {
+        "concepto": "Patrimonio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1019745"
+       },
+       {
+        "concepto": "Patrimonio y pasivos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "6628223"
+       },
+       {
+        "concepto": "Patrimonio y pasivos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1915992"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1872241"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1847449"
+       },
+       {
+        "concepto": "Propiedades, planta y equipo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "0"
+       },
+       {
+        "concepto": "Propiedades, planta y equipo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "0"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "4654792"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "50573"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "498672"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "505870"
+       },
+       {
+        "concepto": "Activos corrientes totales",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "47657"
+       },
+       {
+        "concepto": "Activos corrientes totales",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "50573"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "0"
+       },
+       {
+        "concepto": "Activos intangibles distintos de la plusval�a",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "866"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1042732"
+       },
+       {
+        "concepto": "Capital emitido",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1894732"
+       },
+       {
+        "concepto": "Cuentas comerciales por cobrar y otras cuentas por cobrar corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "116"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "937"
+       },
+       {
+        "concepto": "Cuentas por pagar comerciales y otras cuentas por pagar",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1480"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "47657"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "50457"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "400185"
+       },
+       {
+        "concepto": "Ganancias acumuladas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-3840406"
+       },
+       {
+        "concepto": "Otras reservas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "303451"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "19399"
+       },
+       {
+        "concepto": "Otros activos no financieros no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "17104"
+       },
+       {
+        "concepto": "Otros pasivos no financieros no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "390377"
+       },
+       {
+        "concepto": "Pasivos corrientes totales",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "446796"
+       },
+       {
+        "concepto": "Pasivos corrientes totales",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "505870"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "445859"
+       },
+       {
+        "concepto": "Pasivos por impuestos corrientes, corriente",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "504390"
+       },
+       {
+        "concepto": "Patrimonio total",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1442917"
+       },
+       {
+        "concepto": "Patrimonio total",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1019745"
+       },
+       {
+        "concepto": "Prima de emisi�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2661968"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1822657"
+       },
+       {
+        "concepto": "Propiedades de inversi�n al costo menos depreciaci�n acumulada y deterioro",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1847449"
+       },
+       {
+        "concepto": "Propiedades, planta y equipo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "0"
+       },
+       {
+        "concepto": "Propiedades, planta y equipo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "0"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "47657"
+       },
+       {
+        "concepto": "Total activos corrientes distintos de los activos no corrientes o grupo de activos para su disposici�n clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "50573"
+       },
+       {
+        "concepto": "Total de activos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1889713"
+       },
+       {
+        "concepto": "Total de activos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1915992"
+       },
+       {
+        "concepto": "Total de activos no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1842056"
+       },
+       {
+        "concepto": "Total de activos no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1865419"
+       },
+       {
+        "concepto": "Total de pasivos no corrientes",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "390377"
+       },
+       {
+        "concepto": "Total de patrimonio y pasivos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1889713"
+       },
+       {
+        "concepto": "Total de patrimonio y pasivos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1915992"
+       },
+       {
+        "concepto": "Total pasivos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "446796"
+       },
+       {
+        "concepto": "Total pasivos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "896247"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "446796"
+       },
+       {
+        "concepto": "Total pasivos corrientes distintos de los pasivos incluidos en grupos de activos para su disposici�n clasificados como mantenidos para la venta",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "505870"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 175,
+      "truncado": false,
+      "vistos": 175
+     },
+     "completo": true,
+     "conjunto": "pfdp-zks5",
+     "consulta": {
+      "conjunto": "pfdp-zks5",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+      "where": "(nit = '830010665')"
+     },
+     "cumplen_en_el_portal": 175,
+     "filas": 175,
+     "filtro_soql": "(nit = '830010665')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

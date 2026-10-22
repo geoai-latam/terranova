@@ -1,0 +1,669 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:12:28+00:00",
+ "herramienta": "supersociedades_resultado_integral",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "prwj-nzxa",
+    "max_filas": 1000,
+    "order": "fecha_corte, concepto, periodo",
+    "portal": "datos.gov.co",
+    "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+    "where": "nit = '830010665'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "concepto",
+       "fecha_corte",
+       "nit",
+       "numero_radicado",
+       "periodo",
+       "punto_entrada",
+       "taxonomia",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1204520"
+       },
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2043725"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "147209"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "504357"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "147209"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "504357"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1036182"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1085768"
+       },
+       {
+        "concepto": "Ingreso (gasto) por impuestos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "231374"
+       },
+       {
+        "concepto": "Ingreso (gasto) por impuestos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "487090"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1204520"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "2043725"
+       },
+       {
+        "concepto": "Otros gastos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1199823"
+       },
+       {
+        "concepto": "Otros gastos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1163816"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1178694"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "710216"
+       },
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2043725"
+       },
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2288484"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "504357"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-2877097"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "504357"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-2877097"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Gasto (ingreso) por impuestos, operaciones continuadas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "487090"
+       },
+       {
+        "concepto": "Gasto (ingreso) por impuestos, operaciones continuadas",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "643852"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1085768"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "518526"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2043725"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "2288484"
+       },
+       {
+        "concepto": "Otros gastos, por funci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "1163816"
+       },
+       {
+        "concepto": "Otros gastos, por funci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "5083260"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "710216"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "436205"
+       },
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2391544"
+       },
+       {
+        "concepto": "Ganancia bruta",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2288484"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1275172"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1967202"
+       },
+       {
+        "concepto": "Ganancia (p�rdida), antes de impuestos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-2877097"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1967202"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) por actividades de operaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-2877097"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1275172"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones continuadas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Ganancia (p�rdida) procedente de operaciones discontinuadas",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "0"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "433822"
+       },
+       {
+        "concepto": "Gastos de administraci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "518526"
+       },
+       {
+        "concepto": "Ingreso (gasto) por impuestos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "692030"
+       },
+       {
+        "concepto": "Ingreso (gasto) por impuestos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "643852"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2391544"
+       },
+       {
+        "concepto": "Ingresos de actividades ordinarias",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "2288484"
+       },
+       {
+        "concepto": "Otros gastos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "32535"
+       },
+       {
+        "concepto": "Otros gastos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "5083260"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "42015"
+       },
+       {
+        "concepto": "Otros ingresos",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "436205"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 61,
+      "truncado": false,
+      "vistos": 61
+     },
+     "completo": true,
+     "conjunto": "prwj-nzxa",
+     "consulta": {
+      "conjunto": "prwj-nzxa",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+      "where": "(nit = '830010665')"
+     },
+     "cumplen_en_el_portal": 61,
+     "filas": 61,
+     "filtro_soql": "(nit = '830010665')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
