@@ -45,7 +45,7 @@
 | F3.3 Cuota (Redis) y saldo | ✅ `src/terranova/cuota.py`: token bucket por llave (20 de ráfaga, 60/min; 429 `limite_tasa` con `Retry-After` y `RateLimit-*`) y saldo mensual por organización (con_llave 20 000, ampliado 200 000; `terranova orgs nivel`). El costo se reserva antes de llamar y se devuelve lo no cobrado. **50 llamadas simultáneas sin sobreconsumo**, en memoria y en Redis (Lua atómico, probado con fakeredis) |
 | F3.4 Medición (outbox) | ✅ `src/terranova/medicion.py`: un evento por solicitud, con el `solicitud_id` como clave (sin duplicados); las fallas y la caché quedan con 0 créditos y el resultado o código. Si el outbox falla, la respuesta sale igual. `Idempotency-Key` (REST): mismo sobre, sin ejecutar, cobrar ni medir otra vez (E2E-10); la misma clave con otra entrada da 400 |
 | F3.5 Errores RFC 9457 y Schemathesis | ✅ Schemathesis sobre el OpenAPI publicado (`tests_lentos/`, job de CI aparte): 23 rutas sin 5xx ni respuestas fuera de esquema. Encontró y quedaron arreglados `false` aceptado como 0.0 (entrada estricta), un 500 con cuerpo vacío, errores de FastAPI fuera de problem+json y un 405 sin `Allow` |
-| F3.6 OpenAPI, `llms.txt`, server card | 🟡 OpenAPI generado; faltan `llms.txt` y la server card |
+| F3.6 OpenAPI, `llms.txt`, server card | ✅ OpenAPI 3.1, `/llms.txt` y `/.well-known/mcp/server-card.json` generados del catálogo; `docs/HERRAMIENTAS.md` también, con `--check` en CI |
 | F3.7 Compose de despliegue | ⬜ |
 
 ## Decisiones tomadas

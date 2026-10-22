@@ -170,3 +170,17 @@ async def test_la_aplicacion_reparte_mcp_y_rest() -> None:
     assert llegadas == ["mcp", "mcp", "territorio", "api", "api"]
     rutas = set(crear_aplicacion().mcp)
     assert rutas == {"/mcp"} | {f"/mcp/{f}" for f in puerta.FAMILIAS}
+
+
+@pytest.mark.anyio
+async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
+    llms = await rest.get("/llms.txt")
+    assert llms.status_code == 200 and llms.text.startswith("# Terranova")
+    for h in CATALOGO.herramientas.values():
+        assert f"/v1/co/{h.familia}/{h.id}" in llms.text
+    tarjeta = (await rest.get("/.well-known/mcp/server-card.json")).json()
+    assert (
+        tarjeta["transport"]["endpoint"] == "/mcp" and "2026-07-28" in tarjeta["protocolVersions"]
+    )
+    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas)
+    assert {p["endpoint"] for p in tarjeta["profiles"]} == {f"/mcp/{f}" for f in puerta.FAMILIAS}
