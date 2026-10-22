@@ -43,4 +43,4 @@ procedencia y su error propio:
 | Población | DANE (si se verifica) o WorldPop | DANE por verificar |
 | Contexto municipal | TerriData / SECOP resumen | según licencia |
 
-Tope de tiempo total 20 s; lo que no llega a tiempo sale como error de esa parte (`parcial`).
+Tope de tiempo total 12 s (ADR-0023); lo que no llega a tiempo sale como error de esa parte (`parcial`) y sigue en segundo plano para llenar la caché.

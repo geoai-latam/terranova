@@ -46,7 +46,7 @@ from terranova.errores import ErrorEjecucion, ErrorEntrada
 HERRAMIENTA = "ficha_lugar"
 VERSION = 1
 FAMILIA = "territorio"
-TOPE_S = 20.0
+TOPE_S = 12.0  # ADR-0023: p95 en vivo < 15 s sin depender de la agrología del IGAC
 TOPE_CREDITOS = 50
 PREGUNTA = "¿Qué hay en este lugar: predio, restricciones, suelo, cobertura y sismos?"
 DESCRIPCION = (
@@ -55,7 +55,7 @@ DESCRIPCION = (
     "campesina (ANT), vocación, capacidad y conflictos de uso del suelo (IGAC), cobertura (ESA "
     "WorldCover), sismos M≥3 del último año a ~55 km (USGS), población (DANE) y precio de la "
     "tierra rural (UPRA). Partes en paralelo, cada una con su procedencia y licencia; si una "
-    "falla, la ficha sale «parcial» con el error de esa parte. Tope de 20 s."
+    "falla, la ficha sale «parcial» con el error de esa parte. Tope de 12 s."
 )
 Punto = tuple[float, float]
 _EN_SEGUNDO_PLANO: set[asyncio.Future[Any]] = set()

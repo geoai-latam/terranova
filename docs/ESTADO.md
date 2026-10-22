@@ -1,10 +1,10 @@
 # Estado
 
-*Actualizado: 2026-10-21.*
+*Actualizado: 2026-10-22.*
 
 ## Dónde estamos
 
-**Gates F0 a F3 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-06 pasan contra el compose. En **F4**, el dataset de restricciones (F4.1) y la ficha (F4.2) están listos; falta el p95 en vivo (F4.3).
+**Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).
 
 | Spec F0 | Estado |
 |---|---|
@@ -54,7 +54,7 @@
 |---|---|
 | F4.1 Dataset de restricciones v0 | ✅ `src/terranova/datasets/restricciones.py` + `scripts/dataset_restricciones.py`: RUNAP (1934) + resguardos (989) + zonas de reserva campesina (30) = 2953 filas, CC BY-SA 4.0; pandera, GeoParquet, PostGIS (`curado.restricciones`) y contrato ODCS. **Misma huella tras volver a descargar** (`sha256:fc56a228…`). Ley 2.ª fuera por licencia |
 | F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
-| F4.3 Rendimiento de la ficha | 🟨 Las restricciones salen del dataset curado (PostGIS, `servido_desde: curado`, spec 03 §8.3): una consulta espacial en lugar de tres llamadas a RUNAP y ANT, con la misma verdad (Chingaza, Vaupés, Cabrera, y nada en Chía). En vivo (2026-10-22): E2E-07 ✓ en 7,5 s; cinco corridas de 7,6, 7,9, 20, 9,4 y 10,4 s, con p95 de 18 s ✗ (< 15 s). La corrida de 20 s es la agrología del IGAC en frío (ADR-0022). Con caché, p95 0,02 s ✓ |
+| F4.3 Rendimiento de la ficha | ✅ Las restricciones salen del dataset curado (PostGIS, `servido_desde: curado`). Tope de la ficha en 12 s (ADR-0023): lo que no llega sale `fuente_lenta` y sigue en segundo plano para la caché. En vivo (2026-10-22, 10 puntos nuevos en serie): p95 12,2 s ✓ (< 15 s), 7 de 10 `parcial` por la agrología del IGAC y la lentitud del catastro ese día; con caché, p95 0,02 s ✓ |
 
 ## F7 · Operación (en paralelo desde F3)
 
@@ -85,10 +85,9 @@
 
 ## Siguiente paso concreto
 
-1. **Gate F4:** solo lo bloquea el p95 en vivo, por la agrología del IGAC (ADR-0022). La pregunta
-   al IGAC sobre licencia y descarga de capacidad se sumó al borrador de derechos de petición
-   (`interno/`; la envía el dueño). Con la respuesta, se construye la copia como en F4.1 y se repite
-   `scripts/e2e_ficha.py`. Las restricciones ya salen del curado; la mediana en vivo es de 9,4 s.
+1. **F5 · expansión hasta la paridad** (plan en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md)): primero las dos piezas
+   genéricas (conector de copia y conector de scrape con estado) y la ola 1. La ola 6 espera permisos.
+   **F6** arranca en paralelo. La VM espera: todo se valida en local.
 2. **En paralelo:**
    - **F0.6 (hecho):** la V5 de amenazas con LLM real halló dos fallas del conector, corregidas en
      geo-copilot#38: el resumen de sismos y focos se calculaba antes de recortar al área (los
