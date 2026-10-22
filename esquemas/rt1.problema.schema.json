@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Error total (RFC 9457): REST `application/problem+json`; MCP `isError` con este objeto.",
+  "properties": {
+    "code": {
+      "enum": [
+        "parametro_invalido",
+        "zona_demasiado_grande",
+        "no_autenticado",
+        "sin_permiso",
+        "licencia_no_habilitada",
+        "no_existe",
+        "saldo_agotado",
+        "limite_tasa",
+        "fuente_no_disponible",
+        "fuente_respuesta_invalida",
+        "fuente_lenta",
+        "error_interno"
+      ],
+      "title": "Code",
+      "type": "string"
+    },
+    "detail": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Detail"
+    },
+    "fuente_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Fuente Id"
+    },
+    "param": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Param"
+    },
+    "reintentar_en_s": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reintentar En S"
+    },
+    "solicitud_id": {
+      "pattern": "^req_[0-9A-Za-z]{10,40}$",
+      "title": "Solicitud Id",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "integer"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "type": {
+      "default": "about:blank",
+      "title": "Type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "status",
+    "code",
+    "solicitud_id"
+  ],
+  "title": "Problema",
+  "type": "object"
+}

@@ -17,6 +17,16 @@
 | F0.7 Banco de verdades del producto (40 preguntas) | ⬜ |
 | F0.8 Solicitudes por derecho de petición | ⬜ (humano) |
 
+## F1 · Contrato y catálogo
+
+| Spec F1 | Estado |
+|---|---|
+| F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 38 pruebas (propiedades y casos), verificadas por mutación |
+| F1.2 Modelos del catálogo + validador CI | ⬜ |
+| F1.3 Códigos de error y completitud en el kit (GEO Copilot) | ⬜ |
+| F1.4 Catálogo inicial M1 (~25 herramientas) | ⬜ |
+| F1.5 Índice de cobertura catastral | ⬜ |
+
 ## Decisiones tomadas
 
 - Nombre **Terranova**; repo público `geoai-latam/terranova`.
@@ -36,12 +46,9 @@
 
 ## Siguiente paso concreto
 
-1. **F1.1:** modelos `rt/1` completos en Pydantic, a partir de `src/terranova/sobre.py`, con
-   exportación de JSON Schema y `--check` en CI, más las 10 invariantes como pruebas de propiedad
-   con Hypothesis.
-2. **F1.2:** modelos del catálogo y validador en CI. `catalogo/licencias/m1.yaml` pasa a las fichas
+1. **F1.2:** modelos del catálogo y validador en CI. `catalogo/licencias/m1.yaml` pasa a las fichas
    de fuente.
-3. **En paralelo:**
+2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
    - **F0.7:** banco de 40 verdades medidas en la fuente.

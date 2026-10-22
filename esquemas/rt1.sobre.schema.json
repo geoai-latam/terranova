@@ -1,0 +1,503 @@
+{
+  "$defs": {
+    "Artefacto": {
+      "additionalProperties": true,
+      "description": "Un artefacto de `GeoResult` v1. Se valida lo que el contrato exige; el resto pasa igual.",
+      "properties": {
+        "crs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crs"
+        },
+        "data": {
+          "default": null,
+          "title": "Data"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "title": "Artefacto",
+      "type": "object"
+    },
+    "Cache": {
+      "additionalProperties": false,
+      "properties": {
+        "acierto": {
+          "title": "Acierto",
+          "type": "boolean"
+        },
+        "edad_s": {
+          "minimum": 0,
+          "title": "Edad S",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "acierto",
+        "edad_s"
+      ],
+      "title": "Cache",
+      "type": "object"
+    },
+    "Completitud": {
+      "additionalProperties": false,
+      "properties": {
+        "motivo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Motivo"
+        },
+        "total": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "null si la fuente no dice cuántos hay",
+          "title": "Total"
+        },
+        "truncado": {
+          "title": "Truncado",
+          "type": "boolean"
+        },
+        "vistos": {
+          "minimum": 0,
+          "title": "Vistos",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "vistos",
+        "total",
+        "truncado"
+      ],
+      "title": "Completitud",
+      "type": "object"
+    },
+    "ErrorParte": {
+      "additionalProperties": false,
+      "description": "Error de una fuente dentro de un sobre `parcial` (regla 5).",
+      "properties": {
+        "codigo": {
+          "enum": [
+            "parametro_invalido",
+            "zona_demasiado_grande",
+            "no_autenticado",
+            "sin_permiso",
+            "licencia_no_habilitada",
+            "no_existe",
+            "saldo_agotado",
+            "limite_tasa",
+            "fuente_no_disponible",
+            "fuente_respuesta_invalida",
+            "fuente_lenta",
+            "error_interno"
+          ],
+          "title": "Codigo",
+          "type": "string"
+        },
+        "detalle": {
+          "title": "Detalle",
+          "type": "string"
+        },
+        "fuente_id": {
+          "title": "Fuente Id",
+          "type": "string"
+        },
+        "reintentar_en_s": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reintentar En S"
+        }
+      },
+      "required": [
+        "codigo",
+        "fuente_id",
+        "detalle"
+      ],
+      "title": "ErrorParte",
+      "type": "object"
+    },
+    "GeoResult": {
+      "additionalProperties": false,
+      "properties": {
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/Artefacto"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "facts": {
+          "additionalProperties": true,
+          "title": "Facts",
+          "type": "object"
+        },
+        "geo_result": {
+          "const": "1",
+          "default": "1",
+          "title": "Geo Result",
+          "type": "string"
+        },
+        "style_hint": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Style Hint"
+        }
+      },
+      "required": [
+        "artifacts"
+      ],
+      "title": "GeoResult",
+      "type": "object"
+    },
+    "Licencia": {
+      "additionalProperties": false,
+      "properties": {
+        "spdx": {
+          "description": "Identificador SPDX o LicenseRef-…",
+          "title": "Spdx",
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "uso_comercial": {
+          "enum": [
+            "si",
+            "no",
+            "por_verificar"
+          ],
+          "title": "Uso Comercial",
+          "type": "string"
+        }
+      },
+      "required": [
+        "spdx",
+        "uso_comercial"
+      ],
+      "title": "Licencia",
+      "type": "object"
+    },
+    "Procedencia": {
+      "additionalProperties": false,
+      "properties": {
+        "acto": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acto"
+        },
+        "atribucion": {
+          "title": "Atribucion",
+          "type": "string"
+        },
+        "cache": {
+          "$ref": "#/$defs/Cache"
+        },
+        "completitud": {
+          "$ref": "#/$defs/Completitud"
+        },
+        "conector": {
+          "title": "Conector",
+          "type": "string"
+        },
+        "consulta": {
+          "additionalProperties": true,
+          "title": "Consulta",
+          "type": "object"
+        },
+        "consultado_en": {
+          "format": "date-time",
+          "title": "Consultado En",
+          "type": "string"
+        },
+        "entidad": {
+          "title": "Entidad",
+          "type": "string"
+        },
+        "fuente_id": {
+          "pattern": "^[a-z0-9_]+(\\.[a-z0-9_]+)+$",
+          "title": "Fuente Id",
+          "type": "string"
+        },
+        "huella": {
+          "description": "sha256 de lo que aportó esta fuente a `datos`",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "title": "Huella",
+          "type": "string"
+        },
+        "licencia": {
+          "$ref": "#/$defs/Licencia"
+        },
+        "servido_desde": {
+          "enum": [
+            "fuente",
+            "copia",
+            "curado",
+            "cache",
+            "obsoleto"
+          ],
+          "title": "Servido Desde",
+          "type": "string"
+        },
+        "transformaciones": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Transformaciones",
+          "type": "array"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        },
+        "version_dataset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Dataset"
+        }
+      },
+      "required": [
+        "fuente_id",
+        "entidad",
+        "url",
+        "licencia",
+        "atribucion",
+        "servido_desde",
+        "consultado_en",
+        "consulta",
+        "completitud",
+        "cache",
+        "transformaciones",
+        "conector",
+        "huella"
+      ],
+      "title": "Procedencia",
+      "type": "object"
+    },
+    "ZonaUsada": {
+      "additionalProperties": false,
+      "properties": {
+        "crs": {
+          "anyOf": [
+            {
+              "enum": [
+                "EPSG:4326",
+                "EPSG:9377"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Crs"
+        },
+        "tipo": {
+          "enum": [
+            "punto",
+            "bbox",
+            "poligono",
+            "divipola",
+            "codigo"
+          ],
+          "title": "Tipo",
+          "type": "string"
+        },
+        "valor": {
+          "title": "Valor"
+        }
+      },
+      "required": [
+        "tipo",
+        "valor"
+      ],
+      "title": "ZonaUsada",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "avisos": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Avisos",
+      "type": "array"
+    },
+    "contrato": {
+      "const": "rt/1",
+      "default": "rt/1",
+      "title": "Contrato",
+      "type": "string"
+    },
+    "creditos": {
+      "minimum": 0,
+      "title": "Creditos",
+      "type": "integer"
+    },
+    "datos": {
+      "additionalProperties": true,
+      "title": "Datos",
+      "type": "object"
+    },
+    "entrada": {
+      "additionalProperties": true,
+      "title": "Entrada",
+      "type": "object"
+    },
+    "errores": {
+      "items": {
+        "$ref": "#/$defs/ErrorParte"
+      },
+      "title": "Errores",
+      "type": "array"
+    },
+    "estado": {
+      "enum": [
+        "encontrado",
+        "no_encontrado",
+        "fuera_de_cobertura",
+        "parcial"
+      ],
+      "title": "Estado",
+      "type": "string"
+    },
+    "geo_result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GeoResult"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "herramienta": {
+      "pattern": "^[a-z][a-z0-9_]*@[1-9][0-9]*$",
+      "title": "Herramienta",
+      "type": "string"
+    },
+    "huella": {
+      "description": "sha256 del JSON canónico de `datos` (regla 7)",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "title": "Huella",
+      "type": "string"
+    },
+    "procedencia": {
+      "items": {
+        "$ref": "#/$defs/Procedencia"
+      },
+      "minItems": 1,
+      "title": "Procedencia",
+      "type": "array"
+    },
+    "solicitud_id": {
+      "pattern": "^req_[0-9A-Za-z]{10,40}$",
+      "title": "Solicitud Id",
+      "type": "string"
+    },
+    "zona_usada": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ZonaUsada"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "solicitud_id",
+    "herramienta",
+    "estado",
+    "entrada",
+    "zona_usada",
+    "datos",
+    "huella",
+    "geo_result",
+    "procedencia",
+    "avisos",
+    "errores",
+    "creditos"
+  ],
+  "title": "Sobre",
+  "type": "object"
+}

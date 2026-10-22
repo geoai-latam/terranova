@@ -11,6 +11,7 @@
   "entrada": {"lon": -74.0262, "lat": 4.8619},
   "zona_usada": {"tipo": "punto", "valor": [-74.0262, 4.8619], "crs": "EPSG:4326"},
   "datos": {"codigo_predial": "251750000000000050067000000000", "area_terreno_m2": 0, "…": "…"},
+  "huella": "sha256:…",
   "geo_result": {"geo_result": "1", "artifacts": [{"kind": "feature_collection", "crs": "EPSG:4326", "data": {}}], "facts": {}},
   "procedencia": [{
     "fuente_id": "igac.catastro.terreno",
@@ -47,10 +48,13 @@
 5. `parcial ⇒ errores ≠ []` y cada error nombra su `fuente_id`.
 6. `servido_desde` ∈ {`fuente`, `copia`, `curado`, `cache`, `obsoleto`}; `obsoleto ⇒ aviso` y
    `consultado_en` es la fecha original.
-7. `huella` = sha256 del JSON canónico de `datos` (misma respuesta ⇒ misma huella).
+7. `huella` (en la raíz) = sha256 del JSON canónico de `datos`: claves ordenadas, sin espacios,
+   UTF-8. Misma respuesta ⇒ misma huella. La `huella` de cada `procedencia` es la de lo que aportó
+   esa fuente.
 8. Geometría siempre GeoJSON EPSG:4326 (lon, lat); EPSG:9377 solo si se pide y se declara.
-9. Texto libre de las fuentes: sin caracteres de control ni bidi, con largo máximo por campo y solo
-   dentro de `datos`.
+9. Texto libre de las fuentes: sin caracteres de control (salvo `
+` y `	`) ni marcas bidi, con
+   un máximo de 4000 caracteres por campo y solo dentro de `datos` y de las propiedades de la capa.
 10. Ningún campo fuera de la lista blanca del catálogo.
 
 ## 6.3 Códigos de error (estables)
@@ -71,3 +75,15 @@
 | `error_interno` | 500 | fallo nuestro | no |
 
 Mismo objeto en MCP (`isError: true`, `structuredContent` = problem+json).
+
+## 6.4 Implementación
+
+- Modelos en `src/terranova/contrato.py`. Las reglas 1 a 9 son validadores: un sobre que no las
+  cumple no se puede construir. La 10 es `fuera_de_lista_blanca(sobre, campos)`, con los campos que
+  declara el catálogo.
+- JSON Schema versionado en `esquemas/` (`uv run scripts/esquema.py`). El check de CI falla si
+  quedó viejo.
+- Pruebas de propiedad con Hypothesis en `tests/test_contrato.py`: hay una por regla, y se
+  comprobaron desactivando reglas a mano (mutación).
+- `uso_comercial` ∈ {`si`, `no`, `por_verificar`}, igual que en el catálogo. Los errores de una parte
+  (`errores[]`) llevan `codigo`, `fuente_id`, `detalle` y `reintentar_en_s`.
