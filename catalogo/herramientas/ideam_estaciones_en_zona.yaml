@@ -1,0 +1,41 @@
+id: ideam_estaciones_en_zona
+version: 1
+familia: ambiente
+fuente: ideam.estaciones
+pregunta: "¿Qué estaciones hidrometeorológicas hay en esta zona?"
+descripcion: >
+  Estaciones del Catálogo Nacional de Estaciones del IDEAM dentro de un rectángulo
+  [lon_min, lat_min, lon_max, lat_max]: código, nombre, categoría, tecnología, estado (activa o
+  suspendida), municipio, altitud, coordenadas y entidad propietaria. Incluye estaciones de otras
+  entidades (CAR, empresas de acueducto, particulares). Es el catálogo de estaciones, no sus
+  mediciones.
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: datos_consultar
+  argumentos:
+    id: hp9r-jxuu
+    portal: datos.gov.co
+    select: "codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
+    # `ubicaci_n` trae lat y lon invertidas: se filtra con las columnas numéricas
+    lat: latitud
+    lon: longitud
+    bbox: "{bbox}"
+    order: codigo
+    max_filas: 5000
+  campos: [codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad]
+salida: EstacionesEnZona
+creditos: 5
+canario:
+  # Medido el 2026-10-21 en https://www.datos.gov.co/resource/hp9r-jxuu.json con
+  # $where=latitud::number between 4.852 and 4.856 AND longitud::number between -74.035 and -74.030
+  # (0,8 s): una sola estación. El rectángulo de todo Chía (-74.10, 4.83, -73.98, 4.93) da 32.
+  entrada: {bbox: [-74.035, 4.852, -74.030, 4.856]}
+  verdad:
+    codigo_estacion: "2120500135"
+    nombre: "UNIVERSIDAD DE LA SABANA [2120500135]"
+    municipio: Chía
+    estado: Activa
+    entidad_propietaria: "INSTITUTO DE HIDROLOGÍA METEOROLOGÍA Y ESTUDIOS AMBIENTALES"
+  latencia_max_ms: 5000

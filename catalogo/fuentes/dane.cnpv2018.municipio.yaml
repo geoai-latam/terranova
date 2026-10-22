@@ -1,0 +1,38 @@
+id: dane.cnpv2018.municipio
+titulo: Censo Nacional de Población y Vivienda 2018, totales por municipio
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: autoridad estadística nacional; el CNPV 2018 es el último censo de población
+acto: null
+# No es una licencia abierta: es una «licencia de usuario final» con cita obligatoria que no menciona
+# la redistribución (catalogo/licencias/m1.yaml, dane.mgn_y_cnpv2018). Queda en evaluación hasta que
+# el DANE responda por escrito (F0.8).
+licencia:
+  spdx: null
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  verificada: null
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual"
+uso_comercial: por_verificar
+clase_acceso: api
+atribucion: "Fuente: DANE, Censo Nacional de Población y Vivienda 2018"
+protocolo: arcgis_rest
+conector: dane-mcp
+# Capa 800 (municipio) del CNPV integrado al MGN. Los campos de la fuente llevan prefijo S
+# (STP27_PERS personas, STVIVIENDA viviendas, TSP16_HOG hogares); dane-mcp los entrega ya con los
+# nombres de abajo, que son los que ve el ejecutor.
+url: https://geoportal.dane.gov.co/mparcgis/rest/services/MARCO_INTEGRADO/Serv_DatosCNPV2018_Integrados_MGN2018/MapServer
+modo: en_vivo
+# Cifras cerradas del censo 2018: no cambian hasta el próximo censo.
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P10Y}
+cobertura: {pais: CO}
+datos_personales: ninguno  # solo agregados municipales (reserva estadística)
+estado: borrador
+campos:
+  codigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, 5 dígitos (MPIO_CDPMP)"}
+  municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio (MPIO_CNMBR)"}
+  departamento: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
+  personas: {nombre: poblacion_censada, tipo: int, desc: "personas censadas en 2018 (STP27_PERS); no es una proyección"}
+  viviendas: {nombre: viviendas, tipo: int, desc: "viviendas censadas en 2018 (STVIVIENDA)"}
+  hogares: {nombre: hogares, tipo: int, desc: "hogares censados en 2018 (TSP16_HOG)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}

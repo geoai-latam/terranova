@@ -1,0 +1,41 @@
+id: upra.precio_tierra_rural
+titulo: Precios comerciales de la tierra rural agropecuaria (áreas incluidas y condicionadas)
+entidad: Unidad de Planificación Rural Agropecuaria (UPRA)
+competencia: planificación del ordenamiento social de la propiedad y del mercado de tierras rurales (Decreto 4145 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.datos.gov.co/api/views/rttb-pk7n.json
+  cita: '"licenseId": "CC_40_BY_SA"'
+uso_comercial: si
+clase_acceso: api
+# La licencia de UPRA pide citar la fecha de la versión de los datos: la de este conjunto es la de
+# su publicación y última carga de filas (`rowsUpdatedAt`), 2022-06-16. Los términos de datos.gov.co
+# piden además nombrar el portal y conservar la fecha de actualización.
+atribucion: "Fuente: UPRA, Precios comerciales de la tierra rural agropecuaria, versión de los datos del 2022-06-16. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/rttb-pk7n.json
+modo: en_vivo
+# El portal declara frecuencia anual, pero las filas no cambian desde 2022-06-16.
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  # Medido el 2026-10-21: 244 municipios de 13 departamentos (Antioquia, Atlántico, Bolívar, Boyacá,
+  # Cesar, Córdoba, Cundinamarca, Huila, La Guajira, Meta, Nariño, Quindío y Tolima).
+  excluye: ["los municipios fuera de los 244 que estudió UPRA (p. ej., 25175 Chía)"]
+datos_personales: ninguno
+estado: publicada
+campos:
+  cod_dane_m: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio (5 dígitos)"}
+  municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  departamen: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
+  categoria_: {nombre: categoria_mercado, tipo: str, desc: "área para el mercado de tierras: Incluida o Condicionada"}
+  rango_prec: {nombre: rango_precio, tipo: str, desc: "rango de precio comercial de la tierra tal como lo publica UPRA; CA y ZU son códigos de la fuente, no precios"}
+  cod_precio: {nombre: codigo_rango_precio, tipo: str, desc: "identificador del rango de precios"}
+  area_ha: {nombre: area_ha, tipo: float, desc: "área del polígono clasificado, en hectáreas"}
+  consecutiv: {nombre: consecutivo, tipo: int, desc: "identificador único del polígono en la fuente"}
+comportamiento: {p95_ms_medido: 1000, max_por_pagina: 50000}
+dcat: {publisher: UPRA, theme: agricultura, accrualPeriodicity: annual}

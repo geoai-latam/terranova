@@ -1,0 +1,26 @@
+id: igac_capacidad_uso_en_punto
+version: 1
+familia: territorio
+fuente: igac.agrologia.capacidad_uso
+pregunta: "¿Cuál es la capacidad de uso de la tierra en este punto?"
+descripcion: >
+  Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un punto: clase y subclase de
+  capacidad y su descripción. Cobertura nacional; a esa escala no sirve para un predio.
+  (Fuente: IGAC; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [UCCapacida, Descripcio]
+    max_features: 5
+  campos: [UCCapacida, Descripcio]
+salida: CapacidadUsoEnPunto
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {unidad_capacidad: "2c", descripcion_capacidad: "Capacidad alta para agricultura"}
+  latencia_max_ms: 5000

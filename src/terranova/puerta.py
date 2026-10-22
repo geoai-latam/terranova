@@ -16,10 +16,12 @@ from fastmcp.exceptions import ToolError
 from mcp.types import ToolAnnotations
 from pydantic import Field
 
+from terranova.catalogo import cargar_cobertura
 from terranova.conector import Conector, ConectorMCP, ErrorConector
 from terranova.contrato import (
     Cache,
     Completitud,
+    Estado,
     GeoResult,
     Licencia,
     Procedencia,
@@ -46,6 +48,13 @@ LICENCIA_IGAC_BASE = Licencia(
 )
 CREDITOS_EN_VIVO = 10  # ADR-0010
 CONECTOR_ID = "arcgis-mcp"
+# F1.5: municipio del punto y su gestor catastral. La capa no declara licencia (ADR-0019:
+# `por_verificar`); la puerta solo la usa para decidir el estado y nombrar al gestor.
+CAPA_GESTORES = (
+    "https://mapas.igac.gov.co/server/rest/services/catastro/Gestores_Catastrales/MapServer/1"
+)
+LICENCIA_POR_VERIFICAR = Licencia(spdx="LicenseRef-por-verificar", uso_comercial="por_verificar")
+COBERTURA = cargar_cobertura("cobertura_catastral")["municipios"]
 
 _conector: Conector | None = None
 
@@ -105,6 +114,51 @@ def _geo_result_limpio(zona: str, artefacto: dict[str, Any]) -> dict[str, Any]:
         "data": {"type": "FeatureCollection", "features": rasgos},
     }
     return {"geo_result": "1", "artifacts": [limpio], "facts": {}}
+
+
+async def _cobertura(
+    conector: Conector, lon: float, lat: float, consultado_en: Any
+) -> tuple[bool, str | None, Procedencia]:
+    """(fuera de cobertura, aviso, procedencia) para un punto donde no hubo predio."""
+    argumentos = {
+        "url": CAPA_GESTORES,
+        "bbox": [lon, lat, lon, lat],
+        "out_fields": ["divipola"],
+        "max_features": 1,
+    }
+    respuesta = await conector.llamar("arcgis_query_features", argumentos)
+    artefactos = respuesta.get("artifacts") or []
+    rasgos = artefactos[0]["data"]["features"] if artefactos else []
+    divipola = str(rasgos[0]["properties"].get("divipola") or "") if rasgos else ""
+    municipio = COBERTURA.get(divipola)
+    prov = Procedencia(
+        fuente_id="igac.catastro.gestores",
+        entidad="Instituto Geográfico Agustín Codazzi (IGAC)",
+        url=CAPA_GESTORES,
+        licencia=LICENCIA_POR_VERIFICAR,
+        atribucion="Fuente: IGAC, Gestores catastrales",
+        servido_desde="fuente",
+        consultado_en=consultado_en,
+        consulta=argumentos,
+        completitud=Completitud(vistos=len(rasgos), total=len(rasgos), truncado=False),
+        cache=Cache(acierto=False, edad_s=0),
+        transformaciones=[],
+        conector=CONECTOR_ID,
+        huella=huella({}),
+    )
+    if municipio is None:
+        return False, "El punto no cae en ningún municipio conocido.", prov
+    if municipio["rural"] or municipio["urbano"]:
+        return False, None, prov
+    nombre = municipio["municipio"] or divipola
+    if municipio["gestor"] == "IGAC":
+        aviso = (
+            f"{nombre} ({divipola}) figura con gestor IGAC, pero la base pública no trae sus datos."
+        )
+    else:
+        gestor = municipio["gestor"] or "un gestor sin identificar"
+        aviso = f"{nombre} ({divipola}) lo gestiona {gestor}; la base pública del IGAC no lo cubre."
+    return True, aviso, prov
 
 
 def _datos_predio(zona: str, atributos: dict[str, Any]) -> dict[str, Any]:
@@ -181,10 +235,22 @@ async def igac_predio_en_punto(
     avisos = []
     if any(p.completitud.total is None for p in procedencia):
         avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
+    estado: Estado = "encontrado" if datos else "no_encontrado"
+    if not datos:
+        # ¿no hay predio, o la base del IGAC no cubre ese municipio? (F1.5)
+        try:
+            fuera, aviso, prov = await _cobertura(conector, lon, lat, consultado_en)
+        except ErrorConector as exc:
+            raise ToolError(f"{exc.codigo}: {exc}") from exc
+        procedencia.append(prov)
+        if aviso:
+            avisos.append(aviso)
+        if fuera:
+            estado = "fuera_de_cobertura"
     return Sobre(
         solicitud_id=nueva_solicitud_id(),
         herramienta="igac_predio_en_punto@1",
-        estado="encontrado" if datos else "no_encontrado",
+        estado=estado,
         entrada={"lon": lon, "lat": lat},
         zona_usada=ZonaUsada(tipo="punto", valor=[lon, lat], crs="EPSG:4326"),
         datos=datos,
@@ -193,7 +259,7 @@ async def igac_predio_en_punto(
         procedencia=procedencia,
         avisos=avisos,
         errores=[],
-        creditos=CREDITOS_EN_VIVO,
+        creditos=0 if estado == "fuera_de_cobertura" else CREDITOS_EN_VIVO,
     )
 
 

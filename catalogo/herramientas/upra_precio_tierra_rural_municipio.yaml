@@ -1,0 +1,35 @@
+id: upra_precio_tierra_rural_municipio
+version: 1
+familia: estadisticas
+fuente: upra.precio_tierra_rural
+pregunta: "¿Cuánto vale la tierra rural en este municipio, según UPRA?"
+descripcion: >
+  Rangos de precio comercial de la tierra rural agropecuaria de un municipio (código DIVIPOLA),
+  según el estudio de UPRA: un registro por polígono, con su rango de precio, su categoría para el
+  mercado de tierras (incluida o condicionada) y su área en hectáreas. Solo cubre los 244 municipios
+  estudiados en 13 departamentos, con datos del 2022-06-16; Chía, por ejemplo, no está.
+  (Fuente: UPRA; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  tool: datos_consultar
+  argumentos:
+    id: rttb-pk7n
+    portal: datos.gov.co
+    # sin the_geom: la geometría de los polígonos pesa mucho y la pregunta es por el precio
+    select: "cod_dane_m, municipio, departamen, categoria_, rango_prec, cod_precio, area_ha, consecutiv"
+    where: "cod_dane_m = '{municipio_divipola}'"
+    order: consecutiv
+    max_filas: 5000  # el municipio con más polígonos (73168) tiene 3271
+  campos: [cod_dane_m, municipio, departamen, categoria_, rango_prec, cod_precio, area_ha, consecutiv]
+salida: PrecioTierraRuralMunicipio
+# La puerta los calcula sobre las filas: número de polígonos y suma de `area_ha`.
+derivados: [poligonos, area_ha_total]
+creditos: 5
+canario:
+  # Medido el 2026-10-21 en
+  # https://www.datos.gov.co/resource/rttb-pk7n.json?$where=cod_dane_m='25214' (0,6 s): 116 polígonos,
+  # 4315,86 ha; el primero por `consecutiv` es el 19 (Mayor a 250 - hasta 300, Condicionada).
+  entrada: {municipio_divipola: "25214"}
+  verdad: {municipio: Cota, departamento: Cundinamarca, poligonos: 116, area_ha_total: 4315.86}
+  latencia_max_ms: 5000

@@ -1,0 +1,34 @@
+id: igac.agrologia.vocacion_uso
+titulo: Vocación de uso de las tierras de Colombia (escala 1:100.000)
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: autoridad nacional de agrología (Subdirección de Agrología)
+acto: Resolución 616 de 2020
+# El ítem del servicio trae licenseInfo vacío; manda la Res. 616 (art. 3: agrología nacional; art. 7:
+# CC BY 4.0). Ver catalogo/licencias/m1.yaml, entrada igac.res616.datos_abiertos.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.igac.gov.co/sites/default/files/transparencia/normograma/resolucion_616_de_2020.pdf
+  cita: "ARTÍCULO 7º. LICENCIA CREATIVE COMMONS CC-BY 4.0. Se adopta la Licencia Creative Commons CC-BY 4.0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Subdirección de Agrología"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Capa 0 Vocacion_Uso_Tierras, de la obra Suelos y Tierras de Colombia 2016. El campo Area no
+# declara unidad: queda fuera.
+url: https://mapas.igac.gov.co/server/rest/services/agrologia/vocaciondeusoterritorionacional/MapServer
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  UCVocacion: {nombre: unidad_vocacion, tipo: str, desc: "símbolo de la unidad de vocación (p. ej. CTIf)"}
+  Vocacion: {nombre: vocacion, tipo: str, desc: "clase de vocación: agrícola, ganadera, agroforestal, forestal o de conservación"}
+  Uso_principal: {nombre: uso_principal, tipo: str, desc: "uso principal que debe tener la tierra"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}

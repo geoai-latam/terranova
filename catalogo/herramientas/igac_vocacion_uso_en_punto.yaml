@@ -1,0 +1,27 @@
+id: igac_vocacion_uso_en_punto
+version: 1
+familia: territorio
+fuente: igac.agrologia.vocacion_uso
+pregunta: "¿Cuál es la vocación de uso de la tierra en este punto?"
+descripcion: >
+  Vocación de uso de las tierras (IGAC, escala 1:100.000, Suelos y Tierras de Colombia 2016) en
+  un punto: unidad, clase de vocación (agrícola, ganadera, agroforestal, forestal o de
+  conservación) y uso principal. Cobertura nacional; a esa escala no sirve para un predio.
+  (Fuente: IGAC; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [UCVocacion, Vocacion, Uso_principal]
+    max_features: 5
+  campos: [UCVocacion, Vocacion, Uso_principal]
+salida: VocacionUsoEnPunto
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {unidad_vocacion: CTIf, vocacion: "Agrícola", uso_principal: "Cultivos transitorios intensivos de clima frío"}
+  latencia_max_ms: 5000

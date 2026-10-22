@@ -1,0 +1,36 @@
+id: secop_contratos_municipio
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto?"
+descripcion: >
+  Número de contratos de SECOP II y su valor total, en pesos, de las entidades estatales con sede en
+  un municipio (nombre del municipio y del departamento, como los escribe SECOP, con tildes). Cuenta
+  todos los años y estados; no incluye SECOP I. El municipio es el de la entidad contratante, no el
+  de ejecución.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {municipio: nombre, departamento: nombre}
+consulta:
+  operacion: buscar
+  tool: datos_consultar
+  argumentos:
+    id: jbjy-vk9h
+    portal: datos.gov.co
+    # agregado sin $group (el conector no lo acepta): una sola fila con los dos alias
+    select: "count(*) as contratos, sum(valor_del_contrato) as valor_total"
+    where: "ciudad = '{municipio}' AND departamento = '{departamento}'"
+    max_filas: 1
+  campos: [ciudad, departamento, valor_del_contrato]
+salida: ContratosMunicipio
+# Los dos alias del `select`: la puerta los pasa tal cual (no son columnas de la fuente).
+derivados: [contratos, valor_total]
+creditos: 5
+canario:
+  # Medido el 2026-10-21 (22:16 hora de Colombia) en https://www.datos.gov.co/resource/jbjy-vk9h.json
+  # ?$select=count(*) as contratos, sum(valor_del_contrato) as valor_total
+  # &$where=ciudad='Chía' AND departamento='Cundinamarca' (0,8 s): 12 149 contratos,
+  # $1 289 946 058 879,80. ESTADO.md tenía 12 147 y $1,29 billones. El total crece cada día: la
+  # verdad es un mínimo, no un valor exacto.
+  entrada: {municipio: Chía, departamento: Cundinamarca}
+  minimos: {contratos: 12149, valor_total: 1289946058879.80}
+  latencia_max_ms: 10000

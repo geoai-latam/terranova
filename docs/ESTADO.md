@@ -24,8 +24,8 @@
 | F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 38 pruebas (propiedades y casos), verificadas por mutación |
 | F1.2 Modelos del catálogo + validador CI | ✅ `src/terranova/catalogo.py` + `scripts/validar_catalogo.py` en `make check`; 19 reglas rotas probadas; semilla: `igac.catastro.terreno` e `igac_predio_en_punto` |
 | F1.3 Códigos de error y completitud en el kit (GEO Copilot) | 🟡 kit y `arcgis-mcp` en geo-copilot#45; la puerta ya lee `codigo` y `completitud` (los `fuente_*` pasan, el resto es `error_interno`) |
-| F1.4 Catálogo inicial M1 (~25 herramientas) | ⬜ |
-| F1.5 Índice de cobertura catastral | ⬜ |
+| F1.4 Catálogo inicial M1 | ✅ 18 fuentes y 20 herramientas, cada canario medido en la fuente el 2026-10-21; las fichas con `where` usan tipos con patrón (no hay `str` libre dentro de un texto: inyección) |
+| F1.5 Índice de cobertura catastral | ✅ `catalogo/cobertura/cobertura_catastral.yaml`, medido por los sectores de la base: 780 municipios con datos. Bogotá y El Carmen de Viboral dan `fuera_de_cobertura` (0 créditos), verificado en vivo |
 
 ## Decisiones tomadas
 
@@ -46,9 +46,11 @@
 
 ## Siguiente paso concreto
 
-1. **F1.3** (en GEO Copilot, `geo_mcp_kit`): códigos de error estables en `ToolRunner` y el bloque
-   `consulta`/`completitud` en los `facts`.
-2. **F1.4:** catálogo M1 (~25 herramientas) a partir de `catalogo/licencias/m1.yaml`.
+1. **Cerrar el gate F1:** falta que los conectores M1 restantes (`datos-abiertos-mcp`, `dane-mcp`,
+   `imagery-mcp` y `amenazas-mcp`, que espera el PR geo-copilot#38) emitan `completitud`. Los códigos
+   de error ya salen de todos por el `ToolRunner` (geo-copilot#45).
+2. **F2.1:** ejecutor genérico, catálogo → conector → lista blanca → `rt/1`, con pruebas doradas.
+   Reemplaza la puerta escrita a mano.
 3. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
@@ -81,6 +83,16 @@
 
 - IGAC: `codigo_municipio` errado en la fuente (Chía sale `23175`). Hace falta un canario en F1.
 - IGAC: el último corte mensual es `06_2026`; revisar `Base_Catastral_Publica_IGAC_de_octubre` en F1.5.
+
+- IGAC: El Carmen de Viboral (05148) figura con gestor IGAC y no tiene datos en la base; 63 municipios
+  están igual. Por eso la cobertura se mide y no sale del registro de gestores.
+- IDEAM `hp9r-jxuu`: la columna `ubicaci_n` trae latitud y longitud cruzadas; la herramienta usa
+  `latitud`/`longitud`.
+- SECOP: los totales de un municipio crecen cada día, así que el canario usa `minimos`. Las peticiones
+  tienen que ir en UTF-8 («Chía»).
+- FIRMS y GloFAS no tienen ventana fija para medir una verdad: sin herramienta en el catálogo hasta que
+  haya canarios estructurales (F2).
+- Minambiente: las reservas forestales con geometría no tienen licencia; RUNAP ya las cubre (BY-SA).
 
 ## Cómo correr las comprobaciones
 

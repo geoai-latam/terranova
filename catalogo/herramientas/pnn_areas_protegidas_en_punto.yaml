@@ -1,0 +1,29 @@
+id: pnn_areas_protegidas_en_punto
+version: 1
+familia: ambiente
+fuente: pnn.runap
+pregunta: "¿Qué áreas protegidas del RUNAP contienen este punto?"
+descripcion: >
+  Áreas protegidas inscritas en el RUNAP que contienen un punto: nombre, categoría de manejo,
+  autoridad ambiental, área según el acto y fecha de inscripción. Cubre todo el país y todas las
+  categorías del SINAP (nacionales, regionales y reservas de la sociedad civil inscritas); un área
+  declarada que aún no esté inscrita no aparece. Puede devolver varias si se traslapan.
+  (Fuente: PNN; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+    max_features: 20
+  campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+salida: AreasProtegidasEnPunto
+creditos: 10
+canario:
+  # PNN Chingaza; medido el 2026-10-21 en la capa 0 (punto, esriSpatialRelIntersects), 0,6 s.
+  entrada: {lon: -73.75, lat: 4.55}
+  verdad: {nombre: Chingaza, categoria: Parque Nacional Natural}
+  latencia_max_ms: 5000

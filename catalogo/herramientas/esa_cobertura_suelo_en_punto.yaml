@@ -1,0 +1,28 @@
+id: esa_cobertura_suelo_en_punto
+version: 1
+familia: ambiente
+fuente: esa.worldcover
+pregunta: "¿Qué cobertura del suelo hay alrededor de este punto?"
+descripcion: >
+  Cobertura del suelo de ESA WorldCover 2021 (10 m) en el entorno de un punto (un cuadro de unos
+  1,1 km de lado centrado en él): la clase dominante y el porcentaje de cada clase. Es un mapa de
+  2021: no muestra cambios posteriores.
+  (Fuente: ESA WorldCover; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  # Con un punto, imagery-mcp toma su entorno de ±0,005° y cuenta todo el cuadro.
+  tool: imagery_land_cover
+  argumentos:
+    aoi_geojson: {type: Point, coordinates: ["{lon}", "{lat}"]}
+  campos: [clase, codigo, km2, porcentaje]
+salida: CoberturaSueloEnPunto
+# La clase dominante es la de mayor área (la primera fila que da el conector).
+derivados: [clase_dominante, codigo_clase_dominante]
+creditos: 20
+# Medido el 2026-10-22 (UTC) leyendo la ventana ±0,005° de ESA_WorldCover_10m_2021_v200_N03W075_Map.tif
+# (Kennedy, Bogotá): 50 Construido 90,8 %, 30 Pastizal 5,2 %, 10 Árboles 2,7 %; el píxel del punto es 50.
+canario:
+  entrada: {lon: -74.152, lat: 4.628}
+  verdad: {codigo_clase_dominante: 50, clase_dominante: Construido}
+  latencia_max_ms: 20000

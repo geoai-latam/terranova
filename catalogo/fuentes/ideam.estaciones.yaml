@@ -1,0 +1,44 @@
+id: ideam.estaciones
+titulo: Catálogo Nacional de Estaciones del IDEAM
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: red hidrometeorológica nacional (Ley 99 de 1993, art. 17)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.datos.gov.co/api/views/hp9r-jxuu.json
+  cita: '"licenseId": "CC_40_BY_SA"'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IDEAM, Catálogo Nacional de Estaciones. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/hp9r-jxuu.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura:
+  pais: CO
+  # El catálogo lista estaciones de IDEAM y de otras entidades (CAR, EAAB, particulares); el campo
+  # `entidad` dice de quién es cada una. La licencia es la del conjunto que publica IDEAM.
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+# La columna de ubicación `ubicaci_n` trae la latitud y la longitud invertidas (medido el
+# 2026-10-21): el filtro por zona usa las columnas numéricas `latitud` y `longitud`.
+campos:
+  codigo: {nombre: codigo_estacion, tipo: str, desc: "código de la estación en el catálogo IDEAM"}
+  nombre: {nombre: nombre, tipo: str, desc: "nombre de la estación (incluye el código entre corchetes)"}
+  categoria: {nombre: categoria, tipo: str, desc: "categoría: pluviométrica, limnigráfica, climatológica, etc."}
+  tecnologia: {nombre: tecnologia, tipo: str, desc: "convencional, o automática con o sin telemetría"}
+  estado: {nombre: estado, tipo: str, desc: "estado de funcionamiento: Activa, Suspendida, etc."}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento donde está la estación"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio donde está la estación"}
+  altitud: {nombre: altitud_m, tipo: float, desc: "altitud sobre el nivel del mar, en metros"}
+  latitud: {nombre: lat, tipo: float, desc: "latitud en grados decimales (MAGNA-SIRGAS)"}
+  longitud: {nombre: lon, tipo: float, desc: "longitud en grados decimales (MAGNA-SIRGAS)"}
+  fecha_instalacion: {nombre: fecha_instalacion, tipo: str, desc: "fecha de instalación como la publica la fuente (dd/mm/aaaa)"}
+  fecha_suspension: {nombre: fecha_suspension, tipo: str, desc: "fecha de suspensión como la publica la fuente (dd/mm/aaaa); vacía si sigue activa"}
+  entidad: {nombre: entidad_propietaria, tipo: str, desc: "entidad dueña de la estación"}
+comportamiento: {p95_ms_medido: 1200, max_por_pagina: 50000, orden_coordenadas: lon_lat}
+dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: daily}

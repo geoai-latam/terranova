@@ -1,0 +1,53 @@
+id: cce.secop2.contratos
+titulo: SECOP II, contratos electrónicos
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.datos.gov.co/api/views/jbjy-vk9h.json
+  cita: '"licenseId": "CC_40_BY_SA"'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II - Contratos Electrónicos. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/jbjy-vk9h.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura:
+  pais: CO
+  excluye: ["contratos de SECOP I y de la Tienda Virtual del Estado (otros conjuntos)"]
+# ADR-0014 y spec 06 §13.3: el contratista está en divulgación obligatoria, así que su nombre y el
+# tipo de documento salen. La lista blanca no puede enmascarar según el tipo de documento, de modo
+# que quedan fuera: `documento_proveedor` (es la cédula cuando el contratista es persona natural:
+# 10 355 de los 12 149 contratos de Chía), `codigo_proveedor`, los datos del representante legal
+# (nombre, documento, género, domicilio y nacionalidad), los nombres y documentos del ordenador del
+# gasto, del supervisor y del ordenador de pago, y el banco, el tipo y el número de cuenta.
+datos_personales: filtrados
+estado: publicada
+campos:
+  id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato en SECOP II (CO1.PCCNTR.…)"}
+  referencia_del_contrato: {nombre: referencia, tipo: str, desc: "referencia que le da la entidad"}
+  proceso_de_compra: {nombre: id_proceso, tipo: str, desc: "identificador del proceso de compra (CO1.BDOS.…)"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad estatal contratante"}
+  nit_entidad: {nombre: nit_entidad, tipo: int, desc: "NIT de la entidad contratante"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la entidad contratante"}
+  ciudad: {nombre: municipio, tipo: str, desc: "municipio de la entidad contratante (no el de ejecución)"}
+  tipodocproveedor: {nombre: tipo_documento_contratista, tipo: str, desc: "NIT, Cédula de Ciudadanía, etc.; el número no sale"}
+  proveedor_adjudicado: {nombre: contratista, tipo: str, desc: "nombre o razón social del contratista (divulgación obligatoria)"}
+  objeto_del_contrato: {nombre: objeto, tipo: str, desc: "objeto del contrato"}
+  tipo_de_contrato: {nombre: tipo_contrato, tipo: str, desc: "tipo de contrato"}
+  modalidad_de_contratacion: {nombre: modalidad, tipo: str, desc: "modalidad de contratación"}
+  estado_contrato: {nombre: estado, tipo: str, desc: "estado del contrato en SECOP II"}
+  valor_del_contrato: {nombre: valor, tipo: float, desc: "valor del contrato, en pesos colombianos"}
+  valor_pagado: {nombre: valor_pagado, tipo: float, desc: "valor pagado que reporta la entidad, en pesos"}
+  fecha_de_firma: {nombre: fecha_firma, tipo: date, desc: "fecha de firma"}
+  fecha_de_inicio_del_contrato: {nombre: fecha_inicio, tipo: date, desc: "fecha de inicio"}
+  fecha_de_fin_del_contrato: {nombre: fecha_fin, tipo: date, desc: "fecha de terminación"}
+  ultima_actualizacion: {nombre: fecha_actualizacion, tipo: date, desc: "última actualización del registro en SECOP II"}
+  urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II (la fuente lo da como {url: …})"}
+comportamiento: {p95_ms_medido: 2800, max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

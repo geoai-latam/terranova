@@ -1,0 +1,36 @@
+id: ant.zonas_reserva_campesina
+titulo: Zonas de reserva campesina constituidas
+entidad: Agencia Nacional de Tierras (ANT)
+competencia: constituye las zonas de reserva campesina (Ley 160 de 1994, cap. XIII; Decreto 2363 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/0eca5beb8afe43708622fdd7646cd577?f=json
+  cita: "Este conjunto de datos se distribuye bajo la Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Tierras"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem del dueño `Datos_Abiertos_ANT`; su url es el proxy público de ArcGIS Online hacia el servidor
+# de la ANT. Capa 0: polígonos de las ZRC (30 el 2026-10-21).
+url: https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+# TIPO_ACTO viene como código sin dominio publicado («1»): no entra.
+campos:
+  NOMBRE_ZON: {nombre: nombre, tipo: str, desc: "nombre de la zona de reserva campesina"}
+  DEPARTAMENTO: {nombre: departamento, tipo: str, desc: "nombre del departamento o departamentos"}
+  MUNICIPIOS: {nombre: municipios, tipo: str, desc: "nombre del municipio o municipios"}
+  ACTO_ADMIN: {nombre: acto_administrativo, tipo: str, desc: "acto de constitución (p. ej. «Resolución 046 de 2000»)"}
+  FECHA_CONSTITUCION: {nombre: fecha_constitucion, tipo: str, desc: "fecha de constitución tal como la publica la fuente (texto d/m/aaaa)"}
+  Area_HA: {nombre: area_ha, tipo: float, desc: "área en hectáreas"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: ANT, theme: ordenamiento_rural}

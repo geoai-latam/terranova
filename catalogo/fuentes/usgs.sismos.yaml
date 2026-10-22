@@ -1,0 +1,34 @@
+id: usgs.sismos
+titulo: Catálogo de sismos ComCat de la USGS (servicio FDSN event)
+entidad: U.S. Geological Survey (USGS)
+competencia: catálogo mundial de sismos; en Colombia la red oficial es la del SGC
+acto: null
+licencia:
+  spdx: LicenseRef-dominio-publico-EEUU
+  url: https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits
+  verificada: 2026-10-21
+  evidencia: https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits
+  cita: "USGS-authored or produced data and information are considered to be in the U.S. Public Domain."
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: U.S. Geological Survey (USGS), catálogo ComCat"
+protocolo: api_propia
+conector: amenazas-mcp
+# amenazas-mcp llama a /count y a /query (GeoJSON) con los mismos filtros. Los nombres de abajo son
+# los que entrega el conector: `mag`, `place` y `profundidad_km` por sismo; `en_el_catalogo` es el
+# total de /count.
+url: https://earthquake.usgs.gov/fdsnws/event/1
+modo: en_vivo
+frescura: {ttl_cache_s: 300, sla_actualizacion: PT15M}
+cobertura: {pais: GLOBAL}
+datos_personales: ninguno
+estado: publicada
+campos:
+  mag: {nombre: magnitud, tipo: float, desc: "magnitud del sismo"}
+  magType: {nombre: tipo_magnitud, tipo: str, desc: "escala de la magnitud (mww, mb, ml…)"}
+  place: {nombre: lugar, tipo: str, desc: "lugar descrito por la USGS, en inglés"}
+  fecha: {nombre: fecha_hora, tipo: datetime, desc: "fecha y hora del sismo, UTC"}
+  profundidad_km: {nombre: profundidad_km, tipo: float, desc: "profundidad del hipocentro en km"}
+  en_el_catalogo: {nombre: total_en_catalogo, tipo: int, desc: "sismos del catálogo con esos filtros (/count)", origen: hecho}
+comportamiento: {max_por_pagina: 20000, orden_coordenadas: lon_lat}
+dcat: {publisher: USGS, theme: amenazas, accrualPeriodicity: continuous}

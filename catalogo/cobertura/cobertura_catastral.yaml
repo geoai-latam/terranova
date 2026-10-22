@@ -1,0 +1,6746 @@
+id: cobertura_catastral
+descripcion: Municipios con datos en la base catastral pública del gestor IGAC, medidos por sus sectores,
+  y el gestor de cada uno. Sin datos ⇒ fuera_de_cobertura.
+fuentes:
+  gestores: https://mapas.igac.gov.co/server/rest/services/catastro/Gestores_Catastrales/MapServer/1
+  base: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer
+corte: '06_2026'
+generado: '2026-10-22T03:16:41+00:00'
+resumen:
+  municipios: 1122
+  con_datos: 780
+  gestor_igac_sin_datos: 63
+  otro_gestor_con_datos: 1
+municipios:
+  '05001':
+    municipio: MEDELLIN
+    departamento: ANTIOQUIA
+    gestor: CATASTRO DE MEDELLIN
+    rural: false
+    urbano: false
+  '05002':
+    municipio: ABEJORRAL
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05004':
+    municipio: ABRIAQUI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05021':
+    municipio: ALEJANDRIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05030':
+    municipio: AMAGA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05031':
+    municipio: AMALFI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05034':
+    municipio: ANDES
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05036':
+    municipio: ANGELOPOLIS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05038:
+    municipio: ANGOSTURA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05040':
+    municipio: ANORI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05042':
+    municipio: SANTA FE DE ANTIOQUIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05044':
+    municipio: ANZA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05045':
+    municipio: APARTADO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05051':
+    municipio: ARBOLETES
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05055':
+    municipio: ARGELIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05059:
+    municipio: ARMENIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05079:
+    municipio: BARBOSA
+    departamento: ANTIOQUIA
+    gestor: AREA METROPOLITANA DE VALLE DE ABURRA AMV
+    rural: false
+    urbano: false
+  05086:
+    municipio: BELMIRA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05088:
+    municipio: BELLO
+    departamento: ANTIOQUIA
+    gestor: AREA METROPOLITANA DE VALLE DE ABURRA AMV
+    rural: false
+    urbano: false
+  05091:
+    municipio: BETANIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05093:
+    municipio: BETULIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05101':
+    municipio: CIUDAD BOLIVAR
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05107':
+    municipio: BRICEÑO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05113':
+    municipio: BURITICA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05120':
+    municipio: CACERES
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05125':
+    municipio: CAICEDO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05129:
+    municipio: CALDAS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05134':
+    municipio: CAMPAMENTO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05138:
+    municipio: CAÑASGORDAS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05142':
+    municipio: CARACOLI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05145':
+    municipio: CARAMANTA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05147':
+    municipio: CAREPA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05148:
+    municipio: EL CARMEN DE VIBORAL
+    departamento: ANTIOQUIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '05150':
+    municipio: CAROLINA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05154':
+    municipio: CAUCASIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05172':
+    municipio: CHIGORODO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05190:
+    municipio: CISNEROS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05197:
+    municipio: COCORNA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05206':
+    municipio: CONCEPCION
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05209:
+    municipio: CONCORDIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05212':
+    municipio: COPACABANA
+    departamento: ANTIOQUIA
+    gestor: AREA METROPOLITANA DE VALLE DE ABURRA AMV
+    rural: false
+    urbano: false
+  '05234':
+    municipio: DABEIBA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05237':
+    municipio: DONMATIAS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05240':
+    municipio: EBEJICO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05250':
+    municipio: EL BAGRE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05264':
+    municipio: ENTRERRIOS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05266':
+    municipio: ENVIGADO
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIO DE ENVIGADO
+    rural: false
+    urbano: false
+  05282:
+    municipio: FREDONIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05284:
+    municipio: FRONTINO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05306':
+    municipio: GIRALDO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05308:
+    municipio: GIRARDOTA
+    departamento: ANTIOQUIA
+    gestor: AREA METROPOLITANA DE VALLE DE ABURRA AMV
+    rural: false
+    urbano: false
+  '05310':
+    municipio: GOMEZ PLATA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05313':
+    municipio: GRANADA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05315':
+    municipio: GUADALUPE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05318:
+    municipio: GUARNE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05321':
+    municipio: GUATAPE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05347':
+    municipio: HELICONIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05353':
+    municipio: HISPANIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05360':
+    municipio: ITAGÜI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05361':
+    municipio: ITUANGO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05364':
+    municipio: JARDIN
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05368:
+    municipio: JERICO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05376':
+    municipio: LA CEJA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05380:
+    municipio: LA ESTRELLA
+    departamento: ANTIOQUIA
+    gestor: AREA METROPOLITANA DE VALLE DE ABURRA AMV
+    rural: false
+    urbano: false
+  05390:
+    municipio: LA PINTADA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05400':
+    municipio: LA UNION
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05411':
+    municipio: LIBORINA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05425':
+    municipio: MACEO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05440':
+    municipio: MARINILLA
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIO MARINILLA
+    rural: false
+    urbano: false
+  '05467':
+    municipio: MONTEBELLO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05475':
+    municipio: MURINDO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05480:
+    municipio: MUTATA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05483:
+    municipio: NARIÑO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05490:
+    municipio: NECOCLI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05495:
+    municipio: NECHI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05501':
+    municipio: OLAYA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05541':
+    municipio: PEÑOL
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05543':
+    municipio: PEQUE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05576':
+    municipio: PUEBLORRICO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05579:
+    municipio: PUERTO BERRIO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05585:
+    municipio: PUERTO NARE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05591:
+    municipio: PUERTO TRIUNFO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05604':
+    municipio: REMEDIOS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05607':
+    municipio: RETIRO
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIOS ASOCIADOS DEL ALTIPLANO DEL ORIENTE ANTIOQUEÑO MASORA
+    rural: false
+    urbano: false
+  '05615':
+    municipio: RIONEGRO
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIO DE RIONEGRO
+    rural: false
+    urbano: false
+  05628:
+    municipio: SABANALARGA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05631':
+    municipio: SABANETA
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIO DE SABANETA
+    rural: false
+    urbano: false
+  '05642':
+    municipio: SALGAR
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05647':
+    municipio: SAN ANDRES DE CUERQUIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05649:
+    municipio: SAN CARLOS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05652':
+    municipio: SAN FRANCISCO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05656':
+    municipio: SAN JERONIMO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05658:
+    municipio: SAN JOSE DE LA MONTAÑA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05659:
+    municipio: SAN JUAN DE URABA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05660':
+    municipio: SAN LUIS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05664':
+    municipio: SAN PEDRO DE LOS MILAGROS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05665':
+    municipio: SAN PEDRO DE URABA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05667':
+    municipio: SAN RAFAEL
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05670':
+    municipio: SAN ROQUE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05674':
+    municipio: SAN VICENTE FERRER
+    departamento: ANTIOQUIA
+    gestor: MUNICIPIOS ASOCIADOS DEL ALTIPLANO DEL ORIENTE ANTIOQUEÑO MASORA
+    rural: false
+    urbano: false
+  05679:
+    municipio: SANTA BARBARA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05686:
+    municipio: SANTA ROSA DE OSOS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05690:
+    municipio: SANTO DOMINGO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05697:
+    municipio: EL SANTUARIO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05736':
+    municipio: SEGOVIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05756':
+    municipio: SONSON
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  '05761':
+    municipio: SOPETRAN
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05789:
+    municipio: TAMESIS
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05790:
+    municipio: TARAZA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05792:
+    municipio: TARSO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05809:
+    municipio: TITIRIBI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05819:
+    municipio: TOLEDO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05837:
+    municipio: TURBO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05842:
+    municipio: URAMITA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05847:
+    municipio: URRAO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05854:
+    municipio: VALDIVIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05856:
+    municipio: VALPARAISO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05858:
+    municipio: VEGACHI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05861:
+    municipio: VENECIA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05873:
+    municipio: VIGIA DEL FUERTE
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05885:
+    municipio: YALI
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05887:
+    municipio: YARUMAL
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05890:
+    municipio: YOLOMBO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05893:
+    municipio: YONDO
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  05895:
+    municipio: ZARAGOZA
+    departamento: ANTIOQUIA
+    gestor: CATASTRO ANTIOQUIA
+    rural: false
+    urbano: false
+  08001:
+    municipio: BARRANQUILLA
+    departamento: ATLANTICO
+    gestor: DISTRITO DE BARRANQUILLA
+    rural: false
+    urbano: false
+  08078:
+    municipio: BARANOA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08137:
+    municipio: CAMPO DE LA CRUZ
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08141:
+    municipio: CANDELARIA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08296:
+    municipio: GALAPA
+    departamento: ATLANTICO
+    gestor: AREA METROPOLITANA DE BARRANQUILLA AMB
+    rural: false
+    urbano: false
+  08372:
+    municipio: JUAN DE ACOSTA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  08421:
+    municipio: LURUACO
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08433:
+    municipio: MALAMBO
+    departamento: ATLANTICO
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  08436:
+    municipio: MANATI
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08520:
+    municipio: PALMAR DE VARELA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08549:
+    municipio: PIOJO
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  08558:
+    municipio: POLONUEVO
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08560:
+    municipio: PONEDERA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08573:
+    municipio: PUERTO COLOMBIA
+    departamento: ATLANTICO
+    gestor: AREA METROPOLITANA DE BARRANQUILLA AMB
+    rural: false
+    urbano: false
+  08606:
+    municipio: REPELON
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08634:
+    municipio: SABANAGRANDE
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08638:
+    municipio: SABANALARGA
+    departamento: ATLANTICO
+    gestor: MUNICIPIO DE SABANALARGA
+    rural: false
+    urbano: false
+  08675:
+    municipio: SANTA LUCIA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08685:
+    municipio: SANTO TOMAS
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08758:
+    municipio: SOLEDAD
+    departamento: ATLANTICO
+    gestor: MUNICIPIO DE SOLEDAD
+    rural: false
+    urbano: false
+  08770:
+    municipio: SUAN
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08832:
+    municipio: TUBARA
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  08849:
+    municipio: USIACURI
+    departamento: ATLANTICO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '11001':
+    municipio: BOGOTA
+    departamento: BOGOTA D.C.
+    gestor: UNIDAD ADMINISTRATIVA ESPECIAL DE CATASTRO DISTRITAL BOGOTA UAECD
+    rural: false
+    urbano: false
+  '13001':
+    municipio: CARTAGENA DE INDIAS
+    departamento: BOLIVAR
+    gestor: AREA METROPOLITANA DE BARRANQUILLA AMB
+    rural: false
+    urbano: false
+  '13006':
+    municipio: ACHI
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13030':
+    municipio: ALTOS DEL ROSARIO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13042':
+    municipio: ARENAL
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13052':
+    municipio: ARJONA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13062':
+    municipio: ARROYOHONDO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13074':
+    municipio: BARRANCO DE LOBA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13140':
+    municipio: CALAMAR
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13160':
+    municipio: CANTAGALLO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13188':
+    municipio: CICUCO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13212':
+    municipio: CORDOBA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13222':
+    municipio: CLEMENCIA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13244':
+    municipio: EL CARMEN DE BOLIVAR
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13248':
+    municipio: EL GUAMO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13268':
+    municipio: EL PEÑON
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13300':
+    municipio: HATILLO DE LOBA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13430':
+    municipio: MAGANGUE
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13433':
+    municipio: MAHATES
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13440':
+    municipio: MARGARITA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13442':
+    municipio: MARIA LA BAJA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13458':
+    municipio: MONTECRISTO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13468':
+    municipio: MOMPOS
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13473':
+    municipio: MORALES
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13490':
+    municipio: NOROSI
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13549':
+    municipio: PINILLOS
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13580':
+    municipio: REGIDOR
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13600':
+    municipio: RIO VIEJO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13620':
+    municipio: SAN CRISTOBAL
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13647':
+    municipio: SAN ESTANISLAO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13650':
+    municipio: SAN FERNANDO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13654':
+    municipio: SAN JACINTO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13655':
+    municipio: SAN JACINTO DEL CAUCA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13657':
+    municipio: SAN JUAN NEPOMUCENO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13667':
+    municipio: SAN MARTIN DE LOBA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13670':
+    municipio: SAN PABLO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '13673':
+    municipio: SANTA CATALINA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13683':
+    municipio: SANTA ROSA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13688':
+    municipio: SANTA ROSA DEL SUR
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13744':
+    municipio: SIMITI
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13760':
+    municipio: SOPLAVIENTO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13780':
+    municipio: TALAIGUA NUEVO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '13810':
+    municipio: TIQUISIO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13836':
+    municipio: TURBACO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13838':
+    municipio: TURBANA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13873':
+    municipio: VILLANUEVA
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '13894':
+    municipio: ZAMBRANO
+    departamento: BOLIVAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15001':
+    municipio: TUNJA
+    departamento: BOYACA
+    gestor: MUNICIPIO DE TUNJA
+    rural: false
+    urbano: false
+  '15022':
+    municipio: ALMEIDA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15047':
+    municipio: AQUITANIA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15051':
+    municipio: ARCABUCO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15087':
+    municipio: BELEN
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15090':
+    municipio: BERBEO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15092':
+    municipio: BETEITIVA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15097':
+    municipio: BOAVITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15104':
+    municipio: BOYACA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15106':
+    municipio: BRICEÑO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15109':
+    municipio: BUENAVISTA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15114':
+    municipio: BUSBANZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15131':
+    municipio: CALDAS
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15135':
+    municipio: CAMPOHERMOSO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15162':
+    municipio: CERINZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15172':
+    municipio: CHINAVITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15176':
+    municipio: CHIQUINQUIRA
+    departamento: BOYACA
+    gestor: MUNICIPIO DE CHIQUINQUIRA
+    rural: false
+    urbano: false
+  '15180':
+    municipio: CHISCAS
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15183':
+    municipio: CHITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15185':
+    municipio: CHITARAQUE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15187':
+    municipio: CHIVATA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15189':
+    municipio: CIENEGA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15204':
+    municipio: COMBITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15212':
+    municipio: COPER
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15215':
+    municipio: CORRALES
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15218':
+    municipio: COVARACHIA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15223':
+    municipio: CUBARA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15224':
+    municipio: CUCAITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15226':
+    municipio: CUITIVA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15232':
+    municipio: CHIQUIZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15236':
+    municipio: CHIVOR
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15238':
+    municipio: DUITAMA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '15244':
+    municipio: EL COCUY
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15248':
+    municipio: EL ESPINO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15272':
+    municipio: FIRAVITOBA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15276':
+    municipio: FLORESTA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15293':
+    municipio: GACHANTIVA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15296':
+    municipio: GAMEZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15299':
+    municipio: GARAGOA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15317':
+    municipio: GUACAMAYAS
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15322':
+    municipio: GUATEQUE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15325':
+    municipio: GUAYATA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '15332':
+    municipio: GÜICAN
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15362':
+    municipio: IZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15367':
+    municipio: JENESANO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15368':
+    municipio: JERICO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15377':
+    municipio: LABRANZAGRANDE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15380':
+    municipio: LA CAPILLA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15401':
+    municipio: LA VICTORIA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '15403':
+    municipio: LA UVITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15407':
+    municipio: VILLA DE LEYVA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15425':
+    municipio: MACANAL
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15442':
+    municipio: MARIPI
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15455':
+    municipio: MIRAFLORES
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15464':
+    municipio: MONGUA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15466':
+    municipio: MONGUI
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15469':
+    municipio: MONIQUIRA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15476':
+    municipio: MOTAVITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15480':
+    municipio: MUZO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '15491':
+    municipio: NOBSA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15494':
+    municipio: NUEVO COLON
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15500':
+    municipio: OICATA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15507':
+    municipio: OTANCHE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15511':
+    municipio: PACHAVITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15514':
+    municipio: PAEZ
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15516':
+    municipio: PAIPA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15518':
+    municipio: PAJARITO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15522':
+    municipio: PANQUEBA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15531':
+    municipio: PAUNA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15533':
+    municipio: PAYA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15537':
+    municipio: PAZ DE RIO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15542':
+    municipio: PESCA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15550':
+    municipio: PISBA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15572':
+    municipio: PUERTO BOYACA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15580':
+    municipio: QUIPAMA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15599':
+    municipio: RAMIRIQUI
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '15600':
+    municipio: RAQUIRA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15621':
+    municipio: RONDON
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15632':
+    municipio: SABOYA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15638':
+    municipio: SACHICA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15646':
+    municipio: SAMACA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15660':
+    municipio: SAN EDUARDO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15664':
+    municipio: SAN JOSE DE PARE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15667':
+    municipio: SAN LUIS DE GACENO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15673':
+    municipio: SAN MATEO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15676':
+    municipio: SAN MIGUEL DE SEMA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15681':
+    municipio: SAN PABLO DE BORBUR
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15686':
+    municipio: SANTANA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15690':
+    municipio: SANTA MARIA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15693':
+    municipio: SANTA ROSA DE VITERBO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15696':
+    municipio: SANTA SOFIA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15720':
+    municipio: SATIVANORTE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15723':
+    municipio: SATIVASUR
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15740':
+    municipio: SIACHOQUE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15753':
+    municipio: SOATA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15755':
+    municipio: SOCOTA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15757':
+    municipio: SOCHA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15759':
+    municipio: SOGAMOSO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '15761':
+    municipio: SOMONDOCO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15762':
+    municipio: SORA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15763':
+    municipio: SOTAQUIRA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15764':
+    municipio: SORACA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15774':
+    municipio: SUSACON
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15776':
+    municipio: SUTAMARCHAN
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15778':
+    municipio: SUTATENZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15790':
+    municipio: TASCO
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15798':
+    municipio: TENZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15804':
+    municipio: TIBANA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15806':
+    municipio: TIBASOSA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15808':
+    municipio: TINJACA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15810':
+    municipio: TIPACOQUE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15814':
+    municipio: TOCA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15816':
+    municipio: TOGÜI
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15820':
+    municipio: TOPAGA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15822':
+    municipio: TOTA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15832':
+    municipio: TUNUNGUA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15835':
+    municipio: TURMEQUE
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15837':
+    municipio: TUTA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15839':
+    municipio: TUTAZA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15842':
+    municipio: UMBITA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '15861':
+    municipio: VENTAQUEMADA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '15879':
+    municipio: VIRACACHA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '15897':
+    municipio: ZETAQUIRA
+    departamento: BOYACA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17001':
+    municipio: MANIZALES
+    departamento: CALDAS
+    gestor: MUNICIPIOS ASOCIADOS DEL ALTIPLANO DEL ORIENTE ANTIOQUEÑO MASORA
+    rural: false
+    urbano: false
+  '17013':
+    municipio: AGUADAS
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17042':
+    municipio: ANSERMA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '17050':
+    municipio: ARANZAZU
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17088':
+    municipio: BELALCAZAR
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17174':
+    municipio: CHINCHINA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '17272':
+    municipio: FILADELFIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17380':
+    municipio: LA DORADA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17388':
+    municipio: LA MERCED
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '17433':
+    municipio: MANZANARES
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17442':
+    municipio: MARMATO
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '17444':
+    municipio: MARQUETALIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17446':
+    municipio: MARULANDA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17486':
+    municipio: NEIRA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17495':
+    municipio: NORCASIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17513':
+    municipio: PACORA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17524':
+    municipio: PALESTINA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17541':
+    municipio: PENSILVANIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17614':
+    municipio: RIOSUCIO
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17616':
+    municipio: RISARALDA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17653':
+    municipio: SALAMINA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '17662':
+    municipio: SAMANA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17665':
+    municipio: SAN JOSE
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17777':
+    municipio: SUPIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17867':
+    municipio: VICTORIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17873':
+    municipio: VILLAMARIA
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '17877':
+    municipio: VITERBO
+    departamento: CALDAS
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18001':
+    municipio: FLORENCIA
+    departamento: CAQUETA
+    gestor: MUNICIPIO DE FLORENCIA
+    rural: false
+    urbano: false
+  '18029':
+    municipio: ALBANIA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18094':
+    municipio: BELEN DE LOS ANDAQUIES
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18150':
+    municipio: CARTAGENA DEL CHAIRA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18205':
+    municipio: CURILLO
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18247':
+    municipio: EL DONCELLO
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18256':
+    municipio: EL PAUJIL
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18410':
+    municipio: LA MONTAÑITA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18460':
+    municipio: MILAN
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18479':
+    municipio: MORELIA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18592':
+    municipio: PUERTO RICO
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18610':
+    municipio: SAN JOSE DEL FRAGUA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18753':
+    municipio: SAN VICENTE DEL CAGUAN
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18756':
+    municipio: SOLANO
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18785':
+    municipio: SOLITA
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '18860':
+    municipio: VALPARAISO
+    departamento: CAQUETA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19001':
+    municipio: POPAYAN
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19022':
+    municipio: ALMAGUER
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19050':
+    municipio: ARGELIA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19075':
+    municipio: BALBOA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19100':
+    municipio: BOLIVAR
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19110':
+    municipio: BUENOS AIRES
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19130':
+    municipio: CAJIBIO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19137':
+    municipio: CALDONO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19142':
+    municipio: CALOTO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19212':
+    municipio: CORINTO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19256':
+    municipio: EL TAMBO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19290':
+    municipio: FLORENCIA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19300':
+    municipio: GUACHENE
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19318':
+    municipio: GUAPI
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19355':
+    municipio: INZA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19364':
+    municipio: JAMBALO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19392':
+    municipio: LA SIERRA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19397':
+    municipio: LA VEGA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19418':
+    municipio: LOPEZ DE MICAY
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19450':
+    municipio: MERCADERES
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19455':
+    municipio: MIRANDA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19473':
+    municipio: MORALES
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19513':
+    municipio: PADILLA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19517':
+    municipio: PAEZ
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19532':
+    municipio: PATIA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19533':
+    municipio: PIAMONTE
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19548':
+    municipio: PIENDAMO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19573':
+    municipio: PUERTO TEJADA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19585':
+    municipio: PURACE
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19622':
+    municipio: ROSAS
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19693':
+    municipio: SAN SEBASTIAN
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19698':
+    municipio: SANTANDER DE QUILICHAO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19701':
+    municipio: SANTA ROSA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '19743':
+    municipio: SILVIA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19760':
+    municipio: SOTARA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19780':
+    municipio: SUAREZ
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19785':
+    municipio: SUCRE
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19807':
+    municipio: TIMBIO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19809':
+    municipio: TIMBIQUI
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19821':
+    municipio: TORIBIO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19824':
+    municipio: TOTORO
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '19845':
+    municipio: VILLA RICA
+    departamento: CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20001':
+    municipio: VALLEDUPAR
+    departamento: CESAR
+    gestor: MUNICIPIO DE VALLEDUPAR
+    rural: false
+    urbano: false
+  '20011':
+    municipio: AGUACHICA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20013':
+    municipio: AGUSTIN CODAZZI
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20032':
+    municipio: ASTREA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20045':
+    municipio: BECERRIL
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '20060':
+    municipio: BOSCONIA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '20175':
+    municipio: CHIMICHAGUA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20178':
+    municipio: CHIRIGUANA
+    departamento: CESAR
+    gestor: MUNICIPIO DE CHIRIGÜANA
+    rural: false
+    urbano: false
+  '20228':
+    municipio: CURUMANI
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20238':
+    municipio: EL COPEY
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20250':
+    municipio: EL PASO
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20295':
+    municipio: GAMARRA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20310':
+    municipio: GONZALEZ
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20383':
+    municipio: LA GLORIA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20400':
+    municipio: LA JAGUA DE IBIRICO
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20443':
+    municipio: MANAURE BALCON DEL CESAR
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20517':
+    municipio: PAILITAS
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20550':
+    municipio: PELAYA
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20570':
+    municipio: PUEBLO BELLO
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20614':
+    municipio: RIO DE ORO
+    departamento: CESAR
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '20621':
+    municipio: LA PAZ
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20710':
+    municipio: SAN ALBERTO
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20750':
+    municipio: SAN DIEGO
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20770':
+    municipio: SAN MARTIN
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '20787':
+    municipio: TAMALAMEQUE
+    departamento: CESAR
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23001':
+    municipio: MONTERIA
+    departamento: CORDOBA
+    gestor: MUNICIPIO DE MONTERIA
+    rural: false
+    urbano: false
+  '23068':
+    municipio: AYAPEL
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23079':
+    municipio: BUENAVISTA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23090':
+    municipio: CANALETE
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23162':
+    municipio: CERETE
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23168':
+    municipio: CHIMA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23182':
+    municipio: CHINU
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23189':
+    municipio: CIENAGA DE ORO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23300':
+    municipio: COTORRA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23350':
+    municipio: LA APARTADA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23417':
+    municipio: LORICA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23419':
+    municipio: LOS CORDOBAS
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23464':
+    municipio: MOMIL
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23466':
+    municipio: MONTELIBANO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23500':
+    municipio: MOÑITOS
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23555':
+    municipio: PLANETA RICA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23570':
+    municipio: PUEBLO NUEVO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23574':
+    municipio: PUERTO ESCONDIDO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '23580':
+    municipio: PUERTO LIBERTADOR
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23586':
+    municipio: PURISIMA DE LA CONCEPCION
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23660':
+    municipio: SAHAGUN
+    departamento: CORDOBA
+    gestor: MUNICIPIO DE SAHAGUN
+    rural: false
+    urbano: false
+  '23670':
+    municipio: SAN ANDRES DE SOTAVENTO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23672':
+    municipio: SAN ANTERO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23675':
+    municipio: SAN BERNARDO DEL VIENTO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23678':
+    municipio: SAN CARLOS
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23682':
+    municipio: SAN JOSE DE URE
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23686':
+    municipio: SAN PELAYO
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23807':
+    municipio: TIERRALTA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23815':
+    municipio: TUCHIN
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '23855':
+    municipio: VALENCIA
+    departamento: CORDOBA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25001':
+    municipio: AGUA DE DIOS
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '25019':
+    municipio: ALBAN
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25035':
+    municipio: ANAPOIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25040':
+    municipio: ANOLAIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25053':
+    municipio: ARBELAEZ
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25086':
+    municipio: BELTRAN
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25095':
+    municipio: BITUIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25099':
+    municipio: BOJACA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25120':
+    municipio: CABRERA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25123':
+    municipio: CACHIPAY
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25126':
+    municipio: CAJICA
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE ZIPAQUIRA
+    rural: false
+    urbano: false
+  '25148':
+    municipio: CAPARRAPI
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25151':
+    municipio: CAQUEZA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25154':
+    municipio: CARMEN DE CARUPA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25168':
+    municipio: CHAGUANI
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25175':
+    municipio: CHIA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25178':
+    municipio: CHIPAQUE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25181':
+    municipio: CHOACHI
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25183':
+    municipio: CHOCONTA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25200':
+    municipio: COGUA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25214':
+    municipio: COTA
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE COTA
+    rural: false
+    urbano: false
+  '25224':
+    municipio: CUCUNUBA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25245':
+    municipio: EL COLEGIO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25258':
+    municipio: EL PEÑON
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25260':
+    municipio: EL ROSAL
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25269':
+    municipio: FACATATIVA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25279':
+    municipio: FOMEQUE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25281':
+    municipio: FOSCA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25286':
+    municipio: FUNZA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25288':
+    municipio: FUQUENE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25290':
+    municipio: FUSAGASUGA
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE  FUSAGASUGA
+    rural: false
+    urbano: false
+  '25293':
+    municipio: GACHALA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25295':
+    municipio: GACHANCIPA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25297':
+    municipio: GACHETA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25299':
+    municipio: GAMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25307':
+    municipio: GIRARDOT
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE GIRARDOT
+    rural: false
+    urbano: false
+  '25312':
+    municipio: GRANADA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25317':
+    municipio: GUACHETA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25320':
+    municipio: GUADUAS
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25322':
+    municipio: GUASCA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25324':
+    municipio: GUATAQUI
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25326':
+    municipio: GUATAVITA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25328':
+    municipio: GUAYABAL DE SIQUIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25335':
+    municipio: GUAYABETAL
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25339':
+    municipio: GUTIERREZ
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25368':
+    municipio: JERUSALEN
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25372':
+    municipio: JUNIN
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25377':
+    municipio: LA CALERA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25386':
+    municipio: LA MESA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25394':
+    municipio: LA PALMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25398':
+    municipio: LA PEÑA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25402':
+    municipio: LA VEGA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25407':
+    municipio: LENGUAZAQUE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25426':
+    municipio: MACHETA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25430':
+    municipio: MADRID
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25436':
+    municipio: MANTA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25438':
+    municipio: MEDINA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25473':
+    municipio: MOSQUERA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25483':
+    municipio: NARIÑO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25486':
+    municipio: NEMOCON
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25488':
+    municipio: NILO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25489':
+    municipio: NIMAIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25491':
+    municipio: NOCAIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25506':
+    municipio: VENECIA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25513':
+    municipio: PACHO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25518':
+    municipio: PAIME
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25524':
+    municipio: PANDI
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25530':
+    municipio: PARATEBUENO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25535':
+    municipio: PASCA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25572':
+    municipio: PUERTO SALGAR
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25580':
+    municipio: PULI
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25592':
+    municipio: QUEBRADANEGRA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25594':
+    municipio: QUETAME
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25596':
+    municipio: QUIPILE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25599':
+    municipio: APULO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25612':
+    municipio: RICAURTE
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '25645':
+    municipio: SAN ANTONIO DEL TEQUENDAMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25649':
+    municipio: SAN BERNARDO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25653':
+    municipio: SAN CAYETANO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25658':
+    municipio: SAN FRANCISCO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25662':
+    municipio: SAN JUAN DE RIOSECO
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25718':
+    municipio: SASAIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25736':
+    municipio: SESQUILE
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE SESQUILE
+    rural: false
+    urbano: false
+  '25740':
+    municipio: SIBATE
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25743':
+    municipio: SILVANIA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25745':
+    municipio: SIMIJACA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25754':
+    municipio: SOACHA
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE SOACHA
+    rural: false
+    urbano: false
+  '25758':
+    municipio: SOPO
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE ZIPAQUIRA
+    rural: false
+    urbano: false
+  '25769':
+    municipio: SUBACHOQUE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25772':
+    municipio: SUESCA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25777':
+    municipio: SUPATA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25779':
+    municipio: SUSA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25781':
+    municipio: SUTATAUSA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25785':
+    municipio: TABIO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25793':
+    municipio: TAUSA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25797':
+    municipio: TENA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25799':
+    municipio: TENJO
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25805':
+    municipio: TIBACUY
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25807':
+    municipio: TIBIRITA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25815':
+    municipio: TOCAIMA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25817':
+    municipio: TOCANCIPA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25823':
+    municipio: TOPAIPI
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25839':
+    municipio: UBALA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25841':
+    municipio: UBAQUE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25843':
+    municipio: VILLA DE SAN DIEGO DE UBATE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25845':
+    municipio: UNE
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25851':
+    municipio: UTICA
+    departamento: CUNDINAMARCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '25862':
+    municipio: VERGARA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25867':
+    municipio: VIANI
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25871':
+    municipio: VILLAGOMEZ
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25873':
+    municipio: VILLAPINZON
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25875':
+    municipio: VILLETA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25878':
+    municipio: VIOTA
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25885':
+    municipio: YACOPI
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25898':
+    municipio: ZIPACON
+    departamento: CUNDINAMARCA
+    gestor: DEPARTAMENTO DE CUNDINAMARCA
+    rural: false
+    urbano: false
+  '25899':
+    municipio: ZIPAQUIRA
+    departamento: CUNDINAMARCA
+    gestor: MUNICIPIO DE ZIPAQUIRA
+    rural: false
+    urbano: false
+  '27001':
+    municipio: QUIBDO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '27006':
+    municipio: ACANDI
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '27025':
+    municipio: ALTO BAUDO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27050':
+    municipio: ATRATO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27073':
+    municipio: BAGADO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27075':
+    municipio: BAHIA SOLANO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27077':
+    municipio: BAJO BAUDO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27099':
+    municipio: BOJAYA
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '27135':
+    municipio: EL CANTON DEL SAN PABLO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27150':
+    municipio: CARMEN DEL DARIEN
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27160':
+    municipio: CERTEGUI
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27205':
+    municipio: CONDOTO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '27245':
+    municipio: EL CARMEN DE ATRATO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '27250':
+    municipio: EL LITORAL DEL SAN JUAN
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27361':
+    municipio: ISTMINA
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '27372':
+    municipio: JURADO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27413':
+    municipio: LLORO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27425':
+    municipio: MEDIO ATRATO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27430':
+    municipio: MEDIO BAUDO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27450':
+    municipio: MEDIO SAN JUAN
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27491':
+    municipio: NOVITA
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27495':
+    municipio: NUQUI
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '27580':
+    municipio: RIO IRO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27600':
+    municipio: RIO QUITO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27615':
+    municipio: RIOSUCIO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '27660':
+    municipio: SAN JOSE DEL PALMAR
+    departamento: CHOCO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '27745':
+    municipio: SIPI
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27787':
+    municipio: TADO
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '27800':
+    municipio: UNGUIA
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '27810':
+    municipio: UNION PANAMERICANA
+    departamento: CHOCO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '41':
+    municipio: null
+    departamento: null
+    gestor: null
+    rural: false
+    urbano: true
+  '41001':
+    municipio: NEIVA
+    departamento: HUILA
+    gestor: MUNICIPIO DE NEIVA
+    rural: false
+    urbano: false
+  '41006':
+    municipio: ACEVEDO
+    departamento: HUILA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '41013':
+    municipio: AGRADO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41016':
+    municipio: AIPE
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '41020':
+    municipio: ALGECIRAS
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41026':
+    municipio: ALTAMIRA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41078':
+    municipio: BARAYA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41132':
+    municipio: CAMPOALEGRE
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41206':
+    municipio: COLOMBIA
+    departamento: HUILA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '41244':
+    municipio: ELIAS
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41298':
+    municipio: GARZON
+    departamento: HUILA
+    gestor: MUNICIPIO DE GARZON
+    rural: false
+    urbano: false
+  '41306':
+    municipio: GIGANTE
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41319':
+    municipio: GUADALUPE
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41349':
+    municipio: HOBO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41357':
+    municipio: IQUIRA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41359':
+    municipio: ISNOS
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41378':
+    municipio: LA ARGENTINA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41396':
+    municipio: LA PLATA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41483':
+    municipio: NATAGA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41503':
+    municipio: OPORAPA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41518':
+    municipio: PAICOL
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41524':
+    municipio: PALERMO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41530':
+    municipio: PALESTINA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41548':
+    municipio: PITAL
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41551':
+    municipio: PITALITO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41615':
+    municipio: RIVERA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41660':
+    municipio: SALADOBLANCO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41668':
+    municipio: SAN AGUSTIN
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41676':
+    municipio: SANTA MARIA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41770':
+    municipio: SUAZA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '41791':
+    municipio: TARQUI
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41797':
+    municipio: TESALIA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41799':
+    municipio: TELLO
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41801':
+    municipio: TERUEL
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41807':
+    municipio: TIMANA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41872':
+    municipio: VILLAVIEJA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '41885':
+    municipio: YAGUARA
+    departamento: HUILA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44001':
+    municipio: RIOHACHA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44035':
+    municipio: ALBANIA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '44078':
+    municipio: BARRANCAS
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44090':
+    municipio: DIBULLA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44098':
+    municipio: DISTRACCION
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44110':
+    municipio: EL MOLINO
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '44279':
+    municipio: FONSECA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '44378':
+    municipio: HATONUEVO
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44420':
+    municipio: LA JAGUA DEL PILAR
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44430':
+    municipio: MAICAO
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44560':
+    municipio: MANAURE
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44650':
+    municipio: SAN JUAN DEL CESAR
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '44847':
+    municipio: URIBIA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '44855':
+    municipio: URUMITA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '44874':
+    municipio: VILLANUEVA
+    departamento: LA GUAJIRA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '47001':
+    municipio: SANTA MARTA
+    departamento: MAGDALENA
+    gestor: DISTRITO TURISTICO, CULTURAL E HISTORICO DE SANTA MARTA
+    rural: false
+    urbano: false
+  '47030':
+    municipio: ALGARROBO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47053':
+    municipio: ARACATACA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47058':
+    municipio: ARIGUANI
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47161':
+    municipio: CERRO DE SAN ANTONIO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47170':
+    municipio: CHIVOLO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47189':
+    municipio: CIENAGA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47205':
+    municipio: CONCORDIA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47245':
+    municipio: EL BANCO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47258':
+    municipio: EL PIÑON
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47268':
+    municipio: EL RETEN
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47288':
+    municipio: FUNDACION
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47318':
+    municipio: GUAMAL
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47460':
+    municipio: NUEVA GRANADA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47541':
+    municipio: PEDRAZA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47545':
+    municipio: PIJIÑO DEL CARMEN
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47551':
+    municipio: PIVIJAY
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47555':
+    municipio: PLATO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47570':
+    municipio: PUEBLOVIEJO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47605':
+    municipio: REMOLINO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47660':
+    municipio: SABANAS DE SAN ANGEL
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47675':
+    municipio: SALAMINA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47692':
+    municipio: SAN SEBASTIAN DE BUENAVISTA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47703':
+    municipio: SAN ZENON
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47707':
+    municipio: SANTA ANA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47720':
+    municipio: SANTA BARBARA DE PINTO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47745':
+    municipio: SITIONUEVO
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47798':
+    municipio: TENERIFE
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47960':
+    municipio: ZAPAYAN
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '47980':
+    municipio: ZONA BANANERA
+    departamento: MAGDALENA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50001':
+    municipio: VILLAVICENCIO
+    departamento: META
+    gestor: MUNICIPIO DE VILLAVICENCIO
+    rural: false
+    urbano: false
+  '50006':
+    municipio: ACACIAS
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50110':
+    municipio: BARRANCA DE UPIA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50124':
+    municipio: CABUYARO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50150':
+    municipio: CASTILLA LA NUEVA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50223':
+    municipio: SAN LUIS DE CUBARRAL
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50226':
+    municipio: CUMARAL
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50245':
+    municipio: EL CALVARIO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50251':
+    municipio: EL CASTILLO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50270':
+    municipio: EL DORADO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50287':
+    municipio: FUENTE DE ORO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50313':
+    municipio: GRANADA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50318':
+    municipio: GUAMAL
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50325':
+    municipio: MAPIRIPAN
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50330':
+    municipio: MESETAS
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50350':
+    municipio: LA MACARENA
+    departamento: META
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '50370':
+    municipio: URIBE
+    departamento: META
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '50400':
+    municipio: LEJANIAS
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50450':
+    municipio: PUERTO CONCORDIA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50568':
+    municipio: PUERTO GAITAN
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50573':
+    municipio: PUERTO LOPEZ
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50577':
+    municipio: PUERTO LLERAS
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50590':
+    municipio: PUERTO RICO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50606':
+    municipio: RESTREPO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50680':
+    municipio: SAN CARLOS DE GUAROA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50683':
+    municipio: SAN JUAN DE ARAMA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50686':
+    municipio: SAN JUANITO
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50689':
+    municipio: SAN MARTIN
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '50711':
+    municipio: VISTAHERMOSA
+    departamento: META
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52001':
+    municipio: PASTO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52019':
+    municipio: ALBAN
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52022':
+    municipio: ALDANA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52036':
+    municipio: ANCUYA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52051':
+    municipio: ARBOLEDA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52079':
+    municipio: BARBACOAS
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52083':
+    municipio: BELEN
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52110':
+    municipio: BUESACO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52203':
+    municipio: COLON
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52207':
+    municipio: CONSACA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52210':
+    municipio: CONTADERO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52215':
+    municipio: CORDOBA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52224':
+    municipio: CUASPUD
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52227':
+    municipio: CUMBAL
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52233':
+    municipio: CUMBITARA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52240':
+    municipio: CHACHAGÜI
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52250':
+    municipio: EL CHARCO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52254':
+    municipio: EL PEÑOL
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52256':
+    municipio: EL ROSARIO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52258':
+    municipio: EL TABLON DE GOMEZ
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52260':
+    municipio: EL TAMBO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52287':
+    municipio: FUNES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52317':
+    municipio: GUACHUCAL
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52320':
+    municipio: GUAITARILLA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52323':
+    municipio: GUALMATAN
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52352':
+    municipio: ILES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52354':
+    municipio: IMUES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52356':
+    municipio: IPIALES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52378':
+    municipio: LA CRUZ
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52381':
+    municipio: LA FLORIDA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52385':
+    municipio: LA LLANADA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52390':
+    municipio: LA TOLA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52399':
+    municipio: LA UNION
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52405':
+    municipio: LEIVA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52411':
+    municipio: LINARES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52418':
+    municipio: LOS ANDES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52427':
+    municipio: MAGÜI
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '52435':
+    municipio: MALLAMA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52473':
+    municipio: MOSQUERA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '52480':
+    municipio: NARIÑO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52490':
+    municipio: OLAYA HERRERA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52506':
+    municipio: OSPINA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52520':
+    municipio: FRANCISCO PIZARRO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '52540':
+    municipio: POLICARPA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52560':
+    municipio: POTOSI
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52565':
+    municipio: PROVIDENCIA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52573':
+    municipio: PUERRES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52585':
+    municipio: PUPIALES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52612':
+    municipio: RICAURTE
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52621':
+    municipio: ROBERTO PAYAN
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52678':
+    municipio: SAMANIEGO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52683':
+    municipio: SANDONA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52685':
+    municipio: SAN BERNARDO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52687':
+    municipio: SAN LORENZO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52693':
+    municipio: SAN PABLO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52694':
+    municipio: SAN PEDRO DE CARTAGO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52696':
+    municipio: SANTA BARBARA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52699':
+    municipio: SANTACRUZ
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '52720':
+    municipio: SAPUYES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52786':
+    municipio: TAMINANGO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52788':
+    municipio: TANGUA
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52835':
+    municipio: SAN ANDRES DE TUMACO
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52838':
+    municipio: TUQUERRES
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '52885':
+    municipio: YACUANQUER
+    departamento: NARIÑO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54001':
+    municipio: CUCUTA
+    departamento: NORTE DE SANTANDER
+    gestor: MUNICIPIO DE SAN JOSE DE CUCUTA
+    rural: false
+    urbano: false
+  '54003':
+    municipio: ABREGO
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54051':
+    municipio: ARBOLEDAS
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54099':
+    municipio: BOCHALEMA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '54109':
+    municipio: BUCARASICA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54125':
+    municipio: CACOTA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54128':
+    municipio: CACHIRA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54172':
+    municipio: CHINACOTA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '54174':
+    municipio: CHITAGA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54206':
+    municipio: CONVENCION
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54223':
+    municipio: CUCUTILLA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54239':
+    municipio: DURANIA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54245':
+    municipio: EL CARMEN
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54250':
+    municipio: EL TARRA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54261':
+    municipio: EL ZULIA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '54313':
+    municipio: GRAMALOTE
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54344':
+    municipio: HACARI
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54347':
+    municipio: HERRAN
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54377':
+    municipio: LABATECA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54385':
+    municipio: LA ESPERANZA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54398':
+    municipio: LA PLAYA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54405':
+    municipio: LOS PATIOS
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '54418':
+    municipio: LOURDES
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54480':
+    municipio: MUTISCUA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54498':
+    municipio: OCAÑA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54518':
+    municipio: PAMPLONA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54520':
+    municipio: PAMPLONITA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54553':
+    municipio: PUERTO SANTANDER
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54599':
+    municipio: RAGONVALIA
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54660':
+    municipio: SALAZAR
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54670':
+    municipio: SAN CALIXTO
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54673':
+    municipio: SAN CAYETANO
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '54680':
+    municipio: SANTIAGO
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54720':
+    municipio: SARDINATA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54743':
+    municipio: SILOS
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54800':
+    municipio: TEORAMA
+    departamento: NORTE DE SANTANDER
+    gestor: ASOMUNICIPIOS
+    rural: false
+    urbano: false
+  '54810':
+    municipio: TIBU
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '54820':
+    municipio: TOLEDO
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '54871':
+    municipio: VILLA CARO
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '54874':
+    municipio: VILLA DEL ROSARIO
+    departamento: NORTE DE SANTANDER
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63001':
+    municipio: ARMENIA
+    departamento: QUINDIO
+    gestor: MUNICIPIO ARMENIA
+    rural: false
+    urbano: false
+  '63111':
+    municipio: BUENAVISTA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63130':
+    municipio: CALARCA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '63190':
+    municipio: CIRCASIA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63212':
+    municipio: CORDOBA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63272':
+    municipio: FILANDIA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63302':
+    municipio: GENOVA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63401':
+    municipio: LA TEBAIDA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '63470':
+    municipio: MONTENEGRO
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63548':
+    municipio: PIJAO
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63594':
+    municipio: QUIMBAYA
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '63690':
+    municipio: SALENTO
+    departamento: QUINDIO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66001':
+    municipio: PEREIRA
+    departamento: RISARALDA
+    gestor: AREA METROPOLITANA DE CENTRO OCCIDENTE AMCO
+    rural: false
+    urbano: false
+  '66045':
+    municipio: APIA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '66075':
+    municipio: BALBOA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66088':
+    municipio: BELEN DE UMBRIA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66170':
+    municipio: DOSQUEBRADAS
+    departamento: RISARALDA
+    gestor: AREA METROPOLITANA DE CENTRO OCCIDENTE AMCO
+    rural: false
+    urbano: false
+  '66318':
+    municipio: GUATICA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '66383':
+    municipio: LA CELIA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '66400':
+    municipio: LA VIRGINIA
+    departamento: RISARALDA
+    gestor: AREA METROPOLITANA DE CENTRO OCCIDENTE AMCO
+    rural: false
+    urbano: false
+  '66440':
+    municipio: MARSELLA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66456':
+    municipio: MISTRATO
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66572':
+    municipio: PUEBLO RICO
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66594':
+    municipio: QUINCHIA
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '66682':
+    municipio: SANTA ROSA DE CABAL
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '66687':
+    municipio: SANTUARIO
+    departamento: RISARALDA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68001':
+    municipio: BUCARAMANGA
+    departamento: SANTANDER
+    gestor: AREA METROPOLITANA DE BUCARAMANGA AMB
+    rural: false
+    urbano: false
+  '68013':
+    municipio: AGUADA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68020':
+    municipio: ALBANIA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68051':
+    municipio: ARATOCA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68077':
+    municipio: BARBOSA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68079':
+    municipio: BARICHARA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68081':
+    municipio: BARRANCABERMEJA
+    departamento: SANTANDER
+    gestor: MUNICIPIO DE BARRANCABERMEJA
+    rural: false
+    urbano: false
+  '68092':
+    municipio: BETULIA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68101':
+    municipio: BOLIVAR
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68121':
+    municipio: CABRERA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68132':
+    municipio: CALIFORNIA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68147':
+    municipio: CAPITANEJO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68152':
+    municipio: CARCASI
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68160':
+    municipio: CEPITA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68162':
+    municipio: CERRITO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68167':
+    municipio: CHARALA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68169':
+    municipio: CHARTA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68176':
+    municipio: CHIMA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68179':
+    municipio: CHIPATA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68190':
+    municipio: CIMITARRA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68207':
+    municipio: CONCEPCION
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68209':
+    municipio: CONFINES
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68211':
+    municipio: CONTRATACION
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68217':
+    municipio: COROMORO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68229':
+    municipio: CURITI
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68235':
+    municipio: EL CARMEN DE CHUCURI
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68245':
+    municipio: EL GUACAMAYO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68250':
+    municipio: EL PEÑON
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68255':
+    municipio: EL PLAYON
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68264':
+    municipio: ENCINO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68266':
+    municipio: ENCISO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68271':
+    municipio: FLORIAN
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68276':
+    municipio: FLORIDABLANCA
+    departamento: SANTANDER
+    gestor: MUNICIPIO DE FLORIDABLANCA
+    rural: false
+    urbano: false
+  '68296':
+    municipio: GALAN
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68298':
+    municipio: GAMBITA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68307':
+    municipio: GIRON
+    departamento: SANTANDER
+    gestor: AREA METROPOLITANA DE BUCARAMANGA AMB
+    rural: false
+    urbano: false
+  '68318':
+    municipio: GUACA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68320':
+    municipio: GUADALUPE
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68322':
+    municipio: GUAPOTA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68324':
+    municipio: GUAVATA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68327':
+    municipio: GÜEPSA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68344':
+    municipio: HATO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68368':
+    municipio: JESUS MARIA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68370':
+    municipio: JORDAN
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68377':
+    municipio: LA BELLEZA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68385':
+    municipio: LANDAZURI
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68397':
+    municipio: LA PAZ
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68406':
+    municipio: LEBRIJA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68418':
+    municipio: LOS SANTOS
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68425':
+    municipio: MACARAVITA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68432':
+    municipio: MALAGA
+    departamento: SANTANDER
+    gestor: MUNICIPIO DE MALAGA
+    rural: false
+    urbano: false
+  '68444':
+    municipio: MATANZA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68464':
+    municipio: MOGOTES
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68468':
+    municipio: MOLAGAVITA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68498':
+    municipio: OCAMONTE
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68500':
+    municipio: OIBA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68502':
+    municipio: ONZAGA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68522':
+    municipio: PALMAR
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68524':
+    municipio: PALMAS DEL SOCORRO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68533':
+    municipio: PARAMO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68547':
+    municipio: PIEDECUESTA
+    departamento: SANTANDER
+    gestor: AREA METROPOLITANA DE BUCARAMANGA AMB
+    rural: false
+    urbano: false
+  '68549':
+    municipio: PINCHOTE
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68572':
+    municipio: PUENTE NACIONAL
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68573':
+    municipio: PUERTO PARRA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68575':
+    municipio: PUERTO WILCHES
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68615':
+    municipio: RIONEGRO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68655':
+    municipio: SABANA DE TORRES
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68669':
+    municipio: SAN ANDRES
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68673':
+    municipio: SAN BENITO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68679':
+    municipio: SAN GIL
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68682':
+    municipio: SAN JOAQUIN
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68684':
+    municipio: SAN JOSE DE MIRANDA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68686':
+    municipio: SAN MIGUEL
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68689':
+    municipio: SAN VICENTE DE CHUCURI
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68705':
+    municipio: SANTA BARBARA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68720':
+    municipio: SANTA HELENA DEL OPON
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68745':
+    municipio: SIMACOTA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68755':
+    municipio: SOCORRO
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68770':
+    municipio: SUAITA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68773':
+    municipio: SUCRE
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68780':
+    municipio: SURATA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68820':
+    municipio: TONA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68855':
+    municipio: VALLE DE SAN JOSE
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68861':
+    municipio: VELEZ
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68867':
+    municipio: VETAS
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68872':
+    municipio: VILLANUEVA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '68895':
+    municipio: ZAPATOCA
+    departamento: SANTANDER
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70001':
+    municipio: SINCELEJO
+    departamento: SUCRE
+    gestor: MUNICIPIO DE SINCELEJO
+    rural: true
+    urbano: false
+  '70110':
+    municipio: BUENAVISTA
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70124':
+    municipio: CAIMITO
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70204':
+    municipio: COLOSO
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70215':
+    municipio: COROZAL
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70221':
+    municipio: COVEÑAS
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70230':
+    municipio: CHALAN
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70233':
+    municipio: EL ROBLE
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70235':
+    municipio: GALERAS
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70265':
+    municipio: GUARANDA
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70400':
+    municipio: LA UNION
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70418':
+    municipio: LOS PALMITOS
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70429':
+    municipio: MAJAGUAL
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70473':
+    municipio: MORROA
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70508':
+    municipio: OVEJAS
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70523':
+    municipio: PALMITO
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70670':
+    municipio: SAMPUES
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70678':
+    municipio: SAN BENITO ABAD
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70702':
+    municipio: SAN JUAN DE BETULIA
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70708':
+    municipio: SAN MARCOS
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70713':
+    municipio: SAN ONOFRE
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70717':
+    municipio: SAN PEDRO
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70742':
+    municipio: SAN LUIS DE SINCE
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70771':
+    municipio: SUCRE
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '70820':
+    municipio: SANTIAGO DE TOLU
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '70823':
+    municipio: TOLU VIEJO
+    departamento: SUCRE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73001':
+    municipio: IBAGUE
+    departamento: TOLIMA
+    gestor: MUNICIPIO DE IBAGUE
+    rural: false
+    urbano: false
+  '73024':
+    municipio: ALPUJARRA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73026':
+    municipio: ALVARADO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73030':
+    municipio: AMBALEMA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73043':
+    municipio: ANZOATEGUI
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73055':
+    municipio: ARMERO GUAYABAL
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73067':
+    municipio: ATACO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73124':
+    municipio: CAJAMARCA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73148':
+    municipio: CARMEN DE APICALA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73152':
+    municipio: CASABIANCA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73168':
+    municipio: CHAPARRAL
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73200':
+    municipio: COELLO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73217':
+    municipio: COYAIMA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73226':
+    municipio: CUNDAY
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73236':
+    municipio: DOLORES
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73268':
+    municipio: ESPINAL
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73270':
+    municipio: FALAN
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73275':
+    municipio: FLANDES
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73283':
+    municipio: FRESNO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73319':
+    municipio: GUAMO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73347':
+    municipio: HERVEO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73349':
+    municipio: HONDA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73352':
+    municipio: ICONONZO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73408':
+    municipio: LERIDA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73411':
+    municipio: LIBANO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73443':
+    municipio: SAN SEBASTIAN DE MARIQUITA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73449':
+    municipio: MELGAR
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73461':
+    municipio: MURILLO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73483':
+    municipio: NATAGAIMA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73504':
+    municipio: ORTEGA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73520':
+    municipio: PALOCABILDO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73547':
+    municipio: PIEDRAS
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73555':
+    municipio: PLANADAS
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73563':
+    municipio: PRADO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73585':
+    municipio: PURIFICACION
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73616':
+    municipio: RIOBLANCO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73622':
+    municipio: RONCESVALLES
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73624':
+    municipio: ROVIRA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73671':
+    municipio: SALDAÑA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73675':
+    municipio: SAN ANTONIO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73678':
+    municipio: SAN LUIS
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73686':
+    municipio: SANTA ISABEL
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73770':
+    municipio: SUAREZ
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73854':
+    municipio: VALLE DE SAN JUAN
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73861':
+    municipio: VENADILLO
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73870':
+    municipio: VILLAHERMOSA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '73873':
+    municipio: VILLARRICA
+    departamento: TOLIMA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '76001':
+    municipio: CALI
+    departamento: VALLE DEL CAUCA
+    gestor: CATASTRO MUNICIPAL DE CALI
+    rural: false
+    urbano: false
+  '76020':
+    municipio: ALCALA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76036':
+    municipio: ANDALUCIA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76041':
+    municipio: ANSERMANUEVO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76054':
+    municipio: ARGELIA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76100':
+    municipio: BOLIVAR
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76109':
+    municipio: BUENAVENTURA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76111':
+    municipio: GUADALAJARA DE BUGA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76113':
+    municipio: BUGALAGRANDE
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76122':
+    municipio: CAICEDONIA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76126':
+    municipio: CALIMA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76130':
+    municipio: CANDELARIA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76147':
+    municipio: CARTAGO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76233':
+    municipio: DAGUA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76243':
+    municipio: EL AGUILA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76246':
+    municipio: EL CAIRO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76248':
+    municipio: EL CERRITO
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76250':
+    municipio: EL DOVIO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76275':
+    municipio: FLORIDA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76306':
+    municipio: GINEBRA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76318':
+    municipio: GUACARI
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76364':
+    municipio: JAMUNDI
+    departamento: VALLE DEL CAUCA
+    gestor: MUNICIPIO DE JAMUNDI
+    rural: false
+    urbano: false
+  '76377':
+    municipio: LA CUMBRE
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76400':
+    municipio: LA UNION
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76403':
+    municipio: LA VICTORIA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76497':
+    municipio: OBANDO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76520':
+    municipio: PALMIRA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76563':
+    municipio: PRADERA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76606':
+    municipio: RESTREPO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76616':
+    municipio: RIOFRIO
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '76622':
+    municipio: ROLDANILLO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76670':
+    municipio: SAN PEDRO
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '76736':
+    municipio: SEVILLA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76823':
+    municipio: TORO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76828':
+    municipio: TRUJILLO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76834':
+    municipio: TULUA
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76845':
+    municipio: ULLOA
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76863':
+    municipio: VERSALLES
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76869':
+    municipio: VIJES
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '76890':
+    municipio: YOTOCO
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '76892':
+    municipio: YUMBO
+    departamento: VALLE DEL CAUCA
+    gestor: DEPARTAMENTO DEL VALLE DEL CAUCA
+    rural: false
+    urbano: false
+  '76895':
+    municipio: ZARZAL
+    departamento: VALLE DEL CAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81001':
+    municipio: ARAUCA
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '81065':
+    municipio: ARAUQUITA
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81220':
+    municipio: CRAVO NORTE
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81300':
+    municipio: FORTUL
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81591':
+    municipio: PUERTO RONDON
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81736':
+    municipio: SARAVENA
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '81794':
+    municipio: TAME
+    departamento: ARAUCA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '85001':
+    municipio: YOPAL
+    departamento: CASANARE
+    gestor: MUNICIPIO DE SABANALARGA
+    rural: false
+    urbano: false
+  '85010':
+    municipio: AGUAZUL
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85015':
+    municipio: CHAMEZA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85125':
+    municipio: HATO COROZAL
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85136':
+    municipio: LA SALINA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85139':
+    municipio: MANI
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85162':
+    municipio: MONTERREY
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85225':
+    municipio: NUNCHIA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85230':
+    municipio: OROCUE
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85250':
+    municipio: PAZ DE ARIPORO
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85263':
+    municipio: PORE
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85279':
+    municipio: RECETOR
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85300':
+    municipio: SABANALARGA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '85315':
+    municipio: SACAMA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85325':
+    municipio: SAN LUIS DE PALENQUE
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85400':
+    municipio: TAMARA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '85410':
+    municipio: TAURAMENA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '85430':
+    municipio: TRINIDAD
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '85440':
+    municipio: VILLANUEVA
+    departamento: CASANARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86001':
+    municipio: MOCOA
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86219':
+    municipio: COLON
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86320':
+    municipio: ORITO
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86568':
+    municipio: PUERTO ASIS
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86569':
+    municipio: PUERTO CAICEDO
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86571':
+    municipio: PUERTO GUZMAN
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86573':
+    municipio: PUERTO LEGUIZAMO
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '86749':
+    municipio: SIBUNDOY
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '86755':
+    municipio: SAN FRANCISCO
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '86757':
+    municipio: SAN MIGUEL
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86760':
+    municipio: SANTIAGO
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86865':
+    municipio: VALLE DEL GUAMUEZ
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '86885':
+    municipio: VILLAGARZON
+    departamento: PUTUMAYO
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '88001':
+    municipio: SAN ANDRES
+    departamento: ARCHIPIELAGO DE SAN ANDRES, PROVIDENCIA Y SANTA CATALINA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '88564':
+    municipio: PROVIDENCIA
+    departamento: ARCHIPIELAGO DE SAN ANDRES, PROVIDENCIA Y SANTA CATALINA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '91001':
+    municipio: LETICIA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '91263':
+    municipio: EL ENCANTO
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91405':
+    municipio: LA CHORRERA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91407':
+    municipio: LA PEDRERA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91430':
+    municipio: LA VICTORIA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91460':
+    municipio: MIRITI - PARANA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91530':
+    municipio: PUERTO ALEGRIA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91536':
+    municipio: PUERTO ARICA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '91540':
+    municipio: PUERTO NARIÑO
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '91669':
+    municipio: PUERTO SANTANDER
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '91798':
+    municipio: TARAPACA
+    departamento: AMAZONAS
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '94001':
+    municipio: INIRIDA
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '94343':
+    municipio: BARRANCO MINAS
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94883':
+    municipio: SAN FELIPE
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94884':
+    municipio: PUERTO COLOMBIA
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94885':
+    municipio: LA GUADALUPE
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94886':
+    municipio: CACAHUAL
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94887':
+    municipio: PANA PANA
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '94888':
+    municipio: MORICHAL
+    departamento: GUAINIA
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '95001':
+    municipio: SAN JOSE DEL GUAVIARE
+    departamento: GUAVIARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '95015':
+    municipio: CALAMAR
+    departamento: GUAVIARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '95025':
+    municipio: EL RETORNO
+    departamento: GUAVIARE
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '95200':
+    municipio: MIRAFLORES
+    departamento: GUAVIARE
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '97001':
+    municipio: MITU
+    departamento: VAUPES
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '97161':
+    municipio: CARURU
+    departamento: VAUPES
+    gestor: IGAC
+    rural: false
+    urbano: true
+  '97511':
+    municipio: PACOA
+    departamento: VAUPES
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '97666':
+    municipio: TARAIRA
+    departamento: VAUPES
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '97777':
+    municipio: PAPUNAUA
+    departamento: VAUPES
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '97889':
+    municipio: YAVARATE
+    departamento: VAUPES
+    gestor: IGAC
+    rural: false
+    urbano: false
+  '99001':
+    municipio: PUERTO CARREÑO
+    departamento: VICHADA
+    gestor: IGAC
+    rural: true
+    urbano: false
+  '99524':
+    municipio: LA PRIMAVERA
+    departamento: VICHADA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '99624':
+    municipio: SANTA ROSALIA
+    departamento: VICHADA
+    gestor: IGAC
+    rural: true
+    urbano: true
+  '99773':
+    municipio: CUMARIBO
+    departamento: VICHADA
+    gestor: IGAC
+    rural: true
+    urbano: true

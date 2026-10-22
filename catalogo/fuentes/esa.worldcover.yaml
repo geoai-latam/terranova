@@ -1,0 +1,32 @@
+id: esa.worldcover
+titulo: ESA WorldCover 2021 v200, cobertura del suelo a 10 m
+entidad: European Space Agency (consorcio WorldCover)
+competencia: null
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-21
+  evidencia: https://zenodo.org/records/7254221
+  cita: '"license": {"id": "cc-by-4.0"}'
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "© ESA WorldCover project 2021 / Contains modified Copernicus Sentinel data (2021) processed by ESA WorldCover consortium"
+protocolo: archivo
+conector: imagery-mcp
+# COG por celdas de 3°×3° (ESA_WorldCover_10m_2021_v200_<N|S><lat><E|W><lon>_Map.tif); imagery-mcp
+# lee solo la ventana de la zona. `imagery_land_cover` da una fila por clase con los nombres de abajo.
+url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map
+modo: en_vivo
+# Producto cerrado (mapa de 2021): no cambia.
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P10Y}
+cobertura: {pais: GLOBAL}
+datos_personales: ninguno
+estado: publicada
+campos:
+  clase: {nombre: clase_cobertura, tipo: str, desc: "clase de WorldCover v200 (Árboles, Construido, Agua permanente…)"}
+  codigo: {nombre: codigo_clase, tipo: int, desc: "código de la clase en WorldCover (10 a 100)"}
+  km2: {nombre: area_clase_km2, tipo: float, desc: "área de la clase en la zona, km²"}
+  porcentaje: {nombre: porcentaje_area, tipo: float, desc: "porcentaje de la zona con esa clase"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: ESA, theme: cobertura_del_suelo, accrualPeriodicity: irregular}

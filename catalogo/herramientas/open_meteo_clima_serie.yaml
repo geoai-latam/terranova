@@ -1,0 +1,30 @@
+id: open_meteo_clima_serie
+version: 1
+familia: ambiente
+fuente: open_meteo.era5
+pregunta: "¿Cuánto llovió y qué temperatura hizo en este punto en este periodo?"
+descripcion: >
+  Clima de un punto entre dos fechas (AAAA-MM-DD, ambas incluidas) con el reanálisis ERA5:
+  precipitación acumulada, temperatura media y la elevación de la celda del modelo, que en montaña
+  difiere de la real. Es un modelo de malla, no una estación. Solo uso no comercial.
+  (Fuente: Open-Meteo con ERA5 de Copernicus; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float, desde: fecha, hasta: fecha}
+consulta:
+  operacion: serie
+  tool: clima_serie
+  argumentos:
+    lon: "{lon}"
+    lat: "{lat}"
+    desde: "{desde}"
+    hasta: "{hasta}"
+    fuente: era5
+  campos: [precipitacion_total_periodo_mm, t_media_periodo_c, elevacion_modelo_m, dias]
+salida: ClimaSerie
+creditos: 10
+# Medido el 2026-10-22 (UTC) en archive-api.open-meteo.com con los parámetros del conector:
+# 31 días, suma de precipitation_sum 91,5 mm, media de temperature_2m_mean 12,0 °C, elevación 2557 m.
+# Periodo pasado y fijo.
+canario:
+  entrada: {lon: -74.0721, lat: 4.711, desde: "2023-01-01", hasta: "2023-01-31"}
+  verdad: {precipitacion_total_mm: 91.5, temperatura_media_c: 12.0, elevacion_modelo_m: 2557.0, dias: 31}
+  latencia_max_ms: 8000

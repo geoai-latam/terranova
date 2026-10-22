@@ -1,0 +1,29 @@
+id: igac_vereda_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.vereda
+pregunta: "¿En qué vereda del catastro IGAC está este punto?"
+descripcion: >
+  Vereda catastral (IGAC) que contiene un punto rural: código y nombre de la vereda, código
+  anterior y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [15]  # R_VEREDA
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [CODIGO, NOMBRE, CODIGO_ANTERIOR]
+    max_features: 5
+  campos: [CODIGO, NOMBRE, CODIGO_ANTERIOR]
+salida: VeredaEnPunto
+# `municipio_divipola`, de los 5 primeros dígitos del código de la vereda.
+derivados: [municipio_divipola]
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {codigo_vereda: "25175000000000005", nombre_vereda: YERBABUENA, municipio_divipola: "25175"}
+  latencia_max_ms: 5000

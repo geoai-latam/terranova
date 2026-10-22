@@ -1,0 +1,28 @@
+id: ant_resguardos_en_punto
+version: 1
+familia: ambiente
+fuente: ant.resguardos_indigenas
+pregunta: "¿En qué resguardo indígena formalizado cae este punto?"
+descripcion: >
+  Resguardo indígena formalizado por la ANT que contiene un punto: nombre, pueblo, departamento y
+  municipio (DIVIPOLA), último acto administrativo y área. Cubre todo el país, solo resguardos
+  formalizados; las solicitudes en trámite y otros territorios étnicos no están en esta fuente.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    max_features: 5
+  campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ResguardoEnPunto
+creditos: 10
+canario:
+  # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
+  entrada: {lon: -70.5, lat: 0.8}
+  verdad: {nombre: "Resguardo Indígena Vaupes", municipio_divipola: "97001", numero_acto: "378"}
+  latencia_max_ms: 5000

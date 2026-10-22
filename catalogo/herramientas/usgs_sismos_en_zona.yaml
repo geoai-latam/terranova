@@ -1,0 +1,30 @@
+id: usgs_sismos_en_zona
+version: 1
+familia: ambiente
+fuente: usgs.sismos
+pregunta: "¿Qué sismos hubo en esta zona en este periodo?"
+descripcion: >
+  Sismos del catálogo mundial de la USGS dentro de un rectángulo y un periodo, con una magnitud
+  mínima: magnitud, lugar, fecha, profundidad y cuántos hay en el catálogo. No es la red oficial
+  colombiana (SGC) ni la amenaza sísmica (NSR-10). `hasta` es exclusivo: 2025-01-01 cierra el 2024.
+  (Fuente: USGS; licencia: dominio público de Estados Unidos.)
+entrada: {bbox: bbox, desde: fecha, hasta: fecha, magnitud_min: float}
+consulta:
+  operacion: en_zona
+  tool: amenazas_sismos
+  argumentos:
+    bbox: "{bbox}"
+    desde: "{desde}"
+    hasta: "{hasta}"
+    magnitud_min: "{magnitud_min}"
+  campos: [mag, magType, place, fecha, profundidad_km, en_el_catalogo]
+salida: SismosEnZona
+derivados: [magnitud_maxima]
+creditos: 10
+# Medido el 2026-10-22 (UTC) en /fdsnws/event/1/count (139) y /query?orderby=magnitude&limit=1
+# (M 5.6 mww, «7 km E of Cartago, Colombia», 2024-01-19). Ventana pasada y fija: solo cambia si la
+# USGS revisa su catálogo.
+canario:
+  entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-01-01", hasta: "2025-01-01", magnitud_min: 4.0}
+  verdad: {total_en_catalogo: 139, magnitud_maxima: 5.6}
+  latencia_max_ms: 8000
