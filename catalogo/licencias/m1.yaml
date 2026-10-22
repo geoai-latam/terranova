@@ -1,0 +1,235 @@
+# Licencias de las fuentes M1 (F0.5), verificadas el 2026-10-21.
+#
+# Cada entrada lleva la evidencia primaria: el `licenseInfo` del ítem, los metadatos o el acto
+# administrativo. En F1.2 estas entradas pasan a las fichas de fuente del catálogo (spec 02).
+#
+# La decisión aplica ADR-0007, ADR-0019 y ADR-0020:
+#   produccion   → licencia verificada que permite redistribuir; responde a todas las llaves.
+#   evaluacion   → `por_verificar`; solo responde a llaves de evaluación hasta que haya evidencia.
+#   fuera        → no permite redistribuir; no entra al catálogo.
+# Solo cuentan los ítems del dueño oficial: las copias de terceros traen licencias distintas
+# (NC, confidencial).
+
+- id: igac.catastro.base_publica_gestor
+  entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+  url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.arcgis.com/sharing/rest/content/items/6ca71458728f45988e2cd7aa5305a663?f=json
+    cita: "Este producto adopta la licencia pública internacional de Reconocimiento-CompartirIgual 4.0 de Creative Commons"
+  decision: produccion
+  notas: >
+    Es el producto que consume `igac_predio_en_punto`. Cada corte mensual es un ítem nuevo, así que
+    la licencia se vuelve a leer al descubrir el corte (F1.5). Solo campos catastrales públicos
+    (Res. 616/2020, art. 6, hábeas data).
+
+- id: igac.res616.datos_abiertos
+  entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+  url: https://mapas.igac.gov.co/server/rest/services/
+  licencia: {spdx: CC-BY-4.0, url: https://creativecommons.org/licenses/by/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.igac.gov.co/sites/default/files/transparencia/normograma/resolucion_616_de_2020.pdf
+    cita: "ARTÍCULO 7º. LICENCIA CREATIVE COMMONS CC-BY 4.0. Se adopta la Licencia Creative Commons CC-BY 4.0"
+  decision: produccion
+  notas: >
+    Solo cubre los conjuntos del art. 3: catastro, geodesia, geografía, cartografía básica,
+    ortoimágenes y agrología nacional (vocación, conflictos de uso, suelos y capacidad de uso).
+    Los estudios de agrología hechos con CAR o por convenio (art. 3, parágrafo 2) quedan en
+    `evaluacion`, uno por uno.
+
+- id: igac.ambiente.alojados_de_otras_entidades
+  entidad: Alojados por IGAC; los autores son Minambiente (reservas Ley 2.ª) e IDEAM (inundación La Niña)
+  url: https://mapas.igac.gov.co/server/rest/services/ambiente/
+  licencia: {spdx: null}
+  uso_comercial: por_verificar
+  redistribucion: por_verificar
+  evidencia:
+    url: https://mapas.igac.gov.co/server/rest/services/ambiente/reservasforestalesley2da/MapServer/info/itemInfo?f=json
+    cita: '"accessInformation": "Ministerio de Ambiente y Desarrollo Sostenible", "licenseInfo": ""'
+  decision: evaluacion
+  notas: >
+    No son datos del IGAC: la Res. 616 no aplica. Las reservas de Ley 2.ª se toman de la fuente de
+    Minambiente cuando esa tenga licencia; la inundación de La Niña, de IDEAM.
+
+- id: pnn.runap
+  entidad: Parques Nacionales Naturales de Colombia
+  url: https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.arcgis.com/sharing/rest/content/items/4a673b3d51c146abab5fd462992dd2c0?f=json
+    cita: "RUNAP © 2025 por Parques Nacionales Naturales licenciado bajo CC BY-SA 4.0"
+  decision: produccion
+  notas: >
+    El registro de datos.gov.co k7kn-depg lo marca CC BY; manda el ítem del dueño y BY-SA es lo más
+    conservador (ADR-0019).
+
+- id: dane.mgn_y_cnpv2018
+  entidad: Departamento Administrativo Nacional de Estadística (DANE)
+  url: https://portalgis.dane.gov.co/mparcgis/rest/services/MGN2025/Serv_CapasMGN_2025/MapServer
+  licencia: {spdx: null}
+  uso_comercial: por_verificar
+  redistribucion: por_verificar
+  evidencia:
+    url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+    cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual"
+  decision: evaluacion
+  notas: >
+    No es una licencia abierta: es una «licencia de usuario final» con cita obligatoria que no
+    menciona la redistribución. La parte de población de la ficha usa WorldPop hasta que DANE
+    responda por escrito (F0.8). Solo agregados (reserva estadística).
+
+- id: upra.datos_abiertos
+  entidad: Unidad de Planificación Rural Agropecuaria (UPRA)
+  url: https://www.datos.gov.co/resource/rttb-pk7n.json
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.datos.gov.co/api/views/rttb-pk7n.json
+    cita: '"licenseId": "CC_40_BY_SA"'
+  decision: produccion
+  notas: >
+    Coincide con la licencia de datos abiertos de UPRA (v01, 2026-04-13), que también es BY-SA,
+    aunque su §2 diga BY por error. La atribución debe incluir la fecha de la versión de los datos.
+
+- id: ideam.datos_gov_co
+  entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+  url: https://www.datos.gov.co/resource/57sv-p2fu.json
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.datos.gov.co/api/views/57sv-p2fu.json
+    cita: '"licenseId": "CC_40_BY_SA"'
+  decision: produccion
+  notas: Las estaciones «de terceros» del mismo conjunto pueden tener otros términos.
+
+- id: ideam.geoservicios
+  entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+  url: https://visualizador.ideam.gov.co/gisserver/rest/services
+  licencia: {spdx: null}
+  uso_comercial: por_verificar
+  redistribucion: por_verificar
+  evidencia:
+    url: https://visualizador.ideam.gov.co/gisserver/rest/services/Agrometeorologia/MapServer/info/itemInfo?f=json
+    cita: '"licenseInfo": ""'
+  decision: evaluacion
+  notas: Hay copias de terceros del mapa de ecosistemas marcadas CC BY-NC-SA 3.0; no se usan.
+
+- id: ant.datos_abiertos
+  entidad: Agencia Nacional de Tierras (ANT)
+  url: https://data-agenciadetierras.opendata.arcgis.com
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.arcgis.com/sharing/rest/content/items/8944116ccfd34a7189c4bc44b8e19186?f=json
+    cita: "Este conjunto de datos se distribuye bajo la Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)"
+  decision: produccion
+  notas: Solo los ítems del dueño `Datos_Abiertos_ANT`; hay copias ajenas marcadas confidenciales.
+
+- id: minambiente.datos_gov_co
+  entidad: Ministerio de Ambiente y Desarrollo Sostenible
+  url: https://www.datos.gov.co/resource/9a89-px8u.json
+  licencia: {spdx: CC-BY-SA-4.0, url: https://creativecommons.org/licenses/by-sa/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.datos.gov.co/api/views/9a89-px8u.json
+    cita: '"licenseId": "CC_40_BY_SA"'
+  decision: produccion
+
+- id: minambiente.siac_hub
+  entidad: Ministerio de Ambiente y Desarrollo Sostenible (SIAC)
+  url: https://siac-datosabiertos-mads.hub.arcgis.com
+  licencia: {spdx: null}
+  uso_comercial: por_verificar
+  redistribucion: por_verificar
+  evidencia:
+    url: https://www.arcgis.com/sharing/rest/content/items/f9f75be855c84445ba16e68ff586e1aa?f=json
+    cita: "La información publicada puede ser consultada y utilizada libremente, siempre que se cite la fuente oficial."
+  decision: evaluacion
+  notas: Varía por ítem y algunos no traen licencia. Se revisa uno por uno.
+
+- id: datos_gov_co.terminos_portal
+  entidad: MinTIC, Portal de Datos Abiertos
+  url: https://www.datos.gov.co
+  licencia: {spdx: null}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://herramientas.datos.gov.co/terminos
+    cita: "se entiende por uso, aprovechamiento y/o transformación autorizada de los datos, las actividades tales como: redistribución"
+  decision: produccion
+  notas: >
+    Cada conjunto declara su propia licencia (`license` en los metadatos) y esa manda. Los términos
+    prohíben alterar o suprimir la fecha de actualización y las condiciones de uso: `rt/1` las
+    conserva en `procedencia`. Los registros federados traen `license: null`; la licencia real está
+    en el origen.
+
+- id: usgs.sismos
+  entidad: U.S. Geological Survey
+  url: https://earthquake.usgs.gov/fdsnws/event/1/
+  licencia: {spdx: LicenseRef-dominio-publico-EEUU}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits
+    cita: "USGS-authored or produced data and information are considered to be in the U.S. Public Domain."
+  decision: produccion
+
+- id: nasa.firms
+  entidad: NASA (LANCE/FIRMS)
+  url: https://firms.modaps.eosdis.nasa.gov
+  licencia: {spdx: CC0-1.0, url: https://creativecommons.org/publicdomain/zero/1.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance
+    cita: "Creative Commons Zero (CC0)"
+  decision: produccion
+  notas: Cita sugerida «NASA FIRMS». VIIRS NOAA-20/21 es una misión de NOAA (gobierno de EE. UU.).
+
+- id: esa.worldcover
+  entidad: European Space Agency (consorcio WorldCover)
+  url: https://zenodo.org/records/7254221
+  licencia: {spdx: CC-BY-4.0, url: https://creativecommons.org/licenses/by/4.0/}
+  uso_comercial: si
+  redistribucion: si
+  evidencia:
+    url: https://zenodo.org/records/7254221
+    cita: '"license": {"id": "cc-by-4.0"}'
+  decision: produccion
+
+- id: open_meteo.glofas_era5
+  entidad: Open-Meteo (datos de Copernicus GloFAS y ERA5)
+  url: https://open-meteo.com
+  licencia: {spdx: CC-BY-4.0, url: https://creativecommons.org/licenses/by/4.0/}
+  uso_comercial: "no"
+  redistribucion: si
+  evidencia:
+    url: https://open-meteo.com/en/terms
+    cita: "You may only use the free API services for non-commercial purposes."
+  decision: produccion
+  notas: Con aviso «no comercial» mientras rija ADR-0020; ver ADR-0021.
+
+- id: sgc.geoservicios
+  entidad: Servicio Geológico Colombiano (SGC)
+  url: https://srvags.sgc.gov.co/arcgis/rest/services
+  licencia: {spdx: LicenseRef-SGC-uso-restringido}
+  uso_comercial: "no"
+  redistribucion: "no"
+  evidencia:
+    url: https://miig.sgc.gov.co/DocumentosCompartidos/Licencia.pdf
+    cita: "no pueden ser transmitidos, asignados, intercambiados o vendidos a ninguna tercera parte sin el consentimiento previo escrito"
+  decision: fuera
+  notas: >
+    Algunos ítems propios del SGC en ArcGIS Online (Mapa Geológico 2015) declaran CC BY 4.0, lo
+    que contradice esta licencia. Quedan fuera hasta que el SGC lo confirme por escrito; se agregó a
+    las solicitudes de F0.8.

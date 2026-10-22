@@ -27,12 +27,13 @@ SERVICIO_IGAC = (
     f"Base_Catastral_Publica_del_Gestor_IGAC_{CORTE_IGAC}/FeatureServer"
 )
 CAPAS_TERRENO = {"rural": 14, "urbano": 7}  # R_TERRENO, U_TERRENO
-# ADR-0019: sin licencia verificada se trata como BY-SA.
-LICENCIA_NO_VERIFICADA = Licencia(
+# Verificada el 2026-10-21 en el `licenseInfo` del ítem de ArcGIS Online del corte (F0.5): la base
+# catastral pública del gestor es CC BY-SA 4.0 (la Res. 616 de 2020, CC BY, cubre otros productos).
+LICENCIA_IGAC_BASE = Licencia(
     spdx="CC-BY-SA-4.0",
     url="https://creativecommons.org/licenses/by-sa/4.0/",
-    uso_comercial="desconocido",
-    verificada=False,
+    uso_comercial="si",
+    verificada=True,
 )
 CONECTOR_ID = "arcgis-mcp"
 
@@ -75,6 +76,25 @@ async def _consultar_capa(conector: Conector, zona: str, lon: float, lat: float)
     argumentos = {"url": url, "bbox": [lon, lat, lon, lat], "max_features": 5}
     respuesta = await conector.llamar("arcgis_query_features", argumentos)
     return {"zona": zona, "url": url, "consulta": argumentos, "respuesta": respuesta}
+
+
+def _geo_result_limpio(zona: str, artefacto: dict[str, Any]) -> dict[str, Any]:
+    """El GeoResult del conector con solo los campos de la lista blanca (regla 10 de `rt/1`)."""
+    rasgos = [
+        {
+            "type": "Feature",
+            "geometry": r.get("geometry"),
+            "properties": _datos_predio(zona, r["properties"]),
+        }
+        for r in artefacto["data"]["features"]
+    ]
+    limpio = {
+        "kind": "feature_collection",
+        "name": f"Predio IGAC ({zona})",
+        "crs": artefacto.get("crs", "EPSG:4326"),
+        "data": {"type": "FeatureCollection", "features": rasgos},
+    }
+    return {"geo_result": "1", "artifacts": [limpio], "facts": {}}
 
 
 def _datos_predio(zona: str, atributos: dict[str, Any]) -> dict[str, Any]:
@@ -122,14 +142,14 @@ async def igac_predio_en_punto(
         hechos = respuesta.get("facts") or {}
         datos_capa = _datos_predio(capa["zona"], rasgos[0]["properties"]) if rasgos else {}
         if datos_capa and not datos:
-            datos, geo_result = datos_capa, respuesta
+            datos, geo_result = datos_capa, _geo_result_limpio(capa["zona"], artefactos[0])
         total = hechos.get("total_en_servicio")
         procedencia.append(
             Procedencia(
                 fuente_id=f"igac.catastro.terreno_{capa['zona']}",
                 entidad="Instituto Geográfico Agustín Codazzi (IGAC)",
                 url=capa["url"],
-                licencia=LICENCIA_NO_VERIFICADA,
+                licencia=LICENCIA_IGAC_BASE,
                 atribucion=f"Fuente: IGAC, Base catastral pública del gestor ({CORTE_IGAC})",
                 servido_desde="fuente",
                 consultado_en=consultado_en,
@@ -153,7 +173,7 @@ async def igac_predio_en_punto(
         datos=datos,
         geo_result=geo_result,
         procedencia=procedencia,
-        avisos=["Licencia de la fuente sin verificar: se trata como CC BY-SA 4.0 (ADR-0019)."],
+        avisos=[],
         errores=[],
     )
 
