@@ -1,0 +1,69 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:40:24+00:00",
+ "herramienta": "invima_registro_sanitario_por_expediente",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "ui32-p9f2",
+    "max_filas": 200,
+    "order": "rsynso",
+    "portal": "datos.gov.co",
+    "select": "expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad",
+    "where": "expediente = '2'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estadoregistro",
+       "expediente",
+       "fechavencimiento",
+       "grupo",
+       "modalidad",
+       "producto",
+       "rsynso",
+       "titular"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estadoregistro": "Vencido",
+        "expediente": "2",
+        "fechavencimiento": "1999-10-31T00:00:00.000",
+        "grupo": "ALIMENTOS",
+        "modalidad": "FABRICAR Y VENDER",
+        "producto": "GALLETAS FRANCESITAS RELLENAS DE AREQUIPE",
+        "rsynso": "RSIAD11M04589",
+        "titular": "PETITAS LTDA."
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "ui32-p9f2",
+     "consulta": {
+      "conjunto": "ui32-p9f2",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad",
+      "where": "(expediente = '2')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(expediente = '2')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

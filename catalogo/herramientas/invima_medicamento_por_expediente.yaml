@@ -1,0 +1,30 @@
+id: invima_medicamento_por_expediente
+version: 1
+familia: estadisticas
+fuente: invima.cum_vigentes
+pregunta: "¿Qué dice el INVIMA del medicamento con este expediente?"
+descripcion: >
+  Presentaciones (CUM) vigentes de un medicamento por su número de expediente en el INVIMA:
+  producto, titular, registro sanitario, vencimiento, principio activo y presentación.
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {expediente: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: i7cb-raxc
+    portal: datos.gov.co
+    select: "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad"
+    where: "expediente = '{expediente}'"
+    order: "consecutivocum"
+    max_filas: 200
+  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad]
+salida: MedicamentoPorExpediente
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en i7cb-raxc.
+  entrada: {expediente: 31330}
+  verdad: {expediente: 31330, consecutivo_cum: 1, titular: "PFIZER S.A.S.", registro_sanitario: "INVIMA 2019M-011317-R3"}
+  campos: [atc, concentracion, consecutivo_cum, descripcion_atc, estado_cum, estado_registro, expediente, forma_farmaceutica, modalidad, presentacion, principio_activo, producto, registro_sanitario, titular, unidad_medida, via_administracion]
+  latencia_max_ms: 10000

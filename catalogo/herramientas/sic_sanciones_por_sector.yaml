@@ -1,0 +1,35 @@
+id: sic_sanciones_por_sector
+version: 1
+familia: empresas
+fuente: sic.sanciones
+pregunta: "¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector?"
+descripcion: >
+  Sanciones en firme de la Superintendencia de Industria y Comercio en un año (por fecha de la
+  resolución), agrupadas por sector: número de sanciones y valor total en pesos.
+  (Fuente: SIC; licencia: CC BY-SA 4.0.)
+entrada: {anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 73dx-n59j
+    portal: datos.gov.co
+    select: "sector, count(*) AS sanciones, sum(valor) AS valor_total"
+    where: "date_extract_y(fecha_emitida) = {anio}"
+    group: sector
+    order: "sector"
+    max_filas: 200
+  campos: [fecha_emitida, valor, sector]
+salida: SancionesSicPorSector
+derivados:
+  sanciones: {de: columna, campo: sanciones, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 73dx-n59j: en 2024, el primer sector (orden alfabético) es «Actividades
+  # de parques y atracciones», con 1 sanción de $30 487 584.
+  entrada: {anio: 2024}
+  verdad: {sector: "Actividades de parques y atracciones", sanciones: 1, valor_total: 30487584.0}
+  campos: [sanciones, sector, valor_total]
+  latencia_max_ms: 10000

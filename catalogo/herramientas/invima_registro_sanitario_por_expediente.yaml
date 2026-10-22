@@ -1,0 +1,30 @@
+id: invima_registro_sanitario_por_expediente
+version: 1
+familia: estadisticas
+fuente: invima.rs_nso
+pregunta: "¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA?"
+descripcion: >
+  Registro sanitario o notificación sanitaria obligatoria (alimentos, cosméticos, aseo y otros)
+  por su expediente en el INVIMA: producto, grupo, riesgo, titular, estado y vencimiento.
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {expediente: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: ui32-p9f2
+    portal: datos.gov.co
+    select: "expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad"
+    where: "expediente = '{expediente}'"
+    order: "rsynso"
+    max_filas: 200
+  campos: [expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad]
+salida: RegistroSanitarioPorExpediente
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en ui32-p9f2: el expediente 2 son galletas (registro vencido).
+  entrada: {expediente: 2}
+  verdad: {expediente: 2, registro_sanitario: RSIAD11M04589, grupo: ALIMENTOS, estado_registro: Vencido}
+  campos: [estado_registro, expediente, fecha_vencimiento, grupo, modalidad, producto, registro_sanitario, titular]
+  latencia_max_ms: 15000

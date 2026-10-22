@@ -1,0 +1,40 @@
+id: supersociedades.empresas_grandes
+titulo: "Las 10 000 empresas más grandes del país (Supersociedades)"
+entidad: Superintendencia de Sociedades
+competencia: inspección, vigilancia y control de sociedades (Decreto 1736 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/6cat-2gcs.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Supersociedades, 10.000 Empresas más grandes del país. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# La fuente dice que todas las cifras van en billones de pesos y las publica como texto
+# ($84.95): salen tal cual, con la unidad en la descripción, para no confundirlas con pesos.
+url: https://www.datos.gov.co/resource/6cat-2gcs.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  nit: {nombre: nit, tipo: str, desc: "NIT (la fuente lo publica con .00 al final)"}
+  raz_n_social: {nombre: razon_social, tipo: str, desc: "razón social"}
+  supervisor: {nombre: supervisor, tipo: str, desc: "superintendencia que la vigila"}
+  departamento_domicilio: {nombre: departamento, tipo: str, desc: "departamento del domicilio"}
+  ciudad_domicilio: {nombre: ciudad, tipo: str, desc: "ciudad del domicilio"}
+  ciiu: {nombre: ciiu, tipo: str, desc: "CIIU"}
+  macrosector: {nombre: macrosector, tipo: str, desc: "macrosector"}
+  ingresos_operacionales: {nombre: ingresos_operacionales, tipo: str, desc: "ingresos operacionales, en billones de pesos, como texto de la fuente ($84.95)"}
+  ganancia_p_rdida: {nombre: ganancia_perdida, tipo: str, desc: "ganancia o pérdida, en billones de pesos"}
+  total_activos: {nombre: total_activos, tipo: str, desc: "total de activos, en billones de pesos"}
+  total_pasivos: {nombre: total_pasivos, tipo: str, desc: "total de pasivos, en billones de pesos"}
+  total_patrimonio: {nombre: total_patrimonio, tipo: str, desc: "patrimonio, en billones de pesos"}
+  a_o_de_corte: {nombre: anio_corte, tipo: int, desc: "año de corte"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Superintendencia de Sociedades, theme: comercio, accrualPeriodicity: monthly}
