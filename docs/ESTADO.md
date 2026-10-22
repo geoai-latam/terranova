@@ -56,6 +56,13 @@
 | F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
 | F4.3 Rendimiento de la ficha | 🟨 con caché p95 0,01 s ✓ (< 2 s). En vivo, p95 20 s ✗ (< 15 s): las corridas van de 9 a 20 s, y lo que pesa es el arranque en frío de la agrología del IGAC (~45 s en la primera consulta, 1 a 2 s después). Salida: `copia` de la agrología (ADR-0022), cuando el IGAC aclare la licencia por ítem y restablezca la descarga de capacidad de uso (los enlaces dan 401) |
 
+## F7 · Operación (en paralelo desde F3)
+
+| Spec F7 | Estado |
+|---|---|
+| F7.1 Canarios diarios | 🟨 `terranova canarios [--cada-horas 24]` (`src/terranova/vigilancia.py`). Corre los 20 canarios en serie, sin caché, y guarda cada resultado (SQLite o Postgres). Con `TERRANOVA_ALERTA_URL`, avisa por POST lo que salga rojo. `GET /v1/estado` da el estado por fuente. El compose suma el servicio `canarios`. Primera corrida en vivo (2026-10-22): 17 verdes; rojos la capacidad de uso del IGAC (20 s, arranque en frío) y los dos de RUNAP (el servicio de Parques tarda 60 s por punto). Falta la aceptación: 7 días seguidos registrados en un despliegue |
+| F7.2 a F7.4 | ⬜ |
+
 ## Decisiones tomadas
 
 - Nombre **Terranova**; repo público `geoai-latam/terranova`.
@@ -80,6 +87,9 @@
    al IGAC sobre licencia y descarga de capacidad se sumó al borrador de derechos de petición
    (`interno/`; la envía el dueño). Con la respuesta, se construye la copia como en F4.1 y se repite
    `scripts/e2e_ficha.py`. Fusionar geo-copilot#49 (tools en hilo).
+   Además, la spec 03 §8.3 dice que las restricciones de la ficha salen del **dataset curado**
+   (F4.1), y hoy van en vivo contra RUNAP y ANT. Servirlas del curado (`servido_desde: curado`)
+   quita la parte más frágil: RUNAP tardó 60 s por punto el 2026-10-22.
 2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
@@ -135,6 +145,8 @@
   está (no se matricula).
 - SUIN-Juriscol (`fiev-nid6`): el tipo va en mayúsculas («LEY») y hay errores de clasificación (la
   Ley 2.ª de 1959 sale con materia «Administración de justicia»). Se cita lo que dice la fuente.
+- RUNAP (`mapas.parquesnacionales.gov.co`): el 2026-10-22 una consulta por punto tardó 60 s (los
+  metadatos, 0,4 s). Lo detectó el primer canario diario.
 - Compose: un conector caído al arrancar tumbaba la puerta, que entraba en un ciclo de reinicios.
   Ahora arranca igual. La primera llamada con el conector caído tarda unos 7 s (DNS de Docker más 3 s
   de sesión); tras 3 caídas se abre el circuito y la respuesta baja a menos de 1 s.

@@ -30,6 +30,7 @@ from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import bearer
+from terranova.vigilancia import estado_por_fuente
 
 Scope = MutableMapping[str, Any]
 
@@ -285,6 +286,13 @@ def crear_api() -> FastAPI:
             "modo": f.modo,
             "estado": f.estado,
         }
+
+    @api.get("/v1/estado", tags=["catálogo"], operation_id="ver_estado")
+    async def estado() -> list[dict[str, Any]]:
+        """Estado por fuente según el último canario de cada herramienta (F7.1): `verde`, `rojo`
+        o `sin_datos`. Público, como el catálogo."""
+        ultimos = puerta.canarios.ultimos() if puerta.canarios is not None else []
+        return estado_por_fuente(ultimos, puerta.CATALOGO)
 
     @api.get("/v1/fuentes", tags=["catálogo"], operation_id="listar_fuentes")
     async def fuentes() -> list[dict[str, Any]]:
