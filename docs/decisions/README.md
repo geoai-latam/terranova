@@ -51,3 +51,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0022 · Agrología del IGAC en vivo, con caché, hasta tener copia](0022-agrologia-igac-en-vivo-hasta-tener-copia.md)
 - [ADR-0023 · Tope de la ficha en 12 s: el gate F4 no espera la copia de agrología](0023-tope-de-la-ficha-12-s.md)
 - [ADR-0024 · Conector de copia (G3): copias en PostGIS servidas por la puerta](0024-conector-de-copia.md)
+- [ADR-0025 · El documento de contratistas y proponentes de SECOP se muestra como lo publica la fuente](0025-documentos-en-divulgacion-obligatoria.md)

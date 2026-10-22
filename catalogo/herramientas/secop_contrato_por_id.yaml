@@ -6,8 +6,8 @@ pregunta: "¿Qué dice este contrato de SECOP II?"
 descripcion: >
   Un contrato de SECOP II por su identificador (CO1.PCCNTR.…): entidad contratante, contratista,
   objeto, tipo y modalidad, valor y valor pagado, fechas de firma, inicio y fin, estado y enlace al
-  proceso. Del contratista sale el nombre y el tipo de documento, nunca el número de documento ni
-  sus datos de contacto.
+  proceso. Del contratista salen el nombre, el tipo y el número de documento como los publica la
+  fuente (ADR-0025); nunca sus datos de contacto.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -16,10 +16,10 @@ consulta:
   argumentos:
     id: jbjy-vk9h
     portal: datos.gov.co
-    select: "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso"
+    select: "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso"
     where: "id_contrato = '{id_contrato}'"
     max_filas: 2  # si vinieran dos, la puerta lo dice: el id debería ser único
-  campos: [id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso]
+  campos: [id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso]
 salida: ContratoSecop
 creditos: 2
 canario:
@@ -36,5 +36,5 @@ canario:
     valor: 2602628368
     fecha_firma: "2023-06-26"
     estado: Cerrado
-  campos: [contratista, departamento, entidad, estado, fecha_actualizacion, fecha_fin, fecha_firma, fecha_inicio, id_contrato, id_proceso, modalidad, municipio, nit_entidad, objeto, referencia, tipo_contrato, tipo_documento_contratista, url_proceso, valor, valor_pagado]
+  campos: [contratista, departamento, documento_contratista, entidad, estado, fecha_actualizacion, fecha_fin, fecha_firma, fecha_inicio, id_contrato, id_proceso, modalidad, municipio, nit_entidad, objeto, referencia, tipo_contrato, tipo_documento_contratista, url_proceso, valor, valor_pagado]
   latencia_max_ms: 5000

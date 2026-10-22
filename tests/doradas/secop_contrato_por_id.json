@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T03:51:43+00:00",
+ "grabado": "2026-10-22T22:43:43+00:00",
  "herramienta": "secop_contrato_por_id",
  "llamadas": [
   {
@@ -8,7 +8,7 @@
     "id": "jbjy-vk9h",
     "max_filas": 2,
     "portal": "datos.gov.co",
-    "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
+    "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
     "where": "id_contrato = 'CO1.PCCNTR.5141215'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,6 +18,7 @@
       "columns": [
        "ciudad",
        "departamento",
+       "documento_proveedor",
        "estado_contrato",
        "fecha_de_fin_del_contrato",
        "fecha_de_firma",
@@ -42,6 +43,7 @@
        {
         "ciudad": "Chía",
         "departamento": "Cundinamarca",
+        "documento_proveedor": "832008895",
         "estado_contrato": "Cerrado",
         "fecha_de_fin_del_contrato": "2023-07-14T00:00:00.000",
         "fecha_de_firma": "2023-06-26T00:00:00.000",
@@ -67,8 +69,20 @@
      }
     ],
     "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
      "completo": true,
      "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "max_filas": 2,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
+      "where": "(id_contrato = 'CO1.PCCNTR.5141215')"
+     },
      "cumplen_en_el_portal": 1,
      "filas": 1,
      "filtro_soql": "(id_contrato = 'CO1.PCCNTR.5141215')",

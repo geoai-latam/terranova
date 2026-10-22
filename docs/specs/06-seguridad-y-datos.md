@@ -24,7 +24,7 @@ BY/BY-SA; salidas derivadas de fuentes BY-SA marcadas BY-SA.
 | Clase | Ejemplos | Regla |
 |---|---|---|
 | Persona como **parte de un registro público** buscada por número | radicado, SPOA, queja SFC, contrato SECOP por id | dentro |
-| Persona en **divulgación obligatoria** | contratistas SECOP, accionistas SIMEV, comerciantes RUES | dentro, sin teléfonos ni correos, cédulas enmascaradas por defecto, **sin perfiles que crucen fuentes** sin finalidad declarada |
+| Persona en **divulgación obligatoria** | contratistas SECOP, accionistas SIMEV, comerciantes RUES | dentro, sin teléfonos ni correos, cédulas enmascaradas por defecto (en SECOP, el documento sale como lo publica la fuente: ADR-0025), **sin perfiles que crucen fuentes** sin finalidad declarada |
 | **Boletines oficiales negativos** | BRF Contraloría, BDME | dudosa: desde el boletín publicado, con finalidad registrada; se decide con asesoría legal |
 | Búsqueda **por nombre o documento de una persona** | Rama Judicial por nombre, Procuraduría, SIMIT, SICAAC | fuera del MVP; sería otro producto (KYC) |
 | **Sensibles, prohibidos o con reto de identidad** | antecedentes de Policía (sus términos lo prohíben), RUAF, ADRES, Sisbén, RUNT por persona, registro civil | fuera |

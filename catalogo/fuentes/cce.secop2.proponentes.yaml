@@ -14,7 +14,7 @@ clase_acceso: api
 atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, proponentes por proceso. Fuente: Portal de Datos Abiertos www.datos.gov.co"
 protocolo: socrata
 conector: datos-abiertos-mcp
-# `nit_proveedor` no sale: es la cédula cuando el proponente es persona natural (ADR-0014).
+# El documento del proponente sale como lo publica Colombia Compra (ADR-0025).
 url: https://www.datos.gov.co/resource/hgi6-6wh3.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
@@ -27,6 +27,7 @@ campos:
   entidad_compradora: {nombre: entidad, tipo: str, desc: "entidad compradora"}
   nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
   proveedor: {nombre: proponente, tipo: str, desc: "nombre o razón social del proponente"}
+  nit_proveedor: {nombre: documento_proponente, tipo: str, desc: "NIT o documento del proponente, como lo publica la fuente (ADR-0025)"}
   fecha_publicaci_n: {nombre: fecha_publicacion, tipo: date, desc: "fecha de publicación del proceso"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
