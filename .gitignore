@@ -1,0 +1,32 @@
+# Notas internas (estrategia, legal): nunca se versionan
+interno/
+
+# Secretos
+.env
+.env.*
+!.env.example
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Datos locales
+datos_locales/
+*.parquet.tmp
+cassettes_crudas/
+
+# Editor y SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
