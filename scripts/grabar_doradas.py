@@ -63,7 +63,7 @@ class Grabador:
 
 async def main(nombres: list[str]) -> int:
     catalogo = cargar()
-    reales = conectores_desde_entorno()
+    reales = conectores_desde_entorno(catalogo)
     for c in reales.values():
         if isinstance(c, ConectorMCP):
             await c.abrir()

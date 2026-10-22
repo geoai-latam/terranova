@@ -3,10 +3,13 @@
 from __future__ import annotations
 
 from contextlib import AsyncExitStack
-from typing import Any, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 from fastmcp import Client
 from fastmcp.client.transports import StreamableHttpTransport
+
+if TYPE_CHECKING:
+    from terranova.catalogo import Catalogo
 
 # Lo que la puerta puede atribuir a la fuente. Cualquier otro código del conector (p. ej.
 # `parametro_invalido`) es un fallo nuestro: la puerta ya validó la entrada antes de llamar.
@@ -138,7 +141,9 @@ CONECTORES_POR_DEFECTO = {
 }
 
 
-def conectores_desde_entorno() -> dict[str, Conector]:
+def conectores_desde_entorno(catalogo: Catalogo | None = None) -> dict[str, Conector]:
+    """Los conectores MCP de `TERRANOVA_CONECTORES` y, con el catálogo, el interno `copia`
+    (ADR-0024) si hay base de copias."""
     import json
     import os
 
@@ -151,4 +156,9 @@ def conectores_desde_entorno() -> dict[str, Conector]:
         llave = os.environ.get("TERRANOVA_LLAVE_" + nombre.upper().replace("-", "_"), comun)
         if llave:
             conectores[nombre] = ConectorMCP(url, llave, timeout_s=90)
+    if catalogo is not None:
+        from terranova.copias import conector_desde_entorno
+
+        if (copia := conector_desde_entorno(catalogo)) is not None:
+            conectores["copia"] = copia
     return conectores

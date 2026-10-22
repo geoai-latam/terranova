@@ -5,6 +5,7 @@
     terranova llaves listar [--org geoai]
     terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
+    terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
 
 La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 """
@@ -72,7 +73,7 @@ def canarios(argumentos: list[str]) -> int:
 
     async def una_vez() -> bool:
         catalogo = cargar()
-        conectores = conectores_desde_entorno()
+        conectores = conectores_desde_entorno(catalogo)
         try:
             for c in conectores.values():
                 if isinstance(c, ConectorMCP):
@@ -99,8 +100,66 @@ def canarios(argumentos: list[str]) -> int:
         time.sleep(a.cada_horas * 3600)
 
 
+def copias(argumentos: list[str]) -> int:
+    """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
+    import os
+    import time
+    from datetime import date
+
+    from terranova.catalogo import cargar
+    from terranova.copias import AlmacenCopias, descargar_socrata
+
+    parser = argparse.ArgumentParser(prog="terranova copias actualizar")
+    parser.add_argument("fuentes", nargs="*", help="ids de fuente (por defecto, todas las copias)")
+    parser.add_argument("--cada-horas", type=float, help="repetir (servicio del compose)")
+    a = parser.parse_args(argumentos)
+    url = os.environ.get("TERRANOVA_COPIAS_URL") or os.environ.get("TERRANOVA_CURADO_URL")
+    if not url:
+        print("falta TERRANOVA_COPIAS_URL (postgresql://…)", file=sys.stderr)
+        return 2
+    # en el equipo de desarrollo se acota la ventana (memoria); en la VM va la de la ficha
+    desde_local = os.environ.get("TERRANOVA_COPIA_DESDE")
+
+    def una_vez() -> bool:
+        catalogo = cargar()
+        elegidas = [
+            f for f in catalogo.fuentes.values() if f.copia and (not a.fuentes or f.id in a.fuentes)
+        ]
+        almacen = AlmacenCopias(url)
+        bien = True
+        for fuente in elegidas:
+            assert fuente.copia is not None
+            ventana = fuente.copia.ventana.desde if fuente.copia.ventana else None
+            desde = (
+                max(ventana, date.fromisoformat(desde_local))
+                if ventana and desde_local
+                else ventana
+            )
+            inicio = time.monotonic()
+            try:
+                v = almacen.construir(fuente, descargar_socrata(fuente, desde), desde)
+                almacen.podar(fuente.copia.tabla)
+                segundos = time.monotonic() - inicio
+                print(
+                    f"ok    {fuente.id}: {v.filas} filas desde {desde}, "
+                    f"{v.repetidas} repetidas en la fuente ({segundos:.0f} s)"
+                )
+            except Exception as exc:  # noqa: BLE001 — una copia rota no detiene las demás
+                bien = False
+                print(f"FALLO {fuente.id}: {type(exc).__name__}: {exc}", file=sys.stderr)
+        return bien
+
+    while True:
+        bien = una_vez()
+        if not a.cada_horas:
+            return 0 if bien else 1
+        time.sleep(a.cada_horas * 3600)
+
+
 def main() -> None:
     argumentos = sys.argv[1:]
+    if argumentos[:2] == ["copias", "actualizar"]:
+        sys.exit(copias(argumentos[2:]))
     if argumentos[:1] == ["canarios"]:
         sys.exit(canarios(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:
@@ -109,6 +168,11 @@ def main() -> None:
         registro_desde_entorno().fijar_nivel(argumentos[2], argumentos[3])
         print(f"{argumentos[2]}: nivel {argumentos[3]}")
         sys.exit(0)
+    if argumentos and not argumentos[0].startswith("-"):
+        # antes, un subcomando mal escrito (`terranova orgs --help`) levantaba el servidor
+        print(f"subcomando desconocido: {' '.join(argumentos)}", file=sys.stderr)
+        print(__doc__ or "", file=sys.stderr)
+        sys.exit(2)
     from terranova.app import main as servir
 
     servir()

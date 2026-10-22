@@ -1,0 +1,52 @@
+id: cce.secop2.contratos_copia
+titulo: SECOP II, contratos electrónicos (copia para buscar en el texto)
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.datos.gov.co/api/views/jbjy-vk9h.json
+  cita: '"licenseId": "CC_40_BY_SA"'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II - Contratos Electrónicos. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: copia
+# ADR-0024: buscar en el texto de SECOP en vivo pasa de 90 s (un `like` sin índice). La copia guarda
+# la misma lista blanca que `cce.secop2.contratos` (sin documentos, representantes, supervisores ni
+# cuentas: ADR-0014) y un índice de texto completo en español sobre el objeto.
+url: https://www.datos.gov.co/resource/jbjy-vk9h.json
+modo: copia
+copia:
+  origen: socrata
+  conjunto: jbjy-vk9h
+  tabla: secop_contratos
+  clave: id_contrato
+  ventana: {columna: fecha_de_firma, desde: 2023-01-01}
+  indices: [nit_entidad, ciudad, fecha_de_firma]
+  texto: [objeto_del_contrato]
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P2D}
+cobertura:
+  pais: CO
+  excluye: ["contratos firmados antes de la ventana de la copia", "SECOP I y la Tienda Virtual del Estado"]
+datos_personales: filtrados
+estado: publicada
+campos:
+  id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato en SECOP II (CO1.PCCNTR.…)"}
+  proceso_de_compra: {nombre: id_proceso, tipo: str, desc: "identificador del proceso de compra (CO1.BDOS.…)"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad estatal contratante"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad contratante"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la entidad contratante"}
+  ciudad: {nombre: municipio, tipo: str, desc: "municipio de la entidad contratante (no el de ejecución)"}
+  proveedor_adjudicado: {nombre: contratista, tipo: str, desc: "nombre o razón social del contratista (divulgación obligatoria)"}
+  objeto_del_contrato: {nombre: objeto, tipo: str, desc: "objeto del contrato"}
+  tipo_de_contrato: {nombre: tipo_contrato, tipo: str, desc: "tipo de contrato"}
+  modalidad_de_contratacion: {nombre: modalidad, tipo: str, desc: "modalidad de contratación"}
+  estado_contrato: {nombre: estado, tipo: str, desc: "estado del contrato en SECOP II"}
+  valor_del_contrato: {nombre: valor, tipo: float, desc: "valor del contrato, en pesos colombianos"}
+  fecha_de_firma: {nombre: fecha_firma, tipo: date, desc: "fecha de firma"}
+  urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

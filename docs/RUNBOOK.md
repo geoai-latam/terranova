@@ -92,8 +92,9 @@ funciona.
 **Respaldos.** El servicio `respaldo` del compose deja un `pg_dump -Fc` diario en
 `TERRANOVA_RESPALDOS` (por defecto `docker/respaldos/`) y conserva 14 días. Esa carpeta **se copia
 fuera de la VM**: una copia en la misma máquina no sobrevive a la pérdida de la máquina. En la base
-están las llaves, la medición de uso, los canarios y el dataset curado (este último también se puede
-reconstruir desde las fuentes con `scripts/dataset_restricciones.py`).
+están las llaves, la medición de uso, los canarios, el dataset curado y las copias. Los dos últimos
+también se reconstruyen desde las fuentes: `scripts/dataset_restricciones.py --postgis` y
+`terranova copias actualizar`.
 
 **Cuándo.** Pérdida del volumen de Postgres, una VM nueva o datos corrompidos.
 

@@ -77,6 +77,14 @@ services:
       <<: *entorno
       TERRANOVA_ALERTA_URL: ${TERRANOVA_ALERTA_URL:-}
 
+  # G3 (ADR-0024): reconstruye una vez al día las copias del catálogo (`modo: copia`) en el esquema
+  # `copia` de Postgres. La puerta las lee con el conector interno `copia`.
+  copias:
+    <<: *puerta
+    build: !reset null
+    pull_policy: never
+    command: ["terranova", "copias", "actualizar", "--cada-horas", "24"]
+
   postgres:
     image: postgis/postgis:17-3.5-alpine  # PostGIS: el dataset curado de restricciones (F4.1)
     restart: unless-stopped
