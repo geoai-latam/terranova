@@ -17,7 +17,7 @@ from prometheus_client.registry import Collector
 
 disable_created_metrics()  # type: ignore[no-untyped-call]  # *_created solo hace ruido
 REGISTRO = CollectorRegistry(auto_describe=True)
-# del orden de un acierto de caché (ms) al tope de la ficha (20 s)
+# del orden de un acierto de caché (ms) a la consulta más lenta de un conector (60 s)
 CUBETAS = (0.05, 0.1, 0.3, 0.5, 1, 2, 5, 10, 15, 20, 30, 60)
 
 SOLICITUDES = Contador(

@@ -1,6 +1,6 @@
 # ADR-0022 · Agrología del IGAC en vivo, con caché, hasta tener copia
 
-- **Estado:** aceptada (2026-10-22).
+- **Estado:** aceptada (2026-10-22); su consecuencia sobre el gate F4 la reemplaza ADR-0023.
 - **Contexto:**
   - La ficha de un lugar (F4.2) pide al IGAC tres capas de agrología: vocación, capacidad y
     conflictos de uso (`mapas.igac.gov.co/server/rest/services/agrologia/…`).
