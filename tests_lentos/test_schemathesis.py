@@ -1,6 +1,7 @@
-"""F3.5: Schemathesis sobre el OpenAPI publicado. Sin 5xx y sin violar el esquema de respuesta
-(`Sobre` o `Problema`), con entradas válidas e inválidas generadas. Sin red: el conector falso
-responde vacío."""
+"""F3.5: Schemathesis sobre el OpenAPI publicado por la aplicación completa (con identidad).
+
+Sin 5xx, sin respuestas fuera de esquema (`Sobre` o `Problema`), y sin llave → 401. Entradas válidas
+e inválidas generadas. Sin red: el conector falso responde vacío."""
 
 from typing import Any
 
@@ -10,7 +11,8 @@ from hypothesis import HealthCheck, settings
 from schemathesis.specs.openapi.checks import positive_data_acceptance
 
 from terranova import puerta
-from terranova.app import crear_api
+from terranova.app import crear_aplicacion
+from terranova.identidad import RegistroSql
 
 
 class Vacio:
@@ -22,14 +24,29 @@ VACIOS = {
     n: Vacio()
     for n in ("arcgis-mcp", "datos-abiertos-mcp", "dane-mcp", "amenazas-mcp", "imagery-mcp")
 }
-schema = schemathesis.openapi.from_asgi("/openapi.json", crear_api())
+REGISTRO = RegistroSql(":memory:", "p" * 40)
+LLAVE = REGISTRO.crear("schemathesis", {"*"}, prueba=True, expira=None)
+# antes de cargar el esquema: el arranque de la app ve conectores inyectados y no busca secretos
+puerta.usar_conectores(dict(VACIOS))
+puerta.registro = REGISTRO
+schema = schemathesis.openapi.from_asgi("/openapi.json", crear_aplicacion())
+
+
+@schema.auth()
+class Llave:
+    def get(self, case: Any, ctx: Any) -> str:
+        return LLAVE
+
+    def set(self, case: Any, data: str, ctx: Any) -> None:
+        case.headers = {**(case.headers or {}), "Authorization": f"Bearer {data}"}
 
 
 @pytest.fixture(autouse=True)
-def sin_red(monkeypatch: pytest.MonkeyPatch) -> Any:
-    monkeypatch.setenv("TERRANOVA_PLAN", "evaluacion")
+def sin_red() -> Any:
     puerta.usar_conectores(dict(VACIOS))
+    puerta.registro = REGISTRO
     yield
+    puerta.registro = None
     puerta.usar_conectores(None)
 
 
@@ -39,7 +56,5 @@ def test_api(case: Any) -> None:
     # Un bbox con min ≥ max cumple el esquema (4 números) pero no es un rectángulo: «mín < máx» no
     # se puede decir en JSON Schema y la puerta lo rechaza con 400, como debe. Solo para esas
     # herramientas se omite la comprobación de «dato válido aceptado»; las demás siguen.
-    excluidas = (
-        [positive_data_acceptance] if isinstance(case.body, dict) and "bbox" in case.body else []
-    )
-    case.call_and_validate(excluded_checks=excluidas)
+    con_bbox = isinstance(case.body, dict) and "bbox" in case.body
+    case.call_and_validate(excluded_checks=[positive_data_acceptance] if con_bbox else [])

@@ -16,6 +16,7 @@ from typing import Annotated, Any
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse, PlainTextResponse
 from pydantic import BaseModel, ConfigDict, Field, create_model
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -174,11 +175,19 @@ def crear_api() -> FastAPI:
             tags=[h.familia],
             responses={
                 c: {"model": Problema, "content": {"application/problem+json": {}}}
-                for c in (400, 403, 404, 429, 500, 502, 504)
+                for c in (400, 401, 403, 404, 429, 500, 502, 504)
             },
+            openapi_extra={"security": [{"llave": []}]},
         )
 
-    @api.get("/v1/uso", tags=["cuenta"], operation_id="ver_uso", response_model=None)
+    @api.get(
+        "/v1/uso",
+        tags=["cuenta"],
+        operation_id="ver_uso",
+        response_model=None,
+        responses={401: {"model": Problema, "content": {"application/problem+json": {}}}},
+        openapi_extra={"security": [{"llave": []}]},
+    )
     async def uso(request: Request) -> dict[str, Any] | JSONResponse:
         """Saldo y consumo del mes de la organización de la llave (ADR-0010)."""
         principal = getattr(request.state, "principal", None)
@@ -254,6 +263,22 @@ def crear_api() -> FastAPI:
             return problema("no_existe", f"no hay fuente {fuente_id}")
         return _publica(fuente_id)
 
+    def openapi() -> dict[str, Any]:
+        if api.openapi_schema is None:
+            esquema = get_openapi(
+                title=api.title, version=api.version, description=api.description, routes=api.routes
+            )
+            esquema.setdefault("components", {})["securitySchemes"] = {
+                "llave": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "description": "rt_live_… o rt_test_…",
+                }
+            }
+            api.openapi_schema = esquema
+        return api.openapi_schema
+
+    api.openapi = openapi  # type: ignore[method-assign]
     return api
 
 
