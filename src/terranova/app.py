@@ -20,10 +20,13 @@ from terranova import puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
 from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.identidad import bearer
 
 Scope = MutableMapping[str, Any]
 
 TITULOS = {
+    "no_autenticado": "Falta una llave válida",
+    "sin_permiso": "La llave no tiene permiso para esta familia",
     "parametro_invalido": "Parámetro inválido",
     "licencia_no_habilitada": "Licencia no habilitada para esta llave",
     "no_existe": "No existe",
@@ -82,16 +85,17 @@ def problema(
 def _ruta(h: Herramienta) -> Callable[..., Awaitable[Any]]:
     Entrada = modelo_entrada(h)
 
-    async def herramienta(entrada: Entrada) -> Any:  # type: ignore[valid-type]
+    async def herramienta(entrada: Entrada, request: Request) -> Any:  # type: ignore[valid-type]
         try:
-            return await puerta.ejecutar(h.id, entrada.model_dump())  # type: ignore[attr-defined]
+            principal = getattr(request.state, "principal", None)
+            return await puerta.ejecutar(h.id, entrada.model_dump(), principal)  # type: ignore[attr-defined]
         except ErrorEntrada as exc:
             return problema("parametro_invalido", str(exc), param=exc.param)
         except ErrorEjecucion as exc:
             return problema(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
 
     # el modelo se crea en tiempo de ejecución: la anotación debe ser el tipo, no su nombre
-    herramienta.__annotations__ = {"entrada": Entrada, "return": Any}
+    herramienta.__annotations__ = {"entrada": Entrada, "request": Request, "return": Any}
     return herramienta
 
 
@@ -192,6 +196,18 @@ class Aplicacion:
             return
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
+        if scope["type"] == "http" and (app is not self.api or ruta.startswith("/v1/co/")):
+            # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
+            if puerta.registro is not None:
+                cabeceras = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
+                llave = bearer(cabeceras.get("authorization"))
+                principal = puerta.registro.verificar(llave) if llave else None
+                if principal is None:
+                    await problema(
+                        "no_autenticado", "falta una llave válida (Authorization: Bearer)"
+                    )(scope, receive, send)
+                    return
+                scope.setdefault("state", {})["principal"] = principal
         await app(scope, receive, send)
 
     async def _ciclo(self, receive: Any, send: Any) -> None:
