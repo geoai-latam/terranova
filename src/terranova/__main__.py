@@ -1,3 +1,3 @@
-from terranova.puerta import main
+from terranova.app import main
 
 main()
