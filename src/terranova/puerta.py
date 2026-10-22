@@ -33,6 +33,7 @@ from terranova.identidad import Principal, Registro, registro_desde_entorno
 from terranova.medicion import Evento, Outbox, OutboxSql, registrar_sin_fallar
 from terranova.medicion import ahora as ahora_iso
 from terranova.proteccion import Proteccion
+from terranova.vigilancia import RegistroCanarios
 
 logger = logging.getLogger("terranova.puerta")
 CATALOGO: Catalogo = cargar()
@@ -268,19 +269,22 @@ _iniciados: dict[str, Conector] = {}
 registro: Registro | None = None  # None = sin identidad (solo pruebas en memoria)
 cuota: Cuota | None = None
 outbox: Outbox | None = None
+canarios: RegistroCanarios | None = None
 
 
 async def iniciar() -> None:
     """Conectores, caché, cuota y protección para toda la puerta. Si ya hay conectores (las pruebas
     los inyectan), no hace nada."""
-    global _almacen, registro, cuota, outbox
+    global _almacen, registro, cuota, outbox, canarios
     if _conectores is not None:
         return
     registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
     cuota = cuota_desde_entorno(redis_url)
-    outbox = OutboxSql(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
+    bd = os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
+    outbox = OutboxSql(bd)
+    canarios = RegistroCanarios(bd)
     _iniciados.update(conectores_desde_entorno())
     for nombre, c in _iniciados.items():
         if isinstance(c, ConectorMCP):
@@ -294,7 +298,7 @@ async def iniciar() -> None:
 
 
 async def detener() -> None:
-    global _almacen, registro, cuota, outbox
+    global _almacen, registro, cuota, outbox, canarios
     if not _iniciados:
         return
     usar_conectores(None)
@@ -302,6 +306,7 @@ async def detener() -> None:
     registro = None
     cuota = None
     outbox = None
+    canarios = None
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.cerrar()

@@ -17,7 +17,7 @@ x-puerta: &puerta
     dockerfile: Dockerfile
   image: ${TERRANOVA_IMAGEN:-terranova/puerta:local}
   restart: unless-stopped
-  environment:
+  environment: &entorno
     TERRANOVA_BD: postgresql://terranova:${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD}@postgres:5432/terranova
     TERRANOVA_REDIS_URL: redis://:${REDIS_PASSWORD:?define REDIS_PASSWORD}@redis:6379/0
     TERRANOVA_PIMIENTA: ${TERRANOVA_PIMIENTA:?define TERRANOVA_PIMIENTA (≥ 32 caracteres)}
@@ -52,6 +52,17 @@ services:
     <<: *puerta
     build: !reset null  # la misma imagen que puerta-a: se construye una vez
     pull_policy: never
+
+  # F7.1: los canarios de todo el catálogo, en serie, una vez al día; el resultado va a Postgres y
+  # alimenta GET /v1/estado. Con TERRANOVA_ALERTA_URL avisa por POST lo que salga rojo.
+  canarios:
+    <<: *puerta
+    build: !reset null
+    pull_policy: never
+    command: ["terranova", "canarios", "--cada-horas", "24"]
+    environment:
+      <<: *entorno
+      TERRANOVA_ALERTA_URL: ${TERRANOVA_ALERTA_URL:-}
 
   postgres:
     image: postgres:17-alpine
