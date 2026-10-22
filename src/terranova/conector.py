@@ -47,7 +47,8 @@ class ConectorMCP:
         transporte = StreamableHttpTransport(
             self._url, headers={"Authorization": f"Bearer {self._llave}"}
         )
-        return Client(transporte, timeout=self._timeout_s)
+        # abrir la sesión no espera lo que una consulta: un conector caído se nota en segundos
+        return Client(transporte, timeout=self._timeout_s, init_timeout=min(3, self._timeout_s))
 
     async def abrir(self) -> None:
         await self._pila.enter_async_context(self.cliente)
@@ -66,9 +67,14 @@ class ConectorMCP:
 
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         for intento in (1, 2):
-            try:
-                if not self.cliente.is_connected():
+            if not self.cliente.is_connected():
+                try:
                     await self._reabrir()
+                except Exception as exc:  # el conector no está: se dice ya, sin otro intento
+                    raise ErrorConector(
+                        f"{herramienta}: no se pudo abrir la sesión ({type(exc).__name__})"
+                    ) from exc
+            try:
                 resultado = await self.cliente.call_tool(
                     herramienta, argumentos, raise_on_error=False
                 )
@@ -136,7 +142,9 @@ def conectores_desde_entorno() -> dict[str, Conector]:
     import json
     import os
 
-    urls = {**CONECTORES_POR_DEFECTO, **json.loads(os.environ.get("TERRANOVA_CONECTORES", "{}"))}
+    # si se definen, reemplazan a los de por defecto (que apuntan a 127.0.0.1, solo para desarrollo)
+    crudo = os.environ.get("TERRANOVA_CONECTORES")
+    urls = json.loads(crudo) if crudo else dict(CONECTORES_POR_DEFECTO)
     comun = os.environ.get("TERRANOVA_CONECTOR_LLAVE", "")
     conectores: dict[str, Conector] = {}
     for nombre, url in urls.items():

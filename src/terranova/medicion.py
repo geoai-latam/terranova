@@ -9,12 +9,12 @@ consultas por llave, fuentes pedidas).
 from __future__ import annotations
 
 import logging
-import sqlite3
-import threading
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Protocol
+
+from terranova.bd import Conexion
 
 logger = logging.getLogger("terranova.medicion")
 
@@ -36,13 +36,12 @@ class Outbox(Protocol):
     def eventos(self, org: str | None = None) -> list[Evento]: ...
 
 
-class OutboxSqlite:
-    def __init__(self, ruta: str | Path) -> None:
-        self._candado = threading.Lock()
-        if str(ruta) != ":memory:":
-            Path(ruta).parent.mkdir(parents=True, exist_ok=True)
-        self._bd = sqlite3.connect(str(ruta), check_same_thread=False, isolation_level=None)
-        self._bd.execute(
+class OutboxSql:
+    """Outbox en SQLite o Postgres (la misma `Conexion` que el registro de llaves)."""
+
+    def __init__(self, destino: str | Path) -> None:
+        self._bd = Conexion(destino)
+        self._bd.ejecutar(
             """CREATE TABLE IF NOT EXISTS eventos (
                 solicitud_id TEXT PRIMARY KEY, org TEXT NOT NULL, llave_id TEXT NOT NULL,
                 herramienta TEXT NOT NULL, creditos INTEGER NOT NULL, resultado TEXT NOT NULL,
@@ -50,22 +49,31 @@ class OutboxSqlite:
         )
 
     def registrar(self, evento: Evento) -> None:
-        d = asdict(evento)
-        with self._candado:
-            self._bd.execute(
-                "INSERT OR IGNORE INTO eventos VALUES "
-                "(:solicitud_id, :org, :llave_id, :herramienta, :creditos, :resultado, "
-                ":servido_desde, :momento, 0)",
-                d,
-            )
+        e = evento
+        self._bd.ejecutar(
+            "INSERT INTO eventos VALUES (?,?,?,?,?,?,?,?,0) ON CONFLICT(solicitud_id) DO NOTHING",
+            (
+                e.solicitud_id,
+                e.org,
+                e.llave_id,
+                e.herramienta,
+                e.creditos,
+                e.resultado,
+                e.servido_desde,
+                e.momento,
+            ),
+        )
 
     def eventos(self, org: str | None = None) -> list[Evento]:
-        filas = self._bd.execute(
+        filas, _ = self._bd.ejecutar(
             "SELECT solicitud_id, org, llave_id, herramienta, creditos, resultado, servido_desde, "
             "momento FROM eventos" + (" WHERE org = ?" if org else "") + " ORDER BY momento",
             (org,) if org else (),
-        ).fetchall()
+        )
         return [Evento(*f) for f in filas]
+
+
+OutboxSqlite = OutboxSql  # nombre de F3.4
 
 
 def ahora() -> str:

@@ -1,0 +1,100 @@
+# Despliegue de Terranova (ADR-0015, F3.7): Caddy es lo único expuesto; dos réplicas de la puerta;
+# Postgres (llaves, uso) y Redis (caché, cuota) compartidos; los conectores de GEO Copilot en la red
+# interna, sin puerto publicado (ADR-0002).
+#
+#   cp docker/.env.example docker/.env   # y llenar los secretos
+#   docker compose -f docker/compose.yml --env-file docker/.env up -d --build
+#   docker compose -f docker/compose.yml --env-file docker/.env exec puerta-a terranova llaves crear --org mi-org --scopes '*'
+#
+# En una máquina con poca memoria se puede levantar por partes: primero postgres y redis, luego los
+# conectores y al final las puertas y caddy.
+
+name: terranova
+
+x-puerta: &puerta
+  build:
+    context: ..
+    dockerfile: Dockerfile
+  image: ${TERRANOVA_IMAGEN:-terranova/puerta:local}
+  restart: unless-stopped
+  environment:
+    TERRANOVA_BD: postgresql://terranova:${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD}@postgres:5432/terranova
+    TERRANOVA_REDIS_URL: redis://:${REDIS_PASSWORD:?define REDIS_PASSWORD}@redis:6379/0
+    TERRANOVA_PIMIENTA: ${TERRANOVA_PIMIENTA:?define TERRANOVA_PIMIENTA (≥ 32 caracteres)}
+    TERRANOVA_CONECTOR_LLAVE: ${TERRANOVA_CONECTOR_LLAVE:?define TERRANOVA_CONECTOR_LLAVE}
+    TERRANOVA_CONECTORES: '{"arcgis-mcp": "http://arcgis-mcp:9400/mcp"}'
+  depends_on:
+    postgres: {condition: service_healthy}
+    redis: {condition: service_started}
+    arcgis-mcp: {condition: service_started}
+  networks: [borde, interna]
+  read_only: true
+  tmpfs: [/tmp]
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${TERRANOVA_PUERTO_LOCAL:-8180}:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_datos:/data
+    environment:
+      TERRANOVA_DOMINIO: ${TERRANOVA_DOMINIO:-:80}
+    depends_on: [puerta-a, puerta-b]
+    networks: [borde]
+
+  puerta-a: *puerta
+  puerta-b:
+    <<: *puerta
+    build: !reset null  # la misma imagen que puerta-a: se construye una vez
+    pull_policy: never
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: terranova
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: terranova
+    volumes: [postgres_datos:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "terranova"]
+      interval: 5s
+      retries: 20
+    networks: [interna]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--save", "", "--appendonly", "no"]
+    networks: [interna]
+
+  # Conector de GEO Copilot. En producción va la imagen GHCR con versión fija (ADR-0001); en local se
+  # construye desde el repo hermano.
+  arcgis-mcp:
+    build:
+      context: ../../GEO_COPILOT
+      dockerfile: services/arcgis_mcp/Dockerfile
+    image: ${ARCGIS_MCP_IMAGEN:-geo-copilot/arcgis-mcp:local}
+    restart: unless-stopped
+    environment:
+      ARCGIS_MCP_PORT: "9400"
+      ARCGIS_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["arcgis:read"],"rate_limit_per_min":600}]'
+      ARCGIS_RESULTADOS_DIR: /resultados
+    tmpfs: ["/resultados:size=256m,uid=10004", "/tmp:size=64m,uid=10004"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+networks:
+  borde: {}
+  interna: {}
+
+volumes:
+  postgres_datos: {}
+  caddy_datos: {}

@@ -18,14 +18,17 @@ class Reloj:
 
 
 class Fuente:
-    def __init__(self, codigo: str | None = "fuente_no_disponible") -> None:
+    def __init__(
+        self, codigo: str | None = "fuente_no_disponible", reintentar: int | None = None
+    ) -> None:
         self.codigo = codigo
+        self.reintentar = reintentar
         self.llamadas = 0
 
     async def __call__(self) -> str:
         self.llamadas += 1
         if self.codigo:
-            raise ErrorEjecucion(self.codigo, "caída")
+            raise ErrorEjecucion(self.codigo, "caída", self.reintentar)
         return "ok"
 
 
@@ -91,10 +94,14 @@ async def test_un_circuito_por_fuente() -> None:
 async def test_reintenta_una_vez_solo_lo_no_disponible() -> None:
     reloj = Reloj()
     p = _proteccion(reloj)
-    no_disponible = Fuente("fuente_no_disponible")
+    pasajera = Fuente("fuente_no_disponible", reintentar=5)
     with pytest.raises(ErrorEjecucion):
-        await p.llamar("a.b", no_disponible)
-    assert no_disponible.llamadas == 2  # un reintento
+        await p.llamar("a.b", pasajera)
+    assert pasajera.llamadas == 2  # la fuente dijo que reintentar sirve: un reintento
+    inalcanzable = Fuente("fuente_no_disponible")
+    with pytest.raises(ErrorEjecucion):
+        await p.llamar("e.f", inalcanzable)
+    assert inalcanzable.llamadas == 1  # sin esa señal no se duplica la espera
     lenta = Fuente("fuente_lenta")
     with pytest.raises(ErrorEjecucion):
         await p.llamar("c.d", lenta)

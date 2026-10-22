@@ -66,3 +66,53 @@ jobs:
       # F3.5: sin 5xx ni respuestas fuera de esquema, con entradas generadas (sin red)
       - name: Schemathesis
         run: uv run pytest tests_lentos -q -p schemathesis
+
+  postgres:
+    name: postgres (llaves y uso con varias réplicas)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: pruebas
+          POSTGRES_DB: terranova
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version-file: .python-version
+
+      - name: Instalar uv
+        run: python -m pip install uv==0.12.5
+
+      - name: Dependencias
+        run: uv sync --locked --extra postgres
+
+      - name: Pruebas contra Postgres
+        env:
+          TERRANOVA_PG_PRUEBAS: postgresql://postgres:pruebas@localhost:5432/terranova
+        run: uv run pytest tests/test_postgres.py -q -rs
+
+  imagen:
+    name: imagen de la puerta
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: docker build
+        run: docker build -t terranova/puerta:ci .
+
+      - name: sin pimienta no arranca (falla cerrado)
+        run: |
+          set +e
+          docker run --rm terranova/puerta:ci timeout 20 terranova
+          rc=$?
+          # 124 = timeout la mató porque siguió corriendo: arrancó sin TERRANOVA_PIMIENTA
+          if [ "$rc" -eq 124 ] || [ "$rc" -eq 0 ]; then echo "arrancó sin pimienta (rc=$rc)"; exit 1; fi
+          echo "no arranca sin pimienta (rc=$rc): bien"

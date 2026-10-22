@@ -84,3 +84,34 @@ async def test_tiempo_agotado_es_fuente_lenta() -> None:
             ClienteFalso(excepcion=TimeoutError("Request 'tools/call' timed out"))
         ).llamar("t", {})
     assert exc.value.codigo == "fuente_lenta"
+
+
+def test_conectores_del_entorno_reemplazan_los_de_por_defecto(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from terranova.conector import CONECTORES_POR_DEFECTO, conectores_desde_entorno
+
+    monkeypatch.setenv("TERRANOVA_CONECTOR_LLAVE", "x")
+    monkeypatch.delenv("TERRANOVA_CONECTORES", raising=False)
+    assert set(conectores_desde_entorno()) == set(CONECTORES_POR_DEFECTO)
+    monkeypatch.setenv("TERRANOVA_CONECTORES", '{"arcgis-mcp": "http://arcgis-mcp:9400/mcp"}')
+    assert set(conectores_desde_entorno()) == {"arcgis-mcp"}
+
+
+@pytest.mark.anyio
+async def test_un_conector_caido_no_tumba_el_arranque(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Any
+) -> None:
+    """En el compose, la puerta entraba en un ciclo de reinicios si un conector no respondía."""
+    from terranova import puerta
+
+    monkeypatch.setenv("TERRANOVA_PIMIENTA", "p" * 40)
+    monkeypatch.setenv("TERRANOVA_BD", str(tmp_path / "t.db"))
+    monkeypatch.setenv("TERRANOVA_CONECTOR_LLAVE", "x")
+    monkeypatch.setenv("TERRANOVA_CONECTORES", '{"arcgis-mcp": "http://127.0.0.1:1/mcp"}')
+    monkeypatch.delenv("TERRANOVA_REDIS_URL", raising=False)
+    await puerta.iniciar()
+    try:
+        assert puerta.registro is not None and "arcgis-mcp" in (puerta._conectores or {})
+    finally:
+        await puerta.detener()
