@@ -80,8 +80,10 @@ día), M (1–3 días), L (> 3 días) de trabajo enfocado.
   4. SAMAI, Consejo de Estado, CNDJ, Imprenta, SIATA, ANM: ~27.
   5. SIPI y gaceta de la SIC, Corte Suprema: ~13.
   6. Con permiso: Geovisor IGAC (avalúo), SIIS, CPNU: ~9.
-- Dos piezas genéricas que aceleran todo: un **conector de scrape con estado** (WebForms/JSF, con
-  copia y canario) y un **conector de copia** (bulk → DuckDB/PostGIS con huella y frescura).
+- Piezas genéricas que aceleran todo (detalle en [PLAN_EXPANSION.md](PLAN_EXPANSION.md)): G1
+  agregados en Socrata, G2 corte mensual del IGAC, G3 **conector de copia** (bulk → PostGIS con
+  huella y frescura), G4 **conector de scrape con estado** (WebForms/JSF, con copia y canario) y G5
+  herramientas de la fábrica.
 - **Por ola:** herramientas en el catálogo, pruebas doradas, canario 3 días verde, banco de agente
   sobre la familia ≥ 90 %.
 - **Métrica de la fábrica:** horas desde «fuente elegida» hasta «canario verde 3 días», por fuente.

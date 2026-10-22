@@ -18,7 +18,7 @@ Prometheus o respuestas `parcial` en la ficha.
 
 **Qué hace la puerta sola.** Tras 3 fallas seguidas, el cortacircuitos de esa fuente se abre 30 s y
 responde `fuente_no_disponible` en menos de 1 s, sin tocarla. Si hay copia en caché, sirve
-`obsoleto` con su `consultado_en` original y un aviso (ADR-0006). Las demás fuentes siguen normales.
+`obsoleto` con su `consultado_en` original y un aviso (ADR-0008). Las demás fuentes siguen normales.
 
 **Qué revisar.**
 
