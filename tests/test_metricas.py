@@ -100,3 +100,21 @@ def test_metrics_no_sale_por_el_borde_ni_en_el_openapi() -> None:
     assert "/metrics" not in crear_api().openapi()["paths"]
     caddy = (RAIZ / "docker" / "Caddyfile").read_text(encoding="utf-8")
     assert "respond /metrics 404" in caddy
+
+
+def test_una_ficha_con_partes_en_vivo_no_cuenta_como_cache() -> None:
+    """F7.2: con el predio en caché y el resto en vivo, la ficha (20 s) contaba como caché y
+    disparaba LatenciaConCacheAlta. Cuenta la parte más lenta."""
+    from types import SimpleNamespace
+    from typing import cast
+
+    from terranova.contrato import Sobre
+
+    def sobre(*servidos: str) -> Sobre:
+        partes = [SimpleNamespace(servido_desde=s) for s in servidos]
+        return cast(Sobre, SimpleNamespace(procedencia=partes))
+
+    assert puerta._servido(sobre("cache", "fuente", "curado")) == "fuente"
+    assert puerta._servido(sobre("cache", "curado")) == "curado"
+    assert puerta._servido(sobre("cache")) == "cache"
+    assert puerta._servido(sobre()) is None

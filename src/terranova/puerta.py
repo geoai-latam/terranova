@@ -182,11 +182,25 @@ async def ejecutar(
         _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
         metricas.SOLICITUDES.labels(etiqueta, "error", codigo).inc()
         raise
-    servido = sobre.procedencia[0].servido_desde if sobre.procedencia else None
+    servido = _servido(sobre)
     _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
     metricas.SOLICITUDES.labels(etiqueta, sobre.estado, "").inc()
     metricas.LATENCIA.labels(etiqueta, servido or "ninguno").observe(time.monotonic() - inicio)
     return sobre
+
+
+# De la más lenta a la más rápida: una solicitud de varias partes (la ficha) cuenta como la peor
+_ORDEN_SERVIDO = ("fuente", "obsoleto", "copia", "curado", "cache")
+
+
+def _servido(sobre: Sobre) -> str | None:
+    """De dónde salió la respuesta, para medirla: si UNA parte fue a la fuente, fue en vivo.
+
+    F7.2: con solo la primera procedencia, una ficha de 20 s con el predio en caché contaba como
+    caché y disparaba `LatenciaConCacheAlta`.
+    """
+    vistos = {p.servido_desde for p in sobre.procedencia}
+    return next((s for s in _ORDEN_SERVIDO if s in vistos), None)
 
 
 def _medir(
