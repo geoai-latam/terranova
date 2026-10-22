@@ -312,7 +312,7 @@ async def iniciar() -> None:
     canarios = RegistroCanarios(bd)
     curado = restricciones_desde_entorno()
     _medir_al_raspar()
-    _iniciados.update(conectores_desde_entorno())
+    _iniciados.update(conectores_desde_entorno(CATALOGO))
     for nombre, c in _iniciados.items():
         if isinstance(c, ConectorMCP):
             try:

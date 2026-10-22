@@ -96,7 +96,7 @@ jobs:
       - name: Pruebas contra Postgres
         env:
           TERRANOVA_PG_PRUEBAS: postgresql://postgres:pruebas@localhost:5432/terranova
-        run: uv run --extra postgres --extra datasets pytest tests/test_postgres.py -q -rs
+        run: uv run --extra postgres --extra datasets pytest tests/test_postgres.py tests/test_copias.py -q -rs
 
   imagen:
     name: imagen de la puerta

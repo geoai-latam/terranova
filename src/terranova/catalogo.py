@@ -101,6 +101,35 @@ class Comportamiento(_Ficha):
     orden_coordenadas: Literal["lon_lat", "lat_lon"] = "lon_lat"
 
 
+IDENTIFICADOR_SQL = r"^[a-z][a-z0-9_]{0,40}$"
+
+
+class Ventana(_Ficha):
+    """Qué parte de la fuente se copia: las filas con `columna` desde `desde` (ADR-0024)."""
+
+    columna: str
+    desde: date
+
+
+class Copia(_Ficha):
+    """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
+
+    origen: Literal["socrata"]
+    conjunto: str = Field(pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$", description="id en datos.gov.co")
+    tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
+    clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
+    ventana: Ventana | None = None
+    indices: list[str] = Field(default_factory=list)
+    texto: list[str] = Field(
+        default_factory=list, description="columnas de la búsqueda de texto completo (español)"
+    )
+
+    @property
+    def columnas_usadas(self) -> set[str]:
+        ventana = {self.ventana.columna} if self.ventana else set()
+        return {self.clave, *ventana, *self.indices, *self.texto}
+
+
 class Fuente(_Ficha):
     id: str = Field(pattern=ID_FUENTE)
     titulo: str
@@ -118,6 +147,7 @@ class Fuente(_Ficha):
     conector: str
     url: str = Field(pattern=r"^https://")
     modo: Literal["en_vivo", "copia", "curado"]
+    copia: Copia | None = None
     frescura: Frescura
     cobertura: Cobertura
     datos_personales: Literal["ninguno", "filtrados", "presentes"]
@@ -138,6 +168,10 @@ class Fuente(_Ficha):
             raise ValueError("ADR-0018: un backend interno exige el permiso escrito")
         if self.estado == "publicada" and self.datos_personales == "presentes":
             raise ValueError("ADR-0014: una fuente con datos personales presentes no se publica")
+        if (self.modo == "copia") != (self.copia is not None):
+            raise ValueError("ADR-0024: `modo: copia` va con su bloque `copia:` (y solo con él)")
+        if self.copia is not None and (sueltas := self.copia.columnas_usadas - set(self.campos)):
+            raise ValueError(f"ADR-0024: la copia usa columnas no listadas: {sorted(sueltas)}")
         nombres = [c.nombre for c in self.campos.values()]
         if len(nombres) != len(set(nombres)):
             raise ValueError("dos campos de la fuente van al mismo nombre rt/1")

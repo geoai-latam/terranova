@@ -39,6 +39,7 @@ from terranova.contrato import (
     GeoResult,
     Licencia,
     Procedencia,
+    ServidoDesde,
     Sobre,
     ZonaUsada,
     ahora,
@@ -524,6 +525,8 @@ class Ejecutor:
                 estado = "fuera_de_cobertura"
         if any(p.completitud.total is None for p in procedencia):
             avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
+        if fuente.modo == "copia":
+            avisos += [_aviso_de_copia(r.hechos) for r in respuestas[:1]]
         if fuente.uso_comercial == "no":
             avisos.append(
                 f"Licencia no comercial ({fuente.licencia.spdx}): "
@@ -575,6 +578,10 @@ class Ejecutor:
         consultado_en: datetime,
         mapeadas: list[dict[str, Any]],
     ) -> Procedencia:
+        servido_desde: ServidoDesde = "fuente"
+        if fuente.modo == "copia":  # ADR-0024: la fecha es la de la copia, no la de la pregunta
+            servido_desde = "obsoleto" if r.hechos.get("servido_desde") == "obsoleto" else "copia"
+            consultado_en = _fecha_de_copia(r.hechos)
         return Procedencia(
             fuente_id=fuente.id,
             entidad=fuente.entidad,
@@ -582,7 +589,7 @@ class Ejecutor:
             url=str(r.argumentos.get("url") or fuente.url),
             licencia=licencia_de(fuente),
             atribucion=fuente.atribucion,
-            servido_desde="fuente",
+            servido_desde=servido_desde,
             consultado_en=consultado_en,
             consulta={**r.argumentos, **({"capa": r.capa} if r.capa else {})},
             completitud=completitud_de(r, h.consulta.completo_por_construccion),
@@ -591,6 +598,27 @@ class Ejecutor:
             conector=fuente.conector,
             huella=huella({"elementos": mapeadas}),
         )
+
+
+def _fecha_de_copia(hechos: dict[str, Any]) -> datetime:
+    """Sin la fecha de la copia no se sabe qué tan vieja es: no se responde como si fuera actual."""
+    try:
+        return datetime.fromisoformat(str(hechos["consultado_en"]))
+    except (KeyError, ValueError) as exc:
+        raise ErrorEjecucion("fuente_respuesta_invalida", "la copia no dijo de cuándo es") from exc
+
+
+def _aviso_de_copia(hechos: dict[str, Any]) -> str:
+    """ADR-0024: de cuándo es la copia y qué ventana cubre; vencida, se dice."""
+    copia = hechos.get("copia") or {}
+    fecha = str(hechos.get("consultado_en", ""))[:10]
+    desde = f", con lo firmado desde {copia['ventana_desde']}" if copia.get("ventana_desde") else ""
+    vencida = (
+        " Está vencida: puede faltar lo más reciente."
+        if hechos.get("servido_desde") == "obsoleto"
+        else ""
+    )
+    return f"Sale de la copia de Terranova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
 
 
 def _zona(h: Herramienta, v: dict[str, Any]) -> ZonaUsada | None:

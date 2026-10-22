@@ -1,0 +1,36 @@
+id: secop_contratos_buscar
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos_copia
+pregunta: "¿Qué contratos de SECOP II hablan de esto en su objeto?"
+descripcion: >
+  Busca en el objeto de los contratos de SECOP II los que tienen todas las palabras pedidas, en
+  español y sin importar mayúsculas (no siempre une singular y plural: «escolar» no encuentra
+  «escolares»). Da los 50 más recientes, con entidad, contratista, valor y
+  fecha, y cuántos hay en total. Sale de la copia de Terranova, actualizada a diario: cubre los
+  contratos firmados desde la ventana de la copia (la procedencia lo dice), no todo el histórico.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {texto: nombre}
+consulta:
+  operacion: buscar
+  tool: consultar_copia
+  argumentos:
+    tabla: secop_contratos
+    texto: "{texto}"
+    select: [id_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, fecha_de_firma, urlproceso]
+    order: ["-fecha_de_firma", id_contrato]
+    limite: 50
+  campos: [id_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, fecha_de_firma, urlproceso]
+salida: ContratosBuscar
+derivados:
+  coincidencias: {de: completitud_total, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en jbjy-vk9h con la frase exacta (upper(objeto) like '%AUXILIAR DE
+  # FARMACIA%') entre el 2026-07-01 y el 2026-10-01: 104 contratos. La búsqueda en español encuentra
+  # al menos esos (una frase exacta contiene sus palabras) y la ventana de la copia los incluye.
+  # El primero cambia con cada contrato nuevo: por eso el canario es un mínimo.
+  entrada: {texto: auxiliar de farmacia}
+  minimos: {coincidencias: 104}
+  campos: [coincidencias, contratista, departamento, entidad, estado, fecha_firma, id_contrato, id_proceso, modalidad, municipio, nit_entidad, objeto, tipo_contrato, url_proceso, valor]
+  latencia_max_ms: 3000
