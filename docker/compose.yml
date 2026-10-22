@@ -8,6 +8,10 @@
 #
 # En una máquina con poca memoria se puede levantar por partes: primero postgres y redis, luego los
 # conectores y al final las puertas y caddy.
+#
+# Restricciones curadas (F4.1) en la misma base: con un puerto temporal hacia postgres,
+#   uv run --extra datasets scripts/dataset_restricciones.py --postgis postgresql://terranova:…@127.0.0.1:…/terranova
+# Sin dataset cargado, la ficha consulta RUNAP y ANT en vivo y lo dice en `avisos`.
 
 name: terranova
 
@@ -19,6 +23,8 @@ x-puerta: &puerta
   restart: unless-stopped
   environment: &entorno
     TERRANOVA_BD: postgresql://terranova:${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD}@postgres:5432/terranova
+    # el dataset curado vive en la misma base (cargado con scripts/dataset_restricciones.py --postgis)
+    TERRANOVA_CURADO_URL: postgresql://terranova:${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD}@postgres:5432/terranova
     TERRANOVA_REDIS_URL: redis://:${REDIS_PASSWORD:?define REDIS_PASSWORD}@redis:6379/0
     TERRANOVA_PIMIENTA: ${TERRANOVA_PIMIENTA:?define TERRANOVA_PIMIENTA (≥ 32 caracteres)}
     TERRANOVA_CONECTOR_LLAVE: ${TERRANOVA_CONECTOR_LLAVE:?define TERRANOVA_CONECTOR_LLAVE}
@@ -65,7 +71,7 @@ services:
       TERRANOVA_ALERTA_URL: ${TERRANOVA_ALERTA_URL:-}
 
   postgres:
-    image: postgres:17-alpine
+    image: postgis/postgis:17-3.5-alpine  # PostGIS: el dataset curado de restricciones (F4.1)
     restart: unless-stopped
     environment:
       POSTGRES_USER: terranova

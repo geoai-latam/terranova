@@ -30,9 +30,12 @@ from terranova.conector import (
     conectores_desde_entorno,
 )
 from terranova.contrato import Sobre
+from terranova.curado import restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor
 
 CHIA = {"lon": -74.0262, "lat": 4.8619}
+# con TERRANOVA_CURADO_URL, las restricciones salen del dataset curado (PostGIS)
+BASE_CURADA = restricciones_desde_entorno()
 CODIGO = "251750000000000050067000000000"
 CURADO = Path(__file__).resolve().parents[1] / "datos_locales" / "datasets"
 PARTE_DE_TIPO = {
@@ -81,12 +84,14 @@ async def _cerrar(conectores: dict[str, Conector]) -> None:
 async def e2e_07(ej: Ejecutor, fallas: list[str]) -> Sobre:
     print("E2E-07 · ficha del predio de Chía")
     t = time.monotonic()
-    s = await f.ficha(ej, CHIA, plan="normal", hoy=date.today())
+    s = await f.ficha(ej, CHIA, plan="normal", hoy=date.today(), curado=BASE_CURADA)
     print(f"  ({time.monotonic() - t:.1f} s, {s.creditos} créditos, estado {s.estado})")
     Sobre.model_validate(s.model_dump(mode="json"))
     esperadas = {p.nombre for p in (f.PREDIO_EN_PUNTO, *f.PARTES_PUNTO, *f.PARTES_PREDIO)}
     # plan normal: población (DANE, licencia por verificar) no se consulta y lo dice
     esperadas.discard("poblacion_municipio")
+    if BASE_CURADA is not None:
+        esperadas = (esperadas - set(f.PARTES_RESTRICCIONES.values())) | {"restricciones"}
     _ok(
         s.estado == "encontrado",
         f"encontrado, sin errores ({[e.codigo for e in s.errores]})",
@@ -120,8 +125,12 @@ async def e2e_07(ej: Ejecutor, fallas: list[str]) -> Sobre:
     )
     medidas = restricciones_medidas(CHIA["lon"], CHIA["lat"])
     for parte, nombres in medidas.items():
-        d = s.datos.get(parte, {})
-        obtenido = {d["nombre"]} if d.get("estado") == "encontrado" and d.get("nombre") else set()
+        if "restricciones" in s.datos:  # desde el curado: una lista por tipo
+            obtenido = {x["nombre"] for x in s.datos["restricciones"].get(parte, [])}
+        else:
+            d = s.datos.get(parte, {})
+            encontrado = d.get("estado") == "encontrado" and d.get("nombre")
+            obtenido = {d["nombre"]} if encontrado else set()
         _ok(
             obtenido == nombres,
             f"{parte}: {sorted(obtenido) or 'ninguna'} = curado {sorted(nombres) or 'ninguna'}",
@@ -156,7 +165,7 @@ async def e2e_08(almacen: AlmacenMemoria, fallas: list[str]) -> None:
             if "usgs_sismos_en_zona@" not in json.dumps(v[1])
         }
         ej = Ejecutor(cargar(), conectores, sin_sismos)
-        s = await f.ficha(ej, CHIA, plan="normal", hoy=date.today())
+        s = await f.ficha(ej, CHIA, plan="normal", hoy=date.today(), curado=BASE_CURADA)
     finally:
         await _cerrar(conectores)
     Sobre.model_validate(s.model_dump(mode="json"))
@@ -191,10 +200,12 @@ async def f4_3(almacen: AlmacenMemoria, corridas: int, fallas: list[str]) -> Non
         catalogo = cargar()
         for _ in range(corridas):
             t = time.monotonic()
-            await f.ficha(Ejecutor(catalogo, conectores), CHIA, plan="normal")
+            await f.ficha(Ejecutor(catalogo, conectores), CHIA, plan="normal", curado=BASE_CURADA)
             sin.append(time.monotonic() - t)
             t = time.monotonic()
-            s = await f.ficha(Ejecutor(catalogo, conectores, almacen), CHIA, plan="normal")
+            s = await f.ficha(
+                Ejecutor(catalogo, conectores, almacen), CHIA, plan="normal", curado=BASE_CURADA
+            )
             con.append(time.monotonic() - t)
         desde = {p.servido_desde for p in s.procedencia}
     finally:
@@ -215,7 +226,9 @@ async def calentar(almacen: AlmacenMemoria) -> None:
     conectores = await _abiertos(conectores_desde_entorno())
     try:
         t = time.monotonic()
-        s = await f.ficha(Ejecutor(cargar(), conectores, almacen), CHIA, plan="normal")
+        s = await f.ficha(
+            Ejecutor(cargar(), conectores, almacen), CHIA, plan="normal", curado=BASE_CURADA
+        )
         lentas = [e.fuente_id for e in s.errores]
         await asyncio.gather(*list(f._EN_SEGUNDO_PLANO), return_exceptions=True)
         print(f"  ({time.monotonic() - t:.1f} s; lentas al tope: {lentas or 'ninguna'})")

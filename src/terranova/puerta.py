@@ -27,6 +27,7 @@ from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import Sobre, huella, nueva_solicitud_id
 from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
+from terranova.curado import Restricciones, restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import Principal, Registro, registro_desde_entorno
@@ -242,7 +243,7 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
         if es_ficha:
             # las partes fuera de los scopes de la llave no se consultan (salen en avisos)
             puede = principal.puede if principal is not None else (lambda _f: True)
-            return await ficha_lugar.ficha(ejecutor, entrada, plan=plan, puede=puede)
+            return await ficha_lugar.ficha(ejecutor, entrada, plan=plan, puede=puede, curado=curado)
         return await ejecutor.ejecutar(ficha, entrada, plan=plan)
 
     costo = ficha_lugar.TOPE_CREDITOS if es_ficha else h.creditos if h is not None else None
@@ -270,12 +271,13 @@ registro: Registro | None = None  # None = sin identidad (solo pruebas en memori
 cuota: Cuota | None = None
 outbox: Outbox | None = None
 canarios: RegistroCanarios | None = None
+curado: Restricciones | None = None
 
 
 async def iniciar() -> None:
     """Conectores, caché, cuota y protección para toda la puerta. Si ya hay conectores (las pruebas
     los inyectan), no hace nada."""
-    global _almacen, registro, cuota, outbox, canarios
+    global _almacen, registro, cuota, outbox, canarios, curado
     if _conectores is not None:
         return
     registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
@@ -285,6 +287,7 @@ async def iniciar() -> None:
     bd = os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
     outbox = OutboxSql(bd)
     canarios = RegistroCanarios(bd)
+    curado = restricciones_desde_entorno()
     _iniciados.update(conectores_desde_entorno())
     for nombre, c in _iniciados.items():
         if isinstance(c, ConectorMCP):
@@ -298,7 +301,7 @@ async def iniciar() -> None:
 
 
 async def detener() -> None:
-    global _almacen, registro, cuota, outbox, canarios
+    global _almacen, registro, cuota, outbox, canarios, curado
     if not _iniciados:
         return
     usar_conectores(None)
@@ -307,6 +310,7 @@ async def detener() -> None:
     cuota = None
     outbox = None
     canarios = None
+    curado = None
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.cerrar()

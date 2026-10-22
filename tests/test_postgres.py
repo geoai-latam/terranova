@@ -1,8 +1,10 @@
 """El registro de llaves y el outbox sobre Postgres (F3.7, ADR-0015). Corre solo con
 `TERRANOVA_PG_PRUEBAS=postgresql://…` (en CI, un servicio Postgres)."""
 
+import asyncio
 import os
 import uuid
+from pathlib import Path
 
 import pytest
 
@@ -50,3 +52,38 @@ def test_outbox_en_postgres_sin_duplicados() -> None:
     o.registrar(e)
     o.registrar(e)
     assert o.eventos(org) == [e]
+
+
+def test_restricciones_curadas_en_postgis(tmp_path: Path) -> None:
+    """F4.1 → ficha: lo que carga `cargar_postgis` es lo que lee la puerta (`curado.versiones`)."""
+    assert URL
+    gpd = pytest.importorskip("geopandas")
+    from shapely.geometry import box
+
+    from terranova.curado import RestriccionesPostgis
+    from terranova.datasets import restricciones as r
+
+    filas = gpd.GeoDataFrame(
+        {
+            "id": ["runap:1", "ant.resguardos_indigenas:R-1"],
+            "tipo": ["area_protegida", "resguardo_indigena"],
+            "nombre": ["Chingaza", "Uno"],
+            "categoria": ["Parque Nacional Natural", "Nasa"],
+            "acto": [None, "Resolución 12"],
+            "fecha": ["2011-06-30", "1990-01-15"],
+            "fuente_id": ["pnn.runap", "ant.resguardos_indigenas"],
+            "url": [None, None],
+        },
+        geometry=[box(-74.0, 4.4, -73.5, 4.8), box(-70.6, 0.7, -70.4, 0.9)],
+        crs=r.CRS,
+    )
+    origenes = [r.Origen("pnn.runap", "https://x", "2026-10-09", 1)]
+    m = r.publicar([filas], origenes, tmp_path)
+    parquet = tmp_path / f"restricciones_{m.version}.parquet"
+    r.cargar_postgis(parquet, URL, m)
+    r.cargar_postgis(parquet, URL, m)  # la misma versión otra vez: nada cambia
+
+    c = asyncio.run(RestriccionesPostgis(URL).en_punto(-73.75, 4.55))
+    assert [f["nombre"] for f in c.filas] == ["Chingaza"]
+    assert c.manifiesto["version"] == m.version and c.manifiesto["huella"] == m.huella
+    assert asyncio.run(RestriccionesPostgis(URL).en_punto(-60.0, 10.0)).filas == []

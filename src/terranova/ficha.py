@@ -8,6 +8,10 @@ el plan, scope ausente, predio no encontrado) no es un error: sale en `avisos` y
 
 Dos etapas: las partes por punto van juntas; las que necesitan el código predial o el municipio
 (construcciones, población, precio de la tierra) arrancan en cuanto llega el predio.
+
+Restricciones: con la base curada (`TERRANOVA_CURADO_URL`, F4.1) salen de una sola consulta
+espacial, `servido_desde: curado`, con la procedencia de cada fuente de origen (RUNAP, ANT) y la
+versión del dataset; sin ella, de RUNAP y ANT en vivo (spec 03 §8.3).
 """
 
 from __future__ import annotations
@@ -35,6 +39,7 @@ from terranova.contrato import (
     huella,
     nueva_solicitud_id,
 )
+from terranova.curado import Restricciones
 from terranova.ejecutor import Ejecutor, Plan, licencia_de, validar_entrada
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 
@@ -120,6 +125,14 @@ PARTES_PREDIO = (
     Parte("poblacion_municipio", "dane_poblacion_municipio", _municipio, del_predio=True),
     Parte("precio_tierra", "upra_precio_tierra_rural_municipio", _municipio, del_predio=True),
 )
+# restricciones: las tres partes en vivo, o una sola desde el dataset curado
+PARTES_RESTRICCIONES = {
+    "area_protegida": "areas_protegidas",
+    "resguardo_indigena": "resguardos",
+    "zona_reserva_campesina": "reservas_campesinas",
+}
+ORIGENES_CURADO = ("pnn.runap", "ant.resguardos_indigenas", "ant.zonas_reserva_campesina")
+CREDITOS_CURADO = 5
 HERRAMIENTAS = frozenset(
     p.herramienta for p in (PREDIO_EN_PUNTO, *PARTES_PUNTO, *PARTES_PREDIO)
 ) | {"igac_predio_por_codigo"}
@@ -196,7 +209,14 @@ class _Acumulado:
 
 def _procedencia_fallida(ej: Ejecutor, parte: Parte, consultado_en: datetime) -> Procedencia:
     """Regla 3: la fuente consultada aparece en procedencia aunque haya fallado."""
-    fuente = ej.catalogo.fuentes[ej.catalogo.herramientas[parte.herramienta].fuente]
+    fuente_id = ej.catalogo.herramientas[parte.herramienta].fuente
+    return _procedencia_vacia(ej, fuente_id, consultado_en, {"herramienta": parte.herramienta})
+
+
+def _procedencia_vacia(
+    ej: Ejecutor, fuente_id: str, consultado_en: datetime, consulta: dict[str, Any]
+) -> Procedencia:
+    fuente = ej.catalogo.fuentes[fuente_id]
     return Procedencia(
         fuente_id=fuente.id,
         entidad=fuente.entidad,
@@ -206,7 +226,7 @@ def _procedencia_fallida(ej: Ejecutor, parte: Parte, consultado_en: datetime) ->
         atribucion=fuente.atribucion,
         servido_desde="fuente",
         consultado_en=consultado_en,
-        consulta={"herramienta": parte.herramienta},
+        consulta=consulta,
         completitud=Completitud(vistos=0, total=0, truncado=False),
         cache=Cache(acierto=False, edad_s=0),
         transformaciones=[],
@@ -243,6 +263,95 @@ def _sumar(
         ]
 
 
+async def _restricciones_curadas(
+    ej: Ejecutor,
+    curado: Restricciones,
+    punto: Punto,
+    consultado_en: datetime,
+    resta_s: float,
+    acc: _Acumulado,
+) -> bool:
+    """False si no hay dataset cargado (`no_existe`): entonces las restricciones van en vivo."""
+    consulta = {"dataset": "restricciones", "punto": list(punto)}
+    try:
+        c = await asyncio.wait_for(curado.en_punto(*punto), resta_s)
+    except ErrorEjecucion as exc:
+        if exc.codigo == "no_existe":
+            return False
+        _fallo_curado(ej, exc.codigo, str(exc), exc.reintentar_en_s, consulta, consultado_en, acc)
+        return True
+    except TimeoutError:
+        detalle = f"no llegó en {resta_s:.0f} s"
+        _fallo_curado(ej, "fuente_lenta", detalle, None, consulta, consultado_en, acc)
+        return True
+    m = c.manifiesto
+    datos: dict[str, Any] = {
+        "estado": "encontrado" if c.filas else "no_encontrado",
+        "version_dataset": m["version"],
+    }
+    for tipo, parte in PARTES_RESTRICCIONES.items():
+        datos[parte] = [
+            {k: f[k] for k in ("id", "nombre", "categoria", "acto", "fecha", "url") if f.get(k)}
+            for f in c.filas
+            if f["tipo"] == tipo
+        ]
+    acc.datos["restricciones"] = datos
+    for o in m.get("origenes", []):
+        fuente = ej.catalogo.fuentes.get(o["fuente_id"])
+        if fuente is None:
+            continue
+        propias = [f for f in c.filas if f["fuente_id"] == o["fuente_id"]]
+        acc.procedencia.append(
+            Procedencia(
+                fuente_id=fuente.id,
+                entidad=fuente.entidad,
+                acto=fuente.acto,
+                url=o.get("url") or fuente.url,
+                licencia=licencia_de(fuente),
+                atribucion=fuente.atribucion,
+                servido_desde="curado",
+                consultado_en=consultado_en,
+                version_dataset=m["version"],
+                consulta=consulta,
+                completitud=Completitud(vistos=len(propias), total=len(propias), truncado=False),
+                cache=Cache(acierto=False, edad_s=0),
+                transformaciones=["F4.1: make_valid, precisión 1e-7, normalize"],
+                conector="postgis",
+                huella=huella({"elementos": propias}),
+            )
+        )
+    excluidas = "; ".join(m.get("excluidas", [])) or "nada"
+    acc.avisos.append(
+        f"restricciones: dataset curado {m['version']} (generado {str(m.get('generado'))[:10]}); "
+        f"fuera: {excluidas}."
+    )
+    acc.creditos += CREDITOS_CURADO
+    return True
+
+
+def _fallo_curado(
+    ej: Ejecutor,
+    codigo: str,
+    detalle: str,
+    reintentar_en_s: int | None,
+    consulta: dict[str, Any],
+    consultado_en: datetime,
+    acc: _Acumulado,
+) -> None:
+    """La base curada no respondió: error y procedencia por cada fuente de origen (regla 3)."""
+    for fuente_id in ORIGENES_CURADO:
+        acc.errores.append(
+            ErrorParte(
+                codigo=cast(CodigoError, codigo),
+                fuente_id=fuente_id,
+                detalle=f"restricciones (curado): {detalle}"[:300],
+                reintentar_en_s=reintentar_en_s,
+            )
+        )
+        acc.procedencia.append(_procedencia_vacia(ej, fuente_id, consultado_en, consulta))
+    acc.avisos.append(f"La parte «restricciones» no respondió ({codigo}).")
+
+
 async def ficha(
     ej: Ejecutor,
     entrada: dict[str, Any],
@@ -251,6 +360,7 @@ async def ficha(
     puede: Callable[[str], bool] = lambda _familia: True,
     hoy: date | None = None,
     tope_s: float = TOPE_S,
+    curado: Restricciones | None = None,
 ) -> Sobre:
     """`entrada`: `{lon, lat}` o `{codigo}` (número predial nacional)."""
     hoy = hoy or date.today()
@@ -336,13 +446,34 @@ async def ficha(
             tareas.append(una(p, e))
         return list(await asyncio.gather(*tareas))
 
+    async def restricciones() -> None:
+        if curado is None:
+            return
+        familia = ej.catalogo.herramientas["pnn_areas_protegidas_en_punto"].familia
+        if not puede(familia):
+            acc.avisos.append(f"«restricciones» no se consultó: la llave no tiene «{familia}».")
+            return
+        resta = max(0.1, limite - time.monotonic())
+        if await _restricciones_curadas(ej, curado, punto, consultado_en, resta, acc):
+            return
+        # sin dataset cargado: las tres partes en vivo, como sin base curada
+        acc.avisos.append("restricciones: no hay dataset curado cargado; se consultan en vivo.")
+        vivas = [p for p in PARTES_PUNTO if p.nombre in curadas and not omitir(p)]
+        for parte, r in await asyncio.gather(*(una(p, _punto(punto, hoy)) for p in vivas)):
+            _sumar(ej, acc, parte, r, consultado_en)
+
+    curadas = set(PARTES_RESTRICCIONES.values()) if curado is not None else set()
     primera = []
     for p in PARTES_PUNTO:
+        if p.nombre in curadas:
+            continue
         if motivo := omitir(p):
             acc.avisos.append(f"«{p.nombre}» no se consultó: {motivo}.")
         elif (e := p.entrada(punto, hoy)) is not None:
             primera.append(una(p, e))
-    resultados, segunda = await asyncio.gather(asyncio.gather(*primera), segunda_etapa())
+    resultados, segunda, _ = await asyncio.gather(
+        asyncio.gather(*primera), segunda_etapa(), restricciones()
+    )
     for parte, r in [*resultados, *segunda]:
         _sumar(ej, acc, parte, r, consultado_en)
 

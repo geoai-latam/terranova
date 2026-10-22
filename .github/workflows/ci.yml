@@ -73,7 +73,7 @@ jobs:
     timeout-minutes: 10
     services:
       postgres:
-        image: postgres:17-alpine
+        image: postgis/postgis:17-3.5-alpine
         env:
           POSTGRES_PASSWORD: pruebas
           POSTGRES_DB: terranova
@@ -91,12 +91,12 @@ jobs:
         run: python -m pip install uv==0.12.5
 
       - name: Dependencias
-        run: uv sync --locked --extra postgres
+        run: uv sync --locked --extra postgres --extra datasets
 
       - name: Pruebas contra Postgres
         env:
           TERRANOVA_PG_PRUEBAS: postgresql://postgres:pruebas@localhost:5432/terranova
-        run: uv run pytest tests/test_postgres.py -q -rs
+        run: uv run --extra postgres --extra datasets pytest tests/test_postgres.py -q -rs
 
   imagen:
     name: imagen de la puerta

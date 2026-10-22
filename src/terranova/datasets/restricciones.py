@@ -338,9 +338,10 @@ def publicar(partes: list[gpd.GeoDataFrame], origenes: list[Origen], salida: Pat
 
 
 def cargar_postgis(parquet: Path, url: str, manifiesto: Manifiesto) -> str:
-    """Carga una versión en `curado.restricciones_<version>` (GiST, huella en el comentario) y
-    deja la vista `curado.restricciones` apuntando a ella. Cargar otra vez la misma versión no hace
-    nada. Devuelve el nombre de la tabla."""
+    """Carga una versión en `curado.restricciones_<version>` (GiST, huella en el comentario), deja
+    la vista `curado.restricciones` apuntando a ella y el manifiesto en `curado.versiones` (lo lee
+    la ficha para la procedencia). Cargar otra vez la misma versión no hace nada. Devuelve la
+    tabla."""
     psycopg: Any = importlib.import_module("psycopg")
     sql: Any = importlib.import_module("psycopg.sql")
     g = gpd.read_parquet(parquet)
@@ -351,9 +352,17 @@ def cargar_postgis(parquet: Path, url: str, manifiesto: Manifiesto) -> str:
     with psycopg.connect(url, autocommit=False) as c, c.cursor() as cur:
         cur.execute("CREATE EXTENSION IF NOT EXISTS postgis")
         cur.execute("CREATE SCHEMA IF NOT EXISTS curado")
+        cur.execute(
+            """CREATE TABLE IF NOT EXISTS curado.versiones (
+            dataset text NOT NULL, version text NOT NULL, huella text NOT NULL,
+            manifiesto jsonb NOT NULL, vigente boolean NOT NULL DEFAULT false,
+            PRIMARY KEY (dataset, version))"""
+        )
         cur.execute("SELECT obj_description(to_regclass(%s), 'pg_class')", (f"curado.{tabla}",))
         fila = cur.fetchone()
         if fila and fila[0] == manifiesto.huella:
+            _vigente(cur, manifiesto)
+            c.commit()
             return tabla
         cur.execute(sql.SQL("DROP TABLE IF EXISTS {}").format(destino))
         cur.execute(
@@ -385,5 +394,25 @@ def cargar_postgis(parquet: Path, url: str, manifiesto: Manifiesto) -> str:
                 destino
             )
         )
+        _vigente(cur, manifiesto)
         c.commit()
     return tabla
+
+
+def _vigente(cur: Any, manifiesto: Manifiesto) -> None:
+    """Registra el manifiesto y lo marca como la versión que sirve la vista."""
+    cur.execute(
+        "INSERT INTO curado.versiones VALUES (%s, %s, %s, %s::jsonb, false) "
+        "ON CONFLICT (dataset, version) DO UPDATE SET huella = EXCLUDED.huella, "
+        "manifiesto = EXCLUDED.manifiesto",
+        (
+            manifiesto.dataset,
+            manifiesto.version,
+            manifiesto.huella,
+            json.dumps(asdict(manifiesto), ensure_ascii=False),
+        ),
+    )
+    cur.execute(
+        "UPDATE curado.versiones SET vigente = (version = %s) WHERE dataset = %s",
+        (manifiesto.version, manifiesto.dataset),
+    )
