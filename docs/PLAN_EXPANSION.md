@@ -128,8 +128,9 @@ Cada conjunto tiene su herramienta o la razón por la que todavía no.
 | Convenios interadministrativos `s484-c9k3` | `secop_convenio_interadministrativo` | ✅ |
 | Ofertas SECOP II `wi7w-2nvm` y su histórico `b28v-edj8` | — | necesita copia (G3): la fuente no indexa por proceso y una consulta se agota |
 | Archivos de SECOP II por año (`dmgg-8hin`, `h4m3-b4e2`, `nbae-kzan`, `3skv-9na7`, `kgcd-kt7i`, `f8va-cf4m`) | — | 134 M filas por año: copia (G3) por ventana |
-| Plan anual de adquisiciones (`b6m4-qgqv`, `9sue-ezhx`, `prdx-nxyp`, `azeg-sgqg`) | — | siguiente tramo: por entidad y año, sin contactos |
-| Proveedores registrados `qmzu-gj57`, grupos de proveedores `ceth-n4bn` | — | por NIT solo de personas jurídicas (buscar por cédula sigue fuera, ADR-0014); sin contactos ni representante |
+| PAA de SECOP I `prdx-nxyp` y `azeg-sgqg` | `secop1_paa_entidad`, `secop1_paa_detalle` | ✅ (el encabezado se agrupa: la fuente lo repite por versión; el NIT viene a veces con dígito de verificación) |
+| PAA de SECOP II `b6m4-qgqv` y `9sue-ezhx` | — | la llave es el código de entidad de SECOP, no el NIT: falta cómo llegar a él |
+| Proveedores registrados `qmzu-gj57`, grupos de proveedores `ceth-n4bn` | — | **no se sirve**: el campo `nit` trae cédulas (un «ECOPETROL S.A.» registrado con la cédula de una persona) y personas inscritas como sociedades. Una herramienta por NIT daría datos engañosos; RUES (`rues_empresa_por_nit`) cubre la empresa |
 | Multas SECOP I `4n4q-k399` | — | el NIT de la entidad casi siempre dice «No Definido»: falta una llave útil |
 | SECOP I procesos histórico `qddk-cgux`, SECOP I archivos histórico `8kpz-m6cc`, convenios histórico `ityv-bxct`, modificaciones a procesos SECOP II `e2u2-swiw` (sin actualizar desde 2021) | — | después: mismos esquemas que los vigentes |
 | Contactos de entidades y proveedores `4ex9-j3n8`, ubicaciones adicionales `wwhe-4sq8` | — | fuera: son contactos y direcciones (ADR-0014) |
