@@ -6,14 +6,17 @@ mismo sobre `rt/1`, mismos errores (RFC 9457 en REST, `isError` en MCP, ADR-0011
 
 from __future__ import annotations
 
+import asyncio
 import math
 import os
+import time
 from collections.abc import Awaitable, Callable, MutableMapping
 from contextlib import AsyncExitStack
 from typing import Annotated, Any
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse, PlainTextResponse
 from pydantic import BaseModel, ConfigDict, Field, create_model
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -21,6 +24,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from terranova import puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
+from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import bearer
@@ -171,9 +175,35 @@ def crear_api() -> FastAPI:
             tags=[h.familia],
             responses={
                 c: {"model": Problema, "content": {"application/problem+json": {}}}
-                for c in (400, 403, 404, 429, 500, 502, 504)
+                for c in (400, 401, 403, 404, 429, 500, 502, 504)
             },
+            openapi_extra={"security": [{"llave": []}]},
         )
+
+    @api.get(
+        "/v1/uso",
+        tags=["cuenta"],
+        operation_id="ver_uso",
+        response_model=None,
+        responses={401: {"model": Problema, "content": {"application/problem+json": {}}}},
+        openapi_extra={"security": [{"llave": []}]},
+    )
+    async def uso(request: Request) -> dict[str, Any] | JSONResponse:
+        """Saldo y consumo del mes de la organización de la llave (ADR-0010)."""
+        principal = getattr(request.state, "principal", None)
+        if principal is None:
+            return problema("no_autenticado", "falta una llave válida (Authorization: Bearer)")
+        usados = await puerta.cuota.usados(principal.org) if puerta.cuota else 0
+        limite = NIVELES.get(principal.nivel, NIVELES["con_llave"])
+        return {
+            "org": principal.org,
+            "nivel": principal.nivel,
+            "plan": principal.plan,
+            "mes": mes(time.time()),
+            "limite": limite,
+            "usados": usados,
+            "disponibles": max(0, limite - usados),
+        }
 
     @api.get("/llms.txt", include_in_schema=False)
     async def llms() -> PlainTextResponse:
@@ -233,6 +263,22 @@ def crear_api() -> FastAPI:
             return problema("no_existe", f"no hay fuente {fuente_id}")
         return _publica(fuente_id)
 
+    def openapi() -> dict[str, Any]:
+        if api.openapi_schema is None:
+            esquema = get_openapi(
+                title=api.title, version=api.version, description=api.description, routes=api.routes
+            )
+            esquema.setdefault("components", {})["securitySchemes"] = {
+                "llave": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "description": "rt_live_… o rt_test_…",
+                }
+            }
+            api.openapi_schema = esquema
+        return api.openapi_schema
+
+    api.openapi = openapi  # type: ignore[method-assign]
     return api
 
 
@@ -270,12 +316,15 @@ class Aplicacion:
             return
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
-        if scope["type"] == "http" and (app is not self.api or ruta.startswith("/v1/co/")):
+        protegida = ruta.startswith("/v1/co/") or ruta == "/v1/uso"
+        if scope["type"] == "http" and (app is not self.api or protegida):
             # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
             if puerta.registro is not None:
                 cabeceras = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
                 llave = bearer(cabeceras.get("authorization"))
-                principal = puerta.registro.verificar(llave) if llave else None
+                principal = (
+                    await asyncio.to_thread(puerta.registro.verificar, llave) if llave else None
+                )
                 if principal is None:
                     await problema(
                         "no_autenticado", "falta una llave válida (Authorization: Bearer)"

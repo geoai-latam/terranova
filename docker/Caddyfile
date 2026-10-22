@@ -1,0 +1,22 @@
+# Caddy: TLS automático con un dominio (TERRANOVA_DOMINIO=api.ejemplo.org); en local, HTTP en :80.
+{$TERRANOVA_DOMINIO}
+
+encode zstd gzip
+
+reverse_proxy puerta-a:8100 puerta-b:8100 {
+	lb_policy least_conn
+	health_uri /v1/fuentes
+	health_interval 10s
+	# MCP por streamable HTTP: respuestas largas y flujos
+	flush_interval -1
+	transport http {
+		read_timeout 5m
+	}
+}
+
+header {
+	-Server
+	Strict-Transport-Security "max-age=31536000"
+	X-Content-Type-Options nosniff
+	Referrer-Policy no-referrer
+}

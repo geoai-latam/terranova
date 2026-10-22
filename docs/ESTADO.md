@@ -4,7 +4,7 @@
 
 ## Dónde estamos
 
-**Gates F0, F1 y F2 cerrados.** El núcleo está completo: ejecutor genérico, puerta generada del catálogo (20 herramientas MCP), compuerta de licencia, caché con `obsoleto` y cortacircuitos. Sigue **F3 · Puerta** (adaptador REST, identidad, cuota, medición).
+**Gates F0 a F3 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-06 pasan contra el compose. Sigue **F4 · Ficha y dataset de restricciones**.
 
 | Spec F0 | Estado |
 |---|---|
@@ -46,7 +46,7 @@
 | F3.4 Medición (outbox) | ✅ `src/terranova/medicion.py`: un evento por solicitud, con el `solicitud_id` como clave (sin duplicados); las fallas y la caché quedan con 0 créditos y el resultado o código. Si el outbox falla, la respuesta sale igual. `Idempotency-Key` (REST): mismo sobre, sin ejecutar, cobrar ni medir otra vez (E2E-10); la misma clave con otra entrada da 400 |
 | F3.5 Errores RFC 9457 y Schemathesis | ✅ Schemathesis sobre el OpenAPI publicado (`tests_lentos/`, job de CI aparte): 23 rutas sin 5xx ni respuestas fuera de esquema. Encontró y quedaron arreglados `false` aceptado como 0.0 (entrada estricta), un 500 con cuerpo vacío, errores de FastAPI fuera de problem+json y un 405 sin `Allow` |
 | F3.6 OpenAPI, `llms.txt`, server card | ✅ OpenAPI 3.1, `/llms.txt` y `/.well-known/mcp/server-card.json` generados del catálogo; `docs/HERRAMIENTAS.md` también, con `--check` en CI |
-| F3.7 Compose de despliegue | ⬜ |
+| F3.7 Compose de despliegue | ✅ `Dockerfile` (98 MB, sin privilegios, falla cerrado sin pimienta) y `docker/compose.yml`: Caddy como única entrada, `puerta-a` y `puerta-b`, Postgres (llaves y uso) y Redis (caché y cuota) compartidos, y `arcgis-mcp` en la red interna. **E2E-01 a E2E-06 en verde contra el compose** (`scripts/e2e.py`, `scripts/e2e_gate_f3.py`) |
 
 ## Decisiones tomadas
 
@@ -68,9 +68,10 @@
 
 ## Siguiente paso concreto
 
-1. **F3.2 a F3.4:** identidad (orgs, llaves `rt_live_…` con HMAC y pimienta, scopes, revocación), cuota
-   (Redis, 429) y medición (outbox).
-2. **En paralelo:**
+1. **F4.1:** pipeline del dataset de restricciones v0 (Ley 2.ª, RUNAP y las capas que pasen la
+   compuerta) → GeoParquet + PostGIS, con huella reproducible.
+2. **F4.2 y F4.3:** `ficha_lugar` con sus partes en paralelo y estado `parcial`; p95 < 15 s en vivo.
+3. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
    - **F0.7:** banco de 40 verdades medidas en la fuente.
@@ -116,6 +117,9 @@
   Ahora se pide `geometria: simplificada` (geo-copilot#48) y RUNAP en punto tarda 1,2 s.
 - `datos-abiertos-mcp`: un `count`/`sum` con `$order=:id` daba HTTP 400 (geo-copilot#47).
 - Tras un timeout, la sesión MCP con el conector quedaba inservible; `ConectorMCP` ahora la reabre.
+- Compose: un conector caído al arrancar tumbaba la puerta, que entraba en un ciclo de reinicios.
+  Ahora arranca igual. La primera llamada con el conector caído tarda unos 7 s (DNS de Docker más 3 s
+  de sesión); tras 3 caídas se abre el circuito y la respuesta baja a menos de 1 s.
 
 ## Cómo correr las comprobaciones
 

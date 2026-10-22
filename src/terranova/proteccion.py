@@ -5,8 +5,9 @@
   intento (medio abierto): si falla, se abre otra vez; si sale bien, se cierra.
 - **Bulkhead**: como mucho `concurrencia` llamadas a la vez por fuente. Protege los servidores del
   Estado y evita que una fuente lenta acapare la puerta.
-- **Reintento**: uno, con jitter, solo ante `fuente_no_disponible` (todas son lecturas). Un tiempo
-  agotado no se reintenta: duplicaría la espera.
+- **Reintento**: uno, con jitter, solo ante `fuente_no_disponible` que la fuente marca como pasajero
+  (`reintentar_en_s`; todas son lecturas). Un tiempo agotado o un conector inalcanzable no se
+  reintentan: duplicarían la espera.
 """
 
 from __future__ import annotations
@@ -81,7 +82,13 @@ class Proteccion:
                 except ErrorEjecucion as exc:
                     if exc.codigo not in CAIDAS:
                         raise
-                    if intento == 1 and exc.codigo == "fuente_no_disponible":
+                    # se reintenta solo si la fuente dice que sirve (`reintentar_en_s`): un
+                    # conector inalcanzable no mejora en medio segundo y duplicaría la espera
+                    if (
+                        intento == 1
+                        and exc.codigo == "fuente_no_disponible"
+                        and exc.reintentar_en_s
+                    ):
                         await self.dormir(0.1 + 0.4 * self.azar())
                         continue
                     self._fallo(c)

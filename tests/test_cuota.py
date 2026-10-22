@@ -165,3 +165,19 @@ async def test_limite_de_tasa_es_429_con_retry_after(
     r = await cliente.post(PREDIO, json=CHIA, headers=cabecera)
     assert r.status_code == 429 and r.json()["code"] == "limite_tasa"
     assert r.headers["retry-after"] == "1" and "ratelimit" in r.headers
+
+
+@pytest.mark.anyio
+async def test_uso_del_mes(
+    montaje: tuple[RegistroSqlite, Fuente], cliente: httpx.AsyncClient
+) -> None:
+    registro, _ = montaje
+    cabecera = {
+        "Authorization": f"Bearer {registro.crear('uso', {'*'}, prueba=False, expira=None)}"
+    }
+    assert (await cliente.get("/v1/uso")).status_code == 401
+    antes = (await cliente.get("/v1/uso", headers=cabecera)).json()
+    assert antes["usados"] == 0 and antes["limite"] == 15 and antes["org"] == "uso"
+    assert (await cliente.post(PREDIO, json=CHIA, headers=cabecera)).status_code == 200
+    despues = (await cliente.get("/v1/uso", headers=cabecera)).json()
+    assert despues["usados"] == 10 and despues["disponibles"] == 5

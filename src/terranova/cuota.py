@@ -43,6 +43,10 @@ class Cuota(Protocol):
 
     async def devolver(self, org: str, creditos: int) -> None: ...
 
+    async def usados(self, org: str) -> int:
+        """Créditos usados este mes por la organización."""
+        ...
+
 
 class CuotaMemoria:
     """Una réplica (y pruebas). `reloj` se puede cambiar."""
@@ -84,6 +88,9 @@ class CuotaMemoria:
         async with self._candado:
             clave = f"{org}:{mes(self.reloj())}"
             self._usados[clave] = max(0, self._usados.get(clave, 0) - creditos)
+
+    async def usados(self, org: str) -> int:
+        return self._usados.get(f"{org}:{mes(self.reloj())}", 0)
 
 
 # Atómicos en Redis: compartidos entre réplicas.
@@ -138,6 +145,9 @@ class CuotaRedis:
     async def devolver(self, org: str, creditos: int) -> None:
         if creditos > 0:
             await self._r.decrby(f"terranova:saldo:{org}:{mes(self.reloj())}", creditos)
+
+    async def usados(self, org: str) -> int:
+        return int(await self._r.get(f"terranova:saldo:{org}:{mes(self.reloj())}") or 0)
 
 
 def cuota_desde_entorno(redis_url: str | None) -> Cuota:

@@ -7,6 +7,7 @@ llama salen del catálogo; el sobre `rt/1` y sus errores, del contrato.
 from __future__ import annotations
 
 import hashlib
+import logging
 import os
 import time
 from collections.abc import AsyncIterator
@@ -28,10 +29,11 @@ from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_si
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import Principal, Registro, registro_desde_entorno
-from terranova.medicion import Evento, Outbox, OutboxSqlite, registrar_sin_fallar
+from terranova.medicion import Evento, Outbox, OutboxSql, registrar_sin_fallar
 from terranova.medicion import ahora as ahora_iso
 from terranova.proteccion import Proteccion
 
+logger = logging.getLogger("terranova.puerta")
 CATALOGO: Catalogo = cargar()
 ESQUEMA_SOBRE = Sobre.model_json_schema(mode="serialization")
 
@@ -242,11 +244,16 @@ async def iniciar() -> None:
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
     cuota = cuota_desde_entorno(redis_url)
-    outbox = OutboxSqlite(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
+    outbox = OutboxSql(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
     _iniciados.update(conectores_desde_entorno())
-    for c in _iniciados.values():
+    for nombre, c in _iniciados.items():
         if isinstance(c, ConectorMCP):
-            await c.abrir()
+            try:
+                await c.abrir()
+            except Exception:
+                # su primera llamada reabre la sesión; mientras, sus herramientas responden
+                # fuente_no_disponible y el cortacircuitos protege
+                logger.warning("conector %s no disponible al arrancar", nombre, exc_info=True)
     usar_conectores(dict(_iniciados))
 
 
