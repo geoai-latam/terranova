@@ -41,3 +41,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vereda_en_punto` | ¿En qué vereda del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vocacion_uso_en_punto` | ¿Cuál es la vocación de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
+
+## Ficha de un lugar
+
+`ficha_lugar` (MCP en `/mcp` y `/mcp/territorio`; REST en `POST /v1/fichas`): Ficha de un lugar de Colombia por punto (lon, lat) o por número predial: predio y construcciones (IGAC), vereda, áreas protegidas (RUNAP), resguardos y zonas de reserva campesina (ANT), vocación, capacidad y conflictos de uso del suelo (IGAC), cobertura (ESA WorldCover), sismos M≥3 del último año a ~55 km (USGS), población (DANE) y precio de la tierra rural (UPRA). Partes en paralelo, cada una con su procedencia y licencia; si una falla, la ficha sale «parcial» con el error de esa parte. Tope de 20 s. Cuesta la suma de las partes que respondieron, hasta 50 créditos.

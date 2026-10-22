@@ -85,7 +85,9 @@ CHIA = {"lon": -74.0262, "lat": 4.8619}
 @_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
-    assert set(herramientas) == set(puerta.CATALOGO.herramientas)
+    assert set(herramientas) == set(puerta.CATALOGO.herramientas) | {"ficha_lugar"}
+    ficha = herramientas["ficha_lugar"]
+    assert ficha.input_schema["oneOf"] and ficha.annotations is not None
     t = herramientas[PREDIO]
     assert t.output_schema is not None and "procedencia" in t.output_schema["properties"]
     assert t.annotations is not None and t.annotations.read_only_hint is True

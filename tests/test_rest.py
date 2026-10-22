@@ -182,5 +182,64 @@ async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     assert (
         tarjeta["transport"]["endpoint"] == "/mcp" and "2026-07-28" in tarjeta["protocolVersions"]
     )
-    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas)
+    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas) | {"ficha_lugar"}
     assert {p["endpoint"] for p in tarjeta["profiles"]} == {f"/mcp/{f}" for f in puerta.FAMILIAS}
+
+
+class ArcgisVacio:
+    """ArcGIS responde sin rasgos; los demás conectores no están: la ficha sale `parcial`."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "geo_result": "1",
+            "artifacts": [
+                {
+                    "kind": "feature_collection",
+                    "crs": "EPSG:4326",
+                    "data": {"type": "FeatureCollection", "features": []},
+                }
+            ],
+            "facts": {"total_en_servicio": 0, "completo": True},
+        }
+
+
+@pytest.mark.anyio
+async def test_ficha_por_rest_igual_que_por_mcp(rest: httpx.AsyncClient) -> None:
+    puerta.usar_conectores({"arcgis-mcp": ArcgisVacio()})
+    try:
+        r = await rest.post("/v1/fichas", json={"lon": -74.0262, "lat": 4.8619})
+        async with Client(puerta.crear_servidor(con_ciclo=False)) as mcp:
+            m = await mcp.call_tool("ficha_lugar", {"lon": -74.0262, "lat": 4.8619})
+    finally:
+        puerta.usar_conectores(None)
+    assert r.status_code == 200, r.text
+    sobre = r.json()
+    assert sobre["estado"] == "parcial" and sobre["herramienta"] == "ficha_lugar@1"
+    assert sobre["datos"]["predio"]["estado"] == "no_encontrado"
+    caidas = {e["fuente_id"] for e in sobre["errores"]}
+    assert "esa.worldcover" in caidas and "usgs.sismos" in caidas
+    assert caidas <= {p["fuente_id"] for p in sobre["procedencia"]}  # regla 3
+    assert m.structured_content is not None
+    assert _sin_lo_propio_de_cada_llamada(m.structured_content) == _sin_lo_propio_de_cada_llamada(
+        sobre
+    )
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "cuerpo",
+    [
+        {},
+        {"lon": -74.0},
+        {"lon": -74.0, "lat": 4.8, "codigo": "1" * 30},
+        {"lon": False, "lat": 4},
+        {"codigo": "1" * 30, "lat": None},
+    ],
+)
+async def test_ficha_entrada_invalida(rest: httpx.AsyncClient, cuerpo: dict[str, Any]) -> None:
+    puerta.usar_conectores({})
+    try:
+        r = await rest.post("/v1/fichas", json=cuerpo)
+    finally:
+        puerta.usar_conectores(None)
+    assert r.status_code == 400 and r.json()["code"] == "parametro_invalido"

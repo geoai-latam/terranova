@@ -21,6 +21,7 @@ from fastmcp.tools import Tool, ToolResult
 from mcp.types import TextContent, ToolAnnotations
 from pydantic import PrivateAttr
 
+from terranova import ficha as ficha_lugar
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
@@ -110,6 +111,30 @@ class HerramientaDelCatalogo(Tool):
             },
         )
         herramienta._ficha = h.id
+        return herramienta
+
+    @classmethod
+    def ficha_de_lugar(cls) -> HerramientaDelCatalogo:
+        """`ficha_lugar` (spec 03 §8.3): compone herramientas del catálogo, no es una ficha."""
+        herramienta = cls(
+            name=ficha_lugar.HERRAMIENTA,
+            title=ficha_lugar.PREGUNTA,
+            description=ficha_lugar.DESCRIPCION,
+            parameters=ficha_lugar.ESQUEMA_ENTRADA,
+            output_schema=ESQUEMA_SOBRE,
+            annotations=ToolAnnotations(
+                read_only_hint=True, idempotent_hint=True, open_world_hint=True
+            ),
+            tags={ficha_lugar.FAMILIA},
+            meta={
+                "terranova": {
+                    "familia": ficha_lugar.FAMILIA,
+                    "version": ficha_lugar.VERSION,
+                    "creditos": ficha_lugar.TOPE_CREDITOS,
+                }
+            },
+        )
+        herramienta._ficha = ficha_lugar.HERRAMIENTA
         return herramienta
 
     async def run(self, arguments: dict[str, Any]) -> ToolResult:
@@ -202,17 +227,28 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
     if _conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
     h = CATALOGO.herramientas.get(ficha)
+    es_ficha = ficha == ficha_lugar.HERRAMIENTA
+    familia = ficha_lugar.FAMILIA if es_ficha else h.familia if h is not None else None
     if registro is not None:
         if principal is None:
             raise ErrorEjecucion("no_autenticado", "falta una llave válida (Authorization: Bearer)")
-        if h is not None and not principal.puede(h.familia):
-            raise ErrorEjecucion("sin_permiso", f"la llave no tiene el scope «{h.familia}»")
+        if familia is not None and not principal.puede(familia):
+            raise ErrorEjecucion("sin_permiso", f"la llave no tiene el scope «{familia}»")
     plan = principal.plan if principal is not None else plan_actual()
     ejecutor = Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION)
-    if cuota is None or principal is None or h is None:
+
+    async def correr() -> Sobre:
+        if es_ficha:
+            # las partes fuera de los scopes de la llave no se consultan (salen en avisos)
+            puede = principal.puede if principal is not None else (lambda _f: True)
+            return await ficha_lugar.ficha(ejecutor, entrada, plan=plan, puede=puede)
         return await ejecutor.ejecutar(ficha, entrada, plan=plan)
+
+    costo = ficha_lugar.TOPE_CREDITOS if es_ficha else h.creditos if h is not None else None
+    if cuota is None or principal is None or costo is None:
+        return await correr()
     # ADR-0010: se reserva el costo antes de llamar y se devuelve lo que no se cobró
-    reservado, _ = await cuota.reservar(principal.org, principal.nivel, h.creditos)
+    reservado, _ = await cuota.reservar(principal.org, principal.nivel, costo)
     if not reservado:
         raise ErrorEjecucion(
             "saldo_agotado",
@@ -220,11 +256,11 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
             segundos_hasta_el_mes_siguiente(time.time()),
         )
     try:
-        sobre = await ejecutor.ejecutar(ficha, entrada, plan=plan)
+        sobre = await correr()
     except BaseException:
-        await cuota.devolver(principal.org, h.creditos)
+        await cuota.devolver(principal.org, costo)
         raise
-    await cuota.devolver(principal.org, h.creditos - sobre.creditos)
+    await cuota.devolver(principal.org, costo - sobre.creditos)
     return sobre
 
 
@@ -294,6 +330,8 @@ def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> Fas
     for h in CATALOGO.herramientas.values():
         if familia is None or h.familia == familia:
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
+    if familia in (None, ficha_lugar.FAMILIA):
+        servidor.add_tool(HerramientaDelCatalogo.ficha_de_lugar())
     return servidor
 
 
