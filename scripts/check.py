@@ -8,6 +8,7 @@ PASOS: list[list[str]] = [
     ["ruff", "format", "--check", "."],
     ["mypy"],
     [sys.executable, "scripts/esquema.py", "--check"],
+    [sys.executable, "scripts/validar_catalogo.py"],
     ["pytest"],
 ]
 
