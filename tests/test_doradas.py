@@ -68,3 +68,30 @@ async def test_dorada(herramienta: str) -> None:
             assert p.licencia.spdx == (fuente.licencia.spdx or "LicenseRef-por-verificar")
             assert p.atribucion == fuente.atribucion
     assert sobre.creditos == h.creditos
+
+
+def _filas_crudas(respuesta: dict[str, Any]) -> list[dict[str, Any]]:
+    filas: list[dict[str, Any]] = []
+    for art in respuesta.get("artifacts") or []:
+        filas += [r for r in art.get("rows") or [] if isinstance(r, dict)]
+        filas += [f.get("properties") or {} for f in (art.get("data") or {}).get("features") or []]
+    return filas
+
+
+DE_SOCRATA = sorted(
+    h for h, f in CATALOGO.herramientas.items() if CATALOGO.fuentes[f.fuente].protocolo == "socrata"
+)
+
+
+@pytest.mark.parametrize("herramienta", DE_SOCRATA)
+def test_la_dorada_de_socrata_solo_guarda_la_lista_blanca(herramienta: str) -> None:
+    """El repo es público: la respuesta grabada no puede traer columnas fuera de la lista blanca
+    (cédulas, supervisores, contactos). Por eso las fichas de Socrata piden `select`."""
+    h = CATALOGO.herramientas[herramienta]
+    permitidas = set(CATALOGO.fuentes[h.fuente].campos) | {
+        d.campo for d in h.derivados.values() if d.de == "columna" and d.campo
+    }
+    grabado = json.loads((DORADAS / f"{herramienta}.json").read_text(encoding="utf-8"))
+    filas = [fila for ll in grabado["llamadas"] for fila in _filas_crudas(ll["respuesta"])]
+    vistas = {k for fila in filas for k in fila}
+    assert vistas <= permitidas, f"columnas fuera de la lista blanca: {sorted(vistas - permitidas)}"

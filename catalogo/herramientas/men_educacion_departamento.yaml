@@ -16,6 +16,7 @@ consulta:
   argumentos:
     id: ji8i-4anb
     portal: datos.gov.co
+    select: "ano, c_digo_departamento, departamento, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia"
     where: "c_digo_departamento = {departamento_divipola}"
     order: "ano"
     max_filas: 100

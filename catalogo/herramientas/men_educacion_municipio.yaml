@@ -16,6 +16,7 @@ consulta:
   argumentos:
     id: nudc-7mev
     portal: datos.gov.co
+    select: "a_o, c_digo_municipio, municipio, poblaci_n_5_16, tasa_matriculaci_n_5_16, cobertura_neta, cobertura_bruta, deserci_n, aprobaci_n, reprobaci_n, repitencia"
     where: "c_digo_municipio = '{municipio_divipola}'"
     order: "a_o"
     max_filas: 100
