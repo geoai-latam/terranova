@@ -1,0 +1,202 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:44:05+00:00",
+ "herramienta": "icfes_saber11_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "periodo",
+    "having": "count(*) >= 10",
+    "id": "kgxf-xxbe",
+    "max_filas": 200,
+    "portal": "datos.gov.co",
+    "select": "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica",
+    "where": "cole_cod_mcpio_ubicacion = '25175'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estudiantes",
+       "periodo",
+       "promedio_global",
+       "promedio_lectura_critica",
+       "promedio_matematicas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estudiantes": "464",
+        "periodo": "20101",
+        "promedio_matematicas": "54.2905172413793103"
+       },
+       {
+        "estudiantes": "1552",
+        "periodo": "20102",
+        "promedio_matematicas": "54.4852448453608247"
+       },
+       {
+        "estudiantes": "499",
+        "periodo": "20111",
+        "promedio_matematicas": "58.1793787575150301"
+       },
+       {
+        "estudiantes": "1568",
+        "periodo": "20112",
+        "promedio_matematicas": "51.9834183673469388"
+       },
+       {
+        "estudiantes": "530",
+        "periodo": "20121",
+        "promedio_matematicas": "58.1886792452830189"
+       },
+       {
+        "estudiantes": "1729",
+        "periodo": "20122",
+        "promedio_matematicas": "49.8438403701561596"
+       },
+       {
+        "estudiantes": "512",
+        "periodo": "20131",
+        "promedio_matematicas": "59.1953125000000000"
+       },
+       {
+        "estudiantes": "1717",
+        "periodo": "20132",
+        "promedio_matematicas": "49.7705299941758882"
+       },
+       {
+        "estudiantes": "567",
+        "periodo": "20141",
+        "promedio_matematicas": "55.7495590828924162"
+       },
+       {
+        "estudiantes": "1738",
+        "periodo": "20142",
+        "promedio_global": "279.5650172612197929",
+        "promedio_lectura_critica": "56.0506329113924051",
+        "promedio_matematicas": "55.7928653624856157"
+       },
+       {
+        "estudiantes": "525",
+        "periodo": "20151",
+        "promedio_global": "319.0209523809523810",
+        "promedio_lectura_critica": "60.8723809523809524",
+        "promedio_matematicas": "63.1428571428571429"
+       },
+       {
+        "estudiantes": "1738",
+        "periodo": "20152",
+        "promedio_global": "275.1927502876869965",
+        "promedio_lectura_critica": "54.0535097813578826",
+        "promedio_matematicas": "55.2197928653624856"
+       },
+       {
+        "estudiantes": "351",
+        "periodo": "20161",
+        "promedio_global": "346.3390313390313390",
+        "promedio_lectura_critica": "63.6695156695156695",
+        "promedio_matematicas": "72.2393162393162393"
+       },
+       {
+        "estudiantes": "1854",
+        "periodo": "20162",
+        "promedio_global": "285.0598705501618123",
+        "promedio_lectura_critica": "56.9460625674217907",
+        "promedio_matematicas": "56.3554476806903991"
+       },
+       {
+        "estudiantes": "329",
+        "periodo": "20171",
+        "promedio_global": "329.2978723404255319",
+        "promedio_lectura_critica": "64.4863221884498480",
+        "promedio_matematicas": "64.8389057750759878"
+       },
+       {
+        "estudiantes": "1752",
+        "periodo": "20172",
+        "promedio_global": "281.2163242009132420",
+        "promedio_lectura_critica": "57.7990867579908676",
+        "promedio_matematicas": "55.2990867579908676"
+       },
+       {
+        "estudiantes": "829",
+        "periodo": "20181",
+        "promedio_global": "316.9734620024125452",
+        "promedio_lectura_critica": "63.7852834740651387",
+        "promedio_matematicas": "62.5633293124246080"
+       },
+       {
+        "estudiantes": "286",
+        "periodo": "20191",
+        "promedio_global": "335.6818181818181818",
+        "promedio_lectura_critica": "66.7587412587412587",
+        "promedio_matematicas": "67.5244755244755245"
+       },
+       {
+        "estudiantes": "3756",
+        "periodo": "20194",
+        "promedio_global": "275.2854100106496273",
+        "promedio_lectura_critica": "57.1395101171458999",
+        "promedio_matematicas": "56.3386581469648562"
+       },
+       {
+        "estudiantes": "379",
+        "periodo": "20201",
+        "promedio_global": "299.2875989445910290",
+        "promedio_lectura_critica": "61.1451187335092348",
+        "promedio_matematicas": "60.4089709762532982"
+       },
+       {
+        "estudiantes": "468",
+        "periodo": "20211",
+        "promedio_global": "307.0641025641025641",
+        "promedio_lectura_critica": "62.2029914529914530",
+        "promedio_matematicas": "61.4423076923076923"
+       },
+       {
+        "estudiantes": "414",
+        "periodo": "20221",
+        "promedio_global": "302.5869565217391304",
+        "promedio_lectura_critica": "61.8333333333333333",
+        "promedio_matematicas": "60.7439613526570048"
+       },
+       {
+        "estudiantes": "3372",
+        "periodo": "20224",
+        "promedio_global": "277.4039145907473310",
+        "promedio_lectura_critica": "57.8368920521945433",
+        "promedio_matematicas": "55.9181494661921708"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 23,
+      "truncado": false,
+      "vistos": 23
+     },
+     "completo": true,
+     "conjunto": "kgxf-xxbe",
+     "consulta": {
+      "conjunto": "kgxf-xxbe",
+      "group": "periodo",
+      "having": "count(*) >= 10",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica",
+      "where": "(cole_cod_mcpio_ubicacion = '25175')"
+     },
+     "filas": 23,
+     "filas_que_resume": 26929,
+     "filtro_soql": "(cole_cod_mcpio_ubicacion = '25175')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

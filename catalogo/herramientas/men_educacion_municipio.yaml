@@ -1,0 +1,30 @@
+id: men_educacion_municipio
+version: 1
+familia: estadisticas
+fuente: men.educacion_municipio
+pregunta: "¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación?"
+descripcion: >
+  Indicadores de educación preescolar, básica y media (MinEducación) de un municipio, año por año desde
+  2011: población de 5 a 16 años, tasa de matriculación, cobertura neta y bruta, deserción,
+  aprobación, reprobación y repitencia (en %).
+  (Fuente: MinEducación; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: nudc-7mev
+    portal: datos.gov.co
+    where: "c_digo_municipio = '{municipio_divipola}'"
+    order: "a_o"
+    max_filas: 100
+  campos: [a_o, c_digo_municipio, municipio, poblaci_n_5_16, tasa_matriculaci_n_5_16, cobertura_neta, cobertura_bruta, deserci_n, aprobaci_n, reprobaci_n, repitencia]
+salida: EducacionPorMunicipio
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en nudc-7mev, ordenado por año: el primer año es 2011.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {anio: 2011, municipio: Chía, cobertura_neta: 92.4, desercion: 4.5}
+  campos: [anio, aprobacion, cobertura_bruta, cobertura_neta, desercion, municipio, municipio_divipola, poblacion_5_16, repitencia, reprobacion, tasa_matriculacion_5_16]
+  latencia_max_ms: 10000

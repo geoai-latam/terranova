@@ -1,0 +1,37 @@
+id: igac_compraventas_municipio
+version: 1
+familia: territorio
+fuente: igac.transacciones_inmobiliarias
+pregunta: "¿Cuántas compraventas de inmuebles hubo en este municipio cada año y por cuánto?"
+descripcion: >
+  Compraventas de inmuebles registradas en un municipio (registro de transacciones inmobiliarias del
+  IGAC con datos de la SNR, 2015–2023), por año de radicación: número de compraventas, cuántas traen
+  valor y el valor promedio en pesos. El valor solo viene desde 2021; antes, `con_valor` es 0 y no
+  hay promedio. Es el promedio de los actos registrados, no un precio de mercado ni una mediana.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 7y2j-43cv
+    portal: datos.gov.co
+    select: "year_radica, count(*) AS compraventas, sum(tiene_valor) AS con_valor, avg(valor) AS valor_promedio"
+    where: "divipola = '{municipio_divipola}' AND cod_natujur = 125"
+    group: year_radica
+    max_filas: 50
+  campos: [year_radica, divipola, cod_natujur, tiene_valor, valor]
+salida: CompraventasMunicipio
+derivados:
+  compraventas: {de: columna, campo: compraventas, tipo: int}
+  con_valor: {de: columna, campo: con_valor, tipo: int}
+  valor_promedio_cop: {de: columna, campo: valor_promedio, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 7y2j-43cv (cod_natujur 125, group year_radica): Chía, 2015 → 1055
+  # compraventas sin valor. El conjunto está cerrado en 2023.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {anio: 2015, compraventas: 1055, con_valor: 0}
+  campos: [anio, compraventas, con_valor, valor_promedio_cop]
+  latencia_max_ms: 30000
