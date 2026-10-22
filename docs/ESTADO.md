@@ -4,15 +4,15 @@
 
 ## Dónde estamos
 
-**Fase F0 · Cimientos y decisiones.** F0.1 y F0.3 cerradas: hay esqueleto y una puerta mínima que responde por MCP.
+**Gate F0 cerrado (2026-10-21)**: ADR aceptadas, spikes F0.3 y F0.4 en verde, licencias M1 decididas. Empieza **F1 · Contrato y catálogo**. F0.6 a F0.8 siguen en paralelo, porque el gate no las exige.
 
 | Spec F0 | Estado |
 |---|---|
 | F0.1 Repo y estructura | ✅ `pyproject` (uv, Python 3.13), ruff y mypy estricto fijados, pytest, pre-commit, CI; `make check` verde |
 | F0.2 ADR aceptadas | ✅ las 20 aceptadas el 2026-10-21, con su validación escrita; 0005, 0007, 0010, 0014, 0018 y 0019 se corrigieron al revisarlas |
 | F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ✅ las tres pruebas de ADR-0003 pasan; salto p95 3,1 ms ([informe](spikes/F0.3-protocolo.md)) |
-| F0.4 Spike GeoResult en GEO Copilot | ⬜ |
-| F0.5 Licencias de las fuentes M1 | ⬜ (humano) |
+| F0.4 Spike GeoResult en GEO Copilot | ✅ pintado en el navegador ([informe](spikes/F0.4-geo-result.md)); el hub desanida el sobre (geo-copilot#43) |
+| F0.5 Licencias de las fuentes M1 | ✅ decididas con evidencia en [`catalogo/licencias/m1.yaml`](../catalogo/licencias/m1.yaml): 12 a producción, 4 a evaluación (DANE, IDEAM geoservicios, SIAC, ambiente alojado en IGAC), SGC fuera |
 | F0.6 PR de amenazas y clima en GEO Copilot + Open-Meteo | ⬜ |
 | F0.7 Banco de verdades del producto (40 preguntas) | ⬜ |
 | F0.8 Solicitudes por derecho de petición | ⬜ (humano) |
@@ -36,10 +36,18 @@
 
 ## Siguiente paso concreto
 
-1. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de `igac_predio_en_punto`, verificado en
-   el navegador. La puerta ya devuelve el `geo_result` del conector tal cual.
-
-Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (contrato y catálogo).
+1. **F1.1:** modelos `rt/1` completos en Pydantic, a partir de `src/terranova/sobre.py`, con
+   exportación de JSON Schema y `--check` en CI, más las 10 invariantes como pruebas de propiedad
+   con Hypothesis.
+2. **F1.2:** modelos del catálogo y validador en CI. `catalogo/licencias/m1.yaml` pasa a las fichas
+   de fuente.
+3. **En paralelo:**
+   - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
+     y fusionarlo. También fusionar geo-copilot#43.
+   - **F0.7:** banco de 40 verdades medidas en la fuente.
+   - **F0.8:** las solicitudes por derecho de petición están en borrador en `interno/borradores/`;
+     las envía el dueño. Se sumaron DANE (redistribución del MGN y el CNPV) y SGC (la licencia de
+     MIIG choca con los ítems CC BY en ArcGIS Online).
 
 ## Hechos medidos que sirven de canario
 

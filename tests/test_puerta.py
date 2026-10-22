@@ -83,15 +83,24 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
         "zona": "rural",
         "municipio_divipola": "25175",
     }
-    assert sobre["geo_result"]["artifacts"][0]["kind"] == "feature_collection"
+    artefacto = sobre["geo_result"]["artifacts"][0]
+    assert artefacto["kind"] == "feature_collection" and artefacto["crs"] == "EPSG:4326"
+    # regla 10: la capa lleva solo la lista blanca, nunca los campos crudos de la fuente
+    (rasgo,) = artefacto["data"]["features"]
+    assert rasgo["properties"] == sobre["datos"]
+    assert rasgo["geometry"] == PREDIO_CHIA["geometry"]
     # regla 3: toda fuente consultada aparece, aunque no haya encontrado nada
     assert {p["fuente_id"] for p in sobre["procedencia"]} == {
         "igac.catastro.terreno_rural",
         "igac.catastro.terreno_urbano",
     }
     for p in sobre["procedencia"]:
-        assert p["licencia"]["verificada"] is False
-        assert p["licencia"]["spdx"] == "CC-BY-SA-4.0"
+        assert p["licencia"] == {
+            "spdx": "CC-BY-SA-4.0",
+            "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+            "uso_comercial": "si",
+            "verificada": True,
+        }
         c = p["completitud"]
         assert c["vistos"] <= c["total"] and c["truncado"] == (c["vistos"] < c["total"])
 
