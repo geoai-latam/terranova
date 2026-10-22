@@ -20,7 +20,7 @@ from pydantic import PrivateAttr
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import Sobre
-from terranova.ejecutor import Ejecutor, ErrorEjecucion, ErrorEntrada
+from terranova.ejecutor import Ejecutor, ErrorEjecucion, ErrorEntrada, Plan
 
 CATALOGO: Catalogo = cargar()
 ESQUEMA_SOBRE = Sobre.model_json_schema(mode="serialization")
@@ -48,6 +48,12 @@ def usar_conectores(conectores: dict[str, Conector] | None) -> None:
     """Inyecta los conectores (las pruebas pasan unos falsos)."""
     global _conectores
     _conectores = conectores
+
+
+def plan_actual() -> Plan:
+    """El plan de quien llama. Hasta la identidad (F3.2) sale de `TERRANOVA_PLAN`; por defecto
+    `normal`, el seguro: una fuente con licencia por verificar no responde."""
+    return "evaluacion" if os.environ.get("TERRANOVA_PLAN") == "evaluacion" else "normal"
 
 
 def esquema_entrada(h: Herramienta) -> dict[str, Any]:
@@ -95,7 +101,9 @@ class HerramientaDelCatalogo(Tool):
         if _conectores is None:
             raise ToolError("error_interno: la puerta no tiene conectores")
         try:
-            sobre = await Ejecutor(CATALOGO, _conectores).ejecutar(self._ficha, arguments)
+            sobre = await Ejecutor(CATALOGO, _conectores).ejecutar(
+                self._ficha, arguments, plan=plan_actual()
+            )
         except ErrorEntrada as exc:
             raise ToolError(f"parametro_invalido: {exc}") from exc
         except ErrorEjecucion as exc:

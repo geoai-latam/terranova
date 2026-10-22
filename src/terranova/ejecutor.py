@@ -15,7 +15,7 @@ import unicodedata
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any
+from typing import Any, Literal
 
 from terranova.catalogo import (
     MARCADOR,
@@ -44,6 +44,7 @@ from terranova.contrato import (
 )
 
 MAX_TEXTO_LIBRE = 200
+Plan = Literal["evaluacion", "normal"]
 
 
 class ErrorEntrada(Exception):
@@ -130,7 +131,9 @@ def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
 
 # --- salida ----------------------------------------------------------------------------------
 
-_BIDI_Y_CONTROL = re.compile("[؜‎‏‪-‮⁦-⁩]|[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]")
+_BIDI_Y_CONTROL = re.compile(
+    "[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]|[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]"
+)
 
 
 def sanear(texto: str) -> str:
@@ -372,11 +375,19 @@ class Ejecutor:
         except ErrorConector as exc:
             raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
 
-    async def ejecutar(self, herramienta: str, entrada: dict[str, Any]) -> Sobre:
+    async def ejecutar(
+        self, herramienta: str, entrada: dict[str, Any], *, plan: Plan = "normal"
+    ) -> Sobre:
         h = self.catalogo.herramientas.get(herramienta)
         if h is None:
             raise ErrorEjecucion("no_existe", f"no hay herramienta {herramienta}")
         fuente = self.catalogo.fuentes[h.fuente]
+        # ADR-0007: sin licencia verificada, la fuente solo responde a llaves de evaluación
+        if fuente.uso_comercial == "por_verificar" and plan != "evaluacion":
+            raise ErrorEjecucion(
+                "licencia_no_habilitada",
+                f"{fuente.id}: licencia por verificar; solo responde a llaves de evaluación",
+            )
         valores = validar_entrada(h, entrada)
         consultado_en = ahora()
 

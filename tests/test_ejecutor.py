@@ -56,7 +56,7 @@ def test_renderizar_conserva_tipos_y_arma_texto() -> None:
     }
 
 
-@pytest.mark.parametrize("sucio", ["a‮b", "a\x00b", "x⁦y⁩", "\x1b[31mrojo\x07"])
+@pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
 def test_sanear_quita_control_y_bidi(sucio: str) -> None:
     assert texto_es_limpio(sanear(sucio))
 

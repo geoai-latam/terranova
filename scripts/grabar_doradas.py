@@ -77,7 +77,7 @@ async def main(nombres: list[str]) -> int:
             ej = Ejecutor(catalogo, dict(grabadores))
             t0 = time.perf_counter()
             try:
-                sobre = await ej.ejecutar(h.id, h.canario.entrada)
+                sobre = await ej.ejecutar(h.id, h.canario.entrada, plan="evaluacion")
             except Exception as exc:  # noqa: BLE001 — una herramienta rota no detiene las demás
                 fallos += 1
                 print(f"✗ {h.id}: {type(exc).__name__}: {exc}")
