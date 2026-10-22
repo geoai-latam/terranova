@@ -1,0 +1,64 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:31:18+00:00",
+ "herramienta": "igac_gestor_catastral_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "bhcx-bx97",
+    "max_filas": 5,
+    "portal": "datos.gov.co",
+    "select": "divipola, municipio, departamen, gestor_cat, gestor_con, estado_act",
+    "where": "divipola = '11001'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "departamen",
+       "divipola",
+       "estado_act",
+       "gestor_cat",
+       "gestor_con",
+       "municipio"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "departamen": "BOGOTA D.C.",
+        "divipola": "11001",
+        "estado_act": "EN OPERACION",
+        "gestor_cat": "UNIDAD ADMINISTRATIVA ESPECIAL DE CATASTRO DISTRITAL BOGOTA UAECD",
+        "gestor_con": "GESTOR",
+        "municipio": "BOGOTA"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "bhcx-bx97",
+     "consulta": {
+      "conjunto": "bhcx-bx97",
+      "max_filas": 5,
+      "portal": "datos.gov.co",
+      "select": "divipola, municipio, departamen, gestor_cat, gestor_con, estado_act",
+      "where": "(divipola = '11001')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(divipola = '11001')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

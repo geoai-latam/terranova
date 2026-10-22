@@ -58,13 +58,13 @@
 
 ## F5 · Expansión hasta las fuentes objetivo
 
-Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **24 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
+Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **28 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
 
 | Pieza u ola | Estado |
 |---|---|
 | G2 Corte mensual del IGAC | ✅ `scripts/corte_igac.py`: lee la fecha de corte de la descripción de cada servicio, no del nombre (`…_IGAC_de_octubre` es el corte de octubre de **2025**); con `--escribir` actualiza las fichas catastrales. Vigente al 2026-10-22: `06_2026` |
 | G5 Herramientas de la fábrica | 🟨 `docker/compose.desarrollo.yml` expone los conectores en 127.0.0.1 para grabar doradas desde el host |
-| Ola 1 · IGAC base catastral | 🟨 4 nuevas: `igac_registro_predio` (REGISTRO_1: dirección, destino económico, áreas), `igac_caracteristicas_predio` (REGISTRO_2: unidades y zonas homogéneas), `igac_perimetro_urbano_en_punto`, `igac_sector_en_punto`. Las tablas necesitan que arcgis-mcp las consulte (geo-copilot, rama `feat/arcgis-tablas`). En la fuente, `codigo_municipio` del perímetro está mal (Chía = 23175): se usan `DEPARTAMENTO_CODIGO` y `MUNICIPIO_CODIGO` |
+| Ola 1 · IGAC catastro | 🟨 8 nuevas. Base catastral: `igac_registro_predio` (REGISTRO_1), `igac_caracteristicas_predio` (REGISTRO_2), `igac_perimetro_urbano_en_punto`, `igac_sector_en_punto`. Zonas homogéneas 2026: `igac_zona_geoeconomica_en_punto` (valor del suelo) y `igac_zona_fisica_en_punto`. `igac_estadisticas_catastrales_municipio` (predios, áreas y avalúos por año y estado; licencia por verificar: solo evaluación) e `igac_gestor_catastral_municipio` (datos.gov.co, sin los contactos de personas). Las tablas necesitan geo-copilot#50. En la fuente, `codigo_municipio` dice 23175 para Chía: no se usa |
 
 ## F7 · Operación (en paralelo desde F3)
 

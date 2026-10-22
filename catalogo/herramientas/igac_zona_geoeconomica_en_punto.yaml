@@ -1,0 +1,36 @@
+id: igac_zona_geoeconomica_en_punto
+version: 1
+familia: territorio
+fuente: igac.catastro.zona_geoeconomica
+pregunta: "¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC?"
+descripcion: >
+  Zona homogénea geoeconómica (IGAC) que contiene un punto: su código, el valor del suelo (por
+  hectárea en lo rural, por m² en lo urbano, en pesos), las zonas físicas que abarca y la vigencia.
+  Es el valor catastral de referencia, no un precio de mercado. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [11, 13]  # rural (valor por ha), urbana (valor por m²)
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    geometria: ninguna
+    max_features: 5
+  campos: [CODIGO, CODIGO_ZONA_GEOECONOMICA, VALOR_HECTAREA, VALOR_METRO, SUBZONA_FISICA, VIGENCIA]
+salida: ZonaGeoeconomicaEnPunto
+derivados:
+  zona: {de: capa, valores: {"11": rural, "13": urbano}}
+  municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
+creditos: 10
+canario:
+  entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona económica 006
+  verdad:
+    codigo_zona_geoeconomica: "006"
+    valor_hectarea_cop: 7000000000.0
+    zona: rural
+    municipio_divipola: "25175"
+  campos: [codigo_municipio_zona, codigo_zona_geoeconomica, municipio_divipola, valor_hectarea_cop, zona, zonas_fisicas]
+  latencia_max_ms: 5000

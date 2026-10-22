@@ -1,0 +1,36 @@
+id: igac_estadisticas_catastrales_municipio
+version: 1
+familia: territorio
+fuente: igac.catastro.estadisticas_municipio
+pregunta: "¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año?"
+descripcion: >
+  Estadísticas catastrales de un municipio (IGAC), de 2017 en adelante: por año de reporte, zona
+  (rural o urbana) y estado catastral, el número de predios, el área de terreno, el área
+  geográfica, el área construida y el avalúo total. Un año puede traer un bloque «Actualizado» y
+  otro «Desactualizado»: cada elemento dice su estado; no se suman sin mirarlo.
+  Mientras la licencia no esté verificada, solo responde con llaves de evaluación.
+  (Fuente: IGAC; licencia: por verificar.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    where: "MpCodigo = '{municipio_divipola}'"
+    geometria: ninguna
+    max_features: 500
+  campos: [MpCodigo, MUNICIPIO, GESTOR_CATASTRAL, VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_, Indicador, Zona, Valor, ESTADO_CATASTRAL_RURAL, ESTADO_CATASTRAL_URBANO, VIGENCIA_DE_ACTUALIZACIÓN_RURAL, VIGENCIA_DE_ACTUALIZACIÓN_URBANA]
+salida: EstadisticasCatastralesMunicipio
+derivados:
+  numero_filas: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en Municipios_Estadisticas (MpCodigo='25175'): 120 filas de 2017 a 2025;
+  # crece con cada reporte anual, así que es un mínimo.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {municipio_divipola: "25175", gestor_catastral: IGAC}
+  minimos: {numero_filas: 120}
+  campos: [anio_reporte, estado_catastral_rural, estado_catastral_urbano, gestor_catastral, indicador, municipio, municipio_divipola, numero_filas, valor, vigencia_actualizacion_rural, vigencia_actualizacion_urbana, zona]
+  latencia_max_ms: 15000  # capa de ~123 000 filas: 6 s medidos

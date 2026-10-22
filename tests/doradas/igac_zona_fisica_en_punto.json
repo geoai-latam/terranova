@@ -1,0 +1,154 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:31:19+00:00",
+ "herramienta": "igac_zona_fisica_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/16"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_ZONA_HOMOGENEA_FISICA"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "U_ZONA_HOMOGENEA_FISICA",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/16",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/16"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/15"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "AREA_HOMOGENEA_TIERRA": "FH67c",
+          "CODIGO": "2517500",
+          "CODIGO_DEPARTAMENTO": null,
+          "CODIGO_ZONA_FISICA": "035",
+          "DISPONIBILIDAD_AGUA": 2,
+          "GLOBALID": "53c8343a-db9e-4b2f-9826-113f0ffc8f17",
+          "INFLUENCIA_VIAL": 1,
+          "NORMA_USO_SUELO": "ZJM- Zona Jardín de Uso Múltiple",
+          "OBJECTID": 207963,
+          "Shape__Area": 513753.091796875,
+          "Shape__Length": 7675.380773486217,
+          "USO_ACTUAL_SUELO": 6,
+          "VIGENCIA": 1735689600000,
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_ZONA_HOMOGENEA_FISICA"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "R_ZONA_HOMOGENEA_FISICA",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/15",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer/15"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

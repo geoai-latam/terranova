@@ -1,0 +1,31 @@
+id: igac_gestor_catastral_municipio
+version: 1
+familia: territorio
+fuente: igac.gestores_catastrales
+pregunta: "¿Quién hace el catastro de este municipio?"
+descripcion: >
+  Gestor catastral de un municipio por su código DIVIPOLA: la entidad que hace el catastro (el IGAC
+  u otro gestor habilitado, como la UAECD en Bogotá), su tipo y el estado de la gestión. Sirve para
+  saber si la base catastral pública del IGAC cubre ese municipio.
+  (Fuente: IGAC en datos.gov.co; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  tool: datos_consultar
+  argumentos:
+    id: bhcx-bx97
+    portal: datos.gov.co
+    select: "divipola, municipio, departamen, gestor_cat, gestor_con, estado_act"
+    where: "divipola = '{municipio_divipola}'"
+    max_filas: 5
+  campos: [divipola, municipio, departamen, gestor_cat, gestor_con, estado_act]
+salida: GestorCatastralMunicipio
+creditos: 5
+canario:
+  entrada: {municipio_divipola: "11001"}  # Bogotá: gestor propio (UAECD), medido el 2026-10-22
+  verdad:
+    municipio_divipola: "11001"
+    gestor_catastral: "UNIDAD ADMINISTRATIVA ESPECIAL DE CATASTRO DISTRITAL BOGOTA UAECD"
+    estado: EN OPERACION
+  campos: [departamento, estado, gestor_catastral, municipio, municipio_divipola, tipo_gestor]
+  latencia_max_ms: 5000
