@@ -1,0 +1,168 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:53:35+00:00",
+ "herramienta": "secop_adiciones_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "cb9c-h8sn",
+    "max_filas": 1000,
+    "order": "fecharegistro, identificador",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, identificador, tipo, descripcion, fecharegistro",
+    "where": "id_contrato = 'CO1.PCCNTR.3712964'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "descripcion",
+       "fecharegistro",
+       "id_contrato",
+       "identificador",
+       "tipo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "descripcion": "la consultoria se encuentra en proceso de dar respuesta a las observaciones emitidas por la Secretaría de Salud de la Gobernacion del Huila; segun oficio ADM-DH1N-PIT-0016",
+        "fecharegistro": "2022-09-02T22:31:58.195",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.9142646",
+        "tipo": "Reactivación"
+       },
+       {
+        "descripcion": "Sin Descripción",
+        "fecharegistro": "2022-09-15T20:05:17.155",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.9238517",
+        "tipo": "No definido"
+       },
+       {
+        "descripcion": "contrato en mención; una vez solucionados y/o superados los inconvenientes qua ocasionaron la suspensión.",
+        "fecharegistro": "2022-11-08T19:24:02.817",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.9668969",
+        "tipo": "Suspensión"
+       },
+       {
+        "descripcion": "se ajusta la fecha de terminación según acta de reinicio firmada por las partes",
+        "fecharegistro": "2023-02-28T15:16:52.076",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.10640343",
+        "tipo": "Modificacion General"
+       },
+       {
+        "descripcion": "se ajusta la terminación del contrato según acta firmada por las partes",
+        "fecharegistro": "2023-02-28T16:38:12.824",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.10641205",
+        "tipo": "Modificacion General"
+       },
+       {
+        "descripcion": "Sin Descripción",
+        "fecharegistro": "2023-05-08T22:07:05.950",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.11123902",
+        "tipo": "No definido"
+       },
+       {
+        "descripcion": "la disponibilidad de servicios por parte de Electrohuila no hace parte del alcance del contrato; pero si es exigida por el Ministerio para expedir la viabilidad del proyecto de· construcción del Hospital de Primer Nivel para Pitalito Huila;  por ello solicitamos  suspender  la  ejecución  del contrato de la referencia; hasta el día 30 de junio de 2023.",
+        "fecharegistro": "2023-05-08T22:14:06.273",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.11124003",
+        "tipo": "Reactivación"
+       },
+       {
+        "descripcion": "La disponibilidad de servicios por parte de Electrohuila no hace parte del alcance del contrato; pero si es exigida por el Ministerio para expedir la viabilidad del proyecto de· construcción del Hospital de Primer Nivel para Pitalito Huila;  por ello solicitamos  suspender  la  ejecución  del contrato de la referencia; hasta el día 30 de junio de 2023.",
+        "fecharegistro": "2023-05-08T22:51:58.562",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.11124213",
+        "tipo": "Reactivación"
+       },
+       {
+        "descripcion": "Se suspende el Contrato de  Consultoría N° 290-2022; de acuerdo al plazo que se tome el Ministerio de Salud y Protección Social; hasta el día 30 de julio de 2023 y/o hasta la emisión de la respectiva viabilidad técnica del proyecto por parte del Ministerio de Salud y Protección Social.",
+        "fecharegistro": "2023-05-19T22:34:08.372",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.11228494",
+        "tipo": "Reactivación"
+       },
+       {
+        "descripcion": "Sin Descripción",
+        "fecharegistro": "2023-08-03T22:47:09.346",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12175774",
+        "tipo": "No definido"
+       },
+       {
+        "descripcion": "los motivos que ocasionaron la  suspension; fueron  superados del contrato N° 290 de 2023",
+        "fecharegistro": "2023-08-17T20:07:45.152",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12311910",
+        "tipo": "Suspensión"
+       },
+       {
+        "descripcion": "El contrato en mención; ya supero los inconvenientes qua ocasionaron la suspensión.",
+        "fecharegistro": "2023-08-18T15:30:54.594",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12320135",
+        "tipo": "Suspensión"
+       },
+       {
+        "descripcion": "El contrato en mension ya supéro los inconvenientes que ocasionaron la suspension; razon por la cual se reactiva.",
+        "fecharegistro": "2023-08-29T16:58:11.662",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12423897",
+        "tipo": "Suspensión"
+       },
+       {
+        "descripcion": "EL CONTRATO 290 YA SUPERO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION.",
+        "fecharegistro": "2023-08-29T21:32:07.897",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12433718",
+        "tipo": "Suspensión"
+       },
+       {
+        "descripcion": "se modifica la fecha de terminación según acta de reinicio2 publicada",
+        "fecharegistro": "2023-08-30T18:49:55.473",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.12445469",
+        "tipo": "Modificacion General"
+       },
+       {
+        "descripcion": "SE CAMBIA EL ESTADO A TERMINADO AL CONTRATO",
+        "fecharegistro": "2024-08-14T15:58:49.234",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador": "CO1.CTRMOD.16396297",
+        "tipo": "No definido"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 16,
+      "truncado": false,
+      "vistos": 16
+     },
+     "completo": true,
+     "conjunto": "cb9c-h8sn",
+     "consulta": {
+      "conjunto": "cb9c-h8sn",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, identificador, tipo, descripcion, fecharegistro",
+      "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
+     },
+     "cumplen_en_el_portal": 16,
+     "filas": 16,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3712964')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,145 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:53:56+00:00",
+ "herramienta": "secop_integrado_contratos_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "anio, origen",
+    "id": "rpmr-utcd",
+    "max_filas": 100,
+    "order": "anio, origen",
+    "portal": "datos.gov.co",
+    "select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total",
+    "where": "nit_de_la_entidad = '891180077'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anio",
+       "contratos",
+       "origen",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anio": "2018",
+        "contratos": "1",
+        "origen": "SECOPI",
+        "valor_total": "9995000"
+       },
+       {
+        "anio": "2018",
+        "contratos": "14",
+        "origen": "SECOPII",
+        "valor_total": "2654592160"
+       },
+       {
+        "anio": "2019",
+        "contratos": "6",
+        "origen": "SECOPI",
+        "valor_total": "19006000"
+       },
+       {
+        "anio": "2019",
+        "contratos": "5",
+        "origen": "SECOPII",
+        "valor_total": "1816975735"
+       },
+       {
+        "anio": "2020",
+        "contratos": "4",
+        "origen": "SECOPI",
+        "valor_total": "20167500"
+       },
+       {
+        "anio": "2020",
+        "contratos": "2",
+        "origen": "SECOPII",
+        "valor_total": "200000000"
+       },
+       {
+        "anio": "2021",
+        "contratos": "5",
+        "origen": "SECOPI",
+        "valor_total": "20668000"
+       },
+       {
+        "anio": "2021",
+        "contratos": "379",
+        "origen": "SECOPII",
+        "valor_total": "20884006665"
+       },
+       {
+        "anio": "2022",
+        "contratos": "700",
+        "origen": "SECOPII",
+        "valor_total": "35093939351"
+       },
+       {
+        "anio": "2023",
+        "contratos": "771",
+        "origen": "SECOPII",
+        "valor_total": "93051191161"
+       },
+       {
+        "anio": "2024",
+        "contratos": "1237",
+        "origen": "SECOPII",
+        "valor_total": "76500666908"
+       },
+       {
+        "anio": "2025",
+        "contratos": "1748",
+        "origen": "SECOPII",
+        "valor_total": "173973373344"
+       },
+       {
+        "anio": "2026",
+        "contratos": "1096",
+        "origen": "SECOPII",
+        "valor_total": "53788357455"
+       },
+       {
+        "contratos": "1",
+        "origen": "SECOPI",
+        "valor_total": "12499500"
+       },
+       {
+        "contratos": "105",
+        "origen": "SECOPII",
+        "valor_total": "7003854788"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 15,
+      "truncado": false,
+      "vistos": 15
+     },
+     "completo": true,
+     "conjunto": "rpmr-utcd",
+     "consulta": {
+      "conjunto": "rpmr-utcd",
+      "group": "anio, origen",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total",
+      "where": "(nit_de_la_entidad = '891180077')"
+     },
+     "filas": 15,
+     "filas_que_resume": 6074,
+     "filtro_soql": "(nit_de_la_entidad = '891180077')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

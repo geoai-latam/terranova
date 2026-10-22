@@ -1,0 +1,30 @@
+id: cce.secop2.adiciones
+titulo: SECOP II, adiciones
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/cb9c-h8sn.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, adiciones. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/cb9c-h8sn.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
+  identificador: {nombre: id_adicion, tipo: str, desc: "identificador de la adición"}
+  tipo: {nombre: tipo, tipo: str, desc: "tipo de adición"}
+  descripcion: {nombre: descripcion, tipo: str, desc: "descripción"}
+  fecharegistro: {nombre: fecha_registro, tipo: date, desc: "fecha de registro"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

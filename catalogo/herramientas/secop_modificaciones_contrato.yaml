@@ -1,0 +1,32 @@
+id: secop_modificaciones_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.modificaciones
+pregunta: "¿Qué modificaciones tuvo este contrato de SECOP II?"
+descripcion: >
+  Modificaciones (prórrogas, cambios de valor y de plazo) de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: u8cx-r425
+    select: "id_contrato, identificador_modificacion, proposito_modificacion, descripcion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion"
+    where: "id_contrato = '{id_contrato}'"
+    order: "fecha_de_aprobacion, identificador_modificacion"
+    max_filas: 1000
+  campos: [id_contrato, identificador_modificacion, proposito_modificacion, descripcion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion]
+salida: SecopModificacionesContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
+  entrada: {id_contrato: CO1.PCCNTR.3712964}
+  verdad: {id_contrato: CO1.PCCNTR.3712964}
+  minimos: {numero_registros: 33}
+  campos: [descripcion, dias_extendidos, estado, fecha_aprobacion, id_contrato, id_modificacion, numero_registros, proposito, valor_modificacion]
+  latencia_max_ms: 10000

@@ -1,0 +1,126 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:53:43+00:00",
+ "herramienta": "secop_ejecucion_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "mfmm-jqmq",
+    "max_filas": 1000,
+    "order": "fechadeentregaesperada, nombreplan",
+    "portal": "datos.gov.co",
+    "select": "identificadorcontrato, tipoejecucion, nombreplan, fechadeentregaesperada, fechadeentregareal, porcentajedeavanceesperado, porcentaje_de_avance_real, estado_del_contrato, descripci_n",
+    "where": "identificadorcontrato = 'CO1.PCCNTR.5709738'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "descripci_n",
+       "estado_del_contrato",
+       "fechadeentregaesperada",
+       "fechadeentregareal",
+       "identificadorcontrato",
+       "nombreplan",
+       "porcentaje_de_avance_real",
+       "porcentajedeavanceesperado",
+       "tipoejecucion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-01-31T00:00:00.000",
+        "fechadeentregareal": "2024-01-31T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N.1 - ENERO",
+        "porcentaje_de_avance_real": "16.76",
+        "porcentajedeavanceesperado": "16.76",
+        "tipoejecucion": "PORCENTAJE"
+       },
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-03-01T00:00:00.000",
+        "fechadeentregareal": "2024-03-01T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N. 2 - FEBRERO",
+        "porcentaje_de_avance_real": "32.96",
+        "porcentajedeavanceesperado": "32.96",
+        "tipoejecucion": "PORCENTAJE"
+       },
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-03-30T00:00:00.000",
+        "fechadeentregareal": "2024-03-22T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N. 3 - MARZO",
+        "porcentaje_de_avance_real": "49.72",
+        "porcentajedeavanceesperado": "49.72",
+        "tipoejecucion": "PORCENTAJE"
+       },
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-04-30T00:00:00.000",
+        "fechadeentregareal": "2024-04-30T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N. 4 - ABRIL",
+        "porcentaje_de_avance_real": "66.48",
+        "porcentajedeavanceesperado": "66.48",
+        "tipoejecucion": "PORCENTAJE"
+       },
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-05-30T00:00:00.000",
+        "fechadeentregareal": "2024-05-31T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N. 5 - MAYO",
+        "porcentaje_de_avance_real": "83.24",
+        "porcentajedeavanceesperado": "83.24",
+        "tipoejecucion": "PORCENTAJE"
+       },
+       {
+        "descripci_n": "No definido",
+        "estado_del_contrato": "Confirmado",
+        "fechadeentregaesperada": "2024-07-06T00:00:00.000",
+        "fechadeentregareal": "2024-06-28T00:00:00.000",
+        "identificadorcontrato": "CO1.PCCNTR.5709738",
+        "nombreplan": "PLAN DE EJECUCIoN N. 6 - JUNIO",
+        "porcentaje_de_avance_real": "100",
+        "porcentajedeavanceesperado": "100",
+        "tipoejecucion": "PORCENTAJE"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "conjunto": "mfmm-jqmq",
+     "consulta": {
+      "conjunto": "mfmm-jqmq",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "identificadorcontrato, tipoejecucion, nombreplan, fechadeentregaesperada, fechadeentregareal, porcentajedeavanceesperado, porcentaje_de_avance_real, estado_del_contrato, descripci_n",
+      "where": "(identificadorcontrato = 'CO1.PCCNTR.5709738')"
+     },
+     "cumplen_en_el_portal": 6,
+     "filas": 6,
+     "filtro_soql": "(identificadorcontrato = 'CO1.PCCNTR.5709738')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

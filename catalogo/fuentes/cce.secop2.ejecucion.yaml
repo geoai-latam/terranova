@@ -1,0 +1,34 @@
+id: cce.secop2.ejecucion
+titulo: SECOP II, ejecución de contratos
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/mfmm-jqmq.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, ejecución de contratos. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/mfmm-jqmq.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  identificadorcontrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
+  tipoejecucion: {nombre: tipo_ejecucion, tipo: str, desc: "tipo de ejecución"}
+  nombreplan: {nombre: plan, tipo: str, desc: "nombre del plan"}
+  fechadeentregaesperada: {nombre: fecha_entrega_esperada, tipo: date, desc: "fecha de entrega esperada"}
+  fechadeentregareal: {nombre: fecha_entrega_real, tipo: date, desc: "fecha de entrega real"}
+  porcentajedeavanceesperado: {nombre: avance_esperado_pct, tipo: float, desc: "avance esperado, %"}
+  porcentaje_de_avance_real: {nombre: avance_real_pct, tipo: float, desc: "avance real, %"}
+  estado_del_contrato: {nombre: estado, tipo: str, desc: "estado"}
+  descripci_n: {nombre: descripcion, tipo: str, desc: "descripción del artículo o entrega"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

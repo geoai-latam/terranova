@@ -1,0 +1,42 @@
+id: cce.secop2.procesos
+titulo: SECOP II, procesos de contratación
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/p6dx-8zbt.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, procesos de contratación. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/p6dx-8zbt.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_del_proceso: {nombre: id_proceso, tipo: str, desc: "identificador de la fase del proceso (CO1.REQ.…)"}
+  id_del_portafolio: {nombre: id_portafolio, tipo: str, desc: "identificador del proceso de compra (CO1.BDOS.…); es el `id_proceso` de los contratos"}
+  referencia_del_proceso: {nombre: referencia, tipo: str, desc: "referencia que le da la entidad"}
+  entidad: {nombre: entidad, tipo: str, desc: "entidad estatal"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  departamento_entidad: {nombre: departamento, tipo: str, desc: "departamento de la entidad"}
+  ciudad_entidad: {nombre: municipio, tipo: str, desc: "municipio de la entidad"}
+  nombre_del_procedimiento: {nombre: nombre, tipo: str, desc: "nombre del procedimiento"}
+  descripci_n_del_procedimiento: {nombre: descripcion, tipo: str, desc: "descripción del procedimiento"}
+  fase: {nombre: fase, tipo: str, desc: "fase del proceso"}
+  modalidad_de_contratacion: {nombre: modalidad, tipo: str, desc: "modalidad de contratación"}
+  precio_base: {nombre: precio_base, tipo: float, desc: "precio base, en pesos"}
+  estado_del_procedimiento: {nombre: estado, tipo: str, desc: "estado del procedimiento"}
+  fecha_de_publicacion_del: {nombre: fecha_publicacion, tipo: date, desc: "fecha de publicación"}
+  proveedores_invitados: {nombre: proveedores_invitados, tipo: int, desc: "proveedores invitados"}
+  respuestas_al_procedimiento: {nombre: respuestas, tipo: int, desc: "respuestas recibidas"}
+  urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

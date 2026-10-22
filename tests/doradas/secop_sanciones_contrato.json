@@ -1,0 +1,82 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:54:14+00:00",
+ "herramienta": "secop_sanciones_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "it5q-hg94",
+    "max_filas": 1000,
+    "order": "fecha_evento, numero_de_acto",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto",
+    "where": "id_contrato = 'CO1.PCCNTR.292923'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estado",
+       "fecha_evento",
+       "id_contrato",
+       "nombre_entidad_creadora",
+       "nombre_proveedor_objeto_de",
+       "numero_de_acto",
+       "tipo_de_sancion",
+       "valor",
+       "valor_pagado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estado": "Borrador",
+        "fecha_evento": "2018-07-04T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.292923",
+        "nombre_entidad_creadora": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+        "nombre_proveedor_objeto_de": "URIEL DE JESUS BOTERO ZULUAGA",
+        "numero_de_acto": "Resolucion No 245 Cierre del proceso sancionatorio",
+        "tipo_de_sancion": "Multa",
+        "valor": "0",
+        "valor_pagado": "0"
+       },
+       {
+        "estado": "Borrador",
+        "fecha_evento": "2018-07-09T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.292923",
+        "nombre_entidad_creadora": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+        "nombre_proveedor_objeto_de": "URIEL DE JESUS BOTERO ZULUAGA",
+        "numero_de_acto": "Resolución No. 0249",
+        "tipo_de_sancion": "Multa",
+        "valor": "50207596.56",
+        "valor_pagado": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "it5q-hg94",
+     "consulta": {
+      "conjunto": "it5q-hg94",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto",
+      "where": "(id_contrato = 'CO1.PCCNTR.292923')"
+     },
+     "cumplen_en_el_portal": 2,
+     "filas": 2,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.292923')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

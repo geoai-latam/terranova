@@ -1,0 +1,35 @@
+id: secop_contratos_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto?"
+descripcion: >
+  Contratos de SECOP II de una entidad estatal por su NIT (sin dígito de verificación), por año de
+  firma: número de contratos y valor total en pesos. Solo SECOP II; para SECOP I junto, usa
+  secop_integrado_contratos_entidad.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: jbjy-vk9h
+    select: "date_extract_y(fecha_de_firma) AS anio, count(*) AS contratos, sum(valor_del_contrato) AS valor_total"
+    where: "nit_entidad = '{nit_entidad}'"
+    group: anio
+    max_filas: 50
+  campos: [nit_entidad, fecha_de_firma, valor_del_contrato]
+salida: ContratosEntidad
+derivados:
+  anio: {de: columna, campo: anio, tipo: int}
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en jbjy-vk9h: Municipio de Pitalito, 2018 → 14 contratos, $2 654 592 160.
+  entrada: {nit_entidad: 891180077}
+  verdad: {anio: 2018, contratos: 14, valor_total: 2654592160.0}
+  campos: [anio, contratos, valor_total]
+  latencia_max_ms: 10000

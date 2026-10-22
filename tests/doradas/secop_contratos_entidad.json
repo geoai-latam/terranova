@@ -1,0 +1,104 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:53:36+00:00",
+ "herramienta": "secop_contratos_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "anio",
+    "id": "jbjy-vk9h",
+    "max_filas": 50,
+    "portal": "datos.gov.co",
+    "select": "date_extract_y(fecha_de_firma) AS anio, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+    "where": "nit_entidad = '891180077'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anio",
+       "contratos",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anio": "2018",
+        "contratos": "14",
+        "valor_total": "2654592160"
+       },
+       {
+        "anio": "2019",
+        "contratos": "5",
+        "valor_total": "1816975735"
+       },
+       {
+        "anio": "2020",
+        "contratos": "2",
+        "valor_total": "200000000"
+       },
+       {
+        "anio": "2021",
+        "contratos": "376",
+        "valor_total": "19272231252.76"
+       },
+       {
+        "anio": "2022",
+        "contratos": "673",
+        "valor_total": "34327614565.32"
+       },
+       {
+        "anio": "2023",
+        "contratos": "641",
+        "valor_total": "50128428227.45"
+       },
+       {
+        "anio": "2024",
+        "contratos": "590",
+        "valor_total": "26111601135.74"
+       },
+       {
+        "anio": "2025",
+        "contratos": "659",
+        "valor_total": "63056958787.20"
+       },
+       {
+        "anio": "2026",
+        "contratos": "780",
+        "valor_total": "44573220272.96"
+       },
+       {
+        "contratos": "8",
+        "valor_total": "766235857"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 10,
+      "truncado": false,
+      "vistos": 10
+     },
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "group": "anio",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "date_extract_y(fecha_de_firma) AS anio, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+      "where": "(nit_entidad = '891180077')"
+     },
+     "filas": 10,
+     "filas_que_resume": 3748,
+     "filtro_soql": "(nit_entidad = '891180077')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

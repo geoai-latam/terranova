@@ -1,0 +1,32 @@
+id: secop_suspensiones_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.suspensiones
+pregunta: "¿Este contrato de SECOP II estuvo suspendido? ¿Cuándo y por qué?"
+descripcion: >
+  Suspensiones y reanudaciones de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: u99c-7mfm
+    select: "id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion"
+    where: "id_contrato = '{id_contrato}'"
+    order: "fecha_de_creacion, tipo"
+    max_filas: 1000
+  campos: [id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion]
+salida: SecopSuspensionesContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
+  entrada: {id_contrato: CO1.PCCNTR.3712964}
+  verdad: {id_contrato: CO1.PCCNTR.3712964}
+  minimos: {numero_registros: 20}
+  campos: [fecha_aprobacion, fecha_creacion, id_contrato, numero_registros, proposito, tipo]
+  latencia_max_ms: 10000

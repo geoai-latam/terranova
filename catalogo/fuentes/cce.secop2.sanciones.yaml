@@ -1,0 +1,35 @@
+id: cce.secop2.sanciones
+titulo: SECOP II, multas y sanciones
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/it5q-hg94.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, multas y sanciones. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# `as_codigo_proveedor_objeto` no sale (ADR-0014).
+url: https://www.datos.gov.co/resource/it5q-hg94.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
+  nombre_entidad_creadora: {nombre: entidad, tipo: str, desc: "entidad que la impuso"}
+  nombre_proveedor_objeto_de: {nombre: contratista, tipo: str, desc: "contratista sancionado (divulgación obligatoria)"}
+  tipo_de_sancion: {nombre: tipo_sancion, tipo: str, desc: "tipo de sanción"}
+  valor: {nombre: valor, tipo: float, desc: "valor, en pesos"}
+  valor_pagado: {nombre: valor_pagado, tipo: float, desc: "valor pagado, en pesos"}
+  estado: {nombre: estado, tipo: str, desc: "estado (un borrador no es una sanción en firme)"}
+  fecha_evento: {nombre: fecha_evento, tipo: date, desc: "fecha del evento"}
+  numero_de_acto: {nombre: numero_acto, tipo: str, desc: "número del acto administrativo"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
