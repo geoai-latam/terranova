@@ -54,7 +54,7 @@
 |---|---|
 | F4.1 Dataset de restricciones v0 | ✅ `src/terranova/datasets/restricciones.py` + `scripts/dataset_restricciones.py`: RUNAP (1934) + resguardos (989) + zonas de reserva campesina (30) = 2953 filas, CC BY-SA 4.0; pandera, GeoParquet, PostGIS (`curado.restricciones`) y contrato ODCS. **Misma huella tras volver a descargar** (`sha256:fc56a228…`). Ley 2.ª fuera por licencia |
 | F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
-| F4.3 Rendimiento de la ficha | 🟨 con caché p95 0,01 s ✓ (< 2 s). En vivo, p95 20 s ✗ (< 15 s): las corridas van de 9 a 20 s, y lo que pesa es el arranque en frío de la agrología del IGAC (~45 s en la primera consulta, 1 a 2 s después). Salida: `copia` de la agrología (ADR-0022), cuando el IGAC aclare la licencia por ítem y restablezca la descarga de capacidad de uso (los enlaces dan 401) |
+| F4.3 Rendimiento de la ficha | 🟨 Las restricciones salen del dataset curado (PostGIS, `servido_desde: curado`, spec 03 §8.3): una consulta espacial en lugar de tres llamadas a RUNAP y ANT, con la misma verdad (Chingaza, Vaupés, Cabrera, y nada en Chía). En vivo (2026-10-22): E2E-07 ✓ en 7,5 s; cinco corridas de 7,6, 7,9, 20, 9,4 y 10,4 s, con p95 de 18 s ✗ (< 15 s). La corrida de 20 s es la agrología del IGAC en frío (ADR-0022). Con caché, p95 0,02 s ✓ |
 
 ## F7 · Operación (en paralelo desde F3)
 
@@ -86,10 +86,7 @@
 1. **Gate F4:** solo lo bloquea el p95 en vivo, por la agrología del IGAC (ADR-0022). La pregunta
    al IGAC sobre licencia y descarga de capacidad se sumó al borrador de derechos de petición
    (`interno/`; la envía el dueño). Con la respuesta, se construye la copia como en F4.1 y se repite
-   `scripts/e2e_ficha.py`. Fusionar geo-copilot#49 (tools en hilo).
-   Además, la spec 03 §8.3 dice que las restricciones de la ficha salen del **dataset curado**
-   (F4.1), y hoy van en vivo contra RUNAP y ANT. Servirlas del curado (`servido_desde: curado`)
-   quita la parte más frágil: RUNAP tardó 60 s por punto el 2026-10-22.
+   `scripts/e2e_ficha.py`. Las restricciones ya salen del curado; la mediana en vivo es de 9,4 s.
 2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
@@ -137,7 +134,7 @@
 - Tras un timeout, la sesión MCP con el conector quedaba inservible; `ConectorMCP` ahora la reabre.
 - Conectores de GEO Copilot (mcp 1.28): una tool `def` corría dentro del bucle de eventos y una fuente
   lenta dejaba el servidor sin atender nada, ni siquiera un `GET`. Ahora corren en un hilo
-  (geo-copilot#49). En vivo, la ficha pasó de caer entera por tiempo a 13 s.
+  (geo-copilot#49, fusionado). En vivo, la ficha pasó de caer entera por tiempo a 13 s.
 - Agrología del IGAC (`mapas.igac.gov.co`): arranque en frío de ~45 s en la primera consulta después
   de un rato; luego 1 a 2 s. Es lo que hoy impide cumplir el p95 en vivo de la ficha.
 - RUES (`c82u-588k`, CC BY-SA): mezcla personas naturales, con nombre y cédula, y jurídicas. Una

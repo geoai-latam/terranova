@@ -231,3 +231,110 @@ async def test_codigo_sin_predio_es_la_ficha_del_predio(
         and list(s.datos) == ["predio"]
         and set(ej.llamadas) == {"igac_predio_por_codigo"}
     )
+
+
+MANIFIESTO = {
+    "dataset": "restricciones",
+    "version": "v0-2026-10-22-fc56a228",
+    "generado": "2026-10-22T11:19:26+00:00",
+    "origenes": [
+        {"fuente_id": "pnn.runap", "url": "https://storage.googleapis.com/x.zip"},
+        {"fuente_id": "ant.resguardos_indigenas", "url": "https://utility.arcgis.com/r"},
+        {"fuente_id": "ant.zonas_reserva_campesina", "url": "https://utility.arcgis.com/z"},
+    ],
+    "excluidas": ["reservas Ley 2.ª (Minambiente): licencia por verificar"],
+}
+
+
+class CuradoFalso:
+    def __init__(self, filas: list[dict[str, Any]] | None = None, caido: bool = False) -> None:
+        self.filas, self.caido = filas or [], caido
+        self.puntos: list[tuple[float, float]] = []
+
+    async def en_punto(self, lon: float, lat: float) -> Any:
+        from terranova.curado import Consulta
+
+        self.puntos.append((lon, lat))
+        if self.caido:
+            raise ErrorEjecucion("fuente_no_disponible", "base curada: OperationalError")
+        return Consulta(self.filas, MANIFIESTO)
+
+
+CHINGAZA = {
+    "id": "runap:1",
+    "tipo": "area_protegida",
+    "nombre": "Chingaza",
+    "categoria": "Parque Nacional Natural",
+    "acto": None,
+    "fecha": "2011-06-30",
+    "fuente_id": "pnn.runap",
+    "url": "https://runap.parquesnacionales.gov.co/area-protegida/1",
+}
+
+
+@pytest.mark.anyio
+async def test_restricciones_desde_el_curado(sobres: dict[str, Sobre]) -> None:
+    ej, curado = EjecutorFalso(sobres), CuradoFalso([CHINGAZA])
+    s = _ida_y_vuelta(await f.ficha(ej, PUNTO, plan="evaluacion", hoy=HOY, curado=curado))
+    assert s.estado == "encontrado" and curado.puntos == [(-74.0262, 4.8619)]
+    # una consulta curada en lugar de tres en vivo
+    assert not {"pnn_areas_protegidas_en_punto", "ant_resguardos_en_punto"} & set(ej.llamadas)
+    r = s.datos["restricciones"]
+    assert r["areas_protegidas"] == [
+        {k: v for k, v in CHINGAZA.items() if k not in ("tipo", "fuente_id") and v}
+    ]
+    assert r["resguardos"] == [] and r["version_dataset"] == MANIFIESTO["version"]
+    assert "areas_protegidas" not in s.datos
+    curadas = [p for p in s.procedencia if p.servido_desde == "curado"]
+    assert [p.fuente_id for p in curadas] == list(f.ORIGENES_CURADO)
+    assert curadas[0].completitud.vistos == 1 and curadas[1].completitud.vistos == 0
+    assert all(p.version_dataset == MANIFIESTO["version"] for p in curadas)
+    assert any("dataset curado" in a and "Ley 2.ª" in a for a in s.avisos)
+
+
+@pytest.mark.anyio
+async def test_sin_restricciones_en_el_punto_es_no_encontrado(sobres: dict[str, Sobre]) -> None:
+    s = await f.ficha(
+        EjecutorFalso(sobres), PUNTO, plan="evaluacion", hoy=HOY, curado=CuradoFalso()
+    )
+    assert s.estado == "encontrado" and s.datos["restricciones"]["estado"] == "no_encontrado"
+
+
+@pytest.mark.anyio
+async def test_base_curada_caida_sale_parcial(sobres: dict[str, Sobre]) -> None:
+    curado = CuradoFalso(caido=True)
+    s = _ida_y_vuelta(
+        await f.ficha(EjecutorFalso(sobres), PUNTO, plan="evaluacion", hoy=HOY, curado=curado)
+    )
+    assert s.estado == "parcial" and "restricciones" not in s.datos
+    assert {e.fuente_id for e in s.errores} == set(f.ORIGENES_CURADO)
+    assert {e.codigo for e in s.errores} == {"fuente_no_disponible"}
+
+
+@pytest.mark.anyio
+async def test_restricciones_curadas_respetan_el_scope(sobres: dict[str, Sobre]) -> None:
+    curado = CuradoFalso([CHINGAZA])
+    s = await f.ficha(
+        EjecutorFalso(sobres),
+        PUNTO,
+        plan="evaluacion",
+        hoy=HOY,
+        curado=curado,
+        puede=lambda fam: fam != "ambiente",
+    )
+    assert curado.puntos == [] and "restricciones" not in s.datos
+    assert any("restricciones" in a and "ambiente" in a for a in s.avisos)
+
+
+@pytest.mark.anyio
+async def test_sin_dataset_cargado_las_restricciones_van_en_vivo(sobres: dict[str, Sobre]) -> None:
+    class SinCargar:
+        async def en_punto(self, lon: float, lat: float) -> Any:
+            raise ErrorEjecucion("no_existe", "no hay dataset curado cargado")
+
+    ej = EjecutorFalso(sobres)
+    s = await f.ficha(ej, PUNTO, plan="evaluacion", hoy=HOY, curado=SinCargar())
+    assert s.estado == "encontrado" and "restricciones" not in s.datos
+    assert {"areas_protegidas", "resguardos", "reservas_campesinas"} <= set(s.datos)
+    assert "pnn_areas_protegidas_en_punto" in ej.llamadas
+    assert any("no hay dataset curado" in a for a in s.avisos)
