@@ -1,0 +1,110 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:54:11+00:00",
+ "herramienta": "secop_proceso_por_id",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "p6dx-8zbt",
+    "max_filas": 50,
+    "order": "id_del_proceso",
+    "portal": "datos.gov.co",
+    "select": "id_del_proceso, id_del_portafolio, referencia_del_proceso, entidad, nit_entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, fase, modalidad_de_contratacion, precio_base, estado_del_procedimiento, fecha_de_publicacion_del, proveedores_invitados, respuestas_al_procedimiento, urlproceso",
+    "where": "id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad_entidad",
+       "departamento_entidad",
+       "descripci_n_del_procedimiento",
+       "entidad",
+       "estado_del_procedimiento",
+       "fase",
+       "fecha_de_publicacion_del",
+       "id_del_portafolio",
+       "id_del_proceso",
+       "modalidad_de_contratacion",
+       "nit_entidad",
+       "nombre_del_procedimiento",
+       "precio_base",
+       "proveedores_invitados",
+       "referencia_del_proceso",
+       "respuestas_al_procedimiento",
+       "urlproceso"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad_entidad": "Pitalito",
+        "departamento_entidad": "Huila",
+        "descripci_n_del_procedimiento": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "estado_del_procedimiento": "Evaluación",
+        "fase": "Presentación de observaciones",
+        "fecha_de_publicacion_del": "2022-04-13T00:00:00.000",
+        "id_del_portafolio": "CO1.BDOS.2898382",
+        "id_del_proceso": "CO1.REQ.2978420",
+        "modalidad_de_contratacion": "Concurso de méritos abierto",
+        "nit_entidad": "891180077",
+        "nombre_del_procedimiento": "ESTUDIOS Y DISEÑOS HOPITAL DE PRIMER NIVEL",
+        "precio_base": "1200000000",
+        "proveedores_invitados": "0",
+        "referencia_del_proceso": "MP-SSM-CMA-001-2022",
+        "respuestas_al_procedimiento": "0",
+        "urlproceso": {
+         "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.2905501"
+        }
+       },
+       {
+        "ciudad_entidad": "Pitalito",
+        "departamento_entidad": "Huila",
+        "descripci_n_del_procedimiento": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "estado_del_procedimiento": "Seleccionado",
+        "fase": "Proceso de ofertas",
+        "fecha_de_publicacion_del": "2022-05-05T00:00:00.000",
+        "id_del_portafolio": "CO1.BDOS.2898382",
+        "id_del_proceso": "CO1.REQ.3004001",
+        "modalidad_de_contratacion": "Concurso de méritos abierto",
+        "nit_entidad": "891180077",
+        "nombre_del_procedimiento": "ESTUDIOS Y DISEÑOS HOPITAL DE PRIMER NIVEL (Presentación de oferta)",
+        "precio_base": "1200000000",
+        "proveedores_invitados": "0",
+        "referencia_del_proceso": "MP-SSM-CMA-001-2022 (Presentación de oferta)",
+        "respuestas_al_procedimiento": "1",
+        "urlproceso": {
+         "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.2929201"
+        }
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "p6dx-8zbt",
+     "consulta": {
+      "conjunto": "p6dx-8zbt",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "id_del_proceso, id_del_portafolio, referencia_del_proceso, entidad, nit_entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, fase, modalidad_de_contratacion, precio_base, estado_del_procedimiento, fecha_de_publicacion_del, proveedores_invitados, respuestas_al_procedimiento, urlproceso",
+      "where": "(id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382')"
+     },
+     "cumplen_en_el_portal": 2,
+     "filas": 2,
+     "filtro_soql": "(id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

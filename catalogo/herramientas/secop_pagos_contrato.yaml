@@ -1,0 +1,32 @@
+id: secop_pagos_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.pagos
+pregunta: "¿Qué pagos tiene registrados este contrato de SECOP II?"
+descripcion: >
+  Plan de pagos (facturas y pagos) de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: uymx-8p3j
+    select: "id_del_contrato, id_de_pago, numero_de_factura, fecha_de_emision, valor_total_de_la_factura, valor_a_pagar, estado, fecha_real_de_pago, nit_entidad, nombre_entidad"
+    where: "id_del_contrato = '{id_contrato}'"
+    order: "fecha_de_emision, id_de_pago"
+    max_filas: 1000
+  campos: [id_del_contrato, id_de_pago, numero_de_factura, fecha_de_emision, valor_total_de_la_factura, valor_a_pagar, estado, fecha_real_de_pago, nit_entidad, nombre_entidad]
+salida: SecopPagosContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
+  entrada: {id_contrato: CO1.PCCNTR.3712964}
+  verdad: {id_contrato: CO1.PCCNTR.3712964}
+  minimos: {numero_registros: 3}
+  campos: [entidad, estado, fecha_emision, fecha_pago, id_contrato, id_pago, nit_entidad, numero_factura, numero_registros, valor_a_pagar, valor_factura]
+  latencia_max_ms: 10000

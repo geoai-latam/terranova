@@ -1,0 +1,31 @@
+id: secop_sanciones_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.sanciones
+pregunta: "¿Este contrato de SECOP II tiene multas o sanciones?"
+descripcion: >
+  Multas y sanciones de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: it5q-hg94
+    select: "id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto"
+    where: "id_contrato = '{id_contrato}'"
+    order: "fecha_evento, numero_de_acto"
+    max_filas: 1000
+  campos: [id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto]
+salida: SecopSancionesContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  entrada: {id_contrato: CO1.PCCNTR.292923}
+  verdad: {id_contrato: CO1.PCCNTR.292923}
+  minimos: {numero_registros: 2}
+  campos: [contratista, entidad, estado, fecha_evento, id_contrato, numero_acto, numero_registros, tipo_sancion, valor, valor_pagado]
+  latencia_max_ms: 10000

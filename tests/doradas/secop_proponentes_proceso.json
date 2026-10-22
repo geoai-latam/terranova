@@ -1,0 +1,65 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:54:13+00:00",
+ "herramienta": "secop_proponentes_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "hgi6-6wh3",
+    "max_filas": 500,
+    "order": "proveedor",
+    "portal": "datos.gov.co",
+    "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n",
+    "where": "id_procedimiento = 'CO1.REQ.3004001'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "entidad_compradora",
+       "fecha_publicaci_n",
+       "id_procedimiento",
+       "nit_entidad",
+       "nombre_procedimiento",
+       "proveedor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "entidad_compradora": "MUNICIPIO DE PITALITO",
+        "fecha_publicaci_n": "2022-05-05T00:00:00.000",
+        "id_procedimiento": "CO1.REQ.3004001",
+        "nit_entidad": "891180077",
+        "nombre_procedimiento": "ESTUDIOS Y DISEÑOS HOPITAL DE PRIMER NIVEL (PRESENTACIoN DE OFERTA)",
+        "proveedor": "TEAK INGENIERIA S.A.S"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "hgi6-6wh3",
+     "consulta": {
+      "conjunto": "hgi6-6wh3",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n",
+      "where": "(id_procedimiento = 'CO1.REQ.3004001')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_procedimiento = 'CO1.REQ.3004001')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

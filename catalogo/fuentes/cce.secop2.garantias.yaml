@@ -1,0 +1,34 @@
+id: cce.secop2.garantias
+titulo: SECOP II, garantías
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/gjp9-cutm.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, garantías. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# `asegurado` y `beneficiario` no salen: pueden ser personas naturales (ADR-0014).
+url: https://www.datos.gov.co/resource/gjp9-cutm.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
+  aseguradora: {nombre: aseguradora, tipo: str, desc: "aseguradora"}
+  tipopoliza: {nombre: tipo_poliza, tipo: str, desc: "tipo de póliza"}
+  subtipopoliza: {nombre: subtipo_poliza, tipo: str, desc: "amparo"}
+  estado: {nombre: estado, tipo: str, desc: "estado de la póliza"}
+  valor: {nombre: valor, tipo: float, desc: "valor asegurado, en pesos"}
+  fechadecreacionpoliza: {nombre: fecha_creacion, tipo: date, desc: "fecha de creación de la póliza"}
+  fechafinpoliza: {nombre: fecha_fin, tipo: date, desc: "fecha de fin de la vigencia"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

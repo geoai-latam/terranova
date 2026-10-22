@@ -1,0 +1,32 @@
+id: cce.secop2.proponentes
+titulo: SECOP II, proponentes por proceso
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/hgi6-6wh3.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, proponentes por proceso. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# `nit_proveedor` no sale: es la cédula cuando el proponente es persona natural (ADR-0014).
+url: https://www.datos.gov.co/resource/hgi6-6wh3.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  id_procedimiento: {nombre: id_proceso, tipo: str, desc: "identificador de la fase del proceso (CO1.REQ.…)"}
+  nombre_procedimiento: {nombre: nombre_proceso, tipo: str, desc: "nombre del procedimiento"}
+  entidad_compradora: {nombre: entidad, tipo: str, desc: "entidad compradora"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  proveedor: {nombre: proponente, tipo: str, desc: "nombre o razón social del proponente"}
+  fecha_publicaci_n: {nombre: fecha_publicacion, tipo: date, desc: "fecha de publicación del proceso"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

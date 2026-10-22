@@ -58,7 +58,7 @@
 
 ## F5 · Expansión hasta las fuentes objetivo
 
-Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **32 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
+Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **43 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
 
 | Pieza u ola | Estado |
 |---|---|
@@ -67,6 +67,7 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **32 herramientas** de ~
 | G5 Herramientas de la fábrica | 🟨 `docker/compose.desarrollo.yml` expone los conectores en 127.0.0.1 para grabar doradas desde el host |
 | Ola 1 · IGAC catastro | 🟨 8 nuevas. Base catastral: `igac_registro_predio` (REGISTRO_1), `igac_caracteristicas_predio` (REGISTRO_2), `igac_perimetro_urbano_en_punto`, `igac_sector_en_punto`. Zonas homogéneas 2026: `igac_zona_geoeconomica_en_punto` (valor del suelo) y `igac_zona_fisica_en_punto`. `igac_estadisticas_catastrales_municipio` (predios, áreas y avalúos por año y estado; licencia por verificar: solo evaluación) e `igac_gestor_catastral_municipio` (datos.gov.co, sin los contactos de personas). Las tablas necesitan geo-copilot#50. En la fuente, `codigo_municipio` dice 23175 para Chía: no se usa |
 | Ola 1 · Agregados (G1) | 🟨 4 nuevas: `icfes_saber11_municipio` (estudiantes y puntajes promedio por periodo, solo grupos con n ≥ 10), `men_educacion_municipio` y `men_educacion_departamento` (cobertura, deserción, aprobación desde 2011) e `igac_compraventas_municipio` (compraventas por año 2015–2023; el valor solo desde 2021; promedio, no mediana: la mediana espera la copia, G3) |
+| Ola 1 · SECOP | 🟨 11 nuevas (13 con las de M1): `secop_proceso_por_id` (acepta el proceso de compra CO1.BDOS o una fase CO1.REQ), `secop_proponentes_proceso`, `secop_contratos_entidad` y `secop_integrado_contratos_entidad` (SECOP I y II, por año), y el detalle de un contrato: adiciones, garantías, ejecución, pagos, modificaciones, suspensiones y sanciones. Por número de registro o NIT de entidad, nunca por persona; sin documentos, supervisores, asegurados ni contactos. Cada ficha pide a la fuente solo su lista blanca (`select`), así la dorada tampoco guarda datos de personas. Faltan la búsqueda por texto (necesita G3) y proveedores por NIT (el NIT puede ser una cédula) |
 
 ## F7 · Operación (en paralelo desde F3)
 

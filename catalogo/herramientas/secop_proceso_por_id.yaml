@@ -1,0 +1,35 @@
+id: secop_proceso_por_id
+version: 1
+familia: contratacion
+fuente: cce.secop2.procesos
+pregunta: "¿Qué es este proceso de contratación de SECOP II y en qué estado está?"
+descripcion: >
+  Proceso de contratación de SECOP II por su identificador: el del proceso de compra (CO1.BDOS.…,
+  el que trae cada contrato) o el de una de sus fases (CO1.REQ.…). Un proceso de compra puede tener
+  varias fases: sale una por elemento, con entidad, modalidad, precio base, estado y enlace.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_proceso: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: p6dx-8zbt
+    select: "id_del_proceso, id_del_portafolio, referencia_del_proceso, entidad, nit_entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, fase, modalidad_de_contratacion, precio_base, estado_del_procedimiento, fecha_de_publicacion_del, proveedores_invitados, respuestas_al_procedimiento, urlproceso"
+    where: "id_del_proceso = '{id_proceso}' OR id_del_portafolio = '{id_proceso}'"
+    order: "id_del_proceso"
+    max_filas: 50
+  campos: [id_del_proceso, id_del_portafolio, referencia_del_proceso, entidad, nit_entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, fase, modalidad_de_contratacion, precio_base, estado_del_procedimiento, fecha_de_publicacion_del, proveedores_invitados, respuestas_al_procedimiento, urlproceso]
+salida: ProcesoPorId
+derivados:
+  numero_fases: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en p6dx-8zbt: el proceso de compra del contrato CO1.PCCNTR.3712964
+  # (Pitalito, 2022) tiene dos fases, CO1.REQ.2978420 y CO1.REQ.3004001.
+  entrada: {id_proceso: CO1.BDOS.2898382}
+  verdad: {id_proceso: CO1.REQ.2978420, id_portafolio: CO1.BDOS.2898382, referencia: MP-SSM-CMA-001-2022, nit_entidad: "891180077"}
+  minimos: {numero_fases: 2}
+  campos: [departamento, descripcion, entidad, estado, fase, fecha_publicacion, id_portafolio, id_proceso, modalidad, municipio, nit_entidad, nombre, numero_fases, precio_base, proveedores_invitados, referencia, respuestas, url_proceso]
+  latencia_max_ms: 10000

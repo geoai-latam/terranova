@@ -1,0 +1,35 @@
+id: secop_integrado_contratos_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop.integrado
+pregunta: "¿Cuántos contratos firmó esta entidad cada año, sumando SECOP I y SECOP II?"
+descripcion: >
+  Contratos de una entidad estatal por su NIT en el SECOP Integrado (SECOP I y II), por año de
+  firma y origen: número de contratos y valor total en pesos.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: rpmr-utcd
+    select: "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total"
+    where: "nit_de_la_entidad = '{nit_entidad}'"
+    group: "anio, origen"
+    order: "anio, origen"
+    max_filas: 100
+  campos: [nit_de_la_entidad, fecha_de_firma_del_contrato, valor_contrato, origen]
+salida: IntegradoContratosEntidad
+derivados:
+  anio: {de: columna, campo: anio, tipo: int}
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en rpmr-utcd: Municipio de Pitalito, 2018 en SECOP I → 1 contrato, $9 995 000.
+  entrada: {nit_entidad: 891180077}
+  verdad: {anio: 2018, origen: SECOPI, contratos: 1, valor_total: 9995000.0}
+  campos: [anio, contratos, origen, valor_total]
+  latencia_max_ms: 20000

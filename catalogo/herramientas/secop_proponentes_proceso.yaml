@@ -1,0 +1,33 @@
+id: secop_proponentes_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop2.proponentes
+pregunta: "¿Quiénes se presentaron a este proceso de SECOP II?"
+descripcion: >
+  Proponentes de una fase de un proceso de SECOP II (CO1.REQ.…): nombre o razón social de cada
+  proponente, con la entidad y la fecha. El documento del proponente no sale.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_proceso: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: hgi6-6wh3
+    select: "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n"
+    where: "id_procedimiento = '{id_proceso}'"
+    order: "proveedor"
+    max_filas: 500
+  campos: [id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n]
+salida: ProponentesProceso
+derivados:
+  numero_proponentes: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en hgi6-6wh3: la fase de oferta del proceso de Pitalito tiene 1 proponente.
+  entrada: {id_proceso: CO1.REQ.3004001}
+  verdad: {id_proceso: CO1.REQ.3004001, nit_entidad: "891180077"}
+  minimos: {numero_proponentes: 1}
+  campos: [entidad, fecha_publicacion, id_proceso, nit_entidad, nombre_proceso, numero_proponentes, proponente]
+  latencia_max_ms: 10000
