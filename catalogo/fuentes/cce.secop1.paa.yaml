@@ -1,0 +1,33 @@
+id: cce.secop1.paa
+titulo: "SECOP I, plan anual de adquisiciones (encabezado)"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/prdx-nxyp.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP I - PAA Encabezado. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# La fuente repite el encabezado una vez por versión del plan: la herramienta agrupa y cuenta las
+# versiones. No salen la dirección, el teléfono ni el contacto (ADR-0014).
+url: https://www.datos.gov.co/resource/prdx-nxyp.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  anno_paa: {nombre: anio, tipo: int, desc: "año del plan"}
+  identificador_paa: {nombre: id_paa, tipo: str, desc: "identificador del plan (para el detalle)"}
+  ppto_total: {nombre: presupuesto_total, tipo: float, desc: "presupuesto total del plan, en pesos"}
+  limite_menor_cuantia: {nombre: limite_menor_cuantia, tipo: float, desc: "límite de menor cuantía, en pesos"}
+  limite_minima_cuantia: {nombre: limite_minima_cuantia, tipo: float, desc: "límite de mínima cuantía, en pesos"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

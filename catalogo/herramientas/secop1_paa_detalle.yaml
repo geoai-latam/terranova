@@ -1,0 +1,35 @@
+id: secop1_paa_detalle
+version: 1
+familia: contratacion
+fuente: cce.secop1.paa_detalle
+pregunta: "¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I?"
+descripcion: >
+  Ítems de un plan anual de adquisiciones de SECOP I por su identificador (id_paa, que da
+  secop1_paa_entidad): código UNSPSC, descripción, fecha de inicio, duración, modalidad, fuente de
+  los recursos y valor estimado.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_paa: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: azeg-sgqg
+    portal: datos.gov.co
+    select: "idpaa, id, codigo_unspsc, descripcio_item, fecha_inicio, duracion_estimada, modalidad, fuente_de_recursos, valor_estimado, valor_estimado_vig_actual, requiere_vigencias_futuras"
+    where: "idpaa = {id_paa}"
+    order: "id"
+    max_filas: 1000
+  campos: [idpaa, id, codigo_unspsc, descripcio_item, fecha_inicio, duracion_estimada, modalidad, fuente_de_recursos, valor_estimado, valor_estimado_vig_actual, requiere_vigencias_futuras]
+salida: Secop1PaaDetalle
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en azeg-sgqg (idpaa = 372838): 239
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_paa: 372838}
+  verdad: {id_paa: "372838", id_item: "42694562"}
+  minimos: {numero_registros: 239}
+  campos: [codigo_unspsc, descripcion, duracion, fecha_inicio, fuente_recursos, id_item, id_paa, modalidad, numero_registros, valor_estimado, valor_vigencia_actual, vigencias_futuras]
+  latencia_max_ms: 10000

@@ -1,0 +1,36 @@
+id: secop1_paa_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop1.paa
+pregunta: "¿Qué planes anuales de adquisiciones publicó esta entidad en SECOP I y por cuánto?"
+descripcion: >
+  Planes anuales de adquisiciones de una entidad en SECOP I por su NIT, año por año: identificador
+  del plan, presupuesto total, límites de menor y mínima cuantía y cuántas versiones publicó. El
+  detalle de cada plan sale con secop1_paa_detalle.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: prdx-nxyp
+    portal: datos.gov.co
+    select: "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia, count(*) AS versiones"
+    # la fuente guarda el NIT a veces con dígito de verificación (891800986-2)
+    where: "nit_entidad = '{nit_entidad}' OR starts_with(nit_entidad, '{nit_entidad}-')"
+    group: "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia"
+    order: "anno_paa, identificador_paa"
+    max_filas: 200
+  campos: [anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia]
+salida: PaaEntidad
+derivados:
+  versiones: {de: columna, campo: versiones, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en prdx-nxyp (Cabuyaro, Meta): 4 planes; el de 2020 es el 244479, con
+  # $1 557 290 000 y 11 versiones.
+  entrada: {nit_entidad: 892099232}
+  verdad: {anio: 2020, id_paa: "244479", presupuesto_total: 1557290000.0, versiones: 11}
+  campos: [anio, id_paa, limite_menor_cuantia, limite_minima_cuantia, presupuesto_total, versiones]
+  latencia_max_ms: 10000
