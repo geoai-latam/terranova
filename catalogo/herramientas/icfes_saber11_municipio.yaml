@@ -1,0 +1,38 @@
+id: icfes_saber11_municipio
+version: 1
+familia: estadisticas
+fuente: icfes.saber11
+pregunta: "¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron?"
+descripcion: >
+  Prueba Saber 11 (ICFES) en los colegios de un municipio, por periodo del examen: número de
+  estudiantes y promedio del puntaje global, de matemáticas y de lectura crítica. Solo agregados:
+  un periodo con menos de 10 estudiantes no sale. Los periodos de 2010 no traen puntaje global.
+  (Fuente: ICFES; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: kgxf-xxbe
+    portal: datos.gov.co
+    select: "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica"
+    where: "cole_cod_mcpio_ubicacion = '{municipio_divipola}'"
+    group: periodo
+    having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas
+    max_filas: 200
+  campos: [periodo, cole_cod_mcpio_ubicacion, punt_global, punt_matematicas, punt_lectura_critica]
+salida: Saber11Municipio
+derivados:
+  estudiantes: {de: columna, campo: estudiantes, tipo: int}
+  promedio_global: {de: columna, campo: promedio_global, tipo: float}
+  promedio_matematicas: {de: columna, campo: promedio_matematicas, tipo: float}
+  promedio_lectura_critica: {de: columna, campo: promedio_lectura_critica, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en kgxf-xxbe (group periodo, having n ≥ 10, orden por periodo): el primer
+  # grupo de Chía es 20101 con 464 estudiantes.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {periodo: "20101", estudiantes: 464}
+  campos: [estudiantes, periodo, promedio_global, promedio_lectura_critica, promedio_matematicas]
+  latencia_max_ms: 30000

@@ -1,0 +1,104 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T21:44:08+00:00",
+ "herramienta": "igac_compraventas_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "year_radica",
+    "id": "7y2j-43cv",
+    "max_filas": 50,
+    "portal": "datos.gov.co",
+    "select": "year_radica, count(*) AS compraventas, sum(tiene_valor) AS con_valor, avg(valor) AS valor_promedio",
+    "where": "divipola = '25175' AND cod_natujur = 125"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "compraventas",
+       "con_valor",
+       "valor_promedio",
+       "year_radica"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "compraventas": "1055",
+        "con_valor": "0",
+        "year_radica": "2015"
+       },
+       {
+        "compraventas": "1536",
+        "con_valor": "0",
+        "year_radica": "2016"
+       },
+       {
+        "compraventas": "903",
+        "con_valor": "0",
+        "year_radica": "2017"
+       },
+       {
+        "compraventas": "550",
+        "con_valor": "0",
+        "year_radica": "2018"
+       },
+       {
+        "compraventas": "1521",
+        "con_valor": "0",
+        "year_radica": "2019"
+       },
+       {
+        "compraventas": "1633",
+        "con_valor": "0",
+        "year_radica": "2020"
+       },
+       {
+        "compraventas": "3744",
+        "con_valor": "2836",
+        "valor_promedio": "250271740.84908322",
+        "year_radica": "2021"
+       },
+       {
+        "compraventas": "3076",
+        "con_valor": "3030",
+        "valor_promedio": "414761928.34983498",
+        "year_radica": "2022"
+       },
+       {
+        "compraventas": "3051",
+        "con_valor": "3008",
+        "valor_promedio": "268386895.86103723",
+        "year_radica": "2023"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 9,
+      "truncado": false,
+      "vistos": 9
+     },
+     "completo": true,
+     "conjunto": "7y2j-43cv",
+     "consulta": {
+      "conjunto": "7y2j-43cv",
+      "group": "year_radica",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "year_radica, count(*) AS compraventas, sum(tiene_valor) AS con_valor, avg(valor) AS valor_promedio",
+      "where": "(divipola = '25175' AND cod_natujur = 125)"
+     },
+     "filas": 9,
+     "filas_que_resume": 17069,
+     "filtro_soql": "(divipola = '25175' AND cod_natujur = 125)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

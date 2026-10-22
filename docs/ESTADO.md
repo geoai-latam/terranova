@@ -58,13 +58,15 @@
 
 ## F5 · Expansión hasta las fuentes objetivo
 
-Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **28 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
+Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **32 herramientas** de ~139 (cuentan al tener 3 días de canario verde).
 
 | Pieza u ola | Estado |
 |---|---|
 | G2 Corte mensual del IGAC | ✅ `scripts/corte_igac.py`: lee la fecha de corte de la descripción de cada servicio, no del nombre (`…_IGAC_de_octubre` es el corte de octubre de **2025**); con `--escribir` actualiza las fichas catastrales. Vigente al 2026-10-22: `06_2026` |
+| G1 Agregados en Socrata | ✅ `group` y `having` en `datos_consultar` (geo-copilot#51). Con datos de personas, `having count(*) >= 10` en la ficha (ADR-0014) |
 | G5 Herramientas de la fábrica | 🟨 `docker/compose.desarrollo.yml` expone los conectores en 127.0.0.1 para grabar doradas desde el host |
 | Ola 1 · IGAC catastro | 🟨 8 nuevas. Base catastral: `igac_registro_predio` (REGISTRO_1), `igac_caracteristicas_predio` (REGISTRO_2), `igac_perimetro_urbano_en_punto`, `igac_sector_en_punto`. Zonas homogéneas 2026: `igac_zona_geoeconomica_en_punto` (valor del suelo) y `igac_zona_fisica_en_punto`. `igac_estadisticas_catastrales_municipio` (predios, áreas y avalúos por año y estado; licencia por verificar: solo evaluación) e `igac_gestor_catastral_municipio` (datos.gov.co, sin los contactos de personas). Las tablas necesitan geo-copilot#50. En la fuente, `codigo_municipio` dice 23175 para Chía: no se usa |
+| Ola 1 · Agregados (G1) | 🟨 4 nuevas: `icfes_saber11_municipio` (estudiantes y puntajes promedio por periodo, solo grupos con n ≥ 10), `men_educacion_municipio` y `men_educacion_departamento` (cobertura, deserción, aprobación desde 2011) e `igac_compraventas_municipio` (compraventas por año 2015–2023; el valor solo desde 2021; promedio, no mediana: la mediana espera la copia, G3) |
 
 ## F7 · Operación (en paralelo desde F3)
 
