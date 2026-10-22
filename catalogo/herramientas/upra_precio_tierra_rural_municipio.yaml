@@ -12,6 +12,7 @@ descripcion: >
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo
+  resultado: lista
   tool: datos_consultar
   argumentos:
     id: rttb-pk7n
@@ -24,7 +25,11 @@ consulta:
   campos: [cod_dane_m, municipio, departamen, categoria_, rango_prec, cod_precio, area_ha, consecutiv]
 salida: PrecioTierraRuralMunicipio
 # La puerta los calcula sobre las filas: número de polígonos y suma de `area_ha`.
-derivados: [poligonos, area_ha_total]
+derivados:
+  municipio: {de: primero, campo: municipio}
+  departamento: {de: primero, campo: departamento}
+  poligonos: {de: conteo, tipo: int}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float}
 creditos: 5
 canario:
   # Medido el 2026-10-21 en

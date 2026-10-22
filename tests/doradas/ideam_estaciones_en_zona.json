@@ -1,0 +1,74 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:48:23+00:00",
+ "herramienta": "ideam_estaciones_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.035,
+     4.852,
+     -74.03,
+     4.856
+    ],
+    "id": "hp9r-jxuu",
+    "lat": "latitud",
+    "lon": "longitud",
+    "max_filas": 5000,
+    "order": "codigo",
+    "portal": "datos.gov.co",
+    "select": "codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03269,
+           4.85414
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "altitud": "2548",
+          "categoria": "Climatológica Principal",
+          "codigo": "2120500135",
+          "departamento": "Cundinamarca",
+          "entidad": "INSTITUTO DE HIDROLOGÍA METEOROLOGÍA Y ESTUDIOS AMBIENTALES",
+          "estado": "Activa",
+          "fecha_instalacion": "17/10/2018",
+          "latitud": "4.85414",
+          "longitud": "-74.03269",
+          "municipio": "Chía",
+          "nombre": "UNIVERSIDAD DE LA SABANA [2120500135]",
+          "tecnologia": "Automática con Telemetría"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "hp9r-jxuu"
+     }
+    ],
+    "facts": {
+     "completo": true,
+     "conjunto": "hp9r-jxuu",
+     "cumplen_en_el_portal": 1,
+     "elementos": 1,
+     "filas": 1,
+     "filtro_soql": "(latitud::number between 4.852 and 4.856 AND longitud::number between -74.035 and -74.03)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

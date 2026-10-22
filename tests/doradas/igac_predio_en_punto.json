@@ -1,0 +1,156 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:50:00+00:00",
+ "herramienta": "igac_predio_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "CODIGO",
+     "CODIGO_ANTERIOR"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/14"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0247001,
+           4.8618487
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO": "251750000000000050067000000000",
+          "CODIGO_ANTERIOR": "25175000000050067000"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_TERRENO"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "R_TERRENO",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CODIGO",
+       "CODIGO_ANTERIOR"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/14",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/14"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0262,
+     4.8619,
+     -74.0262,
+     4.8619
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "CODIGO",
+     "CODIGO_ANTERIOR"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/7"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_TERRENO"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0262,
+      4.8619,
+      -74.0262,
+      4.8619
+     ],
+     "capa": "U_TERRENO",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0262,
+       4.8619,
+       -74.0262,
+       4.8619
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CODIGO",
+       "CODIGO_ANTERIOR"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/7",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/7"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

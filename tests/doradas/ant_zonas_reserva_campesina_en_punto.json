@@ -1,0 +1,102 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:59:18+00:00",
+ "herramienta": "ant_zonas_reserva_campesina_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.46,
+     3.88,
+     -74.46,
+     3.88
+    ],
+    "geometria": "simplificada",
+    "max_features": 5,
+    "out_fields": [
+     "NOMBRE_ZON",
+     "DEPARTAMENTO",
+     "MUNICIPIOS",
+     "ACTO_ADMIN",
+     "FECHA_CONSTITUCION",
+     "Area_HA"
+    ],
+    "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.37981,
+           4.03552
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMIN": "Resolución 046 de 2000",
+          "Area_HA": 42574.1278899,
+          "DEPARTAMENTO": "Cundinamarca",
+          "FECHA_CONSTITUCION": "7/11/2000",
+          "MUNICIPIOS": "Cabrera",
+          "NOMBRE_ZON": "Cabrera"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Zona_de_Reserva_Campesina_Constituida"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.46,
+      3.88,
+      -74.46,
+      3.88
+     ],
+     "capa": "Zona_de_Reserva_Campesina_Constituida",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.46,
+       3.88,
+       -74.46,
+       3.88
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "NOMBRE_ZON",
+       "DEPARTAMENTO",
+       "MUNICIPIOS",
+       "ACTO_ADMIN",
+       "FECHA_CONSTITUCION",
+       "Area_HA"
+      ],
+      "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

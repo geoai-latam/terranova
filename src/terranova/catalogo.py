@@ -161,7 +161,21 @@ class Consulta(_Ficha):
     """
 
     operacion: Literal["en_punto", "en_zona", "por_codigo", "buscar", "serie"]
+    resultado: Literal["uno", "lista"] | None = Field(
+        default=None,
+        description="uno: `datos` es el primer elemento; lista: `datos.elementos`. Por defecto, "
+        "uno para en_punto/por_codigo y lista para el resto",
+    )
     tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$", description="herramienta del conector")
+    filas_en: str | None = Field(
+        default=None,
+        description="ruta (con puntos) de la lista de elementos cuando no vienen como capa ni "
+        "tabla, p. ej. `clases` o `facts.municipios`",
+    )
+    completo_por_construccion: bool = Field(
+        default=False,
+        description="resumen completo (ráster, serie): no hay «vistos de un total»",
+    )
     capas: list[int | str] = Field(default_factory=list)
     argumentos: dict[str, Any]
     campos: list[str] = Field(min_length=1, description="campos de la fuente que se piden")
@@ -169,6 +183,51 @@ class Consulta(_Ficha):
     @property
     def marcadores(self) -> set[str]:
         return set(MARCADOR.findall(json.dumps(self.argumentos, ensure_ascii=False)))
+
+    @property
+    def forma(self) -> Literal["uno", "lista"]:
+        if self.resultado is not None:
+            return self.resultado
+        return "uno" if self.operacion in ("en_punto", "por_codigo") else "lista"
+
+
+# Vocabulario cerrado de campos que calcula la puerta (ADR-0012: nada de código suelto por fuente).
+DE_ELEMENTO = frozenset({"capa", "prefijo", "columna"})
+DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "completitud_total"})
+
+
+class Derivado(_Ficha):
+    """Un campo `rt/1` que no viene tal cual de la fuente.
+
+    Por elemento: `capa` (valor según la capa que respondió, `valores`), `prefijo` (los `n`
+    primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
+    resultado, p. ej. un alias de un `select` agregado). Del resultado: `conteo`, `suma` y
+    `maximo` de `campo`, `primero` (el `campo` del primer elemento) y `completitud_total` (el
+    total que dio la fuente).
+    """
+
+    de: Literal[
+        "capa", "prefijo", "columna", "conteo", "suma", "maximo", "primero", "completitud_total"
+    ]
+    campo: str | None = None
+    n: int | None = Field(default=None, ge=1)
+    valores: dict[str, str] | None = None
+    tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
+
+    @model_validator(mode="after")
+    def _completo(self) -> Self:
+        necesita_campo = {"prefijo", "columna", "suma", "maximo", "primero"}
+        if self.de in necesita_campo and not self.campo:
+            raise ValueError(f"un derivado «{self.de}» necesita `campo`")
+        if self.de == "prefijo" and self.n is None:
+            raise ValueError("un derivado «prefijo» necesita `n`")
+        if self.de == "capa" and not self.valores:
+            raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
+        return self
+
+    @property
+    def por_elemento(self) -> bool:
+        return self.de in DE_ELEMENTO
 
 
 class Canario(_Ficha):
@@ -199,8 +258,8 @@ class Herramienta(_Ficha):
     entrada: dict[str, TipoEntrada] = Field(min_length=1)
     consulta: Consulta
     salida: str
-    derivados: list[str] = Field(
-        default_factory=list, description="campos rt/1 que calcula la puerta"
+    derivados: dict[str, Derivado] = Field(
+        default_factory=dict, description="campos rt/1 que calcula la puerta"
     )
     creditos: int = Field(ge=0)
     canario: Canario
@@ -284,6 +343,16 @@ def validar(catalogo: Catalogo) -> list[str]:
         if faltan := set(h.consulta.campos) - set(fuente.campos):
             errores.append(f"{donde}: pide campos fuera de la lista blanca: {sorted(faltan)}")
         salen = fuente.nombres_rt | set(h.derivados)
+        for nombre, d in h.derivados.items():
+            if d.de in (
+                "prefijo",
+                "suma",
+                "maximo",
+                "primero",
+            ) and d.campo not in fuente.nombres_rt | set(h.derivados):
+                errores.append(f"{donde}: el derivado {nombre} usa «{d.campo}», que no sale")
+            if d.de == "capa" and set(map(str, h.consulta.capas)) != set(d.valores or {}):
+                errores.append(f"{donde}: el derivado {nombre} debe dar un valor para cada capa")
         if fuera := (set(h.canario.verdad) | set(h.canario.minimos)) - salen:
             errores.append(
                 f"{donde}: la verdad del canario usa campos que no salen: {sorted(fuera)}"

@@ -1,0 +1,273 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:50:12+00:00",
+ "herramienta": "open_meteo_clima_serie",
+ "llamadas": [
+  {
+   "argumentos": {
+    "desde": "2023-01-01",
+    "fuente": "era5",
+    "hasta": "2023-01-31",
+    "lat": 4.711,
+    "lon": -74.0721
+   },
+   "conector": "amenazas-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "fecha",
+       "t_media_c",
+       "t_max_c",
+       "t_min_c",
+       "precipitacion_mm"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "fecha": "2023-01-01",
+        "precipitacion_mm": 5.8,
+        "t_max_c": 18.3,
+        "t_media_c": 12.5,
+        "t_min_c": 7.1
+       },
+       {
+        "fecha": "2023-01-02",
+        "precipitacion_mm": 2.7,
+        "t_max_c": 18.3,
+        "t_media_c": 12.6,
+        "t_min_c": 9.4
+       },
+       {
+        "fecha": "2023-01-03",
+        "precipitacion_mm": 17.4,
+        "t_max_c": 17.9,
+        "t_media_c": 12.0,
+        "t_min_c": 7.7
+       },
+       {
+        "fecha": "2023-01-04",
+        "precipitacion_mm": 0.7,
+        "t_max_c": 17.7,
+        "t_media_c": 11.7,
+        "t_min_c": 6.6
+       },
+       {
+        "fecha": "2023-01-05",
+        "precipitacion_mm": 2.9,
+        "t_max_c": 19.1,
+        "t_media_c": 12.3,
+        "t_min_c": 8.4
+       },
+       {
+        "fecha": "2023-01-06",
+        "precipitacion_mm": 1.7,
+        "t_max_c": 19.8,
+        "t_media_c": 12.5,
+        "t_min_c": 5.6
+       },
+       {
+        "fecha": "2023-01-07",
+        "precipitacion_mm": 5.3,
+        "t_max_c": 16.7,
+        "t_media_c": 12.8,
+        "t_min_c": 10.3
+       },
+       {
+        "fecha": "2023-01-08",
+        "precipitacion_mm": 6.9,
+        "t_max_c": 18.2,
+        "t_media_c": 12.9,
+        "t_min_c": 10.0
+       },
+       {
+        "fecha": "2023-01-09",
+        "precipitacion_mm": 2.8,
+        "t_max_c": 18.5,
+        "t_media_c": 12.3,
+        "t_min_c": 7.4
+       },
+       {
+        "fecha": "2023-01-10",
+        "precipitacion_mm": 10.6,
+        "t_max_c": 18.1,
+        "t_media_c": 11.9,
+        "t_min_c": 8.2
+       },
+       {
+        "fecha": "2023-01-11",
+        "precipitacion_mm": 5.3,
+        "t_max_c": 17.3,
+        "t_media_c": 12.2,
+        "t_min_c": 8.1
+       },
+       {
+        "fecha": "2023-01-12",
+        "precipitacion_mm": 3.4,
+        "t_max_c": 18.4,
+        "t_media_c": 11.9,
+        "t_min_c": 7.0
+       },
+       {
+        "fecha": "2023-01-13",
+        "precipitacion_mm": 1.2,
+        "t_max_c": 18.6,
+        "t_media_c": 11.8,
+        "t_min_c": 5.5
+       },
+       {
+        "fecha": "2023-01-14",
+        "precipitacion_mm": 5.5,
+        "t_max_c": 19.2,
+        "t_media_c": 11.7,
+        "t_min_c": 5.2
+       },
+       {
+        "fecha": "2023-01-15",
+        "precipitacion_mm": 4.5,
+        "t_max_c": 19.6,
+        "t_media_c": 13.0,
+        "t_min_c": 8.8
+       },
+       {
+        "fecha": "2023-01-16",
+        "precipitacion_mm": 0.9,
+        "t_max_c": 19.6,
+        "t_media_c": 12.8,
+        "t_min_c": 7.5
+       },
+       {
+        "fecha": "2023-01-17",
+        "precipitacion_mm": 0.6,
+        "t_max_c": 18.4,
+        "t_media_c": 12.7,
+        "t_min_c": 8.2
+       },
+       {
+        "fecha": "2023-01-18",
+        "precipitacion_mm": 1.9,
+        "t_max_c": 18.8,
+        "t_media_c": 11.9,
+        "t_min_c": 6.5
+       },
+       {
+        "fecha": "2023-01-19",
+        "precipitacion_mm": 8.1,
+        "t_max_c": 19.2,
+        "t_media_c": 11.9,
+        "t_min_c": 7.1
+       },
+       {
+        "fecha": "2023-01-20",
+        "precipitacion_mm": 0.2,
+        "t_max_c": 18.1,
+        "t_media_c": 12.2,
+        "t_min_c": 6.9
+       },
+       {
+        "fecha": "2023-01-21",
+        "precipitacion_mm": 1.0,
+        "t_max_c": 18.6,
+        "t_media_c": 11.8,
+        "t_min_c": 4.6
+       },
+       {
+        "fecha": "2023-01-22",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 16.9,
+        "t_media_c": 11.4,
+        "t_min_c": 7.0
+       },
+       {
+        "fecha": "2023-01-23",
+        "precipitacion_mm": 0.4,
+        "t_max_c": 16.9,
+        "t_media_c": 10.8,
+        "t_min_c": 4.6
+       },
+       {
+        "fecha": "2023-01-24",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 17.9,
+        "t_media_c": 11.9,
+        "t_min_c": 6.1
+       },
+       {
+        "fecha": "2023-01-25",
+        "precipitacion_mm": 0.5,
+        "t_max_c": 20.7,
+        "t_media_c": 11.4,
+        "t_min_c": 3.4
+       },
+       {
+        "fecha": "2023-01-26",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 19.8,
+        "t_media_c": 10.9,
+        "t_min_c": 4.2
+       },
+       {
+        "fecha": "2023-01-27",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 21.0,
+        "t_media_c": 11.2,
+        "t_min_c": 2.1
+       },
+       {
+        "fecha": "2023-01-28",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 20.1,
+        "t_media_c": 11.0,
+        "t_min_c": 4.3
+       },
+       {
+        "fecha": "2023-01-29",
+        "precipitacion_mm": 0.0,
+        "t_max_c": 19.5,
+        "t_media_c": 10.5,
+        "t_min_c": 1.3
+       },
+       {
+        "fecha": "2023-01-30",
+        "precipitacion_mm": 0.3,
+        "t_max_c": 20.3,
+        "t_media_c": 11.4,
+        "t_min_c": 3.0
+       },
+       {
+        "fecha": "2023-01-31",
+        "precipitacion_mm": 0.9,
+        "t_max_c": 19.8,
+        "t_media_c": 12.8,
+        "t_min_c": 8.6
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "dias": 31,
+     "elevacion_modelo_m": 2557.0,
+     "fuente": "era5",
+     "mensual": [
+      {
+       "dias": 31,
+       "mes": "2023-01",
+       "precipitacion_total_mm": 91.5,
+       "t_media_c": 12.0
+      }
+     ],
+     "nota": "cada fuente modela el punto a SU elevación (ver `elevacion_modelo_m`): en montaña, una elevación del modelo más baja que la real da temperaturas más altas (Bogotá: ERA5 2 594 m, POWER 1 790 m → enero 2023 11,9 °C contra 17,5 °C). Son reanálisis/pronósticos de malla, no estaciones",
+     "precipitacion_total_periodo_mm": 91.5,
+     "pronostico": false,
+     "punto": [
+      -74.0721,
+      4.711
+     ],
+     "t_media_periodo_c": 12.0
+    },
+    "geo_result": "1"
+   },
+   "tool": "clima_serie"
+  }
+ ]
+}

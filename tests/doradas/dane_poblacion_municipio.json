@@ -1,0 +1,36 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:48:20+00:00",
+ "herramienta": "dane_poblacion_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "codigo": "11001"
+   },
+   "conector": "dane-mcp",
+   "respuesta": {
+    "artifacts": [],
+    "facts": {
+     "encontrados": 1,
+     "municipios": [
+      {
+       "centroide": [
+        -74.1810727016,
+        4.31610769809
+       ],
+       "codigo": "11001",
+       "departamento": "BOGOTÁ, D.C.",
+       "hogares": 2514482,
+       "municipio": "BOGOTÁ, D.C.",
+       "personas": 7181469,
+       "viviendas": 2523519
+      }
+     ],
+     "nota": "cifras del Censo Nacional de Población y Vivienda 2018 (población CENSADA), no proyecciones a hoy"
+    },
+    "geo_result": "1"
+   },
+   "tool": "dane_municipios"
+  }
+ ]
+}

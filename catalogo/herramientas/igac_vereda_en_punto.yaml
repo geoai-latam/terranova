@@ -21,7 +21,8 @@ consulta:
   campos: [CODIGO, NOMBRE, CODIGO_ANTERIOR]
 salida: VeredaEnPunto
 # `municipio_divipola`, de los 5 primeros dígitos del código de la vereda.
-derivados: [municipio_divipola]
+derivados:
+  municipio_divipola: {de: prefijo, campo: codigo_vereda, n: 5}
 creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}

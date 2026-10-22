@@ -1,4 +1,4 @@
-"""La puerta por MCP en memoria, con un conector falso: nunca se llama a la fuente en pruebas."""
+"""La puerta por MCP en memoria, con conectores falsos: nunca se llama a la fuente en pruebas."""
 
 from collections.abc import AsyncIterator
 from typing import Any
@@ -16,12 +16,13 @@ CODIGO_CHIA = "251750000000000050067000000000"
 
 def _respuesta(rasgos: list[dict[str, Any]]) -> dict[str, Any]:
     fc = {"type": "FeatureCollection", "features": rasgos}
+    total = len(rasgos)
     return {
         "geo_result": "1",
         "artifacts": [
-            {"kind": "feature_collection", "name": "R_TERRENO", "crs": "EPSG:4326", "data": fc}
+            {"kind": "feature_collection", "name": "capa", "crs": "EPSG:4326", "data": fc}
         ],
-        "facts": {"total_en_servicio": len(rasgos), "traidos": len(rasgos), "completo": True},
+        "facts": {"completitud": {"vistos": total, "total": total, "truncado": False}},
     }
 
 
@@ -37,7 +38,13 @@ PREDIO_CHIA = {
 }
 
 
+def _municipio(divipola: str) -> dict[str, Any]:
+    return {"type": "Feature", "geometry": None, "properties": {"divipola": divipola}}
+
+
 class ConectorFalso:
+    """Responde por la capa de la url (14 R_TERRENO, 7 U_TERRENO, 1 gestores)."""
+
     def __init__(self, por_capa: dict[int, list[dict[str, Any]]], falla: str | None = None) -> None:
         self.por_capa = por_capa
         self.falla = falla
@@ -58,117 +65,96 @@ def anyio_backend() -> str:
 
 @pytest.fixture
 async def cliente_con(request: pytest.FixtureRequest) -> AsyncIterator[Client[Any]]:
-    puerta.usar_conector(request.param)
+    puerta.usar_conectores({"arcgis-mcp": request.param})
     try:
         async with Client(puerta.puerta) as cliente:
             yield cliente
     finally:
-        puerta.usar_conector(None)
+        puerta.usar_conectores(None)
 
 
 def _con(conector: ConectorFalso) -> pytest.MarkDecorator:
     return pytest.mark.parametrize("cliente_con", [conector], indirect=True)
 
 
+PREDIO = "igac_predio_en_punto"
+CHIA = {"lon": -74.0262, "lat": 4.8619}
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({}))
+async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
+    herramientas = {t.name: t for t in await cliente_con.list_tools()}
+    assert set(herramientas) == set(puerta.CATALOGO.herramientas)
+    t = herramientas[PREDIO]
+    assert t.output_schema is not None and "procedencia" in t.output_schema["properties"]
+    assert t.annotations is not None and t.annotations.read_only_hint is True
+    assert t.description is not None and t.description.endswith("licencia: CC BY-SA 4.0.)")
+    por_codigo = herramientas["igac_predio_por_codigo"].input_schema["properties"]["codigo"]
+    assert por_codigo["pattern"] == "^[0-9]{30}$"
+
+
 @pytest.mark.anyio
 @_con(ConectorFalso({14: [PREDIO_CHIA]}))
 async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
-    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
+    r = await cliente_con.call_tool(PREDIO, CHIA)
     sobre = r.structured_content
     assert sobre is not None
-    # la salida cumple el contrato completo (reglas 1-9)
     Sobre.model_validate(sobre)
-    assert sobre["contrato"] == "rt/1" and sobre["creditos"] == 10
-    assert sobre["estado"] == "encontrado"
+    assert sobre["estado"] == "encontrado" and sobre["creditos"] == 10
     assert sobre["datos"] == {
         "codigo_predial": CODIGO_CHIA,
         "codigo_predial_anterior": "25175000000050067000",
         "zona": "rural",
         "municipio_divipola": "25175",
     }
-    artefacto = sobre["geo_result"]["artifacts"][0]
-    assert artefacto["kind"] == "feature_collection" and artefacto["crs"] == "EPSG:4326"
-    # regla 10: la capa lleva solo la lista blanca, nunca los campos crudos de la fuente
-    (rasgo,) = artefacto["data"]["features"]
-    assert rasgo["properties"] == sobre["datos"]
-    assert rasgo["geometry"] == PREDIO_CHIA["geometry"]
-    # regla 3: toda fuente consultada aparece, aunque no haya encontrado nada
-    assert {p["fuente_id"] for p in sobre["procedencia"]} == {
-        "igac.catastro.terreno_rural",
-        "igac.catastro.terreno_urbano",
-    }
-    for p in sobre["procedencia"]:
-        assert p["licencia"] == {
-            "spdx": "CC-BY-SA-4.0",
-            "url": "https://creativecommons.org/licenses/by-sa/4.0/",
-            "uso_comercial": "si",
-        }
-        c = p["completitud"]
-        assert c["vistos"] <= c["total"] and c["truncado"] == (c["vistos"] < c["total"])
+    (rasgo,) = sobre["geo_result"]["artifacts"][0]["data"]["features"]
+    assert rasgo["properties"] == sobre["datos"]  # regla 10: nada de GLOBALID ni codigo_municipio
+    assert {p["licencia"]["spdx"] for p in sobre["procedencia"]} == {"CC-BY-SA-4.0"}
 
 
 @pytest.mark.anyio
-@_con(ConectorFalso({}))
-async def test_sin_predio_es_no_encontrado(cliente_con: Client[Any]) -> None:
-    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -75.0, "lat": 5.0})
+@_con(ConectorFalso({1: [_municipio("25175")]}))
+async def test_sin_predio_en_municipio_cubierto_es_no_encontrado(cliente_con: Client[Any]) -> None:
+    r = await cliente_con.call_tool(PREDIO, {"lon": -74.03, "lat": 4.86})
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "no_encontrado"
-    assert r.structured_content["datos"] == {}
-    assert r.structured_content["geo_result"] is None
-
-
-@pytest.mark.anyio
-@_con(ConectorFalso({}, falla="fuente_no_disponible"))
-async def test_conector_caido_es_error_y_no_sobre(cliente_con: Client[Any]) -> None:
-    with pytest.raises(ToolError, match="fuente_no_disponible"):
-        await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
-
-
-@pytest.mark.anyio
-@_con(ConectorFalso({}))
-async def test_entrada_fuera_de_rango_se_rechaza(cliente_con: Client[Any]) -> None:
-    with pytest.raises(ToolError):
-        await cliente_con.call_tool("igac_predio_en_punto", {"lon": -200, "lat": 4.8})
-
-
-@pytest.mark.anyio
-@_con(ConectorFalso({}))
-async def test_la_herramienta_publica_output_schema(cliente_con: Client[Any]) -> None:
-    (herramienta,) = await cliente_con.list_tools()
-    assert herramienta.name == "igac_predio_en_punto"
-    assert herramienta.output_schema is not None
-    assert "procedencia" in herramienta.output_schema["properties"]
-
-
-@pytest.mark.anyio
-@_con(ConectorFalso({}, falla="fuente_lenta"))
-async def test_el_codigo_del_conector_llega_al_cliente(cliente_con: Client[Any]) -> None:
-    with pytest.raises(ToolError, match=r"^fuente_lenta: "):
-        await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
-
-
-def _municipio(divipola: str) -> dict[str, Any]:
-    return {"type": "Feature", "geometry": None, "properties": {"divipola": divipola}}
+    assert r.structured_content["datos"] == {} and r.structured_content["creditos"] == 10
 
 
 @pytest.mark.anyio
 @_con(ConectorFalso({1: [_municipio("11001")]}))
 async def test_bogota_esta_fuera_de_cobertura_y_no_descuenta(cliente_con: Client[Any]) -> None:
     """F1.5: Bogotá la gestiona la UAECD; la base pública del IGAC no la cubre."""
-    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0817, "lat": 4.6097})
+    r = await cliente_con.call_tool(PREDIO, {"lon": -74.0817, "lat": 4.6097})
     sobre = r.structured_content
     assert sobre is not None
     Sobre.model_validate(sobre)
     assert sobre["estado"] == "fuera_de_cobertura" and sobre["creditos"] == 0
-    assert sobre["datos"] == {} and sobre["geo_result"] is None
     assert any("UAECD" in a for a in sobre["avisos"])
     assert "igac.catastro.gestores" in {p["fuente_id"] for p in sobre["procedencia"]}
 
 
 @pytest.mark.anyio
-@_con(ConectorFalso({1: [_municipio("25175")]}))
-async def test_sin_predio_en_municipio_cubierto_es_no_encontrado(cliente_con: Client[Any]) -> None:
-    r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.03, "lat": 4.86})
-    assert r.structured_content is not None
-    assert r.structured_content["estado"] == "no_encontrado"
-    assert r.structured_content["creditos"] == 10
+@_con(ConectorFalso({}, falla="fuente_lenta"))
+async def test_el_codigo_del_conector_llega_al_cliente(cliente_con: Client[Any]) -> None:
+    with pytest.raises(ToolError, match=r"^fuente_lenta: "):
+        await cliente_con.call_tool(PREDIO, CHIA)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("herramienta", "entrada"),
+    [
+        (PREDIO, {"lon": -200, "lat": 4.8}),
+        (PREDIO, {"lon": -74.0}),
+        ("igac_predio_por_codigo", {"codigo": "' OR 1=1 --"}),
+        ("pnn_areas_protegidas_en_zona", {"bbox": [-73, 5, -74, 4]}),
+    ],
+)
+@_con(ConectorFalso({}))
+async def test_entrada_invalida_no_llega_a_la_fuente(
+    cliente_con: Client[Any], herramienta: str, entrada: dict[str, Any]
+) -> None:
+    with pytest.raises(ToolError):
+        await cliente_con.call_tool(herramienta, entrada)

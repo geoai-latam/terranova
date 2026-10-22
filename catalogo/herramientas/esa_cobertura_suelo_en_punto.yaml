@@ -11,14 +11,19 @@ descripcion: >
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
+  resultado: lista
   # Con un punto, imagery-mcp toma su entorno de ±0,005° y cuenta todo el cuadro.
   tool: imagery_land_cover
+  filas_en: facts.clases
+  completo_por_construccion: true
   argumentos:
     aoi_geojson: {type: Point, coordinates: ["{lon}", "{lat}"]}
   campos: [clase, codigo, km2, porcentaje]
 salida: CoberturaSueloEnPunto
 # La clase dominante es la de mayor área (la primera fila que da el conector).
-derivados: [clase_dominante, codigo_clase_dominante]
+derivados:
+  clase_dominante: {de: primero, campo: clase_cobertura}
+  codigo_clase_dominante: {de: primero, campo: codigo_clase, tipo: int}
 creditos: 20
 # Medido el 2026-10-22 (UTC) leyendo la ventana ±0,005° de ESA_WorldCover_10m_2021_v200_N03W075_Map.tif
 # (Kennedy, Bogotá): 50 Construido 90,8 %, 30 Pastizal 5,2 %, 10 Árboles 2,7 %; el píxel del punto es 50.

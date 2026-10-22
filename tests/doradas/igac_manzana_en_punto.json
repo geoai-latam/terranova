@@ -1,0 +1,92 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:49:59+00:00",
+ "herramienta": "igac_manzana_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.0587,
+     4.8633,
+     -74.0587,
+     4.8633
+    ],
+    "max_features": 5,
+    "out_fields": [
+     "CODIGO",
+     "BARRIO_CODIGO",
+     "CODIGO_ANTERIOR"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/5"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0581707,
+           4.8633432
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "BARRIO_CODIGO": "2517501000000",
+          "CODIGO": "25175010000000043",
+          "CODIGO_ANTERIOR": "2517501000043"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_MANZANA"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.0587,
+      4.8633,
+      -74.0587,
+      4.8633
+     ],
+     "capa": "U_MANZANA",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.0587,
+       4.8633,
+       -74.0587,
+       4.8633
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CODIGO",
+       "BARRIO_CODIGO",
+       "CODIGO_ANTERIOR"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/5",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/5"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

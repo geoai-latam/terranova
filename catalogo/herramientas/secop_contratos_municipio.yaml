@@ -12,6 +12,7 @@ descripcion: >
 entrada: {municipio: nombre, departamento: nombre}
 consulta:
   operacion: buscar
+  resultado: uno
   tool: datos_consultar
   argumentos:
     id: jbjy-vk9h
@@ -23,7 +24,9 @@ consulta:
   campos: [ciudad, departamento, valor_del_contrato]
 salida: ContratosMunicipio
 # Los dos alias del `select`: la puerta los pasa tal cual (no son columnas de la fuente).
-derivados: [contratos, valor_total]
+derivados:
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
 creditos: 5
 canario:
   # Medido el 2026-10-21 (22:16 hora de Colombia) en https://www.datos.gov.co/resource/jbjy-vk9h.json

@@ -15,6 +15,7 @@ descripcion: >
 entrada: {codigo: codigo_predial}
 consulta:
   operacion: por_codigo
+  resultado: lista
   tool: arcgis_query_features
   capas: [12, 3]  # R_CONSTRUCCION, U_CONSTRUCCION
   argumentos:
@@ -25,7 +26,9 @@ consulta:
   campos: [TERRENO_CODIGO, IDENTIFICADOR, TIPO_CONSTRUCCION, NUMERO_PISOS, NUMERO_SOTANOS, NUMERO_SEMISOTANOS, NUMERO_MEZANINES]
 salida: ConstruccionesEnPredio
 # `zona` sale de la capa que respondió; `numero_construcciones`, del conteo de unidades.
-derivados: [zona, numero_construcciones]
+derivados:
+  zona: {de: capa, valores: {"12": rural, "3": urbana}}
+  numero_construcciones: {de: conteo, tipo: int}
 creditos: 10
 canario:
   # Predio urbano de Chía (el de -74.0587, 4.8633): dos unidades, ambas «A», convencionales, 3 pisos.

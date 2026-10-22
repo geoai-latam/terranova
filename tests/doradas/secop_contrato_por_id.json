@@ -1,0 +1,82 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:51:43+00:00",
+ "herramienta": "secop_contrato_por_id",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "jbjy-vk9h",
+    "max_filas": 2,
+    "portal": "datos.gov.co",
+    "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
+    "where": "id_contrato = 'CO1.PCCNTR.5141215'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad",
+       "departamento",
+       "estado_contrato",
+       "fecha_de_fin_del_contrato",
+       "fecha_de_firma",
+       "fecha_de_inicio_del_contrato",
+       "id_contrato",
+       "modalidad_de_contratacion",
+       "nit_entidad",
+       "nombre_entidad",
+       "objeto_del_contrato",
+       "proceso_de_compra",
+       "proveedor_adjudicado",
+       "referencia_del_contrato",
+       "tipo_de_contrato",
+       "tipodocproveedor",
+       "ultima_actualizacion",
+       "urlproceso",
+       "valor_del_contrato",
+       "valor_pagado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad": "Chía",
+        "departamento": "Cundinamarca",
+        "estado_contrato": "Cerrado",
+        "fecha_de_fin_del_contrato": "2023-07-14T00:00:00.000",
+        "fecha_de_firma": "2023-06-26T00:00:00.000",
+        "fecha_de_inicio_del_contrato": "2023-06-26T00:00:00.000",
+        "id_contrato": "CO1.PCCNTR.5141215",
+        "modalidad_de_contratacion": "Contratación directa",
+        "nit_entidad": "900806301",
+        "nombre_entidad": "IDUVI",
+        "objeto_del_contrato": "dquisición del predio denominado El Carmen con un área de dos mil noventa y cinco metros cuadrados (2.095 m2) e identificado con folio de matrícula inmobiliaria No. 50N-20856396 y cedula catastral 010100110075000; ubicado en el municipio de Chía; inlcuyendo terreno; construcciones; mejoras; inventario de cultivos y especies. Proceso de compra en virtud a los Decretos municipales No. 108 de 2023",
+        "proceso_de_compra": "CO1.BDOS.4632571",
+        "proveedor_adjudicado": "DAVAN SAS",
+        "referencia_del_contrato": "CD 51 DE 2023",
+        "tipo_de_contrato": "Otro",
+        "tipodocproveedor": "NIT",
+        "ultima_actualizacion": "2024-02-29T00:00:00.000",
+        "urlproceso": {
+         "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.4639330&isFromPublicArea=True&isModal=true&asPopupView=true"
+        },
+        "valor_del_contrato": "2602628368",
+        "valor_pagado": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.5141215')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

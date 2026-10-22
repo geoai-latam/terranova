@@ -1,0 +1,108 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:59:17+00:00",
+ "herramienta": "ant_resguardos_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -70.5,
+     0.8,
+     -70.5,
+     0.8
+    ],
+    "geometria": "simplificada",
+    "max_features": 5,
+    "out_fields": [
+     "NOMBRE",
+     "PUEBLO",
+     "DEPARTAMENTO",
+     "MUNICIPIO",
+     "ULTIMO_TIPO_ACTO_ADMIN",
+     "ULTIMO_NUMERO_ACTO_ADMIN",
+     "ULTIMA_FECHA_ACTO_ADMIN",
+     "AREA_TOTAL_ACTOS_ADMIN"
+    ],
+    "url": "https://utility.arcgis.com/usrsvcs/servers/8944116ccfd34a7189c4bc44b8e19186/rest/services/DatosAbiertos/Resguardo_Indigena_Formalizado/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -70.11086,
+           2.0785
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 3955168.9113,
+          "DEPARTAMENTO": "97",
+          "MUNICIPIO": "97001",
+          "NOMBRE": "Resguardo Indígena Vaupes",
+          "PUEBLO": "CUBEO Y 18 GRUPOS MAS",
+          "ULTIMA_FECHA_ACTO_ADMIN": 1720569600000,
+          "ULTIMO_NUMERO_ACTO_ADMIN": "378",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Resguardo Indígena Formalizado"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -70.5,
+      0.8,
+      -70.5,
+      0.8
+     ],
+     "capa": "Resguardo Indígena Formalizado",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -70.5,
+       0.8,
+       -70.5,
+       0.8
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "NOMBRE",
+       "PUEBLO",
+       "DEPARTAMENTO",
+       "MUNICIPIO",
+       "ULTIMO_TIPO_ACTO_ADMIN",
+       "ULTIMO_NUMERO_ACTO_ADMIN",
+       "ULTIMA_FECHA_ACTO_ADMIN",
+       "AREA_TOTAL_ACTOS_ADMIN"
+      ],
+      "url": "https://utility.arcgis.com/usrsvcs/servers/8944116ccfd34a7189c4bc44b8e19186/rest/services/DatosAbiertos/Resguardo_Indigena_Formalizado/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://utility.arcgis.com/usrsvcs/servers/8944116ccfd34a7189c4bc44b8e19186/rest/services/DatosAbiertos/Resguardo_Indigena_Formalizado/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

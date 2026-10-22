@@ -1,0 +1,166 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T03:49:58+00:00",
+ "herramienta": "igac_construcciones_en_predio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "max_features": 200,
+    "out_fields": [
+     "TERRENO_CODIGO",
+     "IDENTIFICADOR",
+     "TIPO_CONSTRUCCION",
+     "NUMERO_PISOS",
+     "NUMERO_SOTANOS",
+     "NUMERO_SEMISOTANOS",
+     "NUMERO_MEZANINES"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/12",
+    "where": "TERRENO_CODIGO = '251750100000000430026000000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_CONSTRUCCION"
+     }
+    ],
+    "facts": {
+     "capa": "R_CONSTRUCCION",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 200,
+      "out_fields": [
+       "TERRENO_CODIGO",
+       "IDENTIFICADOR",
+       "TIPO_CONSTRUCCION",
+       "NUMERO_PISOS",
+       "NUMERO_SOTANOS",
+       "NUMERO_SEMISOTANOS",
+       "NUMERO_MEZANINES"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/12",
+      "where": "TERRENO_CODIGO = '251750100000000430026000000000'"
+     },
+     "filtro": "TERRENO_CODIGO = '251750100000000430026000000000'",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/12"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "max_features": 200,
+    "out_fields": [
+     "TERRENO_CODIGO",
+     "IDENTIFICADOR",
+     "TIPO_CONSTRUCCION",
+     "NUMERO_PISOS",
+     "NUMERO_SOTANOS",
+     "NUMERO_SEMISOTANOS",
+     "NUMERO_MEZANINES"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/3",
+    "where": "TERRENO_CODIGO = '251750100000000430026000000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0585528,
+           4.8633258
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "IDENTIFICADOR": "A",
+          "NUMERO_MEZANINES": 0,
+          "NUMERO_PISOS": 3,
+          "NUMERO_SEMISOTANOS": 0,
+          "NUMERO_SOTANOS": 0,
+          "TERRENO_CODIGO": "251750100000000430026000000000",
+          "TIPO_CONSTRUCCION": "CONVENCIONAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058747,
+           4.8634172
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "IDENTIFICADOR": "A",
+          "NUMERO_MEZANINES": 0,
+          "NUMERO_PISOS": 3,
+          "NUMERO_SEMISOTANOS": 0,
+          "NUMERO_SOTANOS": 0,
+          "TERRENO_CODIGO": "251750100000000430026000000000",
+          "TIPO_CONSTRUCCION": "CONVENCIONAL"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_CONSTRUCCION"
+     }
+    ],
+    "facts": {
+     "capa": "U_CONSTRUCCION",
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 200,
+      "out_fields": [
+       "TERRENO_CODIGO",
+       "IDENTIFICADOR",
+       "TIPO_CONSTRUCCION",
+       "NUMERO_PISOS",
+       "NUMERO_SOTANOS",
+       "NUMERO_SEMISOTANOS",
+       "NUMERO_MEZANINES"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/3",
+      "where": "TERRENO_CODIGO = '251750100000000430026000000000'"
+     },
+     "filtro": "TERRENO_CODIGO = '251750100000000430026000000000'",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 2,
+     "traidos": 2,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/3"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}
