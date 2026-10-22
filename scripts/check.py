@@ -9,6 +9,7 @@ PASOS: list[list[str]] = [
     ["mypy"],
     [sys.executable, "scripts/esquema.py", "--check"],
     [sys.executable, "scripts/validar_catalogo.py"],
+    [sys.executable, "scripts/descripcion.py", "--check"],
     [sys.executable, "scripts/sin_invisibles.py"],
     ["pytest"],
 ]

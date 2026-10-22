@@ -14,13 +14,14 @@ from typing import Annotated, Any
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from pydantic import BaseModel, ConfigDict, Field, create_model
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
+from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import bearer
 
@@ -173,6 +174,16 @@ def crear_api() -> FastAPI:
                 for c in (400, 403, 404, 429, 500, 502, 504)
             },
         )
+
+    @api.get("/llms.txt", include_in_schema=False)
+    async def llms() -> PlainTextResponse:
+        return PlainTextResponse(
+            llms_txt(puerta.CATALOGO), media_type="text/markdown; charset=utf-8"
+        )
+
+    @api.get("/.well-known/mcp/server-card.json", include_in_schema=False)
+    async def tarjeta() -> dict[str, Any]:
+        return tarjeta_mcp(puerta.CATALOGO)
 
     @api.get("/v1/herramientas", tags=["catálogo"], operation_id="listar_herramientas")
     async def herramientas() -> list[dict[str, Any]]:
