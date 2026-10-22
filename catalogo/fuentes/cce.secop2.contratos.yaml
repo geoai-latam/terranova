@@ -20,12 +20,11 @@ frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
 cobertura:
   pais: CO
   excluye: ["contratos de SECOP I y de la Tienda Virtual del Estado (otros conjuntos)"]
-# ADR-0014 y spec 06 §13.3: el contratista está en divulgación obligatoria, así que su nombre y el
-# tipo de documento salen. La lista blanca no puede enmascarar según el tipo de documento, de modo
-# que quedan fuera: `documento_proveedor` (es la cédula cuando el contratista es persona natural:
-# 10 355 de los 12 149 contratos de Chía), `codigo_proveedor`, los datos del representante legal
-# (nombre, documento, género, domicilio y nacionalidad), los nombres y documentos del ordenador del
-# gasto, del supervisor y del ordenador de pago, y el banco, el tipo y el número de cuenta.
+# ADR-0014 y ADR-0025: el contratista está en divulgación obligatoria; su nombre, el tipo y el
+# número de documento salen como los publica Colombia Compra (la cédula, si es persona natural).
+# Quedan fuera `codigo_proveedor`, los datos del representante legal (nombre, documento, género,
+# domicilio y nacionalidad), los nombres y documentos del ordenador del gasto, del supervisor y del
+# ordenador de pago, y el banco, el tipo y el número de cuenta.
 datos_personales: filtrados
 estado: publicada
 campos:
@@ -36,7 +35,8 @@ campos:
   nit_entidad: {nombre: nit_entidad, tipo: int, desc: "NIT de la entidad contratante"}
   departamento: {nombre: departamento, tipo: str, desc: "departamento de la entidad contratante"}
   ciudad: {nombre: municipio, tipo: str, desc: "municipio de la entidad contratante (no el de ejecución)"}
-  tipodocproveedor: {nombre: tipo_documento_contratista, tipo: str, desc: "NIT, Cédula de Ciudadanía, etc.; el número no sale"}
+  tipodocproveedor: {nombre: tipo_documento_contratista, tipo: str, desc: "NIT, Cédula de Ciudadanía, etc."}
+  documento_proveedor: {nombre: documento_contratista, tipo: str, desc: "número de documento del contratista, como lo publica la fuente (ADR-0025)"}
   proveedor_adjudicado: {nombre: contratista, tipo: str, desc: "nombre o razón social del contratista (divulgación obligatoria)"}
   objeto_del_contrato: {nombre: objeto, tipo: str, desc: "objeto del contrato"}
   tipo_de_contrato: {nombre: tipo_contrato, tipo: str, desc: "tipo de contrato"}

@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:54:13+00:00",
+ "grabado": "2026-10-22T22:43:45+00:00",
  "herramienta": "secop_proponentes_proceso",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 500,
     "order": "proveedor",
     "portal": "datos.gov.co",
-    "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n",
+    "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n",
     "where": "id_procedimiento = 'CO1.REQ.3004001'"
    },
    "conector": "datos-abiertos-mcp",
@@ -21,6 +21,7 @@
        "fecha_publicaci_n",
        "id_procedimiento",
        "nit_entidad",
+       "nit_proveedor",
        "nombre_procedimiento",
        "proveedor"
       ],
@@ -31,6 +32,7 @@
         "fecha_publicaci_n": "2022-05-05T00:00:00.000",
         "id_procedimiento": "CO1.REQ.3004001",
         "nit_entidad": "891180077",
+        "nit_proveedor": "900194013",
         "nombre_procedimiento": "ESTUDIOS Y DISEÑOS HOPITAL DE PRIMER NIVEL (PRESENTACIoN DE OFERTA)",
         "proveedor": "TEAK INGENIERIA S.A.S"
        }
@@ -49,7 +51,7 @@
       "conjunto": "hgi6-6wh3",
       "max_filas": 500,
       "portal": "datos.gov.co",
-      "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, fecha_publicaci_n",
+      "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n",
       "where": "(id_procedimiento = 'CO1.REQ.3004001')"
      },
      "cumplen_en_el_portal": 1,

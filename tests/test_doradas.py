@@ -95,3 +95,15 @@ def test_la_dorada_de_socrata_solo_guarda_la_lista_blanca(herramienta: str) -> N
     filas = [fila for ll in grabado["llamadas"] for fila in _filas_crudas(ll["respuesta"])]
     vistas = {k for fila in filas for k in fila}
     assert vistas <= permitidas, f"columnas fuera de la lista blanca: {sorted(vistas - permitidas)}"
+
+
+def test_ninguna_dorada_guarda_una_cedula() -> None:
+    """ADR-0025: SECOP muestra el documento del contratista, pero el repo es público: las doradas
+    se graban con registros de personas jurídicas."""
+    for ruta in DORADAS.glob("*.json"):
+        grabado = json.loads(ruta.read_text(encoding="utf-8"))
+        for ll in grabado["llamadas"]:
+            for fila in _filas_crudas(ll["respuesta"]):
+                tipo = str(fila.get("tipodocproveedor") or "")
+                documento = fila.get("documento_proveedor") or fila.get("nit_proveedor")
+                assert not (documento and "dula" in tipo), f"{ruta.name}: cédula grabada"
