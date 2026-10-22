@@ -23,7 +23,7 @@
 |---|---|
 | F1.1 Modelos `rt/1` + JSON Schema `--check` + propiedades | ✅ `src/terranova/contrato.py`: reglas 1–9 como validadores, la 10 como función; esquemas en `esquemas/`; 38 pruebas (propiedades y casos), verificadas por mutación |
 | F1.2 Modelos del catálogo + validador CI | ✅ `src/terranova/catalogo.py` + `scripts/validar_catalogo.py` en `make check`; 19 reglas rotas probadas; semilla: `igac.catastro.terreno` e `igac_predio_en_punto` |
-| F1.3 Códigos de error y completitud en el kit (GEO Copilot) | ⬜ |
+| F1.3 Códigos de error y completitud en el kit (GEO Copilot) | 🟡 kit y `arcgis-mcp` en geo-copilot#45; la puerta ya lee `codigo` y `completitud` (los `fuente_*` pasan, el resto es `error_interno`) |
 | F1.4 Catálogo inicial M1 (~25 herramientas) | ⬜ |
 | F1.5 Índice de cobertura catastral | ⬜ |
 
