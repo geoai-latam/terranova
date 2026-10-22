@@ -33,4 +33,5 @@ canario:
     codigo_predial_anterior: "25175000000050067000"
     zona: rural
     municipio_divipola: "25175"
+  campos: [codigo_predial, codigo_predial_anterior, municipio_divipola, zona]
   latencia_max_ms: 5000

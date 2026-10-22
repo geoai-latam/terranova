@@ -60,9 +60,10 @@
 
 | Spec F7 | Estado |
 |---|---|
-| F7.1 Canarios diarios | 🟨 `terranova canarios [--cada-horas 24]` (`src/terranova/vigilancia.py`). Corre los 20 canarios en serie, sin caché, y guarda cada resultado (SQLite o Postgres). Con `TERRANOVA_ALERTA_URL`, avisa por POST lo que salga rojo. `GET /v1/estado` da el estado por fuente. El compose suma el servicio `canarios`. Primera corrida en vivo (2026-10-22): 17 verdes; rojos la capacidad de uso del IGAC (20 s, arranque en frío) y los dos de RUNAP (el servicio de Parques tarda 60 s por punto). Falta la aceptación: 7 días seguidos registrados en un despliegue |
+| F7.1 Canarios diarios | 🟨 `terranova canarios [--cada-horas 24]` (`src/terranova/vigilancia.py`). Corre los 20 canarios en serie, sin caché, y guarda cada resultado (SQLite o Postgres). Con `TERRANOVA_ALERTA_URL`, avisa por POST lo que salga rojo. `GET /v1/estado` da el estado por fuente. El compose suma el servicio `canarios`. Primera corrida en vivo (2026-10-22): 17 verdes; rojos la capacidad de uso del IGAC (20 s, arranque en frío) y los dos de RUNAP (el servicio de Parques tarda 60 s por punto). El compose ya trae los cinco conectores del catálogo (antes solo `arcgis-mcp`). Corrida del 2026-10-22 con todos: 18 verdes y 2 rojos (agrología del IGAC, 44–84 s); RUNAP ya en verde. Una segunda corrida dio 15 verdes y 5 lentos: la agrología y tres a menos de 1,5 s por encima de su tope de 5 s (IDEAM, SECOP, UPRA). Falta la aceptación: 7 días seguidos registrados en un despliegue |
 | F7.2 Métricas y tablero | 🟨 `/metrics` en cada réplica con las métricas de la spec 05 §12.2 (`src/terranova/metricas.py`), con etiquetas de un conjunto cerrado; Caddy lo bloquea en el borde. Prometheus y Grafana van en el perfil `observabilidad` del compose, con 8 reglas de alerta de los SLO y de operación, probadas con `promtool test rules` en CI, y un tablero de 12 paneles. Falta verlo con tráfico real en un despliegue |
-| F7.3 y F7.4 | ⬜ |
+| F7.3 Runbook | ✅ [`docs/RUNBOOK.md`](RUNBOOK.md): fuente caída, cambio de esquema, llave filtrada y restauración, con un simulacro de cada uno (2026-10-22, registro en el runbook §5). Cada canario declara sus `campos` (`scripts/campos_canario.py`): un campo que la fuente renombra sale `esquema_cambiado`. Servicio `respaldo` (`pg_dump` diario, 14 días); restaurado en una base nueva en 15 s, con la llave funcionando |
+| F7.4 Página de estado pública | ⬜ (M2) |
 
 ## Decisiones tomadas
 

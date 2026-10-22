@@ -8,7 +8,7 @@ from typing import Any
 
 import pytest
 
-from terranova.canario import comprobar
+from terranova.canario import campos_presentes, comprobar
 from terranova.catalogo import cargar
 from terranova.contrato import Sobre, fuera_de_lista_blanca
 from terranova.ejecutor import Ejecutor
@@ -57,6 +57,7 @@ async def test_dorada(herramienta: str) -> None:
 
     Sobre.model_validate(sobre.model_dump(mode="json"))  # reglas 1-9, ida y vuelta por JSON
     assert comprobar(h, sobre) == [], "la verdad medida del canario no coincide"
+    assert sorted(campos_presentes(sobre)) == h.canario.campos, "corre scripts/campos_canario.py"
     permitidos = fuente.nombres_rt | set(h.derivados) | {"elementos"}
     assert fuera_de_lista_blanca(sobre, permitidos) == set(), "regla 10: campo fuera de la lista"
     for elemento in sobre.datos.get("elementos", []):

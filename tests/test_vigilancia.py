@@ -89,6 +89,19 @@ async def test_verdad_distinta_sale_roja() -> None:
     assert not r.ok and r.codigo == "verdad_distinta" and "nombre_vereda" in r.detalle
 
 
+@pytest.mark.anyio
+async def test_campo_renombrado_en_la_fuente_sale_esquema_cambiado() -> None:
+    """F7.3: la fuente renombra CODIGO_ANTERIOR; la lista blanca lo deja fuera sin error y la
+    verdad (código y nombre) sigue igual: solo `canario.campos` lo nota."""
+    h = CATALOGO.herramientas["igac_vereda_en_punto"]
+    catalogo = CATALOGO.model_copy(update={"herramientas": {h.id: h}})
+    texto = (DORADAS / f"{h.id}.json").read_text(encoding="utf-8")
+    llamadas = json.loads(texto.replace('"CODIGO_ANTERIOR": "', '"COD_ANTERIOR_V2": "'))["llamadas"]
+    (r,) = await correr(catalogo, Ejecutor(catalogo, {"arcgis-mcp": Grabado(llamadas)}))
+    assert not r.ok and r.codigo == "esquema_cambiado"
+    assert "codigo_vereda_anterior" in r.detalle and "nombre_vereda" not in r.detalle
+
+
 def _r(h: str, f: str, momento: str, ok: bool = True) -> Resultado:
     return Resultado(h, f, momento, ok, "verde" if ok else "fuente_no_disponible", "", 10)
 

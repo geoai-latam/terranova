@@ -27,4 +27,5 @@ canario:
   # PNN Chingaza; medido el 2026-10-21 en la capa 0 (punto, esriSpatialRelIntersects), 0,6 s.
   entrada: {lon: -73.75, lat: 4.55}
   verdad: {nombre: Chingaza, categoria: Parque Nacional Natural}
+  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, nombre]
   latencia_max_ms: 5000

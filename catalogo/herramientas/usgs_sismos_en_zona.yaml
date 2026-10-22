@@ -28,4 +28,5 @@ creditos: 10
 canario:
   entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-01-01", hasta: "2025-01-01", magnitud_min: 4.0}
   verdad: {total_en_catalogo: 139, magnitud_maxima: 5.6}
+  campos: [fecha_hora, lugar, magnitud, magnitud_maxima, profundidad_km, tipo_magnitud, total_en_catalogo]
   latencia_max_ms: 8000

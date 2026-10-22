@@ -30,3 +30,6 @@ cassettes_crudas/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Respaldos locales de Postgres (F7.3)
+docker/respaldos/

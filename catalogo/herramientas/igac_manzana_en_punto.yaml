@@ -27,4 +27,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
   verdad: {codigo_manzana: "25175010000000043", codigo_barrio: "2517501000000", municipio_divipola: "25175"}
+  campos: [codigo_barrio, codigo_manzana, codigo_manzana_anterior, municipio_divipola]
   latencia_max_ms: 5000

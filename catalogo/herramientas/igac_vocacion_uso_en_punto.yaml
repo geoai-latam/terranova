@@ -25,4 +25,5 @@ creditos: 10
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {unidad_vocacion: CTIf, vocacion: "Agrícola", uso_principal: "Cultivos transitorios intensivos de clima frío"}
+  campos: [unidad_vocacion, uso_principal, vocacion]
   latencia_max_ms: 5000

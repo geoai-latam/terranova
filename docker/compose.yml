@@ -28,11 +28,18 @@ x-puerta: &puerta
     TERRANOVA_REDIS_URL: redis://:${REDIS_PASSWORD:?define REDIS_PASSWORD}@redis:6379/0
     TERRANOVA_PIMIENTA: ${TERRANOVA_PIMIENTA:?define TERRANOVA_PIMIENTA (≥ 32 caracteres)}
     TERRANOVA_CONECTOR_LLAVE: ${TERRANOVA_CONECTOR_LLAVE:?define TERRANOVA_CONECTOR_LLAVE}
-    TERRANOVA_CONECTORES: '{"arcgis-mcp": "http://arcgis-mcp:9400/mcp"}'
+    TERRANOVA_CONECTORES: >-
+      {"arcgis-mcp": "http://arcgis-mcp:9400/mcp", "amenazas-mcp": "http://amenazas-mcp:9930/mcp",
+      "dane-mcp": "http://dane-mcp:9920/mcp", "datos-abiertos-mcp": "http://datos-abiertos-mcp:9900/mcp",
+      "imagery-mcp": "http://imagery-mcp:9100/mcp"}
   depends_on:
     postgres: {condition: service_healthy}
     redis: {condition: service_started}
     arcgis-mcp: {condition: service_started}
+    amenazas-mcp: {condition: service_started}
+    dane-mcp: {condition: service_started}
+    datos-abiertos-mcp: {condition: service_started}
+    imagery-mcp: {condition: service_started}
   networks: [borde, interna]
   read_only: true
   tmpfs: [/tmp]
@@ -84,6 +91,28 @@ services:
       retries: 20
     networks: [interna]
 
+  # F7.3 (ADR-0015): pg_dump diario de llaves, uso, canarios y el dataset curado; guarda 14 días en
+  # TERRANOVA_RESPALDOS, que se copia FUERA de la VM. Restaurar: docs/RUNBOOK.md §4.
+  respaldo:
+    image: postgis/postgis:17-3.5-alpine  # la misma versión de pg_dump que el servidor
+    restart: unless-stopped
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        while true; do
+        f=/respaldos/terranova-$$(date -u +%Y%m%dT%H%MZ).dump;
+        if pg_dump -h postgres -U terranova -d terranova -Fc -f "$$f.parcial"; then
+        mv "$$f.parcial" "$$f" && echo "respaldo $$f";
+        else rm -f "$$f.parcial"; echo "RESPALDO FALLÓ" >&2; fi;
+        find /respaldos -name 'terranova-*.dump' -mtime +14 -delete;
+        sleep 86400; done
+    environment:
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+    volumes: ["${TERRANOVA_RESPALDOS:-./respaldos}:/respaldos"]
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [interna]
+
   redis:
     image: redis:7-alpine
     restart: unless-stopped
@@ -104,6 +133,62 @@ services:
       ARCGIS_RESULTADOS_DIR: /resultados
     tmpfs: ["/resultados:size=256m,uid=10004", "/tmp:size=64m,uid=10004"]
     read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+  # Los demás conectores del catálogo (F7.1: sin ellos, sus 10 canarios salen rojos siempre). Misma
+  # llave de servicio y el mismo endurecimiento que arcgis-mcp; solo llegan a la red interna.
+  amenazas-mcp:
+    build: {context: ../../GEO_COPILOT, dockerfile: services/amenazas_mcp/Dockerfile}
+    image: ${AMENAZAS_MCP_IMAGEN:-geo-copilot/amenazas-mcp:local}
+    restart: unless-stopped
+    environment:
+      AMENAZAS_MCP_PORT: "9930"
+      AMENAZAS_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["amenazas:read"],"rate_limit_per_min":600}]'
+    tmpfs: ["/tmp:size=32m,uid=10012"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+  dane-mcp:
+    build: {context: ../../GEO_COPILOT, dockerfile: services/dane_mcp/Dockerfile}
+    image: ${DANE_MCP_IMAGEN:-geo-copilot/dane-mcp:local}
+    restart: unless-stopped
+    environment:
+      DANE_MCP_PORT: "9920"
+      DANE_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["dane:read"],"rate_limit_per_min":600}]'
+      DANE_RESULTADOS_DIR: /tmp/dane-resultados
+    tmpfs: ["/tmp:size=256m,uid=10011"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+  datos-abiertos-mcp:
+    build: {context: ../../GEO_COPILOT, dockerfile: services/datos_abiertos_mcp/Dockerfile}
+    image: ${DATOS_MCP_IMAGEN:-geo-copilot/datos-abiertos-mcp:local}
+    restart: unless-stopped
+    environment:
+      DATOS_MCP_PORT: "9900"
+      DATOS_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["datos:read"],"rate_limit_per_min":600}]'
+      DATOS_RESULTADOS_DIR: /tmp/datos-resultados
+    tmpfs: ["/tmp:size=256m,uid=10009"]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+  imagery-mcp:
+    build: {context: ../../GEO_COPILOT, dockerfile: services/imagery_mcp/Dockerfile}
+    image: ${IMAGERY_MCP_IMAGEN:-geo-copilot/imagery-mcp:local}
+    restart: unless-stopped
+    environment:
+      IMAGERY_PROVIDER: planetary-computer
+      IMAGERY_PORT: "9100"
+      # imagery:compute: la cobertura del suelo en un punto se calcula (sin él, 403)
+      IMAGERY_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["imagery:read","imagery:compute"],"rate_limit_per_min":120}]'
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]

@@ -36,4 +36,5 @@ canario:
   # verdad es un mínimo, no un valor exacto.
   entrada: {municipio: Chía, departamento: Cundinamarca}
   minimos: {contratos: 12149, valor_total: 1289946058879.80}
+  campos: [contratos, valor_total]
   latencia_max_ms: 10000

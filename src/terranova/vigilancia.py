@@ -20,7 +20,7 @@ from pathlib import Path
 from typing import Any
 
 from terranova.bd import Conexion
-from terranova.canario import comprobar
+from terranova.canario import PREFIJO_ESQUEMA, comprobar
 from terranova.catalogo import Catalogo
 from terranova.ejecutor import Ejecutor
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -35,7 +35,7 @@ class Resultado:
     fuente_id: str
     momento: str
     ok: bool
-    codigo: str  # "verde", "verdad_distinta", "lento" o el código de error rt/1
+    codigo: str  # "verde", "verdad_distinta", "esquema_cambiado", "lento" o el código rt/1
     detalle: str
     latencia_ms: int
 
@@ -98,7 +98,9 @@ async def correr(
             diferencias = comprobar(h, sobre)
             ms = int((reloj() - t) * 1000)
             if diferencias:
-                codigo, detalle = "verdad_distinta", "; ".join(diferencias)
+                esquema = all(d.startswith(PREFIJO_ESQUEMA) for d in diferencias)
+                codigo = "esquema_cambiado" if esquema else "verdad_distinta"
+                detalle = "; ".join(diferencias)
             elif ms > h.canario.latencia_max_ms:
                 codigo, detalle = "lento", f"{ms} ms > {h.canario.latencia_max_ms} ms"
             else:
