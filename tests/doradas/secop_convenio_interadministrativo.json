@@ -1,0 +1,83 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:21+00:00",
+ "herramienta": "secop_convenio_interadministrativo",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "s484-c9k3",
+    "max_filas": 1000,
+    "order": "id_contrato",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, id_proceso, nombre_entidad, departamento, municipio, modalidad_contratacion, tipo_de_contrato, objeto_contractual, valor_con_adiciones, contratista, identificacion_contratista, fecha_firma, estado_contrato, link",
+    "where": "id_contrato = '26-22-117970'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "contratista",
+       "departamento",
+       "estado_contrato",
+       "fecha_firma",
+       "id_contrato",
+       "id_proceso",
+       "identificacion_contratista",
+       "link",
+       "modalidad_contratacion",
+       "municipio",
+       "nombre_entidad",
+       "objeto_contractual",
+       "tipo_de_contrato",
+       "valor_con_adiciones"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "contratista": "JUNTA DE ACCION COMUNAL DE LA VEREDA SAN NICOLAS",
+        "departamento": "Tolima",
+        "estado_contrato": "Celebrado",
+        "fecha_firma": "2026-01-27T00:00:00.000",
+        "id_contrato": "26-22-117970",
+        "id_proceso": "26-22-117970",
+        "identificacion_contratista": "809002076",
+        "link": {
+         "url": "https://www.contratos.gov.co/consultas/detalleProceso.do?numConstancia=26-22-117970"
+        },
+        "modalidad_contratacion": "Contratos y convenios con más de dos partes",
+        "municipio": "Ortega",
+        "nombre_entidad": "TOLIMA - ALCALDÍA MUNICIPIO DE ORTEGA",
+        "objeto_contractual": "AUNAR ESFUERZOS ENTRE LA JUNTA DE ACCION COMUNAL VEREDA SAN NICOLAS Y EL MUNICIPIO DE ORTEGA TOLIMA PARA LA CONSTRUCCION DE UNA PLACA HUELLA COMUNITARIA EN LA VEREDA SAN NICOLAS DEL MUNICIPIO DE ORTEGA TOLIMA",
+        "tipo_de_contrato": "Prestación de Servicios",
+        "valor_con_adiciones": "21502000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "s484-c9k3",
+     "consulta": {
+      "conjunto": "s484-c9k3",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, id_proceso, nombre_entidad, departamento, municipio, modalidad_contratacion, tipo_de_contrato, objeto_contractual, valor_con_adiciones, contratista, identificacion_contratista, fecha_firma, estado_contrato, link",
+      "where": "(id_contrato = '26-22-117970')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_contrato = '26-22-117970')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

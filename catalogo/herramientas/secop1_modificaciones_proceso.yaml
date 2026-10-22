@@ -1,0 +1,34 @@
+id: secop1_modificaciones_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop1.modificaciones_procesos
+pregunta: "¿Qué cambios tuvo este proceso de SECOP I?"
+descripcion: >
+  Modificaciones de un proceso de SECOP I por su constancia: qué campo cambió, el valor anterior
+  y el nuevo, la fecha y la justificación.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {constancia: constancia_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 36vw-pbq2
+    portal: datos.gov.co
+    select: "id_proceso, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio"
+    where: "id_proceso = '{constancia}'"
+    order: "fecha_modificacion, id_modificacion"
+    max_filas: 1000
+  campos: [id_proceso, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio]
+salida: Secop1ModificacionesProceso
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en 36vw-pbq2 (id_proceso = 17-4-7436473): 3
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {constancia: "17-4-7436473"}
+  verdad: {constancia: "17-4-7436473", id_modificacion: "795496"}
+  minimos: {numero_registros: 3}
+  campos: [campo, constancia, fecha, id_modificacion, justificacion, numero_registros, valor_anterior, valor_nuevo]
+  latencia_max_ms: 10000

@@ -1,0 +1,85 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:12+00:00",
+ "herramienta": "secop1_modificaciones_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "36vw-pbq2",
+    "max_filas": 1000,
+    "order": "fecha_modificacion, id_modificacion",
+    "portal": "datos.gov.co",
+    "select": "id_proceso, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio",
+    "where": "id_proceso = '17-4-7436473'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "campo_modificado",
+       "fecha_modificacion",
+       "id_modificacion",
+       "id_proceso",
+       "justificacion_cambio",
+       "valor_anterior",
+       "valor_nuevo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "campo_modificado": "Id Clase UNSPSC",
+        "fecha_modificacion": "2017-12-23 09:44:52",
+        "id_modificacion": "795496",
+        "id_proceso": "17-4-7436473",
+        "justificacion_cambio": "373278",
+        "valor_anterior": "901016",
+        "valor_nuevo": "861217"
+       },
+       {
+        "campo_modificado": "Cuantia",
+        "fecha_modificacion": "2017-12-23 09:44:52",
+        "id_modificacion": "795497",
+        "id_proceso": "17-4-7436473",
+        "justificacion_cambio": "373278",
+        "valor_anterior": "560000",
+        "valor_nuevo": "250000"
+       },
+       {
+        "campo_modificado": "Detalle Objeto",
+        "fecha_modificacion": "2017-12-23 09:44:52",
+        "id_modificacion": "795498",
+        "id_proceso": "17-4-7436473",
+        "justificacion_cambio": "373278",
+        "valor_anterior": "PRESTACIoN DE SERVICIOS  EN SALIDA PEDAGoGICA A LA FERIA DEL LIBRO BOGOTA.",
+        "valor_nuevo": "SERVICIO DE LOGISTICA  PARA APOYO DE JORNADA PEDAGOGICA   SEBSIBILIZACION DE SUSTANCIAS PSICOACTIVAS"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "36vw-pbq2",
+     "consulta": {
+      "conjunto": "36vw-pbq2",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_proceso, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio",
+      "where": "(id_proceso = '17-4-7436473')"
+     },
+     "cumplen_en_el_portal": 3,
+     "filas": 3,
+     "filtro_soql": "(id_proceso = '17-4-7436473')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

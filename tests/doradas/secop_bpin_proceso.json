@@ -1,0 +1,385 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:16+00:00",
+ "herramienta": "secop_bpin_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "d9na-abhe",
+    "max_filas": 1000,
+    "order": "codigo_bpin, id_proceso, id_contracto",
+    "portal": "datos.gov.co",
+    "select": "codigo_bpin, anno_bpin, id_proceso, id_portafolio, id_contracto, validacion_bpin",
+    "where": "id_proceso = 'CO1.REQ.11194762' OR id_portafolio = 'CO1.REQ.11194762' OR id_contracto = 'CO1.REQ.11194762'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anno_bpin",
+       "codigo_bpin",
+       "id_contracto",
+       "id_portafolio",
+       "id_proceso",
+       "validacion_bpin"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10069291",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10069296",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10069796",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10069941",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070046",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070054",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070063",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070231",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070237",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070242",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070246",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070422",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070429",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070440",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070479",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070552",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070557",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070568",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10070571",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10072955",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10072978",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073155",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073163",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073168",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073180",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073251",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073372",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073384",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073398",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10073531",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10074790",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10074933",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075014",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075019",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075022",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075036",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075075",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075078",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075116",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075129",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       },
+       {
+        "anno_bpin": "2025",
+        "codigo_bpin": "2024080010085",
+        "id_contracto": "CO1.PCCNTR.10075140",
+        "id_portafolio": "CO1.BDOS.11007069",
+        "id_proceso": "CO1.REQ.11194762",
+        "validacion_bpin": "Validado"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 41,
+      "truncado": false,
+      "vistos": 41
+     },
+     "completo": true,
+     "conjunto": "d9na-abhe",
+     "consulta": {
+      "conjunto": "d9na-abhe",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "codigo_bpin, anno_bpin, id_proceso, id_portafolio, id_contracto, validacion_bpin",
+      "where": "(id_proceso = 'CO1.REQ.11194762' OR id_portafolio = 'CO1.REQ.11194762' OR id_contracto = 'CO1.REQ.11194762')"
+     },
+     "cumplen_en_el_portal": 41,
+     "filas": 41,
+     "filtro_soql": "(id_proceso = 'CO1.REQ.11194762' OR id_portafolio = 'CO1.REQ.11194762' OR id_contracto = 'CO1.REQ.11194762')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

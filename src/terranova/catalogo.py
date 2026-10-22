@@ -27,6 +27,8 @@ PATRONES_ENTRADA: dict[str, str] = {
     "codigo_predial": r"^[0-9]{30}$",
     "divipola": r"^[0-9]{5}$",
     "id_secop": r"^CO1\.[A-Z]+\.[0-9]+$",
+    "constancia_secop": r"^[0-9]{2}-[0-9]{1,2}-[0-9]+$",  # SECOP I: 19-12-10176235
+    "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
@@ -40,6 +42,8 @@ TipoEntrada = Literal[
     "codigo_predial",
     "divipola",
     "id_secop",
+    "constancia_secop",
+    "contrato_secop",
     "fecha",
     "nombre",
 ]

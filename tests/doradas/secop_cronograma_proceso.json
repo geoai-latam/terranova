@@ -1,0 +1,67 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:23+00:00",
+ "herramienta": "secop_cronograma_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "f3ev-294c",
+    "max_filas": 1000,
+    "order": "id_del_proceso",
+    "portal": "datos.gov.co",
+    "select": "id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n",
+    "where": "id_del_proceso = 'CO1.BDOS.2898382' OR proceso_de_compra = 'CO1.BDOS.2898382'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "fecha_de_apertura_de_ofertas",
+       "id_del_proceso",
+       "modalidad_de_contratacion",
+       "proceso_de_compra"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "fecha_de_apertura_de_ofertas": "2022-04-29 08:05:00.0000000",
+        "id_del_proceso": "CO1.REQ.2978420",
+        "modalidad_de_contratacion": "Concurso de méritos abierto",
+        "proceso_de_compra": "CO1.BDOS.2898382"
+       },
+       {
+        "fecha_de_apertura_de_ofertas": "2022-05-16 08:05:00.0000000",
+        "id_del_proceso": "CO1.REQ.3004001",
+        "modalidad_de_contratacion": "Concurso de méritos abierto",
+        "proceso_de_compra": "CO1.BDOS.2898382"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "f3ev-294c",
+     "consulta": {
+      "conjunto": "f3ev-294c",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n",
+      "where": "(id_del_proceso = 'CO1.BDOS.2898382' OR proceso_de_compra = 'CO1.BDOS.2898382')"
+     },
+     "cumplen_en_el_portal": 2,
+     "filas": 2,
+     "filtro_soql": "(id_del_proceso = 'CO1.BDOS.2898382' OR proceso_de_compra = 'CO1.BDOS.2898382')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

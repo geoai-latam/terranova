@@ -1,0 +1,61 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:28+00:00",
+ "herramienta": "secop_ubicaciones_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "gra4-pcp2",
+    "max_filas": 1000,
+    "order": "localizaci_n",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, localizaci_n, nombre_entidad, nit_entidad",
+    "where": "id_contrato = 'CO1.PCCNTR.3795896'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "id_contrato",
+       "localizaci_n",
+       "nit_entidad",
+       "nombre_entidad"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "id_contrato": "CO1.PCCNTR.3795896",
+        "localizaci_n": "Colombia;  Valle del Cauca ;  Cali",
+        "nit_entidad": "890399011",
+        "nombre_entidad": "SANTIAGO DE CALI DISTRITO ESPECIAL- UNIDAD ADMINISTRATIVA ESPECIAL DE GESTION DE BIENES Y SERVICIOS - CALI"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "gra4-pcp2",
+     "consulta": {
+      "conjunto": "gra4-pcp2",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, localizaci_n, nombre_entidad, nit_entidad",
+      "where": "(id_contrato = 'CO1.PCCNTR.3795896')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3795896')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:18+00:00",
+ "herramienta": "secop_cdp_contrato",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "a86w-fh92",
+    "max_filas": 1000,
+    "order": "id_siif",
+    "portal": "datos.gov.co",
+    "select": "id_contrato, id_siif, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor",
+    "where": "id_contrato = 'CO1.PCCNTR.5588480'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "destino_del_gasto",
+       "entidad",
+       "estado_siif",
+       "id_contrato",
+       "id_siif",
+       "nit",
+       "nit_proveedor",
+       "proveedor",
+       "saldo_cdp",
+       "saldo_total_a_comprometer",
+       "saldo_vigencias_futuras",
+       "valor_utilizado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "destino_del_gasto": "Inversion",
+        "entidad": "MUNICIPIO DE TAMESIS",
+        "estado_siif": "No iniciado",
+        "id_contrato": "CO1.PCCNTR.5588480",
+        "id_siif": "CO1.SIIFITEM.122238973",
+        "nit": "890981238",
+        "nit_proveedor": "901476496",
+        "proveedor": "EMPRESA DE DESARROLLO URBANO Y RURAL TAMESIS",
+        "saldo_cdp": "242025092",
+        "saldo_total_a_comprometer": "276963184",
+        "saldo_vigencias_futuras": "0",
+        "valor_utilizado": "242025092"
+       },
+       {
+        "destino_del_gasto": "Inversion",
+        "entidad": "MUNICIPIO DE TAMESIS",
+        "estado_siif": "No iniciado",
+        "id_contrato": "CO1.PCCNTR.5588480",
+        "id_siif": "CO1.SIIFITEM.122238973",
+        "nit": "890981238",
+        "nit_proveedor": "901476496",
+        "proveedor": "EMPRESA DE DESARROLLO URBANO Y RURAL TAMESIS",
+        "saldo_cdp": "242025092",
+        "saldo_total_a_comprometer": "276963184",
+        "saldo_vigencias_futuras": "0",
+        "valor_utilizado": "242025092"
+       },
+       {
+        "destino_del_gasto": "Inversion",
+        "entidad": "MUNICIPIO DE TAMESIS",
+        "estado_siif": "No iniciado",
+        "id_contrato": "CO1.PCCNTR.5588480",
+        "id_siif": "CO1.SIIFITEM.122238973",
+        "nit": "890981238",
+        "nit_proveedor": "901476496",
+        "proveedor": "EMPRESA DE DESARROLLO URBANO Y RURAL TAMESIS",
+        "saldo_cdp": "242025092",
+        "saldo_total_a_comprometer": "276963184",
+        "saldo_vigencias_futuras": "0",
+        "valor_utilizado": "242025092"
+       },
+       {
+        "destino_del_gasto": "Inversion",
+        "entidad": "MUNICIPIO DE TAMESIS",
+        "estado_siif": "No iniciado",
+        "id_contrato": "CO1.PCCNTR.5588480",
+        "id_siif": "CO1.SIIFITEM.122238973",
+        "nit": "890981238",
+        "nit_proveedor": "901476496",
+        "proveedor": "EMPRESA DE DESARROLLO URBANO Y RURAL TAMESIS",
+        "saldo_cdp": "242025092",
+        "saldo_total_a_comprometer": "276963184",
+        "saldo_vigencias_futuras": "0",
+        "valor_utilizado": "242025092"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "completo": true,
+     "conjunto": "a86w-fh92",
+     "consulta": {
+      "conjunto": "a86w-fh92",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_contrato, id_siif, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor",
+      "where": "(id_contrato = 'CO1.PCCNTR.5588480')"
+     },
+     "cumplen_en_el_portal": 4,
+     "filas": 4,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.5588480')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

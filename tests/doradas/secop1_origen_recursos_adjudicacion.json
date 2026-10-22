@@ -1,0 +1,65 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:13+00:00",
+ "herramienta": "secop1_origen_recursos_adjudicacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "3xwx-53wt",
+    "max_filas": 1000,
+    "order": "orig_rec_nombre, valor",
+    "portal": "datos.gov.co",
+    "select": "id_adjudicacion, orig_rec_nombre, codigo_bpin, anno_bpin, descripcion_otros_recursos, valor",
+    "where": "id_adjudicacion = '10639119'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anno_bpin",
+       "codigo_bpin",
+       "descripcion_otros_recursos",
+       "id_adjudicacion",
+       "orig_rec_nombre",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anno_bpin": "N/D",
+        "codigo_bpin": "No Definido",
+        "descripcion_otros_recursos": "PROPIOS",
+        "id_adjudicacion": "10639119",
+        "orig_rec_nombre": "Otros recursos",
+        "valor": "31500000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "3xwx-53wt",
+     "consulta": {
+      "conjunto": "3xwx-53wt",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_adjudicacion, orig_rec_nombre, codigo_bpin, anno_bpin, descripcion_otros_recursos, valor",
+      "where": "(id_adjudicacion = '10639119')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_adjudicacion = '10639119')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

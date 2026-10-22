@@ -1,0 +1,33 @@
+id: secop_rubros_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.rubros
+pregunta: "¿De qué rubros presupuestales sale la plata de este contrato de SECOP II?"
+descripcion: >
+  Rubros presupuestales de un contrato de SECOP II: código, nombre, valor y vigencia.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: cwhv-7fnp
+    portal: datos.gov.co
+    select: "id_contrato, codigo, nombre, valor_actual, anno, identificador_compromiso"
+    where: "id_contrato = '{id_contrato}'"
+    order: "anno, codigo, identificador_compromiso"
+    max_filas: 1000
+  campos: [id_contrato, codigo, nombre, valor_actual, anno, identificador_compromiso]
+salida: SecopRubrosContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en cwhv-7fnp (id_contrato = CO1.PCCNTR.2514090): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_contrato: "CO1.PCCNTR.2514090"}
+  verdad: {id_contrato: "CO1.PCCNTR.2514090", codigo_rubro: "No Definido"}
+  minimos: {numero_registros: 1}
+  campos: [codigo_rubro, id_compromiso, id_contrato, numero_registros, rubro, valor, vigencia]
+  latencia_max_ms: 10000

@@ -1,0 +1,34 @@
+id: secop1_documentos_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop1.archivos
+pregunta: "¿Qué documentos publicó la entidad en este proceso de SECOP I?"
+descripcion: >
+  Documentos de un proceso de SECOP I por su constancia: nombre, título, descripción, tipo,
+  extensión, fecha y enlace de descarga.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {constancia: constancia_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: ps88-5e3v
+    portal: datos.gov.co
+    select: "numero_de_constancia, identificador, nombrearchivo, titulo, descripcion, tipo, extension, fecha_creacion, ruta_descarga"
+    where: "numero_de_constancia = '{constancia}'"
+    order: "fecha_creacion, identificador"
+    max_filas: 1000
+  campos: [numero_de_constancia, identificador, nombrearchivo, titulo, descripcion, tipo, extension, fecha_creacion, ruta_descarga]
+salida: Secop1DocumentosProceso
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en ps88-5e3v (numero_de_constancia = 26-21-55446): 32
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {constancia: "26-21-55446"}
+  verdad: {constancia: "26-21-55446", id_documento: "140158745"}
+  minimos: {numero_registros: 32}
+  campos: [archivo, constancia, descripcion, extension, fecha_creacion, id_documento, numero_registros, tipo, titulo, url_descarga]
+  latencia_max_ms: 20000

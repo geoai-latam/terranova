@@ -109,3 +109,27 @@ derechos de petición (F0.8).
 | Carga sobre servidores del Estado | copia con incremento, caché, tasa baja y una sola llamada por canario al día |
 | Cambios de esquema y de URL (IGAC cada mes, WebForms) | `canario.campos` (`esquema_cambiado`), G2 para el corte mensual, runbook §2 |
 | Memoria del equipo local | copias por partes; una pieza pesada a la vez; el stack se apaga al terminar |
+
+## Inventario de SECOP (46 conjuntos oficiales de Colombia Compra en datos.gov.co)
+
+Revisado el 2026-10-22 con el catálogo de datos.gov.co (atribución «Colombia Compra Eficiente»).
+Cada conjunto tiene su herramienta o la razón por la que todavía no.
+
+| Conjunto | Herramienta | Estado |
+|---|---|---|
+| SECOP II contratos `jbjy-vk9h` | `secop_contrato_por_id`, `secop_contratos_municipio`, `secop_contratos_entidad`, `secop_contratos_buscar` (copia) | ✅ |
+| SECOP II procesos `p6dx-8zbt` | `secop_proceso_por_id` | ✅ |
+| SECOP integrado `rpmr-utcd` | `secop_integrado_contratos_entidad` | ✅ |
+| Proponentes SECOP II `hgi6-6wh3` | `secop_proponentes_proceso` | ✅ |
+| Adiciones, garantías, ejecución, plan de pagos, modificaciones, suspensiones, sanciones (SECOP II) | `secop_*_contrato` | ✅ |
+| Facturas `ibyt-yi2f`, compromisos `skc9-met7`, rubros `cwhv-7fnp`, CDP `a86w-fh92`, ubicaciones `gra4-pcp2` | `secop_*_contrato` | ✅ |
+| Cronograma `f3ev-294c`, BPIN `d9na-abhe` | `secop_cronograma_proceso`, `secop_bpin_proceso` | ✅ |
+| SECOP I procesos `f789-7hwg`, adiciones `7fix-nd37`, modificaciones `36vw-pbq2` y `u5b4-ae3s`, origen de los recursos `3xwx-53wt`, proponentes `tauh-5jvn`, archivos `ps88-5e3v` | `secop1_*` | ✅ |
+| Convenios interadministrativos `s484-c9k3` | `secop_convenio_interadministrativo` | ✅ |
+| Ofertas SECOP II `wi7w-2nvm` y su histórico `b28v-edj8` | — | necesita copia (G3): la fuente no indexa por proceso y una consulta se agota |
+| Archivos de SECOP II por año (`dmgg-8hin`, `h4m3-b4e2`, `nbae-kzan`, `3skv-9na7`, `kgcd-kt7i`, `f8va-cf4m`) | — | 134 M filas por año: copia (G3) por ventana |
+| Plan anual de adquisiciones (`b6m4-qgqv`, `9sue-ezhx`, `prdx-nxyp`, `azeg-sgqg`) | — | siguiente tramo: por entidad y año, sin contactos |
+| Proveedores registrados `qmzu-gj57`, grupos de proveedores `ceth-n4bn` | — | por NIT solo de personas jurídicas (buscar por cédula sigue fuera, ADR-0014); sin contactos ni representante |
+| Multas SECOP I `4n4q-k399` | — | el NIT de la entidad casi siempre dice «No Definido»: falta una llave útil |
+| SECOP I procesos histórico `qddk-cgux`, SECOP I archivos histórico `8kpz-m6cc`, convenios histórico `ityv-bxct`, modificaciones a procesos SECOP II `e2u2-swiw` (sin actualizar desde 2021) | — | después: mismos esquemas que los vigentes |
+| Contactos de entidades y proveedores `4ex9-j3n8`, ubicaciones adicionales `wwhe-4sq8` | — | fuera: son contactos y direcciones (ADR-0014) |

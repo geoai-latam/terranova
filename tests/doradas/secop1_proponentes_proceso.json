@@ -1,0 +1,85 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:15+00:00",
+ "herramienta": "secop1_proponentes_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "tauh-5jvn",
+    "max_filas": 1000,
+    "order": "proponente",
+    "portal": "datos.gov.co",
+    "select": "id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato",
+    "where": "id_proceso = '09-1-47723'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "adjudicado",
+       "calificacion",
+       "id_proceso",
+       "num_doc_proponente",
+       "numero_contrato",
+       "proponente",
+       "tipo_doc_proponente"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "adjudicado": "No",
+        "calificacion": "100000",
+        "id_proceso": "09-1-47723",
+        "num_doc_proponente": "No Definido",
+        "numero_contrato": "No Definido",
+        "proponente": "CORPORACION EDUCATIVA MINUTO DE DIOS",
+        "tipo_doc_proponente": "Nit de Persona Jurdica"
+       },
+       {
+        "adjudicado": "No",
+        "calificacion": "000",
+        "id_proceso": "09-1-47723",
+        "num_doc_proponente": "No Definido",
+        "numero_contrato": "No Definido",
+        "proponente": "CORPORACION EDUCATIVA MINUTO DE DIOS",
+        "tipo_doc_proponente": "Nit de Persona Jurdica"
+       },
+       {
+        "adjudicado": "No",
+        "calificacion": "100000",
+        "id_proceso": "09-1-47723",
+        "num_doc_proponente": "No Definido",
+        "numero_contrato": "No Definido",
+        "proponente": "UNION TEMPORAL COMPAÑIA DE JESUS SAN IGNACIO FE Y ALEGRIA",
+        "tipo_doc_proponente": "Nit de Persona Jurdica"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "tauh-5jvn",
+     "consulta": {
+      "conjunto": "tauh-5jvn",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato",
+      "where": "(id_proceso = '09-1-47723')"
+     },
+     "cumplen_en_el_portal": 3,
+     "filas": 3,
+     "filtro_soql": "(id_proceso = '09-1-47723')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

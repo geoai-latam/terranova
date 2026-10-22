@@ -1,0 +1,34 @@
+id: secop1_adiciones_adjudicacion
+version: 1
+familia: contratacion
+fuente: cce.secop1.adiciones
+pregunta: "¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I?"
+descripcion: >
+  Adiciones de una adjudicación de SECOP I (su id_adjudicacion, que da secop1_proceso_por_constancia):
+  valor, días, meses y fecha de firma.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_adjudicacion: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 7fix-nd37
+    portal: datos.gov.co
+    select: "id_adjudicacion, adicion_en_valor, adicion_en_dias, adicion_en_meses, fecha_firma"
+    where: "id_adjudicacion = '{id_adjudicacion}'"
+    order: "fecha_firma, adicion_en_valor"
+    max_filas: 1000
+  campos: [id_adjudicacion, adicion_en_valor, adicion_en_dias, adicion_en_meses, fecha_firma]
+salida: Secop1AdicionesAdjudicacion
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en 7fix-nd37 (id_adjudicacion = 9378960): 1
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_adjudicacion: 9378960}
+  verdad: {id_adjudicacion: "9378960"}
+  minimos: {numero_registros: 1}
+  campos: [adicion_dias, adicion_meses, adicion_valor, fecha_firma, id_adjudicacion, numero_registros]
+  latencia_max_ms: 10000

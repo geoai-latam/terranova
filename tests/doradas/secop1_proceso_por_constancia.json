@@ -1,0 +1,97 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:14+00:00",
+ "herramienta": "secop1_proceso_por_constancia",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "f789-7hwg",
+    "max_filas": 1000,
+    "order": "uid",
+    "portal": "datos.gov.co",
+    "select": "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i",
+    "where": "numero_de_constancia = '19-12-10176235'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cuantia_contrato",
+       "cuantia_proceso",
+       "departamento_entidad",
+       "detalle_del_objeto_a_contratar",
+       "estado_del_proceso",
+       "fecha_de_firma_del_contrato",
+       "id_adjudicacion",
+       "identificacion_del_contratista",
+       "modalidad_de_contratacion",
+       "municipio_entidad",
+       "nit_de_la_entidad",
+       "nom_razon_social_contratista",
+       "nombre_entidad",
+       "numero_de_constancia",
+       "numero_de_contrato",
+       "numero_de_proceso",
+       "ruta_proceso_en_secop_i",
+       "tipo_de_contrato",
+       "tipo_identifi_del_contratista",
+       "uid",
+       "valor_contrato_con_adiciones"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cuantia_contrato": "17999998",
+        "cuantia_proceso": "17999998",
+        "departamento_entidad": "Boyacá",
+        "detalle_del_objeto_a_contratar": "COMPRAVENTA DE TUBERIA PARA EL MANTENIMIENTO ACUEDUCTO MUNICIPAL CENTRO",
+        "estado_del_proceso": "Celebrado",
+        "fecha_de_firma_del_contrato": "2019-12-09T00:00:00.000",
+        "id_adjudicacion": "9296788",
+        "identificacion_del_contratista": "826003628",
+        "modalidad_de_contratacion": "Contratación Directa (Ley 1150 de 2007)",
+        "municipio_entidad": "Mongua",
+        "nit_de_la_entidad": "891855735",
+        "nom_razon_social_contratista": "EMPRESA SOLIDARIA DE SERVICIOS PUBLICOS DE MONGUA E.S.P EMSOMONGUA E.S.P.",
+        "nombre_entidad": "BOYACÁ - ALCALDÍA MUNICIPIO DE MONGUA",
+        "numero_de_constancia": "19-12-10176235",
+        "numero_de_contrato": "CONINT/MOG 015-2019",
+        "numero_de_proceso": "CONINT/MOG 015-2019",
+        "ruta_proceso_en_secop_i": {
+         "url": "https://www.contratos.gov.co/consultas/detalleProceso.do?numConstancia=19-12-10176235"
+        },
+        "tipo_de_contrato": "Compraventa",
+        "tipo_identifi_del_contratista": "Nit de Persona Jurídica",
+        "uid": "19-12-10176235-9296788",
+        "valor_contrato_con_adiciones": "17999998"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "f789-7hwg",
+     "consulta": {
+      "conjunto": "f789-7hwg",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i",
+      "where": "(numero_de_constancia = '19-12-10176235')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(numero_de_constancia = '19-12-10176235')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+id: secop_bpin_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop2.bpin
+pregunta: "¿Con qué proyecto de inversión (BPIN) se financia este proceso o contrato de SECOP II?"
+descripcion: >
+  Proyectos de inversión (código BPIN y año) asociados a un proceso (CO1.REQ.…), su proceso de
+  compra (CO1.BDOS.…) o un contrato (CO1.PCCNTR.…) de SECOP II, con su validación.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_secop: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: d9na-abhe
+    portal: datos.gov.co
+    select: "codigo_bpin, anno_bpin, id_proceso, id_portafolio, id_contracto, validacion_bpin"
+    where: "id_proceso = '{id_secop}' OR id_portafolio = '{id_secop}' OR id_contracto = '{id_secop}'"
+    order: "codigo_bpin, id_proceso, id_contracto"
+    max_filas: 1000
+  campos: [codigo_bpin, anno_bpin, id_proceso, id_portafolio, id_contracto, validacion_bpin]
+salida: SecopBpinProceso
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en d9na-abhe (id_proceso = CO1.REQ.11194762): 41
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_secop: "CO1.REQ.11194762"}
+  verdad: {codigo_bpin: "2024080010085", id_contrato: "CO1.PCCNTR.10069291"}
+  minimos: {numero_registros: 41}
+  campos: [anio_bpin, codigo_bpin, id_contrato, id_fase, id_proceso, numero_registros, validacion]
+  latencia_max_ms: 10000

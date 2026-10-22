@@ -1,0 +1,412 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:09+00:00",
+ "herramienta": "secop1_documentos_proceso",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "ps88-5e3v",
+    "max_filas": 1000,
+    "order": "fecha_creacion, identificador",
+    "portal": "datos.gov.co",
+    "select": "numero_de_constancia, identificador, nombrearchivo, titulo, descripcion, tipo, extension, fecha_creacion, ruta_descarga",
+    "where": "numero_de_constancia = '26-21-55446'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "descripcion",
+       "extension",
+       "fecha_creacion",
+       "identificador",
+       "nombrearchivo",
+       "numero_de_constancia",
+       "ruta_descarga",
+       "tipo",
+       "titulo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "descripcion": "PAA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158745",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158745.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158745",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "CERTIFICADO BPIN",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158752",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158752.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158752",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FICHA MGA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158758",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158758.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158758",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "CERTIFICADO DE DISPONIBILIDAD PRESUPUESTAL",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158765",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158765.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158765",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "PRESUPUESTO Y APU",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158770",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158770.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158770",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANEXO 1 - ANEXO TECNICO",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158779",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158779.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158779",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMULARIO 1 - PRESUPUESTO OFICIAL",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158787",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158787.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158787",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANALISIS DEL SECTOR",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158795",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140158795.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158795",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ESTUDIOS PREVIOS",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158803",
+        "nombrearchivo": "DEPREV_PROCESO_26-21-55446_218150011_140158803.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158803",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "DOCUMENTO BASE",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158810",
+        "nombrearchivo": "PPC_PROCESO_26-21-55446_218150011_140158810.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158810",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "AVISO DE CONVOCATORIA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140158818",
+        "nombrearchivo": "AVLP_PROCESO_26-21-55446_218150011_140158818.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140158818",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 1  CARTA DE PRESENTACIoN DE LA PROPUESTA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159113",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159113.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159113",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 2  CONFORMACIoN DE PROPONENTE PLURAL",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159115",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159115.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159115",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 3 - EXPERIENCIA",
+        "extension": ".xlsx",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159117",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159117.xlsx",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159117",
+        "tipo": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 4  CAPACIDAD FINANCIERA Y ORGANIZACIONAL",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159118",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159118.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159118",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 5 - CAPACIDAD RESIDUAL",
+        "extension": ".xlsx",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159119",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159119.xlsx",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159119",
+        "tipo": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 6  PAGOS DE SEGURIDAD SOCIAL Y APORTES LEGALES",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159120",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159120.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159120",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 7  FACTOR DE CALIDAD",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159122",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159122.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159122",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 8  VINCULACIoN DE PERSONAS EN CONDICIoN DE DISCAPACIDAD",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159125",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159125.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159125",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 9  PUNTAJE DE INDUSTRIA NACIONAL",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159128",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159128.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159128",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 10  FACTORES DE DESEMPATE",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159130",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159130.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159130",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 11  AUTORIZACIoN PARA EL TRATAMIENTO DE DATOS PERSONALES",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159133",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159133.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159133",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 12 ACREDITACIoN DE EMPRENDIMIENTO Y EMPRESA DE MUJERES",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159136",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159136.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159136",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "FORMATO 13 ACREDITACIoN MIPYME",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159164",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159164.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159164",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANEXO 2 - CRONOGRAMA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159318",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159318.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159318",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANEXO 3  GLOSARIO",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159322",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159322.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159322",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANEXO 4  PACTO DE TRANSPARENCIA",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159326",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159326.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159326",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "ANEXO 5  MINUTA DE CONTRATO",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159329",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159329.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159329",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "MATRIZ 2  INDICADORES FINANCIEROS Y ORGANIZACIONALES",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159333",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159333.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159333",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "MATRIZ 3  RIESGOS",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159334",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159334.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159334",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "MATRIZ 4  BIENES RELEVANTES PARA LA OBRA PuBLICA DEL SECTOR DE AGUA POTABLE Y SANEAMIENTO BaSICO",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-14T00:00:00.000",
+        "identificador": "140159338",
+        "nombrearchivo": "DA_PROCESO_26-21-55446_218150011_140159338.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140159338",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       },
+       {
+        "descripcion": "AVISO DE CONVOCATORIA N°2",
+        "extension": ".pdf",
+        "fecha_creacion": "2026-10-21T00:00:00.000",
+        "identificador": "140290261",
+        "nombrearchivo": "AV_PROCESO_26-21-55446_218150011_140290261.pdf",
+        "numero_de_constancia": "26-21-55446",
+        "ruta_descarga": "http://20.96.127.85/descarga/140290261",
+        "tipo": "application/pdf",
+        "titulo": "Nuevo Sistema de Almacenamiento de Archivos PUC NO.20"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 32,
+      "truncado": false,
+      "vistos": 32
+     },
+     "completo": true,
+     "conjunto": "ps88-5e3v",
+     "consulta": {
+      "conjunto": "ps88-5e3v",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "numero_de_constancia, identificador, nombrearchivo, titulo, descripcion, tipo, extension, fecha_creacion, ruta_descarga",
+      "where": "(numero_de_constancia = '26-21-55446')"
+     },
+     "cumplen_en_el_portal": 32,
+     "filas": 32,
+     "filtro_soql": "(numero_de_constancia = '26-21-55446')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,85 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:59:10+00:00",
+ "herramienta": "secop1_modificaciones_adjudicacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "u5b4-ae3s",
+    "max_filas": 1000,
+    "order": "fecha_modificacion, id_modificacion",
+    "portal": "datos.gov.co",
+    "select": "id_adjudicacion, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio",
+    "where": "id_adjudicacion = '10878821'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "campo_modificado",
+       "fecha_modificacion",
+       "id_adjudicacion",
+       "id_modificacion",
+       "justificacion_cambio",
+       "valor_anterior",
+       "valor_nuevo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "campo_modificado": "RAZON SOCIAL CONTRATISTA",
+        "fecha_modificacion": "2021-06-10 11:41:38",
+        "id_adjudicacion": "10878821",
+        "id_modificacion": "1880943",
+        "justificacion_cambio": "NuMERO CONSTANCIA: 21-12-11682196. SOREDIYH PATRICIA ATENCIA AVILEZ",
+        "valor_anterior": "SOREDIYH PATRICIA ATENCIA AVILEZ",
+        "valor_nuevo": "SOREDITH PATRICIA ATENCIA AVILES"
+       },
+       {
+        "campo_modificado": "NOMBRE REPRESENTANTE LEGAL CONTRATISTA",
+        "fecha_modificacion": "2021-06-10 11:41:38",
+        "id_adjudicacion": "10878821",
+        "id_modificacion": "1880944",
+        "justificacion_cambio": "NuMERO CONSTANCIA: 21-12-11682196. SOREDIYH PATRICIA ATENCIA AVILEZ",
+        "valor_anterior": "SOREDIYH PATRICIA ATENCIA AVILEZ",
+        "valor_nuevo": "SOREDITH PATRICIA ATENCIA AVILES"
+       },
+       {
+        "campo_modificado": "Numero Contrato",
+        "fecha_modificacion": "2021-08-11 10:25:39",
+        "id_adjudicacion": "10878821",
+        "id_modificacion": "2032411",
+        "justificacion_cambio": "NuMERO CONSTANCIA: 21-12-11682196. CPSP-038-202  ----> FALTABA uLTIMO DiGITO.",
+        "valor_anterior": "CPSP-038-202",
+        "valor_nuevo": "CPSP-038-2021"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "u5b4-ae3s",
+     "consulta": {
+      "conjunto": "u5b4-ae3s",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "id_adjudicacion, id_modificacion, fecha_modificacion, campo_modificado, valor_anterior, valor_nuevo, justificacion_cambio",
+      "where": "(id_adjudicacion = '10878821')"
+     },
+     "cumplen_en_el_portal": 3,
+     "filas": 3,
+     "filtro_soql": "(id_adjudicacion = '10878821')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

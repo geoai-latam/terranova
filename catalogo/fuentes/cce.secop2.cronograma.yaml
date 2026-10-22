@@ -1,0 +1,33 @@
+id: cce.secop2.cronograma
+titulo: "SECOP II, fechas del cronograma"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/f3ev-294c.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, fechas del cronograma. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/f3ev-294c.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_del_proceso: {nombre: id_fase, tipo: str, desc: "identificador de la fase (CO1.REQ.…)"}
+  proceso_de_compra: {nombre: id_proceso, tipo: str, desc: "proceso de compra (CO1.BDOS.…)"}
+  modalidad_de_contratacion: {nombre: modalidad, tipo: str, desc: "modalidad"}
+  fecha_de_aceptaci_n_de_ofertas: {nombre: fecha_presentacion_ofertas, tipo: date, desc: "fecha límite de ofertas"}
+  fecha_de_apertura_de_ofertas: {nombre: fecha_apertura_ofertas, tipo: date, desc: "apertura de ofertas"}
+  fecha_audiencia_de_adjudicaci: {nombre: fecha_adjudicacion, tipo: date, desc: "audiencia de adjudicación"}
+  fecha_entrega_garant_a: {nombre: fecha_entrega_garantia, tipo: date, desc: "entrega de la garantía"}
+  fecha_de_creaci_n: {nombre: fecha_creacion, tipo: date, desc: "creación del cronograma"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

@@ -1,0 +1,34 @@
+id: secop_cronograma_proceso
+version: 1
+familia: contratacion
+fuente: cce.secop2.cronograma
+pregunta: "¿Cuál es el cronograma de este proceso de SECOP II?"
+descripcion: >
+  Fechas del cronograma de un proceso de SECOP II, por el proceso de compra (CO1.BDOS.…) o por
+  una fase (CO1.REQ.…): presentación y apertura de ofertas, adjudicación, garantías y otras.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_proceso: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: f3ev-294c
+    portal: datos.gov.co
+    select: "id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n"
+    where: "id_del_proceso = '{id_proceso}' OR proceso_de_compra = '{id_proceso}'"
+    order: "id_del_proceso"
+    max_filas: 1000
+  campos: [id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n]
+salida: SecopCronogramaProceso
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en f3ev-294c (id_del_proceso = CO1.BDOS.2898382): 2
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_proceso: "CO1.BDOS.2898382"}
+  verdad: {id_fase: "CO1.REQ.2978420", id_proceso: "CO1.BDOS.2898382"}
+  minimos: {numero_registros: 2}
+  campos: [fecha_apertura_ofertas, id_fase, id_proceso, modalidad, numero_registros]
+  latencia_max_ms: 10000

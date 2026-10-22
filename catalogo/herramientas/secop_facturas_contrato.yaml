@@ -1,0 +1,34 @@
+id: secop_facturas_contrato
+version: 1
+familia: contratacion
+fuente: cce.secop2.facturas
+pregunta: "¿Qué facturas tiene registradas este contrato de SECOP II?"
+descripcion: >
+  Facturas de un contrato de SECOP II por su identificador (CO1.PCCNTR.…): número, fecha,
+  valores neto, total y a pagar, estado y si el pago está confirmado.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {id_contrato: id_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: ibyt-yi2f
+    portal: datos.gov.co
+    select: "id_contrato, id_pago, numero_de_factura, fecha_factura, valor_neto, valor_total, valor_a_pagar, estado, pago_confirmado, fecha_estiamda_de_pago"
+    where: "id_contrato = '{id_contrato}'"
+    order: "fecha_factura, id_pago"
+    max_filas: 1000
+  campos: [id_contrato, id_pago, numero_de_factura, fecha_factura, valor_neto, valor_total, valor_a_pagar, estado, pago_confirmado, fecha_estiamda_de_pago]
+salida: SecopFacturasContrato
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 directamente en ibyt-yi2f (id_contrato = CO1.PCCNTR.6232610): 4
+  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  entrada: {id_contrato: "CO1.PCCNTR.6232610"}
+  verdad: {id_contrato: "CO1.PCCNTR.6232610", numero_factura: "01"}
+  minimos: {numero_registros: 4}
+  campos: [estado, fecha_estimada_pago, fecha_factura, id_contrato, id_pago, numero_factura, numero_registros, pago_confirmado, valor_a_pagar, valor_neto, valor_total]
+  latencia_max_ms: 10000
