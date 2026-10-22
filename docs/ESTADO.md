@@ -13,7 +13,7 @@
 | F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ✅ las tres pruebas de ADR-0003 pasan; salto p95 3,1 ms ([informe](spikes/F0.3-protocolo.md)) |
 | F0.4 Spike GeoResult en GEO Copilot | ✅ pintado en el navegador ([informe](spikes/F0.4-geo-result.md)); el hub desanida el sobre (geo-copilot#43) |
 | F0.5 Licencias de las fuentes M1 | ✅ decididas con evidencia en [`catalogo/licencias/m1.yaml`](../catalogo/licencias/m1.yaml): 12 a producción, 4 a evaluación (DANE, IDEAM geoservicios, SIAC, ambiente alojado en IGAC), SGC fuera |
-| F0.6 PR de amenazas y clima en GEO Copilot + Open-Meteo | ⬜ |
+| F0.6 PR de amenazas y clima en GEO Copilot + Open-Meteo | ✅ geo-copilot#38 (V5 3×4 revisada, fusionado) |
 | F0.7 Banco de verdades del producto (40 preguntas) | ✅ [`catalogo/verdades_producto.yaml`](../catalogo/verdades_producto.yaml): 22 de territorio, 6 de contratación, 6 de empresas y 6 de normativa, medidas en la fuente el 2026-10-22. 26 con herramienta del catálogo (o `ficha_lugar`) y 14 de fuentes objetivo (SECOP agregado, RUES, SUIN). `tests/test_verdades.py` exige que no contradigan a los canarios |
 | F0.8 Solicitudes por derecho de petición | ⬜ (humano) |
 
@@ -89,8 +89,11 @@
    (`interno/`; la envía el dueño). Con la respuesta, se construye la copia como en F4.1 y se repite
    `scripts/e2e_ficha.py`. Las restricciones ya salen del curado; la mediana en vivo es de 9,4 s.
 2. **En paralelo:**
-   - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
-     y fusionarlo. También fusionar geo-copilot#43.
+   - **F0.6 (hecho):** la V5 de amenazas con LLM real halló dos fallas del conector, corregidas en
+     geo-copilot#38: el resumen de sismos y focos se calculaba antes de recortar al área (los
+     «sismos más fuertes de Colombia» salían de Panamá y Venezuela) y `clima_serie` no decía que
+     el límite va en `punto`. La V5 necesita `lugares-mcp` arriba; sin él, el agente espera 300 s
+     una aprobación humana. geo-copilot#43 ya estaba fusionado.
    - **F0.8:** las solicitudes por derecho de petición están en borrador en `interno/borradores/`;
      las envía el dueño. Se sumaron DANE (redistribución del MGN y el CNPV) y SGC (la licencia de
      MIIG choca con los ítems CC BY en ArcGIS Online).
