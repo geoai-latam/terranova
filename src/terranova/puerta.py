@@ -6,6 +6,7 @@ llama salen del catálogo; el sobre `rt/1` y sus errores, del contrato.
 
 from __future__ import annotations
 
+import hashlib
 import os
 import time
 from collections.abc import AsyncIterator
@@ -22,11 +23,13 @@ from pydantic import PrivateAttr
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
-from terranova.contrato import Sobre
+from terranova.contrato import Sobre, huella, nueva_solicitud_id
 from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.identidad import Principal, Registro, registro_desde_entorno
+from terranova.medicion import Evento, Outbox, OutboxSqlite, registrar_sin_fallar
+from terranova.medicion import ahora as ahora_iso
 from terranova.proteccion import Proteccion
 
 CATALOGO: Catalogo = cargar()
@@ -136,8 +139,64 @@ async def ejecutar(
     """El mismo camino para MCP y REST (ADR-0004): misma entrada, mismo sobre.
 
     Con identidad (la aplicación), el plan y los scopes salen de la llave; sin ella (pruebas en
-    memoria), el plan sale de `TERRANOVA_PLAN`.
+    memoria), el plan sale de `TERRANOVA_PLAN`. Cada solicitud deja un evento de uso (F3.4).
     """
+    try:
+        sobre = await _ejecutar(ficha, entrada, principal)
+    except (ErrorEjecucion, ErrorEntrada) as exc:
+        codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
+        _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
+        raise
+    servido = sobre.procedencia[0].servido_desde if sobre.procedencia else None
+    _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
+    return sobre
+
+
+def _medir(
+    principal: Principal | None,
+    ficha: str,
+    solicitud_id: str,
+    creditos: int,
+    resultado: str,
+    servido_desde: str | None,
+) -> None:
+    if principal is None:
+        return
+    evento = Evento(
+        solicitud_id=solicitud_id,
+        org=principal.org,
+        llave_id=principal.llave_id,
+        herramienta=ficha,
+        creditos=creditos,
+        resultado=resultado,
+        servido_desde=servido_desde,
+        momento=ahora_iso(),
+    )
+    registrar_sin_fallar(outbox, evento)
+
+
+async def ejecutar_idempotente(
+    ficha: str, entrada: dict[str, Any], principal: Principal | None, clave: str | None
+) -> tuple[Sobre, bool]:
+    """Con `Idempotency-Key`, la misma llave y clave devuelven el mismo sobre sin volver a ejecutar,
+    cobrar ni medir (E2E-10). (sobre, repetido)."""
+    if not clave or principal is None or _almacen is None:
+        return await ejecutar(ficha, entrada, principal), False
+    if len(clave) > 128:
+        raise ErrorEntrada("Idempotency-Key", "hasta 128 caracteres")
+    k = "terranova:idem:" + hashlib.sha256(f"{principal.llave_id}\n{clave}".encode()).hexdigest()
+    pedido = huella({"herramienta": ficha, "entrada": entrada})
+    previo = await _almacen.leer(k)
+    if previo is not None:
+        if previo["pedido"] != pedido:
+            raise ErrorEntrada("Idempotency-Key", "ya se usó con otra herramienta o entrada")
+        return Sobre.model_validate(previo["sobre"]), True
+    sobre = await ejecutar(ficha, entrada, principal)
+    await _almacen.guardar(k, {"pedido": pedido, "sobre": sobre.model_dump(mode="json")}, 24 * 3600)
+    return sobre, False
+
+
+async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | None) -> Sobre:
     if _conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
     h = CATALOGO.herramientas.get(ficha)
@@ -170,18 +229,20 @@ async def ejecutar(
 _iniciados: dict[str, Conector] = {}
 registro: Registro | None = None  # None = sin identidad (solo pruebas en memoria)
 cuota: Cuota | None = None
+outbox: Outbox | None = None
 
 
 async def iniciar() -> None:
     """Conectores, caché, cuota y protección para toda la puerta. Si ya hay conectores (las pruebas
     los inyectan), no hace nada."""
-    global _almacen, registro, cuota
+    global _almacen, registro, cuota, outbox
     if _conectores is not None:
         return
     registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
     cuota = cuota_desde_entorno(redis_url)
+    outbox = OutboxSqlite(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
     _iniciados.update(conectores_desde_entorno())
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
@@ -190,13 +251,14 @@ async def iniciar() -> None:
 
 
 async def detener() -> None:
-    global _almacen, registro, cuota
+    global _almacen, registro, cuota, outbox
     if not _iniciados:
         return
     usar_conectores(None)
     _almacen = None
     registro = None
     cuota = None
+    outbox = None
     for c in _iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.cerrar()
