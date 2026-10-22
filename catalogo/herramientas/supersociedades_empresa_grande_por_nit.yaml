@@ -1,0 +1,31 @@
+id: supersociedades_empresa_grande_por_nit
+version: 1
+familia: empresas
+fuente: supersociedades.empresas_grandes
+pregunta: "¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale?"
+descripcion: >
+  Cifras de una sociedad por su NIT en el reporte de las 10 000 empresas más grandes del país
+  (Supersociedades), año por año: ingresos operacionales, ganancia o pérdida, activos, pasivos y
+  patrimonio, en billones de pesos como los publica la fuente. Si no sale, no está en el reporte.
+  (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
+entrada: {nit: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 6cat-2gcs
+    portal: datos.gov.co
+    select: "nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte"
+    where: "nit = '{nit}.00'"
+    order: "a_o_de_corte"
+    max_filas: 200
+  campos: [nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte]
+salida: EmpresaGrandePorNit
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 6cat-2gcs: Ecopetrol, corte 2021 → ingresos $84.95 (billones).
+  entrada: {nit: 899999068}
+  verdad: {anio_corte: 2021, razon_social: "ECOPETROL S.A.", ingresos_operacionales: "$84.95"}
+  campos: [anio_corte, ciiu, ciudad, departamento, ganancia_perdida, ingresos_operacionales, macrosector, nit, razon_social, supervisor, total_activos, total_pasivos, total_patrimonio]
+  latencia_max_ms: 10000

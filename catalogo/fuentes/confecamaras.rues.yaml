@@ -1,0 +1,42 @@
+id: confecamaras.rues
+titulo: "RUES: personas jurídicas y entidades sin ánimo de lucro (sin personas naturales)"
+entidad: Confederación Colombiana de Cámaras de Comercio (Confecámaras)
+competencia: administra el Registro Único Empresarial y Social (Ley 1727 de 2014)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/c82u-588k.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Confecámaras, RUES. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# 7 de los 9,4 M registros son personas naturales: la herramienta las excluye y no salen sus
+# nombres ni documentos, ni los del representante legal (ADR-0014).
+url: https://www.datos.gov.co/resource/c82u-588k.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  nit: {nombre: nit, tipo: str, desc: "NIT"}
+  digito_verificacion: {nombre: digito_verificacion, tipo: str, desc: "dígito de verificación"}
+  razon_social: {nombre: razon_social, tipo: str, desc: "razón social"}
+  sigla: {nombre: sigla, tipo: str, desc: "sigla"}
+  camara_comercio: {nombre: camara_comercio, tipo: str, desc: "cámara de comercio"}
+  matricula: {nombre: matricula, tipo: str, desc: "número de matrícula"}
+  organizacion_juridica: {nombre: organizacion_juridica, tipo: str, desc: "organización jurídica"}
+  tipo_sociedad: {nombre: tipo_sociedad, tipo: str, desc: "tipo de sociedad"}
+  categoria_matricula: {nombre: categoria_matricula, tipo: str, desc: "categoría de la matrícula"}
+  estado_matricula: {nombre: estado_matricula, tipo: str, desc: "estado de la matrícula"}
+  fecha_matricula: {nombre: fecha_matricula, tipo: str, desc: "fecha de matrícula (AAAAMMDD)"}
+  ultimo_ano_renovado: {nombre: ultimo_ano_renovado, tipo: int, desc: "último año renovado"}
+  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: str, desc: "fecha de cancelación (AAAAMMDD)"}
+  cod_ciiu_act_econ_pri: {nombre: ciiu_principal, tipo: str, desc: "CIIU de la actividad principal"}
+  cod_ciiu_act_econ_sec: {nombre: ciiu_secundaria, tipo: str, desc: "CIIU de la actividad secundaria"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Confederación Colombiana de Cámaras de Comercio, theme: comercio, accrualPeriodicity: monthly}

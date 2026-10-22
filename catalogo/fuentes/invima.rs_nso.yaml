@@ -1,0 +1,35 @@
+id: invima.rs_nso
+titulo: "Registros sanitarios y notificaciones sanitarias obligatorias (alimentos, cosméticos y otros)"
+entidad: Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA)
+competencia: autoridad sanitaria nacional; otorga los registros sanitarios (Decreto 2078 de 2012)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/ui32-p9f2.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: INVIMA, Información sobre RS y NSO vigentes y vencidas. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# `nombredireccion` y los roles no salen: pueden ser personas y su dirección (ADR-0014).
+url: https://www.datos.gov.co/resource/ui32-p9f2.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  expediente: {nombre: expediente, tipo: int, desc: "número de expediente"}
+  producto: {nombre: producto, tipo: str, desc: "producto"}
+  rsynso: {nombre: registro_sanitario, tipo: str, desc: "registro sanitario o NSO"}
+  estadoregistro: {nombre: estado_registro, tipo: str, desc: "estado"}
+  fechavencimiento: {nombre: fecha_vencimiento, tipo: date, desc: "vencimiento"}
+  grupo: {nombre: grupo, tipo: str, desc: "grupo (alimentos, cosméticos, aseo…)"}
+  nivelriesgo: {nombre: nivel_riesgo, tipo: str, desc: "nivel de riesgo"}
+  titular: {nombre: titular, tipo: str, desc: "titular"}
+  modalidad: {nombre: modalidad, tipo: str, desc: "modalidad"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Instituto Nacional de Vigilancia de Medicamentos y Alimentos, theme: salud, accrualPeriodicity: monthly}

@@ -1,0 +1,30 @@
+id: suit_tramites_entidad
+version: 1
+familia: normativa
+fuente: funcionpublica.suit_historico
+pregunta: "¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea?"
+descripcion: >
+  Trámites inscritos en el SUIT (Función Pública) por una entidad, mes a mes: total, presenciales
+  y en línea. Es el histórico que publica Función Pública (se actualiza con retraso).
+  (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: dd24-8p6w
+    portal: datos.gov.co
+    select: "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total"
+    where: "nit = '{nit_entidad}'"
+    order: "a_o, mes"
+    max_filas: 500
+  campos: [nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total]
+salida: TramitesEntidad
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en dd24-8p6w: el Ministerio de Educación, noviembre de 2018 → 18.
+  entrada: {nit_entidad: 899999001}
+  verdad: {anio: 2018, mes: 11, tramites_total: 18}
+  campos: [anio, entidad, mes, nit_entidad, tramites_en_linea, tramites_presenciales, tramites_total]
+  latencia_max_ms: 10000

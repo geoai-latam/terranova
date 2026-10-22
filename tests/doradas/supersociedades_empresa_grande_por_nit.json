@@ -1,0 +1,139 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:40:30+00:00",
+ "herramienta": "supersociedades_empresa_grande_por_nit",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "6cat-2gcs",
+    "max_filas": 200,
+    "order": "a_o_de_corte",
+    "portal": "datos.gov.co",
+    "select": "nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte",
+    "where": "nit = '899999068.00'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o_de_corte",
+       "ciiu",
+       "ciudad_domicilio",
+       "departamento_domicilio",
+       "ganancia_p_rdida",
+       "ingresos_operacionales",
+       "macrosector",
+       "nit",
+       "raz_n_social",
+       "supervisor",
+       "total_activos",
+       "total_pasivos",
+       "total_patrimonio"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o_de_corte": "2021.00",
+        "ciiu": "610",
+        "ciudad_domicilio": "BOGOTA, D.C.",
+        "departamento_domicilio": "BOGOTA D.C.",
+        "ganancia_p_rdida": "$16.69",
+        "ingresos_operacionales": "$84.95",
+        "macrosector": "MINERO",
+        "nit": "899999068.00",
+        "raz_n_social": "ECOPETROL S.A.",
+        "supervisor": "SUPERFINANCIERA",
+        "total_activos": "$171.60",
+        "total_pasivos": "$99.87",
+        "total_patrimonio": "$71.73"
+       },
+       {
+        "a_o_de_corte": "2022.00",
+        "ciiu": "610",
+        "ciudad_domicilio": "BOGOTA, D.C.",
+        "departamento_domicilio": "BOGOTA D.C.",
+        "ganancia_p_rdida": "$33.41",
+        "ingresos_operacionales": "$144.82",
+        "macrosector": "MINERO",
+        "nit": "899999068.00",
+        "raz_n_social": "ECOPETROL S.A.",
+        "supervisor": "SUPERFINANCIERA",
+        "total_activos": "$216.85",
+        "total_pasivos": "$125.81",
+        "total_patrimonio": "$91.03"
+       },
+       {
+        "a_o_de_corte": "2023.00",
+        "ciiu": "610",
+        "ciudad_domicilio": "BOGOTA, D.C.",
+        "departamento_domicilio": "BOGOTA D.C.",
+        "ganancia_p_rdida": "$19.06",
+        "ingresos_operacionales": "$129.51",
+        "macrosector": "MINERO",
+        "nit": "899999068.00",
+        "raz_n_social": "ECOPETROL S.A.",
+        "supervisor": "SUPERFINANCIERA",
+        "total_activos": "$198.73",
+        "total_pasivos": "$120.34",
+        "total_patrimonio": "$78.39"
+       },
+       {
+        "a_o_de_corte": "2024.00",
+        "ciiu": "610",
+        "ciudad_domicilio": "BOGOTA, D.C.",
+        "departamento_domicilio": "BOGOTA D.C.",
+        "ganancia_p_rdida": "$14.93",
+        "ingresos_operacionales": "$113.92",
+        "macrosector": "MINERO",
+        "nit": "899999068.00",
+        "raz_n_social": "ECOPETROL S.A.",
+        "supervisor": "SUPERFINANCIERA",
+        "total_activos": "$214.24",
+        "total_pasivos": "$130.54",
+        "total_patrimonio": "$83.70"
+       },
+       {
+        "a_o_de_corte": "2025.00",
+        "ciiu": "610",
+        "ciudad_domicilio": "BOGOTA, D.C.",
+        "departamento_domicilio": "BOGOTA D.C.",
+        "ganancia_p_rdida": "$ 9.03",
+        "ingresos_operacionales": "$ 100.59",
+        "macrosector": "MINERO",
+        "nit": "899999068.00",
+        "raz_n_social": "ECOPETROL S.A.",
+        "supervisor": "SUPERFINANCIERA",
+        "total_activos": "$ 198.11",
+        "total_pasivos": "$ 114.35",
+        "total_patrimonio": "$ 83.76"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "completo": true,
+     "conjunto": "6cat-2gcs",
+     "consulta": {
+      "conjunto": "6cat-2gcs",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte",
+      "where": "(nit = '899999068.00')"
+     },
+     "cumplen_en_el_portal": 5,
+     "filas": 5,
+     "filtro_soql": "(nit = '899999068.00')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
