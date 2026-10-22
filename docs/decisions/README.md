@@ -25,6 +25,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | **aceptada** |
 | 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | **aceptada** |
 | 0021 | Open-Meteo (GloFAS, ERA5) con el API gratis mientras sea gratuito; salida a Copernicus directo | **aceptada** |
+| 0022 | Agrología del IGAC en vivo con caché hasta tener copia (licencia por ítem y descarga de capacidad pendientes) | **aceptada** |
 
 - [ADR-0001 · Repo público `terranova`](0001-repo-publico-terranova.md)
 - [ADR-0002 · La puerta llama a los conectores por MCP en red interna](0002-la-puerta-llama-a-los-conectores-por-mcp-en-red-interna.md)
@@ -47,3 +48,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0019 · Licencias por ítem y BY-SA por defecto](0019-licencias-por-item-y-by-sa-por-defecto.md)
 - [ADR-0020 · Gratuito al inicio](0020-gratuito-al-inicio.md)
 - [ADR-0021 · Open-Meteo mientras Terranova sea gratuito](0021-open-meteo-mientras-sea-gratuito.md)
+- [ADR-0022 · Agrología del IGAC en vivo, con caché, hasta tener copia](0022-agrologia-igac-en-vivo-hasta-tener-copia.md)

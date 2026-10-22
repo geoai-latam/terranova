@@ -54,7 +54,7 @@
 |---|---|
 | F4.1 Dataset de restricciones v0 | ✅ `src/terranova/datasets/restricciones.py` + `scripts/dataset_restricciones.py`: RUNAP (1934) + resguardos (989) + zonas de reserva campesina (30) = 2953 filas, CC BY-SA 4.0; pandera, GeoParquet, PostGIS (`curado.restricciones`) y contrato ODCS. **Misma huella tras volver a descargar** (`sha256:fc56a228…`). Ley 2.ª fuera por licencia |
 | F4.2 `ficha_lugar` | ✅ `src/terranova/ficha.py`; MCP `ficha_lugar` (en `/mcp` y `/mcp/territorio`) y REST `POST /v1/fichas`. Dos etapas en paralelo: 10 partes por punto y, con el predio, construcciones, población y precio de la tierra. Una parte que falla deja la ficha `parcial` con su error y su procedencia; la que no se consulta (licencia o scope) va a `avisos`. Tope de 20 s; la parte que no llega sigue en segundo plano y llena la caché. Hasta 50 créditos. **En vivo** (`scripts/e2e_ficha.py`): E2E-07 ✓, la ficha de Chía en 13,3 s, con el predio, las restricciones (contra el GeoParquet curado), los sismos (USGS `count` = 0) y UPRA (Chía no está) iguales a lo medido en la fuente; E2E-08 ✓ (amenazas caído → `parcial`, solo el error de sismos) |
-| F4.3 Rendimiento de la ficha | 🟨 con caché p95 0,01 s ✓ (< 2 s). En vivo, p95 20 s ✗ (< 15 s): las corridas van de 9 a 20 s, y lo que pesa es el arranque en frío de la agrología del IGAC (~45 s en la primera consulta, 1 a 2 s después). Salida: `copia` de la agrología (ADR-0008), que es estática (P1Y) y CC BY 4.0 |
+| F4.3 Rendimiento de la ficha | 🟨 con caché p95 0,01 s ✓ (< 2 s). En vivo, p95 20 s ✗ (< 15 s): las corridas van de 9 a 20 s, y lo que pesa es el arranque en frío de la agrología del IGAC (~45 s en la primera consulta, 1 a 2 s después). Salida: `copia` de la agrología (ADR-0022), cuando el IGAC aclare la licencia por ítem y restablezca la descarga de capacidad de uso (los enlaces dan 401) |
 
 ## Decisiones tomadas
 
@@ -76,9 +76,10 @@
 
 ## Siguiente paso concreto
 
-1. **F4.3:** `copia` de la agrología del IGAC (vocación, capacidad y conflictos) si hay descarga
-   masiva oficial con licencia clara; con eso, repetir `scripts/e2e_ficha.py` hasta p95 < 15 s en
-   vivo y cerrar el gate F4 (E2E-07 y E2E-08). Fusionar antes geo-copilot#49 (tools en hilo).
+1. **Gate F4:** solo lo bloquea el p95 en vivo, por la agrología del IGAC (ADR-0022). La pregunta
+   al IGAC sobre licencia y descarga de capacidad se sumó al borrador de derechos de petición
+   (`interno/`; la envía el dueño). Con la respuesta, se construye la copia como en F4.1 y se repite
+   `scripts/e2e_ficha.py`. Fusionar geo-copilot#49 (tools en hilo).
 2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
