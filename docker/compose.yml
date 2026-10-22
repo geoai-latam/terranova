@@ -31,7 +31,7 @@ x-puerta: &puerta
     TERRANOVA_CONECTORES: >-
       {"arcgis-mcp": "http://arcgis-mcp:9400/mcp", "amenazas-mcp": "http://amenazas-mcp:9930/mcp",
       "dane-mcp": "http://dane-mcp:9920/mcp", "datos-abiertos-mcp": "http://datos-abiertos-mcp:9900/mcp",
-      "imagery-mcp": "http://imagery-mcp:9100/mcp"}
+      "imagery-mcp": "http://imagery-mcp:9100/mcp", "web-mcp": "http://web-mcp:9940/mcp"}
   depends_on:
     postgres: {condition: service_healthy}
     redis: {condition: service_started}
@@ -40,6 +40,7 @@ x-puerta: &puerta
     dane-mcp: {condition: service_started}
     datos-abiertos-mcp: {condition: service_started}
     imagery-mcp: {condition: service_started}
+    web-mcp: {condition: service_started}
   networks: [borde, interna]
   read_only: true
   tmpfs: [/tmp]
@@ -197,6 +198,22 @@ services:
       IMAGERY_PORT: "9100"
       # imagery:compute: la cobertura del suelo en un punto se calcula (sin él, 403)
       IMAGERY_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["imagery:read","imagery:compute"],"rate_limit_per_min":120}]'
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
+
+  # G4 (F5): APIs web públicas que no están en datos.gov.co ni en ArcGIS (relatoría de Colombia Compra,
+  # BanRep SDMX). Solo los dominios de la lista, con robots.txt y una petición por segundo por sitio.
+  web-mcp:
+    build: {context: ../../GEO_COPILOT, dockerfile: services/web_mcp/Dockerfile}
+    image: ${WEB_MCP_IMAGEN:-geo-copilot/web-mcp:local}
+    restart: unless-stopped
+    environment:
+      WEB_MCP_PORT: "9940"
+      WEB_MCP_DOMINIOS: relatoria.colombiacompra.gov.co,totoro.banrep.gov.co
+      WEB_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["web:read"],"rate_limit_per_min":120}]'
+    read_only: true
+    tmpfs: ["/tmp:size=16m,uid=10013"]
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]

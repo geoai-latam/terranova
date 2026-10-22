@@ -1,0 +1,173 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:33:08+00:00",
+ "herramienta": "ancp_conceptos_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "params": {
+     "_fields": "id,date,title,link",
+     "order": "desc",
+     "orderby": "date",
+     "per_page": 20,
+     "search": "garantias"
+    },
+    "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/conceptos"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "date",
+       "id",
+       "link",
+       "title.rendered"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "date": "2026-10-22T18:04:30",
+        "id": 67400,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1394-de-2026/",
+        "title.rendered": "C-1394 de 2026"
+       },
+       {
+        "date": "2026-10-22T16:48:26",
+        "id": 67390,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1453-de-2026/",
+        "title.rendered": "C-1453 de 2026"
+       },
+       {
+        "date": "2026-10-22T16:34:39",
+        "id": 67388,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1465-de-2026/",
+        "title.rendered": "C-1465 de 2026"
+       },
+       {
+        "date": "2026-10-21T23:53:54",
+        "id": 67386,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1194-de-2026/",
+        "title.rendered": "C-1194 de 2026"
+       },
+       {
+        "date": "2026-10-21T14:19:01",
+        "id": 67378,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1491-de-2026/",
+        "title.rendered": "C-1491 de 2026"
+       },
+       {
+        "date": "2026-10-19T16:05:40",
+        "id": 67346,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1404-de-2026/",
+        "title.rendered": "C-1404 de 2026"
+       },
+       {
+        "date": "2026-10-19T12:31:42",
+        "id": 67343,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1389-de-2026/",
+        "title.rendered": "C-1389 de 2026"
+       },
+       {
+        "date": "2026-10-19T11:19:13",
+        "id": 67339,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1390-de-2026/",
+        "title.rendered": "C-1390 de 2026"
+       },
+       {
+        "date": "2026-10-19T10:27:22",
+        "id": 67329,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1504-de-2026/",
+        "title.rendered": "C-1504 de 2026"
+       },
+       {
+        "date": "2026-10-19T09:58:07",
+        "id": 67327,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1477-de-2026/",
+        "title.rendered": "C-1477 de 2026"
+       },
+       {
+        "date": "2026-10-19T09:21:43",
+        "id": 67323,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1416-de-2026/",
+        "title.rendered": "C-1416 de 2026"
+       },
+       {
+        "date": "2026-10-16T17:05:39",
+        "id": 67309,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1383-de-2026/",
+        "title.rendered": "C-1383 de 2026"
+       },
+       {
+        "date": "2026-10-14T15:33:53",
+        "id": 67287,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1396-de-2026/",
+        "title.rendered": "C-1396 de 2026"
+       },
+       {
+        "date": "2026-10-13T18:12:42",
+        "id": 67266,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1350-de-2026/",
+        "title.rendered": "C-1350 de 2026"
+       },
+       {
+        "date": "2026-10-08T10:21:36",
+        "id": 67226,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1461-de-2026/",
+        "title.rendered": "C-1461 de 2026"
+       },
+       {
+        "date": "2026-10-08T10:19:06",
+        "id": 67227,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1347-de-2026/",
+        "title.rendered": "C-1347 de 2026"
+       },
+       {
+        "date": "2026-10-01T10:03:51",
+        "id": 67161,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1402-de-2026/",
+        "title.rendered": "C-1402 de 2026"
+       },
+       {
+        "date": "2026-10-01T09:46:29",
+        "id": 67155,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1363-de-2026/",
+        "title.rendered": "C-1363 de 2026"
+       },
+       {
+        "date": "2026-10-01T09:12:13",
+        "id": 67153,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1315-de-2026/",
+        "title.rendered": "C-1315 de 2026"
+       },
+       {
+        "date": "2026-09-30T12:24:33",
+        "id": 67142,
+        "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-1435-de-2026/",
+        "title.rendered": "C-1435 de 2026"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1207,
+      "truncado": true,
+      "vistos": 20
+     },
+     "filas": 20,
+     "params": {
+      "_fields": "id,date,title,link",
+      "order": "desc",
+      "orderby": "date",
+      "per_page": 20,
+      "search": "garantias"
+     },
+     "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/conceptos"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_json"
+  }
+ ]
+}

@@ -138,6 +138,7 @@ CONECTORES_POR_DEFECTO = {
     "dane-mcp": "http://127.0.0.1:9920/mcp",
     "amenazas-mcp": "http://127.0.0.1:9930/mcp",
     "imagery-mcp": "http://127.0.0.1:9100/mcp",
+    "web-mcp": "http://127.0.0.1:9940/mcp",
 }
 
 

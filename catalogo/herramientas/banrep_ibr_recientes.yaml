@@ -1,0 +1,29 @@
+id: banrep_ibr_recientes
+version: 1
+familia: estadisticas
+fuente: banrep.ibr
+pregunta: "¿Cómo va el IBR en sus distintos plazos?"
+descripcion: >
+  Indicador bancario de referencia (IBR) del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
+  fecha y serie, con la unidad (tasa; cada plazo y modalidad es una serie (SUBJECT)). Sale del servicio SDMX oficial; mientras la licencia no
+  esté confirmada, solo responde con llaves de evaluación.
+  (Fuente: Banco de la República; licencia: por verificar.)
+entrada: {ultimas: int}
+consulta:
+  operacion: serie
+  tool: web_sdmx
+  argumentos:
+    url: "{url_fuente}"
+    params: {lastNObservations: "{ultimas}"}
+  campos: [TIME_PERIOD, OBS_VALUE, SUBJECT, UNIT_MEASURE, FREQ]
+salida: IbrRecientes
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en DF_IBR_DAILY_HIST con lastNObservations: 8 serie(s), unidad y frecuencia como
+  # dice la ficha. Los valores cambian a diario: el canario mira la forma y cuántas filas llegan.
+  entrada: {ultimas: 5}
+  minimos: {numero_registros: 40}
+  campos: [fecha, frecuencia, numero_registros, serie, unidad, valor]
+  latencia_max_ms: 20000  # SDMX del BanRep: de 7 a 11 s medidos

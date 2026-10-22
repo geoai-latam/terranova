@@ -1,0 +1,160 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:33:55+00:00",
+ "herramienta": "banrep_uvr_recientes",
+ "llamadas": [
+  {
+   "argumentos": {
+    "params": {
+     "lastNObservations": 5
+    },
+    "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_UVR_DAILY_HIST,1.0/all"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ACTIVITY",
+       "ADJUSTMENT",
+       "EXPENDITURE",
+       "FREQ",
+       "OBS_VALUE",
+       "REFERENCE_AREA",
+       "SUBJECT",
+       "TIME_PERIOD",
+       "UNIT_MEASURE"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "6.3",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261115",
+        "UNIT_MEASURE": "APC"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "6.3",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261114",
+        "UNIT_MEASURE": "APC"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "6.29",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261113",
+        "UNIT_MEASURE": "APC"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "6.29",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261112",
+        "UNIT_MEASURE": "APC"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "6.29",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261111",
+        "UNIT_MEASURE": "APC"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "421.2214",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261115",
+        "UNIT_MEASURE": "CRVU"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "421.1712",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261114",
+        "UNIT_MEASURE": "CRVU"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "421.121",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261113",
+        "UNIT_MEASURE": "CRVU"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "421.0709",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261112",
+        "UNIT_MEASURE": "CRVU"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "421.0207",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "RVU",
+        "TIME_PERIOD": "20261111",
+        "UNIT_MEASURE": "CRVU"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 10,
+      "truncado": false,
+      "vistos": 10
+     },
+     "filas": 10,
+     "params": {
+      "lastNObservations": 5
+     },
+     "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_UVR_DAILY_HIST,1.0/all"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_sdmx"
+  }
+ ]
+}
