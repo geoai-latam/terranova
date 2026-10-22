@@ -1,0 +1,292 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:40:29+00:00",
+ "herramienta": "suit_tramites_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "dd24-8p6w",
+    "max_filas": 500,
+    "order": "a_o, mes",
+    "portal": "datos.gov.co",
+    "select": "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total",
+    "where": "nit = '899999001'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "mes",
+       "nit",
+       "nombre_de_la_entidad",
+       "tr_mites_inscritos_en_l_nea",
+       "tr_mites_inscritos_presencial",
+       "tr_mites_inscritos_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2018",
+        "mes": "11",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "18"
+       },
+       {
+        "a_o": "2018",
+        "mes": "12",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "1",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "16",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "2",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "16",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "3",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "16",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "5",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "6",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "7",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "8",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "9",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "15",
+        "tr_mites_inscritos_presencial": "2",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "10",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "16",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "11",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "16",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2019",
+        "mes": "12",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "1",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "2",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "3",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "4",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "5",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "6",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "7",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "8",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "9",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "17",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "19"
+       },
+       {
+        "a_o": "2020",
+        "mes": "10",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "18",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "20"
+       },
+       {
+        "a_o": "2020",
+        "mes": "11",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "18",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "20"
+       },
+       {
+        "a_o": "2020",
+        "mes": "12",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "19",
+        "tr_mites_inscritos_presencial": "1",
+        "tr_mites_inscritos_total": "21"
+       },
+       {
+        "a_o": "2021",
+        "mes": "1",
+        "nit": "899999001",
+        "nombre_de_la_entidad": "MINISTERIO DE EDUCACION NACIONAL",
+        "tr_mites_inscritos_en_l_nea": "NULL",
+        "tr_mites_inscritos_presencial": "NULL",
+        "tr_mites_inscritos_total": "NULL"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 26,
+      "truncado": false,
+      "vistos": 26
+     },
+     "completo": true,
+     "conjunto": "dd24-8p6w",
+     "consulta": {
+      "conjunto": "dd24-8p6w",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total",
+      "where": "(nit = '899999001')"
+     },
+     "cumplen_en_el_portal": 26,
+     "filas": 26,
+     "filtro_soql": "(nit = '899999001')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

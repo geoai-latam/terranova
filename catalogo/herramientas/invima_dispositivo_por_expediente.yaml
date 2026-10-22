@@ -1,0 +1,30 @@
+id: invima_dispositivo_por_expediente
+version: 1
+familia: estadisticas
+fuente: invima.dispositivos
+pregunta: "¿Qué dispositivo médico ampara este expediente del INVIMA?"
+descripcion: >
+  Registro sanitario de un dispositivo médico u otra tecnología por su expediente en el INVIMA:
+  producto, marca, riesgo, usos, titular, estado y vencimiento.
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {expediente: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: y4qt-w6tk
+    portal: datos.gov.co
+    select: "expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad"
+    where: "expediente = '{expediente}'"
+    order: "registro_sanitario"
+    max_filas: 200
+  campos: [expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad]
+salida: DispositivoPorExpediente
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en y4qt-w6tk: el expediente 217 es cera para huesos.
+  entrada: {expediente: 217}
+  verdad: {expediente: 217, registro_sanitario: "INVIMA 2026DM-0000128-R3", titular: "JOHNSON & JOHNSON MEDTECH COLOMBIA S.A.S."}
+  campos: [estado_registro, expediente, fecha_vencimiento, grupo, marca, modalidad, nivel_riesgo, pais_titular, producto, registro_sanitario, titular, usos]
+  latencia_max_ms: 10000

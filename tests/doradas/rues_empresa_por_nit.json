@@ -1,0 +1,79 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T22:40:25+00:00",
+ "herramienta": "rues_empresa_por_nit",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "c82u-588k",
+    "max_filas": 200,
+    "order": "camara_comercio, matricula",
+    "portal": "datos.gov.co",
+    "select": "nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec",
+    "where": "nit = '899999068' AND organizacion_juridica != 'PERSONA NATURAL'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "camara_comercio",
+       "categoria_matricula",
+       "cod_ciiu_act_econ_pri",
+       "cod_ciiu_act_econ_sec",
+       "digito_verificacion",
+       "estado_matricula",
+       "fecha_matricula",
+       "matricula",
+       "nit",
+       "organizacion_juridica",
+       "razon_social",
+       "tipo_sociedad",
+       "ultimo_ano_renovado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "camara_comercio": "BOGOTA",
+        "categoria_matricula": "SOCIEDAD ó PERSONA JURIDICA PRINCIPAL ó ESAL",
+        "cod_ciiu_act_econ_pri": "0610",
+        "cod_ciiu_act_econ_sec": "0620",
+        "digito_verificacion": "1",
+        "estado_matricula": "ACTIVA",
+        "fecha_matricula": "20030718",
+        "matricula": "1291197",
+        "nit": "899999068",
+        "organizacion_juridica": "SOCIEDAD ANONIMA",
+        "razon_social": "ECOPETROL S A",
+        "tipo_sociedad": "SOCIEDAD COMERCIAL",
+        "ultimo_ano_renovado": "2026"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "c82u-588k",
+     "consulta": {
+      "conjunto": "c82u-588k",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec",
+      "where": "(nit = '899999068' AND organizacion_juridica != 'PERSONA NATURAL')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(nit = '899999068' AND organizacion_juridica != 'PERSONA NATURAL')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

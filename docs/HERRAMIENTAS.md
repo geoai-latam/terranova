@@ -34,15 +34,33 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop_sanciones_contrato` | ¿Este contrato de SECOP II tiene multas o sanciones? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_suspensiones_contrato` | ¿Este contrato de SECOP II estuvo suspendido? ¿Cuándo y por qué? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 
+## empresas
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
+| `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
+| `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+
 ## estadisticas
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
+| `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
+| `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
+| `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
+| `invima_registro_sanitario_por_expediente` | ¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
+
+## normativa
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 
 ## territorio
 
