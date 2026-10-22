@@ -119,4 +119,14 @@ historial de canarios. Lo que pasó entre el último respaldo y el incidente se 
 | Fecha | Procedimiento | Resultado |
 |---|---|---|
 | 2026-10-22 | §2 Cambio de esquema (en prueba) | `tests/test_vigilancia.py`: la fuente renombra `CODIGO_ANTERIOR`; la verdad del canario sigue igual y el canario sale `esquema_cambiado` señalando `codigo_vereda_anterior` |
-| 2026-10-22 | §4 Respaldo | El servicio `respaldo` generó el dump al arrancar (87 MB con el dataset curado, 1 llave y 1 evento). Falta la restauración |
+| 2026-10-22 | §4 Restauración (compose local) | El servicio `respaldo` generó el dump al arrancar (87 MB). Se restauró en un Postgres nuevo, como en una VM recién creada, en 15 s y sin errores: 1 llave, 1 evento, 2955 filas curadas y su versión, iguales al original. Una puerta sobre esa base respondió 200 con la llave existente y 401 sin llave |
+| 2026-10-22 | §1 Fuente caída (compose local) | Con `arcgis-mcp` detenido: `fuente_no_disponible` (502) en 3–6 s las primeras veces; con el circuito abierto, en 0,2 s y sin tocar la fuente. `rt_circuito_abierto{fuente="igac.catastro.terreno"} 1` en las dos réplicas (cada una lleva su circuito); `/metrics` da 404 desde afuera. Lo que estaba en caché siguió respondiendo 200. Los canarios salieron rojos, la alerta llegó al webhook con el detalle y `/v1/estado` mostró las fuentes en rojo. Al levantar el conector, la primera 200 llegó a los 10 s y la otra réplica se recuperó al terminar su enfriamiento (30 s). Hubo un 502 de cuerpo vacío durante la recuperación que no se repitió y que Caddy no registró |
+| 2026-10-22 | §3 Llave filtrada (compose local) | Tras `llaves revocar`, 401 por REST y por MCP en las dos réplicas a los 1,07 s, contando las propias pruebas (meta: < 5 s). `llaves listar` mostró el `ultimo_uso` de la llave |
+
+**Lecciones de los simulacros.**
+
+- El compose solo traía `arcgis-mcp`: los 10 canarios de amenazas, DANE, datos abiertos e imágenes
+  habrían salido rojos para siempre en la VM. Ya están los cinco conectores.
+- Una imagen vieja de un conector convirtió un tiempo agotado (`fuente_lenta`) en `error_interno`:
+  le faltaba el código de error del kit. **Al desplegar, las imágenes de los conectores se
+  construyen desde `main` de geo-copilot**, no se reutilizan las que haya en la máquina.
