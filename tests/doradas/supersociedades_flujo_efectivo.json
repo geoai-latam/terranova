@@ -1,0 +1,599 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:12:25+00:00",
+ "herramienta": "supersociedades_flujo_efectivo",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "ctcp-462n",
+    "max_filas": 1000,
+    "order": "fecha_corte, concepto, periodo",
+    "portal": "datos.gov.co",
+    "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+    "where": "nit = '830010665'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "concepto",
+       "fecha_corte",
+       "nit",
+       "numero_radicado",
+       "periodo",
+       "punto_entrada",
+       "taxonomia",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "concepto": "(+/-) Ajustes por disminuciones (incrementos) en otras cuentas por cobrar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-10078"
+       },
+       {
+        "concepto": "(+/-) Ajustes por el incremento (disminuci�n) de cuentas por pagar de origen comercial",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "15145"
+       },
+       {
+        "concepto": "( + ) Ajustes por gastos de depreciaci�n y amortizaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "31542"
+       },
+       {
+        "concepto": "(+/-) Ajustes por incrementos (disminuciones) en otras cuentas por pagar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "265612"
+       },
+       {
+        "concepto": "(+/-) Ajustes por la disminuci�n (incremento) de cuentas por cobrar de origen comercial",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-4554076"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al final del periodo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "6848"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al principio del periodo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "344742"
+       },
+       {
+        "concepto": "(+/-) Efectos de la variaci�n en la tasa de cambio sobre el efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "0"
+       },
+       {
+        "concepto": "Flujos de efectivo netos procedentes de (utilizados en) actividades de inversi�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4828965"
+       },
+       {
+        "concepto": "Flujos de efectivo netos procedentes de (utilizados en) actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Flujos de efectivo netos procedentes de (utilizados en) actividades de operaci�n",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-5166859"
+       },
+       {
+        "concepto": "(+) Flujos de efectivo procedentes de la p�rdida de control de subsidiarias u otros negocios",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "191145"
+       },
+       {
+        "concepto": "(+/-) Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "17267"
+       },
+       {
+        "concepto": "(+/-) Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "(+) Importes procedentes de ventas de activos intangibles",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "4637820"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-337894"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo, antes del efecto de los cambios en la tasa de cambio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo, antes del efecto de los cambios en la tasa de cambio",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-337894"
+       },
+       {
+        "concepto": "(+/-) Otras entradas (salidas) de efectivo",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-1993385"
+       },
+       {
+        "concepto": "(+/-) Otros ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1061114"
+       },
+       {
+        "concepto": "Total ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "830010665",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "1092656"
+       },
+       {
+        "concepto": "Ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-80240"
+       },
+       {
+        "concepto": "Ajustes por disminuciones (incrementos) en otras cuentas por cobrar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "83221"
+       },
+       {
+        "concepto": "Ajustes por el incremento (disminuci�n) de cuentas por pagar de origen comercial",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-28589"
+       },
+       {
+        "concepto": "Ajustes por gastos de depreciaci�n y amortizaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-10232"
+       },
+       {
+        "concepto": "Ajustes por incrementos (disminuciones) en otras cuentas por pagar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "43115"
+       },
+       {
+        "concepto": "Ajustes por la disminuci�n (incremento) de cuentas por cobrar de origen comercial",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "4647828"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al final del periodo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "50457"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al principio del periodo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016-dic-31",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "6848"
+       },
+       {
+        "concepto": "Flujos de efectivo procedentes de (utilizados en) actividades de inversi�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "14560"
+       },
+       {
+        "concepto": "Flujos de efectivo procedentes de (utilizados en) actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "29049"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Importes procedentes de ventas de propiedades, planta y equipo, clasificados como actividades de inversi�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "14560"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) de efectivo y equivalentes al efectivo",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "43609"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) en el efectivo y equivalentes al efectivo, antes del efecto de los cambios en la tasa de cambio",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "43609"
+       },
+       {
+        "concepto": "Otras entradas (salidas) de efectivo, clasificados como actividades de operaci�n",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-1115337"
+       },
+       {
+        "concepto": "Otros ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-70008"
+       },
+       {
+        "concepto": "(+/-) Ajustes por disminuciones (incrementos) en otras cuentas por cobrar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-1429"
+       },
+       {
+        "concepto": "(+/-) Ajustes por el incremento (disminuci�n) de cuentas por pagar de origen comercial",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-1"
+       },
+       {
+        "concepto": "( + ) Ajustes por gastos de depreciaci�n y amortizaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "24792"
+       },
+       {
+        "concepto": "(+/-) Ajustes por incrementos (disminuciones) en otras cuentas por pagar derivadas de las actividades de operaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-58531"
+       },
+       {
+        "concepto": "(+/-) Ajustes por la disminuci�n (incremento) de cuentas por cobrar de origen comercial",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "116"
+       },
+       {
+        "concepto": "(-) Disminuci�n de capital social y/o readquisici�n de acciones",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "852000"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al final del periodo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "47657"
+       },
+       {
+        "concepto": "Efectivo y equivalentes al efectivo al principio del periodo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "50457"
+       },
+       {
+        "concepto": "Flujos de efectivo netos procedentes de (utilizados en) actividades de financiaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-852000"
+       },
+       {
+        "concepto": "Flujos de efectivo netos procedentes de (utilizados en) actividades de operaci�n",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "849200"
+       },
+       {
+        "concepto": "(+/-) Ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1275172"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-2800"
+       },
+       {
+        "concepto": "Incremento (disminuci�n) neto de efectivo y equivalentes al efectivo, antes del efecto de los cambios en la tasa de cambio",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-2800"
+       },
+       {
+        "concepto": "(+/-) Otras entradas (salidas) de efectivo",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-390377"
+       },
+       {
+        "concepto": "(+/-) Otros ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-542"
+       },
+       {
+        "concepto": "Total ajustes para conciliar la ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "24250"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 54,
+      "truncado": false,
+      "vistos": 54
+     },
+     "completo": true,
+     "conjunto": "ctcp-462n",
+     "consulta": {
+      "conjunto": "ctcp-462n",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+      "where": "(nit = '830010665')"
+     },
+     "cumplen_en_el_portal": 54,
+     "filas": 54,
+     "filtro_soql": "(nit = '830010665')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

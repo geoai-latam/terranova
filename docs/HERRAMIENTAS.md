@@ -57,7 +57,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 |---|---|---|---|---|
 | `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
 | `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
+| `supersociedades_caratula` | ¿Qué datos generales reportó esta sociedad con sus estados financieros? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+| `supersociedades_flujo_efectivo` | ¿Cómo se movió la caja de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+| `supersociedades_otro_resultado_integral` | ¿Qué otro resultado integral reportó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+| `supersociedades_resultado_integral` | ¿Cuánto vendió, gastó y ganó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+| `supersociedades_situacion_financiera` | ¿Cómo está el balance (activos, pasivos, patrimonio) de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 
 ## estadisticas
 

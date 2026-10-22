@@ -1,0 +1,119 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:12:27+00:00",
+ "herramienta": "supersociedades_otro_resultado_integral",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "y3gh-x5g7",
+    "max_filas": 1000,
+    "order": "fecha_corte, concepto, periodo",
+    "portal": "datos.gov.co",
+    "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+    "where": "nit = '830010665'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "concepto",
+       "fecha_corte",
+       "nit",
+       "numero_radicado",
+       "periodo",
+       "punto_entrada",
+       "taxonomia",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2015",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "-84165"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2016-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2017-01-072472",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2016",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2016",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "17267"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2017-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2018-01-058390",
+        "periodo": "2017",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2017",
+        "valor": "-3520949"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Actual",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "1275172"
+       },
+       {
+        "concepto": "Ganancia (p�rdida)",
+        "fecha_corte": "2018-12-31T00:00:00.000",
+        "nit": "830010665",
+        "numero_radicado": "2019-01-055089",
+        "periodo": "Periodo Anterior",
+        "punto_entrada": "40 NIIF Pymes - Individuales",
+        "taxonomia": "01- Estados Financieros de Fin de Ejercicio - Corte 2018",
+        "valor": "-3520949"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "conjunto": "y3gh-x5g7",
+     "consulta": {
+      "conjunto": "y3gh-x5g7",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado",
+      "where": "(nit = '830010665')"
+     },
+     "cumplen_en_el_portal": 6,
+     "filas": 6,
+     "filtro_soql": "(nit = '830010665')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
