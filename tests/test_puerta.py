@@ -9,6 +9,7 @@ from fastmcp.exceptions import ToolError
 
 from terranova import puerta
 from terranova.conector import ErrorConector
+from terranova.contrato import Sobre
 
 CODIGO_CHIA = "251750000000000050067000000000"
 
@@ -75,7 +76,9 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
     r = await cliente_con.call_tool("igac_predio_en_punto", {"lon": -74.0262, "lat": 4.8619})
     sobre = r.structured_content
     assert sobre is not None
-    assert sobre["contrato"] == "rt/1"
+    # la salida cumple el contrato completo (reglas 1-9)
+    Sobre.model_validate(sobre)
+    assert sobre["contrato"] == "rt/1" and sobre["creditos"] == 10
     assert sobre["estado"] == "encontrado"
     assert sobre["datos"] == {
         "codigo_predial": CODIGO_CHIA,
@@ -99,7 +102,6 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
             "spdx": "CC-BY-SA-4.0",
             "url": "https://creativecommons.org/licenses/by-sa/4.0/",
             "uso_comercial": "si",
-            "verificada": True,
         }
         c = p["completitud"]
         assert c["vistos"] <= c["total"] and c["truncado"] == (c["vistos"] < c["total"])

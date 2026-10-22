@@ -18,6 +18,7 @@ dependencies = [
 # Ruff y mypy fijados, en la misma versión que GEO Copilot: una versión nueva no pone el CI en rojo
 # sola. Si se sube aquí, se sube también en .pre-commit-config.yaml.
 dev = [
+    "hypothesis>=6.120",
     "jsonschema>=4.23",
     "mypy==2.4.0",
     "pre-commit>=4",

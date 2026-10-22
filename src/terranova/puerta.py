@@ -9,7 +9,6 @@ import asyncio
 import os
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
-from datetime import UTC, datetime
 from typing import Annotated, Any
 
 from fastmcp import FastMCP
@@ -18,7 +17,18 @@ from mcp.types import ToolAnnotations
 from pydantic import Field
 
 from terranova.conector import Conector, ConectorMCP, ErrorConector
-from terranova.sobre import Completitud, Licencia, Procedencia, Sobre, huella
+from terranova.contrato import (
+    Cache,
+    Completitud,
+    GeoResult,
+    Licencia,
+    Procedencia,
+    Sobre,
+    ZonaUsada,
+    ahora,
+    huella,
+    nueva_solicitud_id,
+)
 
 # El nombre del servicio cambia cada mes; el corte vigente se descubre a mano hasta F1.
 CORTE_IGAC = "06_2026"
@@ -33,8 +43,8 @@ LICENCIA_IGAC_BASE = Licencia(
     spdx="CC-BY-SA-4.0",
     url="https://creativecommons.org/licenses/by-sa/4.0/",
     uso_comercial="si",
-    verificada=True,
 )
+CREDITOS_EN_VIVO = 10  # ADR-0010
 CONECTOR_ID = "arcgis-mcp"
 
 _conector: Conector | None = None
@@ -124,7 +134,7 @@ async def igac_predio_en_punto(
     conector = _conector
     if conector is None:
         raise ToolError("error_interno: la puerta no tiene conector")
-    consultado_en = datetime.now(UTC).isoformat(timespec="seconds")
+    consultado_en = ahora()
     try:
         capas = await asyncio.gather(
             *(_consultar_capa(conector, zona, lon, lat) for zona in CAPAS_TERRENO)
@@ -133,7 +143,7 @@ async def igac_predio_en_punto(
         raise ToolError(f"fuente_no_disponible: {exc}") from exc
 
     datos: dict[str, Any] = {}
-    geo_result: dict[str, Any] | None = None
+    geo_result: GeoResult | None = None
     procedencia: list[Procedencia] = []
     for capa in capas:
         respuesta = capa["respuesta"]
@@ -142,7 +152,8 @@ async def igac_predio_en_punto(
         hechos = respuesta.get("facts") or {}
         datos_capa = _datos_predio(capa["zona"], rasgos[0]["properties"]) if rasgos else {}
         if datos_capa and not datos:
-            datos, geo_result = datos_capa, _geo_result_limpio(capa["zona"], artefactos[0])
+            datos = datos_capa
+            geo_result = GeoResult.model_validate(_geo_result_limpio(capa["zona"], artefactos[0]))
         total = hechos.get("total_en_servicio")
         procedencia.append(
             Procedencia(
@@ -159,22 +170,29 @@ async def igac_predio_en_punto(
                     total=total if isinstance(total, int) else None,
                     truncado=isinstance(total, int) and len(rasgos) < total,
                 ),
+                cache=Cache(acierto=False, edad_s=0),
                 transformaciones=[],
                 conector=CONECTOR_ID,
                 huella=huella(datos_capa),
             )
         )
 
+    avisos = []
+    if any(p.completitud.total is None for p in procedencia):
+        avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
     return Sobre(
+        solicitud_id=nueva_solicitud_id(),
         herramienta="igac_predio_en_punto@1",
         estado="encontrado" if datos else "no_encontrado",
         entrada={"lon": lon, "lat": lat},
-        zona_usada={"tipo": "punto", "valor": [lon, lat], "crs": "EPSG:4326"},
+        zona_usada=ZonaUsada(tipo="punto", valor=[lon, lat], crs="EPSG:4326"),
         datos=datos,
+        huella=huella(datos),
         geo_result=geo_result,
         procedencia=procedencia,
-        avisos=[],
+        avisos=avisos,
         errores=[],
+        creditos=CREDITOS_EN_VIVO,
     )
 
 
