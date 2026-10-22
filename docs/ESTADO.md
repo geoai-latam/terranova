@@ -14,7 +14,7 @@
 | F0.4 Spike GeoResult en GEO Copilot | ✅ pintado en el navegador ([informe](spikes/F0.4-geo-result.md)); el hub desanida el sobre (geo-copilot#43) |
 | F0.5 Licencias de las fuentes M1 | ✅ decididas con evidencia en [`catalogo/licencias/m1.yaml`](../catalogo/licencias/m1.yaml): 12 a producción, 4 a evaluación (DANE, IDEAM geoservicios, SIAC, ambiente alojado en IGAC), SGC fuera |
 | F0.6 PR de amenazas y clima en GEO Copilot + Open-Meteo | ⬜ |
-| F0.7 Banco de verdades del producto (40 preguntas) | ⬜ |
+| F0.7 Banco de verdades del producto (40 preguntas) | ✅ [`catalogo/verdades_producto.yaml`](../catalogo/verdades_producto.yaml): 22 de territorio, 6 de contratación, 6 de empresas y 6 de normativa, medidas en la fuente el 2026-10-22. 26 con herramienta del catálogo (o `ficha_lugar`) y 14 de fuentes objetivo (SECOP agregado, RUES, SUIN). `tests/test_verdades.py` exige que no contradigan a los canarios |
 | F0.8 Solicitudes por derecho de petición | ⬜ (humano) |
 
 ## F1 · Contrato y catálogo
@@ -83,7 +83,6 @@
 2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
-   - **F0.7:** banco de 40 verdades medidas en la fuente.
    - **F0.8:** las solicitudes por derecho de petición están en borrador en `interno/borradores/`;
      las envía el dueño. Se sumaron DANE (redistribución del MGN y el CNPV) y SGC (la licencia de
      MIIG choca con los ítems CC BY en ArcGIS Online).
@@ -131,6 +130,11 @@
   (geo-copilot#49). En vivo, la ficha pasó de caer entera por tiempo a 13 s.
 - Agrología del IGAC (`mapas.igac.gov.co`): arranque en frío de ~45 s en la primera consulta después
   de un rato; luego 1 a 2 s. Es lo que hoy impide cumplir el p95 en vivo de la ficha.
+- RUES (`c82u-588k`, CC BY-SA): mezcla personas naturales, con nombre y cédula, y jurídicas. Una
+  herramienta futura filtra solo personas jurídicas y usa lista blanca de campos (ADR-0014). EPM no
+  está (no se matricula).
+- SUIN-Juriscol (`fiev-nid6`): el tipo va en mayúsculas («LEY») y hay errores de clasificación (la
+  Ley 2.ª de 1959 sale con materia «Administración de justicia»). Se cita lo que dice la fuente.
 - Compose: un conector caído al arrancar tumbaba la puerta, que entraba en un ciclo de reinicios.
   Ahora arranca igual. La primera llamada con el conector caído tarda unos 7 s (DNS de Docker más 3 s
   de sesión); tras 3 caídas se abre el circuito y la respuesta baja a menos de 1 s.

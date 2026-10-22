@@ -1,0 +1,300 @@
+# Banco de verdades del producto (F0.7): preguntas como las haría un usuario, cada una con una
+# verdad medida EN LA FUENTE (consulta directa, no por la puerta) y la herramienta que debería
+# responderla. `herramienta: null` = la fuente aún no está en el catálogo (fuente objetivo, M2).
+#
+# - `verdad`: valores exactos. `minimos`: la fuente crece (SECOP, RUES) y la verdad es un piso.
+# - `estado`: lo que debe decir el sobre cuando la respuesta honesta es «no hay» o «no cubre».
+# - Personas: solo personas jurídicas y agregados (ADR-0014). Nada por cédula ni por nombre.
+# - Lo usan el banco de agente (spec 04 §11.6) y `tests/test_verdades.py`, que comprueba que cada
+#   verdad con herramienta coincide con su canario.
+version: 1
+medido_en: "2026-10-22"
+verdades:
+  # --- territorio: catastro -----------------------------------------------------------------
+  - id: t01
+    familia: territorio
+    pregunta: "¿Qué predio hay en este punto de Chía (-74.0262, 4.8619)?"
+    herramienta: igac_predio_en_punto
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {codigo_predial: "251750000000000050067000000000", zona: rural, municipio_divipola: "25175"}
+    medicion: "ArcGIS R_TERRENO (Base_Catastral_Publica_del_Gestor_IGAC_06_2026, capa 14), query por punto"
+  - id: t02
+    familia: territorio
+    pregunta: "Dame los datos del predio 251750000000000050067000000000."
+    herramienta: igac_predio_por_codigo
+    entrada: {codigo: "251750000000000050067000000000"}
+    verdad: {codigo_predial_anterior: "25175000000050067000", zona: rural, municipio_divipola: "25175"}
+    medicion: "ArcGIS R_TERRENO, where CODIGO = '251750000000000050067000000000'"
+  - id: t03
+    familia: territorio
+    pregunta: "¿En qué vereda queda el punto -74.0262, 4.8619?"
+    herramienta: igac_vereda_en_punto
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {codigo_vereda: "25175000000000005", nombre_vereda: YERBABUENA}
+    medicion: "ArcGIS R_VEREDA (capa 15), query por punto"
+  - id: t04
+    familia: territorio
+    pregunta: "¿En qué manzana del casco urbano de Chía cae el punto -74.0587, 4.8633?"
+    herramienta: igac_manzana_en_punto
+    entrada: {lon: -74.0587, lat: 4.8633}
+    verdad: {codigo_manzana: "25175010000000043", codigo_barrio: "2517501000000"}
+    medicion: "ArcGIS U_MANZANA, query por punto"
+  - id: t05
+    familia: territorio
+    pregunta: "¿Cuántas construcciones tiene el predio urbano 251750100000000430026000000000 y de cuántos pisos?"
+    herramienta: igac_construcciones_en_predio
+    entrada: {codigo: "251750100000000430026000000000"}
+    verdad: {numero_construcciones: 2, numero_pisos: 3}
+    medicion: "ArcGIS R_CONSTRUCCION + U_CONSTRUCCION, where TERRENO_CODIGO"
+  - id: t06
+    familia: territorio
+    pregunta: "¿Hay datos del catastro IGAC para un predio en Bogotá (-74.0721, 4.711)?"
+    herramienta: igac_predio_en_punto
+    entrada: {lon: -74.0721, lat: 4.711}
+    estado: fuera_de_cobertura
+    medicion: "Bogotá la gestiona la UAECD: 0 sectores de 11001 en la base pública (catalogo/cobertura/cobertura_catastral.yaml, F1.5)"
+  # --- territorio: suelo y restricciones ----------------------------------------------------
+  - id: t07
+    familia: territorio
+    pregunta: "¿Para qué es apta la tierra en -74.0262, 4.8619?"
+    herramienta: igac_vocacion_uso_en_punto
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {unidad_vocacion: CTIf, vocacion: "Agrícola", uso_principal: "Cultivos transitorios intensivos de clima frío"}
+    medicion: "MapServer agrologia/vocaciondeusoterritorionacional/0, query por punto"
+  - id: t08
+    familia: territorio
+    pregunta: "¿Qué capacidad de uso tiene la tierra en -74.0262, 4.8619?"
+    herramienta: igac_capacidad_uso_en_punto
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {unidad_capacidad: "2c", descripcion_capacidad: "Capacidad alta para agricultura"}
+    medicion: "MapServer agrologia/capacidaddeusodelastierrasterritorionacional/0, query por punto"
+  - id: t09
+    familia: territorio
+    pregunta: "¿Ese mismo terreno (-74.0262, 4.8619) está bien usado o en conflicto?"
+    herramienta: igac_conflictos_uso_en_punto
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {unidad_conflicto: U2, tipo_conflicto: "Subutilización moderada"}
+    medicion: "MapServer agrologia/conflictos2012territorionacional/0, query por punto"
+  - id: t10
+    familia: territorio
+    pregunta: "¿El punto -73.75, 4.55 está dentro de un parque nacional?"
+    herramienta: pnn_areas_protegidas_en_punto
+    entrada: {lon: -73.75, lat: 4.55}
+    verdad: {nombre: Chingaza, categoria: Parque Nacional Natural}
+    medicion: "RUNAP en bloque (storage.googleapis.com/pnn_geodatabase/runap/latest.zip) y servicio ArcGIS del RUNAP"
+  - id: t11
+    familia: territorio
+    pregunta: "¿Cuántas áreas protegidas del RUNAP tocan el rectángulo -74.5, 4.0, -73.5, 5.0?"
+    herramienta: pnn_areas_protegidas_en_zona
+    entrada: {bbox: [-74.5, 4.0, -73.5, 5.0]}
+    verdad: {total: 169}
+    medicion: "servicio ArcGIS del RUNAP, returnCountOnly con el bbox"
+  - id: t12
+    familia: territorio
+    pregunta: "¿Qué resguardo indígena hay en -70.5, 0.8 y con qué acto se formalizó?"
+    herramienta: ant_resguardos_en_punto
+    entrada: {lon: -70.5, lat: 0.8}
+    verdad: {nombre: "Resguardo Indígena Vaupes", municipio_divipola: "97001", numero_acto: "378"}
+    medicion: "ANT Resguardos Indígenas Formalizados (ArcGIS), query por punto"
+  - id: t13
+    familia: territorio
+    pregunta: "¿El punto -74.46, 3.88 está en una zona de reserva campesina?"
+    herramienta: ant_zonas_reserva_campesina_en_punto
+    entrada: {lon: -74.46, lat: 3.88}
+    verdad: {nombre: Cabrera, acto_administrativo: "Resolución 046 de 2000"}
+    medicion: "ANT Zonas de Reserva Campesina constituidas (ArcGIS), query por punto"
+  - id: t14
+    familia: territorio
+    pregunta: "¿Qué restricciones (áreas protegidas, resguardos, reservas campesinas) tiene el predio de Chía en -74.0262, 4.8619?"
+    herramienta: ficha_lugar
+    entrada: {lon: -74.0262, lat: 4.8619}
+    verdad: {areas_protegidas: no_encontrado, resguardos: no_encontrado, reservas_campesinas: no_encontrado}
+    medicion: "punto contra el GeoParquet curado restricciones v0-2026-10-22-fc56a228 (RUNAP + ANT en bloque, F4.1)"
+  # --- territorio: ambiente y estadísticas ---------------------------------------------------
+  - id: t15
+    familia: territorio
+    pregunta: "¿Qué cobertura domina alrededor de -74.152, 4.628 (Bogotá)?"
+    herramienta: esa_cobertura_suelo_en_punto
+    entrada: {lon: -74.152, lat: 4.628}
+    verdad: {codigo_clase_dominante: 50, clase_dominante: Construido}
+    medicion: "ESA WorldCover 2021 v200, tesela en Planetary Computer, píxeles del entorno"
+  - id: t16
+    familia: territorio
+    pregunta: "¿Hay alguna estación del IDEAM junto a la Universidad de La Sabana?"
+    herramienta: ideam_estaciones_en_zona
+    entrada: {bbox: [-74.035, 4.852, -74.030, 4.856]}
+    verdad: {codigo_estacion: "2120500135", estado: Activa}
+    medicion: "datos.gov.co hp9r-jxuu, where por latitud/longitud"
+  - id: t17
+    familia: territorio
+    pregunta: "¿Cuántos sismos de magnitud 4 o más hubo en Colombia y alrededores en 2024, y cuál fue el mayor?"
+    herramienta: usgs_sismos_en_zona
+    entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-01-01", hasta: "2025-01-01", magnitud_min: 4.0}
+    verdad: {total_en_catalogo: 139, magnitud_maxima: 5.6}
+    medicion: "earthquake.usgs.gov/fdsnws/event/1/count y query con el bbox"
+  - id: t18
+    familia: territorio
+    pregunta: "¿Ha temblado (M≥3) a menos de ~55 km de Chía entre el 22-10-2025 y el 22-10-2026?"
+    herramienta: usgs_sismos_en_zona
+    entrada: {bbox: [-74.5262, 4.3619, -73.5262, 5.3619], desde: "2025-10-22", hasta: "2026-10-22", magnitud_min: 3.0}
+    verdad: {total_en_catalogo: 0}
+    medicion: "earthquake.usgs.gov/fdsnws/event/1/count?minmagnitude=3&… = 0"
+  - id: t19
+    familia: territorio
+    pregunta: "¿Cuánto llovió en Bogotá en enero de 2023?"
+    herramienta: open_meteo_clima_serie
+    entrada: {lon: -74.0721, lat: 4.711, desde: "2023-01-01", hasta: "2023-01-31"}
+    verdad: {precipitacion_total_mm: 91.5, temperatura_media_c: 12.0}
+    medicion: "archive-api.open-meteo.com (ERA5), suma diaria"
+  - id: t20
+    familia: territorio
+    pregunta: "¿Cuánta gente vive en Bogotá según el censo de 2018?"
+    herramienta: dane_poblacion_municipio
+    entrada: {municipio_divipola: "11001"}
+    verdad: {poblacion_censada: 7181469, viviendas: 2523519, hogares: 2514482}
+    medicion: "DANE CNPV 2018, resultados por municipio"
+  - id: t21
+    familia: territorio
+    pregunta: "¿Cuántas hectáreas rurales de Cota tienen precio de referencia de la UPRA?"
+    herramienta: upra_precio_tierra_rural_municipio
+    entrada: {municipio_divipola: "25214"}
+    verdad: {poligonos: 116, area_ha_total: 4315.86}
+    medicion: "datos.gov.co rttb-pk7n, where cod_dane_m = '25214'"
+  - id: t22
+    familia: territorio
+    pregunta: "¿Cuánto vale la tierra rural en Chía según la UPRA?"
+    herramienta: upra_precio_tierra_rural_municipio
+    entrada: {municipio_divipola: "25175"}
+    estado: no_encontrado
+    medicion: "datos.gov.co rttb-pk7n: ninguna fila con cod_dane_m 25175 ni municipio Chía"
+  # --- contratación (SECOP II, cce.secop2.contratos) -------------------------------------------
+  - id: c01
+    familia: contratacion
+    pregunta: "¿Quién firmó el contrato CO1.PCCNTR.5141215, con quién y por cuánto?"
+    herramienta: secop_contrato_por_id
+    entrada: {id_contrato: CO1.PCCNTR.5141215}
+    verdad: {entidad: IDUVI, contratista: DAVAN SAS, valor: 2602628368, fecha_firma: "2023-06-26", estado: Cerrado}
+    medicion: "datos.gov.co jbjy-vk9h, where id_contrato = 'CO1.PCCNTR.5141215'"
+  - id: c02
+    familia: contratacion
+    pregunta: "¿Cuántos contratos públicos se han firmado en Chía y por cuánto?"
+    herramienta: secop_contratos_municipio
+    entrada: {municipio: Chía, departamento: Cundinamarca}
+    minimos: {contratos: 12149, valor_total: 1289946058879.80}
+    medicion: "datos.gov.co jbjy-vk9h, count y sum con ciudad = 'Chía' AND departamento = 'Cundinamarca'"
+  - id: c03
+    familia: contratacion
+    pregunta: "¿Cuántos contratos firmó la Alcaldía de Chía en 2023 y por cuánto?"
+    herramienta: null
+    fuente: cce.secop2.contratos
+    verdad: {contratos: 924, valor_total: 128866224107.24}
+    medicion: "jbjy-vk9h, nit_entidad = '899999172' y fecha_de_firma en 2023: count(*) y sum(valor_del_contrato)"
+  - id: c04
+    familia: contratacion
+    pregunta: "¿Qué tipo de contrato usó más la Alcaldía de Chía en 2023?"
+    herramienta: null
+    fuente: cce.secop2.contratos
+    verdad: {tipo_de_contrato: "Prestación de servicios", contratos: 784}
+    medicion: "jbjy-vk9h, mismo filtro, group by tipo_de_contrato"
+  - id: c05
+    familia: contratacion
+    pregunta: "¿Cuántos contratos de la Alcaldía de Chía en 2023 fueron por contratación directa?"
+    herramienta: null
+    fuente: cce.secop2.contratos
+    verdad: {modalidad_de_contratacion: "Contratación directa", contratos: 747}
+    medicion: "jbjy-vk9h, mismo filtro, group by modalidad_de_contratacion (aparte, 48 «Contratación Directa (con ofertas)»)"
+  - id: c06
+    familia: contratacion
+    pregunta: "¿Qué entidad ha firmado más contratos en Chía?"
+    herramienta: null
+    fuente: cce.secop2.contratos
+    verdad: {nombre_entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: "899999172"}
+    minimos: {contratos: 5920}
+    medicion: "jbjy-vk9h, ciudad = 'Chía', group by nombre_entidad, nit_entidad"
+  # --- empresas (RUES, Confecámaras, datos.gov.co c82u-588k; solo personas jurídicas) ---------
+  - id: e01
+    familia: empresas
+    pregunta: "¿Ecopetrol (NIT 899999068) tiene la matrícula mercantil activa y en qué cámara?"
+    herramienta: null
+    fuente: confecamaras.rues
+    verdad: {razon_social: "ECOPETROL S A", camara_comercio: BOGOTA, matricula: "1291197", estado_matricula: ACTIVA}
+    medicion: "c82u-588k, where nit = '899999068'"
+  - id: e02
+    familia: empresas
+    pregunta: "¿Cuál es la actividad económica principal de Ecopetrol y hasta qué año renovó?"
+    herramienta: null
+    fuente: confecamaras.rues
+    verdad: {cod_ciiu_act_econ_pri: "0610", ultimo_ano_renovado: "2026"}
+    medicion: "c82u-588k, where nit = '899999068'"
+  - id: e03
+    familia: empresas
+    pregunta: "¿Desde cuándo está matriculada ISA (NIT 860016610) y en qué cámara?"
+    herramienta: null
+    fuente: confecamaras.rues
+    verdad: {razon_social: "INTERCONEXION ELECTRICA S.A. E.S.P.", camara_comercio: "MEDELLIN PARA ANTIOQUIA", fecha_matricula: "1967-09-01"}
+    medicion: "c82u-588k, where nit = '860016610'"
+  - id: e04
+    familia: empresas
+    pregunta: "¿EPM (NIT 890904996) aparece en el registro mercantil?"
+    herramienta: null
+    fuente: confecamaras.rues
+    estado: no_encontrado
+    medicion: "c82u-588k, where nit = '890904996': 0 filas (empresa industrial y comercial del Estado)"
+  - id: e05
+    familia: empresas
+    pregunta: "¿Cuántas cámaras de comercio reportan al RUES?"
+    herramienta: null
+    fuente: confecamaras.rues
+    verdad: {camaras: 58}
+    medicion: "c82u-588k, count(distinct camara_comercio)"
+  - id: e06
+    familia: empresas
+    pregunta: "¿Cuántas SAS hay registradas en Colombia?"
+    herramienta: null
+    fuente: confecamaras.rues
+    minimos: {sas: 1311910}
+    medicion: "c82u-588k, group by organizacion_juridica: SOCIEDADES POR ACCIONES SIMPLIFICADAS SAS (incluye canceladas)"
+  # --- normativa (SUIN-Juriscol, MinJusticia, datos.gov.co fiev-nid6) --------------------------
+  - id: n01
+    familia: normativa
+    pregunta: "¿La Ley 1581 de 2012 (datos personales) sigue vigente y qué tipo de ley es?"
+    herramienta: null
+    fuente: minjusticia.suin
+    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos: 30}
+    medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '1581' AND a_o = '2012'"
+  - id: n02
+    familia: normativa
+    pregunta: "¿Cuántos artículos tiene la ley de transparencia (Ley 1712 de 2014)?"
+    herramienta: null
+    fuente: minjusticia.suin
+    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos: 33}
+    medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '1712' AND a_o = '2014'"
+  - id: n03
+    familia: normativa
+    pregunta: "¿Qué entidad expidió el Decreto 1077 de 2015 y cuántos artículos tiene?"
+    herramienta: null
+    fuente: minjusticia.suin
+    verdad: {subtipo: "DECRETO ÚNICO", entidad: "MINISTERIO DE VIVIENDA, CIUDAD Y TERRITORIO", articulos: 1931, vigencia: Vigente}
+    medicion: "fiev-nid6, where tipo = 'DECRETO' AND n_mero = '1077' AND a_o = '2015'"
+  - id: n04
+    familia: normativa
+    pregunta: "¿La Ley 99 de 1993 (crea el Ministerio de Ambiente) está vigente?"
+    herramienta: null
+    fuente: minjusticia.suin
+    verdad: {vigencia: Vigente, sector: "Ambiente y Desarrollo Sostenible", articulos: 122}
+    medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '99' AND a_o = '1993'"
+  - id: n05
+    familia: normativa
+    pregunta: "¿La Ley 2.ª de 1959 (reservas forestales) sigue vigente?"
+    herramienta: null
+    fuente: minjusticia.suin
+    verdad: {vigencia: Vigente, articulos: 18}
+    medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '2' AND a_o = '1959'"
+    nota: "SUIN la clasifica con materia «Administración de justicia» y sector Justicia: error de la fuente; una respuesta honesta cita lo que dice SUIN, no lo corrige"
+  - id: n06
+    familia: normativa
+    pregunta: "¿Cuántas leyes de 2020 están cargadas en SUIN-Juriscol?"
+    herramienta: null
+    fuente: minjusticia.suin
+    minimos: {leyes: 60}
+    medicion: "fiev-nid6, count(*) where tipo = 'LEY' AND a_o = '2020'"
