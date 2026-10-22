@@ -3,6 +3,9 @@
 
 encode zstd gzip
 
+# /metrics es de la red interna (Prometheus lee cada réplica directo): no sale por el borde
+respond /metrics 404
+
 reverse_proxy puerta-a:8100 puerta-b:8100 {
 	lb_policy least_conn
 	health_uri /v1/fuentes

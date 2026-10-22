@@ -108,10 +108,40 @@ services:
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
 
+  # F7.2: Prometheus (alertas de los SLO) y Grafana (tablero). Solo con el perfil:
+  #   docker compose -f docker/compose.yml --env-file docker/.env --profile observabilidad up -d
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    profiles: [observabilidad]
+    restart: unless-stopped
+    volumes:
+      - ./observabilidad/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./observabilidad/reglas.yml:/etc/prometheus/reglas.yml:ro
+      - prometheus_datos:/prometheus
+    networks: [interna]
+
+  grafana:
+    image: grafana/grafana:12.0.2
+    profiles: [observabilidad]
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${TERRANOVA_GRAFANA_PUERTO:-3000}:3000"  # solo en la máquina
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?define GRAFANA_PASSWORD}
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    volumes:
+      - ./observabilidad/grafana/datasources.yml:/etc/grafana/provisioning/datasources/terranova.yml:ro
+      - ./observabilidad/grafana/tableros.yml:/etc/grafana/provisioning/dashboards/terranova.yml:ro
+      - ./observabilidad/grafana/tableros:/var/lib/grafana/dashboards:ro
+    depends_on: [prometheus]
+    networks: [interna]
+
 networks:
   borde: {}
   interna: {}
 
 volumes:
   postgres_datos: {}
+  prometheus_datos: {}
   caddy_datos: {}

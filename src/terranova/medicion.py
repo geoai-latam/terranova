@@ -64,6 +64,10 @@ class OutboxSql:
             ),
         )
 
+    def pendientes(self) -> int:
+        filas, _ = self._bd.ejecutar("SELECT COUNT(*) FROM eventos WHERE enviado = 0")
+        return int(filas[0][0])
+
     def eventos(self, org: str | None = None) -> list[Evento]:
         filas, _ = self._bd.ejecutar(
             "SELECT solicitud_id, org, llave_id, herramienta, creditos, resultado, servido_desde, "

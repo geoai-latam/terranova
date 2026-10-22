@@ -61,7 +61,8 @@
 | Spec F7 | Estado |
 |---|---|
 | F7.1 Canarios diarios | 🟨 `terranova canarios [--cada-horas 24]` (`src/terranova/vigilancia.py`). Corre los 20 canarios en serie, sin caché, y guarda cada resultado (SQLite o Postgres). Con `TERRANOVA_ALERTA_URL`, avisa por POST lo que salga rojo. `GET /v1/estado` da el estado por fuente. El compose suma el servicio `canarios`. Primera corrida en vivo (2026-10-22): 17 verdes; rojos la capacidad de uso del IGAC (20 s, arranque en frío) y los dos de RUNAP (el servicio de Parques tarda 60 s por punto). Falta la aceptación: 7 días seguidos registrados en un despliegue |
-| F7.2 a F7.4 | ⬜ |
+| F7.2 Métricas y tablero | 🟨 `/metrics` en cada réplica con las métricas de la spec 05 §12.2 (`src/terranova/metricas.py`), con etiquetas de un conjunto cerrado; Caddy lo bloquea en el borde. Prometheus y Grafana van en el perfil `observabilidad` del compose, con 8 reglas de alerta de los SLO y de operación, probadas con `promtool test rules` en CI, y un tablero de 12 paneles. Falta verlo con tráfico real en un despliegue |
+| F7.3 y F7.4 | ⬜ |
 
 ## Decisiones tomadas
 

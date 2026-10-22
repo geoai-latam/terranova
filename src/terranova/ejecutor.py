@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Literal
 
+from terranova import metricas
 from terranova.cache import RETENCION_S, Almacen
 from terranova.cache import clave as clave_cache
 from terranova.catalogo import (
@@ -378,10 +379,15 @@ class Ejecutor:
             )
 
         async def una() -> dict[str, Any]:
+            inicio = time.monotonic()
             try:
                 return await c.llamar(tool, argumentos)
             except ErrorConector as exc:
                 raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
+            finally:
+                metricas.FUENTE_LATENCIA.labels(fuente_id or conector).observe(
+                    time.monotonic() - inicio
+                )
 
         if self.proteccion is None:
             return await una()
@@ -414,6 +420,7 @@ class Ejecutor:
         if self.almacen is not None and frescura == "normal":
             guardado = await self.almacen.leer(k)
             if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
+                metricas.CACHE_ACIERTOS.inc()
                 return self._desde_cache(guardado, "cache")
         try:
             sobre = await self._desde_fuente(h, fuente, valores)

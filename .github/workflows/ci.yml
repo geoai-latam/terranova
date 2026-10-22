@@ -117,6 +117,19 @@ jobs:
           if [ "$rc" -eq 124 ] || [ "$rc" -eq 0 ]; then echo "arrancó sin pimienta (rc=$rc)"; exit 1; fi
           echo "no arranca sin pimienta (rc=$rc): bien"
 
+  observabilidad:
+    name: observabilidad (reglas de Prometheus)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: promtool check config y test rules
+        run: |
+          docker run --rm --entrypoint promtool -w /o -v "$PWD/docker/observabilidad:/o:ro"             -v "$PWD/docker/observabilidad/reglas.yml:/etc/prometheus/reglas.yml:ro"             prom/prometheus:v3.5.0 check config prometheus.yml
+          docker run --rm --entrypoint promtool -w /o -v "$PWD/docker/observabilidad:/o:ro"             prom/prometheus:v3.5.0 test rules reglas_test.yml
+          python3 -c "import json; json.load(open('docker/observabilidad/grafana/tableros/terranova.json'))"
+
   datasets:
     name: datasets (restricciones, sin red)
     runs-on: ubuntu-latest

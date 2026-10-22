@@ -18,12 +18,13 @@ from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse, PlainTextResponse
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
 from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
-from terranova import puerta
+from terranova import metricas, puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
 from terranova.cuota import NIVELES, mes
@@ -286,6 +287,11 @@ def crear_api() -> FastAPI:
             "modo": f.modo,
             "estado": f.estado,
         }
+
+    @api.get("/metrics", include_in_schema=False)
+    async def metricas_prometheus() -> Response:
+        """Prometheus (F7.2). Caddy no lo deja salir a internet: solo la red interna."""
+        return Response(generate_latest(metricas.REGISTRO), media_type=CONTENT_TYPE_LATEST)
 
     @api.get("/v1/estado", tags=["catálogo"], operation_id="ver_estado")
     async def estado() -> list[dict[str, Any]]:
