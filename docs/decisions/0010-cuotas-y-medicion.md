@@ -1,6 +1,6 @@
 # ADR-0010 · Cuotas y medición
 
-- **Estado:** propuesta.
+- **Estado:** aceptada (2026-10-21).
 - **Decisión:**
   - La unidad de consumo es el **crédito**, como en otros servicios de datos de gobierno, para poder comparar:
     - `en_vivo` cuesta 10;
@@ -13,7 +13,9 @@
   - Tasa por llave con token bucket en Redis (script atómico) y saldo mensual en Postgres.
   - Un evento de uso por solicitud (`solicitud_id` único) en un outbox. La medición nunca hace fallar
     la respuesta.
-  - 402 al agotar el saldo; 429 con `Retry-After` al exceder la tasa; encabezados `RateLimit-*`.
+  - 429 tanto al exceder la tasa (`limite_tasa`) como al agotar el saldo del mes (`saldo_agotado`),
+    siempre con `Retry-After` (para el saldo, hasta el reinicio del mes) y encabezados `RateLimit-*`.
+    No se usa 402: el servicio es gratuito (ADR-0020) y no hay nada que pagar.
 - **Niveles gratuitos propuestos:**
 
   | Nivel | Créditos al mes | Para |
@@ -22,3 +24,4 @@
   | ampliado | 200 000 | entidades públicas, academia, proyectos abiertos (a pedido) |
 
 - **Más adelante:** si algún día se cobra, el medidor ya existe y la pasarela se decide entonces.
+- **Validación (2026-10-21):** Cambiado 402 → 429 `saldo_agotado`: en un servicio gratuito no hay nada que pagar. Spec 01, E2E-04 y F3.3 quedan alineados.

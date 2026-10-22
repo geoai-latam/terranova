@@ -1,6 +1,6 @@
 # ADR-0006 · Una herramienta por pregunta, generada del catálogo
 
-- **Estado:** propuesta.
+- **Estado:** aceptada (2026-10-21).
 - **Contexto:** los servicios comerciales de datos de gobierno exponen una herramienta por pregunta y les funciona; el diseño previo
   (7 operaciones genéricas con `fuente=`) obliga al agente a conocer los identificadores. Con 150
   herramientas, cargar todas en un cliente cuesta contexto.
@@ -13,3 +13,4 @@
   (5) `buscar_herramientas` para descubrir sin cargar todo.
 - **Confirmación:** banco de agente ([specs/04-pruebas.md](../specs/04-pruebas.md)): tasa de herramienta correcta ≥ 90 % con `/mcp` completo y
   con un perfil.
+- **Validación (2026-10-21):** Sin alternativa mejor medida. La confirmación (≥ 90 % de herramienta correcta) queda para el banco de agente, antes de M1.

@@ -48,7 +48,7 @@ día), M (1–3 días), L (> 3 días) de trabajo enfocado.
 |---|---|---|---|
 | F3.1 | Generador de adaptadores REST + MCP desde el catálogo; perfiles por familia | prueba de paridad verde para todas las herramientas | L |
 | F3.2 | Identidad: orgs, llaves, scopes, CLI `rt llaves crear/revocar/listar` | matriz de permisos; revocación < 5 s | M |
-| F3.3 | Cuota (Redis) y saldo; 402/429 con encabezados | prueba de concurrencia: sin sobreconsumo con 50 llamadas simultáneas | M |
+| F3.3 | Cuota (Redis) y saldo; 429 (`limite_tasa`, `saldo_agotado`) con encabezados | prueba de concurrencia: sin sobreconsumo con 50 llamadas simultáneas | M |
 | F3.4 | Medición: outbox con `solicitud_id` único; no descuenta fallas ni caché | pruebas: reintento idempotente no duplica; falla del outbox no rompe la respuesta | M |
 | F3.5 | Errores RFC 9457 y su espejo MCP | Schemathesis sin 5xx ni violaciones de esquema | S |
 | F3.6 | OpenAPI 3.1, `llms.txt`, server card, documentación generada | Schemathesis corre sobre el OpenAPI publicado | S |

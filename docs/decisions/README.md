@@ -5,24 +5,24 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | # | Decisión | Estado |
 |---|---|---|
 | 0001 | Repo público `terranova` (Apache 2.0 + CC BY-SA para datos); conectores siguen en GEO_COPILOT | **aceptada** |
-| 0002 | La puerta es un servicio nuevo que llama a los conectores por MCP en red interna | propuesta |
-| 0003 | FastMCP 4.1.x fijado en la puerta; conectores en `mcp` 1.28 hasta migrarlos aparte | propuesta (spike F0) |
-| 0004 | Un núcleo, dos adaptadores (REST y MCP) desde los mismos modelos | propuesta |
-| 0005 | Contrato `rt/1` con procedencia por fuente, compatible con GeoResult | propuesta |
-| 0006 | Una herramienta por pregunta, generada del catálogo; perfiles MCP por familia | propuesta |
-| 0007 | Catálogo como código con compuerta de licencia y lista blanca de campos | propuesta |
-| 0008 | En vivo por defecto; copia y curado solo cuando agregan valor; caché con frescura declarada | propuesta |
-| 0009 | Llaves API por organización ahora; OAuth 2.1 después | propuesta |
-| 0010 | Créditos como unidad de cuota por llave (Redis) y medición por evento; fallas y caché no descuentan | propuesta |
-| 0011 | Errores RFC 9457 con código estable, idénticos en REST y MCP | propuesta |
-| 0012 | La puerta no usa LLM | propuesta |
-| 0013 | Observabilidad OTel + Prometheus; canarios en el servidor | propuesta |
-| 0014 | Datos de personas fuera del MVP; producto aparte si se decide | propuesta |
-| 0015 | Despliegue en una VM con Docker Compose y Caddy | propuesta |
-| 0016 | Versión en la URL, cambios aditivos, `Deprecation`/`Sunset` | propuesta |
-| 0017 | Lotes de 50 y trabajos lentos con `Prefer: wait` → 202 | propuesta (M2) |
-| 0018 | Política de acceso: API/bulk sí, HTML público con cortesía, backend interno solo con permiso, captcha nunca | propuesta |
-| 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | propuesta |
+| 0002 | La puerta es un servicio nuevo que llama a los conectores por MCP en red interna | **aceptada** |
+| 0003 | FastMCP 4.1.x fijado en la puerta; conectores en `mcp` 1.28 hasta migrarlos aparte | **aceptada** |
+| 0004 | Un núcleo, dos adaptadores (REST y MCP) desde los mismos modelos | **aceptada** |
+| 0005 | Contrato `rt/1` con procedencia por fuente, compatible con GeoResult | **aceptada** |
+| 0006 | Una herramienta por pregunta, generada del catálogo; perfiles MCP por familia | **aceptada** |
+| 0007 | Catálogo como código con compuerta de licencia y lista blanca de campos | **aceptada** |
+| 0008 | En vivo por defecto; copia y curado solo cuando agregan valor; caché con frescura declarada | **aceptada** |
+| 0009 | Llaves API por organización ahora; OAuth 2.1 después | **aceptada** |
+| 0010 | Créditos como unidad de cuota por llave (Redis) y medición por evento; fallas y caché no descuentan; 429 al agotar | **aceptada** |
+| 0011 | Errores RFC 9457 con código estable, idénticos en REST y MCP | **aceptada** |
+| 0012 | La puerta no usa LLM | **aceptada** |
+| 0013 | Observabilidad OTel + Prometheus; canarios diarios (Actions y servidor) | **aceptada** |
+| 0014 | Datos de personas fuera del MVP; producto aparte si se decide | **aceptada** |
+| 0015 | Despliegue en una VM con Docker Compose y Caddy | **aceptada** |
+| 0016 | Versión en la URL, cambios aditivos, `Deprecation`/`Sunset` | **aceptada** |
+| 0017 | Lotes de 50 y trabajos lentos con `Prefer: wait` → 202 | **aceptada** |
+| 0018 | Política de acceso: API/bulk sí, HTML público con cortesía, backend interno solo con permiso escrito (en ningún plan sin él), captcha nunca | **aceptada** |
+| 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | **aceptada** |
 | 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | **aceptada** |
 
 - [ADR-0001 · Repo público `terranova`](0001-repo-publico-terranova.md)

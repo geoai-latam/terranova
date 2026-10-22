@@ -61,9 +61,9 @@
 | `zona_demasiado_grande` | 400 | polígono o bbox sobre el tope de la herramienta | no |
 | `no_autenticado` | 401 | falta llave o es inválida | no |
 | `sin_permiso` | 403 | la llave no tiene el scope | no |
-| `licencia_no_habilitada` | 403 | fuente sin uso comercial verificado para esta llave | no |
+| `licencia_no_habilitada` | 403 | fuente con licencia `por_verificar` y llave que no es de evaluación (ADR-0007) | no |
 | `no_existe` | 404 | herramienta o recurso inexistente | no |
-| `saldo_agotado` | 402 | créditos del mes agotados | no |
+| `saldo_agotado` | 429 | créditos del mes agotados (con `Retry-After` hasta el reinicio del mes; sin 402: es gratuito) | no |
 | `limite_tasa` | 429 | exceso de tasa (con `Retry-After`) | no |
 | `fuente_no_disponible` | 502 | la fuente respondió error o no conecta | no |
 | `fuente_respuesta_invalida` | 502 | la fuente cambió de esquema o respondió basura | no |
