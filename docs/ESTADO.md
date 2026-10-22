@@ -4,13 +4,13 @@
 
 ## Dónde estamos
 
-**Fase F0 · Cimientos y decisiones.** Esqueleto Python listo (F0.1); todavía sin lógica.
+**Fase F0 · Cimientos y decisiones.** F0.1 y F0.3 cerradas: hay esqueleto y una puerta mínima que responde por MCP.
 
 | Spec F0 | Estado |
 |---|---|
 | F0.1 Repo y estructura | ✅ `pyproject` (uv, Python 3.13), ruff y mypy estricto fijados, pytest, pre-commit, CI; `make check` verde |
 | F0.2 ADR aceptadas | 🟡 0001 (repo público) y 0020 (gratuito) aceptadas; las demás, **propuestas** |
-| F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ⬜ |
+| F0.3 Spike de protocolo (FastMCP 4.1 ↔ conector `mcp` 1.28, Claude Code, Inspector) | ✅ las tres pruebas de ADR-0003 pasan; salto p95 3,1 ms ([informe](spikes/F0.3-protocolo.md)) |
 | F0.4 Spike GeoResult en GEO Copilot | ⬜ |
 | F0.5 Licencias de las fuentes M1 | ⬜ (humano) |
 | F0.6 PR de amenazas y clima en GEO Copilot + Open-Meteo | ⬜ |
@@ -36,13 +36,10 @@
 
 ## Siguiente paso concreto
 
-1. **F0.3:** spike de protocolo, en este orden:
-   1. Puerta FastMCP 4.1 mínima con una herramienta (`igac_predio_en_punto`) que llama a `ogc-mcp` o
-      `arcgis-mcp` de GEO Copilot.
-   2. Conectarla desde Claude Code y MCP Inspector.
-   3. Medir el salto interno (p95 < 50 ms).
-2. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de esa respuesta, verificado en el
-   navegador.
+1. **F0.4:** el hub de GEO Copilot pinta el bloque `geo_result` de `igac_predio_en_punto`, verificado en
+   el navegador. La puerta ya devuelve el `geo_result` del conector tal cual.
+2. **F0.2:** revisar y aceptar (o cambiar) las ADR 0002–0019. ADR-0002 y ADR-0003 ya tienen su
+   confirmación medida en el informe del spike.
 
 Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (contrato y catálogo).
 
@@ -50,7 +47,7 @@ Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (co
 
 | Verdad | Valor |
 |---|---|
-| Predio en (-74.0262, 4.8619), Chía | `251750000000000050067000000000`, ~1 s |
+| Predio en (-74.0262, 4.8619), Chía | `251750000000000050067000000000` (R_TERRENO, corte 06_2026), ~0,5 s directo |
 | SECOP, contratos de Chía | 12 147 contratos, $1,29 billones, 1,7 s |
 | RUNAP en el bbox de prueba | 169 áreas |
 | Población de Bogotá (CNPV 2018) | 7 181 469 |
@@ -65,6 +62,11 @@ Con F0.1–F0.4 verdes y las ADR aceptadas se cierra el gate F0 y empieza F1 (co
 | FastMCP | 4.1.3 |
 | SDK `mcp` (Python) | 2.3.0 (los conectores de GEO Copilot siguen en 1.28.1) |
 | Herramientas en los conectores de GEO Copilot | 49, en 12 servicios |
+
+## Hallazgos abiertos
+
+- IGAC: `codigo_municipio` errado en la fuente (Chía sale `23175`). Hace falta un canario en F1.
+- IGAC: el último corte mensual es `06_2026`; revisar `Base_Catastral_Publica_IGAC_de_octubre` en F1.5.
 
 ## Cómo correr las comprobaciones
 
