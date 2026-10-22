@@ -1,3 +1,3 @@
-from terranova.app import main
+from terranova.cli import main
 
 main()
