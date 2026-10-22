@@ -48,6 +48,14 @@
 | F3.6 OpenAPI, `llms.txt`, server card | ✅ OpenAPI 3.1, `/llms.txt` y `/.well-known/mcp/server-card.json` generados del catálogo; `docs/HERRAMIENTAS.md` también, con `--check` en CI |
 | F3.7 Compose de despliegue | ✅ `Dockerfile` (98 MB, sin privilegios, falla cerrado sin pimienta) y `docker/compose.yml`: Caddy como única entrada, `puerta-a` y `puerta-b`, Postgres (llaves y uso) y Redis (caché y cuota) compartidos, y `arcgis-mcp` en la red interna. **E2E-01 a E2E-06 en verde contra el compose** (`scripts/e2e.py`, `scripts/e2e_gate_f3.py`) |
 
+## F4 · Ficha y dataset de restricciones
+
+| Spec F4 | Estado |
+|---|---|
+| F4.1 Dataset de restricciones v0 | ✅ `src/terranova/datasets/restricciones.py` + `scripts/dataset_restricciones.py`: RUNAP (1934) + resguardos (989) + zonas de reserva campesina (30) = 2953 filas, CC BY-SA 4.0; pandera, GeoParquet, PostGIS (`curado.restricciones`) y contrato ODCS. **Misma huella tras volver a descargar** (`sha256:fc56a228…`). Ley 2.ª fuera por licencia |
+| F4.2 `ficha_lugar` | ⬜ |
+| F4.3 Rendimiento de la ficha | ⬜ |
+
 ## Decisiones tomadas
 
 - Nombre **Terranova**; repo público `geoai-latam/terranova`.
@@ -68,10 +76,8 @@
 
 ## Siguiente paso concreto
 
-1. **F4.1:** pipeline del dataset de restricciones v0 (Ley 2.ª, RUNAP y las capas que pasen la
-   compuerta) → GeoParquet + PostGIS, con huella reproducible.
-2. **F4.2 y F4.3:** `ficha_lugar` con sus partes en paralelo y estado `parcial`; p95 < 15 s en vivo.
-3. **En paralelo:**
+1. **F4.2 y F4.3:** `ficha_lugar` con sus partes en paralelo y estado `parcial`; p95 < 15 s en vivo.
+2. **En paralelo:**
    - **F0.6:** repetir la tanda V5 del PR geo-copilot#38 (la que quedó a medias por falta de memoria)
      y fusionarlo. También fusionar geo-copilot#43.
    - **F0.7:** banco de 40 verdades medidas en la fuente.

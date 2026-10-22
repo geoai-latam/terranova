@@ -1,0 +1,55 @@
+# Contrato del dataset curado de restricciones (Open Data Contract Standard v3, F4.1).
+# Lo construye `scripts/dataset_restricciones.py`; `tests/test_restricciones.py` comprueba que el
+# esquema de aquí y el del código son el mismo.
+apiVersion: v3.0.2
+kind: DataContract
+id: terranova.restricciones
+name: Restricciones del territorio
+version: "0"
+status: active
+domain: territorio
+dataProduct: terranova
+description:
+  purpose: >
+    Una sola capa con las figuras que restringen el uso de un predio y que hoy tienen licencia
+    verificada: áreas protegidas del RUNAP, resguardos indígenas formalizados y zonas de reserva
+    campesina constituidas (ANT). Es la parte «restricciones» de la ficha de un lugar.
+  usage: >
+    Consulta por punto o por zona (PostGIS `curado.restricciones` o el GeoParquet de la versión). Cada
+    fila dice su fuente; la atribución de cada fuente se mantiene.
+  limitations: >
+    No incluye reservas de la Ley 2.ª (licencia por verificar), ni POT, ni rondas hídricas. No es un
+    concepto jurídico: la autoridad sobre cada figura es la entidad que la declara.
+license: CC-BY-SA-4.0
+customProperties:
+  - property: atribucion
+    value: >
+      Fuentes: Parques Nacionales Naturales de Colombia (RUNAP, CC BY-SA 4.0); Agencia Nacional de
+      Tierras (CC BY-SA 4.0). Compilado por Terranova.
+  - property: excluidas
+    value: "reservas Ley 2.ª (Minambiente): licencia por verificar"
+  - property: huella
+    value: "sha256 del contenido (filas ordenadas por tipo e id; atributos y geometría WKB con precisión 1e-7)"
+schema:
+  - name: restricciones
+    physicalType: table
+    physicalName: curado.restricciones
+    properties:
+      - {name: id, logicalType: string, required: true, unique: true, primaryKey: true, description: "fuente:identificador en la fuente"}
+      - {name: tipo, logicalType: string, required: true, description: "area_protegida | resguardo_indigena | zona_reserva_campesina"}
+      - {name: nombre, logicalType: string, required: true}
+      - {name: categoria, logicalType: string, required: false, description: "categoría de manejo (RUNAP) o pueblo (resguardos)"}
+      - {name: acto, logicalType: string, required: false, description: "acto administrativo (ANT)"}
+      - {name: fecha, logicalType: string, required: false, description: "fecha de inscripción o del último acto, ISO 8601"}
+      - {name: fuente_id, logicalType: string, required: true}
+      - {name: url, logicalType: string, required: false}
+      - {name: geometry, logicalType: object, physicalType: "geometry(Polygon/MultiPolygon, 4326)", required: true}
+    quality:
+      - {rule: duplicateCount, column: id, mustBe: 0}
+      - {type: custom, description: "geometrías válidas, solo polígonos, EPSG:4326 dentro de lon/lat"}
+      - {type: custom, description: "dos corridas sobre la misma fuente dan la misma huella"}
+slaProperties:
+  - {property: frequency, value: 1, unit: m, description: "se regenera al publicarse un nuevo RUNAP o cada mes"}
+servers:
+  - {server: postgis, type: postgres, schema: curado, description: "vista curado.restricciones → versión vigente"}
+  - {server: archivo, type: local, format: parquet, description: "restricciones_<version>.parquet + manifiesto"}
