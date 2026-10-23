@@ -104,7 +104,7 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **81 herramientas** de ~
 
 ## Siguiente paso concreto
 
-**Al 2026-10-22: 85 herramientas.** Olas 1 y 2: se sumaron el PAA de SECOP II por NIT y por entidad, las multas de SECOP I por municipio y el SECOP I histórico (2004–2017). Las ofertas de SECOP II no se sirven (sería carga). Las reglas aprendidas de cada fuente están en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md#reglas-aprendidas-de-las-fuentes). Pendientes de la ola 2: directorio DIAN y los 5 departamentos de la UPRA (en búsqueda). Sigue la ola 3.
+**Al 2026-10-22 (noche): 108 herramientas sobre 97 fuentes**, cada una con perfil (spec 07), ficha técnica (spec 08), canario medido en la fuente y dorada grabada en vivo. Olas 1 y 2 cerradas, salvo lo que no se puede servir sin carga ni permiso. De la ola 3 ya están: Corte Constitucional (índice y texto), normas en HTML (Función Pública, Normograma DIAN, CREG), anexos del DANE (IPM, GEIH) y usuarios aduaneros de la DIAN. Piezas nuevas en GEO Copilot: `arcgis_estadisticas`, `web_html`, `web_tabla` y el intermedio TLS verificado de Función Pública. Avance frente a Croma en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md#avance-frente-a-croma).
 
 0. **Spec 08 (hecha):** siguen los códigos sin dominio (usos del suelo, destino económico, clases agrológicas) con su resolución del IGAC, la geometría del DANE y el canario de deriva en F7.1.
 1. **F5 · expansión hasta la paridad** (plan en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md)): primero las dos piezas
