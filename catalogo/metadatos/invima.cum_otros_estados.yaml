@@ -1,0 +1,194 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invima.cum_otros_estados
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/spzp-dfuc.json
+pagina: https://www.datos.gov.co/d/spzp-dfuc
+titulo: CÓDIGO ÚNICO DE MEDICAMENTOS OTROS ESTADOS
+descripcion: INFORMACIÓN DE LOS CÓDIGOS ÚNICOS DE MEDICAMENTOS PARA LOS REGISTROS SANITARIOS OTROS ESTADOS.
+publicado: '2022-12-16'
+datos_actualizados: '2026-10-16'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- cum otros estados
+filas: 114423
+campos:
+  expediente:
+    tipo_fuente: number
+    etiqueta: expediente
+    descripcion: Identificación del documento de registro con la información completa del producto.
+    nulos: 0
+    minimo: '2202'
+    maximo: '20212235532'
+    comparacion: numero
+  producto:
+    tipo_fuente: text
+    etiqueta: producto
+    descripcion: Nombre y/o Descripción breve del medicamento.
+    nulos: 0
+    comparacion: texto
+  titular:
+    tipo_fuente: text
+    etiqueta: titular
+    descripcion: Propietario o responsable del registro sanitario.
+  registrosanitario:
+    tipo_fuente: text
+    etiqueta: registrosanitario
+    descripcion: Autorización de comercialización de un producto.
+  fechavencimiento:
+    tipo_fuente: text
+    etiqueta: fechavencimiento
+    nulos: 12052
+    minimo: 01/01/1900
+    maximo: 12/31/3000
+    comparacion: texto
+  estadoregistro:
+    tipo_fuente: text
+    etiqueta: estadoregistro
+    descripcion: Status del registro sanitario en referencia a su vigencia.
+    nulos: 0
+    minimo: Abandono
+    comparacion: texto
+    valores:
+      Perdida Fuerza Ejec: 52238
+      Temp. no comerc - Vigente: 21125
+      Negado: 19218
+      Cancelado: 15029
+      Desistido: 3655
+      Abandono: 1415
+      Temp. no comercializado - En Trámite Renov: 930
+      Comercializado solo por Exportacion: 526
+      Suspendido: 257
+      No Aplica Registro: 23
+      Revocado: 7
+  consecutivocum:
+    tipo_fuente: number
+    etiqueta: consecutivocum
+    descripcion: Número de expediente del medicamento bajo el cual se tramitó la solicitud de registro
+      sanitario, seguido por un número consecutivo asignado por el Invima a cada presentación comercial,
+      el cual hace parte del CUM y será de obligatorio uso por parte de quienes deben reportar precios
+      de medicamentos.
+    nulos: 0
+    minimo: '1'
+    maximo: '112'
+    comparacion: numero
+  descripcioncomercial:
+    tipo_fuente: text
+    etiqueta: descripcioncomercial
+    descripcion: Descripción del material de envase y empaque, incluyendo la cantidad de cada presentación
+      comercial del medicamento.
+    nulos: 5
+    minimo: .
+    maximo: ZXXXXXX
+    comparacion: texto
+  estadocum:
+    tipo_fuente: text
+    etiqueta: estadocum
+    descripcion: Status de la presentación comercial.
+  fechainactivo:
+    tipo_fuente: text
+    etiqueta: fechainactivo
+    descripcion: Fecha en la que se inactiva una presentación comercial.
+    nulos: 25942
+    minimo: 01/01/1900
+    maximo: 12/31/2025
+    comparacion: texto
+  atc:
+    tipo_fuente: text
+    etiqueta: atc
+    descripcion: Código de clasificación anatómica-terapéuticaquímica.
+    nulos: 0
+    minimo: A01AA01
+    maximo: V10XA01
+    comparacion: texto
+  viaadministracion:
+    tipo_fuente: text
+    etiqueta: viaadministracion
+    descripcion: Sitio de administración del medicamento.
+    nulos: 0
+    minimo: BUCAL
+    maximo: VAGINAL
+    comparacion: texto
+    valores:
+      ORAL: 81476
+      INTRAVENOSA: 10478
+      INTRAMUSCULAR: 5309
+      TOPICA (EXTERNA): 3449
+      SUBCUTANEA: 2724
+      PARENTERAL: 2328
+      INHALACION: 1486
+      CONJUNTIVAL: 1151
+      BUCAL: 1136
+      VAGINAL: 1064
+      OFTÁLMICA: 674
+      TRANSDERMAL: 442
+      INTRAPERITONEAL: 300
+      SIN DATO: 273
+      RECTAL: 238
+      INTRA-ARTERIAL: 230
+      INTRANASAL: 229
+      INTRALESIONAL: 204
+      INTRA-ARTICULAR: 169
+      INTRAOCULAR: 156
+  concentracion:
+    tipo_fuente: text
+    etiqueta: concentracion
+    descripcion: 'Magnitud que expresa la cantidad de una sustancia por unidad dada, ejemplo: 10 mg/Tableta.'
+    nulos: 0
+    minimo: A
+    maximo: S
+    comparacion: texto
+    valores:
+      A: 90379
+      B: 6245
+      S: 6173
+      C: 4694
+      D: 3724
+      E: 2515
+      F: 693
+  principioactivo:
+    tipo_fuente: text
+    etiqueta: principioactivo
+    descripcion: Sustancia con acción farmacológica.
+    nulos: 0
+    maximo: ZOPICLONA
+    comparacion: texto
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: unidadmedida
+    descripcion: Unidad de medida según la forma farmacéutica.
+    nulos: 12
+    minimo: '-'
+    comparacion: texto
+    valores:
+      mg: 89901
+      g: 12723
+      mcg: 2174
+      UI: 2023
+      æg: 1498
+      IU: 1403
+      mg.: 942
+      MG: 529
+      ml: 371
+      '%': 354
+      CFU: 320
+      U: 201
+      '% (W/W)': 155
+      g.: 136
+      µg: 108
+      mg/ml: 90
+      million IU: 87
+      U Ph.Eu: 72
+      ug: 71
+      mL: 71
+  formafarmaceutica:
+    tipo_fuente: text
+    etiqueta: formafarmaceutica
+    descripcion: Forma en la cual se presenta un producto farmacéutico terminado, que permite su dosificación
+      y aplicación farmacéutica
+    nulos: 0
+    minimo: AEROSOLES
+    comparacion: texto

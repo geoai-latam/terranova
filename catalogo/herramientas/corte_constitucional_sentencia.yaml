@@ -1,0 +1,33 @@
+id: corte_constitucional_sentencia
+version: 1
+familia: justicia
+fuente: corteconstitucional.sentencias
+pregunta: "¿Qué dice el índice de la Corte Constitucional sobre esta sentencia?"
+descripcion: >
+  Sentencia de la Corte Constitucional por su número (p. ej. T-760/08, C-355/06, SU-214/16): tipo,
+  fecha, proceso, expediente, magistrado ponente, sala y si hubo salvamento o aclaración de voto. Es
+  el índice oficial; el texto completo está en la relatoría de la Corte.
+  (Fuente: Corte Constitucional; licencia: CC BY-SA 4.0.)
+entrada: {sentencia: sentencia_cc}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: v2k4-2t8s
+    select: "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv"
+    where: "sentencia = '{sentencia}'"
+    order: "sentencia"
+    max_filas: 10
+  campos: [sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv]
+salida: SentenciaCorteConstitucional
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en v2k4-2t8s: T-760/08, tutela del 2008-07-31 (salud).
+  entrada: {sentencia: "T-760/08"}
+  verdad: {sentencia: "T-760/08", tipo: T, proceso: Tutela, magistrado_ponente: "Manuel José Cepeda Espinosa", expediente: "1281247"}
+  campos: [aclaracion_voto, expediente, expediente_tipo, fecha, magistrado_ponente, numero_registros, proceso, sala, salvamento_voto, sentencia, tipo]
+  latencia_max_ms: 10000

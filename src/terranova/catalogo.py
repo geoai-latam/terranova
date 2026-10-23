@@ -30,6 +30,7 @@ PATRONES_ENTRADA: dict[str, str] = {
     "constancia_secop": r"^[0-9]{2}-[0-9]{1,2}-[0-9]+$",  # SECOP I: 19-12-10176235
     "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+    "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}/[0-9]{2}$",  # Corte Constitucional: T-760/08
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
 TipoEntrada = Literal[
@@ -45,6 +46,7 @@ TipoEntrada = Literal[
     "constancia_secop",
     "contrato_secop",
     "fecha",
+    "sentencia_cc",
     "nombre",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})

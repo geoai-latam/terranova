@@ -1,0 +1,33 @@
+id: corte_constitucional_sentencias_anio
+version: 1
+familia: justicia
+fuente: corteconstitucional.sentencias
+pregunta: "¿Cuántas sentencias profirió la Corte Constitucional en un año?"
+descripcion: >
+  Número de sentencias de la Corte Constitucional en un año, por tipo: C (constitucionalidad), T
+  (tutela) y SU (unificación). Índice desde 1992.
+  (Fuente: Corte Constitucional; licencia: CC BY-SA 4.0.)
+entrada: {anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: v2k4-2t8s
+    select: "sentencia_tipo, count(*) AS sentencias"
+    where: "date_extract_y(fecha_sentencia) = {anio}"
+    group: sentencia_tipo
+    order: sentencia_tipo
+    max_filas: 10
+  campos: [sentencia_tipo, fecha_sentencia]
+salida: SentenciasCorteConstitucionalAnio
+derivados:
+  sentencias: {de: columna, campo: sentencias, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en v2k4-2t8s: 2008 → C 260, SU 3, T 994. El año está cerrado.
+  entrada: {anio: 2008}
+  verdad: {tipo: C, sentencias: 260}
+  campos: [sentencias, tipo]
+  latencia_max_ms: 10000

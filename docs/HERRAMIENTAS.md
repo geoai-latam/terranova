@@ -61,7 +61,11 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
+| `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
 | `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
 | `supersociedades_caratula` | ¿Qué datos generales reportó esta sociedad con sus estados financieros? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
@@ -89,10 +93,18 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
+## justicia
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `corte_constitucional_sentencia` | ¿Qué dice el índice de la Corte Constitucional sobre esta sentencia? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
+| `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
+
 ## normativa
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `suit_oferta_tramites_entidad` | ¿Qué trámites ofrece esta entidad y cuántas solicitudes tuvo cada uno en el año? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 | `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 
 ## territorio
