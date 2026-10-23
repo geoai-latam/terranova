@@ -1,0 +1,36 @@
+id: igac_transacciones_folio
+version: 1
+familia: territorio
+fuente: igac.transacciones_inmobiliarias
+pregunta: "¿Qué actos se han registrado sobre este inmueble (por su folio de matrícula)?"
+descripcion: >
+  Historia registral de un inmueble por su folio de matrícula inmobiliaria (p. ej. 50N-20849403),
+  2015 a 2023: cada anotación con su fecha, la naturaleza jurídica del acto (compraventa, hipoteca,
+  patrimonio de familia…), el valor si lo trae, el estado del folio y cuántos intervinientes hay de
+  cada lado, sin nombres.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {matricula: matricula_inmobiliaria}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 7y2j-43cv
+    portal: datos.gov.co
+    select: "matricula, num_anotacion, fecha_radica_texto, year_radica, nombre_natujur, cod_natujur, valor, estado_folio, numero_catastral, count_a, count_de"
+    where: "matricula = '{matricula}'"
+    order: "num_anotacion"
+    max_filas: 500
+  campos: [matricula, num_anotacion, fecha_radica_texto, year_radica, nombre_natujur, cod_natujur, valor, estado_folio, numero_catastral, count_a, count_de]
+salida: TransaccionesFolio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en 7y2j-43cv: el folio 50N-20849403 (Chía) tiene 8 anotaciones en 2020; la
+  # primera (2) es una compraventa.
+  entrada: {matricula: 50N-20849403}
+  verdad: {matricula_inmobiliaria: 50N-20849403, anotacion: 2, naturaleza_juridica: COMPRAVENTA}
+  minimos: {numero_registros: 8}
+  campos: [anio, anotacion, codigo_naturaleza_juridica, fecha_radicacion, matricula_inmobiliaria, naturaleza_juridica, numero_registros, personas_a, personas_de]
+  latencia_max_ms: 15000
