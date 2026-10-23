@@ -1,0 +1,11 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dane.ipm_municipal_2018
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx
+pagina: https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-y-desigualdad/medida-de-pobreza-multidimensional-de-fuente-censal
+titulo: Anexo censal de pobreza municipal 2018
+idioma: Español
+filas: 16385
+descripcion: Hojas 2_IPM Mpio y Dpt, 4_IPM Mpio dominios, 6_Privaciones IPM Dpt-Mpio, 8_Privaciones Mpio
+  dominio.
