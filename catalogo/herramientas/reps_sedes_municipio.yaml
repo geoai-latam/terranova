@@ -1,0 +1,35 @@
+id: reps_sedes_municipio
+version: 1
+familia: territorio
+fuente: minsalud.reps
+pregunta: "¿Qué IPS y sedes de servicios de salud hay en este municipio?"
+descripcion: >
+  Sedes de prestadores de servicios de salud habilitados en un municipio (DIVIPOLA) según el REPS
+  del Ministerio de Salud: código de la sede, prestador, sede, naturaleza (pública o privada), si es
+  ESE, clase y dirección. Solo instituciones: los profesionales independientes no se listan.
+  (Fuente: Ministerio de Salud; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: c36g-9fc2
+    portal: datos.gov.co
+    select: "codigohabilitacionsede, nombreprestador, nombresede, codigoprestador, naturalezajuridica, ese, claseprestador, municipiosede, direcci_nsede, fecha_corte_reps"
+    where: "municipiosede = '{municipio_divipola}' AND tipoid = 'NI' AND claseprestador != 'Profesional Independiente'"
+    order: "nombreprestador, codigohabilitacionsede"
+    max_filas: 2000
+  campos: [codigohabilitacionsede, nombreprestador, nombresede, codigoprestador, naturalezajuridica, ese, claseprestador, municipiosede, direcci_nsede, fecha_corte_reps]
+salida: RepsSedesMunicipio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-23 en c36g-9fc2: Chía tiene 138 sedes de instituciones; la primera en orden es
+  # ACCIONAR SALUD IPS SAS (251750250401).
+  entrada: {municipio_divipola: "25175"}
+  verdad: {prestador: ACCIONAR SALUD IPS SAS, codigo_sede: "251750250401"}
+  minimos: {numero_registros: 120}
+  campos: [clase, codigo_prestador, codigo_sede, corte, direccion, ese, municipio_divipola, naturaleza, numero_registros, prestador, sede]
+  latencia_max_ms: 10000
