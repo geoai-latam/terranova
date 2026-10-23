@@ -79,6 +79,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `supersociedades_otro_resultado_integral` | ¿Qué otro resultado integral reportó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_resultado_integral` | ¿Cuánto vendió, gastó y ganó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_situacion_financiera` | ¿Cómo está el balance (activos, pasivos, patrimonio) de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
+| `supersolidaria_entidades_buscar` | ¿Esta cooperativa o fondo de empleados está registrado ante la Supersolidaria? | Superintendencia de la Economía Solidaria | CC-BY-SA-4.0 | 2 |
 
 ## estadisticas
 

@@ -1,0 +1,89 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supersolidaria.entidades
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/kg2d-yfyg.json
+pagina: https://www.datos.gov.co/d/kg2d-yfyg
+titulo: Listado de Entidades del Sector Solidario
+descripcion: El conjunto de datos contiene información consolidada sobre las organizaciones vigiladas,
+  incluyendo datos generales, ubicación y características de supervisión. Su objetivo es ofrecer a la
+  ciudadanía y entidades interesadas una fuente confiable y actualizada que permita el análisis del sector
+  solidario en Colombia.
+publicado: '2020-06-19'
+datos_actualizados: '2026-10-08'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Hacienda y Crédito Público
+etiquetas:
+- supersolidaria
+- solidaria
+- economia
+- fondosempleados
+- asociacionesmutuales
+- cacs
+- cdacs
+filas: 126837
+campos:
+  a_o:
+    tipo_fuente: number
+    etiqueta: AÑO
+    descripcion: Año de corte de la información reportada.
+    nulos: 0
+    minimo: '2017'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2021': 14105
+      '2023': 14076
+      '2022': 14011
+      '2024': 13791
+      '2020': 13753
+      '2017': 13133
+      '2019': 12904
+      '2018': 12865
+      '2025': 12191
+      '2026': 6008
+  nombreentidad:
+    tipo_fuente: text
+    etiqueta: NOMBREENTIDAD
+    descripcion: Nombre completo de la entidad reportante.
+  sigla:
+    tipo_fuente: text
+    etiqueta: SIGLA
+    descripcion: Abreviatura o sigla de la entidad.
+    nulos: 2561
+    minimo: '2261'
+    maximo: ZUYEPAL
+    comparacion: texto
+  nit:
+    tipo_fuente: text
+    etiqueta: NIT
+    descripcion: Número de Identificación Tributaria (NIT) de la entidad.
+  nombretipo:
+    tipo_fuente: text
+    etiqueta: NOMBRETIPO
+    descripcion: Tipo de entidad
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Municipio donde está ubicada la entidad principal.
+    nulos: 12
+    minimo: ABEJORRAL
+    comparacion: texto
+  nombreactividad:
+    tipo_fuente: text
+    etiqueta: NOMBREACTIVIDAD
+    descripcion: Nombre de la actividad económica principal de la entidad.
+  supervision:
+    tipo_fuente: number
+    etiqueta: SUPERVISION
+    descripcion: Nivel de supervisión asignado a la entidad.
+    nulos: 0
+    minimo: '1'
+    maximo: '3'
+    comparacion: numero
+    valores:
+      '3': 67220
+      '1': 42741
+      '2': 16876

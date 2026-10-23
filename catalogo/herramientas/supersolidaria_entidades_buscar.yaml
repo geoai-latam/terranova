@@ -1,0 +1,35 @@
+id: supersolidaria_entidades_buscar
+version: 1
+familia: empresas
+fuente: supersolidaria.entidades
+pregunta: "¿Esta cooperativa o fondo de empleados está registrado ante la Supersolidaria?"
+descripcion: >
+  Busca entidades del sector solidario (cooperativas, fondos de empleados, mutuales) por una parte de
+  su nombre: NIT, razón social, sigla, tipo, municipio, actividad, nivel de supervisión y el último
+  año que reportó a la Supersolidaria (un año viejo puede querer decir que dejó de reportar).
+  (Fuente: Supersolidaria; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: kg2d-yfyg
+    portal: datos.gov.co
+    select: "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte"
+    where: "upper(nombreentidad) like upper('%{nombre}%')"
+    group: "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision"
+    order: "nombreentidad"
+    max_filas: 50
+  campos: [nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, a_o]
+salida: SupersolidariaEntidadesBuscar
+derivados:
+  ultimo_reporte: {de: columna, campo: ultimo_reporte, tipo: str}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en kg2d-yfyg: «CONFIAR» da 2 entidades; la primera, la Cooperativa Multiactiva
+  # CONFIARCOOP (900-354-104-1), reportó por última vez en 2017.
+  entrada: {nombre: CONFIAR}
+  verdad: {nit: 900-354-104-1, ultimo_reporte: "2017"}
+  campos: [actividad, entidad, municipio, nit, nivel_supervision, sigla, tipo, ultimo_reporte]
+  latencia_max_ms: 10000
