@@ -489,7 +489,7 @@ class Ejecutor:
             elementos += mapeadas
             for fila, geom in zip(mapeadas, r.geometrias, strict=True):
                 if geom is not None:
-                    rasgos.append({"type": "Feature", "geometry": geom, "properties": fila})
+                    rasgos.append({"type": "Feature", "geometry": a_2d(geom), "properties": fila})
             crs = r.crs or crs
             for clave, campo in fuente.campos.items():
                 if campo.origen == "hecho" and clave in r.hechos:
@@ -634,6 +634,25 @@ def _aviso_de_copia(hechos: dict[str, Any]) -> str:
         else ""
     )
     return f"Sale de la copia de Terranova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
+
+
+def a_2d(geometria: Any) -> Any:
+    """La geometría solo con lon y lat (regla 8 de rt/1). USGS manda la profundidad como tercera
+    coordenada y GEO Copilot no pudo pintar los sismos («Geometry has Z dimension»); la
+    profundidad ya va en las propiedades."""
+    if not isinstance(geometria, dict):
+        return geometria
+    if geometria.get("type") == "GeometryCollection":
+        return {**geometria, "geometries": [a_2d(g) for g in geometria.get("geometries") or []]}
+
+    def recortar(c: Any) -> Any:
+        if isinstance(c, list) and c and isinstance(c[0], int | float):
+            return c[:2]
+        return [recortar(x) for x in c] if isinstance(c, list) else c
+
+    if "coordinates" not in geometria:
+        return geometria
+    return {**geometria, "coordinates": recortar(geometria["coordinates"])}
 
 
 @functools.cache
