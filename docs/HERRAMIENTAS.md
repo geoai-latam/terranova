@@ -112,6 +112,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `corte_constitucional_texto_inicio` | ¿De qué trata esta sentencia de la Corte Constitucional? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 2 |
 | `creg_resolucion_buscar` | ¿Qué dice esta resolución de la CREG sobre este tema? | Comisión de Regulación de Energía y Gas (CREG) | LicenseRef-ley23-1982-art41 | 2 |
 | `dian_normograma_buscar` | ¿Qué dice esta norma tributaria o aduanera sobre este tema? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-ley23-1982-art41 | 2 |
+| `funcionpublica_norma_buscar` | ¿Qué dice esta norma sobre este tema? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
+| `funcionpublica_norma_inicio` | ¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
+| `funcionpublica_normas_buscar` | ¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
 | `suit_oferta_tramites_entidad` | ¿Qué trámites ofrece esta entidad y cuántas solicitudes tuvo cada uno en el año? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 | `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 

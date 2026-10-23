@@ -1,0 +1,52 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:09:24+00:00",
+ "herramienta": "funcionpublica_norma_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "buscar": "ARTÍCULO 5",
+    "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "n",
+       "posicion",
+       "texto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "n": 1,
+        "posicion": 7407,
+        "texto": "8 de 2015)\n(Ver Sentencias C-221 de 2016)\n(Ver Sentencias C-379 de 2016)\n(Ver Art. 2.1.1.3.1.3 Decreto 1081 de 2015)\n(Ver Concepto Rad. 2014-00112 (2209), Consejo de Estado.)\nARTÍCULO 5. Ámbito de aplicación.Las disposiciones de esta ley serán aplicables a las siguientes personas en calidad de sujetos obligados:\na) Toda entidad pública, incluyendo las pertenecientes a todas las Ramas del Poder Público, en todos los niveles de la estructura estatal, central o descentralizada por servicios o territorialmente, en los órdenes nacional, departamental, municipal y distrital.\nb) Los órganos, organismos y entidades estatales independientes o autónomos y de control;\nc) Las personas naturales y jurídicas, públicas o privadas, que presten función pública, que presten servicios públicos respecto de la información directamente relacionada con la prestación del servicio públic"
+       },
+       {
+        "n": 2,
+        "posicion": 10646,
+        "texto": "incluye la impresión, emisión y las formas electrónicas de difusión;\nf) Sujetos obligados. Se refiere a cualquier persona natural o jurídica, pública o privada incluida en el artículo 5 de esta ley;\ng) Gestión documental. Es el conjunto de actividades administrativas y técnicas tendientes a la planificación, procesamiento, manejo y organización de la documentación producida y recibida por los sujetos obligados, desde su origen hasta su destino final, con el objeto de facilitar su utilización y conservación;\nh) Documento de archivo. Es el registro de información producida o recibida por una entidad pública o privada en razón de sus actividades o funciones;\ni) Archivo. Es el conjunto de documentos, sea cual fuere su fecha, forma y soporte material, acumulados en un proceso natural por una persona o entidad pública o privada, en el transcurso de su gestión, conserva"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "apariciones": 2,
+     "buscar": "ARTÍCULO 5",
+     "caracteres": 39656,
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "titulo": "Ley 1712 de 2014 - Gestor Normativo - Función Pública",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_html"
+  }
+ ]
+}

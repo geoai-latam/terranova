@@ -1,0 +1,8 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: funcionpublica.gestor_normativo
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://www.funcionpublica.gov.co/eva/gestornormativo
+titulo: Gestor Normativo de Función Pública
+idioma: Español
+descripcion: HTML estático (norma.php?i=…) y búsqueda en HTML (dafpIndexerBGN); se lee con web_html.
