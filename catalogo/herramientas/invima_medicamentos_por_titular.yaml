@@ -1,0 +1,34 @@
+id: invima_medicamentos_por_titular
+version: 1
+familia: empresas
+fuente: invima.cum_vigentes
+pregunta: "¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA?"
+descripcion: >
+  Medicamentos vigentes del Código Único de Medicamentos (INVIMA) cuyo titular contiene un nombre
+  (p. ej. LAFRANCOL): expediente, producto, titular, registro sanitario, su estado y vencimiento;
+  cada producto una vez, hasta 500, por expediente.
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {titular: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: i7cb-raxc
+    portal: datos.gov.co
+    # Spec 07: la fuente repite cada presentación por rol y por principio activo: distinct sin ellos.
+    select: "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento"
+    where: "upper(titular) like upper('%{titular}%')"
+    max_filas: 500
+  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento]
+salida: MedicamentosPorTitular
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en i7cb-raxc: «LAFRANCOL» tiene 193 productos vigentes distintos. Cambia con los
+  # registros: mínimo.
+  entrada: {titular: LAFRANCOL}
+  minimos: {numero_registros: 150}
+  campos: [estado_registro, expediente, fecha_vencimiento, numero_registros, producto, registro_sanitario, titular]
+  latencia_max_ms: 15000

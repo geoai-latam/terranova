@@ -1,0 +1,46 @@
+id: men.educacion_etc
+titulo: "Estadísticas de educación preescolar, básica y media por entidad territorial certificada (MinEducación)"
+entidad: Ministerio de Educación Nacional (MEN)
+competencia: rector de la política educativa (Ley 115 de 1994)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/sras-4t5p.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: MinEducación, Estadísticas en educación por departamento. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/sras-4t5p.json
+modo: en_vivo
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
+cobertura: {pais: CO, columna_tiempo: ano}
+datos_personales: ninguno
+estado: publicada
+campos:
+  ano: {nombre: anio, tipo: int, desc: "año"}
+  cod_etc: {nombre: codigo_etc, tipo: str, desc: "código de la entidad territorial certificada en educación"}
+  nombre_etc: {nombre: etc, tipo: str, desc: "entidad territorial certificada; los nombres con tilde vienen dañados en la fuente (Medell�n)"}
+  poblacion_5_16: {nombre: poblacion_5_16, tipo: int, desc: "población de 5 a 16 años"}
+  tasa_matriculacion_5_16: {nombre: tasa_matriculacion_5_16, tipo: float, desc: "tasa de matriculación de 5 a 16 años, %"}
+  cobertura_neta: {nombre: cobertura_neta, tipo: float, desc: "cobertura neta, %"}
+  cobertura_bruta: {nombre: cobertura_bruta, tipo: float, desc: "cobertura bruta, %"}
+  desercion: {nombre: desercion, tipo: float, desc: "deserción, %"}
+  aprobacion: {nombre: aprobacion, tipo: float, desc: "aprobación, %"}
+  reprobacion: {nombre: reprobacion, tipo: float, desc: "reprobación, %"}
+  repitencia: {nombre: repitencia, tipo: float, desc: "repitencia, %"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: Ministerio de Educación Nacional, theme: educacion, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "una entidad territorial certificada en un año; 97 ETC de 2011 a 2024 (1 336 filas); Medellín (3759) tiene 14"
+  clave: {columna: cod_etc + ano, unica: true}
+  operaciones: {filtrar: 0.3}
+  hallazgos:
+  - "los nombres con tilde vienen con doble codificación (Medellín se guarda como MedellÃ­n): una búsqueda por nombre no los encuentra; se consulta por código"
+  - "la cobertura neta pasa de 100 % (Medellín 2011: 108,49): estudiantes de otros municipios"
+  decision: "en vivo por código de ETC"

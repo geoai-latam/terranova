@@ -66,6 +66,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamentos_por_titular` | ¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 3 |
 | `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
 | `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 3 |
 | `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
@@ -98,6 +99,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `invima_registro_sanitario_por_expediente` | ¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
+| `men_educacion_etc` | ¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
