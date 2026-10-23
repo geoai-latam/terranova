@@ -121,15 +121,15 @@ derechos de petición (F0.8).
 ## Avance frente a Croma
 
 Croma publica unas 177 herramientas para Colombia; unas 139 salen de fuentes abiertas y factibles
-(la comparación fuente por fuente está en `interno/`). Al 2026-10-22 (noche):
+(la comparación fuente por fuente está en `interno/`). Al 2026-10-23, **128 herramientas sobre 109 fuentes**:
 
 | Grupo | Terranova | Lo que falta y por qué |
 |---|---|---|
-| Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT) | 21 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
-| Contratación (SECOP I y II) | 37 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |
-| Empresas (RUES, Supersociedades, INVIMA, DIAN) | 14 | estados financieros del RUES (protegido) y SIIS de Supersociedades (backend interno: permiso) |
-| Estadísticas (ICFES, MEN, DANE, BanRep, SUIT) | 17 | TerriData (licencia por pedir) |
-| Normativa y jurisprudencia | 11 | Consejo de Estado, SAMAI, Corte Suprema, CNDJ, Imprenta Nacional y SIPI: buscadores con estado (JSF, WebForms), pieza «scrape con estado» |
+| Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT) | 24 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
+| Contratación (SECOP I y II) | 38 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |
+| Empresas (RUES, Supersociedades, Superfinanciera, Supersolidaria, INVIMA, DIAN) | 18 | estados financieros del RUES (protegido) y SIIS de Supersociedades (backend interno: permiso) |
+| Estadísticas (ICFES, MEN, DANE, BanRep, SUIT, REPS) | 22 | TerriData (licencia por pedir) |
+| Normativa, jurisprudencia y delitos (Policía) | 18 | Consejo de Estado, SAMAI, Corte Suprema, CNDJ, Imprenta Nacional y SIPI: buscadores con estado (JSF, WebForms), pieza «scrape con estado» |
 | Ambiente | 8 | SIATA (licencia por pedir) |
 
 **Mejor que la referencia en lo que ya está:** cada respuesta trae procedencia, licencia y
