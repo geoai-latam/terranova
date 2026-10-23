@@ -1,0 +1,46 @@
+id: superfinanciera.vigiladas
+titulo: "Entidades vigiladas por la Superintendencia Financiera"
+entidad: Superintendencia Financiera de Colombia (SFC)
+competencia: inspección, vigilancia y control del sistema financiero, asegurador y del mercado de valores (Decreto 2555 de 2010)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/sr9n-792w.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Superintendencia Financiera de Colombia, entidades vigiladas. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Fuera de la lista blanca: representante legal, cargo y correo (personas y contactos, ADR-0014); la
+# pregunta es si la entidad está vigilada.
+url: https://www.datos.gov.co/resource/sr9n-792w.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  tipo_entidad: {nombre: tipo_entidad, tipo: int, desc: "código de tipo de entidad de la SFC (el de Bancolombia es 1); la fuente no publica la tabla"}
+  cod_entidad: {nombre: codigo_entidad, tipo: int, desc: "código de la entidad dentro de su tipo"}
+  razon_social: {nombre: razon_social, tipo: str, desc: "razón social (con las denominaciones que puede usar)"}
+  ciudad: {nombre: ciudad, tipo: str, desc: "ciudad"}
+  direccion: {nombre: direccion, tipo: str, desc: "dirección de la entidad («Pendiente» si no la reportó)"}
+  numeroidentificacion: {nombre: nit_con_dv, tipo: str, desc: "NIT con el dígito de verificación pegado al final (8909039388 = 890903938-8)"}
+  uripaginaweb: {nombre: pagina_web, tipo: str, desc: "página web"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Superintendencia Financiera de Colombia, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una entidad vigilada; 456 en total; Bancolombia es una"
+  clave: {columna: tipo_entidad + cod_entidad, unica: true}
+  operaciones: {filtrar: 0.3}
+  hallazgos:
+  - "el NIT trae el dígito de verificación pegado: se busca por el rango NIT×10 a NIT×10+9"
+  - "hay NIT en 0 y direcciones «Pendiente»: entidades que no reportaron"
+  - "el tipo de entidad es un código sin tabla publicada"
+  - "las tildes vienen dañadas en algunos nombres y ciudades"
+  decision: "en vivo por NIT de empresa y por nombre"

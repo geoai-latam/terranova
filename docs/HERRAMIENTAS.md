@@ -71,6 +71,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 3 |
 | `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
 | `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
+| `superfinanciera_vigilada_por_nit` | ¿Esta empresa está vigilada por la Superintendencia Financiera? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 2 |
+| `superfinanciera_vigiladas_buscar` | ¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 2 |
 | `supersociedades_caratula` | ¿Qué datos generales reportó esta sociedad con sus estados financieros? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
 | `supersociedades_flujo_efectivo` | ¿Cómo se movió la caja de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |

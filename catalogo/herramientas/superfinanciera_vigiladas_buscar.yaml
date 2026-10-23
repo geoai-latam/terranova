@@ -1,0 +1,33 @@
+id: superfinanciera_vigiladas_buscar
+version: 1
+familia: empresas
+fuente: superfinanciera.vigiladas
+pregunta: "¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre?"
+descripcion: >
+  Busca entidades vigiladas por la Superintendencia Financiera por una parte de su razón social
+  (p. ej. BANCOLOMBIA): tipo y código de entidad, razón social, ciudad, NIT con dígito y página web;
+  hasta 50.
+  (Fuente: Superintendencia Financiera; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: sr9n-792w
+    portal: datos.gov.co
+    select: "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb"
+    where: "upper(razon_social) like upper('%{nombre}%')"
+    order: "razon_social"
+    max_filas: 50
+  campos: [tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb]
+salida: VigiladasSuperfinancieraBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en sr9n-792w: «BANCOLOMBIA» da 7 entidades vigiladas. Puede cambiar: mínimo.
+  entrada: {nombre: BANCOLOMBIA}
+  minimos: {numero_registros: 5}
+  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad]
+  latencia_max_ms: 10000
