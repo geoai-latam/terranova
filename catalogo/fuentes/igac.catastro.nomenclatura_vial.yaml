@@ -1,0 +1,42 @@
+id: igac.catastro.nomenclatura_vial
+titulo: Nomenclatura vial (nombres de vías) de la base catastral pública del gestor IGAC
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-21
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/6ca71458728f45988e2cd7aa5305a663?f=json
+  cita: "Este producto adopta la licencia pública internacional de Reconocimiento-CompartirIgual 4.0 de Creative Commons"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Base catastral pública del gestor"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  excluye:
+    - "11001 Bogotá (UAECD)"
+    - "05001 Medellín (gestor propio)"
+    - "76001 Cali (gestor propio)"
+  indice: cobertura_catastral
+datos_personales: ninguno
+estado: publicada
+campos:
+  TEXTO: {nombre: via, tipo: str, desc: "nombre de la vía (CALLE 17, AV PRADILLA…)"}
+  codigo_municipio: {nombre: municipio_codigo_capa, tipo: str, desc: "código de municipio que trae la capa; errado en algunos (23175 para Chía)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: territorio, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un tramo de vía (línea) con su nombre; 139 587 urbanos y 5 430 rurales; 29 tramos en el centro de Chía"
+  operaciones: {filtrar: 0.6, agrupar: 0.6}
+  hallazgos:
+  - "codigo_municipio errado: Chía sale como 23175 (el 23 es Córdoba), así que no se puede filtrar por municipio"
+  - "un mismo nombre de vía tiene varios tramos"
+  decision: "en vivo por zona (rectángulo), nunca por código de municipio"

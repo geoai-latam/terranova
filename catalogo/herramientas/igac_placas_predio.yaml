@@ -1,0 +1,34 @@
+id: igac_placas_predio
+version: 1
+familia: territorio
+fuente: igac.catastro.nomenclatura_domiciliaria
+pregunta: "¿Qué dirección (placa) tiene este predio según el catastro IGAC?"
+descripcion: >
+  Placas domiciliarias de un predio de la base catastral IGAC por su número predial nacional (30
+  dígitos): el texto de cada placa como lo registra el gestor. Cubre los municipios con gestión
+  catastral del IGAC; Bogotá, Medellín, Cali y otros gestores no están.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {codigo: codigo_predial}
+consulta:
+  operacion: por_codigo
+  tool: arcgis_query_features
+  capas: [1, 9]  # U_ y R_NOMENCLATURA_DOMICILIARIA
+  argumentos:
+    url: "{url_capa}"
+    where: "TERRENO_CODIGO = '{codigo}'"
+    geometria: ninguna
+    out_fields: [TEXTO, TERRENO_CODIGO]
+    max_features: 50
+  campos: [TEXTO, TERRENO_CODIGO]
+salida: PlacasPredio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en la capa 1: el predio urbano de Chía 251750100000001800901900000000 tiene
+  # una placa, «7A Tejares de San Jose».
+  entrada: {codigo: "251750100000001800901900000000"}
+  verdad: {placa: 7A Tejares de San Jose, codigo_predial: "251750100000001800901900000000"}
+  minimos: {numero_registros: 1}
+  campos: [codigo_predial, numero_registros, placa]
+  latencia_max_ms: 10000

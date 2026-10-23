@@ -1,0 +1,550 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:19:43+00:00",
+ "herramienta": "igac_vias_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.061,
+     4.861,
+     -74.056,
+     4.866
+    ],
+    "geometria": "simplificada",
+    "max_features": 500,
+    "out_fields": [
+     "TEXTO",
+     "codigo_municipio"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/10"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_NOMENCLATURA_VIAL"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.061,
+      4.861,
+      -74.056,
+      4.866
+     ],
+     "capa": "R_NOMENCLATURA_VIAL",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.061,
+       4.861,
+       -74.056,
+       4.866
+      ],
+      "max_features": 500,
+      "out_fields": [
+       "TEXTO",
+       "codigo_municipio"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/10",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/10"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -74.061,
+     4.861,
+     -74.056,
+     4.866
+    ],
+    "geometria": "simplificada",
+    "max_features": 500,
+    "out_fields": [
+     "TEXTO",
+     "codigo_municipio"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06645,
+           4.85461
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 12",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06076,
+           4.86108
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 11",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06414,
+           4.85804
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 13",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06263,
+           4.85685
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 11 ",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06153,
+           4.86314
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 13",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04918,
+           4.85683
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 12",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06122,
+           4.86376
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 14",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05807,
+           4.8634
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 15",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0602,
+           4.86523
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 16",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06016,
+           4.86433
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 12",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05956,
+           4.8658
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 16A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05999,
+           4.86078
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 10",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05984,
+           4.8589
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 9",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05896,
+           4.86209
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 9",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05858,
+           4.86244
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 9",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0588,
+           4.85666
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 7",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05764,
+           4.86057
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 7A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05718,
+           4.86119
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 13",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058,
+           4.86154
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "AV PRADILLA",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05833,
+           4.8622
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "AV PRADILLA",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05739,
+           4.86483
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 16A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05689,
+           4.86328
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 8",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06436,
+           4.86873
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 17",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05713,
+           4.86403
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 8A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05608,
+           4.86503
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 7",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06096,
+           4.86612
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CALLE 16A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05718,
+           4.86119
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 7A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05785,
+           4.86162
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "DIAGONAL 12",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05755,
+           4.86134
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "TEXTO": "CARRERA 8A",
+          "codigo_municipio": "23175"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_NOMENCLATURA_VIAL"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.061,
+      4.861,
+      -74.056,
+      4.866
+     ],
+     "capa": "U_NOMENCLATURA_VIAL",
+     "completitud": {
+      "total": 29,
+      "truncado": false,
+      "vistos": 29
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.061,
+       4.861,
+       -74.056,
+       4.866
+      ],
+      "max_features": 500,
+      "out_fields": [
+       "TEXTO",
+       "codigo_municipio"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 29,
+     "traidos": 29,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}
