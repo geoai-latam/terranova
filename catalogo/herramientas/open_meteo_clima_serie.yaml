@@ -4,9 +4,11 @@ familia: ambiente
 fuente: open_meteo.era5
 pregunta: "¿Cuánto llovió y qué temperatura hizo en este punto en este periodo?"
 descripcion: >
-  Clima de un punto entre dos fechas (AAAA-MM-DD, ambas incluidas) con el reanálisis ERA5:
-  precipitación acumulada, temperatura media y la elevación de la celda del modelo, que en montaña
-  difiere de la real. Es un modelo de malla, no una estación. Solo uso no comercial.
+  Clima de un punto entre dos fechas (AAAA-MM-DD, ambas incluidas) con la serie histórica de
+  Open-Meteo, que mezcla el modelo IFS del ECMWF con los reanálisis ERA5 y ERA5-Land (estos llegan con
+  5 días de rezago: los días más recientes salen del IFS): precipitación acumulada, temperatura media
+  y la elevación de la celda del modelo, que en montaña difiere de la real. Es un modelo de malla, no
+  una estación. Solo uso no comercial.
   (Fuente: Open-Meteo con ERA5 de Copernicus; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float, desde: fecha, hasta: fecha}
 consulta:

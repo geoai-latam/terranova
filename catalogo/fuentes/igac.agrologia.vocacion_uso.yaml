@@ -32,3 +32,17 @@ campos:
   Uso_principal: {nombre: uso_principal, tipo: str, desc: "uso principal que debe tener la tierra"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un polígono de vocación de uso; 57 080 en el país
+  operaciones:
+    filtrar: 0.4
+    contar: 0.3
+    ordenar: 16.2
+    agrupar: 0.4
+  hallazgos:
+  - el MapServer no cuenta valores distintos
+  - ordenar el país tarda 16 s
+  - el punto de prueba toca un solo elemento
+  decision: en vivo solo por punto

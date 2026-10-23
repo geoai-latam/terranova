@@ -33,3 +33,20 @@ campos:
   CODIGO_ANTERIOR: {nombre: codigo_predial_anterior, tipo: str, desc: "número predial anterior de 20 dígitos"}
 comportamiento: {p95_ms_medido: 1500, max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'un polígono de terreno; Chía: 16 832 rurales para 16 618 números y 15 448 urbanos para 15 371'
+  clave:
+    columna: CODIGO
+    unica: false
+  operaciones:
+    filtrar: 5.2
+    contar: 0.2
+    ordenar: 0.3
+    agrupar: 0.3
+  hallazgos:
+  - un predio puede tener varios polígonos (uno de Chía tiene 25 pedazos con el mismo número)
+  - '265 polígonos del país (11 en Chía) traen el número del municipio y 25 ceros: no son predios'
+  - el punto de prueba toca un solo elemento
+  decision: en punto, excluyendo los números en ceros; por código, todos los polígonos del predio

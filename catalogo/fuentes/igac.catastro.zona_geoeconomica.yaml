@@ -34,6 +34,25 @@ campos:
   VALOR_HECTAREA: {nombre: valor_hectarea_cop, tipo: float, desc: "valor del suelo por hectárea, en pesos (zona rural)"}
   VALOR_METRO: {nombre: valor_m2_cop, tipo: float, desc: "valor del suelo por m², en pesos (zona urbana)"}
   SUBZONA_FISICA: {nombre: zonas_fisicas, tipo: str, desc: "zonas homogéneas físicas que abarca, separadas por coma"}
-  VIGENCIA: {nombre: vigencia, tipo: date, desc: "fecha de vigencia de la zona"}
+  VIGENCIA: {nombre: vigencia, tipo: date, desc: "vigencia del estudio de la zona; a menudo vacía o imposible (ver el perfil)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'una zona homogénea geoeconómica con su valor del suelo; Chía: 29 rurales y 16 urbanas'
+  clave:
+    columna: CODIGO + CODIGO_ZONA_GEOECONOMICA
+    unica: false
+  operaciones:
+    filtrar: 0.8
+    contar: 0.2
+    ordenar: 0.5
+    agrupar: 0.8
+  hallazgos:
+  - CODIGO es el municipio, no la zona
+  - VIGENCIA vacía en 13 % de las rurales (todas las de Chía); va de 1990 a 2026, con años imposibles
+    (1899, 4670)
+  - el valor es catastral, no de mercado
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto; la descripción advierte que un valor de vigencia vieja no es el de hoy

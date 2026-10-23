@@ -32,3 +32,19 @@ campos:
   fecha_inscrita: {nombre: fecha_inscripcion, tipo: date, desc: "fecha de inscripción en el RUNAP"}
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
 dcat: {publisher: PNN, theme: areas_protegidas}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un área protegida inscrita en el RUNAP; 1 936 en el país
+  clave:
+    columna: ap_nombre
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.4
+  hallazgos:
+  - 'un punto puede caer en varias áreas inscritas: la herramienta trae hasta 20'
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto y por zona

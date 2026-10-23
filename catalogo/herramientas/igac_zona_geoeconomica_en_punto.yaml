@@ -6,7 +6,9 @@ pregunta: "¿Cuánto vale el suelo en este punto según la zona homogénea geoec
 descripcion: >
   Zona homogénea geoeconómica (IGAC) que contiene un punto: su código, el valor del suelo (por
   hectárea en lo rural, por m² en lo urbano, en pesos), las zonas físicas que abarca y la vigencia.
-  Es el valor catastral de referencia, no un precio de mercado. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Es el valor catastral de referencia, no un precio de mercado. La vigencia (año del estudio de valores) viene vacía en cerca de 1 de cada 8 zonas rurales (todas las
+  rurales de Chía) y va de 1990 a 2026, con fechas imposibles (1899, 4670): un valor de una vigencia
+  vieja no es el de hoy. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}

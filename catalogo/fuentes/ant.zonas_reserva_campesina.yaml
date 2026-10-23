@@ -34,3 +34,18 @@ campos:
   Area_HA: {nombre: area_ha, tipo: float, desc: "área en hectáreas"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: ANT, theme: ordenamiento_rural}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una zona de reserva campesina constituida; 30 en el país
+  clave:
+    columna: NOMBRE_ZON
+    unica: true
+  operaciones:
+    filtrar: 0.4
+    contar: 0.4
+    ordenar: 0.7
+    agrupar: 0.4
+  hallazgos:
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto

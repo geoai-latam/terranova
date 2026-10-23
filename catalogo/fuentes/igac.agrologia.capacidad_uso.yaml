@@ -30,3 +30,17 @@ campos:
   Descripcio: {nombre: descripcion_capacidad, tipo: str, desc: "descripción de la capacidad de uso"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un polígono de una unidad de capacidad de uso; 64 771 en el país
+  operaciones:
+    filtrar: 45.2
+    contar: 34.0
+    ordenar: 47.4
+    agrupar: 49.9
+  hallazgos:
+  - el MapServer no cuenta valores distintos
+  - contar, ordenar y agrupar el país tarda 34 a 50 s
+  - el punto de prueba toca un solo elemento
+  decision: en vivo solo por punto; agregados, por copia (pendiente)

@@ -34,3 +34,18 @@ campos:
   CODIGO_ANTERIOR: {nombre: codigo_vereda_anterior, tipo: str, desc: "código anterior de la vereda, 13 dígitos"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'una vereda; Chía: 8'
+  clave:
+    columna: CODIGO
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.2
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos:
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto

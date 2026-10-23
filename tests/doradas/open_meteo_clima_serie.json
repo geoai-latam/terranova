@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T03:50:12+00:00",
+ "grabado": "2026-10-23T01:09:25+00:00",
  "herramienta": "open_meteo_clima_serie",
  "llamadas": [
   {
@@ -245,6 +245,11 @@
      }
     ],
     "facts": {
+     "completitud": {
+      "total": 31,
+      "truncado": false,
+      "vistos": 31
+     },
      "dias": 31,
      "elevacion_modelo_m": 2557.0,
      "fuente": "era5",

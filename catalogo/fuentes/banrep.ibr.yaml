@@ -34,3 +34,17 @@ campos:
   FREQ: {nombre: frecuencia, tipo: str, desc: "frecuencia (D diaria)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Banco de la República, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una fecha de una serie del IBR (plazo y modalidad); 8 series, últimas 40 de cada una en 9 s
+  clave:
+    columna: TIME_PERIOD + SUBJECT + UNIT_MEASURE
+    unica: true
+  operaciones:
+    filtrar: 9.2
+  hallazgos:
+  - 'el servicio no filtra por fechas: se piden las últimas N (lastNObservations)'
+  - 'la fecha y el SUBJECT no bastan: la modalidad (nominal o efectiva) va en UNIT_MEASURE'
+  - solo días hábiles
+  decision: en vivo, últimas N por serie

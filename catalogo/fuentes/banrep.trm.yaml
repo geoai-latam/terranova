@@ -34,3 +34,16 @@ campos:
   FREQ: {nombre: frecuencia, tipo: str, desc: "frecuencia (D diaria)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Banco de la República, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una fecha de la TRM; las últimas 40 en 8 s, una serie, fechas únicas
+  clave:
+    columna: TIME_PERIOD
+    unica: true
+  operaciones:
+    filtrar: 8.2
+  hallazgos:
+  - 'el servicio no filtra por fechas: se piden las últimas N (lastNObservations)'
+  - trae fines de semana y la TRM de mañana (la última fecha medida fue el 2026-10-23)
+  decision: en vivo, últimas N; la descripción dice que la última puede ser mañana

@@ -34,3 +34,17 @@ campos:
   FREQ: {nombre: frecuencia, tipo: str, desc: "frecuencia (D diaria)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Banco de la República, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una fecha de la UVR en dos series (valor y variación); últimas 40 de cada una en 8 s
+  clave:
+    columna: TIME_PERIOD + UNIT_MEASURE
+    unica: true
+  operaciones:
+    filtrar: 8.3
+  hallazgos:
+  - 'el servicio no filtra por fechas: se piden las últimas N (lastNObservations)'
+  - 'se calcula por adelantado hasta el 15 del mes siguiente (última medida: 2026-11-15)'
+  - «la UVR de hoy» no es la última fila
+  decision: en vivo, últimas N; la descripción dice que hay fechas futuras
