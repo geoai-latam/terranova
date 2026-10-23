@@ -1,0 +1,56 @@
+id: cce.secop2.paa
+titulo: "SECOP II, plan anual de adquisiciones (detalle)"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/9sue-ezhx.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, plan anual de adquisiciones (detalle). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Los datos de contacto del responsable (nombre, teléfono y correo) quedan fuera de la lista blanca
+# (ADR-0014): la pregunta es qué se va a comprar, no a quién llamar.
+url: https://www.datos.gov.co/resource/9sue-ezhx.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO, columna_tiempo: annio}
+datos_personales: filtrados
+estado: publicada
+campos:
+  id: {nombre: id_item, tipo: str, desc: "identificador del ítem del plan"}
+  descripcion: {nombre: descripcion, tipo: str, desc: "qué se piensa comprar"}
+  fecha_esperada_de_inicio: {nombre: fecha_inicio, tipo: str, desc: "fecha esperada de inicio del proceso (texto de la fuente)"}
+  duracion_esperada: {nombre: duracion, tipo: float, desc: "duración esperada, en la unidad de `unidad_duracion`"}
+  unidad_de_duracion_esperada: {nombre: unidad_duracion, tipo: str, desc: "unidad de la duración (días, meses…)"}
+  modalidad: {nombre: modalidad, tipo: str, desc: "modalidad de selección prevista"}
+  origen_recursos: {nombre: origen_recursos, tipo: str, desc: "origen de los recursos"}
+  valor_total_esperado: {nombre: valor_esperado, tipo: float, desc: "valor estimado del proceso, en pesos"}
+  valor_esperado_de_presupuesto: {nombre: valor_vigencia_actual, tipo: float, desc: "parte del valor cubierta por la vigencia actual, en pesos"}
+  requiere_vigencias_futuras: {nombre: vigencias_futuras, tipo: str, desc: "si requiere vigencias futuras"}
+  codigo_entidad: {nombre: codigo_entidad, tipo: str, desc: "código de la entidad en SECOP II (un NIT puede tener varias)"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad que publicó el plan"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  annio: {nombre: anio, tipo: int, desc: "año del plan"}
+  version_del_paa: {nombre: version, tipo: int, desc: "versión del plan publicada (la fuente guarda solo la última)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un ítem del plan por cada categoría UNSPSC; Pitalito 2025: 754 filas para 582 ítems del municipio"
+  clave: {columna: id, unica: false}
+  operaciones: {filtrar: 0.6, contar: 0.6, agrupar: 14.7}
+  hallazgos:
+  - "un ítem se repite una vez por categoría UNSPSC, con el mismo valor (hasta 12 veces)"
+  - "sumar filas infla: el plan 2025 del municipio de Pitalito suma $91 410 millones por filas y $54 008 millones por ítem"
+  - "un NIT no es una entidad: el de Pitalito cubre al municipio, al concejo y a la personería, cada una con su código y su plan"
+  - "la fuente guarda solo la última versión de cada plan"
+  - "Pitalito no tiene plan de 2020"
+  - "listar con distinct y orden por id no responde en 300 s; sin orden responde en 6 s"
+  decision: "por NIT, un resumen por entidad con valor deduplicado por ítem (etapa previa); por código de entidad, los ítems con distinct y sin orden"

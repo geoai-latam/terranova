@@ -1,0 +1,35 @@
+id: secop2_paa_items
+version: 1
+familia: contratacion
+fuente: cce.secop2.paa
+pregunta: "¿Qué piensa comprar esta entidad según su plan anual de adquisiciones de SECOP II?"
+descripcion: >
+  Ítems del plan anual de adquisiciones de SECOP II de una entidad por su código de SECOP (lo da
+  secop2_paa_entidad) y año: descripción, fecha de inicio, duración, modalidad, origen de los
+  recursos, valor estimado y si requiere vigencias futuras. Cada ítem sale una vez; hasta 2000.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {codigo_entidad: int, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 9sue-ezhx
+    portal: datos.gov.co
+    # Spec 07: `distinct` quita la repetición por categoría UNSPSC; va sin orden, porque ordenar el
+    # `distinct` no responde en 300 s. Cabe en una página (2000 ítems).
+    select: "distinct id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras"
+    where: "codigo_entidad = '{codigo_entidad}' AND annio = {anio}"
+    max_filas: 2000
+  campos: [id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras, codigo_entidad, annio]
+salida: Secop2PaaItems
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 9sue-ezhx: el plan 2025 del municipio de Pitalito (702330010) tiene 582
+  # ítems distintos (754 filas). Es el plan cerrado del año.
+  entrada: {codigo_entidad: 702330010, anio: 2025}
+  minimos: {numero_registros: 582}
+  campos: [descripcion, duracion, fecha_inicio, id_item, modalidad, numero_registros, origen_recursos, unidad_duracion, valor_esperado, valor_vigencia_actual, vigencias_futuras]
+  latencia_max_ms: 30000

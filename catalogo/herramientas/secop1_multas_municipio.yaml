@@ -1,0 +1,37 @@
+id: secop1_multas_municipio
+version: 1
+familia: contratacion
+fuente: cce.secop1.multas
+pregunta: "¿Qué multas y sanciones a contratistas se impusieron en este municipio (SECOP I)?"
+descripcion: >
+  Multas y sanciones a contratistas registradas en SECOP I por las entidades de un municipio (su
+  nombre, p. ej. Girardot): entidad, resolución, contrato, contratista (como lo publica SECOP),
+  valor en pesos y fechas, de la más reciente a la más antigua; hasta 500. No salen las filas de
+  prueba que publica la fuente. Para SECOP II, secop_sanciones_contrato.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {municipio: nombre}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 4n4q-k399
+    portal: datos.gov.co
+    select: "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso"
+    # Spec 07: 94 filas son de una «Z ENTIDAD DE PRUEBA».
+    where: "upper(municipio) = upper('{municipio}') AND nombre_entidad not like '%PRUEBA%'"
+    order: "fecha_de_firmeza DESC, numero_de_resolucion"
+    max_filas: 500
+  campos: [nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso]
+salida: Secop1MultasMunicipio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 4n4q-k399: Girardot tiene 11 multas, todas a empresas o institutos; la
+  # más reciente quedó en firme el 2019-11-05, por $12 216 540.
+  entrada: {municipio: Girardot}
+  verdad: {contratista: GESTION INTEGRAL CONSULTORES S.A.S., valor: 12216540.0}
+  minimos: {numero_registros: 11}
+  campos: [contratista, contrato, documento_contratista, entidad, fecha_firmeza, fecha_publicacion, municipio, nit_entidad, numero_registros, resolucion, url_proceso, valor]
+  latencia_max_ms: 10000

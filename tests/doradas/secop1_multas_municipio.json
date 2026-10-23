@@ -1,0 +1,205 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:24:29+00:00",
+ "herramienta": "secop1_multas_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "4n4q-k399",
+    "max_filas": 500,
+    "order": "fecha_de_firmeza DESC, numero_de_resolucion",
+    "portal": "datos.gov.co",
+    "select": "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso",
+    "where": "upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "documento_contratista",
+       "fecha_de_firmeza",
+       "fecha_de_publicacion",
+       "municipio",
+       "nit_entidad",
+       "nombre_contratista",
+       "nombre_entidad",
+       "numero_de_contrato",
+       "numero_de_resolucion",
+       "ruta_de_proceso",
+       "valor_sancion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "documento_contratista": "900109122",
+        "fecha_de_firmeza": "2019-11-05T00:00:00.000",
+        "fecha_de_publicacion": "2019-11-01T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900222346",
+        "nombre_contratista": "GESTION INTEGRAL CONSULTORES S.A.S.",
+        "nombre_entidad": "CUNDINAMARCA - EMPRESAS PÚBLICAS DE CUNDINAMARCA SA ESP",
+        "numero_de_contrato": "EPC-PDA-C-222-2019",
+        "numero_de_resolucion": "RESOLUCION 256 DE 2019",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26189018",
+        "valor_sancion": "12216540"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2019-01-11T00:00:00.000",
+        "fecha_de_publicacion": "2019-01-11T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 003 DE 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26188016",
+        "valor_sancion": "16562320"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2019-01-11T00:00:00.000",
+        "fecha_de_publicacion": "2019-01-11T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 004 DE 2019",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26188017",
+        "valor_sancion": "8281160"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2019-01-03T00:00:00.000",
+        "fecha_de_publicacion": "2018-12-14T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 019 DE 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26187980",
+        "valor_sancion": "23437260"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2018-12-14T00:00:00.000",
+        "fecha_de_publicacion": "2018-12-14T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 018 DE 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26187979",
+        "valor_sancion": "15624840"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2018-09-21T00:00:00.000",
+        "fecha_de_publicacion": "2018-09-21T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 014 DE 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26188020",
+        "valor_sancion": "15624840"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2018-07-05T00:00:00.000",
+        "fecha_de_publicacion": "2018-07-05T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 009 DE 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26188019",
+        "valor_sancion": "3906210"
+       },
+       {
+        "documento_contratista": "8050277431",
+        "fecha_de_firmeza": "2018-03-12T00:00:00.000",
+        "fecha_de_publicacion": "2018-03-12T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "900290890",
+        "nombre_contratista": "DUMIAN MEDICAL S.A.S",
+        "nombre_entidad": "CUNDINAMARCA - E.S.E. HOSPITAL DE GIRARDOT",
+        "numero_de_contrato": "CPS 013 DE 2015",
+        "numero_de_resolucion": "RESOLUCION No. 006 de 2018",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26188018",
+        "valor_sancion": "7812420"
+       },
+       {
+        "documento_contratista": "8906800353",
+        "fecha_de_firmeza": "2017-01-27T00:00:00.000",
+        "fecha_de_publicacion": "2017-01-27T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "890680035",
+        "nombre_contratista": "INSTITUTO MUNICIPAL DE TURISMO CULTURA Y FOMENTO D",
+        "nombre_entidad": "CUNDINAMARCA - INSTITUTO MUNICIPAL DE TURISMO CULTURA Y FOMENTO DE GIRARDOT",
+        "numero_de_contrato": "RESOLUCION NO 009",
+        "numero_de_resolucion": "009-2017",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26184957",
+        "valor_sancion": "0"
+       },
+       {
+        "documento_contratista": "8906800353",
+        "fecha_de_firmeza": "2016-01-27T00:00:00.000",
+        "fecha_de_publicacion": "2016-01-27T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "890680035",
+        "nombre_contratista": "INSTITUTO MUNICIPAL",
+        "nombre_entidad": "CUNDINAMARCA - INSTITUTO MUNICIPAL DE TURISMO CULTURA Y FOMENTO DE GIRARDOT",
+        "numero_de_contrato": "RESOLUCION NO 005-2016",
+        "numero_de_resolucion": "005-2016",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26183083",
+        "valor_sancion": "5000000"
+       },
+       {
+        "documento_contratista": "8906800353",
+        "fecha_de_firmeza": "2016-01-27T00:00:00.000",
+        "fecha_de_publicacion": "2016-01-27T00:00:00.000",
+        "municipio": "Girardot",
+        "nit_entidad": "890680035",
+        "nombre_contratista": "INSTITUTO MUNICIPAL",
+        "nombre_entidad": "CUNDINAMARCA - INSTITUTO MUNICIPAL DE TURISMO CULTURA Y FOMENTO DE GIRARDOT",
+        "numero_de_contrato": "RESOLUCION NO 005-2016",
+        "numero_de_resolucion": "005-2016",
+        "ruta_de_proceso": "https://www.contratos.gov.co/consultas/detalleProcesoAACS.do?numProcAACS=26183082",
+        "valor_sancion": "5000000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 11,
+      "truncado": false,
+      "vistos": 11
+     },
+     "completo": true,
+     "conjunto": "4n4q-k399",
+     "consulta": {
+      "conjunto": "4n4q-k399",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso",
+      "where": "(upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%')"
+     },
+     "cumplen_en_el_portal": 11,
+     "filas": 11,
+     "filtro_soql": "(upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

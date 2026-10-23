@@ -1,0 +1,210 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.paa
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/9sue-ezhx.json
+pagina: https://www.datos.gov.co/d/9sue-ezhx
+titulo: SECOPII - Plan Anual De Adquisiciones Detalle
+descripcion: Informacion detallada de las compras que realizará la entidad durante el año definido en
+  el plan anual de aquisiciones
+publicado: '2024-10-21'
+datos_actualizados: '2026-09-23'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- paa
+filas: 19603851
+campos:
+  id:
+    tipo_fuente: text
+    etiqueta: Id
+    descripcion: Identificador único del Item del PAA, numérico
+    nulos: 0
+    minimo: MarketplaceCO11
+    maximo: MarketplaceCO19999999
+    comparacion: texto
+  descripcion:
+    tipo_fuente: text
+    etiqueta: Descripcion
+    descripcion: Descripción del Item a adquirir en el proceso registrado
+    nulos: 77
+    comparacion: texto
+  fecha_esperada_de_inicio:
+    tipo_fuente: text
+    etiqueta: Fecha Esperada de Inicio
+    descripcion: Fecha Esperada de inicio de desarrollo del proceso de compra pública
+    nulos: 0
+    minimo: Abril
+    maximo: Septiembre
+    comparacion: texto
+    valores:
+      Enero: 9026984
+      Febrero: 3177715
+      Marzo: 1447456
+      Abril: 926958
+      Julio: 773304
+      Junio: 749155
+      Mayo: 727481
+      Agosto: 627950
+      Septiembre: 579390
+      Octubre: 525377
+      No Definido: 440330
+      Noviembre: 424084
+      Diciembre: 170787
+  duracion_esperada:
+    tipo_fuente: number
+    etiqueta: Duracion Esperada
+    descripcion: Valor de la duración esperada del desarrollo del proceso de compra
+    nulos: 0
+    minimo: '-244'
+    maximo: '429000000'
+    comparacion: numero
+  unidad_de_duracion_esperada:
+    tipo_fuente: text
+    etiqueta: Unidad de Duracion Esperada
+    descripcion: Unidad en la que se calcula el valor de duración esperada
+    nulos: 0
+    comparacion: texto
+    valores:
+      día(s): 9509317
+      Mes(es): 9320563
+      No Especificado: 533165
+      Año(s): 233926
+  origen_recursos:
+    tipo_fuente: text
+    etiqueta: Origen Recursos
+    descripcion: Origen de los recursos para la adquisición, entre otros, pueden definirse los recursos
+      propios, empréstitos, regalías o Sistema General de Participaciones
+    nulos: 0
+    comparacion: texto
+    valores:
+      Recursos propios: 8888441
+      Presupuesto de entidad nacional: 8817784
+      No Definido: 920231
+      Sistema General de Participaciones: 862629
+      Regalias: 84378
+      Recursos de credito: 23508
+  valor_total_esperado:
+    tipo_fuente: number
+    etiqueta: Valor Total Esperado
+    descripcion: Valor estimado del proceso de compra
+    nulos: 0
+    minimo: '0'
+    maximo: '210101288310365210'
+    comparacion: numero
+  valor_esperado_de_presupuesto:
+    tipo_fuente: number
+    etiqueta: Valor Esperado de Presupuesto Actual
+    descripcion: Valor Estimado del proceso, cubierto por la vigencia actual
+    nulos: 0
+    minimo: '0'
+    maximo: '99631162388243277'
+    comparacion: numero
+  requiere_vigencias_futuras:
+    tipo_fuente: text
+    etiqueta: Requiere vigencias futuras
+    descripcion: Indica si se requiere contar con vigencias futuras para la ejecución del PAA. Esta columna
+      antes se llamaba "Valor Esperado de Vigencias Futuras"
+    nulos: 0
+    minimo: 'No'
+    maximo: Si
+    comparacion: texto
+    valores:
+      'No': 18401876
+      Si: 1184472
+      No definido: 10623
+  modalidad:
+    tipo_fuente: text
+    etiqueta: Modalidad
+    descripcion: Mecanismo de Selección utilizado en el proceso de Compra Pública
+    nulos: 0
+    comparacion: texto
+    valores:
+      CONTRATACION DIRECTA: 7271057
+      CONTRATACION DIRECTA (CON OFERTAS): 3258456
+      MINIMA CUANTIA: 2640517
+      No Definido: 2412766
+      CONTRATACION REGIMEN ESPECIAL: 1232327
+      SERVICIOS PROFESIONALES Y APOYO A LA GESTION: 811097
+      SELECCION ABREVIADA DE MENOR CUANTIA: 628617
+      SELECCION ABREVIADA CON SUBASTA INVERSA: 455336
+      PUBLICACION CONTRATACION REGIMEN ESPECIAL: 306738
+      LICITACION PUBLICA: 267092
+      CONCURSO DE MERITOS ABIERTO: 101491
+      CONTRATACION REGIMEN ESPECIAL (CON OFERTAS): 72037
+      SOLICITUD DE INFORMACION A LOS PROVEEDORES: 35299
+      PUBLICACION CONTRATACION REGIMEN ESPECIAL CON PRESENTACION DE OFERTAS: 32259
+      CONCURSO DE MERITOS CON PRECALIFICACION: 26283
+      CONCURSO DE MERITOS ABIERTO (DESCONTINUADO): 24819
+      LICITACION PUBLICA (OBRA PUBLICA): 16814
+      SELECCION ABREVIADA DE MENOR CUANTIA SIN MANIFESTACION DE INTERES: 2801
+      CONCURSO DE MERITOS CON PRECALIFICACION (DESCONTINUADO): 1165
+  codigo_entidad:
+    tipo_fuente: text
+    etiqueta: Codigo Entidad
+    descripcion: Codigo de la entidad en la plataforma SECOPII
+    nulos: 0
+    minimo: '700000011'
+    maximo: SA
+    comparacion: texto
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Nombre de la entidad que publicó el proceso en el SECOPII
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: NIT Entidad
+    descripcion: NIT de la Entidad que publicó el PAA en el SECOPII
+  annio:
+    tipo_fuente: number
+    etiqueta: Annio
+    descripcion: Año del PAA
+    nulos: 0
+    minimo: '-1'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2024': 3913112
+      '2022': 3123072
+      '2023': 2944588
+      '2019': 2563902
+      '2016': 2434159
+      '2021': 1501884
+      '2020': 1159145
+      '2018': 1089262
+      '2017': 842996
+      '2025': 24692
+      '-1': 145
+      '2026': 13
+      '2015': 1
+  version_del_paa:
+    tipo_fuente: number
+    etiqueta: Version del PAA
+    descripcion: Versión del PAA
+    nulos: 0
+    minimo: '1'
+    maximo: '46'
+    comparacion: numero
+    valores:
+      '1': 19475387
+      '2': 109198
+      '3': 9744
+      '4': 1826
+      '5': 527
+      '6': 174
+      '7': 48
+      '9': 25
+      '8': 18
+      '10': 6
+      '13': 5
+      '16': 2
+      '20': 2
+      '14': 2
+      '17': 2
+      '46': 1
+      '11': 1
+      '12': 1
+      '21': 1
+      '32': 1
