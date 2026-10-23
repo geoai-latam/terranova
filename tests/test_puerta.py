@@ -83,6 +83,25 @@ CHIA = {"lon": -74.0262, "lat": 4.8619}
 
 @pytest.mark.anyio
 @_con(ConectorFalso({}))
+async def test_los_esquemas_mcp_los_acepta_un_cliente_openai(cliente_con: Client[Any]) -> None:
+    """OpenAI rechaza la lista ENTERA si un esquema trae combinadores arriba (banco de agente)."""
+    prohibidos = {"oneOf", "anyOf", "allOf", "enum", "const", "not"}
+    for t in await cliente_con.list_tools():
+        assert t.input_schema.get("type") == "object", t.name
+        assert not prohibidos & set(t.input_schema), t.name
+
+
+@pytest.mark.anyio
+async def test_cada_perfil_cabe_en_un_cliente_openai() -> None:
+    """OpenAI acepta hasta 128 herramientas por llamada: `/mcp` completo ya no cabe (150), cada
+    perfil por familia sí (ADR-0006)."""
+    for familia in puerta.FAMILIAS:
+        async with Client(puerta.crear_servidor(familia, con_ciclo=False)) as c:
+            assert len(await c.list_tools()) <= 128, familia
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
     # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08)
@@ -93,7 +112,7 @@ async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[An
     describir = herramientas["fuente_describir"]
     assert describir.annotations is not None and describir.annotations.open_world_hint is False
     ficha = herramientas["ficha_lugar"]
-    assert ficha.input_schema["oneOf"] and ficha.annotations is not None
+    assert "lon" in ficha.input_schema["properties"] and ficha.annotations is not None
     t = herramientas[PREDIO]
     assert t.output_schema is not None and "procedencia" in t.output_schema["properties"]
     assert t.annotations is not None and t.annotations.read_only_hint is True

@@ -171,6 +171,16 @@ def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
     assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "T-760-08")
 
 
+def test_cada_tipo_con_patron_dice_su_forma_con_un_ejemplo_valido() -> None:
+    import re
+
+    from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA
+
+    assert set(FORMAS_ENTRADA) == set(PATRONES_ENTRADA)
+    for tipo, (_, ejemplo) in FORMAS_ENTRADA.items():
+        assert re.fullmatch(PATRONES_ENTRADA[tipo], ejemplo), tipo
+
+
 def test_licencias_legibles() -> None:
     catalogo = cargar()
     assert (

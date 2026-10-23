@@ -42,6 +42,25 @@ PATRONES_ENTRADA: dict[str, str] = {
     "bpin": r"^[0-9]{13,14}$",  # proyecto del Banco de Proyectos (DNP): 2013157610001
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
+# Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
+# herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
+FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
+    "codigo_predial": ("número predial nacional de 30 dígitos", "251750000000000050067000000000"),
+    "divipola": ("código DIVIPOLA del municipio: 5 dígitos, con el cero inicial", "25175"),
+    "id_secop": ("identificador de SECOP II", "CO1.PCCNTR.5141215"),
+    "constancia_secop": ("número de constancia de SECOP I", "19-12-10176235"),
+    "contrato_secop": ("identificador de SECOP II o constancia de SECOP I", "CO1.PCCNTR.5141215"),
+    "fecha": ("fecha AAAA-MM-DD", "2026-10-23"),
+    "sentencia_cc": ("sentencia de la Corte Constitucional, tipo-número/año", "T-760/08"),
+    "sentencia_relatoria": ("sentencia como la escribe la relatoría, con guiones", "T-760-08"),
+    "documento_normativo": ("documento del gestor normativo, tipo_número_año", "decreto_1165_2019"),
+    "nit_empresa": ("NIT de la empresa, 9 dígitos sin dígito de verificación", "899999714"),
+    "codigo_dane_sede": ("código DANE de la sede educativa, 12 dígitos", "125175000493"),
+    "matricula_inmobiliaria": ("folio de matrícula: oficina, guion y número", "50N-20849403"),
+    "bpin": ("código BPIN del proyecto, 13 o 14 dígitos", "2013157610001"),
+    "nombre": ("nombre o parte de él: letras, espacios, puntos y guiones", "Bancolombia"),
+}
+
 TipoEntrada = Literal[
     "float",
     "int",

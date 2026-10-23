@@ -24,7 +24,7 @@ from pydantic import PrivateAttr
 from terranova import ficha as ficha_lugar
 from terranova import metricas
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
-from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
+from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import PATRON_TEXTO_LIMPIO, Sobre, huella, nueva_solicitud_id
 from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
@@ -55,7 +55,14 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
         "description": "[lon_min, lat_min, lon_max, lat_max] EPSG:4326",
     },
     "geojson": {"type": "object"},
-    **{tipo: {"type": "string", "pattern": patron} for tipo, patron in PATRONES_ENTRADA.items()},
+    **{
+        tipo: {
+            "type": "string",
+            "pattern": patron,
+            "description": f"{FORMAS_ENTRADA[tipo][0]} (ej. {FORMAS_ENTRADA[tipo][1]})",
+        }
+        for tipo, patron in PATRONES_ENTRADA.items()
+    },
 }
 
 _conectores: dict[str, Conector] | None = None
