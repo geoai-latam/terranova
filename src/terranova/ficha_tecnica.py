@@ -106,6 +106,17 @@ def _campos(fuente: Fuente, metadatos: Metadatos | None) -> list[dict[str, Any]]
         }
         if de_la_fuente is not None:
             fila["fuente"] = de_la_fuente.model_dump(mode="json", exclude_none=True)
+        codigos = (de_la_fuente.codigos if de_la_fuente else None) or campo.codigos
+        if codigos:
+            fila["codigos"] = codigos
+            fila["codigos_norma"] = (
+                campo.codigos_norma
+                if campo.codigos and not (de_la_fuente and de_la_fuente.codigos)
+                else "dominio publicado por la fuente"
+            )
+            vistos = (de_la_fuente.valores or {}) if de_la_fuente else {}
+            if sin_definir := sorted(v for v in vistos if v.strip() and v not in codigos):
+                fila["sin_definir"] = sin_definir
         salida.append(fila)
     return salida
 

@@ -86,6 +86,18 @@ class Campo(_Ficha):
         description="fila: propiedad de cada elemento; hecho: dato del resultado (facts)",
     )
     desc: str
+    codigos: dict[str, str] | None = Field(
+        default=None, description="significado de cada código, cuando la fuente no lo publica"
+    )
+    codigos_norma: str | None = Field(
+        default=None, description="la norma que define `codigos` (resolución, artículo, URL)"
+    )
+
+    @model_validator(mode="after")
+    def _codigos_con_norma(self) -> Self:
+        if (self.codigos is None) != (self.codigos_norma is None):
+            raise ValueError("spec 08: los códigos escritos a mano van con la norma que los define")
+        return self
 
 
 class Frescura(_Ficha):
@@ -258,6 +270,11 @@ class Fuente(_Ficha):
         min_length=1, description="lista blanca: campo de la fuente → rt/1"
     )
     comportamiento: Comportamiento = Field(default_factory=Comportamiento)
+    capas_servicio: list[int] = Field(
+        default_factory=list,
+        description="capas ArcGIS que consulta un conector propio (las de las herramientas ya se "
+        "saben): la ficha técnica las cosecha (spec 08)",
+    )
     dcat: dict[str, str] = Field(default_factory=dict)
 
     @model_validator(mode="after")

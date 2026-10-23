@@ -6,3 +6,14 @@ origen: https://geoportal.dane.gov.co/mparcgis/rest/services/MARCO_INTEGRADO/Ser
 titulo: Serv_Capas_MGNintegradoCNPV_2018
 descripcion: Corresponde al servicio que representa nivel de información del Censo Nacional de Población
   y Vivienda CNPV2018 integrados con el Marco Geoestadístico Nacional MGN, versión 2018
+filas: 1122
+geografia:
+  geometria: poligono
+  crs: EPSG:3857
+  extension:
+  - -81.735621
+  - -4.229406
+  - -66.847215
+  - 13.394728
+  capas:
+    '800': Municipios Integrados

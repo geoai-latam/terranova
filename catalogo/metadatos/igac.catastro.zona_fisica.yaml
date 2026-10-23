@@ -49,6 +49,13 @@ campos:
     minimo: '0'
     maximo: '56'
     comparacion: numero
+    valores:
+      '2': 46643
+      '3': 45257
+      '1': 13376
+      '4': 11119
+      '0': 5146
+      '56': 26
     codigos:
       '1': Abundabtes
       '2': Suficientes
@@ -60,6 +67,24 @@ campos:
     minimo: '0'
     maximo: '78'
     comparacion: numero
+    valores:
+      '9': 20719
+      '4': 22955
+      '1': 45104
+      '5': 16669
+      '3': 18356
+      '2': 31699
+      '8': 8729
+      '7': 4951
+      '6': 3254
+      '11': 2346
+      '0': 1234
+      '10': 736
+      '13': 542
+      '12': 215
+      '14': 88
+      '78': 23
+      '34': 11
     codigos:
       '1': Buenas 1 - Pavimentada, dos o más vías
       '2': Buenas 2 - Sin pavimentar, dos o más vías
@@ -76,6 +101,29 @@ campos:
     minimo: '0'
     maximo: '20'
     comparacion: numero
+    valores:
+      '16': 33756
+      '9': 12741
+      '0': 12692
+      '7': 9863
+      '12': 8390
+      '2': 11807
+      '15': 5998
+      '1': 27418
+      '4': 14078
+      '3': 6672
+      '8': 5179
+      '11': 4688
+      '5': 17050
+      '20': 3076
+      '10': 2830
+      '6': 2731
+      '14': 2537
+      '19': 1257
+      '17': 519
+      '18': 506
+      '13': 1550
+      '21': 65
     codigos:
       '1': Edificios
       '2': Otras Construcciones
@@ -105,6 +153,25 @@ campos:
   TOPOGRAFIA:
     tipo_fuente: esriFieldTypeString
     etiqueta: Topografia
+    valores:
+      PLANO: 32741
+      INCLINADO: 12401
+      EMPINADO: 5810
+      '1': 4443
+      '2': 1093
+      Plana: 840
+      '3': 803
+      ' ': 421
+      INCLINADA: 216
+      '0': 203
+      EMPINADA: 81
+      Empinada/Inclinada: 36
+      Plano 0-7%: 29
+      Inclinado 7-14%: 18
+      Empinado >14%: 7
+      Bajamar: 4
+      Escarpada: 3
+      Ronda: 2
     codigos:
       PLANO: Rango de pendiente 0-7%
       INCLINADO: Rango de pendiente 7-14 %
@@ -115,6 +182,13 @@ campos:
     minimo: '0'
     maximo: '5'
     comparacion: numero
+    valores:
+      '4': 21311
+      '3': 14279
+      '2': 12837
+      '1': 8851
+      '5': 807
+      '0': 523
     codigos:
       '1': Sin servicios
       '2': Servicios básicos incompletos
@@ -127,6 +201,34 @@ campos:
     minimo: '0'
     maximo: '93'
     comparacion: numero
+    valores:
+      '2': 12970
+      '3': 5433
+      '0': 5050
+      '1': 5040
+      '4': 1866
+      '13': 1439
+      '7': 1098
+      '14': 969
+      '8': 776
+      '15': 672
+      '16': 470
+      '30': 198
+      '5': 165
+      '10': 157
+      '20': 109
+      '9': 104
+      '6': 84
+      '80': 83
+      '92': 71
+      '91': 62
+      '93': 59
+      '11': 44
+      '40': 24
+      '12': 14
+      '72': 8
+      '73': 5
+      '71': 2
     codigos:
       '1': Residencial 1 - (Bajo-Bajo)
       '2': Residencial 2 - (Bajo)

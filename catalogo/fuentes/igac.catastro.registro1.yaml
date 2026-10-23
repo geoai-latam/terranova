@@ -32,7 +32,12 @@ campos:
   NUMERO_PREDIAL: {nombre: codigo_predial, tipo: str, desc: "número predial nacional, 30 dígitos"}
   NUMERO_PREDIAL_ANTERIOR: {nombre: codigo_predial_anterior, tipo: str, desc: "número predial anterior"}
   DIRECCION: {nombre: direccion, tipo: str, desc: "dirección del predio (o su nombre, en lo rural)"}
-  DESTINO_ECONOMICO: {nombre: destino_economico, tipo: str, desc: "código de destino económico del IGAC (p. ej. A habitacional, C comercial, D agropecuario)"}
+  DESTINO_ECONOMICO:
+    nombre: destino_economico
+    tipo: str
+    desc: "código de destino económico del IGAC (p. ej. A habitacional, C comercial, D agropecuario)"
+    codigos: {"A": "Habitacional", "B": "Industrial", "C": "Comercial", "D": "Agropecuario", "E": "Minero", "F": "Cultural", "G": "Recreacional", "H": "Salubridad", "I": "Institucionales", "J": "Educativo", "K": "Religioso", "L": "Agrícola", "M": "Pecuario", "N": "Agroindustrial", "O": "Forestal", "P": "Uso Público", "Q": "Servicios Especiales", "R": "Lote urbanizable no urbanizado", "S": "Lote urbanizado no construido o edificado", "T": "Lote No Urbanizable"}
+    codigos_norma: "Resolución IGAC 070 de 2011, art. 86 (lotes: parágrafo 3); el diccionario de datos abiertos del IGAC remite a ese artículo: https://geoportal.igac.gov.co/sites/geoportal.igac.gov.co/files/geoportal/diccionario_datos_estructura_archivos_secuenciales_catastro_datos_abiertos.pdf"
   AREA_TERRENO: {nombre: area_terreno_m2, tipo: float, desc: "área del terreno, m²"}
   AREA_CONSTRUIDA: {nombre: area_construida_m2, tipo: float, desc: "área construida, m²"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}

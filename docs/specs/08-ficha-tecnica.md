@@ -115,11 +115,29 @@ La **ficha técnica** (`src/terranova/ficha_tecnica.py`) junta las tres y calcul
   actualización retrocedió. Entra al canario diario cuando arranque F7.1. Lo que cambie se revisa y se vuelve
   a perfilar antes de regrabar (spec 07).
 
+## Códigos
+
+Un campo codificado dice qué significa cada código y quién lo define:
+
+- si la fuente publica el dominio (ArcGIS `codedValues`), se cosecha: `codigos_norma` dice «dominio
+  publicado por la fuente»;
+- si no, se escriben en la ficha de la fuente (`campos.<columna>.codigos`) **con la norma que los
+  define** (`codigos_norma`). Sin norma no hay códigos: la regla rompe el catálogo;
+- la cosecha cuenta los valores que de verdad traen los datos. La ficha técnica lista en
+  `sin_definir` los que ninguna tabla define, en vez de inventarles un significado.
+
+Medido el 2026-10-22:
+
+- **Destino económico:** la Resolución IGAC 070 de 2011, art. 86, define A a T, pero los datos traen
+  además U, V, W, X, Y, Z y 0.
+- **Uso de la construcción:** el instructivo IN-FAC-PC03-01 define 79 códigos; los datos traen además
+  0, 61, 99 y la serie 101 a 127.
+- **Zonas físicas:** traen la topografía escrita de 14 maneras («Plano 0-7%», «PLANA», «1»…) frente
+  a un dominio de 3 valores.
+
 ## Pendiente
 
-- DANE (CNPV 2018): su conector no consulta por capa numerada; la ficha técnica no trae geometría.
 - SECOP: fechas imposibles (2099, 3025, 0018). Se miden en el perfil y se decide si las herramientas
   las filtran.
-- Códigos sin dominio en la fuente (usos del suelo, destino económico, clases agrológicas): se
-  escriben a mano con su fuente normativa (resoluciones del IGAC).
 - Contacto de cada fuente (DCAT `contactPoint`): ninguna lo publica en su API.
+- El significado de la serie 101 a 127 del uso de la construcción: buscarlo en el modelo LADM-COL.
