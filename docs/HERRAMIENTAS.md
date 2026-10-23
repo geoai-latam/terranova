@@ -29,6 +29,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop1_origen_recursos_adjudicacion` | ¿De dónde salen los recursos de esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_paa_detalle` | ¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_paa_entidad` | ¿Qué planes anuales de adquisiciones publicó esta entidad en SECOP I y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop1_proceso_historico_por_constancia` | ¿Qué es este proceso antiguo de SECOP I (2004–2017) y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_proceso_por_constancia` | ¿Qué es este proceso de SECOP I y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP I y quién ganó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop2_paa_entidad` | ¿Cuánto planea comprar esta entidad en el año según su plan anual de adquisiciones de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |

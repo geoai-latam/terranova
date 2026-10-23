@@ -1,0 +1,58 @@
+id: cce.secop1.procesos_historico
+titulo: "SECOP I, procesos de compra pública (histórico 2004–2017)"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/qddk-cgux.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP I, procesos de compra pública (histórico). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# No salen los datos del representante legal (nombre, documento, sexo) (ADR-0014).
+url: https://www.datos.gov.co/resource/qddk-cgux.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO, periodo: "procesos cargados entre 2004-11-05 y 2017-12-31"}
+datos_personales: filtrados
+estado: publicada
+campos:
+  uid: {nombre: uid, tipo: str, desc: "identificador único de la fila"}
+  numero_de_constancia: {nombre: constancia, tipo: str, desc: "número de constancia"}
+  numero_de_proceso: {nombre: numero_proceso, tipo: str, desc: "número que le da la entidad"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad"}
+  nit_de_la_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  departamento_entidad: {nombre: departamento, tipo: str, desc: "departamento de la entidad"}
+  municipio_entidad: {nombre: municipio, tipo: str, desc: "municipio de la entidad"}
+  modalidad_de_contratacion: {nombre: modalidad, tipo: str, desc: "modalidad"}
+  estado_del_proceso: {nombre: estado, tipo: str, desc: "estado"}
+  detalle_del_objeto_a_contratar: {nombre: objeto, tipo: str, desc: "objeto"}
+  tipo_de_contrato: {nombre: tipo_contrato, tipo: str, desc: "tipo de contrato"}
+  cuantia_proceso: {nombre: cuantia_proceso, tipo: float, desc: "cuantía del proceso, en pesos"}
+  id_adjudicacion: {nombre: id_adjudicacion, tipo: str, desc: "identificador de la adjudicación"}
+  numero_de_contrato: {nombre: numero_contrato, tipo: str, desc: "número del contrato"}
+  tipo_identifi_del_contratista: {nombre: tipo_documento_contratista, tipo: str, desc: "tipo de documento"}
+  identificacion_del_contratista: {nombre: documento_contratista, tipo: str, desc: "documento (ADR-0025)"}
+  nom_razon_social_contratista: {nombre: contratista, tipo: str, desc: "contratista"}
+  fecha_de_firma_del_contrato: {nombre: fecha_firma, tipo: date, desc: "fecha de firma"}
+  cuantia_contrato: {nombre: valor_contrato, tipo: float, desc: "valor del contrato, en pesos"}
+  valor_contrato_con_adiciones: {nombre: valor_con_adiciones, tipo: float, desc: "valor con adiciones"}
+  ruta_proceso_en_secop_i: {nombre: url_proceso, tipo: str, desc: "enlace al proceso en SECOP I"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un proceso (o adjudicación) de SECOP I cargado entre 2004 y 2017; 6 122 505 en total"
+  clave: {columna: uid, unica: true}
+  operaciones: {filtrar: 3.1, contar: 0.6}
+  hallazgos:
+  - "es la otra mitad de SECOP I: la vigente (f789-7hwg) empieza el 2018-01-01; una constancia de 2015 da 0 allá y 1 acá"
+  - "el NIT de la entidad trae el dígito de verificación (812001675-1), a diferencia de la vigente"
+  - "fechas de firma imposibles (hasta 2099)"
+  decision: "herramienta propia por constancia; la de la vigente remite aquí para lo anterior a 2018"

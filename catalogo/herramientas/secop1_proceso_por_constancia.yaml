@@ -6,7 +6,8 @@ pregunta: "¿Qué es este proceso de SECOP I y a quién se adjudicó?"
 descripcion: >
   Proceso de SECOP I por su número de constancia (p. ej. 19-12-10176235): entidad, modalidad,
   estado, objeto, tipo, cuantía, contratista (con su documento, como lo publica la fuente:
-  ADR-0025), fechas, valor con adiciones y enlace. Una fila por adjudicación.
+  ADR-0025), fechas, valor con adiciones y enlace. Una fila por adjudicación. Cubre lo cargado
+  desde 2018; lo de 2004 a 2017 está en secop1_proceso_historico_por_constancia.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {constancia: constancia_secop}
 consulta:
