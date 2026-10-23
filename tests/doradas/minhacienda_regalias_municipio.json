@@ -1,0 +1,70 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:52:36+00:00",
+ "herramienta": "minhacienda_regalias_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "g4qj-2p2e",
+    "max_filas": 100,
+    "order": "vigencia, nombrefondo",
+    "portal": "datos.gov.co",
+    "select": "vigencia, nombrefondo, presupuestosgrinversion AS presupuesto, numeroproyectosaprobados AS proyectos_aprobados, recursosaprobadosasignadosspgr AS recursos_aprobados",
+    "where": "codigodaneentidad = '25175'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "nombrefondo",
+       "presupuesto",
+       "proyectos_aprobados",
+       "recursos_aprobados",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "nombrefondo": "ASIGNACIONES DIRECTAS",
+        "presupuesto": "106027949.00",
+        "proyectos_aprobados": "0",
+        "recursos_aprobados": "0.00",
+        "vigencia": "Vigencia 2025 - 2026"
+       },
+       {
+        "nombrefondo": "ASIGNACIONES DIRECTAS ANTICIPADAS",
+        "presupuesto": "8416026.00",
+        "proyectos_aprobados": "0",
+        "recursos_aprobados": "0.00",
+        "vigencia": "Vigencia 2025 - 2026"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "g4qj-2p2e",
+     "consulta": {
+      "conjunto": "g4qj-2p2e",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "vigencia, nombrefondo, presupuestosgrinversion AS presupuesto, numeroproyectosaprobados AS proyectos_aprobados, recursosaprobadosasignadosspgr AS recursos_aprobados",
+      "where": "(codigodaneentidad = '25175')"
+     },
+     "cumplen_en_el_portal": 2,
+     "filas": 2,
+     "filtro_soql": "(codigodaneentidad = '25175')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

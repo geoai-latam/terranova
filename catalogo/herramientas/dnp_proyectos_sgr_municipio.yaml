@@ -1,0 +1,42 @@
+id: dnp_proyectos_sgr_municipio
+version: 1
+familia: contratacion
+fuente: dnp.proyectos_sgr
+pregunta: "¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van?"
+descripcion: >
+  Proyectos del Sistema General de Regalías que ejecuta un municipio (DIVIPOLA): BPIN, nombre,
+  estado, sector, valor total y avance físico y financiero. Cada proyecto sale una vez, aunque
+  beneficie a varios departamentos. Solo los que el municipio ejecuta, no los que lo benefician.
+  (Fuente: DNP; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: mzgh-shtp
+    portal: datos.gov.co
+    select: "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor"
+    where: "codejecutor = {municipio_divipola}"
+    group: codigobpin
+    order: codigobpin
+    max_filas: 1000
+  campos: [codigobpin, nombre, estado, sector, valortotal, ejecucionfisica, ejecucionfinanciera, codejecutor, entidadejecutora]
+salida: ProyectosSgrMunicipio
+derivados:
+  nombre: {de: columna, campo: nombre, tipo: str}
+  estado: {de: columna, campo: estado, tipo: str}
+  sector: {de: columna, campo: sector, tipo: str}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+  ejecucion_fisica: {de: columna, campo: ejecucion_fisica, tipo: float}
+  ejecucion_financiera: {de: columna, campo: ejecucion_financiera, tipo: float}
+  ejecutor: {de: columna, campo: ejecutor, tipo: str}
+  valor_proyectos: {de: suma, campo: valor_total, tipo: float}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en mzgh-shtp: Abejorral (05002; prueba el cero inicial) ejecuta 5 proyectos;
+  # el primero, 2013050020003, está TERMINADO.
+  entrada: {municipio_divipola: "05002"}
+  verdad: {bpin: "2013050020003", estado: "TERMINADO", valor_total: 325640339.0}
+  campos: [bpin, ejecucion_financiera, ejecucion_fisica, ejecutor, estado, nombre, sector, valor_proyectos, valor_total]
+  latencia_max_ms: 10000

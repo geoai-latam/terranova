@@ -1,0 +1,74 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:52:31+00:00",
+ "herramienta": "dnp_proyecto_sgr_por_bpin",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigobpin",
+    "id": "mzgh-shtp",
+    "max_filas": 1,
+    "portal": "datos.gov.co",
+    "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos",
+    "where": "codigobpin = '2013157610001'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigobpin",
+       "departamentos",
+       "ejecucion_financiera",
+       "ejecucion_fisica",
+       "ejecutor",
+       "estado",
+       "nombre",
+       "sector",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigobpin": "2013157610001",
+        "departamentos": "1",
+        "ejecucion_financiera": "100",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE SOMONDOCO",
+        "estado": "TERMINADO",
+        "nombre": "ADECUACIÓN Y MEJORAMIENTO DE LA VIA ALTERNA SOMONDOCO- SECTOR EL SALITRE Y VIAS VEREDAS SAN SEBASTIAN Y CUCUAVACA SOMONDOCO, BOYACa, CENTRO ORIENTE",
+        "sector": "TRANSPORTE",
+        "valor_total": "201534549"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "aviso": "vinieron 1 grupos y es el tope: puede haber más; sube `max_filas`",
+     "completitud": {
+      "motivo": "max_filas=1",
+      "total": null,
+      "truncado": true,
+      "vistos": 1
+     },
+     "completo": false,
+     "conjunto": "mzgh-shtp",
+     "consulta": {
+      "conjunto": "mzgh-shtp",
+      "group": "codigobpin",
+      "max_filas": 1,
+      "portal": "datos.gov.co",
+      "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos",
+      "where": "(codigobpin = '2013157610001')"
+     },
+     "filas": 1,
+     "filas_que_resume": 1,
+     "filtro_soql": "(codigobpin = '2013157610001')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

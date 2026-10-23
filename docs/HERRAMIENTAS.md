@@ -21,6 +21,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 |---|---|---|---|---|
 | `ancp_conceptos_buscar` | ¿Qué conceptos de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 2 |
 | `ancp_providencias_buscar` | ¿Qué providencias de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 2 |
+| `dnp_proyecto_sgr_por_bpin` | ¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 1 |
+| `dnp_proyectos_sgr_municipio` | ¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 2 |
 | `secop1_adiciones_adjudicacion` | ¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_documentos_proceso` | ¿Qué documentos publicó la entidad en este proceso de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop1_modificaciones_adjudicacion` | ¿Qué cambios tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
@@ -106,6 +108,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `men_educacion_etc` | ¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
+| `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 1 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
 ## justicia
@@ -162,6 +165,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_zona_fisica_en_punto` | ¿Qué características físicas tiene la zona homogénea del IGAC en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 3 |
+| `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 2 |
 | `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 | `upra_rangos_precio_municipio` | ¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 

@@ -1,0 +1,111 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:52:35+00:00",
+ "herramienta": "dnp_proyectos_sgr_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigobpin",
+    "id": "mzgh-shtp",
+    "max_filas": 1000,
+    "order": "codigobpin",
+    "portal": "datos.gov.co",
+    "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor",
+    "where": "codejecutor = 05002"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigobpin",
+       "ejecucion_financiera",
+       "ejecucion_fisica",
+       "ejecutor",
+       "estado",
+       "nombre",
+       "sector",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigobpin": "2013050020003",
+        "ejecucion_financiera": "99",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE ABEJORRAL",
+        "estado": "TERMINADO",
+        "nombre": "ADECUACIÓN ViA DE ACCESO MUNICIPIO DE ABEJORRAL - ANTIOQUIA",
+        "sector": "TRANSPORTE",
+        "valor_total": "325640339"
+       },
+       {
+        "codigobpin": "2013050020004",
+        "ejecucion_financiera": "97",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE ABEJORRAL",
+        "estado": "TERMINADO",
+        "nombre": "ADECUACIÓN Y PAVIMENTACIoN ViA SALIDA A PANTANILLO MUNICIPIO DE ABEJORRAL - ANTIOQUIA",
+        "sector": "TRANSPORTE",
+        "valor_total": "687842155"
+       },
+       {
+        "codigobpin": "2014050020001",
+        "ejecucion_financiera": "84",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE ABEJORRAL",
+        "estado": "TERMINADO",
+        "nombre": "ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DE UN COLISEO EN EL CORREGIMIENTO DE PANTANILLO, MUNICIPIO DE ABEJORRAL, ANTIOQUIA, OCCIDENTE",
+        "sector": "DEPORTE Y RECREACIÓN",
+        "valor_total": "60900000"
+       },
+       {
+        "codigobpin": "2015050020001",
+        "ejecucion_financiera": "100",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE ABEJORRAL",
+        "estado": "TERMINADO",
+        "nombre": "CONSTRUCCIÓN DE ESCENARIO DEPORTIVO EN EL CORREGIMIENTO PANTANILLO DEL MUNICIPIO DE ABEJORRAL, DEPARTAMENTO DE ANTIOQUIA",
+        "sector": "DEPORTE Y RECREACIÓN",
+        "valor_total": "697905847"
+       },
+       {
+        "codigobpin": "2017050020001",
+        "ejecucion_financiera": "100",
+        "ejecucion_fisica": "100",
+        "ejecutor": "MUNICIPIO DE ABEJORRAL",
+        "estado": "TERMINADO",
+        "nombre": "Rehabilitación redes de servicios públicos y pavimento rígido en vías urbanas del municipio  Abejorral",
+        "sector": "TRANSPORTE",
+        "valor_total": "2807804897"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "completo": true,
+     "conjunto": "mzgh-shtp",
+     "consulta": {
+      "conjunto": "mzgh-shtp",
+      "group": "codigobpin",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor",
+      "where": "(codejecutor = 05002)"
+     },
+     "filas": 5,
+     "filas_que_resume": 5,
+     "filtro_soql": "(codejecutor = 05002)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

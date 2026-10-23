@@ -1,0 +1,124 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: dnp.proyectos_sgr
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/mzgh-shtp.json
+pagina: https://www.datos.gov.co/d/mzgh-shtp
+titulo: DNP-ProyectosSGR
+descripcion: Proyectos de inversión pública financiados con recursos del Sistema General de Regalías -
+  SGR.
+publicado: '2022-11-21'
+datos_actualizados: '2026-10-20'
+frecuencia_declarada: Semanal
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Economía y Finanzas
+etiquetas:
+- proyectos
+- ejecución
+- inversión
+- dnp
+- sgr
+filas: 35010
+campos:
+  codigobpin:
+    tipo_fuente: text
+    etiqueta: CodigoBPIN
+    descripcion: Código único que identifica el proyecto en el banco de proyectos del SGR.
+    nulos: 0
+    minimo: '2012000010001'
+    maximo: 2025N009410002
+    comparacion: texto
+  nombre:
+    tipo_fuente: text
+    etiqueta: Nombre
+    descripcion: Nombre o descripción del proyecto.
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Estado del proyecto a la fecha de generación de la información.
+    nulos: 0
+    minimo: DESAPROBADO
+    maximo: TERMINADO
+    comparacion: texto
+    valores:
+      TERMINADO: 27528
+      EN EJECUCIÓN: 6206
+      DESAPROBADO: 1276
+  valortotal:
+    tipo_fuente: number
+    etiqueta: ValorTotal
+    descripcion: Valor total del proyecto.
+    nulos: 0
+    minimo: '1'
+    maximo: '3527443454052'
+    comparacion: numero
+  sector:
+    tipo_fuente: text
+    etiqueta: Sector
+    descripcion: Sector de inversión del proyecto.
+    nulos: 68
+    comparacion: texto
+    valores:
+      TRANSPORTE: 10995
+      VIVIENDA, CIUDAD Y TERRITORIO: 4853
+      EDUCACIÓN: 3746
+      DEPORTE Y RECREACIÓN: 3406
+      AMBIENTE Y DESARROLLO SOSTENIBLE: 2777
+      AGRICULTURA Y DESARROLLO RURAL: 2294
+      CIENCIA, TECNOLOGÍA E INNOVACIÓN: 1569
+      MINAS Y ENERGÍA: 1342
+      INCLUSIÓN SOCIAL Y RECONCILIACIÓN: 977
+      SALUD Y PROTECCIÓN SOCIAL: 892
+      GOBIERNO TERRITORIAL: 636
+      CULTURA: 539
+      COMERCIO, INDUSTRIA Y TURISMO: 349
+      TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES: 151
+      INTERIOR: 110
+      PLANEACIÓN: 80
+      TRABAJO: 52
+      JUSTICIA Y DEL DERECHO: 50
+      PRESIDENCIA DE LA REPÚBLICA: 48
+      INFORMACIÓN ESTADÍSTICA: 42
+  codejecutor:
+    tipo_fuente: number
+    etiqueta: CodEjecutor
+    descripcion: Código único que identifica a la entidad ejecutora del proyecto. Para el caso de las
+      entidades territoriales (departamentos o municipios), corresponde al código asignado por el DANE,
+      y para las demás
+    nulos: 0
+    minimo: '4'
+    maximo: '8888049'
+    comparacion: numero
+  entidadejecutora:
+    tipo_fuente: text
+    etiqueta: EntidadEjecutora
+    descripcion: Entidad designada como responsable de ejecutar el proyecto.
+    nulos: 0
+    comparacion: texto
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Departamento al que pertenece la entidad ejecutora.
+    nulos: 5341
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+  ejecucionfisica:
+    tipo_fuente: number
+    etiqueta: EjecucionFisica
+    descripcion: Porcentaje de ejecución física del proyecto, de acuerdo con el último reporte realizado
+      por la entidad ejecutora ante el Sistema de Seguimiento, Evaluación y Control.
+    nulos: 1762
+    minimo: '0'
+    maximo: '148'
+    comparacion: numero
+  ejecucionfinanciera:
+    tipo_fuente: number
+    etiqueta: EjecucionFinanciera
+    descripcion: Porcentaje de ejecución financiera del proyecto, de acuerdo con el último reporte realizado
+      por la entidad ejecutora ante el Sistema de Seguimiento, Evaluación y Control.
+    nulos: 2024
+    minimo: '0'
+    maximo: '217'
+    comparacion: numero

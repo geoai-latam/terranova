@@ -1,0 +1,42 @@
+id: minhacienda.regalias_ejecucion
+titulo: "Ejecución presupuestal de regalías por entidad (MinHacienda, bienio vigente)"
+entidad: Ministerio de Hacienda y Crédito Público
+competencia: elabora y ejecuta el presupuesto bienal del Sistema General de Regalías (Ley 2056 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/g4qj-2p2e.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Ministerio de Hacienda y Crédito Público, ejecución presupuestal de regalías. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/g4qj-2p2e.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  vigencia: {nombre: vigencia, tipo: str, desc: "bienio presupuestal (Vigencia 2025 - 2026)"}
+  nombrefondo: {nombre: fondo, tipo: str, desc: "asignación o fondo del SGR"}
+  codigodaneentidad: {nombre: codigo_entidad, tipo: str, desc: "entidad territorial (DIVIPOLA; departamento con 000)"}
+  nombreentidad: {nombre: entidad, tipo: str, desc: "entidad territorial"}
+  presupuestosgrinversion: {nombre: presupuesto, tipo: float, desc: "presupuesto de inversión del SGR en pesos"}
+  numeroproyectosaprobados: {nombre: proyectos_aprobados, tipo: int, desc: "proyectos aprobados"}
+  recursosaprobadosasignadosspgr: {nombre: recursos_aprobados, tipo: float, desc: "recursos aprobados en proyectos, en pesos"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Ministerio de Hacienda y Crédito Público, theme: hacienda, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "un fondo del SGR en una entidad territorial en el bienio vigente; 5 334 filas"
+  clave: {columna: codigodaneentidad + codigofondo, unica: true}
+  operaciones: {filtrar: 0.2}
+  hallazgos:
+  - "solo trae el bienio vigente (2025 - 2026): el anterior no está"
+  - "codigodaneentidad es texto de 5 dígitos; un departamento termina en 000 y 00000 es «OTROS»"
+  decision: "en vivo por municipio, una fila por fondo"

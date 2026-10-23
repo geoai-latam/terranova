@@ -1,0 +1,96 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: minhacienda.regalias_ejecucion
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/g4qj-2p2e.json
+pagina: https://www.datos.gov.co/d/g4qj-2p2e
+titulo: Ejecución Presupuestal de Regalías
+descripcion: 'Este tablero permite consultar del valor de presupuesto SGR que valor ya se encuentra invertido
+  en proyectos : Consulte para cada entidad territorial y cada fuente de inversión del SGR, el presupuesto
+  SGR, los recursos aprobados por las diferentes instancias y que ya están asignados en el SPGR y el cálculo
+  estimado del saldo pendiente de asignación presupuestal. El saldo pendiente de asignación presupuestal
+  es indicativo en la medida que se calcula con la información de los recursos aprobados y asignados en
+  el SPGR remitidas por las secretarias de Planeación o quien haga sus veces a través del Sistema de Presupuesto
+  y Giro de Regalías - SPGR.'
+publicado: '2024-05-14'
+datos_actualizados: '2026-10-23'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Hacienda y Crédito Público
+etiquetas:
+- fondos
+filas: 5334
+campos:
+  vigencia:
+    tipo_fuente: text
+    etiqueta: Vigencia
+    descripcion: Corresponde a la vigencia del presupuesto bienal del SGR
+    nulos: 0
+    comparacion: texto
+    valores:
+      Vigencia 2025 - 2026: 5334
+  nombrefondo:
+    tipo_fuente: text
+    etiqueta: NombreFondo
+    descripcion: Corresponde a la descripción de la fuente de financiación del SGR
+  codigodaneentidad:
+    tipo_fuente: text
+    etiqueta: CodigoDaneEntidad
+    descripcion: Corresponde al codigo Dane del Entidad Territorial
+    nulos: 0
+    minimo: '00000'
+    maximo: '99773'
+    comparacion: texto
+  nombreentidad:
+    tipo_fuente: text
+    etiqueta: NombreEntidad
+    descripcion: Corresponde al codigo Dane del Entidad Territorial
+  presupuestosgrinversion:
+    tipo_fuente: number
+    etiqueta: PresupuestoSGRInversion
+    descripcion: Presupuesto de Inversión vigente SGR
+    nulos: 0
+    minimo: '0.00'
+    maximo: '7976158291226.36'
+    comparacion: numero
+  numeroproyectosaprobados:
+    tipo_fuente: number
+    etiqueta: NumeroProyectosAprobadosAsignadosSPGR
+    descripcion: Corresponde al número de proyectos, inflexibilidades , y operaciones de credito de las
+      asignaciones realizadas por la Instancia correspondiente en el SPGR. El conteo se realiza por numero
+      de proyectos en cada fuente
+    nulos: 0
+    minimo: '0'
+    maximo: '297'
+    comparacion: numero
+    valores:
+      '0': 1501
+      '1': 1303
+      '2': 608
+      '3': 413
+      '4': 265
+      '6': 191
+      '5': 168
+      '7': 148
+      '9': 115
+      '8': 93
+      '10': 79
+      '11': 61
+      '12': 44
+      '13': 40
+      '14': 38
+      '15': 31
+      '17': 18
+      '16': 18
+      '18': 15
+      '20': 12
+  recursosaprobadosasignadosspgr:
+    tipo_fuente: number
+    etiqueta: RecursosAprobadosAsignadosSPGR
+    descripcion: Corresponde a los recursos asignados por la Instancia correspondiente en el SPGR de los
+      proyectos de inversión que hayan sido aprobados, inflexibilidades y pago de operaciones de crédito
+    nulos: 0
+    minimo: '0.00'
+    maximo: '1777125525194.19'
+    comparacion: numero
