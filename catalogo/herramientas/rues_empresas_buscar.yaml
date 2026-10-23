@@ -1,0 +1,36 @@
+id: rues_empresas_buscar
+version: 1
+familia: empresas
+fuente: confecamaras.rues
+pregunta: "¿Qué empresas o entidades registradas en el RUES tienen este nombre?"
+descripcion: >
+  Busca personas jurídicas y entidades sin ánimo de lucro en el RUES por una parte de su razón social
+  (p. ej. ECOPETROL): NIT, razón social, sigla, cámara, matrícula, organización jurídica, estado y
+  actividad; hasta 50, en orden alfabético. Una misma entidad puede salir con una matrícula por
+  cámara. Las personas naturales no se buscan por nombre (ADR-0014).
+  (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: c82u-588k
+    portal: datos.gov.co
+    select: "nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec"
+    # Spec 07: el like sobre 9,4 M filas responde en ~2 s; las personas naturales quedan fuera.
+    where: "upper(razon_social) like upper('%{nombre}%') AND organizacion_juridica != 'PERSONA NATURAL'"
+    order: "razon_social, matricula"
+    max_filas: 50
+  campos: [nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec]
+salida: RuesEmpresasBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en c82u-588k: «ECOPETROL» da 50 personas jurídicas o entidades (asociaciones,
+  # fondos de empleados, la sociedad misma…). Crece con los registros: mínimo.
+  entrada: {nombre: ECOPETROL}
+  minimos: {numero_registros: 50}
+  campos: [camara_comercio, categoria_matricula, ciiu_principal, ciiu_secundaria, digito_verificacion, estado_matricula, fecha_cancelacion, fecha_matricula, matricula, nit, numero_registros, organizacion_juridica, razon_social, sigla, tipo_sociedad, ultimo_ano_renovado]
+  latencia_max_ms: 15000
