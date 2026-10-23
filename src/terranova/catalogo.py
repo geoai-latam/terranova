@@ -106,6 +106,31 @@ class Comportamiento(_Ficha):
 
 
 IDENTIFICADOR_SQL = r"^[a-z][a-z0-9_]{0,40}$"
+OPERACIONES_PERFIL = ("filtrar", "contar", "ordenar", "agrupar")
+
+
+class ClavePerfil(_Ficha):
+    columna: str
+    unica: bool = Field(description="filas = valores distintos en la muestra medida")
+
+
+class Perfil(_Ficha):
+    """Lo medido en la fuente antes de diseñar sus herramientas (spec 07)."""
+
+    medido: date
+    fila: str = Field(min_length=10, description="qué representa una fila, con un ejemplo medido")
+    clave: ClavePerfil | None = None
+    operaciones: dict[str, float | None] = Field(
+        default_factory=dict, description="segundos por operación; None = no responde en 300 s"
+    )
+    hallazgos: list[str] = Field(default_factory=list)
+    decision: str = Field(min_length=5)
+
+    @model_validator(mode="after")
+    def _operaciones_conocidas(self) -> Self:
+        if sueltas := set(self.operaciones) - set(OPERACIONES_PERFIL):
+            raise ValueError(f"operaciones desconocidas en el perfil: {sorted(sueltas)}")
+        return self
 
 
 class Ventana(_Ficha):
@@ -152,6 +177,7 @@ class Fuente(_Ficha):
     url: str = Field(pattern=r"^https://")
     modo: Literal["en_vivo", "copia", "curado"]
     copia: Copia | None = None
+    perfil: Perfil | None = None
     frescura: Frescura
     cobertura: Cobertura
     datos_personales: Literal["ninguno", "filtrados", "presentes"]

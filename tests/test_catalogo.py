@@ -185,3 +185,96 @@ def test_corte_igac_se_lee_de_la_descripcion_no_del_nombre() -> None:
     assert leer("sin fecha") is None and leer("corte de 3 de brumario de 2026") is None
     fichas = corte_igac.fichas_catastrales()
     assert len(fichas) >= 8 and len(set(fichas.values())) == 1  # todas en el mismo corte
+
+
+# Spec 07: fuentes sin perfil al 2026-10-22. La lista solo encoge: una fuente nueva entra con
+# perfil y, al perfilar una de estas, se quita de aquí.
+SIN_PERFIL = frozenset(
+    {
+        "ancp.conceptos",
+        "ancp.providencias",
+        "ant.resguardos_indigenas",
+        "ant.zonas_reserva_campesina",
+        "banrep.dtf",
+        "banrep.ibr",
+        "banrep.tasa_politica",
+        "banrep.trm",
+        "banrep.uvr",
+        "cce.secop.convenios",
+        "cce.secop.integrado",
+        "cce.secop1.adiciones",
+        "cce.secop1.archivos",
+        "cce.secop1.modificaciones_adjudicaciones",
+        "cce.secop1.modificaciones_procesos",
+        "cce.secop1.origen_recursos",
+        "cce.secop1.paa",
+        "cce.secop1.paa_detalle",
+        "cce.secop1.procesos",
+        "cce.secop1.proponentes",
+        "cce.secop2.adiciones",
+        "cce.secop2.bpin",
+        "cce.secop2.cdps",
+        "cce.secop2.compromisos",
+        "cce.secop2.contratos",
+        "cce.secop2.contratos_copia",
+        "cce.secop2.cronograma",
+        "cce.secop2.ejecucion",
+        "cce.secop2.facturas",
+        "cce.secop2.garantias",
+        "cce.secop2.modificaciones",
+        "cce.secop2.pagos",
+        "cce.secop2.procesos",
+        "cce.secop2.proponentes",
+        "cce.secop2.rubros",
+        "cce.secop2.sanciones",
+        "cce.secop2.suspensiones",
+        "cce.secop2.ubicaciones",
+        "confecamaras.rues",
+        "dane.cnpv2018.municipio",
+        "esa.worldcover",
+        "funcionpublica.suit_historico",
+        "icfes.saber11",
+        "ideam.estaciones",
+        "igac.agrologia.capacidad_uso",
+        "igac.agrologia.conflictos_uso",
+        "igac.agrologia.vocacion_uso",
+        "igac.catastro.construccion",
+        "igac.catastro.estadisticas_municipio",
+        "igac.catastro.manzana",
+        "igac.catastro.perimetro",
+        "igac.catastro.registro1",
+        "igac.catastro.registro2",
+        "igac.catastro.sector",
+        "igac.catastro.terreno",
+        "igac.catastro.vereda",
+        "igac.catastro.zona_fisica",
+        "igac.catastro.zona_geoeconomica",
+        "igac.gestores_catastrales",
+        "igac.transacciones_inmobiliarias",
+        "invima.cum_vigentes",
+        "invima.dispositivos",
+        "invima.rs_nso",
+        "men.educacion_departamento",
+        "men.educacion_municipio",
+        "nasa.firms",
+        "open_meteo.era5",
+        "pnn.runap",
+        "sic.sanciones",
+        "supersociedades.empresas_grandes",
+        "supersociedades.niif_caratula",
+        "supersociedades.niif_flujo_efectivo",
+        "supersociedades.niif_otro_resultado_integral",
+        "supersociedades.niif_resultado_integral",
+        "supersociedades.niif_situacion_financiera",
+        "upra.precio_tierra_rural",
+        "usgs.sismos",
+    }
+)
+
+
+def test_toda_fuente_nueva_entra_con_perfil() -> None:
+    sin_perfil = {f.id for f in cargar().fuentes.values() if f.perfil is None}
+    nuevas = sin_perfil - SIN_PERFIL
+    assert not nuevas, f"fuentes sin perfil (spec 07): {sorted(nuevas)}"
+    ya_perfiladas = SIN_PERFIL - sin_perfil
+    assert not ya_perfiladas, f"ya tienen perfil: quítalas de SIN_PERFIL: {sorted(ya_perfiladas)}"
