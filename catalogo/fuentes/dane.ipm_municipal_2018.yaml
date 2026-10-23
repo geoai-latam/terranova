@@ -1,0 +1,44 @@
+id: dane.ipm_municipal_2018
+titulo: "Medida de pobreza multidimensional municipal de fuente censal 2018 (anexo del DANE)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004)
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE». Es una aproximación con el censo 2018: el DANE
+# advierte que no es comparable con el IPM oficial (encuesta).
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  verificada: 2026-10-22
+  evidencia: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: DANE, medida de pobreza multidimensional de fuente censal 2018"
+protocolo: archivo
+conector: web-mcp
+url: https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx
+modo: en_vivo
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
+cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  ID: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
+  Municipio: {nombre: municipio, tipo: str, desc: "municipio (las tildes vienen dañadas en el archivo)"}
+  IPM: {nombre: ipm_total, tipo: float, desc: "incidencia total, %"}
+  Cabeceras: {nombre: ipm_cabeceras, tipo: float, desc: "incidencia en cabeceras, %"}
+  IPM Centros poblados y rural disperso: {nombre: ipm_rural, tipo: float, desc: "incidencia en centros poblados y rural disperso, %"}
+  columna: {nombre: privacion, tipo: str, desc: "indicador de privación (analfabetismo, trabajo informal…)"}
+  valor: {nombre: porcentaje, tipo: float, desc: "hogares con la privación, %"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un municipio (y los departamentos) con su IPM por zona; otra hoja con 15 privaciones por municipio"
+  clave: {columna: ID, unica: true}
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "los nombres con tilde vienen dañados en el archivo (CHÍA sale con un carácter de reemplazo): se consulta por DIVIPOLA"
+  - "el DANE advierte que es una aproximación censal, no comparable con el IPM oficial de la encuesta"
+  decision: "en vivo por DIVIPOLA, leyendo el anexo de 3 MB"

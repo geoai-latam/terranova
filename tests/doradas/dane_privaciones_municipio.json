@@ -1,0 +1,144 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T05:20:24+00:00",
+ "herramienta": "dane_privaciones_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "fila_encabezado": 2,
+    "filtros": {
+     "ID": "25175"
+    },
+    "hoja": "6_Privaciones IPM Dpt-Mpio",
+    "largo_desde": 3,
+    "url": "https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ID",
+       "Municipio",
+       "columna",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Analfabetismo",
+        "valor": 2.6
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Bajo logro educativo",
+        "valor": 23.9
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Barreras a servicios para cuidado de la primera infancia",
+        "valor": 1.6
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Barreras de acceso a servicios de salud",
+        "valor": 4
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Tasa de dependencia",
+        "valor": 18.5
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Hacinamiento crítico",
+        "valor": 4.5
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Inadecuada eliminación de excretas",
+        "valor": 2.8
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Inasistencia escolar",
+        "valor": 1.8
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Material inadecuado de paredes exteriores",
+        "valor": 0.6
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Material inadecuado de pisos",
+        "valor": 0.2
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Rezago escolar",
+        "valor": 13.3
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Sin acceso a fuente de agua mejorada",
+        "valor": 0.4
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Sin aseguramiento en salud",
+        "valor": 16.2
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Trabajo infantil",
+        "valor": 0.5
+       },
+       {
+        "ID": "25175",
+        "Municipio": "CHÍA",
+        "columna": "Trabajo informal",
+        "valor": 69.6
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "archivo": "https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx",
+     "completitud": {
+      "total": 15,
+      "truncado": false,
+      "vistos": 15
+     },
+     "filas": 15,
+     "hoja": "6_Privaciones IPM Dpt-Mpio",
+     "hojas": [
+      "2_IPM Mpio y Dpt",
+      "4_IPM Mpio dominios",
+      "6_Privaciones IPM Dpt-Mpio",
+      "8_Privaciones Mpio dominio",
+      "TB_REF",
+      "Visor"
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_tabla"
+  }
+ ]
+}

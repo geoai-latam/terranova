@@ -1,0 +1,33 @@
+id: dane_privaciones_municipio
+version: 1
+familia: estadisticas
+fuente: dane.ipm_municipal_2018
+pregunta: "¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio?"
+descripcion: >
+  Las 15 privaciones de la medida de pobreza multidimensional censal 2018 del DANE en un municipio
+  (DIVIPOLA): porcentaje de hogares con analfabetismo, bajo logro educativo, sin aseguramiento en
+  salud, hacinamiento crítico, trabajo informal, etc. Una fila por privación.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: web_tabla
+  argumentos:
+    url: "{url_fuente}"
+    hoja: 6_Privaciones IPM Dpt-Mpio
+    fila_encabezado: 2
+    largo_desde: 3
+    filtros: {ID: "{municipio_divipola}"}
+  campos: [ID, Municipio, columna, valor]
+salida: PrivacionesMunicipio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22: Chía (25175) tiene 15 privaciones; analfabetismo 2,6 %, trabajo informal 69,6 %.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {privacion: Analfabetismo, porcentaje: 2.6}
+  minimos: {numero_registros: 15}
+  campos: [municipio, municipio_divipola, numero_registros, porcentaje, privacion]
+  latencia_max_ms: 30000
