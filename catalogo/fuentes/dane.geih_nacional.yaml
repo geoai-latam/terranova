@@ -1,0 +1,40 @@
+id: dane.geih_nacional
+titulo: "Mercado laboral, total nacional, serie mensual (anexo de la GEIH del DANE)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004)
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE».
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  verificada: 2026-10-22
+  evidencia: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística"
+protocolo: archivo
+conector: web-mcp
+url: https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "enero de 2001 al último mes publicado"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  Concepto: {nombre: indicador, tipo: str, desc: "indicador (TGP, TO, TD…) o población, en miles"}
+  columna: {nombre: anio, tipo: str, desc: "año"}
+  subcolumna: {nombre: mes, tipo: str, desc: "mes (Ene, Feb, …)"}
+  valor: {nombre: valor, tipo: float, desc: "porcentaje para las tasas; miles de personas para las poblaciones"}
+dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un indicador en un mes; serie mensual desde enero de 2001"
+  operaciones: {filtrar: 4.0}
+  hallazgos:
+  - "el archivo cambia de nombre cada mes (anex-GEIH-ago2026.xlsx): se descubre en la página"
+  - "tabla ancha: el año combinado sobre 12 meses; se pasa a una fila por indicador y mes"
+  - "algunos indicadores (TCDFTP) valen 0 en los primeros años: no se medían"
+  - "los nombres de los indicadores traen espacios al final"
+  decision: "en vivo por año, descubriendo el anexo del mes"

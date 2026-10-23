@@ -1,0 +1,135 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:54:10+00:00",
+ "herramienta": "dane_ipm_nacional",
+ "llamadas": [
+  {
+   "argumentos": {
+    "enlace_con": "anex-PMultidimensional-[0-9]{4}\\.xlsx",
+    "fila_encabezado": 9,
+    "filtros": {
+     "columna_1": "Nacional"
+    },
+    "hoja": "IPM_Dominios",
+    "largo_desde": 2,
+    "pagina": "https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-multidimensional",
+    "rellenar": 1
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "columna_1",
+       "columna",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "columna": "2010",
+        "columna_1": "Nacional",
+        "valor": 29.7
+       },
+       {
+        "columna": "2011",
+        "columna_1": "Nacional",
+        "valor": 28.8
+       },
+       {
+        "columna": "2012",
+        "columna_1": "Nacional",
+        "valor": 26.5
+       },
+       {
+        "columna": "2013",
+        "columna_1": "Nacional",
+        "valor": 24.3
+       },
+       {
+        "columna": "2014",
+        "columna_1": "Nacional",
+        "valor": 21.6
+       },
+       {
+        "columna": "2015",
+        "columna_1": "Nacional",
+        "valor": 19.8
+       },
+       {
+        "columna": "2016",
+        "columna_1": "Nacional",
+        "valor": 17.6
+       },
+       {
+        "columna": "2018",
+        "columna_1": "Nacional",
+        "valor": 19.1
+       },
+       {
+        "columna": "2019",
+        "columna_1": "Nacional",
+        "valor": 17.5
+       },
+       {
+        "columna": "2020**",
+        "columna_1": "Nacional",
+        "valor": 18.1
+       },
+       {
+        "columna": "2021***",
+        "columna_1": "Nacional",
+        "valor": 16
+       },
+       {
+        "columna": "2022",
+        "columna_1": "Nacional",
+        "valor": 12.9
+       },
+       {
+        "columna": "2023",
+        "columna_1": "Nacional",
+        "valor": 12.1
+       },
+       {
+        "columna": "2024",
+        "columna_1": "Nacional",
+        "valor": 11.5
+       },
+       {
+        "columna": "2025",
+        "columna_1": "Nacional",
+        "valor": 9.9
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "archivo": "https://www.dane.gov.co/files/operaciones/PM/anex-PMultidimensional-2025.xlsx",
+     "completitud": {
+      "total": 15,
+      "truncado": false,
+      "vistos": 15
+     },
+     "filas": 15,
+     "hoja": "IPM_Dominios",
+     "hojas": [
+      "Indice",
+      "IPM_Dominios",
+      "IPM_Indicadores",
+      "IC_IPM",
+      "Intensidad IPM",
+      "Incidencia Ajustada_IPM",
+      "Contribuciones IA_IPM",
+      "IPM_Sexo ",
+      "IC_IPM_Sexo",
+      "IPM_Sexo Jefe  ",
+      "IC_IPM_Sexo Jefe "
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_tabla"
+  }
+ ]
+}

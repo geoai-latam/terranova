@@ -1,0 +1,9 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dian.usuarios_aduaneros
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://www.dian.gov.co/aduanas/opecomeexterior/Paginas/Usuarios-Aduaneros.aspx
+titulo: Usuarios aduaneros autorizados por la DIAN (vigentes)
+idioma: Español
+descripcion: Archivo .xlsx que se descubre en su página índice (el nombre cambia con la fecha); lo lee
+  web_tabla de web-mcp.

@@ -1,0 +1,39 @@
+id: dane.ipm_departamental
+titulo: "Índice de pobreza multidimensional por departamento (anexo del DANE)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004)
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE».
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  verificada: 2026-10-22
+  evidencia: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística"
+protocolo: archivo
+conector: web-mcp
+url: https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-multidimensional
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "2018 a 2025 (anexo 2025)"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  Departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  columna: {nombre: anio, tipo: str, desc: "año (como lo escribe el DANE: «2020**» lleva nota)"}
+  valor: {nombre: valor, tipo: float, desc: "porcentaje"}
+  subcolumna: {nombre: zona, tipo: str, desc: "Total, Cabeceras o Centros poblados y rural disperso"}
+dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un departamento, año y zona; 2018 a 2025"
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "tabla ancha con el año combinado sobre tres zonas: se pasa a una fila por año y zona"
+  - "2020 y 2021 vienen como «2020**» y «2021***»: llevan notas al pie de la hoja"
+  - "el nombre del archivo lleva el año del último dato (anex-PMultidimensional-Departamental-2025.xlsx)"
+  decision: "en vivo por departamento, descubriendo el anexo vigente"

@@ -1,0 +1,9 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dane.geih_nacional
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo
+titulo: Mercado laboral, total nacional, serie mensual (anexo de la GEIH del DANE)
+idioma: Español
+descripcion: Archivo .xlsx que se descubre en su página índice (el nombre cambia con la fecha); lo lee
+  web_tabla de web-mcp.

@@ -1,0 +1,2453 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:54:12+00:00",
+ "herramienta": "dane_mercado_laboral_nacional",
+ "llamadas": [
+  {
+   "argumentos": {
+    "enlace_con": "anex-GEIH-[a-z]{3}[0-9]{4}\\.xlsx",
+    "fila_encabezado": 12,
+    "filas_encabezado": 2,
+    "filtros": {
+     "columna": 2001
+    },
+    "hoja": "Total nacional",
+    "largo_desde": 2,
+    "pagina": "https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "Concepto",
+       "columna",
+       "subcolumna",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 68.37218825607295
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 68.40037008170616
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 68.425956831186
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 68.45394752820357
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 68.48185576809179
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 68.51145096043453
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 68.53174213612935
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 68.56127975868999
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 68.5904709294225
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 68.61851892795977
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 68.64779217029235
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 68.67628681946792
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 69.05353763902929
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 68.94890305685131
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 68.38791055472242
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 65.2240085420357
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 65.4060935661165
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 66.33346530937537
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 66.74311910147799
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 67.438280258118
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 68.30761642453325
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 68.51229196396395
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 69.68407722356532
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 68.80834607388266
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 57.57523697648749
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 56.92820909644579
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 57.57445963735981
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 55.75669314025339
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 56.2258035633463
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 56.17625744067746
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 56.6089674925647
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 57.38086485223965
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 58.69390283161484
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 58.56092668209557
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 60.14975014112143
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 59.444614018525584
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 16.622326481659027
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 17.43420624182221
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 15.811933468430714
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 14.51507752039006
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 14.035832905217315
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 15.312343206140794
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 15.183814819180185
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 14.913511091006335
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 14.074145894901372
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 14.524934134596732
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 13.682217605975037
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 13.608424834543777
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 11.825743579232324
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 11.677267578539357
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 11.972871832863339
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 10.466480203816818
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 10.633666163123442
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 9.962697142121876
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 14.264065955972125
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 13.207737493978586
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 14.201084409564757
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 13.134090156894358
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 12.431698655291434
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 9.77494118304699
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 28.44807071353499
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 29.111473820361567
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 27.784805301294053
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 24.981557724206876
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 24.669499068340762
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 25.275040348262667
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 29.447880775152314
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 28.12124858498492
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 28.275230304466128
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 27.65902429149109
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 26.113916261266468
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 23.38336601759077
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 38378.406
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 38419.624
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 38456.836
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 38498.053
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 38538.005
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 38579.777
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 38637.239
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 38679.542
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 38721.195
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 38761.045
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 38801.883
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 38841.171
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 26240.156
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 26279.165
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 26314.458
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 26353.437
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 26391.541
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 26431.565
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 26478.773
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 26519.189
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 26559.05
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 26597.255
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 26636.636
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 26674.674
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 18119.756
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 18119.196
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 17995.908
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 17188.768
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 17261.676
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 17532.973
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 17672.759
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 17884.085
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 18141.854
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 18222.389
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 18561.494
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 18354.402
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 15107.832
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 14960.258
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 15150.407
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 14693.805
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 14838.856
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 14848.264
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 14989.36
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 15216.94
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 15588.543
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 15575.599
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 16021.87
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 15856.657
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 3011.925
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 3158.938
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 2845.501
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 2494.963
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 2422.82
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 2684.709
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 2683.399
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 2667.145
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 2553.311
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 2646.79
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 2539.624
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 2497.745
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 8120.4
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 8159.969
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 8318.55
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 9164.669
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 9129.865
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 8898.592
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 8806.014
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 8635.104
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 8417.196
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 8374.866
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 8075.142
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 8320.272
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 2142.796
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 2115.827
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 2154.627
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 1799.059
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 1835.549
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 1746.757
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 2520.854
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 2362.083
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 2576.34
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 2393.345
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 2307.509
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 1794.132
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       },
+       {
+        "Concepto": "Concepto",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 2001
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": "Ene"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": "Feb"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": "Mar"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": "Abr"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": "May"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": "Jun"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": "Jul"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": "Ago"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": "Sep"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": "Oct"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": "Nov"
+       },
+       {
+        "Concepto": null,
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": "Dic"
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 69.76562705081902
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 69.79155624161514
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 69.81510696801011
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 69.84103244497263
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 69.866818304316
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 69.89404951075933
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 69.91752517881866
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 69.9452525451179
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 69.97288205271815
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 69.99973563359809
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 70.02787804277001
+       },
+       {
+        "Concepto": "% población en edad de trabajar ",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 70.05523298571768
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 69.06643866188196
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 69.08592932545666
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 68.13887128402398
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 65.64009333527135
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 66.34419546039277
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 67.49826491793709
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 67.28442254227022
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 67.03617200024432
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 68.53966292844042
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 68.61242037859068
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 68.95020906234478
+       },
+       {
+        "Concepto": "Tasa Global de Participación (TGP)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 69.08847409183402
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 55.587570906246
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 55.49929593507975
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 55.70209910791968
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 54.93733720518902
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 55.46582275919262
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 55.20387942842889
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 55.8127781423756
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 55.87634791368146
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 57.44245293716575
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 57.784956402328355
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 57.821479577818415
+       },
+       {
+        "Concepto": "Tasa de Ocupación (TO)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 58.32020119418277
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 19.51579225134562
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 19.666281575762966
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 18.252095964818626
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 16.305211626399775
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 16.396864249274444
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 18.214372627882288
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 17.04948034990978
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 16.647458747910573
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 16.190931669536866
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 15.780625294259865
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 16.140240379059286
+       },
+       {
+        "Concepto": "Tasa de Desocupación (TD)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 15.586214648657506
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 12.07306523715453
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 12.719216275418068
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 13.50724643699514
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 11.320015658813059
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 11.924199091396801
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 11.404470865185214
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 15.48025374385498
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 14.01092741579522
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 15.056460688535594
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 13.592003505341415
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 13.597690107477176
+       },
+       {
+        "Concepto": "Tasa de Subocupación (TS)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 9.890909069974525
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 31.588856602074355
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 32.385497851181036
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 31.759342401813768
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 27.625227285212834
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 28.32106243584708
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 29.618843493067498
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 32.52973409376476
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 30.658385117289793
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 31.247392358072464
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 29.37262978791476
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 29.737930486536463
+       },
+       {
+        "Concepto": "TCSD",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 25.477124430407265
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "TCDFTP",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "MCSFT",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 28266.146
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 28309.171
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 28347.634
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 28390.007
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 28430.934
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 28473.205
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 28514.642
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 28555.848
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 28596.191
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 28634.501
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 28673.462
+       },
+       {
+        "Concepto": "Población total",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 28710.923
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 19720.054
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 19757.411
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 19790.931
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 19827.874
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 19863.789
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 19901.076
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 19936.732
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 19973.46
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 20009.579
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 20044.075
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 20079.417
+       },
+       {
+        "Concepto": "Población en edad de trabajar (PET)",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 20113.504
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 13619.939
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 13649.591
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 13485.317
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 13015.035
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 13178.471
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 13432.881
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 13414.315
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 13389.443
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 13714.498
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 13752.725
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 13844.8
+       },
+       {
+        "Concepto": "Fuerza de trabajo  ",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 13896.113
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 10961.899
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 10965.224
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 11023.964
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 10892.906
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 11017.614
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 10986.166
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 11127.244
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 11160.44
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 11493.993
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 11582.46
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 11610.216
+       },
+       {
+        "Concepto": "Población ocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 11730.236
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 2658.039
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 2684.367
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 2461.353
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 2122.129
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 2160.856
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 2446.715
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 2287.071
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 2229.002
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 2220.505
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 2170.266
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 2234.584
+       },
+       {
+        "Concepto": "Población desocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 2165.878
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 6100.115
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 6107.82
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 6305.614
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 6812.839
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 6685.318
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 6468.195
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 6522.417
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 6584.017
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 6295.081
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 6291.35
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 6234.617
+       },
+       {
+        "Concepto": "Población fuera de la fuerza de trabajo",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 6217.391
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 1644.344
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 1736.121
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 1821.495
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 1473.304
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 1571.427
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 1531.949
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 2076.57
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 1875.985
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 2064.918
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 1869.271
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 1882.573
+       },
+       {
+        "Concepto": "Población subocupada",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 1374.452
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Ene",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Feb",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Mar",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Abr",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "May",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Jun",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Jul",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Ago",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Sep",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Oct",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Nov",
+        "valor": 0
+       },
+       {
+        "Concepto": "Fuerza de trabajo potencial",
+        "columna": "2001",
+        "subcolumna": "Dic",
+        "valor": 0
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "archivo": "https://www.dane.gov.co/files/operaciones/GEIH/anex-GEIH-ago2026.xlsx",
+     "completitud": {
+      "total": 397,
+      "truncado": false,
+      "vistos": 397
+     },
+     "filas": 397,
+     "hoja": "Total nacional",
+     "hojas": [
+      "Índice",
+      "Ficha metodológica",
+      "Total nacional",
+      "Total nacional Trim",
+      "Total 13 ciudades A.M.",
+      "Total 23 ciudades A.M. Trim",
+      "Total 7 ciudades sin A.M.",
+      "Ocupados TN_T13_rama",
+      "Ocupados TN_posición",
+      "Ocupados TN_TCAB_TRES_rama_Trim",
+      "Ocupados 23 Ciudades_rama_Trim",
+      "Ocupados 23 Ciudades_pos_Trim",
+      "Pob_fuera_fuerza_trabajo_TN",
+      "Pob_fuera_fuerza_trab_T13ciud",
+      "Año_móvil_32_ciudades",
+      "Año_móvil_5_ciudades_interm",
+      "Año_móvil_5_ciudades_inter_Rama",
+      "Año_móvil_5_ciudades_inter_Posc",
+      "Otras_formas_trabajo",
+      "Total_nacional_IML_Sexo",
+      "Errores relativos"
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_tabla"
+  }
+ ]
+}

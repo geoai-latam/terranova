@@ -1,0 +1,45 @@
+id: dian.usuarios_aduaneros
+titulo: "Usuarios aduaneros autorizados por la DIAN (vigentes)"
+entidad: Dirección de Impuestos y Aduanas Nacionales (DIAN)
+competencia: autoridad aduanera (Decreto 1165 de 2019)
+acto: null
+# Términos de la DIAN: sin fines de lucro y sin licencia; Terranova es gratuita, pero el uso comercial queda en «no».
+licencia:
+  spdx: LicenseRef-dian-terminos
+  url: https://www.dian.gov.co/Paginas/Privacidad.aspx
+  verificada: 2026-10-22
+  evidencia: https://www.dian.gov.co/Paginas/Privacidad.aspx
+  cita: "no podrán ser utilizados para la creación o promoción de servicios privados o con fines de lucro; la DIAN no concede ninguna licencia"
+uso_comercial: "no"
+clase_acceso: bulk
+atribucion: "Fuente: Dirección de Impuestos y Aduanas Nacionales"
+protocolo: archivo
+conector: web-mcp
+url: https://www.dian.gov.co/aduanas/opecomeexterior/Paginas/Usuarios-Aduaneros.aspx
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  NIT: {nombre: nit, tipo: str, desc: "NIT del usuario aduanero"}
+  Nombre: {nombre: razon_social, tipo: str, desc: "razón social"}
+  Tipo Registro: {nombre: tipo_registro, tipo: str, desc: "calidad aduanera (agencia de aduanas, depósito, aeropuerto…)"}
+  Registro: {nombre: registro, tipo: str, desc: "número del registro"}
+  Seccional de Aduanas: {nombre: seccional, tipo: str, desc: "seccional de aduanas"}
+  Código SYGA: {nombre: codigo_syga, tipo: str, desc: "código en el sistema SYGA"}
+  Código Muisca: {nombre: codigo_muisca, tipo: str, desc: "código en MUISCA"}
+  Nombre Área: {nombre: area, tipo: str, desc: "área o lugar habilitado"}
+dcat: {publisher: "Dirección de Impuestos y Aduanas Nacionales (DIAN)", accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "una habilitación aduanera de un usuario; 2 320 en el archivo del 2026-10-22; la Aerocivil tiene 6"
+  clave: {columna: NIT + Registro, unica: true}
+  operaciones: {filtrar: 2.0}
+  hallazgos:
+  - "el archivo es diario y lleva la fecha en el nombre (Usuarios-aduaneros-22-10-2026.xlsx): se descubre en la página"
+  - "trae unas 140 personas naturales (observadores de importación) con su nombre: la herramienta solo consulta por NIT de empresa (ADR-0014)"
+  - "sus términos prohíben el uso con fines de lucro y no conceden licencia: uso comercial no"
+  - "no es el directorio de importadores y exportadores: ese no se publica como archivo"
+  decision: "en vivo por NIT de empresa, descubriendo el archivo del día"

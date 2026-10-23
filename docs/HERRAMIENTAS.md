@@ -61,6 +61,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `dian_usuario_aduanero_por_nit` | ¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-dian-terminos | 3 |
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
@@ -83,6 +84,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
+| `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
+| `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
