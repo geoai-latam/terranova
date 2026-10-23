@@ -1,0 +1,59 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cnmh.sievcac_desaparicion_forzada
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/c59y-p4sz.json
+pagina: https://www.datos.gov.co/d/c59y-p4sz
+titulo: Sistema de Información de Eventos de Violencia del Conflicto Armado SIEVCAC - Víctimas DF Desaparición
+  Forzada
+descripcion: Victimas para el tipo de violencia DF Desaparición Forzada, con corte al 31 - 03 - 2026
+publicado: '2025-02-27'
+datos_actualizados: '2026-07-06'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+corte: 31 - 03 - 2026
+idioma: Español
+categoria: Inclusión Social y Reconciliación
+etiquetas:
+- cnmh
+- centro nacional de memoria histórica
+- victimas
+filas: 82486
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  id_caso:
+    tipo_fuente: number
+    etiqueta: ID Caso
+    nulos: 0
+    minimo: '9909'
+    maximo: '1085678'
+    comparacion: numero
+  c_digo_dane_de_municipio:
+    tipo_fuente: text
+    etiqueta: Código DANE de Municipio
+    nulos: 0
+    minimo: '00000'
+    maximo: EXVEN
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    nulos: 0
+    minimo: '0'
+    maximo: '2025'
+    comparacion: numero
+  id_persona:
+    tipo_fuente: number
+    etiqueta: ID Persona
+    nulos: 0
+    minimo: '17255'
+    maximo: '1106884'
+    comparacion: numero

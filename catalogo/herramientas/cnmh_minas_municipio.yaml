@@ -1,0 +1,38 @@
+id: cnmh_minas_municipio
+version: 1
+familia: justicia
+fuente: cnmh.sievcac_minas
+pregunta: "¿Cuántas víctimas de minas antipersonal registra la memoria histórica en este municipio?"
+descripcion: >
+  Víctimas de minas antipersonal, munición sin explosionar y artefactos explosivos del conflicto armado en un municipio (DIVIPOLA), según el Observatorio de Memoria y
+  Conflicto del CNMH: personas y casos por año.
+  El año 0 es «sin información». Solo conteos, nunca el registro de una persona.
+  (Fuente: Centro Nacional de Memoria Histórica; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 52eu-ic7d
+    portal: datos.gov.co
+    select: "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos"
+    where: "c_digo_dane_de_municipio = '{municipio_divipola}'"
+    group: "a_o"
+    order: "a_o"
+    max_filas: 1000
+  campos: [c_digo_dane_de_municipio, a_o, id_caso, id_persona]
+salida: CnmhMinasMunicipio
+derivados:
+  victimas: {de: columna, campo: victimas, tipo: int}
+  casos: {de: columna, campo: casos, tipo: int}
+  total_victimas: {de: suma, campo: victimas, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en 52eu-ic7d: GRANADA (05313), 66 víctimas en todos los años.
+  # El CNMH revisa casos con cada corte: el total es un mínimo.
+  entrada: {municipio_divipola: "05313"}
+  verdad: {anio: 1999, victimas: 2, casos: 2}
+  minimos: {total_victimas: 66}
+  campos: [anio, casos, total_victimas, victimas]
+  latencia_max_ms: 10000

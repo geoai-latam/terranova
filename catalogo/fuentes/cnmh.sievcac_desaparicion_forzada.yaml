@@ -1,0 +1,43 @@
+id: cnmh.sievcac_desaparicion_forzada
+titulo: "SIEVCAC, víctimas de desaparición forzada (Centro Nacional de Memoria Histórica)"
+entidad: Centro Nacional de Memoria Histórica (CNMH)
+competencia: documenta los hechos de violencia del conflicto armado en el Observatorio de Memoria y Conflicto (Ley 1448 de 2011, art. 147)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/c59y-p4sz.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Centro Nacional de Memoria Histórica, Observatorio de Memoria y Conflicto (SIEVCAC), víctimas de desaparición forzada. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Cada fila es una víctima: solo salen conteos por municipio, año. Fuera de la lista
+# blanca: sexo, etnia, ocupación, edad, militancia, coordenadas y el resto.
+url: https://www.datos.gov.co/resource/c59y-p4sz.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, columna_tiempo: a_o}
+datos_personales: filtrados
+estado: publicada
+campos:
+  c_digo_dane_de_municipio: {nombre: municipio_divipola, tipo: str, desc: "municipio del hecho (DIVIPOLA, 5 dígitos)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio del hecho"}
+  a_o: {nombre: anio, tipo: int, desc: "año del hecho (0: sin información)"}
+  id_caso: {nombre: caso, tipo: int, desc: "identificador del caso (un caso puede tener varias víctimas)"}
+  id_persona: {nombre: victima, tipo: int, desc: "identificador anónimo de la víctima"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Centro Nacional de Memoria Histórica, theme: memoria, accrualPeriodicity: semiannual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una víctima en un caso; 82 486 filas, hasta 2025"
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el año 0 es «sin información»"
+  - "unas pocas víctimas se repiten en dos filas: se cuentan personas distintas (id_persona)"
+  - "fuerza_o_grupo_armado no es el responsable: es la fuerza o el grupo de la víctima cuando era combatiente (vacío en las civiles), así que no se sirve"
+  - "el CNMH revisa casos viejos con cada corte: las cifras pasadas pueden cambiar"
+  decision: "en vivo por municipio, víctimas y casos por año"

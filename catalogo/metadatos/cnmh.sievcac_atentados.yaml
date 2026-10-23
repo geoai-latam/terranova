@@ -1,0 +1,60 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cnmh.sievcac_atentados
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/4jfs-zi6u.json
+pagina: https://www.datos.gov.co/d/4jfs-zi6u
+titulo: Sistema de Información de Eventos de Violencia del Conflicto Armado SIEVCAC - Víctimas AT Atentados
+  Terroristas
+descripcion: Víctimas para el tipo de violencia AT Atentados Terroristas, con corte a 31 - 03 - 2026
+publicado: '2025-02-27'
+datos_actualizados: '2026-07-06'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Inclusión Social y Reconciliación
+etiquetas:
+- cnmh
+- centro nacional de memoria histórica
+- sievcac
+- victimas
+filas: 904
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  id_caso:
+    tipo_fuente: number
+    etiqueta: ID Caso
+    nulos: 0
+    minimo: '20575'
+    maximo: '1074473'
+    comparacion: numero
+  c_digo_dane_de_municipio:
+    tipo_fuente: text
+    etiqueta: Código DANE de Municipio
+    nulos: 0
+    minimo: '05001'
+    maximo: '99001'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    nulos: 0
+    minimo: ALVARADO
+    maximo: YARUMAL
+    comparacion: texto
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    nulos: 0
+    minimo: '1944'
+    maximo: '2025'
+    comparacion: numero
+  id_persona:
+    tipo_fuente: number
+    etiqueta: ID Persona
+    nulos: 0
+    minimo: '34923'
+    maximo: '1095369'
+    comparacion: numero

@@ -1,0 +1,196 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:26:53+00:00",
+ "herramienta": "cnmh_asesinatos_selectivos_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "djr9-7s3i",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "0",
+        "casos": "7",
+        "victimas": "10"
+       },
+       {
+        "a_o": "1961",
+        "casos": "1",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1965",
+        "casos": "1",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1985",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "1986",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "1987",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1988",
+        "casos": "4",
+        "victimas": "4"
+       },
+       {
+        "a_o": "1989",
+        "casos": "4",
+        "victimas": "6"
+       },
+       {
+        "a_o": "1990",
+        "casos": "5",
+        "victimas": "6"
+       },
+       {
+        "a_o": "1991",
+        "casos": "3",
+        "victimas": "3"
+       },
+       {
+        "a_o": "1992",
+        "casos": "5",
+        "victimas": "5"
+       },
+       {
+        "a_o": "1993",
+        "casos": "8",
+        "victimas": "9"
+       },
+       {
+        "a_o": "1994",
+        "casos": "5",
+        "victimas": "5"
+       },
+       {
+        "a_o": "1995",
+        "casos": "9",
+        "victimas": "9"
+       },
+       {
+        "a_o": "1996",
+        "casos": "13",
+        "victimas": "13"
+       },
+       {
+        "a_o": "1997",
+        "casos": "7",
+        "victimas": "8"
+       },
+       {
+        "a_o": "1998",
+        "casos": "17",
+        "victimas": "17"
+       },
+       {
+        "a_o": "1999",
+        "casos": "8",
+        "victimas": "10"
+       },
+       {
+        "a_o": "2000",
+        "casos": "28",
+        "victimas": "36"
+       },
+       {
+        "a_o": "2001",
+        "casos": "35",
+        "victimas": "43"
+       },
+       {
+        "a_o": "2002",
+        "casos": "78",
+        "victimas": "100"
+       },
+       {
+        "a_o": "2003",
+        "casos": "60",
+        "victimas": "78"
+       },
+       {
+        "a_o": "2004",
+        "casos": "27",
+        "victimas": "36"
+       },
+       {
+        "a_o": "2005",
+        "casos": "11",
+        "victimas": "13"
+       },
+       {
+        "a_o": "2006",
+        "casos": "1",
+        "victimas": "3"
+       },
+       {
+        "a_o": "2008",
+        "casos": "5",
+        "victimas": "6"
+       },
+       {
+        "a_o": "2011",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "2022",
+        "casos": "1",
+        "victimas": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 28,
+      "truncado": false,
+      "vistos": 28
+     },
+     "completo": true,
+     "conjunto": "djr9-7s3i",
+     "consulta": {
+      "conjunto": "djr9-7s3i",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 28,
+     "filas_que_resume": 430,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

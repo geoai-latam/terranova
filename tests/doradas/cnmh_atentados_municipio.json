@@ -1,0 +1,61 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:26:57+00:00",
+ "herramienta": "cnmh_atentados_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "4jfs-zi6u",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2000",
+        "casos": "1",
+        "victimas": "28"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "4jfs-zi6u",
+     "consulta": {
+      "conjunto": "4jfs-zi6u",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 1,
+     "filas_que_resume": 28,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

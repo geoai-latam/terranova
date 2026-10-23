@@ -1,0 +1,131 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:27:07+00:00",
+ "herramienta": "cnmh_violencia_sexual_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "gtg9-672t",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "0",
+        "casos": "6",
+        "victimas": "6"
+       },
+       {
+        "a_o": "1987",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1991",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1993",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1996",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "1997",
+        "casos": "3",
+        "victimas": "3"
+       },
+       {
+        "a_o": "1998",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "1999",
+        "casos": "7",
+        "victimas": "7"
+       },
+       {
+        "a_o": "2000",
+        "casos": "23",
+        "victimas": "23"
+       },
+       {
+        "a_o": "2001",
+        "casos": "8",
+        "victimas": "8"
+       },
+       {
+        "a_o": "2002",
+        "casos": "11",
+        "victimas": "11"
+       },
+       {
+        "a_o": "2003",
+        "casos": "5",
+        "victimas": "6"
+       },
+       {
+        "a_o": "2004",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "2006",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "2007",
+        "casos": "1",
+        "victimas": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 15,
+      "truncado": false,
+      "vistos": 15
+     },
+     "completo": true,
+     "conjunto": "gtg9-672t",
+     "consulta": {
+      "conjunto": "gtg9-672t",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 15,
+     "filas_que_resume": 78,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

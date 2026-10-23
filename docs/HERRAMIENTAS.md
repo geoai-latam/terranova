@@ -116,6 +116,17 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `cnmh_acciones_belicas_municipio` | ¿Cuántas víctimas y bajas en combate hubo en este municipio por acciones bélicas? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_asesinatos_selectivos_municipio` | ¿Cuántos asesinatos selectivos del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_ataques_poblados_municipio` | ¿Cuántas víctimas dejaron los ataques a poblados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_atentados_municipio` | ¿Cuántas víctimas de atentados terroristas ha tenido este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_dano_bienes_municipio` | ¿Cuántas víctimas dejaron los ataques a bienes civiles en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_desaparicion_forzada_municipio` | ¿Cuántas personas fueron desaparecidas a la fuerza en este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_masacres_municipio` | ¿Cuántas víctimas de masacres ha tenido este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_minas_municipio` | ¿Cuántas víctimas de minas antipersonal registra la memoria histórica en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_reclutamiento_municipio` | ¿Cuántos niños, niñas y adolescentes fueron reclutados por grupos armados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_secuestro_municipio` | ¿Cuántos secuestros del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_violencia_sexual_municipio` | ¿Cuántas víctimas de violencia sexual en el conflicto armado registra este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
 | `corte_constitucional_sentencia` | ¿Qué dice el índice de la Corte Constitucional sobre esta sentencia? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
 | `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
 | `medicinalegal_homicidios_municipio` | ¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
