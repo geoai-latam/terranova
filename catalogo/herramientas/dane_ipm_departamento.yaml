@@ -1,0 +1,37 @@
+id: dane_ipm_departamento
+version: 1
+familia: estadisticas
+fuente: dane.ipm_departamental
+pregunta: "¿Qué porcentaje de la población de este departamento está en pobreza multidimensional?"
+descripcion: >
+  Incidencia de la pobreza multidimensional (IPM) de un departamento según el DANE, por año (desde
+  2018) y zona: total, cabeceras y centros poblados y rural disperso, en porcentaje. Sale del
+  anexo vigente, que se descubre en la página del DANE. El nombre va como lo escribe el DANE
+  (Antioquia, Bogotá D.C., …).
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {departamento: nombre}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: "anex-PMultidimensional-Departamental-[0-9]{4}\\.xlsx"
+    hoja: IPM_Departamentos
+    fila_encabezado: 12
+    filas_encabezado: 2
+    largo_desde: 2
+    filtros: {Departamento: "{departamento}"}
+  campos: [Departamento, columna, subcolumna, valor]
+salida: IpmDepartamento
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en anex-PMultidimensional-Departamental-2025.xlsx: Antioquia 2018, total,
+  # 15,3 %; 8 años × 3 zonas = 24 filas.
+  entrada: {departamento: Antioquia}
+  verdad: {departamento: Antioquia, anio: "2018", zona: Total, valor: 15.3}
+  minimos: {numero_registros: 24}
+  campos: [anio, departamento, numero_registros, valor, zona]
+  latencia_max_ms: 30000

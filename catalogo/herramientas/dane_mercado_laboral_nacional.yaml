@@ -1,0 +1,36 @@
+id: dane_mercado_laboral_nacional
+version: 1
+familia: estadisticas
+fuente: dane.geih_nacional
+pregunta: "¿Cómo estuvo el desempleo y el empleo en Colombia en este año?"
+descripcion: >
+  Mercado laboral del total nacional según la GEIH del DANE, mes a mes en un año (desde 2001): tasa
+  global de participación, de ocupación, de desocupación (desempleo), de subocupación y las
+  poblaciones (en miles). Sale del anexo del último mes publicado.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: "anex-GEIH-[a-z]{3}[0-9]{4}\\.xlsx"
+    hoja: Total nacional
+    fila_encabezado: 12
+    filas_encabezado: 2
+    largo_desde: 2
+    filtros: {columna: "{anio}"}
+  campos: [Concepto, columna, subcolumna, valor]
+salida: MercadoLaboralNacional
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en anex-GEIH-ago2026.xlsx: en 2001, el primer indicador (% de población en
+  # edad de trabajar) de enero vale 68,372…; el año está cerrado.
+  entrada: {anio: 2001}
+  verdad: {anio: "2001", mes: Ene}
+  minimos: {numero_registros: 200}
+  campos: [anio, indicador, mes, numero_registros, valor]
+  latencia_max_ms: 30000

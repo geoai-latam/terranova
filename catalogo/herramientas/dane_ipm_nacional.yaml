@@ -1,0 +1,35 @@
+id: dane_ipm_nacional
+version: 1
+familia: estadisticas
+fuente: dane.ipm_nacional
+pregunta: "¿Cómo ha evolucionado la pobreza multidimensional en Colombia?"
+descripcion: >
+  Incidencia de la pobreza multidimensional (IPM) según el DANE para un dominio (Nacional, Cabecera,
+  Centros poblados y rural disperso, o una región), por año desde 2010, en porcentaje. Sale del anexo
+  vigente.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {dominio: nombre}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: "anex-PMultidimensional-[0-9]{4}\\.xlsx"
+    hoja: IPM_Dominios
+    fila_encabezado: 9
+    rellenar: 1
+    largo_desde: 2
+    filtros: {columna_1: "{dominio}"}
+  campos: [columna_1, columna, valor]
+salida: IpmNacional
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en anex-PMultidimensional-2025.xlsx: Nacional 2010, 29,7 %.
+  entrada: {dominio: Nacional}
+  verdad: {dominio: Nacional, anio: "2010", valor: 29.7}
+  minimos: {numero_registros: 15}
+  campos: [anio, dominio, numero_registros, valor]
+  latencia_max_ms: 30000

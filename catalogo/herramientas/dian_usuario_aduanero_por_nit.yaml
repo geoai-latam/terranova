@@ -1,0 +1,31 @@
+id: dian_usuario_aduanero_por_nit
+version: 1
+familia: empresas
+fuente: dian.usuarios_aduaneros
+pregunta: "¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN?"
+descripcion: >
+  Habilitaciones vigentes de un usuario aduanero de la DIAN por su NIT de empresa: calidad (agencia
+  de aduanas, depósito, aeropuerto…), número de registro, seccional y área. Sale del archivo diario
+  que publica la DIAN.
+  (Fuente: DIAN; licencia: términos de uso de la DIAN, sin fines de lucro.)
+entrada: {nit: nit_empresa}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: "Usuarios-aduaneros-[0-9-]+\\.xlsx"
+    filtros: {NIT: "{nit}"}
+  campos: [NIT, Nombre, Tipo Registro, Registro, Seccional de Aduanas, Código SYGA, Código Muisca, Nombre Área]
+salida: UsuarioAduaneroPorNit
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22: la Aerocivil (899999059) tiene 6 habilitaciones de aeropuerto.
+  entrada: {nit: "899999059"}
+  verdad: {razon_social: UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL, tipo_registro: Aeropuerto de Servicio Público o Privado}
+  minimos: {numero_registros: 6}
+  campos: [area, codigo_muisca, codigo_syga, nit, numero_registros, razon_social, registro, seccional, tipo_registro]
+  latencia_max_ms: 30000

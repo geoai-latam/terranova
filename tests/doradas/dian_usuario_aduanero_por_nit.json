@@ -1,0 +1,111 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:54:26+00:00",
+ "herramienta": "dian_usuario_aduanero_por_nit",
+ "llamadas": [
+  {
+   "argumentos": {
+    "enlace_con": "Usuarios-aduaneros-[0-9-]+\\.xlsx",
+    "filtros": {
+     "NIT": "899999059"
+    },
+    "pagina": "https://www.dian.gov.co/aduanas/opecomeexterior/Paginas/Usuarios-Aduaneros.aspx"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "NIT",
+       "Nombre",
+       "Tipo Registro",
+       "Registro",
+       "Seccional de Aduanas",
+       "Código SYGA",
+       "Código Muisca",
+       "Nombre Área"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "Código Muisca": 1054,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "GUSTAVO ROJAS PINILLA",
+        "Registro": 1054,
+        "Seccional de Aduanas": "San Andrés",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       },
+       {
+        "Código Muisca": 1058,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "ALFREDO VÁSQUEZ COBO",
+        "Registro": 1058,
+        "Seccional de Aduanas": "Leticia",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       },
+       {
+        "Código Muisca": 1057,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "SAN LUIS DE IPIALES",
+        "Registro": 1057,
+        "Seccional de Aduanas": "Ipiales",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       },
+       {
+        "Código Muisca": 1048,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "ALFONSO BONILLA DE ARAGÓN",
+        "Registro": 27201,
+        "Seccional de Aduanas": "Cali",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       },
+       {
+        "Código Muisca": 1045,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "ERNESTO CORTISSOZ",
+        "Registro": 27202,
+        "Seccional de Aduanas": "Barranquilla",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       },
+       {
+        "Código Muisca": 1091,
+        "Código SYGA": null,
+        "NIT": 899999059,
+        "Nombre": "UNIDAD ADMINISTRATIVA ESPECIAL DE AERONAUTICA CIVIL",
+        "Nombre Área": "EL EDEN",
+        "Registro": 27210,
+        "Seccional de Aduanas": "Armenia",
+        "Tipo Registro": "Aeropuerto de Servicio Público o Privado"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "archivo": "https://www.dian.gov.co/aduanas/opecomeexterior/Documents/Usuarios-aduaneros-22-10-2026.xlsx",
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "filas": 6,
+     "hoja": null,
+     "hojas": [
+      "UA_vigentes"
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_tabla"
+  }
+ ]
+}
