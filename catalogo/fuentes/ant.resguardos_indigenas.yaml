@@ -35,3 +35,18 @@ campos:
   AREA_TOTAL_ACTOS_ADMIN: {nombre: area_ha_actos, tipo: float, desc: "área total en hectáreas según los actos administrativos"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: ANT, theme: territorios_etnicos}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un resguardo indígena formalizado; 989 en el país
+  clave:
+    columna: NOMBRE
+    unica: true
+  operaciones:
+    filtrar: 0.5
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos:
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto

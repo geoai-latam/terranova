@@ -7,7 +7,9 @@ descripcion: >
   Zona homogénea física (IGAC) que contiene un punto: su código, área homogénea de tierra,
   disponibilidad de agua, influencia vial, uso actual del suelo, norma de uso (POT) y vigencia (en
   lo urbano, topografía, servicios públicos y tipificación de la construcción). Los usos y
-  disponibilidades vienen como códigos del IGAC. Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  disponibilidades vienen como códigos del IGAC. La vigencia (año del estudio de valores) viene vacía en cerca de 1 de cada 8 zonas rurales (todas las
+  rurales de Chía) y va de 1990 a 2026, con fechas imposibles (1899, 4670): un valor de una vigencia
+  vieja no es el de hoy. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}

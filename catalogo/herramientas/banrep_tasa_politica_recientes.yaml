@@ -5,7 +5,7 @@ fuente: banrep.tasa_politica
 pregunta: "¿Cuál es la tasa de política monetaria del Banco de la República?"
 descripcion: >
   Tasa de política monetaria del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
-  fecha y serie, con la unidad (porcentaje anual). Sale del servicio SDMX oficial; se cita con la fecha de
+  fecha y serie, con la unidad (porcentaje anual). Trae fines de semana (la tasa vigente ese día). Sale del servicio SDMX oficial; se cita con la fecha de
   consulta, como pide el aviso legal del Banco.
   (Fuente: Banco de la República; licencia: aviso legal del BanRep.)
 entrada: {ultimas: int}

@@ -32,3 +32,16 @@ campos:
   en_el_catalogo: {nombre: total_en_catalogo, tipo: int, desc: "sismos del catálogo con esos filtros (/count)", origen: hecho}
 comportamiento: {max_por_pagina: 20000, orden_coordenadas: lon_lat}
 dcat: {publisher: USGS, theme: amenazas, accrualPeriodicity: continuous}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un sismo del catálogo ComCat; 169 de M ≥ 4 en el rectángulo de Colombia en 2026
+  clave:
+    columna: id
+    unica: true
+  operaciones:
+    filtrar: 0.9
+  hallazgos:
+  - 'el rectángulo de Colombia incluye sismos de Panamá y Venezuela (F0.6): hay que recortar al área'
+  - los recientes pueden estar en revisión (status automatic); en la muestra, todos revisados
+  decision: en vivo por zona, recortado al polígono

@@ -32,3 +32,18 @@ campos:
   T_Conflicto: {nombre: tipo_conflicto, tipo: str, desc: "tipo e intensidad del conflicto de uso (p. ej. subutilización moderada)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un polígono de conflicto de uso (2012); 548 423 en el país
+  operaciones:
+    filtrar: 13.3
+    contar: 44.5
+    ordenar: 52.9
+    agrupar: 46.7
+  hallazgos:
+  - es el estudio de 2012
+  - el MapServer no cuenta valores distintos
+  - contar, ordenar y agrupar el país tarda 45 a 53 s
+  - el punto de prueba toca un solo elemento
+  decision: en vivo solo por punto

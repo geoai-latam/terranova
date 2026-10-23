@@ -1,5 +1,5 @@
 id: open_meteo.era5
-titulo: Reanálisis ERA5 (Copernicus) por el API histórico de Open-Meteo
+titulo: Clima histórico de Open-Meteo (mezcla de ECMWF IFS, ERA5 y ERA5-Land)
 entidad: Open-Meteo (datos de Copernicus Climate Change Service, ERA5)
 competencia: null
 acto: null
@@ -20,7 +20,8 @@ conector: amenazas-mcp
 # diarios con timezone America/Bogota y entrega los totales del periodo con los nombres de abajo.
 url: https://archive-api.open-meteo.com/v1/archive
 modo: en_vivo
-# Las series históricas no cambian: caché larga (ADR-0021). ERA5 llega con unos días de rezago.
+# Sin `models`, Open-Meteo da su «best match»: IFS HRES (9 km, sin rezago), ERA5 (25 km) y ERA5-Land
+# (11 km), ambos con 5 días de rezago. No es ERA5 puro (ver el perfil). Caché larga (ADR-0021).
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P7D}
 cobertura: {pais: GLOBAL}
 datos_personales: ninguno
@@ -32,3 +33,15 @@ campos:
   dias: {nombre: dias, tipo: int, desc: "días con dato en el periodo", origen: hecho}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Open-Meteo, theme: clima, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un día de un punto de la malla; 22 días en Chía (1 al 22 de octubre de 2026), todos con dato"
+  operaciones: {filtrar: 0.8}
+  hallazgos:
+  - 'no es ERA5 puro: con models=era5, Chía tiene datos hasta el 16 de octubre; la mezcla, hasta hoy'
+  - 'los últimos ~6 días solo pueden venir de IFS, el único componente sin rezago'
+  - 'aun en días viejos la mezcla difiere de ERA5 puro (Chía, 13 de octubre: 8,8 mm contra 18,5 mm)'
+  - por verificar si los últimos días cambian cuando llega ERA5 (repetir la medición el 2026-10-29)
+  - la elevación de la celda difiere de la real en montaña
+  decision: "en vivo con la mezcla, llamándola por su nombre; la descripción dice el rezago de ERA5"

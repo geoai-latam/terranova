@@ -36,3 +36,16 @@ campos:
   hogares: {nombre: hogares, tipo: int, desc: "hogares censados en 2018 (TSP16_HOG)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un municipio del censo 2018 con personas, viviendas y hogares; 1 122 municipios
+  clave:
+    columna: MPIO_CDPMP
+    unica: true
+  operaciones:
+    contar: 0.2
+  hallazgos:
+  - 'es el censo 2018: no es la población de hoy'
+  - 'el MapServer no cuenta valores distintos: la unicidad se midió agrupando'
+  decision: en vivo por código

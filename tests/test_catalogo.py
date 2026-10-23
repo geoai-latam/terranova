@@ -187,46 +187,7 @@ def test_corte_igac_se_lee_de_la_descripcion_no_del_nombre() -> None:
     assert len(fichas) >= 8 and len(set(fichas.values())) == 1  # todas en el mismo corte
 
 
-# Spec 07: fuentes sin perfil al 2026-10-22. La lista solo encoge: una fuente nueva entra con
-# perfil y, al perfilar una de estas, se quita de aquí.
-SIN_PERFIL = frozenset(
-    {
-        "ancp.conceptos",
-        "ancp.providencias",
-        "ant.resguardos_indigenas",
-        "ant.zonas_reserva_campesina",
-        "banrep.dtf",
-        "banrep.ibr",
-        "banrep.tasa_politica",
-        "banrep.trm",
-        "banrep.uvr",
-        "dane.cnpv2018.municipio",
-        "esa.worldcover",
-        "igac.agrologia.capacidad_uso",
-        "igac.agrologia.conflictos_uso",
-        "igac.agrologia.vocacion_uso",
-        "igac.catastro.construccion",
-        "igac.catastro.estadisticas_municipio",
-        "igac.catastro.manzana",
-        "igac.catastro.perimetro",
-        "igac.catastro.registro1",
-        "igac.catastro.registro2",
-        "igac.catastro.sector",
-        "igac.catastro.terreno",
-        "igac.catastro.vereda",
-        "igac.catastro.zona_fisica",
-        "igac.catastro.zona_geoeconomica",
-        "nasa.firms",
-        "open_meteo.era5",
-        "pnn.runap",
-        "usgs.sismos",
-    }
-)
-
-
-def test_toda_fuente_nueva_entra_con_perfil() -> None:
-    sin_perfil = {f.id for f in cargar().fuentes.values() if f.perfil is None}
-    nuevas = sin_perfil - SIN_PERFIL
-    assert not nuevas, f"fuentes sin perfil (spec 07): {sorted(nuevas)}"
-    ya_perfiladas = SIN_PERFIL - sin_perfil
-    assert not ya_perfiladas, f"ya tienen perfil: quítalas de SIN_PERFIL: {sorted(ya_perfiladas)}"
+def test_toda_fuente_tiene_perfil() -> None:
+    """Spec 07: las 77 fuentes quedaron perfiladas el 2026-10-22; una nueva entra con perfil."""
+    sin_perfil = sorted(f.id for f in cargar().fuentes.values() if f.perfil is None)
+    assert not sin_perfil, f"fuentes sin perfil (spec 07): {sin_perfil}"

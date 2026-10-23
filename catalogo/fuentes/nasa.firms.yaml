@@ -31,3 +31,13 @@ campos:
   focos: {nombre: focos, tipo: int, desc: "focos de calor en la zona y el periodo"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: NASA, theme: amenazas, accrualPeriodicity: continuous}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una detección satelital de fuego (VIIRS o MODIS) en un paso del satélite
+  operaciones: {}
+  hallazgos:
+  - 'un mismo incendio da varias detecciones (píxeles y pasos): contar filas no es contar incendios'
+  - 'solo hay los últimos 7 días: no hay verdad fija para un canario'
+  decision: sin herramienta propia hasta tener un canario de estructura; dentro de amenazas-mcp se resume
+    por zona

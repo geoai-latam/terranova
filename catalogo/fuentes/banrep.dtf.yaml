@@ -34,3 +34,16 @@ campos:
   FREQ: {nombre: frecuencia, tipo: str, desc: "frecuencia (D diaria)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Banco de la República, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un día de la semana de vigencia de la DTF; últimas 40 en 10 s
+  clave:
+    columna: TIME_PERIOD
+    unica: true
+  operaciones:
+    filtrar: 9.8
+  hallazgos:
+  - 'el servicio no filtra por fechas: se piden las últimas N (lastNObservations)'
+  - 'es semanal: sale con los días de su vigencia, que terminan después de hoy (última medida: 2026-10-25)'
+  decision: en vivo, últimas N; la descripción explica la vigencia

@@ -30,3 +30,12 @@ campos:
   porcentaje: {nombre: porcentaje_area, tipo: float, desc: "porcentaje de la zona con esa clase"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: ESA, theme: cobertura_del_suelo, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una clase de cobertura (píxeles de 10 m) en la ventana leída del COG de 2021 alrededor del punto
+  operaciones: {}
+  hallazgos:
+  - es la cobertura de 2021, no la de hoy
+  - 'en bordes de cobertura la clase cambia a pocos metros: por eso sale cada clase de la ventana'
+  decision: en vivo, lectura de un píxel; la descripción dice el año

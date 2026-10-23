@@ -39,6 +39,24 @@ campos:
   USO_ACTUAL_SUELO: {nombre: uso_actual_suelo, tipo: int, desc: "código de uso actual del suelo"}
   NORMA_USO_SUELO: {nombre: norma_uso_suelo, tipo: str, desc: "norma de uso del suelo (POT)"}
   TIPIFICACION_CONSTRUCCION: {nombre: tipificacion_construccion, tipo: int, desc: "código de tipificación de la construcción (urbana)"}
-  VIGENCIA: {nombre: vigencia, tipo: date, desc: "fecha de vigencia de la zona"}
+  VIGENCIA: {nombre: vigencia, tipo: date, desc: "vigencia del estudio de la zona; a menudo vacía o imposible (ver el perfil)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'una zona homogénea física; Chía: 410 rurales y 428 urbanas'
+  clave:
+    columna: CODIGO + CODIGO_ZONA_FISICA
+    unica: false
+  operaciones:
+    filtrar: 1.7
+    contar: 0.2
+    ordenar: 0.4
+    agrupar: 0.2
+  hallazgos:
+  - CODIGO es el municipio (a veces con dos dígitos más, a veces vacío o solo la zona), no la zona
+  - VIGENCIA vacía en 11 % de las rurales; va de 1990 a 2026, con años imposibles (205, 1899)
+  - 173 municipios rurales tienen zonas de varias vigencias, que no se solapan (5 de 5 medidos)
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto; la descripción advierte la vigencia

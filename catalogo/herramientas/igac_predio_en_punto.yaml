@@ -6,7 +6,8 @@ pregunta: "¿Qué predio del catastro IGAC hay en este punto?"
 descripcion: >
   Predio catastral (IGAC) que contiene un punto: número predial nacional, número anterior, zona
   (rural o urbana) y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
-  Medellín, Cali y otros gestores no están en esta fuente.
+  Medellín, Cali y otros gestores no están en esta fuente. Los polígonos sin predio asignado (número
+  todo en ceros tras el municipio) no salen: ahí no hay predio identificado.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
@@ -16,6 +17,8 @@ consulta:
   argumentos:
     url: "{url_capa}"
     bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    # Spec 07: 265 polígonos en el país (11 en Chía) traen el número 25175 + 25 ceros: no son predios.
+    where: "SUBSTRING(CODIGO, 6, 25) <> '0000000000000000000000000'"
     out_fields: [CODIGO, CODIGO_ANTERIOR]
     max_features: 5
   campos: [CODIGO, CODIGO_ANTERIOR]

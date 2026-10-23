@@ -42,3 +42,18 @@ campos:
   PUNTAJE_1: {nombre: puntaje_calificacion, tipo: int, desc: "puntaje de calificación de la construcción"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'una línea del registro 2 de un predio; Chía: 75 093 líneas para 66 936 predios'
+  clave:
+    columna: NUMERO_PREDIAL
+    unica: false
+  operaciones:
+    filtrar: 6.5
+    contar: 5.5
+    ordenar: 0.8
+    agrupar: 0.8
+  hallazgos:
+  - un predio puede tener varias líneas, cada una con su zona, uso y construcción
+  decision: en vivo por número predial, todas las líneas

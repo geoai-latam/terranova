@@ -5,7 +5,7 @@ fuente: banrep.ibr
 pregunta: "¿Cómo va el IBR en sus distintos plazos?"
 descripcion: >
   Indicador bancario de referencia (IBR) del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
-  fecha y serie, con la unidad (tasa; cada plazo y modalidad es una serie (SUBJECT)). Sale del servicio SDMX oficial; se cita con la fecha de
+  fecha y serie, con la unidad (tasa; cada plazo y modalidad es una serie (SUBJECT)). Solo días hábiles. Sale del servicio SDMX oficial; se cita con la fecha de
   consulta, como pide el aviso legal del Banco.
   (Fuente: Banco de la República; licencia: aviso legal del BanRep.)
 entrada: {ultimas: int}

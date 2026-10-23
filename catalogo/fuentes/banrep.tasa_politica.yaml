@@ -34,3 +34,16 @@ campos:
   FREQ: {nombre: frecuencia, tipo: str, desc: "frecuencia (D diaria)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Banco de la República, theme: economia, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una fecha de la tasa de política; las últimas 40 en 7 s, fechas únicas
+  clave:
+    columna: TIME_PERIOD
+    unica: true
+  operaciones:
+    filtrar: 6.7
+  hallazgos:
+  - 'el servicio no filtra por fechas: se piden las últimas N (lastNObservations)'
+  - trae fines de semana (la tasa vigente ese día)
+  decision: en vivo, últimas N

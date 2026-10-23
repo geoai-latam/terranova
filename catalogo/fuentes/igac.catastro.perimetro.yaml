@@ -37,3 +37,17 @@ campos:
 # `codigo_municipio` de la fuente no se usa: para Chía dice 23175 (el DIVIPOLA es 25175), medido el 2026-10-22
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un perímetro urbano (cabecera o centro poblado); 2 403 en el país
+  operaciones:
+    filtrar: 0.6
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.4
+  hallazgos:
+  - 'no tiene una clave fiable: CODIGO_NOMBRE solo tiene 76 valores distintos'
+  - MUNICIPIO_CODIGO está errado (23175 para Chía, que es 25175)
+  - el punto de prueba toca un solo elemento
+  decision: en vivo por punto; el municipio no se toma de MUNICIPIO_CODIGO
