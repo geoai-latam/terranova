@@ -91,6 +91,14 @@ CASOS = [
     (
         FUENTE,
         _set(
+            campos__CODIGO={"nombre": "codigo_predial", "tipo": "str", "desc": "x", "codigos": {}}
+        ),
+        "la norma que los define",
+    ),
+    (FUENTE, _set(cobertura__columna_tiempo="NO_ESTA"), "columna_tiempo"),
+    (
+        FUENTE,
+        _set(
             campos__CODIGO={"nombre": "codigo_predial", "tipo": "str", "desc": "x", "origen": "x"}
         ),
         "origen",

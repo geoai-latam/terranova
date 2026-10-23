@@ -25,6 +25,34 @@ campos:
   DESTINO_ECONOMICO:
     tipo_fuente: esriFieldTypeString
     etiqueta: DESTINO_ECONOMICO
+    valores:
+      A: 3450039
+      D: 2157853
+      S: 361022
+      L: 237154
+      R: 151071
+      C: 117615
+      P: 57983
+      I: 49928
+      K: 39363
+      M: 35192
+      G: 27729
+      '0': 26315
+      J: 19700
+      T: 19005
+      O: 14012
+      Z: 9583
+      Q: 9504
+      Y: 9210
+      B: 8010
+      H: 4003
+      F: 3413
+      U: 1413
+      W: 724
+      V: 720
+      E: 657
+      N: 638
+      X: 317
   AREA_TERRENO:
     tipo_fuente: esriFieldTypeDouble
     etiqueta: AREA_TERRENO

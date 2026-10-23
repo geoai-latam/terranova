@@ -218,8 +218,13 @@ def de_arcgis(
     estadisticas: dict[int, dict[str, Any]],
     item: dict[str, Any] | None,
     hoy: date,
+    valores: dict[str, dict[str, int]] | None = None,
 ) -> Metadatos:
-    """La ficha técnica de un servicio ArcGIS: servicio, capas usadas, conteos e ítem."""
+    """La ficha técnica de un servicio ArcGIS: servicio, capas usadas, conteos e ítem.
+
+    `valores` son los valores observados de los campos codificados (sumados entre capas): con
+    ellos la ficha técnica dice qué códigos de los datos no define ninguna tabla."""
+    valores = valores or {}
     campos: dict[str, CampoDeLaFuente] = {}
     geometrias: set[Geometria] = set()
     extension: list[float] | None = None
@@ -254,6 +259,7 @@ def de_arcgis(
                 if minimo is not None
                 else None,
                 codigos=codigos,
+                valores=valores.get(nombre),
             )
     if len(geometrias) > 1:
         raise ValueError(f"{fuente.id}: capas con geometrías distintas {sorted(geometrias)}")
@@ -301,9 +307,10 @@ def de_arcgis(
 
 
 def capas_de(catalogo: Catalogo, fuente_id: str) -> list[int]:
-    """Las capas que consultan las herramientas de una fuente."""
+    """Las capas que consultan las herramientas de una fuente o su conector propio."""
     return sorted(
-        {
+        set(catalogo.fuentes[fuente_id].capas_servicio)
+        | {
             c
             for h in catalogo.herramientas.values()
             if h.fuente == fuente_id
@@ -338,6 +345,7 @@ def cosechar(catalogo: Catalogo, fuente_id: str, hoy: date | None = None) -> Met
             base = str(fuente.url).rstrip("/")
             servicio = _get(http, base, {"f": "json"})
             capas, conteos, estadisticas = {}, {}, {}
+            valores: dict[str, dict[str, int]] = {}
             for n in capas_de(catalogo, fuente_id):
                 capas[n] = _get(http, f"{base}/{n}", {"f": "json"})
                 conteos[n] = int(
@@ -348,6 +356,10 @@ def cosechar(catalogo: Catalogo, fuente_id: str, hoy: date | None = None) -> Met
                     ).get("count", 0)
                 )
                 estadisticas[n] = _estadisticas(http, base, n, capas[n], fuente)
+                for campo, cuentas in _valores_codificados(http, base, n, capas[n], fuente).items():
+                    destino = valores.setdefault(campo, {})
+                    for valor, cuenta in cuentas.items():
+                        destino[valor] = destino.get(valor, 0) + cuenta
             item = None
             if item_id := next(
                 (c.get("serviceItemId") for c in capas.values() if c.get("serviceItemId")), None
@@ -360,7 +372,7 @@ def cosechar(catalogo: Catalogo, fuente_id: str, hoy: date | None = None) -> Met
                     )
                 except httpx.HTTPError:
                     item = None  # el ítem es opcional: un servidor propio no lo tiene
-            return de_arcgis(fuente, servicio, capas, conteos, estadisticas, item, hoy)
+            return de_arcgis(fuente, servicio, capas, conteos, estadisticas, item, hoy, valores)
     raise ValueError(
         f"{fuente_id} ({fuente.protocolo}): la ficha técnica se escribe a mano (metodo: manual)"
     )
@@ -400,6 +412,45 @@ def _estadisticas(
         ) and isinstance(valor, (int, float)):
             atributos[clave] = _fecha(valor / 1000)
     return atributos
+
+
+_MAX_CODIGOS = 100
+
+
+def _valores_codificados(
+    http: httpx.Client, base: str, capa: int, definicion: dict[str, Any], fuente: Fuente
+) -> dict[str, dict[str, int]]:
+    """Cuántas filas trae cada valor de los campos con dominio o con códigos en la ficha."""
+    salida: dict[str, dict[str, int]] = {}
+    for campo in definicion.get("fields") or []:
+        nombre = campo.get("name")
+        curado = fuente.campos.get(nombre)
+        if curado is None or not (campo.get("domain") or curado.codigos):
+            continue
+        estadistica = [
+            {"statisticType": "count", "onStatisticField": nombre, "outStatisticFieldName": "n"}
+        ]
+        try:
+            datos = _get(
+                http,
+                f"{base}/{capa}/query",
+                {
+                    "where": "1=1",
+                    "groupByFieldsForStatistics": nombre,
+                    "outStatistics": json.dumps(estadistica),
+                    "orderByFields": "n DESC",
+                    "resultRecordCount": str(_MAX_CODIGOS),
+                    "f": "json",
+                },
+            )
+        except httpx.HTTPError:
+            continue  # sin conteo la ficha sigue con los códigos: solo no dice cuáles faltan
+        salida[nombre] = {
+            str(f["attributes"][nombre]): int(f["attributes"]["n"])
+            for f in datos.get("features") or []
+            if f["attributes"].get(nombre) is not None
+        }
+    return salida
 
 
 def diferencias(antes: Metadatos, ahora: Metadatos) -> list[str]:

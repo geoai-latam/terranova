@@ -67,3 +67,20 @@ async def test_rest_sirve_la_ficha_tecnica() -> None:
         lista = (await rest.get("/v1/fuentes")).json()
     assert f["geografia"]["geometria"] == "poligono" and f["alertas"]
     assert next(x for x in lista if x["id"] == "icfes.saber11")["periodo"].startswith("20101")
+
+
+def test_los_codigos_dicen_su_norma_y_los_que_nadie_define() -> None:
+    """Res. IGAC 070 de 2011 define A a T; los datos traen U a Z y 0, que nadie define."""
+    destino = next(
+        c
+        for c in ficha_tecnica(CATALOGO, "igac.catastro.registro1", HOY)["campos"]
+        if c["columna_fuente"] == "DESTINO_ECONOMICO"
+    )
+    assert destino["codigos"]["A"] == "Habitacional" and "070 de 2011" in destino["codigos_norma"]
+    assert {"U", "Z", "0"} <= set(destino["sin_definir"]) and "A" not in destino["sin_definir"]
+    agua = next(
+        c
+        for c in ficha_tecnica(CATALOGO, "igac.catastro.zona_fisica", HOY)["campos"]
+        if c["columna_fuente"] == "DISPONIBILIDAD_AGUA"
+    )
+    assert agua["codigos_norma"] == "dominio publicado por la fuente"
