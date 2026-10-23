@@ -1,0 +1,61 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:05+00:00",
+ "herramienta": "policia_abigeato_pirateria_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "tipo_de_hurto, genero",
+    "id": "d4fr-sbn2",
+    "max_filas": 200,
+    "order": "tipo_de_hurto, genero",
+    "portal": "datos.gov.co",
+    "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "genero",
+       "tipo_de_hurto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "3",
+        "genero": "MASCULINO",
+        "tipo_de_hurto": "HURTO ABIGEATO"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "d4fr-sbn2",
+     "consulta": {
+      "conjunto": "d4fr-sbn2",
+      "group": "tipo_de_hurto, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 1,
+     "filas_que_resume": 3,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

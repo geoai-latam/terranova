@@ -1,0 +1,66 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:18+00:00",
+ "herramienta": "policia_violencia_intrafamiliar_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "genero",
+    "id": "vuyt-mqpw",
+    "max_filas": 200,
+    "order": "genero",
+    "portal": "datos.gov.co",
+    "select": "genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "genero"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "255",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "118",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "6"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "vuyt-mqpw",
+     "consulta": {
+      "conjunto": "vuyt-mqpw",
+      "group": "genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 3,
+     "filas_que_resume": 299,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

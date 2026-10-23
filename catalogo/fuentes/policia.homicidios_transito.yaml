@@ -1,0 +1,45 @@
+id: policia.homicidios_transito
+titulo: "Homicidios en accidente de tránsito (Policía Nacional, reporte de delitos)"
+entidad: Policía Nacional de Colombia
+competencia: registra las denuncias y noticias criminales (SIEDCO, Decreto 4222 de 2006)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/ha6j-pa2r.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Policía Nacional, reporte de homicidios en accidente de tránsito. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/ha6j-pa2r.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigo_dane: {nombre: codigo_dane, tipo: str, desc: "municipio, DIVIPOLA seguido de 000"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio (como lo escribe la Policía)"}
+  fecha_hecho: {nombre: fecha, tipo: str, desc: "fecha del hecho, dd/mm/aaaa (texto de la fuente)"}
+  descripci_n_conducta: {nombre: tipo, tipo: str, desc: "tipo de delito o conducta (artículo del Código Penal)"}
+  genero: {nombre: genero, tipo: str, desc: "género de la víctima"}
+  grupo_etar_o: {nombre: grupo_etario, tipo: str, desc: "grupo de edad de la víctima"}
+  armas_medios: {nombre: arma_medio, tipo: str, desc: "arma o medio empleado"}
+  cantidad: {nombre: cantidad, tipo: str, desc: "casos de la fila (texto en algunos reportes)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Policía Nacional, theme: seguridad, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "un hecho reportado con su cantidad de casos; 98 430 filas en el país"
+  operaciones: {filtrar: 0.3, agrupar: 0.3}
+  hallazgos:
+  - "la fecha viene como texto dd/mm/aaaa: el año se filtra con like '%/aaaa'"
+  - "codigo_dane es el DIVIPOLA con tres ceros al final (25175000)"
+  - "cantidad es texto en algunos reportes: se suma con cantidad::number"
+  - "los municipios con tilde vienen dañados en el texto: se consulta por código"
+  - "son denuncias reportadas: no todos los delitos se denuncian, y el año en curso está incompleto"
+  decision: "en vivo por municipio y año, sumando casos por tipo y género"

@@ -1,0 +1,36 @@
+id: policia_violencia_intrafamiliar_municipio
+version: 1
+familia: justicia
+fuente: policia.violencia_intrafamiliar
+pregunta: "¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año?"
+descripcion: >
+  Casos de violencia intrafamiliar reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
+  por género de la víctima. Son denuncias: no todos los delitos se denuncian, y el año en
+  curso está incompleto.
+  (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: vuyt-mqpw
+    portal: datos.gov.co
+    select: "genero, sum(cantidad::number) AS casos"
+    where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
+    group: "genero"
+    order: "genero"
+    max_filas: 200
+  campos: [codigo_dane, fecha_hecho, genero, cantidad]
+salida: PoliciaViolenciaIntrafamiliarMunicipio
+derivados:
+  casos: {de: columna, campo: casos, tipo: int}
+  total_casos: {de: suma, campo: casos, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en vuyt-mqpw: Chía 2024 suma 379 casos; el primer grupo tiene 255.
+  entrada: {municipio_divipola: "25175", anio: 2024}
+  verdad: {genero: "FEMENINO", casos: 255}
+  minimos: {total_casos: 379}
+  campos: [casos, genero, total_casos]
+  latencia_max_ms: 10000

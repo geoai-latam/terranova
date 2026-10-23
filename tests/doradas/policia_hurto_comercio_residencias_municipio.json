@@ -1,0 +1,70 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:31+00:00",
+ "herramienta": "policia_hurto_comercio_residencias_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "tipo_de_hurto, genero",
+    "id": "6sqw-8cg5",
+    "max_filas": 200,
+    "order": "tipo_de_hurto, genero",
+    "portal": "datos.gov.co",
+    "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "genero",
+       "tipo_de_hurto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "220",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO ENTIDADES COMERCIALES"
+       },
+       {
+        "casos": "62",
+        "genero": "FEMENINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO RESIDENCIAS"
+       },
+       {
+        "casos": "79",
+        "genero": "MASCULINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO RESIDENCIAS"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "6sqw-8cg5",
+     "consulta": {
+      "conjunto": "6sqw-8cg5",
+      "group": "tipo_de_hurto, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 3,
+     "filas_que_resume": 361,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

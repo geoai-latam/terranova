@@ -114,6 +114,13 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 |---|---|---|---|---|
 | `corte_constitucional_sentencia` | ¿Qué dice el índice de la Corte Constitucional sobre esta sentencia? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
 | `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
+| `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado o de carga hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_delitos_sexuales_municipio` | ¿Cuántos delitos sexuales se denunciaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_homicidios_transito_municipio` | ¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_hurto_comercio_residencias_municipio` | ¿Cuántos robos a comercios y viviendas hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_hurto_vehiculos_municipio` | ¿Cuántos carros y motos se robaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_lesiones_municipio` | ¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 
 ## normativa
 
