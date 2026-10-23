@@ -1,0 +1,53 @@
+id: upra.rango_precios_nacional
+titulo: "Precios comerciales de la tierra rural agropecuaria, capa nacional (UPRA, 18 departamentos)"
+entidad: Unidad de Planificación Rural Agropecuaria (UPRA)
+competencia: planifica el uso del suelo rural y el mercado de tierras (Decreto 4145 de 2011)
+acto: null
+# Licencia: la UPRA publica este mismo producto en datos.gov.co (rttb-pk7n) con CC BY-SA 4.0. La
+# política de derechos de autor de su sitio prohíbe reproducir «la página»: se refiere al contenido
+# web, no a los datos, pero el choque queda anotado. La capa no declara licencia propia.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/rttb-pk7n.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International (el mismo producto en datos.gov.co)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad de Planificación Rural Agropecuaria (UPRA), precios comerciales de la tierra rural agropecuaria"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+url: https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer
+modo: en_vivo
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: ["áreas excluidas del mercado de tierras (Chía, por ejemplo, no está)", "departamentos sin estudio: 14 de 32"]
+  columna_tiempo: vigencia
+datos_personales: ninguno
+estado: publicada
+campos:
+  departamen: {nombre: departamento, tipo: str, desc: "departamento"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  cod_dane_mpio: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
+  rango_precios: {nombre: rango_precio, tipo: str, desc: "rango de precio comercial como lo publica la UPRA (la capa no declara la unidad); «Zonas urbanas», «Resguardos…» son categorías, no precios"}
+  cod_precios: {nombre: codigo_rango_precio, tipo: str, desc: "código del rango (E-… son exclusiones)"}
+  categoria_mtv11: {nombre: categoria_mercado, tipo: str, desc: "categoría para el mercado de tierras (versión 11)"}
+  vigencia: {nombre: vigencia, tipo: int, desc: "año del estudio de precios"}
+  area_ha: {nombre: area_ha, tipo: float, desc: "área de la zona, en hectáreas"}
+  consecutivo: {nombre: consecutivo, tipo: int, desc: "consecutivo de la zona"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: UPRA, theme: territorio, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "una zona de precio homogéneo; 178 973 en 18 departamentos, con vigencias de 2015 a 2023"
+  clave: {columna: consecutivo, unica: true}
+  operaciones: {filtrar: 0.6, agrupar: 0.6}
+  hallazgos:
+  - "cubre 5 departamentos que no están en datos.gov.co (Arauca, Casanare, Cauca, Sucre y Vichada) y trae la vigencia, que allá no está"
+  - "cada departamento tiene su año de estudio (Boyacá 2015 y 2021, Cundinamarca 2016 y 2022, Bolívar 2023…): un precio de 2015 no es el de hoy"
+  - "Chía no está en la capa: queda fuera de las áreas del mercado de tierras"
+  - "el rango es texto («Mayor que 60 - hasta 70») y la capa no declara la unidad"
+  - "las categorías E-… (zonas urbanas, resguardos) no son precios"
+  decision: "en vivo por punto y agregado por municipio con estadísticas en el servicio"

@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:07:28+00:00",
+ "herramienta": "upra_precio_tierra_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.09602,
+     4.838895,
+     -74.09602,
+     4.838895
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "out_fields": [
+     "departamen",
+     "municipio",
+     "cod_dane_mpio",
+     "rango_precios",
+     "cod_precios",
+     "categoria_mtv11",
+     "vigencia",
+     "area_ha",
+     "consecutivo"
+    ],
+    "url": "https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "area_ha": 192.32168786,
+          "categoria_mtv11": "Incluida",
+          "cod_dane_mpio": "25214",
+          "cod_precios": "4.1.1",
+          "consecutivo": 78510,
+          "departamen": "Cundinamarca",
+          "municipio": "Cota",
+          "rango_precios": "Mayor que 60 - hasta 70",
+          "vigencia": 2016
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Precios comerciales de tierra rural agropecuaria en áreas incluidas y condicionadas para el mercado de tierras en Colombia"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.09602,
+      4.838895,
+      -74.09602,
+      4.838895
+     ],
+     "capa": "Precios comerciales de tierra rural agropecuaria en áreas incluidas y condicionadas para el mercado de tierras en Colombia",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.09602,
+       4.838895,
+       -74.09602,
+       4.838895
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "departamen",
+       "municipio",
+       "cod_dane_mpio",
+       "rango_precios",
+       "cod_precios",
+       "categoria_mtv11",
+       "vigencia",
+       "area_ha",
+       "consecutivo"
+      ],
+      "url": "https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

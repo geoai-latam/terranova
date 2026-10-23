@@ -42,7 +42,7 @@ dcat: {publisher: UPRA, theme: agricultura, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
   medido: '2026-10-22'
-  fila: una zona de precio homogéneo de la tierra rural; 116 en Fusagasugá
+  fila: una zona de precio homogéneo de la tierra rural; 116 en Cota (25214)
   clave:
     columna: consecutiv
     unica: true
