@@ -1,0 +1,86 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:27:02+00:00",
+ "herramienta": "cnmh_masacres_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "cj8q-zu3u",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "1965",
+        "casos": "1",
+        "victimas": "4"
+       },
+       {
+        "a_o": "2000",
+        "casos": "1",
+        "victimas": "17"
+       },
+       {
+        "a_o": "2001",
+        "casos": "3",
+        "victimas": "17"
+       },
+       {
+        "a_o": "2002",
+        "casos": "5",
+        "victimas": "23"
+       },
+       {
+        "a_o": "2003",
+        "casos": "2",
+        "victimas": "8"
+       },
+       {
+        "a_o": "2004",
+        "casos": "1",
+        "victimas": "5"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "conjunto": "cj8q-zu3u",
+     "consulta": {
+      "conjunto": "cj8q-zu3u",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 6,
+     "filas_que_resume": 74,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

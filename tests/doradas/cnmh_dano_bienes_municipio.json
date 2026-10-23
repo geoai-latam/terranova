@@ -1,0 +1,61 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:26:59+00:00",
+ "herramienta": "cnmh_dano_bienes_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "a2ga-ur2i",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2003",
+        "casos": "1",
+        "victimas": "2"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "a2ga-ur2i",
+     "consulta": {
+      "conjunto": "a2ga-ur2i",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 1,
+     "filas_que_resume": 2,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,116 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:27:06+00:00",
+ "herramienta": "cnmh_secuestro_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o",
+    "id": "sg55-sszm",
+    "max_filas": 1000,
+    "order": "a_o",
+    "portal": "datos.gov.co",
+    "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+    "where": "c_digo_dane_de_municipio = '05313'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "casos",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "1988",
+        "casos": "3",
+        "victimas": "3"
+       },
+       {
+        "a_o": "1996",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "1997",
+        "casos": "8",
+        "victimas": "8"
+       },
+       {
+        "a_o": "1998",
+        "casos": "4",
+        "victimas": "4"
+       },
+       {
+        "a_o": "1999",
+        "casos": "3",
+        "victimas": "3"
+       },
+       {
+        "a_o": "2000",
+        "casos": "20",
+        "victimas": "20"
+       },
+       {
+        "a_o": "2001",
+        "casos": "18",
+        "victimas": "20"
+       },
+       {
+        "a_o": "2002",
+        "casos": "15",
+        "victimas": "15"
+       },
+       {
+        "a_o": "2003",
+        "casos": "5",
+        "victimas": "9"
+       },
+       {
+        "a_o": "2004",
+        "casos": "2",
+        "victimas": "2"
+       },
+       {
+        "a_o": "2006",
+        "casos": "1",
+        "victimas": "1"
+       },
+       {
+        "a_o": "2013",
+        "casos": "1",
+        "victimas": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "sg55-sszm",
+     "consulta": {
+      "conjunto": "sg55-sszm",
+      "group": "a_o",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "a_o, count(distinct id_persona) AS victimas, count(distinct id_caso) AS casos",
+      "where": "(c_digo_dane_de_municipio = '05313')"
+     },
+     "filas": 12,
+     "filas_que_resume": 87,
+     "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
