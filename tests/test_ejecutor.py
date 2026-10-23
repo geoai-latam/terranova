@@ -97,3 +97,21 @@ def test_zona_por_divipola_dice_el_lugar() -> None:
         assert zona is not None and zona.valor == codigo and zona.nombre == nombre
     desconocido = _zona(h, {"municipio_divipola": "99999"}, municipios)
     assert desconocido is not None and desconocido.nombre is None
+
+
+def test_la_geometria_sale_en_2d() -> None:
+    """Regla 8 de rt/1: lon y lat. USGS manda la profundidad como tercera coordenada."""
+    from terranova.ejecutor import a_2d
+
+    assert a_2d({"type": "Point", "coordinates": [-72.6, 4.8, 10]}) == {
+        "type": "Point",
+        "coordinates": [-72.6, 4.8],
+    }
+    poligono = {"type": "Polygon", "coordinates": [[[0, 0, 5], [1, 0, 5], [1, 1, 5], [0, 0, 5]]]}
+    assert a_2d(poligono)["coordinates"] == [[[0, 0], [1, 0], [1, 1], [0, 0]]]
+    coleccion = {
+        "type": "GeometryCollection",
+        "geometries": [{"type": "Point", "coordinates": [1, 2, 3]}],
+    }
+    assert a_2d(coleccion)["geometries"][0]["coordinates"] == [1, 2]
+    assert a_2d(None) is None
