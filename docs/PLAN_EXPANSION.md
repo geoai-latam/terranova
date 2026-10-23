@@ -130,11 +130,13 @@ Cada conjunto tiene su herramienta o la razón por la que todavía no.
 | Cronograma `f3ev-294c`, BPIN `d9na-abhe` | `secop_cronograma_proceso`, `secop_bpin_proceso` | ✅ |
 | SECOP I procesos `f789-7hwg`, adiciones `7fix-nd37`, modificaciones `36vw-pbq2` y `u5b4-ae3s`, origen de los recursos `3xwx-53wt`, proponentes `tauh-5jvn`, archivos `ps88-5e3v` | `secop1_*` | ✅ |
 | Convenios interadministrativos `s484-c9k3` | `secop_convenio_interadministrativo` | ✅ |
-| Ofertas SECOP II `wi7w-2nvm` y su histórico `b28v-edj8` | — | necesita copia (G3): la fuente no indexa por proceso y una consulta se agota |
+| Ofertas SECOP II `wi7w-2nvm` y su histórico `b28v-edj8` | — | **no se sirve**: no indexa por proceso ni por fecha (contar un mes pasa de 300 s), así que copiarla sería carga sobre el portal. Quién ofertó lo responde `secop_proponentes_proceso`; el valor de cada oferta espera un bulk de Colombia Compra |
 | Archivos de SECOP II por año (`dmgg-8hin`, `h4m3-b4e2`, `nbae-kzan`, `3skv-9na7`, `kgcd-kt7i`, `f8va-cf4m`) | — | 134 M filas por año: copia (G3) por ventana |
 | PAA de SECOP I `prdx-nxyp` y `azeg-sgqg` | `secop1_paa_entidad`, `secop1_paa_detalle` | ✅ (el encabezado se agrupa: la fuente lo repite por versión; el NIT viene a veces con dígito de verificación) |
 | PAA de SECOP II, detalle `9sue-ezhx` | `secop2_paa_entidad` (por NIT: una fila por entidad del NIT), `secop2_paa_items` (por código de entidad) | ✅ (el detalle trae el NIT; un ítem se repite por categoría UNSPSC: el valor se deduplica por ítem. El encabezado `b6m4-qgqv` queda para el presupuesto general) |
 | Proveedores registrados `qmzu-gj57`, grupos de proveedores `ceth-n4bn` | — | **no se sirve**: el campo `nit` trae cédulas (un «ECOPETROL S.A.» registrado con la cédula de una persona) y personas inscritas como sociedades. Una herramienta por NIT daría datos engañosos; RUES (`rues_empresa_por_nit`) cubre la empresa |
 | Multas SECOP I `4n4q-k399` | `secop1_multas_municipio` | ✅ (la llave es el municipio: el NIT de la entidad casi siempre dice «No Definido»; 94 filas son de una entidad de prueba y se excluyen) |
-| SECOP I procesos histórico `qddk-cgux`, SECOP I archivos histórico `8kpz-m6cc`, convenios histórico `ityv-bxct`, modificaciones a procesos SECOP II `e2u2-swiw` (sin actualizar desde 2021) | — | después: mismos esquemas que los vigentes |
+| SECOP I procesos histórico `qddk-cgux` | `secop1_proceso_historico_por_constancia` | ✅ (la vigente empieza el 2018-01-01 y el histórico cubre 2004–2017: sin él, una constancia de 2015 daba «no encontrado») |
+| Convenios histórico `ityv-bxct` | — | no hace falta: la vigente se recargó entera en 2023 y trae firmas desde 2000 |
+| SECOP I archivos histórico `8kpz-m6cc`, modificaciones a procesos SECOP II `e2u2-swiw` (sin actualizar desde 2021) | — | después: mismos esquemas que los vigentes |
 | Contactos de entidades y proveedores `4ex9-j3n8`, ubicaciones adicionales `wwhe-4sq8` | — | fuera: son contactos y direcciones (ADR-0014) |

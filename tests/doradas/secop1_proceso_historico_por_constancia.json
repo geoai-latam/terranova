@@ -1,0 +1,95 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:38:53+00:00",
+ "herramienta": "secop1_proceso_historico_por_constancia",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "qddk-cgux",
+    "max_filas": 1000,
+    "order": "uid",
+    "portal": "datos.gov.co",
+    "select": "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i",
+    "where": "numero_de_constancia = '15-13-3881619'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cuantia_contrato",
+       "cuantia_proceso",
+       "departamento_entidad",
+       "detalle_del_objeto_a_contratar",
+       "estado_del_proceso",
+       "id_adjudicacion",
+       "identificacion_del_contratista",
+       "modalidad_de_contratacion",
+       "municipio_entidad",
+       "nit_de_la_entidad",
+       "nom_razon_social_contratista",
+       "nombre_entidad",
+       "numero_de_constancia",
+       "numero_de_contrato",
+       "numero_de_proceso",
+       "ruta_proceso_en_secop_i",
+       "tipo_de_contrato",
+       "tipo_identifi_del_contratista",
+       "uid",
+       "valor_contrato_con_adiciones"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cuantia_contrato": "0",
+        "cuantia_proceso": "18000000",
+        "departamento_entidad": "Boyacá",
+        "detalle_del_objeto_a_contratar": "PRESTACIoN DE SERVICIOS PARA LA EJECUCIoN; A TODO COSTO; DE UN EVENTO CULTURAL - RECREATIVO EN HOMENAJE AL DIA DE LA FAMILIA EN  EL MUNICIPIO DE COVARACHIA - BOYACA",
+        "estado_del_proceso": "Convocado",
+        "id_adjudicacion": "Sin Adjudicar",
+        "identificacion_del_contratista": "No Definido",
+        "modalidad_de_contratacion": "Contratación Mínima Cuantía",
+        "municipio_entidad": "Covarachía",
+        "nit_de_la_entidad": "812001675-1",
+        "nom_razon_social_contratista": "No Definido",
+        "nombre_entidad": "BOYACÁ - ALCALDÍA MUNICIPIO DE COVARACHIA",
+        "numero_de_constancia": "15-13-3881619",
+        "numero_de_contrato": "No definido",
+        "numero_de_proceso": "MC No. 028 - 2015",
+        "ruta_proceso_en_secop_i": {
+         "url": "https://www.contratos.gov.co/consultas/detalleProceso.do?numConstancia=15-13-3881619"
+        },
+        "tipo_de_contrato": "Prestación de Servicios",
+        "tipo_identifi_del_contratista": "No Definido",
+        "uid": "15-13-3881619",
+        "valor_contrato_con_adiciones": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "qddk-cgux",
+     "consulta": {
+      "conjunto": "qddk-cgux",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i",
+      "where": "(numero_de_constancia = '15-13-3881619')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(numero_de_constancia = '15-13-3881619')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+id: secop1_proceso_historico_por_constancia
+version: 1
+familia: contratacion
+fuente: cce.secop1.procesos_historico
+pregunta: "¿Qué es este proceso antiguo de SECOP I (2004–2017) y a quién se adjudicó?"
+descripcion: >
+  Proceso de SECOP I cargado entre 2004 y 2017, por su número de constancia (p. ej. 15-13-3881619): entidad, modalidad,
+  estado, objeto, tipo, cuantía, contratista (con su documento, como lo publica la fuente:
+  ADR-0025), fechas, valor con adiciones y enlace. Una fila por adjudicación.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {constancia: constancia_secop}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: qddk-cgux
+    portal: datos.gov.co
+    select: "uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i"
+    where: "numero_de_constancia = '{constancia}'"
+    order: "uid"
+    max_filas: 1000
+  campos: [uid, numero_de_constancia, numero_de_proceso, nombre_entidad, nit_de_la_entidad, departamento_entidad, municipio_entidad, modalidad_de_contratacion, estado_del_proceso, detalle_del_objeto_a_contratar, tipo_de_contrato, cuantia_proceso, id_adjudicacion, numero_de_contrato, tipo_identifi_del_contratista, identificacion_del_contratista, nom_razon_social_contratista, fecha_de_firma_del_contrato, cuantia_contrato, valor_contrato_con_adiciones, ruta_proceso_en_secop_i]
+salida: Secop1ProcesoHistoricoPorConstancia
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en qddk-cgux: la constancia 15-13-3881619 (Covarachía, 2015) es un proceso
+  # sin adjudicar; en la vigente (f789-7hwg) no está.
+  entrada: {constancia: "15-13-3881619"}
+  verdad: {constancia: "15-13-3881619", nit_entidad: "812001675-1", id_adjudicacion: "Sin Adjudicar"}
+  minimos: {numero_registros: 1}
+  campos: [constancia, contratista, cuantia_proceso, departamento, documento_contratista, entidad, estado, id_adjudicacion, modalidad, municipio, nit_entidad, numero_contrato, numero_proceso, numero_registros, objeto, tipo_contrato, tipo_documento_contratista, uid, url_proceso, valor_con_adiciones, valor_contrato]
+  latencia_max_ms: 20000
