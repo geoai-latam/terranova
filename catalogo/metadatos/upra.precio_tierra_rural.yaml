@@ -1,0 +1,163 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: upra.precio_tierra_rural
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/rttb-pk7n.json
+pagina: https://www.datos.gov.co/d/rttb-pk7n
+titulo: Precios comerciales de la tierra rural agropecuaria sobre áreas incluidas y condicionadas para
+  el mercado de tierras.
+descripcion: 'Los mapas de precios comerciales de la tierra rural son la línea base para el monitoreo
+  y proyección del comportamiento de los precios rurales de los departamentos, y son un insumo para la
+  orientación, formulación, seguimiento y evaluación de políticas públicas en el ámbito Nacional y Departamental.
+  La divulgación de esta información es una acción afirmativa de transparencia del mercado de tierras,
+  con la cual se pretende contribuir a su regularización. Para la elaboración de estos mapas se emplearon
+  y analizaron como insumos las capas que se relacionan a continuación: Zonificación física para el mercado
+  de tierras rurales agropecuarias del año 2016. Formalización de la propiedad. Distribución y tamaño
+  predial. Tiempos de desplazamiento (isócronas). Avalúos catastrales integrales vigencia 2016. Este trabajo
+  se complementó con estudios de mercado inmobiliario y de ofertas encontradas en los departamentos. Posteriormente
+  se realizó la caracterización de los territorios en estudio y se efectuó el trazado de los polígonos
+  de rangos de precios. Por la naturaleza y alcance previsto para este trabajo NO se llevó a cabo un muestreo
+  estadístico, pero se realizaron entrevistas semiestructur…'
+publicado: '2022-06-16'
+datos_actualizados: '2022-06-16'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Agricultura y Desarrollo Rural
+etiquetas:
+- precios
+- tierra rural
+- mercado de tierras
+- avalúos
+- upra
+filas: 101644
+geografia:
+  geometria: poligono
+  crs: EPSG:4326
+campos:
+  departamen:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del departamento
+    nulos: 0
+    minimo: Antioquia
+    maximo: Tolima
+    comparacion: texto
+    valores:
+      Tolima: 39486
+      Huila: 11541
+      Meta: 10522
+      Cesar: 9928
+      La Guajira: 9026
+      Bolívar: 4076
+      Atlántico: 3527
+      Nariño: 3381
+      Antioquia: 3295
+      Quindío: 2855
+      Cundinamarca: 1713
+      Córdoba: 1188
+      Boyacá: 1106
+  cod_dane_m:
+    tipo_fuente: text
+    etiqueta: Código municipio
+    descripcion: Código Dane del municipio
+    nulos: 0
+    minimo: '05030'
+    maximo: '73873'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del municipio
+    nulos: 0
+    minimo: Acacías
+    maximo: Yaguará
+    comparacion: texto
+  categoria_:
+    tipo_fuente: text
+    etiqueta: Categoría MT
+    descripcion: Las áreas para el mercado de tierras identifican los lugares geográficos rurales del
+      territorio nacional (área continental emergida e insular) respecto de los cuales está permitido,
+      condicionado o prohibido efectuar transacciones libres de coerción de acuerdo con la normatividad
+      legal vigente.
+    nulos: 0
+    minimo: Condicionada
+    maximo: Incluida
+    comparacion: texto
+    valores:
+      Condicionada: 51221
+      Incluida: 50423
+  rango_prec:
+    tipo_fuente: text
+    etiqueta: Rango precios
+    descripcion: Rangos de precios comerciales de la tierra rural agropecuaria
+    nulos: 0
+    minimo: CA
+    maximo: ZU
+    comparacion: texto
+    valores:
+      Mayor a 2 - hasta 3: 12132
+      Mayor a 5 - hasta 8: 11662
+      Mayor a 10 - hasta 15: 9620
+      CA: 9608
+      Mayor a 15 - hasta 20: 6815
+      Mayor a 20 - hasta 30: 6721
+      Mayor a 8 - hasta 10: 6719
+      Mayor a 3 - hasta 5: 6521
+      Mayor a 1 - hasta 2: 4791
+      Mayor a 30 - hasta 40: 4376
+      Mayor a 40 - hasta 50: 3781
+      Menor a 1: 2762
+      Mayor que 3 - hasta 5: 2428
+      ZU: 1746
+      Mayor a 50 - hasta 60: 1571
+      Mayor que 8 - hasta 10: 1388
+      Mayor que 5 - hasta 8: 1352
+      Mayor a 70 - hasta 80: 917
+      Mayor que 20 - hasta 30: 875
+      Mayor a 60 - hasta 70: 851
+  cod_precio:
+    tipo_fuente: text
+    etiqueta: Código precios
+    descripcion: Identificador del rango de precios
+    nulos: 0
+    minimo: '1'
+    maximo: ZU
+    comparacion: texto
+    valores:
+      '5': 13014
+      '3': 12934
+      '7': 10361
+      CA: 10110
+      '4': 8949
+      '6': 8107
+      '9': 7596
+      '8': 7199
+      '2': 4791
+      '10': 4752
+      '11': 3781
+      '1': 2762
+      ZU: 1904
+      '12': 1571
+      '14': 917
+      '13': 851
+      '15': 504
+      '16': 409
+      '17': 273
+      '18': 254
+  area_ha:
+    tipo_fuente: number
+    etiqueta: Área (ha)
+    descripcion: Área en hectáreas de los polígonos clasificados
+    nulos: 0
+    minimo: '0.0'
+    maximo: '352289.602165'
+    comparacion: numero
+  consecutiv:
+    tipo_fuente: number
+    etiqueta: Consecutivo
+    descripcion: Identificador único de cada registro
+    nulos: 0
+    minimo: '1'
+    maximo: '39486'
+    comparacion: numero

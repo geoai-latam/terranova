@@ -1,0 +1,9 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: banrep.tasa_politica
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_CBR_DAILY_HIST,1.0/all
+titulo: Tasa de política monetaria (DF_CBR_DAILY_HIST)
+descripcion: Serie SDMX del BanRep, con fines de semana.
+frecuencia_declarada: Diaria
+idioma: Español

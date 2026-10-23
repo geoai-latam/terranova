@@ -19,7 +19,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/kgxf-xxbe.json
 modo: en_vivo
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P6M}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: periodo}
 datos_personales: filtrados
 estado: publicada
 campos:

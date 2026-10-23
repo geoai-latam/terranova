@@ -1,0 +1,195 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.procesos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/p6dx-8zbt.json
+pagina: https://www.datos.gov.co/d/p6dx-8zbt
+titulo: SECOP II - Procesos de Contratación
+descripcion: Registro de los procesos de compra, sean o no adjudicados, hechos en la plataforma SECOP
+  II desde su lanzamiento
+publicado: '2024-02-07'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secop
+- procesos de compra
+filas: 8747640
+campos:
+  entidad:
+    tipo_fuente: text
+    etiqueta: Entidad
+    descripcion: Nombre de la Entidad que publica el proceso de compra pública
+    nulos: 0
+    minimo: _
+    comparacion: texto
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: Nit Entidad
+    descripcion: NIT de la Entidad que publicó el proceso
+  departamento_entidad:
+    tipo_fuente: text
+    etiqueta: Departamento Entidad
+    descripcion: Departamento en el cual está registrada la entidad
+    nulos: 0
+    minimo: Amazonas
+    maximo: Vichada
+    comparacion: texto
+  ciudad_entidad:
+    tipo_fuente: text
+    etiqueta: Ciudad Entidad
+    descripcion: Ciudad en la cual está registrada la entidad
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  id_del_proceso:
+    tipo_fuente: text
+    etiqueta: ID del Proceso
+    descripcion: Identificador Único del Proceso, valor generado por la plataforma
+    nulos: 0
+    minimo: CO1.REQ.10000000
+    maximo: CO1.REQ.9999999
+    comparacion: texto
+  referencia_del_proceso:
+    tipo_fuente: text
+    etiqueta: Referencia del Proceso
+    descripcion: Identificador del Proceso, valor generado por la Entidad
+    nulos: 0
+    comparacion: texto
+  id_del_portafolio:
+    tipo_fuente: text
+    etiqueta: ID del Portafolio
+    descripcion: Identificador del Portafolio al cual corresponde el proceso de compra
+    nulos: 0
+    minimo: CO1.BDOS.10000000
+    maximo: CO1.BDOS.9999999
+    comparacion: texto
+  nombre_del_procedimiento:
+    tipo_fuente: text
+    etiqueta: Nombre del Procedimiento
+    descripcion: Nombre dado al proceso de compra por la Entidad
+  descripci_n_del_procedimiento:
+    tipo_fuente: text
+    etiqueta: Descripción del Procedimiento
+    descripcion: Primera definición de las características principales del proceso
+    nulos: 1
+    minimo: __
+    comparacion: texto
+  fase:
+    tipo_fuente: text
+    etiqueta: Fase
+    descripcion: Fase en la que actualmente se encuentra el proceso
+    nulos: 87867
+    comparacion: texto
+    valores:
+      Presentación de oferta: 7568848
+      Fase de ofertas: 829546
+      Presentación de observaciones: 152006
+      Manifestación de interés (Menor Cuantía): 62855
+      Fase de Selección (Presentación de ofertas): 20202
+      Clarification submission: 9543
+      Estimate Phase: 7760
+      Pré-Calificación de competidores: 3737
+      Proceso de ofertas: 3254
+      Selección de ofertas (borrador): 1847
+      Presentación de Observaciones: 99
+      Fase de Concurso: 52
+      Presentación de observaciones (precalificación): 13
+      Presentación de oferta (precalificación): 11
+  fecha_de_publicacion_del:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de Publicacion del Proceso
+    descripcion: Fecha de la publicación inicial del proceso de compra
+    nulos: 129704
+    minimo: '2015-04-16T00:00:00.000'
+    maximo: '2026-06-28T00:00:00.000'
+    comparacion: fecha
+  precio_base:
+    tipo_fuente: number
+    etiqueta: Precio Base
+    descripcion: Precio Base, proyectado, del proceso de Compra
+    nulos: 0
+    minimo: '-34693400216'
+    maximo: '111111111111111111'
+    comparacion: numero
+  modalidad_de_contratacion:
+    tipo_fuente: text
+    etiqueta: Modalidad de Contratacion
+    descripcion: Modalidad de selección bajo la cual se desarrolla el proceso de Compra
+    nulos: 0
+    comparacion: texto
+    valores:
+      Contratación directa: 3936788
+      Contratación régimen especial: 3410452
+      Mínima cuantía: 412912
+      Selección Abreviada de Menor Cuantía: 220347
+      Selección abreviada subasta inversa: 203004
+      Solicitud de información a los Proveedores: 165615
+      Contratación régimen especial (con ofertas): 132265
+      Contratación Directa (con ofertas): 111051
+      Licitación pública: 61013
+      Concurso de méritos abierto: 41559
+      Licitación pública Obra Publica: 30315
+      Licitación Pública Acuerdo Marco de Precios: 11228
+      Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes: 4752
+      Subasta de prueba: 4672
+      Enajenación de bienes con subasta: 832
+      Enajenación de bienes con sobre cerrado: 785
+      Concurso de méritos con precalificación: 50
+  proveedores_invitados:
+    tipo_fuente: number
+    etiqueta: Proveedores Invitados
+    descripcion: Número de Proveedores invitados a participar del proceso, en total
+  respuestas_al_procedimiento:
+    tipo_fuente: number
+    etiqueta: Respuestas al Procedimiento
+    descripcion: Respuestas hechas al procedimiento, tanto de proveedores como de la misma entidad
+    nulos: 0
+    minimo: '0'
+    maximo: '1620'
+    comparacion: numero
+    valores:
+      '0': 7746202
+      '1': 332405
+      '2': 134403
+      '3': 87131
+      '4': 58197
+      '5': 44435
+      '6': 33592
+      '7': 31072
+      '8': 20007
+      '9': 18750
+      '10': 15695
+      '42': 14494
+      '11': 14231
+      '12': 12992
+      '14': 9629
+      '13': 9562
+      '15': 9216
+      '107': 7459
+      '30': 7134
+      '16': 6695
+  estado_del_procedimiento:
+    tipo_fuente: text
+    etiqueta: Estado del Procedimiento
+    descripcion: Estado actual de desarrollo del procedimiento de compra pública
+    nulos: 0
+    minimo: Abierto
+    maximo: Suspendido
+    comparacion: texto
+    valores:
+      Seleccionado: 5355976
+      Publicado: 2607307
+      Evaluación: 547092
+      Cancelado: 152161
+      Borrador: 42541
+      Abierto: 31713
+      Aprobado: 7204
+      En aprobación: 3482
+      Suspendido: 164
+  urlproceso:
+    tipo_fuente: url
+    etiqueta: URLProceso
+    descripcion: URL, en la plataforma, en la que se puede consultar el proceso de compra

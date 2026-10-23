@@ -30,6 +30,7 @@ from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
 from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
 from terranova.vigilancia import estado_por_fuente
 
@@ -270,24 +271,6 @@ def crear_api() -> FastAPI:
             for h in puerta.CATALOGO.herramientas.values()
         ]
 
-    def _publica(fid: str) -> dict[str, Any]:
-        f = puerta.CATALOGO.fuentes[fid]
-        return {
-            "id": f.id,
-            "titulo": f.titulo,
-            "entidad": f.entidad,
-            "licencia": {
-                "spdx": f.licencia.spdx,
-                "url": f.licencia.url,
-                "verificada": f.licencia.verificada,
-            },
-            "uso_comercial": f.uso_comercial,
-            "atribucion": f.atribucion,
-            "cobertura": f.cobertura.model_dump(),
-            "modo": f.modo,
-            "estado": f.estado,
-        }
-
     @api.get("/metrics", include_in_schema=False)
     async def metricas_prometheus() -> Response:
         """Prometheus (F7.2). Caddy no lo deja salir a internet: solo la red interna."""
@@ -302,7 +285,7 @@ def crear_api() -> FastAPI:
 
     @api.get("/v1/fuentes", tags=["catálogo"], operation_id="listar_fuentes")
     async def fuentes() -> list[dict[str, Any]]:
-        return [_publica(fid) for fid in sorted(puerta.CATALOGO.fuentes)]
+        return [resumen(puerta.CATALOGO, fid) for fid in sorted(puerta.CATALOGO.fuentes)]
 
     @api.get(
         "/v1/fuentes/{fuente_id}",
@@ -314,7 +297,7 @@ def crear_api() -> FastAPI:
     async def fuente(fuente_id: str) -> dict[str, Any] | JSONResponse:
         if fuente_id not in puerta.CATALOGO.fuentes:
             return problema("no_existe", f"no hay fuente {fuente_id}")
-        return _publica(fuente_id)
+        return ficha_tecnica(puerta.CATALOGO, fuente_id)
 
     def openapi() -> dict[str, Any]:
         if api.openapi_schema is None:

@@ -1,0 +1,9 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: banrep.uvr
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_UVR_DAILY_HIST,1.0/all
+titulo: UVR (DF_UVR_DAILY_HIST)
+descripcion: Dos series (valor y variación). Se calcula por adelantado hasta el 15 del mes siguiente.
+frecuencia_declarada: Diaria
+idioma: Español

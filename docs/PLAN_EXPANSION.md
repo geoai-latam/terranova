@@ -21,6 +21,8 @@ Una herramienta cuenta como servida cuando cumple todo esto:
 
 0. La fuente tiene **perfil** ([spec 07](specs/07-perfil-de-fuente.md)): qué es una fila, si la clave es única,
    qué trae mal, cómo responde y qué se decide con eso. La herramienta se diseña sobre el perfil.
+   Y tiene **ficha técnica** ([spec 08](specs/08-ficha-tecnica.md)) cosechada de la fuente: años que cubre,
+   geometría, CRS y capas, diccionario de campos, última actualización y corte.
 1. Tiene ficha de fuente y de herramienta en `catalogo/`, y `scripts/validar_catalogo.py` pasa.
 2. La licencia está verificada por ítem (ADR-0019). Si no, queda `por_verificar` y solo responde con
    llaves de evaluación (ADR-0007).

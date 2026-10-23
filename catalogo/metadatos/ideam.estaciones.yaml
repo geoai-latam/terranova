@@ -1,0 +1,159 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.estaciones
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/hp9r-jxuu.json
+pagina: https://www.datos.gov.co/d/hp9r-jxuu
+titulo: Catálogo Nacional de Estaciones del IDEAM
+descripcion: 'Este dataset relaciona la información de las estaciones hidrometeorológicas de propiedad
+  del IDEAM y de otras entidades: contiene nombre de la estación, código, tipo, categoría, localización,
+  entre otros. Los datos disponibles a través de este medio pueden ser libremente consumidos bajo las
+  siguientes cláusulas: 1. Los datos a visualizar o descargar a continuación no han sido validados por
+  el IDEAM. 2. Los datos aquí dispuestos son datos crudos instantáneos provenientes de los sensores de
+  las estaciones automáticas de la red propia y/o producto de convenios interadministrativos con terceras
+  entidades. 3. Los datos son puestos a disposición de la ciudadanía como mecanismo de transparencia y
+  para proveer una herramienta de apoyo a la gestión del riesgo territorial y como datos abiertos en cumplimiento
+  de la Ley 1712 de 2014. 4. Es posible que los datos aquí dispuestos tengan cierto retraso en el tiempo
+  debido a las frecuencias de envío de datos de los sensores y los medios de transmisión utilizados. 5.
+  Los datos presenten errores y/o inconsistencias estando incluso por fuera de los límites considerados
+  normales, producto de fallas en los sensores de origen. 6. El posterior uso e int…'
+publicado: '2025-09-22'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- catálogo estaciones
+- hidrometeorología
+- ideam
+filas: 9914
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  codigo:
+    tipo_fuente: text
+    etiqueta: Codigo
+    descripcion: Corresponde al valor de identificación de la estación dentro del catálogo de estaciones
+    nulos: 0
+    minimo: '0011010010'
+    maximo: '5311700154'
+    comparacion: texto
+  nombre:
+    tipo_fuente: text
+    etiqueta: Nombre
+    descripcion: Corresponde a la identificación de la estación dentro del catálogo de estaciones, tambien
+      lleva el codigo de la estacion
+  categoria:
+    tipo_fuente: text
+    etiqueta: Categoria
+    descripcion: Indica la categoría de la estación de medición de acuerdo con su clase
+    nulos: 0
+    minimo: Agrometeorológica
+    comparacion: texto
+    valores:
+      Pluviométrica: 3910
+      Limnimétrica: 2001
+      Limnigráfica: 1134
+      Climatológica Ordinaria: 975
+      Climatológica Principal: 828
+      Pluviográfica: 584
+      Meteorológica Especial: 226
+      Agrometeorológica: 129
+      Meteorológica Marina: 51
+      Sinóptica Principal: 35
+      Radio Sonda: 14
+      Sinóptica Secundaria: 14
+      Ambiental: 7
+      HidroMeteorológica: 6
+  tecnologia:
+    tipo_fuente: text
+    etiqueta: Tecnologia
+    descripcion: 'Corresponde a los tipos de estaciones de medición: convencional, automática con telemetría,
+      automática sin telemetría'
+    nulos: 0
+    maximo: Convencional
+    comparacion: texto
+    valores:
+      Convencional: 7560
+      Automática con Telemetría: 1761
+      Automática con Telemetría, Convencional: 455
+      Automática sin Telemetría: 137
+      Automática sin Telemetría, Convencional: 1
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Indica las condiciones de funcionamiento en las que actualmente se encuentra la estación
+      de medición
+    nulos: 0
+    minimo: Activa
+    maximo: Suspendida
+    comparacion: texto
+    valores:
+      Activa: 5655
+      Suspendida: 3893
+      En Mantenimiento: 366
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del departamento donde se ubica la estación
+    nulos: 0
+    minimo: Amazonas
+    maximo: Vichada
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del Municipio donde se localiza la estación
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  altitud:
+    tipo_fuente: number
+    etiqueta: Altitud
+    descripcion: Indica el valor de la altura sobre el nivel del mar de la estación de medición
+    nulos: 0
+    minimo: '0'
+    maximo: '5072'
+    comparacion: numero
+  longitud:
+    tipo_fuente: number
+    etiqueta: LONGITUD
+    descripcion: Corresponde a la coordenada longitud en grados, minutos, segundos y dirección (O) Deben
+      estar en sistema Magna Sirgas
+    nulos: 0
+    minimo: '-83.05619444'
+    maximo: '-66.83333333'
+    comparacion: numero
+  latitud:
+    tipo_fuente: number
+    etiqueta: LATITUD
+    descripcion: Corresponde a la coordenada latitud en grados, minutos, segundos y dirección (N/S) Deben
+      estar en sistema Magna Sirgas
+    nulos: 0
+    minimo: '-4.283333333'
+    maximo: '15.7975'
+    comparacion: numero
+  fecha_instalacion:
+    tipo_fuente: text
+    etiqueta: Fecha_instalacion
+    descripcion: Corresponde a la fecha de instalación de la estación de monitoreo
+    nulos: 133
+    minimo: 01/01/2001
+    maximo: 31/12/2017
+    comparacion: texto
+  fecha_suspension:
+    tipo_fuente: text
+    etiqueta: Fecha_suspension
+    descripcion: Fecha en la cual la estación fue suspendida
+    nulos: 6069
+    minimo: 01/01/2011
+    maximo: 31/12/2019
+    comparacion: texto
+  entidad:
+    tipo_fuente: text
+    etiqueta: Entidad
+    descripcion: Entidad propietaria de ls estación
+    nulos: 0
+    comparacion: texto

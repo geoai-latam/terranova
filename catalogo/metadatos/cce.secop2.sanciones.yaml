@@ -1,0 +1,88 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.sanciones
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/it5q-hg94.json
+pagina: https://www.datos.gov.co/d/it5q-hg94
+titulo: SECOPII - Multas y Sanciones
+descripcion: Registro de las Multas y Sanciones Generadas en la Plataforma SECOPII
+publicado: '2022-04-20'
+datos_actualizados: '2026-10-08'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secopii
+- multas
+- sanciones
+filas: 554
+campos:
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: Identificador del Contrato generado por la plataforma
+    nulos: 0
+    minimo: CO1.PCCNTR.1121732
+    comparacion: texto
+  nombre_entidad_creadora:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad Creadora
+    descripcion: Nombre de la Entidad Creadora que Publica la Sanción
+  nombre_proveedor_objeto_de:
+    tipo_fuente: text
+    etiqueta: Nombre Proveedor Objeto de la Multa
+    descripcion: Nombre del Proveedor Objeto de la Multa
+  valor:
+    tipo_fuente: number
+    etiqueta: Valor
+    descripcion: Valor de la multa
+    nulos: 0
+    minimo: '0'
+    maximo: '21067067040'
+    comparacion: numero
+  valor_pagado:
+    tipo_fuente: number
+    etiqueta: Valor Pagado
+    descripcion: Valor Pagado por el proveedor a la fecha
+    nulos: 0
+    minimo: '0'
+    maximo: '7300200000'
+    comparacion: numero
+  fecha_evento:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha Evento
+    descripcion: Fecha del evento que genera la sanción o multa
+    nulos: 54
+    minimo: '2018-07-04T00:00:00.000'
+    maximo: '2028-07-22T00:00:00.000'
+    comparacion: fecha
+  numero_de_acto:
+    tipo_fuente: text
+    etiqueta: Numero de Acto
+    descripcion: Numero de Acto, que genera la sanción
+    nulos: 0
+    comparacion: texto
+  tipo_de_sancion:
+    tipo_fuente: text
+    etiqueta: Tipo de Sancion
+    descripcion: Tipo de Sanción, generado por la multa
+    nulos: 0
+    maximo: Vencimiento
+    comparacion: texto
+    valores:
+      Clausula Penal: 390
+      Multa: 87
+      No Definido: 54
+      Otro: 22
+      Vencimiento: 1
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Estado, generado por la sanción o multa
+    nulos: 0
+    comparacion: texto
+    valores:
+      A la espera de aprobación: 382
+      Publicado por el administrador de la plataforma: 141
+      Borrador: 31

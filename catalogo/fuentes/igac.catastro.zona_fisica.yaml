@@ -57,6 +57,7 @@ perfil:
   hallazgos:
   - CODIGO es el municipio (a veces con dos dígitos más, a veces vacío o solo la zona), no la zona
   - VIGENCIA vacía en 11 % de las rurales; va de 1990 a 2026, con años imposibles (205, 1899)
+  - '1899-12-30 es la «fecha cero» de Excel y Access: una vigencia vacía disfrazada de fecha'
   - 173 municipios rurales tienen zonas de varias vigencias, que no se solapan (5 de 5 medidos)
   - el punto de prueba toca un solo elemento
   decision: en vivo por punto; la descripción advierte la vigencia

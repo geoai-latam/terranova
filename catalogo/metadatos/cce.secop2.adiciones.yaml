@@ -1,0 +1,66 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.adiciones
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/cb9c-h8sn.json
+pagina: https://www.datos.gov.co/d/cb9c-h8sn
+titulo: SECOP II - Adiciones
+descripcion: Adiciones hechas a los contratos firmados en la plataforma SECOP II
+publicado: '2020-06-05'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- adición
+- contrato
+- secop ii
+- procesos de compra
+- presupuesto
+filas: 8378677
+campos:
+  identificador:
+    tipo_fuente: text
+    etiqueta: Identificador
+    descripcion: Identificador único del evento de modificación
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID_Contrato
+    descripcion: Identificador del contrato al que corresponde la modificación
+    nulos: 0
+    minimo: CO1.PCCNTR.10000002
+    maximo: CO1.PCCNTR.9999984
+    comparacion: texto
+  tipo:
+    tipo_fuente: text
+    etiqueta: Tipo
+    descripcion: Tipo de modificación, de acuerdo al impacto que tiene sobre el contrato
+    nulos: 0
+    maximo: Suspensión
+    comparacion: texto
+    valores:
+      Modificacion General: 4064421
+      Conclusion: 2033486
+      No definido: 1648470
+      Adicion en el valor: 256895
+      Reactivación: 140670
+      Suspensión: 127206
+      Cesion: 107005
+      Extension: 380
+      Reduccion en el valor: 143
+      Expiracion: 1
+  descripcion:
+    tipo_fuente: text
+    etiqueta: Descripcion
+    descripcion: Descripción detallada de la justificación de la adición o modificación
+    nulos: 0
+    comparacion: texto
+  fecharegistro:
+    tipo_fuente: calendar_date
+    etiqueta: FechaRegistro
+    descripcion: Fecha en que se hace la modificación
+    nulos: 0
+    minimo: '2015-09-12T14:36:03.228'
+    maximo: '2026-10-21T05:05:24.734'
+    comparacion: fecha

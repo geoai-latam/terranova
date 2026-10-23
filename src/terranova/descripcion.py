@@ -14,6 +14,12 @@ from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo, Fuente, Herramienta
 
 REPO = "https://github.com/geoai-latam/terranova"
+FUENTE_DESCRIBIR = "fuente_describir"
+DESCRIBIR = (
+    "qué años cubre la fuente, si es geográfica (geometría, CRS, extensión, capas), qué significa "
+    "cada campo, qué es una fila, cuándo se actualizó y sus alertas. Sale del catálogo: no gasta "
+    "créditos (spec 08)."
+)
 PROTOCOLOS = ["2026-07-28", "2025-11-25"]
 
 
@@ -41,6 +47,10 @@ def llms_txt(c: Catalogo) -> str:
         "Estados: `encontrado`, `no_encontrado`, `fuera_de_cobertura` (no descuenta), `parcial`. "
         "Errores en problem+json con un código estable (p. ej. `fuente_no_disponible`).",
         "Catálogo público en `/v1/fuentes`.",
+        "",
+        "## Ficha técnica de una fuente",
+        "",
+        f"- [{FUENTE_DESCRIBIR}](/v1/fuentes): {DESCRIBIR}",
         "",
         "## Ficha de un lugar",
         "",
@@ -125,6 +135,10 @@ def herramientas_md(c: Catalogo) -> str:
             )
         lineas.append("")
     lineas += [
+        "## Ficha técnica de una fuente",
+        "",
+        f"`{FUENTE_DESCRIBIR}` (MCP en `/mcp`; REST en `GET /v1/fuentes/{{id}}`): {DESCRIBIR}",
+        "",
         "## Ficha de un lugar",
         "",
         f"`{ficha_lugar.HERRAMIENTA}` (MCP en `/mcp` y `/mcp/{ficha_lugar.FAMILIA}`; REST en "

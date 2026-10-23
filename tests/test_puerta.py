@@ -85,7 +85,13 @@ CHIA = {"lon": -74.0262, "lat": 4.8619}
 @_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
-    assert set(herramientas) == set(puerta.CATALOGO.herramientas) | {"ficha_lugar"}
+    # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08)
+    assert set(herramientas) == set(puerta.CATALOGO.herramientas) | {
+        "ficha_lugar",
+        "fuente_describir",
+    }
+    describir = herramientas["fuente_describir"]
+    assert describir.annotations is not None and describir.annotations.open_world_hint is False
     ficha = herramientas["ficha_lugar"]
     assert ficha.input_schema["oneOf"] and ficha.annotations is not None
     t = herramientas[PREDIO]

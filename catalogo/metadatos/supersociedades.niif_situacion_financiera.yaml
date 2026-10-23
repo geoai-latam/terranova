@@ -1,0 +1,136 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supersociedades.niif_situacion_financiera
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/pfdp-zks5.json
+pagina: https://www.datos.gov.co/d/pfdp-zks5
+titulo: Estados Financieros NIIF- Estado de Situación Financiera
+descripcion: '"Estado de situación financiera, que presenta en forma clasificada, resumida y consistente,
+  la situación financiera de la entidad a una fecha determinada y revela la totalidad de sus bienes, derechos
+  y obligaciones, y la situación del patrimonio". Lo invitamos a participar en la siguiente encuesta https://forms.office.com/r/QNC1FantDU'
+publicado: '2021-10-25'
+datos_actualizados: '2026-07-06'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Economía y Finanzas
+filas: 19638408
+campos:
+  nit:
+    tipo_fuente: number
+    etiqueta: NIT
+    descripcion: Número de Identificación Tributaria (NIT) de la Sociedad.
+  numero_radicado:
+    tipo_fuente: text
+    etiqueta: NUMERO_RADICADO
+    descripcion: Numero de radicado en Postal
+    nulos: 0
+    minimo: 2016-01-148552
+    maximo: 2026-01-512015
+    comparacion: texto
+  punto_entrada:
+    tipo_fuente: text
+    etiqueta: PUNTO_ENTRADA
+    descripcion: Descripción del tipo de entrada al que pertenece la sociedad
+    nulos: 0
+    comparacion: texto
+    valores:
+      40 NIIF Pymes - Individual Grupo 2: 8109529
+      40 NIIF Pymes - Individuales: 6150243
+      10 NIIF Plenas - Individual Grupo 1: 1126712
+      10 NIIF Plenas - Individuales: 1008479
+      50 NIIF Pymes - Separado Grupo 2: 806519
+      50 NIIF Pymes - Separados: 659558
+      20 NIIF Plenas - Separado Grupo 1: 459237
+      20 NIIF Plenas - Separados: 383781
+      60 NIIF Pymes - Consolidado Grupo 2: 256275
+      60 NIIF Pymes - Consolidados: 231392
+      30 NIIF Plenas - Consolidado Grupo 1: 224644
+      30 NIIF Plenas - Consolidados: 192833
+      35 NIIF Plenas - Combinado Grupo 1: 18283
+      65 NIIF Pymes - Combinado Grupo 2: 10923
+  taxonomia:
+    tipo_fuente: text
+    etiqueta: TAXONOMIA
+    descripcion: Descripción de la taxonomía del informe financiero diligenciado
+    nulos: 0
+    comparacion: texto
+    valores:
+      01 - Estados Financieros de Fin de Ejercicio - Corte 202: 11181022
+      01- Estados Financieros de Fin de Ejercicio - Corte 2016: 2337530
+      01- Estados Financieros de Fin de Ejercicio - Corte 2020: 1622575
+      01- Estados Financieros de Fin de Ejercicio - Corte 2019: 1619600
+      01- Estados Financieros de Fin de Ejercicio - Corte 2017: 1360883
+      01- Estados Financieros de Fin de Ejercicio - Corte 2018: 1279139
+      01 - Estados Financieros de Fin de Ejercicio - Corte 201: 237659
+  fecha_corte:
+    tipo_fuente: calendar_date
+    etiqueta: FECHA_CORTE
+    descripcion: Fecha en que finaliza el periodo contable a reportar en SIRFIN
+    nulos: 0
+    minimo: '2015-03-31T00:00:00.000'
+    maximo: '2025-12-31T00:00:00.000'
+    comparacion: fecha
+    valores:
+      '2022-12-31T00:00:00.000': 3705578
+      '2016-12-31T00:00:00.000': 2331482
+      '2023-12-31T00:00:00.000': 1934887
+      '2021-12-31T00:00:00.000': 1811406
+      '2024-12-31T00:00:00.000': 1808950
+      '2020-12-31T00:00:00.000': 1790379
+      '2025-12-31T00:00:00.000': 1706461
+      '2019-12-31T00:00:00.000': 1628744
+      '2017-12-31T00:00:00.000': 1357793
+      '2018-12-31T00:00:00.000': 1276952
+      '2015-12-31T00:00:00.000': 221332
+      '2022-11-30T00:00:00.000': 8266
+      '2022-09-30T00:00:00.000': 7152
+      '2022-10-31T00:00:00.000': 6117
+      '2022-06-30T00:00:00.000': 5490
+      '2016-06-30T00:00:00.000': 4638
+      '2015-06-30T00:00:00.000': 3360
+      '2017-06-30T00:00:00.000': 2510
+      '2021-06-30T00:00:00.000': 2111
+      '2023-06-30T00:00:00.000': 2011
+  concepto:
+    tipo_fuente: text
+    etiqueta: CONCEPTO
+    descripcion: Rubro
+    nulos: 0
+    comparacion: texto
+  periodo:
+    tipo_fuente: text
+    etiqueta: PERIODO
+    descripcion: Periodo a diligenciar
+    nulos: 0
+    minimo: 2013-dic-31
+    comparacion: texto
+    valores:
+      Periodo Actual: 7880228
+      Periodo Anterior: 7846834
+      2016-dic-31: 1501443
+      2015-dic-31: 897467
+      2017-dic-31: 671853
+      2015-ene-01: 669799
+      2014-dic-31: 77080
+      2014-ene-01: 69033
+      2016-jun-30: 4574
+      2016-Dec-31: 4290
+      2015-Dec-31: 2620
+      2017-jun-30: 2463
+      2015-jun-30: 2264
+      2015-Jan-01: 2016
+      2017-Dec-31: 1689
+      2016-sep-30: 623
+      2013-dic-31: 421
+      2015-dic-01: 402
+      2016-ene-01: 365
+      2016-oct-31: 342
+  valor:
+    tipo_fuente: text
+    etiqueta: VALOR
+    descripcion: Valor diligenciado para el CAMPO y COLUMNA definido (Rubro y Periodo)
+    nulos: 0
+    minimo: '0'
+    maximo: '9999999'
+    comparacion: texto

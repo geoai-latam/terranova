@@ -24,7 +24,7 @@ url: https://geoportal.dane.gov.co/mparcgis/rest/services/MARCO_INTEGRADO/Serv_D
 modo: en_vivo
 # Cifras cerradas del censo 2018: no cambian hasta el próximo censo.
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P10Y}
-cobertura: {pais: CO}
+cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
 datos_personales: ninguno  # solo agregados municipales (reserva estadística)
 estado: borrador
 campos:

@@ -1,0 +1,88 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.modificaciones_procesos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/36vw-pbq2.json
+pagina: https://www.datos.gov.co/d/36vw-pbq2
+titulo: SECOP I - Modificaciones a Procesos
+descripcion: Todas las modificaciones a Procesos del SECOP I
+publicado: '2020-11-10'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secop i
+filas: 22052
+campos:
+  id_proceso:
+    tipo_fuente: text
+    etiqueta: ID Proceso
+    descripcion: Identificador del proceso al que corresponde la modificación
+    nulos: 0
+    minimo: 07-1-23299
+    maximo: 26-4-14789106
+    comparacion: texto
+  id_modificacion:
+    tipo_fuente: number
+    etiqueta: ID Modificacion
+    descripcion: Identificador Único de la modificación
+    nulos: 0
+    minimo: '120'
+    maximo: '4591687'
+    comparacion: numero
+  fecha_modificacion:
+    tipo_fuente: text
+    etiqueta: Fecha Modificacion
+    descripcion: Fecha de registro de la modificación
+    nulos: 0
+    comparacion: texto
+  campo_modificado:
+    tipo_fuente: text
+    etiqueta: Campo Modificado
+    descripcion: Campo al que se realiza la modificación
+    nulos: 0
+    comparacion: texto
+    valores:
+      Cambio Estado al proceso: 13606
+      Numero Proceso: 4839
+      Cuantia: 1257
+      Detalle Objeto: 547
+      ID CAUSAL CONTRATACION DIRECTA: 461
+      Id Clase UNSPSC: 313
+      Correo Contacto: 305
+      Id Tipo Contrato: 245
+      Departamento y Municipio de Ejecución: 160
+      Id Objeto Contrato: 78
+      Id Municipio Obtencion: 44
+      Id Municipio Entrega: 35
+      Calificación Definitiva Proponentes: 25
+      Fecha Apertura: 20
+      Direccion Obtencion Documentos: 20
+      Direccion Entrega Documentos: 16
+      Asociado al Acuerdo de Paz: 16
+      Proponentes Seleccionados: 14
+      DESCRIPCION DEL REGIMEN ESPECIAL: 14
+      Fecha Cierre: 11
+  valor_anterior:
+    tipo_fuente: text
+    etiqueta: Valor Anterior
+    descripcion: Para adiciones en valor, anterior valor del contrato
+    nulos: 205
+    minimo: '0'
+    comparacion: texto
+  valor_nuevo:
+    tipo_fuente: text
+    etiqueta: Valor Nuevo
+    descripcion: Para adiciones en valor, nuevo valor del contrato
+    nulos: 3
+    minimo: .
+    comparacion: texto
+  justificacion_cambio:
+    tipo_fuente: text
+    etiqueta: Justificacion Cambio
+    descripcion: Justificación del cambio de modificación del proceso
+    nulos: 0
+    minimo: '-'
+    comparacion: texto

@@ -18,7 +18,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/73dx-n59j.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: fecha_emitida}
 datos_personales: filtrados
 estado: publicada
 campos:

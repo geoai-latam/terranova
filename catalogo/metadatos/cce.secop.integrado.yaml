@@ -1,0 +1,52 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop.integrado
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/rpmr-utcd.json
+pagina: https://www.datos.gov.co/d/rpmr-utcd
+titulo: SECOP Integrado
+descripcion: Información integrada de los procesos de compra pública que se han registrado en las plataformas
+  SECOP I y II, que han finalizado con un contrato.
+publicado: '2024-11-24'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secop
+- compra pública
+- e-procurement
+filas: 20800218
+campos:
+  nit_de_la_entidad:
+    tipo_fuente: text
+    etiqueta: NIT de la Entidad
+    descripcion: Identificador de la Entidad que desarrolla el proceso de compra pública
+  fecha_de_firma_del_contrato:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de Firma del Contrato
+    descripcion: Fecha en que se firmó el contrato, sea de forma física o digital
+    nulos: 1680569
+    minimo: '2000-01-01T00:00:00.000'
+    maximo: '2099-12-30T00:00:00.000'
+    comparacion: fecha
+  valor_contrato:
+    tipo_fuente: number
+    etiqueta: Valor Contrato
+    descripcion: Valor del contrato firmado
+    nulos: 0
+    minimo: '0'
+    maximo: '999999999999999'
+    comparacion: numero
+  origen:
+    tipo_fuente: text
+    etiqueta: Origen
+    descripcion: Plaraforma Origen a donde pertenecen los datos
+    nulos: 0
+    minimo: SECOPI
+    maximo: SECOPII
+    comparacion: texto
+    valores:
+      SECOPI: 14389666
+      SECOPII: 6410552

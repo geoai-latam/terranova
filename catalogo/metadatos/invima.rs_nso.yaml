@@ -1,0 +1,132 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invima.rs_nso
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/ui32-p9f2.json
+pagina: https://www.datos.gov.co/d/ui32-p9f2
+titulo: INFORMACIÓN SOBRE RS Y NSO VIGENTES Y VENCIDAS
+descripcion: Contiene el listado de los Registros Sanitarios y Notificaciones Sanitarias Obligatorias
+  Vigentes y Vencidos
+publicado: '2021-04-30'
+datos_actualizados: '2026-10-16'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- registros sanitarios vigentes y vencidos
+filas: 1380856
+campos:
+  expediente:
+    tipo_fuente: number
+    etiqueta: Expediente
+    descripcion: Número del expediente asociado al registro sanitario
+    nulos: 0
+    minimo: '2'
+    maximo: '201153911'
+    comparacion: numero
+  producto:
+    tipo_fuente: text
+    etiqueta: Producto
+    descripcion: Nombre del producto
+    nulos: 23
+    comparacion: texto
+  nivelriesgo:
+    tipo_fuente: text
+    etiqueta: NivelRiesgo
+    descripcion: Indica el nivel de riesgo del producto
+    nulos: 1203047
+    minimo: I
+    maximo: 'null'
+    comparacion: texto
+    valores:
+      I: 64595
+      IIa: 41398
+      III: 30398
+      II: 25521
+      IIb: 15553
+      'null': 303
+      IIA: 41
+  rsynso:
+    tipo_fuente: text
+    etiqueta: RSyNSO
+    descripcion: Número del registro sanitario
+    nulos: 0
+    minimo: '000107'
+    maximo: V-3676
+    comparacion: texto
+  fechavencimiento:
+    tipo_fuente: calendar_date
+    etiqueta: FechaVencimiento
+    descripcion: Fecha de vencimiento del registro sanitario
+    nulos: 0
+    minimo: '1000-01-01T00:00:00.000'
+    maximo: '3200-01-01T00:00:00.000'
+    comparacion: fecha
+  estadoregistro:
+    tipo_fuente: text
+    etiqueta: EstadoRegistro
+    descripcion: Estado de la vigencia del registro sanitario
+    nulos: 0
+    minimo: Vencido
+    maximo: Vigente
+    comparacion: texto
+    valores:
+      Vigente: 747773
+      Vencido: 633083
+  titular:
+    tipo_fuente: text
+    etiqueta: Titular
+    descripcion: Nombre del titular del registro sanitario
+  modalidad:
+    tipo_fuente: text
+    etiqueta: Modalidad
+    descripcion: Forma como se realiza, importa o comercializa el producto
+    nulos: 0
+    minimo: ELABORAR
+    comparacion: texto
+    valores:
+      IMPORTAR Y VENDER: 867664
+      FABRICAR Y VENDER: 258936
+      NO APLICA: 201414
+      IMPORTAR, FABRICAR Y VENDER: 10597
+      ELABORAR Y VENDER: 7682
+      IMPORTAR, EMPACAR Y VENDER: 7026
+      IMPORTAR, ENVASAR Y VENDER: 6450
+      IMPORTAR, SEMIELABORAR Y VENDER: 5108
+      FABRICAR, ENVASAR Y VENDER: 4400
+      EMPACAR Y VENDER: 3057
+      ENVASAR Y VENDER: 2627
+      IMPORTAR, ACONDICIONAR Y VENDER: 1120
+      FABRICAR Y EXPORTAR: 1066
+      SIN CLASIFICAR: 1062
+      FABRICAR, EMPACAR Y VENDER: 948
+      IMPORTAR: 378
+      ELABORAR: 376
+      ELABORAR Y EXPORTAR: 343
+      PRODUCIR, ENVASAR Y VENDER: 218
+      HIDRATAR Y VENDER: 139
+  grupo:
+    tipo_fuente: text
+    etiqueta: Grupo
+    descripcion: Nombre grupo al que pertenece el producto
+    nulos: 0
+    minimo: ALIMENTOS
+    comparacion: texto
+    valores:
+      COSMETICOS: 572462
+      MEDICO QUIRURGICOS: 254531
+      ALIMENTOS: 198468
+      REACTIVO DIAGNOSTICO: 88676
+      REACTIVOS  IN VITRO: 76440
+      MEDICAMENTOS: 73523
+      ASEO Y LIMPIEZA: 51219
+      BEBIDAS ALCOHOLICAS: 39218
+      SUPLEMENTO DIETARIO: 11710
+      BIOLOGICOS: 5047
+      FITOTERAPEUTICO: 3252
+      ODONTOLOGICOS: 2877
+      HOMEOPATICOS: 2796
+      PLAGUICIDAS: 615
+      OPERACIONES: 17
+      MED. OFICINALES: 5

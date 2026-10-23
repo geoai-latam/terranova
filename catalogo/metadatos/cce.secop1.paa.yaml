@@ -1,0 +1,67 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.paa
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/prdx-nxyp.json
+pagina: https://www.datos.gov.co/d/prdx-nxyp
+titulo: SECOP I - PAA Encabezado
+descripcion: Información registrada en los ultimos 3 años dentro del PAA que se carga en el SECOP I
+publicado: '2023-10-26'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- paa
+- plan anual de adquisiciones
+- secop
+- secop i
+filas: 3700272
+campos:
+  identificador_paa:
+    tipo_fuente: text
+    etiqueta: Identificador PAA
+    descripcion: Identificador único del Plan Anual de Adquisiciones
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: NIT Entidad
+    descripcion: NIT de la Entidad que publica el Plan Anual de Adquisiciones
+  anno_paa:
+    tipo_fuente: text
+    etiqueta: Anno PAA
+    descripcion: Año al que corresponde la definición y procesos enunciados en el Plan Anual de Adquisiciones
+    nulos: 0
+    minimo: '2020'
+    maximo: '2060'
+    comparacion: texto
+    valores:
+      '2021': 1515695
+      '2022': 1445926
+      '2023': 515856
+      '2024': 167016
+      '2020': 73337
+      '2060': 220
+  ppto_total:
+    tipo_fuente: text
+    etiqueta: Ppto total
+    descripcion: Presupuesto total definido para la vigencia del año registrado en el campo Anno PAA
+    nulos: 2662
+    minimo: '0'
+    comparacion: texto
+  limite_menor_cuantia:
+    tipo_fuente: text
+    etiqueta: Limite Menor Cuantia
+    descripcion: Valor total que se puede dedicar a las adquisiciones de menor cuantía, definido para
+      la vigencia del año registrado en el campo Anno PAA
+    nulos: 5401
+    minimo: '0'
+    comparacion: texto
+  limite_minima_cuantia:
+    tipo_fuente: text
+    etiqueta: Limite Minima Cuantia
+    descripcion: Valor total que se puede dedicar a las adquisiciones de mínima cuantía, definido para
+      la vigencia del año registrado en el campo Anno PAA
+    nulos: 3243
+    minimo: '0'
+    comparacion: texto

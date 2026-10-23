@@ -53,6 +53,7 @@ perfil:
   - CODIGO es el municipio, no la zona
   - VIGENCIA vacía en 13 % de las rurales (todas las de Chía); va de 1990 a 2026, con años imposibles
     (1899, 4670)
+  - '1899-12-30 es la «fecha cero» de Excel y Access: una vigencia vacía disfrazada de fecha'
   - el valor es catastral, no de mercado
   - el punto de prueba toca un solo elemento
   decision: en vivo por punto; la descripción advierte que un valor de vigencia vieja no es el de hoy

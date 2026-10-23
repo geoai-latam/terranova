@@ -1,0 +1,10 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: banrep.dtf
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_DTF_DAILY_HIST,1.0/all
+titulo: DTF (DF_DTF_DAILY_HIST)
+descripcion: Tasa semanal publicada con una fila por día de su semana de vigencia, que termina después
+  de hoy.
+frecuencia_declarada: Semanal
+idioma: Español

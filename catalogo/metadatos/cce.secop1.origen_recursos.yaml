@@ -1,0 +1,146 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.origen_recursos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/3xwx-53wt.json
+pagina: https://www.datos.gov.co/d/3xwx-53wt
+titulo: SECOP I - Origen de los Recursos
+descripcion: Información del orígen de los recursos y código BPIN para cada adjudicación registrada en
+  el SECOP I, desde la fecha en que este registro es viable
+publicado: '2021-07-30'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- bpin
+- secop
+filas: 49635428
+campos:
+  orig_rec_nombre:
+    tipo_fuente: text
+    etiqueta: ORIG_REC_NOMBRE
+    descripcion: Nombre de la adjudicación al origen de recurso
+  id_adjudicacion:
+    tipo_fuente: text
+    etiqueta: ID Adjudicacion
+    descripcion: Identificador de la adjudicación al origen de recursos
+    nulos: 0
+    minimo: '1'
+    maximo: '9'
+    comparacion: texto
+    valores:
+      '5': 4181564
+      '8': 4163558
+      '7': 4133089
+      '1': 4131781
+      '11': 4131320
+      '6': 4131112
+      '10': 4127439
+      '9': 4127437
+      '4': 4127392
+      '12': 4127361
+      '3': 4127315
+      '2': 4127315
+  codigo_bpin:
+    tipo_fuente: text
+    etiqueta: Codigo BPIN
+    descripcion: Registro del código BPIN asignado para el proyecto de inversión
+    nulos: 0
+    minimo: '0'
+    comparacion: texto
+    valores:
+      No Definido: 47391013
+      '0': 1959043
+      '2017011000391': 4765
+      '2018011000764': 2299
+      '2020003760448': 1333
+      '522040': 1098
+      '2019410160024': 891
+      '2020003760094': 753
+      '2020170130016': 751
+      '2020004250328': 740
+      '2020761130024': 726
+      '3603130014': 713
+      '2018011000556': 670
+      '2016000030026': 631
+      '2020761130011': 615
+      '2021522270003': 588
+      '2019130010003': 549
+      '1': 535
+      '2020003760217': 501
+      '2018915400009': 476
+  anno_bpin:
+    tipo_fuente: text
+    etiqueta: Anno BPIN
+    descripcion: Año al que corresponde el código PBIN
+    nulos: 0
+    minimo: '0'
+    maximo: N/D
+    comparacion: texto
+    valores:
+      N/D: 49323820
+      '0': 131201
+      '2020': 98222
+      '2021': 63604
+      '2019': 10772
+      '2018': 4383
+      '2017': 2260
+      '2022': 1331
+      '2023': 399
+      '2024': 183
+      '2016': 182
+      '2013': 102
+      '2015': 84
+      '2014': 74
+      '2012': 66
+  descripcion_otros_recursos:
+    tipo_fuente: text
+    etiqueta: Descripcion Otros Recursos
+    descripcion: Describe el origen cuando este no esta catalogado y ha sido registrado como "otros"
+    nulos: 2027
+    minimo: '0'
+    comparacion: texto
+    valores:
+      No Definido: 49096021
+      PROPIOS: 51322
+      RECURSOS PROPIOS: 47754
+      '0': 32785
+      SGP: 16739
+      REGIMEN ESPECIAL: 13034
+      CONTRATOS Y CONVENIOS: 9371
+      RECURSO PUBLICO POR FUNCION DELEGADA POR EL ESTADO: 8241
+      SALUD: 7661
+      Recursos propios: 7553
+      Recursos Propios: 5994
+      RECURSOS PROPIOS ENTIDAD DE SALUD: 4100
+      UPC: 3860
+      ENTIDADES DESCENTRALIZADAS: 3789
+      VENTA DE SERVICIOS DE SALUD: 3754
+      ICLD: 3660
+      PUBLICO: 3487
+      TASA: 3370
+      NA: 3187
+      OTROS: 3121
+  valor:
+    tipo_fuente: number
+    etiqueta: Valor
+    descripcion: Valor Asignado al origen de recursos
+    nulos: 0
+    minimo: '1'
+    maximo: '9'
+    comparacion: numero
+    valores:
+      '5': 4181564
+      '8': 4163558
+      '7': 4133089
+      '1': 4131781
+      '11': 4131320
+      '6': 4131112
+      '10': 4127439
+      '9': 4127437
+      '4': 4127392
+      '12': 4127361
+      '3': 4127315
+      '2': 4127315

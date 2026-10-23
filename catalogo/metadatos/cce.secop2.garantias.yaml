@@ -1,0 +1,104 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.garantias
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/gjp9-cutm.json
+pagina: https://www.datos.gov.co/d/gjp9-cutm
+titulo: SECOP II - Garantias
+descripcion: Información de las garantías publicadas en la plataforma SECOP II
+publicado: '2025-09-25'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- garantía
+- póliza
+- secop ii
+filas: 7127231
+campos:
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: Identificador del contrato, con el que se realiza la garantía
+    nulos: 2
+    minimo: CO1.PCCNTR.10000002
+    maximo: CO1.PCCNTR.9999991
+    comparacion: texto
+  aseguradora:
+    tipo_fuente: text
+    etiqueta: Aseguradora
+    descripcion: Nombre de la Aseguradora, con la que se tramita la garantia
+    nulos: 23
+    minimo: '0'
+    comparacion: texto
+  numeropoliza:
+    tipo_fuente: text
+    etiqueta: NumeroPoliza
+    descripcion: Numero de póliza, con la que se tramita la garantía
+    nulos: 31
+    minimo: '0'
+    comparacion: texto
+  fechadecreacionpoliza:
+    tipo_fuente: text
+    etiqueta: FechaDeCreacionPoliza
+    descripcion: Fecha, en la que se crea la póliza
+    nulos: 0
+    comparacion: texto
+  fechafinpoliza:
+    tipo_fuente: text
+    etiqueta: FechaFinPoliza
+    descripcion: Fecha, en la que finaliza la póliza
+    nulos: 0
+    comparacion: texto
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Estado en la que se encuentra la póliza
+    nulos: 0
+    minimo: Aceptada
+    maximo: Rechazada
+    comparacion: texto
+    valores:
+      Expirada: 3808491
+      Aceptada: 2101406
+      Pendiente: 538268
+      Rechazada: 439030
+      Archivada: 100550
+      Borrador: 53949
+      Borrador Listo: 53060
+      Pendiente Modificacion: 11622
+      Cancelación Pendiente: 10009
+      Cancelada: 4344
+      Cancelacion Rechazada: 3886
+      Modificacion rechazada: 2349
+      Modificada: 267
+  tipopoliza:
+    tipo_fuente: text
+    etiqueta: TipoPoliza
+    descripcion: Objeto con la que se ejecuta la póliza, ejemplo contrato de seguro
+    nulos: 0
+    minimo: Banco
+    comparacion: texto
+    valores:
+      Contrato de Seguro: 7124108
+      Banco: 3036
+      Fondo Independiente: 87
+  subtipopoliza:
+    tipo_fuente: text
+    etiqueta: SubTipoPoliza
+    nulos: 0
+    comparacion: texto
+    valores:
+      No Definido: 6880171
+      Garantia Bancaria: 215998
+      Carta de Credito: 31062
+  valor:
+    tipo_fuente: number
+    etiqueta: Valor
+    descripcion: Valor, de la póliza
+    nulos: 0
+    minimo: '0'
+    maximo: '851895148951951895'
+    comparacion: numero

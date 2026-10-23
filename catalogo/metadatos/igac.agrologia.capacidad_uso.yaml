@@ -1,0 +1,43 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.agrologia.capacidad_uso
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=041150b40bdf412ab5e84c6ebf28db28
+titulo: capacidaddeusodelastierrasterritorionacional
+descripcion: La Clasificación por Capacidad de Uso está basada en la interpretación de las Unidades Cartográficas
+  que integran el mapa de suelos del país (escala 1:100.000). La interpretación busca establecer las restricciones
+  y potencialidades biofísicas de las tierras. Los criterios para evaluarlas y sus rangos de variación
+  se adaptaron al país, a partir de la clasificación originada en los Estados Unidos, a través de la experiencia
+  proporcionada durante más de cinco décadas de aplicación. La clasificación propende por la utilización
+  correcta de las tierras del país y, al estar espacializada, constituye un criterio imprescindible en
+  los planes de ordenamiento territorial, en la toma de decisiones con el fin de reducir su uso irracional
+  y en la planificación de sus recursos naturales. Este producto es generado por la Subdirección de Agrología
+  del Instituto Geográfico Agustín Codazzi - IGAC, para el territorio nacional, el cual fue publicado
+  en la obra Suelos y Tierras de Colombia 2016 a escala 1:100.000.
+publicado: '2024-12-21'
+etiquetas:
+- Capacidad
+- Uso
+- Limitación de Uso
+- Practicas de Manejo
+- Igac
+- Agrologia
+filas: 64771
+geografia:
+  geometria: poligono
+  crs: EPSG:9377
+  extension:
+  - -81.7629646700982
+  - -4.2389597472145
+  - -66.6473278590603
+  - 13.5006901901397
+  capas:
+    '0': Correlación_Capacidad_Uso_100k
+campos:
+  UCCapacida:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: UCCapacida
+  Descripcio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Descripcio

@@ -1,0 +1,60 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.catastro.zona_geoeconomica
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=11a9e1d7e4184a0b83cee631d5ce2d04
+titulo: Zonas Homogéneas Gestor IGAC Vigencias 2026
+descripcion: 'Contiene de las Zonas Homogéneas Físicas (ZHF) y Zonas Homogéneas Geoeconómicas de los municipios
+  que hacen parte de la jurisdicción del IGAC, los cuales cuentan con información que cumple con a la
+  política de datos abiertos del Ministerio de Tecnologías de la Información y las Comunicaciones de Colombia,
+  teniendo en cuenta las excepciones de ley. Cada componente se agrupa en una base de datos, que contiene
+  DATASETS: ZONA_HOMOGENEAS_RURALES: R_ZONAS_HOMOGENEAS_FISICAS, R_ZONAS_HOMOGENEAS_GEOECONOMICAS. ZONA_HOMOGENEA_
+  URBANO: U_ZONAS_HOMOGENEAS_FISICAS, U_ZONAS_HOMOGENEAS_GEOECONOMICAS. Las Zonas Homogéneas Físicas se
+  define como el espacio geográfico con características similares en cuanto a vías, topografía, servicios
+  públicos, uso actual del suelo, norma de uso del suelo, tipificación de las construcciones y/o edificaciones,
+  áreas homogéneas de tierra, disponibilidad de aguas superficiales permanentes u otras variables que
+  permitan diferenciar esta área de las adyacentes. (Res. 1040 de 2023). Las Zonas Homogéneas Geoeconómicas
+  se defines como el espacio geográfico determinado a partir de Zonas Homogéneas Físicas con valores unitarios
+  similares en cuanto a su precio, según las c…'
+publicado: '2026-06-09'
+datos_actualizados: '2026-06-09'
+etiquetas:
+- catastro
+filas: 133165
+geografia:
+  geometria: poligono
+  crs: EPSG:3857
+  extension:
+  - -81.883931
+  - -4.13592
+  - -67.342895
+  - 13.534411
+  capas:
+    '11': R_ZONA_HOMOGENEA_GEOECONOMICA
+    '13': U_ZONA_HOMOGENEA_GEOECONOMICA
+campos:
+  CODIGO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo
+  CODIGO_ZONA_GEOECONOMICA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo_Zona_Geoeconomica
+  VALOR_HECTAREA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Valor_Hectarea
+  SUBZONA_FISICA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Subzona_Fisica
+  VIGENCIA:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Vigencia
+    minimo: '1899-12-30'
+    maximo: '2026-01-26'
+    comparacion: fecha
+  VALOR_METRO:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Valor_Metro
+    minimo: '0'
+    maximo: '70000000'
+    comparacion: numero

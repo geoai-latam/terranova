@@ -19,7 +19,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/6cat-2gcs.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: a_o_de_corte}
 datos_personales: ninguno
 estado: publicada
 campos:

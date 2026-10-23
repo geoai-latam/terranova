@@ -44,6 +44,7 @@ perfil:
     ordenar: 52.7
     agrupar: null
   hallazgos:
+  - 'ppto_total es texto libre: una entidad escribió ahí el nombre, el teléfono y el correo de su alcaldesa (medido al cosechar, spec 08)'
   - cada plan se repite una vez por versión publicada
   - ordenar tardó 53 s y agrupar no respondió en 300 s sobre un prefijo de NIT
   decision: en vivo por NIT exacto, mostrando cada versión con su fecha; sin agregados

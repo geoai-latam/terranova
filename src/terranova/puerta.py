@@ -31,6 +31,7 @@ from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_si
 from terranova.curado import Restricciones, restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
+from terranova.ficha_tecnica import ficha_tecnica
 from terranova.identidad import Principal, Registro, registro_desde_entorno
 from terranova.medicion import Evento, Outbox, OutboxSql, registrar_sin_fallar
 from terranova.medicion import ahora as ahora_iso
@@ -110,7 +111,12 @@ class HerramientaDelCatalogo(Tool):
             ),
             tags={h.familia},
             meta={
-                "terranova": {"familia": h.familia, "version": h.version, "creditos": h.creditos}
+                "terranova": {
+                    "familia": h.familia,
+                    "version": h.version,
+                    "creditos": h.creditos,
+                    "fuente": h.fuente,
+                }
             },
         )
         herramienta._ficha = h.id
@@ -365,8 +371,23 @@ async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
 
 INSTRUCCIONES = (
     "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
-    "(contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la licencia."
+    "(contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la licencia. "
+    "Antes de responder sobre años, cobertura, unidades o códigos, `fuente_describir` "
+    "da la ficha técnica de la fuente de una herramienta."
 )
+
+
+def fuente_describir(fuente: str) -> dict[str, Any]:
+    """Ficha técnica de una fuente (spec 08): qué años cubre, si es geográfica (geometría, CRS,
+    extensión, capas), qué significa cada campo (tipo, mínimo, máximo, códigos), qué es una fila,
+    cuándo se actualizó y qué alertas tiene (datos atrasados, filas repetidas, licencia). Acepta el
+    id de una fuente (`icfes.saber11`) o de una de sus herramientas (`icfes_saber11_municipio`).
+    Sale del catálogo: no consulta la fuente ni gasta créditos."""
+    h = CATALOGO.herramientas.get(fuente)
+    fuente_id = h.fuente if h is not None else fuente
+    if fuente_id not in CATALOGO.fuentes:
+        raise ToolError(f"no_existe: no hay fuente ni herramienta «{fuente}»")
+    return ficha_tecnica(CATALOGO, fuente_id)
 
 
 def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> FastMCP:
@@ -378,6 +399,13 @@ def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> Fas
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
     if familia in (None, ficha_lugar.FAMILIA):
         servidor.add_tool(HerramientaDelCatalogo.ficha_de_lugar())
+    servidor.tool(
+        fuente_describir,
+        annotations=ToolAnnotations(
+            read_only_hint=True, idempotent_hint=True, open_world_hint=False
+        ),
+        tags={"catalogo"},
+    )
     return servidor
 
 

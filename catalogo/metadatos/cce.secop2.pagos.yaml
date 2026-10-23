@@ -1,0 +1,124 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.pagos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/uymx-8p3j.json
+pagina: https://www.datos.gov.co/d/uymx-8p3j
+titulo: SECOP II - Plan de pagos
+descripcion: Plan de pagos de los contratos publicados a través del SECOPII. Contiene la información de
+  los pagos, entidad compradora y proveedor
+publicado: '2025-11-27'
+datos_actualizados: '2026-10-21'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secop ii
+- compra pública
+- colombia compra eficiente
+- pagos
+- contratación
+filas: 20804051
+campos:
+  id_del_contrato:
+    tipo_fuente: text
+    etiqueta: Id del Contrato
+    descripcion: ID del contrato en SECOPII
+    nulos: 0
+    minimo: CO1.PCCNTR.1000001
+    maximo: CO1.PCCNTR.999901
+    comparacion: texto
+  id_de_pago:
+    tipo_fuente: number
+    etiqueta: ID de pago
+    descripcion: ID del pago dentro del contrato
+    nulos: 0
+    minimo: '-12'
+    maximo: '6226'
+    comparacion: numero
+    valores:
+      '1': 3543550
+      '2': 3178455
+      '3': 2847791
+      '4': 2424376
+      '5': 1872743
+      '6': 1455124
+      '7': 1131619
+      '8': 954997
+      '9': 818125
+      '10': 694316
+      '11': 550130
+      '12': 294344
+      '13': 110062
+      '14': 63140
+      '15': 45431
+      '16': 35121
+      '17': 27540
+      '18': 22910
+      '19': 18076
+      '20': 15559
+  numero_de_factura:
+    tipo_fuente: text
+    etiqueta: Numero de factura
+    descripcion: Número de factura o ID del pago
+    nulos: 10
+    comparacion: texto
+  fecha_de_emision:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de emision
+    descripcion: Fecha de emisión de la factura o pago
+    nulos: 610110
+    minimo: '0018-02-26T00:00:00.000'
+    maximo: '5025-12-12T00:00:00.000'
+    comparacion: fecha
+  valor_total_de_la_factura:
+    tipo_fuente: number
+    etiqueta: Valor total de la factura
+    descripcion: Valor total del pago
+    nulos: 0
+    minimo: '0'
+    maximo: '550030270140'
+    comparacion: numero
+  valor_a_pagar:
+    tipo_fuente: number
+    etiqueta: Valor a pagar
+    descripcion: Valor a pagar
+    nulos: 0
+    minimo: '0'
+    maximo: '550030270140'
+    comparacion: numero
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Estado del pago
+    nulos: 0
+    minimo: Aprobado
+    maximo: Rechazado
+    comparacion: texto
+    valores:
+      Pagado: 15744140
+      Aprobado: 2283543
+      Enviado Por Proveedor: 1826563
+      Pendiente Registro: 596471
+      Rechazado: 269755
+      Bajo Aprobación: 88120
+      Pendiente Autorización: 13670
+      Archivado: 7
+      Enviado al comprador: 2
+  fecha_real_de_pago:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha real de pago
+    descripcion: Fecha real en la que se ejecutó el pago
+    nulos: 5080509
+    minimo: '0018-12-10T00:00:00.000'
+    maximo: '2026-12-17T00:00:00.000'
+    comparacion: fecha
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: NIT Entidad
+    descripcion: NIT Entidad compradora en SECOPII
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Nombre Entidad compradora en SECOPII

@@ -1,0 +1,57 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.facturas
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/ibyt-yi2f.json
+pagina: https://www.datos.gov.co/d/ibyt-yi2f
+titulo: SECOP II - Facturas
+descripcion: Facturas pagas en la plataforma SECOP II
+publicado: '2024-10-07'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- facturas
+- secop
+campos:
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: Referencia al contrato al que corresponde el pago
+  id_pago:
+    tipo_fuente: number
+    etiqueta: ID Pago
+    descripcion: Identificador de la secuencia de pagos
+  numero_de_factura:
+    tipo_fuente: text
+    etiqueta: Numero de Factura
+    descripcion: Número de la factura emitida por el proveedor
+  fecha_factura:
+    tipo_fuente: text
+    etiqueta: Fecha Factura
+    descripcion: Fecha de emisión de la factura
+  valor_neto:
+    tipo_fuente: number
+    etiqueta: Valor Neto
+    descripcion: Valor Neto de la factura
+  valor_total:
+    tipo_fuente: number
+    etiqueta: Valor Total
+    descripcion: Valor total de la factura
+  fecha_estiamda_de_pago:
+    tipo_fuente: text
+    etiqueta: Fecha estiamda de pago
+    descripcion: Fehca estimada por la entidad para el pago de la factura
+  valor_a_pagar:
+    tipo_fuente: number
+    etiqueta: Valor a Pagar
+    descripcion: Valor a pagar por parte de la entidad
+  estado:
+    tipo_fuente: text
+    etiqueta: Estado
+    descripcion: Estado de la factura
+  pago_confirmado:
+    tipo_fuente: checkbox
+    etiqueta: Pago confirmado

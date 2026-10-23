@@ -1,0 +1,10 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: ancp.conceptos
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/conceptos
+pagina: https://relatoria.colombiacompra.gov.co/
+titulo: 'Relatoría de Colombia Compra Eficiente: conceptos'
+descripcion: API REST de WordPress; el total sale en la cabecera X-WP-Total.
+idioma: Español
+filas: 7697

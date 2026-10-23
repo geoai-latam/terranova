@@ -1,0 +1,44 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.ubicaciones
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/gra4-pcp2.json
+pagina: https://www.datos.gov.co/d/gra4-pcp2
+titulo: SECOP II - Ubicaciones ejecucion contratos
+descripcion: Información de las ubicaciones en donde se ejecutaron los contratos
+publicado: '2025-03-02'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Municipal
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- procesos de contratación
+- compra pública
+- contratos
+- secop
+filas: 6072536
+campos:
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Nombre de la Entidad que publica el contrato
+  nit_entidad:
+    tipo_fuente: number
+    etiqueta: Nit Entidad
+    descripcion: NIT de la entidad
+  localizaci_n:
+    tipo_fuente: text
+    etiqueta: Localización
+    descripcion: Ubicación fisica de la entidad
+    nulos: 0
+    minimo: Colombia
+    comparacion: texto
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: ID del contrato en la plataforma SECOP II
+    nulos: 0
+    minimo: CO1.PCCNTR.1000001
+    maximo: CO1.PCCNTR.999904
+    comparacion: texto

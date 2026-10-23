@@ -1,0 +1,113 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.procesos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/f789-7hwg.json
+pagina: https://www.datos.gov.co/d/f789-7hwg
+titulo: SECOP I - Procesos de Compra Pública
+descripcion: Procesos de Compra pública registrados en el SECOP I desde el 01 de enero de 2018, contiene
+  la información del proceso, fase de selección y la adjudicación
+publicado: '2025-12-01'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- secop i
+- compra pública
+- colombia compra eficiente
+- licitaciones
+- licitacion
+- contratacion
+campos:
+  uid:
+    tipo_fuente: text
+    etiqueta: UID
+    descripcion: Identificador único de la relación entre proceso y adjudicación, campo constituido por
+      el número de constancia y el de adjudicación, separados por un guión
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Nombre de la Entidad del Estado que publicó el proceso de compra, Entidad compradora
+      el proceso
+  nit_de_la_entidad:
+    tipo_fuente: text
+    etiqueta: NIT de la Entidad
+    descripcion: Identificador tributario de la entidad del Estado que publicó el proceso de compra, Entidad
+      compradora
+  modalidad_de_contratacion:
+    tipo_fuente: text
+    etiqueta: Modalidad de Contratacion
+    descripcion: 'Modalidad de selección que se determinó para el proceso de compra actual, Ej: Licitación
+      Pública, Contratación Directa.'
+  estado_del_proceso:
+    tipo_fuente: text
+    etiqueta: Estado del Proceso
+    descripcion: El Estado del proceso a la fecha de publicación
+  detalle_del_objeto_a_contratar:
+    tipo_fuente: text
+    etiqueta: Detalle del Objeto a Contratar
+    descripcion: Adicional al código que define el objeto del contrato, se registra un detalle de la definición
+      del bien o servicio que se adquirirá dentro del proceso
+  tipo_de_contrato:
+    tipo_fuente: text
+    etiqueta: Tipo De Contrato
+    descripcion: 'Tipo de Contrato que se realizará, ejemplos: Fiducia, Obra, entre otros.'
+  numero_de_constancia:
+    tipo_fuente: text
+    etiqueta: Numero de Constancia
+    descripcion: Identificador del proceso de compra, generado por SECOP I
+  numero_de_proceso:
+    tipo_fuente: text
+    etiqueta: Numero de Proceso
+    descripcion: Identificador del proceso, de acuerdo con la nomenclatura de la entidad
+  numero_de_contrato:
+    tipo_fuente: text
+    etiqueta: Numero de Contrato
+    descripcion: Identificador del contrato, de acuerdo con la nomenclatura de la entidad
+  cuantia_proceso:
+    tipo_fuente: number
+    etiqueta: Cuantia Proceso
+    descripcion: Valor por el cual se lanza el proceso de compra
+  id_adjudicacion:
+    tipo_fuente: text
+    etiqueta: ID Adjudicacion
+    descripcion: Identificador de la adjudicación hechas en el proceso de compra
+  tipo_identifi_del_contratista:
+    tipo_fuente: text
+    etiqueta: Tipo Identifi del Contratista
+    descripcion: Tipo de Identificación del contratista seleccionado en la adjudicación
+  identificacion_del_contratista:
+    tipo_fuente: text
+    etiqueta: Identificacion del Contratista
+    descripcion: Identificación del contratista seleccionado en la adjudicación
+  nom_razon_social_contratista:
+    tipo_fuente: text
+    etiqueta: Nom Razon Social Contratista
+    descripcion: Nombre o Razón Social del contratista seleccionado en la adjudicación
+  fecha_de_firma_del_contrato:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de Firma del Contrato
+    descripcion: Fecha en que se hace la firma del contrato correspondiente a la adjudicación del registro,
+      entregada en formato DDMMYYYY
+  cuantia_contrato:
+    tipo_fuente: number
+    etiqueta: Cuantia Contrato
+    descripcion: Valor por el cual se firma el contrato
+  valor_contrato_con_adiciones:
+    tipo_fuente: number
+    etiqueta: Valor Contrato con Adiciones
+    descripcion: Valor total del contrato, incluyendo las adiciones
+  ruta_proceso_en_secop_i:
+    tipo_fuente: url
+    etiqueta: Ruta Proceso en SECOP I
+    descripcion: Ruta del proceso de compra en SECOP, para hacer consulta de la información detallada
+  municipio_entidad:
+    tipo_fuente: text
+    etiqueta: Municipio Entidad
+    descripcion: Municipio en el que se encuentra registrada la entidad estatal compradora
+  departamento_entidad:
+    tipo_fuente: text
+    etiqueta: Departamento Entidad
+    descripcion: Departamento en el que se encuentra registrada la entidad estatal compradora

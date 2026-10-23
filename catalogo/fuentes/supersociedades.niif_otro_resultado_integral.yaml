@@ -17,7 +17,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/y3gh-x5g7.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: fecha_corte}
 datos_personales: ninguno
 estado: publicada
 campos:

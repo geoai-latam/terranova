@@ -1,0 +1,172 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supersociedades.empresas_grandes
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/6cat-2gcs.json
+pagina: https://www.datos.gov.co/d/6cat-2gcs
+titulo: 10.000 Empresas mas Grandes del País
+descripcion: Reporte de las diez mil empresas más grandes del país, todas las cifras en este reporte se
+  muestran en Billones de Pesos. Lo invitamos a participar en la siguiente encuesta https://forms.office.com/r/QNC1FantDU
+publicado: '2023-09-07'
+datos_actualizados: '2026-09-16'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Comercio, Industria y Turismo
+etiquetas:
+- empresas
+- registro de empresas
+- empresas mas grandes
+filas: 50000
+campos:
+  nit:
+    tipo_fuente: number
+    etiqueta: NIT
+    descripcion: Número de Identificación Tributaria (NIT) de la Sociedad.
+  raz_n_social:
+    tipo_fuente: text
+    etiqueta: RAZÓN SOCIAL
+    descripcion: Nombre de la sociedad
+    nulos: 0
+    minimo: '19'
+    comparacion: texto
+  supervisor:
+    tipo_fuente: text
+    etiqueta: SUPERVISOR
+    descripcion: Empresa que ejerce supervisión
+    nulos: 0
+    minimo: SUPERFINANCIERA
+    maximo: SUPERVIGILANCIA
+    comparacion: texto
+    valores:
+      SUPERSOCIEDADES: 43750
+      SUPERSALUD: 2885
+      SUPERTRANSPORTE: 1450
+      SUPERVIGILANCIA: 983
+      SUPERSERVICIOS: 664
+      SUPERFINANCIERA: 268
+  departamento_domicilio:
+    tipo_fuente: text
+    etiqueta: DEPARTAMENTO DOMICILIO
+    descripcion: Departamento de domicilio de la sociedad
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+    valores:
+      BOGOTA D.C.: 19751
+      ANTIOQUIA: 9403
+      CUNDINAMARCA: 3707
+      VALLE: 3454
+      ATLANTICO: 2638
+      SANTANDER: 1815
+      BOLIVAR: 1171
+      VALLE DEL CAUCA: 951
+      RISARALDA: 856
+      NORTE DE SANTANDER: 796
+      CALDAS: 618
+      MAGDALENA: 546
+      META: 501
+      TOLIMA: 423
+      HUILA: 403
+      CAUCA: 385
+      BOYACA: 335
+      CORDOBA: 333
+      QUINDIO: 315
+      NARIÑO: 295
+  ciudad_domicilio:
+    tipo_fuente: text
+    etiqueta: CIUDAD DOMICILIO
+    descripcion: Ciudad de domicilio de la sociedad
+    nulos: 0
+    minimo: ABREGO
+    maximo: ZIPAQUIRÁ
+    comparacion: texto
+  ciiu:
+    tipo_fuente: number
+    etiqueta: CIIU
+    descripcion: Clasificación Industrial Internacional Uniforme
+    nulos: 0
+    minimo: '111'
+    maximo: '9900.00'
+    comparacion: numero
+  macrosector:
+    tipo_fuente: text
+    etiqueta: MACROSECTOR
+    descripcion: Sector al que pertenece la sociedad
+    nulos: 0
+    minimo: AGROPECUARIO
+    maximo: SERVICIOS
+    comparacion: texto
+    valores:
+      COMERCIO: 17335
+      SERVICIOS: 15689
+      MANUFACTURA: 10033
+      CONSTRUCCIÓN: 3854
+      AGROPECUARIO: 2142
+      MINERO: 947
+  ingresos_operacionales:
+    tipo_fuente: text
+    etiqueta: INGRESOS OPERACIONALES
+    descripcion: Ingresos operacionales registrados por la sociedad
+    nulos: 0
+    comparacion: texto
+  ganancia_p_rdida:
+    tipo_fuente: text
+    etiqueta: GANANCIA (PÉRDIDA)
+    descripcion: Ganancias registradas por la sociedad
+    nulos: 0
+    comparacion: texto
+    valores:
+      $0.00: 25135
+      $ 0.00: 6967
+      $0.01: 5810
+      -$0.00: 3065
+      $0.02: 1564
+      $ 0.01: 1454
+      -$0.01: 918
+      $0.03: 712
+      $ 0.02: 413
+      $0.04: 400
+      -$0.02: 280
+      $0.05: 275
+      -$ 0.01: 224
+      $ 0.03: 210
+      $0.06: 201
+      -$0.03: 151
+      $0.07: 142
+      $ 0.04: 113
+      $0.08: 112
+      $0.09: 83
+  total_activos:
+    tipo_fuente: text
+    etiqueta: TOTAL ACTIVOS
+    descripcion: Total activos registrados por la sociedad
+    nulos: 0
+    comparacion: texto
+  total_pasivos:
+    tipo_fuente: text
+    etiqueta: TOTAL PASIVOS
+    descripcion: Total Pasivos registrados por la sociedad
+    nulos: 0
+    comparacion: texto
+  total_patrimonio:
+    tipo_fuente: text
+    etiqueta: TOTAL PATRIMONIO
+    descripcion: Total Patrimonio registrado por la sociedad
+    nulos: 0
+    comparacion: texto
+  a_o_de_corte:
+    tipo_fuente: number
+    etiqueta: Año de Corte
+    descripcion: Fecha en que finaliza el periodo contable a reportar en SIRFIN
+    nulos: 0
+    minimo: '2021.00'
+    maximo: '2025.00'
+    comparacion: numero
+    valores:
+      '2023.00': 10000
+      '2024.00': 10000
+      '2021.00': 10000
+      '2022.00': 10000
+      '2025.00': 10000

@@ -113,6 +113,10 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_zona_fisica_en_punto` | ¿Qué características físicas tiene la zona homogénea del IGAC en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 
+## Ficha técnica de una fuente
+
+`fuente_describir` (MCP en `/mcp`; REST en `GET /v1/fuentes/{id}`): qué años cubre la fuente, si es geográfica (geometría, CRS, extensión, capas), qué significa cada campo, qué es una fila, cuándo se actualizó y sus alertas. Sale del catálogo: no gasta créditos (spec 08).
+
 ## Ficha de un lugar
 
 `ficha_lugar` (MCP en `/mcp` y `/mcp/territorio`; REST en `POST /v1/fichas`): Ficha de un lugar de Colombia por punto (lon, lat) o por número predial: predio y construcciones (IGAC), vereda, áreas protegidas (RUNAP), resguardos y zonas de reserva campesina (ANT), vocación, capacidad y conflictos de uso del suelo (IGAC), cobertura (ESA WorldCover), sismos M≥3 del último año a ~55 km (USGS), población (DANE) y precio de la tierra rural (UPRA). Partes en paralelo, cada una con su procedencia y licencia; si una falla, la ficha sale «parcial» con el error de esa parte. Tope de 12 s. Cuesta la suma de las partes que respondieron, hasta 50 créditos.

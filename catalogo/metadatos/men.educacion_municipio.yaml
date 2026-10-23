@@ -1,0 +1,150 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: men.educacion_municipio
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/nudc-7mev.json
+pagina: https://www.datos.gov.co/d/nudc-7mev
+titulo: MEN_ESTADISTICAS_EN_EDUCACION_EN_PREESCOLAR, BÁSICA Y MEDIA_POR_MUNICIPIO
+descripcion: 'Contiene información estadística de los niveles preescolar, básica y media relacionada con
+  indicadores sectoriales por Municipio sin atípicos, desde el 2011 hasta 2024. NOTA: Para las tasas de
+  cobertura bruta y neta 2019 y 2018 se realizarron con las proyecciones de población Censo 2018. Cabe
+  mencionar que los datos de cada indicador esta con punto decimal, al momento de exportar los datos se
+  multiplica por 100, para convertirlo a porcentajes. para el detalle de las notas explicativas, por favor
+  consulte el siguiente link http://bi.mineducacion.gov.co:8380/eportal/web/planeacion-basica/documentos?p_p_id=110_INSTANCE_ex7X&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&p_p_col_id=column-1&p_p_col_count=1&_110_INSTANCE_ex7X_struts_action=%2Fdocument_library_display%2Fview_file_entry&_110_INSTANCE_ex7X_redirect=http%3A%2F%2Fbi.mineducacion.gov.co%3A8380%2Feportal%2Fweb%2Fplaneacion-basica%2Fdocumentos%2F-%2Fdocument_library_display%2Fex7X%2Fview%2F111648%3F_110_INSTANCE_ex7X_redirect%3Dhttp%253A%252F%252Fbi.mineducacion.gov.co%253A8380%252Feportal%252Fweb%252Fplaneacion-basica%252Fdocumentos%253Fp_p_id%253D110_INSTANCE_ex7X%2526p_p_lifecycle%253D0%2526p_p_state%253Dnormal%2526p_p_mode…'
+publicado: '2020-12-11'
+datos_actualizados: '2025-11-13'
+frecuencia_declarada: Anual
+cobertura_declarada: Municipal
+idioma: Español
+categoria: Educación
+etiquetas:
+- ministerio educación
+- estadísticas preescolar básica media
+- municipio
+- estadisticas
+- educación preescolar
+- educacion basica
+- educación media
+- educación
+filas: 15707
+campos:
+  a_o:
+    tipo_fuente: text
+    etiqueta: AÑO
+    descripcion: Vigencia del indicador
+    nulos: 0
+    minimo: '2011'
+    maximo: '2024'
+    comparacion: texto
+    valores:
+      '2019': 1123
+      '2014': 1122
+      '2016': 1122
+      '2015': 1122
+      '2011': 1122
+      '2024': 1122
+      '2012': 1122
+      '2021': 1122
+      '2020': 1122
+      '2013': 1122
+      '2017': 1122
+      '2018': 1122
+      '2023': 1121
+      '2022': 1121
+  c_digo_municipio:
+    tipo_fuente: text
+    etiqueta: CÓDIGO_MUNICIPIO
+    descripcion: Código DANE del Municipio
+    nulos: 0
+    minimo: '0'
+    maximo: '99773'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Nombre del Municipio
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  poblaci_n_5_16:
+    tipo_fuente: text
+    etiqueta: POBLACIÓN_5_16
+    descripcion: Población en edad teórica de estudiar (5 a 16 años) según proyecciones de población del
+      DANE
+    nulos: 6
+    minimo: '1'
+    maximo: '9998'
+    comparacion: texto
+  tasa_matriculaci_n_5_16:
+    tipo_fuente: number
+    etiqueta: TASA_MATRICULACIÓN_5_16
+    descripcion: Proporción de la población entre 5 y 16 años que se encuentra asistiendo al sistema educativo.
+      Cuando las proyecciones de población del DANE no capturan adecuadamente los flujos migratorios internos,
+      puede alcanzar valores mayores al 100%.
+    nulos: 115
+    minimo: '0'
+    maximo: '279.03'
+    comparacion: numero
+  cobertura_neta:
+    tipo_fuente: number
+    etiqueta: COBERTURA_NETA
+    descripcion: Es la relación entre el número de estudiantes matriculados en transición, primaria, secundaria
+      y media que tienen la edad teórica (5 a 16 años) y el total de la población correspondiente a esa
+      misma edad. Cuando las proyecciones de población del DANE no capturan adecuadamente los flujos migratorios
+      internos, puede alcanzar valores mayores al 100%
+    nulos: 111
+    minimo: '0'
+    maximo: '264.54'
+    comparacion: numero
+  cobertura_bruta:
+    tipo_fuente: number
+    etiqueta: COBERTURA_BRUTA
+    descripcion: Es la relación entre el número de estudiantes matriculados en transición, primaria, secundaria
+      y media respecto a la población en edad teórica para cursar estos niveles (5 a 16 años). En algunos
+      casos la demanda social es mayor a la población en edad teórica para cursar educación preescolar,
+      básica y media (5 a 16 años), explicada por estudiantes en extraedad, por lo que el indicador toma
+      valores superiores al 100%.
+    nulos: 68
+    minimo: '0'
+    maximo: '10448'
+    comparacion: numero
+  deserci_n:
+    tipo_fuente: number
+    etiqueta: DESERCIÓN
+    descripcion: Tasa de deserción intra - anual del sector oficial. Identifica la proporción de alumnos
+      matriculados que por factores culturales, coyunturales o de prestación del servicio educativo, abandonan
+      sus estudios durante el año lectivo.
+    nulos: 142
+    minimo: '0'
+    maximo: '27.9'
+    comparacion: numero
+  aprobaci_n:
+    tipo_fuente: number
+    etiqueta: APROBACIÓN
+    descripcion: Tasa de aprobación de estudiantes del sector oficial. Identifica el porcentaje de alumnos
+      en educación preescolar, básica y media que aprueba de acuerdo con los planes y programas de estudio
+      vigentes.
+    nulos: 25
+    minimo: '0'
+    maximo: '100'
+    comparacion: numero
+  reprobaci_n:
+    tipo_fuente: number
+    etiqueta: REPROBACIÓN
+    descripcion: Tasa de reprobación de estudiantes del sector oficial. Identifica el porcentaje de alumnos
+      en educación preescolar, básica y media que reprueba de acuerdo con los planes y programas de estudio
+      vigentes.
+    nulos: 86
+    minimo: '0'
+    maximo: '49.39'
+    comparacion: numero
+  repitencia:
+    tipo_fuente: number
+    etiqueta: REPITENCIA
+    descripcion: Tasa de repitencia del sector oficial. Corresponde al porcentaje de alumnos matriculados
+      en un año escolar en transición, primaria, secundaria y media que se encuentran repitiendo el mismo
+      grado cursado el año anterior.
+    nulos: 143
+    minimo: '0'
+    maximo: '37.47'
+    comparacion: numero

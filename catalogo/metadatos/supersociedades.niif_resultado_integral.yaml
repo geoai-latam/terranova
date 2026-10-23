@@ -1,0 +1,159 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supersociedades.niif_resultado_integral
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/prwj-nzxa.json
+pagina: https://www.datos.gov.co/d/prwj-nzxa
+titulo: Estados Financieros NIIF- Estado de Resultado Integral
+descripcion: '"Estado financiero básico, que muestra el resumen de las operaciones del negocio, enfrenta
+  los ingresos contra los costos y gastos para determinar el resultado del periodo. Formularios diligenciados
+  en miles de pesos". Lo invitamos a participar en la siguiente encuesta https://forms.office.com/r/QNC1FantDU'
+publicado: '2021-10-22'
+datos_actualizados: '2026-07-07'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Economía y Finanzas
+etiquetas:
+- estados financieros
+filas: 8091357
+campos:
+  nit:
+    tipo_fuente: number
+    etiqueta: NIT
+    descripcion: Número de Identificación Tributaria (NIT) de la Sociedad.
+  numero_radicado:
+    tipo_fuente: text
+    etiqueta: NUMERO_RADICADO
+    descripcion: Numero de radicado en Postal
+    nulos: 0
+    minimo: 2016-01-148552
+    maximo: 2026-01-512015
+    comparacion: texto
+  punto_entrada:
+    tipo_fuente: text
+    etiqueta: PUNTO_ENTRADA
+    descripcion: Descripción del tipo de entrada al que pertenece la sociedad
+    nulos: 0
+    comparacion: texto
+    valores:
+      40 NIIF Pymes - Individual Grupo 2: 3498534
+      40 NIIF Pymes - Individuales: 2330183
+      10 NIIF Plenas - Individual Grupo 1: 495936
+      10 NIIF Plenas - Individuales: 422190
+      50 NIIF Pymes - Separado Grupo 2: 341085
+      50 NIIF Pymes - Separados: 251465
+      20 NIIF Plenas - Separado Grupo 1: 197990
+      20 NIIF Plenas - Separados: 160787
+      60 NIIF Pymes - Consolidado Grupo 2: 112274
+      30 NIIF Plenas - Consolidado Grupo 1: 98637
+      60 NIIF Pymes - Consolidados: 87260
+      30 NIIF Plenas - Consolidados: 82217
+      35 NIIF Plenas - Combinado Grupo 1: 8029
+      65 NIIF Pymes - Combinado Grupo 2: 4770
+  taxonomia:
+    tipo_fuente: text
+    etiqueta: TAXONOMIA
+    descripcion: Descripción de la taxonomía del informe financiero diligenciado
+    nulos: 0
+    comparacion: texto
+    valores:
+      01 - Estados Financieros de Fin de Ejercicio - Corte 202: 4854631
+      01- Estados Financieros de Fin de Ejercicio - Corte 2020: 701186
+      01- Estados Financieros de Fin de Ejercicio - Corte 2019: 696405
+      01- Estados Financieros de Fin de Ejercicio - Corte 2016: 657218
+      01- Estados Financieros de Fin de Ejercicio - Corte 2017: 563211
+      01- Estados Financieros de Fin de Ejercicio - Corte 2018: 546051
+      01 - Estados Financieros de Fin de Ejercicio - Corte 201: 72655
+  fecha_corte:
+    tipo_fuente: calendar_date
+    etiqueta: FECHA_CORTE
+    descripcion: Fecha en que finaliza el periodo contable a reportar en SIRFIN
+    nulos: 0
+    minimo: '2015-03-31T00:00:00.000'
+    maximo: '2025-12-31T00:00:00.000'
+    comparacion: fecha
+    valores:
+      '2022-12-31T00:00:00.000': 1604372
+      '2023-12-31T00:00:00.000': 839078
+      '2020-12-31T00:00:00.000': 798055
+      '2024-12-31T00:00:00.000': 779636
+      '2021-12-31T00:00:00.000': 778268
+      '2025-12-31T00:00:00.000': 736171
+      '2019-12-31T00:00:00.000': 700222
+      '2016-12-31T00:00:00.000': 655313
+      '2017-12-31T00:00:00.000': 561885
+      '2018-12-31T00:00:00.000': 545102
+      '2015-12-31T00:00:00.000': 66264
+      '2022-11-30T00:00:00.000': 3668
+      '2022-09-30T00:00:00.000': 3252
+      '2022-10-31T00:00:00.000': 2815
+      '2022-06-30T00:00:00.000': 2502
+      '2016-06-30T00:00:00.000': 1445
+      '2017-06-30T00:00:00.000': 1107
+      '2015-06-30T00:00:00.000': 959
+      '2021-06-30T00:00:00.000': 876
+      '2023-06-30T00:00:00.000': 849
+  concepto:
+    tipo_fuente: text
+    etiqueta: CONCEPTO
+    descripcion: Rubro
+    nulos: 0
+    comparacion: texto
+    valores:
+      Ganancia (p�rdida): 627932
+      Ganancia (p�rdida) procedente de operaciones continuadas: 627925
+      Ganancia (p�rdida), antes de impuestos: 627923
+      Ganancia (p�rdida) por actividades de operaci�n: 627861
+      Ganancia bruta: 622729
+      Ingresos de actividades ordinarias: 622156
+      Gastos de administraci�n: 612096
+      Otros ingresos: 546148
+      Ingreso (gasto) por impuestos: 519137
+      Costo de ventas: 507637
+      Otros gastos: 483751
+      Costos financieros: 463759
+      Ingresos financieros: 381822
+      Gastos de ventas: 310361
+      Otras ganancias (p�rdidas): 104090
+      Ganancia (p�rdida) procedente de operaciones discontinuadas: 100164
+      Costos de distribuci�n: 76225
+      Gasto (ingreso) por impuestos, operaciones continuadas: 38114
+      Otros gastos, por funci�n: 35727
+      Ganancia (p�rdida), atribuible a los propietarios de la controladora: 20726
+  periodo:
+    tipo_fuente: text
+    etiqueta: PERIODO
+    descripcion: Periodo a diligenciar
+    nulos: 0
+    minimo: '2013'
+    comparacion: texto
+    valores:
+      Periodo Actual: 3411422
+      Periodo Anterior: 3397259
+      '2016': 605297
+      '2015': 357316
+      '2017': 277352
+      '2014': 32281
+      2016-S1: 1768
+      2016-S2: 1664
+      2017-S1: 1056
+      2015-S2: 979
+      2015-S1: 933
+      2017-S2: 669
+      2014-S2: 399
+      2015-dic: 300
+      2015-dic-31 / 2016-dic-31: 291
+      2016-Q4: 188
+      2015-2016: 139
+      2016-Q3: 120
+      2016-nov-01 / 2016-dic-31: 115
+      2016-Q1Q2Q3: 97
+  valor:
+    tipo_fuente: text
+    etiqueta: VALOR
+    descripcion: Valor diligenciado para el CAMPO y COLUMNA definido (Rubro y Periodo)
+    nulos: 0
+    minimo: '0'
+    maximo: '-9999991'
+    comparacion: texto
