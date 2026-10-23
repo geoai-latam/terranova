@@ -1,0 +1,38 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.catastro.nomenclatura_domiciliaria
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=6ca71458728f45988e2cd7aa5305a663
+titulo: Base Catastral Pública del Gestor IGAC 06 2026
+descripcion: 'ontiene datos catastrales geográficos y alfanuméricos de los municipios que hacen parte
+  de la jurisdicción del IGAC, los cuales cuentan con información que cumple con a la política de datos
+  abiertos del Ministerio de Tecnologías de la Información y las Comunicaciones de Colombia, teniendo
+  en cuenta las excepciones de ley. Contiene los niveles de información Urbanos: U_SECTOR, U_BARRIO, U_PERIMETRO,
+  U_MANZANA, U_TERRENO, U_CONSTRUCCION, U_NOMENCLATURA_VIAL, U_NOMENCLATURA_DOMICILIARIA Contiene los
+  niveles de información Rural: R_SECTOR, R_VEREDA, R_TERRENO, R_CONSTRUCCION, R_NOMENCLATURA_VIAL, R_NOMENCLATURA_DOMICILIARIA
+  Registros Alfanuméricos R1 y R2.'
+publicado: '2026-07-28'
+datos_actualizados: '2026-07-28'
+corte: 30 de junio de 2026
+etiquetas:
+- catastro
+filas: 3026012
+geografia:
+  geometria: linea
+  crs: EPSG:3857
+  extension:
+  - -81.766
+  - -4.132969
+  - -67.379252
+  - 13.532648
+  capas:
+    '1': U_NOMENCLATURA_DOMICILIARIA
+    '9': R_NOMENCLATURA_DOMICILIARIA
+campos:
+  TEXTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Texto
+  TERRENO_CODIGO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Terreno_Codigo

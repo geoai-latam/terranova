@@ -1,0 +1,118 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:19:42+00:00",
+ "herramienta": "igac_placas_predio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "ninguna",
+    "max_features": 50,
+    "out_fields": [
+     "TEXTO",
+     "TERRENO_CODIGO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/9",
+    "where": "TERRENO_CODIGO = '251750100000001800901900000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "R_NOMENCLATURA_DOMICILIARIA"
+     }
+    ],
+    "facts": {
+     "capa": "R_NOMENCLATURA_DOMICILIARIA",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 50,
+      "out_fields": [
+       "TEXTO",
+       "TERRENO_CODIGO"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/9",
+      "where": "TERRENO_CODIGO = '251750100000001800901900000000'"
+     },
+     "filtro": "TERRENO_CODIGO = '251750100000001800901900000000'",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/9"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "geometria": "ninguna",
+    "max_features": 50,
+    "out_fields": [
+     "TEXTO",
+     "TERRENO_CODIGO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/1",
+    "where": "TERRENO_CODIGO = '251750100000001800901900000000'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "TERRENO_CODIGO": "251750100000001800901900000000",
+          "TEXTO": "7A Tejares de San Jose"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "U_NOMENCLATURA_DOMICILIARIA"
+     }
+    ],
+    "facts": {
+     "capa": "U_NOMENCLATURA_DOMICILIARIA",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "max_features": 50,
+      "out_fields": [
+       "TEXTO",
+       "TERRENO_CODIGO"
+      ],
+      "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/1",
+      "where": "TERRENO_CODIGO = '251750100000001800901900000000'"
+     },
+     "filtro": "TERRENO_CODIGO = '251750100000001800901900000000'",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/1"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

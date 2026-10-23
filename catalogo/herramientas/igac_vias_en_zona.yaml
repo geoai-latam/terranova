@@ -1,0 +1,33 @@
+id: igac_vias_en_zona
+version: 1
+familia: territorio
+fuente: igac.catastro.nomenclatura_vial
+pregunta: "¿Qué calles y vías hay en esta zona según el catastro IGAC?"
+descripcion: >
+  Vías de la base catastral IGAC que cruzan un rectángulo (bbox en EPSG:4326, mejor de pocas
+  cuadras): nombre de cada tramo, como capa de líneas. Un nombre puede tener varios tramos. Cubre
+  los municipios con gestión catastral del IGAC.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [0, 10]  # U_ y R_NOMENCLATURA_VIAL
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: simplificada
+    out_fields: [TEXTO, codigo_municipio]
+    max_features: 500
+  campos: [TEXTO, codigo_municipio]
+salida: ViasEnZona
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 5
+canario:
+  # Medido el 2026-10-22: el rectángulo del centro de Chía tiene 29 tramos urbanos (CALLE 11 a 17,
+  # AV PRADILLA…).
+  entrada: {bbox: [-74.061, 4.861, -74.056, 4.866]}
+  minimos: {numero_registros: 25}
+  campos: [municipio_codigo_capa, numero_registros, via]
+  latencia_max_ms: 15000
