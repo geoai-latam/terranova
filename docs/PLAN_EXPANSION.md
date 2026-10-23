@@ -19,6 +19,8 @@ sección F5 del [ROADMAP](ROADMAP.md) y no cambia sus reglas.
 
 Una herramienta cuenta como servida cuando cumple todo esto:
 
+0. La fuente tiene **perfil** ([spec 07](specs/07-perfil-de-fuente.md)): qué es una fila, si la clave es única,
+   qué trae mal, cómo responde y qué se decide con eso. La herramienta se diseña sobre el perfil.
 1. Tiene ficha de fuente y de herramienta en `catalogo/`, y `scripts/validar_catalogo.py` pasa.
 2. La licencia está verificada por ítem (ADR-0019). Si no, queda `por_verificar` y solo responde con
    llaves de evaluación (ADR-0007).
