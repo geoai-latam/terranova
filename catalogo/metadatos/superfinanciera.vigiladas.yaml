@@ -1,0 +1,80 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: superfinanciera.vigiladas
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/sr9n-792w.json
+pagina: https://www.datos.gov.co/d/sr9n-792w
+titulo: Entidades  vigiladas por la Superfinanciera
+descripcion: Las citadas entidades autorizadas para captar recursos del público deben constituirse exclusivamente
+  bajo la forma de sociedades anónimas o de cooperativas financieras. Así las cosas, en nuestro país ninguna
+  sociedad colectiva, en comandita, de responsabilidad limitada o empresa unipersonal puede contar con
+  autorización legal para captar recursos del público y, mucho menos, una persona natural.
+publicado: '2018-04-20'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Semanal
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Hacienda y Crédito Público
+etiquetas:
+- entidades
+- vigiladas
+- superintendencia
+- financiera
+filas: 456
+campos:
+  tipo_entidad:
+    tipo_fuente: number
+    etiqueta: TIPO_ENTIDAD
+    nulos: 0
+    minimo: '1'
+    maximo: '600'
+    comparacion: numero
+  cod_entidad:
+    tipo_fuente: number
+    etiqueta: COD_ENTIDAD
+    nulos: 0
+    minimo: '1'
+    maximo: '221'
+    comparacion: numero
+  razon_social:
+    tipo_fuente: text
+    etiqueta: RAZON_SOCIAL
+    nulos: 0
+    comparacion: texto
+  direccion:
+    tipo_fuente: text
+    etiqueta: DIRECCION
+  ciudad:
+    tipo_fuente: text
+    etiqueta: CIUDAD
+    nulos: 0
+    minimo: BARRANQUILLA
+    maximo: YUMBO
+    comparacion: texto
+    valores:
+      BOGOTÁ D.C.: 365
+      MEDELLIN: 44
+      CALI: 17
+      Pendiente: 13
+      BARRANQUILLA: 3
+      MANIZALES: 2
+      CHIA: 2
+      ENVIGADO: 1
+      BUCARAMANGA: 1
+      LA CALERA: 1
+      PEREIRA: 1
+      YUMBO: 1
+      PASTO: 1
+      BELLO: 1
+      NEIVA: 1
+      PRADERA: 1
+      POPAYAN: 1
+  numeroidentificacion:
+    tipo_fuente: number
+    etiqueta: NUMEROIDENTIFICACION
+  uripaginaweb:
+    tipo_fuente: text
+    etiqueta: URIPAGINAWEB
+    nulos: 0
+    maximo: www.wacolda.com
+    comparacion: texto

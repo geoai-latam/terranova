@@ -1,0 +1,34 @@
+id: superfinanciera_vigilada_por_nit
+version: 1
+familia: empresas
+fuente: superfinanciera.vigiladas
+pregunta: "¿Esta empresa está vigilada por la Superintendencia Financiera?"
+descripcion: >
+  Si una entidad está vigilada por la Superintendencia Financiera, por su NIT (sin dígito de
+  verificación): tipo y código de entidad en la SFC, razón social, ciudad, dirección y página web.
+  «No encontrado» quiere decir que no está en el listado de vigiladas.
+  (Fuente: Superintendencia Financiera; licencia: CC BY-SA 4.0.)
+entrada: {nit: nit_empresa}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: sr9n-792w
+    portal: datos.gov.co
+    select: "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb"
+    # Spec 07: el NIT viene con el dígito de verificación pegado: rango NIT×10 a NIT×10+9.
+    where: "numeroidentificacion between {nit}0 and {nit}9"
+    order: "tipo_entidad, cod_entidad"
+    max_filas: 10
+  campos: [tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb]
+salida: VigiladaSuperfinancieraPorNit
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en sr9n-792w: Bancolombia (890903938) es la entidad 7 del tipo 1, en Medellín.
+  entrada: {nit: "890903938"}
+  verdad: {tipo_entidad: 1, codigo_entidad: 7, ciudad: MEDELLIN, nit_con_dv: "8909039388"}
+  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad]
+  latencia_max_ms: 10000

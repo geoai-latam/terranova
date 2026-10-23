@@ -1,0 +1,67 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T05:48:34+00:00",
+ "herramienta": "superfinanciera_vigilada_por_nit",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "sr9n-792w",
+    "max_filas": 10,
+    "order": "tipo_entidad, cod_entidad",
+    "portal": "datos.gov.co",
+    "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
+    "where": "numeroidentificacion between 8909039380 and 8909039389"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad",
+       "cod_entidad",
+       "direccion",
+       "numeroidentificacion",
+       "razon_social",
+       "tipo_entidad",
+       "uripaginaweb"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "7",
+        "direccion": "Carrera 48 No.26-85 Avenida los Industriales.",
+        "numeroidentificacion": "8909039388",
+        "razon_social": "BANCOLOMBIA S.A. podrá girar también con la denominación social Banco de Colombia S.A., pudiendo identificar sus establecimientos de comercio, productos y servicios, con el nombre comercial de BANCOLOMBIA",
+        "tipo_entidad": "1",
+        "uripaginaweb": "www.bancolombia.com.co"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "sr9n-792w",
+     "consulta": {
+      "conjunto": "sr9n-792w",
+      "max_filas": 10,
+      "portal": "datos.gov.co",
+      "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
+      "where": "(numeroidentificacion between 8909039380 and 8909039389)"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(numeroidentificacion between 8909039380 and 8909039389)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

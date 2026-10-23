@@ -1,0 +1,121 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T05:48:36+00:00",
+ "herramienta": "superfinanciera_vigiladas_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "sr9n-792w",
+    "max_filas": 50,
+    "order": "razon_social",
+    "portal": "datos.gov.co",
+    "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
+    "where": "upper(razon_social) like upper('%BANCOLOMBIA%')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad",
+       "cod_entidad",
+       "direccion",
+       "numeroidentificacion",
+       "razon_social",
+       "tipo_entidad",
+       "uripaginaweb"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "37",
+        "direccion": "Carrera 48 No. 26-85 Torre Sur Piso 10 Sector E",
+        "numeroidentificacion": "8002354265",
+        "razon_social": "BANCA DE INVERSIÓN BANCOLOMBIA S.A. CORPORACIÓN FINANCIERA, que podrá girar bajo la sigla BANCA DE INVERSIÓN BANCOLOMBIA CORPORACIÓN FINANCIERA",
+        "tipo_entidad": "2",
+        "uripaginaweb": "www.bancolombia.com.co"
+       },
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "3",
+        "direccion": "Carrera 52 No. 50-20, Piso 11",
+        "numeroidentificacion": "0",
+        "razon_social": "BANCOLOMBIA (PANAMA) S.A.",
+        "tipo_entidad": "111",
+        "uripaginaweb": "Pendiente"
+       },
+       {
+        "ciudad": "BOGOTÁ D.C.",
+        "cod_entidad": "1",
+        "direccion": "Calle 30 No. 6 - 38 piso 10",
+        "numeroidentificacion": "0",
+        "razon_social": "BANCOLOMBIA PUERTO RICO INTERNACIONAL INC",
+        "tipo_entidad": "111",
+        "uripaginaweb": "Pendiente"
+       },
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "7",
+        "direccion": "Carrera 48 No.26-85 Avenida los Industriales.",
+        "numeroidentificacion": "8909039388",
+        "razon_social": "BANCOLOMBIA S.A. podrá girar también con la denominación social Banco de Colombia S.A., pudiendo identificar sus establecimientos de comercio, productos y servicios, con el nombre comercial de BANCOLOMBIA",
+        "tipo_entidad": "1",
+        "uripaginaweb": "www.bancolombia.com.co"
+       },
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "31",
+        "direccion": "Carrera 48 No. 26 -85 Av. Los Industriales Torre Sur Piso 6E",
+        "numeroidentificacion": "8001502800",
+        "razon_social": "FIDUCIARIA BANCOLOMBIA S.A. SOCIEDAD FIDUCIARIA FIDUCIARIA BANCOLOMBIA",
+        "tipo_entidad": "5",
+        "uripaginaweb": "Pendiente"
+       },
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "18",
+        "direccion": "Carrera 48 No. 26 -85 Piso 10 Sector D Avenida Los Industriales",
+        "numeroidentificacion": "0",
+        "razon_social": "SUCURSAL EN PANAMÁ DE BANCOLOMBIA S.A.",
+        "tipo_entidad": "111",
+        "uripaginaweb": "Pendiente"
+       },
+       {
+        "ciudad": "MEDELLIN",
+        "cod_entidad": "22",
+        "direccion": "CARRERA  48 # 26-85 ZONA INDUSTRIALES,  TORRE SUR",
+        "numeroidentificacion": "8001287358",
+        "razon_social": "VALORES BANCOLOMBIA S.A. COMISIONISTA DE BOLSA",
+        "tipo_entidad": "85",
+        "uripaginaweb": "www.valoresbancolombia.com"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 7,
+      "truncado": false,
+      "vistos": 7
+     },
+     "completo": true,
+     "conjunto": "sr9n-792w",
+     "consulta": {
+      "conjunto": "sr9n-792w",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
+      "where": "(upper(razon_social) like upper('%BANCOLOMBIA%'))"
+     },
+     "cumplen_en_el_portal": 7,
+     "filas": 7,
+     "filtro_soql": "(upper(razon_social) like upper('%BANCOLOMBIA%'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
