@@ -26,7 +26,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
 from terranova.catalogo import PATRONES_ENTRADA, Herramienta
-from terranova.contrato import HTTP_DE, Problema, Sobre, nueva_solicitud_id
+from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
 from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -66,7 +66,7 @@ def _tipo(nombre: str, tipo: str) -> Any:
         return dict[str, Any]
     if tipo in PATRONES_ENTRADA:
         return Annotated[str, Field(pattern=PATRONES_ENTRADA[tipo])]
-    return Annotated[str, Field(max_length=200)]
+    return Annotated[str, Field(max_length=200, pattern=PATRON_TEXTO_LIMPIO)]
 
 
 def modelo_entrada(h: Herramienta) -> type[BaseModel]:

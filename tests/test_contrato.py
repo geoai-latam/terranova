@@ -3,7 +3,7 @@ violación se rechaza al construirlo."""
 
 import json
 from pathlib import Path
-from typing import Any
+from typing import Annotated, Any
 
 import jsonschema
 import pytest
@@ -402,3 +402,34 @@ def _minimo(datos: dict[str, Any] | None = None, geo_crs: str | None = None) -> 
         "errores": [],
         "creditos": 10,
     }
+
+
+def test_el_patron_publicado_es_la_misma_regla_que_texto_es_limpio() -> None:
+    """Schemathesis manda texto con control: el OpenAPI debe decir lo mismo que la puerta valida."""
+    import re
+
+    from pydantic import Field, TypeAdapter
+
+    from terranova.contrato import PATRON_TEXTO_LIMPIO, texto_es_limpio
+
+    validador = TypeAdapter(Annotated[str, Field(pattern=PATRON_TEXTO_LIMPIO)])
+    for texto in (
+        "ARTÍCULO 1o",
+        "a\nb\tc",
+        "x\x07y",
+        "x\u202ey",
+        "x\x85y",
+        "\U000bcbb5",
+        "\u061c",
+        "",
+    ):
+        try:
+            validador.validate_python(texto)
+            pydantic_acepta = True
+        except ValueError:
+            pydantic_acepta = False
+        assert (
+            texto_es_limpio(texto)
+            == bool(re.fullmatch(PATRON_TEXTO_LIMPIO, texto))
+            == pydantic_acepta
+        )

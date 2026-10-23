@@ -210,7 +210,7 @@ services:
     restart: unless-stopped
     environment:
       WEB_MCP_PORT: "9940"
-      WEB_MCP_DOMINIOS: relatoria.colombiacompra.gov.co,totoro.banrep.gov.co
+      WEB_MCP_DOMINIOS: relatoria.colombiacompra.gov.co,totoro.banrep.gov.co,www.funcionpublica.gov.co,www.corteconstitucional.gov.co,gestornormativo.creg.gov.co,normograma.dian.gov.co
       WEB_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["web:read"],"rate_limit_per_min":120}]'
     read_only: true
     tmpfs: ["/tmp:size=16m,uid=10013"]

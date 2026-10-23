@@ -1,0 +1,29 @@
+id: dian_normograma_buscar
+version: 1
+familia: normativa
+fuente: dian.normograma
+pregunta: "¿Qué dice esta norma tributaria o aduanera sobre este tema?"
+descripcion: >
+  Busca en una norma del Normograma de la DIAN por el nombre del documento (decreto_1165_2019,
+  ley_2277_2022, estatuto_tributario…) y devuelve hasta 20 fragmentos alrededor de cada aparición, con
+  cuántas hay. Solo fragmentos del texto oficial.
+  (Fuente: DIAN, Normograma; licencia: Ley 23 de 1982, art. 41.)
+entrada: {documento: documento_normativo, buscar: str}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://normograma.dian.gov.co/dian/compilacion/docs/{documento}.htm"
+    buscar: "{buscar}"
+  campos: [n, posicion, texto, titulo, caracteres, apariciones]
+salida: NormogramaDianBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22: el Decreto 1165 de 2019 tiene 3 apariciones de «ARTÍCULO 1o».
+  entrada: {documento: decreto_1165_2019, buscar: ARTÍCULO 1o}
+  verdad: {apariciones: 3, titulo: "Compilación Jurídica de la DIAN - Decreto 1165 de 2019"}
+  minimos: {numero_registros: 3}
+  campos: [apariciones, caracteres, n, numero_registros, posicion, texto, titulo]
+  latencia_max_ms: 30000

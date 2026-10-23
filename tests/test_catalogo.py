@@ -166,6 +166,9 @@ def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
     assert re.fullmatch(PATRONES_ENTRADA["codigo_predial"], "251750000000000050067000000000")
     assert re.fullmatch(PATRONES_ENTRADA["nombre"], "Chía")
     assert re.fullmatch(PATRONES_ENTRADA["id_secop"], "CO1.PCCNTR.5141215")
+    assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], "resolucion_creg_101-131_2026")
+    assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], "../etc/passwd_2026") is None
+    assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "T-760-08")
 
 
 def test_licencias_legibles() -> None:

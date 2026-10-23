@@ -31,6 +31,10 @@ PATRONES_ENTRADA: dict[str, str] = {
     "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
     "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}/[0-9]{2}$",  # Corte Constitucional: T-760/08
+    # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas)
+    "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}-[0-9]{2}$",
+    # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas
+    "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}_[0-9]{4}$",
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
 TipoEntrada = Literal[
@@ -47,6 +51,8 @@ TipoEntrada = Literal[
     "contrato_secop",
     "fecha",
     "sentencia_cc",
+    "sentencia_relatoria",
+    "documento_normativo",
     "nombre",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
@@ -257,7 +263,7 @@ class Fuente(_Ficha):
     permiso: Permiso | None = None
     atribucion: str
     protocolo: Literal[
-        "arcgis_rest", "wfs", "wms", "socrata", "ckan", "stac", "api_propia", "archivo"
+        "arcgis_rest", "wfs", "wms", "socrata", "ckan", "stac", "api_propia", "archivo", "html"
     ]
     conector: str
     url: str = Field(pattern=r"^https://")
@@ -570,6 +576,7 @@ LICENCIAS_LEGIBLES = {
     "CC0-1.0": "CC0 1.0",
     "LicenseRef-dominio-publico-EEUU": "dominio público de Estados Unidos",
     "LicenseRef-banrep-aviso-legal": "aviso legal del BanRep",
+    "LicenseRef-ley23-1982-art41": "Ley 23 de 1982, art. 41",
 }
 
 

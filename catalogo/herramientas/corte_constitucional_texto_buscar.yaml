@@ -1,0 +1,29 @@
+id: corte_constitucional_texto_buscar
+version: 1
+familia: normativa
+fuente: corteconstitucional.relatoria
+pregunta: "¿Qué dice esta sentencia de la Corte Constitucional sobre este tema?"
+descripcion: >
+  Busca en el texto de una sentencia de la Corte Constitucional y devuelve hasta 20 fragmentos
+  alrededor de cada aparición, con cuántas hay. Pide el año de la sentencia y su número con guiones
+  (T-760-08); el índice (fecha, ponente) sale de corte_constitucional_sentencia.
+  (Fuente: Corte Constitucional, relatoría; licencia: Ley 23 de 1982, art. 41.)
+entrada: {anio: int, sentencia: sentencia_relatoria, buscar: str}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
+    buscar: "{buscar}"
+  campos: [n, posicion, texto, titulo, caracteres, apariciones]
+salida: TextoSentenciaBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22: T-760/08 tiene 32 apariciones de «derecho fundamental a la salud».
+  entrada: {anio: 2008, sentencia: T-760-08, buscar: derecho fundamental a la salud}
+  verdad: {apariciones: 32}
+  minimos: {numero_registros: 20}
+  campos: [apariciones, caracteres, n, numero_registros, posicion, texto, titulo]
+  latencia_max_ms: 30000

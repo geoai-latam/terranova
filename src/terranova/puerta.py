@@ -26,7 +26,7 @@ from terranova import metricas
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import PATRONES_ENTRADA, Catalogo, Herramienta, cargar
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
-from terranova.contrato import Sobre, huella, nueva_solicitud_id
+from terranova.contrato import PATRON_TEXTO_LIMPIO, Sobre, huella, nueva_solicitud_id
 from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
 from terranova.curado import Restricciones, restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor, Plan
@@ -46,7 +46,7 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
     "float": {"type": "number"},
     "int": {"type": "integer"},
     "bool": {"type": "boolean"},
-    "str": {"type": "string", "maxLength": 200},
+    "str": {"type": "string", "maxLength": 200, "pattern": PATRON_TEXTO_LIMPIO},
     "bbox": {
         "type": "array",
         "items": {"type": "number"},

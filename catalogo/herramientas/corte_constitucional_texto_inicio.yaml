@@ -1,0 +1,26 @@
+id: corte_constitucional_texto_inicio
+version: 1
+familia: normativa
+fuente: corteconstitucional.relatoria
+pregunta: "¿De qué trata esta sentencia de la Corte Constitucional?"
+descripcion: >
+  El comienzo del texto de una sentencia de la Corte Constitucional (hasta 8 000 caracteres): número,
+  notas de relatoría y descriptores o síntesis, con cuántos caracteres tiene la sentencia entera.
+  Para buscar dentro, corte_constitucional_texto_buscar.
+  (Fuente: Corte Constitucional, relatoría; licencia: Ley 23 de 1982, art. 41.)
+entrada: {anio: int, sentencia: sentencia_relatoria}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
+    max_caracteres: 8000
+  campos: [texto, titulo, caracteres]
+salida: TextoSentenciaInicio
+creditos: 2
+canario:
+  # Medido el 2026-10-22: T-760/08 tiene 1 398 924 caracteres; el texto empieza «T-760-08».
+  entrada: {anio: 2008, sentencia: T-760-08}
+  minimos: {caracteres: 1000000}
+  campos: [caracteres, texto, titulo]
+  latencia_max_ms: 30000

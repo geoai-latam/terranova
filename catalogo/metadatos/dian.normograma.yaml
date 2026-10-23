@@ -1,0 +1,8 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dian.normograma
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://normograma.dian.gov.co/dian/compilacion
+titulo: 'Normograma de la DIAN: compilación jurídica tributaria, aduanera y cambiaria'
+idioma: Español
+descripcion: HTML estático; se lee con web_html de web-mcp (robots.txt y una petición por segundo).

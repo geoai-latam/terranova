@@ -224,6 +224,24 @@ def huella(datos: dict[str, Any]) -> str:
     return "sha256:" + hashlib.sha256(canonico.encode()).hexdigest()
 
 
+def _rango(desde: int, hasta: int) -> str:
+    return chr(desde) if desde == hasta else f"{chr(desde)}-{chr(hasta)}"
+
+
+# La misma regla que `texto_es_limpio`, como patrón publicable en el OpenAPI (JSON Schema y el motor
+# de pydantic): control salvo salto de línea y tabulador, y marcas bidi. Con caracteres literales,
+# no escapes, para que los dos motores lo lean igual. Schemathesis manda texto con control y
+# espera que el esquema lo diga.
+PATRON_TEXTO_LIMPIO = (
+    "^[^"
+    + _rango(0x00, 0x08)
+    + _rango(0x0B, 0x1F)
+    + _rango(0x7F, 0x9F)
+    + "".join(sorted(_BIDI))
+    + "]*$"
+)
+
+
 def texto_es_limpio(texto: str) -> bool:
     """Sin caracteres de control (salvo salto de línea y tabulador) ni marcas bidi."""
     for c in texto:
