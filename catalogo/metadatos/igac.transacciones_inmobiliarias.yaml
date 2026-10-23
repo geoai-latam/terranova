@@ -1,7 +1,7 @@
 # Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
 fuente: igac.transacciones_inmobiliarias
 metodo: cosechado
-cosechado: '2026-10-22'
+cosechado: '2026-10-23'
 origen: https://www.datos.gov.co/api/views/7y2j-43cv.json
 pagina: https://www.datos.gov.co/d/7y2j-43cv
 titulo: Registro de transacciones inmobiliarias en Colombia IGAC
@@ -22,6 +22,24 @@ etiquetas:
 - ordenamiento territorial
 filas: 30903248
 campos:
+  matricula:
+    tipo_fuente: text
+    etiqueta: MATRICULA
+    descripcion: 'Corresponde con el número de folio de la matrícula inmobiliaria creado por la oficina
+      de registro de instrumentos públicos - ORIP. Se compone de dos partes: los 3 primeros dígitos coinciden
+      con el código de la ORIP y el resto es el número de cada folio.'
+    nulos: 0
+    minimo: 001-1000000
+    maximo: 999-9878
+    comparacion: texto
+  fecha_radica_texto:
+    tipo_fuente: text
+    etiqueta: FECHA_RADICA_TEXTO
+    descripcion: Corresponde con la fecha de radicación del trámite que deriva en una nueva anotación
+      en el folio de matrícula correspondiente.
+    nulos: 1
+    minimo: 01/01/2016
+    comparacion: texto
   year_radica:
     tipo_fuente: text
     etiqueta: YEAR_RADICA
@@ -51,6 +69,49 @@ campos:
     minimo: '11001'
     maximo: '99773'
     comparacion: texto
+  num_anotacion:
+    tipo_fuente: number
+    etiqueta: NUM_ANOTACION
+    descripcion: Corresponde con el número consecutivo que surgió como resultado del registro de la transacción
+    nulos: 0
+    minimo: '1'
+    maximo: '30088'
+    comparacion: numero
+    valores:
+      '2': 3381204
+      '3': 3249371
+      '4': 3048598
+      '1': 2908061
+      '5': 2800051
+      '6': 2501512
+      '7': 2182810
+      '8': 1799574
+      '9': 1473724
+      '10': 1192681
+      '11': 979161
+      '12': 811199
+      '13': 675402
+      '14': 568165
+      '15': 484424
+      '16': 411237
+      '17': 349365
+      '18': 297133
+      '19': 251623
+      '20': 212269
+  estado_folio:
+    tipo_fuente: text
+    etiqueta: ESTADO_FOLIO
+    descripcion: 'Los posibles estados del folio son activo: significa que el folio puede seguir recibiendo
+      anotaciones, cerrado: implica que el folio ya no puede continuar recibiendo anotaciones o en custodia:
+      se asigna a otra jurisdicción por razones de seguridad.'
+    nulos: 13579939
+    minimo: ACTIVO
+    maximo: CUSTODIA
+    comparacion: texto
+    valores:
+      ACTIVO: 16867436
+      CERRADO: 455853
+      CUSTODIA: 20
   cod_natujur:
     tipo_fuente: number
     etiqueta: COD_NATUJUR
@@ -60,6 +121,79 @@ campos:
     minimo: '100'
     maximo: '4010'
     comparacion: numero
+  nombre_natujur:
+    tipo_fuente: text
+    etiqueta: NOMBRE_NATUJUR
+    descripcion: 'Es el nombre del acto jurídico que corresponde de acuerdo con lo establecido por la
+      SNR, se recomienda consultar la Resolución No. 07448 de 11-08-2021 en: https://servicios.supernotariado.gov.co/files/portal/portal-codigosdenaturalezajuridica074482021v4.pdf'
+  numero_catastral:
+    tipo_fuente: text
+    etiqueta: NUMERO_CATASTRAL
+    descripcion: Corresponde con el número predial catastral de 30 dígitos que viene asociado al folio
+      de matrícula inmobiliaria.
+    nulos: 30903248
+  count_a:
+    tipo_fuente: number
+    etiqueta: COUNT_A
+    descripcion: Relaciona la cantidad de intervinientes que participaron en una transacción como receptores
+      de los efectos jurídicos del acto, por ejemplo, si en una compraventa participan 3 hermanos en la
+      venta de un predio a una pareja aquí va el número 2.
+    nulos: 0
+    minimo: '0'
+    maximo: '10791'
+    comparacion: numero
+    valores:
+      '1': 20764843
+      '2': 4446765
+      '0': 4254510
+      '3': 516684
+      '4': 426622
+      '5': 123633
+      '6': 111535
+      '8': 54469
+      '7': 50954
+      '10': 29870
+      '9': 28435
+      '12': 16420
+      '11': 14515
+      '14': 9580
+      '13': 6983
+      '16': 6434
+      '18': 4569
+      '15': 4111
+      '20': 3609
+      '22': 2284
+  count_de:
+    tipo_fuente: number
+    etiqueta: COUNT_DE
+    descripcion: Relaciona la cantidad de intervinientes que participaron como otorgantes en una transacción,
+      por ejemplo, si en una compraventa participan 3 hermanos en la venta de un predio a una pareja aquí
+      va el número 3.
+    nulos: 0
+    minimo: '0'
+    maximo: '6744'
+    comparacion: numero
+    valores:
+      '1': 19926568
+      '0': 6831830
+      '2': 3332038
+      '3': 268981
+      '4': 250007
+      '5': 72199
+      '6': 63197
+      '7': 32290
+      '8': 32166
+      '9': 18935
+      '10': 18905
+      '12': 9392
+      '11': 9139
+      '14': 5823
+      '13': 4548
+      '16': 3584
+      '18': 2995
+      '15': 2837
+      '20': 2469
+      '22': 1171
   tiene_valor:
     tipo_fuente: number
     etiqueta: TIENE_VALOR

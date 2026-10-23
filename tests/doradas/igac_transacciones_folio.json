@@ -1,0 +1,139 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T05:14:02+00:00",
+ "herramienta": "igac_transacciones_folio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "7y2j-43cv",
+    "max_filas": 500,
+    "order": "num_anotacion",
+    "portal": "datos.gov.co",
+    "select": "matricula, num_anotacion, fecha_radica_texto, year_radica, nombre_natujur, cod_natujur, valor, estado_folio, numero_catastral, count_a, count_de",
+    "where": "matricula = '50N-20849403'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cod_natujur",
+       "count_a",
+       "count_de",
+       "fecha_radica_texto",
+       "matricula",
+       "nombre_natujur",
+       "num_anotacion",
+       "year_radica"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cod_natujur": "125",
+        "count_a": "1",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-02-07 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "COMPRAVENTA",
+        "num_anotacion": "2",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "960",
+        "count_a": "0",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-02-07 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "CERTIFICACIÓN TÉCNICA DE OCUPACIÓN",
+        "num_anotacion": "3",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "315",
+        "count_a": "1",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-02-07 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "CONSTITUCIÓN PATRIMONIO DE FAMILIA",
+        "num_anotacion": "4",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "843",
+        "count_a": "1",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-07-16 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "CANCELACIÓN POR VOLUNTAD DE LAS PARTES",
+        "num_anotacion": "5",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "125",
+        "count_a": "1",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-08-06 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "COMPRAVENTA",
+        "num_anotacion": "6",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "304",
+        "count_a": "1",
+        "count_de": "0",
+        "fecha_radica_texto": "2020-08-06 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "AFECTACIÓN A VIVIENDA FAMILIAR",
+        "num_anotacion": "7",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "901",
+        "count_a": "2",
+        "count_de": "0",
+        "fecha_radica_texto": "2020-09-04 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "ACLARACIÓN",
+        "num_anotacion": "8",
+        "year_radica": "2020"
+       },
+       {
+        "cod_natujur": "362",
+        "count_a": "1",
+        "count_de": "1",
+        "fecha_radica_texto": "2020-09-04 00:00:00",
+        "matricula": "50N-20849403",
+        "nombre_natujur": "PROHIBICIÓN DE TRANSFERENCIA \\\"ART. 21 LEY 1537 DE 2012 QUE MODIFICO EL ART. 8 DE LA LEY 3 DE 1991\\\"",
+        "num_anotacion": "9",
+        "year_radica": "2020"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 8,
+      "truncado": false,
+      "vistos": 8
+     },
+     "completo": true,
+     "conjunto": "7y2j-43cv",
+     "consulta": {
+      "conjunto": "7y2j-43cv",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "matricula, num_anotacion, fecha_radica_texto, year_radica, nombre_natujur, cod_natujur, valor, estado_folio, numero_catastral, count_a, count_de",
+      "where": "(matricula = '50N-20849403')"
+     },
+     "cumplen_en_el_portal": 8,
+     "filas": 8,
+     "filtro_soql": "(matricula = '50N-20849403')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

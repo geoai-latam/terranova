@@ -25,6 +25,14 @@ datos_personales: filtrados
 estado: publicada
 campos:
   year_radica: {nombre: anio, tipo: int, desc: "año de radicación de la anotación"}
+  matricula: {nombre: matricula_inmobiliaria, tipo: str, desc: "folio de matrícula inmobiliaria (oficina de registro y número)"}
+  num_anotacion: {nombre: anotacion, tipo: int, desc: "número de la anotación en el folio"}
+  fecha_radica_texto: {nombre: fecha_radicacion, tipo: str, desc: "fecha de radicación (texto de la fuente)"}
+  nombre_natujur: {nombre: naturaleza_juridica, tipo: str, desc: "naturaleza jurídica del acto (compraventa, hipoteca…)"}
+  estado_folio: {nombre: estado_folio, tipo: str, desc: "estado del folio"}
+  numero_catastral: {nombre: numero_catastral, tipo: str, desc: "número catastral asociado"}
+  count_a: {nombre: personas_a, tipo: int, desc: "cuántos intervinientes reciben (sin nombres)"}
+  count_de: {nombre: personas_de, tipo: int, desc: "cuántos intervinientes otorgan (sin nombres)"}
   divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
   cod_natujur: {nombre: codigo_naturaleza_juridica, tipo: int, desc: "código de la naturaleza jurídica (125 compraventa)"}
   tiene_valor: {nombre: tiene_valor, tipo: int, desc: "1 si la anotación trae valor"}
