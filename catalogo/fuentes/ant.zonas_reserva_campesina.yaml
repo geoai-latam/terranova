@@ -32,7 +32,7 @@ campos:
   ACTO_ADMIN: {nombre: acto_administrativo, tipo: str, desc: "acto de constitución (p. ej. «Resolución 046 de 2000»)"}
   FECHA_CONSTITUCION: {nombre: fecha_constitucion, tipo: str, desc: "fecha de constitución tal como la publica la fuente (texto d/m/aaaa)"}
   Area_HA: {nombre: area_ha, tipo: float, desc: "área en hectáreas"}
-comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat, reintentos_si_vacio: 3}
 dcat: {publisher: ANT, theme: ordenamiento_rural}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -48,4 +48,5 @@ perfil:
     agrupar: 0.4
   hallazgos:
   - el punto de prueba toca un solo elemento
+  - "la fuente (proxy utility.arcgis.com) responde vacío sin error ~25 % de las veces (4 de 16, 2026-10-23): se reintenta 3 veces antes de decir no_encontrado"
   decision: en vivo por punto

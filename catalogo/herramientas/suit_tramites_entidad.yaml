@@ -6,6 +6,7 @@ pregunta: "¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuán
 descripcion: >
   Trámites inscritos en el SUIT (Función Pública) por una entidad, mes a mes: total, presenciales
   y en línea. Es el histórico que publica Función Pública (se actualiza con retraso).
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
 consulta:

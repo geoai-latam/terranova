@@ -468,6 +468,15 @@ class Ejecutor:
             )
             llamadas.append(self._una(h, fuente.conector, capa, argumentos))
         respuestas = await asyncio.gather(*llamadas)
+        hechos_de_dato = [k for k, c in fuente.campos.items() if c.origen == "hecho"]
+        reintentos = 0
+        while reintentos < fuente.comportamiento.reintentos_si_vacio and all(
+            not r.filas and not any(k in r.hechos for k in hechos_de_dato) for r in respuestas
+        ):
+            reintentos += 1
+            respuestas = await asyncio.gather(
+                *(self._una(h, fuente.conector, r.capa, r.argumentos) for r in respuestas)
+            )
 
         elementos: list[dict[str, Any]] = []
         rasgos: list[dict[str, Any]] = []
@@ -512,6 +521,11 @@ class Ejecutor:
 
         avisos: list[str] = []
         estado: Estado = "encontrado" if hay_algo else "no_encontrado"
+        if not hay_algo and reintentos:
+            avisos.append(
+                f"Esta fuente a veces responde vacío sin error: se consultó {reintentos + 1} veces "
+                "y en todas vino vacía."
+            )
         if h.consulta.forma == "uno" and len(elementos) > 1:
             avisos.append(
                 f"Hay {len(elementos)} resultados; se muestra el primero (todos van en la capa)."

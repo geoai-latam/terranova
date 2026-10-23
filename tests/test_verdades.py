@@ -18,7 +18,7 @@ CATALOGO = cargar()
 FAMILIAS = {"territorio", "contratacion", "empresas", "normativa", "justicia", "estadisticas"}
 ESTADOS = {"no_encontrado", "fuera_de_cobertura"}
 CAMPOS = {"id", "familia", "pregunta", "herramienta", "entrada", "fuente", "verdad", "minimos"}
-CAMPOS |= {"estado", "medicion", "nota"}
+CAMPOS |= {"estado", "medicion", "nota", "alternativas"}
 
 
 def test_sesenta_preguntas_en_seis_familias() -> None:

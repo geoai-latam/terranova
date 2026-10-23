@@ -1,0 +1,261 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T09:17:02+00:00",
+ "herramienta": "secop_contratos_entidad_anio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "tipo_de_contrato, modalidad_de_contratacion",
+    "id": "jbjy-vk9h",
+    "max_filas": 200,
+    "order": "contratos DESC",
+    "portal": "datos.gov.co",
+    "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+    "where": "nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "contratos",
+       "entidad",
+       "modalidad_de_contratacion",
+       "tipo_de_contrato",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "contratos": "726",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación directa",
+        "tipo_de_contrato": "Prestación de servicios",
+        "valor_total": "22346922539.33"
+       },
+       {
+        "contratos": "41",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+        "tipo_de_contrato": "Otro",
+        "valor_total": "12779278694.67"
+       },
+       {
+        "contratos": "34",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Prestación de servicios",
+        "valor_total": "935519284"
+       },
+       {
+        "contratos": "15",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "tipo_de_contrato": "Prestación de servicios",
+        "valor_total": "4022793401"
+       },
+       {
+        "contratos": "12",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación directa",
+        "tipo_de_contrato": "Arrendamiento de inmuebles",
+        "valor_total": "3710749226"
+       },
+       {
+        "contratos": "12",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Compraventa",
+        "valor_total": "302195520.42"
+       },
+       {
+        "contratos": "8",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Licitación pública Obra Publica",
+        "tipo_de_contrato": "Obra",
+        "valor_total": "26456558956"
+       },
+       {
+        "contratos": "8",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Suministros",
+        "valor_total": "264681644.69"
+       },
+       {
+        "contratos": "7",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Licitación pública",
+        "tipo_de_contrato": "Prestación de servicios",
+        "valor_total": "31301809585"
+       },
+       {
+        "contratos": "7",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "tipo_de_contrato": "Compraventa",
+        "valor_total": "2037566221"
+       },
+       {
+        "contratos": "6",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Concurso de méritos abierto",
+        "tipo_de_contrato": "Interventoría",
+        "valor_total": "4017656467"
+       },
+       {
+        "contratos": "6",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+        "tipo_de_contrato": "Compraventa",
+        "valor_total": "1341784450"
+       },
+       {
+        "contratos": "5",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "tipo_de_contrato": "Suministros",
+        "valor_total": "1590493298"
+       },
+       {
+        "contratos": "5",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación régimen especial (con ofertas)",
+        "tipo_de_contrato": "Decreto 092 de 2017",
+        "valor_total": "9830386651"
+       },
+       {
+        "contratos": "5",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación directa",
+        "tipo_de_contrato": "Otro",
+        "valor_total": "125873000"
+       },
+       {
+        "contratos": "4",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "tipo_de_contrato": "Obra",
+        "valor_total": "1525928698.13"
+       },
+       {
+        "contratos": "4",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Obra",
+        "valor_total": "169440802"
+       },
+       {
+        "contratos": "3",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Consultoría",
+        "valor_total": "90433300"
+       },
+       {
+        "contratos": "3",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación directa",
+        "tipo_de_contrato": "Comodato",
+        "valor_total": "0"
+       },
+       {
+        "contratos": "2",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Otro",
+        "valor_total": "103427281"
+       },
+       {
+        "contratos": "2",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "tipo_de_contrato": "Prestación de servicios",
+        "valor_total": "192355027"
+       },
+       {
+        "contratos": "2",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "tipo_de_contrato": "Otro",
+        "valor_total": "771481011"
+       },
+       {
+        "contratos": "1",
+        "entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "tipo_de_contrato": "Arrendamiento de muebles",
+        "valor_total": "35625349"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "tipo_de_contrato": "Compraventa",
+        "valor_total": "67748393"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "tipo_de_contrato": "Suministros",
+        "valor_total": "296295423"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+        "tipo_de_contrato": "Suministros",
+        "valor_total": "77700000"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación régimen especial",
+        "tipo_de_contrato": "Otro",
+        "valor_total": "0"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación directa",
+        "tipo_de_contrato": "Obra",
+        "valor_total": "71000000"
+       },
+       {
+        "contratos": "1",
+        "entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "modalidad_de_contratacion": "Contratación régimen especial",
+        "tipo_de_contrato": "Decreto 092 de 2017",
+        "valor_total": "4400519885"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 29,
+      "truncado": false,
+      "vistos": 29
+     },
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "group": "tipo_de_contrato, modalidad_de_contratacion",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+      "where": "(nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023)"
+     },
+     "filas": 29,
+     "filas_que_resume": 924,
+     "filtro_soql": "(nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

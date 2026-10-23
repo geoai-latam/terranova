@@ -19,7 +19,8 @@ consulta:
     portal: datos.gov.co
     # agregado sin $group (el conector no lo acepta): una sola fila con los dos alias
     select: "count(*) as contratos, sum(valor_del_contrato) as valor_total"
-    where: "ciudad = '{municipio}' AND departamento = '{departamento}'"
+    # sin distinguir mayúsculas: el agente copia «CHÍA» de DIVIPOLA y SECOP escribe «Chía»
+    where: "upper(ciudad) = upper('{municipio}') AND upper(departamento) = upper('{departamento}')"
     max_filas: 1
   campos: [ciudad, departamento, valor_del_contrato]
 salida: ContratosMunicipio

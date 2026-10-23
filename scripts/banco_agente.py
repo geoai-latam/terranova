@@ -71,11 +71,13 @@ def _aparece(valor: Any, texto: str) -> bool:
 
 
 def _pisos(minimos: dict[str, Any], datos: dict[str, Any]) -> list[str]:
+    """El piso se cumple arriba o en alguna fila de `elementos` (resultado lista)."""
+    filas = [datos, *[e for e in datos.get("elementos") or [] if isinstance(e, dict)]]
     fallas = []
     for k, piso in minimos.items():
-        v = datos.get(k)
-        if not isinstance(v, int | float) or v < piso:
-            fallas.append(f"{k}: {v} < {piso}")
+        valores: list[float] = [f[k] for f in filas if isinstance(f.get(k), int | float)]
+        if not any(v >= piso for v in valores):
+            fallas.append(f"{k}: {max(valores) if valores else None} < {piso}")
     return fallas
 
 
@@ -144,7 +146,9 @@ async def _pregunta(
             )
             mensajes.append({"role": "tool", "tool_call_id": tc["id"], "content": texto[:8000]})
     esperada = v["herramienta"]
-    propias = [ll for ll in llamadas if ll["herramienta"] == esperada]
+    # una alternativa válida (misma verdad en otra herramienta) también cuenta
+    validas = {esperada, *(v.get("alternativas") or [])}
+    propias = [ll for ll in llamadas if ll["herramienta"] in validas]
     fallas: list[str] = []
     if esperada is None:
         ok_herramienta = True  # «no cubre»: se revisa que la respuesta no invente
@@ -152,7 +156,8 @@ async def _pregunta(
     else:
         ok_herramienta = bool(propias)
         ok_entrada = any(
-            {k: str(a) for k, a in ll["argumentos"].items()}
+            ll["herramienta"] != esperada  # la alternativa tiene su propia entrada
+            or {k: str(a) for k, a in ll["argumentos"].items()}
             == {k: str(a) for k, a in v["entrada"].items()}
             for ll in propias
         )

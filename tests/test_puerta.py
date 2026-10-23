@@ -97,7 +97,9 @@ async def test_cada_perfil_cabe_en_un_cliente_openai() -> None:
     perfil por familia sí (ADR-0006)."""
     for familia in puerta.FAMILIAS:
         async with Client(puerta.crear_servidor(familia, con_ciclo=False)) as c:
-            assert len(await c.list_tools()) <= 128, familia
+            nombres = {t.name for t in await c.list_tools()}
+        assert len(nombres) <= 128, familia
+        assert puerta.HERRAMIENTAS_COMUNES <= nombres, familia  # de nombre a código, en todos
 
 
 @pytest.mark.anyio
@@ -185,3 +187,42 @@ async def test_entrada_invalida_no_llega_a_la_fuente(
 ) -> None:
     with pytest.raises(ToolError):
         await cliente_con.call_tool(herramienta, entrada)
+
+
+class ConectorIntermitente(ConectorFalso):
+    """Responde vacío las primeras `vacias` veces, como el proxy de la ANT (~25 %)."""
+
+    def __init__(self, rasgos: list[dict[str, Any]], vacias: int) -> None:
+        super().__init__({0: rasgos})
+        self.vacias = vacias
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        if len(self.llamadas) < self.vacias:
+            self.llamadas.append({"herramienta": herramienta, **argumentos})
+            return _respuesta([])
+        return await super().llamar(herramienta, argumentos)
+
+
+ZRC = "ant_zonas_reserva_campesina_en_punto"
+CABRERA = {"type": "Feature", "geometry": None, "properties": {"NOMBRE_ZON": "Cabrera"}}
+
+
+@pytest.mark.anyio
+@_con(ConectorIntermitente([CABRERA], vacias=2))
+async def test_un_vacio_falso_se_reintenta_antes_de_decir_no_encontrado(
+    cliente_con: Client[Any],
+) -> None:
+    """«No se pudo» no es «no hay»: la fuente marcada se vuelve a preguntar si responde vacío."""
+    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+    assert r.structured_content is not None
+    assert r.structured_content["estado"] == "encontrado"
+    assert r.structured_content["datos"]["nombre"] == "Cabrera"
+
+
+@pytest.mark.anyio
+@_con(ConectorIntermitente([CABRERA], vacias=10))
+async def test_vacio_tras_los_reintentos_lo_dice(cliente_con: Client[Any]) -> None:
+    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+    assert r.structured_content is not None
+    assert r.structured_content["estado"] == "no_encontrado"
+    assert any("4 veces" in a for a in r.structured_content["avisos"])

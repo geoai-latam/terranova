@@ -20,7 +20,9 @@ consulta:
     select: "nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec"
     # Spec 07: el like sobre 9,4 M filas responde en ~2 s; las personas naturales quedan fuera.
     where: "upper(razon_social) like upper('%{nombre}%') AND organizacion_juridica != 'PERSONA NATURAL'"
-    order: "razon_social, matricula"
+    # la coincidencia más corta primero: con orden alfabético, «ECOPETROL» llenaba los 50 con
+    # asociaciones y la sociedad misma no salía (banco de agente, e02)
+    order: "length(razon_social), razon_social, matricula"
     max_filas: 50
   campos: [nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec]
 salida: RuesEmpresasBuscar

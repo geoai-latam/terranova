@@ -1,0 +1,35 @@
+id: suin_normas_anio
+version: 1
+familia: normativa
+fuente: minjusticia.suin
+pregunta: "¿Cuántas leyes, decretos y resoluciones de este año están cargados en SUIN-Juriscol?"
+descripcion: >
+  Normas de un año cargadas en SUIN-Juriscol (Ministerio de Justicia), contadas por tipo (ley,
+  decreto, resolución, circular…). Es lo que SUIN tiene cargado, no todo lo que se expidió.
+  (Fuente: MinJusticia, SUIN-Juriscol; licencia: CC BY-SA 4.0.)
+entrada: {anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: fiev-nid6
+    portal: datos.gov.co
+    select: "tipo, count(*) AS normas"
+    where: "a_o = '{anio}'"
+    group: tipo
+    order: tipo
+    max_filas: 50
+  campos: [tipo, a_o]
+salida: NormasSuinAnio
+derivados:
+  normas: {de: columna, campo: normas, tipo: int}
+  total_normas: {de: suma, campo: normas, tipo: int}
+creditos: 1
+canario:
+  # Medido el 2026-10-23 en fiev-nid6: 2019, 650 normas (70 leyes, 318 decretos). SUIN sigue cargando: el total es un mínimo.
+  entrada: {anio: 2019}
+  verdad: {tipo: "ACTO LEGISLATIVO", normas: 5}
+  minimos: {total_normas: 650}
+  campos: [normas, tipo, total_normas]
+  latencia_max_ms: 10000

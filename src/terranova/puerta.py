@@ -397,12 +397,17 @@ def fuente_describir(fuente: str) -> dict[str, Any]:
     return ficha_tecnica(CATALOGO, fuente_id)
 
 
+# De nombre a código, en todos los perfiles: sin ellas el agente supone los códigos (en el banco de
+# agente mandó 25095 como DIVIPOLA de Chía, que es 25175, y un NIT inventado para su alcaldía).
+HERRAMIENTAS_COMUNES = frozenset({"dane_divipola_buscar", "secop_entidades_municipio"})
+
+
 def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> FastMCP:
     """`/mcp` con todo o un perfil por familia (`/mcp/territorio`…, ADR-0006)."""
     nombre = "terranova" if familia is None else f"terranova-{familia}"
     servidor = FastMCP(nombre, instructions=INSTRUCCIONES, lifespan=_ciclo if con_ciclo else None)
     for h in CATALOGO.herramientas.values():
-        if familia is None or h.familia == familia:
+        if familia is None or h.familia == familia or h.id in HERRAMIENTAS_COMUNES:
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
     if familia in (None, ficha_lugar.FAMILIA):
         servidor.add_tool(HerramientaDelCatalogo.ficha_de_lugar())

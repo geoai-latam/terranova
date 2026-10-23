@@ -1,0 +1,91 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T08:30:24+00:00",
+ "herramienta": "suin_normas_anio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "tipo",
+    "id": "fiev-nid6",
+    "max_filas": 50,
+    "order": "tipo",
+    "portal": "datos.gov.co",
+    "select": "tipo, count(*) AS normas",
+    "where": "a_o = '2019'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "normas",
+       "tipo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "normas": "5",
+        "tipo": "ACTO LEGISLATIVO"
+       },
+       {
+        "normas": "1",
+        "tipo": "ACUERDO"
+       },
+       {
+        "normas": "21",
+        "tipo": "CIRCULAR"
+       },
+       {
+        "normas": "2",
+        "tipo": "CIRCULAR CONJUNTA"
+       },
+       {
+        "normas": "3",
+        "tipo": "CIRCULAR EXTERNA"
+       },
+       {
+        "normas": "318",
+        "tipo": "DECRETO"
+       },
+       {
+        "normas": "13",
+        "tipo": "DIRECTIVA PRESIDENCIAL"
+       },
+       {
+        "normas": "70",
+        "tipo": "LEY"
+       },
+       {
+        "normas": "217",
+        "tipo": "RESOLUCION"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 9,
+      "truncado": false,
+      "vistos": 9
+     },
+     "completo": true,
+     "conjunto": "fiev-nid6",
+     "consulta": {
+      "conjunto": "fiev-nid6",
+      "group": "tipo",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "tipo, count(*) AS normas",
+      "where": "(a_o = '2019')"
+     },
+     "filas": 9,
+     "filas_que_resume": 650,
+     "filtro_soql": "(a_o = '2019')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

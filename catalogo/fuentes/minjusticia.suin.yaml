@@ -1,0 +1,46 @@
+id: minjusticia.suin
+titulo: "Normas cargadas en el Sistema Único de Información Normativa SUIN-Juriscol"
+entidad: Ministerio de Justicia y del Derecho
+competencia: administra el SUIN-Juriscol, que reúne y depura la normativa de carácter general (Decreto 1081 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/fiev-nid6.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Ministerio de Justicia y del Derecho, SUIN-Juriscol, lista de normas cargadas. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/fiev-nid6.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, columna_tiempo: a_o}
+datos_personales: ninguno
+estado: publicada
+campos:
+  tipo: {nombre: tipo, tipo: str, desc: "tipo de norma en mayúsculas y sin tildes (LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO…)"}
+  n_mero: {nombre: numero, tipo: str, desc: "número de la norma"}
+  a_o: {nombre: anio, tipo: str, desc: "año de expedición"}
+  subtipo: {nombre: subtipo, tipo: str, desc: "subtipo (LEY ESTATUTARIA, DECRETO ÚNICO…; «NULL» si no tiene)"}
+  vigencia: {nombre: vigencia, tipo: str, desc: "vigencia según SUIN (Vigente, No vigente…)"}
+  entidad: {nombre: entidad, tipo: str, desc: "entidad que la expidió"}
+  sector: {nombre: sector, tipo: str, desc: "sector administrativo"}
+  materia: {nombre: materia, tipo: str, desc: "materias, separadas por «|»"}
+  art_culos: {nombre: articulos, tipo: str, desc: "número de artículos (texto en la fuente)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Ministerio de Justicia y del Derecho, theme: justicia, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una norma; 89 366 filas para 88 010 combinaciones de tipo, número y año"
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "tipo + número + año no es único: resoluciones o decretos de distintas entidades comparten número"
+  - "el tipo viene en mayúsculas sin tildes; hay unas pocas filas con tipo «NULL», «Acto Legislativo» o un número"
+  - "el subtipo vacío viene como el texto «NULL»"
+  - "la vigencia y la materia son las de SUIN: la Ley 2.ª de 1959 sale con materia «Administración de justicia», un error de la fuente que se cita, no se corrige"
+  - "número, año y artículos son texto"
+  decision: "en vivo por tipo, número y año; y conteo por tipo de un año"

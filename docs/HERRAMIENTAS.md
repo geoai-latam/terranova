@@ -43,11 +43,13 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop_contrato_por_id` | ¿Qué dice este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_contratos_buscar` | ¿Qué contratos de SECOP II hablan de esto en su objeto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_entidad` | ¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_contratos_entidad_anio` | ¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
 | `secop_contratos_municipio` | ¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_proveedor` | ¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
 | `secop_convenio_interadministrativo` | ¿Qué es este convenio interadministrativo de SECOP? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_cronograma_proceso` | ¿Cuál es el cronograma de este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_ejecucion_contrato` | ¿Cómo va la ejecución de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_entidades_municipio` | ¿Qué entidades estatales contratan en este municipio y cuál es su NIT? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
 | `secop_facturas_contrato` | ¿Qué facturas tiene registradas este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_garantias_contrato` | ¿Qué pólizas de garantía tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_integrado_contratos_entidad` | ¿Cuántos contratos firmó esta entidad cada año, sumando SECOP I y SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
@@ -152,6 +154,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `funcionpublica_norma_buscar` | ¿Qué dice esta norma sobre este tema? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
 | `funcionpublica_norma_inicio` | ¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
 | `funcionpublica_normas_buscar` | ¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
+| `suin_norma` | ¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 1 |
+| `suin_normas_anio` | ¿Cuántas leyes, decretos y resoluciones de este año están cargados en SUIN-Juriscol? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 1 |
 | `suit_oferta_tramites_entidad` | ¿Qué trámites ofrece esta entidad y cuántas solicitudes tuvo cada uno en el año? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 | `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 
@@ -159,6 +163,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_compraventas_municipio` | ¿Cuántas compraventas de inmuebles hubo en este municipio cada año y por cuánto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |

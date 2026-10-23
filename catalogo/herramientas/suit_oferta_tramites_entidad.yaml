@@ -7,6 +7,7 @@ descripcion: >
   Trámites y otros procedimientos que una entidad tiene inscritos en el SUIT, por NIT y año (2014 a
   2023): código, nombre, solicitudes presenciales y en línea, PQRD, si cuesta y cuántos requisitos
   pide. Cada trámite sale una vez por año aunque la fuente lo repita.
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int, anio: int}
 consulta:

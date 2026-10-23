@@ -7,6 +7,7 @@ descripcion: >
   Contratos de SECOP II de una entidad estatal por su NIT (sin dígito de verificación), por año de
   firma: número de contratos y valor total en pesos. Solo SECOP II; para SECOP I junto, usa
   secop_integrado_contratos_entidad.
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
 consulta:
@@ -16,13 +17,15 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: jbjy-vk9h
-    select: "date_extract_y(fecha_de_firma) AS anio, count(*) AS contratos, sum(valor_del_contrato) AS valor_total"
+    # el nombre de la entidad en cada fila: si el agente supuso un NIT, se ve de quién es el dato
+    select: "date_extract_y(fecha_de_firma) AS anio, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total"
     where: "nit_entidad = '{nit_entidad}'"
     group: anio
     max_filas: 50
-  campos: [nit_entidad, fecha_de_firma, valor_del_contrato]
+  campos: [nit_entidad, nombre_entidad, fecha_de_firma, valor_del_contrato]
 salida: ContratosEntidad
 derivados:
+  entidad: {de: columna, campo: entidad, tipo: str}
   anio: {de: columna, campo: anio, tipo: int}
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
@@ -31,5 +34,5 @@ canario:
   # Medido el 2026-10-22 en jbjy-vk9h: Municipio de Pitalito, 2018 → 14 contratos, $2 654 592 160.
   entrada: {nit_entidad: 891180077}
   verdad: {anio: 2018, contratos: 14, valor_total: 2654592160.0}
-  campos: [anio, contratos, valor_total]
+  campos: [anio, contratos, entidad, valor_total]
   latencia_max_ms: 10000

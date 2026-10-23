@@ -7,6 +7,7 @@ descripcion: >
   Planes anuales de adquisiciones de una entidad en SECOP I por su NIT, año por año: identificador
   del plan, presupuesto total, límites de menor y mínima cuantía y cuántas versiones publicó. El
   detalle de cada plan sale con secop1_paa_detalle.
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
 consulta:

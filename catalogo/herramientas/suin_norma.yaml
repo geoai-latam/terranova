@@ -1,0 +1,33 @@
+id: suin_norma
+version: 1
+familia: normativa
+fuente: minjusticia.suin
+pregunta: "¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene?"
+descripcion: >
+  Si una ley o decreto está vigente y cuántos artículos tiene, por su tipo, número y año, según
+  SUIN-Juriscol (Ministerio de Justicia): subtipo (ley
+  estatutaria, decreto único…), vigencia, entidad que la expidió, sector, materias y número de
+  artículos. El tipo va sin tildes: LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO, CIRCULAR… Puede
+  salir más de una norma si varias entidades usaron el mismo número.
+  (Fuente: MinJusticia, SUIN-Juriscol; licencia: CC BY-SA 4.0.)
+entrada: {tipo: nombre, numero: int, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: fiev-nid6
+    portal: datos.gov.co
+    where: "upper(tipo) = upper('{tipo}') AND n_mero = '{numero}' AND a_o = '{anio}'"
+    max_filas: 20
+  campos: [tipo, n_mero, a_o, subtipo, vigencia, entidad, sector, materia, art_culos]
+salida: NormaSuin
+derivados:
+  articulos_n: {de: columna, campo: art_culos, tipo: int}
+creditos: 1
+canario:
+  # Medido el 2026-10-23 en fiev-nid6: Ley 1581 de 2012 (protección de datos personales).
+  entrada: {tipo: ley, numero: 1581, anio: 2012}
+  verdad: {subtipo: "LEY ESTATUTARIA", vigencia: "Vigente", entidad: "CONGRESO DE COLOMBIA", articulos_n: 30}
+  campos: [anio, articulos, articulos_n, entidad, materia, numero, sector, subtipo, tipo, vigencia]
+  latencia_max_ms: 10000

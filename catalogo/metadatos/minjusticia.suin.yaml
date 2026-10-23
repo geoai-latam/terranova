@@ -1,0 +1,164 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: minjusticia.suin
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/fiev-nid6.json
+pagina: https://www.datos.gov.co/d/fiev-nid6
+titulo: Lista de normas cargadas en el Sistema Único de Información Normativa SUIN-Juriscol
+descripcion: Reporte de normas cargadas en el Sistema Único de Información Normativa SUIN-Juriscol
+publicado: '2021-05-27'
+datos_actualizados: '2026-07-08'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Justicia y Derecho
+etiquetas:
+- suin
+- normas
+- leyes
+- decretos
+- juriscol
+- constituciones
+filas: 89366
+campos:
+  tipo:
+    tipo_fuente: text
+    etiqueta: Tipo
+    descripcion: Describe el tipo de norma (Decreto,Acto legislativo, Leyes, Constituciones, Directivas
+      presidenciales, Circular, Circular externa, Resoluciones)
+    nulos: 0
+    minimo: '49291'
+    comparacion: texto
+    valores:
+      DECRETO: 67078
+      LEY: 11675
+      RESOLUCION: 8491
+      CIRCULAR EXTERNA: 870
+      DIRECTIVA PRESIDENCIAL: 316
+      INSTRUCCION ADMINISTRATIVA CONJUNTA: 241
+      CIRCULAR: 229
+      ACUERDO: 222
+      ACTO LEGISLATIVO: 136
+      RESOLUCION EXTERNA: 37
+      CIRCULAR CONJUNTA: 22
+      CONSTITUCION POLITICA: 20
+      INSTRUCCION: 12
+      DIRECTIVA VICEPRESIDENCIAL: 5
+      CODIGO: 3
+      DIRECTIVA MINISTERIAL: 3
+      'NULL': 2
+      Acto Legislativo: 1
+      CIRCULAR VICEPRESIDENCIAL: 1
+      '49291': 1
+  n_mero:
+    tipo_fuente: text
+    etiqueta: Número
+    descripcion: Registro numérico dado a la norma
+    nulos: 0
+    minimo: 0000-014
+    comparacion: texto
+  a_o:
+    tipo_fuente: text
+    etiqueta: Año
+    descripcion: Registro de expedición de la norma
+    nulos: 0
+    minimo: '102'
+    maximo: 'NULL'
+    comparacion: texto
+  sector:
+    tipo_fuente: text
+    etiqueta: Sector
+    descripcion: Sector asociado con la norma
+    nulos: 0
+    comparacion: texto
+    valores:
+      Hacienda y Crédito Público: 22423
+      Interior: 11509
+      'NULL': 5239
+      Comercio, Industria y Turismo: 4431
+      Transporte: 4386
+      Educación Nacional: 4108
+      Minas y Energía: 4036
+      Defensa Nacional: 4023
+      Salud y Protección Social: 3583
+      Relaciones Exteriores: 3529
+      Función Pública: 3080
+      Justicia y del Derecho: 2963
+      Presidencia de la República: 2611
+      Tecnologías de la Información y de las Comunicaciones: 2594
+      Agricultura y Desarrollo Rural: 2517
+      Trabajo: 2194
+      Vivienda, Ciudad y Territorio: 2017
+      Planeación: 1568
+      Inclusión Social y Reconciliación: 704
+      Ambiente y Desarrollo Sostenible: 417
+  subtipo:
+    tipo_fuente: text
+    etiqueta: Subtipo
+    descripcion: Clasificación de las normas (decretos y leyes)
+    nulos: 0
+    minimo: 27/3/1995
+    comparacion: texto
+    valores:
+      DECRETO ORDINARIO: 50631
+      'NULL': 11878
+      LEY ORDINARIA: 10248
+      DECRETO REGLAMENTARIO: 9589
+      DECRETO LEGISLATIVO: 3941
+      DECRETO LEY: 1474
+      LEY APROBATORIA DE TRATADO: 1000
+      DECRETO CONSTITUCIONAL: 332
+      DECRETO EJECUTIVO: 100
+      LEY MARCO: 52
+      LEY ESTATUTARIA: 46
+      LEY ORGANICA: 40
+      DECRETO ÚNICO: 20
+      DECRETO ÚNICO REGLAMENTARIO (DUR): 7
+      Comisión de Regulación de Energía y Gas+CREG: 2
+      PRESIDENCIA DE LA REPUBLICA: 1
+      27/3/1995: 1
+      MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL: 1
+      4/5/1999: 1
+      MINISTERIO DE RELACIONES EXTERIORES: 1
+  vigencia:
+    tipo_fuente: text
+    etiqueta: Vigencia
+    descripcion: Se refiera al momento en el cual la norma produce efectos jurídicos.
+    nulos: 0
+    minimo: Compilado
+    comparacion: texto
+    valores:
+      Vigente: 72214
+      Derogado: 7777
+      'NULL': 7529
+      Compilado: 1279
+      Declarado Inexequible: 293
+      No vigente: 162
+      Declarado Nulo: 55
+      Derogado Parcialmente: 27
+      Vigente Parcial: 19
+      Suspendido Provisionalmente: 5
+      Inexequible parcialmente: 3
+      Sustituido: 2
+      No ajustado a derecho: 1
+  entidad:
+    tipo_fuente: text
+    etiqueta: Entidad
+    descripcion: Entidad emisora de la norma
+    nulos: 0
+    minimo: '0'
+    comparacion: texto
+  materia:
+    tipo_fuente: text
+    etiqueta: Materia
+    descripcion: Tema relacionado con la norma
+    nulos: 0
+    comparacion: texto
+  art_culos:
+    tipo_fuente: text
+    etiqueta: Artículos
+    descripcion: Número de artículos que contiene la norma
+    nulos: 0
+    minimo: '1'
+    maximo: 'NULL'
+    comparacion: texto

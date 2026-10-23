@@ -6,7 +6,8 @@ pregunta: "¿Qué dice esta norma sobre este tema?"
 descripcion: >
   Busca dentro de una norma del Gestor Normativo de Función Pública por su número (el i= de su
   enlace, p. ej. 56882 para la Ley 1712 de 2014) y devuelve hasta 20 fragmentos alrededor de cada
-  aparición, con cuántas hay. Los textos traen las notas de vigencia de Función Pública.
+  aparición, con cuántas hay. Los textos traen las notas de vigencia de Función Pública. El i= se
+  busca con funcionpublica_normas_buscar; no es el número de la ley.
   (Fuente: Función Pública; licencia: Ley 23 de 1982, art. 41.)
 entrada: {norma: int, buscar: str}
 consulta:

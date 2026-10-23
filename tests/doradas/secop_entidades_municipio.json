@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T09:11:11+00:00",
+ "herramienta": "secop_entidades_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "nombre_entidad, nit_entidad",
+    "id": "jbjy-vk9h",
+    "max_filas": 200,
+    "order": "contratos_todos_los_anios DESC",
+    "portal": "datos.gov.co",
+    "select": "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(valor_del_contrato) AS valor_todos_los_anios",
+    "where": "upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "contratos_todos_los_anios",
+       "nit_entidad",
+       "nombre_entidad",
+       "valor_todos_los_anios"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "contratos_todos_los_anios": "5920",
+        "nit_entidad": "899999172",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "valor_todos_los_anios": "998267670424.18"
+       },
+       {
+        "contratos_todos_los_anios": "3403",
+        "nit_entidad": "899999034",
+        "nombre_entidad": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "valor_todos_los_anios": "137367989607.84"
+       },
+       {
+        "contratos_todos_los_anios": "1993",
+        "nit_entidad": "800201907",
+        "nombre_entidad": "INSTITUTO MUNICIPAL DE RECREACIÓN Y DEPORTES DE CHIA",
+        "valor_todos_los_anios": "82422950442.81"
+       },
+       {
+        "contratos_todos_los_anios": "289",
+        "nit_entidad": "900806301",
+        "nombre_entidad": "IDUVI",
+        "valor_todos_los_anios": "51225489151.44"
+       },
+       {
+        "contratos_todos_los_anios": "223",
+        "nit_entidad": "900233350",
+        "nombre_entidad": "CONCEJO MUNICIPAL CHIA",
+        "valor_todos_los_anios": "6024898558.57"
+       },
+       {
+        "contratos_todos_los_anios": "214",
+        "nit_entidad": "899999172",
+        "nombre_entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "valor_todos_los_anios": "5462166709"
+       },
+       {
+        "contratos_todos_los_anios": "105",
+        "nit_entidad": "899999714",
+        "nombre_entidad": "EMPRESA DE SERVICIOS PUBLICOS DE CHIA E.S.P.",
+        "valor_todos_los_anios": "9125693985.96"
+       },
+       {
+        "contratos_todos_los_anios": "2",
+        "nit_entidad": "8600755581",
+        "nombre_entidad": "Universidad de La Sabana",
+        "valor_todos_los_anios": "49200000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 8,
+      "truncado": false,
+      "vistos": 8
+     },
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "group": "nombre_entidad, nit_entidad",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(valor_del_contrato) AS valor_todos_los_anios",
+      "where": "(upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca'))"
+     },
+     "filas": 8,
+     "filas_que_resume": 12149,
+     "filtro_soql": "(upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

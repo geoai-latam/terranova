@@ -1,0 +1,68 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T08:30:39+00:00",
+ "herramienta": "suin_norma",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "fiev-nid6",
+    "max_filas": 20,
+    "portal": "datos.gov.co",
+    "where": "upper(tipo) = upper('ley') AND n_mero = '1581' AND a_o = '2012'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "art_culos",
+       "entidad",
+       "materia",
+       "n_mero",
+       "sector",
+       "subtipo",
+       "tipo",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2012",
+        "art_culos": "30",
+        "entidad": "CONGRESO DE COLOMBIA",
+        "materia": "Derechos humanos y DIH|Procedimiento general",
+        "n_mero": "1581",
+        "sector": "Interior",
+        "subtipo": "LEY ESTATUTARIA",
+        "tipo": "LEY",
+        "vigencia": "Vigente"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "fiev-nid6",
+     "consulta": {
+      "conjunto": "fiev-nid6",
+      "max_filas": 20,
+      "portal": "datos.gov.co",
+      "where": "(upper(tipo) = upper('ley') AND n_mero = '1581' AND a_o = '2012')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(upper(tipo) = upper('ley') AND n_mero = '1581' AND a_o = '2012')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
