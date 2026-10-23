@@ -56,6 +56,8 @@
 ` y `	`) ni marcas bidi, con
    un máximo de 4000 caracteres por campo y solo dentro de `datos` y de las propiedades de la capa.
 10. Ningún campo fuera de la lista blanca del catálogo.
+11. Con un código DIVIPOLA, `zona_usada.nombre` dice el municipio y el departamento (del índice de
+    cobertura). Si el agente supuso un código errado, el sobre muestra de qué lugar es el dato.
 
 ## 6.3 Códigos de error (estables)
 
@@ -68,7 +70,7 @@
 | `licencia_no_habilitada` | 403 | fuente con licencia `por_verificar` y llave que no es de evaluación (ADR-0007) | no |
 | `no_existe` | 404 | herramienta o recurso inexistente | no |
 | `saldo_agotado` | 429 | créditos del mes agotados (con `Retry-After` hasta el reinicio del mes; sin 402: es gratuito) | no |
-| `limite_tasa` | 429 | exceso de tasa (con `Retry-After`) | no |
+| `limite_tasa` | 429 | exceso de tasa (con `Retry-After`). Por MCP solo gasta `tools/call`: abrir la sesión o listar herramientas no toca fuentes | no |
 | `fuente_no_disponible` | 502 | la fuente respondió error o no conecta | no |
 | `fuente_respuesta_invalida` | 502 | la fuente cambió de esquema o respondió basura | no |
 | `fuente_lenta` | 504 | la fuente no respondió a tiempo | no |

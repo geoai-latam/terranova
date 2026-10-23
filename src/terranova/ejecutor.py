@@ -568,7 +568,7 @@ class Ejecutor:
             herramienta=f"{h.id}@{h.version}",
             estado=estado,
             entrada=valores,
-            zona_usada=_zona(h, valores),
+            zona_usada=_zona(h, valores, self.indice("cobertura_catastral")["municipios"]),
             datos=datos,
             huella=huella(datos),
             geo_result=geo,
@@ -635,14 +635,20 @@ def _aviso_de_copia(hechos: dict[str, Any]) -> str:
     return f"Sale de la copia de Terranova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
 
 
-def _zona(h: Herramienta, v: dict[str, Any]) -> ZonaUsada | None:
+def _zona(
+    h: Herramienta, v: dict[str, Any], municipios: dict[str, Any] | None = None
+) -> ZonaUsada | None:
     if "lon" in v and "lat" in v:
         return ZonaUsada(tipo="punto", valor=[v["lon"], v["lat"]], crs="EPSG:4326")
     for nombre, tipo in h.entrada.items():
         if tipo == "bbox":
             return ZonaUsada(tipo="bbox", valor=v[nombre], crs="EPSG:4326")
         if tipo == "divipola":
-            return ZonaUsada(tipo="divipola", valor=v[nombre])
+            lugar = (municipios or {}).get(v[nombre]) or {}
+            nombre_lugar = ", ".join(
+                x for x in (lugar.get("municipio"), lugar.get("departamento")) if x
+            )
+            return ZonaUsada(tipo="divipola", valor=v[nombre], nombre=nombre_lugar or None)
         if tipo == "codigo_predial":
             return ZonaUsada(tipo="codigo", valor=v[nombre])
     return None

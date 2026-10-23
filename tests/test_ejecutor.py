@@ -83,3 +83,17 @@ def test_sanear_conserva_saltos_y_corta_lo_largo() -> None:
 )
 def test_convertir(valor: Any, tipo: str, esperado: Any) -> None:
     assert convertir(valor, tipo) == esperado
+
+
+def test_zona_por_divipola_dice_el_lugar() -> None:
+    """Regla 11 de rt/1: con un código supuesto (05380 por Granada), el sobre dice el lugar."""
+    from terranova.catalogo import cargar_cobertura
+    from terranova.ejecutor import _zona
+
+    municipios = cargar_cobertura("cobertura_catastral")["municipios"]
+    h = CATALOGO.herramientas["cnmh_masacres_municipio"]
+    for codigo, nombre in [("05380", "LA ESTRELLA, ANTIOQUIA"), ("05313", "GRANADA, ANTIOQUIA")]:
+        zona = _zona(h, {"municipio_divipola": codigo}, municipios)
+        assert zona is not None and zona.valor == codigo and zona.nombre == nombre
+    desconocido = _zona(h, {"municipio_divipola": "99999"}, municipios)
+    assert desconocido is not None and desconocido.nombre is None
