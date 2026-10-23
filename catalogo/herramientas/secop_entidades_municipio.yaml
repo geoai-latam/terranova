@@ -1,0 +1,40 @@
+id: secop_entidades_municipio
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Qué entidades estatales contratan en este municipio y cuál es su NIT?"
+descripcion: >
+  Entidades estatales con sede en un municipio que firman contratos en SECOP II, con su NIT, y sus
+  contratos y valor en pesos de TODOS los años juntos, de la que más contrata a la que menos. Sirve
+  para conocer el NIT de una alcaldía u otra entidad antes de usar las herramientas que lo piden, en
+  vez de suponerlo. Para un año, siga con secop_contratos_entidad o secop_contratos_entidad_anio y
+  el NIT. Municipio y departamento como los escribe SECOP, con tildes.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {municipio: nombre, departamento: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: jbjy-vk9h
+    portal: datos.gov.co
+    select: "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(valor_del_contrato) AS valor_todos_los_anios"
+    # sin distinguir mayúsculas: el agente copia «CHÍA» de DIVIPOLA y SECOP escribe «Chía»
+    where: "upper(ciudad) = upper('{municipio}') AND upper(departamento) = upper('{departamento}')"
+    group: "nombre_entidad, nit_entidad"
+    order: "contratos_todos_los_anios DESC"
+    max_filas: 200
+  campos: [nombre_entidad, nit_entidad, ciudad, departamento, valor_del_contrato]
+salida: EntidadesMunicipio
+derivados:
+  contratos_todos_los_anios: {de: columna, campo: contratos_todos_los_anios, tipo: int}
+  valor_todos_los_anios: {de: columna, campo: valor_todos_los_anios, tipo: float}
+creditos: 3
+canario:
+  # Medido el 2026-10-23 en jbjy-vk9h: Chía, 8 entidades; la que más contrata es la Alcaldía
+  # (899999172) con 5920 contratos. El número crece cada día: mínimo.
+  entrada: {municipio: Chía, departamento: Cundinamarca}
+  verdad: {entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: 899999172}
+  minimos: {contratos_todos_los_anios: 5920}
+  campos: [contratos_todos_los_anios, entidad, nit_entidad, valor_todos_los_anios]
+  latencia_max_ms: 15000

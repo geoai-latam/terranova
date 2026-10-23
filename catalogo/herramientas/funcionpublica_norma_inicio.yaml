@@ -4,9 +4,11 @@ familia: normativa
 fuente: funcionpublica.gestor_normativo
 pregunta: "¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó?"
 descripcion: >
-  El comienzo de una norma del Gestor Normativo de Función Pública por su número (hasta 6 000
-  caracteres): título, fecha de expedición, fecha de entrada en vigencia, medio de publicación y el
-  inicio del texto, con cuántos caracteres tiene la norma entera.
+  El comienzo de una norma del Gestor Normativo de Función Pública (hasta 6 000 caracteres): título,
+  fecha de expedición, fecha de entrada en vigencia, medio de publicación y el inicio del texto, con
+  cuántos caracteres tiene la norma entera. `norma` es el número interno del gestor (el i= de su
+  enlace, p. ej. 56882 para la Ley 1712 de 2014), no el número de la ley: búsquelo con
+  funcionpublica_normas_buscar. Para la vigencia, el subtipo o el número de artículos, use suin_norma.
   (Fuente: Función Pública; licencia: Ley 23 de 1982, art. 41.)
 entrada: {norma: int}
 consulta:

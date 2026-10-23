@@ -18,7 +18,7 @@ consulta:
     portal: datos.gov.co
     select: "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb"
     where: "upper(razon_social) like upper('%{nombre}%')"
-    order: "razon_social"
+    order: "length(razon_social), razon_social"  # la coincidencia más corta primero
     max_filas: 50
   campos: [tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb]
 salida: VigiladasSuperfinancieraBuscar

@@ -186,30 +186,33 @@ verdades:
     familia: contratacion
     pregunta: "¿Cuántos contratos firmó la Alcaldía de Chía en 2023 y por cuánto?"
     herramienta: secop_contratos_entidad
+    alternativas: [secop_contratos_entidad_anio]
     entrada: {nit_entidad: 899999172}
     verdad: {contratos: 924, valor_total: 128866224107.24}
     medicion: "jbjy-vk9h, nit_entidad = '899999172' y fecha_de_firma en 2023: count(*) y sum(valor_del_contrato)"
   - id: c04
     familia: contratacion
     pregunta: "¿Qué tipo de contrato usó más la Alcaldía de Chía en 2023?"
-    herramienta: null
-    fuente: cce.secop2.contratos
-    verdad: {tipo_de_contrato: "Prestación de servicios", contratos: 784}
+    herramienta: secop_contratos_entidad_anio
+    entrada: {nit_entidad: 899999172, anio: 2023}
+    verdad: {tipo_contrato: "Prestación de servicios"}
+    nota: "784 contratos de prestación de servicios sumando sus modalidades; la herramienta los da por modalidad"
     medicion: "jbjy-vk9h, mismo filtro, group by tipo_de_contrato"
   - id: c05
     familia: contratacion
     pregunta: "¿Cuántos contratos de la Alcaldía de Chía en 2023 fueron por contratación directa?"
-    herramienta: null
-    fuente: cce.secop2.contratos
-    verdad: {modalidad_de_contratacion: "Contratación directa", contratos: 747}
+    herramienta: secop_contratos_entidad_anio
+    entrada: {nit_entidad: 899999172, anio: 2023}
+    verdad: {modalidad: "Contratación directa"}
+    nota: "747 por contratación directa sumando los tipos de contrato; la herramienta los da por tipo"
     medicion: "jbjy-vk9h, mismo filtro, group by modalidad_de_contratacion (aparte, 48 «Contratación Directa (con ofertas)»)"
   - id: c06
     familia: contratacion
     pregunta: "¿Qué entidad ha firmado más contratos en Chía?"
-    herramienta: null
-    fuente: cce.secop2.contratos
-    verdad: {nombre_entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: "899999172"}
-    minimos: {contratos: 5920}
+    herramienta: secop_entidades_municipio
+    entrada: {municipio: Chía, departamento: Cundinamarca}
+    verdad: {entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: 899999172}
+    minimos: {contratos_todos_los_anios: 5920}
     medicion: "jbjy-vk9h, ciudad = 'Chía', group by nombre_entidad, nit_entidad"
   # --- empresas (RUES, Confecámaras, datos.gov.co c82u-588k; solo personas jurídicas) ---------
   - id: e01
@@ -223,6 +226,7 @@ verdades:
     familia: empresas
     pregunta: "¿Cuál es la actividad económica principal de Ecopetrol y hasta qué año renovó?"
     herramienta: rues_empresa_por_nit
+    alternativas: [rues_empresas_buscar]
     entrada: {nit: 899999068}
     verdad: {cod_ciiu_act_econ_pri: "0610", ultimo_ano_renovado: "2026"}
     medicion: "c82u-588k, where nit = '899999068'"
@@ -258,45 +262,45 @@ verdades:
   - id: n01
     familia: normativa
     pregunta: "¿La Ley 1581 de 2012 (datos personales) sigue vigente y qué tipo de ley es?"
-    herramienta: null
-    fuente: minjusticia.suin
-    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos: 30}
+    herramienta: suin_norma
+    entrada: {tipo: LEY, numero: 1581, anio: 2012}
+    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos_n: 30}
     medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '1581' AND a_o = '2012'"
   - id: n02
     familia: normativa
     pregunta: "¿Cuántos artículos tiene la ley de transparencia (Ley 1712 de 2014)?"
-    herramienta: null
-    fuente: minjusticia.suin
-    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos: 33}
+    herramienta: suin_norma
+    entrada: {tipo: LEY, numero: 1712, anio: 2014}
+    verdad: {subtipo: "LEY ESTATUTARIA", vigencia: Vigente, articulos_n: 33}
     medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '1712' AND a_o = '2014'"
   - id: n03
     familia: normativa
     pregunta: "¿Qué entidad expidió el Decreto 1077 de 2015 y cuántos artículos tiene?"
-    herramienta: null
-    fuente: minjusticia.suin
-    verdad: {subtipo: "DECRETO ÚNICO", entidad: "MINISTERIO DE VIVIENDA, CIUDAD Y TERRITORIO", articulos: 1931, vigencia: Vigente}
+    herramienta: suin_norma
+    entrada: {tipo: DECRETO, numero: 1077, anio: 2015}
+    verdad: {subtipo: "DECRETO ÚNICO", entidad: "MINISTERIO DE VIVIENDA, CIUDAD Y TERRITORIO", articulos_n: 1931, vigencia: Vigente}
     medicion: "fiev-nid6, where tipo = 'DECRETO' AND n_mero = '1077' AND a_o = '2015'"
   - id: n04
     familia: normativa
     pregunta: "¿La Ley 99 de 1993 (crea el Ministerio de Ambiente) está vigente?"
-    herramienta: null
-    fuente: minjusticia.suin
-    verdad: {vigencia: Vigente, sector: "Ambiente y Desarrollo Sostenible", articulos: 122}
+    herramienta: suin_norma
+    entrada: {tipo: LEY, numero: 99, anio: 1993}
+    verdad: {vigencia: Vigente, sector: "Ambiente y Desarrollo Sostenible", articulos_n: 122}
     medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '99' AND a_o = '1993'"
   - id: n05
     familia: normativa
     pregunta: "¿La Ley 2.ª de 1959 (reservas forestales) sigue vigente?"
-    herramienta: null
-    fuente: minjusticia.suin
-    verdad: {vigencia: Vigente, articulos: 18}
+    herramienta: suin_norma
+    entrada: {tipo: LEY, numero: 2, anio: 1959}
+    verdad: {vigencia: Vigente, articulos_n: 18}
     medicion: "fiev-nid6, where tipo = 'LEY' AND n_mero = '2' AND a_o = '1959'"
     nota: "SUIN la clasifica con materia «Administración de justicia» y sector Justicia: error de la fuente; una respuesta honesta cita lo que dice SUIN, no lo corrige"
   - id: n06
     familia: normativa
     pregunta: "¿Cuántas leyes de 2020 están cargadas en SUIN-Juriscol?"
-    herramienta: null
-    fuente: minjusticia.suin
-    minimos: {leyes: 60}
+    herramienta: suin_normas_anio
+    entrada: {anio: 2020}
+    verdad: {tipo: LEY, normas: 60}
     medicion: "fiev-nid6, count(*) where tipo = 'LEY' AND a_o = '2020'"
   # --- justicia: delitos, muertes violentas y conflicto (medido el 2026-10-23) ----------------
   - id: j01

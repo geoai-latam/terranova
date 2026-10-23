@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T06:00:36+00:00",
+ "grabado": "2026-10-23T08:40:17+00:00",
  "herramienta": "supersolidaria_entidades_buscar",
  "llamadas": [
   {
@@ -8,7 +8,7 @@
     "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
     "id": "kg2d-yfyg",
     "max_filas": 50,
-    "order": "nombreentidad",
+    "order": "length(nombreentidad), nombreentidad",
     "portal": "datos.gov.co",
     "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
     "where": "upper(nombreentidad) like upper('%CONFIAR%')"
@@ -30,6 +30,15 @@
       "kind": "table",
       "rows": [
        {
+        "municipio": "MEDELLÍN",
+        "nit": "811-007-658-1",
+        "nombreactividad": "Otras actividades",
+        "nombreentidad": "FUNDACION CONFIAR",
+        "nombretipo": "Instituciones auxiliares especializadas",
+        "supervision": "2",
+        "ultimo_reporte": "2020"
+       },
+       {
         "municipio": "MONTERÍA",
         "nit": "900-354-104-1",
         "nombreactividad": "Otras actividades",
@@ -38,15 +47,6 @@
         "sigla": "CONFIARCOOP",
         "supervision": "3",
         "ultimo_reporte": "2017"
-       },
-       {
-        "municipio": "MEDELLÍN",
-        "nit": "811-007-658-1",
-        "nombreactividad": "Otras actividades",
-        "nombreentidad": "FUNDACION CONFIAR",
-        "nombretipo": "Instituciones auxiliares especializadas",
-        "supervision": "2",
-        "ultimo_reporte": "2020"
        }
       ]
      }

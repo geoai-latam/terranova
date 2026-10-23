@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T03:57:07+00:00",
+ "grabado": "2026-10-23T09:11:04+00:00",
  "herramienta": "secop_contratos_municipio",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 1,
     "portal": "datos.gov.co",
     "select": "count(*) as contratos, sum(valor_del_contrato) as valor_total",
-    "where": "ciudad = 'Chía' AND departamento = 'Cundinamarca'"
+    "where": "upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -43,11 +43,11 @@
       "max_filas": 1,
       "portal": "datos.gov.co",
       "select": "count(*) as contratos, sum(valor_del_contrato) as valor_total",
-      "where": "(ciudad = 'Chía' AND departamento = 'Cundinamarca')"
+      "where": "(upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca'))"
      },
      "filas": 1,
      "filas_que_resume": 12149,
-     "filtro_soql": "(ciudad = 'Chía' AND departamento = 'Cundinamarca')",
+     "filtro_soql": "(upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

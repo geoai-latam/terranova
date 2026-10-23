@@ -8,6 +8,7 @@ descripcion: >
   firma y origen: número de contratos y valor total en pesos. Cada contrato cuenta una vez, con su
   mayor valor registrado (la fuente lo repite en cada cambio de estado; las adiciones suben el valor).
   Va unos meses detrás de SECOP II: para lo reciente, mejor las herramientas de SECOP II.
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
 consulta:

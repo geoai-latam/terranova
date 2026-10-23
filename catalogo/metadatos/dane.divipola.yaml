@@ -1,0 +1,61 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: dane.divipola
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/gdxc-w37w.json
+pagina: https://www.datos.gov.co/d/gdxc-w37w
+titulo: DIVIPOLA- Códigos municipios
+descripcion: Código de la división Político Administrativa del país, Actualización a corte 30 diciembre
+  2024.
+publicado: '2025-01-24'
+datos_actualizados: '2025-01-24'
+frecuencia_declarada: Semestral
+cobertura_declarada: Departamental
+idioma: Español
+categoria: Mapas Nacionales
+etiquetas:
+- codigo
+- departamento
+- municipio
+- divipola
+- división policito administrativa
+- actualización
+filas: 1122
+campos:
+  cod_dpto:
+    tipo_fuente: text
+    etiqueta: Código Departamento
+    nulos: 0
+    minimo: '05'
+    maximo: '99'
+    comparacion: texto
+  dpto:
+    tipo_fuente: text
+    etiqueta: Nombre Departamento
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+  cod_mpio:
+    tipo_fuente: text
+    etiqueta: Código Municipio
+    nulos: 0
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  nom_mpio:
+    tipo_fuente: text
+    etiqueta: Nombre Municipio
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  tipo_municipio:
+    tipo_fuente: text
+    etiqueta: 'Tipo: Municipio / Isla / Área no municipalizada'
+    nulos: 0
+    maximo: Municipio
+    comparacion: texto
+    valores:
+      Municipio: 1103
+      Área no municipalizada: 18
+      Isla: 1

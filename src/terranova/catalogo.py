@@ -159,6 +159,9 @@ class Comportamiento(_Ficha):
     p95_ms_medido: int | None = Field(default=None, ge=0)
     max_por_pagina: int | None = Field(default=None, ge=1)
     orden_coordenadas: Literal["lon_lat", "lat_lon"] = "lon_lat"
+    # Medido en la fuente: a veces responde vacío sin error (la ANT por utility.arcgis.com, ~25 %).
+    # Antes de decir «no encontrado» se vuelve a preguntar: «no se pudo» no es «no hay».
+    reintentos_si_vacio: int = Field(default=0, ge=0, le=3)
 
 
 IDENTIFICADOR_SQL = r"^[a-z][a-z0-9_]{0,40}$"

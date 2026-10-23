@@ -8,6 +8,7 @@ descripcion: >
   tener varias, p. ej. municipio, concejo y personería) con su código de SECOP, la versión
   publicada, cuántos ítems tiene y su valor total estimado en pesos. Cada ítem cuenta una vez: la
   fuente lo repite por categoría UNSPSC. El código sirve para secop2_paa_items.
+  Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int, anio: int}
 consulta:

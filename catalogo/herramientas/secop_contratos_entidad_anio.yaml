@@ -1,0 +1,43 @@
+id: secop_contratos_entidad_anio
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad?"
+descripcion: >
+  Contratos de SECOP II firmados por una entidad estatal (NIT) en un año, por tipo de contrato
+  (prestación de servicios, obra, suministro…) y modalidad (contratación directa, mínima cuantía,
+  licitación…): número y valor en pesos, del grupo más grande al más chico, y los totales del año
+  (total_contratos, valor_total_anio). Si no tiene el NIT de la entidad, búsquelo con
+  secop_entidades_municipio; no lo suponga.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: jbjy-vk9h
+    portal: datos.gov.co
+    # el nombre de la entidad en cada fila: si el agente supuso un NIT, se ve de quién es el dato
+    select: "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total"
+    where: "nit_entidad = '{nit_entidad}' AND date_extract_y(fecha_de_firma) = {anio}"
+    group: "tipo_de_contrato, modalidad_de_contratacion"
+    order: "contratos DESC"
+    max_filas: 200
+  campos: [nit_entidad, nombre_entidad, fecha_de_firma, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato]
+salida: ContratosEntidadAnio
+derivados:
+  entidad: {de: columna, campo: entidad, tipo: str}
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+  total_contratos: {de: suma, campo: contratos, tipo: int}
+  valor_total_anio: {de: suma, campo: valor_total, tipo: float}
+creditos: 3
+canario:
+  # Medido el 2026-10-23 en jbjy-vk9h: la Alcaldía de Chía (899999172) en 2023, 924 contratos en 29
+  # grupos; el más grande, prestación de servicios por contratación directa: 726 (año cerrado).
+  entrada: {nit_entidad: 899999172, anio: 2023}
+  verdad: {tipo_contrato: "Prestación de servicios", modalidad: "Contratación directa", contratos: 726}
+  minimos: {total_contratos: 924}
+  campos: [contratos, entidad, modalidad, tipo_contrato, total_contratos, valor_total, valor_total_anio]
+  latencia_max_ms: 10000
