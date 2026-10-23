@@ -104,6 +104,8 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **81 herramientas** de ~
 
 ## Siguiente paso concreto
 
+**Al 2026-10-22: 85 herramientas.** Olas 1 y 2: se sumaron el PAA de SECOP II por NIT y por entidad, las multas de SECOP I por municipio y el SECOP I histórico (2004–2017). Las ofertas de SECOP II no se sirven (sería carga). Las reglas aprendidas de cada fuente están en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md#reglas-aprendidas-de-las-fuentes). Pendientes de la ola 2: directorio DIAN y los 5 departamentos de la UPRA (en búsqueda). Sigue la ola 3.
+
 0. **Spec 08 (hecha):** siguen los códigos sin dominio (usos del suelo, destino económico, clases agrológicas) con su resolución del IGAC, la geometría del DANE y el canario de deriva en F7.1.
 1. **F5 · expansión hasta la paridad** (plan en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md)): primero las dos piezas
    genéricas (conector de copia y conector de scrape con estado) y la ola 1. La ola 6 espera permisos.
