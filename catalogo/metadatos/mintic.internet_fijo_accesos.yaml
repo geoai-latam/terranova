@@ -1,0 +1,116 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: mintic.internet_fijo_accesos
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/n48w-gutb.json
+pagina: https://www.datos.gov.co/d/n48w-gutb
+titulo: Internet Fijo Accesos por tecnología y segmento
+descripcion: Número de suscriptores con acceso dedicado a Internet para cada uno de los departamentos
+  y municipios de Colombia, según los datos reportados por los proveedores al último día de cada trimestre.
+  Basados en estos datos y en las proyecciones del DANE para la población por municipio, departamento
+  y en total en Colombia, se muestra el porcentaje de penetración de Internet fijo. Periodo 2015-4T 2019-1T
+publicado: '2021-11-10'
+datos_actualizados: '2024-02-23'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ciencia, Tecnología e Innovación
+etiquetas:
+- suscriptores
+- internet
+- departamentos
+- municipios proveedores trimestre
+- internet fijo
+filas: 2795052
+campos:
+  anno:
+    tipo_fuente: text
+    etiqueta: AÑO
+    nulos: 0
+    minimo: '2016'
+    maximo: '2023'
+    comparacion: texto
+    valores:
+      '2022': 754858
+      '2023': 614227
+      '2021': 399848
+      '2020': 342123
+      '2019': 293282
+      '2018': 233772
+      '2017': 156886
+      '2016': 56
+  trimestre:
+    tipo_fuente: text
+    etiqueta: TRIMESTRE
+    nulos: 0
+    minimo: '1'
+    maximo: '4'
+    comparacion: texto
+    valores:
+      '3': 774134
+      '2': 746674
+      '1': 693804
+      '4': 580440
+  proveedor:
+    tipo_fuente: text
+    etiqueta: PROVEEDOR
+  cod_municipio:
+    tipo_fuente: text
+    etiqueta: COD_MUNICIPIO
+    nulos: 10
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  segmento:
+    tipo_fuente: text
+    etiqueta: SEGMENTO
+    nulos: 0
+    minimo: CORPORATIVO
+    comparacion: texto
+    valores:
+      CORPORATIVO: 893577
+      RESIDENCIAL - ESTRATO 2: 594438
+      RESIDENCIAL - ESTRATO 3: 423739
+      RESIDENCIAL - ESTRATO 1: 418236
+      RESIDENCIAL - ESTRATO 4: 224848
+      RESIDENCIAL - ESTRATO 5: 109898
+      RESIDENCIAL - ESTRATO 6: 85552
+      SIN ESTRATIFICAR: 38396
+      USO PROPIO INTERNO DEL OPERADOR: 6368
+  tecnologia:
+    tipo_fuente: text
+    etiqueta: TECNOLOGIA
+    nulos: 0
+    minimo: CABLE
+    maximo: XDSL
+    comparacion: texto
+    valores:
+      CABLE: 639283
+      FIBER TO THE HOME (FTTH): 630091
+      XDSL: 510367
+      OTRAS TECNOLOGÍAS INALÁMBRICAS: 280690
+      HYBRID FIBER COAXIAL (HFC): 212051
+      SATELITAL: 174319
+      OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX): 156455
+      WIFI: 110824
+      FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB): 20035
+      FIBER TO THE CABINET (FTTC): 19992
+      WIMAX: 15981
+      FIBER TO THE PREMISES: 13299
+      OTRAS TECNOLOGÍAS FIJAS: 7033
+      FIBER TO THE ANTENNA (FTTA): 2594
+      FIBER TO THE NODE (FTTN): 1888
+      NA (NO APLICA): 150
+  no_de_accesos:
+    tipo_fuente: text
+    etiqueta: No DE ACCESOS
+    nulos: 0
+    minimo: '0'
+    maximo: '9995'
+    comparacion: texto

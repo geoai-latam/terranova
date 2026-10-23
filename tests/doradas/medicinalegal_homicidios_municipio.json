@@ -1,0 +1,81 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:05:27+00:00",
+ "herramienta": "medicinalegal_homicidios_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "id": "vtub-3de2",
+    "max_filas": 200,
+    "order": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "portal": "datos.gov.co",
+    "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+    "where": "codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "mecanismo_causal_de_la_lesion_fatal",
+       "sexo_de_la_victima"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "1",
+        "mecanismo_causal_de_la_lesion_fatal": "Contundente",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "2",
+        "mecanismo_causal_de_la_lesion_fatal": "Cortopunzante",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "3",
+        "mecanismo_causal_de_la_lesion_fatal": "Proyectil de arma de fuego",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "1",
+        "mecanismo_causal_de_la_lesion_fatal": "Contundente",
+        "sexo_de_la_victima": "Mujer"
+       },
+       {
+        "casos": "1",
+        "mecanismo_causal_de_la_lesion_fatal": "Cortopunzante",
+        "sexo_de_la_victima": "Mujer"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "completo": true,
+     "conjunto": "vtub-3de2",
+     "consulta": {
+      "conjunto": "vtub-3de2",
+      "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+      "where": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')"
+     },
+     "filas": 5,
+     "filas_que_resume": 8,
+     "filtro_soql": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

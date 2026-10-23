@@ -1,0 +1,183 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:05:36+00:00",
+ "herramienta": "presidencia_victimas_minas_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "ano, condicion, genero",
+    "id": "yhxn-eqqw",
+    "max_filas": 500,
+    "order": "ano, condicion, genero",
+    "portal": "datos.gov.co",
+    "select": "ano, condicion, genero, count(*) AS victimas",
+    "where": "codigodanemunicipio = 05313"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ano",
+       "condicion",
+       "genero",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ano": "1999",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "1"
+       },
+       {
+        "ano": "1999",
+        "condicion": "Civil",
+        "genero": "Muerto",
+        "victimas": "1"
+       },
+       {
+        "ano": "2000",
+        "condicion": "Civil",
+        "genero": "Muerto",
+        "victimas": "1"
+       },
+       {
+        "ano": "2000",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "1"
+       },
+       {
+        "ano": "2001",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "2"
+       },
+       {
+        "ano": "2002",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "1"
+       },
+       {
+        "ano": "2002",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "4"
+       },
+       {
+        "ano": "2003",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "7"
+       },
+       {
+        "ano": "2003",
+        "condicion": "Civil",
+        "genero": "Muerto",
+        "victimas": "6"
+       },
+       {
+        "ano": "2003",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "9"
+       },
+       {
+        "ano": "2004",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "2"
+       },
+       {
+        "ano": "2004",
+        "condicion": "Civil",
+        "genero": "Muerto",
+        "victimas": "6"
+       },
+       {
+        "ano": "2004",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "4"
+       },
+       {
+        "ano": "2004",
+        "condicion": "Fuerza pública",
+        "genero": "Muerto",
+        "victimas": "2"
+       },
+       {
+        "ano": "2005",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "5"
+       },
+       {
+        "ano": "2005",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "7"
+       },
+       {
+        "ano": "2005",
+        "condicion": "Fuerza pública",
+        "genero": "Muerto",
+        "victimas": "4"
+       },
+       {
+        "ano": "2006",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "7"
+       },
+       {
+        "ano": "2006",
+        "condicion": "Fuerza pública",
+        "genero": "Herido",
+        "victimas": "3"
+       },
+       {
+        "ano": "2007",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "4"
+       },
+       {
+        "ano": "2011",
+        "condicion": "Civil",
+        "genero": "Herido",
+        "victimas": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 21,
+      "truncado": false,
+      "vistos": 21
+     },
+     "completo": true,
+     "conjunto": "yhxn-eqqw",
+     "consulta": {
+      "conjunto": "yhxn-eqqw",
+      "group": "ano, condicion, genero",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "ano, condicion, genero, count(*) AS victimas",
+      "where": "(codigodanemunicipio = 05313)"
+     },
+     "filas": 21,
+     "filas_que_resume": 78,
+     "filtro_soql": "(codigodanemunicipio = 05313)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

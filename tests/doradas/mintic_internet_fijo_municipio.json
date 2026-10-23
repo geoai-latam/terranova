@@ -1,0 +1,206 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:05:33+00:00",
+ "herramienta": "mintic_internet_fijo_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "trimestre, tecnologia",
+    "id": "n48w-gutb",
+    "max_filas": 200,
+    "order": "trimestre, tecnologia",
+    "portal": "datos.gov.co",
+    "select": "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos",
+    "where": "cod_municipio = '25175' AND anno = '2023'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "accesos",
+       "tecnologia",
+       "trimestre"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "accesos": "25973",
+        "tecnologia": "CABLE",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "48",
+        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "11893",
+        "tecnologia": "FIBER TO THE HOME (FTTH)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "1",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "2669",
+        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "1889",
+        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "2115",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "19",
+        "tecnologia": "SATELITAL",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "2165",
+        "tecnologia": "WIFI",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "4215",
+        "tecnologia": "XDSL",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "25239",
+        "tecnologia": "CABLE",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "48",
+        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "11602",
+        "tecnologia": "FIBER TO THE HOME (FTTH)",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "1",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "2976",
+        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "1493",
+        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "2040",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "17",
+        "tecnologia": "SATELITAL",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "2761",
+        "tecnologia": "WIFI",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "3658",
+        "tecnologia": "XDSL",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "25014",
+        "tecnologia": "CABLE",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "53",
+        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "12120",
+        "tecnologia": "FIBER TO THE HOME (FTTH)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "1",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "3278",
+        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "2090",
+        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "1928",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "15",
+        "tecnologia": "SATELITAL",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "1673",
+        "tecnologia": "WIFI",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "3153",
+        "tecnologia": "XDSL",
+        "trimestre": "3"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 30,
+      "truncado": false,
+      "vistos": 30
+     },
+     "completo": true,
+     "conjunto": "n48w-gutb",
+     "consulta": {
+      "conjunto": "n48w-gutb",
+      "group": "trimestre, tecnologia",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos",
+      "where": "(cod_municipio = '25175' AND anno = '2023')"
+     },
+     "filas": 30,
+     "filas_que_resume": 6623,
+     "filtro_soql": "(cod_municipio = '25175' AND anno = '2023')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

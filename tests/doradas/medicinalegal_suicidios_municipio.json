@@ -1,0 +1,71 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:05:32+00:00",
+ "herramienta": "medicinalegal_suicidios_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "id": "f75u-mirk",
+    "max_filas": 200,
+    "order": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "portal": "datos.gov.co",
+    "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+    "where": "codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "mecanismo_causal_de_la_lesion_fatal",
+       "sexo_de_la_victima"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "9",
+        "mecanismo_causal_de_la_lesion_fatal": "Generadores de asfixia",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "3",
+        "mecanismo_causal_de_la_lesion_fatal": "Proyectil de arma de fuego",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "3",
+        "mecanismo_causal_de_la_lesion_fatal": "Generadores de asfixia",
+        "sexo_de_la_victima": "Mujer"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "f75u-mirk",
+     "consulta": {
+      "conjunto": "f75u-mirk",
+      "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+      "where": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')"
+     },
+     "filas": 3,
+     "filas_que_resume": 15,
+     "filtro_soql": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

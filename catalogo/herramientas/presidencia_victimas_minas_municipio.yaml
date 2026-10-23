@@ -1,0 +1,35 @@
+id: presidencia_victimas_minas_municipio
+version: 1
+familia: justicia
+fuente: presidencia.victimas_minas
+pregunta: "¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron?"
+descripcion: >
+  Víctimas de minas antipersonal y munición sin explosionar en un municipio (DIVIPOLA), de 1990 a
+  2023: por año, condición (civil o fuerza pública) y resultado (herido o muerto). Solo conteos.
+  (Fuente: Presidencia de la República, Descontamina Colombia; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: yhxn-eqqw
+    portal: datos.gov.co
+    select: "ano, condicion, genero, count(*) AS victimas"
+    where: "codigodanemunicipio = {municipio_divipola}"
+    group: "ano, condicion, genero"
+    order: "ano, condicion, genero"
+    max_filas: 500
+  campos: [codigodanemunicipio, ano, condicion, genero]
+salida: VictimasMinasMunicipio
+derivados:
+  victimas: {de: columna, campo: victimas, tipo: int}
+  total_victimas: {de: suma, campo: victimas, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en yhxn-eqqw: Granada, Antioquia (05313; prueba el cero inicial), 78 víctimas.
+  entrada: {municipio_divipola: "05313"}
+  verdad: {anio: 1999, condicion: "Civil", resultado: "Herido", victimas: 1}
+  minimos: {total_victimas: 78}
+  campos: [anio, condicion, resultado, total_victimas, victimas]
+  latencia_max_ms: 10000

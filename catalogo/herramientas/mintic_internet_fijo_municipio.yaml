@@ -1,0 +1,35 @@
+id: mintic_internet_fijo_municipio
+version: 1
+familia: estadisticas
+fuente: mintic.internet_fijo_accesos
+pregunta: "¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología?"
+descripcion: >
+  Accesos a internet fijo de un municipio (DIVIPOLA) en un año, por trimestre y tecnología (fibra,
+  cable, xDSL, satelital…), sumando todos los proveedores y segmentos. El conjunto llega hasta el
+  tercer trimestre de 2023.
+  (Fuente: MinTIC; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: n48w-gutb
+    portal: datos.gov.co
+    select: "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos"
+    where: "cod_municipio = '{municipio_divipola}' AND anno = '{anio}'"
+    group: "trimestre, tecnologia"
+    order: "trimestre, tecnologia"
+    max_filas: 200
+  campos: [anno, trimestre, cod_municipio, tecnologia, no_de_accesos]
+salida: InternetFijoMunicipio
+derivados:
+  accesos: {de: columna, campo: accesos, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en n48w-gutb: Chía 2023, 30 grupos; el primero, trimestre 1
+  # CABLE: 25973 accesos.
+  entrada: {municipio_divipola: "25175", anio: 2023}
+  verdad: {trimestre: "1", tecnologia: "CABLE", accesos: 25973}
+  campos: [accesos, tecnologia, trimestre]
+  latencia_max_ms: 15000
