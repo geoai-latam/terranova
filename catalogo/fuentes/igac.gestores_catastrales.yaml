@@ -31,3 +31,17 @@ campos:
   estado_act: {nombre: estado, tipo: str, desc: "estado de la gestión (EN OPERACION…)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: el gestor catastral de un municipio; 1 para 11001
+  clave:
+    columna: divipola
+    unica: true
+  operaciones:
+    filtrar: 1.0
+    contar: 0.3
+    ordenar: 1.1
+    agrupar: 0.3
+  hallazgos: []
+  decision: en vivo, como está

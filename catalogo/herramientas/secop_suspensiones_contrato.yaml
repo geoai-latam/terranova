@@ -14,7 +14,8 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: u99c-7mfm
-    select: "id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion"
+    # Spec 07: la fuente trae copias exactas (20 filas, 10 distintas en CO1.PCCNTR.3712964).
+    select: "distinct id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion"
     where: "id_contrato = '{id_contrato}'"
     order: "fecha_de_creacion, tipo"
     max_filas: 1000
@@ -27,6 +28,6 @@ canario:
   # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
   entrada: {id_contrato: CO1.PCCNTR.3712964}
   verdad: {id_contrato: CO1.PCCNTR.3712964}
-  minimos: {numero_registros: 20}
+  minimos: {numero_registros: 10}
   campos: [fecha_aprobacion, fecha_creacion, id_contrato, numero_registros, proposito, tipo]
   latencia_max_ms: 10000

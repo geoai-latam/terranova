@@ -38,5 +38,25 @@ campos:
   unidadmedida: {nombre: unidad_medida, tipo: str, desc: "unidad de la concentración"}
   formafarmaceutica: {nombre: forma_farmaceutica, tipo: str, desc: "forma farmacéutica"}
   modalidad: {nombre: modalidad, tipo: str, desc: "modalidad del registro (fabricar y vender, importar…)"}
+  tiporol: {nombre: rol, tipo: str, desc: "FABRICANTE o IMPORTADOR (los únicos en la fuente, medido 2026-10-22)"}
+  nombrerol: {nombre: empresa_rol, tipo: str, desc: "laboratorio o empresa que cumple el rol"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Instituto Nacional de Vigilancia de Medicamentos y Alimentos, theme: salud, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una presentación de un medicamento por cada rol (fabricante, importador); 10 filas para 5 presentaciones
+    del expediente 31330
+  clave:
+    columna: expediente + consecutivocum + tiporol
+    unica: false
+  operaciones:
+    filtrar: 1.3
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - 'con ibuprofeno: 3 019 filas para 1 822 presentaciones (hasta 8 roles por presentación)'
+  - solo hay dos roles, FABRICANTE e IMPORTADOR, y los cumplen empresas
+  - fechavencimiento viene vacía en la muestra
+  decision: por expediente, una fila por rol mostrando quién; por principio activo, `distinct` sin roles

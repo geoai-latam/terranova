@@ -4,7 +4,9 @@ familia: contratacion
 fuente: cce.secop2.garantias
 pregunta: "¿Qué pólizas de garantía tiene este contrato de SECOP II?"
 descripcion: >
-  Garantías (pólizas) de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  Garantías de un contrato de SECOP II por su identificador (CO1.PCCNTR.…): una fila por amparo de
+  cada póliza (cumplimiento, calidad…), con su valor y vigencia. La fuente a menudo no nombra el
+  amparo («No Definido»): se distinguen por valor y fecha de fin.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -14,19 +16,20 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: gjp9-cutm
-    select: "id_contrato, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza"
+    select: "id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza"
     where: "id_contrato = '{id_contrato}'"
-    order: "fechadecreacionpoliza, subtipopoliza"
+    order: "numeropoliza, fechafinpoliza"
     max_filas: 1000
-  campos: [id_contrato, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza]
+  campos: [id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza]
 salida: SecopGarantiasContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
 creditos: 5
 canario:
-  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
+  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; 3 pólizas × 3 amparos = 9 filas.
+  # Los registros solo crecen.
   entrada: {id_contrato: CO1.PCCNTR.3712964}
   verdad: {id_contrato: CO1.PCCNTR.3712964}
   minimos: {numero_registros: 9}
-  campos: [aseguradora, estado, fecha_creacion, fecha_fin, id_contrato, numero_registros, subtipo_poliza, tipo_poliza, valor]
+  campos: [aseguradora, estado, fecha_creacion, fecha_fin, id_contrato, numero_poliza, numero_registros, subtipo_poliza, tipo_poliza, valor]
   latencia_max_ms: 10000

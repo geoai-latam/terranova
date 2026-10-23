@@ -27,3 +27,23 @@ campos:
   origen: {nombre: origen, tipo: str, desc: "SECOPI o SECOPII"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'un contrato en cada estado que tuvo; Pitalito: 6 074 filas para 3 794 contratos (uno sale 9 veces)'
+  clave:
+    columna: numero_del_contrato
+    unica: false
+  operaciones:
+    filtrar: 1.0
+    contar: 1.3
+    ordenar: 0.2
+    agrupar: 0.3
+  hallazgos:
+  - la fuente repite el contrato en cada cambio de estado (Modificado, Suspendido…), a veces con otro
+    valor y otra fecha de fin
+  - 'sumar filas infla: Pitalito 2025 da 1 748 filas y $174 000 millones; deduplicado, 652 contratos y
+    $63 157 millones'
+  - 'va detrás de SECOP II: en 2026, 719 contratos de Pitalito contra 780 en SECOP II directo'
+  - 106 filas sin fecha de firma
+  decision: etapa previa por contrato (su mayor valor) y luego agregado; para lo reciente, SECOP II

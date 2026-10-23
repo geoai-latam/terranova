@@ -7,6 +7,7 @@ descripcion: >
   Prueba Saber 11 (ICFES) en los colegios de un municipio, por periodo del examen: número de
   estudiantes y promedio del puntaje global, de matemáticas y de lectura crítica. Solo agregados:
   un periodo con menos de 10 estudiantes no sale. Los periodos de 2010 no traen puntaje global.
+  Cada estudiante cuenta una vez, aunque la fuente lo repita (lo hace en 20181, 20194 y 20224).
   (Fuente: ICFES; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -16,7 +17,12 @@ consulta:
   argumentos:
     id: kgxf-xxbe
     portal: datos.gov.co
-    select: "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica"
+    # Spec 07: primero un grupo por estudiante (estu_consecutivo, seudónimo del ICFES que no sale) y
+    # luego el agregado sobre esos grupos. Contar filas daba 3 372 estudiantes en Chía 20224 (son
+    # 1 686) y, en 20181, un promedio global de 317,0 (es 306,2).
+    previo_select: "periodo, estu_consecutivo, avg(punt_global::number) AS g, avg(punt_matematicas::number) AS m, avg(punt_lectura_critica::number) AS l"
+    previo_group: "periodo, estu_consecutivo"
+    select: "periodo, count(*) AS estudiantes, avg(g) AS promedio_global, avg(m) AS promedio_matematicas, avg(l) AS promedio_lectura_critica"
     where: "cole_cod_mcpio_ubicacion = '{municipio_divipola}'"
     group: periodo
     having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas

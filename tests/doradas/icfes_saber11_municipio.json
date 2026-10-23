@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:44:05+00:00",
+ "grabado": "2026-10-23T00:52:18+00:00",
  "herramienta": "icfes_saber11_municipio",
  "llamadas": [
   {
@@ -10,7 +10,9 @@
     "id": "kgxf-xxbe",
     "max_filas": 200,
     "portal": "datos.gov.co",
-    "select": "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica",
+    "previo_group": "periodo, estu_consecutivo",
+    "previo_select": "periodo, estu_consecutivo, avg(punt_global::number) AS g, avg(punt_matematicas::number) AS m, avg(punt_lectura_critica::number) AS l",
+    "select": "periodo, count(*) AS estudiantes, avg(g) AS promedio_global, avg(m) AS promedio_matematicas, avg(l) AS promedio_lectura_critica",
     "where": "cole_cod_mcpio_ubicacion = '25175'"
    },
    "conector": "datos-abiertos-mcp",
@@ -32,9 +34,9 @@
         "promedio_matematicas": "54.2905172413793103"
        },
        {
-        "estudiantes": "1552",
+        "estudiantes": "1550",
         "periodo": "20102",
-        "promedio_matematicas": "54.4852448453608247"
+        "promedio_matematicas": "54.4869548387096774"
        },
        {
         "estudiantes": "499",
@@ -52,9 +54,9 @@
         "promedio_matematicas": "58.1886792452830189"
        },
        {
-        "estudiantes": "1729",
+        "estudiantes": "1728",
         "periodo": "20122",
-        "promedio_matematicas": "49.8438403701561596"
+        "promedio_matematicas": "49.8408564814814815"
        },
        {
         "estudiantes": "512",
@@ -117,15 +119,15 @@
         "estudiantes": "1752",
         "periodo": "20172",
         "promedio_global": "281.2163242009132420",
-        "promedio_lectura_critica": "57.7990867579908676",
+        "promedio_lectura_critica": "57.79908675799086757991",
         "promedio_matematicas": "55.2990867579908676"
        },
        {
-        "estudiantes": "829",
+        "estudiantes": "481",
         "periodo": "20181",
-        "promedio_global": "316.9734620024125452",
-        "promedio_lectura_critica": "63.7852834740651387",
-        "promedio_matematicas": "62.5633293124246080"
+        "promedio_global": "306.2349272349272349",
+        "promedio_lectura_critica": "62.0893970893970894",
+        "promedio_matematicas": "60.2619542619542620"
        },
        {
         "estudiantes": "286",
@@ -135,7 +137,7 @@
         "promedio_matematicas": "67.5244755244755245"
        },
        {
-        "estudiantes": "3756",
+        "estudiantes": "1878",
         "periodo": "20194",
         "promedio_global": "275.2854100106496273",
         "promedio_lectura_critica": "57.1395101171458999",
@@ -163,7 +165,7 @@
         "promedio_matematicas": "60.7439613526570048"
        },
        {
-        "estudiantes": "3372",
+        "estudiantes": "1686",
         "periodo": "20224",
         "promedio_global": "277.4039145907473310",
         "promedio_lectura_critica": "57.8368920521945433",
@@ -186,7 +188,8 @@
       "having": "count(*) >= 10",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "periodo, count(*) AS estudiantes, avg(punt_global::number) AS promedio_global, avg(punt_matematicas::number) AS promedio_matematicas, avg(punt_lectura_critica::number) AS promedio_lectura_critica",
+      "previo_group": "periodo, estu_consecutivo",
+      "select": "periodo, count(*) AS estudiantes, avg(g) AS promedio_global, avg(m) AS promedio_matematicas, avg(l) AS promedio_lectura_critica",
       "where": "(cole_cod_mcpio_ubicacion = '25175')"
      },
      "filas": 23,

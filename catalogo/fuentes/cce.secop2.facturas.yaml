@@ -34,3 +34,17 @@ campos:
   fecha_estiamda_de_pago: {nombre: fecha_estimada_pago, tipo: date, desc: "fecha estimada de pago"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una factura de un contrato; 4 para CO1.PCCNTR.6232610
+  clave:
+    columna: id_pago
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos: []
+  decision: en vivo, como está

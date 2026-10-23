@@ -28,3 +28,17 @@ campos:
   nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un sitio de ejecución de un contrato; 1 para CO1.PCCNTR.3795896
+  clave:
+    columna: localizaci_n
+    unica: true
+  operaciones:
+    filtrar: 0.7
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.3
+  hallazgos: []
+  decision: en vivo, como está

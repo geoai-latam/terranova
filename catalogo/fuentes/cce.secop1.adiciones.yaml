@@ -28,3 +28,17 @@ campos:
   fecha_firma: {nombre: fecha_firma, tipo: date, desc: "fecha de firma"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una adición a una adjudicación de SECOP I; 1 fila para 9378960
+  clave:
+    columna: id_adjudicacion
+    unica: true
+  operaciones:
+    filtrar: 1.2
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.3
+  hallazgos: []
+  decision: en vivo, como está

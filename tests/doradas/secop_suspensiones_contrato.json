@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:54:21+00:00",
+ "grabado": "2026-10-23T00:51:17+00:00",
  "herramienta": "secop_suspensiones_contrato",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 1000,
     "order": "fecha_de_creacion, tipo",
     "portal": "datos.gov.co",
-    "select": "id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion",
+    "select": "distinct id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion",
     "where": "id_contrato = 'CO1.PCCNTR.3712964'"
    },
    "conector": "datos-abiertos-mcp",
@@ -40,13 +40,6 @@
         "tipo": "Reanudacion"
        },
        {
-        "fecha_de_aprobacion": "2023-02-28T00:00:00.000",
-        "fecha_de_creacion": "2022-11-08T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "CONTRATO EN MENCIoN; UNA VEZ SOLUCIONADOS Y/O SUPERADOS LOS INCONVENIENTES QUA OCASIONARON LA SUSPENSIoN.",
-        "tipo": "Reanudacion"
-       },
-       {
         "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
         "fecha_de_creacion": "2023-05-08T00:00:00.000",
         "id_contrato": "CO1.PCCNTR.3712964",
@@ -58,34 +51,6 @@
         "fecha_de_creacion": "2023-05-08T00:00:00.000",
         "id_contrato": "CO1.PCCNTR.3712964",
         "proposito_de_la_modificacion": "LA DISPONIBILIDAD DE SERVICIOS POR PARTE DE ELECTROHUILA NO HACE PARTE DEL ALCANCE DEL CONTRATO; PERO SI ES EXIGIDA POR EL MINISTERIO PARA EXPEDIR LA VIABILIDAD DEL PROYECTO DE· CONSTRUCCIoN DEL HOSPITAL DE PRIMER NIVEL PARA PITALITO HUILA;  POR ELLO SOLICITAMOS  SUSPENDER  LA  EJECUCIoN  DEL CONTRATO DE LA REFERENCIA; HASTA EL DiA 30 DE JUNIO DE 2023.",
-        "tipo": "Suspension"
-       },
-       {
-        "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
-        "fecha_de_creacion": "2023-05-08T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "LA DISPONIBILIDAD DE SERVICIOS POR PARTE DE ELECTROHUILA NO HACE PARTE DEL ALCANCE DEL CONTRATO; PERO SI ES EXIGIDA POR EL MINISTERIO PARA EXPEDIR LA VIABILIDAD DEL PROYECTO DE· CONSTRUCCIoN DEL HOSPITAL DE PRIMER NIVEL PARA PITALITO HUILA;  POR ELLO SOLICITAMOS  SUSPENDER  LA  EJECUCIoN  DEL CONTRATO DE LA REFERENCIA; HASTA EL DiA 30 DE JUNIO DE 2023.",
-        "tipo": "Suspension"
-       },
-       {
-        "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
-        "fecha_de_creacion": "2023-05-08T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "LA DISPONIBILIDAD DE SERVICIOS POR PARTE DE ELECTROHUILA NO HACE PARTE DEL ALCANCE DEL CONTRATO; PERO SI ES EXIGIDA POR EL MINISTERIO PARA EXPEDIR LA VIABILIDAD DEL PROYECTO DE· CONSTRUCCIoN DEL HOSPITAL DE PRIMER NIVEL PARA PITALITO HUILA;  POR ELLO SOLICITAMOS  SUSPENDER  LA  EJECUCIoN  DEL CONTRATO DE LA REFERENCIA; HASTA EL DiA 30 DE JUNIO DE 2023.",
-        "tipo": "Suspension"
-       },
-       {
-        "fecha_de_aprobacion": "2023-05-19T00:00:00.000",
-        "fecha_de_creacion": "2023-05-08T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "LA DISPONIBILIDAD DE SERVICIOS POR PARTE DE ELECTROHUILA NO HACE PARTE DEL ALCANCE DEL CONTRATO; PERO SI ES EXIGIDA POR EL MINISTERIO PARA EXPEDIR LA VIABILIDAD DEL PROYECTO DE· CONSTRUCCIoN DEL HOSPITAL DE PRIMER NIVEL PARA PITALITO HUILA;  POR ELLO SOLICITAMOS  SUSPENDER  LA  EJECUCIoN  DEL CONTRATO DE LA REFERENCIA; HASTA EL DiA 30 DE JUNIO DE 2023.",
-        "tipo": "Suspension"
-       },
-       {
-        "fecha_de_aprobacion": "2023-05-24T00:00:00.000",
-        "fecha_de_creacion": "2023-05-19T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "SE SUSPENDE EL CONTRATO DE  CONSULTORiA N° 290-2022; DE ACUERDO AL PLAZO QUE SE TOME EL MINISTERIO DE SALUD Y PROTECCIoN SOCIAL; HASTA EL DiA 30 DE JULIO DE 2023 Y/O HASTA LA EMISIoN DE LA RESPECTIVA VIABILIDAD TeCNICA DEL PROYECTO POR PARTE DEL MINISTERIO DE SALUD Y PROTECCIoN SOCIAL.",
         "tipo": "Suspension"
        },
        {
@@ -110,45 +75,10 @@
         "tipo": "Reanudacion"
        },
        {
-        "fecha_de_aprobacion": "2023-08-17T00:00:00.000",
-        "fecha_de_creacion": "2023-08-17T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "LOS MOTIVOS QUE OCASIONARON LA  SUSPENSION; FUERON  SUPERADOS DEL CONTRATO N° 290 DE 2023",
-        "tipo": "Reanudacion"
-       },
-       {
-        "fecha_de_aprobacion": "2023-08-17T00:00:00.000",
-        "fecha_de_creacion": "2023-08-17T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "LOS MOTIVOS QUE OCASIONARON LA  SUSPENSION; FUERON  SUPERADOS DEL CONTRATO N° 290 DE 2023",
-        "tipo": "Reanudacion"
-       },
-       {
         "fecha_de_aprobacion": "2023-08-18T00:00:00.000",
         "fecha_de_creacion": "2023-08-18T00:00:00.000",
         "id_contrato": "CO1.PCCNTR.3712964",
         "proposito_de_la_modificacion": "EL CONTRATO EN MENCIoN; YA SUPERO LOS INCONVENIENTES QUA OCASIONARON LA SUSPENSIoN.",
-        "tipo": "Reanudacion"
-       },
-       {
-        "fecha_de_aprobacion": "2023-08-18T00:00:00.000",
-        "fecha_de_creacion": "2023-08-18T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "EL CONTRATO EN MENCIoN; YA SUPERO LOS INCONVENIENTES QUA OCASIONARON LA SUSPENSIoN.",
-        "tipo": "Reanudacion"
-       },
-       {
-        "fecha_de_aprobacion": "2023-08-29T00:00:00.000",
-        "fecha_de_creacion": "2023-08-29T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "EL CONTRATO EN MENSION YA SUPeRO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION; RAZON POR LA CUAL SE REACTIVA.",
-        "tipo": "Reanudacion"
-       },
-       {
-        "fecha_de_aprobacion": "2023-08-29T00:00:00.000",
-        "fecha_de_creacion": "2023-08-29T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "EL CONTRATO EN MENSION YA SUPeRO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION; RAZON POR LA CUAL SE REACTIVA.",
         "tipo": "Reanudacion"
        },
        {
@@ -162,7 +92,7 @@
         "fecha_de_aprobacion": "2023-08-29T00:00:00.000",
         "fecha_de_creacion": "2023-08-29T00:00:00.000",
         "id_contrato": "CO1.PCCNTR.3712964",
-        "proposito_de_la_modificacion": "EL CONTRATO 290 YA SUPERO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION.",
+        "proposito_de_la_modificacion": "EL CONTRATO EN MENSION YA SUPeRO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION; RAZON POR LA CUAL SE REACTIVA.",
         "tipo": "Reanudacion"
        }
       ]
@@ -170,9 +100,9 @@
     ],
     "facts": {
      "completitud": {
-      "total": 20,
+      "total": 10,
       "truncado": false,
-      "vistos": 20
+      "vistos": 10
      },
      "completo": true,
      "conjunto": "u99c-7mfm",
@@ -180,11 +110,11 @@
       "conjunto": "u99c-7mfm",
       "max_filas": 1000,
       "portal": "datos.gov.co",
-      "select": "id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion",
+      "select": "distinct id_contrato, tipo, proposito_de_la_modificacion, fecha_de_creacion, fecha_de_aprobacion",
       "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
      },
-     "cumplen_en_el_portal": 20,
-     "filas": 20,
+     "filas": 10,
+     "filas_que_resume": 20,
      "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3712964')",
      "portal": "datos.gov.co"
     },

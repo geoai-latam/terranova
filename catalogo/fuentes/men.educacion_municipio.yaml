@@ -34,3 +34,17 @@ campos:
   repitencia: {nombre: repitencia, tipo: float, desc: "repitencia, %"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Ministerio de Educación Nacional, theme: educacion, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: los indicadores de un municipio en un año; 14 años para Chía
+  clave:
+    columna: a_o
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.4
+  hallazgos: []
+  decision: en vivo, como está

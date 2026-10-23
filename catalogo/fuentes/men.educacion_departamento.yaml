@@ -34,3 +34,17 @@ campos:
   repitencia: {nombre: repitencia, tipo: float, desc: "repitencia, %"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Ministerio de Educación Nacional, theme: educacion, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: los indicadores de un departamento en un año; 14 años para Cundinamarca
+  clave:
+    columna: ano
+    unica: true
+  operaciones:
+    filtrar: 4.2
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos: []
+  decision: en vivo, como está

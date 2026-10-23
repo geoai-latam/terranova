@@ -29,3 +29,17 @@ campos:
   identificador_compromiso: {nombre: id_compromiso, tipo: str, desc: "compromiso al que pertenece"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un rubro presupuestal de un contrato; 1 para CO1.PCCNTR.2514090
+  clave:
+    columna: identificador_unico
+    unica: true
+  operaciones:
+    filtrar: 0.7
+    contar: 0.2
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos: []
+  decision: en vivo, como está

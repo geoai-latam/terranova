@@ -4,7 +4,8 @@ familia: contratacion
 fuente: cce.secop2.cdps
 pregunta: "¿Qué certificados de disponibilidad presupuestal (CDP) tiene este contrato de SECOP II?"
 descripcion: >
-  CDP de un contrato de SECOP II consultados en SIIF: identificador, estado, destino del gasto,
+  CDP de un contrato de SECOP II consultados en SIIF, uno por proyecto de inversión (BPIN) que
+  financian: identificador, BPIN, estado, destino del gasto,
   saldo del CDP y de vigencias futuras, valor utilizado y saldo por comprometer, con la entidad
   y el contratista (su documento, como lo publica la fuente: ADR-0025).
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
@@ -16,20 +17,21 @@ consulta:
   argumentos:
     id: a86w-fh92
     portal: datos.gov.co
-    select: "id_contrato, id_siif, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor"
+    # Spec 07: la fuente repite cada CDP por BPIN y cada par dos veces (4 filas, 2 distintas).
+    select: "distinct id_contrato, id_siif, bpin_codigo, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor"
     where: "id_contrato = '{id_contrato}'"
-    order: "id_siif"
+    order: "id_siif, bpin_codigo"
     max_filas: 1000
-  campos: [id_contrato, id_siif, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor]
+  campos: [id_contrato, id_siif, bpin_codigo, estado_siif, destino_del_gasto, saldo_cdp, saldo_vigencias_futuras, valor_utilizado, saldo_total_a_comprometer, fecha_consulta_siif, entidad, nit, proveedor, nit_proveedor]
 salida: SecopCdpContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
 creditos: 5
 canario:
-  # Medido el 2026-10-22 directamente en a86w-fh92 (id_contrato = CO1.PCCNTR.5588480): 4
-  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
+  # Medido el 2026-10-22 directamente en a86w-fh92 (id_contrato = CO1.PCCNTR.5588480): 4 filas, 2
+  # distintas (un CDP, dos BPIN); el primero con el orden de la ficha da la verdad. Mínimo: crecen.
   entrada: {id_contrato: "CO1.PCCNTR.5588480"}
-  verdad: {id_contrato: "CO1.PCCNTR.5588480", id_cdp: "CO1.SIIFITEM.122238973"}
-  minimos: {numero_registros: 4}
-  campos: [contratista, destino_gasto, documento_contratista, entidad, estado, id_cdp, id_contrato, nit_entidad, numero_registros, saldo_cdp, saldo_por_comprometer, saldo_vigencias_futuras, valor_utilizado]
+  verdad: {id_contrato: "CO1.PCCNTR.5588480", id_cdp: "CO1.SIIFITEM.122238973", bpin: "2020057890049"}
+  minimos: {numero_registros: 2}
+  campos: [bpin, contratista, destino_gasto, documento_contratista, entidad, estado, id_cdp, id_contrato, nit_entidad, numero_registros, saldo_cdp, saldo_por_comprometer, saldo_vigencias_futuras, valor_utilizado]
   latencia_max_ms: 10000

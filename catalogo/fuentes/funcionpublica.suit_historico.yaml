@@ -30,3 +30,17 @@ campos:
   tr_mites_inscritos_total: {nombre: tramites_total, tipo: int, desc: "trámites inscritos en total"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo de la Función Pública, theme: gobierno, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: los trámites inscritos de una entidad en un mes; 26 meses para 899999001
+  clave:
+    columna: a_o + mes
+    unica: true
+  operaciones:
+    filtrar: 1.1
+    contar: 0.3
+    ordenar: 1.2
+    agrupar: 0.2
+  hallazgos: []
+  decision: en vivo, como está

@@ -31,3 +31,18 @@ campos:
   fecha_de_creaci_n: {nombre: fecha_creacion, tipo: date, desc: "creación del cronograma"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: las fechas del cronograma de un proceso; 2 filas (proceso y portafolio)
+  clave:
+    columna: id_del_proceso
+    unica: true
+  operaciones:
+    filtrar: 1.9
+    contar: 0.2
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos:
+  - las fechas de aceptación de ofertas, adjudicación, garantía y creación vienen vacías en la muestra
+  decision: en vivo, como está

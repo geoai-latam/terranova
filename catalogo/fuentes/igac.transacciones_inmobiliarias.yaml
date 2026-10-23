@@ -31,3 +31,19 @@ campos:
   valor: {nombre: valor, tipo: float, desc: "valor del acto, en pesos; solo promediado"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Geográfico Agustín Codazzi, theme: catastro, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una transacción registrada; 17 069 compraventas en Chía
+  clave:
+    columna: pk
+    unica: true
+  operaciones:
+    filtrar: 0.8
+    contar: 2.0
+    ordenar: 24.4
+    agrupar: 10.4
+  hallazgos:
+  - el valor viene vacío en 8 195 de 17 069 (48 %)
+  - ordenar tarda 24 s y agrupar 10 s
+  decision: agregado por año con mínimo de grupo; el promedio solo sobre las que traen valor

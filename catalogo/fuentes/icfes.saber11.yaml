@@ -30,3 +30,23 @@ campos:
   punt_lectura_critica: {nombre: punt_lectura_critica, tipo: float, desc: "puntaje de lectura crítica; solo promediado"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Colombiano para la Evaluación de la Educación, theme: educacion, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'un estudiante en un periodo del examen; Chía: 26 929 filas para 23 014 estudiantes'
+  clave:
+    columna: periodo + estu_consecutivo
+    unica: false
+  operaciones:
+    filtrar: 0.6
+    contar: 64.5
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - en 20181, 20194 y 20224 la fuente repite estudiantes (hasta 3 veces), con los mismos puntajes
+  - contar filas daba 3 372 estudiantes en Chía 20224 (son 1 686); en 20181, un promedio global de 317,0
+    (es 306,2)
+  - los periodos de 2010 no traen puntaje global ni de lectura crítica
+  - contar todo un municipio tarda ~64 s
+  - 'en frío, la consulta en dos etapas pasó una vez de 90 s; en caliente, de 3 a 11 s'
+  decision: etapa previa por estudiante y luego agregado; nunca grupos de menos de 10 (ADR-0014)

@@ -31,3 +31,19 @@ campos:
   limite_minima_cuantia: {nombre: limite_minima_cuantia, tipo: float, desc: "límite de mínima cuantía, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una versión del plan anual de una entidad; 44 filas para 4 planes (hasta 11 versiones del mismo)
+  clave:
+    columna: nit_entidad + anno_paa + identificador_paa
+    unica: false
+  operaciones:
+    filtrar: 1.2
+    contar: 0.2
+    ordenar: 52.7
+    agrupar: null
+  hallazgos:
+  - cada plan se repite una vez por versión publicada
+  - ordenar tardó 53 s y agrupar no respondió en 300 s sobre un prefijo de NIT
+  decision: en vivo por NIT exacto, mostrando cada versión con su fecha; sin agregados

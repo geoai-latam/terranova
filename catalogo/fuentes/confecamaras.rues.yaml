@@ -40,3 +40,18 @@ campos:
   cod_ciiu_act_econ_sec: {nombre: ciiu_secundaria, tipo: str, desc: "CIIU de la actividad secundaria"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Confederación Colombiana de Cámaras de Comercio, theme: comercio, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una matrícula mercantil; 1 para el NIT 899999068 sin personas naturales
+  clave:
+    columna: matricula
+    unica: true
+  operaciones:
+    filtrar: 0.5
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.3
+  hallazgos:
+  - 'la fuente trae personas naturales: se filtran en la consulta (ADR-0014)'
+  decision: en vivo, sin personas naturales
