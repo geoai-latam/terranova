@@ -1,0 +1,36 @@
+id: invima_medicamento_vencido_por_expediente
+version: 1
+familia: empresas
+fuente: invima.cum_vencidos
+pregunta: "¿Este medicamento tiene el registro vencido en el INVIMA?"
+descripcion: >
+  Presentaciones (CUM) vencidos de un medicamento por su expediente en el INVIMA: producto,
+  titular, registro sanitario y su estado, consecutivo y estado del CUM, principio activo (una fila por
+  cada uno), concentración, forma farmacéutica, vía y ATC. Las vigentes salen en
+  invima_medicamento_por_expediente.
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {expediente: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: vwwf-4ftk
+    select: "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc"
+    where: "expediente = '{expediente}'"
+    order: "consecutivocum, estadocum, principioactivo"
+    max_filas: 500
+  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc]
+salida: InvimaMedicamentoVencidoPorExpediente
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en vwwf-4ftk: el expediente 2203 tiene 3 filas distintas; la primera
+  # (consecutivo 1) es ACETAMINOFEN JARABE X 150 MG / 5 ML.
+  entrada: {expediente: 2203}
+  verdad: {expediente: 2203, consecutivo_cum: 1, titular: "GENFAR S.A.", registro_sanitario: "INVIMA 2017M-007901-R3"}
+  minimos: {numero_registros: 3}
+  campos: [atc, concentracion, consecutivo_cum, estado_cum, estado_registro, expediente, fecha_inactivo, fecha_vencimiento, forma_farmaceutica, numero_registros, presentacion, principio_activo, producto, registro_sanitario, titular, unidad_medida, via_administracion]
+  latencia_max_ms: 10000

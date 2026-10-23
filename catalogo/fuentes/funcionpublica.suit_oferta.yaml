@@ -1,0 +1,48 @@
+id: funcionpublica.suit_oferta
+titulo: "Oferta de trámites y otros procedimientos administrativos (SUIT), con sus solicitudes por año"
+entidad: Departamento Administrativo de la Función Pública (DAFP)
+competencia: administra el Sistema Único de Información de Trámites (Ley 962 de 2005, Decreto 2106 de 2019)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/k7xp-z2d2.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Departamento Administrativo de la Función Pública, SUIT. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/k7xp-z2d2.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO, columna_tiempo: fecha_vigencia}
+datos_personales: ninguno
+estado: publicada
+campos:
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad"}
+  codigo_id_tramite: {nombre: codigo_tramite, tipo: str, desc: "código del trámite en el SUIT"}
+  fuente: {nombre: tramite, tipo: str, desc: "nombre del trámite: la fuente lo publica en la columna `fuente`"}
+  fecha_vigencia: {nombre: anio, tipo: str, desc: "año de las solicitudes"}
+  numero_solicitudes_presenciales: {nombre: solicitudes_presenciales, tipo: int, desc: "solicitudes presenciales"}
+  numero_solicitudes_enlinea: {nombre: solicitudes_en_linea, tipo: int, desc: "solicitudes en línea"}
+  numero_solicitudes_linea_parcial: {nombre: solicitudes_parcialmente_en_linea, tipo: int, desc: "solicitudes parcialmente en línea"}
+  numero_total_solicitudes: {nombre: solicitudes, tipo: int, desc: "solicitudes en el año"}
+  numero_pqrd: {nombre: pqrd, tipo: int, desc: "peticiones, quejas, reclamos y denuncias sobre el trámite"}
+  tiene_costo: {nombre: tiene_costo, tipo: str, desc: "si el trámite cuesta"}
+  numero_de_requisitos: {nombre: requisitos, tipo: int, desc: "número de requisitos"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: "Departamento Administrativo de la Función Pública", accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un trámite de una entidad en un año, repetido hasta 9 veces igual; Chía 2021: 115 filas distintas"
+  clave: {columna: codigo_id_tramite + fecha_vigencia + nit_entidad, unica: false}
+  operaciones: {filtrar: 0.7, contar: 3.5}
+  hallazgos:
+  - "77 890 filas para 67 720 trámite–año–entidad: copias exactas en lo que importa"
+  - "el nombre del trámite viene en la columna `fuente`"
+  - "cubre 2014 a 2023 y no se actualiza desde 2025-08"
+  decision: "en vivo por NIT y año, con distinct"

@@ -1,0 +1,126 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: confecamaras.rues_establecimientos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/nb3d-v3n7.json
+pagina: https://www.datos.gov.co/d/nb3d-v3n7
+titulo: Establecimientos - Agencias - Sucursales
+descripcion: Extracción que contiene los datos básicos del Registro Mercantil que administran las Cámaras
+  de Comercio a nivel Nacional para Establecimientos, Agencias y Sucursales, que se encuentran sincronizados
+  en el Registro Único Empresarial y Social (RUES).
+publicado: '2025-08-11'
+datos_actualizados: '2026-10-02'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Comercio, Industria y Turismo
+etiquetas:
+- establecimiento
+- agencia
+- sucursal
+- rues
+- propietario
+- matricula mercantil
+- camara de comercio
+- confecamaras
+- registro mercantil
+filas: 6335457
+campos:
+  camara_comercio:
+    tipo_fuente: text
+    etiqueta: camara_comercio
+    descripcion: Camara de comercio que realiza la actualización de datos.
+    nulos: 0
+    maximo: VILLAVICENCIO
+    comparacion: texto
+  matricula:
+    tipo_fuente: text
+    etiqueta: matricula
+    descripcion: Número de Matricula Mercantil
+    nulos: 0
+    minimo: '1'
+    maximo: '999999'
+    comparacion: texto
+  ultimo_ano_renovado:
+    tipo_fuente: text
+    etiqueta: ultimo_ano_renovado
+    descripcion: Ultimo Año Renovado
+    nulos: 7341
+    minimo: '0'
+    maximo: '981'
+    comparacion: texto
+  fecha_renovacion:
+    tipo_fuente: text
+    etiqueta: fecha_renovacion
+    descripcion: Fecha de ultima renovación
+    nulos: 1326731
+    minimo: '00000000'
+    maximo: '20301130'
+    comparacion: texto
+  razon_social:
+    tipo_fuente: text
+    etiqueta: razon_social
+    descripcion: Razón Social
+    nulos: 149
+    comparacion: texto
+  estado_matricula:
+    tipo_fuente: text
+    etiqueta: estado_matricula
+    descripcion: Estado Matricula
+    nulos: 0
+    minimo: ACTIVA
+    comparacion: texto
+    valores:
+      CANCELADA: 3725787
+      ACTIVA: 2284140
+      MATRÍCULA CANCELADA LEY 1429: 317542
+      NO ASIGNADO: 3765
+      INACTIVA POR CIERRE DEL ESTABLECIMIENTO: 2352
+      MATRÍCULA CANCELADA POR TRASLADO DE DOMICILIO: 1020
+      MATRÍCULA NUEVA, CONSTITUCIÓN POR TRASLADO: 357
+      NO MATRICULADO: 349
+      NO COMPETENCIA DE LA CAMARA: 99
+      MATRICULA INACTIVA POR PERDIDA DE CALIDAD DE COMERCIANTE: 43
+      INACTIVA: 2
+      SIN ESTADO: 1
+  cod_ciiu_act_econ_pri:
+    tipo_fuente: text
+    etiqueta: cod_ciiu_act_econ_pri
+    descripcion: Código CIIU actividad económica principal
+    nulos: 241721
+    maximo: Z999999
+    comparacion: texto
+  fecha_cancelacion:
+    tipo_fuente: text
+    etiqueta: fecha_cancelacion
+    descripcion: Fecha Cancelación
+    nulos: 2338243
+    minimo: '00000000'
+    maximo: '29042019'
+    comparacion: texto
+  numero_identificacion:
+    tipo_fuente: text
+    etiqueta: numero_identificacion_propietario
+    descripcion: Numero de identificación del propietario
+  categoria_matricula:
+    tipo_fuente: text
+    etiqueta: categoria_matricula
+    descripcion: Categoría Matricula
+    nulos: 0
+    minimo: AGENCIA
+    maximo: SUCURSAL
+    comparacion: texto
+    valores:
+      ESTABLECIMIENTO DE COMERCIO: 6230521
+      AGENCIA: 75610
+      SUCURSAL: 26758
+      PERSONA NATURAL: 2536
+      SOCIEDAD ó PERSONA JURIDICA PRINCIPAL ó ESAL: 32
+  fecha_matricula:
+    tipo_fuente: text
+    etiqueta: fecha_matricula
+    descripcion: Fecha de inscripción de la matricula
+    nulos: 40920
+    minimo: '00000000'
+    maximo: '20290212'
+    comparacion: texto

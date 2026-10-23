@@ -1,0 +1,132 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: funcionpublica.suit_oferta
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/k7xp-z2d2.json
+pagina: https://www.datos.gov.co/d/k7xp-z2d2
+titulo: Oferta de Trámites, Otros Procedimientos Administrativos (OPA) y Consultas de Acceso a Información
+  Pública por parte de las entidades que conforman la Rama Ejecutiva del Estado colombiano.
+descripcion: 'Listado general de Trámites, Otros Procedimientos Administrativos (OPA) y Consultas de Acceso
+  a Información Pública vigentes al 31 de diciembre del año correspondiente, ofrecidos por las entidades,
+  instituciones, organismos autónomos, autoridades, corporaciones, ministerios, departamentos administrativos,
+  unidades administrativas especiales, consejos, fondos, entes universitarios y demás organismos que integran
+  la Rama Ejecutiva del Estado colombiano. Esta información se encuentra registrada en el Sistema Único
+  de Información de Trámites – SUIT. Nos interesa conocer su opinión sobre nuestros conjuntos de datos.
+  Lo invitamos a diligenciar esta breve encuesta de satisfacción de datos abiertos: https://www1.funcionpublica.gov.co/participacion-transparencia-y-servicio-al-ciudadano/evaluacion-experiencia-ciudadana
+  Evaluación Experiencia Ciudadana - Función Pública'
+publicado: '2025-08-05'
+datos_actualizados: '2025-08-05'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Función pública
+etiquetas:
+- datos de operación
+- trámites
+- racionalización
+- servicio al ciudadano
+- oferta institucional
+- niveles de servicio
+- pqrds
+- solicitudes recibidas
+filas: 77890
+campos:
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: NOMBRE DE LA ENTIDAD
+    descripcion: Denominación verbal dada a la entidad que administra el trámite
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: NIT  DE LA ENTIDAD
+    descripcion: Número o codigo de indentificación tributaria
+  codigo_id_tramite:
+    tipo_fuente: text
+    etiqueta: CODIGO SUIT TRÁMITE
+    descripcion: Código numerico de Identificación del trámite u otro procedimiento administrativo
+    nulos: 0
+    minimo: '10'
+    maximo: '9992'
+    comparacion: texto
+  fecha_vigencia:
+    tipo_fuente: text
+    etiqueta: FECHA DE VIGENCIA
+    descripcion: Es la fecha de realización de la consulta en el Sistema SUIT, se publican los registros
+      encontrados en la base de datos, hasta la fecha de corte, el año de esta fecha se considera el año
+      de vigencia
+    nulos: 0
+    minimo: '2014'
+    maximo: '2023'
+    comparacion: texto
+    valores:
+      '2021': 14786
+      '2022': 14670
+      '2020': 11047
+      '2019': 10558
+      '2018': 9996
+      '2023': 7203
+      '2017': 3848
+      '2016': 2853
+      '2015': 1835
+      '2014': 1094
+  fuente:
+    tipo_fuente: text
+    etiqueta: FUENTE
+    descripcion: Denominación o nombre que se le asigno al trámite u Opa.
+    nulos: 0
+    comparacion: texto
+  numero_solicitudes_presenciales:
+    tipo_fuente: text
+    etiqueta: NOMBRE COMUN
+    descripcion: Cantidad de solicitudes de inicio de trámite u Opas radicadas por los ciudadanos en forma
+      presencial, desde el 01 de enero hasta el 31 de diciembre del año de vigencia.
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+  numero_solicitudes_linea_parcial:
+    tipo_fuente: text
+    etiqueta: PROPOSITO DEL REGISTRO
+    descripcion: Cantidad de solicitudes de inicio de trámites u Opas, que fueron radicas y resueltas
+      parcialmente atravez de internet -en linea-, desde el 01 de enero hasta el 31 de diciembre del año
+      de vigencia.
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+  numero_solicitudes_enlinea:
+    tipo_fuente: text
+    etiqueta: NOMBRE RESULTADO
+    descripcion: Cantidad de solicitudes de inicio de trámites u Opas, que fueron radicas y resueltas
+      completamente atravez de internet -en linea-, desde el 01 de enero hasta el 31 de diciembre del
+      año de vigencia.
+    nulos: 0
+    minimo: '0'
+    maximo: '998'
+    comparacion: texto
+  numero_pqrd:
+    tipo_fuente: text
+    etiqueta: CLASE DE TRAMITE U OPA
+    descripcion: Cantidad de Peticiones, Quejas y Reclamos radicadas por los ciudadanos, desde el 01 de
+      enero hasta el 31 de diciembre del año de vigencia.
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+  numero_total_solicitudes:
+    tipo_fuente: text
+    etiqueta: URL TRAMITE EN LINEA
+    descripcion: 'Suma de los campos: número de solicitudes resueltas en forma presencial mas número de
+      solicitudes resueltas parcialmente en linea, mas número de solicitudes resueltas completamente en
+      linea.'
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+  numero_de_requisitos:
+    tipo_fuente: text
+    etiqueta: NUMERO DE REQUISITOS
+    nulos: 77890
+  tiene_costo:
+    tipo_fuente: text
+    etiqueta: TIENE COSTO
+    nulos: 77890

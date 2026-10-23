@@ -1,0 +1,73 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:56:32+00:00",
+ "herramienta": "corte_constitucional_sentencia",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "v2k4-2t8s",
+    "max_filas": 10,
+    "order": "sentencia",
+    "portal": "datos.gov.co",
+    "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv",
+    "where": "sentencia = 'T-760/08'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "av_apv",
+       "expediente_numero",
+       "expediente_tipo",
+       "fecha_sentencia",
+       "magistrado_a",
+       "proceso",
+       "sala",
+       "sentencia",
+       "sentencia_tipo",
+       "sv_spv"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "av_apv": "No",
+        "expediente_numero": "1281247",
+        "expediente_tipo": "T",
+        "fecha_sentencia": "2008-07-31T00:00:00.000",
+        "magistrado_a": "Manuel José Cepeda Espinosa",
+        "proceso": "Tutela",
+        "sala": "Salas de Revisión",
+        "sentencia": "T-760/08",
+        "sentencia_tipo": "T",
+        "sv_spv": "No"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "v2k4-2t8s",
+     "consulta": {
+      "conjunto": "v2k4-2t8s",
+      "max_filas": 10,
+      "portal": "datos.gov.co",
+      "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv",
+      "where": "(sentencia = 'T-760/08')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(sentencia = 'T-760/08')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
