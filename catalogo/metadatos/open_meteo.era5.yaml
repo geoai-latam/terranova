@@ -1,0 +1,19 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: open_meteo.era5
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://open-meteo.com/en/docs/historical-weather-api
+titulo: Open-Meteo Historical Weather API (best match)
+descripcion: Mezcla IFS HRES (9 km, sin rezago), ERA5 (0,25°) y ERA5-Land (0,1°), ambos con 5 días de
+  rezago, según la documentación de Open-Meteo.
+frecuencia_declarada: Diaria
+idioma: Inglés
+geografia:
+  geometria: raster
+  crs: EPSG:4326
+  extension:
+  - -180.0
+  - -90.0
+  - 180.0
+  - 90.0
+  resolucion_m: 9000.0

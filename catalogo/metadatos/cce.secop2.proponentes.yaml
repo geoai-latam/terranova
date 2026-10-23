@@ -1,0 +1,49 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.proponentes
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/hgi6-6wh3.json
+pagina: https://www.datos.gov.co/d/hgi6-6wh3
+titulo: Proponentes por Proceso SECOP II
+descripcion: Contiene información sobre los proveedores que presentan propuestas en los procesos de contratación
+  pública gestionados a través de la plataforma SECOP II.
+publicado: '2024-09-17'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+filas: 2348111
+campos:
+  id_procedimiento:
+    tipo_fuente: text
+    etiqueta: ID Procedimiento
+    nulos: 0
+    minimo: CO1.REQ.1
+    maximo: CO1.REQ.9999998
+    comparacion: texto
+  fecha_publicaci_n:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha Publicación
+    nulos: 16277
+    minimo: '2015-02-14T00:00:00.000'
+    maximo: '2026-10-20T00:00:00.000'
+    comparacion: fecha
+  nombre_procedimiento:
+    tipo_fuente: text
+    etiqueta: Nombre Procedimiento
+  nit_entidad:
+    tipo_fuente: number
+    etiqueta: NIT Entidad
+  entidad_compradora:
+    tipo_fuente: text
+    etiqueta: Entidad Compradora
+    nulos: 0
+    minimo: _
+    comparacion: texto
+  proveedor:
+    tipo_fuente: text
+    etiqueta: Proveedor
+  nit_proveedor:
+    tipo_fuente: text
+    etiqueta: NIT Proveedor

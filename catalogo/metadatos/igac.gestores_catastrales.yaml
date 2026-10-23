@@ -1,0 +1,84 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.gestores_catastrales
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/bhcx-bx97.json
+pagina: https://www.datos.gov.co/d/bhcx-bx97
+titulo: Gestores Catastrales de Colombia
+descripcion: Gestores Catastrales de Colombia
+publicado: '2025-03-05'
+datos_actualizados: '2025-03-05'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ordenamiento Territorial
+etiquetas:
+- catastro
+filas: 1122
+geografia:
+  geometria: poligono
+  crs: EPSG:4326
+campos:
+  divipola:
+    tipo_fuente: text
+    etiqueta: divipola
+    nulos: 1
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  departamen:
+    tipo_fuente: text
+    etiqueta: departamen
+    nulos: 1
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: municipio
+    nulos: 1
+    minimo: ABEJORRAL
+    comparacion: texto
+  gestor_con:
+    tipo_fuente: text
+    etiqueta: gestor_con
+    nulos: 1
+    minimo: CONTRATO
+    comparacion: texto
+    valores:
+      GESTOR IGAC: 836
+      GESTOR: 265
+      CONTRATO: 20
+  gestor_cat:
+    tipo_fuente: text
+    etiqueta: gestor_cat
+    nulos: 1
+    comparacion: texto
+    valores:
+      IGAC: 836
+      CATASTRO ANTIOQUIA: 112
+      DEPARTAMENTO DE CUNDINAMARCA: 76
+      DEPARTAMENTO DEL VALLE DEL CAUCA: 25
+      ASOMUNICIPIOS: 12
+      MUNICIPIOS ASOCIADOS DEL ALTIPLANO DEL ORIENTE ANTIOQUEÑO MASORA: 5
+      AREA METROPOLITANA DE VALLE DE ABURRA AMV: 5
+      UNIDAD ADMINISTRATIVA ESPECIAL DE CATASTRO DISTRITAL BOGOTA UAECD: 4
+      AREA METROPOLITANA DE CENTRO OCCIDENTE AMCO: 3
+      AREA METROPOLITANA DE BUCARAMANGA AMB: 3
+      MUNICIPIO DE ZIPAQUIRA: 3
+      AREA METROPOLITANA DE BARRANQUILLA AMB: 2
+      MUNICIPIO DE SOACHA: 2
+      MUNICIPIO DE JAMUNDI: 2
+      MUNICIPIO DE TUNJA: 1
+      MUNICIPIO DE FLORIDABLANCA: 1
+      DISTRITO TURISTICO, CULTURAL E HISTORICO DE SANTA MARTA: 1
+      MUNICIPIO DE ENVIGADO: 1
+      MUNICIPIO DE GARZON: 1
+      MUNICIPIO MARINILLA: 1
+  estado_act:
+    tipo_fuente: text
+    etiqueta: estado_act
+    nulos: 1
+    comparacion: texto
+    valores:
+      EN OPERACION: 1121

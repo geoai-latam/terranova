@@ -1,0 +1,118 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: funcionpublica.suit_historico
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/dd24-8p6w.json
+pagina: https://www.datos.gov.co/d/dd24-8p6w
+titulo: Histórico de trámites reportados en el SUIT
+descripcion: 'Información correspondiente a la cantidad de trámites reportados por las entidades de la
+  Rama Ejecutiva de orden nacional en el Sistema Único de información de trámites -SUIT, en las modalidades
+  presencial, parcial o en línea y las acciones de racionalización y trámites racionalizados por las entidades
+  activas. Nos interesa conocer su opinión sobre nuestros conjuntos de datos. Lo invitamos a diligenciar
+  esta breve encuesta de satisfacción de datos abiertos: https://www.funcionpublica.gov.co/encuesta-institucional2'
+publicado: '2025-05-28'
+datos_actualizados: '2025-05-28'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Función pública
+etiquetas:
+- función pública
+- trámites
+- otros procedimientos administrativos
+- política de racionalización de trámites
+- tipo de trámite
+- normativa
+- tecnológica
+- administrativa
+- tipo de racionalización
+- audiencia
+filas: 59947
+campos:
+  nombre_de_la_entidad:
+    tipo_fuente: text
+    etiqueta: NOMBRE DE LA ENTIDAD
+    descripcion: Denominación verbal dada a una Entidad.
+  nit:
+    tipo_fuente: text
+    etiqueta: NIT
+    descripcion: Número de Identificación tributaria de la Entidad.
+  a_o:
+    tipo_fuente: text
+    etiqueta: AÑO
+    descripcion: Datos del tiempo que aplica la información.
+    nulos: 0
+    minimo: '2018'
+    maximo: '2021'
+    comparacion: texto
+    valores:
+      '2020': 29211
+      '2019': 26135
+      '2018': 4558
+      '2021': 43
+  mes:
+    tipo_fuente: number
+    etiqueta: MES
+    descripcion: Datos del tiempo que aplica la información.
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '12': 7162
+      '11': 7133
+      '10': 4859
+      '9': 4847
+      '8': 4836
+      '7': 4817
+      '6': 4804
+      '5': 4794
+      '3': 4763
+      '1': 4762
+      '2': 4748
+      '4': 2422
+  tr_mites_inscritos_presencial:
+    tipo_fuente: text
+    etiqueta: 'TRÁMITES INSCRITOS: PRESENCIAL'
+    descripcion: Indica el número de los trámites u otros procedimientos de manera presencial.
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+  tr_mites_inscritos_en_l_nea:
+    tipo_fuente: text
+    etiqueta: 'TRÁMITES INSCRITOS: EN LÍNEA'
+    descripcion: Indica el número de los trámites u otros procedimientos en línea.
+    nulos: 0
+    minimo: '0'
+    maximo: 'NULL'
+    comparacion: texto
+    valores:
+      '0': 50555
+      '1': 4299
+      '2': 1718
+      '3': 941
+      '4': 495
+      '5': 368
+      '6': 310
+      '7': 277
+      '8': 211
+      '11': 136
+      '9': 109
+      '13': 62
+      'NULL': 45
+      '17': 39
+      '20': 33
+      '28': 31
+      '15': 31
+      '19': 31
+      '12': 30
+      '10': 27
+  tr_mites_inscritos_total:
+    tipo_fuente: text
+    etiqueta: 'TRÁMITES INSCRITOS: TOTAL'
+    descripcion: Indica el número total de los trámites u otros procedimientos inscritos.
+    nulos: 0
+    minimo: '1'
+    maximo: 'NULL'
+    comparacion: texto

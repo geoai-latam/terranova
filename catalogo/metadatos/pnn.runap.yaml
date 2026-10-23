@@ -1,0 +1,35 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: pnn.runap
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer?f=json
+descripcion: 'Esta es la capa con todas las áreas protegidas registradas en el registro único de áreas
+  protegidas download_at: https://storage.googleapis.com/pnn_geodatabase/runap/latest.zip'
+filas: 1936
+geografia:
+  geometria: poligono
+  crs: EPSG:4686
+  capas:
+    '0': Registro Unico Nacional AP
+campos:
+  ap_nombre:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre del area protegida
+  ap_categoria:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Categoria de manejo
+  fecha_inscrita:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Fecha Inscrita
+    minimo: '2011-06-30'
+    maximo: '2026-10-22'
+    comparacion: fecha
+  organizacion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre Autoridad Ambiental
+  area_ha_total_resolucion:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Area Total Hectareas Resolucion
+    minimo: '0.0604'
+    maximo: '12370957.82'
+    comparacion: numero

@@ -1,0 +1,86 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.transacciones_inmobiliarias
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/7y2j-43cv.json
+pagina: https://www.datos.gov.co/d/7y2j-43cv
+titulo: Registro de transacciones inmobiliarias en Colombia IGAC
+descripcion: El dataset corresponde a los 30'905.678 registros de las transacciones inmobiliarias únicas
+  dentro del periodo 2015-2023 para 1.105 municipios de Colombia, construidas a partir de la matricula
+  inmobiliaria, código de DIVIPOLA, el código de la oficina de registro - ORIP, el número del folio y
+  de la anotación, el código del acto de la naturaleza jurídica y el año de radicación. Permite reconocer
+  las transacciones que se refieren a folios nuevos, identificar los registros con indicios de dinámica
+  inmobiliaria, las transacciones que tienen valor y el valor de las transacciones.
+publicado: '2025-04-04'
+datos_actualizados: '2025-04-04'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Vivienda, Ciudad y Territorio
+etiquetas:
+- inmobiliario
+- ordenamiento territorial
+filas: 30903248
+campos:
+  year_radica:
+    tipo_fuente: text
+    etiqueta: YEAR_RADICA
+    descripcion: Año en el que se contabiliza la transacción.
+    nulos: 0
+    minimo: '2015'
+    maximo: '2023'
+    comparacion: texto
+    valores:
+      '2022': 4223565
+      '2023': 3971033
+      '2021': 3850368
+      '2016': 3656455
+      '2019': 3186849
+      '2017': 3184604
+      '2015': 3138029
+      '2018': 3020947
+      '2020': 2671398
+  divipola:
+    tipo_fuente: text
+    etiqueta: DIVIPOLA
+    descripcion: Es la codificación geográfica que permite identificar las divisiones político-administrativas
+      de Colombia de manera única. Se compone de dos (2) dígitos que identifican cada departamento, iniciando
+      con el 05 para el departamento de Antioquia; tres (3) dígitos que identifican cada municipio, a
+      partir del 001 para la capital del departamento.
+    nulos: 0
+    minimo: '11001'
+    maximo: '99773'
+    comparacion: texto
+  cod_natujur:
+    tipo_fuente: number
+    etiqueta: COD_NATUJUR
+    descripcion: 'Es el código del acto jurídico que corresponde de acuerdo con lo establecido por la
+      SNR, se recomienda consultar la Resolución No. 07448 de 11-08-2021 en: https://servicios.supernotariado.gov.co/files/portal/portal-codigosdenaturalezajuridica074482021v4.pdf'
+    nulos: 0
+    minimo: '100'
+    maximo: '4010'
+    comparacion: numero
+  tiene_valor:
+    tipo_fuente: number
+    etiqueta: TIENE_VALOR
+    descripcion: Algunos de los actos jurídicos relacionan el valor de la transacción, por ejemplo, en
+      caso de una compraventa se indica el valor por el cual se transó el predio, en ese caso se encuentra
+      el valor de 1, esto permite hacer conteos fáciles de cuantos actos tienen valor, cuando se están
+      analizando periodos de tiempo.
+    nulos: 0
+    minimo: '0'
+    maximo: '1'
+    comparacion: numero
+    valores:
+      '1': 18219652
+      '0': 12683596
+  valor:
+    tipo_fuente: number
+    etiqueta: VALOR
+    descripcion: Corresponde con el valor de la transacción, en caso que venga vacío se recomienda indagar
+      en el campo documento justificativo y dirigirse a la entidad a conseguir el valor correspondiente
+      y reportarlo al correo obs_inmobiliario@igac.gov.co, para poder enriquecer la información.
+    nulos: 12683596
+    minimo: '0.0'
+    maximo: '3789999940000000'
+    comparacion: numero

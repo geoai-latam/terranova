@@ -1,0 +1,8 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: dane.cnpv2018.municipio
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://geoportal.dane.gov.co/mparcgis/rest/services/MARCO_INTEGRADO/Serv_DatosCNPV2018_Integrados_MGN2018/MapServer?f=json
+titulo: Serv_Capas_MGNintegradoCNPV_2018
+descripcion: Corresponde al servicio que representa nivel de información del Censo Nacional de Población
+  y Vivienda CNPV2018 integrados con el Marco Geoestadístico Nacional MGN, versión 2018

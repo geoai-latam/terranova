@@ -97,6 +97,14 @@ class Cobertura(_Ficha):
     pais: str = Field(pattern=r"^([A-Z]{2}|GLOBAL)$")
     excluye: list[str] = Field(default_factory=list)
     indice: str | None = None
+    columna_tiempo: str | None = Field(
+        default=None,
+        description="columna de la lista blanca que fecha cada fila: su mínimo y máximo cosechados "
+        "son los años que cubre la fuente (spec 08)",
+    )
+    periodo: str | None = Field(
+        default=None, description="años que cubre, escritos a mano cuando no hay columna (spec 08)"
+    )
 
 
 class Comportamiento(_Ficha):
@@ -159,6 +167,70 @@ class Copia(_Ficha):
         return {self.clave, *ventana, *self.indices, *self.texto}
 
 
+Geometria = Literal["punto", "multipunto", "linea", "poligono", "raster"]
+
+
+class Geografia(_Ficha):
+    """Lo geográfico de la fuente, tal como lo declara su servicio (spec 08)."""
+
+    geometria: Geometria
+    crs: str | None = Field(default=None, description="EPSG:… del servicio")
+    extension: list[float] | None = Field(
+        default=None, min_length=4, max_length=4, description="[oeste, sur, este, norte] EPSG:4326"
+    )
+    capas: dict[int, str] = Field(default_factory=dict, description="capa → nombre en el servicio")
+    resolucion_m: float | None = Field(
+        default=None,
+        gt=0,
+        description="tamaño de la celda o del píxel, en metros (raster y mallas)",
+    )
+
+
+class CampoDeLaFuente(_Ficha):
+    """Una columna de la lista blanca según la fuente: su tipo, su texto y lo que contiene."""
+
+    tipo_fuente: str
+    etiqueta: str | None = None
+    descripcion: str | None = None
+    nulos: int | None = Field(default=None, ge=0)
+    minimo: str | None = None
+    maximo: str | None = None
+    comparacion: Literal["numero", "texto", "fecha"] | None = Field(
+        default=None, description="cómo se ordenan mínimo y máximo: en texto, «99» > «500»"
+    )
+    valores: dict[str, int] | None = Field(
+        default=None, description="valores más frecuentes (solo categorías sin datos de personas)"
+    )
+    codigos: dict[str, str] | None = Field(default=None, description="dominio de la fuente")
+
+
+class Metadatos(_Ficha):
+    """Ficha técnica (spec 08): lo que la fuente dice de sí misma, cosechado por
+    `scripts/cosechar_metadatos.py` en `catalogo/metadatos/<fuente>.yaml`. No se edita a mano;
+    lo que la fuente no dice va en la ficha de la fuente (perfil, campos, cobertura)."""
+
+    fuente: str = Field(pattern=ID_FUENTE)
+    metodo: Literal["cosechado", "manual"]
+    cosechado: date
+    origen: str = Field(pattern=r"^https://", description="de dónde salió esta ficha técnica")
+    pagina: str | None = Field(default=None, description="página de la fuente para personas")
+    titulo: str | None = None
+    descripcion: str | None = None
+    publicado: date | None = None
+    datos_actualizados: date | None = Field(
+        default=None, description="última vez que cambiaron los datos, según la fuente"
+    )
+    frecuencia_declarada: str | None = None
+    cobertura_declarada: str | None = None
+    corte: str | None = Field(default=None, description="corte de la información, si lo declara")
+    idioma: str | None = None
+    categoria: str | None = None
+    etiquetas: list[str] = Field(default_factory=list)
+    filas: int | None = Field(default=None, ge=0)
+    geografia: Geografia | None = None
+    campos: dict[str, CampoDeLaFuente] = Field(default_factory=dict)
+
+
 class Fuente(_Ficha):
     id: str = Field(pattern=ID_FUENTE)
     titulo: str
@@ -198,6 +270,8 @@ class Fuente(_Ficha):
             raise ValueError("ADR-0018: un backend interno exige el permiso escrito")
         if self.estado == "publicada" and self.datos_personales == "presentes":
             raise ValueError("ADR-0014: una fuente con datos personales presentes no se publica")
+        if self.cobertura.columna_tiempo and self.cobertura.columna_tiempo not in self.campos:
+            raise ValueError("spec 08: cobertura.columna_tiempo no está en la lista blanca")
         if (self.modo == "copia") != (self.copia is not None):
             raise ValueError("ADR-0024: `modo: copia` va con su bloque `copia:` (y solo con él)")
         if self.copia is not None and (sueltas := self.copia.columnas_usadas - set(self.campos)):
@@ -345,6 +419,9 @@ class Catalogo(BaseModel):
     fuentes: dict[str, Fuente]
     herramientas: dict[str, Herramienta]
     coberturas: set[str] = Field(default_factory=set, description="índices en catalogo/cobertura/")
+    metadatos: dict[str, Metadatos] = Field(
+        default_factory=dict, description="ficha técnica por fuente (spec 08), catalogo/metadatos/"
+    )
 
 
 class CatalogoInvalido(Exception):
@@ -375,7 +452,20 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
                 errores.append(f"{nombre}: id repetido {ficha.id}")
             destino[ficha.id] = ficha  # type: ignore[assignment]
     coberturas = {ruta.stem for ruta in (raiz / "cobertura").glob("*.yaml")}
-    catalogo = Catalogo(fuentes=fuentes, herramientas=herramientas, coberturas=coberturas)
+    metadatos: dict[str, Metadatos] = {}
+    for ruta in sorted((raiz / "metadatos").glob("*.yaml")):
+        nombre = ruta.relative_to(raiz).as_posix()
+        try:
+            m = Metadatos.model_validate(yaml.safe_load(ruta.read_text(encoding="utf-8")))
+        except (ValidationError, yaml.YAMLError) as exc:
+            errores.append(f"{nombre}: {exc}")
+            continue
+        if ruta.stem != m.fuente:
+            errores.append(f"{nombre}: el archivo debe llamarse {m.fuente}.yaml")
+        metadatos[m.fuente] = m
+    catalogo = Catalogo(
+        fuentes=fuentes, herramientas=herramientas, coberturas=coberturas, metadatos=metadatos
+    )
     errores += validar(catalogo)
     if errores:
         raise CatalogoInvalido(errores)
@@ -385,6 +475,14 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
 def validar(catalogo: Catalogo) -> list[str]:
     """Reglas entre fichas (spec 02, §7.3)."""
     errores = []
+    for fid, m in catalogo.metadatos.items():
+        fuente = catalogo.fuentes.get(fid)
+        if fuente is None:
+            errores.append(f"metadatos/{fid}.yaml: la fuente {fid} no existe")
+        elif sueltos := set(m.campos) - set(fuente.campos):
+            errores.append(
+                f"metadatos/{fid}.yaml: describe campos fuera de la lista blanca: {sorted(sueltos)}"
+            )
     for f in catalogo.fuentes.values():
         if f.cobertura.indice and f.cobertura.indice not in catalogo.coberturas:
             errores.append(

@@ -21,7 +21,7 @@ conector: arcgis-mcp
 url: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Municipios_Estadisticas/FeatureServer
 modo: en_vivo
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_}
 datos_personales: ninguno  # agregados municipales
 estado: borrador
 campos:

@@ -1,0 +1,92 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.cronograma
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/f3ev-294c.json
+pagina: https://www.datos.gov.co/d/f3ev-294c
+titulo: SECOPII - Fechas Cronograma
+descripcion: Información de las fechas de los distintos pasos que ocurren en los contratos y procesos
+publicado: '2026-08-31'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- procesos de contratación
+- compra pública
+- contratos
+- secop
+filas: 9077919
+campos:
+  id_del_proceso:
+    tipo_fuente: text
+    etiqueta: ID del Proceso
+    descripcion: Identificador del Proceso
+    nulos: 0
+    minimo: CO1.REQ.1
+    maximo: CO1.REQ.9999999
+    comparacion: texto
+  proceso_de_compra:
+    tipo_fuente: text
+    etiqueta: Proceso de Compra
+    descripcion: Identificador del expediente
+    nulos: 0
+    minimo: CO1.BDOS.1
+    maximo: CO1.BDOS.9999999
+    comparacion: texto
+  modalidad_de_contratacion:
+    tipo_fuente: text
+    etiqueta: Modalidad de Contratacion
+    descripcion: Modalidad del proceso
+    nulos: 0
+    comparacion: texto
+    valores:
+      Contratación directa: 4271409
+      Contratación régimen especial: 3681193
+      Mínima cuantía: 382408
+      Selección Abreviada de Menor Cuantía: 202698
+      Solicitud de información a los Proveedores: 195457
+      Contratación Directa (con ofertas): 106769
+      Selección abreviada subasta inversa: 94876
+      Contratación régimen especial (con ofertas): 53485
+      Concurso de méritos abierto: 36137
+      Licitación pública: 27410
+      Licitación pública Obra Publica: 17722
+      Subasta de prueba: 4286
+      Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes: 2368
+      Enajenación de bienes con subasta: 778
+      Enajenación de bienes con sobre cerrado: 612
+      Licitación Pública Acuerdo Marco de Precios: 259
+      Concurso de méritos con precalificación: 49
+      No definido: 3
+  fecha_de_aceptaci_n_de_ofertas:
+    tipo_fuente: text
+    etiqueta: Fecha Aceptacion de ofertas
+    descripcion: Fecha de Aceptación de ofertas
+    nulos: 8697911
+    comparacion: texto
+  fecha_de_apertura_de_ofertas:
+    tipo_fuente: text
+    etiqueta: Fecha Apertura de Ofertas
+    descripcion: Fecha de Apertura de Ofertas
+    nulos: 8817712
+    comparacion: texto
+  fecha_audiencia_de_adjudicaci:
+    tipo_fuente: text
+    etiqueta: Fecha Audiencia de Adjudicacion
+    descripcion: Fecha de Audiencia de Adjudicación
+    nulos: 9049160
+    comparacion: texto
+  fecha_entrega_garant_a:
+    tipo_fuente: text
+    etiqueta: Fecha entrega garantia
+    descripcion: Fecha de Entrega de las garantías de ejecución del contrato
+    nulos: 8464819
+    comparacion: texto
+  fecha_de_creaci_n:
+    tipo_fuente: text
+    etiqueta: Fecha de creacion
+    descripcion: Fecha de creación de Proceso de Compra
+    nulos: 8976160
+    comparacion: texto

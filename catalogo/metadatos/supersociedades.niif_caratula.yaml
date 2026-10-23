@@ -1,0 +1,119 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supersociedades.niif_caratula
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/6hqw-m3dm.json
+pagina: https://www.datos.gov.co/d/6hqw-m3dm
+titulo: Estados Financieros NIIF- Carátula
+descripcion: '"Datos básicos de la sociedad". Lo invitamos a participar en la siguiente encuesta https://forms.office.com/r/QNC1FantDU'
+publicado: '2021-10-27'
+datos_actualizados: '2026-07-06'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Economía y Finanzas
+filas: 9622096
+campos:
+  nit:
+    tipo_fuente: number
+    etiqueta: NIT
+    descripcion: Número de Identificación Tributaria (NIT) de la Sociedad.
+  numero_radicado:
+    tipo_fuente: text
+    etiqueta: NUMERO_RADICADO
+    descripcion: Numero de radicado en Postal
+    nulos: 0
+    minimo: 2016-01-148552
+    maximo: 2026-01-512015
+    comparacion: texto
+  punto_entrada:
+    tipo_fuente: text
+    etiqueta: PUNTO_ENTRADA
+    descripcion: Descripción del tipo de entrada al que pertenece la sociedad
+    nulos: 0
+    comparacion: texto
+    valores:
+      40 NIIF Pymes - Individual Grupo 2: 4706992
+      40 NIIF Pymes - Individuales: 2368763
+      10 NIIF Plenas - Individual Grupo 1: 631776
+      50 NIIF Pymes - Separado Grupo 2: 454847
+      10 NIIF Plenas - Individuales: 401071
+      50 NIIF Pymes - Separados: 252952
+      20 NIIF Plenas - Separado Grupo 1: 243195
+      20 NIIF Plenas - Separados: 149418
+      60 NIIF Pymes - Consolidado Grupo 2: 129468
+      30 NIIF Plenas - Consolidado Grupo 1: 106924
+      60 NIIF Pymes - Consolidados: 82333
+      30 NIIF Plenas - Consolidados: 72380
+      30 NIIF Plenas - Consolidado: 8496
+      35 NIIF Plenas - Combinado Grupo 1: 8339
+      65 NIIF Pymes - Combinado Grupo 2: 5142
+  taxonomia:
+    tipo_fuente: text
+    etiqueta: TAXONOMIA
+    descripcion: Descripción de la taxonomía del informe financiero diligenciado
+    nulos: 0
+    comparacion: texto
+    valores:
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2022: 2601714
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2023: 979576
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2024: 909669
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2021: 900294
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2025: 895430
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2020: 859119
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2019: 733993
+      01- Estados Financieros de Fin de Ejercicio - Corte 2016: 601686
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2017: 539678
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2018: 530993
+      01 - Estados Financieros de Fin de Ejercicio - Corte 2015: 69944
+  fecha_corte:
+    tipo_fuente: calendar_date
+    etiqueta: FECHA_CORTE
+    descripcion: Fecha en que finaliza el periodo contable a reportar en SIRFIN
+    nulos: 0
+    minimo: '2015-03-31T00:00:00.000'
+    maximo: '2025-12-31T00:00:00.000'
+    comparacion: fecha
+    valores:
+      '2022-12-31T00:00:00.000': 2576736
+      '2023-12-31T00:00:00.000': 976822
+      '2024-12-31T00:00:00.000': 907550
+      '2021-12-31T00:00:00.000': 901189
+      '2025-12-31T00:00:00.000': 893901
+      '2020-12-31T00:00:00.000': 858580
+      '2019-12-31T00:00:00.000': 732788
+      '2016-12-31T00:00:00.000': 599882
+      '2017-12-31T00:00:00.000': 538226
+      '2018-12-31T00:00:00.000': 529810
+      '2015-12-31T00:00:00.000': 68402
+      '2022-11-30T00:00:00.000': 6017
+      '2022-09-30T00:00:00.000': 5451
+      '2022-10-31T00:00:00.000': 4668
+      '2022-06-30T00:00:00.000': 4391
+      '2016-06-30T00:00:00.000': 1368
+      '2017-06-30T00:00:00.000': 1188
+      '2015-06-30T00:00:00.000': 1177
+      '2021-06-30T00:00:00.000': 1085
+      '2023-06-30T00:00:00.000': 1063
+  concepto:
+    tipo_fuente: text
+    etiqueta: CONCEPTO
+    descripcion: Identifica a que corresponde el dato ubicado en la columna valor
+    nulos: 0
+    comparacion: texto
+  periodo:
+    tipo_fuente: text
+    etiqueta: PERIODO
+    descripcion: Instante para el que se diligencia la información.
+    nulos: 0
+    minimo: '2017'
+    comparacion: texto
+  valor:
+    tipo_fuente: text
+    etiqueta: VALOR
+    descripcion: Es el dato que corresponde a la descripción del concepto, diligenciados por las sociedades
+      se presentan como los reportan para mantener la integridad, confiabilidad, disponibilidad de la
+      información
+    nulos: 36
+    minimo: '-'
+    comparacion: texto

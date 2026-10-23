@@ -1,0 +1,34 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ant.zonas_reserva_campesina
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer?f=json
+titulo: Zonas de Reserva Campesina Constituida
+filas: 30
+geografia:
+  geometria: poligono
+  crs: EPSG:4686
+  capas:
+    '0': Zona_de_Reserva_Campesina_Constituida
+campos:
+  NOMBRE_ZON:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre ZRC
+  DEPARTAMENTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Departamento
+  MUNICIPIOS:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Municipio
+  ACTO_ADMIN:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Acto Administrativo
+  Area_HA:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Área HA
+    minimo: '818.38915022'
+    maximo: '473027.146488'
+    comparacion: numero
+  FECHA_CONSTITUCION:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Fecha de Constitución

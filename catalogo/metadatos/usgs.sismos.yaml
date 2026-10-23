@@ -1,0 +1,18 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: usgs.sismos
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://earthquake.usgs.gov/fdsnws/event/1/
+pagina: https://earthquake.usgs.gov/earthquakes/search/
+titulo: USGS ComCat (FDSN event)
+descripcion: Catálogo mundial de sismos en tiempo casi real; los recientes pueden estar en revisión.
+frecuencia_declarada: Diaria
+idioma: Inglés
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+  extension:
+  - -180.0
+  - -90.0
+  - 180.0
+  - 90.0

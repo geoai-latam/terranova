@@ -20,6 +20,7 @@ url: https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapSe
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura:
+  columna_tiempo: fecha_inscrita
   pais: CO
   excluye: []
 datos_personales: ninguno

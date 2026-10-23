@@ -1,0 +1,76 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.catastro.estadisticas_municipio
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Municipios_Estadisticas/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=61b10dc94329461094419a32e129415e
+titulo: Municipios_Estadisticas
+publicado: '2026-03-04'
+datos_actualizados: '2025-03-12'
+etiquetas:
+- Líneas Limítrofes de las Entidades Territoriales
+- Municipios
+- Areas no municipalizadas
+- Límite
+- República de Colombia
+- Distritos
+- Línea
+- Entidades Territoriales
+- Límites Entidades Territoriales
+filas: 123325
+geografia:
+  geometria: poligono
+  crs: EPSG:3857
+  extension:
+  - -81.766815
+  - -4.23198
+  - -66.685409
+  - 13.534596
+  capas:
+    '0': Municipios_Estadisticas
+campos:
+  MpCodigo:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo
+  MUNICIPIO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: MUNICIPIO
+  GESTOR_CATASTRAL:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: GESTOR_CATASTRAL
+  VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_
+    minimo: '2017'
+    maximo: '2025'
+    comparacion: numero
+  VIGENCIA_DE_ACTUALIZACIÓN_RURAL:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: VIGENCIA_DE_ACTUALIZACIÓN_RURAL
+    minimo: '0'
+    maximo: '2025'
+    comparacion: numero
+  VIGENCIA_DE_ACTUALIZACIÓN_URBANA:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: VIGENCIA_DE_ACTUALIZACIÓN_URBANA
+    minimo: '0'
+    maximo: '2025'
+    comparacion: numero
+  ESTADO_CATASTRAL_RURAL:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ESTADO_CATASTRAL_RURAL
+  ESTADO_CATASTRAL_URBANO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ESTADO_CATASTRAL_URBANO
+  Indicador:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Indicador
+  Zona:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Zona
+  Valor:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Valor
+    minimo: '0'
+    maximo: '905070178851600'
+    comparacion: numero

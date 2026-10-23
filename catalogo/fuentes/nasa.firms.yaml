@@ -20,7 +20,7 @@ conector: amenazas-mcp
 url: https://firms.modaps.eosdis.nasa.gov/data/active_fire
 modo: en_vivo
 frescura: {ttl_cache_s: 1800, sla_actualizacion: PT3H}
-cobertura: {pais: GLOBAL}
+cobertura: {pais: GLOBAL, periodo: "los últimos 7 días"}
 datos_personales: ninguno
 estado: borrador
 campos:

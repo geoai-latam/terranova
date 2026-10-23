@@ -1,0 +1,13 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: nasa.firms
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://firms.modaps.eosdis.nasa.gov/active_fire/
+titulo: NASA FIRMS, focos activos (VIIRS y MODIS)
+descripcion: Detecciones de calor por paso de satélite; solo los últimos 7 días en los archivos regionales.
+frecuencia_declarada: Diaria
+idioma: Inglés
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+  resolucion_m: 375.0

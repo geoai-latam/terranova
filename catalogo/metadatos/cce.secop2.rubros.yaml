@@ -1,0 +1,110 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.rubros
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/cwhv-7fnp.json
+pagina: https://www.datos.gov.co/d/cwhv-7fnp
+titulo: SECOP II - Rubros Presupuestales
+descripcion: Resumen de los Rubros y Posiciones por código del rubro, conjunto que opera como detalle
+  del conjunto de datos de compromisos presupuestales de SECOP II
+publicado: '2019-12-27'
+datos_actualizados: '2026-10-09'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- rubros
+- ejecucion presupuestal
+- secop ii
+filas: 5891594
+campos:
+  identificador_compromiso:
+    tipo_fuente: text
+    etiqueta: Identificador Compromiso
+    descripcion: Identificador del Compromiso Presupuestal
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: Identificador del Contrato en la plataforma, inicia con el prefijo CO1.PCCNTR
+    nulos: 0
+    minimo: CO1.PCCNTR.1000001
+    maximo: CO1.PCCNTR.999903
+    comparacion: texto
+  codigo:
+    tipo_fuente: text
+    etiqueta: Codigo
+    descripcion: Código del Rubro
+    nulos: 0
+    minimo: A-01-01-01-001-001
+    comparacion: texto
+    valores:
+      No Definido: 5761147
+      C-3603-1300-14-0-3603025-02: 26225
+      A-02-02-02-008-003: 8503
+      A-02-02-02-009-003: 3223
+      A-02-02-02-008-007: 2962
+      A-02-02-01-003-005: 2109
+      A-03-03-01-001: 1843
+      A-02-02-02-008-002: 1775
+      A-02-02-01-003-006: 1539
+      C-3602-1300-8-0-3602035-02: 1469
+      A-02-02-02-008-005: 1452
+      A-02-02: 1451
+      A-02-02-02-008: 1270
+      C-3605-1300-2-0-3605007-02: 1234
+      A-02-02-01-003-002: 1201
+      C-0401-1003-24-0-0401004-02: 1189
+      A-02-02-01-004-002: 1175
+      C-3602-1300-7-0-3602031-02: 1150
+      A-02-02-01-003-008: 1066
+      A-02-02-01-003-003: 1058
+  nombre:
+    tipo_fuente: text
+    etiqueta: Nombre
+    descripcion: Nombre del Rubro Presupuestal
+  valor_actual:
+    tipo_fuente: number
+    etiqueta: Valor Actual
+    descripcion: Valor actual del Rubro Presupuestal
+    nulos: 0
+    minimo: '0'
+    maximo: '246040996861.84'
+    comparacion: numero
+    valores:
+      '0': 5761472
+      '26531050': 793
+      '30321200': 786
+      '37901500': 655
+      '20000000': 637
+      '10000000': 633
+      '5000000': 628
+      '34111350': 544
+      '30000000': 475
+      '15000000': 438
+      '2000000': 362
+      '40000000': 361
+      '3000000': 316
+      '45550475': 313
+      '6000000': 311
+      '50000000': 299
+      '4000000': 296
+      '23182362': 292
+      '1000000': 281
+      '12000000': 269
+  anno:
+    tipo_fuente: text
+    etiqueta: Anno
+    descripcion: Año al que corresponde el Rubro registrado
+    nulos: 0
+    minimo: '0'
+    maximo: '2022'
+    comparacion: texto
+    valores:
+      '0': 5889882
+      '2021': 1108
+      '2020': 483
+      '2022': 88
+      '2019': 25
+      '2018': 6
+      '2016': 2

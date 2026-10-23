@@ -20,7 +20,7 @@ url: https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map
 modo: en_vivo
 # Producto cerrado (mapa de 2021): no cambia.
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P10Y}
-cobertura: {pais: GLOBAL}
+cobertura: {pais: GLOBAL, periodo: "2021 (mapa cerrado, no se actualiza)"}
 datos_personales: ninguno
 estado: publicada
 campos:

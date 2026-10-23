@@ -1,0 +1,125 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.paa_detalle
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/azeg-sgqg.json
+pagina: https://www.datos.gov.co/d/azeg-sgqg
+titulo: SECOP I - PAA Detalle
+descripcion: Detalle de los planes anuales de adquisiciones publicados en el SECOP I, durante los ultimos
+  3 años
+publicado: '2023-10-26'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- paa
+- plan anual de adquisición
+- secop
+- secop i
+filas: 598425
+campos:
+  id:
+    tipo_fuente: number
+    etiqueta: ID
+    descripcion: Identificador único del registro de la adquisición planeada
+    nulos: 0
+    minimo: '34837338'
+    maximo: '42694800'
+    comparacion: numero
+  codigo_unspsc:
+    tipo_fuente: text
+    etiqueta: Codigo UNSPSC
+    descripcion: Codigo de identificación de Naciones Unidas para el bien o servicio que se busca conseguir
+      con la adquisición
+    nulos: 0
+    comparacion: texto
+  descripcio_item:
+    tipo_fuente: text
+    etiqueta: Descripcion Item
+    descripcion: Descripción del bien o servicio que se busca adquirir
+    nulos: 0
+    comparacion: texto
+  fecha_inicio:
+    tipo_fuente: text
+    etiqueta: Fecha Inicio
+    descripcion: Fecha de Inicio del Proceso de compra correspondiente al ítem
+    nulos: 0
+    minimo: '00012023'
+    maximo: XXXXXXX
+    comparacion: texto
+  duracion_estimada:
+    tipo_fuente: text
+    etiqueta: Duracion Estimada
+    descripcion: Duración Estimada de ejecución del contrato que derive del proceso de compra
+    nulos: 0
+    minimo: '001'
+    comparacion: texto
+  modalidad:
+    tipo_fuente: text
+    etiqueta: Modalidad Seleccion
+    descripcion: Mecanismo de Selección utilizado en el proceso de Compra Pública
+    nulos: 0
+    comparacion: texto
+  fuente_de_recursos:
+    tipo_fuente: text
+    etiqueta: Fuente de Recursos
+    descripcion: Origen de los recursos para la adquisición, entre otros, pueden definirse los recursos
+      propios, empréstitos, regalías o Sistema General de Participaciones
+    nulos: 0
+    maximo: XXX
+    comparacion: texto
+  valor_estimado:
+    tipo_fuente: text
+    etiqueta: Valor Estimado
+    descripcion: Valor estimado del proceso de compra
+    nulos: 0
+    minimo: '0'
+    maximo: XXXXXXXX
+    comparacion: texto
+  valor_estimado_vig_actual:
+    tipo_fuente: text
+    etiqueta: Valor Estimado Vig Actual
+    descripcion: Valor Estimado del proceso, cubierto por la vigencia actual
+    nulos: 0
+    minimo: '0'
+    maximo: XXXXXXXXXX
+    comparacion: texto
+  requiere_vigencias_futuras:
+    tipo_fuente: text
+    etiqueta: Requiere Vigencias Futuras
+    descripcion: Valor Estimado del proceso, cubierto por las vigencias futuras
+    nulos: 0
+    minimo: '000'
+    maximo: VALUE
+    comparacion: texto
+    valores:
+      N/D: 590743
+      NO APLICA: 1026
+      N A: 533
+      'NO': 314
+      'No': 167
+      Se requieren vigencias futuras: 160
+      '500000000': 144
+      '1000000000': 105
+      '20000000': 90
+      '15000000': 89
+      '30000000': 73
+      '10000000': 71
+      '3000000': 67
+      '1500000000': 64
+      No Aplica: 60
+      '200000000': 59
+      '18000000': 57
+      '2000000000': 53
+      '1000000': 49
+      '2000000': 48
+  idpaa:
+    tipo_fuente: number
+    etiqueta: IDPAA
+    descripcion: Identificador unico del plan anual de adquisiciones
+    nulos: 0
+    minimo: '272187'
+    maximo: '372838'
+    comparacion: numero

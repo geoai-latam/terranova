@@ -1,0 +1,80 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: icfes.saber11
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/kgxf-xxbe.json
+pagina: https://www.datos.gov.co/d/kgxf-xxbe
+titulo: Resultados únicos Saber 11
+descripcion: Resultados de las pruebas de Saber 11 del 2010 asl 2022
+publicado: '2022-06-07'
+datos_actualizados: '2023-08-23'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Educación
+etiquetas:
+- saber 11
+- resultados
+filas: 7109704
+campos:
+  periodo:
+    tipo_fuente: text
+    etiqueta: PERIODO
+    descripcion: Periodo de los resultados
+    nulos: 0
+    minimo: '20101'
+    maximo: '20224'
+    comparacion: texto
+    valores:
+      '20194': 1096524
+      '20224': 1065888
+      '20122': 641956
+      '20102': 628374
+      '20112': 617442
+      '20162': 550275
+      '20132': 548596
+      '20172': 548269
+      '20142': 546727
+      '20152': 544491
+      '20101': 41656
+      '20121': 38432
+      '20131': 35179
+      '20111': 32978
+      '20181': 32348
+      '20151': 25973
+      '20141': 24910
+      '20221': 20049
+      '20211': 15528
+      '20201': 15435
+  cole_cod_mcpio_ubicacion:
+    tipo_fuente: text
+    etiqueta: COLE_COD_MCPIO_UBICACION
+    descripcion: Código Municipio de la sede
+    nulos: 23
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  punt_matematicas:
+    tipo_fuente: text
+    etiqueta: PUNT_MATEMATICAS
+    descripcion: Puntaje Matemáticas
+    nulos: 0
+    minimo: '0'
+    maximo: '99.48'
+    comparacion: texto
+  punt_lectura_critica:
+    tipo_fuente: text
+    etiqueta: PUNT_LECTURA_CRITICA
+    descripcion: Puntaje Lectura crítica
+    nulos: 2609523
+    minimo: '0'
+    maximo: '99'
+    comparacion: texto
+  punt_global:
+    tipo_fuente: text
+    etiqueta: PUNT_GLOBAL
+    descripcion: Puntaje Global
+    nulos: 2609523
+    minimo: '0'
+    maximo: '99'
+    comparacion: texto

@@ -1,0 +1,125 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.compromisos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/skc9-met7.json
+pagina: https://www.datos.gov.co/d/skc9-met7
+titulo: SECOP II - Compromisos Presupuestales
+descripcion: En el desarrollo de la ejecución de un contrato, un proceso de compra genera solicitudes
+  para aprobar el compromiso presupuestal para el cual fue planteado, los compromisos presupeustales son
+  aprobados por el Ministerio de Hacienda a través de una interoperabiidad con la plataforma del SIIF,
+  cada consulta en el sistema corresponde a uno de los ítems asociados al proceso de compra pública
+publicado: '2019-10-07'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- compromiso presupuestal
+- ejecución gastos presupuestal
+- siif
+- vigencias futuras
+- presupuesto
+- ejecución
+- gastos
+filas: 5866580
+campos:
+  identificador_nico:
+    tipo_fuente: text
+    etiqueta: Identificador Único
+    descripcion: Identificador único de la Integración ejecutada en la interfase
+  id_contrato:
+    tipo_fuente: text
+    etiqueta: ID Contrato
+    descripcion: Identificador del Contrato, valor creado automáticamente por la plataforma
+    nulos: 0
+    minimo: CO1.PCCNTR.1000001
+    maximo: CO1.PCCNTR.999903
+    comparacion: texto
+  balance_compromiso:
+    tipo_fuente: number
+    etiqueta: Saldo de compromisos CDP
+    descripcion: Saldo comprometido en el Certificado de Disponibilidad Presupuestal
+    nulos: 0
+    minimo: '0'
+    maximo: '922359011671116116'
+    comparacion: numero
+  estado_integraci_n:
+    tipo_fuente: text
+    etiqueta: Ultima consulta al SIIF
+    descripcion: Ultimo tipo de ejecución de la consulta por interoperabilidad al Sistema Integrado de
+      Información Financiera - SIIF Nación
+    nulos: 0
+    minimo: Error
+    comparacion: texto
+    valores:
+      Fallido: 3882643
+      No Definido: 948206
+      Exito: 877583
+      Error: 158147
+      Generated: 1
+  tipo_de_compromiso:
+    tipo_fuente: number
+    etiqueta: Tipo de Compromiso
+    descripcion: ID del tipo de compromiso, donde el valor 0 es de ingresos, el valor 1 corresponde a
+      vigencias futuras.
+    nulos: 0
+    minimo: '0'
+    maximo: '1'
+    comparacion: numero
+    valores:
+      '0': 5762799
+      '1': 103781
+  c_digo_item:
+    tipo_fuente: text
+    etiqueta: Código Item
+    descripcion: Código del ítem, asociado a la solicitud realizada al SIIF
+    nulos: 12
+    minimo: '-'
+    comparacion: texto
+  valor_item:
+    tipo_fuente: number
+    etiqueta: Saldo total comprometido
+    descripcion: Valor en dinero comprometido en total, sumando todos los items asociados al proceso de
+      compra pública
+    nulos: 0
+    minimo: '0'
+    maximo: '922359011671116116'
+    comparacion: numero
+  fecha_registro_item:
+    tipo_fuente: text
+    etiqueta: Fecha Registro Item
+    descripcion: Fecha en la que se registra el ítem en la plataforma
+    nulos: 4850670
+    comparacion: texto
+  valor_a_liberar:
+    tipo_fuente: number
+    etiqueta: Valor a Liberar
+    descripcion: Respuesta de la interoperabilidad, sobre el valor que se libera para cubrir el requerimiento
+      del compromiso presupuestal
+    nulos: 0
+    minimo: '0'
+    maximo: '1800000000000'
+    comparacion: numero
+    valores:
+      '0': 5662353
+      '9000000': 2072
+      '3000000': 1987
+      '6000000': 1826
+      '5400000': 1582
+      '10000000': 1581
+      '12000000': 1491
+      '15000000': 1383
+      '9900000': 1289
+      '3600000': 1200
+      '20000000': 1089
+      '4000000': 1072
+      '7500000': 1037
+      '5000000': 1026
+      '6600000': 984
+      '8000000': 962
+      '2000000': 888
+      '4500000': 871
+      '20216000': 791
+      '18000000': 784

@@ -191,3 +191,53 @@ def test_toda_fuente_tiene_perfil() -> None:
     """Spec 07: las 77 fuentes quedaron perfiladas el 2026-10-22; una nueva entra con perfil."""
     sin_perfil = sorted(f.id for f in cargar().fuentes.values() if f.perfil is None)
     assert not sin_perfil, f"fuentes sin perfil (spec 07): {sin_perfil}"
+
+
+def test_toda_fuente_tiene_ficha_tecnica() -> None:
+    """Spec 08: cosechada de la fuente o, si no publica metadatos, escrita a mano."""
+    catalogo = cargar()
+    sin_ficha = sorted(set(catalogo.fuentes) - set(catalogo.metadatos))
+    assert not sin_ficha, f"fuentes sin catalogo/metadatos/<id>.yaml (spec 08): {sin_ficha}"
+    for fid, m in catalogo.metadatos.items():
+        protocolo = catalogo.fuentes[fid].protocolo
+        if protocolo in ("socrata", "arcgis_rest"):
+            assert m.metodo == "cosechado", f"{fid}: {protocolo} se cosecha, no se escribe a mano"
+
+
+def test_la_ficha_tecnica_no_guarda_valores_de_personas() -> None:
+    """El repo es público (ADR-0014): de una columna que puede traer personas no sale nada."""
+    from terranova.cosecha import _PERSONAS
+
+    for fid, m in cargar().metadatos.items():
+        for columna, campo in m.campos.items():
+            if _PERSONAS.search(columna):
+                assert campo.minimo is None and campo.maximo is None and campo.valores is None, (
+                    f"{fid}.{columna}"
+                )
+
+
+def test_metadatos_fuera_de_la_lista_blanca_rompen_el_catalogo(tmp_path: Path) -> None:
+    raiz = _catalogo_con(tmp_path, FUENTE, lambda _: None)
+    (raiz / "metadatos").mkdir()
+    (raiz / "metadatos" / "igac.catastro.terreno.yaml").write_text(
+        "fuente: igac.catastro.terreno\nmetodo: cosechado\ncosechado: 2026-10-22\n"
+        "origen: https://x.gov.co\ncampos:\n  PROPIETARIO: {tipo_fuente: text}\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogoInvalido, match="fuera de la lista blanca"):
+        cargar(raiz)
+
+
+def test_la_ficha_tecnica_no_guarda_correos_ni_telefonos() -> None:
+    """Un campo de texto libre puede traer contactos de personas (spec 08): ningún valor guardado
+    parece un correo ni anuncia un teléfono."""
+    import re
+
+    # sin patrón de dígitos: un BPIN (3603130014) parece un celular; las cédulas las cubre la
+    # prueba de columnas de personas
+    # y sin palabras sueltas: «Correo Contacto» es el nombre de un campo modificado (una categoría)
+    contacto = re.compile(r"@|(TEL[EÉ]FONO|CELULAR|M[OÓ]VIL)\W{0,3}\d{7}", re.IGNORECASE)
+    for fid, m in cargar().metadatos.items():
+        for columna, campo in m.campos.items():
+            vistos = [campo.minimo or "", campo.maximo or "", *(campo.valores or {})]
+            assert not any(contacto.search(v) for v in vistos), f"{fid}.{columna}"

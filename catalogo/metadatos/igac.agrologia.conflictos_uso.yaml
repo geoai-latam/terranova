@@ -1,0 +1,44 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.agrologia.conflictos_uso
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://mapas.igac.gov.co/server/rest/services/agrologia/conflictos2012territorionacional/MapServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=41c479615fdb4348835fe330078c1646
+titulo: Conflictos de uso de la tierra año 2012. Territorio nacional
+descripcion: Los conflictos de uso de las tierras resultan de las discrepancias entre el uso que hace
+  la población del medio natural y el que debería tener, de acuerdo con sus potencialidades y restricciones
+  ambientales. El IGAC, a través de la Subdirección de Agrología, ha venido investigando durante los últimos
+  25 años, los criterios y metodologías tendientes a establecer el uso y las prácticas de manejo que deben
+  tener los suelos y tierras del país, buscando su productividad sostenible en función de la oferta y
+  demanda ambientales. Su mayor dedicación se ha concentrado en aspectos agrícolas, ganaderos, agroforestales,
+  forestales y de conservación/recuperación de suelos y aguas. Este producto es generado por la Subdirección
+  de Agrología del Instituto Geográfico Agustín Codazzi - IGAC, para el territorio nacional, el cual fue
+  publicado en la obra Suelos y Tierras de Colombia 2016 a escala 1:100.000. Dado que el producto integra
+  varios insumos, se visualiza la fecha de insumo correspondiente al más reciente utilizado durante su
+  elaboración.
+publicado: '2024-12-21'
+etiquetas:
+- Conflictos
+- Uso
+- '2012'
+- Subutilización
+- Sobreutilización
+- Agrología
+filas: 548423
+geografia:
+  geometria: poligono
+  crs: EPSG:9377
+  extension:
+  - -81.7355217929374
+  - -4.22788351499992
+  - -66.8472151419999
+  - 13.3946629429248
+  capas:
+    '0': Conflictos_2012
+campos:
+  UCConfli:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: UCConfli
+  T_Conflicto:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: T_Conflicto

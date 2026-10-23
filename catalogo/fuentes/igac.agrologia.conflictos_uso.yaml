@@ -23,6 +23,7 @@ url: https://mapas.igac.gov.co/server/rest/services/agrologia/conflictos2012terr
 modo: en_vivo
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
 cobertura:
+  periodo: "estudio de 2012"
   pais: CO
   excluye: ["88 San Andrés, Providencia y Santa Catalina (la capa 0 no lo cubre)"]
 datos_personales: ninguno

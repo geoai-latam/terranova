@@ -1,0 +1,142 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.catastro.zona_fisica
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=11a9e1d7e4184a0b83cee631d5ce2d04
+titulo: Zonas Homogéneas Gestor IGAC Vigencias 2026
+descripcion: 'Contiene de las Zonas Homogéneas Físicas (ZHF) y Zonas Homogéneas Geoeconómicas de los municipios
+  que hacen parte de la jurisdicción del IGAC, los cuales cuentan con información que cumple con a la
+  política de datos abiertos del Ministerio de Tecnologías de la Información y las Comunicaciones de Colombia,
+  teniendo en cuenta las excepciones de ley. Cada componente se agrupa en una base de datos, que contiene
+  DATASETS: ZONA_HOMOGENEAS_RURALES: R_ZONAS_HOMOGENEAS_FISICAS, R_ZONAS_HOMOGENEAS_GEOECONOMICAS. ZONA_HOMOGENEA_
+  URBANO: U_ZONAS_HOMOGENEAS_FISICAS, U_ZONAS_HOMOGENEAS_GEOECONOMICAS. Las Zonas Homogéneas Físicas se
+  define como el espacio geográfico con características similares en cuanto a vías, topografía, servicios
+  públicos, uso actual del suelo, norma de uso del suelo, tipificación de las construcciones y/o edificaciones,
+  áreas homogéneas de tierra, disponibilidad de aguas superficiales permanentes u otras variables que
+  permitan diferenciar esta área de las adyacentes. (Res. 1040 de 2023). Las Zonas Homogéneas Geoeconómicas
+  se defines como el espacio geográfico determinado a partir de Zonas Homogéneas Físicas con valores unitarios
+  similares en cuanto a su precio, según las c…'
+publicado: '2026-06-09'
+datos_actualizados: '2026-06-09'
+etiquetas:
+- catastro
+filas: 191762
+geografia:
+  geometria: poligono
+  crs: EPSG:3857
+  extension:
+  - -81.883931
+  - -4.13592
+  - -67.342895
+  - 13.534411
+  capas:
+    '15': R_ZONA_HOMOGENEA_FISICA
+    '16': U_ZONA_HOMOGENEA_FISICA
+campos:
+  CODIGO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo
+  CODIGO_ZONA_FISICA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo_Zona_Fisica
+  AREA_HOMOGENEA_TIERRA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Area_Homogenea_Tierra
+  DISPONIBILIDAD_AGUA:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Disponibilidad_Agua
+    minimo: '0'
+    maximo: '56'
+    comparacion: numero
+    codigos:
+      '1': Abundabtes
+      '2': Suficientes
+      '3': Escasas
+      '4': Sin aguas
+  INFLUENCIA_VIAL:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Influencia_Vial
+    minimo: '0'
+    maximo: '78'
+    comparacion: numero
+    codigos:
+      '1': Buenas 1 - Pavimentada, dos o más vías
+      '2': Buenas 2 - Sin pavimentar, dos o más vías
+      '3': Regulares 3 - Pavimentadas, vía angosta
+      '4': Regulares 4 - Sin pavimentar, vía angosta
+      '5': Malas 5 - Transitable en tiempo seco
+      '6': Malas 6 - Carreteable sólo para vehículos medianos
+      '7': Malas 7 - Camino real o de herradura
+      '8': Sin vías 8 - Sendero
+      '9': Sin vías 9 - Sin vías
+  USO_ACTUAL_SUELO:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Uso_Actual_Suelo
+    minimo: '0'
+    maximo: '20'
+    comparacion: numero
+    codigos:
+      '1': Edificios
+      '2': Otras Construcciones
+      '3': Parques, Jardines y Huertos
+      '4': Cultivos de caracter permanente
+      '5': Tierras de labor irrigadas
+      '6': Tierras de labor no irrigadas
+      '7': Tierras con maleza
+      '8': Tierras improductivas
+      '9': Pastos naturales
+      '10': Pastos artificiales
+      '11': Pastos naturales mejorados
+      '12': Bosques
+      '13': Selvas vírgenes
+      '14': Condiciones especiales
+      '15': Cuerpos de agua
+      '16': Mixto
+  NORMA_USO_SUELO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Norma_Uso_Suelo
+  VIGENCIA:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Vigencia
+    minimo: '0205-01-01'
+    maximo: '2026-01-26'
+    comparacion: fecha
+  TOPOGRAFIA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Topografia
+    codigos:
+      PLANO: Rango de pendiente 0-7%
+      INCLINADO: Rango de pendiente 7-14 %
+      EMPINADO: Rango de pendiente  > 14 %
+  SERVICIO_PUBLICO:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Servicios_Publicos
+    minimo: '0'
+    maximo: '5'
+    comparacion: numero
+    codigos:
+      '1': Sin servicios
+      '2': Servicios básicos incompletos
+      '3': Servicios básicos completos
+      '4': Servicios básicos y complementarios
+      '5': Servicios básicos incompletos y complementarios
+  TIPIFICACION_CONSTRUCCION:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Tipificacion_Construccion
+    minimo: '0'
+    maximo: '93'
+    comparacion: numero
+    codigos:
+      '1': Residencial 1 - (Bajo-Bajo)
+      '2': Residencial 2 - (Bajo)
+      '3': Residencial 3 - (Medio-Bajo)
+      '4': Residencial 4 - (Medio)
+      '5': Residencial 5 - (Medio-Alto)
+      '6': Residencial 6 - (Alto)
+      '7': Comercial Barrial
+      '8': Comercial Sectorial
+      '9': Comercial Especializado
+      '10': Industrial Liviana
+      '11': Industrial Mediana
+      '12': Industrial Pesada

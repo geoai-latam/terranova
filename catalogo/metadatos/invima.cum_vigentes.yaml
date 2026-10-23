@@ -1,0 +1,180 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invima.cum_vigentes
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/i7cb-raxc.json
+pagina: https://www.datos.gov.co/d/i7cb-raxc
+titulo: CÓDIGO ÚNICO DE MEDICAMENTOS VIGENTES
+descripcion: INFORMACIÓN DE LOS CÓDIGOS ÚNICOS DE MEDICAMENTOS PARA LOS REGISTROS SANITARIOS VIGENTES.
+publicado: '2022-12-16'
+datos_actualizados: '2026-10-16'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- medicamentos
+filas: 156913
+campos:
+  expediente:
+    tipo_fuente: number
+    etiqueta: expediente
+    nulos: 0
+    minimo: '3521'
+    maximo: '20328675'
+    comparacion: numero
+  producto:
+    tipo_fuente: text
+    etiqueta: producto
+    nulos: 0
+    comparacion: texto
+  titular:
+    tipo_fuente: text
+    etiqueta: titular
+  registrosanitario:
+    tipo_fuente: text
+    etiqueta: registrosanitario
+  fechavencimiento:
+    tipo_fuente: text
+    etiqueta: fechavencimiento
+    nulos: 110171
+    minimo: 01/01/1000
+    maximo: 12/31/3000
+    comparacion: texto
+  estadoregistro:
+    tipo_fuente: text
+    etiqueta: estadoregistro
+    nulos: 0
+    minimo: Vigente
+    maximo: Vigente
+    comparacion: texto
+    valores:
+      Vigente: 156913
+  consecutivocum:
+    tipo_fuente: number
+    etiqueta: consecutivocum
+    nulos: 0
+    minimo: '1'
+    maximo: '301'
+    comparacion: numero
+  descripcioncomercial:
+    tipo_fuente: text
+    etiqueta: descripcioncomercial
+    nulos: 21
+    minimo: '-'
+    comparacion: texto
+  estadocum:
+    tipo_fuente: text
+    etiqueta: estadocum
+  atc:
+    tipo_fuente: text
+    etiqueta: atc
+    nulos: 0
+    minimo: A01AB08
+    maximo: V10XX10
+    comparacion: texto
+  descripcionatc:
+    tipo_fuente: text
+    etiqueta: descripcionatc
+    nulos: 0
+    maximo: ZOPICLONA
+    comparacion: texto
+  viaadministracion:
+    tipo_fuente: text
+    etiqueta: viaadministracion
+    nulos: 0
+    minimo: BUCAL
+    maximo: VAGINAL
+    comparacion: texto
+    valores:
+      ORAL: 105967
+      INTRAVENOSA: 16145
+      INTRAMUSCULAR: 7113
+      TOPICA (EXTERNA): 5207
+      SUBCUTANEA: 4948
+      INHALACION: 3171
+      VAGINAL: 1928
+      BUCAL: 1678
+      OFTÁLMICA: 1438
+      INTRAPERITONEAL: 1135
+      CONJUNTIVAL: 969
+      PARENTERAL: 792
+      INTRA-ARTERIAL: 765
+      PERFUSION INTRAVENOSA: 732
+      INTRA-ARTICULAR: 607
+      INTRALESIONAL: 557
+      TRANSDERMAL: 400
+      INTRAOCULAR: 394
+      INFUSIÓN INTRAVENOSA: 378
+      RECTAL: 378
+  concentracion:
+    tipo_fuente: text
+    etiqueta: concentracion
+    nulos: 0
+    minimo: A
+    maximo: S
+    comparacion: texto
+    valores:
+      A: 117210
+      B: 11977
+      C: 9590
+      S: 9235
+      D: 5117
+      F: 2004
+      E: 1780
+  principioactivo:
+    tipo_fuente: text
+    etiqueta: principioactivo
+    nulos: 0
+    maximo: ZOPLICONA
+    comparacion: texto
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: unidadmedida
+    nulos: 0
+    minimo: '-'
+    comparacion: texto
+    valores:
+      mg: 120649
+      g: 21791
+      mcg: 4081
+      UI: 2207
+      mg.: 1192
+      '%': 989
+      IU: 667
+      æg: 534
+      '% (V/V)': 533
+      ml: 376
+      U.I.: 307
+      MG: 304
+      µg: 286
+      m3: 284
+      g.: 258
+      '-': 200
+      mL: 175
+      U: 166
+      MBq: 117
+      mg/ml: 85
+  formafarmaceutica:
+    tipo_fuente: text
+    etiqueta: formafarmaceutica
+    nulos: 0
+    minimo: AEROSOLES
+    comparacion: texto
+  nombrerol:
+    tipo_fuente: text
+    etiqueta: nombrerol
+  tiporol:
+    tipo_fuente: text
+    etiqueta: tiporol
+  modalidad:
+    tipo_fuente: text
+    etiqueta: modalidad
+    nulos: 0
+    comparacion: texto
+    valores:
+      IMPORTAR Y VENDER: 72484
+      FABRICAR Y VENDER: 68430
+      IMPORTAR. SEMIELABORAR Y VENDER: 12955
+      IMPORTAR. ENVASAR Y VENDER: 2872
+      FABRICAR Y EXPORTAR: 172

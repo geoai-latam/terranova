@@ -1,0 +1,79 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.bpin
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/d9na-abhe.json
+pagina: https://www.datos.gov.co/d/d9na-abhe
+titulo: SECOP II - BPIN por Proceso
+descripcion: Informacion de los codigos BPIN de los procesos de compra y contratos
+publicado: '2026-02-21'
+datos_actualizados: '2026-10-21'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- procesos de contratación
+- compra pública
+- contratos
+- secop
+filas: 9150353
+campos:
+  codigo_bpin:
+    tipo_fuente: text
+    etiqueta: Codigo BPIN
+    descripcion: Codigo BPIN del proceso
+    nulos: 0
+    minimo: '0'
+    maximo: XXXXXXXXXX
+    comparacion: texto
+  anno_bpin:
+    tipo_fuente: number
+    etiqueta: Anno BPIN
+    descripcion: Año codigo BPIN
+    nulos: 0
+    minimo: '2018'
+    maximo: '2027'
+    comparacion: numero
+    valores:
+      '2025': 2367895
+      '2024': 2128212
+      '2023': 1861370
+      '2026': 1859065
+      '2022': 858714
+      '2021': 54249
+      '2020': 11172
+      '2027': 101
+      '2019': 8
+      '2018': 3
+  id_proceso:
+    tipo_fuente: text
+    etiqueta: ID Proceso
+    descripcion: ID del proceso de compra
+    nulos: 0
+    minimo: CO1.REQ.10000001
+    comparacion: texto
+  id_contracto:
+    tipo_fuente: text
+    etiqueta: ID Contracto
+    descripcion: ID del contrato electronico
+    nulos: 0
+    minimo: CO1.PCCNTR.10000002
+    comparacion: texto
+  id_portafolio:
+    tipo_fuente: text
+    etiqueta: ID Portafolio
+    descripcion: ID del portafolio del proceso de compra
+    nulos: 0
+    minimo: CO1.BDOS.10000008
+    comparacion: texto
+  validacion_bpin:
+    tipo_fuente: text
+    etiqueta: Validacion BPIN
+    descripcion: Indica si el codigo fue validado o no
+    nulos: 0
+    maximo: Validado
+    comparacion: texto
+    valores:
+      Validado: 9132457
+      No validado: 8332

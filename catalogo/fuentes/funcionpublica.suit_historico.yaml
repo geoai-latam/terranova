@@ -17,7 +17,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/dd24-8p6w.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO}
+cobertura: {pais: CO, columna_tiempo: a_o}
 datos_personales: ninguno
 estado: publicada
 campos:

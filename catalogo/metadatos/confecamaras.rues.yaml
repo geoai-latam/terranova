@@ -1,0 +1,204 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: confecamaras.rues
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/c82u-588k.json
+pagina: https://www.datos.gov.co/d/c82u-588k
+titulo: Personas Naturales, Personas Jurídicas y Entidades Sin Animo de Lucro
+descripcion: Extracción que contiene los datos básicos del Registro Mercantil que administran las Cámaras
+  de Comercio a nivel Nacional para Personas Naturales, Personas Jurídicas y Entidades Sin Animo de Lucro
+  (ESADLs), que se encuentran sincronizados en el Registro Único Empresarial y Social (RUES).
+publicado: '2022-02-06'
+datos_actualizados: '2026-10-02'
+frecuencia_declarada: Mensual
+cobertura_declarada: Departamental
+idioma: Español
+categoria: Comercio, Industria y Turismo
+etiquetas:
+- cámaras de comercio
+- personas naturales
+- personas juridicas
+- entidades sin animo de lucro
+- confecamaras
+- registro mercantil
+- rues
+filas: 9436330
+campos:
+  camara_comercio:
+    tipo_fuente: text
+    etiqueta: camara_comercio
+    descripcion: Cámara de comercio que realiza la actualización de datos.
+    nulos: 0
+    maximo: VILLAVICENCIO
+    comparacion: texto
+  matricula:
+    tipo_fuente: text
+    etiqueta: matricula
+    descripcion: Número de Matricula Mercantil
+    nulos: 0
+    minimo: '1'
+    maximo: '999999'
+    comparacion: texto
+  razon_social:
+    tipo_fuente: text
+    etiqueta: razon_social
+    descripcion: Razón Social
+    nulos: 17
+    minimo: '-'
+    comparacion: texto
+  sigla:
+    tipo_fuente: text
+    etiqueta: sigla
+    descripcion: Sigla
+    nulos: 8991220
+    maximo: ZZZ
+    comparacion: texto
+  nit:
+    tipo_fuente: text
+    etiqueta: nit
+    descripcion: Número de Identificación Tributario
+  digito_verificacion:
+    tipo_fuente: text
+    etiqueta: digito_verificacion
+    descripcion: Digito de Verificación
+    nulos: 2159814
+    minimo: '-'
+    maximo: O
+    comparacion: texto
+    valores:
+      '0': 1375073
+      '1': 1179576
+      '3': 591375
+      '6': 590669
+      '2': 590538
+      '4': 590393
+      '8': 590232
+      '5': 590015
+      '7': 589575
+      '9': 588956
+      '-': 79
+      .: 11
+      A: 5
+      E: 4
+      +: 3
+      O: 3
+      o: 2
+      N: 2
+      e: 1
+      '}': 1
+  cod_ciiu_act_econ_pri:
+    tipo_fuente: text
+    etiqueta: cod_ciiu_act_econ_pri
+    descripcion: Código CIIU actividad económica principal
+    nulos: 581715
+    maximo: Z999999
+    comparacion: texto
+  cod_ciiu_act_econ_sec:
+    tipo_fuente: text
+    etiqueta: cod_ciiu_act_econ_sec
+    descripcion: Código CIIU actividad económica secundaria
+    nulos: 6081154
+    minimo: '0000'
+    maximo: O930906
+    comparacion: texto
+  fecha_matricula:
+    tipo_fuente: text
+    etiqueta: fecha_matricula
+    descripcion: Fecha Matricula
+    nulos: 29165
+    minimo: '00000000'
+    maximo: '99999999'
+    comparacion: texto
+  ultimo_ano_renovado:
+    tipo_fuente: text
+    etiqueta: ultimo_ano_renovado
+    descripcion: Ultimo Año Renovado
+    nulos: 0
+    minimo: '0'
+    maximo: '9999'
+    comparacion: texto
+  fecha_cancelacion:
+    tipo_fuente: text
+    etiqueta: fecha_cancelacion
+    descripcion: Fecha Cancelación
+    nulos: 4000254
+    minimo: '00000000'
+    maximo: '99991231'
+    comparacion: texto
+  tipo_sociedad:
+    tipo_fuente: text
+    etiqueta: tipo_sociedad
+    descripcion: Tipo sociedad
+    nulos: 0
+    comparacion: texto
+    valores:
+      SOCIEDAD COMERCIAL: 8547896
+      NO APLICA: 454763
+      ENTIDAD SIN ANIMO DE LUCRO: 372619
+      ECONOMIA SOLIDARIA: 42404
+      SOCIEDAD CIVIL: 12710
+      VENDEDORES DE JUEGOS DE SUERTE Y AZAR: 5277
+      ENTIDAD SIN ANIMO DE LUCRO EXTRANJERAS: 569
+      VEEDURIAS CIUDADANAS: 50
+      EMPRESAS INDUSTRIALES Y COMERCIALES DEL ESTADO: 42
+  organizacion_juridica:
+    tipo_fuente: text
+    etiqueta: organizacion_juridica
+    descripcion: Organización Jurídica
+    nulos: 1370
+    maximo: VEEDURIA
+    comparacion: texto
+    valores:
+      PERSONA NATURAL: 6955797
+      SOCIEDADES POR ACCIONES SIMPLIFICADAS SAS: 1311910
+      SOCIEDAD LIMITADA: 520557
+      LAS DEMÁS ORGANIZACIONES CIVILES,CORPORACIONES,FUNDACIONES: 95919
+      EMPRESAS UNIPERSONALES: 84043
+      CORPORACIONES, ASOCIACIONES Y FUNDACIONES CREADAS PARA ADELANTAR ACTIVIDADES EN COMUNIDADES INDÍGENAS.: 75318
+      ? ASOCIACIONES, CORPORACIONES, FUNDACIONES E INSTITUCIONES DE UTILIDAD COMÚN (GREMIALES, DE BENEFICENCIA;
+        PROFESIONALES, JUVENILES, SOCIALES, DEMOCRÁTICAS Y PARTICIPATIVAS, CÍVICAS Y COMUNITARIAS, DE
+        EGRESADOS, DE REHABILITACIÓN SOCIAL Y AYUDA A INDIGENTES Y CLUBES SOCIALES).
+      : 72373
+      SOCIEDAD ANONIMA: 53736
+      FUNDACIONES: 51058
+      CORPORACIONES: 40765
+      SOCIEDAD EN COMANDITA SIMPLE: 37146
+      ENTIDADES DE NATURALEZA COOPERATIVA: 28007
+      EMPRESAS ASOCIATIVAS DE TRABAJO: 26679
+      OTRAS SOCIEDADES: 17626
+      COOPERATIVAS, FEDERACIONES Y CONFEDERACIONES, INSTITUCIONES AUXILIARES DE LA ECONOMÍA SOLIDARIA Y PRECOOPERATIVAS.: 16178
+      ASOCIACIONES AGROPECUARIAS Y CAMPESINAS NACIONALES Y NO NACIONALES: 12708
+      SOCIEDAD EXTRANJERA: 5619
+      SOCIEDAD EN COMANDITA POR ACCIONES: 5074
+      ASOCIACIONES DE PADRES DE FAMILIA: 4952
+      ASOCIACIONES SIN ÁNIMO DE LUCRO O DE ECONOMÍA SOLIDARIA FORMADAS POR PADRES DE FAMILIA Y EDUCADORES.: 4162
+  categoria_matricula:
+    tipo_fuente: text
+    etiqueta: categoria_matricula
+    descripcion: Categoría Matricula
+    nulos: 0
+    comparacion: texto
+    valores:
+      PERSONA NATURAL: 6962889
+      SOCIEDAD ó PERSONA JURIDICA PRINCIPAL ó ESAL: 2473441
+  estado_matricula:
+    tipo_fuente: text
+    etiqueta: estado_matricula
+    descripcion: Estado Matricula
+    nulos: 5786
+    minimo: ACTIVA
+    comparacion: texto
+    valores:
+      CANCELADA: 5091481
+      ACTIVA: 3919062
+      MATRÍCULA CANCELADA LEY 1429: 255144
+      MATRÍCULA CANCELADA POR TRASLADO DE DOMICILIO: 89488
+      MATRÍCULA NUEVA, CONSTITUCIÓN POR TRASLADO: 34116
+      NO ASIGNADO: 19660
+      SIN ESTADO: 15022
+      NO COMPETENCIA DE LA CAMARA: 2377
+      MATRICULA INACTIVA POR PERDIDA DE CALIDAD DE COMERCIANTE: 2321
+      NO MATRICULADO: 1086
+      MATRÍCULA CANCELADA POR FUSIÓN: 727
+      MATRÍCULA CANCELADA POR RECONSTITUCIÓN.: 38
+      INACTIVA: 22

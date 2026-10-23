@@ -1,0 +1,91 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop2.ejecucion
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/mfmm-jqmq.json
+pagina: https://www.datos.gov.co/d/mfmm-jqmq
+titulo: SECOP II - Ejecución Contratos
+descripcion: Informacion relacionada con la ejecucion de los contratos firmados en el SECOP II, en términos
+  de avance estimado y real
+publicado: '2025-06-09'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- gastos
+- secop
+- secop ii
+filas: 4845421
+campos:
+  identificadorcontrato:
+    tipo_fuente: text
+    etiqueta: Identificador del Contrato
+    descripcion: Enlaza el plan de ejecucion con el contrato correspondiente
+  tipoejecucion:
+    tipo_fuente: text
+    etiqueta: Tipo de Ejecucion
+    descripcion: Determina si el plan se reporta en términos de entregables o de porcentaje de avance
+    nulos: 0
+    comparacion: texto
+    valores:
+      PORCENTAJE: 3589876
+      RECEPCIoN DE ARTiCULOS: 1244780
+      NO DEFINIDO: 10765
+  nombreplan:
+    tipo_fuente: text
+    etiqueta: Nombre del Plan
+    descripcion: Nombre del Plan de Ejecucion del contrato, refiere al identificador unico con el que
+      se crea la programación de avance de la ejecución del contrato
+  fechadeentregaesperada:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de Entrega Esperada
+    descripcion: Fecha de Entrega esperada del ultimo entregable registrado en el plan de avance
+    nulos: 563156
+    minimo: '2015-12-18T00:00:00.000'
+    maximo: '3025-12-31T00:00:00.000'
+    comparacion: fecha
+  porcentajedeavanceesperado:
+    tipo_fuente: number
+    etiqueta: Porcentaje de Avance Esperado
+    descripcion: Porcentaje de avance esperado para el proyecto a la fecha
+    nulos: 0
+    minimo: '0'
+    maximo: '1302020'
+    comparacion: numero
+  fechadeentregareal:
+    tipo_fuente: calendar_date
+    etiqueta: Fecha de Entrega Real
+    descripcion: Fecha de Entrega real del ultimo entregable registrado en el plan de avance
+    nulos: 516513
+    minimo: '0018-04-12T00:00:00.000'
+    maximo: '5026-04-01T00:00:00.000'
+    comparacion: fecha
+  porcentaje_de_avance_real:
+    tipo_fuente: number
+    etiqueta: Porcentaje de avance real
+    descripcion: Porcentaje de ejecución real del proyecto
+    nulos: 0
+    minimo: '0'
+    maximo: '15102021115900'
+    comparacion: numero
+  estado_del_contrato:
+    tipo_fuente: text
+    etiqueta: Estado del contrato
+    descripcion: Estado de la ejecución del contrato
+    nulos: 0
+    minimo: Adhoc
+    maximo: Pendiente
+    comparacion: texto
+    valores:
+      Confirmado: 3764004
+      Adhoc: 563054
+      Pendiente: 423008
+      Cancelado: 95355
+  descripci_n:
+    tipo_fuente: text
+    etiqueta: Descripción
+    descripcion: Descripción de la ejecución del contrato
+    nulos: 0
+    comparacion: texto

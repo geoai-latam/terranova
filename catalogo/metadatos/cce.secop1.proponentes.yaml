@@ -1,0 +1,76 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: cce.secop1.proponentes
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/tauh-5jvn.json
+pagina: https://www.datos.gov.co/d/tauh-5jvn
+titulo: SECOP I - Proponentes
+descripcion: Información de proponentes por proceso de compra y su calificación
+publicado: '2022-05-19'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- proponentes
+- secop i
+- compra pública
+filas: 119799
+campos:
+  id_proceso:
+    tipo_fuente: text
+    etiqueta: ID Proceso
+    descripcion: Identificador del Proceso de Compra para el que se registra el proponente
+    nulos: 0
+    minimo: 06-1-3368
+    maximo: 26-9-510346
+    comparacion: texto
+  tipo_doc_proponente:
+    tipo_fuente: text
+    etiqueta: Tipo Doc Proponente
+    descripcion: Tipo de Documento del Proponente
+  num_doc_proponente:
+    tipo_fuente: text
+    etiqueta: Num Doc Proponente
+    descripcion: Número de Documento del proponente
+  proponente:
+    tipo_fuente: text
+    etiqueta: Proponente
+    descripcion: Nombre del Proponente registrado en el proceso
+  calificacion:
+    tipo_fuente: text
+    etiqueta: Calificacion
+    descripcion: Calificación recibida por el proponente dentro del proceso de compra correspondiente
+      al registro
+    nulos: 0
+    minimo: '000'
+    maximo: '9999999900'
+    comparacion: texto
+  adjudicado:
+    tipo_fuente: text
+    etiqueta: Adjudicado
+    descripcion: Marcación que define si el proponente fue adjudicado dentro del proceso correspondiente
+      al registro
+    nulos: 0
+    minimo: 'No'
+    maximo: Si
+    comparacion: texto
+    valores:
+      'No': 119795
+      Si: 4
+  numero_contrato:
+    tipo_fuente: text
+    etiqueta: Numero Contrato
+    descripcion: Identificador del Contrato dentro del proceso de compra, en caso que el proponente haya
+      salido favorecido, corresponde al campo Numero Contrato del conjunto de datos de procesos de compra
+      del SECOP I
+    nulos: 0
+    minimo: '0322021'
+    comparacion: texto
+    valores:
+      No Definido: 119795
+      '1010120062772021': 1
+      '113': 1
+      '792021': 1
+      '0322021': 1

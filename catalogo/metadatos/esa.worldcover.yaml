@@ -1,0 +1,12 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: esa.worldcover
+metodo: manual
+cosechado: '2026-10-22'
+origen: https://esa-worldcover.org/en
+titulo: ESA WorldCover 10 m 2021 v200
+descripcion: Mapa global de cobertura del suelo de 2021 en COG de 3°×3°; producto cerrado, no se actualiza.
+idioma: Inglés
+geografia:
+  geometria: raster
+  crs: EPSG:4326
+  resolucion_m: 10.0
