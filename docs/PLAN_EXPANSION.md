@@ -29,9 +29,30 @@ Una herramienta cuenta como servida cuando cumple todo esto:
 3. Tiene prueba dorada grabada en vivo (`scripts/grabar_doradas.py`) y `canario.campos`
    (`scripts/campos_canario.py`).
 4. El canario usa una verdad medida en la fuente, nunca copiada de la respuesta de la puerta.
-5. Cumple la lista blanca de campos y no expone personas (ADR-0014): ni teléfonos, ni correos, ni
-   búsquedas por nombre o cédula.
+5. Lo que la fuente publica sale como lo publica (ADR-0025): no se tapan ni se alteran campos. La
+   lista blanca elige qué campos responden la pregunta. Lo que no se hace (ADR-0014): buscar por
+   nombre o cédula, cruzar fuentes para armar el perfil de una persona y versionar datos personales
+   en el repo (doradas, fichas técnicas).
 6. Su canario pasa **3 días en verde** antes de contarla en el avance.
+
+## Reglas aprendidas de las fuentes
+
+Cada una salió de un caso medido. Se revisan todas al diseñar una herramienta nueva.
+
+| Regla | Caso que la originó |
+|---|---|
+| Si la clave no es única, no se cuentan ni suman filas: etapa previa por registro (`previo_select`/`previo_group`) o `distinct` | ICFES (estudiantes repetidos), SECOP Integrado (un contrato por estado), PAA de SECOP II (un ítem por categoría UNSPSC) |
+| Contar lo que se pregunta, con nombre propio: `count(distinct …)` si una fila no es un caso | SIC: sancionados ≠ resoluciones |
+| Un código de la fuente no es una entidad: un NIT puede tener varias | PAA de SECOP II: Pitalito = municipio, concejo y personería |
+| Si la fuente está partida (vigente e histórico), cada mitad tiene herramienta y se remiten entre sí. Así «no encontrado» no esconde un «está en la otra mitad» | SECOP I: vigente desde 2018, histórico 2004–2017 |
+| Las filas de prueba de la fuente se excluyen en la consulta | multas de SECOP I: «Z ENTIDAD DE PRUEBA» |
+| Los valores imposibles o de relleno (1899-12-30, 2099, «No Definido», 0) se dicen en la ficha técnica; no se toman por datos | vigencias del IGAC, fechas de SECOP, NIT de las multas |
+| Los códigos llevan la norma que los define; lo que ninguna norma define sale como `sin_definir` | destino económico (U a Z), uso de la construcción (101 a 127) |
+| Una fecha de la fuente puede ser futura y valer: se explica en la descripción | TRM de mañana, UVR hasta el 15 del mes siguiente |
+| El nombre de una fuente no basta: se verifica qué entrega | «ERA5» de Open-Meteo era una mezcla con IFS |
+| En Socrata, ordenar un `distinct` grande no responde: sin orden si cabe en una página | PAA de SECOP II |
+| Si contar un mes pasa de 300 s, la fuente no se copia ni se sirve en vivo: sería carga | ofertas de SECOP II |
+| El canario de una fuente con personas se elige con personas jurídicas, y una prueba lo vigila | multas de SECOP I (NIT de empresa) |
 
 ## Piezas genéricas
 
