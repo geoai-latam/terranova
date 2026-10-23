@@ -413,7 +413,16 @@ def test_el_patron_publicado_es_la_misma_regla_que_texto_es_limpio() -> None:
     from terranova.contrato import PATRON_TEXTO_LIMPIO, texto_es_limpio
 
     validador = TypeAdapter(Annotated[str, Field(pattern=PATRON_TEXTO_LIMPIO)])
-    for texto in ("ARTÍCULO 1o", "a\nb\tc", "x\x07y", "x‮y", "x\x85y", "\U000bcbb5", "؜", ""):
+    for texto in (
+        "ARTÍCULO 1o",
+        "a\nb\tc",
+        "x\x07y",
+        "x\u202ey",
+        "x\x85y",
+        "\U000bcbb5",
+        "\u061c",
+        "",
+    ):
         try:
             validador.validate_python(texto)
             pydantic_acepta = True
