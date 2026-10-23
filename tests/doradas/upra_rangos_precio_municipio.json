@@ -1,0 +1,126 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:08:17+00:00",
+ "herramienta": "upra_rangos_precio_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "agrupar": [
+     "vigencia",
+     "cod_precios",
+     "rango_precios"
+    ],
+    "medidas": [
+     {
+      "campo": "area_ha",
+      "nombre": "hectareas",
+      "tipo": "sum"
+     },
+     {
+      "campo": "consecutivo",
+      "nombre": "zonas",
+      "tipo": "count"
+     }
+    ],
+    "orden": [
+     "vigencia",
+     "cod_precios"
+    ],
+    "url": "https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer/0",
+    "where": "cod_dane_mpio = '25214'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cod_precios",
+       "hectareas",
+       "rango_precios",
+       "vigencia",
+       "zonas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cod_precios": "4.1.1",
+        "hectareas": 984.143,
+        "rango_precios": "Mayor que 60 - hasta 70",
+        "vigencia": 2016,
+        "zonas": 28
+       },
+       {
+        "cod_precios": "5.2.3",
+        "hectareas": 562.444,
+        "rango_precios": "Mayor que 250 - hasta 300",
+        "vigencia": 2016,
+        "zonas": 23
+       },
+       {
+        "cod_precios": "6.1.1",
+        "hectareas": 422.521,
+        "rango_precios": "Mayor que 300 - hasta 400",
+        "vigencia": 2016,
+        "zonas": 7
+       },
+       {
+        "cod_precios": "7.1.1",
+        "hectareas": 1413.931,
+        "rango_precios": "Mayor que 1000 ",
+        "vigencia": 2016,
+        "zonas": 30
+       },
+       {
+        "cod_precios": "E-1",
+        "hectareas": 1724.276,
+        "rango_precios": "Zonas urbanas",
+        "vigencia": 2016,
+        "zonas": 24
+       },
+       {
+        "cod_precios": "E-3",
+        "hectareas": 320.513,
+        "rango_precios": "Resguardos indígenas constituidos",
+        "vigencia": 2016,
+        "zonas": 5
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "capa": "https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer/0",
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "consulta": {
+      "agrupar": [
+       "vigencia",
+       "cod_precios",
+       "rango_precios"
+      ],
+      "medidas": [
+       {
+        "campo": "area_ha",
+        "nombre": "hectareas",
+        "tipo": "sum"
+       },
+       {
+        "campo": "consecutivo",
+        "nombre": "zonas",
+        "tipo": "count"
+       }
+      ],
+      "where": "cod_dane_mpio = '25214'"
+     },
+     "filas_que_resume": 117,
+     "grupos": 6
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_estadisticas"
+  }
+ ]
+}

@@ -1,0 +1,32 @@
+id: upra_precio_tierra_en_punto
+version: 1
+familia: territorio
+fuente: upra.rango_precios_nacional
+pregunta: "¿Cuánto vale la tierra rural en este punto según la UPRA?"
+descripcion: >
+  Rango de precio comercial de la tierra rural agropecuaria (UPRA) en un punto: rango como lo
+  publica la UPRA, su código, categoría para el mercado de tierras, año del estudio (vigencia),
+  área de la zona y municipio. Cubre 18 departamentos; cada uno tiene su año de estudio (2015 a
+  2023), así que el precio es el de ese año. Fuera de las áreas del mercado de tierras no hay dato.
+  (Fuente: UPRA; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    geometria: ninguna
+    out_fields: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
+    max_features: 5
+  campos: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
+salida: PrecioTierraEnPunto
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0: el punto (punto representativo de la
+  # zona 78510) cae en Cota, rango «Mayor que 60 - hasta 70», vigencia 2016.
+  entrada: {lon: -74.09602, lat: 4.838895}
+  verdad: {municipio: Cota, municipio_divipola: "25214", rango_precio: "Mayor que 60 - hasta 70", codigo_rango_precio: "4.1.1", vigencia: 2016}
+  campos: [area_ha, categoria_mercado, codigo_rango_precio, consecutivo, departamento, municipio, municipio_divipola, rango_precio, vigencia]
+  latencia_max_ms: 10000

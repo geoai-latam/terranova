@@ -7,7 +7,8 @@ descripcion: >
   Rangos de precio comercial de la tierra rural agropecuaria de un municipio (código DIVIPOLA),
   según el estudio de UPRA: un registro por polígono, con su rango de precio, su categoría para el
   mercado de tierras (incluida o condicionada) y su área en hectáreas. Solo cubre los 244 municipios
-  estudiados en 13 departamentos, con datos del 2022-06-16; Chía, por ejemplo, no está.
+  estudiados en 13 departamentos, con datos del 2022-06-16; Chía, por ejemplo, no está. Para 18
+  departamentos y con el año del estudio: upra_rangos_precio_municipio y upra_precio_tierra_en_punto.
   (Fuente: UPRA; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:

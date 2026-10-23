@@ -1,0 +1,55 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: upra.rango_precios_nacional
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer?f=json
+titulo: Map
+filas: 178973
+geografia:
+  geometria: poligono
+  crs: EPSG:3857
+  extension:
+  - -77.928402
+  - 0.362001
+  - -67.409803
+  - 12.45734
+  capas:
+    '0': Precios comerciales de tierra rural agropecuaria en áreas incluidas y condicionadas para el mercado
+      de tierras en Colombia
+campos:
+  departamen:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: departamen
+  municipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: municipio
+  cod_dane_mpio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: cod_dane_mpio
+  area_ha:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: area_ha
+    minimo: '0.0'
+    maximo: '2069953.341'
+    comparacion: numero
+  consecutivo:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: consecutivo
+    minimo: '1'
+    maximo: '178973'
+    comparacion: numero
+  rango_precios:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: rango_precios
+  cod_precios:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: cod_precios
+  categoria_mtv11:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: categoria_mtv11
+  vigencia:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: vigencia
+    minimo: '2015'
+    maximo: '2023'
+    comparacion: numero
