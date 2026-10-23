@@ -1,0 +1,36 @@
+id: policia_homicidios_transito_municipio
+version: 1
+familia: justicia
+fuente: policia.homicidios_transito
+pregunta: "¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año?"
+descripcion: >
+  Homicidios culposos en accidente de tránsito reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
+  por tipo y género de la víctima. Son denuncias: no todos los delitos se denuncian, y el año en
+  curso está incompleto.
+  (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: ha6j-pa2r
+    portal: datos.gov.co
+    select: "descripci_n_conducta, genero, sum(cantidad::number) AS casos"
+    where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
+    group: "descripci_n_conducta, genero"
+    order: "descripci_n_conducta, genero"
+    max_filas: 200
+  campos: [codigo_dane, fecha_hecho, descripci_n_conducta, genero, cantidad]
+salida: PoliciaHomicidiosTransitoMunicipio
+derivados:
+  casos: {de: columna, campo: casos, tipo: int}
+  total_casos: {de: suma, campo: casos, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en ha6j-pa2r: Chía 2024 suma 13 casos; el primer grupo tiene 5.
+  entrada: {municipio_divipola: "25175", anio: 2024}
+  verdad: {genero: "FEMENINO", casos: 5, tipo: "ARTÍCULO 109. HOMICIDIO CULPOSO ( EN ACCIDENTE DE TRÁNSITO)"}
+  minimos: {total_casos: 13}
+  campos: [casos, genero, tipo, total_casos]
+  latencia_max_ms: 10000

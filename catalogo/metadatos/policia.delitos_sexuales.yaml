@@ -1,0 +1,121 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: policia.delitos_sexuales
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/fpe5-yrmw.json
+pagina: https://www.datos.gov.co/d/fpe5-yrmw
+titulo: Reporte  Delitos sexuales Policía Nacional
+descripcion: 'En este conjunto de datos la ciudadanía puede encontrará información delitos Sexuales desde
+  el 01 de enero del año 2010 al 31 de julio del año 2026. Fuente: DIJIN - Policía Nacional. Datos extraídos
+  el día 31 de agosto del 2026 a las 17:17 horas. Cifras sujetas a variación, en proceso de integración
+  y consolidación con información de fiscalía general de la nación. Señor usuario si encuentra alguna
+  inconsistencia en la información publicada, no la puede hacer saber atreves del correo electrónico Dijin.aicri-jef@policia.gov.co.
+  Nota: se ha realizado actualización en las cifras de todos los delitos, de acuerdo a la nueva metodología
+  de validación de denuncias con la Fiscalía General de la Nación, la cual puede ser encontrada en el
+  link https://www.policia.gov.co/grupo-informacion-criminalidad.'
+publicado: '2021-04-13'
+datos_actualizados: '2026-09-01'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Municipal
+idioma: Español
+categoria: Seguridad y Defensa
+etiquetas:
+- policía
+- delitos
+- sexual
+filas: 405193
+campos:
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    nulos: 5
+    minimo: Abejorral
+    comparacion: texto
+  codigo_dane:
+    tipo_fuente: text
+    etiqueta: CODIGO DANE
+    nulos: 0
+    minimo: '05001000'
+    maximo: '99773003'
+    comparacion: texto
+  armas_medios:
+    tipo_fuente: text
+    etiqueta: ARMAS MEDIOS
+    nulos: 0
+    comparacion: texto
+    valores:
+      SIN EMPLEO DE ARMAS: 244479
+      NO REPORTADO: 70027
+      CONTUNDENTES: 57292
+      ARMA BLANCA / CORTOPUNZANTE: 22168
+      ESCOPOLAMINA: 7518
+      ARMA DE FUEGO: 2379
+      LICOR ADULTERADO: 971
+      CINTAS/CINTURON: 168
+      CORTOPUNZANTES: 107
+      ESPOSAS: 69
+      CORTANTES: 14
+      ARMAS BLANCAS: 1
+  fecha_hecho:
+    tipo_fuente: text
+    etiqueta: FECHA HECHO
+    nulos: 0
+    minimo: 01/01/2010
+    maximo: 31/12/2025
+    comparacion: texto
+  genero:
+    tipo_fuente: text
+    etiqueta: GENERO
+    nulos: 2417
+    minimo: FEMENINO
+    comparacion: texto
+    valores:
+      FEMENINO: 340874
+      MASCULINO: 61249
+      NO REPORTA: 653
+  grupo_etario:
+    tipo_fuente: text
+    etiqueta: GRUPO ETARIO
+    nulos: 635
+    minimo: ADOLESCENTES
+    maximo: MENORES
+    comparacion: texto
+    valores:
+      ADULTOS: 253189
+      MENORES: 80479
+      ADOLESCENTES: 70890
+  cantidad:
+    tipo_fuente: number
+    etiqueta: CANTIDAD
+    nulos: 0
+    minimo: '1'
+    maximo: '1'
+    comparacion: numero
+    valores:
+      '1': 405193
+  delito:
+    tipo_fuente: text
+    etiqueta: delito
+    nulos: 0
+    comparacion: texto
+    valores:
+      ARTÍCULO 209. ACTOS SEXUALES CON MENOR DE 14 AÑOS: 139901
+      ARTÍCULO 208. ACCESO CARNAL ABUSIVO CON MENOR DE 14 AÑOS: 85049
+      ARTÍCULO 205. ACCESO CARNAL VIOLENTO: 59761
+      ARTÍCULO 206. ACTO SEXUAL VIOLENTO: 43465
+      ARTÍCULO 210 A. ACOSO SEXUAL: 30514
+      ARTÍCULO 210. ACCESO CARNAL O ACTO SEXUAL ABUSIVO CON INCAPAZ DE RESISTIR: 16580
+      ARTÍCULO 218. PORNOGRAFÍA CON MENORES: 11648
+      ARTÍCULO 207. ACCESO CARNAL O ACTO SEXUAL EN PERSONA PUESTA EN INCAPACIDAD DE RESISTIR: 6653
+      ARTÍCULO 219 A. UTILIZACIÓN O FACILITACIÓN DE MEDIOS DE COMUNICACIÓN PARA OFRECER SERVICIOS SEXUALES DE MENORES: 2577
+      ARTÍCULO 213. INDUCCIÓN A LA PROSTITUCIÓN: 2355
+      ARTÍCULO 217 A. DEMANDA DE EXPLOTACION SEXUAL COMERCIAL DE PERSONA MENOR DE 18 AÑOS DE EDAD: 2135
+      ARTÍCULO 211. ACTOS SEXUALES CON MENOR DE 14 AÑOS (CIRCUNSTANCIAS DE AGRAVACIÓN): 819
+      ARTÍCULO 211. ACCESO CARNAL ABUSIVO CON MENOR DE 14 AÑOS (CIRCUNSTANCIAS AGRAVACIÓN): 815
+      ARTÍCULO 213 A. PROXENETISMO CON MENOR DE EDAD: 747
+      ARTÍCULO 211. ACCESO CARNAL O ACTO SEXUAL EN PERSONA PUESTA EN INCAPACIDAD DE RESISTIR  (CIRCUNSTANC: 646
+      ARTÍCULO 214. CONSTREÑIMIENTO A LA PROSTITUCIÓN: 316
+      ARTÍCULO 211. ACCESO CARNAL VIOLENTO (CIRCUNSTANCIAS AGRAVACIÓN): 316
+      ARTÍCULO 211. ACTO SEXUAL VIOLENTO (CIRCUNSTANCIAS DE AGRAVACIÓN): 295
+      ARTÍCULO 211. ACCESO CARNAL O ACTO SEXUAL ABUSIVO CON INCAPAZ DE RESISTIR (CIRCUNSTANCIAS AGRAVACIÓN: 294
+      ARTÍCULO 217. ESTÍMULO A LA PROSTITUCIÓN DE MENORES: 223

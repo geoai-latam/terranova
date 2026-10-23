@@ -1,0 +1,138 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: policia.lesiones
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/72sg-cybi.json
+pagina: https://www.datos.gov.co/d/72sg-cybi
+titulo: Reporte Lesiones Personales y en Accidente de Tránsito Policía Nacional
+descripcion: 'En este conjunto de datos la ciudadanía puede encontrará información del delito de Lesiones
+  personales y Lesiones en accidente de Tránsito desde 01 de enero del año 2010 al 31 de julio del año
+  2026. Fuente: DIJIN - Policía Nacional. Datos extraídos el día 31 de agosto del 2026 a las 17:17 horas.
+  cifras sujetas a variación, en proceso de integración y consolidación con información de fiscalía general
+  de la nación. Señor usuario si encuentra alguna inconsistencia en la información publicada, no la puede
+  hacer saber atraves del correo electrónico Dijin.aicri-jef@policia.gov.co. Nota: se ha realizado actualización
+  en las cifras de todos los delitos, de acuerdo a la nueva metodología de validación de denuncias con
+  la Fiscalía General de la Nación, la cual puede ser encontrada en el link https://www.policia.gov.co/grupo-informacion-criminalidad.'
+publicado: '2021-02-10'
+datos_actualizados: '2026-09-01'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Seguridad y Defensa
+filas: 1381416
+campos:
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    nulos: 12
+    minimo: Abejorral
+    comparacion: texto
+  codigo_dane:
+    tipo_fuente: text
+    etiqueta: CODIGO DANE
+    nulos: 0
+    minimo: '00000000'
+    maximo: '99773010'
+    comparacion: texto
+  armas_medios:
+    tipo_fuente: text
+    etiqueta: ARMAS MEDIOS
+    nulos: 0
+    minimo: ACIDO
+    maximo: VENENO
+    comparacion: texto
+    valores:
+      CONTUNDENTES: 443385
+      ARMA BLANCA / CORTOPUNZANTE: 260940
+      SIN EMPLEO DE ARMAS: 227777
+      VEHICULO: 185803
+      MOTO: 123781
+      ARMA DE FUEGO: 55434
+      NO REPORTADO: 50050
+      ACIDO: 13301
+      PUNZANTES: 4963
+      BICICLETA: 2827
+      ARMA TRAUMATICA: 2430
+      PERRO: 2317
+      ARTEFACTO EXPLOSIVO/CARGA DINAMITA: 1148
+      COMBUSTIBLE: 909
+      ALIMENTOS VENCIDOS: 753
+      ESCOPOLAMINA: 739
+      GRANADA DE MANO: 677
+      MINA ANTIPERSONA: 592
+      AGUA CALIENTE: 510
+      QUIMICOS: 346
+  fecha_hecho:
+    tipo_fuente: text
+    etiqueta: FECHA HECHO
+    nulos: 0
+    minimo: 01/01/2010
+    maximo: 31/12/2025
+    comparacion: texto
+  genero:
+    tipo_fuente: text
+    etiqueta: GENERO
+    nulos: 2117
+    minimo: FEMENINO
+    comparacion: texto
+    valores:
+      MASCULINO: 836786
+      FEMENINO: 542393
+      NO REPORTA: 120
+  grupo_etario:
+    tipo_fuente: text
+    etiqueta: GRUPO ETARIO
+    nulos: 810
+    minimo: ADOLESCENTES
+    maximo: MENORES
+    comparacion: texto
+    valores:
+      ADULTOS: 1251812
+      ADOLESCENTES: 96420
+      MENORES: 32374
+  descripci_n_conducta:
+    tipo_fuente: text
+    etiqueta: DESCRIPCIÓN CONDUCTA
+    nulos: 0
+    comparacion: texto
+    valores:
+      ARTÍCULO 111. LESIONES PERSONALES: 907890
+      ARTÍCULO 120. LESIONES CULPOSAS ( EN ACCIDENTE DE TRANSITO ): 455359
+      ARTICULO 120 LESIONES CULPOSAS: 8651
+      ARTÍCULO 119. LESIONES PERSONALES ( CIRCUNSTANCIAS DE AGRAVACIÓN): 4995
+      ARTÍCULO 113. DEFORMIDAD: 1905
+      ARTÍCULO 125. LESIONES AL FETO: 653
+      ARTÍCULO 136. LESIONES EN PERSONA PROTEGIDA: 545
+      ARTÍCULO 115. LESIONES CON PERTURBACION PSIQUICA TRANSITORIA: 366
+      ARTÍCULO 112. INCAPACIDAD PARA TRABAJAR O ENFERMEDAD: 358
+      ARTÍCULO 116. PÉRDIDA ANATÓMICA O FUNCIONAL DE UN ÓRGANO O MIEMBRO: 252
+      ARTÍCULO 126. LESIONE CULPOSAS AL FETO: 241
+      ARTÍCULO 114. PERTURBACIÓN FUNCIONAL: 201
+  cantidad:
+    tipo_fuente: text
+    etiqueta: CANTIDAD
+    nulos: 0
+    minimo: '1'
+    maximo: '99'
+    comparacion: texto
+    valores:
+      '1': 985536
+      '2': 228343
+      '3': 75769
+      '4': 34082
+      '5': 17505
+      '6': 10228
+      '7': 6412
+      '8': 4525
+      '9': 3063
+      '10': 2328
+      '11': 1769
+      '12': 1488
+      '13': 1228
+      '14': 1011
+      '15': 926
+      '16': 835
+      '17': 652
+      '18': 621
+      '19': 553
+      '20': 484

@@ -1,0 +1,36 @@
+id: policia_hurto_comercio_residencias_municipio
+version: 1
+familia: justicia
+fuente: policia.hurto_comercio_residencias
+pregunta: "¿Cuántos robos a comercios y viviendas hubo en este municipio en el año?"
+descripcion: >
+  Hurtos a comercios y residencias reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
+  por tipo y género de la víctima (vacío si la víctima es un negocio). Son denuncias: no todos los delitos se denuncian, y el año en
+  curso está incompleto.
+  (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 6sqw-8cg5
+    portal: datos.gov.co
+    select: "tipo_de_hurto, genero, sum(cantidad::number) AS casos"
+    where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
+    group: "tipo_de_hurto, genero"
+    order: "tipo_de_hurto, genero"
+    max_filas: 200
+  campos: [codigo_dane, fecha_hecho, tipo_de_hurto, genero, cantidad]
+salida: PoliciaHurtoComercioResidenciasMunicipio
+derivados:
+  casos: {de: columna, campo: casos, tipo: int}
+  total_casos: {de: suma, campo: casos, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en 6sqw-8cg5: Chía 2024 suma 361 casos; el primer grupo (entidades comerciales, sin género: la víctima es un negocio) tiene 220.
+  entrada: {municipio_divipola: "25175", anio: 2024}
+  verdad: {casos: 220, tipo: "ARTÍCULO 239. HURTO ENTIDADES COMERCIALES"}
+  minimos: {total_casos: 361}
+  campos: [casos, genero, tipo, total_casos]
+  latencia_max_ms: 10000

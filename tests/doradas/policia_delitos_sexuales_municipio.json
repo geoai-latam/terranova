@@ -1,0 +1,121 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:06+00:00",
+ "herramienta": "policia_delitos_sexuales_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "delito, genero",
+    "id": "fpe5-yrmw",
+    "max_filas": 200,
+    "order": "delito, genero",
+    "portal": "datos.gov.co",
+    "select": "delito, genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "delito",
+       "genero"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "8",
+        "delito": "ARTÍCULO 205. ACCESO CARNAL VIOLENTO",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "1",
+        "delito": "ARTÍCULO 205. ACCESO CARNAL VIOLENTO",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "13",
+        "delito": "ARTÍCULO 206. ACTO SEXUAL VIOLENTO",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "3",
+        "delito": "ARTÍCULO 207. ACCESO CARNAL O ACTO SEXUAL EN PERSONA PUESTA EN INCAPACIDAD DE RESISTIR",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "5",
+        "delito": "ARTÍCULO 208. ACCESO CARNAL ABUSIVO CON MENOR DE 14 AÑOS",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "1",
+        "delito": "ARTÍCULO 208. ACCESO CARNAL ABUSIVO CON MENOR DE 14 AÑOS",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "16",
+        "delito": "ARTÍCULO 209. ACTOS SEXUALES CON MENOR DE 14 AÑOS",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "3",
+        "delito": "ARTÍCULO 209. ACTOS SEXUALES CON MENOR DE 14 AÑOS",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "3",
+        "delito": "ARTÍCULO 210 A. ACOSO SEXUAL",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "1",
+        "delito": "ARTÍCULO 210 A. ACOSO SEXUAL",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "4",
+        "delito": "ARTÍCULO 210. ACCESO CARNAL O ACTO SEXUAL ABUSIVO CON INCAPAZ DE RESISTIR",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "4",
+        "delito": "ARTÍCULO 218. PORNOGRAFÍA CON MENORES",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "1",
+        "delito": "ARTÍCULO 219 A. UTILIZACIÓN O FACILITACIÓN DE MEDIOS DE COMUNICACIÓN PARA OFRECER SERVICIOS SEXUALES DE MENORES",
+        "genero": "FEMENINO"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 13,
+      "truncado": false,
+      "vistos": 13
+     },
+     "completo": true,
+     "conjunto": "fpe5-yrmw",
+     "consulta": {
+      "conjunto": "fpe5-yrmw",
+      "group": "delito, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "delito, genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 13,
+     "filas_que_resume": 63,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

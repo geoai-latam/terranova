@@ -1,0 +1,76 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:13+00:00",
+ "herramienta": "policia_hurto_vehiculos_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "tipo_de_hurto, genero",
+    "id": "9vha-vh9n",
+    "max_filas": 200,
+    "order": "tipo_de_hurto, genero",
+    "portal": "datos.gov.co",
+    "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "genero",
+       "tipo_de_hurto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "10",
+        "genero": "FEMENINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO AUTOMOTORES"
+       },
+       {
+        "casos": "18",
+        "genero": "MASCULINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO AUTOMOTORES"
+       },
+       {
+        "casos": "13",
+        "genero": "FEMENINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO MOTOCICLETAS"
+       },
+       {
+        "casos": "54",
+        "genero": "MASCULINO",
+        "tipo_de_hurto": "ARTÍCULO 239. HURTO MOTOCICLETAS"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "completo": true,
+     "conjunto": "9vha-vh9n",
+     "consulta": {
+      "conjunto": "9vha-vh9n",
+      "group": "tipo_de_hurto, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 4,
+     "filas_que_resume": 95,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

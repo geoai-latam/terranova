@@ -1,0 +1,99 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:33:17+00:00",
+ "herramienta": "policia_lesiones_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "descripci_n_conducta, genero",
+    "id": "72sg-cybi",
+    "max_filas": 200,
+    "order": "descripci_n_conducta, genero",
+    "portal": "datos.gov.co",
+    "select": "descripci_n_conducta, genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "descripci_n_conducta",
+       "genero"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "94",
+        "descripci_n_conducta": "ARTÍCULO 111. LESIONES PERSONALES",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "174",
+        "descripci_n_conducta": "ARTÍCULO 111. LESIONES PERSONALES",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "4",
+        "descripci_n_conducta": "ARTÍCULO 111. LESIONES PERSONALES"
+       },
+       {
+        "casos": "1",
+        "descripci_n_conducta": "ARTÍCULO 113. DEFORMIDAD",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "1",
+        "descripci_n_conducta": "ARTÍCULO 119. LESIONES PERSONALES ( CIRCUNSTANCIAS DE AGRAVACIÓN)",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "2",
+        "descripci_n_conducta": "ARTÍCULO 119. LESIONES PERSONALES ( CIRCUNSTANCIAS DE AGRAVACIÓN)",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "45",
+        "descripci_n_conducta": "ARTÍCULO 120. LESIONES CULPOSAS ( EN ACCIDENTE DE TRANSITO )",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "137",
+        "descripci_n_conducta": "ARTÍCULO 120. LESIONES CULPOSAS ( EN ACCIDENTE DE TRANSITO )",
+        "genero": "MASCULINO"
+       },
+       {
+        "casos": "1",
+        "descripci_n_conducta": "ARTÍCULO 120. LESIONES CULPOSAS ( EN ACCIDENTE DE TRANSITO )"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 9,
+      "truncado": false,
+      "vistos": 9
+     },
+     "completo": true,
+     "conjunto": "72sg-cybi",
+     "consulta": {
+      "conjunto": "72sg-cybi",
+      "group": "descripci_n_conducta, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "descripci_n_conducta, genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 9,
+     "filas_que_resume": 334,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
