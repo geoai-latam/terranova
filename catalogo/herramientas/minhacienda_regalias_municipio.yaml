@@ -1,0 +1,38 @@
+id: minhacienda_regalias_municipio
+version: 1
+familia: estadisticas
+fuente: minhacienda.regalias_ejecucion
+pregunta: "¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos?"
+descripcion: >
+  Presupuesto de inversión del Sistema General de Regalías de un municipio (DIVIPOLA) en el bienio
+  vigente, por fondo o asignación: presupuesto, proyectos aprobados y recursos aprobados en pesos.
+  Solo el bienio en curso: el anterior no se publica aquí.
+  (Fuente: MinHacienda; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: g4qj-2p2e
+    portal: datos.gov.co
+    select: "vigencia, nombrefondo, presupuestosgrinversion AS presupuesto, numeroproyectosaprobados AS proyectos_aprobados, recursosaprobadosasignadosspgr AS recursos_aprobados"
+    where: "codigodaneentidad = '{municipio_divipola}'"
+    order: "vigencia, nombrefondo"
+    max_filas: 100
+  campos: [vigencia, nombrefondo, codigodaneentidad, presupuestosgrinversion, numeroproyectosaprobados, recursosaprobadosasignadosspgr]
+salida: RegaliasMunicipio
+derivados:
+  presupuesto: {de: columna, campo: presupuesto, tipo: float}
+  proyectos_aprobados: {de: columna, campo: proyectos_aprobados, tipo: int}
+  recursos_aprobados: {de: columna, campo: recursos_aprobados, tipo: float}
+  presupuesto_total: {de: suma, campo: presupuesto, tipo: float}
+creditos: 1
+canario:
+  # Medido el 2026-10-23 en g4qj-2p2e: Chía, Vigencia 2025 - 2026, ASIGNACIONES DIRECTAS: $106027949.00.
+  # Cambia con el bienio (2027): entonces se vuelve a medir.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {vigencia: "Vigencia 2025 - 2026", fondo: "ASIGNACIONES DIRECTAS"}
+  minimos: {presupuesto_total: 1}
+  campos: [fondo, presupuesto, presupuesto_total, proyectos_aprobados, recursos_aprobados, vigencia]
+  latencia_max_ms: 10000

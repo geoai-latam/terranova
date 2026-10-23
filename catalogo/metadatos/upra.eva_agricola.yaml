@@ -1,0 +1,156 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: upra.eva_agricola
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/uejq-wxrr.json
+pagina: https://www.datos.gov.co/d/uejq-wxrr
+titulo: Evaluaciones Agropecuarias Municipales – EVA. 2019 - 2025. Base Agrícola
+descripcion: La EVA es una investigación que se realiza mediante un mecanismo subjetivo de recolección
+  de información respecto al área, la producción y el rendimiento de la actividad agropecuaria municipal.
+  El método de cálculo se fundamenta principalmente en la confrontación y conciliación de la información
+  que proveen los registros administrativos que manejan entidades y gremios del sector (área registrada,
+  área bajo asistencia técnica, sacrificio de ganado, registros de parafiscales etc.), con el conocimiento
+  de los funcionarios y los profesionales del sector, respecto al desarrollo y comportamiento de la producción.
+  Su cobertura es de 1.103 municipios y de cerca de 200 productos de la canasta agropecuaria. El Gobierno
+  Nacional, mediante Resolución 299 de 2019 del Ministerio de Agricultura y Desarrollo Rural (MADR), delegó
+  en la Unidad de Planificación Rural Agropecuaria (UPRA) coordinar las actuaciones de las autoridades
+  administrativas sectoriales con miras a implementar el Sistema Nacional Unificado de Información Rural
+  y Agropecuaria (SNUIRA), el Sistema de Información para la Gestión de Riesgos Agropecuarios (SIGRA),
+  consolidar Agronet y gestionar la información del sector agropecuario…
+publicado: '2022-05-27'
+datos_actualizados: '2026-08-28'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Agricultura y Desarrollo Rural
+etiquetas:
+- área
+- cultivos transitorios
+- cultivos
+- evaluaciones agropecuarias municipales
+- upra
+- producción
+- rendimiento
+- área cosechada
+- área sembrada
+filas: 166732
+campos:
+  c_digo_dane_municipio:
+    tipo_fuente: text
+    etiqueta: Código Dane municipio
+    descripcion: Código del municipio - DIVIPOLA
+    nulos: 0
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del municipio
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  grupo_cultivo:
+    tipo_fuente: text
+    etiqueta: Grupo cultivo
+    descripcion: Clasificación de la especie cultivada
+    nulos: 0
+    minimo: Cereales
+    comparacion: texto
+    valores:
+      Frutales: 49152
+      Hortalizas: 31629
+      Cereales: 28663
+      Raíces y tubérculos: 21244
+      Leguminosas: 17898
+      Cultivos tropicales tradicionales: 14511
+      Oleaginosas: 2045
+      Cultivos para condimentos, bebidas medicinales y aromáticas: 1590
+  cultivo:
+    tipo_fuente: text
+    etiqueta: Cultivo
+    descripcion: Nombre de la especie cultivada
+    nulos: 0
+    minimo: Acelga
+    maximo: Zapote
+    comparacion: texto
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    descripcion: Año de referencia
+    nulos: 0
+    minimo: '2019'
+    maximo: '2025'
+    comparacion: numero
+    valores:
+      '2025': 25617
+      '2024': 25553
+      '2023': 24909
+      '2022': 24808
+      '2021': 23898
+      '2020': 21511
+      '2019': 20436
+  periodo:
+    tipo_fuente: text
+    etiqueta: Periodo
+    descripcion: Periodo de siembra (Año y semestre para transitorios) y solo año para los cultivos permanentes
+    nulos: 0
+    minimo: '2019'
+    maximo: 2025B
+    comparacion: texto
+    valores:
+      '2024': 9955
+      '2025': 9929
+      '2023': 9669
+      '2022': 9627
+      '2021': 9527
+      '2020': 8572
+      2025A: 8071
+      2024A: 8013
+      '2019': 8007
+      2023A: 7833
+      2022A: 7818
+      2021A: 7654
+      2025B: 7617
+      2024B: 7585
+      2023B: 7407
+      2022B: 7363
+      2020A: 6923
+      2019A: 6753
+      2021B: 6717
+      2020B: 6016
+  rea_sembrada:
+    tipo_fuente: number
+    etiqueta: Área sembrada
+    descripcion: Área Sembrada en hectáreas
+    nulos: 0
+    minimo: '0.00'
+    maximo: '77630.00'
+    comparacion: numero
+  rea_cosechada:
+    tipo_fuente: number
+    etiqueta: Área cosechada
+    descripcion: Área cosechada en hectáreas de las siembras realizadas en el periodo de referencia
+    nulos: 0
+    minimo: '0.00'
+    maximo: '77630.00'
+    comparacion: numero
+  producci_n:
+    tipo_fuente: number
+    etiqueta: Producción
+    descripcion: Producción en toneladas de las siembras realizadas en el periodo de referencia
+    nulos: 0
+    minimo: '0.00'
+    maximo: '4776340.50'
+    comparacion: numero
+  ciclo_del_cultivo:
+    tipo_fuente: text
+    etiqueta: Ciclo del cultivo
+    descripcion: Ciclo del cultivo (transitorio o permanente)
+    nulos: 0
+    minimo: Permanente
+    maximo: Transitorio
+    comparacion: texto
+    valores:
+      Transitorio: 101676
+      Permanente: 65056

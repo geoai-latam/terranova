@@ -1,0 +1,39 @@
+id: dnp_proyecto_sgr_por_bpin
+version: 1
+familia: contratacion
+fuente: dnp.proyectos_sgr
+pregunta: "¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va?"
+descripcion: >
+  Un proyecto del Sistema General de Regalías por su código BPIN: nombre, estado, sector, valor
+  total, entidad ejecutora, avance físico y financiero, y cuántos departamentos beneficia.
+  (Fuente: DNP; licencia: CC BY-SA 4.0.)
+entrada: {bpin: bpin}
+consulta:
+  operacion: por_codigo
+  resultado: uno
+  tool: datos_consultar
+  argumentos:
+    id: mzgh-shtp
+    portal: datos.gov.co
+    select: "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos"
+    where: "codigobpin = '{bpin}'"
+    group: codigobpin
+    max_filas: 1
+  campos: [codigobpin, nombre, estado, sector, valortotal, ejecucionfisica, ejecucionfinanciera, entidadejecutora, departamento]
+salida: ProyectoSgr
+derivados:
+  nombre: {de: columna, campo: nombre, tipo: str}
+  estado: {de: columna, campo: estado, tipo: str}
+  sector: {de: columna, campo: sector, tipo: str}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+  ejecucion_fisica: {de: columna, campo: ejecucion_fisica, tipo: float}
+  ejecucion_financiera: {de: columna, campo: ejecucion_financiera, tipo: float}
+  ejecutor: {de: columna, campo: ejecutor, tipo: str}
+  departamentos: {de: columna, campo: departamentos, tipo: int}
+creditos: 1
+canario:
+  # Medido el 2026-10-23 en mzgh-shtp: ADECUACIÓN Y MEJORAMIENTO DE LA VIA ALTERNA SOMONDOCO- SECTO… (MUNICIPIO DE SOMONDOCO), TERMINADO.
+  entrada: {bpin: "2013157610001"}
+  verdad: {estado: "TERMINADO", valor_total: 201534549.0, ejecutor: "MUNICIPIO DE SOMONDOCO", departamentos: 1}
+  campos: [bpin, departamentos, ejecucion_financiera, ejecucion_fisica, ejecutor, estado, nombre, sector, valor_total]
+  latencia_max_ms: 10000

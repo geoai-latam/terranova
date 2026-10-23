@@ -1,0 +1,46 @@
+id: upra.eva_agricola
+titulo: "Evaluaciones Agropecuarias Municipales (EVA), base agrícola 2019 a 2025"
+entidad: Unidad de Planificación Rural Agropecuaria (UPRA)
+competencia: consolida con el Ministerio de Agricultura y las secretarías departamentales las estadísticas agrícolas por municipio
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/uejq-wxrr.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: UPRA y Ministerio de Agricultura, Evaluaciones Agropecuarias Municipales (EVA). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/uejq-wxrr.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura: {pais: CO, columna_tiempo: a_o}
+datos_personales: ninguno
+estado: publicada
+campos:
+  c_digo_dane_municipio: {nombre: municipio_divipola, tipo: str, desc: "municipio (DIVIPOLA, 5 dígitos)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  grupo_cultivo: {nombre: grupo, tipo: str, desc: "grupo de cultivo (hortalizas, frutales, cereales…)"}
+  cultivo: {nombre: cultivo, tipo: str, desc: "cultivo"}
+  a_o: {nombre: anio, tipo: int, desc: "año"}
+  periodo: {nombre: periodo, tipo: str, desc: "periodo: semestre A o B en los transitorios, año en los permanentes"}
+  rea_sembrada: {nombre: area_sembrada, tipo: float, desc: "área sembrada (ha)"}
+  rea_cosechada: {nombre: area_cosechada, tipo: float, desc: "área cosechada (ha)"}
+  producci_n: {nombre: produccion, tipo: float, desc: "producción (t)"}
+  ciclo_del_cultivo: {nombre: ciclo, tipo: str, desc: "ciclo: transitorio, anual o permanente"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: UPRA, theme: agricultura, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "un cultivo (y su desagregación) en un municipio y un periodo; 166 732 filas de 2019 a 2025"
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "los transitorios traen dos periodos al año (A y B): el año suma los dos semestres"
+  - "un cultivo puede venir en varias desagregaciones (estado físico): se suman en el cultivo"
+  - "el rendimiento no se suma: se calcula como producción sobre área cosechada"
+  - "el código DIVIPOLA viene completo con sus 5 dígitos (texto)"
+  decision: "en vivo por municipio y año, sumando por cultivo"

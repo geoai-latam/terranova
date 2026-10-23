@@ -1,0 +1,187 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:52:38+00:00",
+ "herramienta": "upra_eva_cultivos_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "cultivo",
+    "id": "uejq-wxrr",
+    "max_filas": 500,
+    "order": "cultivo",
+    "portal": "datos.gov.co",
+    "select": "cultivo, max(grupo_cultivo) AS grupo, max(ciclo_del_cultivo) AS ciclo, sum(rea_sembrada) AS area_sembrada, sum(rea_cosechada) AS area_cosechada, sum(producci_n) AS produccion",
+    "where": "c_digo_dane_municipio = '25175' AND a_o = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "area_cosechada",
+       "area_sembrada",
+       "ciclo",
+       "cultivo",
+       "grupo",
+       "produccion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "area_cosechada": "15.00",
+        "area_sembrada": "15.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Arveja",
+        "grupo": "Leguminosas",
+        "produccion": "42.05"
+       },
+       {
+        "area_cosechada": "4.00",
+        "area_sembrada": "4.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Brócoli",
+        "grupo": "Hortalizas",
+        "produccion": "40.00"
+       },
+       {
+        "area_cosechada": "22.00",
+        "area_sembrada": "22.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Cilantro",
+        "grupo": "Hortalizas",
+        "produccion": "125.40"
+       },
+       {
+        "area_cosechada": "1.00",
+        "area_sembrada": "3.00",
+        "ciclo": "Permanente",
+        "cultivo": "Ciruela",
+        "grupo": "Frutales",
+        "produccion": "4.00"
+       },
+       {
+        "area_cosechada": "4.00",
+        "area_sembrada": "4.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Coliflor",
+        "grupo": "Hortalizas",
+        "produccion": "68.00"
+       },
+       {
+        "area_cosechada": "1.00",
+        "area_sembrada": "3.00",
+        "ciclo": "Permanente",
+        "cultivo": "Durazno o albaricoque",
+        "grupo": "Frutales",
+        "produccion": "7.00"
+       },
+       {
+        "area_cosechada": "12.00",
+        "area_sembrada": "12.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Espinaca",
+        "grupo": "Hortalizas",
+        "produccion": "246.00"
+       },
+       {
+        "area_cosechada": "1.00",
+        "area_sembrada": "3.00",
+        "ciclo": "Permanente",
+        "cultivo": "Feijoa",
+        "grupo": "Frutales",
+        "produccion": "5.00"
+       },
+       {
+        "area_cosechada": "7.00",
+        "area_sembrada": "7.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Frijol",
+        "grupo": "Leguminosas",
+        "produccion": "9.79"
+       },
+       {
+        "area_cosechada": "8.00",
+        "area_sembrada": "8.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Haba",
+        "grupo": "Leguminosas",
+        "produccion": "4.24"
+       },
+       {
+        "area_cosechada": "30.00",
+        "area_sembrada": "32.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Lechuga",
+        "grupo": "Hortalizas",
+        "produccion": "600.00"
+       },
+       {
+        "area_cosechada": "39.00",
+        "area_sembrada": "41.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Maíz",
+        "grupo": "Cereales",
+        "produccion": "32.72"
+       },
+       {
+        "area_cosechada": "5.00",
+        "area_sembrada": "5.00",
+        "ciclo": "Permanente",
+        "cultivo": "Mora",
+        "grupo": "Frutales",
+        "produccion": "5.00"
+       },
+       {
+        "area_cosechada": "125.00",
+        "area_sembrada": "125.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Papa",
+        "grupo": "Raíces y tubérculos",
+        "produccion": "2750.00"
+       },
+       {
+        "area_cosechada": "8.00",
+        "area_sembrada": "9.00",
+        "ciclo": "Transitorio",
+        "cultivo": "Plantas aromáticas",
+        "grupo": "Cultivos para condimentos, bebidas medicinales y aromáticas",
+        "produccion": "24.00"
+       },
+       {
+        "area_cosechada": "7.00",
+        "area_sembrada": "7.00",
+        "ciclo": "Permanente",
+        "cultivo": "Tomate de árbol",
+        "grupo": "Frutales",
+        "produccion": "73.50"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 16,
+      "truncado": false,
+      "vistos": 16
+     },
+     "completo": true,
+     "conjunto": "uejq-wxrr",
+     "consulta": {
+      "conjunto": "uejq-wxrr",
+      "group": "cultivo",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "cultivo, max(grupo_cultivo) AS grupo, max(ciclo_del_cultivo) AS ciclo, sum(rea_sembrada) AS area_sembrada, sum(rea_cosechada) AS area_cosechada, sum(producci_n) AS produccion",
+      "where": "(c_digo_dane_municipio = '25175' AND a_o = 2024)"
+     },
+     "filas": 16,
+     "filas_que_resume": 26,
+     "filtro_soql": "(c_digo_dane_municipio = '25175' AND a_o = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

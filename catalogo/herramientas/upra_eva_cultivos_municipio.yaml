@@ -1,0 +1,41 @@
+id: upra_eva_cultivos_municipio
+version: 1
+familia: territorio
+fuente: upra.eva_agricola
+pregunta: "¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce?"
+descripcion: >
+  Evaluaciones Agropecuarias Municipales (EVA) de un municipio (DIVIPOLA) en un año, de 2019 a
+  2025: por cultivo, área sembrada y cosechada (ha) y producción (t), sumando los semestres y las
+  desagregaciones del año. El rendimiento es producción sobre área cosechada.
+  (Fuente: UPRA y MinAgricultura; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: uejq-wxrr
+    portal: datos.gov.co
+    select: "cultivo, max(grupo_cultivo) AS grupo, max(ciclo_del_cultivo) AS ciclo, sum(rea_sembrada) AS area_sembrada, sum(rea_cosechada) AS area_cosechada, sum(producci_n) AS produccion"
+    where: "c_digo_dane_municipio = '{municipio_divipola}' AND a_o = {anio}"
+    group: cultivo
+    order: cultivo
+    max_filas: 500
+  campos: [c_digo_dane_municipio, a_o, cultivo, grupo_cultivo, ciclo_del_cultivo, rea_sembrada, rea_cosechada, producci_n]
+salida: EvaCultivosMunicipio
+derivados:
+  grupo: {de: columna, campo: grupo, tipo: str}
+  ciclo: {de: columna, campo: ciclo, tipo: str}
+  area_sembrada: {de: columna, campo: area_sembrada, tipo: float}
+  area_cosechada: {de: columna, campo: area_cosechada, tipo: float}
+  produccion: {de: columna, campo: produccion, tipo: float}
+  area_sembrada_total: {de: suma, campo: area_sembrada, tipo: float}
+creditos: 2
+canario:
+  # Medido el 2026-10-23 en uejq-wxrr: Chía 2024, 16 cultivos y 300 ha sembradas; el primero,
+  # Arveja: 15.00 ha sembradas y 42.05 t.
+  entrada: {municipio_divipola: "25175", anio: 2024}
+  verdad: {cultivo: "Arveja", area_sembrada: 15.0, produccion: 42.05}
+  minimos: {area_sembrada_total: 300}
+  campos: [area_cosechada, area_sembrada, area_sembrada_total, ciclo, cultivo, grupo, produccion]
+  latencia_max_ms: 10000

@@ -39,6 +39,7 @@ PATRONES_ENTRADA: dict[str, str] = {
     "nit_empresa": r"^[89][0-9]{8}$",
     "codigo_dane_sede": r"^[0-9]{12}$",  # sede educativa (DANE): 125175000493
     "matricula_inmobiliaria": r"^[0-9A-Z]{2,4}-[0-9]{1,10}$",  # folio de matrícula: 50N-20849403
+    "bpin": r"^[0-9]{13,14}$",  # proyecto del Banco de Proyectos (DNP): 2013157610001
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
 TipoEntrada = Literal[
@@ -60,6 +61,7 @@ TipoEntrada = Literal[
     "nit_empresa",
     "codigo_dane_sede",
     "matricula_inmobiliaria",
+    "bpin",
     "nombre",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
