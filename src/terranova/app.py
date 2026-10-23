@@ -7,6 +7,7 @@ mismo sobre `rt/1`, mismos errores (RFC 9457 en REST, `isError` en MCP, ADR-0011
 from __future__ import annotations
 
 import asyncio
+import json
 import math
 import os
 import time
@@ -342,6 +343,49 @@ def _con_cabeceras(send: Any, extra: list[tuple[bytes, bytes]]) -> Any:
     return enviar
 
 
+# Un mensaje MCP es pequeño; uno más grande se cobra sin leerlo entero (por precaución).
+_MAX_CUERPO_MCP = 1_000_000
+
+
+async def _leer_cuerpo(receive: Any) -> tuple[bytes, Any]:
+    """El cuerpo de la petición y un `receive` que lo vuelve a entregar intacto a quien siga."""
+    partes: list[bytes] = []
+    tamano = 0
+    while True:
+        mensaje = await receive()
+        if mensaje["type"] != "http.request":
+            break
+        partes.append(mensaje.get("body", b""))
+        tamano += len(partes[-1])
+        if not mensaje.get("more_body") or tamano > _MAX_CUERPO_MCP:
+            break
+    cuerpo = b"".join(partes)
+    entregado = False
+
+    async def otra_vez() -> Any:
+        nonlocal entregado
+        if not entregado:
+            entregado = True
+            return {"type": "http.request", "body": cuerpo, "more_body": False}
+        return await receive()
+
+    return cuerpo, otra_vez
+
+
+def _consulta_mcp(cuerpo: bytes) -> bool:
+    """¿El mensaje MCP consulta una herramienta (`tools/call`)? Abrir la sesión, listar las
+    herramientas o un ping no tocan ninguna fuente y no gastan cuota: un cliente que abre cuatro
+    perfiles se quedaba sin cupo antes de preguntar nada (F6, GEO Copilot). Lo ilegible se cobra."""
+    if len(cuerpo) > _MAX_CUERPO_MCP:
+        return True
+    try:
+        mensaje = json.loads(cuerpo)
+    except ValueError:
+        return True
+    mensajes = mensaje if isinstance(mensaje, list) else [mensaje]
+    return any(not isinstance(m, dict) or m.get("method") == "tools/call" for m in mensajes)
+
+
 class Aplicacion:
     """Reparte por ruta: las de MCP a su servidor; el resto, a la API. Un solo arranque."""
 
@@ -370,7 +414,11 @@ class Aplicacion:
                     )(scope, receive, send)
                     return
                 scope.setdefault("state", {})["principal"] = principal
-                if puerta.cuota is not None:
+                cobrar = True
+                if app is not self.api:
+                    cuerpo, receive = await _leer_cuerpo(receive)
+                    cobrar = scope.get("method") == "POST" and _consulta_mcp(cuerpo)
+                if puerta.cuota is not None and cobrar:
                     permitido, quedan, espera = await puerta.cuota.tomar_ficha(principal.llave_id)
                     tasa = _cabeceras_tasa(puerta.cuota, quedan, espera)
                     if not permitido:
@@ -402,11 +450,18 @@ class Aplicacion:
             await send({"type": "lifespan.shutdown.complete"})
 
 
+# Sin estado: cada petición MCP se basta sola. Caddy reparte entre dos réplicas sin afinidad, y
+# una sesión solo funcionaría si todas sus peticiones cayeran en la réplica que la abrió. La puerta
+# solo lee: no hay nada que guardar entre peticiones.
+OPCIONES_MCP: dict[str, Any] = {"stateless_http": True}
+
+
 def crear_aplicacion() -> Aplicacion:
-    mcp = {"/mcp": puerta.crear_servidor(con_ciclo=False).http_app(path="/mcp")}
+    mcp = {"/mcp": puerta.crear_servidor(con_ciclo=False).http_app(path="/mcp", **OPCIONES_MCP)}
     for familia in puerta.FAMILIAS:
         ruta = f"/mcp/{familia}"
-        mcp[ruta] = puerta.crear_servidor(familia, con_ciclo=False).http_app(path=ruta)
+        servidor = puerta.crear_servidor(familia, con_ciclo=False)
+        mcp[ruta] = servidor.http_app(path=ruta, **OPCIONES_MCP)
     return Aplicacion(crear_api(), mcp)
 
 

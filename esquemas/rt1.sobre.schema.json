@@ -368,6 +368,18 @@
           "default": null,
           "title": "Crs"
         },
+        "nombre": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Nombre"
+        },
         "tipo": {
           "enum": [
             "punto",

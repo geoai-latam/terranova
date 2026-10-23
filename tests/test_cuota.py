@@ -181,3 +181,38 @@ async def test_uso_del_mes(
     assert (await cliente.post(PREDIO, json=CHIA, headers=cabecera)).status_code == 200
     despues = (await cliente.get("/v1/uso", headers=cabecera)).json()
     assert despues["usados"] == 10 and despues["disponibles"] == 5
+
+
+@pytest.mark.anyio
+async def test_abrir_y_listar_por_mcp_no_gasta_la_tasa(
+    montaje: tuple[RegistroSqlite, Fuente],
+) -> None:
+    """Solo `tools/call` consulta una fuente: un cliente que abre varios perfiles (initialize,
+    tools/list) no debe quedarse sin cupo antes de preguntar (F6, GEO Copilot)."""
+    registro, _ = montaje
+    cabecera = {
+        "Authorization": f"Bearer {registro.crear('mcp', {'*'}, prueba=False, expira=None)}",
+        "Accept": "application/json, text/event-stream",
+    }
+    aplicacion = crear_aplicacion()
+    mcp = aplicacion.mcp["/mcp/territorio"]
+    lista = {"jsonrpc": "2.0", "id": 1, "method": "tools/list"}
+    llamada = {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {"name": "igac_predio_en_punto", "arguments": {"lon": -74.0262, "lat": 4.8619}},
+    }
+    async with mcp.router.lifespan_context(mcp):
+        transporte = httpx.ASGITransport(app=aplicacion)
+        async with httpx.AsyncClient(transport=transporte, base_url="http://puerta") as c:
+            listas = [
+                (await c.post("/mcp/territorio", json=lista, headers=cabecera)).status_code
+                for _ in range(6)
+            ]
+            llamadas = [
+                (await c.post("/mcp/territorio", json=llamada, headers=cabecera)).status_code
+                for _ in range(4)
+            ]
+    assert listas == [200] * 6  # la cubeta es de 3: listar no la gasta
+    assert llamadas[-1] == 429  # consultar sí

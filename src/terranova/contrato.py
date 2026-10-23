@@ -121,6 +121,9 @@ class ZonaUsada(_Modelo):
     tipo: Literal["punto", "bbox", "poligono", "divipola", "codigo"]
     valor: Any
     crs: Literal["EPSG:4326", "EPSG:9377"] | None = None
+    # Regla 11: con un código DIVIPOLA, el lugar con su nombre. Un agente que supuso el código
+    # (05380 por Granada) ve que el dato es de La Estrella, no de Granada (F6, GEO Copilot).
+    nombre: str | None = None
 
 
 class Artefacto(BaseModel):

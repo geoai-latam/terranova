@@ -173,6 +173,23 @@ async def test_la_aplicacion_reparte_mcp_y_rest() -> None:
 
 
 @pytest.mark.anyio
+async def test_mcp_sin_sesion_lo_atiende_cualquier_replica() -> None:
+    """Dos réplicas tras Caddy, sin afinidad: una petición sin sesión previa (la que cae en la
+    réplica que no la abrió) debe funcionar igual."""
+    mcp = crear_aplicacion().mcp["/mcp/justicia"]
+    async with mcp.router.lifespan_context(mcp):
+        transporte = httpx.ASGITransport(app=mcp)
+        async with httpx.AsyncClient(transport=transporte, base_url="http://127.0.0.1") as c:
+            r = await c.post(
+                "/mcp/justicia",
+                json={"jsonrpc": "2.0", "id": 1, "method": "tools/list"},
+                headers={"Accept": "application/json, text/event-stream"},
+            )
+    assert r.status_code == 200, r.text
+    assert "dane_divipola_buscar" in r.text
+
+
+@pytest.mark.anyio
 async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     llms = await rest.get("/llms.txt")
     assert llms.status_code == 200 and llms.text.startswith("# Terranova")
