@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:44:53+00:00",
+ "herramienta": "banrep_trm_recientes",
+ "llamadas": [
+  {
+   "argumentos": {
+    "params": {
+     "lastNObservations": 5
+    },
+    "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ACTIVITY",
+       "ADJUSTMENT",
+       "EXPENDITURE",
+       "FREQ",
+       "OBS_VALUE",
+       "REFERENCE_AREA",
+       "SUBJECT",
+       "TIME_PERIOD",
+       "UNIT_MEASURE"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "3185.01",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "CCSP",
+        "TIME_PERIOD": "20261023",
+        "UNIT_MEASURE": "COP"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "3191.47",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "CCSP",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "COP"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "3163.76",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "CCSP",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "COP"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "3156.32",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "CCSP",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "COP"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "3174.67",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "CCSP",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "COP"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "filas": 5,
+     "params": {
+      "lastNObservations": 5
+     },
+     "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_HIST,1.0/all"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_sdmx"
+  }
+ ]
+}

@@ -1,0 +1,490 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-22T23:44:37+00:00",
+ "herramienta": "banrep_ibr_recientes",
+ "llamadas": [
+  {
+   "argumentos": {
+    "params": {
+     "lastNObservations": 5
+    },
+    "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_IBR_DAILY_HIST,1.0/all"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ACTIVITY",
+       "ADJUSTMENT",
+       "EXPENDITURE",
+       "FREQ",
+       "OBS_VALUE",
+       "REFERENCE_AREA",
+       "SUBJECT",
+       "TIME_PERIOD",
+       "UNIT_MEASURE"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.258",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.259",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.245",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.271",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.257",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.406",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.407",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.395",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.418",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.409",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM00",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.309",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.306",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.302",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.308",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.295",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.508",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.507",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.5",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.505",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.495",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM01",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.438",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.436",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.412",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.421",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.382",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.735",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.733",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.712",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.72",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.688",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM03",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.517",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.525",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.484",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.511",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "12.468",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "ER"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.981",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261022",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.988",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261021",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.95",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261020",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.975",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261019",
+        "UNIT_MEASURE": "NR"
+       },
+       {
+        "ACTIVITY": "_Z",
+        "ADJUSTMENT": "_Z",
+        "EXPENDITURE": "_Z",
+        "FREQ": "D",
+        "OBS_VALUE": "11.935",
+        "REFERENCE_AREA": "CO",
+        "SUBJECT": "IRIBRM06",
+        "TIME_PERIOD": "20261016",
+        "UNIT_MEASURE": "NR"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 40,
+      "truncado": false,
+      "vistos": 40
+     },
+     "filas": 40,
+     "params": {
+      "lastNObservations": 5
+     },
+     "url": "https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_IBR_DAILY_HIST,1.0/all"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_sdmx"
+  }
+ ]
+}

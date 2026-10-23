@@ -426,6 +426,7 @@ def _interpolados(valor: Any) -> set[str]:
 LICENCIAS_LEGIBLES = {
     "CC0-1.0": "CC0 1.0",
     "LicenseRef-dominio-publico-EEUU": "dominio público de Estados Unidos",
+    "LicenseRef-banrep-aviso-legal": "aviso legal del BanRep",
 }
 
 

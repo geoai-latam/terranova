@@ -28,9 +28,9 @@ class CopiaVacia:
         return {"artifacts": [{"kind": "table", "rows": []}], "facts": hechos}
 
 
+# un conector falso por cada conector del catálogo: uno nuevo (web-mcp) no puede quedar sin el suyo
 VACIOS: dict[str, Any] = {
-    n: Vacio()
-    for n in ("arcgis-mcp", "datos-abiertos-mcp", "dane-mcp", "amenazas-mcp", "imagery-mcp")
+    f.conector: Vacio() for f in puerta.CATALOGO.fuentes.values() if f.conector != "copia"
 } | {"copia": CopiaVacia()}
 REGISTRO = RegistroSql(":memory:", "p" * 40)
 LLAVE = REGISTRO.crear("schemathesis", {"*"}, prueba=True, expira=None)

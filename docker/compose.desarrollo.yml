@@ -16,6 +16,8 @@ services:
     ports: ["127.0.0.1:9930:9930"]
   imagery-mcp:
     ports: ["127.0.0.1:9100:9100"]
+  web-mcp:
+    ports: ["127.0.0.1:9940:9940"]
   # Postgres para los jobs del host (copias, dataset curado): TERRANOVA_COPIAS_URL=postgresql://terranova:…@127.0.0.1:55432/terranova
   postgres:
     ports: ["127.0.0.1:55432:5432"]

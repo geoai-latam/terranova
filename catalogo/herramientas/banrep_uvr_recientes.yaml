@@ -1,0 +1,29 @@
+id: banrep_uvr_recientes
+version: 1
+familia: estadisticas
+fuente: banrep.uvr
+pregunta: "¿Cuánto vale y cómo varía la UVR?"
+descripcion: >
+  Unidad de valor real (UVR) del Banco de la República: las últimas observaciones (`ultimas` por serie; hasta 5000 filas), una fila por
+  fecha y serie, con la unidad (dos series: el valor y su variación (SUBJECT y UNIT_MEASURE lo dicen)). Sale del servicio SDMX oficial; se cita con la fecha de
+  consulta, como pide el aviso legal del Banco.
+  (Fuente: Banco de la República; licencia: aviso legal del BanRep.)
+entrada: {ultimas: int}
+consulta:
+  operacion: serie
+  tool: web_sdmx
+  argumentos:
+    url: "{url_fuente}"
+    params: {lastNObservations: "{ultimas}"}
+  campos: [TIME_PERIOD, OBS_VALUE, SUBJECT, UNIT_MEASURE, FREQ]
+salida: UvrRecientes
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en DF_UVR_DAILY_HIST con lastNObservations: 2 serie(s), unidad y frecuencia como
+  # dice la ficha. Los valores cambian a diario: el canario mira la forma y cuántas filas llegan.
+  entrada: {ultimas: 5}
+  minimos: {numero_registros: 10}
+  campos: [fecha, frecuencia, numero_registros, serie, unidad, valor]
+  latencia_max_ms: 20000  # SDMX del BanRep: de 7 a 11 s medidos
