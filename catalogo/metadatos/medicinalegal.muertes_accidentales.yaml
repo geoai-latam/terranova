@@ -1,0 +1,113 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: medicinalegal.muertes_accidentales
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/irg9-q5fx.json
+pagina: https://www.datos.gov.co/d/irg9-q5fx
+titulo: Muertes Accidentales en Colombia - Histórico
+descripcion: 'Contiene información de las cifras definitivas prevalente de las muertes accidentales ocurridas
+  en el territorio nacional Colombiano en el periodo de tiempo comprendido entre los años 2015 a 2024,
+  de los cuales tiene conocimiento y son registrados por el Instituto Nacional de Medicina Legal y Ciencias
+  Forenses. Su opinión es muy importante para nosotros, ya que nos ayuda a mejorar los servicios que brindamos;
+  por tal motivo, le agradecemos responder la siguiente encuesta relacionada con la satisfacción de consulta
+  de datos abiertos: https://forms.office.com/r/CGD4hDTEX8. Observaciones Generales: 1. En concordancia
+  con el quehacer misional del INMLCF, de acuerdo con lo establecido en el Artículo 35 de la Ley 938 de
+  2004, la entidad provee cifras estadísticas obtenidas de la práctica forense, esto con el objetivo de
+  que puedan ser consultadas por el público en general, y también para que sean utilizadas como insumo
+  para generar políticas públicas y toma de decisiones en cuanto a la mitigación y prevención de las lesiones
+  de causa externa que ocurren en el territorio nacional colombiano. 2. Cuando se clasifica un caso en
+  una de las categorías solicitadas, no se tipifica un delito, ta…'
+publicado: '2025-09-09'
+datos_actualizados: '2025-09-09'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Justicia y Derecho
+etiquetas:
+- lesiones fatales
+- medicina legal
+- muerte accidental
+filas: 33254
+campos:
+  a_o_del_hecho:
+    tipo_fuente: text
+    etiqueta: Año del hecho
+    descripcion: Rango de tiempo en el que se dieron los hechos, se encuentra establecido por el período
+      que transcurre desde el día 1 de enero hasta el 31 de diciembre.
+    nulos: 0
+    minimo: '2015'
+    maximo: '2024'
+    comparacion: texto
+    valores:
+      '2024': 4181
+      '2023': 3873
+      '2022': 3872
+      '2017': 3514
+      '2021': 3323
+      '2018': 3075
+      '2019': 2989
+      '2016': 2940
+      '2020': 2812
+      '2015': 2675
+  sexo_de_la_victima:
+    tipo_fuente: text
+    etiqueta: Sexo de la victima
+    descripcion: Hace referencia al sexo del fallecido. Desde la perspectiva biológica, se refiere a las
+      características genéticas, endocrinas y morfológicas del cuerpo. Las categorías utilizadas para
+      clasificar estas características en los seres humanos son hombre, mujer.
+    nulos: 0
+    minimo: Hombre
+    maximo: Mujer
+    comparacion: texto
+    valores:
+      Hombre: 26978
+      Mujer: 6261
+      Indeterminado: 15
+  codigo_dane_municipio:
+    tipo_fuente: text
+    etiqueta: Código Dane Municipio
+    descripcion: División Político Administrativa (DIVIPOLA). Es una codificación estándar, numérica,
+      que identifica a las entidades territoriales dándole a cada municipio, una identidad única, inconfundible
+      y homogénea.
+    nulos: 0
+    minimo: '11001'
+    maximo: '999'
+    comparacion: texto
+  municipio_del_hecho_dane:
+    tipo_fuente: text
+    etiqueta: Municipio del hecho DANE
+    descripcion: Entidad territorial fundamental de la división político-administrativa del Estado colombiano,
+      donde ocurrieron los hechos. También corresponde a la ciudad, distrito, municipio, pueblo o sitio
+      específico, donde ocurrieron los hechos.
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  mecanismo_causal_de_la_lesion_fatal:
+    tipo_fuente: text
+    etiqueta: Mecanismo Causal de la Lesión Fatal
+    descripcion: Se clasifican los casos de muerte de acuerdo a la causa principal que la originó, pueden
+      ser por algún tipo de trauma o lesión externa.
+    nulos: 0
+    maximo: Tóxico
+    comparacion: texto
+    valores:
+      Contundente: 16126
+      Generadores de asfixia: 10127
+      Eléctrico: 2330
+      Tóxico: 1980
+      Térmico: 1259
+      Cortocontundente: 343
+      Agentes y mecanismo explosivo: 196
+      Proyectil de arma de fuego: 188
+      Por determinar: 122
+      Cortante: 94
+      Corto contundente: 87
+      Otros: 85
+      Cortopunzante: 74
+      Punzante: 50
+      Caústico: 44
+      Otro: 44
+      Agente o mecanismo explosivo: 39
+      Mecanismo o agente explosivo: 28
+      Otra: 22
+      Corto punzante: 12

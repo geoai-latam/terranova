@@ -1,0 +1,43 @@
+id: mintic.internet_fijo_accesos
+titulo: "Accesos a internet fijo por tecnología y segmento (MinTIC)"
+entidad: Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC)
+competencia: publica las estadísticas del sector TIC con los reportes de los proveedores (Resolución CRC 5050 de 2016)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/n48w-gutb.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: MinTIC, internet fijo: accesos por tecnología y segmento. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/n48w-gutb.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura: {pais: CO, columna_tiempo: anno}
+datos_personales: ninguno
+estado: publicada
+campos:
+  anno: {nombre: anio, tipo: str, desc: "año"}
+  trimestre: {nombre: trimestre, tipo: str, desc: "trimestre (1 a 4)"}
+  proveedor: {nombre: proveedor, tipo: str, desc: "proveedor de internet"}
+  cod_municipio: {nombre: municipio_divipola, tipo: str, desc: "municipio (DIVIPOLA, 5 dígitos)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  segmento: {nombre: segmento, tipo: str, desc: "segmento: residencial por estrato o corporativo"}
+  tecnologia: {nombre: tecnologia, tipo: str, desc: "tecnología de acceso (fibra, cable, xDSL, satelital…)"}
+  no_de_accesos: {nombre: accesos, tipo: str, desc: "número de accesos (texto en la fuente)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: MinTIC, theme: tic, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "un proveedor, municipio, segmento, tecnología y velocidad en un trimestre; 2 795 052 filas"
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el último trimestre publicado es 2023-3: el conjunto dejó de actualizarse en febrero de 2024"
+  - "no_de_accesos y la velocidad son texto (la velocidad con coma decimal): se suma con ::number"
+  - "el código DIVIPOLA viene completo con sus 5 dígitos (texto)"
+  decision: "en vivo por municipio y año, sumando accesos por trimestre y tecnología"

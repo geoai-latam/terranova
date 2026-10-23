@@ -1,0 +1,44 @@
+id: medicinalegal.muertes_accidentales
+titulo: "Muertes accidentales, 2015 a 2024 (Medicina Legal)"
+entidad: Instituto Nacional de Medicina Legal y Ciencias Forenses
+competencia: practica las necropsias médico-legales y lleva el registro de lesiones fatales de causa externa (Ley 938 de 2004)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/irg9-q5fx.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Nacional de Medicina Legal y Ciencias Forenses, muertes accidentales, 2015 a 2024. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Cada fila es una víctima. Solo salen conteos por municipio, año, sexo y mecanismo: fuera de la lista
+# blanca quedan estado civil, escolaridad, etnia, orientación sexual, identidad de género y el resto.
+url: https://www.datos.gov.co/resource/irg9-q5fx.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura: {pais: CO, columna_tiempo: a_o_del_hecho}
+datos_personales: filtrados
+estado: publicada
+campos:
+  codigo_dane_municipio: {nombre: municipio_divipola, tipo: str, desc: "municipio del hecho (DIVIPOLA sin el cero inicial: 5001)"}
+  municipio_del_hecho_dane: {nombre: municipio, tipo: str, desc: "municipio del hecho"}
+  a_o_del_hecho: {nombre: anio, tipo: str, desc: "año del hecho"}
+  sexo_de_la_victima: {nombre: sexo, tipo: str, desc: "sexo de la víctima"}
+  mecanismo_causal_de_la_lesion_fatal: {nombre: mecanismo, tipo: str, desc: "mecanismo causal de la lesión fatal (arma de fuego, cortopunzante…)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Instituto Nacional de Medicina Legal y Ciencias Forenses, theme: salud, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una víctima; 33 254 de 2015 a 2024"
+  clave: {columna: id, unica: true}
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el código DIVIPOLA es texto sin el cero inicial (5001 es Medellín): se compara como número"
+  - "999 es «Sin información» de municipio"
+  - "cada fila es una persona con atributos sensibles: solo se sirven conteos"
+  - "son cifras de Medicina Legal (necropsias), distintas de las denuncias de la Policía"
+  decision: "en vivo por municipio y año, contando víctimas por sexo y mecanismo"

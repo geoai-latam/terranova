@@ -1,0 +1,42 @@
+id: presidencia.victimas_minas
+titulo: "Víctimas de minas antipersonal y munición sin explosionar (Descontamina Colombia)"
+entidad: Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia)
+competencia: lleva el registro nacional de víctimas de minas antipersonal (Ley 759 de 2002)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/yhxn-eqqw.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Presidencia de la República, Descontamina Colombia, situación de víctimas de minas antipersonal. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Cada fila es una víctima: solo salen conteos por municipio, año, condición y resultado.
+url: https://www.datos.gov.co/resource/yhxn-eqqw.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura: {pais: CO, columna_tiempo: ano}
+datos_personales: filtrados
+estado: publicada
+campos:
+  codigodanemunicipio: {nombre: municipio_divipola, tipo: int, desc: "municipio (DIVIPOLA numérico, sin el cero inicial)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  ano: {nombre: anio, tipo: int, desc: "año del evento"}
+  condicion: {nombre: condicion, tipo: str, desc: "civil o fuerza pública"}
+  genero: {nombre: resultado, tipo: str, desc: "herido o muerto (la fuente lo publica en la columna «genero»)"}
+  estado: {nombre: sexo, tipo: str, desc: "sexo de la víctima (la fuente lo publica en la columna «estado»)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Presidencia de la República, theme: seguridad, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una víctima; 12 390 de 1990 a 2023"
+  operaciones: {filtrar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "las columnas están cruzadas: «genero» trae herido o muerto y «estado» trae el sexo"
+  - "codigodanemunicipio es numérico: el DIVIPOLA de Antioquia pierde el cero inicial"
+  - "el último año publicado es 2023"
+  decision: "en vivo por municipio, contando víctimas por año, condición y resultado"

@@ -1,0 +1,85 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: presidencia.victimas_minas
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/yhxn-eqqw.json
+pagina: https://www.datos.gov.co/d/yhxn-eqqw
+titulo: Situación Víctimas Minas Antipersonal en Colombia
+descripcion: Registro del núcleo básico de las víctimas de minas antipersonal (MAP), artefactos explosivos
+  improvisado (AEI) con características de minas antipersonal y municiones sin explotar (MUSE) que se
+  han presentado en Colombia en el periodo comprendido entre 1990 al mes anterior de la fecha de corte.
+publicado: '2019-02-13'
+datos_actualizados: '2024-01-19'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Departamental
+idioma: Español
+categoria: Inclusión Social y Reconciliación
+etiquetas:
+- víctimas
+- desminado
+- humanitario
+- minas
+- antipersonal
+- presidencia
+- colombia
+- minas antipersonal
+filas: 12390
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  municipio:
+    tipo_fuente: text
+    etiqueta: municipio
+    descripcion: Municipio en el que sufrió el accidente la víctima
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  codigodanemunicipio:
+    tipo_fuente: number
+    etiqueta: codigodanemunicipio
+    descripcion: Código DANE del Municipio en el que sufrió el accidente la víctima
+    nulos: 0
+    minimo: '5001'
+    maximo: '99773'
+    comparacion: numero
+  ano:
+    tipo_fuente: number
+    etiqueta: ano
+    descripcion: Número del año en el que ocurrió el evento causante de la víctima
+    nulos: 0
+    minimo: '1990'
+    maximo: '2023'
+    comparacion: numero
+  condicion:
+    tipo_fuente: text
+    etiqueta: condicion
+    descripcion: Pertenece a la Fuerza Pública o Civil
+    nulos: 0
+    minimo: Civil
+    comparacion: texto
+    valores:
+      Fuerza pública: 7368
+      Civil: 5022
+  estado:
+    tipo_fuente: text
+    etiqueta: estado
+    descripcion: Condición de la víctima como resultado del evento (muerto o herido)
+    nulos: 0
+    minimo: Hombre
+    comparacion: texto
+    valores:
+      Hombre: 11677
+      Mujer: 673
+      Sin Información: 40
+  genero:
+    tipo_fuente: text
+    etiqueta: genero
+    descripcion: Género de la víctima (Masculino o Femenino)
+    nulos: 0
+    minimo: Herido
+    maximo: Muerto
+    comparacion: texto
+    valores:
+      Herido: 10038
+      Muerto: 2352

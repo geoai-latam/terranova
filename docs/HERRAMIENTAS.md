@@ -109,6 +109,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_etc` | ¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 1 |
+| `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 2 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
 ## justicia
@@ -117,6 +118,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 |---|---|---|---|---|
 | `corte_constitucional_sentencia` | ¿Qué dice el índice de la Corte Constitucional sobre esta sentencia? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
 | `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
+| `medicinalegal_homicidios_municipio` | ¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
+| `medicinalegal_muertes_accidentales_municipio` | ¿Cuántas muertes accidentales (ahogamientos, caídas, electrocuciones…) hubo en este municipio en el año? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
+| `medicinalegal_suicidios_municipio` | ¿Cuántos suicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
 | `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado o de carga hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 | `policia_delitos_sexuales_municipio` | ¿Cuántos delitos sexuales se denunciaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 | `policia_homicidios_transito_municipio` | ¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
@@ -124,6 +128,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `policia_hurto_vehiculos_municipio` | ¿Cuántos carros y motos se robaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 | `policia_lesiones_municipio` | ¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 | `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
+| `presidencia_victimas_minas_municipio` | ¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron? | Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia) | CC-BY-SA-4.0 | 2 |
 
 ## normativa
 

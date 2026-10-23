@@ -1,0 +1,76 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T07:05:28+00:00",
+ "herramienta": "medicinalegal_muertes_accidentales_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "id": "irg9-q5fx",
+    "max_filas": 200,
+    "order": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+    "portal": "datos.gov.co",
+    "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+    "where": "codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "mecanismo_causal_de_la_lesion_fatal",
+       "sexo_de_la_victima"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "9",
+        "mecanismo_causal_de_la_lesion_fatal": "Contundente",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "2",
+        "mecanismo_causal_de_la_lesion_fatal": "Eléctrico",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "1",
+        "mecanismo_causal_de_la_lesion_fatal": "Generadores de asfixia",
+        "sexo_de_la_victima": "Hombre"
+       },
+       {
+        "casos": "3",
+        "mecanismo_causal_de_la_lesion_fatal": "Contundente",
+        "sexo_de_la_victima": "Mujer"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "completo": true,
+     "conjunto": "irg9-q5fx",
+     "consulta": {
+      "conjunto": "irg9-q5fx",
+      "group": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "sexo_de_la_victima, mecanismo_causal_de_la_lesion_fatal, count(*) AS casos",
+      "where": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')"
+     },
+     "filas": 4,
+     "filas_que_resume": 15,
+     "filtro_soql": "(codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
