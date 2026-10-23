@@ -1,0 +1,46 @@
+id: corteconstitucional.sentencias
+titulo: "Sentencias proferidas por la Corte Constitucional"
+entidad: Corte Constitucional
+competencia: guarda de la integridad y supremacía de la Constitución (Constitución, art. 241)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/v2k4-2t8s.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corte Constitucional, sentencias proferidas. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/v2k4-2t8s.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO, columna_tiempo: fecha_sentencia}
+datos_personales: ninguno
+estado: publicada
+campos:
+  sentencia: {nombre: sentencia, tipo: str, desc: "número de la sentencia (T-760/08: tutela 760 de 2008)"}
+  sentencia_tipo: {nombre: tipo, tipo: str, desc: "C constitucionalidad, T tutela, SU unificación"}
+  fecha_sentencia: {nombre: fecha, tipo: date, desc: "fecha de la sentencia"}
+  proceso: {nombre: proceso, tipo: str, desc: "tipo de proceso (tutela, demanda de inconstitucionalidad…)"}
+  expediente_tipo: {nombre: expediente_tipo, tipo: str, desc: "tipo de expediente (T, D, …)"}
+  expediente_numero: {nombre: expediente, tipo: str, desc: "número del expediente"}
+  magistrado_a: {nombre: magistrado_ponente, tipo: str, desc: "magistrado o magistrada ponente"}
+  sala: {nombre: sala, tipo: str, desc: "sala que decidió"}
+  sv_spv: {nombre: salvamento_voto, tipo: str, desc: "si hubo salvamento de voto (s.d.: sin dato)"}
+  av_apv: {nombre: aclaracion_voto, tipo: str, desc: "si hubo aclaración de voto (s.d.: sin dato)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: "Corte Constitucional", accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "una sentencia; 29 513 de 1992-02-25 a 2026-09-30, todas distintas"
+  clave: {columna: sentencia, unica: true}
+  operaciones: {filtrar: 0.5, contar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el número trae el año en dos dígitos (T-760/08): de 92 a 99 es 1992–1999"
+  - "salvamentos y aclaraciones dicen «s.d.» (sin dato) en las sentencias recientes"
+  - "no trae el texto: está en la relatoría de la Corte (HTML)"
+  decision: "en vivo por número y agregado por año"

@@ -1,0 +1,207 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:56:35+00:00",
+ "herramienta": "invima_medicamento_otros_estados_por_expediente",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "spzp-dfuc",
+    "max_filas": 500,
+    "order": "consecutivocum, estadocum, principioactivo",
+    "portal": "datos.gov.co",
+    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+    "where": "expediente = '3277'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "atc",
+       "concentracion",
+       "consecutivocum",
+       "descripcioncomercial",
+       "estadocum",
+       "estadoregistro",
+       "expediente",
+       "fechainactivo",
+       "fechavencimiento",
+       "formafarmaceutica",
+       "principioactivo",
+       "producto",
+       "registrosanitario",
+       "titular",
+       "unidadmedida",
+       "viaadministracion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "1",
+        "descripcioncomercial": "CAJA X 10 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechainactivo": "11/06/2015",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "2",
+        "descripcioncomercial": "CAJA X 20 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechainactivo": "11/06/2015",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "3",
+        "descripcioncomercial": "CAJA X 30 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechainactivo": "11/06/2015",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "4",
+        "descripcioncomercial": "CAJA X 50 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechainactivo": "11/06/2015",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "5",
+        "descripcioncomercial": "CAJA X 10 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS. RECUBIERTAS",
+        "estadocum": "Activo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "6",
+        "descripcioncomercial": "CAJA X 20 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "estadocum": "Activo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "7",
+        "descripcioncomercial": "CAJA X 30 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "estadocum": "Activo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N05BB01",
+        "concentracion": "A",
+        "consecutivocum": "8",
+        "descripcioncomercial": "CAJA X 50 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "estadocum": "Activo",
+        "estadoregistro": "Desistido",
+        "expediente": "3277",
+        "fechavencimiento": "10/01/2021",
+        "formafarmaceutica": "TABLETA RECUBIERTA",
+        "principioactivo": "HIDROXICINA CLORHIDRATO",
+        "producto": "HIDERAX S® 50 MG",
+        "registrosanitario": "INVIMA 2016M-001830-R2",
+        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
+        "unidadmedida": "mg",
+        "viaadministracion": "ORAL"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 8,
+      "truncado": false,
+      "vistos": 8
+     },
+     "completo": true,
+     "conjunto": "spzp-dfuc",
+     "consulta": {
+      "conjunto": "spzp-dfuc",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+      "where": "(expediente = '3277')"
+     },
+     "filas": 8,
+     "filas_que_resume": 8,
+     "filtro_soql": "(expediente = '3277')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

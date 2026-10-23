@@ -1,0 +1,121 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:56:36+00:00",
+ "herramienta": "invima_medicamento_vencido_por_expediente",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "vwwf-4ftk",
+    "max_filas": 500,
+    "order": "consecutivocum, estadocum, principioactivo",
+    "portal": "datos.gov.co",
+    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+    "where": "expediente = '2203'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "atc",
+       "concentracion",
+       "consecutivocum",
+       "descripcioncomercial",
+       "estadocum",
+       "estadoregistro",
+       "expediente",
+       "fechainactivo",
+       "fechavencimiento",
+       "formafarmaceutica",
+       "principioactivo",
+       "producto",
+       "registrosanitario",
+       "titular",
+       "unidadmedida",
+       "viaadministracion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "atc": "N02BE01",
+        "concentracion": "B",
+        "consecutivocum": "1",
+        "descripcioncomercial": "FRASCO AMBAR POR 60 ML",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Vencido",
+        "expediente": "2203",
+        "fechainactivo": "2022-03-22T00:00:00.000",
+        "fechavencimiento": "2022-03-22T00:00:00.000",
+        "formafarmaceutica": "JARABE",
+        "principioactivo": "ACETAMINOFEN POLVO",
+        "producto": "ACETAMINOFEN JARABE X 150 MG / 5 ML",
+        "registrosanitario": "INVIMA 2017M-007901-R3",
+        "titular": "GENFAR S.A.",
+        "unidadmedida": "g",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N02BE01",
+        "concentracion": "B",
+        "consecutivocum": "2",
+        "descripcioncomercial": "FRASCO AMBAR POR 120 ML",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Vencido",
+        "expediente": "2203",
+        "fechainactivo": "2022-03-22T00:00:00.000",
+        "fechavencimiento": "2022-03-22T00:00:00.000",
+        "formafarmaceutica": "JARABE",
+        "principioactivo": "ACETAMINOFEN POLVO",
+        "producto": "ACETAMINOFEN JARABE X 150 MG / 5 ML",
+        "registrosanitario": "INVIMA 2017M-007901-R3",
+        "titular": "GENFAR S.A.",
+        "unidadmedida": "g",
+        "viaadministracion": "ORAL"
+       },
+       {
+        "atc": "N02BE01",
+        "concentracion": "B",
+        "consecutivocum": "3",
+        "descripcioncomercial": "FRASCO AMBAR POR 90 ML",
+        "estadocum": "Inactivo",
+        "estadoregistro": "Vencido",
+        "expediente": "2203",
+        "fechainactivo": "2022-03-22T00:00:00.000",
+        "fechavencimiento": "2022-03-22T00:00:00.000",
+        "formafarmaceutica": "JARABE",
+        "principioactivo": "ACETAMINOFEN POLVO",
+        "producto": "ACETAMINOFEN JARABE X 150 MG / 5 ML",
+        "registrosanitario": "INVIMA 2017M-007901-R3",
+        "titular": "GENFAR S.A.",
+        "unidadmedida": "g",
+        "viaadministracion": "ORAL"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "vwwf-4ftk",
+     "consulta": {
+      "conjunto": "vwwf-4ftk",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+      "where": "(expediente = '2203')"
+     },
+     "filas": 3,
+     "filas_que_resume": 3,
+     "filtro_soql": "(expediente = '2203')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+id: rues_establecimientos_por_nit
+version: 1
+familia: empresas
+fuente: confecamaras.rues_establecimientos
+pregunta: "¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa?"
+descripcion: >
+  Establecimientos de comercio, agencias y sucursales de una sociedad por su NIT, según el RUES:
+  matrícula, nombre, cámara, estado, último año renovado, fechas, actividad (CIIU) y categoría. Solo
+  propietarios identificados con NIT.
+  (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
+entrada: {nit: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: nb3d-v3n7
+    select: "matricula, razon_social, camara_comercio, estado_matricula, ultimo_ano_renovado, fecha_matricula, fecha_renovacion, fecha_cancelacion, cod_ciiu_act_econ_pri, categoria_matricula, numero_identificacion"
+    where: "clase_identificacion = 'NIT' AND numero_identificacion = '{nit}'"
+    order: "matricula"
+    max_filas: 1000
+  campos: [matricula, razon_social, camara_comercio, estado_matricula, ultimo_ano_renovado, fecha_matricula, fecha_renovacion, fecha_cancelacion, cod_ciiu_act_econ_pri, categoria_matricula, numero_identificacion]
+salida: RuesEstablecimientosPorNit
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22 en nb3d-v3n7: Ecopetrol (899999068) tiene 3; la primera matrícula es 2167505,
+  # «LA TIENDA ECOPETROL», en Bogotá.
+  entrada: {nit: 899999068}
+  verdad: {matricula: "2167505", nombre_establecimiento: LA TIENDA ECOPETROL, camara: BOGOTA}
+  minimos: {numero_registros: 3}
+  campos: [camara, categoria, ciiu, estado, fecha_cancelacion, fecha_matricula, fecha_renovacion, matricula, nit_propietario, nombre_establecimiento, numero_registros, ultimo_ano_renovado]
+  latencia_max_ms: 10000

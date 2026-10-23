@@ -1,0 +1,99 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:56:38+00:00",
+ "herramienta": "rues_establecimientos_por_nit",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "nb3d-v3n7",
+    "max_filas": 1000,
+    "order": "matricula",
+    "portal": "datos.gov.co",
+    "select": "matricula, razon_social, camara_comercio, estado_matricula, ultimo_ano_renovado, fecha_matricula, fecha_renovacion, fecha_cancelacion, cod_ciiu_act_econ_pri, categoria_matricula, numero_identificacion",
+    "where": "clase_identificacion = 'NIT' AND numero_identificacion = '899999068'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "camara_comercio",
+       "categoria_matricula",
+       "cod_ciiu_act_econ_pri",
+       "estado_matricula",
+       "fecha_cancelacion",
+       "fecha_matricula",
+       "fecha_renovacion",
+       "matricula",
+       "numero_identificacion",
+       "razon_social",
+       "ultimo_ano_renovado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "camara_comercio": "BOGOTA",
+        "categoria_matricula": "ESTABLECIMIENTO DE COMERCIO",
+        "cod_ciiu_act_econ_pri": "4719",
+        "estado_matricula": "ACTIVA",
+        "fecha_matricula": "20120102",
+        "fecha_renovacion": "20260330",
+        "matricula": "2167505",
+        "numero_identificacion": "899999068",
+        "razon_social": "LA TIENDA ECOPETROL",
+        "ultimo_ano_renovado": "2026"
+       },
+       {
+        "camara_comercio": "BOGOTA",
+        "categoria_matricula": "ESTABLECIMIENTO DE COMERCIO",
+        "cod_ciiu_act_econ_pri": "4719",
+        "estado_matricula": "ACTIVA",
+        "fecha_matricula": "20140522",
+        "fecha_renovacion": "20260330",
+        "matricula": "2456764",
+        "numero_identificacion": "899999068",
+        "razon_social": "LA TIENDA ECOPETROL",
+        "ultimo_ano_renovado": "2026"
+       },
+       {
+        "camara_comercio": "BUCARAMANGA",
+        "categoria_matricula": "ESTABLECIMIENTO DE COMERCIO",
+        "cod_ciiu_act_econ_pri": "4719",
+        "estado_matricula": "CANCELADA",
+        "fecha_cancelacion": "20190121",
+        "fecha_matricula": "20140922",
+        "fecha_renovacion": "20181220",
+        "matricula": "9000306299",
+        "numero_identificacion": "899999068",
+        "razon_social": "LA TIENDA ECOPETROL BUCARAMANGA",
+        "ultimo_ano_renovado": "2018"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "nb3d-v3n7",
+     "consulta": {
+      "conjunto": "nb3d-v3n7",
+      "max_filas": 1000,
+      "portal": "datos.gov.co",
+      "select": "matricula, razon_social, camara_comercio, estado_matricula, ultimo_ano_renovado, fecha_matricula, fecha_renovacion, fecha_cancelacion, cod_ciiu_act_econ_pri, categoria_matricula, numero_identificacion",
+      "where": "(clase_identificacion = 'NIT' AND numero_identificacion = '899999068')"
+     },
+     "cumplen_en_el_portal": 3,
+     "filas": 3,
+     "filtro_soql": "(clase_identificacion = 'NIT' AND numero_identificacion = '899999068')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

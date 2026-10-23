@@ -1,0 +1,201 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invima.cum_vencidos
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/vwwf-4ftk.json
+pagina: https://www.datos.gov.co/d/vwwf-4ftk
+titulo: CÓDIGO ÚNICO DE MEDICAMENTOS VENCIDOS
+descripcion: INFORMACIÓN DE LOS CÓDIGOS ÚNICOS DE MEDICAMENTOS PARA LOS REGISTROS SANITARIOS VENCIDOS.
+publicado: '2022-12-16'
+datos_actualizados: '2026-10-16'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- cum vencidos
+filas: 153394
+campos:
+  expediente:
+    tipo_fuente: number
+    etiqueta: expediente
+    descripcion: Número del expediente asociado al registro sanitario
+    nulos: 0
+    minimo: '2203'
+    maximo: '191956779'
+    comparacion: numero
+  producto:
+    tipo_fuente: text
+    etiqueta: producto
+    descripcion: Nombre del producto
+    nulos: 0
+    comparacion: texto
+  titular:
+    tipo_fuente: text
+    etiqueta: titular
+    descripcion: Nombre del titular del registro sanitario
+  registrosanitario:
+    tipo_fuente: text
+    etiqueta: registrosanitario
+    descripcion: Número del registro sanitario o notificación sanitaria
+  fechavencimiento:
+    tipo_fuente: calendar_date
+    etiqueta: fechavencimiento
+    descripcion: Fecha de vencimiento del registro sanitario
+    nulos: 0
+    minimo: '1900-01-01T00:00:00.000'
+    maximo: '3000-01-01T00:00:00.000'
+    comparacion: fecha
+  estadoregistro:
+    tipo_fuente: text
+    etiqueta: estadoregistro
+    descripcion: Estado del registro sanitario
+    nulos: 0
+    minimo: Vencido
+    maximo: Vencido
+    comparacion: texto
+    valores:
+      Vencido: 153394
+  consecutivocum:
+    tipo_fuente: number
+    etiqueta: consecutivocum
+    descripcion: Número del consecutivo del Código único de Medicamentos
+    nulos: 0
+    minimo: '1'
+    maximo: '145'
+    comparacion: numero
+    valores:
+      '1': 46331
+      '2': 29125
+      '3': 19486
+      '4': 13260
+      '5': 8972
+      '6': 6381
+      '7': 4656
+      '8': 3668
+      '9': 2878
+      '10': 2464
+      '11': 1957
+      '12': 1786
+      '13': 1499
+      '14': 1385
+      '15': 1179
+      '16': 1072
+      '17': 916
+      '18': 818
+      '19': 770
+      '20': 662
+  descripcioncomercial:
+    tipo_fuente: text
+    etiqueta: descripcioncomercial
+    descripcion: Descripción del CUM
+    nulos: 5
+    comparacion: texto
+  estadocum:
+    tipo_fuente: text
+    etiqueta: estadocum
+    descripcion: Estado actual del CUM
+  fechainactivo:
+    tipo_fuente: calendar_date
+    etiqueta: fechainactivo
+    descripcion: Fecha en al que queda inactivo el código CUM
+    nulos: 1196
+    minimo: '1900-01-01T00:00:00.000'
+    maximo: '2026-03-13T00:00:00.000'
+    comparacion: fecha
+  atc:
+    tipo_fuente: text
+    etiqueta: atc
+    descripcion: Código ATC
+    nulos: 0
+    minimo: A01AA01
+    maximo: V10XX02
+    comparacion: texto
+  viaadministracion:
+    tipo_fuente: text
+    etiqueta: viaadministracion
+    descripcion: Vía de administración del medicamento
+    nulos: 0
+    minimo: BUCAL
+    maximo: VAGINAL
+    comparacion: texto
+    valores:
+      ORAL: 102120
+      PARENTERAL: 13688
+      INTRAVENOSA: 10032
+      TOPICA (EXTERNA): 8426
+      INTRAMUSCULAR: 5765
+      BUCAL: 3737
+      CONJUNTIVAL: 1910
+      INHALACION: 1545
+      VAGINAL: 1272
+      SUBCUTANEA: 1191
+      INTRAPERITONEAL: 931
+      SIN DATO: 529
+      DENTAL: 302
+      HEMODIALISIS: 298
+      TRANSDERMAL: 277
+      RECTAL: 215
+      OTICO AURICULAR: 212
+      INTRANASAL: 182
+      SUBLINGUAL: 149
+      INTRAOCULAR: 115
+  concentracion:
+    tipo_fuente: text
+    etiqueta: concentracion
+    descripcion: Cantidad de principio activo expresada por peso o por volumen, de acuerdo con la naturaleza
+      de la forma farmacéutica. Cuando no puede determinarse por un método físico o químico se expresa
+      en términos de unidades definidas arbitrariamente por comparación con un patrón biológico de referencia.
+    nulos: 0
+    minimo: A
+    maximo: S
+    comparacion: texto
+    valores:
+      A: 111047
+      B: 14981
+      D: 9036
+      C: 6319
+      S: 5215
+      E: 5204
+      F: 1592
+  principioactivo:
+    tipo_fuente: text
+    etiqueta: principioactivo
+    descripcion: Descripción del principio activo
+    nulos: 0
+    comparacion: texto
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: unidadmedida
+    descripcion: Unidad de medida del principio activo
+    nulos: 0
+    minimo: '-'
+    comparacion: texto
+    valores:
+      mg: 103534
+      g: 29338
+      IU: 5281
+      mcg: 4754
+      æg: 4130
+      UI: 1389
+      ml: 1176
+      mg.: 1013
+      '%': 309
+      U: 258
+      g.: 190
+      U.I.: 171
+      '% (V/V)': 142
+      CCID50: 127
+      million IU: 106
+      mL: 102
+      LfU: 87
+      MG: 87
+      million organisms: 86
+      mCi: 78
+  formafarmaceutica:
+    tipo_fuente: text
+    etiqueta: formafarmaceutica
+    descripcion: Indica la forma de presentar los medicamentos
+    nulos: 0
+    minimo: AEROSOLES
+    comparacion: texto

@@ -1,0 +1,201 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invima.cum_renovacion
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/vgr4-gemg.json
+pagina: https://www.datos.gov.co/d/vgr4-gemg
+titulo: CÓDIGO ÚNICO DE MEDICAMENTOS EN TRÁMITE DE RENOVACIÓN
+descripcion: INFORMACIÓN DE LOS CÓDIGOS ÚNICOS DE MEDICAMENTOS PARA LOS REGISTROS SANITARIOS EN TRÁMITE
+  DE RENOVACIÓN.
+publicado: '2022-12-16'
+datos_actualizados: '2026-10-16'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- cum renovacion
+filas: 1352
+campos:
+  expediente:
+    tipo_fuente: number
+    etiqueta: expediente
+    nulos: 0
+    minimo: '27407'
+    maximo: '20104600'
+    comparacion: numero
+  producto:
+    tipo_fuente: text
+    etiqueta: producto
+    nulos: 0
+    comparacion: texto
+  titular:
+    tipo_fuente: text
+    etiqueta: titular
+  registrosanitario:
+    tipo_fuente: text
+    etiqueta: registrosanitario
+  fechavencimiento:
+    tipo_fuente: calendar_date
+    etiqueta: fechavencimiento
+    nulos: 0
+    minimo: '1900-01-01T00:00:00.000'
+    maximo: '3000-12-31T00:00:00.000'
+    comparacion: fecha
+    valores:
+      '2021-04-01T00:00:00.000': 444
+      '2021-10-01T00:00:00.000': 189
+      '3000-01-01T00:00:00.000': 93
+      '2026-04-14T00:00:00.000': 84
+      '1900-01-01T00:00:00.000': 75
+      '2025-08-19T00:00:00.000': 66
+      '2026-09-09T00:00:00.000': 64
+      '2020-10-01T00:00:00.000': 64
+      '2019-12-16T00:00:00.000': 42
+      '2026-03-17T00:00:00.000': 36
+      '2019-12-23T00:00:00.000': 29
+      '2025-04-30T00:00:00.000': 16
+      '2026-12-03T00:00:00.000': 15
+      '3000-12-31T00:00:00.000': 13
+      '2020-03-26T00:00:00.000': 12
+      '2019-12-24T00:00:00.000': 11
+      '2025-09-10T00:00:00.000': 10
+      '2023-02-22T00:00:00.000': 8
+      '2020-01-21T00:00:00.000': 8
+      '2020-02-23T00:00:00.000': 8
+  estadoregistro:
+    tipo_fuente: text
+    etiqueta: estadoregistro
+    nulos: 0
+    comparacion: texto
+    valores:
+      En tramite renov: 1352
+  consecutivocum:
+    tipo_fuente: number
+    etiqueta: consecutivocum
+    nulos: 0
+    minimo: '1'
+    maximo: '35'
+    comparacion: numero
+    valores:
+      '1': 258
+      '2': 219
+      '3': 169
+      '4': 130
+      '5': 100
+      '6': 85
+      '7': 57
+      '8': 39
+      '9': 37
+      '10': 29
+      '11': 29
+      '12': 23
+      '13': 23
+      '14': 21
+      '15': 14
+      '16': 12
+      '18': 10
+      '17': 10
+      '19': 10
+      '20': 10
+  descripcioncomercial:
+    tipo_fuente: text
+    etiqueta: descripcioncomercial
+    nulos: 0
+    comparacion: texto
+  estadocum:
+    tipo_fuente: text
+    etiqueta: estadocum
+  fechainactivo:
+    tipo_fuente: text
+    etiqueta: fechainactivo
+    nulos: 372
+    minimo: 01/01/1900
+    maximo: 12/24/2019
+    comparacion: texto
+  atc:
+    tipo_fuente: text
+    etiqueta: atc
+    nulos: 0
+    minimo: A02AB01
+    maximo: V04CA02
+    comparacion: texto
+  viaadministracion:
+    tipo_fuente: text
+    etiqueta: viaadministracion
+    nulos: 0
+    minimo: BUCAL
+    maximo: VAGINAL
+    comparacion: texto
+    valores:
+      ORAL: 896
+      INHALACION: 90
+      INTRAVENOSA: 76
+      INTRAMUSCULAR: 67
+      VAGINAL: 65
+      TOPICA (EXTERNA): 57
+      BUCAL: 40
+      OFTÁLMICA: 38
+      INFILTRATIVA - LOCAL: 12
+      RECTAL: 8
+      INFILTRATIVA - BLOQUEOS: 2
+      CONJUNTIVAL: 1
+  concentracion:
+    tipo_fuente: text
+    etiqueta: concentracion
+    nulos: 0
+    minimo: A
+    maximo: F
+    comparacion: texto
+    valores:
+      A: 1014
+      D: 141
+      B: 58
+      E: 52
+      F: 46
+      C: 41
+  principioactivo:
+    tipo_fuente: text
+    etiqueta: principioactivo
+    nulos: 0
+    comparacion: texto
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: unidadmedida
+    nulos: 0
+    maximo: UI
+    comparacion: texto
+    valores:
+      mg: 926
+      g: 290
+      '%': 74
+      æg: 36
+      microgramos: 16
+      UI: 9
+      MG: 1
+  formafarmaceutica:
+    tipo_fuente: text
+    etiqueta: formafarmaceutica
+    nulos: 0
+    comparacion: texto
+    valores:
+      TABLETA RECUBIERTA: 214
+      CAPSULA DURA: 201
+      TABLETA: 188
+      SOLUCION INYECTABLE: 121
+      CAPSULA BLANDA: 100
+      GAS: 74
+      POLVO PARA RECONSTITUIR A SUSPENSION ORAL: 68
+      SUSPENSION PARA INHALACION: 52
+      TABLETA DE LIBERACION RETARDADA: 42
+      CREMA TOPICA: 35
+      POLVO LIOFILIZADO PARA RECONSTITUIR A SOLUCION INYECTABLE: 34
+      SUSPENSION ORAL: 31
+      TABLETA CUBIERTA CON PELICULA: 29
+      SOLUCION OFTALMICA: 20
+      POLVO PARA RECONSTITUIR A SOLUCION ORAL: 20
+      SUSPENSION OFTALMICA: 18
+      CAPSULA VAGINAL: 16
+      CREMA VAGINAL: 16
+      TABLETA ORODISPERSABLE: 15
+      SOLUCION TOPICA: 9
