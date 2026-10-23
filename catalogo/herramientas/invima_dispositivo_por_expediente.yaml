@@ -15,7 +15,10 @@ consulta:
   argumentos:
     id: y4qt-w6tk
     portal: datos.gov.co
-    select: "expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad"
+    # Spec 07: la fuente repite el registro una vez por rol (8 filas para el expediente 217). Los
+    # roles incluyen personas (apoderado, representante legal, químico farmacéutico): no salen
+    # (ADR-0014) y se deduplica.
+    select: "distinct expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad"
     where: "expediente = '{expediente}'"
     order: "registro_sanitario"
     max_filas: 200

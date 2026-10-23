@@ -31,3 +31,21 @@ campos:
   numero_radicado: {nombre: radicado, tipo: str, desc: "número de radicado"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Supersociedades, theme: comercio, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un concepto de un estado financiero en un periodo de un reporte; 61 filas en 3 reportes del NIT
+    830010665
+  clave:
+    columna: numero_radicado + punto_entrada + periodo + concepto
+    unica: true
+  operaciones:
+    filtrar: 0.5
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - 'cada reporte trae también el año anterior: un año sale en dos reportes'
+  - '`periodo` cambia de formato: «Periodo Actual»/«Periodo Anterior» desde 2018; antes, fechas o años'
+  - la unidad la fija la taxonomía de cada reporte
+  decision: en vivo por NIT, con el periodo como lo escribe la fuente

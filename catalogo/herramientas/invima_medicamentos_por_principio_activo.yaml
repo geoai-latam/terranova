@@ -6,7 +6,7 @@ pregunta: "¿Qué medicamentos con este principio activo tienen registro vigente
 descripcion: >
   Medicamentos vigentes del Código Único de Medicamentos (INVIMA) que contienen un principio
   activo (p. ej. IBUPROFENO): producto, titular, registro sanitario, presentación, concentración,
-  forma farmacéutica y ATC; hasta 200, ordenados por expediente.
+  forma farmacéutica y ATC; cada presentación una vez, hasta 200, ordenadas por expediente.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {principio_activo: nombre}
 consulta:
@@ -16,7 +16,9 @@ consulta:
   argumentos:
     id: i7cb-raxc
     portal: datos.gov.co
-    select: "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad"
+    # Spec 07: la fuente repite cada presentación por fabricante e importador (3 019 filas para 1 822
+    # presentaciones con ibuprofeno): una vez cada una.
+    select: "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad"
     where: "upper(principioactivo) like upper('%{principio_activo}%')"
     order: "expediente, consecutivocum"
     max_filas: 200
@@ -24,7 +26,7 @@ consulta:
 salida: MedicamentosPorPrincipio
 creditos: 5
 canario:
-  # Medido el 2026-10-22 en i7cb-raxc: 3019 CUM vigentes con ibuprofeno; el primero por
+  # Medido el 2026-10-22 en i7cb-raxc: 1 822 presentaciones vigentes con ibuprofeno; la primera por
   # expediente es el 31330 (Motrin 800 mg, Pfizer).
   entrada: {principio_activo: IBUPROFENO}
   verdad: {expediente: 31330, titular: "PFIZER S.A.S.", principio_activo: IBUPROFENO}

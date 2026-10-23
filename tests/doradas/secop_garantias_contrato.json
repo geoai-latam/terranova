@@ -1,15 +1,15 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:53:44+00:00",
+ "grabado": "2026-10-23T00:50:57+00:00",
  "herramienta": "secop_garantias_contrato",
  "llamadas": [
   {
    "argumentos": {
     "id": "gjp9-cutm",
     "max_filas": 1000,
-    "order": "fechadecreacionpoliza, subtipopoliza",
+    "order": "numeropoliza, fechafinpoliza",
     "portal": "datos.gov.co",
-    "select": "id_contrato, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
+    "select": "id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
     "where": "id_contrato = 'CO1.PCCNTR.3712964'"
    },
    "conector": "datos-abiertos-mcp",
@@ -22,6 +22,7 @@
        "fechadecreacionpoliza",
        "fechafinpoliza",
        "id_contrato",
+       "numeropoliza",
        "subtipopoliza",
        "tipopoliza",
        "valor"
@@ -34,6 +35,7 @@
         "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
         "fechafinpoliza": "2023-08-23 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 1",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
@@ -44,6 +46,7 @@
         "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
         "fechafinpoliza": "2024-02-23 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 1",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
@@ -54,16 +57,7 @@
         "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
         "fechafinpoliza": "2026-02-23 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
-        "subtipopoliza": "No Definido",
-        "tipopoliza": "Contrato de Seguro",
-        "valor": "234715400"
-       },
-       {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
-        "fechafinpoliza": "2026-06-30 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 1",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "234715400"
@@ -74,6 +68,7 @@
         "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
         "fechafinpoliza": "2023-12-29 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 3",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
@@ -84,6 +79,7 @@
         "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
         "fechafinpoliza": "2024-06-29 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 3",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
@@ -91,9 +87,10 @@
        {
         "aseguradora": "HDI SEGUROS SAS",
         "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
-        "fechafinpoliza": "2026-10-07 23:59:00.0000000 -05:00",
+        "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
+        "fechafinpoliza": "2026-06-30 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 3",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "234715400"
@@ -104,6 +101,7 @@
         "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
         "fechafinpoliza": "2024-04-05 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 5",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
@@ -114,9 +112,21 @@
         "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
         "fechafinpoliza": "2024-10-06 23:59:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 5",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
         "valor": "117357700"
+       },
+       {
+        "aseguradora": "HDI SEGUROS SAS",
+        "estado": "Expirada",
+        "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
+        "fechafinpoliza": "2026-10-07 23:59:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "numeropoliza": "4006472 ANEXO 5",
+        "subtipopoliza": "No Definido",
+        "tipopoliza": "Contrato de Seguro",
+        "valor": "234715400"
        }
       ]
      }
@@ -133,7 +143,7 @@
       "conjunto": "gjp9-cutm",
       "max_filas": 1000,
       "portal": "datos.gov.co",
-      "select": "id_contrato, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
+      "select": "id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
       "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
      },
      "cumplen_en_el_portal": 9,

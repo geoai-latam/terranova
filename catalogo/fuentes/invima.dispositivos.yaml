@@ -35,3 +35,18 @@ campos:
   modalidad: {nombre: modalidad, tipo: str, desc: "modalidad"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Instituto Nacional de Vigilancia de Medicamentos y Alimentos, theme: salud, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un registro de dispositivo por cada rol; 8 filas para 1 registro (expediente 217)
+  clave:
+    columna: registro_sanitario + rol
+    unica: false
+  operaciones:
+    filtrar: 0.5
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos:
+  - entre los roles hay personas (apoderado, representante legal, químico farmacéutico)
+  decision: '`distinct` sin roles (ADR-0014)'

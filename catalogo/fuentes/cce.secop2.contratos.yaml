@@ -51,3 +51,20 @@ campos:
   urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II (la fuente lo da como {url: …})"}
 comportamiento: {p95_ms_medido: 2800, max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un contrato electrónico; 1 para CO1.PCCNTR.5141215
+  clave:
+    columna: id_contrato
+    unica: true
+  operaciones:
+    filtrar: 0.5
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - en toda la tabla, 3 id_contrato repetidos entre 334 431 (medido en la ola 1)
+  - 'ultima_actualizacion viene nula en el 98 %: no sirve para frescura'
+  - 'documento_proveedor trae cédulas de personas naturales (ADR-0025: se muestra, no se busca)'
+  decision: en vivo por id, entidad o municipio; buscar en el texto, por la copia

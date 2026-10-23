@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:53:56+00:00",
+ "grabado": "2026-10-23T00:51:14+00:00",
  "herramienta": "secop_integrado_contratos_entidad",
  "llamadas": [
   {
@@ -10,7 +10,9 @@
     "max_filas": 100,
     "order": "anio, origen",
     "portal": "datos.gov.co",
-    "select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total",
+    "previo_group": "anio, origen, numero_del_contrato",
+    "previo_select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, numero_del_contrato, max(valor_contrato) AS valor",
+    "select": "anio, origen, count(*) AS contratos, sum(valor) AS valor_total",
     "where": "nit_de_la_entidad = '891180077'"
    },
    "conector": "datos-abiertos-mcp",
@@ -39,9 +41,9 @@
        },
        {
         "anio": "2019",
-        "contratos": "6",
+        "contratos": "5",
         "origen": "SECOPI",
-        "valor_total": "19006000"
+        "valor_total": "18450000"
        },
        {
         "anio": "2019",
@@ -69,39 +71,39 @@
        },
        {
         "anio": "2021",
-        "contratos": "379",
+        "contratos": "376",
         "origen": "SECOPII",
-        "valor_total": "20884006665"
+        "valor_total": "19273624579"
        },
        {
         "anio": "2022",
-        "contratos": "700",
+        "contratos": "673",
         "origen": "SECOPII",
-        "valor_total": "35093939351"
+        "valor_total": "34411906972"
        },
        {
         "anio": "2023",
-        "contratos": "771",
+        "contratos": "641",
         "origen": "SECOPII",
-        "valor_total": "93051191161"
+        "valor_total": "50322647202"
        },
        {
         "anio": "2024",
-        "contratos": "1237",
+        "contratos": "599",
         "origen": "SECOPII",
-        "valor_total": "76500666908"
+        "valor_total": "26828909491"
        },
        {
         "anio": "2025",
-        "contratos": "1748",
+        "contratos": "652",
         "origen": "SECOPII",
-        "valor_total": "173973373344"
+        "valor_total": "63157495075"
        },
        {
         "anio": "2026",
-        "contratos": "1096",
+        "contratos": "719",
         "origen": "SECOPII",
-        "valor_total": "53788357455"
+        "valor_total": "41017852086"
        },
        {
         "contratos": "1",
@@ -129,7 +131,8 @@
       "group": "anio, origen",
       "max_filas": 100,
       "portal": "datos.gov.co",
-      "select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total",
+      "previo_group": "anio, origen, numero_del_contrato",
+      "select": "anio, origen, count(*) AS contratos, sum(valor) AS valor_total",
       "where": "(nit_de_la_entidad = '891180077')"
      },
      "filas": 15,

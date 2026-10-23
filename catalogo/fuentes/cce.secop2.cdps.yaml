@@ -23,6 +23,7 @@ estado: publicada
 campos:
   id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato"}
   id_siif: {nombre: id_cdp, tipo: str, desc: "identificador del CDP en SIIF"}
+  bpin_codigo: {nombre: bpin, tipo: str, desc: "proyecto de inversión (BPIN) que financia el CDP"}
   estado_siif: {nombre: estado, tipo: str, desc: "estado en SIIF"}
   destino_del_gasto: {nombre: destino_gasto, tipo: str, desc: "destino del gasto"}
   saldo_cdp: {nombre: saldo_cdp, tipo: float, desc: "saldo del CDP, en pesos"}
@@ -36,3 +37,19 @@ campos:
   nit_proveedor: {nombre: documento_contratista, tipo: str, desc: "documento del contratista (ADR-0025)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un CDP por cada proyecto BPIN que financia, y cada par dos veces; 4 filas, 2 distintas, en CO1.PCCNTR.5588480
+  clave:
+    columna: id_siif + bpin_codigo
+    unica: false
+  operaciones:
+    filtrar: 0.8
+    contar: 0.3
+    ordenar: 0.3
+    agrupar: 0.2
+  hallazgos:
+  - copias exactas del par CDP–BPIN
+  - fecha_consulta_siif viene vacía
+  decision: '`distinct` con el BPIN en la lista blanca'

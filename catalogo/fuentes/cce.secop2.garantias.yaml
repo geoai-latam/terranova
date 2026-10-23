@@ -23,12 +23,29 @@ datos_personales: filtrados
 estado: publicada
 campos:
   id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
+  numeropoliza: {nombre: numero_poliza, tipo: str, desc: "número de la póliza"}
   aseguradora: {nombre: aseguradora, tipo: str, desc: "aseguradora"}
   tipopoliza: {nombre: tipo_poliza, tipo: str, desc: "tipo de póliza"}
-  subtipopoliza: {nombre: subtipo_poliza, tipo: str, desc: "amparo"}
+  subtipopoliza: {nombre: subtipo_poliza, tipo: str, desc: "amparo; a menudo «No Definido»"}
   estado: {nombre: estado, tipo: str, desc: "estado de la póliza"}
   valor: {nombre: valor, tipo: float, desc: "valor asegurado, en pesos"}
   fechadecreacionpoliza: {nombre: fecha_creacion, tipo: date, desc: "fecha de creación de la póliza"}
   fechafinpoliza: {nombre: fecha_fin, tipo: date, desc: "fecha de fin de la vigencia"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un amparo de una póliza; 3 pólizas × 3 amparos = 9 filas en CO1.PCCNTR.3712964
+  clave:
+    columna: numeropoliza
+    unica: false
+  operaciones:
+    filtrar: 0.5
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - 'el amparo casi nunca tiene nombre (subtipo «No Definido»): se distingue por valor y fecha de fin'
+  - sin el número de póliza en la lista blanca, las pólizas no se distinguían
+  decision: en vivo, con el número de póliza; una fila por amparo

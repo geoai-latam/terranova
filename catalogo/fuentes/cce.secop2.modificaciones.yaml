@@ -32,3 +32,20 @@ campos:
   fecha_de_aprobacion: {nombre: fecha_aprobacion, tipo: date, desc: "fecha de aprobación"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una modificación de un contrato; 33 filas, 21 distintas, 16 identificadores, en CO1.PCCNTR.3712964
+  clave:
+    columna: identificador_modificacion
+    unica: false
+  operaciones:
+    filtrar: 0.5
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - copias exactas de la misma modificación
+  - una modificación con otro estado o fecha sale aparte
+  - 3 sin fecha de aprobación
+  decision: '`distinct` sobre la lista blanca'

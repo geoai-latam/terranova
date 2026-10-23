@@ -27,3 +27,20 @@ campos:
   sector: {nombre: sector, tipo: str, desc: "sector económico"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de Industria y Comercio, theme: comercio, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: 'un sancionado en una resolución; 2024: 327 filas para 312 resoluciones'
+  clave:
+    columna: radicado + multado
+    unica: true
+  operaciones:
+    filtrar: 0.5
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.1
+  hallazgos:
+  - una resolución puede sancionar a varios, cada uno con su valor
+  - contar filas cuenta sancionados, no resoluciones
+  - 'una resolución puede tener sancionados de dos sectores: por sector suman 313, en el año son 312'
+  decision: agregado con resoluciones (distintas) y sanciones (sancionados) por separado

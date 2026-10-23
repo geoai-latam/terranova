@@ -30,3 +30,18 @@ campos:
   numero_contrato: {nombre: numero_contrato, tipo: str, desc: "número del contrato, si lo hubo"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un proponente de un proceso; 3 filas para 2 proponentes en 09-1-47723
+  clave:
+    columna: proponente + num_doc_proponente + numero_contrato
+    unica: false
+  operaciones:
+    filtrar: 0.5
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - un proponente sale dos veces con distinta calificación o adjudicación
+  decision: en vivo; la herramienta lista, no cuenta proponentes

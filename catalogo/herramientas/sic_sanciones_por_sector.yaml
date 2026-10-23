@@ -5,7 +5,9 @@ fuente: sic.sanciones
 pregunta: "¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector?"
 descripcion: >
   Sanciones en firme de la Superintendencia de Industria y Comercio en un año (por fecha de la
-  resolución), agrupadas por sector: número de sanciones y valor total en pesos.
+  resolución), agrupadas por sector: resoluciones, sanciones (una por sancionado: una resolución
+  puede sancionar a varios) y valor total en pesos. Una resolución con sancionados de varios sectores
+  cuenta en cada uno.
   (Fuente: SIC; licencia: CC BY-SA 4.0.)
 entrada: {anio: int}
 consulta:
@@ -15,7 +17,7 @@ consulta:
   argumentos:
     id: 73dx-n59j
     portal: datos.gov.co
-    select: "sector, count(*) AS sanciones, sum(valor) AS valor_total"
+    select: "sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total"
     where: "date_extract_y(fecha_emitida) = {anio}"
     group: sector
     order: "sector"
@@ -23,13 +25,15 @@ consulta:
   campos: [fecha_emitida, valor, sector]
 salida: SancionesSicPorSector
 derivados:
+  resoluciones: {de: columna, campo: resoluciones, tipo: int}
   sanciones: {de: columna, campo: sanciones, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
 creditos: 5
 canario:
   # Medido el 2026-10-22 en 73dx-n59j: en 2024, el primer sector (orden alfabético) es «Actividades
-  # de parques y atracciones», con 1 sanción de $30 487 584.
+  # de parques y atracciones», con 1 resolución y 1 sanción de $30 487 584. En todo 2024: 312
+  # resoluciones y 327 sancionados.
   entrada: {anio: 2024}
-  verdad: {sector: "Actividades de parques y atracciones", sanciones: 1, valor_total: 30487584.0}
-  campos: [sanciones, sector, valor_total]
+  verdad: {sector: "Actividades de parques y atracciones", resoluciones: 1, sanciones: 1, valor_total: 30487584.0}
+  campos: [resoluciones, sanciones, sector, valor_total]
   latencia_max_ms: 10000

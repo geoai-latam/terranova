@@ -38,3 +38,19 @@ campos:
   a_o_de_corte: {nombre: anio_corte, tipo: int, desc: "año de corte"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de Sociedades, theme: comercio, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una empresa en un año de corte; 5 años para el NIT 899999068
+  clave:
+    columna: a_o_de_corte
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos:
+  - las cifras vienen en billones y como texto («$84.95»)
+  - el NIT trae «.00» al final
+  decision: en vivo, con la unidad dicha en la ficha

@@ -30,3 +30,17 @@ campos:
   justificacion_cambio: {nombre: justificacion, tipo: str, desc: "justificación"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una modificación a una adjudicación; 3 para 10878821
+  clave:
+    columna: id_modificacion
+    unica: true
+  operaciones:
+    filtrar: 2.2
+    contar: 0.4
+    ordenar: 0.4
+    agrupar: 0.3
+  hallazgos: []
+  decision: en vivo, como está

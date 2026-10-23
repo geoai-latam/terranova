@@ -5,7 +5,9 @@ fuente: cce.secop.integrado
 pregunta: "¿Cuántos contratos firmó esta entidad cada año, sumando SECOP I y SECOP II?"
 descripcion: >
   Contratos de una entidad estatal por su NIT en el SECOP Integrado (SECOP I y II), por año de
-  firma y origen: número de contratos y valor total en pesos.
+  firma y origen: número de contratos y valor total en pesos. Cada contrato cuenta una vez, con su
+  mayor valor registrado (la fuente lo repite en cada cambio de estado; las adiciones suben el valor).
+  Va unos meses detrás de SECOP II: para lo reciente, mejor las herramientas de SECOP II.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
 consulta:
@@ -15,7 +17,11 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: rpmr-utcd
-    select: "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, count(*) AS contratos, sum(valor_contrato) AS valor_total"
+    # Spec 07: en Pitalito, 2025, son 1 748 filas para 652 contratos; sumar filas daba $174 000 millones
+    # (son $63 157 millones; SECOP II directo da 659 contratos y $63 057 millones).
+    previo_select: "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, numero_del_contrato, max(valor_contrato) AS valor"
+    previo_group: "anio, origen, numero_del_contrato"
+    select: "anio, origen, count(*) AS contratos, sum(valor) AS valor_total"
     where: "nit_de_la_entidad = '{nit_entidad}'"
     group: "anio, origen"
     order: "anio, origen"

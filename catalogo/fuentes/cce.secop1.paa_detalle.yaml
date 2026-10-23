@@ -35,3 +35,17 @@ campos:
   requiere_vigencias_futuras: {nombre: vigencias_futuras, tipo: str, desc: "si requiere vigencias futuras"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: un ítem del plan anual; 239 para el plan 372838
+  clave:
+    columna: id
+    unica: true
+  operaciones:
+    filtrar: 0.6
+    contar: 0.3
+    ordenar: 0.2
+    agrupar: 0.2
+  hallazgos: []
+  decision: en vivo, como está

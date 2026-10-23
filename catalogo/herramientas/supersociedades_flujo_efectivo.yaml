@@ -6,7 +6,10 @@ pregunta: "¿Cómo se movió la caja de esta sociedad?"
 descripcion: >
   Estado de flujo de efectivo de una sociedad vigilada por Supersociedades, por su NIT: concepto, periodo y valor
   de cada reporte NIIF, del corte más antiguo al más reciente (hasta 1000 filas). La unidad la
-  fija la taxonomía de cada reporte. Las sociedades vigiladas por otra superintendencia no salen.
+  fija la taxonomía de cada reporte. Cada reporte trae también el año anterior: un año sale en dos
+  reportes. `periodo` es el texto de la fuente: «Periodo Actual» o «Periodo Anterior» desde el corte
+  de 2018; antes, fechas o años (y en algunos reportes de 2016, el NIT). Las sociedades vigiladas por
+  otra superintendencia no salen.
   (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
 entrada: {nit: int}
 consulta:

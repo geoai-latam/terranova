@@ -17,6 +17,9 @@ Las fuentes abiertas parecen tablas limpias y no lo son. Lo medido en la ola 1 y
 | Supersociedades, 10 000 empresas | cifras en pesos | en billones, como texto (`$84.95`) |
 | BanRep, SDMX | filtro por fechas | el servicio no filtra: solo las últimas N |
 | Estadísticas catastrales del IGAC | un dato por año | un bloque «actualizado» y otro «desactualizado» el mismo año |
+| ICFES, Saber 11 | una fila por estudiante | en 20181, 20194 y 20224, estudiantes repetidos: Chía 20224 daba 3 372 (son 1 686) y en 20181 un promedio de 317,0 (es 306,2) |
+| SECOP Integrado | una fila por contrato | una por cada estado del contrato: Pitalito 2025 sumaba $174 000 millones (son $63 157 millones) |
+| INVIMA, CUM | una fila por presentación | una por presentación y rol: 3 019 filas para 1 822 presentaciones con ibuprofeno |
 
 Una herramienta hecha sin saber esto responde mal y con aplomo: «32 895 ofertas». Eso es peor que
 no responder.
@@ -57,6 +60,16 @@ perfil:
 Son pocas consultas, separadas en el tiempo: no es carga sobre la fuente. Lo que el script no ve
 (qué significa un código, si un `nit` trae cédulas, en qué unidad viene una cifra) lo revisa una
 persona y lo escribe en `hallazgos`.
+
+## Herramientas para lo que se encuentra
+
+| Hallazgo | Qué se hace | Ejemplo |
+|---|---|---|
+| copias exactas | `select distinct` (el conector no lo confunde con un corte) | modificaciones de SECOP II |
+| el registro se repite y hay que agregar | etapa previa (`previo_select` + `previo_group`): se agrupa por registro y luego se agrega | ICFES, SECOP Integrado |
+| filas «iguales» porque la lista blanca oculta lo que las distingue | se agrega la columna, si no es de personas | BPIN del CDP, póliza, rol del CUM |
+| la columna que distingue es de personas | se deduplica sin ella (ADR-0014) | roles de dispositivos médicos |
+| contar filas no es contar lo que se pregunta | `count(distinct …)` con nombre propio | resoluciones de la SIC |
 
 ## Reglas
 

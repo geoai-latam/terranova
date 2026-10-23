@@ -29,3 +29,17 @@ campos:
   valor: {nombre: valor, tipo: float, desc: "valor, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-22'
+  fila: una fuente de recursos de una adjudicación; 1 para 10639119
+  clave:
+    columna: identificador
+    unica: true
+  operaciones:
+    filtrar: 1.1
+    contar: 0.2
+    ordenar: 0.4
+    agrupar: 0.3
+  hallazgos: []
+  decision: en vivo, como está
