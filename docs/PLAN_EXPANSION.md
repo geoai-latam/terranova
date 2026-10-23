@@ -121,17 +121,17 @@ derechos de petición (F0.8).
 ## Avance frente a Croma
 
 Croma publica unas 177 herramientas para Colombia; unas 139 salen de fuentes abiertas y factibles
-(la comparación fuente por fuente está en `interno/`). Al 2026-10-23 (noche), **148 herramientas sobre 128 fuentes**: el número de la referencia abierta ya se
+(la comparación fuente por fuente está en `interno/`). Al 2026-10-23 (madrugada del 24), **153 herramientas sobre 130 fuentes**: el número de la referencia abierta ya se
 superó. No es la misma lista: lo que Croma sirve y Terranova no está en la última columna, con su razón.
 A cambio, Terranova cubre seguridad, memoria del conflicto, regalías y agro, que la referencia no trae.
 
 | Grupo | Terranova | Lo que falta y por qué |
 |---|---|---|
-| Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT, EVA agrícola) | 25 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
-| Contratación (SECOP I y II, proyectos del SGR) | 40 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |
+| Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT, EVA agrícola, DIVIPOLA) | 26 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
+| Contratación (SECOP I y II, proyectos del SGR) | 42 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |
 | Empresas (RUES, Supersociedades, Superfinanciera, Supersolidaria, INVIMA, DIAN) | 18 | estados financieros del RUES (protegido) y SIIS de Supersociedades (backend interno: permiso) |
 | Estadísticas (ICFES, MEN, DANE, BanRep, SUIT, REPS, regalías, internet fijo) | 24 | TerriData (licencia por pedir) |
-| Normativa y jurisprudencia | 9 | Consejo de Estado, SAMAI, Corte Suprema, CNDJ, Imprenta Nacional y SIPI: buscadores con estado (JSF, WebForms), pieza «scrape con estado» |
+| Normativa y jurisprudencia (con SUIN-Juriscol) | 11 | Consejo de Estado, SAMAI, Corte Suprema, CNDJ, Imprenta Nacional y SIPI: buscadores con estado (JSF, WebForms), pieza «scrape con estado» |
 | Seguridad y memoria (Policía, Medicina Legal, CNMH, minas) | 24 | homicidios intencionales de la Policía (no están en datos.gov.co: se cubren con Medicina Legal) |
 | Ambiente | 8 | SIATA (licencia por pedir) |
 
