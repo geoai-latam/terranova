@@ -15,15 +15,15 @@ RUTA = Path(__file__).resolve().parents[1] / "catalogo" / "verdades_producto.yam
 BANCO: dict[str, Any] = yaml.safe_load(RUTA.read_text(encoding="utf-8"))
 VERDADES: list[dict[str, Any]] = BANCO["verdades"]
 CATALOGO = cargar()
-FAMILIAS = {"territorio", "contratacion", "empresas", "normativa"}
+FAMILIAS = {"territorio", "contratacion", "empresas", "normativa", "justicia", "estadisticas"}
 ESTADOS = {"no_encontrado", "fuera_de_cobertura"}
 CAMPOS = {"id", "familia", "pregunta", "herramienta", "entrada", "fuente", "verdad", "minimos"}
 CAMPOS |= {"estado", "medicion", "nota"}
 
 
-def test_cuarenta_preguntas_en_cuatro_familias() -> None:
-    assert len(VERDADES) == 40
-    assert len({v["id"] for v in VERDADES}) == 40
+def test_sesenta_preguntas_en_seis_familias() -> None:
+    assert len(VERDADES) == 60
+    assert len({v["id"] for v in VERDADES}) == 60
     familias = Counter(v["familia"] for v in VERDADES)
     assert set(familias) == FAMILIAS and min(familias.values()) >= 5
 

@@ -185,8 +185,8 @@ verdades:
   - id: c03
     familia: contratacion
     pregunta: "¿Cuántos contratos firmó la Alcaldía de Chía en 2023 y por cuánto?"
-    herramienta: null
-    fuente: cce.secop2.contratos
+    herramienta: secop_contratos_entidad
+    entrada: {nit_entidad: 899999172}
     verdad: {contratos: 924, valor_total: 128866224107.24}
     medicion: "jbjy-vk9h, nit_entidad = '899999172' y fecha_de_firma en 2023: count(*) y sum(valor_del_contrato)"
   - id: c04
@@ -215,29 +215,29 @@ verdades:
   - id: e01
     familia: empresas
     pregunta: "¿Ecopetrol (NIT 899999068) tiene la matrícula mercantil activa y en qué cámara?"
-    herramienta: null
-    fuente: confecamaras.rues
+    herramienta: rues_empresa_por_nit
+    entrada: {nit: 899999068}
     verdad: {razon_social: "ECOPETROL S A", camara_comercio: BOGOTA, matricula: "1291197", estado_matricula: ACTIVA}
     medicion: "c82u-588k, where nit = '899999068'"
   - id: e02
     familia: empresas
     pregunta: "¿Cuál es la actividad económica principal de Ecopetrol y hasta qué año renovó?"
-    herramienta: null
-    fuente: confecamaras.rues
+    herramienta: rues_empresa_por_nit
+    entrada: {nit: 899999068}
     verdad: {cod_ciiu_act_econ_pri: "0610", ultimo_ano_renovado: "2026"}
     medicion: "c82u-588k, where nit = '899999068'"
   - id: e03
     familia: empresas
     pregunta: "¿Desde cuándo está matriculada ISA (NIT 860016610) y en qué cámara?"
-    herramienta: null
-    fuente: confecamaras.rues
+    herramienta: rues_empresa_por_nit
+    entrada: {nit: 860016610}
     verdad: {razon_social: "INTERCONEXION ELECTRICA S.A. E.S.P.", camara_comercio: "MEDELLIN PARA ANTIOQUIA", fecha_matricula: "1967-09-01"}
     medicion: "c82u-588k, where nit = '860016610'"
   - id: e04
     familia: empresas
     pregunta: "¿EPM (NIT 890904996) aparece en el registro mercantil?"
-    herramienta: null
-    fuente: confecamaras.rues
+    herramienta: rues_empresa_por_nit
+    entrada: {nit: 890904996}
     estado: no_encontrado
     medicion: "c82u-588k, where nit = '890904996': 0 filas (empresa industrial y comercial del Estado)"
   - id: e05
@@ -298,3 +298,145 @@ verdades:
     fuente: minjusticia.suin
     minimos: {leyes: 60}
     medicion: "fiev-nid6, count(*) where tipo = 'LEY' AND a_o = '2020'"
+  # --- justicia: delitos, muertes violentas y conflicto (medido el 2026-10-23) ----------------
+  - id: j01
+    familia: justicia
+    pregunta: "¿Cuántos carros y motos se robaron en Chía en 2024?"
+    herramienta: policia_hurto_vehiculos_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 95}
+    medicion: "9vha-vh9n, sum(cantidad::number) where codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+  - id: j02
+    familia: justicia
+    pregunta: "¿Cuántas denuncias de violencia intrafamiliar hubo en Chía en 2024?"
+    herramienta: policia_violencia_intrafamiliar_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 379}
+    medicion: "vuyt-mqpw, sum(cantidad::number) where codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+  - id: j03
+    familia: justicia
+    pregunta: "¿Cuántos robos a comercios y viviendas hubo en Chía en 2024?"
+    herramienta: policia_hurto_comercio_residencias_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 361}
+    medicion: "6sqw-8cg5, sum(cantidad::number) where codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+  - id: j04
+    familia: justicia
+    pregunta: "Según Medicina Legal, ¿cuántos homicidios hubo en Chía en 2024?"
+    herramienta: medicinalegal_homicidios_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 8}
+    medicion: "vtub-3de2, count(*) where codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024'"
+  - id: j05
+    familia: justicia
+    pregunta: "¿Cuántos suicidios registró Medicina Legal en Chía en 2024?"
+    herramienta: medicinalegal_suicidios_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 15}
+    medicion: "f75u-mirk, count(*) where codigo_dane_municipio::number = 25175 AND a_o_del_hecho = '2024'"
+  - id: j06
+    familia: justicia
+    pregunta: "¿Cuántas víctimas de masacres ha tenido Granada, Antioquia (05313), en el conflicto armado?"
+    herramienta: cnmh_masacres_municipio
+    entrada: {municipio_divipola: "05313"}
+    minimos: {total_victimas: 74}
+    medicion: "cj8q-zu3u (SIEVCAC), count(distinct id_persona) where c_digo_dane_de_municipio = '05313'"
+  - id: j07
+    familia: justicia
+    pregunta: "¿Cuántas personas fueron víctimas de desaparición forzada en Granada, Antioquia (05313)?"
+    herramienta: cnmh_desaparicion_forzada_municipio
+    entrada: {municipio_divipola: "05313"}
+    minimos: {total_victimas: 270}
+    medicion: "c59y-p4sz (SIEVCAC), count(distinct id_persona) where c_digo_dane_de_municipio = '05313'"
+  - id: j08
+    familia: justicia
+    pregunta: "¿Cuántos secuestros del conflicto hubo en Granada, Antioquia (05313)?"
+    herramienta: cnmh_secuestro_municipio
+    entrada: {municipio_divipola: "05313"}
+    minimos: {total_victimas: 87}
+    medicion: "sg55-sszm (SIEVCAC), count(distinct id_persona) where c_digo_dane_de_municipio = '05313'"
+  - id: j09
+    familia: justicia
+    pregunta: "¿Cuántas víctimas de minas antipersonal tiene registradas la Presidencia en Granada, Antioquia (05313)?"
+    herramienta: presidencia_victimas_minas_municipio
+    entrada: {municipio_divipola: "05313"}
+    minimos: {total_victimas: 78}
+    medicion: "yhxn-eqqw, count(*) where codigodanemunicipio = 5313"
+  - id: j10
+    familia: justicia
+    pregunta: "¿Cuántas personas murieron en accidentes de tránsito en Chía en 2024, según la Policía?"
+    herramienta: policia_homicidios_transito_municipio
+    entrada: {municipio_divipola: "25175", anio: 2024}
+    minimos: {total_casos: 13}
+    medicion: "ha6j-pa2r, sum(cantidad::number) where codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+  # --- estadísticas: pobreza, educación, regalías, conectividad (medido el 2026-10-23) -------
+  - id: s01
+    familia: estadisticas
+    pregunta: "¿Cuál es el índice de pobreza multidimensional de Chía?"
+    herramienta: dane_ipm_municipio
+    entrada: {municipio_divipola: "25175"}
+    verdad: {ipm_total: 6.7, ipm_cabeceras: 6.3, ipm_rural: 8.6}
+    medicion: "DANE, anexo IPM municipal del CNPV 2018"
+  - id: s02
+    familia: estadisticas
+    pregunta: "¿Qué porcentaje de analfabetismo tiene Chía según el censo?"
+    herramienta: dane_privaciones_municipio
+    entrada: {municipio_divipola: "25175"}
+    verdad: {privacion: Analfabetismo, porcentaje: 2.6}
+    medicion: "DANE, anexo IPM municipal del CNPV 2018, privaciones"
+  - id: s03
+    familia: estadisticas
+    pregunta: "¿Cuántos estudiantes de la sede educativa 125175000493 presentaron el Saber 11?"
+    herramienta: icfes_saber11_colegio
+    entrada: {codigo_dane_sede: "125175000493"}
+    verdad: {periodo: "20102", estudiantes: 153}
+    medicion: "kgxf-xxbe, un grupo por estudiante where cole_cod_dane_sede = '125175000493'"
+  - id: s04
+    familia: estadisticas
+    pregunta: "¿Cómo ha sido la cobertura neta y la deserción escolar en Chía?"
+    herramienta: men_educacion_municipio
+    entrada: {municipio_divipola: "25175"}
+    verdad: {anio: 2011, cobertura_neta: 92.4, desercion: 4.5}
+    medicion: "MEN estadísticas por municipio, código 25175"
+  - id: s05
+    familia: estadisticas
+    pregunta: "¿Cuánta plata de regalías tiene presupuestada Chía en el bienio actual?"
+    herramienta: minhacienda_regalias_municipio
+    entrada: {municipio_divipola: "25175"}
+    verdad: {vigencia: "Vigencia 2025 - 2026", fondo: "ASIGNACIONES DIRECTAS"}
+    medicion: "g4qj-2p2e, where codigodaneentidad = '25175'"
+  - id: s06
+    familia: estadisticas
+    pregunta: "¿Cuántas conexiones de internet fijo por cable tenía Chía en el primer trimestre de 2023?"
+    herramienta: mintic_internet_fijo_municipio
+    entrada: {municipio_divipola: "25175", anio: 2023}
+    verdad: {trimestre: "1", tecnologia: CABLE, accesos: 25973}
+    medicion: "n48w-gutb, sum(no_de_accesos::number) where cod_municipio = '25175' AND anno = '2023'"
+  - id: s07
+    familia: estadisticas
+    pregunta: "¿Cuál es la pobreza multidimensional de Antioquia?"
+    herramienta: dane_ipm_departamento
+    entrada: {departamento: Antioquia}
+    minimos: {numero_registros: 24}
+    medicion: "DANE, anexo IPM departamental"
+  - id: s08
+    familia: estadisticas
+    pregunta: "¿Cuántos estudiantes de estrato 1 de Chía presentaron el Saber 11 en el periodo 20224?"
+    herramienta: icfes_saber11_estrato_municipio
+    entrada: {municipio_divipola: "25175", periodo: 20224}
+    verdad: {estrato: "Estrato 1", estudiantes: 71}
+    medicion: "kgxf-xxbe, estudiantes distintos por estrato, Chía, periodo 20224"
+  - id: s09
+    familia: estadisticas
+    pregunta: "¿Cuál es la TRM de los últimos días?"
+    herramienta: banrep_trm_recientes
+    entrada: {ultimas: 5}
+    verdad: {unidad: COP, frecuencia: D}
+    medicion: "BanRep SDMX, serie TRM"
+  - id: s10
+    familia: estadisticas
+    pregunta: "¿Qué cobertura neta en educación tenía Cundinamarca?"
+    herramienta: men_educacion_departamento
+    entrada: {departamento_divipola: 25}
+    verdad: {anio: 2011, departamento: Cundinamarca, cobertura_neta: 91.93, desercion: 3.6}
+    medicion: "MEN estadísticas por departamento, código 25"

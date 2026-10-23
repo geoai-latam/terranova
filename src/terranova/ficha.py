@@ -137,12 +137,16 @@ HERRAMIENTAS = frozenset(
     p.herramienta for p in (PREDIO_EN_PUNTO, *PARTES_PUNTO, *PARTES_PREDIO)
 ) | {"igac_predio_por_codigo"}
 
+# Punto o código, no los dos. Va en OpenAPI; en MCP no: OpenAI rechaza la lista ENTERA de
+# herramientas si una trae oneOf/anyOf/allOf/not arriba (banco de agente, 2026-10-23). La regla la
+# hace cumplir `ficha` (se espera {lon, lat} o {codigo}) y la descripción del esquema la dice.
+ALTERNATIVAS_ENTRADA: list[Any] = [
+    {"required": ["lon", "lat"], "not": {"required": ["codigo"]}},
+    {"required": ["codigo"], "not": {"anyOf": [{"required": ["lon"]}, {"required": ["lat"]}]}},
+]
 ESQUEMA_ENTRADA: dict[str, Any] = {
     "type": "object",
-    "oneOf": [
-        {"required": ["lon", "lat"], "not": {"required": ["codigo"]}},
-        {"required": ["codigo"], "not": {"anyOf": [{"required": ["lon"]}, {"required": ["lat"]}]}},
-    ],
+    "description": "Un punto (lon y lat) o un número predial (codigo), no los dos.",
     "properties": {
         "lon": {"type": "number", "minimum": -180, "maximum": 180, "description": "Longitud"},
         "lat": {"type": "number", "minimum": -90, "maximum": 90, "description": "Latitud"},

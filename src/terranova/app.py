@@ -25,7 +25,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
-from terranova.catalogo import PATRONES_ENTRADA, Herramienta
+from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta
 from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
 from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
@@ -65,7 +65,10 @@ def _tipo(nombre: str, tipo: str) -> Any:
     if tipo == "geojson":
         return dict[str, Any]
     if tipo in PATRONES_ENTRADA:
-        return Annotated[str, Field(pattern=PATRONES_ENTRADA[tipo])]
+        forma, ejemplo = FORMAS_ENTRADA[tipo]
+        return Annotated[
+            str, Field(pattern=PATRONES_ENTRADA[tipo], description=f"{forma} (ej. {ejemplo})")
+        ]
     return Annotated[str, Field(max_length=200, pattern=PATRON_TEXTO_LIMPIO)]
 
 
@@ -103,7 +106,7 @@ class FichaEntrada(BaseModel):
     model_config = ConfigDict(
         extra="forbid",
         strict=True,
-        json_schema_extra={"oneOf": ficha_lugar.ESQUEMA_ENTRADA["oneOf"]},
+        json_schema_extra={"oneOf": ficha_lugar.ALTERNATIVAS_ENTRADA},
     )
     # sin `null` en el esquema: un campo ausente se omite, no se manda vacío (Schemathesis)
     lon: Annotated[float, Field(ge=-180, le=180)] | SkipJsonSchema[None] = None
