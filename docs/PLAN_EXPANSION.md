@@ -118,6 +118,28 @@ SIPI y gaceta de la SIC, WebRelatoria de la Corte Suprema. Son los de mayor esfu
 Geovisor IGAC (avalúo por predio), SIIS de Supersociedades, CPNU. Solo con respuesta escrita a los
 derechos de petición (F0.8).
 
+## Avance frente a Croma
+
+Croma publica unas 177 herramientas para Colombia; unas 139 salen de fuentes abiertas y factibles
+(la comparación fuente por fuente está en `interno/`). Al 2026-10-22 (noche):
+
+| Grupo | Terranova | Lo que falta y por qué |
+|---|---|---|
+| Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT) | 21 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
+| Contratación (SECOP I y II) | 37 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |
+| Empresas (RUES, Supersociedades, INVIMA, DIAN) | 14 | estados financieros del RUES (protegido) y SIIS de Supersociedades (backend interno: permiso) |
+| Estadísticas (ICFES, MEN, DANE, BanRep, SUIT) | 17 | TerriData (licencia por pedir) |
+| Normativa y jurisprudencia | 11 | Consejo de Estado, SAMAI, Corte Suprema, CNDJ, Imprenta Nacional y SIPI: buscadores con estado (JSF, WebForms), pieza «scrape con estado» |
+| Ambiente | 8 | SIATA (licencia por pedir) |
+
+**Mejor que la referencia en lo que ya está:** cada respuesta trae procedencia, licencia y
+completitud (`rt/1`), y cada fuente su perfil (qué es una fila, sus trampas) y su ficha técnica (años,
+geometría, códigos con su norma, alertas de atraso), que el agente consulta con `fuente_describir`.
+Varias cifras que una consulta ingenua daría mal salen bien: estudiantes del ICFES sin repetidos,
+contratos del SECOP Integrado sin contarlos por estado y PAA de SECOP II por ítem. Las fuentes partidas
+(SECOP I vigente e histórico) se remiten entre sí, para que «no encontrado» no esconda «está en la otra
+mitad».
+
 ## Cómo se mide el avance
 
 - **Herramientas con canario verde 3 días / herramientas objetivo**, por ola.
