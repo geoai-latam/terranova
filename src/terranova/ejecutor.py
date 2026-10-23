@@ -9,6 +9,7 @@ Aquí solo vive la mecánica común.
 from __future__ import annotations
 
 import asyncio
+import functools
 import math
 import re
 import time
@@ -568,7 +569,7 @@ class Ejecutor:
             herramienta=f"{h.id}@{h.version}",
             estado=estado,
             entrada=valores,
-            zona_usada=_zona(h, valores, self.indice("cobertura_catastral")["municipios"]),
+            zona_usada=_zona(h, valores, _municipios()),
             datos=datos,
             huella=huella(datos),
             geo_result=geo,
@@ -633,6 +634,14 @@ def _aviso_de_copia(hechos: dict[str, Any]) -> str:
         else ""
     )
     return f"Sale de la copia de Terranova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
+
+
+@functools.cache
+def _municipios() -> dict[str, Any]:
+    """Nombre de cada municipio para `zona_usada` (regla 11), leído una vez por proceso: el índice
+    pesa 0,3 s y el ejecutor se crea en cada solicitud (Schemathesis se colgaba)."""
+    municipios: dict[str, Any] = cargar_cobertura("cobertura_catastral")["municipios"]
+    return municipios
 
 
 def _zona(
