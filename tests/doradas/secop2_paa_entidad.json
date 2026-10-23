@@ -1,0 +1,82 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T02:19:39+00:00",
+ "herramienta": "secop2_paa_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigo_entidad, nombre_entidad, version_del_paa",
+    "id": "9sue-ezhx",
+    "max_filas": 50,
+    "order": "codigo_entidad",
+    "portal": "datos.gov.co",
+    "previo_group": "codigo_entidad, nombre_entidad, version_del_paa, id",
+    "previo_select": "codigo_entidad, nombre_entidad, version_del_paa, id, max(valor_total_esperado) AS v",
+    "select": "codigo_entidad, nombre_entidad, version_del_paa, count(*) AS items, sum(v) AS valor_total",
+    "where": "nit_entidad = '891180077' AND annio = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigo_entidad",
+       "items",
+       "nombre_entidad",
+       "valor_total",
+       "version_del_paa"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigo_entidad": "702330010",
+        "items": "582",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "valor_total": "54007710964",
+        "version_del_paa": "40"
+       },
+       {
+        "codigo_entidad": "716138425",
+        "items": "4",
+        "nombre_entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "valor_total": "70880000",
+        "version_del_paa": "1"
+       },
+       {
+        "codigo_entidad": "724816145",
+        "items": "12",
+        "nombre_entidad": "CONCEJO DE PITALITO",
+        "valor_total": "206322500",
+        "version_del_paa": "5"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "9sue-ezhx",
+     "consulta": {
+      "conjunto": "9sue-ezhx",
+      "group": "codigo_entidad, nombre_entidad, version_del_paa",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "previo_group": "codigo_entidad, nombre_entidad, version_del_paa, id",
+      "select": "codigo_entidad, nombre_entidad, version_del_paa, count(*) AS items, sum(v) AS valor_total",
+      "where": "(nit_entidad = '891180077' AND annio = 2025)"
+     },
+     "filas": 3,
+     "filas_que_resume": 770,
+     "filtro_soql": "(nit_entidad = '891180077' AND annio = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

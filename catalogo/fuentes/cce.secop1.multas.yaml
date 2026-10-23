@@ -1,0 +1,51 @@
+id: cce.secop1.multas
+titulo: "SECOP I, multas y sanciones a contratistas"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/4n4q-k399.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP I, multas y sanciones. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# El contratista sale como lo publica SECOP (ADR-0025); no se busca por su documento ni su nombre
+# (ADR-0014): la llave es el municipio.
+url: https://www.datos.gov.co/resource/4n4q-k399.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO, columna_tiempo: fecha_de_firmeza}
+datos_personales: filtrados
+estado: publicada
+campos:
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad que impuso la multa o sanción"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad; casi siempre «No Definido»"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio de la entidad (o «Todo el pais»)"}
+  numero_de_resolucion: {nombre: resolucion, tipo: str, desc: "acto que impuso la multa (texto de la fuente)"}
+  numero_de_contrato: {nombre: contrato, tipo: str, desc: "contrato sancionado (texto de la fuente)"}
+  documento_contratista: {nombre: documento_contratista, tipo: str, desc: "documento del contratista, como lo publica SECOP (ADR-0025)"}
+  nombre_contratista: {nombre: contratista, tipo: str, desc: "contratista sancionado"}
+  valor_sancion: {nombre: valor, tipo: float, desc: "valor de la multa o sanción, en pesos (0 en 1 de cada 7)"}
+  fecha_de_firmeza: {nombre: fecha_firmeza, tipo: date, desc: "fecha en que quedó en firme"}
+  fecha_de_publicacion: {nombre: fecha_publicacion, tipo: date, desc: "fecha de publicación"}
+  ruta_de_proceso: {nombre: url_proceso, tipo: str, desc: "enlace al proceso en SECOP I"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "una multa o sanción; 1 716 en total (2010 a 2026), 85 en Villavicencio"
+  clave: {columna: numero_de_resolucion + numero_de_contrato + documento_contratista, unica: false}
+  operaciones: {filtrar: 0.5, contar: 0.5, agrupar: 4.1}
+  hallazgos:
+  - "94 filas (5,5 %) son de una «Z ENTIDAD DE PRUEBA»: datos de prueba publicados como reales"
+  - "262 multas valen 0"
+  - "el NIT de la entidad casi siempre dice «No Definido»: no sirve de llave"
+  - "una resolución puede imponer varias multas al mismo contrato, con otro valor o fecha: en Villavicencio 85 filas son 72 resoluciones–contrato y todas distintas"
+  - "«Todo el pais» aparece como municipio"
+  decision: "por municipio, sin las filas de prueba; el contratista sale como lo publica SECOP"

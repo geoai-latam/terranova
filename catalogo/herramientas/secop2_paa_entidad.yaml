@@ -1,0 +1,40 @@
+id: secop2_paa_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop2.paa
+pregunta: "¿Cuánto planea comprar esta entidad en el año según su plan anual de adquisiciones de SECOP II?"
+descripcion: >
+  Plan anual de adquisiciones de SECOP II por NIT y año: una fila por entidad del NIT (un NIT puede
+  tener varias, p. ej. municipio, concejo y personería) con su código de SECOP, la versión
+  publicada, cuántos ítems tiene y su valor total estimado en pesos. Cada ítem cuenta una vez: la
+  fuente lo repite por categoría UNSPSC. El código sirve para secop2_paa_items.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: int, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 9sue-ezhx
+    portal: datos.gov.co
+    # Spec 07: primero un grupo por ítem (su valor una vez) y luego el total por entidad.
+    previo_select: "codigo_entidad, nombre_entidad, version_del_paa, id, max(valor_total_esperado) AS v"
+    previo_group: "codigo_entidad, nombre_entidad, version_del_paa, id"
+    select: "codigo_entidad, nombre_entidad, version_del_paa, count(*) AS items, sum(v) AS valor_total"
+    where: "nit_entidad = '{nit_entidad}' AND annio = {anio}"
+    group: "codigo_entidad, nombre_entidad, version_del_paa"
+    order: "codigo_entidad"
+    max_filas: 50
+  campos: [codigo_entidad, nombre_entidad, version_del_paa, id, valor_total_esperado, nit_entidad, annio]
+salida: Secop2PaaEntidad
+derivados:
+  items: {de: columna, campo: items, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en 9sue-ezhx: Pitalito 2025, la primera entidad por código es el
+  # municipio (702330010), versión 40, 582 ítems y $54 007 710 964.
+  entrada: {nit_entidad: 891180077, anio: 2025}
+  verdad: {codigo_entidad: "702330010", entidad: MUNICIPIO DE PITALITO, version: 40, items: 582, valor_total: 54007710964.0}
+  campos: [codigo_entidad, entidad, items, valor_total, version]
+  latencia_max_ms: 30000

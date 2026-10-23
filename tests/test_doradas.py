@@ -3,6 +3,7 @@ su conector (`scripts/grabar_doradas.py`). Sin red: si cambia el mapeo, el contr
 falla aquí; si cambia la fuente, falla al regrabar (spec 04, §11.3)."""
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -103,6 +104,23 @@ DOCUMENTOS_SECOP = [
     ("tipo_identifi_del_contratista", "identificacion_del_contratista"),
     ("tipo_doc_proponente", "num_doc_proponente"),
 ]
+
+
+# columnas de documento sin columna de tipo al lado: en una dorada, solo NIT de empresa
+DOCUMENTOS_SIN_TIPO = ["documento_contratista"]
+NIT_DE_EMPRESA = re.compile(r"^[89][0-9]{8,9}$")
+
+
+def test_un_documento_sin_tipo_en_una_dorada_es_un_nit_de_empresa() -> None:
+    """Las multas de SECOP I no dicen el tipo de documento: el canario se eligió con empresas, y una
+    cédula (p. ej. 80123456, que también empieza por 8) rompe esta prueba."""
+    for ruta in DORADAS.glob("*.json"):
+        grabado = json.loads(ruta.read_text(encoding="utf-8"))
+        for ll in grabado["llamadas"]:
+            for fila in _filas_crudas(ll["respuesta"]):
+                for columna in DOCUMENTOS_SIN_TIPO:
+                    if valor := fila.get(columna):
+                        assert NIT_DE_EMPRESA.match(str(valor)), f"{ruta.name}: {columna}"
 
 
 def test_ninguna_dorada_guarda_una_cedula() -> None:
