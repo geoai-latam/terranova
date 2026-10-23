@@ -1,0 +1,88 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: minsalud.reps
+metodo: cosechado
+cosechado: '2026-10-23'
+origen: https://www.datos.gov.co/api/views/c36g-9fc2.json
+pagina: https://www.datos.gov.co/d/c36g-9fc2
+titulo: Registro Especial de Prestadores y Sedes de Servicios de Salud
+descripcion: Registro Especial de Prestadores y Sedes de Servicios de Salud, por clase de prestador IPS-Instituciones
+  Prestadoras de Servicios de Salud.
+publicado: '2023-07-04'
+datos_actualizados: '2026-04-17'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- ministerio de salud y protección social
+- reps
+filas: 76821
+campos:
+  codigoprestador:
+    tipo_fuente: text
+    etiqueta: CodigoPrestador
+    nulos: 0
+    minimo: '0500100003'
+    maximo: '9977300151'
+    comparacion: texto
+  nombreprestador:
+    tipo_fuente: text
+    etiqueta: NombrePrestador
+  codigohabilitacionsede:
+    tipo_fuente: text
+    etiqueta: CodigoHabilitacionSede
+    nulos: 0
+    minimo: '050010000301'
+    maximo: '997730015101'
+    comparacion: texto
+  nombresede:
+    tipo_fuente: text
+    etiqueta: NombreSede
+  naturalezajuridica:
+    tipo_fuente: text
+    etiqueta: NaturalezaJuridica
+    nulos: 0
+    minimo: Mixta
+    maximo: Pública
+    comparacion: texto
+    valores:
+      Privada: 72905
+      Pública: 3845
+      Mixta: 71
+  ese:
+    tipo_fuente: text
+    etiqueta: ESE
+    nulos: 0
+    minimo: 'NO'
+    maximo: SI
+    comparacion: texto
+    valores:
+      'NO': 73336
+      SI: 3485
+  municipiosede:
+    tipo_fuente: text
+    etiqueta: MunicipioSede
+    nulos: 0
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  direcci_nsede:
+    tipo_fuente: text
+    etiqueta: DireccionSede
+  claseprestador:
+    tipo_fuente: text
+    etiqueta: ClasePrestadorDesc
+    nulos: 0
+    comparacion: texto
+    valores:
+      Profesional Independiente: 54657
+      Instituciones Prestadoras de Servicios de Salud - IPS: 19551
+      Objeto Social Diferente a la Prestación de Servicios de Salud: 2107
+      Transporte Especial de Pacientes: 506
+  fecha_corte_reps:
+    tipo_fuente: text
+    etiqueta: FechaCorte
+    nulos: 0
+    comparacion: texto
+    valores:
+      'Fecha corte REPS: Mar 12 2026  3:11PM': 76821

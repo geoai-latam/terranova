@@ -1,0 +1,48 @@
+id: minsalud.reps
+titulo: "Registro Especial de Prestadores y Sedes de Servicios de Salud (REPS)"
+entidad: Ministerio de Salud y Protección Social
+competencia: administra el registro de prestadores habilitados (Resolución 3100 de 2019)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/c36g-9fc2.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Ministerio de Salud y Protección Social, REPS. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Los profesionales independientes son personas con cédula: no se consultan (ADR-0014). Teléfonos y
+# correos quedan fuera de la lista blanca: algunos son personales y quedarían en el repo.
+url: https://www.datos.gov.co/resource/c36g-9fc2.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  codigohabilitacionsede: {nombre: codigo_sede, tipo: str, desc: "código de habilitación de la sede"}
+  nombreprestador: {nombre: prestador, tipo: str, desc: "prestador (IPS, entidad con objeto social diferente, transporte de pacientes)"}
+  nombresede: {nombre: sede, tipo: str, desc: "nombre de la sede"}
+  codigoprestador: {nombre: codigo_prestador, tipo: str, desc: "código del prestador"}
+  naturalezajuridica: {nombre: naturaleza, tipo: str, desc: "Pública, Privada o Mixta"}
+  ese: {nombre: ese, tipo: str, desc: "si es empresa social del Estado"}
+  claseprestador: {nombre: clase, tipo: str, desc: "clase de prestador"}
+  municipiosede: {nombre: municipio_divipola, tipo: str, desc: "municipio de la sede, DIVIPOLA"}
+  direcci_nsede: {nombre: direccion, tipo: str, desc: "dirección de la sede"}
+  fecha_corte_reps: {nombre: corte, tipo: str, desc: "corte del REPS (texto de la fuente)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Ministerio de Salud y Protección Social, theme: salud, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una sede de un prestador; 76 821 en el país; Chía: 138 sedes de instituciones y 350 de profesionales independientes"
+  clave: {columna: codigohabilitacionsede, unica: true}
+  operaciones: {filtrar: 0.6}
+  hallazgos:
+  - "trae personas (profesionales independientes, con cédula): se excluyen por clase y tipo de documento"
+  - "las tildes de los municipios vienen dañadas (MEDELLÍN): se consulta por DIVIPOLA"
+  - "el corte viene como texto («Fecha corte REPS: Mar 12 2026…»)"
+  decision: "en vivo por municipio, solo instituciones (tipo NI)"
