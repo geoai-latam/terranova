@@ -1,0 +1,45 @@
+id: supersolidaria.entidades
+titulo: "Listado de entidades del sector solidario (Supersolidaria)"
+entidad: Superintendencia de la Economía Solidaria
+competencia: supervisa cooperativas, fondos de empleados y asociaciones mutuales (Ley 454 de 1998)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-23
+  evidencia: https://www.datos.gov.co/api/views/kg2d-yfyg.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Superintendencia de la Economía Solidaria, listado de entidades. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Fuera de la lista blanca: representante legal, teléfono, correo y dirección (personas y contactos).
+url: https://www.datos.gov.co/resource/kg2d-yfyg.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, columna_tiempo: a_o}
+datos_personales: filtrados
+estado: publicada
+campos:
+  nit: {nombre: nit, tipo: str, desc: "NIT con guiones y dígito de verificación (800-112-808-7)"}
+  nombreentidad: {nombre: entidad, tipo: str, desc: "razón social"}
+  sigla: {nombre: sigla, tipo: str, desc: "sigla"}
+  nombretipo: {nombre: tipo, tipo: str, desc: "tipo de entidad (fondo de empleados, cooperativa multiactiva…)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio del domicilio"}
+  nombreactividad: {nombre: actividad, tipo: str, desc: "actividad"}
+  supervision: {nombre: nivel_supervision, tipo: str, desc: "nivel de supervisión (1, 2 o 3)"}
+  a_o: {nombre: anio, tipo: str, desc: "año del reporte"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Superintendencia de la Economía Solidaria, theme: economia, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-23
+  fila: "una entidad en un periodo de reporte; 126 837 filas para 5 639 entidades (2017 a 2026)"
+  clave: {columna: nit + a_o + mes, unica: true}
+  operaciones: {filtrar: 1.1}
+  hallazgos:
+  - "cada entidad se repite por periodo de reporte: se agrupa por entidad con su último año"
+  - "el NIT trae guiones y dígito de verificación: se busca por nombre"
+  - "una entidad que dejó de reportar sigue en el listado con su último año (CONFIARCOOP: 2017)"
+  decision: "en vivo por nombre, agrupado por entidad con su último reporte"

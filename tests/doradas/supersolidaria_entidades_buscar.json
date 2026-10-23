@@ -1,0 +1,80 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T06:00:36+00:00",
+ "herramienta": "supersolidaria_entidades_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
+    "id": "kg2d-yfyg",
+    "max_filas": 50,
+    "order": "nombreentidad",
+    "portal": "datos.gov.co",
+    "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
+    "where": "upper(nombreentidad) like upper('%CONFIAR%')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "municipio",
+       "nit",
+       "nombreactividad",
+       "nombreentidad",
+       "nombretipo",
+       "sigla",
+       "supervision",
+       "ultimo_reporte"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "municipio": "MONTERÍA",
+        "nit": "900-354-104-1",
+        "nombreactividad": "Otras actividades",
+        "nombreentidad": "COOPERATIVA MULTIACTIVA CONFIARCOOP",
+        "nombretipo": "Multiactiva sin seccion de ahorro",
+        "sigla": "CONFIARCOOP",
+        "supervision": "3",
+        "ultimo_reporte": "2017"
+       },
+       {
+        "municipio": "MEDELLÍN",
+        "nit": "811-007-658-1",
+        "nombreactividad": "Otras actividades",
+        "nombreentidad": "FUNDACION CONFIAR",
+        "nombretipo": "Instituciones auxiliares especializadas",
+        "supervision": "2",
+        "ultimo_reporte": "2020"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "kg2d-yfyg",
+     "consulta": {
+      "conjunto": "kg2d-yfyg",
+      "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
+      "where": "(upper(nombreentidad) like upper('%CONFIAR%'))"
+     },
+     "filas": 2,
+     "filas_que_resume": 15,
+     "filtro_soql": "(upper(nombreentidad) like upper('%CONFIAR%'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
