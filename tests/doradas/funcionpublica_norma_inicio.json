@@ -1,0 +1,44 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:09:27+00:00",
+ "herramienta": "funcionpublica_norma_inicio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "max_caracteres": 6000,
+    "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "texto",
+       "titulo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "texto": "﻿\nLey 1712 de 2014 - Gestor Normativo - Función Pública\nLey 1712 de 2014\nDescargar PDF\nFechas\nFecha de Expedición: 06 de marzo de 2014\nFecha de Entrada en Vigencia: 06 de septiembre de 2014\nMedio de Publicación: Diario Oficial 49084 de marzo 6 de 2014\nTemas (3)\nACCESO A LA INFORMACIÓN\n- Subtema: Documentos Públicos\nRegula el derecho de acceso a la información pública, los procedimientos para el ejercicio y garantía del derecho y las excepciones a la publicidad de la información. Arts. 1 y ss.\nACCESO A LA INFORMACIÓN\n- Subtema: Garantías\nSeñala las garantías para el ejercicio del derecho de acceso a la información. Arts. 23 y ss.\nACCESO A LA INFORMACIÓN\n- Subtema: Reserva\nEstablece que toda la información que esté en custodia de un sujeto obligado es pública y no podrá ser reservada sino por disposición constitucional o legal.\nConceptos (5)\nACCESO A LA INFORMACIÓN\nConcepto 319071 de 2024\nConcepto 536941 de 2024\nConcepto 461681 de 2024\nConcepto 014871 de 2024\nConcepto 036201 de 2024\nVigencias(2)\nModificado por Ley 2195 de 2022\nReglamentado por Decreto 103 de 2015\nLos datos publicados tienen propósitos exclusivamente informativos. El Departamento Administrativo de la Función Pública no se hace responsable de la vigencia de la presente norma. Nos encontramos en un proceso permanente de actualización de los contenidos.\nLEY 1712 DE 2014\n(Marzo 6)\n(Ver Ley 2199 de 2022)\nNota: (El proyecto de Ley Estatutaria “Por medio del cual se crea la ley de transparencia y del derecho de acceso a la información pública nacional.”, fue revisado mediante la sentencia C-274 de 2013, de acuerdo con lo establecido en los artículos 153 y 241-8 de la Constitución Política.)\nPor medio de la cual se crea la Ley de Transparencia y del Derecho de Acceso a la Información Pública Nacional y se dictan otras disposiciones.\nEl Congreso de la República\nDECRETA:\nTÍTULO I\nDISPOSICIONES GENERALES\nARTÍCULO 1. Objeto. El objeto de la presente ley es regular el derecho de acceso a la información pública, los procedimientos para el ejercicio y garantía del derecho y las excepciones a la publicidad de información.\n(Ver Art. 2.1.1.1.1. Decreto 1081 de 2015)\nARTÍCULO 2. Principio de máxima publicidad para titular universal. Toda información en posesión, bajo control o custodia de un sujeto obligado es pública y no podrá ser reservada o limitada sino por disposición constitucional o legal, de conformidad con la presente ley.\n(Ver Sentencia de nov. 3 de 2016, Rad. 2016-02216, Consejo de Estado.)\n(Ver Sentencia T-398 de 2015.)\n(Ver Concepto Rad. 2014-00112 (2209), Consejo de Estado.)\nARTÍCULO 3. Otros principios de la transparencia y acceso a la información pública. En la interpretación del derecho de acceso a la información se deberá adoptar un criterio de razonabilidad y proporcionalidad, así como aplicar los siguientes principios:\n(Ver artículos 2.1.1.3.1.5. y 2.1.1.5.3.1 Decreto 1081 de 2015)\nPrincipio de transparencia. Principio conforme al cual toda la información en poder de los sujetos obligados definidos en esta ley se presume pública, en consecuencia de lo cual dichos sujetos están en el deber de proporcionar y facilitar el acceso a la misma en los términos más amplios posibles y a través de los medios y procedimientos que al efecto establezca la ley, excluyendo solo aquello que esté sujeto a las excepciones constitucionales y legales y bajo el cumplimiento de los requisitos establecidos en esta ley.\nPrincipio de buena fe. En virtud del cual todo sujeto obligado, al cumplir con las obligaciones derivadas del derecho de acceso a la información pública, lo hará con motivación honesta, leal y desprovista de cualquier intención dolosa o culposa.\nPrincipio de facilitación. En virtud de este principio los sujetos obligados deberán facilitar el ejercicio del derecho de acceso a la información pública, excluyendo exigencias o requisitos que puedan obstruirlo o impedirlo.\nPrincipio de no discriminación. De acuerdo al cual los sujetos obligados deberán entregar información a todas las personas que lo soliciten, en igualdad de condiciones, sin hacer distinciones arbitrarias y sin exigir expresión de causa o motivación para la solicitud.\nPrincipio de gratuidad. Según este principio el acceso a la información pública es gratuito y no se podrá cobrar valores adicionales al costo de reproducción de la información.\nPrincipio de celeridad. Con este principio se busca la agilidad en el trámite y la gestión administrativa. Comporta la indispensable agilidad en el cumplimiento de las tareas a cargo de entidades y servidores públicos.\nPrincipio de eficacia. El principio impone el logro de resultados mínimos en relación con las responsabilidades confiadas a los organis­mos estatales, con miras a la efectividad de los derechos colectivos e individuales.\nPrincipio de la calidad de la información. Toda la información de interés público que sea producida, gestionada y difundida por el sujeto obligado, deberá ser oportuna, objetiva, veraz, completa, reutilizable, procesable y estar disponible en formatos accesibles para los solicitantes e interesados en ella, teniendo en cuenta los procedimientos de gestión documental de la respectiva entidad.\nPrincipio de la divulgación proactiva de la información. El derecho de acceso a la información no radica únicamente en la obligación de dar respuesta a las peticiones de la sociedad, sino también en el deber de los sujetos obligados de promover y generar una cultura de transparencia, lo que conlleva la obligación de publicar y divulgar documentos y archivos que plasman la actividad estatal y de interés público, de forma rutinaria y proactiva, actualizada, accesible y comprensible, atendiendo a límites razonables del talento humano y recursos físicos y financieros.\nPrincipio de responsabilidad en el uso de la información. En virtud de este, cualquier persona que haga uso de la información que proporcionen los sujetos obligados, lo hará atendiendo a la misma.\n(Ver Sentencia T-398 de 2015.)\nARTÍCULO 4. Concepto del d",
+        "titulo": "Ley 1712 de 2014 - Gestor Normativo - Función Pública"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "caracteres": 39656,
+     "completitud": {
+      "motivo": "max_caracteres=6000",
+      "total": 39656,
+      "truncado": true,
+      "vistos": 6000
+     },
+     "titulo": "Ley 1712 de 2014 - Gestor Normativo - Función Pública",
+     "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_html"
+  }
+ ]
+}

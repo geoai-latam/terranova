@@ -1,0 +1,30 @@
+id: funcionpublica_normas_buscar
+version: 1
+familia: normativa
+fuente: funcionpublica.gestor_normativo
+pregunta: "¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)?"
+descripcion: >
+  Busca en el Gestor Normativo de Función Pública (leyes, decretos, circulares, conceptos,
+  sentencias) y devuelve los 10 primeros resultados con su título y su enlace (norma.php?i=…: ese
+  número es el que piden funcionpublica_norma_buscar y funcionpublica_norma_inicio).
+  (Fuente: Función Pública; licencia: Ley 23 de 1982, art. 41.)
+entrada: {texto: str}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://www.funcionpublica.gov.co/dafpIndexerBGN/norma/index"
+    params: {find: FindNext, query: "{texto}", max: 10, offset: 0}
+    enlaces_con: "norma\\.php\\?i=[0-9]+"
+  campos: [texto, url, titulo, enlaces]
+salida: NormasFuncionPublicaBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22: «ley 1712 de 2014» da 10 resultados; el primero es la ley (i=56882).
+  entrada: {texto: ley 1712 de 2014}
+  verdad: {texto: "Ley 1712 de 2014 - Nivel Nacional", url: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"}
+  minimos: {numero_registros: 10}
+  campos: [caracteres, numero_registros, resultados, texto, titulo, url]
+  latencia_max_ms: 30000

@@ -1,0 +1,86 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:09:37+00:00",
+ "herramienta": "funcionpublica_normas_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "enlaces_con": "norma\\.php\\?i=[0-9]+",
+    "params": {
+     "find": "FindNext",
+     "max": 10,
+     "offset": 0,
+     "query": "ley 1712 de 2014"
+    },
+    "url": "https://www.funcionpublica.gov.co/dafpIndexerBGN/norma/index"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "texto",
+       "url"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "texto": "Ley 1712 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=56882"
+       },
+       {
+        "texto": "Circular 016 de 2013 - Procuraduria General de la Nacion",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=71315"
+       },
+       {
+        "texto": "Concepto 377131 de 2022 - Departamento Administrativo de la Función Pública",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=202943"
+       },
+       {
+        "texto": "Ley 2014 de 2019 - Ministerio del Interior",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=104573"
+       },
+       {
+        "texto": "Ley 1742 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60353"
+       },
+       {
+        "texto": "Ley 1743 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60329"
+       },
+       {
+        "texto": "Ley 1744 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60356"
+       },
+       {
+        "texto": "Ley 1745 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60315"
+       },
+       {
+        "texto": "Ley 1748 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60402"
+       },
+       {
+        "texto": "Ley 1741 de 2014 - Nivel Nacional",
+        "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=60280"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "caracteres": 28526,
+     "completitud": {
+      "total": 10,
+      "truncado": false,
+      "vistos": 10
+     },
+     "enlaces": 10,
+     "titulo": "Gestor Normativo",
+     "url": "https://www.funcionpublica.gov.co/dafpIndexerBGN/norma/index"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_html"
+  }
+ ]
+}

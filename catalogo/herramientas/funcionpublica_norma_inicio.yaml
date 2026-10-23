@@ -1,0 +1,27 @@
+id: funcionpublica_norma_inicio
+version: 1
+familia: normativa
+fuente: funcionpublica.gestor_normativo
+pregunta: "¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó?"
+descripcion: >
+  El comienzo de una norma del Gestor Normativo de Función Pública por su número (hasta 6 000
+  caracteres): título, fecha de expedición, fecha de entrada en vigencia, medio de publicación y el
+  inicio del texto, con cuántos caracteres tiene la norma entera.
+  (Fuente: Función Pública; licencia: Ley 23 de 1982, art. 41.)
+entrada: {norma: int}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i={norma}"
+    max_caracteres: 6000
+  campos: [texto, titulo, caracteres]
+salida: NormaFuncionPublicaInicio
+creditos: 2
+canario:
+  # Medido el 2026-10-22: la Ley 1712 de 2014 (56882) tiene 39 656 caracteres.
+  entrada: {norma: 56882}
+  verdad: {titulo: "Ley 1712 de 2014 - Gestor Normativo - Función Pública"}
+  minimos: {caracteres: 30000}
+  campos: [caracteres, texto, titulo]
+  latencia_max_ms: 30000
