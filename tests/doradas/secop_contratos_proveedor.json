@@ -1,0 +1,93 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:54:40+00:00",
+ "herramienta": "secop_contratos_proveedor",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "anio",
+    "id": "jbjy-vk9h",
+    "max_filas": 50,
+    "order": "anio",
+    "portal": "datos.gov.co",
+    "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(valor_del_contrato) AS valor_total, count(distinct nit_entidad) AS entidades",
+    "where": "documento_proveedor = '899999714' AND tipodocproveedor = 'NIT'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "anio",
+       "contratos",
+       "entidades",
+       "valor_total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "anio": "2021",
+        "contratos": "1",
+        "entidades": "1",
+        "valor_total": "854818600"
+       },
+       {
+        "anio": "2022",
+        "contratos": "4",
+        "entidades": "1",
+        "valor_total": "997398581"
+       },
+       {
+        "anio": "2023",
+        "contratos": "3",
+        "entidades": "1",
+        "valor_total": "4654696722"
+       },
+       {
+        "anio": "2024",
+        "contratos": "5",
+        "entidades": "2",
+        "valor_total": "21998647934.63"
+       },
+       {
+        "anio": "2025",
+        "contratos": "7",
+        "entidades": "2",
+        "valor_total": "11417044096.68"
+       },
+       {
+        "anio": "2026",
+        "contratos": "5",
+        "entidades": "2",
+        "valor_total": "2351757526.79"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "group": "anio",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(valor_del_contrato) AS valor_total, count(distinct nit_entidad) AS entidades",
+      "where": "(documento_proveedor = '899999714' AND tipodocproveedor = 'NIT')"
+     },
+     "filas": 6,
+     "filas_que_resume": 25,
+     "filtro_soql": "(documento_proveedor = '899999714' AND tipodocproveedor = 'NIT')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
