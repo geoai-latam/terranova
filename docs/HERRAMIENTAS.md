@@ -89,6 +89,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
+| `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
+| `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
@@ -135,6 +137,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_placas_predio` | ¿Qué dirección (placa) tiene este predio según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 3 |
 | `igac_predio_en_punto` | ¿Qué predio del catastro IGAC hay en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_predios_destino_municipio` | ¿Cuántos predios hay en este municipio por destino económico (habitacional, comercial, agropecuario…)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
 | `igac_registro_predio` | ¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_sector_en_punto` | ¿En qué sector catastral del IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vereda_en_punto` | ¿En qué vereda del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |

@@ -1,0 +1,100 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:49:20+00:00",
+ "herramienta": "icfes_saber11_estrato_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "fami_estratovivienda",
+    "having": "count(*) >= 10",
+    "id": "kgxf-xxbe",
+    "max_filas": 20,
+    "order": "fami_estratovivienda",
+    "portal": "datos.gov.co",
+    "previo_group": "fami_estratovivienda, estu_consecutivo",
+    "previo_select": "fami_estratovivienda, estu_consecutivo, avg(punt_global::number) AS g",
+    "select": "fami_estratovivienda, count(*) AS estudiantes, avg(g) AS promedio_global",
+    "where": "cole_cod_mcpio_ubicacion = '25175' AND periodo = '20224'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estudiantes",
+       "fami_estratovivienda",
+       "promedio_global"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estudiantes": "71",
+        "fami_estratovivienda": "Estrato 1",
+        "promedio_global": "248.3661971830985915"
+       },
+       {
+        "estudiantes": "721",
+        "fami_estratovivienda": "Estrato 2",
+        "promedio_global": "271.4812760055478502"
+       },
+       {
+        "estudiantes": "514",
+        "fami_estratovivienda": "Estrato 3",
+        "promedio_global": "279.1206225680933852"
+       },
+       {
+        "estudiantes": "211",
+        "fami_estratovivienda": "Estrato 4",
+        "promedio_global": "301.6018957345971564"
+       },
+       {
+        "estudiantes": "64",
+        "fami_estratovivienda": "Estrato 5",
+        "promedio_global": "313.2187500000000000"
+       },
+       {
+        "estudiantes": "21",
+        "fami_estratovivienda": "Estrato 6",
+        "promedio_global": "291.7619047619047619"
+       },
+       {
+        "estudiantes": "19",
+        "fami_estratovivienda": "Sin Estrato",
+        "promedio_global": "229.1052631578947368"
+       },
+       {
+        "estudiantes": "65",
+        "promedio_global": "256.9076923076923077"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 8,
+      "truncado": false,
+      "vistos": 8
+     },
+     "completo": true,
+     "conjunto": "kgxf-xxbe",
+     "consulta": {
+      "conjunto": "kgxf-xxbe",
+      "group": "fami_estratovivienda",
+      "having": "count(*) >= 10",
+      "max_filas": 20,
+      "portal": "datos.gov.co",
+      "previo_group": "fami_estratovivienda, estu_consecutivo",
+      "select": "fami_estratovivienda, count(*) AS estudiantes, avg(g) AS promedio_global",
+      "where": "(cole_cod_mcpio_ubicacion = '25175' AND periodo = '20224')"
+     },
+     "filas": 8,
+     "filas_que_resume": 3372,
+     "filtro_soql": "(cole_cod_mcpio_ubicacion = '25175' AND periodo = '20224')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

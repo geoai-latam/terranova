@@ -37,6 +37,7 @@ PATRONES_ENTRADA: dict[str, str] = {
     "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}_[0-9]{4}$",
     # NIT de persona jurídica (empieza por 8 o 9): buscar por cédula queda fuera (ADR-0014)
     "nit_empresa": r"^[89][0-9]{8}$",
+    "codigo_dane_sede": r"^[0-9]{12}$",  # sede educativa (DANE): 125175000493
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
 }
 TipoEntrada = Literal[
@@ -56,6 +57,7 @@ TipoEntrada = Literal[
     "sentencia_relatoria",
     "documento_normativo",
     "nit_empresa",
+    "codigo_dane_sede",
     "nombre",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})

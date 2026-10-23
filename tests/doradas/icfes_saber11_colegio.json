@@ -1,0 +1,117 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:49:18+00:00",
+ "herramienta": "icfes_saber11_colegio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "periodo",
+    "having": "count(*) >= 10",
+    "id": "kgxf-xxbe",
+    "max_filas": 200,
+    "portal": "datos.gov.co",
+    "previo_group": "periodo, estu_consecutivo",
+    "previo_select": "periodo, estu_consecutivo, max(cole_nombre_sede) AS sede, avg(punt_global::number) AS g",
+    "select": "periodo, max(sede) AS sede, count(*) AS estudiantes, avg(g) AS promedio_global",
+    "where": "cole_cod_dane_sede = '125175000493'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estudiantes",
+       "periodo",
+       "promedio_global",
+       "sede"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estudiantes": "153",
+        "periodo": "20102",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "131",
+        "periodo": "20112",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "165",
+        "periodo": "20122",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "181",
+        "periodo": "20132",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "167",
+        "periodo": "20142",
+        "promedio_global": "270.6107784431137725",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "131",
+        "periodo": "20152",
+        "promedio_global": "270.6030534351145038",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "189",
+        "periodo": "20162",
+        "promedio_global": "284.6772486772486772",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "176",
+        "periodo": "20172",
+        "promedio_global": "278.4659090909090909",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "152",
+        "periodo": "20194",
+        "promedio_global": "272.5789473684210526",
+        "sede": "I.E. DIVERSIFICADO - SEDE PRINCIPAL"
+       },
+       {
+        "estudiantes": "216",
+        "periodo": "20224",
+        "promedio_global": "269.0787037037037037",
+        "sede": "INSTITUCION EDUCATIVA DIVERSIFICADO - SEDE PRINCIPAL"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 10,
+      "truncado": false,
+      "vistos": 10
+     },
+     "completo": true,
+     "conjunto": "kgxf-xxbe",
+     "consulta": {
+      "conjunto": "kgxf-xxbe",
+      "group": "periodo",
+      "having": "count(*) >= 10",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "previo_group": "periodo, estu_consecutivo",
+      "select": "periodo, max(sede) AS sede, count(*) AS estudiantes, avg(g) AS promedio_global",
+      "where": "(cole_cod_dane_sede = '125175000493')"
+     },
+     "filas": 10,
+     "filas_que_resume": 2029,
+     "filtro_soql": "(cole_cod_dane_sede = '125175000493')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
