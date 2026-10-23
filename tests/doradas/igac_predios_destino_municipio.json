@@ -1,0 +1,202 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T04:49:21+00:00",
+ "herramienta": "igac_predios_destino_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "agrupar": [
+     "DESTINO_ECONOMICO"
+    ],
+    "medidas": [
+     {
+      "campo": "NUMERO_PREDIAL",
+      "nombre": "predios",
+      "tipo": "count"
+     },
+     {
+      "campo": "AREA_TERRENO",
+      "nombre": "area_terreno",
+      "tipo": "sum"
+     },
+     {
+      "campo": "AREA_CONSTRUIDA",
+      "nombre": "area_construida",
+      "tipo": "sum"
+     }
+    ],
+    "orden": [
+     "DESTINO_ECONOMICO"
+    ],
+    "url": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/17",
+    "where": "NUMERO_PREDIAL LIKE '25175%'"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "DESTINO_ECONOMICO",
+       "area_construida",
+       "area_terreno",
+       "predios"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "DESTINO_ECONOMICO": "A",
+        "area_construida": 4899861,
+        "area_terreno": 7887622,
+        "predios": 52961
+       },
+       {
+        "DESTINO_ECONOMICO": "B",
+        "area_construida": 58772,
+        "area_terreno": 155314,
+        "predios": 27
+       },
+       {
+        "DESTINO_ECONOMICO": "C",
+        "area_construida": 429821,
+        "area_terreno": 1140074,
+        "predios": 3570
+       },
+       {
+        "DESTINO_ECONOMICO": "D",
+        "area_construida": 1555410,
+        "area_terreno": 54471708,
+        "predios": 7192
+       },
+       {
+        "DESTINO_ECONOMICO": "E",
+        "area_construida": 430,
+        "area_terreno": 1953,
+        "predios": 3
+       },
+       {
+        "DESTINO_ECONOMICO": "F",
+        "area_construida": 66828,
+        "area_terreno": 432772,
+        "predios": 31
+       },
+       {
+        "DESTINO_ECONOMICO": "G",
+        "area_construida": 214243,
+        "area_terreno": 3411376,
+        "predios": 535
+       },
+       {
+        "DESTINO_ECONOMICO": "H",
+        "area_construida": 9297,
+        "area_terreno": 7888,
+        "predios": 3
+       },
+       {
+        "DESTINO_ECONOMICO": "I",
+        "area_construida": 91120,
+        "area_terreno": 380023,
+        "predios": 79
+       },
+       {
+        "DESTINO_ECONOMICO": "J",
+        "area_construida": 161121,
+        "area_terreno": 654718,
+        "predios": 348
+       },
+       {
+        "DESTINO_ECONOMICO": "K",
+        "area_construida": 28134,
+        "area_terreno": 613458,
+        "predios": 365
+       },
+       {
+        "DESTINO_ECONOMICO": "M",
+        "area_construida": 1089,
+        "area_terreno": 2117,
+        "predios": 1
+       },
+       {
+        "DESTINO_ECONOMICO": "N",
+        "area_construida": 541,
+        "area_terreno": 140,
+        "predios": 7
+       },
+       {
+        "DESTINO_ECONOMICO": "O",
+        "area_construida": 0,
+        "area_terreno": 31201,
+        "predios": 2
+       },
+       {
+        "DESTINO_ECONOMICO": "P",
+        "area_construida": 6844,
+        "area_terreno": 1674501,
+        "predios": 549
+       },
+       {
+        "DESTINO_ECONOMICO": "Q",
+        "area_construida": 0,
+        "area_terreno": 415075,
+        "predios": 8
+       },
+       {
+        "DESTINO_ECONOMICO": "R",
+        "area_construida": 5500,
+        "area_terreno": 116239,
+        "predios": 224
+       },
+       {
+        "DESTINO_ECONOMICO": "S",
+        "area_construida": 34671,
+        "area_terreno": 405818,
+        "predios": 1007
+       },
+       {
+        "DESTINO_ECONOMICO": "T",
+        "area_construida": 387,
+        "area_terreno": 7885,
+        "predios": 24
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "capa": "https://services2.arcgis.com/RVvWzU3lgJISqdke/arcgis/rest/services/Base_Catastral_Publica_del_Gestor_IGAC_06_2026/FeatureServer/17",
+     "completitud": {
+      "total": 19,
+      "truncado": false,
+      "vistos": 19
+     },
+     "completo": true,
+     "consulta": {
+      "agrupar": [
+       "DESTINO_ECONOMICO"
+      ],
+      "medidas": [
+       {
+        "campo": "NUMERO_PREDIAL",
+        "nombre": "predios",
+        "tipo": "count"
+       },
+       {
+        "campo": "AREA_TERRENO",
+        "nombre": "area_terreno",
+        "tipo": "sum"
+       },
+       {
+        "campo": "AREA_CONSTRUIDA",
+        "nombre": "area_construida",
+        "tipo": "sum"
+       }
+      ],
+      "where": "NUMERO_PREDIAL LIKE '25175%'"
+     },
+     "filas_que_resume": 66936,
+     "grupos": 19
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_estadisticas"
+  }
+ ]
+}

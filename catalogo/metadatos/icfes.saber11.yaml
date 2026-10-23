@@ -46,6 +46,14 @@ campos:
       '20221': 20049
       '20211': 15528
       '20201': 15435
+  cole_cod_dane_sede:
+    tipo_fuente: text
+    etiqueta: COLE_COD_DANE_SEDE
+    descripcion: Código DANE de la Sede
+    nulos: 110
+    minimo: '000000000000'
+    maximo: '854874000001'
+    comparacion: texto
   cole_cod_mcpio_ubicacion:
     tipo_fuente: text
     etiqueta: COLE_COD_MCPIO_UBICACION
@@ -54,6 +62,25 @@ campos:
     minimo: '05001'
     maximo: '99773'
     comparacion: texto
+  cole_nombre_sede:
+    tipo_fuente: text
+    etiqueta: COLE_NOMBRE_SEDE
+    descripcion: Nombre de la sede
+  fami_estratovivienda:
+    tipo_fuente: text
+    etiqueta: FAMI_ESTRATOVIVIENDA
+    descripcion: Estrato del examinando
+    nulos: 218219
+    comparacion: texto
+    valores:
+      Estrato 1: 2488247
+      Estrato 2: 2441528
+      Estrato 3: 1348516
+      Estrato 4: 323398
+      Estrato 5: 125691
+      Sin Estrato: 89332
+      Estrato 6: 74772
+      Vive en una zona rural donde no hay estratificación socioeconómica: 1
   punt_matematicas:
     tipo_fuente: text
     etiqueta: PUNT_MATEMATICAS

@@ -28,6 +28,9 @@ campos:
   punt_global: {nombre: punt_global, tipo: float, desc: "puntaje global (0–500); solo se usa promediado"}
   punt_matematicas: {nombre: punt_matematicas, tipo: float, desc: "puntaje de matemáticas; solo promediado"}
   punt_lectura_critica: {nombre: punt_lectura_critica, tipo: float, desc: "puntaje de lectura crítica; solo promediado"}
+  cole_cod_dane_sede: {nombre: codigo_dane_sede, tipo: str, desc: "código DANE de la sede del colegio"}
+  cole_nombre_sede: {nombre: sede, tipo: str, desc: "nombre de la sede (cambia de escritura entre años)"}
+  fami_estratovivienda: {nombre: estrato, tipo: str, desc: "estrato de la vivienda del estudiante (sin dato si vacío); solo agregado"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Colombiano para la Evaluación de la Educación, theme: educacion, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terranova.

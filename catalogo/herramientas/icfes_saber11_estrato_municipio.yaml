@@ -1,0 +1,40 @@
+id: icfes_saber11_estrato_municipio
+version: 1
+familia: estadisticas
+fuente: icfes.saber11
+pregunta: "¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio?"
+descripcion: >
+  Prueba Saber 11 (ICFES) en los colegios de un municipio y un periodo del examen (AAAAS, p. ej.
+  20224), por estrato de la vivienda del estudiante: número de estudiantes y promedio del puntaje
+  global. Solo agregados: un estrato con menos de 10 estudiantes no sale; sin estrato sale vacío.
+  Cada estudiante cuenta una vez.
+  (Fuente: ICFES; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, periodo: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: kgxf-xxbe
+    portal: datos.gov.co
+    previo_select: "fami_estratovivienda, estu_consecutivo, avg(punt_global::number) AS g"
+    previo_group: "fami_estratovivienda, estu_consecutivo"
+    select: "fami_estratovivienda, count(*) AS estudiantes, avg(g) AS promedio_global"
+    where: "cole_cod_mcpio_ubicacion = '{municipio_divipola}' AND periodo = '{periodo}'"
+    group: fami_estratovivienda
+    having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas
+    order: fami_estratovivienda
+    max_filas: 20
+  campos: [fami_estratovivienda, cole_cod_mcpio_ubicacion, periodo, punt_global]
+salida: Saber11EstratoMunicipio
+derivados:
+  estudiantes: {de: columna, campo: estudiantes, tipo: int}
+  promedio_global: {de: columna, campo: promedio_global, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en kgxf-xxbe: Chía 20224, estrato 1 → 71 estudiantes y 248,37 de promedio;
+  # estrato 5 → 64 y 313,22. Hay 65 sin estrato.
+  entrada: {municipio_divipola: "25175", periodo: 20224}
+  verdad: {estrato: Estrato 1, estudiantes: 71}
+  campos: [estrato, estudiantes, promedio_global]
+  latencia_max_ms: 30000

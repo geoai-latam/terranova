@@ -42,6 +42,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop_contratos_buscar` | ¿Qué contratos de SECOP II hablan de esto en su objeto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_entidad` | ¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_municipio` | ¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_contratos_proveedor` | ¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
 | `secop_convenio_interadministrativo` | ¿Qué es este convenio interadministrativo de SECOP? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_cronograma_proceso` | ¿Cuál es el cronograma de este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_ejecucion_contrato` | ¿Cómo va la ejecución de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
@@ -65,6 +66,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamentos_por_titular` | ¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 3 |
 | `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
 | `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 3 |
 | `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
@@ -89,12 +91,15 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
+| `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
+| `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `invima_registro_sanitario_por_expediente` | ¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
 | `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
+| `men_educacion_etc` | ¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
@@ -135,6 +140,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_placas_predio` | ¿Qué dirección (placa) tiene este predio según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 3 |
 | `igac_predio_en_punto` | ¿Qué predio del catastro IGAC hay en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_predios_destino_municipio` | ¿Cuántos predios hay en este municipio por destino económico (habitacional, comercial, agropecuario…)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
 | `igac_registro_predio` | ¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_sector_en_punto` | ¿En qué sector catastral del IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_vereda_en_punto` | ¿En qué vereda del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |

@@ -1,0 +1,244 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T05:00:23+00:00",
+ "herramienta": "men_educacion_etc",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "sras-4t5p",
+    "max_filas": 100,
+    "order": "ano",
+    "portal": "datos.gov.co",
+    "select": "ano, cod_etc, nombre_etc, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia",
+    "where": "cod_etc = '3759'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ano",
+       "aprobacion",
+       "cobertura_bruta",
+       "cobertura_neta",
+       "cod_etc",
+       "desercion",
+       "nombre_etc",
+       "poblacion_5_16",
+       "repitencia",
+       "reprobacion",
+       "tasa_matriculacion_5_16"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ano": "2011",
+        "aprobacion": "96.28",
+        "cobertura_bruta": "125.35",
+        "cobertura_neta": "108.49",
+        "cod_etc": "3759",
+        "desercion": "3.69",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "386466",
+        "repitencia": "4.57",
+        "reprobacion": "0.03",
+        "tasa_matriculacion_5_16": "108.73"
+       },
+       {
+        "ano": "2012",
+        "aprobacion": "92.46",
+        "cobertura_bruta": "123.8",
+        "cobertura_neta": "108.43",
+        "cod_etc": "3759",
+        "desercion": "3.37",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "380839",
+        "repitencia": "3.67",
+        "reprobacion": "4.18",
+        "tasa_matriculacion_5_16": "109000000000000.00"
+       },
+       {
+        "ano": "2013",
+        "aprobacion": "90.51",
+        "cobertura_bruta": "122.93",
+        "cobertura_neta": "106.63",
+        "cod_etc": "3759",
+        "desercion": "3.39",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "377955",
+        "repitencia": "1.41",
+        "reprobacion": "6.1",
+        "tasa_matriculacion_5_16": "106.86"
+       },
+       {
+        "ano": "2014",
+        "aprobacion": "92.33",
+        "cobertura_bruta": "122.86",
+        "cobertura_neta": "105.73",
+        "cod_etc": "3759",
+        "desercion": "1.8",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "374411",
+        "repitencia": "1.5",
+        "reprobacion": "5.86",
+        "tasa_matriculacion_5_16": "105.93"
+       },
+       {
+        "ano": "2015",
+        "aprobacion": "85.92",
+        "cobertura_bruta": "120.72",
+        "cobertura_neta": "105.21",
+        "cod_etc": "3759",
+        "desercion": "3.58",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "371407",
+        "repitencia": "1.47",
+        "reprobacion": "10.5",
+        "tasa_matriculacion_5_16": "105.40"
+       },
+       {
+        "ano": "2016",
+        "aprobacion": "85.04",
+        "cobertura_bruta": "118.91",
+        "cobertura_neta": "103.18",
+        "cod_etc": "3759",
+        "desercion": "3.93",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "370403",
+        "repitencia": "3.3",
+        "reprobacion": "11.02",
+        "tasa_matriculacion_5_16": "103.38"
+       },
+       {
+        "ano": "2017",
+        "aprobacion": "85.31",
+        "cobertura_bruta": "116.3",
+        "cobertura_neta": "101.16",
+        "cod_etc": "3759",
+        "desercion": "3.46",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "370202",
+        "repitencia": "10.16",
+        "reprobacion": "11.23",
+        "tasa_matriculacion_5_16": "101.33"
+       },
+       {
+        "ano": "2018",
+        "aprobacion": "86.1",
+        "cobertura_bruta": "110.95",
+        "cobertura_neta": "96.88",
+        "cod_etc": "3759",
+        "desercion": "4.14",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "384358",
+        "repitencia": "3.81",
+        "reprobacion": "9.76",
+        "tasa_matriculacion_5_16": "100.67"
+       },
+       {
+        "ano": "2019",
+        "aprobacion": "86.29",
+        "cobertura_bruta": "112.44",
+        "cobertura_neta": "97.96",
+        "cod_etc": "3759",
+        "desercion": "3.91",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "383386",
+        "repitencia": "4.4",
+        "reprobacion": "9.8",
+        "tasa_matriculacion_5_16": "98.15"
+       },
+       {
+        "ano": "2020",
+        "aprobacion": "90.66",
+        "cobertura_bruta": "111.7",
+        "cobertura_neta": "98.15",
+        "cod_etc": "3759",
+        "desercion": "1.64",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "382105",
+        "repitencia": "7.04",
+        "reprobacion": "7.69",
+        "tasa_matriculacion_5_16": "98.33"
+       },
+       {
+        "ano": "2021",
+        "aprobacion": "87.89",
+        "cobertura_bruta": "109.93",
+        "cobertura_neta": "96.94",
+        "cod_etc": "3759",
+        "desercion": "3.27",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "379,616",
+        "repitencia": "6.17",
+        "reprobacion": "8.84",
+        "tasa_matriculacion_5_16": "97.12"
+       },
+       {
+        "ano": "2022",
+        "aprobacion": "85.66",
+        "cobertura_bruta": "109.22",
+        "cobertura_neta": "97.06",
+        "cod_etc": "3759",
+        "desercion": "4.91",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "378768",
+        "repitencia": "6.41",
+        "reprobacion": "9.43",
+        "tasa_matriculacion_5_16": "97.26"
+       },
+       {
+        "ano": "2023",
+        "aprobacion": "85.37",
+        "cobertura_bruta": "107.16",
+        "cobertura_neta": "95.94",
+        "cod_etc": "3759",
+        "desercion": "5.4",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "377562",
+        "repitencia": "9.25",
+        "reprobacion": "9.23",
+        "tasa_matriculacion_5_16": "96.15"
+       },
+       {
+        "ano": "2024",
+        "aprobacion": "88.74",
+        "cobertura_bruta": "104.12",
+        "cobertura_neta": "93.58",
+        "cod_etc": "3759",
+        "desercion": "3.18",
+        "nombre_etc": "Medellín",
+        "poblacion_5_16": "376137",
+        "repitencia": "9.08",
+        "reprobacion": "8.08",
+        "tasa_matriculacion_5_16": "93.77"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 14,
+      "truncado": false,
+      "vistos": 14
+     },
+     "completo": true,
+     "conjunto": "sras-4t5p",
+     "consulta": {
+      "conjunto": "sras-4t5p",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "ano, cod_etc, nombre_etc, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia",
+      "where": "(cod_etc = '3759')"
+     },
+     "cumplen_en_el_portal": 14,
+     "filas": 14,
+     "filtro_soql": "(cod_etc = '3759')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

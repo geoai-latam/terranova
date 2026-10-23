@@ -1,0 +1,38 @@
+id: secop_contratos_proveedor
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos
+pregunta: "¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)?"
+descripcion: >
+  Contratos de SECOP II firmados por una empresa contratista según su NIT, por año de firma: número
+  de contratos, valor total en pesos y con cuántas entidades distintas. Solo empresas (documento tipo
+  NIT): a las personas no se las busca por su cédula (ADR-0014).
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit: nit_empresa}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: jbjy-vk9h
+    portal: datos.gov.co
+    select: "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(valor_del_contrato) AS valor_total, count(distinct nit_entidad) AS entidades"
+    where: "documento_proveedor = '{nit}' AND tipodocproveedor = 'NIT'"
+    group: anio
+    order: anio
+    max_filas: 50
+  campos: [documento_proveedor, tipodocproveedor, fecha_de_firma, valor_del_contrato, id_contrato, nit_entidad]
+salida: SecopContratosProveedor
+derivados:
+  anio: {de: columna, campo: anio, tipo: int}
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor_total: {de: columna, campo: valor_total, tipo: float}
+  entidades: {de: columna, campo: entidades, tipo: int}
+creditos: 3
+canario:
+  # Medido el 2026-10-22 en jbjy-vk9h: la Empresa de Servicios Públicos de Chía (899999714), 2021 →
+  # 1 contrato por $854 818 600 con 1 entidad (año cerrado).
+  entrada: {nit: "899999714"}
+  verdad: {anio: 2021, contratos: 1, valor_total: 854818600.0, entidades: 1}
+  campos: [anio, contratos, entidades, valor_total]
+  latencia_max_ms: 15000

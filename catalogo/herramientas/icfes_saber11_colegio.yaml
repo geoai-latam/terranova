@@ -1,0 +1,41 @@
+id: icfes_saber11_colegio
+version: 1
+familia: estadisticas
+fuente: icfes.saber11
+pregunta: "¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron?"
+descripcion: >
+  Prueba Saber 11 (ICFES) de una sede educativa por su código DANE (12 dígitos), por periodo del
+  examen: estudiantes, nombre de la sede y promedio del puntaje global. Solo agregados: un periodo
+  con menos de 10 estudiantes no sale. Cada estudiante cuenta una vez, aunque la fuente lo repita.
+  (Fuente: ICFES; licencia: CC BY-SA 4.0.)
+entrada: {codigo_dane_sede: codigo_dane_sede}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: kgxf-xxbe
+    portal: datos.gov.co
+    # Spec 07: un grupo por estudiante y luego el agregado. El nombre de la sede cambia de escritura
+    # entre años («I.E. DIVERSIFICADO» / «INSTITUCION EDUCATIVA DIVERSIFICADO»): sale con max().
+    previo_select: "periodo, estu_consecutivo, max(cole_nombre_sede) AS sede, avg(punt_global::number) AS g"
+    previo_group: "periodo, estu_consecutivo"
+    select: "periodo, max(sede) AS sede, count(*) AS estudiantes, avg(g) AS promedio_global"
+    where: "cole_cod_dane_sede = '{codigo_dane_sede}'"
+    group: periodo
+    having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas
+    max_filas: 200
+  campos: [periodo, cole_cod_dane_sede, cole_nombre_sede, punt_global]
+salida: Saber11Colegio
+derivados:
+  sede: {de: columna, campo: sede, tipo: str}
+  estudiantes: {de: columna, campo: estudiantes, tipo: int}
+  promedio_global: {de: columna, campo: promedio_global, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en kgxf-xxbe: la I.E. Diversificado de Chía (125175000493), 20102 → 153
+  # estudiantes (los periodos de 2010 no traen puntaje global).
+  entrada: {codigo_dane_sede: "125175000493"}
+  verdad: {periodo: "20102", estudiantes: 153}
+  campos: [estudiantes, periodo, promedio_global, sede]
+  latencia_max_ms: 30000

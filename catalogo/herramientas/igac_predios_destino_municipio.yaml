@@ -1,0 +1,42 @@
+id: igac_predios_destino_municipio
+version: 1
+familia: territorio
+fuente: igac.catastro.registro1
+pregunta: "¿Cuántos predios hay en este municipio por destino económico (habitacional, comercial, agropecuario…)?"
+descripcion: >
+  Predios de la base catastral pública IGAC de un municipio (DIVIPOLA) por destino económico:
+  número de predios y suma de área de terreno y área construida, calculados en el servicio. El
+  significado de cada letra (A habitacional, C comercial, D agropecuario…, Res. IGAC 070 de 2011) y
+  las que ninguna norma define están en la ficha técnica (fuente_describir). Cubre los municipios con
+  gestión catastral del IGAC.
+  (Fuente: IGAC; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: arcgis_estadisticas
+  capas: [17]  # REGISTRO_1
+  argumentos:
+    url: "{url_capa}"
+    where: "NUMERO_PREDIAL LIKE '{municipio_divipola}%'"
+    agrupar: [DESTINO_ECONOMICO]
+    medidas:
+      - {tipo: count, campo: NUMERO_PREDIAL, nombre: predios}
+      - {tipo: sum, campo: AREA_TERRENO, nombre: area_terreno}
+      - {tipo: sum, campo: AREA_CONSTRUIDA, nombre: area_construida}
+    orden: [DESTINO_ECONOMICO]
+  campos: [NUMERO_PREDIAL, DESTINO_ECONOMICO, AREA_TERRENO, AREA_CONSTRUIDA]
+salida: PrediosDestinoMunicipio
+derivados:
+  predios: {de: columna, campo: predios, tipo: int}
+  area_terreno: {de: columna, campo: area_terreno, tipo: float}
+  area_construida: {de: columna, campo: area_construida, tipo: float}
+creditos: 5
+canario:
+  # Medido el 2026-10-22 en la capa 17 (corte 06_2026): Chía, destino A (habitacional), 52 961 predios.
+  # Cambia con cada corte: mínimo.
+  entrada: {municipio_divipola: "25175"}
+  verdad: {destino_economico: A}
+  minimos: {predios: 50000}
+  campos: [area_construida, area_terreno, destino_economico, predios]
+  latencia_max_ms: 20000
