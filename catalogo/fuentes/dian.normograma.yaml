@@ -1,0 +1,41 @@
+id: dian.normograma
+titulo: "Normograma de la DIAN: compilación jurídica tributaria, aduanera y cambiaria"
+entidad: Dirección de Impuestos y Aduanas Nacionales (DIAN)
+competencia: administra los impuestos nacionales, las aduanas y el control cambiario (Decreto 1742 de 2020)
+acto: null
+# Avance Jurídico arma el normograma: el texto oficial es libre (art. 41); sus notas y estructura no, por eso solo salen fragmentos.
+licencia:
+  spdx: LicenseRef-ley23-1982-art41
+  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
+  verificada: 2026-10-22
+  evidencia: https://normograma.dian.gov.co/dian/compilacion/creditos.htm
+  cita: "los textos oficiales podrán ser consultados y reproducidos de conformidad con el artículo 41 de la Ley 23 de 1982"
+uso_comercial: si
+clase_acceso: html_publico
+atribucion: "Fuente: Dirección de Impuestos y Aduanas Nacionales (DIAN)"
+protocolo: html
+conector: web-mcp
+url: https://normograma.dian.gov.co/dian/compilacion
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P7D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  titulo: {nombre: titulo, tipo: str, desc: "título de la página", origen: hecho}
+  caracteres: {nombre: caracteres, tipo: int, desc: "caracteres de texto de toda la página", origen: hecho}
+  apariciones: {nombre: apariciones, tipo: int, desc: "veces que aparece lo buscado", origen: hecho}
+  n: {nombre: n, tipo: int, desc: "número del fragmento"}
+  posicion: {nombre: posicion, tipo: int, desc: "posición del fragmento en el texto"}
+  texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
+comportamiento: {max_por_pagina: 20}
+dcat: {publisher: "Dirección de Impuestos y Aduanas Nacionales (DIAN)", theme: normativa, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un fragmento de una norma; el Decreto 1165 de 2019 tiene 1,3 M caracteres y 3 apariciones de «ARTÍCULO 1o»"
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "lo hace Avance Jurídico: sus notas y su estructura están protegidas; solo se sirven fragmentos, nunca la norma entera"
+  - "no hay búsqueda JSON: el documento se pide por su nombre (decreto_1165_2019)"
+  decision: "fragmentos alrededor de lo buscado en un documento dado"

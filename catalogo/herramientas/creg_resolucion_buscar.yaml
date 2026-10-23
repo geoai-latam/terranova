@@ -1,0 +1,29 @@
+id: creg_resolucion_buscar
+version: 1
+familia: normativa
+fuente: creg.gestor_normativo
+pregunta: "¿Qué dice esta resolución de la CREG sobre este tema?"
+descripcion: >
+  Busca en una resolución de la CREG por el nombre del documento (resolucion_creg_101-131_2026) y
+  devuelve hasta 20 fragmentos alrededor de cada aparición, con cuántas hay. Solo fragmentos del
+  texto oficial.
+  (Fuente: CREG, gestor normativo; licencia: Ley 23 de 1982, art. 41.)
+entrada: {documento: documento_normativo, buscar: str}
+consulta:
+  operacion: buscar
+  tool: web_html
+  argumentos:
+    url: "https://gestornormativo.creg.gov.co/gestor/entorno/docs/{documento}.htm"
+    buscar: "{buscar}"
+  campos: [n, posicion, texto, titulo, caracteres, apariciones]
+salida: CregResolucionBuscar
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-22: la Resolución CREG 101-131 de 2026 tiene 4 apariciones de «ARTÍCULO 1».
+  entrada: {documento: resolucion_creg_101-131_2026, buscar: ARTÍCULO 1}
+  verdad: {apariciones: 4}
+  minimos: {numero_registros: 4}
+  campos: [apariciones, caracteres, n, numero_registros, posicion, texto, titulo]
+  latencia_max_ms: 30000

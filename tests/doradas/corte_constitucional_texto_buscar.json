@@ -1,0 +1,142 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:30:55+00:00",
+ "herramienta": "corte_constitucional_texto_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "buscar": "derecho fundamental a la salud",
+    "url": "https://www.corteconstitucional.gov.co/relatoria/2008/T-760-08.htm"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "n",
+       "posicion",
+       "texto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "n": 1,
+        "posicion": 15458,
+        "texto": "erechos Humanos y\ndesarrollo de los instrumentos de protección de derechos, regionales e\ninternacionales para sujetos de protección especial\nDERECHO A LA\nSALUD-La defensa del derecho fundamental a la salud y\ndesarrollo interpre­tativo de los textos que consagran la Carta Internacional\nde Derechos Humanos\nDERECHO A LA\nSALUD-Convención internacional sobre la protección de\nlos derechos de todos los trabajadores migratorios y de sus familiares\nDERECHO A LA\nSALUD-Principios para la protección de los enfermos\nmen­tales y el mejoramiento de la atención de la salud mental\nDERECHO A LA\nSALUD-Declaración y Programa de acción de Viena de\n1993, de la Conferencia Mundial de Derechos Humanos y\nénfasis en que todos los\nderechos humanos son universales, indivisibles e interdependientes y están\nrelacionados entre sí\nDERECHO A LA\nSALUD-Recomendación general N°\n24 de 1999 sobre ‘la"
+       },
+       {
+        "n": 2,
+        "posicion": 45861,
+        "texto": "o. Esta\nomisión del regulador representa una gran barrera al acceso a los servicios de\nsalud que requieren las personas, lo cual constituye un claro déficit de\nprotección del derecho fundamental a la salud (ver apartado 6.1.3.1.).\nEn consecuencia, se ordenará a la Comisión de Regulación en\nSalud que adopte las medidas necesarias para regular el trámite interno que\ndebe adelantar el médico tratante para que la EPS autorice directamente (a) los\nservicios de salud no incluidos en el plan obligatorio de salud (contributivo o\nsubsidiado), diferentes al suministro de un medicamento y (b) como los\nmedicamentos y demás insumos para la atención de las actividades,\nprocedimientos e intervenciones explícitamente excluidas del Plan Obligatorio\nde Salud, de tal forma que se respete el principio de integralidad. No\nobstante, hasta tanto éste trámite interno de las EPS no sea r"
+       },
+       {
+        "n": 3,
+        "posicion": 61774,
+        "texto": "ón\nconstitucional de salud es sensible a las diferencias tanto sociales como\nambientales que existan entre los diferentes grupos de personas que viven en\nColombia.[8]\n3.2. El derecho fundamental a la salud\n3.2.1. La Corte Constitucional ha reconocido el carácter\nfundamental del derecho a la salud. En la presente\nsentencia, la Sala de Revisión no entra a analizar el concepto de ‘derecho\nfundamental’. Esta categoría es objeto de sinnúmero de debates doctrinarios\ny judiciales que no se pretenden zanjar en el presente proceso. Por ello, no\nentra a definir qué es un derecho fundamental, en general, ni cuáles son los\ncriterios para su identificación o delimitación, entre otras cuestiones. No\nobstante, la jurisprudencia constitucional ha ido delimitando algunos aspectos\ndel concepto, que serán retomados a continuación. En un primer momento, la\nCorte delimitó el concepto"
+       },
+       {
+        "n": 4,
+        "posicion": 66593,
+        "texto": "ntal todo derecho constitucional que funcionalmente esté dirigido a\nlograr la dignidad humana y sea traducible en un derecho subjetivo. (…)”[15]\nEn tal sentido, el ámbito del derecho fundamental a la salud\nestá delimitado por la dogmática constitucional, que reconoce los contenidos\ngarantizados a las personas en virtud del mismo. El ámbito de protección, por\ntanto, no está delimitado por el plan obligatorio de salud. Puede existir un\nservicio de salud no incluido en el plan, que se requiera con necesidad y\ncomprometa en forma grave la vida dignidad de la persona o su integridad\npersonal.\n3.2.1.3. Así pues, considerando que “son fundamentales (i)\naquellos derechos respecto de los cuales existe consenso sobre su naturaleza\nfundamental y (ii) todo derecho constitucional que funcionalmente esté\ndirigido a lograr la dignidad humana y sea traducible en un derecho subje"
+       },
+       {
+        "n": 5,
+        "posicion": 68114,
+        "texto": "era, contemplado en los planes obligatorios, es derecho\nfundamental autónomo. En tal medida, la negación de los servicios de salud\ncontemplados en el POS es una violación del derecho fundamental a la salud, por\ntanto, se trata de una prestación claramente exigible y justiciable mediante\nacción de tutela.[17]\nLa jurisprudencia ha señalado que la calidad de fundamental de un derecho no\ndepende de la vía procesal mediante la cual éste se hace efectivo.[18]\nEl legislador también se ha pronunciado al respecto, al\nexpedir la ley para ‘mejorar la atención’ de las personas que sufren\nenfermedades ruinosas o catastróficas, en la cual se advierte que el contenido\nde la ley, y de las disposiciones que las complementen o adicionen, ‘se\ninterpretarán y ejecutarán teniendo presente el respeto y garantías al derecho\na la vida y que en ningún caso se pueda afectar la dignidad de"
+       },
+       {
+        "n": 6,
+        "posicion": 78432,
+        "texto": "egales y reglamentarias únicamente podrá acudirse al amparo\npor vía de acción de tutela en aquellos eventos en los cuales logre demostrarse\nque la falta de reconocimiento del derecho fundamental a la salud (i) significa\na un mismo tiempo lesionar de manera seria y directa la dignidad humana de la\npersona afectada con la vulneración del derecho; (ii) se pregona de un sujeto\nde especial protección constitucional[35]\ny/o (iii) implica poner a la persona afectada en una condición de indefensión\npor su falta de capacidad de pago para hacer valer ese derecho.\nLo anterior, justamente por\ncuanto el Estado - bajo aplicación de los principios de equidad, solidaridad,\nsubsidiariedad y eficiencia - ha de racionalizar la prestación satisfactoria\ndel servicio de salud a su cargo o a cargo de los particulares que obran en\ncalidad de autoridades públicas, atendiendo, de modo pri"
+       },
+       {
+        "n": 7,
+        "posicion": 80070,
+        "texto": "medica­men­tos\nprevistos en cualquiera de los planes obligatorios de salud, o no permitir la\nrealización de las cirugías amparadas por el plan, constituye una vulneración\nal derecho fundamental a la salud.”[38]\nLa Corte también había considerado explícitamente que el derecho a la salud es\nfundamental y tutelable, en aquellos casos en los que la persona que requiere\nel servicio de salud es un sujeto de especial protección constitucional. Así lo\nha considerado la jurisprudencia, por ejemplo, con relación a las personas de\nla tercera edad.[39]\nSin embargo, esta variante jurisprudencial deja de ser\nrelevante en punto a la cuestión de la fundamentalidad del derecho a la salud.\n3.3. Facetas positivas y negativas derivadas del derecho\na la salud; jurisprudencia sobre la protección de los derechos fundamentales, a\npropósito de las obligaciones de contenido prestacional"
+       },
+       {
+        "n": 8,
+        "posicion": 113535,
+        "texto": "v) la evaluación de las estrategias\ndestinadas a mejorar la salud.’\n3.5. Los límites del derecho a la\nsalud. Ejemplos de limitaciones en el acceso a servicios.\n3.5.1. Como el derecho fundamental a la salud\nes limitable y, por lo tanto, el plan de beneficios no tiene que ser infinito\nsino que puede circunscribirse a cubrir las necesidades y a las prioridades de\nsalud determinadas por los órganos competentes para asignar de manera eficiente\nlos recursos escasos disponibles, la Corte Constitucional en numerosas\nsentencias ha negado servicios de salud solicitados por vía de tutela. Por\nejemplo, la Corte ha negado los servicios estéticos. Si bien la obesidad puede\nen el largo plazo tener consecuencias para la salud de una persona, cada\nindividuo también tiene el deber de cuidar de su salud y por lo tanto, de velar\npor prevenir las enfermedades que se derivan del sobre"
+       },
+       {
+        "n": 9,
+        "posicion": 123540,
+        "texto": "a continuación a señalar las reglas jurisprudenciales establecidas al\nrespecto.\n4. El acceso a servicios de salud de calidad y de manera\noportuna y eficaz, garantizado por el derecho fundamental a la salud\nEl derecho fundamental a la salud, comprende, entre otros,\nel derecho a acceder a servicios de salud de manera oportuna, eficaz y con\ncalidad, el cual ha sido objeto de la mayoría de acciones de tutela. A\ncontinuación pasa la Sala a indicar el alcance y contenido de este derecho de\nacceso a la salud a la luz de la jurisprudencia constitucional, resaltando las\nreglas aplicables a los casos que forman parte del presente proceso. También se\nresaltarán aquellos casos en los que el juez constitucional haya tenido que\nenfrentar algunos de los mayores obs­táculos y barreras existentes y persistentes\nen el Sistema, para acceder a los servicios de salud, relacionados co"
+       },
+       {
+        "n": 10,
+        "posicion": 123574,
+        "texto": "s jurisprudenciales establecidas al\nrespecto.\n4. El acceso a servicios de salud de calidad y de manera\noportuna y eficaz, garantizado por el derecho fundamental a la salud\nEl derecho fundamental a la salud, comprende, entre otros,\nel derecho a acceder a servicios de salud de manera oportuna, eficaz y con\ncalidad, el cual ha sido objeto de la mayoría de acciones de tutela. A\ncontinuación pasa la Sala a indicar el alcance y contenido de este derecho de\nacceso a la salud a la luz de la jurisprudencia constitucional, resaltando las\nreglas aplicables a los casos que forman parte del presente proceso. También se\nresaltarán aquellos casos en los que el juez constitucional haya tenido que\nenfrentar algunos de los mayores obs­táculos y barreras existentes y persistentes\nen el Sistema, para acceder a los servicios de salud, relacionados con los\nmismos.\n4.1. Existencia de u"
+       },
+       {
+        "n": 11,
+        "posicion": 169777,
+        "texto": "os medicamentos previstos en cualquiera de los planes\nobligatorios de salud, o no permitir la realización de las cirugías amparadas\npor el plan, constituye una vulneración al derecho fundamental a la salud.’[178] La\njurisprudencia ha precisado las condiciones en las cuales la vulneración al\nderecho a acceder a un servicio fundamental a la salud es tutelable, en los\nsiguientes términos: una persona inscrita en el régimen de salud contributivo o\nsubsi­diado tiene derecho a reclamar mediante acción de tutela la prestación de\nun servicio de salud cuando éste (i) está contemplado por el Plan\nObligatorio de Salud (POS o POS-S),[179]\n(ii) fue ordenado por su médico tratante adscrito a la entidad\nprestadora del servicio de salud correspondiente,[180] (iii) es necesario\npara conservar su salud, su vida, su dignidad, su integridad,[181] o algún otro derecho\nfundamental y ("
+       },
+       {
+        "n": 12,
+        "posicion": 239183,
+        "texto": "ud. Esta protección se ha\nreconocido en diferentes ámbitos, como por ejemplo, las Fuerzas Armadas.[305]\nLa jurisprudencia constitucional considera que “(…) ‘es\nviolatorio del derecho fundamental a la salud de un menor que una ESS, EPS o\nARS le suspenda el suministro de un tratamiento médico que requiera, antes de\nque éste haya sido efectivamente asumido por otro prestador.”[306] La\nCorte ha afirmado que “los servicios de salud que se deba continuar\nprestando pueden estar o no incluidos en los Planes Obligatorios (POS y POSS).\nPara la Corte, si tales servicios (i) se encuentran fuera del Plan,\n(ii) venían siendo prestados por la entidad accionada (ARS, EPS o empresa\nsolidaria de salud a la que se encuentre afiliado el menor), y (iii) son\nnecesarios para tratar o diagnosticar una patología grave que padece, entonces,\nserá la entidad accionada (EPS, ARS, o empresa s"
+       },
+       {
+        "n": 13,
+        "posicion": 247132,
+        "texto": "azadas[314] las personas de la\ntercera edad[315]\ny las personas con alguna discapacidad.[316]\nAdicionalmente, la jurisprudencia constitucional ha garantizado especialmente\nel derecho fundamental a la salud de aquellas personas que se encuentran en una\nrelación de sujeción, como por ejemplo, las personas vinculadas a las Fuerzas\nArmadas[317]\no las personas privadas de la libertad.[318]\n4.5.2. La jurisprudencia constitucional ha reconocido la\nespecial protección que merecen los niños en materia de salud. Como lo señaló\nla Sala Plena de la Corte, “[l]a Constitución de 1991 significó un cambio\nsustancial en la concepción que tenía el sistema jurídico sobre los niños. De\nser sujetos incapaces con derechos restringidos y hondas limitaciones para\npoder ejercerlos pasaron a ser concebidos como personas libres y autónomas con\nplenitud de derechos, que de acuerdo a su edad"
+       },
+       {
+        "n": 14,
+        "posicion": 249041,
+        "texto": "Por otra parte se les otorga especial valor al indicar\nque “los derechos de los niños prevalecen sobre los derechos de los demás”\n(art. 44, CP). Concretamente, se reconoce su derecho fundamental a la salud.[320] Las\nmedidas de protección especial que se debe a los menores deben tener por\nfinalidad garantizar a los niños (i) su desarrollo armónico e\nintegral y (ii) el ejercicio pleno de sus derechos.” El\ndesarrollo de un menor es integral cuando se da en las diversas\ndimensiones de la persona (intelectual, afectiva, deportiva, social, cultural).\nEl desarrollo de un menor es armónico cuando no se privilegia\ndesproporcionadamente alguno de los diferentes aspectos de la formación del\nmenor, ni cuando se excluye o minimiza en exceso alguno de ellos.[321]\n4.5.2.1. La jurisprudencia constitucional ha expresado en\nforma reiterada que el derecho a la salud de los niños, e"
+       },
+       {
+        "n": 15,
+        "posicion": 249984,
+        "texto": "r el juez constitucional en los casos\nen que sea amenazado o vulnerado.[323]\nEn el caso de los niños y de las niñas, la acción de tutela procede\ndirectamente para defender su derecho fundamental a la salud; no se ha\nrequerido, pues, que exista conexidad con otro derecho como la vida o la\nintegridad.[324]\nLa jurisprudencia ha señalado que los servicios de salud que un niño o una niña\nrequieran son justiciables, incluso en casos en los que se trate de servicios\nno incluidos en los planes obligatorios de salud (del régimen contributivo y\ndel subsidiado).\n4.5.2.2. La protección a los niños es mayor, pues,\npor ejemplo, se garantiza su acceso a servicios de salud que requiera para\nasegurar desarrollo armónico e integral. La jurisprudencia constitucional ha\ntutelado, por ejemplo, la práctica de cirugías plásticas de malformaciones, aun\ncuando no afecten la integridad fu"
+       },
+       {
+        "n": 16,
+        "posicion": 251847,
+        "texto": "irmado un título valor equivalente al\ncosto del servicio, especialmente, si el menor se encuentra en situación de\nindefensión y vulnerabilidad.[330]\nTambién se ha tutelado el derecho fundamental a la salud de un menor a\nque no se le cobren pagos moderadores cuando estos se constituyen en barreras\nal acceso de un servicio de salud, tanto si éste se requiere por ser necesario\no por ser complementario y útil.[331]\nLa jurisprudencia ha protegido especialmente, entre los menores, a los bebés\nrecién nacidos, considerando, por ejemplo, que una EPS viola los derechos de un\nmenor al condicionar la atención médica a periodos mínimos de tiempo, en\nespecial si se trata de servicios de salud que están incluidos dentro del Plan\nObligatorio de Salud.[332]\nTambién reciben una especial protección de la jurisprudencia constitucional si\nconcurren dos condiciones de vulnerabilidad,"
+       },
+       {
+        "n": 17,
+        "posicion": 257857,
+        "texto": "jurisprudencia no es suficiente y en muchas ocasiones ha llegado tarde. No son\npocos los niños y las niñas que han fallecido esperando que se les reconociera\ny protegiera su derecho fundamental a la salud.[340] La protección ideal de\nlos derechos de los niños no se logra con una jurisprudencia constitucional\nrobusta y protectora que los garantice cada vez que sean violados; el ideal es\nque las prácticas aseguren los derechos de los menores de tal forma que no sea\nnecesario ir ante un juez a solicitar su defensa.\nConcluye así la Sala, un breve recuento de algunas de las\nreglas jurisprudenciales sobre el derecho a acceder a los servicios de salud,\nen especial aquellas relevantes para la solución de los casos de acción de\ntutela acumuladas al presente proceso. Pasa a continuación entonces, a analizar\nlos problemas jurídicos concretos derivados de los expedientes.\n5"
+       },
+       {
+        "n": 18,
+        "posicion": 273039,
+        "texto": "rantizar la prestación del servicio, 48 horas después de que ser ordenado por\nél o los médicos tratantes.\n5.1.2.5. En conclusión, la Sala considera que Famisanar EPS\nvioló el derecho fundamental a la salud de la accionante, al negarle el acceso\na un servicio de salud que puede requerir una persona, contemplado en el\nplan obligatorio de servicios, sin tomar las medidas adecuadas y necesarias\npara establecer si la persona realmente lo requería o no desde el punto de\nvista médico. La EPS fundó su decisión con base en tres razones, a saber, que\nel servicio (i) no está incluido en los planes obliga­torios, (ii) no se ha\ndeterminado médicamente si se requiere o no y (iii) que la accionante no\ndemostró su incapacidad económica.\n(i) Si se aceptara, en gracia de\ndiscusión que el servicio en cuestión no estaba incluido dentro del plan\nobligatorio de salud, en todo caso, co"
+       },
+       {
+        "n": 19,
+        "posicion": 310222,
+        "texto": "l caso del derecho a la salud de los niños, existen ámbitos de protección\nespeciales, derivados de su condición de sujetos de especial protección\nconstitucional. Así pues, su derecho fundamental a la salud no sólo protege el\nacceso a los servicios que se requieran para conservar la salud, en especial si\nse encuentra compro­metida su vida, su integridad personal o su dignidad. En el\ncaso de los niños y las niñas, su derecho a la salud les garantiza también, por\nejemplo, el acceso a los servicio de salud que se requieran para lograr\n‘un desarrollo armónico e integral’ (art. 44, CP). El proceso de\ndesarrollo y crecimiento de los niños y las niñas implica considerar aspectos\nen los que un determinado servicio de salud puede ser indispensable y\nsignificar mejoras enormes, frente a lo que representa el mismo servicio de\nsalud en personas adultas.\nAhora bien, en el pres"
+       },
+       {
+        "n": 20,
+        "posicion": 319055,
+        "texto": "su hija de 15 años, Yoice Dalila Rueda Castilla, contra\nla Clínica Cardiovascular Jesús de Nazareth y el Departamento Administrativo\nDistrital de Salud, DADIS, por violar el derecho fundamental a la salud de su\nhija. Conforme a la Historia Clínica y evaluación médica hecha a la niña, ella presenta\nuna hipertrofia de glándulas mamarias, por lo que se le ordenó la\npráctica de una cirugía plástica. La madre alega que carece de recursos\neconómicos para asumir el costo del servicio de salud requerido, es\ndesempleada, ama de casa y hace las uñas a domicilio; ambas, madre e hija, se\nencuentran en el nivel 2 del SISBEN. Advierte además, que luego de ser atendida\n“por medio del SISBEN” y que se le ordenara la cirugía, su hija fue remitida al\nDADIS, donde se le dio una orden para la clínica Jesús de Nazareth, entidad\ndonde le dijeron que la llamarían, pero nunca lo hicier"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "apariciones": 32,
+     "buscar": "derecho fundamental a la salud",
+     "caracteres": 1398924,
+     "completitud": {
+      "total": 32,
+      "truncado": true,
+      "vistos": 20
+     },
+     "titulo": "***",
+     "url": "https://190.217.24.188/relatoria/2008/T-760-08.htm"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_html"
+  }
+ ]
+}

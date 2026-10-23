@@ -1,0 +1,62 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-23T03:30:56+00:00",
+ "herramienta": "creg_resolucion_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "buscar": "ARTÍCULO 1",
+    "url": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_creg_101-131_2026.htm"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "n",
+       "posicion",
+       "texto"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "n": 1,
+        "posicion": 871,
+        "texto": "S\nEn ejercicio de las facultades legales conferidas por las Leyes 142 y 143 de 1994, y por los Decretos 1524 y 2253 de 1994, 1260 de 2013 y 1073 de 2015.\nCONSIDERANDO QUE:\nEl artículo 1 de la Constitución Política establece que Colombia es un Estado social de derecho, organizado en forma de República unitaria, descentralizada, con autonomía de sus entidades territoriales, democrática, participativa y pluralista, fundada en el respeto de la dignidad humana, en el trabajo y la solidaridad de las personas que la integran y en la prevalencia del interés general.\nEl artículo 334 de la Constitución Política establece que corresponde al Estado la dirección general de la economía, para lo cual intervendrá, entre otros asuntos, en los servicios públicos y privados, buscando el mejoramiento de la calidad de vida de los habitantes, la distribución equitativa de las oportuni"
+       },
+       {
+        "n": 2,
+        "posicion": 1661,
+        "texto": "o de la calidad de vida de los habitantes, la distribución equitativa de las oportunidades y los beneficios del desarrollo, y la preservación de un ambiente sano.\nConforme al artículo 1 de la Constitución Política y en desarrollo del artículo 334 ibidem, el ejercicio de las actividades económicas y la prestación de servicios públicos se encuentran supeditados a la primacía del interés general, razón por la cual, ante situaciones de estrechez energética y riesgo de desabastecimiento, el Estado está facultado para establecer mecanismos regulatorios que prioricen la confiabilidad, imponiendo cargas proporcionales al consumo ineficiente en beneficio de la colectividad y la preservación de los recursos, en protección de los derechos colectivos sobre los particulares.\nEn concordancia con lo anterior, el artículo 95 de la Constitución Política establece que todo colombi"
+       },
+       {
+        "n": 3,
+        "posicion": 4271,
+        "texto": "ia, y establecer criterios para la fijación de compromisos de ventas garantizadas de energía y potencia entre las empresas eléctricas y entre estas y los grandes usuarios.\nEl artículo 1 de la Ley 143 de 1994 establece que corresponde al Estado, en relación con el servicio de energía, garantizar la prestación continua e ininterrumpida del servicio.\nEl artículo 4 de la Ley 143 de 1994, establece que el Estado, en relación con el servicio de electricidad, tendrá como objetivos en el cumplimiento de sus funciones, los de abastecer la demanda de electricidad de la comunidad bajo criterios económicos y de viabilidad financiera, asegurando su cubrimiento en un marco de uso racional y eficiente de los diferentes recursos energéticos del país; asegurar una operación eficiente, segura y confiable en las actividades del sector; y mantener los niveles de calidad y seguridad"
+       },
+       {
+        "n": 4,
+        "posicion": 12492,
+        "texto": "nte resolución.\nConforme a lo anterior, la CREG en su Sesión No. 1498 del 18 de septiembre de 2026, aprobó expedir la presente resolución.\nEn mérito de lo expuesto,\nRESUELVE:\nARTÍCULO 1o. OBJETO. Modificar el ámbito de aplicación y ajustar los plazos a los que se refieren los artículos 2 y 3 de la Resolución CREG 101 124 de 2026, respectivamente.\nARTÍCULO 2o. MODIFICAR EL ÁMBITO DE APLICACIÓN DE LA RESOLUCIÓN CREG 101 124 DE 2026. Se establece como nueva fecha para el acogimiento de los comercializadores beneficiarios de las medidas de diferimiento, la entrada en vigor de la presente resolución, y, en consecuencia, se modifica el numeral 2.2 del artículo 2 de la Resolución CREG 101 124 de 2026, en el siguiente sentido:\n\"2.2 Que a la fecha de publicación en el Diario Oficial de la Resolución CREG 101-131 de 2026 se encuentren inmersos en alguna causal que implique"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "apariciones": 4,
+     "buscar": "ARTÍCULO 1",
+     "caracteres": 17345,
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "titulo": "Alejandría - Resolución 101_131 de 2026 CREG",
+     "url": "https://141.148.2.149/gestor/entorno/docs/resolucion_creg_101-131_2026.htm"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_html"
+  }
+ ]
+}

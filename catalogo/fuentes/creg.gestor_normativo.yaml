@@ -1,0 +1,41 @@
+id: creg.gestor_normativo
+titulo: "Gestor normativo de la CREG (Alejandría): resoluciones"
+entidad: Comisión de Regulación de Energía y Gas (CREG)
+competencia: regula los servicios de energía eléctrica, gas y combustibles (Leyes 142 y 143 de 1994)
+acto: null
+# Avance Jurídico arma el gestor: el texto oficial es libre (art. 41); sus notas no, por eso solo salen fragmentos.
+licencia:
+  spdx: LicenseRef-ley23-1982-art41
+  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
+  verificada: 2026-10-22
+  evidencia: https://gestornormativo.creg.gov.co/gestor/entorno/creditos.html
+  cita: "textos oficiales de libre reproducción (Ley 23 de 1982, art. 41); las notas añadidas están protegidas"
+uso_comercial: si
+clase_acceso: html_publico
+atribucion: "Fuente: Comisión de Regulación de Energía y Gas (CREG)"
+protocolo: html
+conector: web-mcp
+url: https://gestornormativo.creg.gov.co/gestor/entorno
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P7D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  titulo: {nombre: titulo, tipo: str, desc: "título de la página", origen: hecho}
+  caracteres: {nombre: caracteres, tipo: int, desc: "caracteres de texto de toda la página", origen: hecho}
+  apariciones: {nombre: apariciones, tipo: int, desc: "veces que aparece lo buscado", origen: hecho}
+  n: {nombre: n, tipo: int, desc: "número del fragmento"}
+  posicion: {nombre: posicion, tipo: int, desc: "posición del fragmento en el texto"}
+  texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
+comportamiento: {max_por_pagina: 20}
+dcat: {publisher: "Comisión de Regulación de Energía y Gas (CREG)", theme: normativa, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un fragmento de una resolución; la 101-131 de 2026 tiene 17 345 caracteres y 4 apariciones de «ARTÍCULO 1»"
+  operaciones: {filtrar: 1.5}
+  hallazgos:
+  - "el índice cronológico solo trae el año en curso (125 de 2026, 0 de 2025): una herramienta por año diría «no encontrado» para años que sí existen, así que no se hace"
+  - "lo hace Avance Jurídico: sus notas están protegidas; solo salen fragmentos"
+  decision: "fragmentos alrededor de lo buscado en una resolución dada"
