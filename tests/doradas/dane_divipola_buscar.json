@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T08:39:54+00:00",
+ "grabado": "2026-10-24T23:13:41+00:00",
  "herramienta": "dane_divipola_buscar",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 50,
     "order": "length(nom_mpio), cod_mpio",
     "portal": "datos.gov.co",
-    "select": "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio",
+    "select": "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud",
     "where": "upper(nom_mpio) like upper('%Chía%')"
    },
    "conector": "datos-abiertos-mcp",
@@ -20,6 +20,8 @@
        "cod_dpto",
        "cod_mpio",
        "dpto",
+       "latitud",
+       "longitud",
        "nom_mpio",
        "tipo_municipio"
       ],
@@ -29,6 +31,8 @@
         "cod_dpto": "25",
         "cod_mpio": "25175",
         "dpto": "CUNDINAMARCA",
+        "latitud": "4,866508",
+        "longitud": "-74,05",
         "nom_mpio": "CHÍA",
         "tipo_municipio": "Municipio"
        },
@@ -36,6 +40,8 @@
         "cod_dpto": "85",
         "cod_mpio": "85225",
         "dpto": "CASANARE",
+        "latitud": "5,636474",
+        "longitud": "-72,195323",
         "nom_mpio": "NUNCHÍA",
         "tipo_municipio": "Municipio"
        },
@@ -43,6 +49,8 @@
         "cod_dpto": "66",
         "cod_mpio": "66594",
         "dpto": "RISARALDA",
+        "latitud": "5,340456",
+        "longitud": "-75,730431",
         "nom_mpio": "QUINCHÍA",
         "tipo_municipio": "Municipio"
        },
@@ -50,6 +58,8 @@
         "cod_dpto": "15",
         "cod_mpio": "15218",
         "dpto": "BOYACÁ",
+        "latitud": "6,500177",
+        "longitud": "-72,738978",
         "nom_mpio": "COVARACHÍA",
         "tipo_municipio": "Municipio"
        }
@@ -68,7 +78,7 @@
       "conjunto": "gdxc-w37w",
       "max_filas": 50,
       "portal": "datos.gov.co",
-      "select": "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio",
+      "select": "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud",
       "where": "(upper(nom_mpio) like upper('%Chía%'))"
      },
      "cumplen_en_el_portal": 4,

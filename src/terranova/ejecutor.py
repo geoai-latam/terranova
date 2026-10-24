@@ -215,7 +215,10 @@ def mapear_fila(
     out: dict[str, Any] = {}
     for clave, campo in fuente.campos.items():
         if campo.origen == "fila" and clave in fila:
-            out[campo.nombre] = convertir(fila[clave], campo.tipo)
+            valor = fila[clave]
+            if campo.coma_decimal and isinstance(valor, str):
+                valor = valor.replace(",", ".")
+            out[campo.nombre] = convertir(valor, campo.tipo)
     for nombre, d in h.derivados.items():
         if not d.por_elemento:
             continue

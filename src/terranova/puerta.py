@@ -24,7 +24,14 @@ from pydantic import PrivateAttr
 from terranova import ficha as ficha_lugar
 from terranova import metricas
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
-from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Catalogo, Herramienta, cargar
+from terranova.catalogo import (
+    FORMAS_ENTRADA,
+    PATRONES_ENTRADA,
+    Catalogo,
+    Herramienta,
+    cargar,
+    ids_parecidos,
+)
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import PATRON_TEXTO_LIMPIO, Sobre, huella, nueva_solicitud_id
 from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
@@ -393,7 +400,9 @@ def fuente_describir(fuente: str) -> dict[str, Any]:
     h = CATALOGO.herramientas.get(fuente)
     fuente_id = h.fuente if h is not None else fuente
     if fuente_id not in CATALOGO.fuentes:
-        raise ToolError(f"no_existe: no hay fuente ni herramienta «{fuente}»")
+        parecidos = ids_parecidos(CATALOGO, fuente)
+        pista = f"; ¿quiso decir {', '.join(parecidos)}?" if parecidos else ""
+        raise ToolError(f"no_existe: no hay fuente ni herramienta «{fuente}»{pista}")
     return ficha_tecnica(CATALOGO, fuente_id)
 
 
