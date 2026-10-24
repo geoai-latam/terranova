@@ -115,3 +115,32 @@ def test_la_geometria_sale_en_2d() -> None:
     }
     assert a_2d(coleccion)["geometries"][0]["coordinates"] == [1, 2]
     assert a_2d(None) is None
+
+
+class _SinFilas:
+    """datos-abiertos responde una tabla vacía (como Socrata ante un año sin datos)."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "artifacts": [{"columns": [], "kind": "table", "rows": []}],
+            "facts": {"completitud": {"vistos": 0, "total": 0, "truncado": False}},
+        }
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("anio", "estado"), [(2030, "fuera_de_cobertura"), (2020, "no_encontrado")]
+)
+async def test_un_anio_fuera_de_la_fuente_no_es_cero_casos(anio: int, estado: str) -> None:
+    """Medicina Legal cubre 2015 a 2024 (cosechado): 2030 vacío es «fuera de cobertura», no «no hay
+    casos»; un año dentro del rango y vacío sigue siendo `no_encontrado`."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": _SinFilas()})
+    sobre = await ej.ejecutar(
+        "medicinalegal_homicidios_municipio",
+        {"municipio_divipola": "25175", "anio": anio},
+        plan="evaluacion",
+    )
+    assert sobre.estado == estado
+    assert any("2015 a 2024" in a for a in sobre.avisos) is (estado == "fuera_de_cobertura")
