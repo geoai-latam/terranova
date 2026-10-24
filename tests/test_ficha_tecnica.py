@@ -54,6 +54,9 @@ async def test_fuente_describir_por_mcp_acepta_la_herramienta() -> None:
     assert r.structured_content is not None and r.structured_content["id"] == "icfes.saber11"
     with pytest.raises(Exception, match="no_existe"):
         await puerta.puerta.call_tool("fuente_describir", {"fuente": "no.existe"})
+    # error accionable: un agente pidió «open-meteo» y se rindió sin saber el id
+    with pytest.raises(Exception, match=r"¿quiso decir open_meteo\.era5"):
+        await puerta.puerta.call_tool("fuente_describir", {"fuente": "open-meteo"})
 
 
 @pytest.mark.anyio

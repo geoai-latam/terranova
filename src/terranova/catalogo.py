@@ -6,6 +6,7 @@ rompe el CI (`scripts/check.py`).
 
 from __future__ import annotations
 
+import difflib
 import json
 import re
 from datetime import date
@@ -127,6 +128,11 @@ class Campo(_Ficha):
     )
     codigos_norma: str | None = Field(
         default=None, description="la norma que define `codigos` (resolución, artículo, URL)"
+    )
+    coma_decimal: bool = Field(
+        default=False,
+        description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
+        "en general «1,234» es ambiguo",
     )
 
     @model_validator(mode="after")
@@ -621,6 +627,23 @@ def _licencia_legible(fuente: Fuente) -> str:
         return LICENCIAS_LEGIBLES[spdx]
     legible = re.sub(r"^CC-(BY(?:-SA|-NC|-ND)*)-(\d\.\d)$", lambda m: f"CC {m[1]} {m[2]}", spdx)
     return legible
+
+
+def ids_parecidos(catalogo: Catalogo, texto: str, n: int = 5) -> list[str]:
+    """Ids de fuentes y herramientas que se parecen a `texto`, para un error accionable: un agente
+    pidió `fuente_describir("open-meteo")` y, sin pistas, se rindió (GEO Copilot, fiabilidad).
+    Primero los que contienen el texto (o lo contiene su título o entidad), luego los parecidos."""
+    clave = re.sub(r"[^a-z0-9]+", "_", texto.lower()).strip("_")
+    if not clave:
+        return []
+    candidatos = {
+        **{f.id: f"{f.titulo} {f.entidad}" for f in catalogo.fuentes.values()},
+        **{h.id: h.pregunta for h in catalogo.herramientas.values()},
+    }
+    normal = {i: re.sub(r"[^a-z0-9]+", "_", f"{i} {t}".lower()) for i, t in candidatos.items()}
+    contienen = sorted(i for i, t in normal.items() if clave in t)
+    parecidos = difflib.get_close_matches(clave, list(candidatos), n=n, cutoff=0.6)
+    return list(dict.fromkeys([*contienen, *parecidos]))[:n]
 
 
 def cargar_cobertura(indice: str, raiz: Path = RAIZ) -> dict[str, Any]:

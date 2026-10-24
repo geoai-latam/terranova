@@ -26,6 +26,8 @@ campos:
   cod_dpto: {nombre: departamento_divipola, tipo: str, desc: "código del departamento (2 dígitos)"}
   dpto: {nombre: departamento, tipo: str, desc: "departamento"}
   tipo_municipio: {nombre: tipo_municipio, tipo: str, desc: "municipio, isla o área no municipalizada"}
+  longitud: {nombre: longitud, tipo: float, coma_decimal: true, desc: "longitud de la cabecera municipal (EPSG:4326)"}
+  latitud: {nombre: latitud, tipo: float, coma_decimal: true, desc: "latitud de la cabecera municipal (EPSG:4326)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: DANE, theme: territorio, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terranova.
@@ -37,5 +39,5 @@ perfil:
   hallazgos:
   - "los nombres van en mayúsculas con tildes: «chia» no encuentra CHÍA; upper() no quita tildes"
   - "hay nombres repetidos en varios departamentos (San Andrés, La Unión…): se devuelven todos con su departamento"
-  - "longitud y latitud vienen como texto con coma decimal"
+  - "longitud y latitud vienen como texto con coma decimal: se declara `coma_decimal` en esos campos"
   decision: "en vivo por nombre o parte del nombre"

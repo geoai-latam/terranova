@@ -5,9 +5,10 @@ fuente: dane.divipola
 pregunta: "¿Cuál es el código DIVIPOLA de este municipio?"
 descripcion: >
   Código DIVIPOLA (5 dígitos) de los municipios cuyo nombre contiene el texto dado, con su
-  departamento. Úsela antes de cualquier herramienta que pida municipio_divipola en vez de suponer
-  el código. Escriba el nombre con tildes (Chía, Bogotá): sin ellas no coincide. Si hay varios
-  municipios con el mismo nombre, salen todos con su departamento.
+  departamento y las coordenadas de su cabecera (lon, lat). Úsela antes de cualquier herramienta
+  que pida municipio_divipola, o un punto de un municipio, en vez de suponerlos. Escriba el nombre
+  con tildes (Chía, Bogotá): sin ellas no coincide. Si hay varios municipios con el mismo nombre,
+  salen todos con su departamento.
   (Fuente: DANE; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:
@@ -17,16 +18,16 @@ consulta:
   argumentos:
     id: gdxc-w37w
     portal: datos.gov.co
-    select: "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio"
+    select: "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud"
     where: "upper(nom_mpio) like upper('%{nombre}%')"
     order: "length(nom_mpio), cod_mpio"  # «Chía» antes que Covarachía y Quinchía
     max_filas: 50
-  campos: [cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio]
+  campos: [cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud]
 salida: DivipolaMunicipios
 creditos: 1
 canario:
   # Medido el 2026-10-23 en gdxc-w37w: «Chía» trae 4 municipios (Chía primero, luego Covarachía y Quinchía).
   entrada: {nombre: "Chía"}
-  verdad: {municipio_divipola: "25175", municipio: "CHÍA"}
-  campos: [departamento, departamento_divipola, municipio, municipio_divipola, tipo_municipio]
+  verdad: {municipio_divipola: "25175", municipio: "CHÍA", longitud: -74.05, latitud: 4.866508}
+  campos: [departamento, departamento_divipola, latitud, longitud, municipio, municipio_divipola, tipo_municipio]
   latencia_max_ms: 20000  # el primer `like` del día tarda hasta ~12 s; luego ~0,2 s

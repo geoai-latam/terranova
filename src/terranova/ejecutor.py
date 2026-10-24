@@ -133,6 +133,9 @@ def sanear(texto: str) -> str:
     return limpio if len(limpio) <= MAX_TEXTO else limpio[: MAX_TEXTO - 1] + "…"
 
 
+_AÑO = re.compile(r"^(\d{4})")
+
+
 def convertir(valor: Any, tipo: str) -> Any:
     """Al tipo del catálogo. Lo que no se puede convertir sale como `None`, nunca inventado."""
     if valor is None:
@@ -215,7 +218,10 @@ def mapear_fila(
     out: dict[str, Any] = {}
     for clave, campo in fuente.campos.items():
         if campo.origen == "fila" and clave in fila:
-            out[campo.nombre] = convertir(fila[clave], campo.tipo)
+            valor = fila[clave]
+            if campo.coma_decimal and isinstance(valor, str):
+                valor = valor.replace(",", ".")
+            out[campo.nombre] = convertir(valor, campo.tipo)
     for nombre, d in h.derivados.items():
         if not d.por_elemento:
             continue
@@ -365,6 +371,27 @@ class Ejecutor:
         self.proteccion = proteccion
         self.reloj = reloj
         self._indices: dict[str, dict[str, Any]] = {}
+
+    def _anio_fuera(self, fuente: Fuente, valores: dict[str, Any]) -> str | None:
+        """Un año pedido fuera de los que cubre la fuente (spec 08: mínimo y máximo cosechados de
+        su columna de tiempo). Solo se usa si la consulta volvió vacía: un año publicado después de
+        la cosecha trae datos y no pasa por aquí. Sin esto, «¿homicidios en Chía en 2030?» volvía
+        `no_encontrado` y un agente lo dio como «0 homicidios» (GEO Copilot, fiabilidad)."""
+        anio = valores.get("anio")
+        columna = fuente.cobertura.columna_tiempo
+        metadatos = self.catalogo.metadatos.get(fuente.id)
+        campo = metadatos.campos.get(columna) if metadatos and columna else None
+        if not isinstance(anio, int) or not campo or not campo.minimo or not campo.maximo:
+            return None
+        desde, hasta = (
+            int(m[1]) if (m := _AÑO.match(v)) else None for v in (campo.minimo, campo.maximo)
+        )
+        if desde is None or hasta is None or desde <= anio <= hasta:
+            return None
+        return (
+            f"La fuente cubre de {desde} a {hasta}: {anio} está fuera de su cobertura (no es que "
+            "haya cero casos)."
+        )
 
     def indice(self, nombre: str) -> dict[str, Any]:
         if nombre not in self._indices:
@@ -538,6 +565,13 @@ class Ejecutor:
                 avisos.append(veredicto.aviso)
             if veredicto.fuera:
                 estado = "fuera_de_cobertura"
+        if (
+            not hay_algo
+            and estado == "no_encontrado"
+            and (fuera := self._anio_fuera(fuente, valores))
+        ):
+            estado = "fuera_de_cobertura"
+            avisos.append(fuera)
         if any(p.completitud.total is None for p in procedencia):
             avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
         if fuente.modo == "copia":

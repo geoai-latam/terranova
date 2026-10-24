@@ -26,7 +26,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
-from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta
+from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
 from terranova.cuota import NIVELES, mes
 from terranova.descripcion import llms_txt, tarjeta_mcp
@@ -300,7 +300,9 @@ def crear_api() -> FastAPI:
     )
     async def fuente(fuente_id: str) -> dict[str, Any] | JSONResponse:
         if fuente_id not in puerta.CATALOGO.fuentes:
-            return problema("no_existe", f"no hay fuente {fuente_id}")
+            parecidos = ids_parecidos(puerta.CATALOGO, fuente_id)
+            pista = f"; ¿quiso decir {', '.join(parecidos)}?" if parecidos else ""
+            return problema("no_existe", f"no hay fuente {fuente_id}{pista}")
         return ficha_tecnica(puerta.CATALOGO, fuente_id)
 
     def openapi() -> dict[str, Any]:

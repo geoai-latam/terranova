@@ -262,3 +262,15 @@ def test_la_ficha_tecnica_no_guarda_correos_ni_telefonos() -> None:
         for columna, campo in m.campos.items():
             vistos = [campo.minimo or "", campo.maximo or "", *(campo.valores or {})]
             assert not any(contacto.search(v) for v in vistos), f"{fid}.{columna}"
+
+
+def test_ids_parecidos_para_un_error_accionable() -> None:
+    from terranova.catalogo import cargar, ids_parecidos
+
+    catalogo = cargar()
+    assert ids_parecidos(catalogo, "open-meteo")[:2] == [
+        "open_meteo.era5",
+        "open_meteo_clima_serie",
+    ]
+    assert "medicinalegal.homicidios" in ids_parecidos(catalogo, "Medicina Legal")
+    assert ids_parecidos(catalogo, "xyzzy") == [] and ids_parecidos(catalogo, "--") == []
