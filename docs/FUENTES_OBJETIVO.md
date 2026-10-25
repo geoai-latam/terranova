@@ -185,3 +185,21 @@ respuesta por escrito:
 4. **AMVA / SIATA:** licencia de los datos del geoportal.
 5. **DNP:** licencia de TerriData.
 6. **BanRep:** uso del backend de series (o quedarse con el SDMX).
+
+## Candidatos adicionales (descubiertos con G6, 2026-10-25)
+
+Hallados con `catalogo_buscar` / la Discovery API de datos.gov.co; **candidatos de promoción** (ADR-0026,
+[spec 09](specs/09-descubrimiento.md)), fuera de las olas actuales. Todos CC BY salvo nota. Antes de
+promover: licencia verificada por ítem (ADR-0019) y lista blanca sin datos de personas (ADR-0014).
+
+| Candidato | Entidad | Qué aporta | Salvedad |
+|---|---|---|---|
+| Actos registrales y escrituras públicas | **SNR** (Superintendencia de Notariado y Registro) | la fuente **autoritativa** del registro (actos de naturaleza jurídica registral, escrituras, títulos), vs el espejo de IGAC que ya servimos | el certificado de tradición en vivo (VUR) está **fuera** (ADR-0018: login/captcha/pago); los actos traen nombres de propietarios → lista blanca |
+| Licencias ambientales | **ANLA** | expedientes y licencias ambientales = **restricción de un lugar** (36 datasets) | verificar cuáles son datos geográficos reales vs «activos de información» (inventario de transparencia) |
+| Restitución de tierras (estadísticas) | **URT** | solicitudes y demandas de restitución = **riesgo territorial** (contexto) | el micro-dato por predio es **sensible y no abierto**; solo el agregado por municipio/departamento |
+| Gestión del riesgo de desastres | **UNGRD** | emergencias y riesgo de desastres = contexto de **amenaza** | muchos registros son inventario; elegir los datasets de datos reales |
+| Catastro de los gestores descentralizados | **UAECD (Bogotá)**, catastros de Antioquia, etc. | cubren lo que **IGAC no** (Bogotá no es catastro IGAC) | licencia **por verificar** (varios sin licencia declarada) |
+
+**No es candidato de Socrata:** la **deforestación / alertas de bosque** (clave para EUDR) no está en
+datos.gov.co; viene de los geoservicios de IDEAM/SMByC y del GFC2020 de la UE — va como capa ráster/ArcGIS
+(ya en el plan), no por este catálogo.
