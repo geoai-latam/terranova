@@ -5,13 +5,25 @@ apuntando a un Postgres **con la extensión pgvector** (en CI, el job `descubrim
 """
 
 import os
+from typing import Any
 
 import pytest
 
-from terranova.almacen_descubrimiento import ESQUEMA, AlmacenDescubrimiento, _vector_literal
+from terranova.almacen_descubrimiento import (
+    ESQUEMA,
+    AlmacenDescubrimiento,
+    ConectorCatalogo,
+    _vector_literal,
+)
+from terranova.conector import ErrorConector
 from terranova.descubrimiento import DatasetDescubrible
 
 URL_PG = os.environ.get("TERRANOVA_PG_PRUEBAS")
+
+
+@pytest.fixture
+def anyio_backend() -> str:
+    return "asyncio"
 
 
 def test_vector_literal() -> None:
@@ -77,3 +89,53 @@ def test_reemplazar_es_por_catalogo() -> None:
     hallados = almacen.buscar((1.0, 0.0, 0.0), piso=0.5, limite=10)
     ids = {d.id_socrata for d in hallados}
     assert ids == {"a2", "b"}  # icde quedó con a2 (no a), socrata intacto
+
+
+# --- conector interno catalogo_dcat (sin DB ni modelo) ------------------------------------------
+class _AlmacenFalso:
+    def __init__(self, resultado: list[DatasetDescubrible]) -> None:
+        self._resultado = resultado
+        self.visto: dict[str, Any] = {}
+
+    def buscar(
+        self, vector: tuple[float, ...], *, limite: int = 20, **_: Any
+    ) -> list[DatasetDescubrible]:
+        self.visto = {"vector": vector, "limite": limite}
+        return self._resultado
+
+
+class _EmbedderFalso:
+    def consulta(self, texto: str) -> tuple[float, ...]:
+        return (1.0, 0.0, 0.0)
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+        return [(1.0, 0.0, 0.0) for _ in textos]
+
+
+@pytest.mark.anyio
+async def test_conector_catalogo_busca_y_surte_procedencia() -> None:
+    agua = _ds("agua", "Cuerpos de agua")
+    almacen = _AlmacenFalso([agua])
+    con = ConectorCatalogo(almacen, _EmbedderFalso())  # type: ignore[arg-type]
+    r = await con.llamar("buscar_catalogo", {"consulta": "dónde hay agua", "limite": 5})
+    fila = r["artifacts"][0]["rows"][0]
+    assert fila["id"] == "agua" and fila["licencia"] == "CC BY" and fila["protocolo"] == "icde"
+    assert "url" in fila and fila["url"].endswith("/agua")
+    assert almacen.visto["limite"] == 5  # el límite llega al almacén
+    assert r["facts"]["completitud"]["vistos"] == 1
+
+
+@pytest.mark.anyio
+async def test_conector_catalogo_herramienta_desconocida() -> None:
+    con = ConectorCatalogo(_AlmacenFalso([]), _EmbedderFalso())  # type: ignore[arg-type]
+    with pytest.raises(ErrorConector) as exc:
+        await con.llamar("otra", {"consulta": "x"})
+    assert exc.value.codigo == "error_interno"
+
+
+@pytest.mark.anyio
+async def test_conector_catalogo_sin_embebedor_es_fuente_no_disponible() -> None:
+    con = ConectorCatalogo(_AlmacenFalso([]), None)  # type: ignore[arg-type]
+    with pytest.raises(ErrorConector) as exc:
+        await con.llamar("buscar_catalogo", {"consulta": "x"})
+    assert exc.value.codigo == "fuente_no_disponible"
