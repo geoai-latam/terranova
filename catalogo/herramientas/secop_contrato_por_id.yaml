@@ -4,9 +4,10 @@ familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Qué dice este contrato de SECOP II?"
 descripcion: >
-  Un contrato de SECOP II por su identificador (CO1.PCCNTR.…): entidad contratante, contratista,
-  objeto, tipo y modalidad, valor y valor pagado, fechas de firma, inicio y fin, estado y enlace al
-  proceso. Del contratista salen el nombre, el tipo y el número de documento como los publica la
+  Un contrato de SECOP II por su identificador (CO1.PCCNTR.…): quién lo firmó y con quién (entidad
+  contratante y contratista), por cuánto (valor y valor pagado), objeto, tipo y modalidad, fechas de
+  firma, inicio y fin, estado y enlace al proceso. Es la ficha del contrato; sus pagos,
+  modificaciones o adiciones tienen herramientas aparte. Del contratista salen el nombre, el tipo y el número de documento como los publica la
   fuente (ADR-0025); nunca sus datos de contacto.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
