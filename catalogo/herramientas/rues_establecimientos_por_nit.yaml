@@ -7,7 +7,7 @@ descripcion: >
   Establecimientos de comercio, agencias y sucursales de una sociedad por su NIT, según el RUES:
   matrícula, nombre, cámara, estado, último año renovado, fechas, actividad (CIIU) y categoría. Solo
   propietarios identificados con NIT.
-  (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
 entrada: {nit: int}
 consulta:
   operacion: por_codigo

@@ -7,7 +7,7 @@ descripcion: >
   Contratos de SECOP II firmados por una empresa contratista según su NIT, por año de firma: número
   de contratos, valor total en pesos y con cuántas entidades distintas. Solo empresas (documento tipo
   NIT): a las personas no se las busca por su cédula (ADR-0014).
-  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo

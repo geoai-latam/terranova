@@ -7,7 +7,7 @@ descripcion: >
   Si una entidad está vigilada por la Superintendencia Financiera, por su NIT (sin dígito de
   verificación): tipo y código de entidad en la SFC, razón social, ciudad, dirección y página web.
   «No encontrado» quiere decir que no está en el listado de vigiladas.
-  (Fuente: Superintendencia Financiera; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con superfinanciera_vigiladas_buscar; no lo suponga. (Fuente: Superintendencia Financiera; licencia: CC BY-SA 4.0.)
 entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo

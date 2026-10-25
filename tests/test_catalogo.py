@@ -281,3 +281,27 @@ def test_la_licencia_dice_si_no_hay_uso_comercial() -> None:
     comercialmente; su API gratuita es solo no comercial (GEO Copilot, plan de fiabilidad)."""
     h = cargar().herramientas["open_meteo_clima_serie"]
     assert h.descripcion.rstrip().endswith("licencia: CC BY 4.0, sin uso comercial.)")
+
+
+def test_toda_herramienta_que_pide_nit_dice_como_buscarlo() -> None:
+    """Fiabilidad: si el agente no tiene el NIT, la descripción debe mandarlo a una herramienta
+    de búsqueda por nombre; si no, lo supone (GEO Copilot supuso el de la Alcaldía de Chía)."""
+    c = cargar()
+    busquedas = {
+        h.id
+        for h in c.herramientas.values()
+        if "buscar" in h.id or h.id == "secop_entidades_municipio"
+    }
+
+    def pide_nit(h: object) -> bool:
+        return any(
+            "nit" in n.lower() and t in ("int", "nit_empresa")
+            for n, t in h.entrada.items()  # type: ignore[attr-defined]
+        )
+
+    sin_guia = [
+        h.id
+        for h in c.herramientas.values()
+        if pide_nit(h) and not any(b in h.descripcion for b in busquedas)
+    ]
+    assert not sin_guia, f"piden NIT y no dicen cómo buscarlo: {sorted(sin_guia)}"
