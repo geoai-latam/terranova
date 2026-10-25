@@ -209,12 +209,12 @@ datos.gov.co; viene de los geoservicios de IDEAM/SMByC y del GFC2020 de la UE �
 Muchas entidades publican **geovisores** que, por debajo, son servidores **ArcGIS REST** (`MapServer` /
 `FeatureServer`) — el mismo protocolo que ya consumimos de IGAC, ANT, PNN, UPRA y DANE con el conector
 `arcgis_rest`. Son el **segundo camino de descubrimiento**, paralelo a G6: donde datos.gov.co es el
-catálogo DCAT de Socrata (tablas), el geoportal es el catálogo de **capas**. El catálogo nacional de
-geoservicios es la **ICDE / Colombia en Mapas** (`colombiaenmapas.gov.co`), que agrega los servicios de
-muchas entidades; una «G6 para geoportales» sería cosechar ese catálogo (CSW / ArcGIS Hub) igual que se
-cosecha el de Socrata. Mismas reglas: licencia por ítem (ADR-0019, BY-SA si no se sabe), sin datos de
-personas (ADR-0014), nunca login ni captcha (ADR-0018), y **una sola llamada de metadatos** por servidor
-para verificar (nunca carga, como el canario).
+catálogo DCAT de Socrata (tablas), el geoportal es el catálogo de **capas**. Y ese catálogo de capas
+**existe y es DCAT**: el **Hub de datos abiertos de la ICDE** (`datos.icde.gov.co`) expone un feed
+**DCAT-US 1.1** — la «G6 para geoportales» ya es cosechable, no hipotética (ver abajo). Mismas reglas:
+licencia por ítem (ADR-0019, BY-SA si no se sabe), sin datos de personas (ADR-0014), nunca login ni
+captcha (ADR-0018), y **una sola llamada de metadatos** por servidor para verificar (nunca carga, como
+el canario).
 
 | Candidato | Entidad | Qué aporta | Estado (medido) |
 |---|---|---|---|
@@ -231,3 +231,33 @@ geoservicios ricos, pero su licencia es **restrictiva** (igual que sus capas OGC
 **Honestidad de estado:** «en vivo» = verificado hoy con una llamada de metadatos; «por verificar» = la
 entidad tiene geovisor pero no confirmé el endpoint ArcGIS (no se golpea el servidor a ciegas). Ninguno
 entra a producción sin su licencia verificada por ítem.
+
+### El catálogo DCAT de capas: el Hub de la ICDE (`datos.icde.gov.co`)
+
+El **centro autoritativo** nacional de datos espaciales abiertos. Es un **ArcGIS Hub** que expone un feed
+**DCAT-US 1.1** (`/api/feed/dcat-us/1.1.json`) — el análogo ArcGIS del DCAT de Socrata. Ya lo ingiere G6
+(`de_dcat_us`, `terranova catalogo-dcat ingerir --fuente icde`); un solo buscador cubre los dos catálogos
+(tablas de Socrata + capas de ArcGIS). Medido el 2026-10-25 (una cosecha del feed):
+
+- **≥10.000 datasets** (el feed topa en 10.000, como el offset de Socrata; el total real es mayor y haría
+  falta paginar `/api/search/v1` para la pasada completa).
+- **100 % con licencia declarada CC BY 4.0** (vs. 36 % en datos.gov.co). Es un *default* del Hub: sigue
+  siendo **declarada**, se verifica al promover (ADR-0019).
+- **~99 % IGAC** (9.961/10.000), + PNN (RUNAP, que ya servimos) y UPIT (transporte). `theme` es inútil
+  (todo `geospatial`); la entidad no discrimina.
+- **Lo que de verdad decide:** la **clase**. ~**8.898 son restitución cartográfica** del IGAC (mapa base
+  troceado por plancha: drenajes, construcciones, puentes, cercas, muros, piscinas, tapas, curvas de
+  nivel…) y solo ~**1.102 son «Dato temático»** (hidrografía 500k, límites, MDT, ortofoto). `de_dcat_us`
+  marca esa clase (`_clase_icde`) para que la promoción se centre en el resto, no en las 9k primitivas.
+- **8.701** traen endpoint **ArcGIS REST** directo (consumible por el conector `arcgis_rest`).
+
+**Qué nos aporta (honesto):** su valor es el **inventario/descubribilidad** (un DCAT que lista las capas
+del IGAC con su REST y su licencia) y un **puñado de capas temáticas** (hidrografía, MDT, ortofoto), **no
+cobertura de entidades nuevas** — es casi todo el mapa base del IGAC, al que ya llegamos por su ArcGIS.
+Un *crawl* ciego inundaría el catálogo con 9k primitivas; por eso se ingiere con la clase y se promueve
+selectivo.
+
+**Más amplio, por confirmar:** **Colombia en Mapas** (`colombiaenmapas.gov.co`, +8.800 metadatos
+multi-entidad) y el **GeoNetwork del IGAC** (`metadatos.igac.gov.co/geonetwork`, **CSW / ISO 19139**) son
+el catálogo multi-entidad de verdad, pero por **CSW** (no DCAT-US) y más pesado; `metadatos.igac` **no
+respondió** el 2026-10-25 (HTTP 000). Queda como pieza futura si se confirma su endpoint y su licencia.

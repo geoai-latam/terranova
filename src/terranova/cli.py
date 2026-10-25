@@ -6,8 +6,8 @@
     terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
     terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
-    terranova catalogo-dcat ingerir [--limite-paginas N] [--salida f.jsonl]   (G6: cosechar)
-    terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]    (G6: buscador)
+    terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
+    terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]         (G6: buscador)
 
 Cliente del REST /v1 (ADR-0027; TERRANOVA_PUERTA y TERRANOVA_LLAVE):
     terranova consultar <herramienta> --<arg> <valor> [--json]
@@ -173,19 +173,26 @@ def catalogo_dcat(argumentos: list[str]) -> int:
 
 
 def _catalogo_ingerir(argumentos: list[str]) -> int:
-    """Cosecha el catálogo DCAT a JSONL y muestra sus métricas."""
+    """Cosecha un catálogo DCAT a JSONL y muestra sus métricas. `--fuente socrata` (datos.gov.co,
+    tablas) o `--fuente icde` (Hub de la ICDE, capas ArcGIS)."""
+    import collections
     import pathlib
 
-    from terranova.descubrimiento import a_jsonl, ingerir, metricas
+    from terranova.descubrimiento import a_jsonl, ingerir, ingerir_dcat_us, metricas
 
     parser = argparse.ArgumentParser(prog="terranova catalogo-dcat ingerir")
-    parser.add_argument("--limite-paginas", type=int, help="acota la cosecha (desarrollo)")
+    parser.add_argument("--fuente", choices=["socrata", "icde"], default="socrata")
+    parser.add_argument("--limite-paginas", type=int, help="acota la cosecha (solo socrata)")
     parser.add_argument("--por-pagina", type=int, default=1000)
-    parser.add_argument("--salida", default="datos_locales/catalogo_dcat.jsonl")
+    parser.add_argument("--salida", help="por defecto, datos_locales/catalogo_<fuente>.jsonl")
     a = parser.parse_args(argumentos)
 
-    datasets = ingerir(limite_paginas=a.limite_paginas, por_pagina=a.por_pagina)
-    salida = pathlib.Path(a.salida)
+    if a.fuente == "icde":
+        datasets = ingerir_dcat_us()
+    else:
+        datasets = ingerir(limite_paginas=a.limite_paginas, por_pagina=a.por_pagina)
+    ruta = a.salida or f"datos_locales/catalogo_{a.fuente}.jsonl"
+    salida = pathlib.Path(ruta)
     salida.parent.mkdir(parents=True, exist_ok=True)
     salida.write_text(a_jsonl(datasets) + "\n", encoding="utf-8")
     m = metricas(datasets)
@@ -193,10 +200,16 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
     def pct(x: int) -> str:
         return f"{100 * x // m.total}%" if m.total else "-"
 
-    print(f"catálogo: {m.total} datasets → {a.salida}")
+    print(f"catálogo ({a.fuente}): {m.total} datasets → {ruta}")
     print(f"  con licencia declarada: {m.con_licencia} ({pct(m.con_licencia)})")
     print(f"  vivos (< 12 meses):     {m.vivos} ({pct(m.vivos)})")
     print(f"  entidades distintas:    {m.entidades}")
+    if a.fuente == "icde":
+        # la entidad es casi toda IGAC; lo que decide es la CLASE (base vs temático), spec 09
+        clases = collections.Counter(d.categoria or "(sin)" for d in datasets)
+        print("  por clase:")
+        for clase, n in clases.most_common():
+            print(f"    {n:>5}  {clase}")
     print("  top entidades:")
     for ent, n in m.top_entidades:
         print(f"    {n:>5}  {ent[:70]}")
@@ -204,7 +217,8 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
 
 
 def _catalogo_buscar(argumentos: list[str]) -> int:
-    """Busca en el catálogo ingerido: qué fuente responde una pregunta, con su licencia."""
+    """Busca en los catálogos ingeridos (socrata + icde): qué fuente responde una pregunta, con su
+    licencia. Con `--catalogo`, busca solo en ese archivo."""
     import pathlib
 
     from terranova.descubrimiento import buscar, cargar_jsonl
@@ -213,20 +227,26 @@ def _catalogo_buscar(argumentos: list[str]) -> int:
     parser.add_argument("consulta")
     parser.add_argument("--entidad", help="acota a una entidad")
     parser.add_argument("--limite", type=int, default=20)
-    parser.add_argument("--catalogo", default="datos_locales/catalogo_dcat.jsonl")
+    parser.add_argument("--catalogo", help="un archivo concreto; por defecto, todos los catálogos")
     a = parser.parse_args(argumentos)
 
-    ruta = pathlib.Path(a.catalogo)
-    if not ruta.exists():
-        print(
-            f"no hay catálogo en {a.catalogo}; corre antes 'catalogo-dcat ingerir'", file=sys.stderr
-        )
+    if a.catalogo:
+        rutas = [pathlib.Path(a.catalogo)]
+    else:
+        base = pathlib.Path("datos_locales")
+        rutas = sorted(base.glob("catalogo_*.jsonl"))
+    rutas = [r for r in rutas if r.exists()]
+    if not rutas:
+        print("no hay catálogos; corre antes 'catalogo-dcat ingerir'", file=sys.stderr)
         return 2
-    datasets = cargar_jsonl(ruta.read_text(encoding="utf-8"))
+    datasets = []
+    for r in rutas:
+        datasets.extend(cargar_jsonl(r.read_text(encoding="utf-8")))
     hallados = buscar(datasets, a.consulta, entidad=a.entidad, limite=a.limite)
     for d in hallados:
         lic = (d.licencia or "")[:30] if d.con_licencia() else "sin licencia"
-        print(f"{d.id_socrata}  {d.entidad[:35]:35}  [{lic}]  {d.titulo[:50]}")
+        proto = "" if d.protocolo == "socrata" else f" ({d.protocolo})"
+        print(f"{d.id_socrata}  {d.entidad[:30]:30}  [{lic}]  {d.titulo[:45]}{proto}")
     if not hallados:
         print("(sin candidatos para esa consulta)", file=sys.stderr)
     return 0

@@ -12,6 +12,14 @@ carga (el mismo espíritu de `cosecha.py` y del job de copias).
 - `cargar_jsonl` relee el catálogo del disco; `buscar` es el **buscador** (`catalogo_buscar`, spec
   09): casa una pregunta contra título + descripción + columnas + entidad y ordena por valor.
 
+Hay un **segundo catálogo DCAT**, el de **capas** (geoservicios): el Hub de la ICDE
+(`datos.icde.gov.co`), un **DCAT-US 1.1** (ArcGIS Hub, casi todo IGAC). `de_dcat_us` lo interpreta
+a la misma `DatasetDescubrible` (con `protocolo=arcgis_rest` y la `url` del endpoint REST), así que
+el buscador y la promoción son los mismos: un solo buscador sobre dos catálogos (tablas de Socrata y
+capas de ArcGIS). Ojo: ese catálogo es grande pero ~99 % es la **restitución cartográfica del IGAC**
+(mapa base troceado), no dato de decisión —`_clase_icde` lo marca para que la promoción se centre en
+el resto.
+
 La promoción a herramientas curadas se monta sobre esto (spec 09).
 """
 
@@ -27,6 +35,20 @@ from typing import Any
 #: El endpoint federado de la Discovery API de Socrata y el dominio de Colombia.
 DISCOVERY_URL = "https://api.us.socrata.com/api/catalog/v1"
 DOMINIO = "www.datos.gov.co"
+
+#: El feed DCAT-US 1.1 del Hub de datos abiertos de la ICDE (ArcGIS Hub, sobre todo IGAC).
+#: El catálogo autoritativo de **capas** (geoservicios), el análogo ArcGIS del DCAT de Socrata.
+ICDE_DCAT_URL = "https://datos.icde.gov.co/api/feed/dcat-us/1.1.json"
+
+#: Keywords de la restitución cartográfica del IGAC: marcan «mapa base», no dato de decisión.
+#: Se comparan ya normalizadas (`_sin_acentos`), así que van en minúscula y sin tildes.
+_KW_CARTOGRAFIA_BASE = {
+    "restitucion",
+    "fotogrametria",
+    "planimetria",
+    "altimetria",
+    "toponimia",
+}
 
 
 @dataclass(frozen=True)
@@ -169,6 +191,94 @@ def ingerir(
     finally:
         if cerrar:
             http.close()
+    return datasets
+
+
+def _item_arcgis(identifier: str) -> str:
+    """El id estable de un ítem del Hub: `<itemid>` (+ `:<sublayer>` si lo trae). El `identifier`
+    del DCAT-US es una URL `…item.html?id=<32hex>&sublayer=N`; si no casa, se usa tal cual."""
+    import re
+
+    m = re.search(r"id=([0-9a-fA-F]{32})", identifier or "")
+    if not m:
+        return _texto(identifier)
+    sub = re.search(r"sublayer=(\d+)", identifier or "")
+    return f"{m.group(1)}:{sub.group(1)}" if sub else m.group(1)
+
+
+def _rest_url_arcgis(distribuciones: list[dict[str, Any]]) -> str | None:
+    """De las distribuciones DCAT, el endpoint **ArcGIS REST** (lo que consume el conector), no la
+    página del Hub. Se prefiere la que se declara GeoService/REST."""
+    for y in distribuciones:
+        marca = f"{_texto(y.get('format'))} {_texto(y.get('title'))}"
+        if "GeoService" in marca or "REST" in marca:
+            u = _texto(y.get("accessURL")) or _texto(y.get("downloadURL"))
+            if u:
+                return u
+    return None
+
+
+def _clase_icde(keywords: tuple[str, ...]) -> str:
+    """Clasifica un ítem del Hub ICDE: la restitución cartográfica del IGAC («Cartografía base»,
+    la cola larga de primitivas por plancha) vs. el resto («Dato temático»). Es la señal que
+    separa el mapa base del dato de decisión (spec 09: el valor está en el resto, no en las 9k
+    primitivas de restitución)."""
+    kws = {_sin_acentos(k) for k in keywords}
+    return "Cartografía base" if len(_KW_CARTOGRAFIA_BASE & kws) >= 3 else "Dato temático"
+
+
+def de_dcat_us(dataset: dict[str, Any]) -> DatasetDescubrible:
+    """Interpreta un dataset de un feed **DCAT-US 1.1** (ArcGIS Hub de la ICDE). Pura: no toca la
+    red. El `protocolo` queda `arcgis_rest` y la `url` es el endpoint REST (no la página del Hub).
+    El Hub no publica señal de uso (vistas/descargas), así que quedan en 0: el orden se decide por
+    licencia y frescura."""
+    ident = _texto(dataset.get("identifier"))
+    id_item = _item_arcgis(ident)
+    if not id_item:
+        raise KeyError("identifier ausente")
+    keywords = tuple(k for k in (dataset.get("keyword") or []) if isinstance(k, str))
+    pub = dataset.get("publisher") or {}
+    dists = [y for y in (dataset.get("distribution") or []) if isinstance(y, dict)]
+    rest = _rest_url_arcgis(dists)
+    return DatasetDescubrible(
+        id_socrata=id_item,  # el campo es el id genérico del catálogo; aquí, el item de ArcGIS
+        titulo=_texto(dataset.get("title")),
+        descripcion=_texto(dataset.get("description")) or _texto(dataset.get("summary")),
+        entidad=_texto(pub.get("name")),
+        categoria=_clase_icde(keywords),
+        columnas=keywords,  # las keywords hacen de «campos» para casar la pregunta
+        licencia=(_texto(dataset.get("license")) or None),
+        actualizado_en=(_texto(dataset.get("modified")) or _texto(dataset.get("issued")) or None),
+        vistas=0,
+        descargas=0,
+        url=(rest or _texto(dataset.get("landingPage")) or ident),
+        protocolo="arcgis_rest",
+    )
+
+
+def ingerir_dcat_us(cliente: Any = None, *, url: str = ICDE_DCAT_URL) -> list[DatasetDescubrible]:
+    """Cosecha un feed DCAT-US 1.1 (el Hub de la ICDE). Es **un solo documento** (no paginado como
+    Socrata); hoy el feed topa en ~10.000 ítems, casi todos cartografía base del IGAC. Metadatos,
+    no carga. Un ítem malformado no tumba la cosecha."""
+    import httpx
+
+    http = cliente or httpx.Client(
+        timeout=120, headers={"User-Agent": "terranova-descubrimiento/1"}
+    )
+    cerrar = cliente is None
+    try:
+        r = http.get(url)
+        r.raise_for_status()
+        crudos = r.json().get("dataset") or []
+    finally:
+        if cerrar:
+            http.close()
+    datasets: list[DatasetDescubrible] = []
+    for x in crudos:
+        try:
+            datasets.append(de_dcat_us(x))
+        except (KeyError, TypeError, ValueError):
+            continue
     return datasets
 
 

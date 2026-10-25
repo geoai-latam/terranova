@@ -29,6 +29,15 @@ IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos d
   herramientas / uso`, con exit codes que distinguen «no encontrado» de «no se pudo».
 - **Validación crítica** de las ADR/specs (#85): el catálogo es **metadatos** en `descubrimiento.datasets`,
   no un `copia` (ADR-0024); licencia **declarada** (verificar es manual, al promover); orden del CLI.
+- **Segundo catálogo DCAT: las capas (ICDE, #91).** El Hub de datos abiertos de la ICDE
+  (`datos.icde.gov.co`) expone un feed **DCAT-US 1.1** — el centro autoritativo nacional de datos
+  espaciales, el análogo ArcGIS del DCAT de Socrata. `de_dcat_us` (puro) lo interpreta a la misma
+  `DatasetDescubrible` (`protocolo=arcgis_rest`, `url`=endpoint REST); `catalogo-dcat ingerir --fuente
+  icde` lo cosecha y el buscador cubre los dos catálogos a la vez. Validado en vivo: 10.000 ítems,
+  **100 % CC BY 4.0 declarada**, pero **~89 % es restitución cartográfica del IGAC** (mapa base) y solo
+  ~11 % «Dato temático»; por eso `de_dcat_us` marca la **clase** y la promoción se centra en el resto.
+  Su valor es el **inventario** y un puñado de capas temáticas, no entidades nuevas (ver
+  [FUENTES_OBJETIVO.md](FUENTES_OBJETIVO.md)). Colombia en Mapas / GeoNetwork IGAC (CSW) queda por confirmar.
 
 **Lo que queda, bloqueado por dependencias** (no por falta de desarrollo):
 - exponer `catalogo_buscar` como herramienta **`rt/1`** del gateway (REST/MCP) pide un conector interno
