@@ -8,9 +8,9 @@ acto: null
 # intermedio verificado (geo-copilot#58), sin desactivar la verificación.
 licencia:
   spdx: LicenseRef-ley23-1982-art41
-  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
-  verificada: 2026-10-22
-  evidencia: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
+  url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
+  verificada: 2026-10-25
+  evidencia: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
   cita: "la información podrá ser utilizada teniendo en cuenta las normas que protegen la propiedad intelectual; los textos oficiales son de libre reproducción (art. 41)"
 uso_comercial: si
 clase_acceso: html_publico

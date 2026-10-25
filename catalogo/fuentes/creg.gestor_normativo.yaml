@@ -6,7 +6,7 @@ acto: null
 # Avance Jurídico arma el gestor: el texto oficial es libre (art. 41); sus notas no, por eso solo salen fragmentos.
 licencia:
   spdx: LicenseRef-ley23-1982-art41
-  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
+  url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
   verificada: 2026-10-22
   evidencia: https://gestornormativo.creg.gov.co/gestor/entorno/creditos.html
   cita: "textos oficiales de libre reproducción (Ley 23 de 1982, art. 41); las notas añadidas están protegidas"
