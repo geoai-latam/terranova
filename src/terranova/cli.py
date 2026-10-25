@@ -8,6 +8,7 @@
     terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
     terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]         (G6: buscador)
+    terranova embeddings-servicio    (G6/ADR-0028: microservicio de embeddings, red interna)
 
 Cliente del REST /v1 (ADR-0027; TERRANOVA_PUERTA y TERRANOVA_LLAVE):
     terranova consultar <herramienta> --<arg> <valor> [--json]
@@ -317,6 +318,11 @@ def main() -> None:
         sys.exit(copias(argumentos[2:]))
     if argumentos[:1] == ["catalogo-dcat"]:
         sys.exit(catalogo_dcat(argumentos[1:]))
+    if argumentos[:1] == ["embeddings-servicio"]:
+        from terranova.embeddings_servicio import main as servir_embeddings
+
+        servir_embeddings()
+        sys.exit(0)
     if argumentos[:1] == ["canarios"]:
         sys.exit(canarios(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:

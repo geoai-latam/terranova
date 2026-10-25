@@ -32,6 +32,8 @@ x-puerta: &puerta
       {"arcgis-mcp": "http://arcgis-mcp:9400/mcp", "amenazas-mcp": "http://amenazas-mcp:9930/mcp",
       "dane-mcp": "http://dane-mcp:9920/mcp", "datos-abiertos-mcp": "http://datos-abiertos-mcp:9900/mcp",
       "imagery-mcp": "http://imagery-mcp:9100/mcp", "web-mcp": "http://web-mcp:9940/mcp"}
+    # G6 (ADR-0028): el buscador del catálogo embebe la consulta con el microservicio de embeddings
+    TERRANOVA_EMBEDDINGS_URL: http://embeddings:9950
   depends_on:
     postgres: {condition: service_healthy}
     redis: {condition: service_started}
@@ -85,6 +87,21 @@ services:
     build: !reset null
     pull_policy: never
     command: ["terranova", "copias", "actualizar", "--cada-horas", "24"]
+
+  # G6 (ADR-0028): microservicio de embeddings del catálogo. El modelo (ONNX) va horneado en la
+  # imagen, en un solo contenedor (no en cada réplica de la puerta). Solo en la red interna, sin
+  # llave (como los conectores MCP, ADR-0002). La puerta y el job de ingesta lo llaman por HTTP.
+  embeddings:
+    build:
+      context: ..
+      dockerfile: docker/embeddings/Dockerfile
+    image: ${TERRANOVA_EMBEDDINGS_IMAGEN:-terranova/embeddings:local}
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp:size=64m,uid=10101"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [interna]
 
   postgres:
     image: postgis/postgis:17-3.5-alpine  # PostGIS: el dataset curado de restricciones (F4.1)
