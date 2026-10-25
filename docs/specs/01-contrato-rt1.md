@@ -64,6 +64,11 @@
     falta («San Andrés, Santander»). La puerta lo resuelve con el índice de municipios antes de
     consultar, así que a la fuente siempre llega el código. Si varios municipios se llaman así, no
     elige: responde `parametro_invalido` con los candidatos y sus códigos.
+13. Si la ficha técnica muestra que los datos de la fuente no son recientes (llevan más del doble de
+    su frecuencia declarada sin cambiar, con un mínimo de 7 días, a la fecha de la cosecha, o su
+    columna de tiempo termina hace más de dos años), el sobre lo dice en un aviso «Datos no
+    recientes: …». `consultado_en` es la fecha de la consulta, no la de los datos. Como el de
+    homónimos, el aviso se agrega al servir y no se guarda en la caché.
 
 ## 6.3 Códigos de error (estables)
 

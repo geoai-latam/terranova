@@ -6,9 +6,9 @@ acto: null
 # Textos oficiales: Ley 23 de 1982, art. 41. La relatoría no publica términos de uso propios.
 licencia:
   spdx: LicenseRef-ley23-1982-art41
-  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
-  verificada: 2026-10-22
-  evidencia: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
+  url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
+  verificada: 2026-10-25
+  evidencia: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
   cita: "Es permitido a todos reproducir la Constitución, leyes, decretos… y decisiones judiciales (Ley 23 de 1982, art. 41)"
 uso_comercial: si
 clase_acceso: html_publico

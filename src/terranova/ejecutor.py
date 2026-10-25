@@ -452,14 +452,12 @@ class Ejecutor:
             guardado = await self.almacen.leer(k)
             if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
                 metricas.CACHE_ACIERTOS.inc()
-                return _con_homonimos(self._desde_cache(guardado, "cache"), h, valores)
+                return self._servir(self._desde_cache(guardado, "cache"), h, valores)
         try:
             sobre = await self._desde_fuente(h, fuente, valores)
         except ErrorEjecucion as exc:
             if guardado and exc.codigo in CODIGOS_DE_CAIDA:
-                return _con_homonimos(
-                    self._desde_cache(guardado, "obsoleto", exc.codigo), h, valores
-                )
+                return self._servir(self._desde_cache(guardado, "obsoleto", exc.codigo), h, valores)
             raise
         if self.almacen is not None and sobre.estado != "parcial":
             await self.almacen.guardar(
@@ -467,7 +465,25 @@ class Ejecutor:
                 {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
                 RETENCION_S,
             )
-        return _con_homonimos(sobre, h, valores)
+        return self._servir(sobre, h, valores)
+
+    def _servir(self, sobre: Sobre, h: Herramienta, valores: dict[str, Any]) -> Sobre:
+        """Los avisos que salen del catálogo y no de la fuente: se agregan al servir (de la fuente
+        o de la caché) y no se guardan en la caché. Los homónimos del municipio, y si los datos
+        no son recientes: ICFES Saber 11 no cambia desde 2023 y la respuesta solo decía la fecha
+        de la consulta, de hoy («nunca un dato viejo disfrazado de actual»)."""
+        from terranova.ficha_tecnica import atraso
+
+        fuente = self.catalogo.fuentes[h.fuente]
+        avisos = [
+            *((a,) if (a := _aviso_de_homonimos(h, valores)) else ()),
+            *(
+                f"Datos no recientes: {a}."
+                for a in atraso(fuente, self.catalogo.metadatos.get(fuente.id), ahora().date())
+            ),
+        ]
+        nuevos = [a for a in avisos if a not in sobre.avisos]
+        return sobre.model_copy(update={"avisos": [*sobre.avisos, *nuevos]}) if nuevos else sobre
 
     def _desde_cache(
         self, guardado: dict[str, Any], modo: Literal["cache", "obsoleto"], causa: str | None = None
@@ -787,15 +803,6 @@ def _aviso_de_homonimos(h: Herramienta, v: dict[str, Any]) -> str | None:
                 "otro, no se consultó."
             )
     return None
-
-
-def _con_homonimos(sobre: Sobre, h: Herramienta, v: dict[str, Any]) -> Sobre:
-    """El sobre con el aviso de homónimos. Se agrega al servir (de la fuente o de la caché) y no se
-    guarda en la caché: sale del índice de municipios, no de la fuente."""
-    aviso = _aviso_de_homonimos(h, v)
-    if not aviso or aviso in sobre.avisos:
-        return sobre
-    return sobre.model_copy(update={"avisos": [*sobre.avisos, aviso]})
 
 
 def _zona(

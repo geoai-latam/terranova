@@ -164,3 +164,34 @@ async def test_el_aviso_de_homonimos_sale_tambien_desde_cache() -> None:
         assert len(homonimos) == 1 and "50313 GRANADA (META)" in homonimos[0]
     ((_, guardado),) = almacen._datos.values()
     assert not any(a.startswith("Se consultó") for a in guardado["sobre"]["avisos"])
+
+
+@pytest.mark.anyio
+async def test_el_aviso_de_datos_no_recientes_sale_tambien_desde_cache() -> None:
+    """ICFES Saber 11 declara actualización semestral y no cambia desde 2023: el sobre solo decía
+    la fecha de la consulta, de hoy. El aviso sale de la ficha técnica, no de la fuente."""
+    h = CATALOGO.herramientas["icfes_saber11_municipio"]
+    grabado = json.loads(
+        (Path(__file__).parent / "doradas" / f"{h.id}.json").read_text(encoding="utf-8")
+    )
+
+    class Grabada(Fuente):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            self.llamadas += 1
+            for ll in grabado["llamadas"]:
+                if ll["argumentos"] == argumentos:
+                    copia: dict[str, Any] = json.loads(json.dumps(ll["respuesta"]))
+                    return copia
+            raise AssertionError(argumentos)
+
+    fuente, reloj, almacen = Grabada(), Reloj(), AlmacenMemoria()
+    almacen.reloj = reloj
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": fuente}, almacen, reloj)
+    primero = await ej.ejecutar(h.id, h.canario.entrada)
+    segundo = await ej.ejecutar(h.id, h.canario.entrada)
+    assert segundo.procedencia[0].servido_desde == "cache"
+    for sobre in (primero, segundo):
+        recientes = [a for a in sobre.avisos if a.startswith("Datos no recientes")]
+        assert any("2023-08-23" in a for a in recientes) and len(recientes) == len(set(recientes))
+    ((_, guardado),) = almacen._datos.values()
+    assert not any(a.startswith("Datos no recientes") for a in guardado["sobre"]["avisos"])

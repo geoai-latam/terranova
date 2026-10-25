@@ -33,6 +33,7 @@ _FRECUENCIAS = {
     "anual": 366,
 }
 _HOLGURA = 2  # una fuente va atrasada si pasó más del doble de su frecuencia declarada
+_ATRASO_MINIMO = 7  # días: un dato diario de hace tres días no es «no reciente»
 
 
 def _llano(texto: str) -> str:
@@ -40,20 +41,29 @@ def _llano(texto: str) -> str:
     return sin_tildes.strip().lower()
 
 
-def alertas(fuente: Fuente, metadatos: Metadatos | None, hoy: date) -> list[str]:
-    """Lo que un agente debe saber antes de usar la fuente, calculado del catálogo."""
+def atraso(fuente: Fuente, metadatos: Metadatos | None, hoy: date) -> list[str]:
+    """Si los datos de la fuente no son recientes: lleva más del doble de su frecuencia declarada
+    sin cambiar, o su columna de tiempo termina hace más de dos años."""
     salida: list[str] = []
     if metadatos and metadatos.frecuencia_declarada and metadatos.datos_actualizados:
         dias = _FRECUENCIAS.get(_llano(metadatos.frecuencia_declarada))
-        atraso = (hoy - metadatos.datos_actualizados).days
-        if dias and atraso > _HOLGURA * dias:
+        # medido a la fecha de la cosecha: lo que la fuente cambió después, la cosecha no lo vio
+        # (sin esto, todo SECOP, diario, salía «atrasado» tres días después de cosechar)
+        atraso = (min(hoy, metadatos.cosechado) - metadatos.datos_actualizados).days
+        if dias and atraso > max(_HOLGURA * dias, _ATRASO_MINIMO):
             salida.append(
                 f"la fuente declara actualización {metadatos.frecuencia_declarada.lower()} y sus "
                 f"datos no cambian desde {metadatos.datos_actualizados.isoformat()}"
             )
     if (rango := _rango(fuente, metadatos)) and (m := _AÑO.match(rango[1])):
         if int(m.group(1)) < hoy.year - _HOLGURA:
-            salida.append(f"los datos llegan hasta {rango[1]}: no hay años más recientes")
+            salida.append(f"los datos llegan hasta {m.group(1)}: no hay años más recientes")
+    return salida
+
+
+def alertas(fuente: Fuente, metadatos: Metadatos | None, hoy: date) -> list[str]:
+    """Lo que un agente debe saber antes de usar la fuente, calculado del catálogo."""
+    salida = atraso(fuente, metadatos, hoy)
     if fuente.perfil and fuente.perfil.clave and not fuente.perfil.clave.unica:
         salida.append(
             f"una fila no es un registro único ({fuente.perfil.clave.columna}): contar filas no "

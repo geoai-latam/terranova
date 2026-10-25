@@ -6,10 +6,10 @@ acto: null
 # Avance Jurídico arma el normograma: el texto oficial es libre (art. 41); sus notas y estructura no, por eso solo salen fragmentos.
 licencia:
   spdx: LicenseRef-ley23-1982-art41
-  url: http://www.secretariasenado.gov.co/senado/basedoc/ley_0023_1982.html
-  verificada: 2026-10-22
-  evidencia: https://normograma.dian.gov.co/dian/compilacion/creditos.htm
-  cita: "los textos oficiales podrán ser consultados y reproducidos de conformidad con el artículo 41 de la Ley 23 de 1982"
+  url: https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=3431
+  verificada: 2026-10-25
+  evidencia: https://normograma.dian.gov.co/dian/compilacion/creditos.html
+  cita: "podrán ser consultados y reproducidos de conformidad con lo dispuesto en el artículo 41 de la Ley 23 de 1982"
 uso_comercial: si
 clase_acceso: html_publico
 atribucion: "Fuente: Dirección de Impuestos y Aduanas Nacionales (DIAN)"

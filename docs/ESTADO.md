@@ -16,6 +16,12 @@
 
 Queda abierto que el agente suponga el NIT de una entidad. Una salida es que la puerta resuelva la entidad por su nombre.
 
+**Auditoría de fuentes (2026-10-25):** se revisaron las 130 fuentes y las 153 herramientas: canarios en vivo (en serie, una llamada por herramienta), licencias, personas, doradas, frescura y evidencias de licencia.
+- **Canarios:** 144/153 en la primera pasada. Repetidos los rojos, quedan 3, las capas de agrología del IGAC: la consulta más liviana tarda 30 s en la fuente, y siguen esperando la copia (ADR-0023). Los demás rojos fueron pasajeros (PNN, RUES, ICFES, INVIMA y una suspensión de SECOP) o un dato reprocesado por la fuente (Open-Meteo: 92,2 mm, antes 91,5).
+- **Frescura:** el sobre dice «Datos no recientes» cuando la ficha técnica lo muestra (regla 13). Le pasa a 15 fuentes, entre ellas ICFES, internet fijo, víctimas de minas y la UPRA.
+- **Evidencias de licencia:** 3 estaban rotas (la Ley 23 en el Senado y los créditos de la DIAN) y ya se corrigieron.
+- **Pendientes:** 5 fuentes en borrador con la licencia por verificar (ADR-0019) y la copia de agrología.
+
 | Spec F0 | Estado |
 |---|---|
 | F0.1 Repo y estructura | ✅ `pyproject` (uv, Python 3.13), ruff y mypy estricto fijados, pytest, pre-commit, CI; `make check` verde |

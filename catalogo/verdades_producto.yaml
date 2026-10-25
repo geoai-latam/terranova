@@ -144,8 +144,8 @@ verdades:
     pregunta: "¿Cuánto llovió en Bogotá en enero de 2023?"
     herramienta: open_meteo_clima_serie
     entrada: {lon: -74.0721, lat: 4.711, desde: "2023-01-01", hasta: "2023-01-31"}
-    verdad: {precipitacion_total_mm: 91.5, temperatura_media_c: 12.0}
-    medicion: "archive-api.open-meteo.com (ERA5), suma diaria"
+    verdad: {precipitacion_total_mm: 92.2, temperatura_media_c: 12.0}
+    medicion: "archive-api.open-meteo.com (ERA5), suma diaria; vuelto a medir el 2026-10-25 (era 91,5: Open-Meteo reprocesa)"
   - id: t20
     familia: territorio
     pregunta: "¿Cuánta gente vive en Bogotá según el censo de 2018?"
