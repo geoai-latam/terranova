@@ -12,7 +12,16 @@ da con **conector genérico + buscador de catálogo (G6) + promoción curada**, 
 [spec 09](specs/09-descubrimiento.md)). Y se abre el bloque de **canales de cliente** sobre el REST
 `/v1`: un **CLI de cliente** delgado con `catalogo buscar` y el batch `verificar <archivo>`
 ([ADR-0027](decisions/0027-cli-de-cliente.md), [spec 10](specs/10-cli.md)), junto con la API con cuota,
-OGC API y archivos. Siguiente entregable concreto: la **ingesta del catálogo DCAT** (métricas de G6).
+OGC API y archivos.
+
+**G6 · ingesta del catálogo DCAT (primer entregable, 2026-10-25):** `src/terranova/descubrimiento.py` +
+`terranova catalogo-dcat ingerir` cosechan la Discovery API de datos.gov.co (metadatos, en serie, con
+`User-Agent` propio; funciones puras probadas sin red). Una muestra de 2.000 datasets **confirma la
+ADR-0026**: solo **36 %** declara licencia (ADR-0019: sin licencia no sale a producción), y un solo
+publicador (MinTIC) acapara ~63 % de la cuenta, mientras los que **deciden** (Colombia Compra, UPRA,
+IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos deciden», medido. Falta: la
+pasada completa (scroll más allá del tope de offset) a PostGIS como copia, y el buscador
+`catalogo_buscar` (spec 09).
 
 **F6 en el navegador (2026-10-23):** GEO Copilot conectado a la puerta (Caddy, dos réplicas) con una llave propia y cuatro perfiles (justicia, estadísticas, normativa, territorio: 97 herramientas, bajo el tope de 128 de OpenAI), LLM gpt-5.4-mini. Cuatro preguntas reales con la cifra medida en la fuente: homicidios (8) y hurto de vehículos (95; 28 automotores y 67 motos) de Chía 2024; vigencia y artículos de la Ley 1581 (30); masacres en Granada (74); y el predio de un punto de Chía con su ficha, pintado y encuadrado en el mapa. La prueba halló tres fallas, corregidas: la cuota por llave se gastaba en abrir sesión y listar herramientas por MCP (un cliente con cuatro perfiles quedaba sin cupo: ahora solo `tools/call` gasta); el sobre no decía el lugar de un código DIVIPOLA (el agente supuso 05380 por Granada y entregó los datos de La Estrella: ahora `zona_usada.nombre`, regla 11 de `rt/1`, y el agente se corrige solo); y el juez de GEO Copilot leía solo 400 caracteres de cada resultado y le hizo retractar una cifra correcta (geo-copilot). MCP queda sin estado (`stateless_http`), porque Caddy reparte entre réplicas sin afinidad. Falta F6.2 (el panel «Cómo lo hice» con fuente y licencia), F6.3 (E2E en Playwright) y F6.4 (misma huella por las tres puertas).
 
