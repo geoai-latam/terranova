@@ -41,7 +41,7 @@ def _ds(
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
 def test_reemplazar_y_buscar_vectorial() -> None:
     assert URL_PG
-    import psycopg
+    psycopg = pytest.importorskip("psycopg")
 
     with psycopg.connect(URL_PG, autocommit=True) as c:  # base de pruebas: se parte de cero
         c.execute(f"DROP SCHEMA IF EXISTS {ESQUEMA} CASCADE")
@@ -62,7 +62,7 @@ def test_reemplazar_y_buscar_vectorial() -> None:
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
 def test_reemplazar_es_por_catalogo() -> None:
     assert URL_PG
-    import psycopg
+    psycopg = pytest.importorskip("psycopg")
 
     with psycopg.connect(URL_PG, autocommit=True) as c:
         c.execute(f"DROP SCHEMA IF EXISTS {ESQUEMA} CASCADE")
