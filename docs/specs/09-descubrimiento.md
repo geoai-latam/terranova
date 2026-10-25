@@ -189,10 +189,12 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
 
 ## 9.6 Compuerta de G6
 
-- **Ingesta** ✅ (#84 Socrata, #91 ICDE): la cosecha a JSONL con sus métricas (9.2); funciones puras
-  (`de_socrata_catalog`, `de_dcat_us`) probadas sin red y validadas en vivo contra las dos fuentes.
-  Falta el `scroll`/paginado completo (ambas topan en ~10.000) y el aterrizaje en PostGIS
-  `descubrimiento.datasets` (bloqueado por la decisión de dónde vive el catálogo).
+- **Ingesta** ✅ (#84 Socrata, #91 ICDE, #94 microservicio de embeddings, #95 aterrizaje): la cosecha
+  con sus métricas (9.2); funciones puras (`de_socrata_catalog`, `de_dcat_us`) probadas sin red y
+  validadas en vivo. El **aterrizaje en PostGIS/pgvector** (`AlmacenDescubrimiento`,
+  `descubrimiento.datasets` con columna `vector`, `catalogo-dcat ingerir --a-postgis`) y el
+  **microservicio de embeddings** ya están; el job `descubrimiento` del compose refresca los dos
+  catálogos a diario. Falta el `scroll`/paginado completo (ambos topan en ~10.000).
 - **Buscador (lógica)** ✅ (#86 léxico, #93 embeddings): `buscar` (léxico) casa la pregunta y ordena por
   valor; **`buscar_vectorial`** (semántico, ADR-0028) ordena por coseno con piso y desempate por valor,
   re-embed completo (`embeber_catalogo`), modelo local fijado (`FastEmbedder`); `catalogo-dcat buscar`

@@ -29,6 +29,13 @@ IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos d
   herramientas / uso`, con exit codes que distinguen «no encontrado» de «no se pudo».
 - **Validación crítica** de las ADR/specs (#85): el catálogo es **metadatos** en `descubrimiento.datasets`,
   no un `copia` (ADR-0024); licencia **declarada** (verificar es manual, al promover); orden del CLI.
+- **Runtime del catálogo (en marcha, PRs #94–#95).** (1) **Microservicio de embeddings** (#94): el
+  modelo (ONNX/fastembed) en un contenedor aparte, `/embed` por HTTP, `EmbedderRemoto` para la puerta y
+  el job. (2) **Almacén pgvector** (#95): `AlmacenDescubrimiento` (`descubrimiento.datasets` con columna
+  `vector`, refresco entero por catálogo), `catalogo-dcat ingerir --a-postgis`, job `descubrimiento` en
+  el compose (cosecha Socrata+ICDE a diario y pide vectores al microservicio), imagen Postgres con
+  postgis **y** pgvector, y un job de CI con imagen pgvector para probar el `<=>`. Falta: el conector
+  interno `catalogo_dcat` + la ficha `rt/1` + la pasada completa (scroll/paginado) + la promoción.
 - **Buscador semántico con embeddings (#93, ADR-0028).** El recuperador del catálogo pasa de léxico a
   **embeddings**: modelo multilingüe local y **fijado** (`intfloat/multilingual-e5-small`, ONNX vía
   `fastembed`, extra `terranova[descubrimiento]`), orden por coseno con **piso** y desempate por valor,

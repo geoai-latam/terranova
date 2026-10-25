@@ -88,6 +88,24 @@ services:
     pull_policy: never
     command: ["terranova", "copias", "actualizar", "--cada-horas", "24"]
 
+  # G6 (ADR-0028): una vez al día cosecha los dos catálogos DCAT (Socrata + ICDE), pide los vectores
+  # al microservicio `embeddings` y los aterriza en PostGIS/pgvector (`descubrimiento.datasets`). La
+  # puerta los lee con el conector interno del catálogo. Metadatos, no carga (ADR-0026).
+  descubrimiento:
+    <<: *puerta
+    build: !reset null
+    pull_policy: never
+    entrypoint: ["sh", "-c"]
+    command:
+      - >-
+        while true; do
+        terranova catalogo-dcat ingerir --fuente socrata --a-postgis || echo "socrata FALLÓ" >&2;
+        terranova catalogo-dcat ingerir --fuente icde --a-postgis || echo "icde FALLÓ" >&2;
+        sleep 86400; done
+    depends_on:
+      postgres: {condition: service_healthy}
+      embeddings: {condition: service_started}
+
   # G6 (ADR-0028): microservicio de embeddings del catálogo. El modelo (ONNX) va horneado en la
   # imagen, en un solo contenedor (no en cada réplica de la puerta). Solo en la red interna, sin
   # llave (como los conectores MCP, ADR-0002). La puerta y el job de ingesta lo llaman por HTTP.
@@ -104,7 +122,9 @@ services:
     networks: [interna]
 
   postgres:
-    image: postgis/postgis:17-3.5-alpine  # PostGIS: el dataset curado de restricciones (F4.1)
+    # PostGIS (dataset curado, F4.1) + pgvector (catálogo de descubrimiento, G6/ADR-0028)
+    build: {context: .., dockerfile: docker/postgres/Dockerfile}
+    image: ${TERRANOVA_POSTGRES_IMAGEN:-terranova/postgres:local}
     restart: unless-stopped
     environment:
       POSTGRES_USER: terranova
