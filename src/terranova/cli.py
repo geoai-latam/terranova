@@ -197,6 +197,11 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
         action="store_true",
         help="re-embebe todo el catálogo (ADR-0028) y deja el índice de vectores al lado",
     )
+    parser.add_argument(
+        "--a-postgis",
+        action="store_true",
+        help="aterriza metadatos + embeddings en PostGIS/pgvector (job de producción, ADR-0028)",
+    )
     a = parser.parse_args(argumentos)
 
     if a.fuente == "icde":
@@ -205,9 +210,16 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
         datasets = ingerir(limite_paginas=a.limite_paginas, por_pagina=a.por_pagina)
     ruta = a.salida or f"datos_locales/catalogo_{a.fuente}.jsonl"
     salida = pathlib.Path(ruta)
-    salida.parent.mkdir(parents=True, exist_ok=True)
-    salida.write_text(a_jsonl(datasets) + "\n", encoding="utf-8")
-    if a.embeddings:
+    if (
+        not a.a_postgis
+    ):  # el job a PostGIS no escribe en disco (rootfs de solo lectura); la base manda
+        salida.parent.mkdir(parents=True, exist_ok=True)
+        salida.write_text(a_jsonl(datasets) + "\n", encoding="utf-8")
+    if a.a_postgis:
+        rc = _catalogo_a_postgis(a.fuente, datasets)
+        if rc != 0:
+            return rc
+    elif a.embeddings:
         try:
             from terranova.descubrimiento import (
                 FastEmbedder,
@@ -230,7 +242,8 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
     def pct(x: int) -> str:
         return f"{100 * x // m.total}%" if m.total else "-"
 
-    print(f"catálogo ({a.fuente}): {m.total} datasets → {ruta}")
+    destino = "PostGIS (descubrimiento.datasets)" if a.a_postgis else ruta
+    print(f"catálogo ({a.fuente}): {m.total} datasets → {destino}")
     print(f"  con licencia declarada: {m.con_licencia} ({pct(m.con_licencia)})")
     print(f"  vivos (< 12 meses):     {m.vivos} ({pct(m.vivos)})")
     print(f"  entidades distintas:    {m.entidades}")
@@ -273,6 +286,39 @@ def _buscar_mejor(
         return buscar_vectorial(datasets, vq, vectores, limite=limite)
     except ImportError:
         return buscar(datasets, consulta, entidad=entidad, limite=limite)
+
+
+def _catalogo_a_postgis(fuente: str, datasets: list[DatasetDescubrible]) -> int:
+    """Embebe todo el catálogo (microservicio si hay `TERRANOVA_EMBEDDINGS_URL`, si no local) y lo
+    aterriza en PostGIS/pgvector, refrescando entero ese catálogo (ADR-0028)."""
+    import os
+
+    from terranova.descubrimiento import Embedder, embeber_catalogo
+
+    url = os.environ.get("TERRANOVA_CURADO_URL") or os.environ.get("TERRANOVA_COPIAS_URL")
+    if not url:
+        print("falta TERRANOVA_CURADO_URL (postgresql://…)", file=sys.stderr)
+        return 2
+    emb_url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
+    embedder: Embedder
+    try:
+        if emb_url:
+            from terranova.descubrimiento import EmbedderRemoto
+
+            embedder = EmbedderRemoto(emb_url)
+        else:
+            from terranova.descubrimiento import FastEmbedder
+
+            embedder = FastEmbedder()
+    except ImportError:
+        print("faltan los embeddings; instala 'terranova[descubrimiento]'", file=sys.stderr)
+        return 2
+    from terranova.almacen_descubrimiento import AlmacenDescubrimiento
+
+    vectores = embeber_catalogo(datasets, embedder)
+    n = AlmacenDescubrimiento(url).reemplazar(fuente, datasets, vectores)
+    print(f"PostGIS: {n} filas de «{fuente}» en descubrimiento.datasets ({len(vectores)} vectores)")
+    return 0
 
 
 def _catalogo_buscar(argumentos: list[str]) -> int:
