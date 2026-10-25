@@ -4,6 +4,14 @@ El canal de terminal para quien pregunta: un **cliente delgado del REST `/v1`** 
 lógica — formatea el sobre `rt/1`, hace batch y exporta. Complementa la sección 8 de
 [03-superficie.md](03-superficie.md) (8.1 REST, 8.2 MCP, 8.3 ficha → **8.4 CLI**).
 
+> **Orden de desarrollo (validado al implementar).** Los comandos dependen de piezas aguas arriba, así
+> que se construyen en este orden: (1) **MVP** `consultar / fuentes / herramientas / uso` — solo el
+> REST `/v1`, que ya existe; (2) `catalogo buscar` — necesita `catalogo_buscar` de **G6** (spec 09)
+> primero; (3) `exportar` — necesita GDAL/`fiona` en el extra `[cliente]`; (4) `verificar <archivo>` —
+> el **último**, porque orquesta las **reglas de la obligación** (EUDR) y el **dataset curado de
+> restricciones**, que son entregables de F4/F5 aún no terminados. El CLI no inventa esas reglas; las
+> llama cuando existen.
+
 ## 10.1 Alcance
 
 - **Sí:** consultar una herramienta por lugar/código; buscar en el catálogo (G6); listar herramientas

@@ -49,8 +49,10 @@
   - El buscador hereda la **lista blanca** y la **licencia** de cada fuente; la geometría y los campos
     personales siguen fuera (ADR-0014).
   - `$group` (G1) se vuelve prerrequisito real de la cola larga, no un lujo.
-  - Aparece una tabla/manifiesto nuevo (`catalogo/descubribles` o `copia.catalogo_dcat`) que se refresca
-    como una copia (ADR-0024): con su fecha, su huella y su `obsoleto`.
+  - Aparece un almacén de **metadatos sobre fuentes** `descubrimiento.datasets` (su **propio** espacio,
+    **no** un `copia.*`: una copia es datos en bulk bajo lista blanca, ADR-0024; el catálogo es metadatos
+    y no tiene una sola fuente). Se refresca a diario con su fecha, huella y `obsoleto`. La licencia que
+    guarda es la **declarada**; «verificada» (ADR-0019) se pone al **promover**, no al ingerir.
 - **Confirmación:**
   - **Ingesta:** una pasada del Discovery API de Socrata deja la tabla con, por dataset: entidad/dueño,
     título, descripción, columnas, licencia, frecuencia, última actualización e id 4x4. Métricas de la
