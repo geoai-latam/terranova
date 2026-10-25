@@ -19,9 +19,25 @@ OGC API y archivos.
 `User-Agent` propio; funciones puras probadas sin red). Una muestra de 2.000 datasets **confirma la
 ADR-0026**: solo **36 %** declara licencia (ADR-0019: sin licencia no sale a producción), y un solo
 publicador (MinTIC) acapara ~63 % de la cuenta, mientras los que **deciden** (Colombia Compra, UPRA,
-IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos deciden», medido. Falta: la
-pasada completa (scroll más allá del tope de offset) a PostGIS como copia, y el buscador
-`catalogo_buscar` (spec 09).
+IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos deciden», medido.
+
+**G6 · buscador y CLI de cliente (2026-10-25).** El núcleo desarrollable quedó completo y validado:
+- **Buscador `catalogo_buscar`** (#86): `buscar` (puro) casa una pregunta contra título + descripción +
+  columnas + entidad y ordena por licencia declarada > vivo > uso; `terranova catalogo-dcat buscar`.
+  Validado en vivo: «contratos» → datasets de Colombia Compra/SECOP, con su licencia.
+- **CLI de cliente MVP** (#87, ADR-0027): cliente delgado del REST `/v1` — `consultar / fuentes /
+  herramientas / uso`, con exit codes que distinguen «no encontrado» de «no se pudo».
+- **Validación crítica** de las ADR/specs (#85): el catálogo es **metadatos** en `descubrimiento.datasets`,
+  no un `copia` (ADR-0024); licencia **declarada** (verificar es manual, al promover); orden del CLI.
+
+**Lo que queda, bloqueado por dependencias** (no por falta de desarrollo):
+- exponer `catalogo_buscar` como herramienta **`rt/1`** del gateway (REST/MCP) pide un conector interno
+  nuevo + un `modo` en el ejecutor + ficha que pase las 19 reglas con **canario reproducible** + un
+  **almacén en runtime** (PostGIS): es una decisión de **deploy** del catálogo (dónde vive, cómo se
+  refresca, cómo canariza), no solo código;
+- la **pasada completa con `scroll`** a PostGIS (el offset topa en ~10.000) depende de ese almacén;
+- en el CLI, `catalogo buscar` (necesita el `rt/1` anterior), `exportar` (GDAL) y `verificar` (las
+  **reglas de la obligación EUDR**, de F4/F5) esperan sus dependencias.
 
 **F6 en el navegador (2026-10-23):** GEO Copilot conectado a la puerta (Caddy, dos réplicas) con una llave propia y cuatro perfiles (justicia, estadísticas, normativa, territorio: 97 herramientas, bajo el tope de 128 de OpenAI), LLM gpt-5.4-mini. Cuatro preguntas reales con la cifra medida en la fuente: homicidios (8) y hurto de vehículos (95; 28 automotores y 67 motos) de Chía 2024; vigencia y artículos de la Ley 1581 (30); masacres en Granada (74); y el predio de un punto de Chía con su ficha, pintado y encuadrado en el mapa. La prueba halló tres fallas, corregidas: la cuota por llave se gastaba en abrir sesión y listar herramientas por MCP (un cliente con cuatro perfiles quedaba sin cupo: ahora solo `tools/call` gasta); el sobre no decía el lugar de un código DIVIPOLA (el agente supuso 05380 por Granada y entregó los datos de La Estrella: ahora `zona_usada.nombre`, regla 11 de `rt/1`, y el agente se corrige solo); y el juez de GEO Copilot leía solo 400 caracteres de cada resultado y le hizo retractar una cifra correcta (geo-copilot). MCP queda sin estado (`stateless_http`), porque Caddy reparte entre réplicas sin afinidad. Falta F6.2 (el panel «Cómo lo hice» con fuente y licencia), F6.3 (E2E en Playwright) y F6.4 (misma huella por las tres puertas).
 
