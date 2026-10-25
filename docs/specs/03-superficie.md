@@ -44,3 +44,11 @@ procedencia y su error propio:
 | Contexto municipal | TerriData / SECOP resumen | según licencia |
 
 Tope de tiempo total 12 s (ADR-0023); lo que no llega a tiempo sale como error de esa parte (`parcial`) y sigue en segundo plano para llenar la caché.
+
+## 8.4 CLI de cliente
+
+El canal de terminal: un **cliente delgado del REST `/v1`** (ADR-0027), para el script, el cron y el
+CI de quien pregunta. `consultar`, `catalogo buscar` (front de G6), `exportar` (GeoJSON/GPKG/CSV) y el
+batch `verificar <archivo>` (caso EUDR). Salida con estado `rt/1`, procedencia y licencia; `--json`
+para el sobre crudo; exit codes que distinguen «no encontrado» de «no se pudo». Detalle en
+[10-cli.md](10-cli.md).

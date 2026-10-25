@@ -66,6 +66,7 @@ spec y su prueba antes de usarla en una ola.
 | **G3 · Conector de copia** | Bulk o Socrata → PostGIS en `copia.*`, con huella, versión vigente, frescura (TTL de la fuente) y job programado. La puerta sirve `servido_desde: copia` y nunca presenta una copia vencida como actual (ADR-0008). Generaliza el pipeline de F4.1 | Terranova | SECOP (búsquedas y medianas), transacciones, TerriData, anexos DANE, directorio DIAN |
 | **G4 · Conector de scrape con estado** | Navega formularios WebForms/JSF (ViewState), con tasa baja, `User-Agent` propio, caché y copia, y registra URL y fecha. Respeta `robots.txt`. **Nunca** captchas, logins ni retos de identidad (ADR-0018) | nuevo `html_mcp` (GEO Copilot) | normas, jurisprudencia, SIPI, Imprenta, ANM |
 | **G5 · Herramientas de la fábrica** | `scripts/nueva_fuente.py` (andamio de fichas), medición de «horas por fuente» y el tablero de avance (canario verde / objetivo) | Terranova | todas |
+| **G6 · Catálogo descubrible + buscador** | Ingiere el catálogo DCAT de datos.gov.co como copia de metadatos y expone `catalogo_buscar` (qué fuente responde qué, con entidad, licencia e id); la cola larga se alcanza por el conector genérico y las olas se **promueven** desde el catálogo por valor/uso, no a mano (ADR-0026, [spec 09](specs/09-descubrimiento.md)) | Terranova + `datos_abiertos_mcp` | toda la cola larga de datos.gov.co; ordena qué promover |
 
 Reglas de las copias en local:
 

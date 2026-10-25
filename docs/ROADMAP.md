@@ -82,13 +82,27 @@ día), M (1–3 días), L (> 3 días) de trabajo enfocado.
   6. Con permiso: Geovisor IGAC (avalúo), SIIS, CPNU: ~9.
 - Piezas genéricas que aceleran todo (detalle en [PLAN_EXPANSION.md](PLAN_EXPANSION.md)): G1
   agregados en Socrata, G2 corte mensual del IGAC, G3 **conector de copia** (bulk → PostGIS con
-  huella y frescura), G4 **conector de scrape con estado** (WebForms/JSF, con copia y canario) y G5
-  herramientas de la fábrica.
+  huella y frescura), G4 **conector de scrape con estado** (WebForms/JSF, con copia y canario), G5
+  herramientas de la fábrica y G6 **catálogo descubrible + buscador** (`catalogo_buscar` sobre el
+  catálogo DCAT de datos.gov.co; la cola larga por el conector genérico y las olas promovidas por
+  valor/uso, no a mano — ADR-0026, [spec 09](specs/09-descubrimiento.md)).
 - **Por ola:** herramientas en el catálogo, pruebas doradas, canario 3 días verde, banco de agente
   sobre la familia ≥ 90 %.
 - **Métrica de la fábrica:** horas desde «fuente elegida» hasta «canario verde 3 días», por fuente.
 
-**Gate F5:** [FUENTES_OBJETIVO.md](FUENTES_OBJETIVO.md) al 100 % en «abiertas y factibles».
+**Gate F5:** [FUENTES_OBJETIVO.md](FUENTES_OBJETIVO.md) al 100 % en «abiertas y factibles»; **G6**: el
+catálogo DCAT ingerido, `catalogo_buscar` con canario de verdad, y al menos una fuente de la cola
+larga **promovida desde el buscador** (ADR-0026, spec 09).
+
+### Canales de cliente (el bloque «60 d» del deck)
+
+Sobre el REST `/v1` que ya existe, los canales que faltan para quien pregunta, apoyados en G6:
+
+- **CLI de cliente** — cliente delgado del REST: `consultar`, `catalogo buscar`, `exportar` y el batch
+  `verificar <archivo>` (caso EUDR). Decidido en [ADR-0027](decisions/0027-cli-de-cliente.md), detalle
+  en [spec 10](specs/10-cli.md).
+- **API con cuota por cliente** y **OGC API** (Features) para el SIG del cliente.
+- **Archivos**: export en EPSG:9377 (GPKG, SHP, KML, CSV, DXF) y el GeoJSON de la UE.
 
 ## F6 · GEO Copilot como cliente
 

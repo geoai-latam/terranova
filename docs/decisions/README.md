@@ -52,3 +52,5 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0023 · Tope de la ficha en 12 s: el gate F4 no espera la copia de agrología](0023-tope-de-la-ficha-12-s.md)
 - [ADR-0024 · Conector de copia (G3): copias en PostGIS servidas por la puerta](0024-conector-de-copia.md)
 - [ADR-0025 · El documento de contratistas y proponentes de SECOP se muestra como lo publica la fuente](0025-documentos-en-divulgacion-obligatoria.md)
+- [ADR-0026 · Cobertura de datos abiertos: conector genérico + buscador de catálogo (G6), no un tool por dataset](0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md)
+- [ADR-0027 · CLI de cliente: un cliente delgado del REST /v1, con `catalogo buscar` y `verificar <archivo>`](0027-cli-de-cliente.md)

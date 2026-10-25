@@ -6,6 +6,14 @@
 
 **Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).
 
+**Dirección nueva (2026-10-25):** la cobertura de la cola larga de datos.gov.co (~miles de datasets) se
+da con **conector genérico + buscador de catálogo (G6) + promoción curada**, no un tool por dataset
+([ADR-0026](decisions/0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md),
+[spec 09](specs/09-descubrimiento.md)). Y se abre el bloque de **canales de cliente** sobre el REST
+`/v1`: un **CLI de cliente** delgado con `catalogo buscar` y el batch `verificar <archivo>`
+([ADR-0027](decisions/0027-cli-de-cliente.md), [spec 10](specs/10-cli.md)), junto con la API con cuota,
+OGC API y archivos. Siguiente entregable concreto: la **ingesta del catálogo DCAT** (métricas de G6).
+
 **F6 en el navegador (2026-10-23):** GEO Copilot conectado a la puerta (Caddy, dos réplicas) con una llave propia y cuatro perfiles (justicia, estadísticas, normativa, territorio: 97 herramientas, bajo el tope de 128 de OpenAI), LLM gpt-5.4-mini. Cuatro preguntas reales con la cifra medida en la fuente: homicidios (8) y hurto de vehículos (95; 28 automotores y 67 motos) de Chía 2024; vigencia y artículos de la Ley 1581 (30); masacres en Granada (74); y el predio de un punto de Chía con su ficha, pintado y encuadrado en el mapa. La prueba halló tres fallas, corregidas: la cuota por llave se gastaba en abrir sesión y listar herramientas por MCP (un cliente con cuatro perfiles quedaba sin cupo: ahora solo `tools/call` gasta); el sobre no decía el lugar de un código DIVIPOLA (el agente supuso 05380 por Granada y entregó los datos de La Estrella: ahora `zona_usada.nombre`, regla 11 de `rt/1`, y el agente se corrige solo); y el juez de GEO Copilot leía solo 400 caracteres de cada resultado y le hizo retractar una cifra correcta (geo-copilot). MCP queda sin estado (`stateless_http`), porque Caddy reparte entre réplicas sin afinidad. Falta F6.2 (el panel «Cómo lo hice» con fuente y licencia), F6.3 (E2E en Playwright) y F6.4 (misma huella por las tres puertas).
 
 **Fiabilidad del agente con GEO Copilot (2026-10-24/25):** GEO Copilot hizo un plan de fiabilidad sobre la puerta con gpt-5.4-mini, y su batería de 32 preguntas pasó de 84,9 % a 29/32 en una corrida completa. Las tres fallas se arreglaron y, repetidas sobre el estado final, dieron 6/6. Cuatro cambios fueron de la puerta:
