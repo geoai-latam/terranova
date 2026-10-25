@@ -35,7 +35,7 @@ def _resultado(**over: object) -> dict[str, object]:
     return base
 
 
-def test_de_socrata_catalog_mapea_los_campos():
+def test_de_socrata_catalog_mapea_los_campos() -> None:
     d = de_socrata_catalog(_resultado())
     assert d.id_socrata == "jbjy-vk9h"
     assert d.titulo == "SECOP II - Contratos Electrónicos"
@@ -48,7 +48,7 @@ def test_de_socrata_catalog_mapea_los_campos():
     assert d.protocolo == "socrata"
 
 
-def test_entidad_cae_al_owner_y_luego_al_dominio():
+def test_entidad_cae_al_owner_y_luego_al_dominio() -> None:
     sin_attr = _resultado(resource={"id": "aaaa-bbbb"}, owner={"display_name": "DANE"})
     assert de_socrata_catalog(sin_attr).entidad == "DANE"
     solo_dominio = _resultado(
@@ -57,12 +57,12 @@ def test_entidad_cae_al_owner_y_luego_al_dominio():
     assert de_socrata_catalog(solo_dominio).entidad == "www.datos.gov.co"
 
 
-def test_resultado_sin_id_se_rechaza():
+def test_resultado_sin_id_se_rechaza() -> None:
     with pytest.raises(KeyError):
         de_socrata_catalog(_resultado(resource={"name": "sin id"}))
 
 
-def test_con_licencia_y_vivo():
+def test_con_licencia_y_vivo() -> None:
     con = de_socrata_catalog(_resultado())
     assert con.con_licencia() is True
     assert con.vivo(HOY) is True  # actualizado ayer
@@ -95,7 +95,7 @@ def _ds(entidad: str, licencia: str | None, fecha: str | None) -> DatasetDescubr
     )
 
 
-def test_metricas_resume_la_compuerta():
+def test_metricas_resume_la_compuerta() -> None:
     datasets = [
         _ds("IGAC", "CC BY 4.0", "2026-10-01T00:00:00Z"),
         _ds("IGAC", None, "2026-09-01T00:00:00Z"),
@@ -109,7 +109,7 @@ def test_metricas_resume_la_compuerta():
     assert m.top_entidades[0] == ("IGAC", 2)
 
 
-def test_a_jsonl_una_linea_por_dataset_con_sus_campos():
+def test_a_jsonl_una_linea_por_dataset_con_sus_campos() -> None:
     datasets = [_ds("IGAC", "CC BY 4.0", "2026-10-01T00:00:00Z")]
     lineas = a_jsonl(datasets).splitlines()
     assert len(lineas) == 1
