@@ -1,12 +1,20 @@
 # Estado
 
-*Actualizado: 2026-10-22.*
+*Actualizado: 2026-10-25.*
 
 ## Dónde estamos
 
 **Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).
 
 **F6 en el navegador (2026-10-23):** GEO Copilot conectado a la puerta (Caddy, dos réplicas) con una llave propia y cuatro perfiles (justicia, estadísticas, normativa, territorio: 97 herramientas, bajo el tope de 128 de OpenAI), LLM gpt-5.4-mini. Cuatro preguntas reales con la cifra medida en la fuente: homicidios (8) y hurto de vehículos (95; 28 automotores y 67 motos) de Chía 2024; vigencia y artículos de la Ley 1581 (30); masacres en Granada (74); y el predio de un punto de Chía con su ficha, pintado y encuadrado en el mapa. La prueba halló tres fallas, corregidas: la cuota por llave se gastaba en abrir sesión y listar herramientas por MCP (un cliente con cuatro perfiles quedaba sin cupo: ahora solo `tools/call` gasta); el sobre no decía el lugar de un código DIVIPOLA (el agente supuso 05380 por Granada y entregó los datos de La Estrella: ahora `zona_usada.nombre`, regla 11 de `rt/1`, y el agente se corrige solo); y el juez de GEO Copilot leía solo 400 caracteres de cada resultado y le hizo retractar una cifra correcta (geo-copilot). MCP queda sin estado (`stateless_http`), porque Caddy reparte entre réplicas sin afinidad. Falta F6.2 (el panel «Cómo lo hice» con fuente y licencia), F6.3 (E2E en Playwright) y F6.4 (misma huella por las tres puertas).
+
+**Fiabilidad del agente con GEO Copilot (2026-10-24/25):** GEO Copilot hizo un plan de fiabilidad sobre la puerta con gpt-5.4-mini, y su batería de 32 preguntas pasó de 84,9 % a 29/32 en una corrida completa. Las tres fallas se arreglaron y, repetidas sobre el estado final, dieron 6/6. Cuatro cambios fueron de la puerta:
+- un municipio se puede pedir por su nombre; si es ambiguo, la puerta responde `parametro_invalido` con los candidatos (regla 12 de `rt/1`, #76);
+- un código con homónimos lleva un aviso que los lista, también desde la caché (#76). Antes, un agente puso 08001 (Barranquilla) por «San Andrés»;
+- la ficha cierra con «sin uso comercial» cuando la fuente no lo permite (#77). Con «licencia: CC BY 4.0» a secas, un agente dijo que Open-Meteo se podía usar comercialmente;
+- la ficha del contrato de SECOP dice quién lo firmó, con quién y por cuánto (#78). Su descripción no tenía esas palabras y la búsqueda por palabras la ponía en el puesto 11.
+
+Queda abierto que el agente suponga el NIT de una entidad. Una salida es que la puerta resuelva la entidad por su nombre.
 
 | Spec F0 | Estado |
 |---|---|
