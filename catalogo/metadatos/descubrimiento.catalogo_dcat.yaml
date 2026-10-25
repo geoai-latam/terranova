@@ -1,0 +1,14 @@
+# Ficha técnica escrita a mano (spec 08): el catálogo es un índice propio, no una fuente que publique
+# metadatos legibles de sí misma. Se cosecha de dos catálogos DCAT (datos.gov.co y el Hub de la ICDE).
+fuente: descubrimiento.catalogo_dcat
+metodo: manual
+cosechado: '2026-10-25'
+origen: https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co
+pagina: https://www.datos.gov.co/
+titulo: "Catálogo de descubrimiento (DCAT de datos.gov.co + Hub de la ICDE)"
+descripcion: >
+  Índice de metadatos sobre fuentes oficiales (no datos): título, entidad, licencia declarada,
+  vigencia, protocolo y enlace, con un vector por fila para el buscador semántico (ADR-0028).
+idioma: Español
+frecuencia_declarada: diaria
+cobertura_declarada: Colombia

@@ -143,6 +143,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
 | `presidencia_victimas_minas_municipio` | ¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron? | Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia) | CC-BY-SA-4.0 | 2 |
 
+## meta
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terranova (índice de metadatos sobre fuentes oficiales) | por verificar | 1 |
+
 ## normativa
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |

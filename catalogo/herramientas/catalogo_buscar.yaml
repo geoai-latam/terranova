@@ -1,0 +1,29 @@
+id: catalogo_buscar
+version: 1
+familia: meta
+fuente: descubrimiento.catalogo_dcat
+pregunta: "¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia?"
+descripcion: >
+  Busca en el catálogo de fuentes oficiales (datos.gov.co y el Hub de la ICDE) por el SIGNIFICADO de la
+  pregunta (embeddings, ADR-0028), no por palabras exactas. Devuelve los datasets o capas candidatos
+  con su entidad, licencia, vigencia, protocolo y enlace, para consultarlos con el conector genérico o
+  saltar a la herramienta curada si ya existe. Es el buscador del catálogo (G6); la puerta no inventa
+  la respuesta, solo recupera candidatos y surte su procedencia.
+  (Fuente: catálogo DCAT de datos.gov.co y de la ICDE; licencia: por verificar.)
+entrada: {consulta: nombre}
+consulta:
+  operacion: buscar
+  tool: buscar_catalogo
+  argumentos: {consulta: "{consulta}", limite: 20}
+  campos: [id, titulo, entidad, licencia, actualizado_en, protocolo, url]
+salida: CandidatosCatalogo
+derivados:
+  coincidencias: {de: completitud_total, tipo: int}
+creditos: 1
+canario:
+  # La verdad se mide en el almacén desplegado (pgvector con los dos catálogos ingeridos): una
+  # consulta semántica trae al menos un candidato competente. El mínimo es 1 (crece con el catálogo).
+  entrada: {consulta: "áreas protegidas de un predio"}
+  minimos: {coincidencias: 1}
+  campos: [actualizado_en, coincidencias, entidad, id, licencia, protocolo, titulo, url]
+  latencia_max_ms: 10000
