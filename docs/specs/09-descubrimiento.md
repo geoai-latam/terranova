@@ -118,13 +118,14 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
 
 ## 9.6 Compuerta de G6
 
-- **Ingesta:** el catálogo DCAT ingerido con sus métricas (9.2) en `descubrimiento.datasets`, refrescado
-  a diario con huella y `obsoleto`. (La ingesta a JSONL + métricas ya está; falta el `scroll` completo y
-  el aterrizaje en PostGIS.)
-- **Buscador:** `catalogo_buscar` con **canario de verdad medida** —«para la pregunta X en el lugar L,
-  la fuente competente es el dataset Y de la entidad Z»— y prueba de que el agente hace **buscador →
-  conector genérico** y responde con procedencia, licencia y frescura.
-- **Honestidad:** una prueba de que un candidato sin licencia verificada sale marcado y no como apto, y
-  de que ningún dataset con datos personales entra al índice.
+- **Ingesta** ✅ (#84): la cosecha a JSONL con sus métricas (9.2); funciones puras probadas sin red.
+  Falta el `scroll` completo y el aterrizaje en PostGIS `descubrimiento.datasets` (bloqueado por la
+  decisión de dónde vive el catálogo).
+- **Buscador (lógica)** ✅ (#86): `buscar` casa la pregunta y ordena por valor; `catalogo-dcat buscar`
+  en terminal; validado en vivo. Falta exponerlo como herramienta **`rt/1`** por REST/MCP (conector
+  interno + `modo` en el ejecutor + ficha con **canario reproducible** + almacén en runtime): es una
+  decisión de **deploy** del catálogo, no solo código.
+- **Honestidad:** la lógica ya marca «sin licencia» y no indexa personas; la prueba como herramienta
+  `rt/1` va con la exposición.
 - **Promoción:** al menos una fuente de la cola larga **promovida desde el buscador** (no desde
-  FUENTES_OBJETIVO a mano), con su ficha y canario en verde.
+  FUENTES_OBJETIVO a mano), con su ficha y canario en verde — va después del `rt/1`.
