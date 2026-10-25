@@ -10,6 +10,7 @@ from terranova.descubrimiento import (
     a_jsonl,
     buscar,
     cargar_jsonl,
+    de_dcat_us,
     de_socrata_catalog,
     metricas,
 )
@@ -171,3 +172,66 @@ def test_buscar_filtra_por_entidad() -> None:
 def test_cargar_jsonl_redondea_lo_que_dejo_a_jsonl() -> None:
     orig = [_reg("a", licencia="CC BY", fecha="2026-10-01T00:00:00Z", vistas=5)]
     assert cargar_jsonl(a_jsonl(orig)) == orig  # frozen dataclass: igualdad por campos
+
+
+# --------------------------------------------------------- DCAT-US del Hub de la ICDE (ArcGIS)
+def _dcat(**over: object) -> dict[str, object]:
+    base: dict[str, object] = {
+        "identifier": "https://www.arcgis.com/home/item.html?id="
+        + "4a673b3d51c146abab5fd462992dd2c0&sublayer=0",
+        "title": "Dato Fundamental - Cuerpos de Agua 500k",
+        "description": "Cuerpos de agua a escala 1:500.000.",
+        "publisher": {"name": "Instituto Geográfico Agustín Codazzi"},
+        "keyword": ["Cartografía", "Cuerpos de agua", "Hidrografía"],
+        "theme": ["geospatial"],
+        "license": "http://creativecommons.org/licenses/by/4.0/",
+        "modified": "2026-09-30T00:00:00.000Z",
+        "landingPage": "https://datos.icde.gov.co/datasets/IGAC::cuerpos-de-agua",
+        "distribution": [
+            {"title": "ArcGIS Hub Dataset", "format": "Web Page", "accessURL": "https://hub/x"},
+            {
+                "title": "ArcGIS GeoService",
+                "format": "ArcGIS GeoServices REST API",
+                "accessURL": "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/x",
+            },
+        ],
+    }
+    base.update(over)
+    return base
+
+
+def test_de_dcat_us_mapea_capa_arcgis() -> None:
+    d = de_dcat_us(_dcat())
+    assert d.id_socrata == "4a673b3d51c146abab5fd462992dd2c0:0"  # item + sublayer
+    assert d.titulo == "Dato Fundamental - Cuerpos de Agua 500k"
+    assert d.entidad == "Instituto Geográfico Agustín Codazzi"
+    assert d.columnas == ("Cartografía", "Cuerpos de agua", "Hidrografía")
+    assert d.licencia == "http://creativecommons.org/licenses/by/4.0/"
+    assert d.actualizado_en == "2026-09-30T00:00:00.000Z"
+    assert d.protocolo == "arcgis_rest"
+    # la url es el endpoint REST, no la página del Hub
+    assert d.url == "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/x"
+
+
+def test_de_dcat_us_clasifica_base_vs_tematico() -> None:
+    assert de_dcat_us(_dcat()).categoria == "Dato temático"  # cuerpos de agua
+    base = de_dcat_us(_dcat(keyword=["Restitución", "Fotogrametría", "Planimetría", "Altimetría"]))
+    assert base.categoria == "Cartografía base"  # restitución del IGAC (la cola larga)
+
+
+def test_de_dcat_us_sin_rest_cae_a_la_pagina_del_hub() -> None:
+    d = de_dcat_us(_dcat(distribution=[{"title": "web", "format": "Web Page"}]))
+    assert d.url == "https://datos.icde.gov.co/datasets/IGAC::cuerpos-de-agua"
+
+
+def test_de_dcat_us_sin_identifier_se_rechaza() -> None:
+    with pytest.raises(KeyError):
+        de_dcat_us(_dcat(identifier=""))
+
+
+def test_dcat_us_entra_al_mismo_buscador_y_jsonl() -> None:
+    d = de_dcat_us(_dcat())
+    # el buscador es el mismo (un solo buscador, dos catálogos)
+    assert buscar([d], "cuerpos de agua", hoy=HOY) == [d]
+    # y redondea por JSONL conservando el protocolo
+    assert cargar_jsonl(a_jsonl([d])) == [d]

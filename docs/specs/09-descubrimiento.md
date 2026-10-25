@@ -14,11 +14,23 @@ herramienta.
 > la Discovery API topa en ~10.000). Medido en una muestra de 2.000: 36 % con licencia declarada, un
 > publicador (MinTIC) con ~63 % de la cuenta.
 
+> **Segundo catálogo DCAT (2026-10-25): las capas, no solo las tablas.** El descubrimiento tiene **dos**
+> catálogos DCAT, con la **misma** `DatasetDescubrible` y el **mismo** buscador: (1) datos.gov.co
+> (Socrata, **tablas**, `protocolo=socrata`) y (2) el **Hub de la ICDE** `datos.icde.gov.co` (ArcGIS Hub,
+> **DCAT-US 1.1**, **capas**, `protocolo=arcgis_rest`). `de_dcat_us` interpreta el segundo a la misma
+> fila, con la `url` del endpoint **ArcGIS REST** (lo que consume el conector). Es la «G6 para
+> geoportales», y **ya es código**, no hipótesis (`ingerir_dcat_us`). Medido: el feed de la ICDE topa en
+> ~10.000, **100 % CC BY 4.0 declarada**, ~99 % IGAC, y **~89 % es restitución cartográfica** (mapa base
+> troceado), solo ~11 % «Dato temático» — por eso `de_dcat_us` marca la **clase** (`_clase_icde`) y la
+> promoción se centra en el resto, no en las 9k primitivas. Detalle y cifras en
+> [FUENTES_OBJETIVO.md](../FUENTES_OBJETIVO.md).
+
 ## 9.1 Alcance
 
-- **Sí:** ingerir el catálogo DCAT de datos.gov.co como **metadatos**; exponer `catalogo_buscar` que, dada una
-  pregunta o un lugar, devuelve los datasets candidatos competentes con entidad, licencia, vigencia e
-  id; un criterio para **promover** un dataset a herramienta `rt/1`.
+- **Sí:** ingerir los catálogos DCAT (datos.gov.co de Socrata **y** el Hub DCAT-US de la ICDE) como
+  **metadatos**; exponer `catalogo_buscar` que, dada una pregunta o un lugar, devuelve los datasets o
+  capas candidatos competentes con entidad, licencia, vigencia e id; un criterio para **promover** a
+  herramienta `rt/1`.
 - **No:** un tool por dataset; indexar datos personales o geometría de predios (ADR-0014); sacar a
   producción un dataset sin licencia verificada (ADR-0019); reemplazar las fichas curadas de F5 —el
   buscador las **complementa** (la cola larga) y las **alimenta** (qué promover).
@@ -118,9 +130,10 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
 
 ## 9.6 Compuerta de G6
 
-- **Ingesta** ✅ (#84): la cosecha a JSONL con sus métricas (9.2); funciones puras probadas sin red.
-  Falta el `scroll` completo y el aterrizaje en PostGIS `descubrimiento.datasets` (bloqueado por la
-  decisión de dónde vive el catálogo).
+- **Ingesta** ✅ (#84 Socrata, #91 ICDE): la cosecha a JSONL con sus métricas (9.2); funciones puras
+  (`de_socrata_catalog`, `de_dcat_us`) probadas sin red y validadas en vivo contra las dos fuentes.
+  Falta el `scroll`/paginado completo (ambas topan en ~10.000) y el aterrizaje en PostGIS
+  `descubrimiento.datasets` (bloqueado por la decisión de dónde vive el catálogo).
 - **Buscador (lógica)** ✅ (#86): `buscar` casa la pregunta y ordena por valor; `catalogo-dcat buscar`
   en terminal; validado en vivo. Falta exponerlo como herramienta **`rt/1`** por REST/MCP (conector
   interno + `modo` en el ejecutor + ficha con **canario reproducible** + almacén en runtime): es una
