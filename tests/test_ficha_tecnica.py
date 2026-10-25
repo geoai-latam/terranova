@@ -24,7 +24,7 @@ def test_el_icfes_dice_sus_anios_y_que_esta_atrasado() -> None:
     assert f["cobertura"]["periodo"].startswith("20101 a 20224")
     assert f["frescura"]["datos_actualizados"] == "2023-08-23"
     assert any("semestral" in a and "2023-08-23" in a for a in f["alertas"])
-    assert any("llegan hasta 20224" in a for a in f["alertas"])
+    assert any("llegan hasta 2022:" in a for a in f["alertas"])  # «20224»: año y semestre
     assert any("registro único" in a for a in f["alertas"])  # el perfil: estudiantes repetidos
     assert f["es_geografica"] is False
 
@@ -87,3 +87,19 @@ def test_los_codigos_dicen_su_norma_y_los_que_nadie_define() -> None:
         if c["columna_fuente"] == "DISPONIBILIDAD_AGUA"
     )
     assert agua["codigos_norma"] == "dominio publicado por la fuente"
+
+
+def test_el_atraso_se_mide_a_la_fecha_de_la_cosecha() -> None:
+    """Una fuente diaria cosechada hace un mes no queda «atrasada» por eso, y tres días de atraso
+    de una diaria no son «datos no recientes»."""
+    from datetime import timedelta
+
+    from terranova.ficha_tecnica import atraso
+
+    f = CATALOGO.fuentes["cce.secop2.contratos"]
+    m = CATALOGO.metadatos["cce.secop2.contratos"]
+    assert atraso(f, m, m.cosechado + timedelta(days=30)) == []
+    tres = m.model_copy(update={"datos_actualizados": m.cosechado - timedelta(days=3)})
+    assert atraso(f, tres, m.cosechado) == []
+    viejo = m.model_copy(update={"datos_actualizados": m.cosechado - timedelta(days=30)})
+    assert atraso(f, viejo, m.cosechado)

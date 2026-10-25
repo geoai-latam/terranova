@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T01:09:25+00:00",
+ "grabado": "2026-10-25T03:34:49+00:00",
  "herramienta": "open_meteo_clima_serie",
  "llamadas": [
   {
@@ -26,14 +26,14 @@
       "rows": [
        {
         "fecha": "2023-01-01",
-        "precipitacion_mm": 5.8,
+        "precipitacion_mm": 6.4,
         "t_max_c": 18.3,
         "t_media_c": 12.5,
         "t_min_c": 7.1
        },
        {
         "fecha": "2023-01-02",
-        "precipitacion_mm": 2.7,
+        "precipitacion_mm": 2.8,
         "t_max_c": 18.3,
         "t_media_c": 12.6,
         "t_min_c": 9.4
@@ -257,12 +257,12 @@
       {
        "dias": 31,
        "mes": "2023-01",
-       "precipitacion_total_mm": 91.5,
+       "precipitacion_total_mm": 92.2,
        "t_media_c": 12.0
       }
      ],
      "nota": "cada fuente modela el punto a SU elevación (ver `elevacion_modelo_m`): en montaña, una elevación del modelo más baja que la real da temperaturas más altas (Bogotá: ERA5 2 594 m, POWER 1 790 m → enero 2023 11,9 °C contra 17,5 °C). Son reanálisis/pronósticos de malla, no estaciones",
-     "precipitacion_total_periodo_mm": 91.5,
+     "precipitacion_total_periodo_mm": 92.2,
      "pronostico": false,
      "punto": [
       -74.0721,
