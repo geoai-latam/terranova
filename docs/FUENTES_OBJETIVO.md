@@ -203,3 +203,31 @@ promover: licencia verificada por ítem (ADR-0019) y lista blanca sin datos de p
 **No es candidato de Socrata:** la **deforestación / alertas de bosque** (clave para EUDR) no está en
 datos.gov.co; viene de los geoservicios de IDEAM/SMByC y del GFC2020 de la UE — va como capa ráster/ArcGIS
 (ya en el plan), no por este catálogo.
+
+## Candidatos por geovisor / ArcGIS REST (entidades nacionales, 2026-10-25)
+
+Muchas entidades publican **geovisores** que, por debajo, son servidores **ArcGIS REST** (`MapServer` /
+`FeatureServer`) — el mismo protocolo que ya consumimos de IGAC, ANT, PNN, UPRA y DANE con el conector
+`arcgis_rest`. Son el **segundo camino de descubrimiento**, paralelo a G6: donde datos.gov.co es el
+catálogo DCAT de Socrata (tablas), el geoportal es el catálogo de **capas**. El catálogo nacional de
+geoservicios es la **ICDE / Colombia en Mapas** (`colombiaenmapas.gov.co`), que agrega los servicios de
+muchas entidades; una «G6 para geoportales» sería cosechar ese catálogo (CSW / ArcGIS Hub) igual que se
+cosecha el de Socrata. Mismas reglas: licencia por ítem (ADR-0019, BY-SA si no se sabe), sin datos de
+personas (ADR-0014), nunca login ni captcha (ADR-0018), y **una sola llamada de metadatos** por servidor
+para verificar (nunca carga, como el canario).
+
+| Candidato | Entidad | Qué aporta | Estado (medido) |
+|---|---|---|---|
+| **DANE — geoportal completo** | DANE | hoy solo usamos CNPV2018 por municipio; el mismo servidor trae **Divipola**, **MGN** histórico (1993–2025), **veredas**, y decenas de capas de indicadores por tema | **en vivo** (`geoportal.dane.gov.co/mparcgis`): ~90 carpetas; **cola larga** dentro de una fuente ya catalogada |
+| **Mapa de Tierras (hidrocarburos)** | **ANH** | bloques y contratos de hidrocarburos = **actividad/restricción de un lugar** (relevante para debida diligencia) | **en vivo** (`geovisor.anh.gov.co`, ArcGIS Server 11.1, 12 servicios); licencia por verificar |
+| **Catastro minero** | **ANM** | títulos y solicitudes mineras = restricción de un lugar | ya previsto en **ola 4**; confirmar endpoint ArcGIS vs. descarga |
+| **Concesiones e infraestructura** | **ANI**, **INVÍAS** | vías 4G, férreo, puertos, red vial nacional = contexto territorial | geoportal existe; **endpoint ArcGIS por verificar** (las URLs probadas no respondieron) |
+| **Páramos y ecosistemas** | **Minambiente / SIAC**, IDEAM | delimitación de páramos, ecosistemas, amenazas = restricción ambiental | **ojo al protocolo:** IDEAM/SIAC publican sobre todo **GeoServer (WMS/WFS)**, no ArcGIS REST → otro conector |
+
+**Fuera por licencia:** el **SGC** (Servicio Geológico Colombiano — geología, amenaza sísmica) tiene
+geoservicios ricos, pero su licencia es **restrictiva** (igual que sus capas OGC, ya descartadas en
+`CLAUDE.md`): no entra al catálogo sin permiso escrito.
+
+**Honestidad de estado:** «en vivo» = verificado hoy con una llamada de metadatos; «por verificar» = la
+entidad tiene geovisor pero no confirmé el endpoint ArcGIS (no se golpea el servidor a ciegas). Ninguno
+entra a producción sin su licencia verificada por ítem.
