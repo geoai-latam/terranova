@@ -6,51 +6,63 @@ con un tool por dataset. Este spec detalla la ingesta del catálogo, la herramie
 y la promoción. No cambia el contrato `rt/1` ni el ejecutor; agrega una fuente interna y una
 herramienta.
 
+> **Validación al implementar (2026-10-25).** La ingesta (primer código, `descubrimiento.py`) afinó tres
+> cosas de este spec: (a) el catálogo es **metadatos sobre fuentes**, no un `copia` de datos (ADR-0024
+> es para datos en bulk bajo lista blanca); vive en su **propio almacén** `descubrimiento.datasets`, no
+> en `copia.*`. (b) La ingesta solo obtiene la licencia **declarada**; «verificada» (ADR-0019) es un paso
+> manual en la **promoción**, no en la ingesta. (c) La pasada completa necesita `scroll` (el offset de
+> la Discovery API topa en ~10.000). Medido en una muestra de 2.000: 36 % con licencia declarada, un
+> publicador (MinTIC) con ~63 % de la cuenta.
+
 ## 9.1 Alcance
 
-- **Sí:** ingerir el catálogo DCAT de datos.gov.co como dato; exponer `catalogo_buscar` que, dada una
+- **Sí:** ingerir el catálogo DCAT de datos.gov.co como **metadatos**; exponer `catalogo_buscar` que, dada una
   pregunta o un lugar, devuelve los datasets candidatos competentes con entidad, licencia, vigencia e
   id; un criterio para **promover** un dataset a herramienta `rt/1`.
 - **No:** un tool por dataset; indexar datos personales o geometría de predios (ADR-0014); sacar a
   producción un dataset sin licencia verificada (ADR-0019); reemplazar las fichas curadas de F5 —el
   buscador las **complementa** (la cola larga) y las **alimenta** (qué promover).
 
-## 9.2 La ingesta (una copia de metadatos, no carga)
+## 9.2 La ingesta (metadatos sobre fuentes, no carga)
 
-El catálogo descubrible es una **copia** (ADR-0024) de **metadatos**, no de datos: una pasada del
-Discovery API de Socrata de datos.gov.co (`/api/catalog/v1`), paginada, en serie, con `User-Agent`
-propio, **una vez al día**, nunca por pregunta. Es el mismo espíritu del canario: metadatos, no bulk
-de datos.
+El catálogo descubrible es **metadatos sobre fuentes** en su **propio almacén** `descubrimiento.datasets`
+(no un `copia.*`, que es para datos en bulk bajo lista blanca, ADR-0024): una pasada del Discovery API
+de Socrata de datos.gov.co (`https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co`),
+paginada, en serie, con `User-Agent` propio, **una vez al día**, nunca por pregunta — con `scroll`
+(no solo `offset`, que topa en ~10.000) para la pasada completa. Es el mismo espíritu del canario:
+metadatos, no bulk de datos.
 
-Por cada dataset se guarda:
+Por cada dataset se guarda (lo que ya lee `de_socrata_catalog`):
 
 ```yaml
-# fila de copia.catalogo_dcat (o catalogo/descubribles), una por dataset
+# fila de descubrimiento.datasets, una por dataset
 id_socrata: "jbjy-vk9h"                 # el 4x4
 titulo: "SECOP II - Contratos Electrónicos"
 descripcion: "..."                       # resumen de la fuente
-entidad: "Colombia Compra Eficiente"     # dueño/publisher (competencia a confirmar)
+entidad: "Colombia Compra Eficiente"     # attribution / dueño (competencia a confirmar al promover)
 categoria: "Gastos Gubernamentales"
 columnas: [nombre_entidad, valor_del_contrato, ciudad, ...]   # para casar preguntas con campos
-licencia: {spdx: CC-BY-SA-4.0, verificada: null}   # por ítem (ADR-0019); null = por verificar
-frecuencia: "diaria"                     # accrualPeriodicity declarada
-actualizado_en: "2026-10-25"             # última actualización declarada por la fuente
-filas: 30500694                          # tamaño declarado, si lo expone
+licencia_declarada: "Creative Commons Attribution 4.0"   # lo que DECLARA la fuente; verificar es manual
+verificada: false                        # ADR-0019: se pone al promover, no en la ingesta
+actualizado_en: "2026-10-24"             # última actualización declarada por la fuente
+vistas: 1234                             # señal de uso, para ordenar la promoción
+descargas: 56
 protocolo: socrata
 url: "https://www.datos.gov.co/resource/jbjy-vk9h.json"
 promovido_a: "secop_*"                   # herramienta(s) rt/1 si ya está curado; null si no
 ```
 
-El manifiesto de la copia (`copia.versiones`) lleva fecha, huella y conteos. Si la copia pasa su
-`sla_actualizacion`, el buscador responde con `obsoleto` y su `consultado_en` original (ADR-0008).
+El almacén lleva su fecha, huella y conteos (como una copia, aunque no lo sea). Si pasa su SLA de
+refresco, el buscador responde con `obsoleto` y su `consultado_en` original (ADR-0008).
 
-**Métricas de la ingesta (compuerta de la ingesta):** nº total de datasets; cuántos con **licencia
-verificable**; cuántos por **entidad**; cuántos **vivos** (`actualizado_en` < N meses); cuántos ya
-**promovidos**. Se espera que «lo que decide» sea de unos **pocos cientos**.
+**Métricas de la ingesta (compuerta):** nº total de datasets; cuántos con **licencia declarada**;
+cuántos por **entidad**; cuántos **vivos** (`actualizado_en` < N meses); cuántos ya **promovidos**. Se
+espera que «lo que decide» sea de unos **pocos cientos** (medido: MinTIC solo acapara ~63 % de la
+cuenta; las entidades que deciden tienen decenas cada una).
 
 ## 9.3 La herramienta `catalogo_buscar`
 
-Una herramienta `rt/1` de la familia `meta` (o `territorio`), con conector interno sobre la copia.
+Una herramienta `rt/1` de la familia `meta`, con conector interno propio sobre `descubrimiento.datasets`.
 
 ```yaml
 id: catalogo_buscar
@@ -63,7 +75,7 @@ consulta:
   operacion: buscar_texto
   resultado: lista
   # casa la consulta contra titulo + descripcion + columnas + entidad (texto completo en español);
-  # ordena por señal de valor: ya promovido > licencia verificada > vivo > tamaño/uso
+  # ordena por señal de valor: ya promovido > con licencia declarada > vivo > uso (vistas/descargas)
 salida: CandidatosCatalogo
 campos: [id_socrata, titulo, entidad, licencia, actualizado_en, promovido_a, url]
 ```
@@ -99,14 +111,16 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
 
 - **Agregados en la cola larga:** dependen de `$group` en Socrata (pieza **G1**). Hasta tenerlo, un
   `count`/`sum` sobre un dataset no promovido cae en copia (ADR-0024) o no se ofrece.
-- **Contrato y ejecutor:** sin cambios. `catalogo_buscar` es una herramienta más; su conector interno
-  es análogo al de copia (ADR-0024), con SQL parametrizado y vocabulario cerrado (ADR-0012).
+- **Contrato y ejecutor:** sin cambios. `catalogo_buscar` es una herramienta más; su conector interno es
+  propio (sobre `descubrimiento.datasets`), con SQL parametrizado y vocabulario cerrado (ADR-0012), como
+  el de copia pero sin ser una copia.
 - **Superficie:** `catalogo_buscar` sale por REST, MCP y OGC como cualquier herramienta (spec 03).
 
 ## 9.6 Compuerta de G6
 
-- **Ingesta:** el catálogo DCAT ingerido con sus métricas (9.2), refrescado a diario como una copia,
-  con huella y `obsoleto`.
+- **Ingesta:** el catálogo DCAT ingerido con sus métricas (9.2) en `descubrimiento.datasets`, refrescado
+  a diario con huella y `obsoleto`. (La ingesta a JSONL + métricas ya está; falta el `scroll` completo y
+  el aterrizaje en PostGIS.)
 - **Buscador:** `catalogo_buscar` con **canario de verdad medida** —«para la pregunta X en el lugar L,
   la fuente competente es el dataset Y de la entidad Z»— y prueba de que el agente hace **buscador →
   conector genérico** y responde con procedencia, licencia y frescura.
