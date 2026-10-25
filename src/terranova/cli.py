@@ -9,6 +9,10 @@
     terranova catalogo-dcat ingerir [--limite-paginas N] [--salida f.jsonl]   (G6: cosechar)
     terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]    (G6: buscador)
 
+Cliente del REST /v1 (ADR-0027; TERRANOVA_PUERTA y TERRANOVA_LLAVE):
+    terranova consultar <herramienta> --<arg> <valor> [--json]
+    terranova herramientas [--familia F] · terranova fuentes · terranova uso
+
 La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 """
 
@@ -242,6 +246,10 @@ def main() -> None:
         registro_desde_entorno().fijar_nivel(argumentos[2], argumentos[3])
         print(f"{argumentos[2]}: nivel {argumentos[3]}")
         sys.exit(0)
+    if argumentos and argumentos[0] in ("consultar", "herramientas", "fuentes", "uso"):
+        from terranova import cliente  # cliente delgado del REST (ADR-0027); no carga el núcleo
+
+        sys.exit(getattr(cliente, argumentos[0])(argumentos[1:]))
     if argumentos and not argumentos[0].startswith("-"):
         # antes, un subcomando mal escrito (`terranova orgs --help`) levantaba el servidor
         print(f"subcomando desconocido: {' '.join(argumentos)}", file=sys.stderr)
