@@ -99,6 +99,25 @@ def test_zona_por_divipola_dice_el_lugar() -> None:
     assert desconocido is not None and desconocido.nombre is None
 
 
+def test_un_municipio_con_homonimos_lo_avisa() -> None:
+    """Hay cinco «San Andrés»: consultar uno por código avisa de los otros, para que el agente
+    pregunte o diga cuál tomó (GEO Copilot, plan de fiabilidad F4)."""
+    from terranova.ejecutor import _aviso_de_homonimos, _municipios, homonimos
+
+    otros = homonimos("88001", _municipios())
+    assert [o[:5] for o in otros] == ["05647", "23670", "52835", "68669"]
+    assert homonimos("25175", _municipios()) == []  # Chía es único
+    assert homonimos("52835", _municipios()) == []  # SAN ANDRES DE TUMACO no es «San Andrés»
+    h = CATALOGO.herramientas["cnmh_masacres_municipio"]
+    aviso = _aviso_de_homonimos(h, {"municipio_divipola": "88001"})
+    assert (
+        aviso
+        and aviso.startswith("Se consultó 88001 = SAN ANDRES")
+        and "68669 SAN ANDRES (SANTANDER)" in aviso
+    )
+    assert _aviso_de_homonimos(h, {"municipio_divipola": "25175"}) is None
+
+
 def test_la_geometria_sale_en_2d() -> None:
     """Regla 8 de rt/1: lon y lat. USGS manda la profundidad como tercera coordenada."""
     from terranova.ejecutor import a_2d
@@ -144,3 +163,32 @@ async def test_un_anio_fuera_de_la_fuente_no_es_cero_casos(anio: int, estado: st
     )
     assert sobre.estado == estado
     assert any("2015 a 2024" in a for a in sobre.avisos) is (estado == "fuera_de_cobertura")
+
+
+@pytest.mark.parametrize(
+    ("texto", "codigo"),
+    [
+        ("Chía", "25175"),
+        ("chia", "25175"),
+        ("San Andrés, Santander", "68669"),
+        ("San Andrés, San Andrés y Providencia", "88001"),
+        ("Tumaco", "52835"),  # SAN ANDRES DE TUMACO
+        ("Bogotá D.C.", "11001"),
+        ("Granada, Meta", "50313"),
+    ],
+)
+def test_divipola_por_nombre(texto: str, codigo: str) -> None:
+    """Plan de fiabilidad F4: el agente puede dar el nombre y la puerta pone el código."""
+    h = CATALOGO.herramientas["cnmh_masacres_municipio"]
+    assert validar_entrada(h, {"municipio_divipola": texto}) == {"municipio_divipola": codigo}
+
+
+def test_divipola_por_nombre_ambiguo_lista_los_codigos() -> None:
+    h = CATALOGO.herramientas["cnmh_masacres_municipio"]
+    with pytest.raises(ErrorEntrada) as e:
+        validar_entrada(h, {"municipio_divipola": "San Andrés"})
+    assert "ambiguo" in str(e.value) and "88001" in str(e.value) and "68669" in str(e.value)
+    with pytest.raises(ErrorEntrada, match="no hay un municipio"):
+        validar_entrada(h, {"municipio_divipola": "Macondo"})
+    with pytest.raises(ErrorEntrada, match="formato"):
+        validar_entrada(h, {"municipio_divipola": "25175' OR 1=1"})

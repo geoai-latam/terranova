@@ -5,10 +5,10 @@ fuente: dane.divipola
 pregunta: "¿Cuál es el código DIVIPOLA de este municipio?"
 descripcion: >
   Código DIVIPOLA (5 dígitos) de los municipios cuyo nombre contiene el texto dado, con su
-  departamento y las coordenadas de su cabecera (lon, lat). Úsela antes de cualquier herramienta
-  que pida municipio_divipola, o un punto de un municipio, en vez de suponerlos. Escriba el nombre
-  con tildes (Chía, Bogotá): sin ellas no coincide. Si hay varios municipios con el mismo nombre,
-  salen todos con su departamento.
+  departamento y las coordenadas de su cabecera (lon, lat). Úsela para el punto de un municipio en
+  vez de suponerlo; las herramientas que piden municipio_divipola aceptan también el nombre.
+  Escriba el nombre con tildes (Chía, Bogotá): sin ellas no coincide. Si hay varios municipios con
+  el mismo nombre, salen todos con su departamento.
   (Fuente: DANE; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:

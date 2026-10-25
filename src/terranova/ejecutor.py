@@ -96,6 +96,8 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
+        if tipo == "divipola" and not v.isdigit():
+            return municipio_por_nombre(nombre, v, _municipios())
         return v
     if len(v) > MAX_TEXTO_LIBRE or not texto_es_limpio(v):
         raise ErrorEntrada(nombre, f"texto de hasta {MAX_TEXTO_LIBRE} caracteres, sin control")
@@ -450,12 +452,14 @@ class Ejecutor:
             guardado = await self.almacen.leer(k)
             if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
                 metricas.CACHE_ACIERTOS.inc()
-                return self._desde_cache(guardado, "cache")
+                return _con_homonimos(self._desde_cache(guardado, "cache"), h, valores)
         try:
             sobre = await self._desde_fuente(h, fuente, valores)
         except ErrorEjecucion as exc:
             if guardado and exc.codigo in CODIGOS_DE_CAIDA:
-                return self._desde_cache(guardado, "obsoleto", exc.codigo)
+                return _con_homonimos(
+                    self._desde_cache(guardado, "obsoleto", exc.codigo), h, valores
+                )
             raise
         if self.almacen is not None and sobre.estado != "parcial":
             await self.almacen.guardar(
@@ -463,7 +467,7 @@ class Ejecutor:
                 {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
                 RETENCION_S,
             )
-        return sobre
+        return _con_homonimos(sobre, h, valores)
 
     def _desde_cache(
         self, guardado: dict[str, Any], modo: Literal["cache", "obsoleto"], causa: str | None = None
@@ -695,6 +699,103 @@ def _municipios() -> dict[str, Any]:
     pesa 0,3 s y el ejecutor se crea en cada solicitud (Schemathesis se colgaba)."""
     municipios: dict[str, Any] = cargar_cobertura("cobertura_catastral")["municipios"]
     return municipios
+
+
+def _plano(texto: str) -> str:
+    sin = unicodedata.normalize("NFD", texto.casefold())
+    return " ".join("".join(c for c in sin if unicodedata.category(c) != "Mn").split())
+
+
+def _clave(texto: str) -> str:
+    """Solo letras y espacios: «BOGOTA, D.C.» → «bogota d c»."""
+    return " ".join(re.sub(r"[^a-zñ ]", " ", _plano(texto)).split())
+
+
+_VACIAS = frozenset({"y", "de", "del", "la", "el", "los", "las"})
+
+
+def municipio_por_nombre(param: str, texto: str, municipios: dict[str, Any]) -> str:
+    """El código DIVIPOLA de un municipio dicho por su nombre («Chía», «San Andrés, Santander»).
+
+    Un agente que ponía el código de memoria mandó 08001 (Barranquilla) por «San Andrés» (GEO
+    Copilot, plan de fiabilidad F4): con el nombre, la puerta resuelve con el índice y, si hay
+    varios, no elige: el error los lista con su código."""
+    nombre, _, depto = texto.partition(",")
+    # «Bogotá D.C.» y «Bogotá, D.C.»: «D.C.» es Distrito Capital, no un departamento aparte
+    q = re.sub(r"( d ?c| distrito capital)$", "", _clave(nombre))
+    qd = set(re.sub(r"^(d ?c|distrito capital)$", "", _clave(depto)).split()) - _VACIAS
+    todos = [(c, m) for c, m in sorted(municipios.items()) if m.get("municipio")]
+    exactos = [(c, m) for c, m in todos if _clave(m["municipio"]) == q]
+    parecidos = [(c, m) for c, m in todos if _clave(m["municipio"]).startswith(q + " ")]
+    # «Tumaco» es SAN ANDRES DE TUMACO: el nombre como palabras dentro del oficial, de último
+    contienen = [(c, m) for c, m in todos if f" {q} " in f" {_clave(m['municipio'])} "]
+    candidatos = exactos or parecidos or contienen
+    if qd:
+        # «San Andrés y Providencia» está en «ARCHIPIELAGO DE SAN ANDRES, PROVIDENCIA Y …»
+        candidatos = [
+            (c, m) for c, m in candidatos if qd <= set(_clave(m.get("departamento") or "").split())
+        ]
+    if len(candidatos) == 1:
+        return candidatos[0][0]
+    if not candidatos:
+        raise ErrorEntrada(
+            param,
+            f"no hay un municipio llamado «{texto.strip()}» en el DIVIPOLA; búscalo con "
+            "dane_divipola_buscar o usa su código",
+        )
+    vistos = {c for c, _ in candidatos}
+    lista = [*candidatos, *((c, m) for c, m in exactos + parecidos if c not in vistos)]
+    opciones = "; ".join(
+        f"{c} {m['municipio']} ({m.get('departamento') or '?'})" for c, m in lista[:8]
+    ) + (f"; y {len(lista) - 8} más" if len(lista) > 8 else "")
+    raise ErrorEntrada(
+        param,
+        f"«{texto.strip()}» es ambiguo: {len(lista)} municipios se llaman así: {opciones}. Usa el "
+        "código o «nombre, departamento»",
+    )
+
+
+def homonimos(codigo: str, municipios: dict[str, Any], *, tope: int = 6) -> list[str]:
+    """Los otros municipios que se llaman igual que `codigo` o empiezan por su nombre («SAN
+    ANDRES»: el de Santander, SAN ANDRES DE SOTAVENTO…), como «código NOMBRE (DEPTO)»."""
+    nombre = (municipios.get(codigo) or {}).get("municipio")
+    if not nombre:
+        return []
+    base = _plano(nombre)
+    otros = []
+    for cod, m in sorted(municipios.items()):
+        otro = _plano(m.get("municipio") or "")
+        if cod != codigo and (otro == base or otro.startswith(base + " ")):
+            otros.append(f"{cod} {m['municipio']} ({m.get('departamento') or '?'})")
+    return otros[:tope] + ([f"y {len(otros) - tope} más"] if len(otros) > tope else [])
+
+
+def _aviso_de_homonimos(h: Herramienta, v: dict[str, Any]) -> str | None:
+    """Con un municipio por código, el hecho de que hay otros con ese nombre. Un agente que puso de
+    memoria 88001 para «San Andrés» respondía «no hay masacres» sin decir que hay cinco San Andrés
+    (GEO Copilot, plan de fiabilidad F4): con el aviso, decide si pregunta o dice cuál tomó."""
+    municipios = _municipios()
+    for nombre, tipo in h.entrada.items():
+        if tipo != "divipola" or not isinstance(v.get(nombre), str):
+            continue
+        if otros := homonimos(v[nombre], municipios):
+            lugar = municipios[v[nombre]]
+            depto = lugar.get("departamento") or "?"
+            return (
+                f"Se consultó {v[nombre]} = {lugar['municipio']} ({depto}). "
+                f"Otros municipios con ese nombre: {'; '.join(otros)}. Si la pregunta era por "
+                "otro, no se consultó."
+            )
+    return None
+
+
+def _con_homonimos(sobre: Sobre, h: Herramienta, v: dict[str, Any]) -> Sobre:
+    """El sobre con el aviso de homónimos. Se agrega al servir (de la fuente o de la caché) y no se
+    guarda en la caché: sale del índice de municipios, no de la fuente."""
+    aviso = _aviso_de_homonimos(h, v)
+    if not aviso or aviso in sobre.avisos:
+        return sobre
+    return sobre.model_copy(update={"avisos": [*sobre.avisos, aviso]})
 
 
 def _zona(
