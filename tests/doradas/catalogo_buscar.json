@@ -1,0 +1,57 @@
+{
+ "grabado": "2026-10-25T00:00:00+00:00",
+ "herramienta": "catalogo_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "consulta": "áreas protegidas de un predio",
+    "limite": 20
+   },
+   "conector": "catalogo_dcat",
+   "tool": "buscar_catalogo",
+   "respuesta": {
+    "artifacts": [
+     {
+      "kind": "table",
+      "columns": [
+       "id",
+       "titulo",
+       "entidad",
+       "licencia",
+       "actualizado_en",
+       "protocolo",
+       "url"
+      ],
+      "rows": [
+       {
+        "id": "4a673b3d51c146abab5fd462992dd2c0:0",
+        "titulo": "runap - Registro Único Nacional de Áreas Protegidas",
+        "entidad": "Parques Nacionales Naturales de Colombia",
+        "licencia": "http://creativecommons.org/licenses/by/4.0/",
+        "actualizado_en": "2026-09-30T00:00:00.000Z",
+        "protocolo": "arcgis_rest",
+        "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer"
+       },
+       {
+        "id": "7365da6723ee43ff9124d8c7777dbe64:3",
+        "titulo": "Dato Fundamental - Límites de áreas protegidas",
+        "entidad": "Instituto Geográfico Agustín Codazzi",
+        "licencia": "http://creativecommons.org/licenses/by/4.0/",
+        "actualizado_en": "2026-09-30T00:00:00.000Z",
+        "protocolo": "arcgis_rest",
+        "url": "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/MapServer"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "vistos": 2,
+      "total": 2,
+      "truncado": false
+     }
+    }
+   }
+  }
+ ]
+}

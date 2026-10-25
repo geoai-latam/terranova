@@ -93,7 +93,14 @@ TipoEntrada = Literal[
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 
 Familia = Literal[
-    "territorio", "contratacion", "empresas", "normativa", "justicia", "estadisticas", "ambiente"
+    "territorio",
+    "contratacion",
+    "empresas",
+    "normativa",
+    "justicia",
+    "estadisticas",
+    "ambiente",
+    "meta",  # G6 (ADR-0026/0028): el buscador del catálogo, `catalogo_buscar`
 ]
 UsoComercial = Literal["si", "no", "por_verificar"]
 

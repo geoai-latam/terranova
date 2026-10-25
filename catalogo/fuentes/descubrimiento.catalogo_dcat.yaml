@@ -1,0 +1,47 @@
+id: descubrimiento.catalogo_dcat
+titulo: "Catálogo de descubrimiento (DCAT de datos.gov.co + Hub de la ICDE)"
+entidad: Terranova (índice de metadatos sobre fuentes oficiales)
+competencia: "índice propio de metadatos; la competencia y la licencia son de cada fuente indexada"
+acto: null
+# El catálogo es METADATOS sobre fuentes (ADR-0026), no datos: por dataset/capa guarda título,
+# descripción, entidad, licencia DECLARADA, vigencia, protocolo y enlace. No indexa datos personales
+# ni geometría de predios (ADR-0014). La licencia del índice en sí queda por verificar; la de cada
+# candidato se surte en su fila y se verifica al promover (ADR-0019).
+licencia:
+  spdx: null
+  url: https://www.datos.gov.co/
+  verificada: null
+  evidencia: https://api.us.socrata.com/api/catalog/v1?domains=www.datos.gov.co
+  cita: "metadatos de catálogo público; licencia por ítem en cada fila"
+uso_comercial: por_verificar
+clase_acceso: api
+atribucion: "Fuente: catálogo DCAT de datos.gov.co y del Hub de datos abiertos de la ICDE"
+protocolo: api_propia
+conector: catalogo_dcat
+url: https://www.datos.gov.co/
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: borrador
+campos:
+  id: {nombre: id, tipo: str, desc: "id del dataset (4x4 de Socrata) o de la capa (ítem de ArcGIS)"}
+  titulo: {nombre: titulo, tipo: str, desc: "título de la fuente"}
+  entidad: {nombre: entidad, tipo: str, desc: "entidad/dueño que la publica"}
+  licencia: {nombre: licencia, tipo: str, desc: "licencia declarada (por verificar al promover)"}
+  actualizado_en: {nombre: actualizado_en, tipo: str, desc: "última actualización declarada"}
+  protocolo: {nombre: protocolo, tipo: str, desc: "socrata (tabla) o arcgis_rest (capa)"}
+  url: {nombre: url, tipo: str, desc: "endpoint para consultar con el conector genérico"}
+dcat: {publisher: Terranova, theme: meta, accrualPeriodicity: daily}
+# Spec 07: medido al ingerir los dos catálogos el 2026-10-25.
+perfil:
+  medido: '2026-10-25'
+  fila: un dataset (Socrata) o una capa (ICDE) del catálogo, con sus metadatos y su vector
+  clave: {columna: id, unica: true}
+  operaciones:
+    filtrar: 0.95
+  hallazgos:
+  - el buscador es semántico (embeddings multilingües e5, ADR-0028), no por palabras exactas
+  - la licencia es por ítem; la del índice en sí queda por verificar (ADR-0019)
+  - no indexa datos personales ni geometría de predios (ADR-0014)
+  decision: semántico con embeddings; piso de similitud y desempate por valor (licencia, frescura)
