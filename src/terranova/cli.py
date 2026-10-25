@@ -6,6 +6,7 @@
     terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
     terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
+    terranova catalogo-dcat ingerir [--limite-paginas N] [--salida f.jsonl]   (G6: catálogo DCAT)
 
 La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 """
@@ -156,10 +157,43 @@ def copias(argumentos: list[str]) -> int:
         time.sleep(a.cada_horas * 3600)
 
 
+def catalogo_dcat(argumentos: list[str]) -> int:
+    """Ingiere el catálogo DCAT de datos.gov.co (G6, ADR-0026) a JSONL y muestra sus métricas."""
+    import pathlib
+
+    from terranova.descubrimiento import a_jsonl, ingerir, metricas
+
+    parser = argparse.ArgumentParser(prog="terranova catalogo-dcat ingerir")
+    parser.add_argument("--limite-paginas", type=int, help="acota la cosecha (desarrollo)")
+    parser.add_argument("--por-pagina", type=int, default=1000)
+    parser.add_argument("--salida", default="datos_locales/catalogo_dcat.jsonl")
+    a = parser.parse_args(argumentos)
+
+    datasets = ingerir(limite_paginas=a.limite_paginas, por_pagina=a.por_pagina)
+    salida = pathlib.Path(a.salida)
+    salida.parent.mkdir(parents=True, exist_ok=True)
+    salida.write_text(a_jsonl(datasets) + "\n", encoding="utf-8")
+    m = metricas(datasets)
+
+    def pct(x: int) -> str:
+        return f"{100 * x // m.total}%" if m.total else "-"
+
+    print(f"catálogo: {m.total} datasets → {a.salida}")
+    print(f"  con licencia declarada: {m.con_licencia} ({pct(m.con_licencia)})")
+    print(f"  vivos (< 12 meses):     {m.vivos} ({pct(m.vivos)})")
+    print(f"  entidades distintas:    {m.entidades}")
+    print("  top entidades:")
+    for ent, n in m.top_entidades:
+        print(f"    {n:>5}  {ent[:70]}")
+    return 0
+
+
 def main() -> None:
     argumentos = sys.argv[1:]
     if argumentos[:2] == ["copias", "actualizar"]:
         sys.exit(copias(argumentos[2:]))
+    if argumentos[:2] == ["catalogo-dcat", "ingerir"]:
+        sys.exit(catalogo_dcat(argumentos[2:]))
     if argumentos[:1] == ["canarios"]:
         sys.exit(canarios(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:
