@@ -105,6 +105,45 @@ herramienta curada si `promovido_a` no es null).
 - **Personas (ADR-0014):** un dataset con datos personales no entra al índice; nunca se busca por
   cédula ni por nombre de persona.
 
+## 9.3b Flujo de consumo y economía de contexto (por qué no un tool por dataset)
+
+El argumento central de [ADR-0026](../decisions/0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md):
+decenas de miles de datasets **no pueden** ser decenas de miles de herramientas. Ya las ~153 curadas
+pasan el **tope de 128 de OpenAI** (por eso GEO Copilot usa perfiles por familia). Un tool por dataset
+reventaría el contexto del LLM antes de empezar. La puerta **no tiene LLM** (ADR-0012): el catálogo
+(los ~20k de Socrata + los ~10k de la ICDE) vive en el almacén `descubrimiento.datasets`, se consulta
+por **SQL/texto** y **nunca entra a un prompt**.
+
+Lo que el MCP expone es un conjunto **pequeño y fijo**: (1) las **herramientas curadas** (las fuentes
+promovidas, en perfiles ≤128), (2) **una** herramienta de descubrimiento `catalogo_buscar` (familia
+`meta`), y (3) **un conector genérico por protocolo** (`datos-abiertos-mcp` para Socrata; el consumo
+`arcgis_rest` para las capas de la ICDE). Tres tipos de pieza, no treinta mil.
+
+El consumo es en **dos pasos, como un buscador**:
+
+```
+pregunta del usuario
+   │  "¿qué me restringe este polígono ambientalmente?"
+   ▼
+① catalogo_buscar(consulta, lugar?)       ← la puerta casa texto en el ALMACÉN (SQL, vocabulario
+   │                                          cerrado, ADR-0012) y devuelve SOLO el top-N (≤20):
+   │                                          id · entidad · licencia · vigencia · url · promovido_a
+   ▼
+② el agente elige UN candidato y:
+     ├─ promovido_a ≠ null  → llama la herramienta CURADA (ficha + canario)
+     └─ promovido_a = null  → llama el conector GENÉRICO con ese id + params
+            · Socrata  → datos-abiertos-mcp(id, $where/$select…)
+            · ICDE     → arcgis_rest(url, punto/bbox → features)
+   ▼
+sobre rt/1 (estado · dato · procedencia · licencia · completitud)
+```
+
+El contexto del LLM en todo momento = **la lista fija de herramientas** + **los ≤20 resultados de la
+pregunta actual**, nunca el corpus. Es *retrieval*, no *stuffing*: RAG en espíritu pero **determinista**
+(coincidencia de texto + orden por valor), sin embeddings y sin LLM en la puerta. Ahí vive la
+«libertad» de consultar cualquiera de las miles de fuentes, no en miles de tools ni en SQL libre
+escrito por un modelo.
+
 ## 9.4 Promoción a herramienta curada
 
 Un dataset del catálogo se **promueve** a una ficha `rt/1` (F5) cuando cumple el umbral de valor:
