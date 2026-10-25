@@ -8,6 +8,8 @@ import pytest
 from terranova.descubrimiento import (
     DatasetDescubrible,
     a_jsonl,
+    buscar,
+    cargar_jsonl,
     de_socrata_catalog,
     metricas,
 )
@@ -116,3 +118,56 @@ def test_a_jsonl_una_linea_por_dataset_con_sus_campos() -> None:
     fila = json.loads(lineas[0])
     assert fila["entidad"] == "IGAC" and fila["licencia"] == "CC BY 4.0"
     assert fila["url"].endswith("/resource/x.json")
+
+
+# --------------------------------------------------------------------------- buscador (spec 09)
+def _reg(
+    id_: str,
+    *,
+    licencia: str | None = None,
+    fecha: str | None = None,
+    vistas: int = 0,
+    titulo: str = "dato catastro",
+    entidad: str = "IGAC",
+) -> DatasetDescubrible:
+    return DatasetDescubrible(
+        id_socrata=id_,
+        titulo=titulo,
+        descripcion="",
+        entidad=entidad,
+        categoria=None,
+        columnas=(),
+        licencia=licencia,
+        actualizado_en=fecha,
+        vistas=vistas,
+        descargas=0,
+        url=f"https://www.datos.gov.co/resource/{id_}.json",
+    )
+
+
+def test_buscar_casa_todas_las_palabras_sin_tildes() -> None:
+    a = _reg("a", titulo="Contratos de farmacia", entidad="SECOP", vistas=10)
+    b = _reg("b", titulo="Áreas protegidas")  # no casa «farmacia»
+    hallados = buscar([a, b], "CONTRATOS farmacia", hoy=HOY)  # sin tildes ni mayúsculas
+    assert [d.id_socrata for d in hallados] == ["a"]
+
+
+def test_buscar_ordena_con_licencia_luego_vivo_luego_uso() -> None:
+    sin = _reg("sin", licencia=None, fecha=None, vistas=100)  # sin licencia: último
+    lic_viejo = _reg("licviejo", licencia="CC BY", fecha="2020-01-01T00:00:00Z")
+    vivo_poco = _reg("vivo1", licencia="CC BY", fecha="2026-10-01T00:00:00Z", vistas=1)
+    vivo_mucho = _reg("vivo2", licencia="CC BY", fecha="2026-10-01T00:00:00Z", vistas=999)
+    orden = buscar([sin, lic_viejo, vivo_poco, vivo_mucho], "catastro", hoy=HOY)
+    assert [d.id_socrata for d in orden] == ["vivo2", "vivo1", "licviejo", "sin"]
+
+
+def test_buscar_filtra_por_entidad() -> None:
+    igac = _reg("i", licencia="CC BY", fecha="2026-10-01T00:00:00Z", entidad="IGAC")
+    dane = _reg("d", licencia="CC BY", fecha="2026-10-01T00:00:00Z", entidad="DANE")
+    hallados = buscar([igac, dane], "catastro", entidad="igac", hoy=HOY)
+    assert [d.id_socrata for d in hallados] == ["i"]
+
+
+def test_cargar_jsonl_redondea_lo_que_dejo_a_jsonl() -> None:
+    orig = [_reg("a", licencia="CC BY", fecha="2026-10-01T00:00:00Z", vistas=5)]
+    assert cargar_jsonl(a_jsonl(orig)) == orig  # frozen dataclass: igualdad por campos
