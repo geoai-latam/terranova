@@ -15,15 +15,19 @@ cast `::vector`, nunca texto suelto. Las pruebas del almacén corren solo con `T
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Mapping
 from datetime import date
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from terranova.descubrimiento import (
     DIM_EMBEDDING,
     PISO_SIMILITUD,
     DatasetDescubrible,
 )
+
+if TYPE_CHECKING:
+    from terranova.descubrimiento import Embedder
 
 ESQUEMA = "descubrimiento"
 
@@ -173,3 +177,74 @@ class AlmacenDescubrimiento:
             url=f[10] or "",
             protocolo=f[11] or "socrata",
         )
+
+
+# --- el conector interno `catalogo_dcat` -------------------------------------------------------
+
+
+class ConectorCatalogo:
+    """Conector interno del catálogo (G6, ADR-0026/0028): misma interfaz que los conectores MCP.
+    La herramienta `catalogo_buscar` embebe la consulta (con el microservicio) y busca en
+    `descubrimiento.datasets`. La puerta no decide nada: solo recupera y surte procedencia."""
+
+    def __init__(self, almacen: AlmacenDescubrimiento, embedder: Embedder | None) -> None:
+        self._almacen = almacen
+        self._embedder = embedder
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        from terranova.conector import ErrorConector
+
+        if herramienta != "buscar_catalogo":
+            raise ErrorConector(f"el conector catálogo no tiene «{herramienta}»", "error_interno")
+        if self._embedder is None:
+            raise ErrorConector("embeddings no configurados", "fuente_no_disponible")
+        consulta = str(argumentos.get("consulta") or "").strip()
+        if not consulta:
+            raise ErrorConector("consulta vacía", "error_interno")
+        limite = int(argumentos.get("limite") or 20)
+        try:
+            vector = await asyncio.to_thread(self._embedder.consulta, consulta)
+            hallados = await asyncio.to_thread(self._almacen.buscar, vector, limite=limite)
+        except Exception as exc:  # el microservicio o la base caídos = fuente caída
+            raise ErrorConector(f"catalogo: {type(exc).__name__}", "fuente_no_disponible") from exc
+        filas = [
+            {
+                "id": d.id_socrata,
+                "titulo": d.titulo,
+                "entidad": d.entidad,
+                "licencia": d.licencia or "",
+                "actualizado_en": d.actualizado_en or "",
+                "protocolo": d.protocolo,
+                "url": d.url,
+            }
+            for d in hallados
+        ]
+        columnas = ["id", "titulo", "entidad", "licencia", "actualizado_en", "protocolo", "url"]
+        return {
+            "artifacts": [{"kind": "table", "columns": columnas, "rows": filas}],
+            "facts": {
+                "completitud": {
+                    "vistos": len(filas),
+                    "total": None if len(filas) >= limite else len(filas),
+                    "truncado": len(filas) >= limite,
+                }
+            },
+        }
+
+
+def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:
+    """El conector `catalogo_dcat` si hay base (`TERRANOVA_CURADO_URL`/`TERRANOVA_COPIAS_URL`). El
+    embebedor habla con el microservicio (`TERRANOVA_EMBEDDINGS_URL`); sin él, el conector existe
+    pero responde `fuente_no_disponible` (honesto: no hay con qué embeber)."""
+    import os
+
+    url = os.environ.get("TERRANOVA_CURADO_URL") or os.environ.get("TERRANOVA_COPIAS_URL")
+    if not url:
+        return None
+    emb_url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
+    embedder: Embedder | None = None
+    if emb_url:
+        from terranova.descubrimiento import EmbedderRemoto
+
+        embedder = EmbedderRemoto(emb_url)
+    return ConectorCatalogo(AlmacenDescubrimiento(url), embedder)
