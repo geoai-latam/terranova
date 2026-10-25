@@ -4,8 +4,10 @@ familia: contratacion
 fuente: cce.secop2.compromisos
 pregunta: "¿Qué compromisos presupuestales respaldan este contrato de SECOP II?"
 descripcion: >
-  Compromisos presupuestales (registros en SIIF) de un contrato de SECOP II: tipo, ítem,
-  valor, fecha, estado de la integración, balance y valor a liberar.
+  Compromisos presupuestales (RP, registros en SIIF) que RESPALDAN un contrato de SECOP II: tipo,
+  ítem, valor, fecha, estado de la integración, balance y valor a liberar. Es el respaldo
+  presupuestal del contrato; para el proyecto de inversión que lo financia (código BPIN) usa
+  secop_bpin_proceso, y para el certificado de disponibilidad (CDP) usa secop_cdp_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:

@@ -4,11 +4,13 @@ familia: contratacion
 fuente: cce.secop2.contratos_copia
 pregunta: "¿Qué contratos de SECOP II hablan de esto en su objeto?"
 descripcion: >
-  Busca en el objeto de los contratos de SECOP II los que tienen todas las palabras pedidas, en
-  español y sin importar mayúsculas (no siempre une singular y plural: «escolar» no encuentra
-  «escolares»). Da los 50 más recientes, con entidad, contratista, valor y
-  fecha, y cuántos hay en total. Sale de la copia de Terranova, actualizada a diario: cubre los
-  contratos firmados desde la ventana de la copia (la procedencia lo dice), no todo el histórico.
+  Busca contratos de SECOP II por PALABRAS de su objeto (qué se contrató): los que tienen todas las
+  palabras pedidas, en español y sin importar mayúsculas (no siempre une singular y plural: «escolar»
+  no encuentra «escolares»). Da los 50 más recientes, con entidad, contratista, valor y fecha, y
+  cuántos hay en total. Es una búsqueda por texto del objeto, NO por municipio ni entidad; para el
+  conteo y el valor total de un municipio usa secop_contratos_municipio. Sale de la copia de
+  Terranova, actualizada a diario: cubre los contratos firmados desde la ventana de la copia (la
+  procedencia lo dice), no todo el histórico.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {texto: nombre}
 consulta:
