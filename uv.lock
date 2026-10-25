@@ -2794,6 +2794,7 @@ datasets = [
 ]
 descubrimiento = [
     { name = "fastembed" },
+    { name = "uvicorn" },
 ]
 postgres = [
     { name = "psycopg", extra = ["binary"] },
@@ -2830,6 +2831,7 @@ requires-dist = [
     { name = "pyogrio", marker = "extra == 'datasets'", specifier = ">=0.9" },
     { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "redis", marker = "extra == 'redis'", specifier = ">=5,<7" },
+    { name = "uvicorn", marker = "extra == 'descubrimiento'", specifier = ">=0.30" },
 ]
 provides-extras = ["redis", "postgres", "datasets", "descubrimiento"]
 

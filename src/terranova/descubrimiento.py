@@ -433,6 +433,31 @@ class FastEmbedder:
         return self._embeber([f"passage: {t}" for t in textos])
 
 
+class EmbedderRemoto:
+    """El `Embedder` que habla con el **microservicio** de embeddings por HTTP (ADR-0028, Q2): así
+    el modelo vive en un solo contenedor y no se carga en cada réplica de la puerta. Misma interfaz
+    que `FastEmbedder`."""
+
+    def __init__(self, url: str, cliente: Any = None, timeout_s: float = 30) -> None:
+        import httpx
+
+        self._url = url.rstrip("/") + "/embed"
+        self._http = cliente or httpx.Client(
+            timeout=timeout_s, headers={"User-Agent": "terranova-descubrimiento/1"}
+        )
+
+    def _pedir(self, cuerpo: dict[str, Any]) -> list[tuple[float, ...]]:
+        r = self._http.post(self._url, json=cuerpo)
+        r.raise_for_status()
+        return [tuple(float(x) for x in v) for v in r.json()["vectores"]]
+
+    def consulta(self, texto: str) -> tuple[float, ...]:
+        return self._pedir({"consulta": texto})[0]
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+        return self._pedir({"documentos": textos}) if textos else []
+
+
 def embeber_catalogo(
     datasets: list[DatasetDescubrible], embedder: Embedder
 ) -> dict[str, tuple[float, ...]]:

@@ -44,9 +44,19 @@
     estado; el dueño pidió explícitamente la pasada completa, que ya es barata a esta escala.
   - **Embeddings en la ruta del dato (RAG que redacta la respuesta).** Rompe ADR-0012 y la honestidad:
     el dato debe salir de la fuente, no de un modelo.
+- **Runtime (decidido con el dueño, 2026-10-25):**
+  - **Almacén: PostGIS + `pgvector`** (Q1). El catálogo y los vectores viven en `descubrimiento.datasets`
+    (columna `vector(384)`), compartido entre las dos réplicas y refrescado por el job de ingesta. La
+    imagen Postgres (hoy `postgis`) necesita la extensión `pgvector` (se añade en su Dockerfile).
+  - **El modelo corre en un MICROSERVICIO aparte** (Q2), no dentro de la puerta: un contenedor
+    `embeddings` (`fastembed`, modelo horneado en la imagen) en la red interna, que la puerta y el job
+    llaman por HTTP (`EmbedderRemoto`). Así el modelo no se duplica en cada réplica (memoria) y la
+    puerta no carga onnxruntime. `terranova embeddings-servicio` lo sirve.
+  - **Yo construyo el código y la config; el dueño despliega** (Q3): no se baja el modelo ni se
+    levantan contenedores en esta máquina (prioridad de memoria a sus procesos de video).
 - **Consecuencias:**
-  - Extra nuevo `descubrimiento` (`fastembed`). El buscador: embeddings si hay índice de vectores y el
-    modelo está; si no, cae al **léxico** (nada se rompe sin el extra).
+  - Extra nuevo `descubrimiento` (`fastembed` + `uvicorn`). El buscador: embeddings si hay índice de
+    vectores y el servicio responde; si no, cae al **léxico** (nada se rompe sin el extra/servicio).
   - Aparece un **índice de vectores** por catálogo: en desarrollo, un `*.vec.jsonl` al lado del JSONL
     (`catalogo-dcat ingerir --embeddings`); en producción, una columna `vector` en
     `descubrimiento.datasets` (pgvector) —parte del mismo aterrizaje en PostGIS que ya bloquea el
