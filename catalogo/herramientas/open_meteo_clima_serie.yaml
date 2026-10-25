@@ -9,7 +9,7 @@ descripcion: >
   5 días de rezago: los días más recientes salen del IFS): precipitación acumulada, temperatura media
   y la elevación de la celda del modelo, que en montaña difiere de la real. Es un modelo de malla, no
   una estación. Solo uso no comercial.
-  (Fuente: Open-Meteo con ERA5 de Copernicus; licencia: CC BY 4.0.)
+  (Fuente: Open-Meteo con ERA5 de Copernicus; licencia: CC BY 4.0, sin uso comercial.)
 entrada: {lon: float, lat: float, desde: fecha, hasta: fecha}
 consulta:
   operacion: serie
