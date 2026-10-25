@@ -7,7 +7,7 @@ descripcion: >
   Matrícula mercantil en el RUES de una persona jurídica o entidad sin ánimo de lucro por su NIT
   (sin dígito de verificación): razón social, cámara, matrícula, organización jurídica, estado,
   fechas, último año renovado y CIIU. Las personas naturales no se consultan.
-  (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
 entrada: {nit: int}
 consulta:
   operacion: por_codigo

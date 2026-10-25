@@ -10,7 +10,7 @@ descripcion: >
   reportes. `periodo` es el texto de la fuente: «Periodo Actual» o «Periodo Anterior» desde el corte
   de 2018; antes, fechas o años (y en algunos reportes de 2016, el NIT). Las sociedades vigiladas por
   otra superintendencia no salen.
-  (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
 entrada: {nit: int}
 consulta:
   operacion: por_codigo

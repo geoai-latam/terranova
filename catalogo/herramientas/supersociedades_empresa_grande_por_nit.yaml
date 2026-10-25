@@ -7,7 +7,7 @@ descripcion: >
   Cifras de una sociedad por su NIT en el reporte de las 10 000 empresas más grandes del país
   (Supersociedades), año por año: ingresos operacionales, ganancia o pérdida, activos, pasivos y
   patrimonio, en billones de pesos como los publica la fuente. Si no sale, no está en el reporte.
-  (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
 entrada: {nit: int}
 consulta:
   operacion: por_codigo
