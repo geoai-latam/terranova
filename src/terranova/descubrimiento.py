@@ -26,11 +26,12 @@ La promoción a herramientas curadas se monta sobre esto (spec 09).
 from __future__ import annotations
 
 import json
+import math
 import unicodedata
 from collections import Counter
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
-from typing import Any
+from typing import Any, Protocol
 
 #: El endpoint federado de la Discovery API de Socrata y el dominio de Colombia.
 DISCOVERY_URL = "https://api.us.socrata.com/api/catalog/v1"
@@ -346,3 +347,116 @@ def buscar(
         key=lambda d: (d.con_licencia(), d.vivo(hoy), d.vistas + d.descargas), reverse=True
     )
     return candidatos[:limite]
+
+
+# --------------------------------------------------------------------------- embeddings (ADR-0028)
+#: El modelo de embeddings: multilingüe (español), pequeño, ONNX en CPU, local y gratis (coherente
+#: con «open source y gratuita» y con la poca memoria del equipo). Se FIJA la versión para que el
+#: canario sea reproducible; cambiarla obliga a re-embeder todo (es un cambio deliberado).
+MODELO_EMBEDDING = "intfloat/multilingual-e5-small"
+DIM_EMBEDDING = 384
+#: Debajo de este coseno, un candidato no se parece lo suficiente: no se muestra (honestidad —los
+#: embeddings no empujan un «parecido pero falso» con confianza).
+PISO_SIMILITUD = 0.78  # e5 normaliza alto; se afina con el banco de verdades
+
+
+class Embedder(Protocol):
+    """Lo que necesita el buscador vectorial. El modelo real (fastembed) o uno falso en pruebas."""
+
+    def consulta(self, texto: str) -> tuple[float, ...]: ...
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]: ...
+
+
+def texto_para_embedding(d: DatasetDescubrible) -> str:
+    """El texto que representa un dataset para buscarlo: título + descripción + entidad + categoría
+    + keywords. Pura y estable (misma fila → mismo texto → mismo vector con el modelo fijado)."""
+    partes = [d.titulo, d.descripcion, d.entidad, d.categoria or "", *d.columnas]
+    return " · ".join(p.strip() for p in partes if p and p.strip())
+
+
+def _coseno(a: tuple[float, ...], b: tuple[float, ...]) -> float:
+    """Similitud coseno. Lógica de referencia (la corrida grande va en pgvector/numpy)."""
+    if len(a) != len(b):
+        raise ValueError("vectores de distinta dimensión")
+    punto = sum(x * y for x, y in zip(a, b, strict=True))
+    na = math.sqrt(sum(x * x for x in a))
+    nb = math.sqrt(sum(y * y for y in b))
+    return punto / (na * nb) if na and nb else 0.0
+
+
+def buscar_vectorial(
+    datasets: list[DatasetDescubrible],
+    vector_consulta: tuple[float, ...],
+    vectores: dict[str, tuple[float, ...]],
+    *,
+    limite: int = 20,
+    piso: float = PISO_SIMILITUD,
+    hoy: date | None = None,
+) -> list[DatasetDescubrible]:
+    """El buscador por **embeddings** (ADR-0028): ordena por parecido semántico con la pregunta, con
+    un **piso** (lo poco parecido no se muestra). Dentro de un mismo nivel de parecido (redondeado a
+    centésimas), rompe el empate por **valor** (licencia > vivo) para honrar la honestidad sin pisar
+    la relevancia. Pura: recibe los vectores ya calculados (no toca red ni modelo)."""
+    hoy = hoy or date.today()
+    puntuados: list[tuple[DatasetDescubrible, float]] = []
+    for d in datasets:
+        v = vectores.get(d.id_socrata)
+        if v is None:
+            continue
+        s = _coseno(vector_consulta, v)
+        if s >= piso:
+            puntuados.append((d, s))
+    puntuados.sort(
+        key=lambda p: (round(p[1], 2), p[0].con_licencia(), p[0].vivo(hoy), p[1]),
+        reverse=True,
+    )
+    return [d for d, _ in puntuados[:limite]]
+
+
+class FastEmbedder:
+    """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
+    arrastra; se instala con el extra `descubrimiento`. e5 pide prefijos `query:`/`passage:`."""
+
+    def __init__(self, modelo: str = MODELO_EMBEDDING) -> None:
+        from fastembed import TextEmbedding  # type: ignore[import-not-found]
+
+        self._modelo = TextEmbedding(model_name=modelo)
+
+    def _embeber(self, textos: list[str]) -> list[tuple[float, ...]]:
+        return [tuple(float(x) for x in v) for v in self._modelo.embed(textos)]
+
+    def consulta(self, texto: str) -> tuple[float, ...]:
+        return self._embeber([f"query: {texto}"])[0]
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+        return self._embeber([f"passage: {t}" for t in textos])
+
+
+def embeber_catalogo(
+    datasets: list[DatasetDescubrible], embedder: Embedder
+) -> dict[str, tuple[float, ...]]:
+    """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector."""
+    if not datasets:
+        return {}
+    vectores = embedder.documentos([texto_para_embedding(d) for d in datasets])
+    return {d.id_socrata: v for d, v in zip(datasets, vectores, strict=True)}
+
+
+def vectores_a_jsonl(vectores: dict[str, tuple[float, ...]]) -> str:
+    """El índice de vectores como JSONL (una línea `{"id":…, "v":[…]}`), para dejarlo en disco."""
+    return "\n".join(
+        json.dumps({"id": k, "v": [round(x, 6) for x in v]}, ensure_ascii=False)
+        for k, v in vectores.items()
+    )
+
+
+def cargar_vectores(texto: str) -> dict[str, tuple[float, ...]]:
+    """Relee el índice de vectores de un JSONL (lo que dejó `vectores_a_jsonl`)."""
+    salida: dict[str, tuple[float, ...]] = {}
+    for linea in texto.splitlines():
+        if not linea.strip():
+            continue
+        d = json.loads(linea)
+        salida[d["id"]] = tuple(float(x) for x in d["v"])
+    return salida

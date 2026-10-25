@@ -29,6 +29,11 @@ datasets = [
     "pyarrow>=17",
     "pyogrio>=0.9",
 ]
+# Embeddings del catálogo de descubrimiento (G6, ADR-0028): modelo multilingüe local (ONNX, sin
+# torch) para el buscador semántico. La versión del modelo se fija en descubrimiento.py.
+descubrimiento = [
+    "fastembed>=0.4,<0.8",
+]
 
 [dependency-groups]
 # Ruff y mypy fijados, en la misma versión que GEO Copilot: una versión nueva no pone el CI en rojo
