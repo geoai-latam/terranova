@@ -6,7 +6,8 @@
     terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
     terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
-    terranova catalogo-dcat ingerir [--limite-paginas N] [--salida f.jsonl]   (G6: catálogo DCAT)
+    terranova catalogo-dcat ingerir [--limite-paginas N] [--salida f.jsonl]   (G6: cosechar)
+    terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]    (G6: buscador)
 
 La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 """
@@ -158,7 +159,17 @@ def copias(argumentos: list[str]) -> int:
 
 
 def catalogo_dcat(argumentos: list[str]) -> int:
-    """Ingiere el catálogo DCAT de datos.gov.co (G6, ADR-0026) a JSONL y muestra sus métricas."""
+    """G6 (ADR-0026, spec 09): `ingerir` cosecha el catálogo DCAT; `buscar` busca en él."""
+    if argumentos[:1] == ["ingerir"]:
+        return _catalogo_ingerir(argumentos[1:])
+    if argumentos[:1] == ["buscar"]:
+        return _catalogo_buscar(argumentos[1:])
+    print("uso: terranova catalogo-dcat ingerir|buscar …", file=sys.stderr)
+    return 2
+
+
+def _catalogo_ingerir(argumentos: list[str]) -> int:
+    """Cosecha el catálogo DCAT a JSONL y muestra sus métricas."""
     import pathlib
 
     from terranova.descubrimiento import a_jsonl, ingerir, metricas
@@ -188,12 +199,41 @@ def catalogo_dcat(argumentos: list[str]) -> int:
     return 0
 
 
+def _catalogo_buscar(argumentos: list[str]) -> int:
+    """Busca en el catálogo ingerido: qué fuente responde una pregunta, con su licencia."""
+    import pathlib
+
+    from terranova.descubrimiento import buscar, cargar_jsonl
+
+    parser = argparse.ArgumentParser(prog="terranova catalogo-dcat buscar")
+    parser.add_argument("consulta")
+    parser.add_argument("--entidad", help="acota a una entidad")
+    parser.add_argument("--limite", type=int, default=20)
+    parser.add_argument("--catalogo", default="datos_locales/catalogo_dcat.jsonl")
+    a = parser.parse_args(argumentos)
+
+    ruta = pathlib.Path(a.catalogo)
+    if not ruta.exists():
+        print(
+            f"no hay catálogo en {a.catalogo}; corre antes 'catalogo-dcat ingerir'", file=sys.stderr
+        )
+        return 2
+    datasets = cargar_jsonl(ruta.read_text(encoding="utf-8"))
+    hallados = buscar(datasets, a.consulta, entidad=a.entidad, limite=a.limite)
+    for d in hallados:
+        lic = (d.licencia or "")[:30] if d.con_licencia() else "sin licencia"
+        print(f"{d.id_socrata}  {d.entidad[:35]:35}  [{lic}]  {d.titulo[:50]}")
+    if not hallados:
+        print("(sin candidatos para esa consulta)", file=sys.stderr)
+    return 0
+
+
 def main() -> None:
     argumentos = sys.argv[1:]
     if argumentos[:2] == ["copias", "actualizar"]:
         sys.exit(copias(argumentos[2:]))
-    if argumentos[:2] == ["catalogo-dcat", "ingerir"]:
-        sys.exit(catalogo_dcat(argumentos[2:]))
+    if argumentos[:1] == ["catalogo-dcat"]:
+        sys.exit(catalogo_dcat(argumentos[1:]))
     if argumentos[:1] == ["canarios"]:
         sys.exit(canarios(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:

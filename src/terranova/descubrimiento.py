@@ -9,14 +9,16 @@ carga (el mismo espíritu de `cosecha.py` y del job de copias).
 - `metricas` resume el catálogo para la compuerta de G6 (cuántos, con licencia, vivos, por entidad).
 - `ingerir` hace las peticiones paginadas (en serie, con `User-Agent` propio, filtradas al dominio),
   nunca por pregunta. Un resultado malformado no tumba la cosecha.
+- `cargar_jsonl` relee el catálogo del disco; `buscar` es el **buscador** (`catalogo_buscar`, spec
+  09): casa una pregunta contra título + descripción + columnas + entidad y ordena por valor.
 
-El buscador `catalogo_buscar` y la promoción a herramientas curadas se montan sobre esto (spec 09);
-aquí solo está la ingesta y sus métricas.
+La promoción a herramientas curadas se monta sobre esto (spec 09).
 """
 
 from __future__ import annotations
 
 import json
+import unicodedata
 from collections import Counter
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
@@ -173,3 +175,64 @@ def ingerir(
 def a_jsonl(datasets: list[DatasetDescubrible]) -> str:
     """El catálogo como JSONL (una línea por dataset), para dejarlo en disco."""
     return "\n".join(json.dumps(asdict(d), ensure_ascii=False) for d in datasets)
+
+
+def cargar_jsonl(texto: str) -> list[DatasetDescubrible]:
+    """Relee el catálogo de un JSONL (lo que dejó `a_jsonl`)."""
+    salida: list[DatasetDescubrible] = []
+    for linea in texto.splitlines():
+        if not linea.strip():
+            continue
+        d = json.loads(linea)
+        salida.append(
+            DatasetDescubrible(
+                id_socrata=d["id_socrata"],
+                titulo=d.get("titulo", ""),
+                descripcion=d.get("descripcion", ""),
+                entidad=d.get("entidad", ""),
+                categoria=d.get("categoria"),
+                columnas=tuple(d.get("columnas") or []),
+                licencia=d.get("licencia"),
+                actualizado_en=d.get("actualizado_en"),
+                vistas=int(d.get("vistas") or 0),
+                descargas=int(d.get("descargas") or 0),
+                url=d.get("url", ""),
+                protocolo=d.get("protocolo", "socrata"),
+            )
+        )
+    return salida
+
+
+def _sin_acentos(s: str) -> str:
+    sin = "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+    return sin.lower()
+
+
+def buscar(
+    datasets: list[DatasetDescubrible],
+    consulta: str,
+    *,
+    entidad: str | None = None,
+    limite: int = 20,
+    hoy: date | None = None,
+) -> list[DatasetDescubrible]:
+    """El buscador (`catalogo_buscar`, spec 09): los datasets que casan TODAS las palabras de la
+    consulta (sin tildes, sin importar mayúsculas) en título + descripción + columnas + entidad +
+    categoría, ordenados por señal de valor: con licencia declarada > vivo > uso (vistas+descargas).
+    Pura: no toca la red ni la base."""
+    hoy = hoy or date.today()
+    palabras = [p for p in _sin_acentos(consulta).split() if p]
+    ent = _sin_acentos(entidad) if entidad else None
+    candidatos: list[DatasetDescubrible] = []
+    for d in datasets:
+        if ent and ent not in _sin_acentos(d.entidad):
+            continue
+        heno = _sin_acentos(
+            " ".join([d.titulo, d.descripcion, d.entidad, d.categoria or "", *d.columnas])
+        )
+        if all(p in heno for p in palabras):
+            candidatos.append(d)
+    candidatos.sort(
+        key=lambda d: (d.con_licencia(), d.vivo(hoy), d.vistas + d.descargas), reverse=True
+    )
+    return candidatos[:limite]
