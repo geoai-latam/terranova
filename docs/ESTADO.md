@@ -29,6 +29,14 @@ IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos d
   herramientas / uso`, con exit codes que distinguen «no encontrado» de «no se pudo».
 - **Validación crítica** de las ADR/specs (#85): el catálogo es **metadatos** en `descubrimiento.datasets`,
   no un `copia` (ADR-0024); licencia **declarada** (verificar es manual, al promover); orden del CLI.
+- **Buscador semántico con embeddings (#93, ADR-0028).** El recuperador del catálogo pasa de léxico a
+  **embeddings**: modelo multilingüe local y **fijado** (`intfloat/multilingual-e5-small`, ONNX vía
+  `fastembed`, extra `terranova[descubrimiento]`), orden por coseno con **piso** y desempate por valor,
+  **re-embed completo por pasada** (no incremental). Reconciliado con ADR-0012: los embeddings viven
+  **solo en el descubrimiento**, nunca en la ruta del dato (el sobre `rt/1` sigue determinista). Sin el
+  extra, cae al léxico. Lógica pura probada sin red (embebedor falso); la corrida real con `fastembed` y
+  el índice en pgvector van con el runtime del catálogo. Las API de búsqueda de los portales (Socrata/Hub)
+  quedan como complemento, no como recuperador.
 - **Segundo catálogo DCAT: las capas (ICDE, #91).** El Hub de datos abiertos de la ICDE
   (`datos.icde.gov.co`) expone un feed **DCAT-US 1.1** — el centro autoritativo nacional de datos
   espaciales, el análogo ArcGIS del DCAT de Socrata. `de_dcat_us` (puro) lo interpreta a la misma

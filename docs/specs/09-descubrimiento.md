@@ -105,6 +105,26 @@ herramienta curada si `promovido_a` no es null).
 - **Personas (ADR-0014):** un dataset con datos personales no entra al índice; nunca se busca por
   cédula ni por nombre de persona.
 
+**El recuperador: embeddings (semántico), [ADR-0028](../decisions/0028-descubrimiento-con-embeddings.md).**
+El buscador recupera por **parecido semántico**, no por coincidencia de palabras: así «contaminación del
+agua» encuentra un dataset de «vertimientos» aunque no compartan términos. Modelo multilingüe **local y
+fijado** (`intfloat/multilingual-e5-small`, ONNX vía `fastembed`, extra `terranova[descubrimiento]`);
+la versión se fija para que el **canario sea reproducible**. El orden es por coseno con un **piso de
+similitud** (lo poco parecido no se muestra) y **desempate por valor** (licencia > vivo), para que la
+relevancia mande sin pisar la honestidad. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
+los embeddings viven **solo aquí** (sugerir *qué fuente* mirar), **nunca en la ruta del dato** —el
+ejecutor, los conectores y el sobre `rt/1` siguen sin modelo y deterministas—. Sin el extra, el buscador
+cae al **léxico** (nada se rompe). Las **API de búsqueda de los portales** (Socrata `q=`, ArcGIS Hub
+`q=`) son **complemento** de la cola larga, no el recuperador: léxicas, globales y sin nuestras reglas.
+
+**Mantenimiento del índice (ADR-0028): re-embed COMPLETO por pasada**, no incremental. En cada cosecha
+diaria se re-embebe **todo** el catálogo (a esta escala —decenas de miles de textos cortos— una pasada
+con el modelo pequeño es barata); cambiar de modelo obliga a re-embeder todo (deliberado, canariado). En
+desarrollo el índice es un `*.vec.jsonl` al lado del catálogo (`catalogo-dcat ingerir --embeddings`); en
+producción, una columna `vector` en `descubrimiento.datasets` (pgvector), parte del mismo aterrizaje en
+PostGIS que bloquea el runtime del catálogo. El coseno en memoria es la **lógica de referencia** (dev y
+pruebas); la corrida grande va en pgvector, misma cuenta.
+
 ## 9.3b Flujo de consumo y economía de contexto (por qué no un tool por dataset)
 
 El argumento central de [ADR-0026](../decisions/0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md):
@@ -173,10 +193,13 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
   (`de_socrata_catalog`, `de_dcat_us`) probadas sin red y validadas en vivo contra las dos fuentes.
   Falta el `scroll`/paginado completo (ambas topan en ~10.000) y el aterrizaje en PostGIS
   `descubrimiento.datasets` (bloqueado por la decisión de dónde vive el catálogo).
-- **Buscador (lógica)** ✅ (#86): `buscar` casa la pregunta y ordena por valor; `catalogo-dcat buscar`
-  en terminal; validado en vivo. Falta exponerlo como herramienta **`rt/1`** por REST/MCP (conector
-  interno + `modo` en el ejecutor + ficha con **canario reproducible** + almacén en runtime): es una
-  decisión de **deploy** del catálogo, no solo código.
+- **Buscador (lógica)** ✅ (#86 léxico, #93 embeddings): `buscar` (léxico) casa la pregunta y ordena por
+  valor; **`buscar_vectorial`** (semántico, ADR-0028) ordena por coseno con piso y desempate por valor,
+  re-embed completo (`embeber_catalogo`), modelo local fijado (`FastEmbedder`); `catalogo-dcat buscar`
+  usa vectores si hay índice, si no cae al léxico. Lógica pura probada sin red (embebedor falso). Falta
+  la **corrida real con `fastembed`** (extra; modelo se baja una vez) y exponerlo como herramienta
+  **`rt/1`** por REST/MCP (conector interno + `modo` en el ejecutor + ficha con **canario reproducible**
+  + almacén en runtime con pgvector): es una decisión de **deploy** del catálogo, no solo código.
 - **Honestidad:** la lógica ya marca «sin licencia» y no indexa personas; la prueba como herramienta
   `rt/1` va con la exposición.
 - **Promoción:** al menos una fuente de la cola larga **promovida desde el buscador** (no desde

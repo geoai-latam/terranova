@@ -9,10 +9,15 @@ from terranova.descubrimiento import (
     DatasetDescubrible,
     a_jsonl,
     buscar,
+    buscar_vectorial,
     cargar_jsonl,
+    cargar_vectores,
     de_dcat_us,
     de_socrata_catalog,
+    embeber_catalogo,
     metricas,
+    texto_para_embedding,
+    vectores_a_jsonl,
 )
 
 HOY = date(2026, 10, 25)
@@ -235,3 +240,59 @@ def test_dcat_us_entra_al_mismo_buscador_y_jsonl() -> None:
     assert buscar([d], "cuerpos de agua", hoy=HOY) == [d]
     # y redondea por JSONL conservando el protocolo
     assert cargar_jsonl(a_jsonl([d])) == [d]
+
+
+# ------------------------------------------------------------ embeddings del catálogo (ADR-0028)
+class _EmbedderFalso:
+    """Embebedor determinista para probar la lógica sin modelo ni red: cada texto → un vector 3D
+    según palabras clave, así el coseno es predecible."""
+
+    def _vec(self, texto: str) -> tuple[float, ...]:
+        t = texto.lower()
+        return (
+            1.0 if "agua" in t or "hidr" in t else 0.0,
+            1.0 if "bosque" in t or "arbol" in t else 0.0,
+            1.0 if "contrato" in t or "secop" in t else 0.0,
+        )
+
+    def consulta(self, texto: str) -> tuple[float, ...]:
+        return self._vec(texto)
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+        return [self._vec(t) for t in textos]
+
+
+def test_texto_para_embedding_junta_los_campos() -> None:
+    d = de_dcat_us(_dcat())
+    t = texto_para_embedding(d)
+    assert "Cuerpos de Agua" in t and "Instituto Geográfico" in t and "Hidrografía" in t
+
+
+def test_embeber_catalogo_y_buscar_vectorial() -> None:
+    agua = _reg("agua", titulo="Cuerpos de agua e hidrografía", licencia="CC BY")
+    bosque = _reg("bosque", titulo="Cobertura de bosque y árboles", licencia="CC BY")
+    contrato = _reg("contrato", titulo="Contratos del SECOP", licencia="CC BY")
+    datasets = [agua, bosque, contrato]
+    emb = _EmbedderFalso()
+    vectores = embeber_catalogo(datasets, emb)
+    assert set(vectores) == {"agua", "bosque", "contrato"}
+    # una consulta sobre agua trae el de agua, no los otros (piso filtra lo ortogonal)
+    vq = emb.consulta("dónde hay agua")
+    hallados = buscar_vectorial(datasets, vq, vectores, piso=0.5, hoy=HOY)
+    assert [d.id_socrata for d in hallados] == ["agua"]
+
+
+def test_buscar_vectorial_rompe_empate_por_licencia() -> None:
+    con = _reg("con", titulo="agua potable", licencia="CC BY", fecha="2026-10-01T00:00:00Z")
+    sin = _reg("sin", titulo="agua potable", licencia=None)
+    emb = _EmbedderFalso()
+    vectores = embeber_catalogo([con, sin], emb)
+    vq = emb.consulta("agua")
+    # mismo parecido (ambos «agua») → el que tiene licencia va primero
+    orden = buscar_vectorial([con, sin], vq, vectores, piso=0.5, hoy=HOY)
+    assert [d.id_socrata for d in orden] == ["con", "sin"]
+
+
+def test_vectores_redondean_por_jsonl() -> None:
+    vectores: dict[str, tuple[float, ...]] = {"a": (0.1, 0.2, 0.3), "b": (1.0, 0.0, 0.5)}
+    assert cargar_vectores(vectores_a_jsonl(vectores)) == vectores

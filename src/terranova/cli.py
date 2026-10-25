@@ -21,8 +21,14 @@ from __future__ import annotations
 import argparse
 import sys
 from datetime import date
+from typing import TYPE_CHECKING
 
 from terranova.identidad import registro_desde_entorno
+
+if TYPE_CHECKING:
+    import pathlib
+
+    from terranova.descubrimiento import DatasetDescubrible
 
 
 def llaves(argumentos: list[str]) -> int:
@@ -185,6 +191,11 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
     parser.add_argument("--limite-paginas", type=int, help="acota la cosecha (solo socrata)")
     parser.add_argument("--por-pagina", type=int, default=1000)
     parser.add_argument("--salida", help="por defecto, datos_locales/catalogo_<fuente>.jsonl")
+    parser.add_argument(
+        "--embeddings",
+        action="store_true",
+        help="re-embebe todo el catálogo (ADR-0028) y deja el índice de vectores al lado",
+    )
     a = parser.parse_args(argumentos)
 
     if a.fuente == "icde":
@@ -195,6 +206,24 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
     salida = pathlib.Path(ruta)
     salida.parent.mkdir(parents=True, exist_ok=True)
     salida.write_text(a_jsonl(datasets) + "\n", encoding="utf-8")
+    if a.embeddings:
+        try:
+            from terranova.descubrimiento import (
+                FastEmbedder,
+                embeber_catalogo,
+                vectores_a_jsonl,
+            )
+
+            vectores = embeber_catalogo(datasets, FastEmbedder())
+        except ImportError:
+            print(
+                "faltan los embeddings; instala el extra: pip install 'terranova[descubrimiento]'",
+                file=sys.stderr,
+            )
+            return 2
+        ruta_vec = salida.with_suffix(".vec.jsonl")
+        ruta_vec.write_text(vectores_a_jsonl(vectores) + "\n", encoding="utf-8")
+        print(f"embeddings: {len(vectores)} vectores → {ruta_vec}")
     m = metricas(datasets)
 
     def pct(x: int) -> str:
@@ -216,12 +245,42 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
     return 0
 
 
+def _buscar_mejor(
+    datasets: list[DatasetDescubrible],
+    rutas: list[pathlib.Path],
+    consulta: str,
+    *,
+    entidad: str | None,
+    limite: int,
+) -> list[DatasetDescubrible]:
+    """Si hay índice de vectores (`*.vec.jsonl`) y el modelo está, busca por **embeddings**
+    (ADR-0028); si no, cae al buscador **léxico**. Mismo tipo de candidatos. El filtro por
+    `--entidad` solo lo hace el léxico, así que fuerza esa vía."""
+    from terranova.descubrimiento import buscar, cargar_vectores
+
+    vec_rutas = [r.with_suffix(".vec.jsonl") for r in rutas]
+    if entidad or not any(r.exists() for r in vec_rutas):
+        return buscar(datasets, consulta, entidad=entidad, limite=limite)
+    try:
+        from terranova.descubrimiento import FastEmbedder, buscar_vectorial
+
+        vectores: dict[str, tuple[float, ...]] = {}
+        for r in vec_rutas:
+            if r.exists():
+                vectores.update(cargar_vectores(r.read_text(encoding="utf-8")))
+        vq = FastEmbedder().consulta(consulta)
+        return buscar_vectorial(datasets, vq, vectores, limite=limite)
+    except ImportError:
+        return buscar(datasets, consulta, entidad=entidad, limite=limite)
+
+
 def _catalogo_buscar(argumentos: list[str]) -> int:
     """Busca en los catálogos ingeridos (socrata + icde): qué fuente responde una pregunta, con su
-    licencia. Con `--catalogo`, busca solo en ese archivo."""
+    licencia. Usa embeddings si hay índice de vectores; si no, el buscador léxico. Con `--catalogo`,
+    busca solo en ese archivo."""
     import pathlib
 
-    from terranova.descubrimiento import buscar, cargar_jsonl
+    from terranova.descubrimiento import cargar_jsonl
 
     parser = argparse.ArgumentParser(prog="terranova catalogo-dcat buscar")
     parser.add_argument("consulta")
@@ -242,7 +301,7 @@ def _catalogo_buscar(argumentos: list[str]) -> int:
     datasets = []
     for r in rutas:
         datasets.extend(cargar_jsonl(r.read_text(encoding="utf-8")))
-    hallados = buscar(datasets, a.consulta, entidad=a.entidad, limite=a.limite)
+    hallados = _buscar_mejor(datasets, rutas, a.consulta, entidad=a.entidad, limite=a.limite)
     for d in hallados:
         lic = (d.licencia or "")[:30] if d.con_licencia() else "sin licencia"
         proto = "" if d.protocolo == "socrata" else f" ({d.protocolo})"
