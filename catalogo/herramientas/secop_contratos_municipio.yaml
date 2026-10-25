@@ -4,10 +4,11 @@ familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto?"
 descripcion: >
-  Número de contratos de SECOP II y su valor total, en pesos, de las entidades estatales con sede en
-  un municipio (nombre del municipio y del departamento, como los escribe SECOP, con tildes). Cuenta
-  todos los años y estados; no incluye SECOP I. El municipio es el de la entidad contratante, no el
-  de ejecución.
+  CUÁNTOS contratos de SECOP II y por CUÁNTO (valor total en pesos) en un municipio: el conteo y la
+  suma de las entidades estatales con sede en ese municipio (nombre del municipio y del departamento,
+  como los escribe SECOP, con tildes). Cuenta todos los años y estados; no incluye SECOP I. El
+  municipio es el de la entidad contratante, no el de ejecución. Es un conteo por municipio, NO una
+  búsqueda de texto; para buscar contratos por palabras de su objeto usa secop_contratos_buscar.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {municipio: nombre, departamento: nombre}
 consulta:

@@ -4,8 +4,10 @@ familia: contratacion
 fuente: cce.secop2.bpin
 pregunta: "¿Con qué proyecto de inversión (BPIN) se financia este proceso o contrato de SECOP II?"
 descripcion: >
-  Proyectos de inversión (código BPIN y año) asociados a un proceso (CO1.REQ.…), su proceso de
-  compra (CO1.BDOS.…) o un contrato (CO1.PCCNTR.…) de SECOP II, con su validación.
+  Proyecto de inversión (código BPIN y año) con el que se FINANCIA un proceso (CO1.REQ.…), su proceso
+  de compra (CO1.BDOS.…) o un contrato (CO1.PCCNTR.…) de SECOP II, con su validación. Es el proyecto
+  de inversión, NO el respaldo presupuestal del contrato; para los compromisos presupuestales (RP) usa
+  secop_compromisos_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_secop: id_secop}
 consulta:

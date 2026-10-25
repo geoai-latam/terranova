@@ -4,9 +4,11 @@ familia: territorio
 fuente: igac.catastro.manzana
 pregunta: "¿En qué manzana urbana del catastro IGAC está este punto?"
 descripcion: >
-  Manzana urbana catastral (IGAC) que contiene un punto: código de la manzana, código del barrio,
-  código anterior y municipio. Solo zona urbana; en suelo rural no responde. Cubre los municipios con gestión catastral del IGAC; Bogotá,
-  Medellín, Cali y otros gestores no están en esta fuente.
+  Manzana urbana catastral (IGAC) que contiene un punto: la manzana CONCRETA (código de la manzana,
+  código del barrio, código anterior y municipio). Es la manzana, NO el casco urbano completo; para
+  el perímetro urbano de ese punto usa igac_perimetro_urbano_en_punto. Solo zona urbana; en suelo
+  rural no responde. Cubre los municipios con gestión catastral del IGAC; Bogotá, Medellín, Cali y
+  otros gestores no están en esta fuente.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

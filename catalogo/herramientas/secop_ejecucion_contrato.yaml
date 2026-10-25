@@ -4,7 +4,9 @@ familia: contratacion
 fuente: cce.secop2.ejecucion
 pregunta: "¿Cómo va la ejecución de este contrato de SECOP II?"
 descripcion: >
-  Plan de ejecución (entregas y avance) de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  CÓMO VA un contrato de SECOP II: su plan de ejecución (entregas, hitos y % de avance) por su
+  identificador (CO1.PCCNTR.…), uno por elemento. Es el avance en el tiempo, no el lugar; para DÓNDE
+  se ejecuta (municipios) usa secop_ubicaciones_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:

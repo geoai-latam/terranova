@@ -4,7 +4,9 @@ familia: contratacion
 fuente: cce.secop2.ubicaciones
 pregunta: "¿Dónde se ejecuta este contrato de SECOP II?"
 descripcion: >
-  Lugares de ejecución de un contrato de SECOP II, con la entidad.
+  DÓNDE se ejecuta un contrato de SECOP II: los lugares geográficos (municipios/departamentos) de
+  ejecución, con la entidad. Es la ubicación, no el avance; para cómo va el contrato (entregas,
+  hitos, % de avance) usa secop_ejecucion_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
