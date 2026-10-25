@@ -136,3 +136,31 @@ async def test_un_error_de_la_peticion_no_se_tapa_con_cache(
     with pytest.raises(ErrorEjecucion) as exc:
         await ej.ejecutar(H.id, H.canario.entrada)
     assert exc.value.codigo == "fuente_respuesta_invalida"
+
+
+@pytest.mark.anyio
+async def test_el_aviso_de_homonimos_sale_tambien_desde_cache() -> None:
+    """Sale del índice de municipios, no de la fuente: no se guarda en la caché, se agrega al
+    servir. Un sobre guardado antes del aviso lo trae igual (GEO Copilot, fiabilidad F4)."""
+    h = CATALOGO.herramientas["cnmh_masacres_municipio"]
+    grabado = json.loads(
+        (Path(__file__).parent / "doradas" / f"{h.id}.json").read_text(encoding="utf-8")
+    )
+
+    class Grabada(Fuente):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            self.llamadas += 1
+            copia: dict[str, Any] = json.loads(json.dumps(grabado["llamadas"][0]["respuesta"]))
+            return copia
+
+    fuente, reloj, almacen = Grabada(), Reloj(), AlmacenMemoria()
+    almacen.reloj = reloj
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": fuente}, almacen, reloj)
+    primero = await ej.ejecutar(h.id, {"municipio_divipola": "05313"})
+    segundo = await ej.ejecutar(h.id, {"municipio_divipola": "05313"})
+    assert fuente.llamadas == 1 and segundo.procedencia[0].servido_desde == "cache"
+    for sobre in (primero, segundo):
+        homonimos = [a for a in sobre.avisos if a.startswith("Se consultó 05313 = GRANADA")]
+        assert len(homonimos) == 1 and "50313 GRANADA (META)" in homonimos[0]
+    ((_, guardado),) = almacen._datos.values()
+    assert not any(a.startswith("Se consultó") for a in guardado["sobre"]["avisos"])

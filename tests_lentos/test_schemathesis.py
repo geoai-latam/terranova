@@ -58,11 +58,27 @@ def sin_red() -> Any:
     puerta.usar_conectores(None)
 
 
+# las entradas `divipola`: aceptan el código o el nombre (regla 12 de rt/1)
+DIVIPOLA = {
+    n
+    for h in puerta.CATALOGO.herramientas.values()
+    for n, t in h.entrada.items()
+    if t == "divipola"
+}
+
+
 @schema.parametrize()
 @settings(max_examples=25, deadline=None, suppress_health_check=list(HealthCheck))
 def test_api(case: Any) -> None:
     # Un bbox con min ≥ max cumple el esquema (4 números) pero no es un rectángulo: «mín < máx» no
     # se puede decir en JSON Schema y la puerta lo rechaza con 400, como debe. Solo para esas
     # herramientas se omite la comprobación de «dato válido aceptado»; las demás siguen.
-    con_bbox = isinstance(case.body, dict) and "bbox" in case.body
-    case.call_and_validate(excluded_checks=[positive_data_acceptance] if con_bbox else [])
+    # Igual con un municipio por nombre: «uno» cumple el patrón, pero no hay un municipio con ese
+    # nombre (o hay varios) y la puerta responde 400 con los candidatos. Con el código no se omite.
+    cuerpo = case.body if isinstance(case.body, dict) else {}
+    con_bbox = "bbox" in cuerpo
+    por_nombre = any(
+        k in DIVIPOLA and isinstance(v, str) and not v.isdigit() for k, v in cuerpo.items()
+    )
+    omitir = con_bbox or por_nombre
+    case.call_and_validate(excluded_checks=[positive_data_acceptance] if omitir else [])

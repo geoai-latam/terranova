@@ -57,7 +57,13 @@
    un máximo de 4000 caracteres por campo y solo dentro de `datos` y de las propiedades de la capa.
 10. Ningún campo fuera de la lista blanca del catálogo.
 11. Con un código DIVIPOLA, `zona_usada.nombre` dice el municipio y el departamento (del índice de
-    cobertura). Si el agente supuso un código errado, el sobre muestra de qué lugar es el dato.
+    cobertura). Si el agente supuso un código errado, el sobre muestra de qué lugar es el dato. Si
+    otros municipios se llaman igual (hay cinco «San Andrés»), un aviso los lista con su código. El
+    aviso sale del índice y no de la fuente: se agrega al servir y no se guarda en la caché.
+12. Una entrada `divipola` acepta el código o el nombre del municipio, con «, departamento» si hace
+    falta («San Andrés, Santander»). La puerta lo resuelve con el índice de municipios antes de
+    consultar, así que a la fuente siempre llega el código. Si varios municipios se llaman así, no
+    elige: responde `parametro_invalido` con los candidatos y sus códigos.
 
 ## 6.3 Códigos de error (estables)
 

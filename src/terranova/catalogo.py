@@ -26,7 +26,9 @@ DURACION_ISO = r"^P(?:\d+[YMWD])+(?:T(?:\d+[HMS])+)?$|^PT(?:\d+[HMS])+$"
 # inyección SQL/SoQL.
 PATRONES_ENTRADA: dict[str, str] = {
     "codigo_predial": r"^[0-9]{30}$",
-    "divipola": r"^[0-9]{5}$",
+    # el código, o el nombre del municipio (con «, departamento» si hace falta): la puerta lo
+    # convierte en el código antes de la consulta, así que a la fuente siempre llegan 5 dígitos
+    "divipola": r"^([0-9]{5}|[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .,-]{0,99})$",
     "id_secop": r"^CO1\.[A-Z]+\.[0-9]+$",
     "constancia_secop": r"^[0-9]{2}-[0-9]{1,2}-[0-9]+$",  # SECOP I: 19-12-10176235
     "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
@@ -47,7 +49,11 @@ PATRONES_ENTRADA: dict[str, str] = {
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
 FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "codigo_predial": ("número predial nacional de 30 dígitos", "251750000000000050067000000000"),
-    "divipola": ("código DIVIPOLA del municipio: 5 dígitos, con el cero inicial", "25175"),
+    "divipola": (
+        "código DIVIPOLA del municipio (5 dígitos, con el cero inicial) o su nombre; si varios se "
+        "llaman igual, con el departamento: «San Andrés, Santander»",
+        "25175",
+    ),
     "id_secop": ("identificador de SECOP II", "CO1.PCCNTR.5141215"),
     "constancia_secop": ("número de constancia de SECOP I", "19-12-10176235"),
     "contrato_secop": ("identificador de SECOP II o constancia de SECOP I", "CO1.PCCNTR.5141215"),
