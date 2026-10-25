@@ -93,8 +93,11 @@ def de_socrata_catalog(resultado: dict[str, Any]) -> DatasetDescubrible:
         id_socrata=id_socrata,
         titulo=_texto(res.get("name")),
         descripcion=_texto(res.get("description")),
-        entidad=(_texto(res.get("attribution")) or _texto(dueno.get("display_name"))
-                 or _texto(meta.get("domain"))),
+        entidad=(
+            _texto(res.get("attribution"))
+            or _texto(dueno.get("display_name"))
+            or _texto(meta.get("domain"))
+        ),
         categoria=(clasif.get("domain_category") or None),
         columnas=tuple(c for c in columnas if isinstance(c, str)),
         licencia=(meta.get("license") or None),
@@ -105,8 +108,9 @@ def de_socrata_catalog(resultado: dict[str, Any]) -> DatasetDescubrible:
     )
 
 
-def metricas(datasets: list[DatasetDescubrible], hoy: date | None = None,
-             top: int = 10) -> MetricasCatalogo:
+def metricas(
+    datasets: list[DatasetDescubrible], hoy: date | None = None, top: int = 10
+) -> MetricasCatalogo:
     """El resumen de la compuerta. Pura."""
     hoy = hoy or date.today()
     por_entidad = Counter(d.entidad for d in datasets if d.entidad)
@@ -119,21 +123,34 @@ def metricas(datasets: list[DatasetDescubrible], hoy: date | None = None,
     )
 
 
-def ingerir(cliente: Any = None, *, limite_paginas: int | None = None, por_pagina: int = 1000,
-            dominio: str = DOMINIO) -> list[DatasetDescubrible]:
+def ingerir(
+    cliente: Any = None,
+    *,
+    limite_paginas: int | None = None,
+    por_pagina: int = 1000,
+    dominio: str = DOMINIO,
+) -> list[DatasetDescubrible]:
     """Cosecha el catálogo del dominio, paginado y en serie. `limite_paginas` acota (desarrollo)."""
     import httpx
 
-    http = cliente or httpx.Client(timeout=120,
-                                   headers={"User-Agent": "terranova-descubrimiento/1"})
+    http = cliente or httpx.Client(
+        timeout=120, headers={"User-Agent": "terranova-descubrimiento/1"}
+    )
     cerrar = cliente is None
     datasets: list[DatasetDescubrible] = []
     offset, pagina = 0, 0
     try:
         while True:
-            r = http.get(DISCOVERY_URL, params={"domains": dominio, "search_context": dominio,
-                                                 "limit": por_pagina, "offset": offset,
-                                                 "order": "dataset_id"})
+            r = http.get(
+                DISCOVERY_URL,
+                params={
+                    "domains": dominio,
+                    "search_context": dominio,
+                    "limit": por_pagina,
+                    "offset": offset,
+                    "order": "dataset_id",
+                },
+            )
             r.raise_for_status()
             resultados = r.json().get("results") or []
             if not resultados:

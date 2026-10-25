@@ -51,8 +51,9 @@ def test_de_socrata_catalog_mapea_los_campos():
 def test_entidad_cae_al_owner_y_luego_al_dominio():
     sin_attr = _resultado(resource={"id": "aaaa-bbbb"}, owner={"display_name": "DANE"})
     assert de_socrata_catalog(sin_attr).entidad == "DANE"
-    solo_dominio = _resultado(resource={"id": "cccc-dddd"}, owner={},
-                              metadata={"domain": "www.datos.gov.co"})
+    solo_dominio = _resultado(
+        resource={"id": "cccc-dddd"}, owner={}, metadata={"domain": "www.datos.gov.co"}
+    )
     assert de_socrata_catalog(solo_dominio).entidad == "www.datos.gov.co"
 
 
@@ -70,7 +71,8 @@ def test_con_licencia_y_vivo():
     assert sin_lic.con_licencia() is False
 
     viejo = de_socrata_catalog(
-        _resultado(resource={"id": "ee-ff", "data_updated_at": "2023-01-01T00:00:00Z"}))
+        _resultado(resource={"id": "ee-ff", "data_updated_at": "2023-01-01T00:00:00Z"})
+    )
     assert viejo.vivo(HOY) is False
 
     sin_fecha = de_socrata_catalog(_resultado(resource={"id": "gg-hh"}))
@@ -79,8 +81,16 @@ def test_con_licencia_y_vivo():
 
 def _ds(entidad: str, licencia: str | None, fecha: str | None) -> DatasetDescubrible:
     return DatasetDescubrible(
-        id_socrata="x", titulo="t", descripcion="", entidad=entidad, categoria=None,
-        columnas=(), licencia=licencia, actualizado_en=fecha, vistas=0, descargas=0,
+        id_socrata="x",
+        titulo="t",
+        descripcion="",
+        entidad=entidad,
+        categoria=None,
+        columnas=(),
+        licencia=licencia,
+        actualizado_en=fecha,
+        vistas=0,
+        descargas=0,
         url="https://www.datos.gov.co/resource/x.json",
     )
 
