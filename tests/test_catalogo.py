@@ -274,3 +274,10 @@ def test_ids_parecidos_para_un_error_accionable() -> None:
     ]
     assert "medicinalegal.homicidios" in ids_parecidos(catalogo, "Medicina Legal")
     assert ids_parecidos(catalogo, "xyzzy") == [] and ids_parecidos(catalogo, "--") == []
+
+
+def test_la_licencia_dice_si_no_hay_uso_comercial() -> None:
+    """Con «licencia: CC BY 4.0» a secas, un agente dijo que Open-Meteo se podía usar
+    comercialmente; su API gratuita es solo no comercial (GEO Copilot, plan de fiabilidad)."""
+    h = cargar().herramientas["open_meteo_clima_serie"]
+    assert h.descripcion.rstrip().endswith("licencia: CC BY 4.0, sin uso comercial.)")

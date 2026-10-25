@@ -582,8 +582,8 @@ class Ejecutor:
             avisos += [_aviso_de_copia(r.hechos) for r in respuestas[:1]]
         if fuente.uso_comercial == "no":
             avisos.append(
-                f"Licencia no comercial ({fuente.licencia.spdx}): "
-                "el uso posterior debe ser no comercial."
+                f"Solo uso no comercial ({fuente.licencia.spdx}): este dato no se puede usar con "
+                "fines comerciales."
             )
 
         geo = None

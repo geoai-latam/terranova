@@ -626,13 +626,17 @@ LICENCIAS_LEGIBLES = {
 
 
 def _licencia_legible(fuente: Fuente) -> str:
+    """La licencia como la lee un agente, con «sin uso comercial» si la fuente no lo permite: con
+    «licencia: CC BY 4.0» a secas, un agente contestó que Open-Meteo se podía usar comercialmente
+    (su API gratuita es solo no comercial; GEO Copilot, plan de fiabilidad)."""
     spdx = fuente.licencia.spdx
     if spdx is None:
         return "por verificar"
     if spdx in LICENCIAS_LEGIBLES:
-        return LICENCIAS_LEGIBLES[spdx]
-    legible = re.sub(r"^CC-(BY(?:-SA|-NC|-ND)*)-(\d\.\d)$", lambda m: f"CC {m[1]} {m[2]}", spdx)
-    return legible
+        legible = LICENCIAS_LEGIBLES[spdx]
+    else:
+        legible = re.sub(r"^CC-(BY(?:-SA|-NC|-ND)*)-(\d\.\d)$", lambda m: f"CC {m[1]} {m[2]}", spdx)
+    return f"{legible}, sin uso comercial" if fuente.uso_comercial == "no" else legible
 
 
 def ids_parecidos(catalogo: Catalogo, texto: str, n: int = 5) -> list[str]:
