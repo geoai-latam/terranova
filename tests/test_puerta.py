@@ -250,3 +250,13 @@ async def test_datos_de_fuente_invalidos_son_fuente_respuesta_invalida(
     with pytest.raises(ErrorEjecucion) as exc:
         await puerta.ejecutar("igac_predio_en_punto", {"lon": -74.0, "lat": 4.8})
     assert exc.value.codigo == "fuente_respuesta_invalida"
+
+
+def test_estado_puerta_dos_instancias_son_independientes() -> None:
+    """WS6: el estado mutable vive en un objeto, no en variables de módulo. Dos `EstadoPuerta` no
+    comparten nada (ni el cortacircuitos ni los conectores), que es lo que da el aislamiento."""
+    a, b = puerta.EstadoPuerta(), puerta.EstadoPuerta()
+    a.iniciados["x"] = object()  # type: ignore[assignment]
+    a.cuota = object()  # type: ignore[assignment]
+    assert b.iniciados == {} and b.cuota is None
+    assert a.proteccion is not b.proteccion

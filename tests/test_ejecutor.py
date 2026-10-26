@@ -251,6 +251,35 @@ class _TodasLasCapasCaen:
         raise ErrorConector("todo caído", "fuente_no_disponible")
 
 
+def test_paridad_rest_mcp_entero_estricto() -> None:
+    """ADR-0004: REST (modelo pydantic estricto) y MCP (`validar_entrada`) aceptan y rechazan la
+    misma entrada. Antes `5.0` pasaba por MCP y lo rechazaba REST: misma herramienta, dos reglas."""
+    from pydantic import ValidationError
+
+    from terranova.app import modelo_entrada
+
+    h = CATALOGO.herramientas["banrep_dtf_recientes"]  # `ultimas`: int
+    modelo = modelo_entrada(h)
+
+    def rest_acepta(e: dict[str, Any]) -> bool:
+        try:
+            modelo(**e)
+            return True
+        except ValidationError:
+            return False
+
+    def mcp_acepta(e: dict[str, Any]) -> bool:
+        try:
+            validar_entrada(h, dict(e))
+            return True
+        except ErrorEntrada:
+            return False
+
+    for e in ({"ultimas": 5}, {"ultimas": 5.0}, {"ultimas": "5"}, {"ultimas": True}):
+        assert rest_acepta(e) == mcp_acepta(e), e
+    assert mcp_acepta({"ultimas": 5}) and not mcp_acepta({"ultimas": 5.0})  # 5.0 no es 5
+
+
 @pytest.mark.anyio
 async def test_una_capa_caida_degrada_a_parcial() -> None:
     """WS6: con una capa caída y otra con datos, el sobre es `parcial` con aviso (no «encontrado»

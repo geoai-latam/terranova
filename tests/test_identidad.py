@@ -91,11 +91,11 @@ def con_identidad(registro: RegistroSqlite) -> Iterator[RegistroSqlite]:
             "dane-mcp": Grabado("dane_poblacion_municipio"),
         }
     )
-    puerta.registro = registro
+    puerta.ESTADO.registro = registro
     try:
         yield registro
     finally:
-        puerta.registro = None
+        puerta.ESTADO.registro = None
         puerta.usar_conectores(None)
 
 

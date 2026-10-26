@@ -69,14 +69,18 @@ def validar_entrada(h: Herramienta, entrada: dict[str, Any]) -> dict[str, Any]:
 
 
 def _valor(nombre: str, tipo: str, v: Any) -> Any:
-    if tipo in ("float", "int"):
+    if tipo == "int":
+        # estricto como el modelo REST (ADR-0004): un entero llega como entero, `5.0` no es `5`.
+        # Antes el camino MCP aceptaba `5.0` y el REST lo rechazaba: misma herramienta, dos reglas.
+        if isinstance(v, bool) or not isinstance(v, int):
+            raise ErrorEntrada(nombre, "debe ser un número entero (int)")
+        return v
+    if tipo == "float":
         if isinstance(v, bool) or not isinstance(v, int | float) or not math.isfinite(v):
-            raise ErrorEntrada(nombre, f"debe ser un número ({tipo})")
-        if tipo == "int" and int(v) != v:
-            raise ErrorEntrada(nombre, "debe ser entero")
+            raise ErrorEntrada(nombre, "debe ser un número (float)")
         if (nombre == "lon" and not -180 <= v <= 180) or (nombre == "lat" and not -90 <= v <= 90):
             raise ErrorEntrada(nombre, "fuera de rango (EPSG:4326)")
-        return int(v) if tipo == "int" else float(v)
+        return float(v)
     if tipo == "bool":
         if not isinstance(v, bool):
             raise ErrorEntrada(nombre, "debe ser true o false")

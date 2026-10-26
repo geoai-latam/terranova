@@ -22,13 +22,23 @@ verde (WS1–WS7):
   CNPV con el mismo criterio.
 - **WS4 · blindar G6 (#113):** `parecido` recortado a [0,1], huella del modelo junto a los vectores,
   `embeber_catalogo` por lotes con tope en `/embed`, aviso de truncamiento de la cosecha ICDE.
-- **WS5 · endurecimiento de despliegue y pruebas (en curso):** tope de cuerpo REST, `mem_limit`/
+- **WS5 · endurecimiento de despliegue y pruebas (#114):** tope de cuerpo REST, `mem_limit`/
   `pids_limit` en todos los contenedores y Redis con `--maxmemory`/LRU (que un desborde no mate los
   procesos de video del dueño), `pytest-cov` con piso 70 % en `make check`, pip-audit + trivy +
   dependabot en CI, y el piso de CONTEO del canario (no solo `elementos[0]`). Queda documentado, para
   aplicar con prueba en la VM: read_only/cap_drop en los servicios con estado y el rate_limit de borde
   en Caddy (exige compilar con xcaddy).
-- **WS6 · refactors estructurales:** siguiente.
+- **WS6a · concurrencia y degradación (#122):** un `asyncio.Lock` por `ConectorMCP` reabre la sesión
+  caída una sola vez bajo llamadas en paralelo; una fuente de varias capas con una capa caída degrada
+  a `parcial` (con el error en `errores`, regla 5) en vez de fallar entera; y una prueba en intérprete
+  limpio fija la frontera ADR-0012/0028 (la ruta del dato no importa el modelo de embeddings).
+- **WS6b · encapsular estado y paridad de entrada:** el estado mutable de `puerta.py` pasa de variables
+  de módulo sueltas a un objeto `EstadoPuerta` (cohesión y aislamiento); y la coerción de entrada queda
+  pareja REST↔MCP (ADR-0004: `5.0` ya no lo acepta MCP y lo rechaza REST; ambos exigen entero). El
+  trabajo de import perezoso se dejó como está a propósito: `terranova.app:app` es el punto de entrada
+  ASGI documentado y el catálogo se necesita al importar para construir las herramientas.
+- **Pendiente de la auditoría (dueño):** la base legal DANE (WS3) y el despliegue en la VM (WS5:
+  endurecimiento con prueba; e2e de las 153 herramientas; primera promoción y afinado del piso G6).
 
 ## Dónde estamos
 
