@@ -122,7 +122,13 @@ score, pero conviene tenerlo presente. Y cuando **ambas señales coinciden** en 
 por la Corte»), el híbrido no lo arregla: es **calidad del modelo** (el pequeño `MiniLM` confunde «estado»
 el Estado con contenido de gobierno). El modelo es **intercambiable** (`MODELO_EMBEDDING`/`DIM_EMBEDDING`):
 en un host con más RAM que el equipo de desarrollo, `intfloat/multilingual-e5-large` (1024-dim, ~2,2 GB)
-rankea mejor; se decide al desplegar, midiendo con el banco de verdades. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
+rankea mejor; se decide al desplegar, midiendo con el banco de verdades. **El piso no distingue el
+gibberish con pinta de palabras:** medido con pruebas de usuario humano, «asdkjfh qwerty» puntúa 0,47
+(cae en páginas municipales genéricas) y una consulta buena como «cuanto cuesta un remedio» puntúa 0,469
+—el coseno absoluto de este modelo no está calibrado, así que ningún piso fijo los separa (subirlo mata
+buenas). Mitiga: el **cliente LLM juzga** los candidatos (Terranova es recuperación honesta, no el juez),
+y un modelo grande calibra mejor. El gibberish claro sin palabras («xzxzxz 12345», 0,37) sí cae bajo el
+piso. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
 los embeddings viven **solo aquí** (sugerir *qué fuente* mirar), **nunca en la ruta del dato** —el
 ejecutor, los conectores y el sobre `rt/1` siguen sin modelo y deterministas—. Sin el extra, el buscador
 cae al **léxico** (nada se rompe). Las **API de búsqueda de los portales** (Socrata `q=`, ArcGIS Hub
