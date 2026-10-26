@@ -7,6 +7,7 @@ rompe el CI (`scripts/check.py`).
 from __future__ import annotations
 
 import difflib
+import functools
 import json
 import re
 from datetime import date
@@ -663,8 +664,10 @@ def ids_parecidos(catalogo: Catalogo, texto: str, n: int = 5) -> list[str]:
     return list(dict.fromkeys([*contienen, *parecidos]))[:n]
 
 
+@functools.cache
 def cargar_cobertura(indice: str, raiz: Path = RAIZ) -> dict[str, Any]:
-    """Un índice de cobertura (`catalogo/cobertura/<indice>.yaml`)."""
+    """Un índice de cobertura (`catalogo/cobertura/<indice>.yaml`). Memoizado a nivel proceso: el
+    YAML (~0,3 s) se parsea una vez, no por petición catastral (se lee solo, no se muta)."""
     datos = yaml.safe_load((raiz / "cobertura" / f"{indice}.yaml").read_text(encoding="utf-8"))
     if not isinstance(datos, dict) or "municipios" not in datos:
         raise CatalogoInvalido([f"cobertura/{indice}.yaml: falta `municipios`"])
