@@ -7,7 +7,7 @@ acto: null
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: 2026-10-22
+  verificada: null
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
   cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
 uso_comercial: si
@@ -21,6 +21,7 @@ frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura: {pais: CO, periodo: "2018 a 2025 (anexo 2025)"}
 datos_personales: ninguno
 estado: publicada
+clasificacion_licencia: ambar
 campos:
   Departamento: {nombre: departamento, tipo: str, desc: "departamento"}
   columna: {nombre: anio, tipo: str, desc: "año (como lo escribe el DANE: «2020**» lleva nota)"}

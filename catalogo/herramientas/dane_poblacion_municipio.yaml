@@ -7,7 +7,7 @@ descripcion: >
   Totales oficiales del Censo Nacional de Población y Vivienda 2018 de un municipio, por su código
   DIVIPOLA de 5 dígitos: personas, viviendas y hogares censados. Es población censada en 2018, no
   una proyección a hoy.
-  (Fuente: DANE; licencia: por verificar.)
+  (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo

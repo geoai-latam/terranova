@@ -3,16 +3,17 @@ titulo: Censo Nacional de Población y Vivienda 2018, totales por municipio
 entidad: Departamento Administrativo Nacional de Estadística (DANE)
 competencia: autoridad estadística nacional; el CNPV 2018 es el último censo de población
 acto: null
-# No es una licencia abierta: es una «licencia de usuario final» con cita obligatoria que no menciona
-# la redistribución (catalogo/licencias/m1.yaml, dane.mgn_y_cnpv2018). Queda en evaluación hasta que
-# el DANE responda por escrito (F0.8).
+# Términos del DANE: autorizan uso, aprovechamiento, transformación y análisis citando «Fuente: DANE»,
+# sin mencionar la redistribución. Agregados municipales, sin persona ni reserva → dato público
+# reutilizable (ADR-0019 enmienda: ámbar, sirve con aviso). Si el DANE confirma por escrito la
+# redistribución, sube a verde (F0.8).
 licencia:
-  spdx: null
+  spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
   verificada: null
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
   cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual"
-uso_comercial: por_verificar
+uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: DANE, Censo Nacional de Población y Vivienda 2018"
 protocolo: arcgis_rest
@@ -28,7 +29,8 @@ cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
 # dane-mcp consulta la capa 800 (municipios) del servicio del censo.
 capas_servicio: [800]
 datos_personales: ninguno  # solo agregados municipales (reserva estadística)
-estado: borrador
+estado: publicada
+clasificacion_licencia: ambar
 campos:
   codigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, 5 dígitos (MPIO_CDPMP)"}
   municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio (MPIO_CNMBR)"}

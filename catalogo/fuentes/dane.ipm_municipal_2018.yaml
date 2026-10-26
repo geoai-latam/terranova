@@ -8,7 +8,7 @@ acto: null
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: 2026-10-22
+  verificada: null
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
   cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
 uso_comercial: si
@@ -22,6 +22,7 @@ frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
 cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
 datos_personales: ninguno
 estado: publicada
+clasificacion_licencia: ambar
 campos:
   ID: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
   Municipio: {nombre: municipio, tipo: str, desc: "municipio (las tildes vienen dañadas en el archivo)"}
