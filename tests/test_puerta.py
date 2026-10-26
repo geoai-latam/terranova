@@ -161,7 +161,13 @@ async def test_bogota_esta_fuera_de_cobertura_y_no_descuenta(cliente_con: Client
     Sobre.model_validate(sobre)
     assert sobre["estado"] == "fuera_de_cobertura" and sobre["creditos"] == 0
     assert any("UAECD" in a for a in sobre["avisos"])
-    assert "igac.catastro.gestores" in {p["fuente_id"] for p in sobre["procedencia"]}
+    # WS3: la procedencia cita la fuente REAL del catálogo con su licencia verdadera (CC-BY-SA-4.0
+    # de su ficha), no un id fantasma con `por-verificar` fijado a mano
+    gestores = next(
+        p for p in sobre["procedencia"] if p["fuente_id"] == "igac.gestores_catastrales"
+    )
+    assert gestores["licencia"]["spdx"] == "CC-BY-SA-4.0"
+    assert "igac.catastro.gestores" not in {p["fuente_id"] for p in sobre["procedencia"]}
 
 
 @pytest.mark.anyio

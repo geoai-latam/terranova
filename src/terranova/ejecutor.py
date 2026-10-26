@@ -307,18 +307,21 @@ async def cobertura_catastral(
             "out_fields": ["divipola"],
             "max_features": 1,
         }
+        gestores = ej.catalogo.fuentes["igac.gestores_catastrales"]
         sc = await ej.llamar(
-            "arcgis-mcp", "arcgis_query_features", argumentos, fuente_id="igac.catastro.gestores"
+            "arcgis-mcp", "arcgis_query_features", argumentos, fuente_id=gestores.id
         )
         rasgos = ((sc.get("artifacts") or [{}])[0].get("data") or {}).get("features") or []
         divipola = str(rasgos[0]["properties"].get("divipola") or "") if rasgos else None
         procedencia.append(
             Procedencia(
-                fuente_id="igac.catastro.gestores",
-                entidad="Instituto Geográfico Agustín Codazzi (IGAC)",
+                # la fuente REAL del catálogo (no un id fantasma): su licencia es la que declara su
+                # ficha (CC-BY-SA-4.0 verificada), no un `por-verificar` fijado a mano
+                fuente_id=gestores.id,
+                entidad=gestores.entidad,
                 url=CAPA_GESTORES,
-                licencia=Licencia(spdx="LicenseRef-por-verificar", uso_comercial="por_verificar"),
-                atribucion="Fuente: IGAC, Gestores catastrales",
+                licencia=licencia_de(gestores),
+                atribucion=gestores.atribucion,
                 servido_desde="fuente",
                 consultado_en=consultado_en,
                 consulta=argumentos,
