@@ -32,6 +32,7 @@ campos:
   actualizado_en: {nombre: actualizado_en, tipo: str, desc: "última actualización declarada"}
   protocolo: {nombre: protocolo, tipo: str, desc: "socrata (tabla) o arcgis_rest (capa)"}
   url: {nombre: url, tipo: str, desc: "endpoint para consultar con el conector genérico"}
+  parecido: {nombre: parecido, tipo: float, desc: "parecido semántico 0–1; el cliente juzga la confianza"}
 dcat: {publisher: Terranova, theme: meta, accrualPeriodicity: daily}
 # Spec 07: medido al ingerir los dos catálogos el 2026-10-25.
 perfil:

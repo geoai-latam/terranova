@@ -20,7 +20,8 @@
        "licencia",
        "actualizado_en",
        "protocolo",
-       "url"
+       "url",
+       "parecido"
       ],
       "rows": [
        {
@@ -30,7 +31,8 @@
         "licencia": "http://creativecommons.org/licenses/by/4.0/",
         "actualizado_en": "2026-09-30T00:00:00.000Z",
         "protocolo": "arcgis_rest",
-        "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer"
+        "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer",
+        "parecido": 0.66
        },
        {
         "id": "7365da6723ee43ff9124d8c7777dbe64:3",
@@ -39,7 +41,8 @@
         "licencia": "http://creativecommons.org/licenses/by/4.0/",
         "actualizado_en": "2026-09-30T00:00:00.000Z",
         "protocolo": "arcgis_rest",
-        "url": "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/MapServer"
+        "url": "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/MapServer",
+        "parecido": 0.58
        }
       ]
      }
