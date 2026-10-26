@@ -29,13 +29,25 @@ IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos d
   herramientas / uso`, con exit codes que distinguen «no encontrado» de «no se pudo».
 - **Validación crítica** de las ADR/specs (#85): el catálogo es **metadatos** en `descubrimiento.datasets`,
   no un `copia` (ADR-0024); licencia **declarada** (verificar es manual, al promover); orden del CLI.
-- **Runtime del catálogo (en marcha, PRs #94–#95).** (1) **Microservicio de embeddings** (#94): el
-  modelo (ONNX/fastembed) en un contenedor aparte, `/embed` por HTTP, `EmbedderRemoto` para la puerta y
-  el job. (2) **Almacén pgvector** (#95): `AlmacenDescubrimiento` (`descubrimiento.datasets` con columna
-  `vector`, refresco entero por catálogo), `catalogo-dcat ingerir --a-postgis`, job `descubrimiento` en
-  el compose (cosecha Socrata+ICDE a diario y pide vectores al microservicio), imagen Postgres con
-  postgis **y** pgvector, y un job de CI con imagen pgvector para probar el `<=>`. Falta: el conector
-  interno `catalogo_dcat` + la ficha `rt/1` + la pasada completa (scroll/paginado) + la promoción.
+- **Runtime del catálogo con embeddings — NÚCLEO COMPLETO (PRs #94–#99, 2026-10-25).** Descubrimiento
+  semántico de punta a punta, todo probado sin red (y el `<=>` contra pgvector en CI); falta solo el
+  **despliegue** (bajar el modelo, levantar el compose), que es del dueño (Q3).
+  1. **Microservicio de embeddings** (#94): el modelo (ONNX/fastembed) en un contenedor aparte, `/embed`
+     por HTTP, `EmbedderRemoto` para la puerta y el job — no se duplica en cada réplica.
+  2. **Almacén pgvector** (#95): `AlmacenDescubrimiento` (`descubrimiento.datasets` con columna `vector`,
+     refresco entero por catálogo), `catalogo-dcat ingerir --a-postgis`, job `descubrimiento` en el
+     compose, imagen Postgres con postgis **y** pgvector, y job de CI con imagen pgvector.
+  3. **Conector interno `catalogo_dcat`** (#96): embebe la consulta y busca con `<=>` + piso + orden por
+     valor; registrado en `conectores_desde_entorno`; honesto si falta el embebedor.
+  4. **Ficha `catalogo_buscar` `rt/1`** (#97): familia nueva `meta`, perfil, ficha técnica, dorada y
+     canario reproducible; sale por REST/MCP y en los perfiles por familia.
+  5. **Pasada completa** (#98): Socrata con `scroll_id` (sin el tope de 10k), ICDE con `?page=N`.
+  6. **Promoción data-driven** (#99): `candidatos_a_promover` + `catalogo-dcat promover` ordenan la cola
+     por cobertura medida del banco de verdades, no por intuición.
+  **Despliegue pendiente (dueño):** `docker compose … up -d --build` levanta `embeddings`, la imagen
+  Postgres con pgvector y el job `descubrimiento`; luego la primera promoción (`catalogo-dcat promover`)
+  y afinar el piso de similitud con el banco de verdades. La ficha `catalogo_buscar` ya es `rt/1`; su
+  canario va verde cuando el almacén tiene datos.
 - **Buscador semántico con embeddings (#93, ADR-0028).** El recuperador del catálogo pasa de léxico a
   **embeddings**: modelo multilingüe local y **fijado** (`intfloat/multilingual-e5-small`, ONNX vía
   `fastembed`, extra `terranova[descubrimiento]`), orden por coseno con **piso** y desempate por valor,
