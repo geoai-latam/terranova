@@ -168,14 +168,14 @@ def ingerir(
     scroll_id, pagina = "", 0
     try:
         while True:
+            # `scroll_id` entra en modo scroll (ordena por dataset_id solo); `scroll_id` + `order`
+            # da 400 en la API real, así que NO se manda `order`. En la primera página va vacío.
             params: dict[str, Any] = {
                 "domains": dominio,
                 "search_context": dominio,
                 "limit": por_pagina,
-                "order": "dataset_id",
+                "scroll_id": scroll_id,
             }
-            if scroll_id:
-                params["scroll_id"] = scroll_id
             r = http.get(DISCOVERY_URL, params=params)
             r.raise_for_status()
             resultados = r.json().get("results") or []
@@ -379,9 +379,10 @@ def buscar(
 MODELO_EMBEDDING = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 DIM_EMBEDDING = 384
 #: Debajo de este coseno, un candidato no se parece lo suficiente: no se muestra (honestidad —los
-#: embeddings no empujan un «parecido pero falso» con confianza). Medido con este modelo; se afina
-#: con el banco de verdades al desplegar.
-PISO_SIMILITUD = 0.30
+#: embeddings no empujan un «parecido pero falso» con confianza). Medido en vivo con este modelo
+#: (2026-10-25): con 0,30 casi todo pasaba (cientos de 2000); con 0,40 el ruido baja y una consulta
+#: sin respuesta («bitcoin») devuelve 0. Se afina con el banco de verdades al desplegar.
+PISO_SIMILITUD = 0.40
 
 
 class Embedder(Protocol):
