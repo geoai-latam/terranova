@@ -117,7 +117,12 @@ reproducible**. Hay un **piso de similitud** (lo poco parecido no se muestra) y 
 (licencia > vivo), para que la relevancia mande sin pisar la honestidad. **Límite conocido:** los
 embeddings devuelven *lo más parecido*, no *«no lo tengo»*; para una pregunta cuya fuente no está en el
 catálogo pueden dar un candidato tangencial con confianza media —se mitiga con el piso y surtiendo el
-score, pero conviene tenerlo presente. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
+score, pero conviene tenerlo presente. Y cuando **ambas señales coinciden** en un falso positivo (medido:
+«contratos del estado» trae un registro cuya descripción habla del «Estado» y de «cumplimiento ordenado
+por la Corte»), el híbrido no lo arregla: es **calidad del modelo** (el pequeño `MiniLM` confunde «estado»
+el Estado con contenido de gobierno). El modelo es **intercambiable** (`MODELO_EMBEDDING`/`DIM_EMBEDDING`):
+en un host con más RAM que el equipo de desarrollo, `intfloat/multilingual-e5-large` (1024-dim, ~2,2 GB)
+rankea mejor; se decide al desplegar, midiendo con el banco de verdades. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
 los embeddings viven **solo aquí** (sugerir *qué fuente* mirar), **nunca en la ruta del dato** —el
 ejecutor, los conectores y el sobre `rt/1` siguen sin modelo y deterministas—. Sin el extra, el buscador
 cae al **léxico** (nada se rompe). Las **API de búsqueda de los portales** (Socrata `q=`, ArcGIS Hub
