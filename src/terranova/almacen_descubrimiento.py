@@ -261,12 +261,15 @@ class ConectorCatalogo:
             for d in hallados
         ]
         columnas = ["id", "titulo", "entidad", "licencia", "actualizado_en", "protocolo", "url"]
+        # El buscador devuelve el top-N, no un conteo exhaustivo: `total` = candidatos devueltos
+        # (no un «total de coincidencias» desconocido; con un piso podrían ser cientos). `truncado`
+        # avisa que hay más. Así `coincidencias` (derivado de total) siempre es un número.
         return {
             "artifacts": [{"kind": "table", "columns": columnas, "rows": filas}],
             "facts": {
                 "completitud": {
                     "vistos": len(filas),
-                    "total": None if len(filas) >= limite else len(filas),
+                    "total": len(filas),
                     "truncado": len(filas) >= limite,
                 }
             },
@@ -288,4 +291,13 @@ def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:
         from terranova.descubrimiento import EmbedderRemoto
 
         embedder = EmbedderRemoto(emb_url)
+    else:
+        # sin microservicio: si el extra está, el modelo corre en el proceso (dev o un solo nodo);
+        # si no, el conector queda sin embebedor y responde fuente_no_disponible (honesto).
+        try:
+            from terranova.descubrimiento import FastEmbedder
+
+            embedder = FastEmbedder()
+        except ImportError:
+            embedder = None
     return ConectorCatalogo(AlmacenDescubrimiento(url), embedder)
