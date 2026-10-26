@@ -18,6 +18,11 @@ import yaml
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, model_validator
 
 RAIZ = Path(__file__).resolve().parents[2] / "catalogo"
+
+#: Nombre de campo que delata la cédula de una persona natural (ADR-0014). Solo las personas
+#: naturales tienen «cédula»; las empresas (nit, razón social) se permiten, y un documento genérico
+#: que a veces es cédula va con nombre `documento_…` (ADR-0025), no `cedula`.
+PATRON_CEDULA = re.compile(r"c[eé]dula")
 ID_FUENTE = r"^[a-z0-9_]+(\.[a-z0-9_]+)+$"
 ID_HERRAMIENTA = r"^[a-z][a-z0-9]*(_[a-z0-9]+)+$"
 DURACION_ISO = r"^P(?:\d+[YMWD])+(?:T(?:\d+[HMS])+)?$|^PT(?:\d+[HMS])+$"
@@ -346,6 +351,14 @@ class Fuente(_Ficha):
             raise ValueError("ADR-0018: un backend interno exige el permiso escrito")
         if self.estado == "publicada" and self.datos_personales == "presentes":
             raise ValueError("ADR-0014: una fuente con datos personales presentes no se publica")
+        cedulas = [c.nombre for c in self.campos.values() if PATRON_CEDULA.search(c.nombre)]
+        if cedulas:
+            # ADR-0014: una cédula de persona natural no sale como campo de la lista blanca. Si la
+            # fuente la trae dentro de un documento (SECOP), va con nombre genérico (`documento_…`,
+            # ADR-0025), no `cedula`. El resto (empresas: nit, razón social, nombres) se permite.
+            raise ValueError(
+                f"ADR-0014: campo de cédula de persona natural en la lista blanca: {cedulas}"
+            )
         if self.cobertura.columna_tiempo and self.cobertura.columna_tiempo not in self.campos:
             raise ValueError("spec 08: cobertura.columna_tiempo no está en la lista blanca")
         if (self.modo == "copia") != (self.copia is not None):
