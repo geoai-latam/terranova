@@ -54,6 +54,10 @@ PATRONES_ENTRADA: dict[str, str] = {
     "expediente_minero": r"^[A-Z0-9][A-Z0-9-]{3,19}$",
     # código SIGEP de la entidad (Función Pública): dígitos, con posible cero inicial (0870)
     "codigo_sigep": r"^[0-9]{1,6}$",
+    # subpartida arancelaria NANDINA de 10 dígitos (comercio exterior DANE/DIAN): 8517130000
+    "subpartida": r"^[0-9]{10}$",
+    # año de cuatro dígitos (2000 a 2099)
+    "anio": r"^20[0-9]{2}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -78,6 +82,8 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "nombre": ("nombre o parte de él: letras, espacios, puntos y guiones", "Bancolombia"),
     "expediente_minero": ("código de expediente del título minero (ANM)", "ABQ-101"),
     "codigo_sigep": ("código SIGEP de la entidad (Función Pública)", "6194"),
+    "subpartida": ("subpartida arancelaria NANDINA de 10 dígitos", "8517130000"),
+    "anio": ("año de cuatro dígitos", "2025"),
 }
 
 TipoEntrada = Literal[
@@ -103,6 +109,8 @@ TipoEntrada = Literal[
     "nombre",
     "expediente_minero",
     "codigo_sigep",
+    "subpartida",
+    "anio",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 
@@ -247,8 +255,15 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata"]
-    conjunto: str = Field(pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$", description="id en datos.gov.co")
+    origen: Literal["socrata", "zip_dane"]
+    conjunto: str | None = Field(
+        default=None,
+        pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
+        description="id en datos.gov.co (socrata)",
+    )
+    descargas: list[str] = Field(
+        default_factory=list, description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane)"
+    )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
     clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
     ventana: Ventana | None = None
@@ -256,6 +271,14 @@ class Copia(_Ficha):
     texto: list[str] = Field(
         default_factory=list, description="columnas de la búsqueda de texto completo (español)"
     )
+
+    @model_validator(mode="after")
+    def _origen_coherente(self) -> Copia:
+        if self.origen == "socrata" and not self.conjunto:
+            raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
+        if self.origen == "zip_dane" and not self.descargas:
+            raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")
+        return self
 
     @property
     def columnas_usadas(self) -> set[str]:

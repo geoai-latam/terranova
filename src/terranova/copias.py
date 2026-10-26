@@ -166,6 +166,165 @@ def descargar_socrata(
             http.close()
 
 
+# --- ingesta de los microdatos de comercio exterior del DANE (ZIP, origen zip_dane) ------------
+#
+# El DANE publica las estadísticas de importaciones (ANDA, catálogo 856) como ZIP de microdatos: un
+# ZIP por entrega, con un ZIP mensual dentro, y en cada mensual un CSV (`;`, números europeos,
+# `FECH`=AAMM). El microdato NO trae NIT ni persona (41 columnas agregables). Se **pre-agrega** en
+# la ingesta a (año, mes, subpartida NANDINA, país de origen) con los valores sumados, para no
+# guardar decenas de millones de líneas: la copia queda compacta y el `copia` agrega al consultar.
+
+# columna canónica de la copia -> columna del CSV del DANE
+_COMEX_MEDIDAS = {
+    "valor_cif_pesos": "VACIP",
+    "valor_cif_usd": "VACID",
+    "valor_fob_usd": "VAFODO",
+    "peso_neto_kg": "PNK",
+    "cantidad": "CANU",
+}
+
+
+def num_europeo(texto: str) -> float:
+    """'285.792,00' -> 285792.0 ; '-   ' o '' -> 0.0 (separador de miles `.`, decimal `,`)."""
+    t = (texto or "").strip()
+    if t in ("", "-"):
+        return 0.0
+    try:
+        return float(t.replace(".", "").replace(",", "."))
+    except ValueError:
+        return 0.0
+
+
+def anio_mes_dane(fech: str) -> tuple[int, int]:
+    """`FECH` del microdato AAMM -> (año, mes): '2511' -> (2025, 11)."""
+    f = fech.strip()
+    if len(f) != 4 or not f.isdigit():
+        raise ValueError(f"FECH inesperada: «{fech}»")
+    return 2000 + int(f[:2]), int(f[2:])
+
+
+# acumulador: (anio, mes, subpartida, pais) -> {medida: suma, ...} + lineas
+_Clave = tuple[int, int, str, str]
+
+
+def agregar_comex_csv(texto_csv: str, acumulador: dict[_Clave, dict[str, float]]) -> int:
+    """Suma un CSV mensual del DANE dentro de `acumulador`. Devuelve las líneas leídas.
+
+    Pura: no toca red ni base. El CSV es `;`, con BOM y números europeos; la subpartida es `NABAN`
+    y el país de origen `PAISGEN`. El encabezado trae espacios (` VAFODO `) que se recortan."""
+    import csv
+    import io
+
+    lector = csv.reader(io.StringIO(texto_csv), delimiter=";")
+    cols = [c.strip() for c in next(lector, [])]
+    idx = {c: i for i, c in enumerate(cols)}
+    faltan = {"FECH", "NABAN", "PAISGEN", *_COMEX_MEDIDAS.values()} - set(idx)
+    if faltan:
+        raise ValueError(f"al CSV del DANE le faltan columnas: {sorted(faltan)}")
+    i_fech, i_sub, i_pais = idx["FECH"], idx["NABAN"], idx["PAISGEN"]
+    i_med = {m: idx[c] for m, c in _COMEX_MEDIDAS.items()}
+    n = 0
+    for fila in lector:
+        if len(fila) <= i_pais:
+            continue
+        anio, mes = anio_mes_dane(fila[i_fech])
+        clave: _Clave = (anio, mes, fila[i_sub].strip(), fila[i_pais].strip())
+        reg = acumulador.setdefault(clave, dict.fromkeys(_COMEX_MEDIDAS, 0.0) | {"lineas": 0.0})
+        for m, col in i_med.items():
+            reg[m] += num_europeo(fila[col])
+        reg["lineas"] += 1
+        n += 1
+    return n
+
+
+def fusionar_mes(texto_csv: str, acumulador: dict[_Clave, dict[str, float]]) -> None:
+    """Suma un CSV mensual al acumulador con dedup por (año, mes): gana el último archivo.
+
+    Las entregas del DANE se solapan (p. ej. octubre sale en dos ZIP): sumar sin deduplicar dobla
+    ese mes. Cada CSV reemplaza los meses que trae (se procesan en orden de `descargas`; el ZIP más
+    reciente pisa al anterior). Pura: no toca red ni base."""
+    temp: dict[_Clave, dict[str, float]] = {}
+    agregar_comex_csv(texto_csv, temp)
+    meses = {(anio, mes) for (anio, mes, _, _) in temp}
+    for clave in [k for k in acumulador if (k[0], k[1]) in meses]:
+        del acumulador[clave]
+    acumulador.update(temp)
+
+
+def filas_de_acumulador(acumulador: dict[_Clave, dict[str, float]]) -> Iterator[dict[str, Any]]:
+    """Las filas de la copia (lista blanca) desde el acumulador, con clave sintética única."""
+    for (anio, mes, sub, pais), reg in acumulador.items():
+        yield {
+            "clave": f"{anio}{mes:02d}-{sub}-{pais}",
+            "anio": str(anio),
+            "mes": mes,
+            "subpartida": sub,
+            "pais_origen": pais,
+            **{m: round(reg[m], 2) for m in _COMEX_MEDIDAS},
+            "lineas": int(reg["lineas"]),
+        }
+
+
+def descargar_zip_dane(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Baja los ZIP del DANE, pre-agrega sus CSV mensuales y rinde las filas de la copia por página.
+
+    `desde` se ignora (se copia la ventana completa de los ZIP declarados). Cada ZIP trae ZIP
+    mensuales, y cada mensual un CSV."""
+    import io
+    import tempfile
+    import zipfile
+
+    import httpx
+
+    assert fuente.copia is not None
+    acumulador: dict[_Clave, dict[str, float]] = {}
+    propio = cliente is None
+    http = cliente or httpx.Client(
+        timeout=600, follow_redirects=True, headers={"User-Agent": "terranova-copias/1"}
+    )
+    try:
+        for url in fuente.copia.descargas:
+            with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp:
+                with http.stream("GET", url) as r:
+                    r.raise_for_status()
+                    for trozo in r.iter_bytes(1 << 20):
+                        tmp.write(trozo)
+                ruta = tmp.name
+            try:
+                externo = zipfile.ZipFile(ruta)
+                for miembro in externo.namelist():
+                    low = miembro.lower()
+                    if low.endswith(".zip"):  # ZIP mensual anidado
+                        interno = zipfile.ZipFile(io.BytesIO(externo.read(miembro)))
+                        csvs = [n for n in interno.namelist() if n.lower().endswith(".csv")]
+                        if not csvs:
+                            continue
+                        texto = interno.read(csvs[0]).decode("utf-8-sig", "replace")
+                    elif low.endswith(".csv"):  # CSV directo bajo una carpeta del mes
+                        texto = externo.read(miembro).decode("utf-8-sig", "replace")
+                    else:
+                        continue
+                    fusionar_mes(texto, acumulador)
+            finally:
+                import os
+
+                os.unlink(ruta)
+    finally:
+        if propio:
+            http.close()
+
+    pagina: list[dict[str, Any]] = []
+    for fila in filas_de_acumulador(acumulador):
+        pagina.append(fila)
+        if len(pagina) >= PAGINA:
+            yield pagina
+            pagina = []
+    if pagina:
+        yield pagina
+
+
 def _pedir(http: Any, url: str, params: dict[str, Any], intentos: int = 3) -> list[dict[str, Any]]:
     import time
 

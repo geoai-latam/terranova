@@ -17,7 +17,12 @@ from terranova.copias import (
     ConectorCopia,
     ErrorCopia,
     Version,
+    agregar_comex_csv,
+    anio_mes_dane,
     duracion,
+    filas_de_acumulador,
+    fusionar_mes,
+    num_europeo,
     plan_de_consulta,
 )
 
@@ -204,3 +209,80 @@ async def test_una_copia_que_no_dice_su_fecha_no_se_sirve_como_actual() -> None:
     with pytest.raises(ErrorEjecucion) as exc:
         await ej.ejecutar("secop_contratos_buscar", {"texto": "farmacia"}, plan="evaluacion")
     assert exc.value.codigo == "fuente_respuesta_invalida"
+
+
+# --- ingesta de los microdatos de comercio exterior del DANE (origen zip_dane) ------------------
+
+_HEADER = "FECH;NABAN;PAISGEN; VACIP ; VACID ; VAFODO ; PNK ; CANU "
+# dos líneas del mismo mes/subpartida/país: se suman dentro de un archivo
+_CSV_NOV = (
+    _HEADER + "\r\n"
+    "2511;8517130000;156; 1.000,50 ; 100,25 ; 90,00 ; 10,00 ; 5,00 \r\n"
+    "2511;8517130000;156; 2.000,00 ; 200,00 ; 180,00 ; 20,00 ; 10,00 \r\n"
+    "2511;8703239090;276; 500.000,00 ; 1.234,56 ; -   ; 7,00 ; 1,00 \r\n"
+)
+_CSV_OCT = _HEADER + "\r\n2510;8517130000;156; 9,00 ; 9,00 ; 9,00 ; 9,00 ; 9,00 \r\n"
+
+
+def test_num_europeo() -> None:
+    assert num_europeo("285.792,00") == 285792.0
+    assert num_europeo(" 1.234,56 ") == 1234.56
+    assert num_europeo("54000,00") == 54000.0
+    assert num_europeo("-   ") == 0.0
+    assert num_europeo("") == 0.0
+    assert num_europeo("0") == 0.0
+
+
+def test_anio_mes_dane() -> None:
+    assert anio_mes_dane("2511") == (2025, 11)
+    assert anio_mes_dane("2601") == (2026, 1)
+    with pytest.raises(ValueError, match="FECH"):
+        anio_mes_dane("25")
+
+
+def test_agregar_comex_csv_suma_por_subpartida_y_pais() -> None:
+    acc: dict[Any, Any] = {}
+    n = agregar_comex_csv(_CSV_NOV, acc)
+    assert n == 3
+    tel = acc[(2025, 11, "8517130000", "156")]
+    assert tel["valor_cif_pesos"] == 3000.5  # 1000,50 + 2000,00
+    assert tel["valor_fob_usd"] == 270.0
+    assert tel["lineas"] == 2.0
+    carro = acc[(2025, 11, "8703239090", "276")]
+    assert carro["valor_fob_usd"] == 0.0  # «-   » es cero
+    assert carro["lineas"] == 1.0
+
+
+def test_agregar_comex_csv_exige_columnas() -> None:
+    with pytest.raises(ValueError, match="faltan columnas"):
+        agregar_comex_csv("FECH;NABAN\r\n2511;8517130000\r\n", {})
+
+
+def test_fusionar_mes_deduplica_el_mes_repetido() -> None:
+    acc: dict[Any, Any] = {}
+    fusionar_mes(_CSV_NOV, acc)
+    fusionar_mes(_CSV_NOV, acc)  # el mismo mes otra vez: reemplaza, NO duplica
+    assert acc[(2025, 11, "8517130000", "156")]["valor_cif_pesos"] == 3000.5
+
+
+def test_fusionar_mes_conserva_otros_meses() -> None:
+    acc: dict[Any, Any] = {}
+    fusionar_mes(_CSV_NOV, acc)
+    fusionar_mes(_CSV_OCT, acc)  # otro mes: se conserva
+    fusionar_mes(_CSV_NOV, acc)  # noviembre otra vez: reemplaza noviembre, octubre intacto
+    assert (2025, 10, "8517130000", "156") in acc
+    assert acc[(2025, 10, "8517130000", "156")]["valor_fob_usd"] == 9.0
+    assert acc[(2025, 11, "8517130000", "156")]["valor_cif_pesos"] == 3000.5
+
+
+def test_filas_de_acumulador_da_la_lista_blanca() -> None:
+    acc: dict[Any, Any] = {}
+    agregar_comex_csv(_CSV_NOV, acc)
+    filas = {f["clave"]: f for f in filas_de_acumulador(acc)}
+    tel = filas["202511-8517130000-156"]
+    assert tel["anio"] == "2025"  # str, como la columna de la ficha
+    assert tel["mes"] == 11
+    assert tel["subpartida"] == "8517130000"
+    assert tel["pais_origen"] == "156"
+    assert tel["valor_cif_pesos"] == 3000.5
+    assert tel["lineas"] == 2  # int

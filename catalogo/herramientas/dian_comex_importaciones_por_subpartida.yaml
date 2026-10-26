@@ -1,0 +1,42 @@
+id: dian_comex_importaciones_por_subpartida
+version: 1
+familia: estadisticas
+fuente: dian.comex_importaciones
+pregunta: "¿Cuánto importó Colombia de una subpartida arancelaria en un año?"
+descripcion: >
+  Valor y volumen de las importaciones de Colombia para una SUBPARTIDA arancelaria (NANDINA de 10
+  dígitos) en un AÑO: valor CIF (en pesos y en dólares), valor FOB en dólares, peso neto en kilos y
+  cantidad, sumados de todas las declaraciones de importación de ese año. Son cifras estadísticas del
+  DANE (no probatorias) y NO incluyen el detalle por empresa: el microdato abierto no trae NIT. Sale
+  de la copia de Terranova (ADR-0024); la procedencia dice la fecha de la copia y la ventana de meses
+  que cubre, así que un año en curso puede estar incompleto.
+  (Fuente: DANE, Estadísticas de Importaciones; licencia: CC BY-SA 4.0.)
+entrada: {subpartida: subpartida, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: uno
+  tool: consultar_copia
+  argumentos:
+    tabla: dian_comex_importaciones
+    filtros: {subpartida: "{subpartida}", anio: "{anio}"}
+    agregados:
+      valor_cif_pesos: "sum:valor_cif_pesos"
+      valor_cif_usd: "sum:valor_cif_usd"
+      valor_fob_usd: "sum:valor_fob_usd"
+      peso_neto_kg: "sum:peso_neto_kg"
+      cantidad: "sum:cantidad"
+      lineas: "sum:lineas"
+    limite: 2
+  campos: [valor_cif_pesos, valor_cif_usd, valor_fob_usd, peso_neto_kg, cantidad, lineas]
+salida: ComexImportacionSubpartida
+derivados: {}
+creditos: 2
+canario:
+  # Medido el 2026-10-26 en los microdatos ANDA 856 (año 2025 completo, ZIP Impo_2025_1 + Impo_2025_2).
+  # La subpartida 8517130000 (teléfonos móviles) importa en NOVIEMBRE de 2025 FOB US$188.197.179; el
+  # total del año es mayor, así que el año completo supera ese mínimo. Se usa `minimos` porque las
+  # cifras provisionales del DANE pueden revisarse, pero nunca por debajo de un mes ya observado.
+  entrada: {subpartida: "8517130000", anio: "2025"}
+  minimos: {valor_fob_usd: 188197179}
+  campos: [cantidad, lineas, peso_neto_kg, valor_cif_pesos, valor_cif_usd, valor_fob_usd]
+  latencia_max_ms: 5000
