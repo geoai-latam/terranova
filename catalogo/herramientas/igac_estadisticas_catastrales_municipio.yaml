@@ -8,8 +8,7 @@ descripcion: >
   (rural o urbana) y estado catastral, el número de predios, el área de terreno, el área
   geográfica, el área construida y el avalúo total. Un año puede traer un bloque «Actualizado» y
   otro «Desactualizado»: cada elemento dice su estado; no se suman sin mirarlo.
-  Mientras la licencia no esté verificada, solo responde con llaves de evaluación.
-  (Fuente: IGAC; licencia: por verificar.)
+  (Fuente: IGAC; licencia: dato público reutilizable.)
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo

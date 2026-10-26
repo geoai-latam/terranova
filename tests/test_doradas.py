@@ -12,7 +12,7 @@ import pytest
 from terranova.canario import campos_presentes, comprobar
 from terranova.catalogo import cargar
 from terranova.contrato import Sobre, fuera_de_lista_blanca
-from terranova.ejecutor import Ejecutor
+from terranova.ejecutor import Ejecutor, licencia_de
 
 DORADAS = Path(__file__).parent / "doradas"
 CATALOGO = cargar()
@@ -66,7 +66,7 @@ async def test_dorada(herramienta: str) -> None:
     assert {p.fuente_id for p in sobre.procedencia} >= {fuente.id}
     for p in sobre.procedencia:
         if p.fuente_id == fuente.id:
-            assert p.licencia.spdx == (fuente.licencia.spdx or "LicenseRef-por-verificar")
+            assert p.licencia.spdx == licencia_de(fuente).spdx
             assert p.atribucion == fuente.atribucion
     assert sobre.creditos == h.creditos
 
