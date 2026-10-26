@@ -54,6 +54,16 @@ CASOS = [
     (FUENTE, _set(licencia__evidencia=None), "evidencia"),
     (FUENTE, _set(clase_acceso="interno_con_permiso"), "ADR-0018"),
     (FUENTE, _set(datos_personales="presentes"), "ADR-0014"),
+    # Enmienda ADR-0019: una fuente roja no se publica (queda en borrador).
+    (FUENTE, _set(clasificacion_licencia="rojo"), "borrador"),
+    # Enmienda ADR-0019: ámbar es dato público reutilizable → uso_comercial «si».
+    (FUENTE, _set(clasificacion_licencia="ambar", uso_comercial="no"), "uso_comercial"),
+    # Enmienda ADR-0019: datos personales presentes no caben en ámbar (son rojo).
+    (
+        FUENTE,
+        _set(clasificacion_licencia="ambar", uso_comercial="si", datos_personales="presentes"),
+        "ADR-0014",
+    ),
     # WS3: una cédula de persona natural como campo de la lista blanca rompe el catálogo (ADR-0014)
     (
         FUENTE,

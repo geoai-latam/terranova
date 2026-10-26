@@ -113,6 +113,18 @@ Familia = Literal[
     "meta",  # G6 (ADR-0026/0028): el buscador del catálogo, `catalogo_buscar`
 ]
 UsoComercial = Literal["si", "no", "por_verificar"]
+# ADR-0019 (enmienda 2026-10-26): clasificación de licencia por ítem.
+#   verde  → licencia abierta verificada; sirve a todas las llaves.
+#   ambar  → dato público reutilizable (Ley 1712/2014) con términos no verificados; sirve con
+#            aviso (traslada a la fuente la responsabilidad de exactitud/uso). No cabe persona.
+#   rojo   → bloqueado (persona, reserva legal o prohibición de redistribuir); no se publica.
+ClasificacionLicencia = Literal["verde", "ambar", "rojo"]
+# Aviso que acompaña cada respuesta de una fuente ámbar (modelo Superfinanciera Res.1519/2020).
+AVISO_DATO_PUBLICO = (
+    "Dato público reutilizable (Ley 1712/2014). La exactitud y vigencia son responsabilidad de la "
+    "entidad fuente; verifique los términos para su uso específico. Terranova normaliza y entrega, "
+    "no certifica."
+)
 
 
 class _Ficha(BaseModel):
@@ -334,6 +346,12 @@ class Fuente(_Ficha):
     cobertura: Cobertura
     datos_personales: Literal["ninguno", "filtrados", "presentes"]
     estado: Literal["borrador", "publicada"]
+    clasificacion_licencia: ClasificacionLicencia = Field(
+        default="verde",
+        description="ADR-0019 (enmienda): verde=licencia abierta verificada; ambar=dato público "
+        "reutilizable, términos no verificados, sirve con aviso; rojo=bloqueado (persona, reserva "
+        "legal o prohibición expresa), no se publica.",
+    )
     campos: dict[str, Campo] = Field(
         min_length=1, description="lista blanca: campo de la fuente → rt/1"
     )
@@ -347,10 +365,29 @@ class Fuente(_Ficha):
 
     @model_validator(mode="after")
     def _reglas(self) -> Self:
-        if self.licencia.spdx is None and self.uso_comercial != "por_verificar":
-            raise ValueError("ADR-0019: sin licencia conocida, uso_comercial es por_verificar")
-        if self.uso_comercial != "por_verificar" and self.licencia.verificada is None:
-            raise ValueError("ADR-0007: uso_comercial decidido exige licencia verificada")
+        clf = self.clasificacion_licencia
+        if clf == "rojo" and self.estado != "borrador":
+            raise ValueError(
+                "ADR-0019 (enmienda): una fuente roja (persona, reserva legal o prohibición "
+                "expresa de redistribuir) no se publica; déjala en borrador"
+            )
+        if clf == "ambar":
+            # Dato público reutilizable (Ley 1712/2014): sirve sin SPDX verificado, con aviso.
+            # Queda exenta de ADR-0007 (licencia verificada), pero NO de la línea roja de personas.
+            if self.uso_comercial != "si":
+                raise ValueError(
+                    "ADR-0019 (enmienda): una fuente ámbar es dato público reutilizable, "
+                    "uso_comercial es «si» (el aviso traslada la responsabilidad de uso)"
+                )
+            if self.datos_personales == "presentes":
+                raise ValueError(
+                    "ADR-0014: datos personales presentes no caben en ámbar; esa fuente es roja"
+                )
+        else:  # verde (o rojo en borrador): reglas clásicas de ADR-0019/0007
+            if self.licencia.spdx is None and self.uso_comercial != "por_verificar":
+                raise ValueError("ADR-0019: sin licencia conocida, la fuente es ámbar o rojo")
+            if self.uso_comercial != "por_verificar" and self.licencia.verificada is None:
+                raise ValueError("ADR-0007: uso_comercial decidido exige licencia verificada")
         if self.clase_acceso == "interno_con_permiso" and self.permiso is None:
             raise ValueError("ADR-0018: un backend interno exige el permiso escrito")
         if self.estado == "publicada" and self.datos_personales == "presentes":
@@ -656,7 +693,11 @@ def _licencia_legible(fuente: Fuente) -> str:
     (su API gratuita es solo no comercial; GEO Copilot, plan de fiabilidad)."""
     spdx = fuente.licencia.spdx
     if spdx is None:
-        return "por verificar"
+        return (
+            "dato público reutilizable"
+            if fuente.clasificacion_licencia == "ambar"
+            else "por verificar"
+        )
     if spdx in LICENCIAS_LEGIBLES:
         legible = LICENCIAS_LEGIBLES[spdx]
     else:
