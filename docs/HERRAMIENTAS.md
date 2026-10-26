@@ -112,6 +112,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 1 |
 | `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 2 |
+| `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
 ## justicia

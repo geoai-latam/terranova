@@ -1,0 +1,53 @@
+id: funcionpublica.sigep_servidores
+titulo: "Servidores públicos activos por entidad (SIGEP, Función Pública)"
+entidad: Departamento Administrativo de la Función Pública (DAFP)
+competencia: administra el Sistema de Información y Gestión del Empleo Público (SIGEP), Decreto 1083 de 2015, Título 17
+acto: null
+# El dataset trae una fila por servidor con atributos que, combinados (sexo, lugar de nacimiento,
+# salario, fecha de vinculación), permiten re-identificar a la persona aunque no haya cédula ni
+# nombre. Por eso la lista blanca deja fuera esas columnas y solo se exponen AGREGADOS por entidad y
+# nivel (conteos): nunca una fila de persona (ADR-0014). La licencia del portal es CC BY-SA 4.0.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-26
+  evidencia: https://www.datos.gov.co/api/views/2jzx-383z.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Departamento Administrativo de la Función Pública (DAFP), SIGEP. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/2jzx-383z.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura: {pais: CO}
+# «filtrados»: el dataset trae columnas de persona (sexo, nacimiento, salario, fecha); se omiten de
+# la lista blanca y solo salen agregados institucionales.
+datos_personales: filtrados
+estado: publicada
+campos:
+  codigosigep: {nombre: codigo_entidad, tipo: str, desc: "código SIGEP de la entidad"}
+  nombreentidad: {nombre: nombre_entidad, tipo: str, desc: "nombre de la entidad"}
+  orden: {nombre: orden, tipo: str, desc: "orden de la entidad (NACIONAL o TERRITORIAL)"}
+  niveljerarquicoempleo: {nombre: nivel_jerarquico, tipo: str, desc: "nivel jerárquico del empleo (DIRECTIVO, ASESOR, PROFESIONAL, TÉCNICO, ASISTENCIAL)"}
+  naturalezajuridica: {nombre: naturaleza_juridica, tipo: str, desc: "naturaleza jurídica de la entidad"}
+  tipodenombramiento: {nombre: tipo_nombramiento, tipo: str, desc: "tipo de nombramiento del empleo"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Departamento Administrativo de la Función Pública, theme: empleo_publico, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-26'
+  fila: "un servidor público activo; 272 228 filas, 3 884 entidades (codigosigep); FISCALIA (6194) la mayor con 22 435; NACIONAL 152 899 / TERRITORIAL 119 329"
+  clave:
+    columna: codigosigep
+    unica: false
+  operaciones:
+    contar: 0.5
+    agrupar: 0.4
+    filtrar: 0.1
+  hallazgos:
+  - "codigosigep identifica la entidad (no es único por fila): se agrupa por él para contar planta"
+  - "cada fila es un servidor con atributos re-identificables (sexo, nacimiento, salario, fecha): se omiten de la lista blanca y solo se exponen agregados (ADR-0014)"
+  - "el nivel jerárquico tiene 5 valores: DIRECTIVO, ASESOR, PROFESIONAL, TÉCNICO, ASISTENCIAL"
+  decision: "en vivo por entidad (codigosigep), contando servidores por nivel jerárquico, sin exponer ninguna columna de persona"
