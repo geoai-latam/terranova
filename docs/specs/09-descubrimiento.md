@@ -105,13 +105,19 @@ herramienta curada si `promovido_a` no es null).
 - **Personas (ADR-0014):** un dataset con datos personales no entra al índice; nunca se busca por
   cédula ni por nombre de persona.
 
-**El recuperador: embeddings (semántico), [ADR-0028](../decisions/0028-descubrimiento-con-embeddings.md).**
-El buscador recupera por **parecido semántico**, no por coincidencia de palabras: así «contaminación del
-agua» encuentra un dataset de «vertimientos» aunque no compartan términos. Modelo multilingüe **local y
-fijado** (`paraphrase-multilingual-MiniLM-L12-v2`, ONNX vía `fastembed`, extra `terranova[descubrimiento]`);
-la versión se fija para que el **canario sea reproducible**. El orden es por coseno con un **piso de
-similitud** (lo poco parecido no se muestra) y **desempate por valor** (licencia > vivo), para que la
-relevancia mande sin pisar la honestidad. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
+**El recuperador: híbrido (semántico + léxico), [ADR-0028](../decisions/0028-descubrimiento-con-embeddings.md).**
+El buscador recupera por **parecido semántico** (embeddings), así «contaminación del agua» encuentra un
+dataset de «vertimientos» aunque no compartan términos; y lo **fusiona por RRF con el léxico** (el FTS en
+español del almacén, `ts_rank`, que pondera por IDF). Medido en vivo (2026-10-25, 2000 datasets): el
+puro-vectorial mete ruido en el top y falla algunos tipeos; el híbrido mejora la precisión, y el FTS por
+IDF evita que las palabras comunes inflen un falso positivo (lo que sí pasó con una frecuencia de
+términos cruda). Modelo multilingüe **local y fijado** (`paraphrase-multilingual-MiniLM-L12-v2`, ONNX vía
+`fastembed`, extra `terranova[descubrimiento]`); la versión se fija para que el **canario sea
+reproducible**. Hay un **piso de similitud** (lo poco parecido no se muestra) y **desempate por valor**
+(licencia > vivo), para que la relevancia mande sin pisar la honestidad. **Límite conocido:** los
+embeddings devuelven *lo más parecido*, no *«no lo tengo»*; para una pregunta cuya fuente no está en el
+catálogo pueden dar un candidato tangencial con confianza media —se mitiga con el piso y surtiendo el
+score, pero conviene tenerlo presente. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
 los embeddings viven **solo aquí** (sugerir *qué fuente* mirar), **nunca en la ruta del dato** —el
 ejecutor, los conectores y el sobre `rt/1` siguen sin modelo y deterministas—. Sin el extra, el buscador
 cae al **léxico** (nada se rompe). Las **API de búsqueda de los portales** (Socrata `q=`, ArcGIS Hub

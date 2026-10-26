@@ -15,6 +15,13 @@
     puerta **no usa LLM** y que la lógica sale del catálogo, no de código suelto. Hay que reconciliarlo
     sin traicionar la honestidad ni el **canario reproducible**.
 - **Decisión:** `catalogo_buscar` recupera por **embeddings** (buscador **semántico**), con estas reglas:
+  0. **Híbrido, no solo vectorial (refinado el 2026-10-25 con medición en vivo).** El recuperador
+     fusiona por **RRF** el parecido semántico (`<=>` de pgvector) con el **léxico** (el FTS en
+     español del almacén, `ts_rank`, IDF). Probado con 2000 datasets reales: el puro-vectorial mete
+     ruido en el top y falla tipeos; el híbrido mejora la precisión. Clave: el léxico debe ser **FTS
+     con IDF**, no frecuencia de términos cruda (esta última subió un falso positivo al repetir
+     palabras comunes). Esto **revierte la postergación** del híbrido que decía antes este ADR: la
+     medición lo justificó. Sin el extra/servicio, cae al léxico puro.
   1. **Modelo local y fijado.** `paraphrase-multilingual-MiniLM-L12-v2` (multilingüe, español; ONNX en CPU vía
      `fastembed`, sin torch; local, offline y **gratis** —coherente con el proyecto y con la poca
      memoria del equipo). La **versión se fija** (`MODELO_EMBEDDING`): el canario es reproducible.
