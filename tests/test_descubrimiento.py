@@ -380,3 +380,46 @@ def test_candidatos_a_promover_ordena_por_cobertura_medida() -> None:
     assert cola[0].dataset.id_socrata == "agua" and cola[0].preguntas == 2
     assert cola[1].dataset.id_socrata == "raro" and cola[1].preguntas == 2
     assert cola[2].dataset.id_socrata == "bosque" and cola[2].preguntas == 1
+
+
+# --- WS4: lotes de embeddings + aviso de truncamiento -------------------------------------------
+class _EmbedderCuentaLotes:
+    def __init__(self) -> None:
+        self.lotes: list[int] = []
+
+    def consulta(self, texto: str) -> tuple[float, ...]:
+        return (1.0,)
+
+    def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+        self.lotes.append(len(textos))
+        return [(1.0,) for _ in textos]
+
+
+def test_embeber_catalogo_trocea_en_lotes() -> None:
+    ds = [_reg(f"d{i}") for i in range(300)]
+    emb = _EmbedderCuentaLotes()
+    vectores = embeber_catalogo(ds, emb, lote=256)
+    assert len(vectores) == 300
+    assert emb.lotes == [256, 44]  # no manda todo en un POST
+
+
+def test_ingerir_dcat_avisa_si_trunca(caplog: pytest.LogCaptureFixture) -> None:
+    import logging
+
+    from terranova.descubrimiento import ingerir_dcat_us
+
+    # un feed que SIEMPRE trae ítems nuevos: al agotar las páginas permitidas, avisa que truncó
+    class _HTTPInfinito:
+        def __init__(self) -> None:
+            self.n = 0
+
+        def get(self, url: str, params: dict[str, Any] | None = None) -> _Resp:
+            self.n += 1
+            return _Resp(
+                {"dataset": [_dcat(identifier=f"https://x/item.html?id={'a' * 31}{self.n}")]}
+            )
+
+    with caplog.at_level(logging.WARNING, logger="terranova"):
+        ds = ingerir_dcat_us(_HTTPInfinito(), limite_paginas=2)
+    assert len(ds) == 2  # se detuvo en el tope
+    assert any("truncada" in m for m in caplog.messages)

@@ -61,3 +61,13 @@ def test_embedder_remoto_habla_con_el_servicio() -> None:
     assert capturado["url"] == "http://embeddings:9950/embed"
     assert capturado["body"] == {"consulta": "agua"}
     assert emb.documentos([]) == []  # lista vacía no llama al servicio
+
+
+def test_embed_rechaza_demasiados_documentos() -> None:
+    r = _cliente().post("/embed", json={"documentos": ["x"] * 1001})  # > MAX_DOCS
+    assert r.status_code == 422
+
+
+def test_embed_rechaza_texto_gigante() -> None:
+    r = _cliente().post("/embed", json={"consulta": "x" * 9000})  # > MAX_TEXTO
+    assert r.status_code == 422

@@ -12,18 +12,25 @@ llave (vive en la red interna, como los conectores MCP, ADR-0002). El modelo se 
 from __future__ import annotations
 
 import os
-from typing import Any
+from typing import Annotated, Any
 
 from fastapi import FastAPI
-from pydantic import BaseModel, ConfigDict, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
+
+#: Topes para que una petición no agote la memoria del contenedor (DoS). Un lote de ingesta usa
+#: cientos de textos cortos; una consulta es una frase.
+MAX_TEXTO = 8000
+MAX_DOCS = 1000
 
 
 class PeticionEmbed(BaseModel):
     """O una `consulta` (una pregunta) o `documentos` (textos de datasets), no ambos ni ninguno."""
 
     model_config = ConfigDict(extra="forbid", strict=True)
-    consulta: str | None = None
-    documentos: list[str] | None = None
+    consulta: str | None = Field(default=None, max_length=MAX_TEXTO)
+    documentos: list[Annotated[str, Field(max_length=MAX_TEXTO)]] | None = Field(
+        default=None, max_length=MAX_DOCS
+    )
 
     @model_validator(mode="after")
     def _uno_u_otro(self) -> PeticionEmbed:

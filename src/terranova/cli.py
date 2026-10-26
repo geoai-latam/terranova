@@ -321,9 +321,10 @@ def _catalogo_a_postgis(fuente: str, datasets: list[DatasetDescubrible]) -> int:
         print("faltan los embeddings; instala 'terranova[descubrimiento]'", file=sys.stderr)
         return 2
     from terranova.almacen_descubrimiento import AlmacenDescubrimiento
+    from terranova.descubrimiento import MODELO_EMBEDDING
 
     vectores = embeber_catalogo(datasets, embedder)
-    n = AlmacenDescubrimiento(url).reemplazar(fuente, datasets, vectores)
+    n = AlmacenDescubrimiento(url).reemplazar(fuente, datasets, vectores, modelo=MODELO_EMBEDDING)
     print(f"PostGIS: {n} filas de «{fuente}» en descubrimiento.datasets ({len(vectores)} vectores)")
     return 0
 
