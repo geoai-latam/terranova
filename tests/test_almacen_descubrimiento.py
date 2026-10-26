@@ -77,6 +77,10 @@ def test_reemplazar_y_buscar_vectorial() -> None:
     hallados = almacen.buscar((1.0, 0.0, 0.0), piso=0.5)
     assert [d.id_socrata for d in hallados] == ["agua"]
     assert hallados[0].protocolo == "icde"  # se conserva el protocolo (lo usa el agente)
+    # contar es el total honesto: solo agua pasa el piso vectorial; con el término «bosque» el FTS
+    # suma bosque (son 2 coincidencias en total aunque el top-N vectorial muestre 1)
+    assert almacen.contar((1.0, 0.0, 0.0), piso=0.5) == 1
+    assert almacen.contar((1.0, 0.0, 0.0), "cobertura de bosque", piso=0.5) == 2
 
 
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
@@ -110,6 +114,9 @@ class _AlmacenFalso:
     ) -> list[DatasetDescubrible]:
         self.visto = {"vector": vector, "texto": texto, "limite": limite}
         return self._resultado
+
+    def contar(self, vector: tuple[float, ...], texto: str | None = None, **_: Any) -> int:
+        return len(self._resultado)
 
 
 class _EmbedderFalso:
