@@ -185,3 +185,20 @@ async def test_canario_no_aborta_ante_error_inesperado() -> None:
     r = await correr(CATALOGO, _Revienta(), reloj=lambda: 0.0)  # type: ignore[arg-type]
     assert len(r) == len(CATALOGO.herramientas)  # ninguna se saltó
     assert all(not x.ok and x.codigo == "error_interno" for x in r)
+
+
+def test_canario_piso_de_conteo_de_elementos() -> None:
+    """WS5: `minimos: {elementos: N}` exige al menos N resultados en la lista (antes el canario
+    solo miraba el primer elemento, así que una lista corta pasaba verde)."""
+    from types import SimpleNamespace
+
+    from terranova.canario import comprobar
+
+    def _h(minimos: dict[str, int]) -> Any:
+        return SimpleNamespace(canario=SimpleNamespace(verdad={}, minimos=minimos, campos=[]))
+
+    def _s(n: int) -> Any:
+        return SimpleNamespace(estado="encontrado", datos={"elementos": [{} for _ in range(n)]})
+
+    assert any("elementos" in p for p in comprobar(_h({"elementos": 3}), _s(2)))  # corta → roja
+    assert not any("elementos" in p for p in comprobar(_h({"elementos": 3}), _s(3)))  # cumple

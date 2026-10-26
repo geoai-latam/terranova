@@ -11,7 +11,9 @@ PASOS: list[list[str]] = [
     [sys.executable, "scripts/validar_catalogo.py"],
     [sys.executable, "scripts/descripcion.py", "--check"],
     [sys.executable, "scripts/sin_invisibles.py"],
-    ["pytest"],
+    # Cobertura en la misma corrida (sin coste extra de RAM): term-missing para ver qué falta y un
+    # piso que no debe bajar. El piso vale para esta suite (sin extras), la que corre `make check`.
+    ["pytest", "--cov=terranova", "--cov-report=term-missing", "--cov-fail-under=70"],
 ]
 
 

@@ -1,6 +1,34 @@
 # Estado
 
-*Actualizado: 2026-10-25.*
+*Actualizado: 2026-10-26.*
+
+## Auditoría integral (2026-10-26)
+
+Una auditoría integral del código y el comportamiento encontró, por impacto: disponibilidad de la
+capa de datos, fugas de honestidad de estado en rutas de error, inconsistencias de licencia, defectos
+del descubrimiento G6, y brechas de ops/pruebas. Se cierran por workstreams, cada uno un PR con CI en
+verde (WS1–WS7):
+
+- **WS1 · capa de datos resiliente (#109):** pool Postgres con reconexión (`psycopg_pool`), medición
+  e `ultimo_uso` fuera del event loop (`asyncio.to_thread`), `cargar_cobertura` memoizado por proceso.
+- **WS2 · honestidad de estado en los errores (#110):** nada escapa como 500 text/plain
+  (`exception_handler` catch-all → `error_interno` problem+json); datos de fuente inválidos →
+  `fuente_respuesta_invalida`; el `ConectorCatalogo` no disfraza sus bugs de `fuente_no_disponible`;
+  `forma="uno"` con `datos={}` → `no_encontrado`; el canario atrapa lo inesperado y sigue.
+- **WS3 · licencias y catálogo (#111, #112):** gestores catastrales con su `fuente_id` y licencia
+  reales (`igac.gestores_catastrales`, CC-BY-SA-4.0), typo `terrminos`→`terminos` en 4 fichas DANE,
+  guardia de catálogo contra cédulas de persona natural en la lista blanca (ADR-0014). **Pendiente del
+  dueño:** registrar `LicenseRef-dane-terminos` en `m1.yaml` con la base legal escrita y reconciliar el
+  CNPV con el mismo criterio.
+- **WS4 · blindar G6 (#113):** `parecido` recortado a [0,1], huella del modelo junto a los vectores,
+  `embeber_catalogo` por lotes con tope en `/embed`, aviso de truncamiento de la cosecha ICDE.
+- **WS5 · endurecimiento de despliegue y pruebas (en curso):** tope de cuerpo REST, `mem_limit`/
+  `pids_limit` en todos los contenedores y Redis con `--maxmemory`/LRU (que un desborde no mate los
+  procesos de video del dueño), `pytest-cov` con piso 70 % en `make check`, pip-audit + trivy +
+  dependabot en CI, y el piso de CONTEO del canario (no solo `elementos[0]`). Queda documentado, para
+  aplicar con prueba en la VM: read_only/cap_drop en los servicios con estado y el rate_limit de borde
+  en Caddy (exige compilar con xcaddy).
+- **WS6 · refactors estructurales:** siguiente.
 
 ## Dónde estamos
 

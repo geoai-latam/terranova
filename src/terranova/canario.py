@@ -50,7 +50,13 @@ def comprobar(h: Herramienta, sobre: Sobre) -> list[str]:
         if not _igual(esperado, obtenido):
             problemas.append(f"{clave}: se esperaba {esperado!r}, vino {obtenido!r}")
     for clave, minimo in h.canario.minimos.items():
-        obtenido = _buscar(sobre.datos, clave)
+        # `elementos` es un piso de CONTEO de la lista (no un escalar de elementos[0]): una
+        # fuente de lista que devuelve menos resultados de los medidos sale roja (antes solo
+        # se miraba el 1º)
+        if clave == "elementos":
+            obtenido = len(sobre.datos.get("elementos") or [])
+        else:
+            obtenido = _buscar(sobre.datos, clave)
         if not isinstance(obtenido, int | float) or obtenido < minimo:
             problemas.append(f"{clave}: se esperaba ≥ {minimo}, vino {obtenido!r}")
     # F7.3: un campo renombrado en la fuente sale de la lista blanca sin error; aquí se nota

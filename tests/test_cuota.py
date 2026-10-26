@@ -168,6 +168,21 @@ async def test_limite_de_tasa_es_429_con_retry_after(
 
 
 @pytest.mark.anyio
+async def test_cuerpo_rest_demasiado_grande_es_400_sin_leerlo_entero(
+    montaje: tuple[RegistroSqlite, Fuente], cliente: httpx.AsyncClient
+) -> None:
+    """Un cuerpo REST enorme se corta y se rechaza (parametro_invalido) antes de agotar memoria."""
+    registro, _ = montaje
+    cabecera = {
+        "Authorization": f"Bearer {registro.crear('grande', {'*'}, prueba=False, expira=None)}"
+    }
+    gordo = {"lon": -74.0, "lat": 4.0, "relleno": "x" * 300_000}
+    r = await cliente.post(PREDIO, json=gordo, headers=cabecera)
+    assert r.status_code == 400 and r.json()["code"] == "parametro_invalido"
+    assert r.json()["param"] == "body"
+
+
+@pytest.mark.anyio
 async def test_uso_del_mes(
     montaje: tuple[RegistroSqlite, Fuente], cliente: httpx.AsyncClient
 ) -> None:
