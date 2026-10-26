@@ -49,7 +49,7 @@ IDEAM, MinEducación, INVIMA…) son decenas cada uno — «unos pocos cientos d
   y afinar el piso de similitud con el banco de verdades. La ficha `catalogo_buscar` ya es `rt/1`; su
   canario va verde cuando el almacén tiene datos.
 - **Buscador semántico con embeddings (#93, ADR-0028).** El recuperador del catálogo pasa de léxico a
-  **embeddings**: modelo multilingüe local y **fijado** (`intfloat/multilingual-e5-small`, ONNX vía
+  **embeddings**: modelo multilingüe local y **fijado** (`paraphrase-multilingual-MiniLM-L12-v2`, ONNX vía
   `fastembed`, extra `terranova[descubrimiento]`), orden por coseno con **piso** y desempate por valor,
   **re-embed completo por pasada** (no incremental). Reconciliado con ADR-0012: los embeddings viven
   **solo en el descubrimiento**, nunca en la ruta del dato (el sobre `rt/1` sigue determinista). Sin el

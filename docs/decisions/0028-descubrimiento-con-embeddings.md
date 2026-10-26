@@ -15,7 +15,7 @@
     puerta **no usa LLM** y que la lógica sale del catálogo, no de código suelto. Hay que reconciliarlo
     sin traicionar la honestidad ni el **canario reproducible**.
 - **Decisión:** `catalogo_buscar` recupera por **embeddings** (buscador **semántico**), con estas reglas:
-  1. **Modelo local y fijado.** `intfloat/multilingual-e5-small` (multilingüe, español; ONNX en CPU vía
+  1. **Modelo local y fijado.** `paraphrase-multilingual-MiniLM-L12-v2` (multilingüe, español; ONNX en CPU vía
      `fastembed`, sin torch; local, offline y **gratis** —coherente con el proyecto y con la poca
      memoria del equipo). La **versión se fija** (`MODELO_EMBEDDING`): el canario es reproducible.
      Instalable con el extra `terranova[descubrimiento]`; el núcleo no lo arrastra.
@@ -54,6 +54,14 @@
     puerta no carga onnxruntime. `terranova embeddings-servicio` lo sirve.
   - **Yo construyo el código y la config; el dueño despliega** (Q3): no se baja el modelo ni se
     levantan contenedores en esta máquina (prioridad de memoria a sus procesos de video).
+- **Modelo (medido el 2026-10-25):** el nombre que se fijó primero (`intfloat/multilingual-e5-small`)
+  **no está en el registro de `fastembed`** (solo el `-large`). Se usa
+  **`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`**: multilingüe, **dim 384**, ~0,22 GB,
+  ONNX. Es **simétrico** (no e5): la consulta y los documentos se embeben igual, **sin** prefijos
+  `query:`/`passage:`. El `PISO_SIMILITUD` quedó en **0,30** (la escala de coseno de este modelo, no la
+  de e5); se afina con el banco de verdades. La reproducibilidad exacta de los scores depende de la
+  versión de `fastembed` (una versión nueva cambió el pooling a *mean*); el canario, al ser un mínimo
+  (≥1 candidato), es robusto a ese cambio.
 - **Consecuencias:**
   - Extra nuevo `descubrimiento` (`fastembed` + `uvicorn`). El buscador: embeddings si hay índice de
     vectores y el servicio responde; si no, cae al **léxico** (nada se rompe sin el extra/servicio).
@@ -70,7 +78,12 @@
     `vectores_a_jsonl`/`cargar_vectores`), probada con un **embebedor falso** determinista: la consulta
     sobre «agua» trae el dataset de agua y no los ortogonales; el empate lo rompe la licencia; el índice
     redondea por JSONL.
-  - **Corrida real con `fastembed`** (`--embeddings`): queda para cuando se instale el extra / en la VM
-    (el modelo se baja una vez). No se corre en CI por memoria; la lógica ya está cubierta.
+  - **Corrida real con `fastembed`** ✅ (2026-10-25, en la máquina de desarrollo): se instaló el extra,
+    se cosechó una muestra de 300 datasets de datos.gov.co y se embebió con el modelo real;
+    `catalogo-dcat buscar "contaminación del agua"` trajo —por significado, sin compartir palabras—
+    datasets de hidrología, inundación, humedales y corredores ambientales (IDEAM, POT). Destapó el
+    nombre de modelo inválido, los prefijos e5 de más, el piso en escala e5, y dos bugs del CLI en
+    Windows (consola cp1252 y el glob que agarraba el índice de vectores), ya corregidos. No se corre
+    en CI por memoria/descarga del modelo.
   - **Canario** con verdad medida y modelo fijado, y la prueba de que el agente hace **buscar →
     conector genérico** con procedencia, licencia y frescura (va con la exposición `rt/1`, spec 09 §9.6).

@@ -24,7 +24,7 @@ def test_salud() -> None:
     r = _cliente().get("/salud")
     assert r.status_code == 200
     assert r.json()["estado"] == "ok"
-    assert "e5" in r.json()["modelo"]  # intfloat/multilingual-e5-small
+    assert "MiniLM" in r.json()["modelo"]  # paraphrase-multilingual-MiniLM-L12-v2
 
 
 def test_embed_consulta() -> None:
