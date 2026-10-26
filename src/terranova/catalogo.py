@@ -52,6 +52,8 @@ PATRONES_ENTRADA: dict[str, str] = {
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
     # expediente de título minero (ANM): mayúsculas, dígitos y guion; sin comillas ni espacios
     "expediente_minero": r"^[A-Z0-9][A-Z0-9-]{3,19}$",
+    # código SIGEP de la entidad (Función Pública): dígitos, con posible cero inicial (0870)
+    "codigo_sigep": r"^[0-9]{1,6}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -75,6 +77,7 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "bpin": ("código BPIN del proyecto, 13 o 14 dígitos", "2013157610001"),
     "nombre": ("nombre o parte de él: letras, espacios, puntos y guiones", "Bancolombia"),
     "expediente_minero": ("código de expediente del título minero (ANM)", "ABQ-101"),
+    "codigo_sigep": ("código SIGEP de la entidad (Función Pública)", "6194"),
 }
 
 TipoEntrada = Literal[
@@ -99,6 +102,7 @@ TipoEntrada = Literal[
     "bpin",
     "nombre",
     "expediente_minero",
+    "codigo_sigep",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 
