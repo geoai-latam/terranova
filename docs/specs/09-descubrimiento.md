@@ -178,6 +178,12 @@ La promoción es la **unidad de trabajo de F5** de siempre (ficha + herramientas
 pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por intuición. El campo
 `promovido_a` cierra el lazo (el buscador deja de ofrecer el crudo cuando ya hay curado).
 
+**La cola de promoción está mecanizada** (`candidatos_a_promover`, `terranova catalogo-dcat promover`):
+corre las preguntas del **banco de verdades** sin herramienta (`herramienta: null`, las fuentes
+objetivo) por el buscador del almacén y ordena los datasets por **cobertura medida** (en cuántas
+preguntas aparecen), luego por licencia y frescura. Así la siguiente ola sale de datos, no de
+intuición. La corrida real va contra el almacén desplegado (pgvector + embeddings).
+
 ## 9.5 Qué queda fuera y qué comparte
 
 - **Agregados en la cola larga:** dependen de `$group` en Socrata (pieza **G1**). Hasta tenerlo, un
@@ -205,5 +211,6 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
   + almacén en runtime con pgvector): es una decisión de **deploy** del catálogo, no solo código.
 - **Honestidad:** la lógica ya marca «sin licencia» y no indexa personas; la prueba como herramienta
   `rt/1` va con la exposición.
-- **Promoción:** al menos una fuente de la cola larga **promovida desde el buscador** (no desde
-  FUENTES_OBJETIVO a mano), con su ficha y canario en verde — va después del `rt/1`.
+- **Promoción:** la **cola está mecanizada** (`catalogo-dcat promover`, #99): ordena por cobertura
+  medida del banco de verdades. Falta la **primera fuente promovida desde ella** (ficha + canario en
+  verde), que va contra el almacén desplegado — la unidad de trabajo de F5, ya data-driven.

@@ -436,6 +436,39 @@ def buscar_vectorial(
     return [d for d, _ in puntuados[:limite]]
 
 
+@dataclass(frozen=True)
+class CandidatoPromocion:
+    """Un dataset del catálogo que responde preguntas reales del producto (ADR-0026 §9.4): se
+    promueve por valor MEDIDO (en cuántas preguntas del banco aparece), no por intuición."""
+
+    dataset: DatasetDescubrible
+    preguntas: int  # en cuántas preguntas del banco salió como candidato
+
+
+def candidatos_a_promover(
+    preguntas: list[str],
+    buscar_fn: Any,
+    *,
+    por_pregunta: int = 5,
+    hoy: date | None = None,
+) -> list[CandidatoPromocion]:
+    """Corre cada pregunta del banco por el buscador (`buscar_fn(consulta)`) y cuenta en cuántas
+    aparece cada dataset; ordena la cola de promoción por **cobertura medida**, luego por licencia y
+    frescura. Pura: recibe el buscador (no toca red ni base)."""
+    hoy = hoy or date.today()
+    conteo: dict[str, int] = {}
+    ref: dict[str, DatasetDescubrible] = {}
+    for pregunta in preguntas:
+        for d in list(buscar_fn(pregunta))[:por_pregunta]:
+            conteo[d.id_socrata] = conteo.get(d.id_socrata, 0) + 1
+            ref[d.id_socrata] = d
+    candidatos = [CandidatoPromocion(ref[i], n) for i, n in conteo.items()]
+    candidatos.sort(
+        key=lambda c: (c.preguntas, c.dataset.con_licencia(), c.dataset.vivo(hoy)), reverse=True
+    )
+    return candidatos
+
+
 class FastEmbedder:
     """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
     arrastra; se instala con el extra `descubrimiento`. e5 pide prefijos `query:`/`passage:`."""

@@ -8,6 +8,7 @@
     terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
     terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]         (G6: buscador)
+    terranova catalogo-dcat promover [--banco f.yaml]   (G6: cola de promoción data-driven)
     terranova embeddings-servicio    (G6/ADR-0028: microservicio de embeddings, red interna)
 
 Cliente del REST /v1 (ADR-0027; TERRANOVA_PUERTA y TERRANOVA_LLAVE):
@@ -175,7 +176,9 @@ def catalogo_dcat(argumentos: list[str]) -> int:
         return _catalogo_ingerir(argumentos[1:])
     if argumentos[:1] == ["buscar"]:
         return _catalogo_buscar(argumentos[1:])
-    print("uso: terranova catalogo-dcat ingerir|buscar …", file=sys.stderr)
+    if argumentos[:1] == ["promover"]:
+        return _catalogo_promover(argumentos[1:])
+    print("uso: terranova catalogo-dcat ingerir|buscar|promover …", file=sys.stderr)
     return 2
 
 
@@ -318,6 +321,64 @@ def _catalogo_a_postgis(fuente: str, datasets: list[DatasetDescubrible]) -> int:
     vectores = embeber_catalogo(datasets, embedder)
     n = AlmacenDescubrimiento(url).reemplazar(fuente, datasets, vectores)
     print(f"PostGIS: {n} filas de «{fuente}» en descubrimiento.datasets ({len(vectores)} vectores)")
+    return 0
+
+
+def _catalogo_promover(argumentos: list[str]) -> int:
+    """Promoción data-driven (ADR-0026 §9.4): corre las preguntas del banco de verdades por el
+    buscador del almacén y ordena la cola de promoción por cobertura medida. Las preguntas sin
+    herramienta (`herramienta: null`) son las fuentes objetivo aún sin promover."""
+    import os
+    import pathlib
+
+    import yaml
+
+    from terranova.almacen_descubrimiento import AlmacenDescubrimiento
+    from terranova.descubrimiento import candidatos_a_promover
+
+    parser = argparse.ArgumentParser(prog="terranova catalogo-dcat promover")
+    parser.add_argument("--banco", default="catalogo/verdades_producto.yaml")
+    parser.add_argument("--por-pregunta", type=int, default=5)
+    parser.add_argument(
+        "--incluir-cubiertas", action="store_true", help="también las que ya tienen herramienta"
+    )
+    a = parser.parse_args(argumentos)
+
+    url = os.environ.get("TERRANOVA_CURADO_URL") or os.environ.get("TERRANOVA_COPIAS_URL")
+    emb_url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
+    if not url or not emb_url:
+        print(
+            "faltan TERRANOVA_CURADO_URL y TERRANOVA_EMBEDDINGS_URL (almacén desplegado)",
+            file=sys.stderr,
+        )
+        return 2
+    banco = yaml.safe_load(pathlib.Path(a.banco).read_text(encoding="utf-8"))
+    preguntas = [
+        v["pregunta"]
+        for v in banco.get("verdades", [])
+        if a.incluir_cubiertas or v.get("herramienta") is None
+    ]
+    if not preguntas:
+        print("no hay preguntas sin herramienta en el banco (nada que promover)", file=sys.stderr)
+        return 0
+
+    from terranova.descubrimiento import EmbedderRemoto
+
+    embedder = EmbedderRemoto(emb_url)
+    almacen = AlmacenDescubrimiento(url)
+
+    def buscar_fn(consulta: str) -> list[DatasetDescubrible]:
+        return almacen.buscar(embedder.consulta(consulta), limite=a.por_pregunta)
+
+    cola = candidatos_a_promover(preguntas, buscar_fn, por_pregunta=a.por_pregunta)
+    print(f"cola de promoción ({len(preguntas)} preguntas sin cubrir):")
+    for c in cola:
+        d = c.dataset
+        lic = (d.licencia or "")[:24] if d.con_licencia() else "sin licencia"
+        print(
+            f"  {c.preguntas:>2} preg  {d.id_socrata[:30]:30}  [{lic}]  "
+            f"{d.entidad[:20]:20}  {d.titulo[:38]}"
+        )
     return 0
 
 
