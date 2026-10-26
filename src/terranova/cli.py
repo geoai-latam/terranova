@@ -21,6 +21,7 @@ La llave se imprime UNA vez; después solo existe su HMAC (ADR-0009).
 from __future__ import annotations
 
 import argparse
+import contextlib
 import sys
 from datetime import date
 from typing import TYPE_CHECKING
@@ -401,7 +402,10 @@ def _catalogo_buscar(argumentos: list[str]) -> int:
         rutas = [pathlib.Path(a.catalogo)]
     else:
         base = pathlib.Path("datos_locales")
-        rutas = sorted(base.glob("catalogo_*.jsonl"))
+        # el glob agarra también el índice de vectores catalogo_*.vec.jsonl: se excluye
+        rutas = sorted(
+            r for r in base.glob("catalogo_*.jsonl") if not r.name.endswith(".vec.jsonl")
+        )
     rutas = [r for r in rutas if r.exists()]
     if not rutas:
         print("no hay catálogos; corre antes 'catalogo-dcat ingerir'", file=sys.stderr)
@@ -420,6 +424,9 @@ def _catalogo_buscar(argumentos: list[str]) -> int:
 
 
 def main() -> None:
+    # la salida lleva tildes y flechas (→); la consola de Windows es cp1252 por defecto
+    with contextlib.suppress(Exception):
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
     argumentos = sys.argv[1:]
     if argumentos[:2] == ["copias", "actualizar"]:
         sys.exit(copias(argumentos[2:]))

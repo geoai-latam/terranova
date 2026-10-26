@@ -373,13 +373,15 @@ def buscar(
 
 # --------------------------------------------------------------------------- embeddings (ADR-0028)
 #: El modelo de embeddings: multilingüe (español), pequeño, ONNX en CPU, local y gratis (coherente
-#: con «open source y gratuita» y con la poca memoria del equipo). Se FIJA la versión para que el
-#: canario sea reproducible; cambiarla obliga a re-embeder todo (es un cambio deliberado).
-MODELO_EMBEDDING = "intfloat/multilingual-e5-small"
+#: con «open source y gratuita» y con la poca memoria del equipo). Se FIJA para que el canario sea
+#: reproducible; cambiarlo obliga a re-embeder todo. Es un modelo simétrico de sentence-transformers
+#: (no e5): no lleva prefijos `query:`/`passage:`.
+MODELO_EMBEDDING = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 DIM_EMBEDDING = 384
 #: Debajo de este coseno, un candidato no se parece lo suficiente: no se muestra (honestidad —los
-#: embeddings no empujan un «parecido pero falso» con confianza).
-PISO_SIMILITUD = 0.78  # e5 normaliza alto; se afina con el banco de verdades
+#: embeddings no empujan un «parecido pero falso» con confianza). Medido con este modelo; se afina
+#: con el banco de verdades al desplegar.
+PISO_SIMILITUD = 0.30
 
 
 class Embedder(Protocol):
@@ -471,7 +473,8 @@ def candidatos_a_promover(
 
 class FastEmbedder:
     """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
-    arrastra; se instala con el extra `descubrimiento`. e5 pide prefijos `query:`/`passage:`."""
+    arrastra; se instala con el extra `descubrimiento`. El modelo es simétrico (sentence-
+    transformers): la consulta y los documentos se embeben igual, sin prefijos."""
 
     def __init__(self, modelo: str = MODELO_EMBEDDING) -> None:
         from fastembed import TextEmbedding  # type: ignore[import-not-found]
@@ -482,10 +485,10 @@ class FastEmbedder:
         return [tuple(float(x) for x in v) for v in self._modelo.embed(textos)]
 
     def consulta(self, texto: str) -> tuple[float, ...]:
-        return self._embeber([f"query: {texto}"])[0]
+        return self._embeber([texto])[0]
 
     def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
-        return self._embeber([f"passage: {t}" for t in textos])
+        return self._embeber(textos)
 
 
 class EmbedderRemoto:

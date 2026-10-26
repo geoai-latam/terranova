@@ -108,7 +108,7 @@ herramienta curada si `promovido_a` no es null).
 **El recuperador: embeddings (semántico), [ADR-0028](../decisions/0028-descubrimiento-con-embeddings.md).**
 El buscador recupera por **parecido semántico**, no por coincidencia de palabras: así «contaminación del
 agua» encuentra un dataset de «vertimientos» aunque no compartan términos. Modelo multilingüe **local y
-fijado** (`intfloat/multilingual-e5-small`, ONNX vía `fastembed`, extra `terranova[descubrimiento]`);
+fijado** (`paraphrase-multilingual-MiniLM-L12-v2`, ONNX vía `fastembed`, extra `terranova[descubrimiento]`);
 la versión se fija para que el **canario sea reproducible**. El orden es por coseno con un **piso de
 similitud** (lo poco parecido no se muestra) y **desempate por valor** (licencia > vivo), para que la
 relevancia mande sin pisar la honestidad. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
