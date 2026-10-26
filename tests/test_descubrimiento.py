@@ -355,3 +355,27 @@ def test_ingerir_icde_pagina_y_deduplica() -> None:
     ds = ingerir_dcat_us(http)
     assert sorted(d.id_socrata for d in ds) == ["a" * 32, "b" * 32]
     assert http.params[1] == {"page": 2}  # la segunda página pide ?page=2
+
+
+# ---------------------------------------------------------- promoción data-driven (pieza 6)
+def test_candidatos_a_promover_ordena_por_cobertura_medida() -> None:
+    from terranova.descubrimiento import candidatos_a_promover
+
+    agua = _reg("agua", titulo="cuerpos de agua", licencia="CC BY")
+    bosque = _reg("bosque", titulo="cobertura de bosque", licencia="CC BY")
+    raro = _reg("raro", titulo="dataset raro", licencia=None)
+
+    def buscar_fn(pregunta: str) -> list[DatasetDescubrible]:
+        if "agua" in pregunta:
+            return [agua, raro]
+        if "bosque" in pregunta:
+            return [agua, bosque]  # agua aparece también aquí
+        return [raro]
+
+    preguntas = ["¿dónde hay agua?", "¿cobertura de bosque?", "algo raro"]
+    cola = candidatos_a_promover(preguntas, buscar_fn, hoy=HOY)
+    # agua y raro salen en 2 preguntas; a igual cobertura, la licencia desempata (agua > raro);
+    # bosque sale en 1. → [agua, raro, bosque]
+    assert cola[0].dataset.id_socrata == "agua" and cola[0].preguntas == 2
+    assert cola[1].dataset.id_socrata == "raro" and cola[1].preguntas == 2
+    assert cola[2].dataset.id_socrata == "bosque" and cola[2].preguntas == 1
