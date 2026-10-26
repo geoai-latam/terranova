@@ -200,6 +200,31 @@ class AlmacenDescubrimiento:
         )
         return [por_id[i] for i in ids[:limite]]
 
+    def contar(
+        self,
+        vector_consulta: tuple[float, ...],
+        texto_consulta: str | None = None,
+        *,
+        piso: float = PISO_SIMILITUD,
+    ) -> int:
+        """Cuántos candidatos coinciden en total (parecido sobre el piso **o** match del FTS): el
+        `total` honesto de la completitud, ya que el buscador solo devuelve el top-N."""
+        lit = _vector_literal(vector_consulta)
+        if texto_consulta and texto_consulta.strip():
+            fila = self._c.execute(
+                f"""SELECT count(*) FROM {ESQUEMA}.datasets
+                    WHERE (embedding IS NOT NULL AND 1 - (embedding <=> %s::vector) >= %s)
+                       OR (_texto @@ plainto_tsquery('spanish', %s))""",
+                (lit, piso, texto_consulta),
+            ).fetchone()
+        else:
+            fila = self._c.execute(
+                f"""SELECT count(*) FROM {ESQUEMA}.datasets
+                    WHERE embedding IS NOT NULL AND 1 - (embedding <=> %s::vector) >= %s""",
+                (lit, piso),
+            ).fetchone()
+        return int(fila[0]) if fila else 0
+
     @staticmethod
     def _fila(f: Any) -> DatasetDescubrible:
         return DatasetDescubrible(
@@ -246,6 +271,7 @@ class ConectorCatalogo:
             hallados = await asyncio.to_thread(
                 self._almacen.buscar, vector, consulta, limite=limite
             )
+            total = await asyncio.to_thread(self._almacen.contar, vector, consulta)
         except Exception as exc:  # el microservicio o la base caídos = fuente caída
             raise ErrorConector(f"catalogo: {type(exc).__name__}", "fuente_no_disponible") from exc
         filas = [
@@ -261,16 +287,16 @@ class ConectorCatalogo:
             for d in hallados
         ]
         columnas = ["id", "titulo", "entidad", "licencia", "actualizado_en", "protocolo", "url"]
-        # El buscador devuelve el top-N, no un conteo exhaustivo: `total` = candidatos devueltos
-        # (no un «total de coincidencias» desconocido; con un piso podrían ser cientos). `truncado`
-        # avisa que hay más. Así `coincidencias` (derivado de total) siempre es un número.
+        # Completitud honesta: `vistos` = los que devuelve el top-N; `total` = cuántos coinciden en
+        # total (contar sobre el piso + FTS); `truncado` = hay más de los mostrados. Así
+        # `coincidencias` (derivado de total) siempre es un número y dice la verdad.
         return {
             "artifacts": [{"kind": "table", "columns": columnas, "rows": filas}],
             "facts": {
                 "completitud": {
                     "vistos": len(filas),
-                    "total": len(filas),
-                    "truncado": len(filas) >= limite,
+                    "total": total,
+                    "truncado": len(filas) < total,
                 }
             },
         }
