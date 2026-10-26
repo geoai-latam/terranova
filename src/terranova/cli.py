@@ -369,7 +369,8 @@ def _catalogo_promover(argumentos: list[str]) -> int:
     almacen = AlmacenDescubrimiento(url)
 
     def buscar_fn(consulta: str) -> list[DatasetDescubrible]:
-        return almacen.buscar(embedder.consulta(consulta), limite=a.por_pregunta)
+        pares = almacen.buscar(embedder.consulta(consulta), consulta, limite=a.por_pregunta)
+        return [d for d, _ in pares]
 
     cola = candidatos_a_promover(preguntas, buscar_fn, por_pregunta=a.por_pregunta)
     print(f"cola de promoción ({len(preguntas)} preguntas sin cubrir):")

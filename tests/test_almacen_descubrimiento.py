@@ -75,8 +75,9 @@ def test_reemplazar_y_buscar_vectorial() -> None:
 
     # una consulta alineada con «agua» trae agua primero y filtra bosque (ortogonal) por el piso
     hallados = almacen.buscar((1.0, 0.0, 0.0), piso=0.5)
-    assert [d.id_socrata for d in hallados] == ["agua"]
-    assert hallados[0].protocolo == "icde"  # se conserva el protocolo (lo usa el agente)
+    assert [d.id_socrata for d, _ in hallados] == ["agua"]
+    assert hallados[0][0].protocolo == "icde"  # se conserva el protocolo (lo usa el agente)
+    assert hallados[0][1] == 1.0  # parecido (coseno): agua alineado con la consulta
     # contar es el total honesto: solo agua pasa el piso vectorial; con el término «bosque» el FTS
     # suma bosque (son 2 coincidencias en total aunque el top-N vectorial muestre 1)
     assert almacen.contar((1.0, 0.0, 0.0), piso=0.5) == 1
@@ -99,7 +100,7 @@ def test_reemplazar_es_por_catalogo() -> None:
     # refrescar icde no borra socrata
     almacen.reemplazar("icde", [_ds("a2", "agua icde nueva")], {"a2": (1.0, 0.0, 0.0)})
     hallados = almacen.buscar((1.0, 0.0, 0.0), piso=0.5, limite=10)
-    ids = {d.id_socrata for d in hallados}
+    ids = {d.id_socrata for d, _ in hallados}
     assert ids == {"a2", "b"}  # icde quedó con a2 (no a), socrata intacto
 
 
@@ -111,9 +112,9 @@ class _AlmacenFalso:
 
     def buscar(
         self, vector: tuple[float, ...], texto: str | None = None, *, limite: int = 20, **_: Any
-    ) -> list[DatasetDescubrible]:
+    ) -> list[tuple[DatasetDescubrible, float]]:
         self.visto = {"vector": vector, "texto": texto, "limite": limite}
-        return self._resultado
+        return [(d, 0.7) for d in self._resultado]
 
     def contar(self, vector: tuple[float, ...], texto: str | None = None, **_: Any) -> int:
         return len(self._resultado)
@@ -136,6 +137,7 @@ async def test_conector_catalogo_busca_y_surte_procedencia() -> None:
     fila = r["artifacts"][0]["rows"][0]
     assert fila["id"] == "agua" and fila["licencia"] == "CC BY" and fila["protocolo"] == "icde"
     assert "url" in fila and fila["url"].endswith("/agua")
+    assert fila["parecido"] == 0.7  # el parecido se surte por candidato (el cliente juzga)
     assert almacen.visto["limite"] == 5 and almacen.visto["texto"] == "dónde hay agua"
     assert r["facts"]["completitud"]["vistos"] == 1
 
@@ -174,6 +176,6 @@ def test_buscar_hibrido_trae_match_lexico_que_el_vector_no_ranquea() -> None:
     # los lexemas, ambos en el título de contrato). El vector trae agua; el FTS trae contrato
     # (con su vector bajo el piso). El híbrido debe traer AMBOS.
     hallados = almacen.buscar((1.0, 0.0, 0.0), "contratación pública", piso=0.5, limite=10)
-    ids = {d.id_socrata for d in hallados}
+    ids = {d.id_socrata for d, _ in hallados}
     assert "agua" in ids  # por el vector
     assert "contrato" in ids  # por el FTS (ts_rank), aunque su vector está bajo el piso

@@ -152,45 +152,50 @@ class AlmacenDescubrimiento:
         limite: int = 20,
         piso: float = PISO_SIMILITUD,
         hoy: date | None = None,
-    ) -> list[DatasetDescubrible]:
+    ) -> list[tuple[DatasetDescubrible, float]]:
         """Búsqueda **híbrida** (ADR-0028, medido el 2026-10-25): fusiona por RRF el parecido
         semántico (`<=>` de pgvector, dentro del piso) con el léxico (`ts_rank` del FTS en español,
         que pondera por IDF y evita que las palabras comunes inflen un falso positivo). Sin texto,
-        es solo vectorial. A igual relevancia, desempata por valor (licencia, frescura)."""
+        es solo vectorial. A igual relevancia, desempata por valor (licencia, frescura). Devuelve
+        cada candidato con su **parecido** (coseno de 0 a 1) para que el cliente juzgue."""
         hoy = hoy or date.today()
         lit = _vector_literal(vector_consulta)
         n = limite * 3
         por_id: dict[str, DatasetDescubrible] = {}
+        sims: dict[str, float] = {}
 
         # 1) candidatos por vector, dentro del piso, de más a menos parecido
         cur = self._c.execute(
-            f"""SELECT {self._COLS}
+            f"""SELECT {self._COLS}, 1 - (embedding <=> %s::vector) AS sim
                 FROM {ESQUEMA}.datasets
                 WHERE embedding IS NOT NULL AND 1 - (embedding <=> %s::vector) >= %s
                 ORDER BY embedding <=> %s::vector
                 LIMIT %s""",
-            (lit, piso, lit, n),
+            (lit, lit, piso, lit, n),
         )
         rank_vec: list[str] = []
         for f in cur.fetchall():
             rank_vec.append(f[0])
             por_id[f[0]] = self._fila(f)
+            sims[f[0]] = float(f[12])
 
         # 2) candidatos por FTS (si hay texto): plainto_tsquery exige todos los lexemas; ts_rank los
-        #    ordena por IDF. Es la precisión léxica que el puro-vectorial no da.
+        #    ordena por IDF. Es la precisión léxica que el puro-vectorial no da. Se trae también su
+        #    coseno (puede estar bajo el piso: el cliente ve que casó por palabra, no por sentido).
         rank_lex: list[str] = []
         if texto_consulta and texto_consulta.strip():
             curl = self._c.execute(
-                f"""SELECT {self._COLS}
+                f"""SELECT {self._COLS}, 1 - (embedding <=> %s::vector) AS sim
                     FROM {ESQUEMA}.datasets
                     WHERE _texto @@ plainto_tsquery('spanish', %s)
                     ORDER BY ts_rank(_texto, plainto_tsquery('spanish', %s)) DESC
                     LIMIT %s""",
-                (texto_consulta, texto_consulta, n),
+                (lit, texto_consulta, texto_consulta, n),
             )
             for f in curl.fetchall():
                 rank_lex.append(f[0])
                 por_id.setdefault(f[0], self._fila(f))
+                sims.setdefault(f[0], float(f[12]) if f[12] is not None else 0.0)
 
         puntos = _rrf([rank_vec, rank_lex] if rank_lex else [rank_vec])
         ids = sorted(
@@ -198,7 +203,7 @@ class AlmacenDescubrimiento:
             key=lambda i: (puntos.get(i, 0.0), por_id[i].con_licencia(), por_id[i].vivo(hoy)),
             reverse=True,
         )
-        return [por_id[i] for i in ids[:limite]]
+        return [(por_id[i], sims.get(i, 0.0)) for i in ids[:limite]]
 
     def contar(
         self,
@@ -283,10 +288,22 @@ class ConectorCatalogo:
                 "actualizado_en": d.actualizado_en or "",
                 "protocolo": d.protocolo,
                 "url": d.url,
+                # parecido semántico de 0 a 1: el cliente LLM juzga la confianza (si todo ~0.47 y
+                # plano, probablemente no hay una fuente buena; ADR-0028, límite de calibración)
+                "parecido": round(parecido, 3),
             }
-            for d in hallados
+            for d, parecido in hallados
         ]
-        columnas = ["id", "titulo", "entidad", "licencia", "actualizado_en", "protocolo", "url"]
+        columnas = [
+            "id",
+            "titulo",
+            "entidad",
+            "licencia",
+            "actualizado_en",
+            "protocolo",
+            "url",
+            "parecido",
+        ]
         # Completitud honesta: `vistos` = los que devuelve el top-N; `total` = cuántos coinciden en
         # total (contar sobre el piso + FTS); `truncado` = hay más de los mostrados. Así
         # `coincidencias` (derivado de total) siempre es un número y dice la verdad.

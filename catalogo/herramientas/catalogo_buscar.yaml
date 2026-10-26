@@ -15,7 +15,7 @@ consulta:
   operacion: buscar
   tool: buscar_catalogo
   argumentos: {consulta: "{consulta}", limite: 20}
-  campos: [id, titulo, entidad, licencia, actualizado_en, protocolo, url]
+  campos: [id, titulo, entidad, licencia, actualizado_en, protocolo, url, parecido]
 salida: CandidatosCatalogo
 derivados:
   coincidencias: {de: completitud_total, tipo: int}
@@ -25,5 +25,5 @@ canario:
   # consulta semántica trae al menos un candidato competente. El mínimo es 1 (crece con el catálogo).
   entrada: {consulta: "áreas protegidas de un predio"}
   minimos: {coincidencias: 1}
-  campos: [actualizado_en, coincidencias, entidad, id, licencia, protocolo, titulo, url]
+  campos: [actualizado_en, coincidencias, entidad, id, licencia, parecido, protocolo, titulo, url]
   latencia_max_ms: 10000
