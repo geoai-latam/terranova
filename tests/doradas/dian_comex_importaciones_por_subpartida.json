@@ -1,0 +1,68 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-26T12:00:00+00:00",
+ "herramienta": "dian_comex_importaciones_por_subpartida",
+ "llamadas": [
+  {
+   "argumentos": {
+    "agregados": {
+     "cantidad": "sum:cantidad",
+     "lineas": "sum:lineas",
+     "peso_neto_kg": "sum:peso_neto_kg",
+     "valor_cif_pesos": "sum:valor_cif_pesos",
+     "valor_cif_usd": "sum:valor_cif_usd",
+     "valor_fob_usd": "sum:valor_fob_usd"
+    },
+    "filtros": {
+     "anio": "2025",
+     "subpartida": "8517130000"
+    },
+    "limite": 2,
+    "tabla": "dian_comex_importaciones"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cantidad",
+       "lineas",
+       "peso_neto_kg",
+       "valor_cif_pesos",
+       "valor_cif_usd",
+       "valor_fob_usd"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cantidad": 13269012.0,
+        "lineas": 16789,
+        "peso_neto_kg": 5277783.41,
+        "valor_cif_pesos": 7530958435144.0,
+        "valor_cif_usd": 1858806879.18,
+        "valor_fob_usd": 1812212359.88
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-26T12:00:00+00:00",
+     "copia": {
+      "filas": 392976,
+      "huella": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "repetidas_en_la_fuente": 0,
+      "version": "20261026120000000000",
+      "ventana_desde": null
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

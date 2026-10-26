@@ -122,7 +122,7 @@ def copias(argumentos: list[str]) -> int:
     from datetime import date
 
     from terranova.catalogo import cargar
-    from terranova.copias import AlmacenCopias, descargar_socrata
+    from terranova.copias import AlmacenCopias, descargar_socrata, descargar_zip_dane
 
     parser = argparse.ArgumentParser(prog="terranova copias actualizar")
     parser.add_argument("fuentes", nargs="*", help="ids de fuente (por defecto, todas las copias)")
@@ -150,9 +150,12 @@ def copias(argumentos: list[str]) -> int:
                 if ventana and desde_local
                 else ventana
             )
+            descargar = (
+                descargar_zip_dane if fuente.copia.origen == "zip_dane" else descargar_socrata
+            )
             inicio = time.monotonic()
             try:
-                v = almacen.construir(fuente, descargar_socrata(fuente, desde), desde)
+                v = almacen.construir(fuente, descargar(fuente, desde), desde)
                 almacen.podar(fuente.copia.tabla)
                 segundos = time.monotonic() - inicio
                 print(
