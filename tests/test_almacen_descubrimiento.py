@@ -164,8 +164,8 @@ def test_buscar_hibrido_trae_match_lexico_que_el_vector_no_ranquea() -> None:
         "socrata", [agua, contrato], {"agua": (1.0, 0.0, 0.0), "contrato": (0.0, 0.0, 1.0)}
     )
     # vector (1,0,0) alineado con «agua»; texto «contratación pública» (plainto_tsquery exige TODOS
-    # los lexemas, ambos en el título de contrato). El vector trae agua; el FTS trae contrato (con su
-    # vector bajo el piso). El híbrido debe traer AMBOS.
+    # los lexemas, ambos en el título de contrato). El vector trae agua; el FTS trae contrato
+    # (con su vector bajo el piso). El híbrido debe traer AMBOS.
     hallados = almacen.buscar((1.0, 0.0, 0.0), "contratación pública", piso=0.5, limite=10)
     ids = {d.id_socrata for d in hallados}
     assert "agua" in ids  # por el vector
