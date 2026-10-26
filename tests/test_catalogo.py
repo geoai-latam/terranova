@@ -54,6 +54,12 @@ CASOS = [
     (FUENTE, _set(licencia__evidencia=None), "evidencia"),
     (FUENTE, _set(clase_acceso="interno_con_permiso"), "ADR-0018"),
     (FUENTE, _set(datos_personales="presentes"), "ADR-0014"),
+    # WS3: una cédula de persona natural como campo de la lista blanca rompe el catálogo (ADR-0014)
+    (
+        FUENTE,
+        _set(campos__ced={"nombre": "cedula", "tipo": "str", "desc": "x"}),
+        "cédula de persona",
+    ),
     (FUENTE, _set(url="http://inseguro.gov.co"), "url"),
     (FUENTE, _set(campos={}), "campos"),
     (
