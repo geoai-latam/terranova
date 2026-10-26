@@ -273,6 +273,7 @@ def descargar_zip_dane(
     `desde` se ignora (se copia la ventana completa de los ZIP declarados). Cada ZIP trae ZIP
     mensuales, y cada mensual un CSV."""
     import io
+    import os
     import tempfile
     import zipfile
 
@@ -293,23 +294,22 @@ def descargar_zip_dane(
                         tmp.write(trozo)
                 ruta = tmp.name
             try:
-                externo = zipfile.ZipFile(ruta)
-                for miembro in externo.namelist():
-                    low = miembro.lower()
-                    if low.endswith(".zip"):  # ZIP mensual anidado
-                        interno = zipfile.ZipFile(io.BytesIO(externo.read(miembro)))
-                        csvs = [n for n in interno.namelist() if n.lower().endswith(".csv")]
-                        if not csvs:
+                # el ZIP se cierra antes de borrarlo: en Windows no se puede unlink si sigue abierto
+                with zipfile.ZipFile(ruta) as externo:
+                    for miembro in externo.namelist():
+                        low = miembro.lower()
+                        if low.endswith(".zip"):  # ZIP mensual anidado
+                            with zipfile.ZipFile(io.BytesIO(externo.read(miembro))) as interno:
+                                csvs = [n for n in interno.namelist() if n.lower().endswith(".csv")]
+                                if not csvs:
+                                    continue
+                                texto = interno.read(csvs[0]).decode("utf-8-sig", "replace")
+                        elif low.endswith(".csv"):  # CSV directo bajo una carpeta del mes
+                            texto = externo.read(miembro).decode("utf-8-sig", "replace")
+                        else:
                             continue
-                        texto = interno.read(csvs[0]).decode("utf-8-sig", "replace")
-                    elif low.endswith(".csv"):  # CSV directo bajo una carpeta del mes
-                        texto = externo.read(miembro).decode("utf-8-sig", "replace")
-                    else:
-                        continue
-                    fusionar_mes(texto, acumulador)
+                        fusionar_mes(texto, acumulador)
             finally:
-                import os
-
                 os.unlink(ruta)
     finally:
         if propio:
