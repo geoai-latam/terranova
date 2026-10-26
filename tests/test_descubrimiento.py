@@ -341,7 +341,8 @@ def test_ingerir_socrata_pagina_con_scroll_id() -> None:
     )
     ds = ingerir(http, por_pagina=2)
     assert [d.id_socrata for d in ds] == ["a-aaaa", "b-bbbb", "c-cccc"]
-    assert "scroll_id" not in http.params[0]  # la primera página no lleva scroll_id
+    assert http.params[0]["scroll_id"] == ""  # primera página: scroll_id vacío, sin `order`
+    assert "order" not in http.params[0]  # `scroll_id` + `order` da 400 en la API real
     assert http.params[1]["scroll_id"] == "b-bbbb"  # la segunda pide los mayores al último
 
 
