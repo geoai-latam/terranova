@@ -7,9 +7,9 @@ acto: null
 # advierte que no es comparable con el IPM oficial (encuesta).
 licencia:
   spdx: LicenseRef-dane-terminos
-  url: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
   verificada: 2026-10-22
-  evidencia: https://www.dane.gov.co/index.php/terrminos-y-condiciones-dane
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
   cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
 uso_comercial: si
 clase_acceso: bulk
