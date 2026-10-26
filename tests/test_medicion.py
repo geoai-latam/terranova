@@ -57,13 +57,15 @@ def montaje() -> Iterator[tuple[str, Fuente, OutboxSqlite, CuotaMemoria]]:
     registro, fuente = RegistroSqlite(":memory:", "p" * 40), Fuente()
     outbox, cuota = OutboxSqlite(":memory:"), CuotaMemoria(capacidad=100)
     puerta.usar_conectores({"arcgis-mcp": fuente})
-    puerta.registro, puerta.cuota, puerta.outbox = registro, cuota, outbox
-    puerta._almacen = AlmacenMemoria()
+    puerta.ESTADO.registro, puerta.ESTADO.cuota, puerta.ESTADO.outbox = registro, cuota, outbox
+    puerta.ESTADO.almacen = AlmacenMemoria()
     llave = registro.crear("geoai", {"*"}, prueba=False, expira=None)
     try:
         yield llave, fuente, outbox, cuota
     finally:
-        puerta.registro = puerta.cuota = puerta.outbox = puerta._almacen = None
+        puerta.ESTADO.registro = puerta.ESTADO.cuota = puerta.ESTADO.outbox = (
+            puerta.ESTADO.almacen
+        ) = None
         puerta.usar_conectores(None)
 
 
@@ -121,7 +123,7 @@ async def test_si_el_outbox_falla_la_respuesta_sale_igual(
     montaje: tuple[str, Fuente, OutboxSqlite, CuotaMemoria], cliente: httpx.AsyncClient
 ) -> None:
     llave, _, _, _ = montaje
-    puerta.outbox = OutboxRoto()
+    puerta.ESTADO.outbox = OutboxRoto()
     r = await cliente.post(PREDIO, json=CHIA, headers={"Authorization": f"Bearer {llave}"})
     assert r.status_code == 200 and r.json()["estado"] == "encontrado"
 

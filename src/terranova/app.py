@@ -247,7 +247,7 @@ def crear_api() -> FastAPI:
         principal = getattr(request.state, "principal", None)
         if principal is None:
             return problema("no_autenticado", "falta una llave válida (Authorization: Bearer)")
-        usados = await puerta.cuota.usados(principal.org) if puerta.cuota else 0
+        usados = await puerta.ESTADO.cuota.usados(principal.org) if puerta.ESTADO.cuota else 0
         limite = NIVELES.get(principal.nivel, NIVELES["con_llave"])
         return {
             "org": principal.org,
@@ -292,7 +292,7 @@ def crear_api() -> FastAPI:
     async def estado() -> list[dict[str, Any]]:
         """Estado por fuente según el último canario de cada herramienta (F7.1): `verde`, `rojo`
         o `sin_datos`. Público, como el catálogo."""
-        ultimos = puerta.canarios.ultimos() if puerta.canarios is not None else []
+        ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return estado_por_fuente(ultimos, puerta.CATALOGO)
 
     @api.get("/v1/fuentes", tags=["catálogo"], operation_id="listar_fuentes")
@@ -418,11 +418,13 @@ class Aplicacion:
         protegida = ruta.startswith("/v1/co/") or ruta in ("/v1/uso", "/v1/fichas")
         if scope["type"] == "http" and (app is not self.api or protegida):
             # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
-            if puerta.registro is not None:
+            if puerta.ESTADO.registro is not None:
                 cabeceras = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
                 llave = bearer(cabeceras.get("authorization"))
                 principal = (
-                    await asyncio.to_thread(puerta.registro.verificar, llave) if llave else None
+                    await asyncio.to_thread(puerta.ESTADO.registro.verificar, llave)
+                    if llave
+                    else None
                 )
                 if principal is None:
                     await problema(
@@ -443,9 +445,11 @@ class Aplicacion:
                             param="body",
                         )(scope, receive, send)
                         return
-                if puerta.cuota is not None and cobrar:
-                    permitido, quedan, espera = await puerta.cuota.tomar_ficha(principal.llave_id)
-                    tasa = _cabeceras_tasa(puerta.cuota, quedan, espera)
+                if puerta.ESTADO.cuota is not None and cobrar:
+                    permitido, quedan, espera = await puerta.ESTADO.cuota.tomar_ficha(
+                        principal.llave_id
+                    )
+                    tasa = _cabeceras_tasa(puerta.ESTADO.cuota, quedan, espera)
                     if not permitido:
                         await problema(
                             "limite_tasa",

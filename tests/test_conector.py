@@ -131,6 +131,8 @@ async def test_un_conector_caido_no_tumba_el_arranque(
     monkeypatch.delenv("TERRANOVA_REDIS_URL", raising=False)
     await puerta.iniciar()
     try:
-        assert puerta.registro is not None and "arcgis-mcp" in (puerta._conectores or {})
+        assert puerta.ESTADO.registro is not None and "arcgis-mcp" in (
+            puerta.ESTADO.conectores or {}
+        )
     finally:
         await puerta.detener()
