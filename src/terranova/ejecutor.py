@@ -23,6 +23,7 @@ from terranova import metricas
 from terranova.cache import RETENCION_S, Almacen
 from terranova.cache import clave as clave_cache
 from terranova.catalogo import (
+    AVISO_DATO_PUBLICO,
     MARCADOR,
     PATRONES_ENTRADA,
     Catalogo,
@@ -277,11 +278,15 @@ def completitud_de(r: Respuesta, por_construccion: bool) -> Completitud:
 
 
 def licencia_de(fuente: Fuente) -> Licencia:
-    return Licencia(
-        spdx=fuente.licencia.spdx or "LicenseRef-por-verificar",
-        url=fuente.licencia.url,
-        uso_comercial=fuente.uso_comercial,
-    )
+    spdx = fuente.licencia.spdx
+    if spdx is None:
+        # ADR-0019 (enmienda): una fuente ámbar sin SPDX sirve como dato público reutilizable.
+        spdx = (
+            "LicenseRef-terminos-no-verificados"
+            if fuente.clasificacion_licencia == "ambar"
+            else "LicenseRef-por-verificar"
+        )
+    return Licencia(spdx=spdx, url=fuente.licencia.url, uso_comercial=fuente.uso_comercial)
 
 
 # --- cobertura -------------------------------------------------------------------------------
@@ -656,6 +661,8 @@ class Ejecutor:
                 f"Solo uso no comercial ({fuente.licencia.spdx}): este dato no se puede usar con "
                 "fines comerciales."
             )
+        if fuente.clasificacion_licencia == "ambar":
+            avisos.append(AVISO_DATO_PUBLICO)
 
         geo = None
         if rasgos:
