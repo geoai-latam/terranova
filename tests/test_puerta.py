@@ -226,3 +226,21 @@ async def test_vacio_tras_los_reintentos_lo_dice(cliente_con: Client[Any]) -> No
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "no_encontrado"
     assert any("4 veces" in a for a in r.structured_content["avisos"])
+
+
+@pytest.mark.anyio
+async def test_datos_de_fuente_invalidos_son_fuente_respuesta_invalida(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """WS2: datos de la fuente que rompen el contrato rt/1 (vistos>total) no escapan como 500;
+    se mapean a `fuente_respuesta_invalida` (ADR-0011), no a «no hay» ni a error interno."""
+    from terranova.contrato import Completitud
+    from terranova.errores import ErrorEjecucion
+
+    async def _boom(*a: Any, **k: Any) -> Any:
+        Completitud(vistos=5, total=2, truncado=False)  # dispara la regla 4 → ValidationError
+
+    monkeypatch.setattr(puerta, "_ejecutar", _boom)
+    with pytest.raises(ErrorEjecucion) as exc:
+        await puerta.ejecutar("igac_predio_en_punto", {"lon": -74.0, "lat": 4.8})
+    assert exc.value.codigo == "fuente_respuesta_invalida"

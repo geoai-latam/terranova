@@ -171,3 +171,17 @@ async def test_v1_estado_es_publico(tmp_path: Path) -> None:
     assert r.status_code == 200
     estado = {e["fuente_id"]: e["estado"] for e in r.json()}
     assert estado["igac.catastro.terreno"] == "verde" and estado["pnn.runap"] == "sin_datos"
+
+
+@pytest.mark.anyio
+async def test_canario_no_aborta_ante_error_inesperado() -> None:
+    """WS2: un error no previsto en UNA herramienta (KeyError/ValueError) no aborta el bucle ni
+    suprime la alerta: cada herramienta queda con un resultado (error_interno, rojo)."""
+
+    class _Revienta:
+        async def ejecutar(self, *a: Any, **k: Any) -> Any:
+            raise KeyError("boom")
+
+    r = await correr(CATALOGO, _Revienta(), reloj=lambda: 0.0)  # type: ignore[arg-type]
+    assert len(r) == len(CATALOGO.herramientas)  # ninguna se saltó
+    assert all(not x.ok and x.codigo == "error_interno" for x in r)
