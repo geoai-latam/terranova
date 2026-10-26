@@ -277,8 +277,11 @@ class ConectorCatalogo:
                 self._almacen.buscar, vector, consulta, limite=limite
             )
             total = await asyncio.to_thread(self._almacen.contar, vector, consulta)
-        except Exception as exc:  # el microservicio o la base caídos = fuente caída
-            raise ErrorConector(f"catalogo: {type(exc).__name__}", "fuente_no_disponible") from exc
+        except Exception as exc:
+            # servicio/base caídos (red, timeout, conexión) = fuente_no_disponible; un bug propio
+            # (dimensión de vector, SQL) = error_interno (honestidad: no es que la fuente se cayera,
+            # y así no recicla caché obsoleta ni abre el cortacircuitos de proteccion.py)
+            raise ErrorConector(f"catalogo: {type(exc).__name__}", _codigo_catalogo(exc)) from exc
         filas = [
             {
                 "id": d.id_socrata,
@@ -317,6 +320,29 @@ class ConectorCatalogo:
                 }
             },
         }
+
+
+#: Excepciones (por nombre de clase) que significan «el servicio/base no está», no un bug nuestro.
+_CAIDA = frozenset(
+    {
+        "OperationalError",
+        "InterfaceError",
+        "AdminShutdown",
+        "CannotConnectNow",  # psycopg
+        "ConnectError",
+        "ConnectTimeout",
+        "ReadTimeout",
+        "PoolTimeout",
+        "TransportError",  # httpx/pool
+        "TimeoutError",
+        "ConnectionError",  # stdlib
+    }
+)
+
+
+def _codigo_catalogo(exc: Exception) -> str:
+    """`fuente_no_disponible` si el servicio/base se cayó; si no, `error_interno` (bug propio)."""
+    return "fuente_no_disponible" if type(exc).__name__ in _CAIDA else "error_interno"
 
 
 def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:

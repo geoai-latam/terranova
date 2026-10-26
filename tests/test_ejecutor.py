@@ -192,3 +192,28 @@ def test_divipola_por_nombre_ambiguo_lista_los_codigos() -> None:
         validar_entrada(h, {"municipio_divipola": "Macondo"})
     with pytest.raises(ErrorEntrada, match="formato"):
         validar_entrada(h, {"municipio_divipola": "25175' OR 1=1"})
+
+
+class _FilaVaciaTabla:
+    """La fuente devuelve una fila pero vacía (ninguna columna de la lista blanca): todos los campos
+    mapean a None (WS2). Tabla sin geometría (dane.cnpv2018 vía dane-mcp)."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "artifacts": [{"kind": "table", "columns": [], "rows": [{}]}],
+            "facts": {"completitud": {"vistos": 1, "total": 1, "truncado": False}},
+        }
+
+
+@pytest.mark.anyio
+async def test_fila_con_todo_none_es_no_encontrado() -> None:
+    """WS2: `encontrado` con datos={} es indistinguible de un bug; una fila cuyos campos mapean
+    todos a None (forma «uno», sin derivados) se reporta honestamente como `no_encontrado`."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"dane-mcp": _FilaVaciaTabla()})
+    sobre = await ej.ejecutar(
+        "dane_poblacion_municipio", {"municipio_divipola": "25175"}, plan="evaluacion"
+    )
+    assert sobre.estado == "no_encontrado"
+    assert sobre.datos == {}

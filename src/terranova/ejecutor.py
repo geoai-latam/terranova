@@ -569,6 +569,10 @@ class Ejecutor:
 
         avisos: list[str] = []
         estado: Estado = "encontrado" if hay_algo else "no_encontrado"
+        # honestidad: una fila cuyos campos de lista blanca mapean todos a None deja `datos` vacío
+        # (forma «uno»); «encontrado» con datos vacío es indistinguible de un bug → «no encontrado»
+        if h.consulta.forma == "uno" and not datos:
+            estado = "no_encontrado"
         if not hay_algo and reintentos:
             avisos.append(
                 f"Esta fuente a veces responde vacío sin error: se consultó {reintentos + 1} veces "

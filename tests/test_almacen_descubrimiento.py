@@ -179,3 +179,48 @@ def test_buscar_hibrido_trae_match_lexico_que_el_vector_no_ranquea() -> None:
     ids = {d.id_socrata for d, _ in hallados}
     assert "agua" in ids  # por el vector
     assert "contrato" in ids  # por el FTS (ts_rank), aunque su vector está bajo el piso
+
+
+# --- WS2: honestidad de error en el conector del catálogo ---------------------------------------
+def test_codigo_catalogo_distingue_caida_de_bug() -> None:
+    from terranova.almacen_descubrimiento import _codigo_catalogo
+
+    class OperationalError(Exception): ...  # como psycopg: la base se cayó
+
+    class DataException(Exception): ...  # como pgvector: dimensión incompatible (bug propio)
+
+    assert _codigo_catalogo(OperationalError()) == "fuente_no_disponible"
+    assert _codigo_catalogo(TimeoutError()) == "fuente_no_disponible"
+    assert _codigo_catalogo(DataException()) == "error_interno"
+    assert _codigo_catalogo(KeyError()) == "error_interno"
+
+
+class _AlmacenRevienta:
+    def __init__(self, exc: Exception) -> None:
+        self._exc = exc
+
+    def buscar(self, *a: Any, **k: Any) -> Any:
+        raise self._exc
+
+    def contar(self, *a: Any, **k: Any) -> int:
+        return 0
+
+
+@pytest.mark.anyio
+async def test_conector_mapea_bug_a_error_interno_no_a_caida() -> None:
+    class DataException(Exception): ...
+
+    con = ConectorCatalogo(_AlmacenRevienta(DataException("dim")), _EmbedderFalso())  # type: ignore[arg-type]
+    with pytest.raises(ErrorConector) as exc:
+        await con.llamar("buscar_catalogo", {"consulta": "agua"})
+    assert exc.value.codigo == "error_interno"  # bug propio, no «fuente caída»
+
+
+@pytest.mark.anyio
+async def test_conector_mapea_caida_a_fuente_no_disponible() -> None:
+    class OperationalError(Exception): ...
+
+    con = ConectorCatalogo(_AlmacenRevienta(OperationalError("down")), _EmbedderFalso())  # type: ignore[arg-type]
+    with pytest.raises(ErrorConector) as exc:
+        await con.llamar("buscar_catalogo", {"consulta": "agua"})
+    assert exc.value.codigo == "fuente_no_disponible"

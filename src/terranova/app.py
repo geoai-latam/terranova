@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import math
 import os
 import time
@@ -192,6 +193,13 @@ def crear_api() -> FastAPI:
             str(primero.get("msg", "entrada inválida")),
             param=".".join(ruta) or "body",  # sin cuerpo, el parámetro que falta es el cuerpo
         )
+
+    @api.exception_handler(Exception)
+    async def _inesperado(_: Request, exc: Exception) -> JSONResponse:
+        """Nada escapa como 500 text/plain (ADR-0011): cualquier error no previsto sale como
+        problem+json `error_interno`, con su solicitud_id para rastrearlo en los logs."""
+        logging.getLogger("terranova").exception("error interno no previsto")
+        return problema("error_interno", "error interno")
 
     for h in puerta.CATALOGO.herramientas.values():
         api.add_api_route(

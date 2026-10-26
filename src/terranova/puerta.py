@@ -20,7 +20,7 @@ from fastmcp.exceptions import ToolError
 from fastmcp.server.dependencies import get_http_request
 from fastmcp.tools import Tool, ToolResult
 from mcp.types import TextContent, ToolAnnotations
-from pydantic import PrivateAttr
+from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas
@@ -198,6 +198,15 @@ async def ejecutar(
     inicio = time.monotonic()
     try:
         sobre = await _ejecutar(ficha, entrada, principal)
+    except ValidationError as exc:
+        # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
+        # rotulado): es la fuente la que respondió algo inválido, no un error nuestro ni «no hay».
+        logging.getLogger("terranova").warning("fuente_respuesta_invalida en %s: %s", ficha, exc)
+        await _medir(principal, ficha, nueva_solicitud_id(), 0, "fuente_respuesta_invalida", None)
+        metricas.SOLICITUDES.labels(etiqueta, "error", "fuente_respuesta_invalida").inc()
+        raise ErrorEjecucion(
+            "fuente_respuesta_invalida", "la fuente respondió algo inválido"
+        ) from exc
     except (ErrorEjecucion, ErrorEntrada) as exc:
         codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
         await _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)

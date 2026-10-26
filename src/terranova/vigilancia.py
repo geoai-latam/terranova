@@ -109,6 +109,10 @@ async def correr(
             ms = int((reloj() - t) * 1000)
             codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
             detalle = str(exc)
+        except Exception as exc:  # un error inesperado en UNA herramienta no aborta el resto
+            ms = int((reloj() - t) * 1000)
+            codigo, detalle = "error_interno", f"{type(exc).__name__}: {exc}"
+            logger.exception("canario %s reventó inesperadamente", h.id)
         resultados.append(
             Resultado(h.id, h.fuente, ahora(), codigo == "verde", codigo, detalle[:500], ms)
         )
@@ -141,12 +145,14 @@ def alertar(resultados: list[Resultado], url: str | None) -> bool:
     if not url or not rojos:
         return False
     cuerpo = json.dumps({"servicio": "terranova", "canarios_rojos": rojos}).encode()
-    peticion = urllib.request.Request(
-        url, data=cuerpo, headers={"Content-Type": "application/json"}, method="POST"
-    )
     try:
+        # construir el Request DENTRO del try: una URL mal formada lanza ValueError (no OSError)
+        # y no debe estallar el job justo cuando hay rojos que avisar
+        peticion = urllib.request.Request(
+            url, data=cuerpo, headers={"Content-Type": "application/json"}, method="POST"
+        )
         with urllib.request.urlopen(peticion, timeout=10):
             return True
-    except OSError:
+    except Exception:  # avisar es best-effort; nunca tumba el canario
         logger.exception("no se pudo mandar la alerta de canarios")
         return False
