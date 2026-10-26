@@ -169,6 +169,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
+| `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |

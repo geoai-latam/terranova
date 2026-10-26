@@ -1,0 +1,50 @@
+id: anm.titulos_mineros
+titulo: "Títulos mineros y explotadores autorizados (RUCOM, ANM)"
+entidad: Agencia Nacional de Minería (ANM)
+competencia: administra el registro minero nacional y el RUCOM (Registro Único de Comercializadores de Minerales), Decreto 1073 de 2015
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-26
+  evidencia: https://www.datos.gov.co/api/views/42ha-fhvj.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Minería - ANM, RUCOM. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# El dataset trae un campo de titular (nombre_persona) que puede ser persona natural y no hay
+# columna para distinguirla de una jurídica: se excluye de la salida (lista blanca, ADR-0014).
+url: https://www.datos.gov.co/resource/42ha-fhvj.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO}
+datos_personales: filtrados
+estado: publicada
+campos:
+  codigo_expediente: {nombre: codigo_expediente, tipo: str, desc: "código de expediente del título minero"}
+  mineral: {nombre: mineral, tipo: str, desc: "mineral autorizado"}
+  planta_beneficio: {nombre: planta_beneficio, tipo: str, desc: "planta de beneficio asociada"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  codigo_dane: {nombre: codigo_dane, tipo: str, desc: "código DANE del municipio (DIVIPOLA, 5 dígitos)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Agencia Nacional de Minería, theme: mineria, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-26'
+  fila: "un mineral autorizado de un expediente; el dataset repite filas por mineral (ABQ-101 en Yumbo aparece con DIABASA y ROCA MUERTA); 121 filas para Yumbo (76892)"
+  clave:
+    columna: codigo_expediente
+    unica: false
+  operaciones:
+    filtrar: 0.3
+    contar: 0.2
+    ordenar: 0.2
+    agrupar: 0.3
+  hallazgos:
+  - "el dataset repite filas por mineral: se deduplica con group"
+  - "el campo de titular (nombre_persona) puede ser persona natural y no se puede filtrar: se omite de la salida (ADR-0014)"
+  - "el código DANE viene con sus 5 dígitos y coincide con DIVIPOLA"
+  decision: "en vivo por municipio (DANE) y por expediente, deduplicando por mineral y sin el nombre del titular"

@@ -1,0 +1,35 @@
+id: anm_titulo_por_expediente
+version: 1
+familia: territorio
+fuente: anm.titulos_mineros
+pregunta: "¿Qué minerales ampara y dónde está el título minero con este expediente?"
+descripcion: >
+  Minerales autorizados y ubicación (municipio, departamento, código DANE) de un título minero por
+  su código de expediente, con cuántos registros tiene cada mineral. Un expediente puede amparar
+  varios minerales. No se publica el nombre del titular (ADR-0014).
+  (Fuente: Agencia Nacional de Minería (ANM), RUCOM; licencia: CC BY-SA 4.0.)
+entrada: {expediente: expediente_minero}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 42ha-fhvj
+    portal: datos.gov.co
+    select: "mineral, municipio, departamento, codigo_dane, count(*) AS registros"
+    where: "codigo_expediente = '{expediente}'"
+    group: "mineral, municipio, departamento, codigo_dane"
+    order: "mineral"
+    max_filas: 200
+  campos: [codigo_expediente, mineral, municipio, departamento, codigo_dane]
+salida: TituloMineroExpediente
+derivados:
+  registros: {de: columna, campo: registros, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-26 en 42ha-fhvj: el expediente ABQ-101 ampara DIABASA y ROCA MUERTA en Yumbo
+  # (Valle, 76892); 1ra por mineral DIABASA, 4 registros.
+  entrada: {expediente: "ABQ-101"}
+  verdad: {mineral: "DIABASA", municipio: "YUMBO", departamento: "VALLE", codigo_dane: "76892", registros: 4}
+  campos: [codigo_dane, departamento, mineral, municipio, registros]
+  latencia_max_ms: 15000
