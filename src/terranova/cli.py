@@ -206,12 +206,15 @@ def _catalogo_ingerir(argumentos: list[str]) -> int:
         action="store_true",
         help="aterriza metadatos + embeddings en PostGIS/pgvector (job de producción, ADR-0028)",
     )
+    parser.add_argument("--limite", type=int, help="acota a los primeros N datasets (dev/pruebas)")
     a = parser.parse_args(argumentos)
 
     if a.fuente == "icde":
         datasets = ingerir_dcat_us()
     else:
         datasets = ingerir(limite_paginas=a.limite_paginas, por_pagina=a.por_pagina)
+    if a.limite:
+        datasets = datasets[: a.limite]
     ruta = a.salida or f"datos_locales/catalogo_{a.fuente}.jsonl"
     salida = pathlib.Path(ruta)
     if (
@@ -346,12 +349,8 @@ def _catalogo_promover(argumentos: list[str]) -> int:
     a = parser.parse_args(argumentos)
 
     url = os.environ.get("TERRANOVA_CURADO_URL") or os.environ.get("TERRANOVA_COPIAS_URL")
-    emb_url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
-    if not url or not emb_url:
-        print(
-            "faltan TERRANOVA_CURADO_URL y TERRANOVA_EMBEDDINGS_URL (almacén desplegado)",
-            file=sys.stderr,
-        )
+    if not url:
+        print("falta TERRANOVA_CURADO_URL (almacén)", file=sys.stderr)
         return 2
     banco = yaml.safe_load(pathlib.Path(a.banco).read_text(encoding="utf-8"))
     preguntas = [
@@ -363,9 +362,23 @@ def _catalogo_promover(argumentos: list[str]) -> int:
         print("no hay preguntas sin herramienta en el banco (nada que promover)", file=sys.stderr)
         return 0
 
-    from terranova.descubrimiento import EmbedderRemoto
+    from terranova.descubrimiento import Embedder
 
-    embedder = EmbedderRemoto(emb_url)
+    # microservicio si hay URL; si no, FastEmbedder local (dev/un nodo), como el conector/ingesta
+    emb_url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
+    embedder: Embedder
+    try:
+        if emb_url:
+            from terranova.descubrimiento import EmbedderRemoto
+
+            embedder = EmbedderRemoto(emb_url)
+        else:
+            from terranova.descubrimiento import FastEmbedder
+
+            embedder = FastEmbedder()
+    except ImportError:
+        print("faltan los embeddings; instala 'terranova[descubrimiento]'", file=sys.stderr)
+        return 2
     almacen = AlmacenDescubrimiento(url)
 
     def buscar_fn(consulta: str) -> list[DatasetDescubrible]:
