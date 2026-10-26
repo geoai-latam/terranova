@@ -6,6 +6,7 @@ llama salen del catálogo; el sobre `rt/1` y sus errores, del contrato.
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import logging
 import os
@@ -199,11 +200,11 @@ async def ejecutar(
         sobre = await _ejecutar(ficha, entrada, principal)
     except (ErrorEjecucion, ErrorEntrada) as exc:
         codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
-        _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
+        await _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
         metricas.SOLICITUDES.labels(etiqueta, "error", codigo).inc()
         raise
     servido = _servido(sobre)
-    _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
+    await _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
     metricas.SOLICITUDES.labels(etiqueta, sobre.estado, "").inc()
     metricas.LATENCIA.labels(etiqueta, servido or "ninguno").observe(time.monotonic() - inicio)
     return sobre
@@ -223,7 +224,7 @@ def _servido(sobre: Sobre) -> str | None:
     return next((s for s in _ORDEN_SERVIDO if s in vistos), None)
 
 
-def _medir(
+async def _medir(
     principal: Principal | None,
     ficha: str,
     solicitud_id: str,
@@ -243,7 +244,8 @@ def _medir(
         servido_desde=servido_desde,
         momento=ahora_iso(),
     )
-    registrar_sin_fallar(outbox, evento)
+    # el INSERT del outbox va fuera del event loop (no bloquea la ruta caliente)
+    await asyncio.to_thread(registrar_sin_fallar, outbox, evento)
 
 
 async def ejecutar_idempotente(
