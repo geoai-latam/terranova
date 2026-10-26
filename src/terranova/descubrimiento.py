@@ -299,6 +299,16 @@ def ingerir_dcat_us(
                 nuevos += 1
             if nuevos == 0:  # página vacía o sin ítems nuevos: se acabó el catálogo
                 break
+        else:
+            # salimos del for sin `break`: agotamos `tope` páginas y la última aún traía ítems
+            # nuevos → el feed tiene MÁS de lo que trajimos (el DCAT de la ICDE topa en ~10.000 e
+            # ignora ?page). No es la cola completa; para pasar de ahí haría falta la API Hub v3.
+            import logging
+
+            logging.getLogger("terranova").warning(
+                "cosecha DCAT truncada en %d ítems (el feed topa; falta la cola, ADR-0028)",
+                len(datasets),
+            )
     finally:
         if cerrar:
             http.close()
@@ -518,13 +528,18 @@ class EmbedderRemoto:
 
 
 def embeber_catalogo(
-    datasets: list[DatasetDescubrible], embedder: Embedder
+    datasets: list[DatasetDescubrible], embedder: Embedder, *, lote: int = 256
 ) -> dict[str, tuple[float, ...]]:
-    """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector."""
-    if not datasets:
-        return {}
-    vectores = embedder.documentos([texto_para_embedding(d) for d in datasets])
-    return {d.id_socrata: v for d, v in zip(datasets, vectores, strict=True)}
+    """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector. En
+    **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al microservicio
+    revienta la memoria/el timeout en una VM chica."""
+    vectores: dict[str, tuple[float, ...]] = {}
+    for i in range(0, len(datasets), lote):
+        trozo = datasets[i : i + lote]
+        salida = embedder.documentos([texto_para_embedding(d) for d in trozo])
+        for d, v in zip(trozo, salida, strict=True):
+            vectores[d.id_socrata] = v
+    return vectores
 
 
 def vectores_a_jsonl(vectores: dict[str, tuple[float, ...]]) -> str:

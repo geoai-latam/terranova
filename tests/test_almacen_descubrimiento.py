@@ -224,3 +224,32 @@ async def test_conector_mapea_caida_a_fuente_no_disponible() -> None:
     with pytest.raises(ErrorConector) as exc:
         await con.llamar("buscar_catalogo", {"consulta": "agua"})
     assert exc.value.codigo == "fuente_no_disponible"
+
+
+# --- WS4: blindaje de G6 -----------------------------------------------------------------------
+def test_recorta_parecido_a_0_1() -> None:
+    from terranova.almacen_descubrimiento import _recorta
+
+    assert _recorta(-0.3) == 0.0  # coseno ortogonal/negativo → 0
+    assert _recorta(1.5) == 1.0
+    assert _recorta(0.42) == 0.42
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_huella_de_modelo_no_se_mezcla() -> None:
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute(f"DROP SCHEMA IF EXISTS {ESQUEMA} CASCADE")
+
+    alm = AlmacenDescubrimiento(URL_PG, dim=3)
+    alm.reemplazar("icde", [_ds("a", "agua")], {"a": (1.0, 0.0, 0.0)}, modelo="modelo-A")
+    assert alm.modelo_indexado() == ("modelo-A", 3)
+    # el mismo modelo: ok (otro catálogo)
+    alm.reemplazar(
+        "socrata", [_ds("b", "x", protocolo="socrata")], {"b": (1.0, 0.0, 0.0)}, modelo="modelo-A"
+    )
+    # otro modelo con la misma dim: se rechaza (no mezclar, ADR-0028)
+    with pytest.raises(ValueError, match="no se puede mezclar"):
+        alm.reemplazar("icde", [_ds("c", "y")], {"c": (1.0, 0.0, 0.0)}, modelo="modelo-B")

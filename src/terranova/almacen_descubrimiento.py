@@ -37,6 +37,12 @@ def _vector_literal(v: tuple[float, ...]) -> str:
     return "[" + ",".join(repr(float(x)) for x in v) + "]"
 
 
+def _recorta(sim: float) -> float:
+    """El `parecido` al contrato [0,1]: el coseno de pgvector puede ser negativo (ortogonal/opuesto)
+    y la rama FTS no aplica el piso, así que un match léxico podría traerlo bajo 0 (ADR-0028)."""
+    return max(0.0, min(1.0, sim))
+
+
 def _rrf(rankings: list[list[str]], k: int = 60) -> dict[str, float]:
     """Reciprocal Rank Fusion: combina varias listas ordenadas de ids en un puntaje por id, sin
     depender de la escala de cada una (el vector da coseno, el FTS da ts_rank). `1/(k+posición)`."""
@@ -95,17 +101,49 @@ class AlmacenDescubrimiento:
         self._c.execute(
             f"CREATE INDEX IF NOT EXISTS datasets_texto ON {ESQUEMA}.datasets USING gin (_texto)"
         )
+        # huella del modelo: una fila con el nombre+dim del modelo que generó los vectores. Sin
+        # esto, un cambio de modelo con la MISMA dimensión (p. ej. otro de 384) pasaría en silencio
+        # y daría cosenos sin sentido (la columna vector(dim) solo detecta cambios de dimensión).
+        self._c.execute(
+            f"""CREATE TABLE IF NOT EXISTS {ESQUEMA}.modelo (
+                unica boolean PRIMARY KEY DEFAULT true, modelo text NOT NULL, dim int NOT NULL)"""
+        )
+
+    def modelo_indexado(self) -> tuple[str, int] | None:
+        existe = self._c.execute(f"SELECT to_regclass('{ESQUEMA}.modelo')").fetchone()
+        if not existe or existe[0] is None:
+            return None
+        fila = self._c.execute(f"SELECT modelo, dim FROM {ESQUEMA}.modelo").fetchone()
+        return (fila[0], int(fila[1])) if fila else None
+
+    def _fijar_modelo(self, modelo: str) -> None:
+        """Graba/verifica la huella: mezclar modelos (o dim) en el mismo almacén es un error."""
+        actual = self.modelo_indexado()
+        if actual is not None and actual != (modelo, self._dim):
+            raise ValueError(
+                f"el almacén ya está indexado con {actual}, no se puede mezclar con "
+                f"({modelo!r}, {self._dim}): re-embebe todo tras cambiar de modelo (ADR-0028)"
+            )
+        if actual is None:
+            self._c.execute(
+                f"INSERT INTO {ESQUEMA}.modelo (modelo, dim) VALUES (%s, %s)", (modelo, self._dim)
+            )
 
     def reemplazar(
         self,
         fuente_catalogo: str,
         datasets: list[DatasetDescubrible],
         vectores: Mapping[str, tuple[float, ...]],
+        *,
+        modelo: str | None = None,
     ) -> int:
         """Refresca ENTERO el catálogo `fuente_catalogo` (ADR-0028): borra sus filas y mete las
         nuevas, en una transacción. El vector es opcional (una fila sin embedding no sale en la
-        búsqueda vectorial, pero sí en el léxico)."""
+        búsqueda vectorial, pero sí en el léxico). Con `modelo`, graba/verifica la huella (no deja
+        mezclar modelos en el mismo almacén)."""
         self.asegurar_esquema()
+        if modelo is not None:
+            self._fijar_modelo(modelo)
         filas = [
             (
                 fuente_catalogo,
@@ -177,7 +215,7 @@ class AlmacenDescubrimiento:
         for f in cur.fetchall():
             rank_vec.append(f[0])
             por_id[f[0]] = self._fila(f)
-            sims[f[0]] = float(f[12])
+            sims[f[0]] = _recorta(float(f[12]))
 
         # 2) candidatos por FTS (si hay texto): plainto_tsquery exige todos los lexemas; ts_rank los
         #    ordena por IDF. Es la precisión léxica que el puro-vectorial no da. Se trae también su
@@ -195,7 +233,7 @@ class AlmacenDescubrimiento:
             for f in curl.fetchall():
                 rank_lex.append(f[0])
                 por_id.setdefault(f[0], self._fila(f))
-                sims.setdefault(f[0], float(f[12]) if f[12] is not None else 0.0)
+                sims.setdefault(f[0], _recorta(float(f[12])) if f[12] is not None else 0.0)
 
         puntos = _rrf([rank_vec, rank_lex] if rank_lex else [rank_vec])
         ids = sorted(
