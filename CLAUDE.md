@@ -53,8 +53,6 @@ gratuita. Los conectores viven en `../GEO_COPILOT/services/` (repo público
 ## Entorno
 
 - Windows 11, Git Bash y PowerShell. Python con uv.
-- **La memoria del equipo es poca:** los procesos de video del dueño tienen prioridad. Levanta Docker
-  por partes, corre las pruebas por trozos y una pesada a la vez.
 - Los conectores se levantan desde `../GEO_COPILOT/docker/docker-compose.yml` (perfil por servicio).
   Las llaves van en `<SVC>_MCP_KEYS` / `<SVC>_MCP_APP_KEY`.
 
