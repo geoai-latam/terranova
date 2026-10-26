@@ -148,6 +148,46 @@ jobs:
           if [ "$rc" -eq 124 ] || [ "$rc" -eq 0 ]; then echo "arrancó sin pimienta (rc=$rc)"; exit 1; fi
           echo "no arranca sin pimienta (rc=$rc): bien"
 
+      # Trivy escanea la imagen construida en busca de HIGH/CRITICAL con arreglo (--ignore-unfixed
+      # evita ruido por las que nadie puede corregir todavía). Informativo por ahora (no bloquea):
+      # se vuelve bloqueante cuando se confirme que la línea base queda limpia. Dependabot (docker)
+      # mantiene al día la imagen base.
+      - name: trivy (vulnerabilidades de la imagen, informativo)
+        continue-on-error: true
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.67.0 image             --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed --no-progress terranova/puerta:ci
+
+  seguridad:
+    name: seguridad (pip-audit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version-file: .python-version
+
+      - name: Instalar uv
+        run: python -m pip install uv==0.12.5
+
+      # Bloquea el merge: audita el cierre de dependencias que de verdad SE DESPLIEGA en la puerta
+      # (núcleo + postgres + redis, sin dev), que es su superficie de ataque (Dockerfile).
+      - name: pip-audit (puerta)
+        run: |
+          uv export --no-dev --no-emit-project --extra postgres --extra redis             --format requirements-txt > req-puerta.txt
+          uv run --with pip-audit pip-audit -r req-puerta.txt
+
+      # Informativo (no bloquea): el microservicio de embeddings es una imagen aparte, en la red
+      # interna, sin exposición, con modelos solo de texto. fastembed arrastra pillow y fija
+      # pillow<12, así que sus CVE no se pueden corregir sin subir fastembed: se vigilan aquí y con
+      # Dependabot, sin frenar cada PR por una dependencia que no está en la ruta del dato.
+      - name: pip-audit (embeddings, informativo)
+        continue-on-error: true
+        run: |
+          uv export --no-dev --no-emit-project --extra descubrimiento             --format requirements-txt > req-embeddings.txt
+          uv run --with pip-audit pip-audit -r req-embeddings.txt
+
   observabilidad:
     name: observabilidad (reglas de Prometheus)
     runs-on: ubuntu-latest

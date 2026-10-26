@@ -1,0 +1,25 @@
+# Dependabot mantiene al día las dependencias y las imágenes base, con PR semanales (ADR-0001: el
+# repo es público; las actualizaciones de seguridad no deben depender de que alguien se acuerde).
+version: 2
+updates:
+  - package-ecosystem: uv
+    directory: "/"
+    schedule: {interval: weekly}
+    open-pull-requests-limit: 5
+    commit-message: {prefix: "deps"}
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule: {interval: weekly}
+    commit-message: {prefix: "ci"}
+
+  # Imágenes base del compose y los Dockerfile: Dependabot propone el bump (y el digest cuando se
+  # fija por @sha256). Los conectores viven en el repo hermano, aquí solo lo nuestro.
+  - package-ecosystem: docker
+    directories:
+      - "/"
+      - "/docker"
+      - "/docker/embeddings"
+      - "/docker/postgres"
+    schedule: {interval: weekly}
+    commit-message: {prefix: "docker"}

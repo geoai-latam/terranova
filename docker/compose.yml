@@ -9,6 +9,15 @@
 # En una máquina con poca memoria se puede levantar por partes: primero postgres y redis, luego los
 # conectores y al final las puertas y caddy.
 #
+# Endurecimiento: la puerta, el microservicio y los conectores corren sin privilegios
+# (read_only + cap_drop:[ALL] + no-new-privileges) y todos los servicios llevan techo de memoria y
+# de PIDs (mem_limit/pids_limit) para que un desborde no mate los procesos de video del dueño en la
+# VM compartida. Falta por aplicar **en el despliegue, con prueba en la VM** (no a ciegas, porque
+# cada imagen tiene sus mañas): read_only/cap_drop en los servicios con estado (postgres usa gosu en
+# el init; redis también; caddy necesita NET_BIND_SERVICE para el :80), y un rate_limit de borde en
+# Caddy, que exige compilar Caddy con xcaddy (el módulo no viene de serie). La cuota por llave de la
+# puerta ya limita la tasa en la aplicación; el de borde sería defensa en profundidad.
+#
 # Restricciones curadas (F4.1) en la misma base: con un puerto temporal hacia postgres,
 #   uv run --extra datasets scripts/dataset_restricciones.py --postgis postgresql://terranova:…@127.0.0.1:…/terranova
 # Sin dataset cargado, la ficha consulta RUNAP y ANT en vivo y lo dice en `avisos`.
@@ -48,6 +57,10 @@ x-puerta: &puerta
   tmpfs: [/tmp]
   cap_drop: [ALL]
   security_opt: ["no-new-privileges:true"]
+  # Techo de memoria por contenedor: si uno se desborda lo mata su cgroup, no el host (la VM es
+  # compartida con los procesos de video del dueño). Son límites, no reservas: no apartan RAM.
+  mem_limit: 512m
+  pids_limit: 256
 
 services:
   caddy:
@@ -62,6 +75,8 @@ services:
       TERRANOVA_DOMINIO: ${TERRANOVA_DOMINIO:-:80}
     depends_on: [puerta-a, puerta-b]
     networks: [borde]
+    mem_limit: 256m
+    pids_limit: 128
 
   puerta-a: *puerta
   puerta-b:
@@ -120,6 +135,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 1536m  # el modelo ONNX + onnxruntime; el más goloso del stack
+    pids_limit: 256
 
   postgres:
     # PostGIS (dataset curado, F4.1) + pgvector (catálogo de descubrimiento, G6/ADR-0028)
@@ -136,6 +153,8 @@ services:
       interval: 5s
       retries: 20
     networks: [interna]
+    mem_limit: 1g
+    pids_limit: 256
 
   # F7.3 (ADR-0015): pg_dump diario de llaves, uso, canarios y el dataset curado; guarda 14 días en
   # TERRANOVA_RESPALDOS, que se copia FUERA de la VM. Restaurar: docs/RUNBOOK.md §4.
@@ -158,12 +177,29 @@ services:
     depends_on:
       postgres: {condition: service_healthy}
     networks: [interna]
+    mem_limit: 256m
+    pids_limit: 64
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}", "--save", "", "--appendonly", "no"]
+    # Redis es caché/cuota, no almacén durable: con un techo de memoria y expulsión LRU nunca crece
+    # sin límite (sería otra vía de OOM). --save "" / --appendonly no: no persiste a disco.
+    command:
+      - redis-server
+      - --requirepass
+      - ${REDIS_PASSWORD}
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - 192mb
+      - --maxmemory-policy
+      - allkeys-lru
     networks: [interna]
+    mem_limit: 256m
+    pids_limit: 64
 
   # Conector de GEO Copilot. En producción va la imagen GHCR con versión fija (ADR-0001); en local se
   # construye desde el repo hermano.
@@ -182,6 +218,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 512m
+    pids_limit: 256
 
   # Los demás conectores del catálogo (F7.1: sin ellos, sus 10 canarios salen rojos siempre). Misma
   # llave de servicio y el mismo endurecimiento que arcgis-mcp; solo llegan a la red interna.
@@ -197,6 +235,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 256m
+    pids_limit: 128
 
   dane-mcp:
     build: {context: ../../GEO_COPILOT, dockerfile: services/dane_mcp/Dockerfile}
@@ -211,6 +251,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 384m
+    pids_limit: 128
 
   datos-abiertos-mcp:
     build: {context: ../../GEO_COPILOT, dockerfile: services/datos_abiertos_mcp/Dockerfile}
@@ -225,6 +267,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 384m
+    pids_limit: 128
 
   imagery-mcp:
     build: {context: ../../GEO_COPILOT, dockerfile: services/imagery_mcp/Dockerfile}
@@ -238,6 +282,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 512m
+    pids_limit: 128
 
   # G4 (F5): APIs web públicas que no están en datos.gov.co ni en ArcGIS (relatoría de Colombia Compra,
   # BanRep SDMX). Solo los dominios de la lista, con robots.txt y una petición por segundo por sitio.
@@ -254,6 +300,8 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
+    mem_limit: 256m
+    pids_limit: 128
 
   # F7.2: Prometheus (alertas de los SLO) y Grafana (tablero). Solo con el perfil:
   #   docker compose -f docker/compose.yml --env-file docker/.env --profile observabilidad up -d
@@ -266,6 +314,8 @@ services:
       - ./observabilidad/reglas.yml:/etc/prometheus/reglas.yml:ro
       - prometheus_datos:/prometheus
     networks: [interna]
+    mem_limit: 512m
+    pids_limit: 128
 
   grafana:
     image: grafana/grafana:12.0.2
@@ -283,6 +333,8 @@ services:
       - ./observabilidad/grafana/tableros:/var/lib/grafana/dashboards:ro
     depends_on: [prometheus]
     networks: [interna]
+    mem_limit: 256m
+    pids_limit: 128
 
 networks:
   borde: {}

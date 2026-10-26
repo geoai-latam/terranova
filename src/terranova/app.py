@@ -355,10 +355,16 @@ def _con_cabeceras(send: Any, extra: list[tuple[bytes, bytes]]) -> Any:
 
 # Un mensaje MCP es pequeño; uno más grande se cobra sin leerlo entero (por precaución).
 _MAX_CUERPO_MCP = 1_000_000
+# La entrada de una herramienta REST es un JSON diminuto (un punto, un código). Un cuerpo mayor es
+# un error o un abuso: se corta antes de agotar la memoria (DoS) y se rechaza (ver `__call__`).
+_MAX_CUERPO_REST = 256_000
 
 
-async def _leer_cuerpo(receive: Any) -> tuple[bytes, Any]:
-    """El cuerpo de la petición y un `receive` que lo vuelve a entregar intacto a quien siga."""
+async def _leer_cuerpo(receive: Any, tope: int = _MAX_CUERPO_MCP) -> tuple[bytes, Any]:
+    """El cuerpo de la petición y un `receive` que lo vuelve a entregar intacto a quien siga.
+
+    Deja de acumular en cuanto se pasa de `tope` (aunque falten trozos): así un cuerpo enorme no
+    agota la memoria. Si `len(cuerpo) > tope`, el llamador sabe que se truncó."""
     partes: list[bytes] = []
     tamano = 0
     while True:
@@ -367,7 +373,7 @@ async def _leer_cuerpo(receive: Any) -> tuple[bytes, Any]:
             break
         partes.append(mensaje.get("body", b""))
         tamano += len(partes[-1])
-        if not mensaje.get("more_body") or tamano > _MAX_CUERPO_MCP:
+        if not mensaje.get("more_body") or tamano > tope:
             break
     cuerpo = b"".join(partes)
     entregado = False
@@ -428,6 +434,15 @@ class Aplicacion:
                 if app is not self.api:
                     cuerpo, receive = await _leer_cuerpo(receive)
                     cobrar = scope.get("method") == "POST" and _consulta_mcp(cuerpo)
+                elif scope.get("method") == "POST":
+                    cuerpo, receive = await _leer_cuerpo(receive, tope=_MAX_CUERPO_REST)
+                    if len(cuerpo) > _MAX_CUERPO_REST:
+                        await problema(
+                            "parametro_invalido",
+                            "el cuerpo de la petición es demasiado grande",
+                            param="body",
+                        )(scope, receive, send)
+                        return
                 if puerta.cuota is not None and cobrar:
                     permitido, quedan, espera = await puerta.cuota.tomar_ficha(principal.llave_id)
                     tasa = _cabeceras_tasa(puerta.cuota, quedan, espera)
