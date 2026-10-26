@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Protocol
 
@@ -45,6 +46,9 @@ class ConectorMCP:
         self._url, self._llave, self._timeout_s = url, llave, timeout_s
         self.cliente: Client[StreamableHttpTransport] = self._nuevo_cliente()
         self._pila = AsyncExitStack()
+        # La puerta llama al mismo conector en paralelo (una ficha con varias capas, varias
+        # peticiones a la vez): solo una corrutina reabre la sesión; las demás esperan y reusan.
+        self._candado = asyncio.Lock()
 
     def _nuevo_cliente(self) -> Client[StreamableHttpTransport]:
         transporte = StreamableHttpTransport(
@@ -68,11 +72,20 @@ class ConectorMCP:
         self.cliente = self._nuevo_cliente()
         await self.abrir()
 
+    async def _asegurar_abierto(self) -> None:
+        """Reabre la sesión si se cayó, bajo candado y con doble comprobación: si otra corrutina la
+        reabrió mientras esta esperaba el candado, no se reabre dos veces."""
+        if self.cliente.is_connected():
+            return
+        async with self._candado:
+            if not self.cliente.is_connected():
+                await self._reabrir()
+
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         for intento in (1, 2):
             if not self.cliente.is_connected():
                 try:
-                    await self._reabrir()
+                    await self._asegurar_abierto()
                 except Exception as exc:  # el conector no está: se dice ya, sin otro intento
                     raise ErrorConector(
                         f"{herramienta}: no se pudo abrir la sesión ({type(exc).__name__})"
