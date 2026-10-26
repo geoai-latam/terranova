@@ -1,5 +1,6 @@
 """`ConectorMCP` traduce el error del conector (kit F1.3) a un código de `rt/1`."""
 
+import asyncio
 from types import SimpleNamespace
 from typing import Any
 
@@ -69,6 +70,24 @@ async def test_sin_conexion_es_fuente_no_disponible() -> None:
     with pytest.raises(ErrorConector) as exc:
         await _conector(ClienteFalso(excepcion=ConnectionError("rechazada"))).llamar("t", {})
     assert exc.value.codigo == "fuente_no_disponible"
+
+
+@pytest.mark.anyio
+async def test_reapertura_concurrente_reabre_una_sola_vez(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Varias llamadas en paralelo con la sesión caída reabren solo una vez (candado + doble
+    comprobación): sin el candado, cada corrutina reabría y abría cinco sesiones a la vez."""
+    conector = ConectorMCP("http://127.0.0.1:1/mcp", "llave")
+    estado = {"conectado": False, "reaperturas": 0}
+    conector.cliente = SimpleNamespace(is_connected=lambda: estado["conectado"])  # type: ignore[assignment]
+
+    async def reabrir_falso() -> None:
+        estado["reaperturas"] += 1
+        await asyncio.sleep(0)  # cede el control: fuerza la carrera entre corrutinas
+        estado["conectado"] = True
+
+    monkeypatch.setattr(conector, "_reabrir", reabrir_falso)
+    await asyncio.gather(*(conector._asegurar_abierto() for _ in range(5)))
+    assert estado["reaperturas"] == 1
 
 
 @pytest.mark.anyio

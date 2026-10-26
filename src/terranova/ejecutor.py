@@ -14,7 +14,7 @@ import math
 import re
 import time
 import unicodedata
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Literal
@@ -36,6 +36,7 @@ from terranova.contrato import (
     MAX_TEXTO,
     Cache,
     Completitud,
+    ErrorParte,
     Estado,
     GeoResult,
     Licencia,
@@ -361,6 +362,25 @@ Frescura = Literal["normal", "estricta"]
 CODIGOS_DE_CAIDA = frozenset({"fuente_no_disponible", "fuente_lenta"})
 
 
+async def _reunir_capas(
+    llamadas: Sequence[Awaitable[Respuesta]],
+) -> tuple[list[Respuesta], list[BaseException]]:
+    """Lanza todas las capas a la vez y separa las que respondieron de las que fallaron: una capa
+    caída no tumba a las demás (una fuente de varias capas sale `parcial`, no en error entero). La
+    cancelación sí se propaga: no es un fallo de la fuente."""
+    resultados = await asyncio.gather(*llamadas, return_exceptions=True)
+    ok: list[Respuesta] = []
+    fallos: list[BaseException] = []
+    for r in resultados:
+        if isinstance(r, asyncio.CancelledError):
+            raise r
+        if isinstance(r, BaseException):
+            fallos.append(r)
+        else:
+            ok.append(r)
+    return ok, fallos
+
+
 class Ejecutor:
     def __init__(
         self,
@@ -518,16 +538,22 @@ class Ejecutor:
                 {**valores, "url_fuente": fuente.url, "url_capa": f"{fuente.url}/{capa}"},
             )
             llamadas.append(self._una(h, fuente.conector, capa, argumentos))
-        respuestas = await asyncio.gather(*llamadas)
+        respuestas, fallos = await _reunir_capas(llamadas)
+        if not respuestas:
+            raise fallos[0]  # todas las capas fallaron: se falla igual (no hay `parcial` de una)
+        capas_incompletas = len(fallos)  # unas capas sí respondieron y otras no: será `parcial`
         hechos_de_dato = [k for k, c in fuente.campos.items() if c.origen == "hecho"]
         reintentos = 0
         while reintentos < fuente.comportamiento.reintentos_si_vacio and all(
             not r.filas and not any(k in r.hechos for k in hechos_de_dato) for r in respuestas
         ):
             reintentos += 1
-            respuestas = await asyncio.gather(
-                *(self._una(h, fuente.conector, r.capa, r.argumentos) for r in respuestas)
+            nuevas, _ = await _reunir_capas(
+                [self._una(h, fuente.conector, r.capa, r.argumentos) for r in respuestas]
             )
+            if len(nuevas) < len(respuestas):
+                break  # un reintento que pierde capas no borra lo que ya se tenía
+            respuestas = nuevas
 
         elementos: list[dict[str, Any]] = []
         rasgos: list[dict[str, Any]] = []
@@ -599,6 +625,24 @@ class Ejecutor:
         ):
             estado = "fuera_de_cobertura"
             avisos.append(fuera)
+        errores: list[ErrorParte] = []
+        if capas_incompletas and estado != "fuera_de_cobertura":
+            # honestidad: con unas capas caídas no se puede afirmar «encontrado» ni «no encontrado»
+            estado = "parcial"
+            avisos.append(
+                f"{capas_incompletas} de {len(capas)} capas de la fuente no respondieron: "
+                "el resultado puede estar incompleto."
+            )
+            # regla 5: un sobre `parcial` lleva el error de cada capa que cayó (de la misma fuente)
+            for exc in fallos:
+                errores.append(
+                    ErrorParte(
+                        codigo=getattr(exc, "codigo", "fuente_no_disponible"),
+                        fuente_id=fuente.id,
+                        detalle=str(exc)[:500],
+                        reintentar_en_s=getattr(exc, "reintentar_en_s", None),
+                    )
+                )
         if any(p.completitud.total is None for p in procedencia):
             avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
         if fuente.modo == "copia":
@@ -636,7 +680,7 @@ class Ejecutor:
             geo_result=geo,
             procedencia=procedencia,
             avisos=avisos,
-            errores=[],
+            errores=errores,
             creditos=0 if estado == "fuera_de_cobertura" else h.creditos,
         )
 
