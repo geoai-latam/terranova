@@ -127,15 +127,31 @@ async def test_rest_sin_llave_401_y_catalogo_publico(
 
 @pytest.mark.anyio
 async def test_rest_con_llave_scope_y_plan(
-    con_identidad: RegistroSqlite, cliente: httpx.AsyncClient
+    con_identidad: RegistroSqlite, cliente: httpx.AsyncClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
+    # Ya no hay fichas por_verificar reales (enmienda ADR-0019): se fuerza la de DANE a sintética
+    # para probar que una llave normal recibe `licencia_no_habilitada` y una de evaluación responde.
+    fid = puerta.CATALOGO.herramientas["dane_poblacion_municipio"].fuente
+    f = puerta.CATALOGO.fuentes[fid]
+    sin_ver = f.model_copy(
+        update={
+            "uso_comercial": "por_verificar",
+            "clasificacion_licencia": "verde",
+            "licencia": f.licencia.model_copy(update={"spdx": None, "verificada": None}),
+        }
+    )
+    monkeypatch.setattr(
+        puerta,
+        "CATALOGO",
+        puerta.CATALOGO.model_copy(update={"fuentes": {**puerta.CATALOGO.fuentes, fid: sin_ver}}),
+    )
     territorio = con_identidad.crear("geoai", {"territorio"}, prueba=False, expira=None)
     r = await cliente.post(PREDIO, json=CHIA, headers=_con(territorio))
     assert r.status_code == 200 and r.json()["estado"] == "encontrado"
     # sin el scope de la familia
     r = await cliente.post(DANE, json={"municipio_divipola": "11001"}, headers=_con(territorio))
     assert r.status_code == 403 and r.json()["code"] == "sin_permiso"
-    # con el scope pero llave normal: DANE tiene licencia por verificar (ADR-0007)
+    # con el scope pero llave normal: la fuente está por_verificar (ADR-0007)
     viva = con_identidad.crear("geoai", {"estadisticas"}, prueba=False, expira=None)
     r = await cliente.post(DANE, json={"municipio_divipola": "11001"}, headers=_con(viva))
     assert r.status_code == 403 and r.json()["code"] == "licencia_no_habilitada"

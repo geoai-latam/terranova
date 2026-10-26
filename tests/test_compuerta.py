@@ -31,11 +31,27 @@ def anyio_backend() -> str:
     return "asyncio"
 
 
+def _catalogo_con_fuente_por_verificar(herramienta: str) -> Any:
+    """Fuerza la fuente de una herramienta a `por_verificar` (ya no hay fichas reales así tras la
+    enmienda ADR-0019): el mecanismo del gate se prueba con un fixture sintético."""
+    fid = CATALOGO.herramientas[herramienta].fuente
+    f = CATALOGO.fuentes[fid]
+    sin_verificar = f.model_copy(
+        update={
+            "uso_comercial": "por_verificar",
+            "clasificacion_licencia": "verde",
+            "licencia": f.licencia.model_copy(update={"spdx": None, "verificada": None}),
+        }
+    )
+    return CATALOGO.model_copy(update={"fuentes": {**CATALOGO.fuentes, fid: sin_verificar}})
+
+
 @pytest.mark.anyio
 async def test_licencia_por_verificar_no_responde_a_una_llave_normal() -> None:
-    """DANE no tiene licencia abierta: con plan normal, `licencia_no_habilitada` y sin llamar."""
+    """Una fuente por_verificar: con plan normal, `licencia_no_habilitada` y sin llamar."""
     conector = Conector({})
-    ej = Ejecutor(CATALOGO, {"dane-mcp": conector})
+    cat = _catalogo_con_fuente_por_verificar("dane_poblacion_municipio")
+    ej = Ejecutor(cat, {"dane-mcp": conector})
     with pytest.raises(ErrorEjecucion) as exc:
         await ej.ejecutar("dane_poblacion_municipio", {"municipio_divipola": "11001"})
     assert exc.value.codigo == "licencia_no_habilitada"
