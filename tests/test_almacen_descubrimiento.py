@@ -13,6 +13,7 @@ from terranova.almacen_descubrimiento import (
     ESQUEMA,
     AlmacenDescubrimiento,
     ConectorCatalogo,
+    _rrf,
     _vector_literal,
 )
 from terranova.conector import ErrorConector
@@ -29,6 +30,13 @@ def anyio_backend() -> str:
 def test_vector_literal() -> None:
     assert _vector_literal((0.1, 0.2, 0.3)) == "[0.1,0.2,0.3]"
     assert _vector_literal(()) == "[]"
+
+
+def test_rrf_fusiona_por_posicion() -> None:
+    # "b" sale alto en las dos listas → gana; "a" y "c" primeros en una sola
+    puntos = _rrf([["a", "b", "c"], ["b", "c", "x"]])
+    assert max(puntos, key=lambda i: puntos[i]) == "b"
+    assert puntos["a"] < puntos["b"]  # a solo aparece en una lista
 
 
 def _ds(
@@ -98,9 +106,9 @@ class _AlmacenFalso:
         self.visto: dict[str, Any] = {}
 
     def buscar(
-        self, vector: tuple[float, ...], *, limite: int = 20, **_: Any
+        self, vector: tuple[float, ...], texto: str | None = None, *, limite: int = 20, **_: Any
     ) -> list[DatasetDescubrible]:
-        self.visto = {"vector": vector, "limite": limite}
+        self.visto = {"vector": vector, "texto": texto, "limite": limite}
         return self._resultado
 
 
@@ -121,7 +129,7 @@ async def test_conector_catalogo_busca_y_surte_procedencia() -> None:
     fila = r["artifacts"][0]["rows"][0]
     assert fila["id"] == "agua" and fila["licencia"] == "CC BY" and fila["protocolo"] == "icde"
     assert "url" in fila and fila["url"].endswith("/agua")
-    assert almacen.visto["limite"] == 5  # el límite llega al almacén
+    assert almacen.visto["limite"] == 5 and almacen.visto["texto"] == "dónde hay agua"
     assert r["facts"]["completitud"]["vistos"] == 1
 
 
@@ -139,3 +147,26 @@ async def test_conector_catalogo_sin_embebedor_es_fuente_no_disponible() -> None
     with pytest.raises(ErrorConector) as exc:
         await con.llamar("buscar_catalogo", {"consulta": "x"})
     assert exc.value.codigo == "fuente_no_disponible"
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_buscar_hibrido_trae_match_lexico_que_el_vector_no_ranquea() -> None:
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute(f"DROP SCHEMA IF EXISTS {ESQUEMA} CASCADE")
+
+    almacen = AlmacenDescubrimiento(URL_PG, dim=3)
+    agua = _ds("agua", "Cuerpos de agua")  # alineado con el vector de consulta
+    contrato = _ds("contrato", "Contratación pública estatal", protocolo="socrata")  # ortogonal
+    almacen.reemplazar(
+        "socrata", [agua, contrato], {"agua": (1.0, 0.0, 0.0), "contrato": (0.0, 0.0, 1.0)}
+    )
+    # vector (1,0,0) alineado con «agua»; texto «contratación pública» (plainto_tsquery exige TODOS
+    # los lexemas, ambos en el título de contrato). El vector trae agua; el FTS trae contrato
+    # (con su vector bajo el piso). El híbrido debe traer AMBOS.
+    hallados = almacen.buscar((1.0, 0.0, 0.0), "contratación pública", piso=0.5, limite=10)
+    ids = {d.id_socrata for d in hallados}
+    assert "agua" in ids  # por el vector
+    assert "contrato" in ids  # por el FTS (ts_rank), aunque su vector está bajo el piso

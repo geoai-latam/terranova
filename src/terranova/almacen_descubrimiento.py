@@ -37,6 +37,16 @@ def _vector_literal(v: tuple[float, ...]) -> str:
     return "[" + ",".join(repr(float(x)) for x in v) + "]"
 
 
+def _rrf(rankings: list[list[str]], k: int = 60) -> dict[str, float]:
+    """Reciprocal Rank Fusion: combina varias listas ordenadas de ids en un puntaje por id, sin
+    depender de la escala de cada una (el vector da coseno, el FTS da ts_rank). `1/(k+posición)`."""
+    puntos: dict[str, float] = {}
+    for ranking in rankings:
+        for posicion, id_ in enumerate(ranking):
+            puntos[id_] = puntos.get(id_, 0.0) + 1.0 / (k + posicion + 1)
+    return puntos
+
+
 class AlmacenDescubrimiento:
     """La tabla `descubrimiento.datasets` (metadatos + vector), refrescada entera por catálogo."""
 
@@ -129,37 +139,66 @@ class AlmacenDescubrimiento:
                 )
         return len(filas)
 
+    _COLS = (
+        "id, titulo, descripcion, entidad, categoria, columnas, licencia, "
+        "actualizado_en, vistas, descargas, url, protocolo"
+    )
+
     def buscar(
         self,
         vector_consulta: tuple[float, ...],
+        texto_consulta: str | None = None,
         *,
         limite: int = 20,
         piso: float = PISO_SIMILITUD,
         hoy: date | None = None,
     ) -> list[DatasetDescubrible]:
-        """Búsqueda vectorial con `<=>` (coseno) de pgvector, reordenada por valor igual que
-        `descubrimiento.buscar_vectorial`: trae los más parecidos (sobre el piso) y, a igual
-        parecido, antepone licencia y frescura."""
+        """Búsqueda **híbrida** (ADR-0028, medido el 2026-10-25): fusiona por RRF el parecido
+        semántico (`<=>` de pgvector, dentro del piso) con el léxico (`ts_rank` del FTS en español,
+        que pondera por IDF y evita que las palabras comunes inflen un falso positivo). Sin texto,
+        es solo vectorial. A igual relevancia, desempata por valor (licencia, frescura)."""
         hoy = hoy or date.today()
         lit = _vector_literal(vector_consulta)
-        # `<=>` es distancia coseno (0 = idéntico); similitud = 1 - distancia. Se trae de más a
-        # menos parecido un margen (el triple) y se reordena por valor, como buscar_vectorial.
+        n = limite * 3
+        por_id: dict[str, DatasetDescubrible] = {}
+
+        # 1) candidatos por vector, dentro del piso, de más a menos parecido
         cur = self._c.execute(
-            f"""SELECT id, titulo, descripcion, entidad, categoria, columnas, licencia,
-                    actualizado_en, vistas, descargas, url, protocolo,
-                    1 - (embedding <=> %s::vector) AS sim
+            f"""SELECT {self._COLS}
                 FROM {ESQUEMA}.datasets
                 WHERE embedding IS NOT NULL AND 1 - (embedding <=> %s::vector) >= %s
                 ORDER BY embedding <=> %s::vector
                 LIMIT %s""",
-            (lit, lit, piso, lit, limite * 3),
+            (lit, piso, lit, n),
         )
-        puntuados = [(self._fila(f), float(f[12])) for f in cur.fetchall()]
-        puntuados.sort(
-            key=lambda p: (round(p[1], 2), p[0].con_licencia(), p[0].vivo(hoy), p[1]),
+        rank_vec: list[str] = []
+        for f in cur.fetchall():
+            rank_vec.append(f[0])
+            por_id[f[0]] = self._fila(f)
+
+        # 2) candidatos por FTS (si hay texto): plainto_tsquery exige todos los lexemas; ts_rank los
+        #    ordena por IDF. Es la precisión léxica que el puro-vectorial no da.
+        rank_lex: list[str] = []
+        if texto_consulta and texto_consulta.strip():
+            curl = self._c.execute(
+                f"""SELECT {self._COLS}
+                    FROM {ESQUEMA}.datasets
+                    WHERE _texto @@ plainto_tsquery('spanish', %s)
+                    ORDER BY ts_rank(_texto, plainto_tsquery('spanish', %s)) DESC
+                    LIMIT %s""",
+                (texto_consulta, texto_consulta, n),
+            )
+            for f in curl.fetchall():
+                rank_lex.append(f[0])
+                por_id.setdefault(f[0], self._fila(f))
+
+        puntos = _rrf([rank_vec, rank_lex] if rank_lex else [rank_vec])
+        ids = sorted(
+            por_id,
+            key=lambda i: (puntos.get(i, 0.0), por_id[i].con_licencia(), por_id[i].vivo(hoy)),
             reverse=True,
         )
-        return [d for d, _ in puntuados[:limite]]
+        return [por_id[i] for i in ids[:limite]]
 
     @staticmethod
     def _fila(f: Any) -> DatasetDescubrible:
@@ -204,7 +243,9 @@ class ConectorCatalogo:
         limite = int(argumentos.get("limite") or 20)
         try:
             vector = await asyncio.to_thread(self._embedder.consulta, consulta)
-            hallados = await asyncio.to_thread(self._almacen.buscar, vector, limite=limite)
+            hallados = await asyncio.to_thread(
+                self._almacen.buscar, vector, consulta, limite=limite
+            )
         except Exception as exc:  # el microservicio o la base caídos = fuente caída
             raise ErrorConector(f"catalogo: {type(exc).__name__}", "fuente_no_disponible") from exc
         filas = [
