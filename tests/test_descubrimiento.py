@@ -2,6 +2,7 @@
 
 import json
 from datetime import date
+from typing import Any
 
 import pytest
 
@@ -296,3 +297,61 @@ def test_buscar_vectorial_rompe_empate_por_licencia() -> None:
 def test_vectores_redondean_por_jsonl() -> None:
     vectores: dict[str, tuple[float, ...]] = {"a": (0.1, 0.2, 0.3), "b": (1.0, 0.0, 0.5)}
     assert cargar_vectores(vectores_a_jsonl(vectores)) == vectores
+
+
+# --------------------------------------------------------- paginación de la ingesta (pieza 5)
+class _Resp:
+    def __init__(self, cuerpo: dict[str, Any]) -> None:
+        self._cuerpo = cuerpo
+
+    def raise_for_status(self) -> None:
+        pass
+
+    def json(self) -> dict[str, Any]:
+        return self._cuerpo
+
+
+class _HTTPFalso:
+    """Devuelve páginas en secuencia y guarda los params de cada GET (sin red)."""
+
+    def __init__(self, paginas: list[dict[str, Any]]) -> None:
+        self._paginas = paginas
+        self.params: list[dict[str, Any]] = []
+        self._i = 0
+
+    def get(self, url: str, params: dict[str, Any] | None = None) -> _Resp:
+        self.params.append(params or {})
+        cuerpo = self._paginas[self._i] if self._i < len(self._paginas) else {}
+        self._i += 1
+        return _Resp(cuerpo)
+
+
+def _result(id_: str) -> dict[str, Any]:
+    return {"resource": {"id": id_, "name": f"ds {id_}"}, "metadata": {"domain": "d"}}
+
+
+def test_ingerir_socrata_pagina_con_scroll_id() -> None:
+    from terranova.descubrimiento import ingerir
+
+    http = _HTTPFalso(
+        [
+            {"results": [_result("a-aaaa"), _result("b-bbbb")]},  # página llena (por_pagina=2)
+            {"results": [_result("c-cccc")]},  # página corta → última
+        ]
+    )
+    ds = ingerir(http, por_pagina=2)
+    assert [d.id_socrata for d in ds] == ["a-aaaa", "b-bbbb", "c-cccc"]
+    assert "scroll_id" not in http.params[0]  # la primera página no lleva scroll_id
+    assert http.params[1]["scroll_id"] == "b-bbbb"  # la segunda pide los mayores al último
+
+
+def test_ingerir_icde_pagina_y_deduplica() -> None:
+    from terranova.descubrimiento import ingerir_dcat_us
+
+    p1 = {"dataset": [_dcat(identifier="https://x/item.html?id=" + "a" * 32)]}
+    p2 = {"dataset": [_dcat(identifier="https://x/item.html?id=" + "b" * 32)]}
+    p3 = {"dataset": [_dcat(identifier="https://x/item.html?id=" + "b" * 32)]}  # repetido → corta
+    http = _HTTPFalso([p1, p2, p3])
+    ds = ingerir_dcat_us(http)
+    assert sorted(d.id_socrata for d in ds) == ["a" * 32, "b" * 32]
+    assert http.params[1] == {"page": 2}  # la segunda página pide ?page=2

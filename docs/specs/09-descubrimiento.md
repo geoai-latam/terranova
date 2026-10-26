@@ -194,7 +194,8 @@ pero **ordenada por el buscador**: se promueve por valor y uso medidos, no por i
   validadas en vivo. El **aterrizaje en PostGIS/pgvector** (`AlmacenDescubrimiento`,
   `descubrimiento.datasets` con columna `vector`, `catalogo-dcat ingerir --a-postgis`) y el
   **microservicio de embeddings** ya están; el job `descubrimiento` del compose refresca los dos
-  catálogos a diario. Falta el `scroll`/paginado completo (ambos topan en ~10.000).
+  catálogos a diario. La **pasada completa** también: Socrata con `scroll_id` (no `offset`, que topa
+  en ~10.000) e ICDE con `?page=N` hasta que una página no trae ítems nuevos (#98).
 - **Buscador (lógica)** ✅ (#86 léxico, #93 embeddings): `buscar` (léxico) casa la pregunta y ordena por
   valor; **`buscar_vectorial`** (semántico, ADR-0028) ordena por coseno con piso y desempate por valor,
   re-embed completo (`embeber_catalogo`), modelo local fijado (`FastEmbedder`); `catalogo-dcat buscar`

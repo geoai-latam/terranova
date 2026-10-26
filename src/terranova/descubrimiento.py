@@ -155,7 +155,9 @@ def ingerir(
     por_pagina: int = 1000,
     dominio: str = DOMINIO,
 ) -> list[DatasetDescubrible]:
-    """Cosecha el catálogo del dominio, paginado y en serie. `limite_paginas` acota (desarrollo)."""
+    """Cosecha el catálogo del dominio, en serie. Pagina con **`scroll_id`** (no `offset`, que topa
+    en ~10.000): cada página pide los `id` mayores que el último visto, ordenados por `dataset_id`.
+    `limite_paginas` acota (desarrollo)."""
     import httpx
 
     http = cliente or httpx.Client(
@@ -163,19 +165,18 @@ def ingerir(
     )
     cerrar = cliente is None
     datasets: list[DatasetDescubrible] = []
-    offset, pagina = 0, 0
+    scroll_id, pagina = "", 0
     try:
         while True:
-            r = http.get(
-                DISCOVERY_URL,
-                params={
-                    "domains": dominio,
-                    "search_context": dominio,
-                    "limit": por_pagina,
-                    "offset": offset,
-                    "order": "dataset_id",
-                },
-            )
+            params: dict[str, Any] = {
+                "domains": dominio,
+                "search_context": dominio,
+                "limit": por_pagina,
+                "order": "dataset_id",
+            }
+            if scroll_id:
+                params["scroll_id"] = scroll_id
+            r = http.get(DISCOVERY_URL, params=params)
             r.raise_for_status()
             resultados = r.json().get("results") or []
             if not resultados:
@@ -185,8 +186,11 @@ def ingerir(
                     datasets.append(de_socrata_catalog(x))
                 except (KeyError, TypeError, ValueError):
                     continue  # un resultado malformado no tumba la cosecha
+            ultimo = (resultados[-1].get("resource") or {}).get("id") or ""
+            if not ultimo or ultimo == scroll_id:  # sin avance: corta (evita un bucle infinito)
+                break
+            scroll_id = ultimo
             pagina += 1
-            offset += por_pagina
             if len(resultados) < por_pagina or (limite_paginas and pagina >= limite_paginas):
                 break
     finally:
@@ -257,29 +261,47 @@ def de_dcat_us(dataset: dict[str, Any]) -> DatasetDescubrible:
     )
 
 
-def ingerir_dcat_us(cliente: Any = None, *, url: str = ICDE_DCAT_URL) -> list[DatasetDescubrible]:
-    """Cosecha un feed DCAT-US 1.1 (el Hub de la ICDE). Es **un solo documento** (no paginado como
-    Socrata); hoy el feed topa en ~10.000 ítems, casi todos cartografía base del IGAC. Metadatos,
-    no carga. Un ítem malformado no tumba la cosecha."""
+def ingerir_dcat_us(
+    cliente: Any = None,
+    *,
+    url: str = ICDE_DCAT_URL,
+    limite_paginas: int | None = None,
+    max_paginas: int = 50,
+) -> list[DatasetDescubrible]:
+    """Cosecha un feed DCAT-US 1.1 (el Hub de la ICDE). El feed topa en ~10.000 ítems por página, y
+    se **pagina** con `?page=N` hasta que una página no trae ítems nuevos (vacía o ya vistos), o
+    hasta el tope de seguridad `max_paginas`. `limite_paginas` acota (desarrollo). Metadatos, no
+    carga; un ítem malformado no tumba la cosecha."""
     import httpx
 
     http = cliente or httpx.Client(
         timeout=120, headers={"User-Agent": "terranova-descubrimiento/1"}
     )
     cerrar = cliente is None
+    datasets: list[DatasetDescubrible] = []
+    vistos: set[str] = set()
+    tope = min(max_paginas, limite_paginas) if limite_paginas else max_paginas
     try:
-        r = http.get(url)
-        r.raise_for_status()
-        crudos = r.json().get("dataset") or []
+        for pagina in range(1, tope + 1):
+            r = http.get(url, params={"page": pagina}) if pagina > 1 else http.get(url)
+            r.raise_for_status()
+            crudos = r.json().get("dataset") or []
+            nuevos = 0
+            for x in crudos:
+                try:
+                    d = de_dcat_us(x)
+                except (KeyError, TypeError, ValueError):
+                    continue
+                if d.id_socrata in vistos:  # el feed repite la página 1 si no soporta ?page: corta
+                    continue
+                vistos.add(d.id_socrata)
+                datasets.append(d)
+                nuevos += 1
+            if nuevos == 0:  # página vacía o sin ítems nuevos: se acabó el catálogo
+                break
     finally:
         if cerrar:
             http.close()
-    datasets: list[DatasetDescubrible] = []
-    for x in crudos:
-        try:
-            datasets.append(de_dcat_us(x))
-        except (KeyError, TypeError, ValueError):
-            continue
     return datasets
 
 
