@@ -264,6 +264,22 @@ class Copia(_Ficha):
     descargas: list[str] = Field(
         default_factory=list, description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane)"
     )
+    # Mapeo del microdato de comercio exterior del DANE (origen zip_dane): se pre-agrega a
+    # (año, mes, subpartida, país) sumando las medidas. Las columnas del CSV difieren impo/expo.
+    subpartida_csv: str | None = Field(
+        default=None, description="columna CSV de la subpartida NANDINA (NABAN impo, POSAR expo)"
+    )
+    pais_csv: str | None = Field(
+        default=None, description="columna CSV del país (PAISGEN impo, PAIS expo)"
+    )
+    pais_col: str | None = Field(
+        default=None,
+        description="columna de la lista blanca para el país (pais_origen/pais_destino)",
+    )
+    medidas: dict[str, str] = Field(
+        default_factory=dict,
+        description="medidas a sumar: {columna de la lista blanca: columna del CSV}",
+    )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
     clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
     ventana: Ventana | None = None
@@ -276,14 +292,24 @@ class Copia(_Ficha):
     def _origen_coherente(self) -> Copia:
         if self.origen == "socrata" and not self.conjunto:
             raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
-        if self.origen == "zip_dane" and not self.descargas:
-            raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")
+        if self.origen == "zip_dane":
+            if not self.descargas:
+                raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")
+            faltan = [
+                c for c in ("subpartida_csv", "pais_csv", "pais_col") if getattr(self, c) is None
+            ]
+            if faltan or not self.medidas:
+                raise ValueError(
+                    "ADR-0024: origen `zip_dane` exige subpartida_csv, pais_csv, pais_col y "
+                    f"medidas (faltan: {faltan or ['medidas']})"
+                )
         return self
 
     @property
     def columnas_usadas(self) -> set[str]:
         ventana = {self.ventana.columna} if self.ventana else set()
-        return {self.clave, *ventana, *self.indices, *self.texto}
+        extra = set(self.medidas) | ({self.pais_col} if self.pais_col else set())
+        return {self.clave, *ventana, *self.indices, *self.texto, *extra}
 
 
 Geometria = Literal["punto", "multipunto", "linea", "poligono", "raster"]

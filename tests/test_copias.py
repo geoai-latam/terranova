@@ -16,6 +16,7 @@ from terranova.copias import (
     AlmacenCopias,
     ConectorCopia,
     ErrorCopia,
+    MapaComex,
     Version,
     agregar_comex_csv,
     anio_mes_dane,
@@ -213,6 +214,18 @@ async def test_una_copia_que_no_dice_su_fecha_no_se_sirve_como_actual() -> None:
 
 # --- ingesta de los microdatos de comercio exterior del DANE (origen zip_dane) ------------------
 
+_MAPA_IMPO = MapaComex(
+    subpartida_csv="NABAN",
+    pais_csv="PAISGEN",
+    pais_col="pais_origen",
+    medidas={"valor_cif_pesos": "VACIP", "valor_fob_usd": "VAFODO"},
+)
+_MAPA_EXPO = MapaComex(
+    subpartida_csv="POSAR",
+    pais_csv="PAIS",
+    pais_col="pais_destino",
+    medidas={"valor_fob_usd": "FOBDOL", "valor_fob_pesos": "FOBPES"},
+)
 _HEADER = "FECH;NABAN;PAISGEN; VACIP ; VACID ; VAFODO ; PNK ; CANU "
 # dos líneas del mismo mes/subpartida/país: se suman dentro de un archivo
 _CSV_NOV = (
@@ -222,6 +235,8 @@ _CSV_NOV = (
     "2511;8703239090;276; 500.000,00 ; 1.234,56 ; -   ; 7,00 ; 1,00 \r\n"
 )
 _CSV_OCT = _HEADER + "\r\n2510;8517130000;156; 9,00 ; 9,00 ; 9,00 ; 9,00 ; 9,00 \r\n"
+# expo: columnas distintas (POSAR, PAIS, FOBDOL, FOBPES)
+_CSV_EXPO = "FECH;POSAR;PAIS; FOBDOL ; FOBPES \r\n2503;0901110000;842; 1.000,00 ; 4.000.000,00 \r\n"
 
 
 def test_num_europeo() -> None:
@@ -242,7 +257,7 @@ def test_anio_mes_dane() -> None:
 
 def test_agregar_comex_csv_suma_por_subpartida_y_pais() -> None:
     acc: dict[Any, Any] = {}
-    n = agregar_comex_csv(_CSV_NOV, acc)
+    n = agregar_comex_csv(_CSV_NOV, acc, _MAPA_IMPO)
     assert n == 3
     tel = acc[(2025, 11, "8517130000", "156")]
     assert tel["valor_cif_pesos"] == 3000.5  # 1000,50 + 2000,00
@@ -253,23 +268,32 @@ def test_agregar_comex_csv_suma_por_subpartida_y_pais() -> None:
     assert carro["lineas"] == 1.0
 
 
+def test_agregar_comex_csv_mapa_expo() -> None:
+    # el mismo motor sirve exportaciones con otras columnas (POSAR/PAIS/FOBDOL/FOBPES)
+    acc: dict[Any, Any] = {}
+    agregar_comex_csv(_CSV_EXPO, acc, _MAPA_EXPO)
+    café = acc[(2025, 3, "0901110000", "842")]
+    assert café["valor_fob_usd"] == 1000.0
+    assert café["valor_fob_pesos"] == 4000000.0
+
+
 def test_agregar_comex_csv_exige_columnas() -> None:
     with pytest.raises(ValueError, match="faltan columnas"):
-        agregar_comex_csv("FECH;NABAN\r\n2511;8517130000\r\n", {})
+        agregar_comex_csv("FECH;NABAN\r\n2511;8517130000\r\n", {}, _MAPA_IMPO)
 
 
 def test_fusionar_mes_deduplica_el_mes_repetido() -> None:
     acc: dict[Any, Any] = {}
-    fusionar_mes(_CSV_NOV, acc)
-    fusionar_mes(_CSV_NOV, acc)  # el mismo mes otra vez: reemplaza, NO duplica
+    fusionar_mes(_CSV_NOV, acc, _MAPA_IMPO)
+    fusionar_mes(_CSV_NOV, acc, _MAPA_IMPO)  # el mismo mes otra vez: reemplaza, NO duplica
     assert acc[(2025, 11, "8517130000", "156")]["valor_cif_pesos"] == 3000.5
 
 
 def test_fusionar_mes_conserva_otros_meses() -> None:
     acc: dict[Any, Any] = {}
-    fusionar_mes(_CSV_NOV, acc)
-    fusionar_mes(_CSV_OCT, acc)  # otro mes: se conserva
-    fusionar_mes(_CSV_NOV, acc)  # noviembre otra vez: reemplaza noviembre, octubre intacto
+    fusionar_mes(_CSV_NOV, acc, _MAPA_IMPO)
+    fusionar_mes(_CSV_OCT, acc, _MAPA_IMPO)  # otro mes: se conserva
+    fusionar_mes(_CSV_NOV, acc, _MAPA_IMPO)  # noviembre otra vez: reemplaza nov, octubre intacto
     assert (2025, 10, "8517130000", "156") in acc
     assert acc[(2025, 10, "8517130000", "156")]["valor_fob_usd"] == 9.0
     assert acc[(2025, 11, "8517130000", "156")]["valor_cif_pesos"] == 3000.5
@@ -277,8 +301,8 @@ def test_fusionar_mes_conserva_otros_meses() -> None:
 
 def test_filas_de_acumulador_da_la_lista_blanca() -> None:
     acc: dict[Any, Any] = {}
-    agregar_comex_csv(_CSV_NOV, acc)
-    filas = {f["clave"]: f for f in filas_de_acumulador(acc)}
+    agregar_comex_csv(_CSV_NOV, acc, _MAPA_IMPO)
+    filas = {f["clave"]: f for f in filas_de_acumulador(acc, _MAPA_IMPO)}
     tel = filas["202511-8517130000-156"]
     assert tel["anio"] == "2025"  # str, como la columna de la ficha
     assert tel["mes"] == 11

@@ -100,6 +100,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 10 |
 | `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
+| `dian_comex_exportaciones_por_subpartida` | ¿Cuánto exportó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `dian_comex_importaciones_por_subpartida` | ¿Cuánto importó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |

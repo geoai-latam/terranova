@@ -26,6 +26,10 @@ copia:
   origen: zip_dane
   tabla: dian_comex_importaciones
   clave: clave
+  subpartida_csv: NABAN
+  pais_csv: PAISGEN
+  pais_col: pais_origen
+  medidas: {valor_cif_pesos: VACIP, valor_cif_usd: VACID, valor_fob_usd: VAFODO, peso_neto_kg: PNK, cantidad: CANU}
   indices: [subpartida, pais_origen, anio]
   descargas:
     - https://microdatos.dane.gov.co/index.php/catalog/856/download/24417
