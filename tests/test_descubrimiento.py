@@ -462,15 +462,35 @@ def test_embedder_remoto_reintenta_si_el_servicio_corta() -> None:
 
         def post(self, url: str, json: dict[str, Any]) -> httpx.Response:
             self.n += 1
-            if self.n == 1:
+            if self.n <= 3:  # el servicio se reinicia (p. ej. el kernel lo mató) y tarda en volver
                 raise httpx.RemoteProtocolError("Server disconnected")
             req = httpx.Request("POST", url)
             return httpx.Response(200, json={"vectores": [[0.1, 0.2]]}, request=req)
 
     cli = _Cliente()
-    emb = EmbedderRemoto("http://embeddings:9950", cli, dormir=_sin_espera)
+    esperas: list[float] = []
+    emb = EmbedderRemoto("http://embeddings:9950", cli, dormir=esperas.append)
     assert emb.documentos(["a"]) == [(0.1, 0.2)]
-    assert cli.n == 2
+    assert cli.n == 4
+    assert esperas == [5, 10, 20]  # 35 s en total: más que lo que tarda en recargar el modelo
+
+
+def test_fastembedder_pide_al_modelo_de_a_lotes_chicos() -> None:
+    from terranova.descubrimiento import LOTE_MODELO, FastEmbedder
+
+    class _Modelo:
+        def __init__(self) -> None:
+            self.lotes: list[int] = []
+
+        def embed(self, textos: list[str], batch_size: int) -> list[list[float]]:
+            self.lotes.append(batch_size)
+            return [[1.0] for _ in textos]
+
+    emb = FastEmbedder.__new__(FastEmbedder)  # sin cargar el modelo real
+    emb._modelo = _Modelo()
+    assert emb.documentos(["a", "b"]) == [(1.0,), (1.0,)]
+    assert emb._modelo.lotes == [LOTE_MODELO]
+    assert LOTE_MODELO <= 16  # e5-large con lotes de 64 reventó los 3 GB del servicio
 
 
 # ---------------------------------------------------------- promoción data-driven (pieza 6)

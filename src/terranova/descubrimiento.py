@@ -530,6 +530,9 @@ def candidatos_a_promover(
     return candidatos
 
 
+LOTE_MODELO = 8
+
+
 class FastEmbedder:
     """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
     arrastra; se instala con el extra `descubrimiento`. e5 es asimétrico: antepone `query:` a la
@@ -541,7 +544,10 @@ class FastEmbedder:
         self._modelo = TextEmbedding(model_name=modelo)
 
     def _embeber(self, textos: list[str]) -> list[tuple[float, ...]]:
-        return [tuple(float(x) for x in v) for v in self._modelo.embed(textos)]
+        # Lote interno chico: e5-large (FP32) con 64 textos de 512 tokens a la vez pasó de 3 GB y el
+        # kernel mató el servicio. De a LOTE_MODELO la memoria de activaciones queda acotada.
+        vectores = self._modelo.embed(textos, batch_size=LOTE_MODELO)
+        return [tuple(float(x) for x in v) for v in vectores]
 
     def consulta(self, texto: str) -> tuple[float, ...]:
         return self._embeber([PREFIJO_CONSULTA + texto])[0]
@@ -554,7 +560,8 @@ class EmbedderRemoto:
     """El `Embedder` que habla con el **microservicio** de embeddings por HTTP (ADR-0028, Q2): así
     el modelo vive en un solo contenedor y no se carga en cada réplica de la puerta. Misma interfaz
     que `FastEmbedder`. Con e5-large en CPU un lote tarda varios segundos: timeout holgado y
-    reintentos si el servicio corta la conexión o responde 5xx."""
+    reintentos si el servicio corta la conexión o responde 5xx. Las esperas (5, 10, 20 s) cubren
+    un reinicio del servicio, que tarda ~20 s en volver a cargar el modelo."""
 
     def __init__(
         self,
@@ -562,7 +569,8 @@ class EmbedderRemoto:
         cliente: Any = None,
         timeout_s: float = 120,
         *,
-        intentos: int = 3,
+        intentos: int = 4,
+        espera_s: float = 5.0,
         dormir: Callable[[float], None] = time.sleep,
     ) -> None:
         import httpx
@@ -572,6 +580,7 @@ class EmbedderRemoto:
             timeout=timeout_s, headers={"User-Agent": "terranova-descubrimiento/1"}
         )
         self._intentos = intentos
+        self._espera_s = espera_s
         self._dormir = dormir
 
     def _pedir(self, cuerpo: dict[str, Any]) -> list[tuple[float, ...]]:
@@ -588,7 +597,7 @@ class EmbedderRemoto:
             except httpx.TransportError:
                 if intento == self._intentos:
                     raise
-            self._dormir(2.0 * intento)
+            self._dormir(self._espera_s * 2 ** (intento - 1))
         raise AssertionError("inalcanzable")
 
     def consulta(self, texto: str) -> tuple[float, ...]:

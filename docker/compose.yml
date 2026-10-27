@@ -138,7 +138,9 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
-    mem_limit: 3g  # e5-large (ONNX) + onnxruntime; el más goloso del stack (hay RAM de sobra)
+    # e5-large (ONNX FP32, ~2,2 GB de pesos) + activaciones: el más goloso del stack. Con 3g y lotes
+    # de 64 el kernel lo mató; ahora el modelo va de a 8 textos y queda 1 GB de holgura.
+    mem_limit: 4g
     pids_limit: 256
 
   postgres:
