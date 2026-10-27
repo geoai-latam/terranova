@@ -24,7 +24,9 @@ def test_salud() -> None:
     r = _cliente().get("/salud")
     assert r.status_code == 200
     assert r.json()["estado"] == "ok"
-    assert "MiniLM" in r.json()["modelo"]  # paraphrase-multilingual-MiniLM-L12-v2
+    from terranova.descubrimiento import MODELO_EMBEDDING
+
+    assert r.json()["modelo"] == MODELO_EMBEDDING
 
 
 def test_embed_consulta() -> None:
