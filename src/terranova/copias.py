@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
-from terranova.catalogo import Catalogo, Fuente
+from terranova.catalogo import Catalogo, Copia, Fuente
 
 ESQUEMA = "copia"
 PAGINA = 50_000
@@ -174,14 +174,20 @@ def descargar_socrata(
 # la ingesta a (año, mes, subpartida NANDINA, país de origen) con los valores sumados, para no
 # guardar decenas de millones de líneas: la copia queda compacta y el `copia` agrega al consultar.
 
-# columna canónica de la copia -> columna del CSV del DANE
-_COMEX_MEDIDAS = {
-    "valor_cif_pesos": "VACIP",
-    "valor_cif_usd": "VACID",
-    "valor_fob_usd": "VAFODO",
-    "peso_neto_kg": "PNK",
-    "cantidad": "CANU",
-}
+
+@dataclass(frozen=True)
+class MapaComex:
+    """Qué columnas del CSV del DANE leer (difieren entre impo y expo); de la ficha (`copia`)."""
+
+    subpartida_csv: str  # NABAN (impo) / POSAR (expo)
+    pais_csv: str  # PAISGEN (impo) / PAIS (expo)
+    pais_col: str  # columna de la lista blanca: pais_origen / pais_destino
+    medidas: dict[str, str]  # {columna de la lista blanca: columna del CSV}
+
+    @classmethod
+    def de_copia(cls, copia: Copia) -> MapaComex:
+        assert copia.subpartida_csv and copia.pais_csv and copia.pais_col
+        return cls(copia.subpartida_csv, copia.pais_csv, copia.pais_col, copia.medidas)
 
 
 def num_europeo(texto: str) -> float:
@@ -207,29 +213,32 @@ def anio_mes_dane(fech: str) -> tuple[int, int]:
 _Clave = tuple[int, int, str, str]
 
 
-def agregar_comex_csv(texto_csv: str, acumulador: dict[_Clave, dict[str, float]]) -> int:
+def agregar_comex_csv(
+    texto_csv: str, acumulador: dict[_Clave, dict[str, float]], mapa: MapaComex
+) -> int:
     """Suma un CSV mensual del DANE dentro de `acumulador`. Devuelve las líneas leídas.
 
-    Pura: no toca red ni base. El CSV es `;`, con BOM y números europeos; la subpartida es `NABAN`
-    y el país de origen `PAISGEN`. El encabezado trae espacios (` VAFODO `) que se recortan."""
+    Pura: no toca red ni base. El CSV es `;`, con BOM y números europeos; las columnas (subpartida,
+    país, medidas) salen de `mapa`. El encabezado trae espacios (` VAFODO `) que se recortan."""
     import csv
     import io
 
     lector = csv.reader(io.StringIO(texto_csv), delimiter=";")
     cols = [c.strip() for c in next(lector, [])]
     idx = {c: i for i, c in enumerate(cols)}
-    faltan = {"FECH", "NABAN", "PAISGEN", *_COMEX_MEDIDAS.values()} - set(idx)
+    faltan = {"FECH", mapa.subpartida_csv, mapa.pais_csv, *mapa.medidas.values()} - set(idx)
     if faltan:
         raise ValueError(f"al CSV del DANE le faltan columnas: {sorted(faltan)}")
-    i_fech, i_sub, i_pais = idx["FECH"], idx["NABAN"], idx["PAISGEN"]
-    i_med = {m: idx[c] for m, c in _COMEX_MEDIDAS.items()}
+    i_fech, i_sub, i_pais = idx["FECH"], idx[mapa.subpartida_csv], idx[mapa.pais_csv]
+    i_med = {m: idx[c] for m, c in mapa.medidas.items()}
+    tope = max(i_fech, i_sub, i_pais, *i_med.values())
     n = 0
     for fila in lector:
-        if len(fila) <= i_pais:
+        if len(fila) <= tope:
             continue
         anio, mes = anio_mes_dane(fila[i_fech])
         clave: _Clave = (anio, mes, fila[i_sub].strip(), fila[i_pais].strip())
-        reg = acumulador.setdefault(clave, dict.fromkeys(_COMEX_MEDIDAS, 0.0) | {"lineas": 0.0})
+        reg = acumulador.setdefault(clave, dict.fromkeys(mapa.medidas, 0.0) | {"lineas": 0.0})
         for m, col in i_med.items():
             reg[m] += num_europeo(fila[col])
         reg["lineas"] += 1
@@ -237,21 +246,25 @@ def agregar_comex_csv(texto_csv: str, acumulador: dict[_Clave, dict[str, float]]
     return n
 
 
-def fusionar_mes(texto_csv: str, acumulador: dict[_Clave, dict[str, float]]) -> None:
+def fusionar_mes(
+    texto_csv: str, acumulador: dict[_Clave, dict[str, float]], mapa: MapaComex
+) -> None:
     """Suma un CSV mensual al acumulador con dedup por (año, mes): gana el último archivo.
 
     Las entregas del DANE se solapan (p. ej. octubre sale en dos ZIP): sumar sin deduplicar dobla
     ese mes. Cada CSV reemplaza los meses que trae (se procesan en orden de `descargas`; el ZIP más
     reciente pisa al anterior). Pura: no toca red ni base."""
     temp: dict[_Clave, dict[str, float]] = {}
-    agregar_comex_csv(texto_csv, temp)
+    agregar_comex_csv(texto_csv, temp, mapa)
     meses = {(anio, mes) for (anio, mes, _, _) in temp}
     for clave in [k for k in acumulador if (k[0], k[1]) in meses]:
         del acumulador[clave]
     acumulador.update(temp)
 
 
-def filas_de_acumulador(acumulador: dict[_Clave, dict[str, float]]) -> Iterator[dict[str, Any]]:
+def filas_de_acumulador(
+    acumulador: dict[_Clave, dict[str, float]], mapa: MapaComex
+) -> Iterator[dict[str, Any]]:
     """Las filas de la copia (lista blanca) desde el acumulador, con clave sintética única."""
     for (anio, mes, sub, pais), reg in acumulador.items():
         yield {
@@ -259,8 +272,8 @@ def filas_de_acumulador(acumulador: dict[_Clave, dict[str, float]]) -> Iterator[
             "anio": str(anio),
             "mes": mes,
             "subpartida": sub,
-            "pais_origen": pais,
-            **{m: round(reg[m], 2) for m in _COMEX_MEDIDAS},
+            mapa.pais_col: pais,
+            **{m: round(reg[m], 2) for m in mapa.medidas},
             "lineas": int(reg["lineas"]),
         }
 
@@ -280,6 +293,7 @@ def descargar_zip_dane(
     import httpx
 
     assert fuente.copia is not None
+    mapa = MapaComex.de_copia(fuente.copia)
     acumulador: dict[_Clave, dict[str, float]] = {}
     propio = cliente is None
     http = cliente or httpx.Client(
@@ -308,7 +322,7 @@ def descargar_zip_dane(
                             texto = externo.read(miembro).decode("utf-8-sig", "replace")
                         else:
                             continue
-                        fusionar_mes(texto, acumulador)
+                        fusionar_mes(texto, acumulador, mapa)
             finally:
                 os.unlink(ruta)
     finally:
@@ -316,7 +330,7 @@ def descargar_zip_dane(
             http.close()
 
     pagina: list[dict[str, Any]] = []
-    for fila in filas_de_acumulador(acumulador):
+    for fila in filas_de_acumulador(acumulador, mapa):
         pagina.append(fila)
         if len(pagina) >= PAGINA:
             yield pagina
