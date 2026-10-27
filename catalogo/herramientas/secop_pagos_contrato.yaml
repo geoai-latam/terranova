@@ -4,7 +4,9 @@ familia: contratacion
 fuente: cce.secop2.pagos
 pregunta: "¿Qué pagos tiene registrados este contrato de SECOP II?"
 descripcion: >
-  Plan de pagos (facturas y pagos) de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  Plan de pagos de un contrato de SECOP II por su identificador (CO1.PCCNTR.…): cada pago con la
+  factura que lo respalda, el valor a pagar y la fecha REAL en que se pagó. Para la lista de
+  facturas con sus valores neto y total y si el pago está confirmado, usa `secop_facturas_contrato`.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:

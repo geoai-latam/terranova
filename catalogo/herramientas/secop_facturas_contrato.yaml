@@ -5,7 +5,8 @@ fuente: cce.secop2.facturas
 pregunta: "¿Qué facturas tiene registradas este contrato de SECOP II?"
 descripcion: >
   Facturas de un contrato de SECOP II por su identificador (CO1.PCCNTR.…): número, fecha,
-  valores neto, total y a pagar, estado y si el pago está confirmado.
+  valores neto, total y a pagar, estado y si el pago está confirmado. Es la herramienta para
+  «¿qué facturas tiene?»; para cuándo se pagó cada una, `secop_pagos_contrato`.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:

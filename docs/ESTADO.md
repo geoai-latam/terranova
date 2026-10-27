@@ -89,6 +89,26 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
 
   Solo responde a llaves de evaluación mientras la licencia de los catálogos DCAT siga por verificar
   (ADR-0019).
+- **E2E con LLM real de las 159 herramientas en producción (2026-10-27,
+  [`scripts/e2e_agente.py`](../scripts/e2e_agente.py)).** Un agente con `gpt-5.4-mini` se conecta
+  por MCP remoto (TLS + llave de evaluación) al perfil de cada familia. Para cada herramienta recibe
+  la pregunta del catálogo con los datos de su canario, y se mide contra la verdad del canario.
+
+  **Resultado:** **138 éxitos de 159 (87 %)**, herramienta correcta 99 %, entrada correcta 99 %,
+  1,9 llamadas y ~21 000 tokens por pregunta. Cada caso que no salió en éxito se revisó a mano. En
+  ninguno la puerta dijo «no hay» cuando no pudo consultar: siempre «no pude», con la causa.
+  - **8 cortes pasajeros** (SECOP 503, IDEAM 503): al repetir, los 8 dan éxito.
+  - **Bloqueos por IP del datacenter, persistentes:** DANE (6, ya conocido y diferido) y **RUNAP de
+    PNN (2, hallazgo nuevo):** 403 desde el servidor y 200 desde Colombia. No se evade (ADR-0018):
+    va al lote de copias ingeridas desde Colombia.
+  - **UPRA (2):** timeout; es la fuente lenta conocida.
+  - **Verdad vieja de un canario:** `secop_garantias_contrato`. SECOP re-publicó las pólizas y el
+    contrato del canario quedó sin filas; la puerta respondió bien «0 pólizas». Se midió una verdad
+    nueva y se grabó su dorada.
+  - **Ambigüedad del catálogo:** facturas vs. plan de pagos de SECOP. El plan de pagos se describía
+    como «facturas y pagos»; ahora cada descripción remite a la otra.
+  - **Falso negativo de la medida:** `suin_norma` (respuesta correcta; el canario dice «ley» y el
+    agente mandó «LEY»). El banco ahora compara la entrada sin distinguir mayúsculas.
 
 ## Dónde estamos
 

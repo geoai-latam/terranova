@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T00:50:57+00:00",
+ "grabado": "2026-10-27T18:08:22+00:00",
  "herramienta": "secop_garantias_contrato",
  "llamadas": [
   {
@@ -10,7 +10,7 @@
     "order": "numeropoliza, fechafinpoliza",
     "portal": "datos.gov.co",
     "select": "id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
-    "where": "id_contrato = 'CO1.PCCNTR.3712964'"
+    "where": "id_contrato = 'CO1.PCCNTR.10000376'"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -30,112 +30,101 @@
       "kind": "table",
       "rows": [
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
-        "fechafinpoliza": "2023-08-23 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 1",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 16:54:55.5071626 -05:00",
+        "fechafinpoliza": "2026-06-05 11:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 47 994000068799",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
+        "valor": "35380000"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
-        "fechafinpoliza": "2024-02-23 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 1",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 16:54:55.5071626 -05:00",
+        "fechafinpoliza": "2026-10-01 11:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 47 994000068799",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
+        "valor": "0"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-02-28 09:53:23.7904913 -05:00",
-        "fechafinpoliza": "2026-02-23 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 1",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 16:54:55.5071626 -05:00",
+        "fechafinpoliza": "2027-06-05 11:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 47 994000068799",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "234715400"
+        "valor": "14152000"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
-        "fechafinpoliza": "2023-12-29 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 3",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 16:54:55.5071626 -05:00",
+        "fechafinpoliza": "2030-02-05 11:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 47 994000068799",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
+        "valor": "3538000"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
-        "fechafinpoliza": "2024-06-29 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 3",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 17:01:24.3087261 -05:00",
+        "fechafinpoliza": "2026-10-01 10:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 74 994000015190",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
+        "valor": "0"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-03-13 15:24:23.7737102 -05:00",
-        "fechafinpoliza": "2026-06-30 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 3",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 17:01:24.3087261 -05:00",
+        "fechafinpoliza": "2026-10-01 10:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 74 994000015190",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "234715400"
+        "valor": "0"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
-        "fechafinpoliza": "2024-04-05 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 5",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 17:01:24.3087261 -05:00",
+        "fechafinpoliza": "2026-10-01 10:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 74 994000015190",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
+        "valor": "0"
        },
        {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
-        "fechafinpoliza": "2024-10-06 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 5",
+        "aseguradora": "ASEGURADORA SOLIDARIA DE COLOMBIA",
+        "estado": "Pendiente",
+        "fechadecreacionpoliza": "2026-10-01 17:01:24.3087261 -05:00",
+        "fechafinpoliza": "2026-12-31 11:00:00.0000000 -05:00",
+        "id_contrato": "CO1.PCCNTR.10000376",
+        "numeropoliza": "360 74 994000015190",
         "subtipopoliza": "No Definido",
         "tipopoliza": "Contrato de Seguro",
-        "valor": "117357700"
-       },
-       {
-        "aseguradora": "HDI SEGUROS SAS",
-        "estado": "Expirada",
-        "fechadecreacionpoliza": "2023-08-30 16:03:02.2409609 -05:00",
-        "fechafinpoliza": "2026-10-07 23:59:00.0000000 -05:00",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "numeropoliza": "4006472 ANEXO 5",
-        "subtipopoliza": "No Definido",
-        "tipopoliza": "Contrato de Seguro",
-        "valor": "234715400"
+        "valor": "350181000"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 9,
+      "total": 8,
       "truncado": false,
-      "vistos": 9
+      "vistos": 8
      },
      "completo": true,
      "conjunto": "gjp9-cutm",
@@ -144,11 +133,11 @@
       "max_filas": 1000,
       "portal": "datos.gov.co",
       "select": "id_contrato, numeropoliza, aseguradora, tipopoliza, subtipopoliza, estado, valor, fechadecreacionpoliza, fechafinpoliza",
-      "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
+      "where": "(id_contrato = 'CO1.PCCNTR.10000376')"
      },
-     "cumplen_en_el_portal": 9,
-     "filas": 9,
-     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3712964')",
+     "cumplen_en_el_portal": 8,
+     "filas": 8,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.10000376')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"
