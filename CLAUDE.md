@@ -12,8 +12,10 @@
 
 Puerta única (MCP + REST `/v1`) sobre fuentes oficiales colombianas y globales, con el contrato
 `rt/1`. Cada respuesta lleva procedencia, licencia, completitud y `servido_desde`. Es open source y
-gratuita. Los conectores viven en `../GEO_COPILOT/services/` (repo público
-`geoai-latam/geo-copilot`), y GEO Copilot es el primer cliente.
+gratuita. **Terranova es autocontenida:** todas las herramientas viven y funcionan aquí. Los
+conectores (microservicios MCP que van a la fuente) están vendorizados en `conectores/` (services +
+`packages/geo_mcp_kit`); el `copia` y el descubrimiento son internos. GEO Copilot no es una
+dependencia: será solo un cliente más que se conecta por el MCP de Terranova.
 
 ## Reglas del proyecto
 
@@ -53,8 +55,8 @@ gratuita. Los conectores viven en `../GEO_COPILOT/services/` (repo público
 ## Entorno
 
 - Windows 11, Git Bash y PowerShell. Python con uv.
-- Los conectores se levantan desde `../GEO_COPILOT/docker/docker-compose.yml` (perfil por servicio).
-  Las llaves van en `<SVC>_MCP_KEYS` / `<SVC>_MCP_APP_KEY`.
+- Los conectores se construyen y levantan desde el propio `docker/compose.yml` (build en
+  `conectores/`). Las llaves de servicio van en `<SVC>_MCP_KEYS` (una sola, `TERRANOVA_CONECTOR_LLAVE`).
 
 ## Gotchas conocidos
 

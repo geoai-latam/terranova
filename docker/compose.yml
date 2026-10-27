@@ -205,9 +205,9 @@ services:
   # construye desde el repo hermano.
   arcgis-mcp:
     build:
-      context: ../../GEO_COPILOT
+      context: ../conectores
       dockerfile: services/arcgis_mcp/Dockerfile
-    image: ${ARCGIS_MCP_IMAGEN:-geo-copilot/arcgis-mcp:local}
+    image: ${ARCGIS_MCP_IMAGEN:-terranova/arcgis-mcp:local}
     restart: unless-stopped
     environment:
       ARCGIS_MCP_PORT: "9400"
@@ -224,8 +224,8 @@ services:
   # Los demás conectores del catálogo (F7.1: sin ellos, sus 10 canarios salen rojos siempre). Misma
   # llave de servicio y el mismo endurecimiento que arcgis-mcp; solo llegan a la red interna.
   amenazas-mcp:
-    build: {context: ../../GEO_COPILOT, dockerfile: services/amenazas_mcp/Dockerfile}
-    image: ${AMENAZAS_MCP_IMAGEN:-geo-copilot/amenazas-mcp:local}
+    build: {context: ../conectores, dockerfile: services/amenazas_mcp/Dockerfile}
+    image: ${AMENAZAS_MCP_IMAGEN:-terranova/amenazas-mcp:local}
     restart: unless-stopped
     environment:
       AMENAZAS_MCP_PORT: "9930"
@@ -239,8 +239,8 @@ services:
     pids_limit: 128
 
   dane-mcp:
-    build: {context: ../../GEO_COPILOT, dockerfile: services/dane_mcp/Dockerfile}
-    image: ${DANE_MCP_IMAGEN:-geo-copilot/dane-mcp:local}
+    build: {context: ../conectores, dockerfile: services/dane_mcp/Dockerfile}
+    image: ${DANE_MCP_IMAGEN:-terranova/dane-mcp:local}
     restart: unless-stopped
     environment:
       DANE_MCP_PORT: "9920"
@@ -255,8 +255,8 @@ services:
     pids_limit: 128
 
   datos-abiertos-mcp:
-    build: {context: ../../GEO_COPILOT, dockerfile: services/datos_abiertos_mcp/Dockerfile}
-    image: ${DATOS_MCP_IMAGEN:-geo-copilot/datos-abiertos-mcp:local}
+    build: {context: ../conectores, dockerfile: services/datos_abiertos_mcp/Dockerfile}
+    image: ${DATOS_MCP_IMAGEN:-terranova/datos-abiertos-mcp:local}
     restart: unless-stopped
     environment:
       DATOS_MCP_PORT: "9900"
@@ -271,8 +271,8 @@ services:
     pids_limit: 128
 
   imagery-mcp:
-    build: {context: ../../GEO_COPILOT, dockerfile: services/imagery_mcp/Dockerfile}
-    image: ${IMAGERY_MCP_IMAGEN:-geo-copilot/imagery-mcp:local}
+    build: {context: ../conectores, dockerfile: services/imagery_mcp/Dockerfile}
+    image: ${IMAGERY_MCP_IMAGEN:-terranova/imagery-mcp:local}
     restart: unless-stopped
     environment:
       IMAGERY_PROVIDER: planetary-computer
@@ -288,8 +288,8 @@ services:
   # G4 (F5): APIs web públicas que no están en datos.gov.co ni en ArcGIS (relatoría de Colombia Compra,
   # BanRep SDMX). Solo los dominios de la lista, con robots.txt y una petición por segundo por sitio.
   web-mcp:
-    build: {context: ../../GEO_COPILOT, dockerfile: services/web_mcp/Dockerfile}
-    image: ${WEB_MCP_IMAGEN:-geo-copilot/web-mcp:local}
+    build: {context: ../conectores, dockerfile: services/web_mcp/Dockerfile}
+    image: ${WEB_MCP_IMAGEN:-terranova/web-mcp:local}
     restart: unless-stopped
     environment:
       WEB_MCP_PORT: "9940"
