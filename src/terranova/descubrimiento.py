@@ -27,8 +27,10 @@ from __future__ import annotations
 
 import json
 import math
+import time
 import unicodedata
 from collections import Counter
+from collections.abc import Callable
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
 from typing import Any, Protocol
@@ -148,16 +150,58 @@ def metricas(
     )
 
 
+#: Reintentos de la cosecha: una descarga larga desde el datacenter a veces se corta (conexión
+#: cerrada, JSON truncado, 5xx). Se reintenta con espera creciente; un 4xx (salvo 429) es un error
+#: de la petición y no se reintenta.
+INTENTOS_COSECHA = 4
+ESPERA_COSECHA_S = 5.0
+
+
+def _get_json(
+    http: Any,
+    url: str,
+    params: dict[str, Any] | None = None,
+    *,
+    intentos: int = INTENTOS_COSECHA,
+    espera_s: float = ESPERA_COSECHA_S,
+    dormir: Callable[[float], None] = time.sleep,
+) -> dict[str, Any]:
+    """GET → JSON, con reintentos ante cortes, 5xx/429 y JSON truncado (espera 5, 10, 20 s…)."""
+    import httpx
+
+    ultimo: Exception | None = None
+    for intento in range(1, intentos + 1):
+        try:
+            r = http.get(url, params=params) if params is not None else http.get(url)
+            r.raise_for_status()
+            datos: dict[str, Any] = r.json()
+            return datos
+        except httpx.HTTPStatusError as exc:
+            codigo = exc.response.status_code
+            if codigo < 500 and codigo != 429:
+                raise
+            ultimo = exc
+        except (httpx.TransportError, ValueError) as exc:  # ValueError: JSON truncado
+            ultimo = exc
+        if intento < intentos:
+            dormir(espera_s * 2 ** (intento - 1))
+    assert ultimo is not None
+    raise ultimo
+
+
 def ingerir(
     cliente: Any = None,
     *,
     limite_paginas: int | None = None,
     por_pagina: int = 1000,
     dominio: str = DOMINIO,
+    pausa_s: float = 0.5,
+    dormir: Callable[[float], None] = time.sleep,
 ) -> list[DatasetDescubrible]:
     """Cosecha el catálogo del dominio, en serie. Pagina con **`scroll_id`** (no `offset`, que topa
     en ~10.000): cada página pide los `id` mayores que el último visto, ordenados por `dataset_id`.
-    `limite_paginas` acota (desarrollo)."""
+    Cada página se reintenta si la conexión se corta y se retoma desde el mismo `scroll_id`; entre
+    páginas hay una pausa corta (cortesía con la fuente). `limite_paginas` acota (desarrollo)."""
     import httpx
 
     http = cliente or httpx.Client(
@@ -176,9 +220,9 @@ def ingerir(
                 "limit": por_pagina,
                 "scroll_id": scroll_id,
             }
-            r = http.get(DISCOVERY_URL, params=params)
-            r.raise_for_status()
-            resultados = r.json().get("results") or []
+            if pagina:
+                dormir(pausa_s)
+            resultados = _get_json(http, DISCOVERY_URL, params, dormir=dormir).get("results") or []
             if not resultados:
                 break
             for x in resultados:
@@ -267,11 +311,13 @@ def ingerir_dcat_us(
     url: str = ICDE_DCAT_URL,
     limite_paginas: int | None = None,
     max_paginas: int = 50,
+    dormir: Callable[[float], None] = time.sleep,
 ) -> list[DatasetDescubrible]:
     """Cosecha un feed DCAT-US 1.1 (el Hub de la ICDE). El feed topa en ~10.000 ítems por página, y
     se **pagina** con `?page=N` hasta que una página no trae ítems nuevos (vacía o ya vistos), o
     hasta el tope de seguridad `max_paginas`. `limite_paginas` acota (desarrollo). Metadatos, no
-    carga; un ítem malformado no tumba la cosecha."""
+    carga; un ítem malformado no tumba la cosecha. Cada página (~30 MB) se reintenta si llega
+    cortada: un JSON truncado se vuelve a pedir en vez de tumbar la cosecha."""
     import httpx
 
     http = cliente or httpx.Client(
@@ -283,9 +329,8 @@ def ingerir_dcat_us(
     tope = min(max_paginas, limite_paginas) if limite_paginas else max_paginas
     try:
         for pagina in range(1, tope + 1):
-            r = http.get(url, params={"page": pagina}) if pagina > 1 else http.get(url)
-            r.raise_for_status()
-            crudos = r.json().get("dataset") or []
+            cuerpo = _get_json(http, url, {"page": pagina} if pagina > 1 else None, dormir=dormir)
+            crudos = cuerpo.get("dataset") or []
             nuevos = 0
             for x in crudos:
                 try:
@@ -508,20 +553,43 @@ class FastEmbedder:
 class EmbedderRemoto:
     """El `Embedder` que habla con el **microservicio** de embeddings por HTTP (ADR-0028, Q2): así
     el modelo vive en un solo contenedor y no se carga en cada réplica de la puerta. Misma interfaz
-    que `FastEmbedder`."""
+    que `FastEmbedder`. Con e5-large en CPU un lote tarda varios segundos: timeout holgado y
+    reintentos si el servicio corta la conexión o responde 5xx."""
 
-    def __init__(self, url: str, cliente: Any = None, timeout_s: float = 30) -> None:
+    def __init__(
+        self,
+        url: str,
+        cliente: Any = None,
+        timeout_s: float = 120,
+        *,
+        intentos: int = 3,
+        dormir: Callable[[float], None] = time.sleep,
+    ) -> None:
         import httpx
 
         self._url = url.rstrip("/") + "/embed"
         self._http = cliente or httpx.Client(
             timeout=timeout_s, headers={"User-Agent": "terranova-descubrimiento/1"}
         )
+        self._intentos = intentos
+        self._dormir = dormir
 
     def _pedir(self, cuerpo: dict[str, Any]) -> list[tuple[float, ...]]:
-        r = self._http.post(self._url, json=cuerpo)
-        r.raise_for_status()
-        return [tuple(float(x) for x in v) for v in r.json()["vectores"]]
+        import httpx
+
+        for intento in range(1, self._intentos + 1):
+            try:
+                r = self._http.post(self._url, json=cuerpo)
+                r.raise_for_status()
+                return [tuple(float(x) for x in v) for v in r.json()["vectores"]]
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code < 500 or intento == self._intentos:
+                    raise
+            except httpx.TransportError:
+                if intento == self._intentos:
+                    raise
+            self._dormir(2.0 * intento)
+        raise AssertionError("inalcanzable")
 
     def consulta(self, texto: str) -> tuple[float, ...]:
         return self._pedir({"consulta": texto})[0]
@@ -531,11 +599,12 @@ class EmbedderRemoto:
 
 
 def embeber_catalogo(
-    datasets: list[DatasetDescubrible], embedder: Embedder, *, lote: int = 256
+    datasets: list[DatasetDescubrible], embedder: Embedder, *, lote: int = 64
 ) -> dict[str, tuple[float, ...]]:
     """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector. En
     **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al microservicio
-    revienta la memoria/el timeout en una VM chica."""
+    revienta la memoria/el timeout en una VM chica. 64 por lote: con e5-large en CPU un lote de 256
+    puede pasar el timeout del microservicio."""
     vectores: dict[str, tuple[float, ...]] = {}
     for i in range(0, len(datasets), lote):
         trozo = datasets[i : i + lote]
