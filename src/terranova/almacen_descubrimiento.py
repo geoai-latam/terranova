@@ -355,8 +355,8 @@ class ConectorCatalogo:
                 "actualizado_en": d.actualizado_en or "",
                 "protocolo": d.protocolo,
                 "url": d.url,
-                # parecido semántico de 0 a 1: el cliente LLM juzga la confianza (si todo ~0.47 y
-                # plano, probablemente no hay una fuente buena; ADR-0028, límite de calibración)
+                # parecido semántico de 0 a 1: el cliente LLM juzga la confianza (con e5, lo que
+                # pasa el piso de 0,84 es pertinente; un match solo léxico puede venir más bajo)
                 "parecido": round(parecido, 3),
             }
             for d, parecido in hallados

@@ -439,10 +439,14 @@ DIM_EMBEDDING = 1024
 PREFIJO_CONSULTA = "query: "
 PREFIJO_DOCUMENTO = "passage: "
 #: Debajo de este coseno, un candidato no se parece lo suficiente: no se muestra (honestidad —los
-#: embeddings no empujan un «parecido pero falso» con confianza). Medido en vivo con este modelo
-#: (2026-10-25): con 0,30 casi todo pasaba (cientos de 2000); con 0,40 el ruido baja y una consulta
-#: sin respuesta («bitcoin») devuelve 0. Se afina con el banco de verdades al desplegar.
-PISO_SIMILITUD = 0.40
+#: embeddings no empujan un «parecido pero falso» con confianza). Depende del modelo: e5 comprime
+#: los cosenos entre 0,75 y 0,92, así que el 0,40 de MiniLM dejaba pasar el catálogo entero. Medido
+#: en producción (2026-10-27, 33.726 datasets de Socrata, 100 consultas): 20 consultas ajenas al
+#: catálogo («bitcoin», recetas, fútbol…) dan un coseno máximo de 0,838, y con 0,84 ninguna trae
+#: candidatos (tampoco por FTS). Las 20 temáticas («calidad del agua en ríos», «homicidios por
+#: municipio»…) siguen trayendo candidatos, por vector o por la rama léxica. Las preguntas largas
+#: con coordenadas, NIT o años puntúan más bajo: el buscador rinde mejor con el tema.
+PISO_SIMILITUD = 0.84
 
 
 class Embedder(Protocol):
