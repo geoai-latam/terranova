@@ -15,6 +15,7 @@ Tres piezas, de la más pura a la que toca la red y la base:
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import hashlib
 import json
 import re
@@ -54,6 +55,28 @@ class Plan:
     sql_total: str | None  # cuántas filas cumplen, para la completitud (None con agregados)
     parametros_total: tuple[Any, ...]
     limite: int
+    geometria: bool = False  # cada fila trae `_geojson`: sale como feature_collection
+
+
+# Cómo sale la geometría de una copia espacial: la misma idea que el conector ArcGIS («simplificada»
+# ≈ 55 m basta para pintar un parque y evita mandar polígonos de decenas de MB).
+_GEOMETRIA = {
+    "completa": "ST_AsGeoJSON(_geom, 7)",
+    "simplificada": "ST_AsGeoJSON(ST_SimplifyPreserveTopology(_geom, 0.0005), 5)",
+}
+
+
+def _coordenadas(valor: Any, n: int, nombre: str) -> list[float]:
+    """`n` números finitos (lon, lat…): van como parámetros, nunca dentro del SQL."""
+    import math
+
+    try:
+        numeros = [float(v) for v in valor]
+    except (TypeError, ValueError) as exc:
+        raise ErrorCopia(f"`{nombre}` debe ser una lista de {n} números") from exc
+    if len(numeros) != n or not all(math.isfinite(v) for v in numeros):
+        raise ErrorCopia(f"`{nombre}` debe ser una lista de {n} números")
+    return numeros
 
 
 def _columna(nombre: str, permitidas: set[str]) -> str:
@@ -82,7 +105,9 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     `argumentos` (de la ficha, ya con la entrada puesta): `select` (columnas), `filtros`
     ({columna: valor}, igualdad), `texto` (búsqueda en las columnas `copia.texto`), `agregados`
     ({alias: "count" | "sum:col" | "median:col" …}), `group` (columnas), `order` (columnas; con
-    `-` delante, descendente) y `limite`.
+    `-` delante, descendente) y `limite`. En una copia espacial, además: `punto` ([lon, lat]) o
+    `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan, y
+    `geometria` («completa», «simplificada» o «ninguna», la de por defecto).
     """
     if fuente.copia is None:
         raise ErrorCopia(f"{fuente.id} no tiene copia")
@@ -95,7 +120,19 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     columnas = [_columna(c, permitidas) for c in argumentos.get("select") or []]
     if agregados and (sueltas := set(columnas) - set(group)):
         raise ErrorCopia(f"con agregados, las columnas van en `group`: {sorted(sueltas)}")
-    seleccion = ", ".join([*(columnas or ([] if agregados else ["*"])), *agregados])
+    espaciales = [k for k in ("punto", "bbox") if argumentos.get(k) is not None]
+    geometria = str(argumentos.get("geometria") or "ninguna")
+    if (espaciales or geometria != "ninguna") and not fuente.copia.espacial:
+        raise ErrorCopia(f"{fuente.id} no tiene geometría en su copia")
+    if geometria not in (*_GEOMETRIA, "ninguna"):
+        raise ErrorCopia(f"geometría desconocida: «{geometria}»")
+    if geometria != "ninguna" and agregados:
+        raise ErrorCopia("con agregados no sale geometría")
+    if not columnas and not agregados and fuente.copia.espacial:
+        columnas = [_columna(c, permitidas) for c in fuente.campos]  # `*` traería `_geom` cruda
+    con_geometria = geometria != "ninguna"
+    salida = [f"{_GEOMETRIA[geometria]} AS _geojson"] if con_geometria else []
+    seleccion = ", ".join([*(columnas or ([] if agregados else ["*"])), *agregados, *salida])
 
     condiciones, parametros = [], []
     for columna, valor in (argumentos.get("filtros") or {}).items():
@@ -106,6 +143,17 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
             raise ErrorCopia(f"{fuente.id} no tiene columnas de texto en su copia")
         condiciones.append("_texto @@ plainto_tsquery('spanish', %s)")
         parametros.append(str(texto))
+    if len(espaciales) > 1:
+        raise ErrorCopia("`punto` y `bbox` no van juntos")
+    if (punto := argumentos.get("punto")) is not None:
+        condiciones.append("ST_Intersects(_geom, ST_SetSRID(ST_MakePoint(%s, %s), 4326))")
+        parametros += _coordenadas(punto, 2, "punto")
+    if (bbox := argumentos.get("bbox")) is not None:
+        caja = _coordenadas(bbox, 4, "bbox")
+        if caja[0] > caja[2] or caja[1] > caja[3]:
+            raise ErrorCopia("`bbox` va como [oeste, sur, este, norte]")
+        condiciones.append("ST_Intersects(_geom, ST_MakeEnvelope(%s, %s, %s, %s, 4326))")
+        parametros += caja
     donde = f" WHERE {' AND '.join(condiciones)}" if condiciones else ""
 
     orden = []
@@ -123,7 +171,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         sql += f" ORDER BY {', '.join(orden)}"
     sql += " LIMIT %s"
     sql_total = None if agregados else f"SELECT count(*) FROM {vista}{donde}"
-    return Plan(sql, (*parametros, limite), sql_total, tuple(parametros), limite)
+    return Plan(sql, (*parametros, limite), sql_total, tuple(parametros), limite, con_geometria)
 
 
 # --- el job: descarga y almacén --------------------------------------------------------------
@@ -161,6 +209,141 @@ def descargar_socrata(
             if len(pagina) < PAGINA:
                 return
             desplazamiento += len(pagina)
+    finally:
+        if propio:
+            http.close()
+
+
+# --- capas ArcGIS con su geometría (origen arcgis) ----------------------------------------------
+#
+# Para las capas que no se pueden consultar en vivo desde el servidor (RUNAP y UPRA bloquean o no
+# aceptan la IP del datacenter) o que tardan demasiado (agrología del IGAC, ~50 s por punto). Se
+# baja una petición a la vez, con pausa entre páginas: es un servidor del Estado (ADR-0018).
+
+GEOMETRIA = "_geom"  # la columna de la geometría (EPSG:4326) en la copia y en las filas bajadas
+PAUSA_ARCGIS_S = 1.0
+
+
+def ewkt(geometria: dict[str, Any]) -> str:
+    """GeoJSON → EWKT en EPSG:4326, solo lon y lat: Postgres lo lee tal cual en un COPY."""
+
+    def punto(p: list[float]) -> str:
+        return f"{float(p[0])!r} {float(p[1])!r}"
+
+    def linea(ps: list[list[float]]) -> str:
+        return "(" + ",".join(punto(p) for p in ps) + ")"
+
+    def poligono(anillos: list[list[list[float]]]) -> str:
+        return "(" + ",".join(linea(a) for a in anillos) + ")"
+
+    tipo = geometria.get("type")
+    c: Any = geometria.get("coordinates")
+    cuerpos = {
+        "Point": lambda: f"POINT({punto(c)})",
+        "MultiPoint": lambda: "MULTIPOINT(" + ",".join(f"({punto(p)})" for p in c) + ")",
+        "LineString": lambda: f"LINESTRING{linea(c)}",
+        "MultiLineString": lambda: "MULTILINESTRING(" + ",".join(linea(x) for x in c) + ")",
+        "Polygon": lambda: f"POLYGON{poligono(c)}",
+        "MultiPolygon": lambda: "MULTIPOLYGON(" + ",".join(poligono(x) for x in c) + ")",
+    }
+    if tipo not in cuerpos or not c:
+        raise ErrorCopia(f"geometría que la copia no sabe guardar: «{tipo}»")
+    return f"SRID=4326;{cuerpos[str(tipo)]()}"
+
+
+def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 3) -> dict[str, Any]:
+    """Una petición al servicio; ArcGIS responde los errores con 200 y `{"error": …}`."""
+    import time
+
+    for intento in range(1, intentos + 1):
+        try:
+            r = http.get(url, params=params)
+            r.raise_for_status()
+            datos: dict[str, Any] = r.json()
+            if "error" in datos:
+                raise ValueError(f"ArcGIS: {datos['error']}")
+            return datos
+        except Exception:
+            if intento == intentos:
+                raise
+            time.sleep(10 * intento)  # cortesía con la fuente: no se insiste de inmediato
+    return {}
+
+
+def descargar_arcgis(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None, pausa_s: float | None = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Páginas de la capa: la lista blanca y la geometría GeoJSON en EPSG:4326 (`_geom`).
+
+    `desde` se ignora (se copia la capa entera). Se pagina por la clave (`clave > última vista`,
+    ordenado por ella) hasta una página vacía (no se confía en `exceededTransferLimit`): con
+    `resultOffset` el servicio del IGAC tardaba ~50 s por página y así ~2 s, porque no recorre las
+    filas ya vistas. Si el servicio sabe contar, al final se compara: una copia a medias no se
+    publica."""
+    import sys
+    import time
+
+    import httpx
+
+    assert fuente.copia is not None and fuente.copia.capa is not None
+    copia = fuente.copia
+    url = f"{fuente.url}/{copia.capa}/query"
+    columnas = list(fuente.campos)
+    base: dict[str, Any] = {
+        "outFields": ",".join(columnas),
+        "returnGeometry": "true",
+        "outSR": "4326",
+        "geometryPrecision": "6",  # ~0,1 m
+        "orderByFields": copia.clave,
+        "f": "geojson",
+    }
+    if copia.tolerancia:
+        base["maxAllowableOffset"] = str(copia.tolerancia)
+    pausa = PAUSA_ARCGIS_S if pausa_s is None else pausa_s
+    propio = cliente is None
+    http = cliente or httpx.Client(timeout=600, headers={"User-Agent": "terranova-copias/1"})
+    try:
+        try:
+            conteo = _pedir_arcgis(
+                http, url, {"where": "1=1", "returnCountOnly": "true", "f": "json"}, intentos=1
+            )
+            esperado: int | None = int(conteo["count"])
+        except Exception as exc:  # noqa: BLE001 — sin conteo se copia igual, sin esa verificación
+            esperado = None
+            print(f"aviso {fuente.id}: la capa no dijo cuántos tiene ({exc})", file=sys.stderr)
+        vistos = 0
+        ultima: int | None = None
+        while True:
+            time.sleep(pausa)
+            donde = "1=1" if ultima is None else f"{copia.clave} > {ultima}"
+            datos = _pedir_arcgis(
+                http, url, {**base, "where": donde, "resultRecordCount": copia.por_pagina}
+            )
+            rasgos = datos.get("features") or []
+            if not rasgos:
+                break
+            pagina = []
+            for rasgo in rasgos:
+                propiedades = rasgo.get("properties") or {}
+                pagina.append(
+                    {**{c: propiedades.get(c) for c in columnas}, GEOMETRIA: rasgo.get("geometry")}
+                )
+            clave = pagina[-1].get(copia.clave)
+            if (
+                not isinstance(clave, int)
+                or isinstance(clave, bool)
+                or (ultima is not None and clave <= ultima)
+            ):
+                raise ErrorCopia(
+                    f"la capa no pagina por {copia.clave}: llegó {clave!r} después de {ultima!r}"
+                )
+            ultima = clave
+            vistos += len(rasgos)
+            yield pagina
+        if esperado is not None and vistos != esperado:
+            raise ErrorCopia(
+                f"la capa dice {esperado} elementos y llegaron {vistos}: la copia no se publica"
+            )
     finally:
         if propio:
             http.close()
@@ -365,6 +548,9 @@ def _convertir(valor: Any, tipo: str) -> Any:
             return float(valor)
         if tipo == "bool":
             return str(valor).strip().lower() in ("true", "1", "si", "sí")
+        if tipo in ("date", "datetime") and isinstance(valor, int | float):  # epoch ms de ArcGIS
+            momento = datetime.fromtimestamp(valor / 1000, UTC).isoformat()
+            return momento[:10] if tipo == "date" else momento
         if tipo in ("date", "datetime"):
             texto = str(valor)
             return texto[:10] if tipo == "date" else texto
@@ -430,28 +616,48 @@ class AlmacenCopias:
             if copia.texto
             else ""
         )
+        if copia.espacial:
+            self._c.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+            definicion += f', "{GEOMETRIA}" geometry(Geometry, 4326)'
         self._c.execute(f"CREATE TABLE {fisica} ({definicion}{generada})")
         resumen = hashlib.sha256()
         filas = repetidas = 0
         anterior: Any = object()
         columnas = list(tipos)
-        lista = ", ".join(f'"{c}"' for c in columnas)
-        with self._c.cursor() as cur, cur.copy(f"COPY {fisica} ({lista}) FROM STDIN") as cp:
-            for pagina in paginas:
-                for fila in pagina:
-                    if fila.get(copia.clave) == anterior:  # ordenadas: la repetida es contigua
-                        repetidas += 1
-                        continue
-                    anterior = fila.get(copia.clave)
-                    valores = [_convertir(fila.get(c), fuente.campos[c].tipo) for c in columnas]
-                    cp.write_row(valores)
-                    resumen.update(json.dumps(valores, default=str).encode())
-                    filas += 1
-        self._c.execute(f'ALTER TABLE {fisica} ADD PRIMARY KEY ("{copia.clave}")')
-        for col in copia.indices:
-            self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
-        if copia.texto:
-            self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
+        lista = ", ".join(f'"{c}"' for c in [*columnas, *([GEOMETRIA] if copia.espacial else [])])
+        try:
+            with self._c.cursor() as cur, cur.copy(f"COPY {fisica} ({lista}) FROM STDIN") as cp:
+                for pagina in paginas:
+                    for fila in pagina:
+                        if fila.get(copia.clave) == anterior:  # ordenadas: la repetida es contigua
+                            repetidas += 1
+                            continue
+                        anterior = fila.get(copia.clave)
+                        valores = [_convertir(fila.get(c), fuente.campos[c].tipo) for c in columnas]
+                        if copia.espacial:
+                            geometria = fila.get(GEOMETRIA)
+                            valores.append(ewkt(geometria) if geometria else None)
+                        cp.write_row(valores)
+                        resumen.update(json.dumps(valores, default=str).encode())
+                        filas += 1
+            self._c.execute(f'ALTER TABLE {fisica} ADD PRIMARY KEY ("{copia.clave}")')
+            for col in copia.indices:
+                self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
+            if copia.texto:
+                self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
+            if copia.espacial:
+                # un polígono inválido (autointersecciones, a veces por la simplificación) puede
+                # hacer fallar el cruce: se repara al copiar, no al consultar
+                self._c.execute(
+                    f'UPDATE {fisica} SET "{GEOMETRIA}" = ST_MakeValid("{GEOMETRIA}") '
+                    f'WHERE NOT ST_IsValid("{GEOMETRIA}")'
+                )
+                self._c.execute(f'CREATE INDEX ON {fisica} USING gist ("{GEOMETRIA}")')
+                self._c.execute(f"ANALYZE {fisica}")
+        except BaseException:
+            with contextlib.suppress(Exception):  # con la conexión caída, manda el error original
+                self._c.execute(f"DROP TABLE IF EXISTS {fisica}")  # una copia a medias no queda
+            raise
         v = Version(
             fuente.id,
             copia.tabla,
@@ -551,6 +757,16 @@ def duracion(iso: str) -> timedelta:
     return timedelta(days=366 * y + 31 * mes + 7 * sem + d, hours=h, minutes=minutos)
 
 
+def toca_actualizar(fuente: Fuente, version: Version | None, ahora: datetime) -> bool:
+    """Con `--solo-vencidas`: se rehace la copia que no existe o que ya va por la mitad de su SLA.
+
+    Así un refresco diario no vuelve a bajar cada día una capa que la fuente cambia una vez al año
+    (cortesía con la fuente) y la copia nunca llega a vencerse si el refresco corre."""
+    if version is None:
+        return True
+    return ahora - version.actualizada_en >= duracion(fuente.frescura.sla_actualizacion) / 2
+
+
 def _a_json(valor: Any) -> Any:
     if isinstance(valor, datetime | date):
         return valor.isoformat()
@@ -600,6 +816,20 @@ class ConectorCopia:
             "completitud": _completitud(len(filas), total, plan.limite),
         }
         filas_json = [{k: _a_json(v) for k, v in f.items()} for f in filas]
+        if plan.geometria:
+            rasgos = []
+            for f in filas_json:
+                geojson = f.pop("_geojson", None)
+                rasgos.append(
+                    {
+                        "type": "Feature",
+                        "geometry": json.loads(geojson) if geojson else None,
+                        "properties": f,
+                    }
+                )
+            coleccion = {"type": "FeatureCollection", "features": rasgos}
+            artefacto = {"kind": "feature_collection", "crs": "EPSG:4326", "data": coleccion}
+            return {"artifacts": [artefacto], "facts": hechos}
         columnas = sorted({k for f in filas_json for k in f})
         return {
             "artifacts": [{"kind": "table", "columns": columnas, "rows": filas_json}],

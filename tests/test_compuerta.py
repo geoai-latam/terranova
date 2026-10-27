@@ -116,7 +116,11 @@ async def test_texto_malicioso_de_la_fuente_sale_saneado_y_solo_en_datos() -> No
     """E2E-14: instrucciones y bidi en un campo de la fuente; un campo nuevo no declarado."""
     respuesta = {
         "geo_result": "1",
-        "facts": {"completitud": {"vistos": 1, "total": 1, "truncado": False}},
+        "facts": {
+            "completitud": {"vistos": 1, "total": 1, "truncado": False},
+            "servido_desde": "copia",
+            "consultado_en": "2026-10-27T00:00:00+00:00",
+        },
         "artifacts": [
             {
                 "kind": "feature_collection",
@@ -138,7 +142,7 @@ async def test_texto_malicioso_de_la_fuente_sale_saneado_y_solo_en_datos() -> No
             }
         ],
     }
-    ej = Ejecutor(CATALOGO, {"arcgis-mcp": Conector(respuesta)})
+    ej = Ejecutor(CATALOGO, {"copia": Conector(respuesta)})  # RUNAP se sirve por copia
     sobre = await ej.ejecutar("pnn_areas_protegidas_en_punto", {"lon": -73.75, "lat": 4.55})
     nombre = sobre.datos["nombre"]
     assert texto_es_limpio(nombre) and chr(0x202E) not in nombre and chr(0x1B) not in nombre

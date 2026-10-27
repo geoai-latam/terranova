@@ -5,7 +5,7 @@
     terranova llaves listar [--org geoai]
     terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
-    terranova copias actualizar [fuente …] [--cada-horas 24]   (G3: copias en TERRANOVA_COPIAS_URL)
+    terranova copias actualizar [fuente …] [--cada-horas 24] [--solo-vencidas]   (G3: copias)
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
     terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]         (G6: buscador)
     terranova catalogo-dcat promover [--banco f.yaml]   (G6: cola de promoción data-driven)
@@ -119,15 +119,31 @@ def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
     import time
-    from datetime import date
+    from datetime import UTC, date, datetime
 
     from terranova.catalogo import cargar
-    from terranova.copias import AlmacenCopias, descargar_socrata, descargar_zip_dane
+    from terranova.copias import (
+        AlmacenCopias,
+        descargar_arcgis,
+        descargar_socrata,
+        descargar_zip_dane,
+        toca_actualizar,
+    )
 
     parser = argparse.ArgumentParser(prog="terranova copias actualizar")
     parser.add_argument("fuentes", nargs="*", help="ids de fuente (por defecto, todas las copias)")
     parser.add_argument("--cada-horas", type=float, help="repetir (servicio del compose)")
+    parser.add_argument(
+        "--solo-vencidas",
+        action="store_true",
+        help="rehacer solo las que no existen o van por la mitad de su SLA (refresco recurrente)",
+    )
     a = parser.parse_args(argumentos)
+    descargas = {
+        "socrata": descargar_socrata,
+        "zip_dane": descargar_zip_dane,
+        "arcgis": descargar_arcgis,
+    }
     url = os.environ.get("TERRANOVA_COPIAS_URL") or os.environ.get("TERRANOVA_CURADO_URL")
     if not url:
         print("falta TERRANOVA_COPIAS_URL (postgresql://…)", file=sys.stderr)
@@ -150,11 +166,14 @@ def copias(argumentos: list[str]) -> int:
                 if ventana and desde_local
                 else ventana
             )
-            descargar = (
-                descargar_zip_dane if fuente.copia.origen == "zip_dane" else descargar_socrata
-            )
+            descargar = descargas[fuente.copia.origen]
             inicio = time.monotonic()
             try:
+                if a.solo_vencidas and not toca_actualizar(
+                    fuente, almacen.vigente(fuente.copia.tabla), datetime.now(UTC)
+                ):
+                    print(f"al día {fuente.id}")
+                    continue
                 v = almacen.construir(fuente, descargar(fuente, desde), desde)
                 almacen.podar(fuente.copia.tabla)
                 segundos = time.monotonic() - inicio

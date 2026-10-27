@@ -21,6 +21,7 @@ from terranova.copias import (
     agregar_comex_csv,
     anio_mes_dane,
     duracion,
+    ewkt,
     filas_de_acumulador,
     fusionar_mes,
     num_europeo,
@@ -310,3 +311,222 @@ def test_filas_de_acumulador_da_la_lista_blanca() -> None:
     assert tel["pais_origen"] == "156"
     assert tel["valor_cif_pesos"] == 3000.5
     assert tel["lineas"] == 2  # int
+
+
+# --- copias espaciales de capas ArcGIS (origen arcgis) ------------------------------------------
+
+RUNAP = CATALOGO.fuentes["pnn.runap"]
+UPRA = CATALOGO.fuentes["upra.rango_precios_nacional"]
+_CUADRO = [[[-74.0, 4.0], [-73.0, 4.0], [-73.0, 5.0], [-74.0, 5.0], [-74.0, 4.0]]]
+# un «moño»: el anillo se cruza a sí mismo, inválido (la copia lo repara al cargar)
+_MONO = [[[-75.0, 6.0], [-74.0, 7.0], [-74.0, 6.0], [-75.0, 7.0], [-75.0, 6.0]]]
+
+
+def test_plan_espacial_por_punto_y_por_zona() -> None:
+    plan = plan_de_consulta(
+        RUNAP, {"punto": ["-73.75", "4.55"], "select": ["ap_nombre"], "geometria": "simplificada"}
+    )
+    assert "ST_Intersects(_geom, ST_SetSRID(ST_MakePoint(%s, %s), 4326))" in plan.sql
+    assert plan.parametros[:2] == (-73.75, 4.55) and plan.geometria
+    assert "ST_SimplifyPreserveTopology(_geom, 0.0005)" in plan.sql
+    zona = plan_de_consulta(RUNAP, {"bbox": [-74.5, 4.0, -73.5, 5.0]})
+    assert "ST_MakeEnvelope(%s, %s, %s, %s, 4326)" in zona.sql and not zona.geometria
+    assert '"_geom"' not in zona.sql and "*" not in zona.sql  # sin select: la lista blanca
+    assert zona.sql_total is not None and zona.parametros_total == (-74.5, 4.0, -73.5, 5.0)
+
+
+def test_plan_espacial_rechaza_lo_que_no_es() -> None:
+    for argumentos, error in (
+        ({"punto": ["x", "4"]}, "2 números"),
+        ({"punto": [1.0, float("nan")]}, "2 números"),
+        ({"bbox": [-73.0, 4.0, -74.0, 5.0]}, "oeste, sur, este, norte"),
+        ({"punto": [1, 2], "bbox": [0, 0, 1, 1]}, "no van juntos"),
+        ({"geometria": "toda"}, "geometría desconocida"),
+        ({"agregados": {"n": "count"}, "geometria": "completa"}, "no sale geometría"),
+    ):
+        with pytest.raises(ErrorCopia, match=error):
+            plan_de_consulta(RUNAP, argumentos)
+    with pytest.raises(ErrorCopia, match="no tiene geometría"):
+        plan_de_consulta(SECOP, {"punto": [-74, 4]})
+
+
+def test_ewkt_de_geojson() -> None:
+    assert ewkt({"type": "Point", "coordinates": [-74.5, 4.25, 30.0]}) == (
+        "SRID=4326;POINT(-74.5 4.25)"  # solo lon y lat
+    )
+    assert ewkt({"type": "Polygon", "coordinates": [[[0, 0], [1, 0], [1, 1], [0, 0]]]}) == (
+        "SRID=4326;POLYGON((0.0 0.0,1.0 0.0,1.0 1.0,0.0 0.0))"
+    )
+    multi = ewkt({"type": "MultiPolygon", "coordinates": [_CUADRO, _CUADRO]})
+    assert multi.startswith("SRID=4326;MULTIPOLYGON(((-74.0 4.0,") and multi.count("((") == 2
+    with pytest.raises(ErrorCopia, match="no sabe guardar"):
+        ewkt({"type": "GeometryCollection", "geometries": []})
+
+
+def test_fecha_de_arcgis_en_epoch_ms() -> None:
+    from terranova.copias import _convertir
+
+    assert _convertir(1309410000000, "date") == "2011-06-30"  # 2011-06-30T05:00Z
+    assert _convertir("2011-06-30T00:00:00.000", "date") == "2011-06-30"
+
+
+class _Respuesta:
+    def __init__(self, datos: dict[str, Any]) -> None:
+        self.datos = datos
+
+    def raise_for_status(self) -> None:
+        return None
+
+    def json(self) -> dict[str, Any]:
+        return self.datos
+
+
+class ArcgisFalso:
+    """Una capa de `n` rasgos (claves 1, 4, 7…: con huecos) que pagina como un MapServer por
+    `where clave > x`; anota cada petición. `desordenada` ignora el `where` (repite la página)."""
+
+    def __init__(self, n: int, conteo: dict[str, Any], *, desordenada: bool = False) -> None:
+        self.n, self.conteo, self.desordenada = n, conteo, desordenada
+        self.pedidos: list[tuple[str, dict[str, Any]]] = []
+
+    def get(self, url: str, params: dict[str, Any]) -> _Respuesta:
+        self.pedidos.append((url, params))
+        if params.get("returnCountOnly"):
+            return _Respuesta(self.conteo)
+        donde = params["where"]
+        desde = -1 if donde == "1=1" or self.desordenada else int(donde.split(">")[1])
+        claves = [c for c in (3 * i + 1 for i in range(self.n)) if c > desde]
+        rasgos = [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Polygon", "coordinates": _CUADRO},
+                "properties": {"objectid": c, "ap_nombre": f"Área {c}", "fecha_inscrita": 0},
+            }
+            for c in claves[: params["resultRecordCount"]]
+        ]
+        return _Respuesta({"type": "FeatureCollection", "features": rasgos})
+
+
+def test_descargar_arcgis_pagina_por_la_clave_hasta_vaciar() -> None:
+    from terranova.copias import descargar_arcgis
+
+    http = ArcgisFalso(60, {"count": 60})
+    paginas = list(descargar_arcgis(RUNAP, cliente=http, pausa_s=0))
+    assert [len(p) for p in paginas] == [25, 25, 10]  # `por_pagina` de la ficha: 25
+    url, params = http.pedidos[1]
+    assert url == f"{RUNAP.url}/0/query" and params["orderByFields"] == "objectid"
+    assert params["outSR"] == "4326" and "maxAllowableOffset" not in params  # RUNAP: completa
+    assert set(params["outFields"].split(",")) == set(RUNAP.campos)
+    assert paginas[0][0]["_geom"]["type"] == "Polygon" and paginas[0][0]["ap_nombre"] == "Área 1"
+    # por la clave, no por desplazamiento: la segunda página arranca tras la última clave vista
+    assert params["where"] == "1=1" and http.pedidos[2][1]["where"] == "objectid > 73"
+    assert "resultOffset" not in http.pedidos[2][1]
+    vistas = [f["objectid"] for p in paginas for f in p]
+    assert len(set(vistas)) == 60  # ni repetidas ni perdidas pese a los huecos
+
+
+def test_descargar_arcgis_simplifica_si_la_ficha_lo_declara() -> None:
+    from terranova.copias import descargar_arcgis
+
+    assert UPRA.copia is not None
+    http = ArcgisFalso(0, {"count": 0})
+    assert list(descargar_arcgis(UPRA, cliente=http, pausa_s=0)) == []
+    assert http.pedidos[1][1]["maxAllowableOffset"] == str(UPRA.copia.tolerancia)
+
+
+def test_descargar_arcgis_no_publica_una_copia_a_medias() -> None:
+    from terranova.copias import descargar_arcgis
+
+    with pytest.raises(ErrorCopia, match="dice 61 elementos y llegaron 60"):
+        list(descargar_arcgis(RUNAP, cliente=ArcgisFalso(60, {"count": 61}), pausa_s=0))
+    # una capa que no respeta `clave > x` repetiría páginas sin fin: se corta con error
+    with pytest.raises(ErrorCopia, match="no pagina por objectid"):
+        list(descargar_arcgis(RUNAP, cliente=ArcgisFalso(60, {}, desordenada=True), pausa_s=0))
+    # si el servicio no sabe contar, se copia igual (sin esa verificación)
+    sin_conteo = ArcgisFalso(3, {"error": {"code": 500}})
+    assert sum(len(p) for p in descargar_arcgis(RUNAP, cliente=sin_conteo, pausa_s=0)) == 3
+
+
+@pytest.mark.anyio
+async def test_el_conector_da_la_geometria_como_coleccion_de_rasgos() -> None:
+    punto = '{"type": "Point", "coordinates": [-73.8, 4.7]}'
+    filas = [{"ap_nombre": "Chingaza", "_geojson": punto}]
+    version = Version(RUNAP.id, "runap", "v1", 1936, "sha256:x", None, datetime.now(UTC))
+    c = ConectorCopia(CATALOGO, AlmacenFalso(version, filas, 1))  # type: ignore[arg-type]
+    sc = await c.llamar(
+        "consultar_copia", {"tabla": "runap", "punto": [-73.75, 4.55], "geometria": "simplificada"}
+    )
+    art = sc["artifacts"][0]
+    assert art["kind"] == "feature_collection" and art["crs"] == "EPSG:4326"
+    rasgo = art["data"]["features"][0]
+    assert rasgo["properties"] == {"ap_nombre": "Chingaza"}
+    assert rasgo["geometry"]["coordinates"] == [-73.8, 4.7]
+
+
+def test_solo_vencidas_rehace_la_que_va_por_la_mitad_del_sla() -> None:
+    from terranova.copias import toca_actualizar
+
+    ahora = datetime(2026, 10, 27, tzinfo=UTC)
+
+    def de_hace(dias: int) -> Version:
+        return Version(RUNAP.id, "runap", "v", 1, "h", None, ahora - timedelta(days=dias))
+
+    assert toca_actualizar(RUNAP, None, ahora)  # sin copia: se hace
+    assert not toca_actualizar(RUNAP, de_hace(10), ahora)  # SLA P1M ≈ 31 días: la mitad, 15,5
+    assert toca_actualizar(RUNAP, de_hace(16), ahora)
+
+
+def test_la_capa_va_con_el_origen_arcgis() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+
+    with pytest.raises(ValidationError, match="`capa` va con el origen `arcgis`"):
+        Copia(origen="arcgis", tabla="t", clave="objectid")
+    with pytest.raises(ValidationError, match="`tolerancia` solo aplica"):
+        Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", tolerancia=0.0001)
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_copia_espacial_en_postgis() -> None:
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute("DROP SCHEMA IF EXISTS copia CASCADE")
+    almacen = AlmacenCopias(URL_PG)
+
+    def area(i: int, anillos: Any) -> dict[str, Any]:
+        return {
+            "objectid": i,
+            "ap_nombre": f"Área {i}",
+            "fecha_inscrita": 1309410000000,
+            "_geom": {"type": "Polygon", "coordinates": anillos},
+        }
+
+    v = almacen.construir(RUNAP, iter([[area(1, _CUADRO), area(2, _MONO)]]), None)
+    assert v.filas == 2
+
+    def consultar(argumentos: dict[str, Any]) -> tuple[list[dict[str, Any]], int | None]:
+        return almacen.consultar(plan_de_consulta(RUNAP, argumentos))
+
+    filas, total = consultar({"punto": [-73.5, 4.5], "select": ["ap_nombre", "fecha_inscrita"]})
+    assert filas == [{"ap_nombre": "Área 1", "fecha_inscrita": date(2011, 6, 30)}] and total == 1
+    assert consultar({"punto": [-80.0, 0.0]}) == ([], 0)
+    # el moño se reparó al cargar: el cruce no falla y lo encuentra
+    filas, total = consultar({"bbox": [-76.0, 3.0, -72.0, 8.0], "order": ["objectid"]})
+    assert [f["objectid"] for f in filas] == [1, 2] and total == 2
+    filas, _ = consultar({"punto": [-73.5, 4.5], "geometria": "completa", "select": ["objectid"]})
+    assert '"Polygon"' in filas[0]["_geojson"]
+
+    def rota() -> Any:
+        yield [area(3, _CUADRO)]
+        raise ErrorCopia("la capa se cortó")
+
+    with pytest.raises(ErrorCopia):
+        almacen.construir(RUNAP, rota(), None)
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        tablas = c.execute(
+            "SELECT count(*) FROM pg_tables WHERE schemaname = 'copia' AND tablename LIKE 'runap_%'"
+        ).fetchone()
+    assert tablas == (1,)  # la que falló no quedó huérfana; la vigente sigue
+    assert almacen.vigente("runap") == v

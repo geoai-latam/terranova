@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-26.*
+*Actualizado: 2026-10-27.*
 
 ## Auditoría integral (2026-10-26)
 
@@ -109,6 +109,23 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     como «facturas y pagos»; ahora cada descripción remite a la otra.
   - **Falso negativo de la medida:** `suin_norma` (respuesta correcta; el canario dice «ley» y el
     agente mandó «LEY»). El banco ahora compara la entrada sin distinguir mayúsculas.
+- **Copias espaciales de capas ArcGIS (2026-10-27, enmienda de la ADR-0024).** RUNAP (403 de
+  Cloudflare al datacenter), UPRA (inalcanzable desde la UE; desde Colombia responde en 1,2 s) y la
+  agrología del IGAC (~54 s por punto desde la UE) se sirven ahora desde una copia en PostGIS:
+  - **Origen `arcgis` en el conector de copia:** baja la capa entera con su lista blanca y la geometría
+    en EPSG:4326, simplificada si la ficha lo declara (`tolerancia`; agrología a ~11 m, por debajo del
+    error de un mapa 1:100.000). Pagina por la clave (`clave > última`), no por desplazamiento: en el
+    IGAC, ~2 s por página contra ~50 s. Si el conteo del servicio no cuadra, la copia no se publica.
+  - **`consultar_copia` espacial:** `punto` y `bbox` (ST_Intersects, índice GiST), geometría
+    `completa | simplificada | ninguna`, responde una colección de rasgos. Las geometrías inválidas se
+    reparan al cargar (ST_MakeValid).
+  - **`copias actualizar --solo-vencidas`:** solo rehace las copias que faltan o van por la mitad de
+    su SLA; el refresco recurrente desde Colombia puede correr seguido sin rebajar nada.
+  - **Ingeridas por túnel desde Colombia:** RUNAP 1.936 áreas (268 s), UPRA 178.973 zonas (549 s),
+    capacidad de uso 64.771 polígonos (854 s), vocación de uso. Seis herramientas pasan a la copia
+    con sus doradas regrabadas y los canarios con las verdades de la fuente. **Conflictos de uso**
+    (548.423 polígonos; la fuente tarda ~50 s por consulta, sea cual sea la página) sigue en vivo
+    hasta terminar su copia.
 
 ## Dónde estamos
 

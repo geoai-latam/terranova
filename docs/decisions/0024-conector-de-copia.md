@@ -52,3 +52,42 @@
   - Prueba sin red del job (incremento, huella, cambio atómico de versión) y del conector
     (parámetros, vocabulario cerrado, `obsoleto`).
   - En vivo: búsqueda por texto en SECOP con una verdad medida en la fuente.
+
+## Enmienda (2026-10-27): copias espaciales de capas ArcGIS
+
+- **Contexto:** el e2e y los canarios en producción mostraron capas que el servidor no puede
+  consultar en vivo. El servicio del RUNAP (PNN) responde a la IP del datacenter con un reto
+  antibots, y el de la UPRA ni acepta la conexión; desde Colombia ambos responden en 1 s. La
+  agrología del IGAC tarda ~50 s por punto. Ninguna de esas tres cosas se evade (ADR-0018).
+- **Decisión:**
+  - **Origen `arcgis`.** La ficha declara la `capa`, la `clave` (el identificador del servicio) y
+    `por_pagina`.
+    - El job baja la capa con la lista blanca y la geometría en EPSG:4326, página por página y
+      ordenada por la clave, hasta una página vacía. Pagina por la clave (`clave > última vista`),
+      no por `resultOffset`: con desplazamiento el servicio del IGAC recorre lo ya visto y tardaba
+      ~50 s por página; así, ~2 s. Una capa que no respete ese orden corta la copia con error.
+    - Va una petición a la vez, con pausa entre páginas.
+    - Si el servicio sabe contar y no llegó todo, la copia no se publica, y la tabla a medias no
+      queda.
+  - **Simplificación declarada.** `tolerancia`, en grados, solo cuando la escala de la fuente es
+    más gruesa: la agrología, a 1:100.000, se copia a ~11 m. Los límites legales, como el RUNAP,
+    van completos.
+  - **Geometría en la copia.** Va en `_geom` con índice GiST. Los polígonos inválidos se reparan
+    al cargar, no al consultar.
+  - **Cruce espacial en `consultar_copia`.**
+    - `punto` ([lon, lat]) o `bbox`: `ST_Intersects`, con las coordenadas como parámetros.
+    - `geometria` (`completa`, `simplificada` a ~55 m, como el conector ArcGIS, o `ninguna`):
+      con geometría, la respuesta es una `feature_collection`.
+  - **Refresco.**
+    - `terranova copias actualizar --solo-vencidas` rehace solo las copias que no existen o que
+      van por la mitad de su `sla_actualizacion`.
+    - Así un refresco diario no vuelve a bajar una capa que cambia una vez al año, y la copia no
+      llega a vencerse.
+    - Las que bloquean el datacenter se ingieren desde una IP colombiana, por túnel al Postgres
+      del servidor.
+- **Confirmación:**
+  - Pruebas sin red: plan espacial, EWKT, paginación y conteo con un servicio falso, y la
+    respuesta del conector.
+  - Prueba en PostGIS: cruce por punto y por zona, reparación de un polígono inválido y una carga
+    rota que no deja tabla.
+  - Doradas regrabadas desde las copias reales.
