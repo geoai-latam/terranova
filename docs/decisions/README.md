@@ -54,3 +54,5 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0025 · El documento de contratistas y proponentes de SECOP se muestra como lo publica la fuente](0025-documentos-en-divulgacion-obligatoria.md)
 - [ADR-0026 · Cobertura de datos abiertos: conector genérico + buscador de catálogo (G6), no un tool por dataset](0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md)
 - [ADR-0027 · CLI de cliente: un cliente delgado del REST /v1, con `catalogo buscar` y `verificar <archivo>`](0027-cli-de-cliente.md)
+- [ADR-0028 · Descubrimiento del catálogo con embeddings (buscador semántico), reconciliado con ADR-0012](0028-descubrimiento-con-embeddings.md)
+- [ADR-0030 · Despliegue en una VPS única con Docker Compose (no nube gestionada) para el arranque](0030-despliegue-vps-unica-compose.md)
