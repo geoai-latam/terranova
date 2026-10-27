@@ -141,6 +141,9 @@ services:
     # e5-large (ONNX FP32, ~2,2 GB de pesos) + activaciones: el más goloso del stack. Con 3g y lotes
     # de 64 el kernel lo mató; ahora el modelo va de a 8 textos y queda 1 GB de holgura.
     mem_limit: 4g
+    # Embeber en CPU ocupa todos los núcleos por horas: con prioridad baja, la puerta y Postgres
+    # pasan primero cuando compiten (sin límite fijo: si la máquina está libre, usa todo).
+    cpu_shares: 256
     pids_limit: 256
 
   postgres:

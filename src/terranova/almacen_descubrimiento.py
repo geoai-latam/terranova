@@ -16,6 +16,7 @@ cast `::vector`, nunca texto suelto. Las pruebas del almacén corren solo con `T
 from __future__ import annotations
 
 import asyncio
+import json
 from collections.abc import Mapping
 from datetime import date
 from typing import TYPE_CHECKING, Any
@@ -108,6 +109,31 @@ class AlmacenDescubrimiento:
             f"""CREATE TABLE IF NOT EXISTS {ESQUEMA}.modelo (
                 unica boolean PRIMARY KEY DEFAULT true, modelo text NOT NULL, dim int NOT NULL)"""
         )
+        # caché de vectores por huella (sha256 de modelo + texto): la ingesta retoma tras un corte
+        # y la pasada diaria solo embebe lo nuevo o cambiado (ver `embeber_catalogo`).
+        self._c.execute(
+            f"""CREATE TABLE IF NOT EXISTS {ESQUEMA}.vectores (
+                huella text PRIMARY KEY, embedding vector({self._dim}) NOT NULL)"""
+        )
+
+    def vectores_por_huella(self, huellas: list[str]) -> dict[str, tuple[float, ...]]:
+        self.asegurar_esquema()
+        cur = self._c.execute(
+            f"SELECT huella, embedding::text FROM {ESQUEMA}.vectores WHERE huella = ANY(%s)",
+            (huellas,),
+        )
+        return {h: tuple(float(x) for x in json.loads(v)) for h, v in cur.fetchall()}
+
+    def guardar_vectores(self, pares: Mapping[str, tuple[float, ...]]) -> None:
+        if not pares:
+            return
+        self.asegurar_esquema()
+        with self._c.transaction(), self._c.cursor() as cur:
+            cur.executemany(
+                f"""INSERT INTO {ESQUEMA}.vectores (huella, embedding) VALUES (%s, %s::vector)
+                    ON CONFLICT (huella) DO UPDATE SET embedding = EXCLUDED.embedding""",
+                [(h, _vector_literal(v)) for h, v in pares.items()],
+            )
 
     def modelo_indexado(self) -> tuple[str, int] | None:
         existe = self._c.execute(f"SELECT to_regclass('{ESQUEMA}.modelo')").fetchone()

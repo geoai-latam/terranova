@@ -25,12 +25,14 @@ La promoción a herramientas curadas se monta sobre esto (spec 09).
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
+import sys
 import time
 import unicodedata
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
 from typing import Any, Protocol
@@ -451,11 +453,32 @@ class Embedder(Protocol):
     def documentos(self, textos: list[str]) -> list[tuple[float, ...]]: ...
 
 
+#: Tope del texto que se embebe (~250 tokens). El costo de e5-large en CPU crece con el largo y lo
+#: que distingue un dataset va al inicio (título, descripción, entidad); la cola de columnas casi no
+#: suma. Medido en el server (6 vCPU): sin tope, ~0,9 textos/s.
+MAX_CARACTERES_EMBEDDING = 1000
+
+
 def texto_para_embedding(d: DatasetDescubrible) -> str:
     """El texto que representa un dataset para buscarlo: título + descripción + entidad + categoría
     + keywords. Pura y estable (misma fila → mismo texto → mismo vector con el modelo fijado)."""
     partes = [d.titulo, d.descripcion, d.entidad, d.categoria or "", *d.columnas]
-    return " · ".join(p.strip() for p in partes if p and p.strip())
+    return " · ".join(p.strip() for p in partes if p and p.strip())[:MAX_CARACTERES_EMBEDDING]
+
+
+def huella_texto(texto: str, modelo: str = MODELO_EMBEDDING) -> str:
+    """La llave del vector en la caché: mismo modelo + mismo texto → mismo vector. Lleva el modelo,
+    así que cambiar de modelo invalida la caché sola."""
+    return hashlib.sha256(f"{modelo}\n{texto}".encode()).hexdigest()
+
+
+class CacheVectores(Protocol):
+    """Dónde se guardan los vectores ya calculados, por huella (en producción, una tabla en
+    pgvector). Permite retomar una pasada cortada y no re-embeber lo que no cambió."""
+
+    def vectores_por_huella(self, huellas: list[str]) -> dict[str, tuple[float, ...]]: ...
+
+    def guardar_vectores(self, pares: Mapping[str, tuple[float, ...]]) -> None: ...
 
 
 def _coseno(a: tuple[float, ...], b: tuple[float, ...]) -> float:
@@ -608,19 +631,46 @@ class EmbedderRemoto:
 
 
 def embeber_catalogo(
-    datasets: list[DatasetDescubrible], embedder: Embedder, *, lote: int = 64
+    datasets: list[DatasetDescubrible],
+    embedder: Embedder,
+    *,
+    lote: int = 64,
+    cache: CacheVectores | None = None,
+    modelo: str = MODELO_EMBEDDING,
 ) -> dict[str, tuple[float, ...]]:
-    """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector. En
-    **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al microservicio
-    revienta la memoria/el timeout en una VM chica. 64 por lote: con e5-large en CPU un lote de 256
-    puede pasar el timeout del microservicio."""
-    vectores: dict[str, tuple[float, ...]] = {}
-    for i in range(0, len(datasets), lote):
-        trozo = datasets[i : i + lote]
-        salida = embedder.documentos([texto_para_embedding(d) for d in trozo])
-        for d, v in zip(trozo, salida, strict=True):
-            vectores[d.id_socrata] = v
-    return vectores
+    """El vector de **todo** el catálogo → id → vector (ADR-0028: la pasada cubre el catálogo
+    entero). En **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al
+    microservicio revienta la memoria/el timeout en una VM chica.
+
+    Con `cache`, solo se embebe lo que no tiene vector para su huella (texto + modelo) y cada lote
+    se guarda al terminarlo. El vector de un texto dado no cambia con el mismo modelo, así que el
+    resultado es el mismo que re-embeber todo. e5-large en CPU va a ~1 texto/s: sin caché, una
+    pasada de ~34k datasets son ~10 h y un corte la pierde entera."""
+    textos = {d.id_socrata: texto_para_embedding(d) for d in datasets}
+    huellas = {id_: huella_texto(t, modelo) for id_, t in textos.items()}
+    previos = cache.vectores_por_huella(sorted(set(huellas.values()))) if cache else {}
+    pendientes: dict[str, str] = {}  # huella → texto (textos repetidos se embeben una vez)
+    for id_, h in huellas.items():
+        if h not in previos:
+            pendientes.setdefault(h, textos[id_])
+    if cache:
+        print(
+            f"embeddings: {len(huellas)} datasets, {len(previos)} en caché, "
+            f"{len(pendientes)} por embeber",
+            file=sys.stderr,
+        )
+    calculados = dict(previos)
+    orden = list(pendientes)
+    for n, i in enumerate(range(0, len(orden), lote), start=1):
+        trozo = orden[i : i + lote]
+        salida = embedder.documentos([pendientes[h] for h in trozo])
+        nuevos = dict(zip(trozo, salida, strict=True))
+        calculados.update(nuevos)
+        if cache:
+            cache.guardar_vectores(nuevos)
+            if n % 20 == 0:
+                print(f"embeddings: {i + len(trozo)}/{len(orden)}", file=sys.stderr)
+    return {id_: calculados[h] for id_, h in huellas.items()}
 
 
 def vectores_a_jsonl(vectores: dict[str, tuple[float, ...]]) -> str:

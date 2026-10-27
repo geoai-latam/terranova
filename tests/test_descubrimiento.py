@@ -1,6 +1,7 @@
 """G6 (ADR-0026, spec 09): la ingesta del catálogo DCAT lee bien la Discovery API, sin red."""
 
 import json
+from collections.abc import Mapping
 from datetime import date
 from typing import Any
 
@@ -531,11 +532,73 @@ class _EmbedderCuentaLotes:
 
 
 def test_embeber_catalogo_trocea_en_lotes() -> None:
-    ds = [_reg(f"d{i}") for i in range(300)]
+    ds = [_reg(f"d{i}", titulo=f"dato {i}") for i in range(300)]
     emb = _EmbedderCuentaLotes()
     vectores = embeber_catalogo(ds, emb, lote=256)
     assert len(vectores) == 300
     assert emb.lotes == [256, 44]  # no manda todo en un POST
+
+
+class _CacheEnMemoria:
+    def __init__(self) -> None:
+        self.d: dict[str, tuple[float, ...]] = {}
+        self.guardados: list[int] = []
+
+    def vectores_por_huella(self, huellas: list[str]) -> dict[str, tuple[float, ...]]:
+        return {h: self.d[h] for h in huellas if h in self.d}
+
+    def guardar_vectores(self, pares: Mapping[str, tuple[float, ...]]) -> None:
+        self.d.update(pares)
+        self.guardados.append(len(pares))
+
+
+def test_embeber_catalogo_guarda_cada_lote_y_retoma_tras_un_corte() -> None:
+    ds = [_reg(f"d{i}", titulo=f"dato {i}") for i in range(10)]
+    cache = _CacheEnMemoria()
+
+    class _SeCaeEnElTercerLote(_EmbedderCuentaLotes):
+        def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+            if len(self.lotes) == 2:
+                raise ConnectionError("corte")
+            return super().documentos(textos)
+
+    with pytest.raises(ConnectionError):
+        embeber_catalogo(ds, _SeCaeEnElTercerLote(), lote=3, cache=cache)
+    assert cache.guardados == [3, 3]  # lo hecho antes del corte quedó guardado
+
+    emb = _EmbedderCuentaLotes()
+    vectores = embeber_catalogo(ds, emb, lote=3, cache=cache)
+    assert len(vectores) == 10
+    assert emb.lotes == [3, 1]  # retoma: solo los 4 que faltaban
+    # una segunda pasada sin cambios no embebe nada
+    emb2 = _EmbedderCuentaLotes()
+    assert embeber_catalogo(ds, emb2, lote=3, cache=cache) == vectores
+    assert emb2.lotes == []
+
+
+def test_embeber_catalogo_re_embebe_lo_cambiado_y_con_otro_modelo() -> None:
+    cache = _CacheEnMemoria()
+    agua = _reg("a", titulo="agua")
+    embeber_catalogo([agua, _reg("b", titulo="bosque")], _EmbedderFalso(), cache=cache)
+    emb = _EmbedderCuentaLotes()
+    embeber_catalogo([agua, _reg("b", titulo="bosque nativo")], emb, cache=cache)
+    assert emb.lotes == [1]  # solo el que cambió de texto
+    emb_otro = _EmbedderCuentaLotes()
+    embeber_catalogo([_reg("a", titulo="agua")], emb_otro, cache=cache, modelo="otro/modelo")
+    assert emb_otro.lotes == [1]  # la huella lleva el modelo: otro modelo no reusa vectores
+
+
+def test_embeber_catalogo_embebe_una_vez_los_textos_repetidos() -> None:
+    emb = _EmbedderCuentaLotes()
+    vectores = embeber_catalogo([_reg("a"), _reg("b")], emb)  # mismo texto
+    assert emb.lotes == [1] and set(vectores) == {"a", "b"}
+
+
+def test_texto_para_embedding_tiene_tope() -> None:
+    from terranova.descubrimiento import MAX_CARACTERES_EMBEDDING
+
+    d = _reg("largo", titulo="x" * (MAX_CARACTERES_EMBEDDING * 3))
+    assert len(texto_para_embedding(d)) == MAX_CARACTERES_EMBEDDING
 
 
 def test_ingerir_dcat_avisa_si_trunca(caplog: pytest.LogCaptureFixture) -> None:
