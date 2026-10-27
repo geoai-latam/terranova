@@ -40,6 +40,34 @@ verde (WS1–WS7):
 - **Pendiente de la auditoría (dueño):** la base legal DANE (WS3) y el despliegue en la VM (WS5:
   endurecimiento con prueba; e2e de las 153 herramientas; primera promoción y afinado del piso G6).
 
+## Despliegue en producción (2026-10-27)
+
+**Terranova está desplegada, pública y autocontenida**, sirviendo datos reales. Decisión de infra en
+[ADR-0030](decisions/0030-despliegue-vps-unica-compose.md): una sola VPS con todo el `docker compose`,
+sin servicios gestionados (~10–30× más barata que la nube grande).
+
+- **Pública con TLS:** API en un dominio propio con certificado Let's Encrypt automático (Caddy); REST
+  `/v1` y MCP, autenticación por llave (401 sin llave), http→https.
+- **Stack:** Postgres (PostGIS + pgvector) + Redis + puerta (1 réplica) + Caddy + los 6 conectores +
+  el microservicio de embeddings. Ajustado a 12 GB (1 réplica, Redis con tope, `mem_limit`).
+- **Autocontenida (#134):** los 6 conectores (datos-abiertos, arcgis, dane, web, imagery, amenazas) y
+  `geo_mcp_kit` se vendorizaron a `conectores/`. **Terranova ya no depende de geo-copilot**: todas las
+  herramientas viven y corren aquí; geo-copilot será solo un cliente más por el MCP.
+- **Datos:** comex (importaciones + exportaciones) servido por copia (ingesta por túnel desde una IP
+  colombiana); el resto de las fuentes en vivo por sus conectores.
+- **Bugs reales que destapó el primer despliegue, corregidos:** #130 (ZIP sin cerrar en Windows), #133
+  (`httpx` fuera del runtime + base de Postgres en bullseye con PGDG roto → bookworm), #134 (CA público
+  excluido por `*.pem`; `conectores/` fuera del lint).
+- **Canarios (prueba completa):** 121 verdes / 14 no-verde de 135; **cero fallos nuevos** del
+  despliegue. Los 14: 6 diferidos por decisión (fuentes DANE bloqueadas por IP de datacenter +
+  `catalogo_buscar`), 5 fuentes lentas conocidas (agrología/RUNAP/UPRA), 1 copia de SECOP sin ingerir,
+  1 sin canario por diseño (FIRMS), 1 transitorio.
+- **Patrón confirmado:** las llamadas en vivo (respuestas chicas) funcionan desde el datacenter; las
+  **descargas grandes** (copias y la cosecha del catálogo DCAT) se caen o se bloquean (el DANE bloquea
+  la IP del datacenter, 403 — no se evade, ADR-0018) → las **copias y cosechas se ingieren desde una IP
+  colombiana** (túnel). Pendiente: SECOP-copia y cosecha de descubrimiento por esa vía; respaldo a
+  objeto off-site; el lote de fuentes DANE; y el refresco recurrente de copias desde Colombia.
+
 ## Dónde estamos
 
 **Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).
