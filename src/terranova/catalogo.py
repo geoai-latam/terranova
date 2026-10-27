@@ -255,7 +255,7 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata", "zip_dane"]
+    origen: Literal["socrata", "zip_dane", "arcgis"]
     conjunto: str | None = Field(
         default=None,
         pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
@@ -280,6 +280,19 @@ class Copia(_Ficha):
         default_factory=dict,
         description="medidas a sumar: {columna de la lista blanca: columna del CSV}",
     )
+    # Capa de un servicio ArcGIS (origen arcgis): se copia con su geometría, en EPSG:4326, a una
+    # columna `_geom` con índice espacial; `consultar_copia` la cruza con un punto o un bbox.
+    capa: int | None = Field(default=None, ge=0, description="capa del servicio (origen arcgis)")
+    por_pagina: int = Field(
+        default=500, ge=1, le=2000, description="elementos por petición (polígonos pesados: menos)"
+    )
+    tolerancia: float | None = Field(
+        default=None,
+        gt=0,
+        le=0.001,
+        description="simplificación al copiar, en grados (maxAllowableOffset; 0,0001 ≈ 11 m): "
+        "solo si la escala de la fuente es más gruesa que eso",
+    )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
     clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
     ventana: Ventana | None = None
@@ -292,6 +305,10 @@ class Copia(_Ficha):
     def _origen_coherente(self) -> Copia:
         if self.origen == "socrata" and not self.conjunto:
             raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
+        if (self.origen == "arcgis") != (self.capa is not None):
+            raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
+        if self.tolerancia is not None and self.origen != "arcgis":
+            raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS")
         if self.origen == "zip_dane":
             if not self.descargas:
                 raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")
@@ -304,6 +321,11 @@ class Copia(_Ficha):
                     f"medidas (faltan: {faltan or ['medidas']})"
                 )
         return self
+
+    @property
+    def espacial(self) -> bool:
+        """Lleva geometría (`_geom`): se puede cruzar con un punto o un bbox."""
+        return self.origen == "arcgis"
 
     @property
     def columnas_usadas(self) -> set[str]:

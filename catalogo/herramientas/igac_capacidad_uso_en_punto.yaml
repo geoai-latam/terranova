@@ -6,18 +6,19 @@ pregunta: "¿Cuál es la capacidad de uso de la tierra en este punto?"
 descripcion: >
   Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un punto: clase y subclase de
   capacidad y su descripción. Cobertura nacional; a esa escala no sirve para un predio.
+  Sale de la copia de Terranova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [UCCapacida, Descripcio]
-    max_features: 5
+    tabla: igac_capacidad_uso
+    punto: ["{lon}", "{lat}"]
+    select: [UCCapacida, Descripcio]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 5
   campos: [UCCapacida, Descripcio]
 salida: CapacidadUsoEnPunto
 creditos: 10
