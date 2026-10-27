@@ -13,6 +13,8 @@ authors = [{ name = "GeoAI LATAM" }]
 dependencies = [
     "fastapi>=0.120",
     "fastmcp==4.1.3",
+    # la puerta siempre habla HTTP: ConectorMCP (conectores en vivo) y la ingesta de copias (zip/socrata)
+    "httpx>=0.28",
     "prometheus-client>=0.21,<1",
     "pyyaml>=6.0.3",
 ]
@@ -43,7 +45,6 @@ descubrimiento = [
 # sola. Si se sube aquí, se sube también en .pre-commit-config.yaml.
 dev = [
     "fakeredis[lua]>=2.26",
-    "httpx>=0.28",
     "hypothesis>=6.120",
     "jsonschema>=4.23",
     "mypy==2.4.0",
