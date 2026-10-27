@@ -65,8 +65,23 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
 - **Patrón confirmado:** las llamadas en vivo (respuestas chicas) funcionan desde el datacenter; las
   **descargas grandes** (copias y la cosecha del catálogo DCAT) se caen o se bloquean (el DANE bloquea
   la IP del datacenter, 403 — no se evade, ADR-0018) → las **copias y cosechas se ingieren desde una IP
-  colombiana** (túnel). Pendiente: SECOP-copia y cosecha de descubrimiento por esa vía; respaldo a
-  objeto off-site; el lote de fuentes DANE; y el refresco recurrente de copias desde Colombia.
+  colombiana** (túnel). Pendiente: respaldo a objeto off-site, el lote de fuentes DANE y el refresco
+  recurrente de copias desde Colombia.
+- **SECOP-copia ingerida** (por túnel): 3.661.398 filas desde 2023; `secop_contratos_buscar` responde.
+- **Descubrimiento en producción con e5-large (#136, #137).** La cosecha del catálogo DCAT **no** estaba
+  bloqueada: los cortes eran transitorios. Ahora reintenta con backoff y corre completa en el servidor
+  (Socrata: 33.726 datasets sin fallos). El cuello real era el embebido:
+  - e5-large en CPU va a ~1,3 textos/s.
+  - El servicio con lotes de 64 superaba los 3 GB y el kernel lo mataba: ahora va de a 8, con 4g.
+  - Hay **caché de vectores por huella** (modelo + texto): la ingesta retoma tras un corte y la pasada
+    diaria solo embebe lo nuevo. La primera pasada tomó ~6 h.
+
+  `descubrimiento.datasets` tiene los 33.726 datasets de Socrata con vector y el **canario de
+  `catalogo_buscar` está verde**. Los resultados son pertinentes («calidad del agua en ríos» → ICA de
+  los ríos de Cali y del río Cauca). ICDE se ingiere detrás (10.000 capas, tope conocido del feed).
+  **Pendiente:** recalibrar el piso de similitud para e5-large con el banco de verdades. El de 0,40
+  venía de MiniLM, y con e5 todos los cosenos caen en 0,8–0,9: el piso no filtra y `coincidencias`
+  cuenta el catálogo entero (una consulta sin respuesta, como «bitcoin», trae candidatos con 0,83).
 
 ## Dónde estamos
 
