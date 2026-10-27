@@ -16,6 +16,9 @@ RUN uv sync --locked --no-dev --extra descubrimiento && rm -rf /root/.cache
 # hornear el modelo fijado en la imagen (se baja una vez, al construir; runtime offline)
 ENV PATH="/srv/.venv/bin:$PATH"
 ENV FASTEMBED_CACHE_PATH=/srv/modelos
+# e5-large usa external-data (>2GB): sin symlinks los .onnx/.onnx_data quedan en el mismo dir
+# y onnxruntime no rechaza la ruta (evita "External data path escapes model directory").
+ENV HF_HUB_DISABLE_SYMLINKS=1
 RUN python -c "from terranova.descubrimiento import MODELO_EMBEDDING; from fastembed import TextEmbedding; TextEmbedding(MODELO_EMBEDDING)"
 
 RUN useradd --uid 10101 --no-create-home embeddings && chown -R 10101 /srv/modelos
