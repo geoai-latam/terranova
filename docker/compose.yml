@@ -120,6 +120,9 @@ services:
     depends_on:
       postgres: {condition: service_healthy}
       embeddings: {condition: service_started}
+    # La pasada completa guarda en memoria todo el catálogo (~34k datasets de Socrata) y sus vectores
+    # e5-large (dim 1024, ~1 GB como tuplas de floats): con el techo de la puerta (512m) el job moría.
+    mem_limit: 3g
 
   # G6 (ADR-0028): microservicio de embeddings del catálogo. El modelo (ONNX) va horneado en la
   # imagen, en un solo contenedor (no en cada réplica de la puerta). Solo en la red interna, sin
