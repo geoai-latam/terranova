@@ -76,12 +76,19 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
   - Hay **caché de vectores por huella** (modelo + texto): la ingesta retoma tras un corte y la pasada
     diaria solo embebe lo nuevo. La primera pasada tomó ~6 h.
 
-  `descubrimiento.datasets` tiene los 33.726 datasets de Socrata con vector y el **canario de
-  `catalogo_buscar` está verde**. Los resultados son pertinentes («calidad del agua en ríos» → ICA de
-  los ríos de Cali y del río Cauca). ICDE se ingiere detrás (10.000 capas, tope conocido del feed).
-  **Pendiente:** recalibrar el piso de similitud para e5-large con el banco de verdades. El de 0,40
-  venía de MiniLM, y con e5 todos los cosenos caen en 0,8–0,9: el piso no filtra y `coincidencias`
-  cuenta el catálogo entero (una consulta sin respuesta, como «bitcoin», trae candidatos con 0,83).
+  `descubrimiento.datasets` tiene **los dos catálogos completos con vector**: 33.726 datasets de
+  Socrata y 10.000 capas de ICDE (el tope conocido del feed). El **canario de `catalogo_buscar` está
+  verde**. Los resultados son pertinentes: «calidad del agua en ríos» trae el ICA de los ríos de Cali
+  y del río Cauca.
+- **Piso de similitud recalibrado para e5 (#139): 0,40 → 0,84**, medido en producción con 100
+  consultas:
+  - Las 20 ajenas al catálogo (coseno máximo 0,838) ya no traen nada.
+  - Las 20 temáticas sí traen candidatos.
+  - «bitcoin», «receta de arepas» y «asdkjfh qwerty» dan `no_encontrado`.
+  - «calidad del agua en ríos» da 48 coincidencias (antes, el catálogo entero).
+
+  Solo responde a llaves de evaluación mientras la licencia de los catálogos DCAT siga por verificar
+  (ADR-0019).
 
 ## Dónde estamos
 

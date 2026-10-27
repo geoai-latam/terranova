@@ -16,7 +16,7 @@ jobs:
   check:
     name: check (ruff, mypy, pytest)
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # la suite ya tarda ~9,5 min en CI; con 10 el job moría con todo en verde
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
