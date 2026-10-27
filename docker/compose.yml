@@ -135,7 +135,7 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
-    mem_limit: 1536m  # el modelo ONNX + onnxruntime; el más goloso del stack
+    mem_limit: 3g  # e5-large (ONNX) + onnxruntime; el más goloso del stack (hay RAM de sobra)
     pids_limit: 256
 
   postgres:

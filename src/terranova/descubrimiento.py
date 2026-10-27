@@ -382,12 +382,15 @@ def buscar(
 
 
 # --------------------------------------------------------------------------- embeddings (ADR-0028)
-#: El modelo de embeddings: multilingüe (español), pequeño, ONNX en CPU, local y gratis (coherente
-#: con «open source y gratuita» y con la poca memoria del equipo). Se FIJA para que el canario sea
-#: reproducible; cambiarlo obliga a re-embeder todo. Es un modelo simétrico de sentence-transformers
-#: (no e5): no lleva prefijos `query:`/`passage:`.
-MODELO_EMBEDDING = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
-DIM_EMBEDDING = 384
+#: El modelo de embeddings: multilingüe (español), ONNX en CPU, local y gratis (coherente con «open
+#: source y gratuita»). Se FIJA para que el canario sea reproducible; cambiarlo obliga a re-embeder
+#: todo. e5-large es asimétrico: la consulta y los documentos llevan prefijos distintos (`query:` /
+#: `passage:`), por eso `FastEmbedder` los antepone según el método.
+MODELO_EMBEDDING = "intfloat/multilingual-e5-large"
+DIM_EMBEDDING = 1024
+#: Prefijos de instrucción que e5 espera (vacíos para un modelo simétrico como MiniLM).
+PREFIJO_CONSULTA = "query: "
+PREFIJO_DOCUMENTO = "passage: "
 #: Debajo de este coseno, un candidato no se parece lo suficiente: no se muestra (honestidad —los
 #: embeddings no empujan un «parecido pero falso» con confianza). Medido en vivo con este modelo
 #: (2026-10-25): con 0,30 casi todo pasaba (cientos de 2000); con 0,40 el ruido baja y una consulta
@@ -484,8 +487,8 @@ def candidatos_a_promover(
 
 class FastEmbedder:
     """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
-    arrastra; se instala con el extra `descubrimiento`. El modelo es simétrico (sentence-
-    transformers): la consulta y los documentos se embeben igual, sin prefijos."""
+    arrastra; se instala con el extra `descubrimiento`. e5 es asimétrico: antepone `query:` a la
+    consulta y `passage:` a los documentos (un solo lugar, para no duplicar el prefijo)."""
 
     def __init__(self, modelo: str = MODELO_EMBEDDING) -> None:
         from fastembed import TextEmbedding  # type: ignore[import-not-found]
@@ -496,10 +499,10 @@ class FastEmbedder:
         return [tuple(float(x) for x in v) for v in self._modelo.embed(textos)]
 
     def consulta(self, texto: str) -> tuple[float, ...]:
-        return self._embeber([texto])[0]
+        return self._embeber([PREFIJO_CONSULTA + texto])[0]
 
     def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
-        return self._embeber(textos)
+        return self._embeber([PREFIJO_DOCUMENTO + t for t in textos])
 
 
 class EmbedderRemoto:
