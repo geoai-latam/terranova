@@ -120,6 +120,9 @@ services:
     depends_on:
       postgres: {condition: service_healthy}
       embeddings: {condition: service_started}
+    # La pasada completa guarda en memoria todo el catálogo (~34k datasets de Socrata) y sus vectores
+    # e5-large (dim 1024, ~1 GB como tuplas de floats): con el techo de la puerta (512m) el job moría.
+    mem_limit: 3g
 
   # G6 (ADR-0028): microservicio de embeddings del catálogo. El modelo (ONNX) va horneado en la
   # imagen, en un solo contenedor (no en cada réplica de la puerta). Solo en la red interna, sin
@@ -135,7 +138,12 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
     networks: [interna]
-    mem_limit: 3g  # e5-large (ONNX) + onnxruntime; el más goloso del stack (hay RAM de sobra)
+    # e5-large (ONNX FP32, ~2,2 GB de pesos) + activaciones: el más goloso del stack. Con 3g y lotes
+    # de 64 el kernel lo mató; ahora el modelo va de a 8 textos y queda 1 GB de holgura.
+    mem_limit: 4g
+    # Embeber en CPU ocupa todos los núcleos por horas: con prioridad baja, la puerta y Postgres
+    # pasan primero cuando compiten (sin límite fijo: si la máquina está libre, usa todo).
+    cpu_shares: 256
     pids_limit: 256
 
   postgres:

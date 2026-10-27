@@ -25,10 +25,14 @@ La promoción a herramientas curadas se monta sobre esto (spec 09).
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
+import sys
+import time
 import unicodedata
 from collections import Counter
+from collections.abc import Callable, Mapping
 from dataclasses import asdict, dataclass
 from datetime import date, datetime
 from typing import Any, Protocol
@@ -148,16 +152,58 @@ def metricas(
     )
 
 
+#: Reintentos de la cosecha: una descarga larga desde el datacenter a veces se corta (conexión
+#: cerrada, JSON truncado, 5xx). Se reintenta con espera creciente; un 4xx (salvo 429) es un error
+#: de la petición y no se reintenta.
+INTENTOS_COSECHA = 4
+ESPERA_COSECHA_S = 5.0
+
+
+def _get_json(
+    http: Any,
+    url: str,
+    params: dict[str, Any] | None = None,
+    *,
+    intentos: int = INTENTOS_COSECHA,
+    espera_s: float = ESPERA_COSECHA_S,
+    dormir: Callable[[float], None] = time.sleep,
+) -> dict[str, Any]:
+    """GET → JSON, con reintentos ante cortes, 5xx/429 y JSON truncado (espera 5, 10, 20 s…)."""
+    import httpx
+
+    ultimo: Exception | None = None
+    for intento in range(1, intentos + 1):
+        try:
+            r = http.get(url, params=params) if params is not None else http.get(url)
+            r.raise_for_status()
+            datos: dict[str, Any] = r.json()
+            return datos
+        except httpx.HTTPStatusError as exc:
+            codigo = exc.response.status_code
+            if codigo < 500 and codigo != 429:
+                raise
+            ultimo = exc
+        except (httpx.TransportError, ValueError) as exc:  # ValueError: JSON truncado
+            ultimo = exc
+        if intento < intentos:
+            dormir(espera_s * 2 ** (intento - 1))
+    assert ultimo is not None
+    raise ultimo
+
+
 def ingerir(
     cliente: Any = None,
     *,
     limite_paginas: int | None = None,
     por_pagina: int = 1000,
     dominio: str = DOMINIO,
+    pausa_s: float = 0.5,
+    dormir: Callable[[float], None] = time.sleep,
 ) -> list[DatasetDescubrible]:
     """Cosecha el catálogo del dominio, en serie. Pagina con **`scroll_id`** (no `offset`, que topa
     en ~10.000): cada página pide los `id` mayores que el último visto, ordenados por `dataset_id`.
-    `limite_paginas` acota (desarrollo)."""
+    Cada página se reintenta si la conexión se corta y se retoma desde el mismo `scroll_id`; entre
+    páginas hay una pausa corta (cortesía con la fuente). `limite_paginas` acota (desarrollo)."""
     import httpx
 
     http = cliente or httpx.Client(
@@ -176,9 +222,9 @@ def ingerir(
                 "limit": por_pagina,
                 "scroll_id": scroll_id,
             }
-            r = http.get(DISCOVERY_URL, params=params)
-            r.raise_for_status()
-            resultados = r.json().get("results") or []
+            if pagina:
+                dormir(pausa_s)
+            resultados = _get_json(http, DISCOVERY_URL, params, dormir=dormir).get("results") or []
             if not resultados:
                 break
             for x in resultados:
@@ -267,11 +313,13 @@ def ingerir_dcat_us(
     url: str = ICDE_DCAT_URL,
     limite_paginas: int | None = None,
     max_paginas: int = 50,
+    dormir: Callable[[float], None] = time.sleep,
 ) -> list[DatasetDescubrible]:
     """Cosecha un feed DCAT-US 1.1 (el Hub de la ICDE). El feed topa en ~10.000 ítems por página, y
     se **pagina** con `?page=N` hasta que una página no trae ítems nuevos (vacía o ya vistos), o
     hasta el tope de seguridad `max_paginas`. `limite_paginas` acota (desarrollo). Metadatos, no
-    carga; un ítem malformado no tumba la cosecha."""
+    carga; un ítem malformado no tumba la cosecha. Cada página (~30 MB) se reintenta si llega
+    cortada: un JSON truncado se vuelve a pedir en vez de tumbar la cosecha."""
     import httpx
 
     http = cliente or httpx.Client(
@@ -283,9 +331,8 @@ def ingerir_dcat_us(
     tope = min(max_paginas, limite_paginas) if limite_paginas else max_paginas
     try:
         for pagina in range(1, tope + 1):
-            r = http.get(url, params={"page": pagina}) if pagina > 1 else http.get(url)
-            r.raise_for_status()
-            crudos = r.json().get("dataset") or []
+            cuerpo = _get_json(http, url, {"page": pagina} if pagina > 1 else None, dormir=dormir)
+            crudos = cuerpo.get("dataset") or []
             nuevos = 0
             for x in crudos:
                 try:
@@ -406,11 +453,32 @@ class Embedder(Protocol):
     def documentos(self, textos: list[str]) -> list[tuple[float, ...]]: ...
 
 
+#: Tope del texto que se embebe (~250 tokens). El costo de e5-large en CPU crece con el largo y lo
+#: que distingue un dataset va al inicio (título, descripción, entidad); la cola de columnas casi no
+#: suma. Medido en el server (6 vCPU): sin tope, ~0,9 textos/s.
+MAX_CARACTERES_EMBEDDING = 1000
+
+
 def texto_para_embedding(d: DatasetDescubrible) -> str:
     """El texto que representa un dataset para buscarlo: título + descripción + entidad + categoría
     + keywords. Pura y estable (misma fila → mismo texto → mismo vector con el modelo fijado)."""
     partes = [d.titulo, d.descripcion, d.entidad, d.categoria or "", *d.columnas]
-    return " · ".join(p.strip() for p in partes if p and p.strip())
+    return " · ".join(p.strip() for p in partes if p and p.strip())[:MAX_CARACTERES_EMBEDDING]
+
+
+def huella_texto(texto: str, modelo: str = MODELO_EMBEDDING) -> str:
+    """La llave del vector en la caché: mismo modelo + mismo texto → mismo vector. Lleva el modelo,
+    así que cambiar de modelo invalida la caché sola."""
+    return hashlib.sha256(f"{modelo}\n{texto}".encode()).hexdigest()
+
+
+class CacheVectores(Protocol):
+    """Dónde se guardan los vectores ya calculados, por huella (en producción, una tabla en
+    pgvector). Permite retomar una pasada cortada y no re-embeber lo que no cambió."""
+
+    def vectores_por_huella(self, huellas: list[str]) -> dict[str, tuple[float, ...]]: ...
+
+    def guardar_vectores(self, pares: Mapping[str, tuple[float, ...]]) -> None: ...
 
 
 def _coseno(a: tuple[float, ...], b: tuple[float, ...]) -> float:
@@ -485,6 +553,9 @@ def candidatos_a_promover(
     return candidatos
 
 
+LOTE_MODELO = 8
+
+
 class FastEmbedder:
     """El `Embedder` real, con `fastembed` (ONNX, sin torch). Import perezoso: el núcleo no lo
     arrastra; se instala con el extra `descubrimiento`. e5 es asimétrico: antepone `query:` a la
@@ -496,7 +567,10 @@ class FastEmbedder:
         self._modelo = TextEmbedding(model_name=modelo)
 
     def _embeber(self, textos: list[str]) -> list[tuple[float, ...]]:
-        return [tuple(float(x) for x in v) for v in self._modelo.embed(textos)]
+        # Lote interno chico: e5-large (FP32) con 64 textos de 512 tokens a la vez pasó de 3 GB y el
+        # kernel mató el servicio. De a LOTE_MODELO la memoria de activaciones queda acotada.
+        vectores = self._modelo.embed(textos, batch_size=LOTE_MODELO)
+        return [tuple(float(x) for x in v) for v in vectores]
 
     def consulta(self, texto: str) -> tuple[float, ...]:
         return self._embeber([PREFIJO_CONSULTA + texto])[0]
@@ -508,20 +582,46 @@ class FastEmbedder:
 class EmbedderRemoto:
     """El `Embedder` que habla con el **microservicio** de embeddings por HTTP (ADR-0028, Q2): así
     el modelo vive en un solo contenedor y no se carga en cada réplica de la puerta. Misma interfaz
-    que `FastEmbedder`."""
+    que `FastEmbedder`. Con e5-large en CPU un lote tarda varios segundos: timeout holgado y
+    reintentos si el servicio corta la conexión o responde 5xx. Las esperas (5, 10, 20 s) cubren
+    un reinicio del servicio, que tarda ~20 s en volver a cargar el modelo."""
 
-    def __init__(self, url: str, cliente: Any = None, timeout_s: float = 30) -> None:
+    def __init__(
+        self,
+        url: str,
+        cliente: Any = None,
+        timeout_s: float = 120,
+        *,
+        intentos: int = 4,
+        espera_s: float = 5.0,
+        dormir: Callable[[float], None] = time.sleep,
+    ) -> None:
         import httpx
 
         self._url = url.rstrip("/") + "/embed"
         self._http = cliente or httpx.Client(
             timeout=timeout_s, headers={"User-Agent": "terranova-descubrimiento/1"}
         )
+        self._intentos = intentos
+        self._espera_s = espera_s
+        self._dormir = dormir
 
     def _pedir(self, cuerpo: dict[str, Any]) -> list[tuple[float, ...]]:
-        r = self._http.post(self._url, json=cuerpo)
-        r.raise_for_status()
-        return [tuple(float(x) for x in v) for v in r.json()["vectores"]]
+        import httpx
+
+        for intento in range(1, self._intentos + 1):
+            try:
+                r = self._http.post(self._url, json=cuerpo)
+                r.raise_for_status()
+                return [tuple(float(x) for x in v) for v in r.json()["vectores"]]
+            except httpx.HTTPStatusError as exc:
+                if exc.response.status_code < 500 or intento == self._intentos:
+                    raise
+            except httpx.TransportError:
+                if intento == self._intentos:
+                    raise
+            self._dormir(self._espera_s * 2 ** (intento - 1))
+        raise AssertionError("inalcanzable")
 
     def consulta(self, texto: str) -> tuple[float, ...]:
         return self._pedir({"consulta": texto})[0]
@@ -531,18 +631,46 @@ class EmbedderRemoto:
 
 
 def embeber_catalogo(
-    datasets: list[DatasetDescubrible], embedder: Embedder, *, lote: int = 256
+    datasets: list[DatasetDescubrible],
+    embedder: Embedder,
+    *,
+    lote: int = 64,
+    cache: CacheVectores | None = None,
+    modelo: str = MODELO_EMBEDDING,
 ) -> dict[str, tuple[float, ...]]:
-    """Re-embebe **todo** el catálogo (ADR-0028: pasada completa, no incremental) → id → vector. En
-    **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al microservicio
-    revienta la memoria/el timeout en una VM chica."""
-    vectores: dict[str, tuple[float, ...]] = {}
-    for i in range(0, len(datasets), lote):
-        trozo = datasets[i : i + lote]
-        salida = embedder.documentos([texto_para_embedding(d) for d in trozo])
-        for d, v in zip(trozo, salida, strict=True):
-            vectores[d.id_socrata] = v
-    return vectores
+    """El vector de **todo** el catálogo → id → vector (ADR-0028: la pasada cubre el catálogo
+    entero). En **lotes** (no todo el corpus en una llamada): un POST de decenas de miles al
+    microservicio revienta la memoria/el timeout en una VM chica.
+
+    Con `cache`, solo se embebe lo que no tiene vector para su huella (texto + modelo) y cada lote
+    se guarda al terminarlo. El vector de un texto dado no cambia con el mismo modelo, así que el
+    resultado es el mismo que re-embeber todo. e5-large en CPU va a ~1 texto/s: sin caché, una
+    pasada de ~34k datasets son ~10 h y un corte la pierde entera."""
+    textos = {d.id_socrata: texto_para_embedding(d) for d in datasets}
+    huellas = {id_: huella_texto(t, modelo) for id_, t in textos.items()}
+    previos = cache.vectores_por_huella(sorted(set(huellas.values()))) if cache else {}
+    pendientes: dict[str, str] = {}  # huella → texto (textos repetidos se embeben una vez)
+    for id_, h in huellas.items():
+        if h not in previos:
+            pendientes.setdefault(h, textos[id_])
+    if cache:
+        print(
+            f"embeddings: {len(huellas)} datasets, {len(previos)} en caché, "
+            f"{len(pendientes)} por embeber",
+            file=sys.stderr,
+        )
+    calculados = dict(previos)
+    orden = list(pendientes)
+    for n, i in enumerate(range(0, len(orden), lote), start=1):
+        trozo = orden[i : i + lote]
+        salida = embedder.documentos([pendientes[h] for h in trozo])
+        nuevos = dict(zip(trozo, salida, strict=True))
+        calculados.update(nuevos)
+        if cache:
+            cache.guardar_vectores(nuevos)
+            if n % 20 == 0:
+                print(f"embeddings: {i + len(trozo)}/{len(orden)}", file=sys.stderr)
+    return {id_: calculados[h] for id_, h in huellas.items()}
 
 
 def vectores_a_jsonl(vectores: dict[str, tuple[float, ...]]) -> str:

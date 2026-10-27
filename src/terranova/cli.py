@@ -300,7 +300,8 @@ def _buscar_mejor(
 
 def _catalogo_a_postgis(fuente: str, datasets: list[DatasetDescubrible]) -> int:
     """Embebe todo el catálogo (microservicio si hay `TERRANOVA_EMBEDDINGS_URL`, si no local) y lo
-    aterriza en PostGIS/pgvector, refrescando entero ese catálogo (ADR-0028)."""
+    aterriza en PostGIS/pgvector, refrescando entero ese catálogo (ADR-0028). Los vectores ya
+    calculados salen de la caché del almacén: solo se embebe lo nuevo o cambiado."""
     import os
 
     from terranova.descubrimiento import Embedder, embeber_catalogo
@@ -326,8 +327,9 @@ def _catalogo_a_postgis(fuente: str, datasets: list[DatasetDescubrible]) -> int:
     from terranova.almacen_descubrimiento import AlmacenDescubrimiento
     from terranova.descubrimiento import MODELO_EMBEDDING
 
-    vectores = embeber_catalogo(datasets, embedder)
-    n = AlmacenDescubrimiento(url).reemplazar(fuente, datasets, vectores, modelo=MODELO_EMBEDDING)
+    almacen = AlmacenDescubrimiento(url)
+    vectores = embeber_catalogo(datasets, embedder, cache=almacen, modelo=MODELO_EMBEDDING)
+    n = almacen.reemplazar(fuente, datasets, vectores, modelo=MODELO_EMBEDDING)
     print(f"PostGIS: {n} filas de «{fuente}» en descubrimiento.datasets ({len(vectores)} vectores)")
     return 0
 
