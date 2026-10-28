@@ -178,7 +178,7 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
     - valor de referencia del m² de la UAECD (#162);
     - POT 555: tratamiento urbanístico y área de actividad (#165);
     - estrato por manzana (#166);
-    - amenaza por movimiento en masa (#167).
+    - amenaza por movimiento en masa (#167), con el suelo rural desde #171.
   - CAR: zonificación del POMCA del río Bogotá, en vivo (#168).
   - CAR: los otros POMCA, en vivo (#170). `car_pomca_en_punto` consulta a la vez nueve cuencas
     (Bogotá, Carare-Minero, Garagoa, Negro, Alto Suárez, Medio y Bajo Suárez, Seco, Guavio,
@@ -199,7 +199,6 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
 - **Pendiente:**
   - La etapa 2 del SINIC, con los ~264 municipios restantes. La etapa 1 (21 municipios, 2 347 361
     terrenos) se ingirió desde Colombia en 3,2 h; unos pocos terrenos llegan sin geometría.
-  - El suelo rural de la amenaza de Bogotá (otro GeoJSON, de 110 MB).
   - Todas las copias de Bogotá y el SINIC entran en el refresco desde Colombia.
 
 ## Copias del DANE (2026-10-28)

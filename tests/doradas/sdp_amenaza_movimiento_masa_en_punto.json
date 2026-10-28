@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T09:00:46+00:00",
+ "grabado": "2026-10-28T14:16:09+00:00",
  "herramienta": "sdp_amenaza_movimiento_masa_en_punto",
  "llamadas": [
   {
@@ -64,13 +64,13 @@
       "truncado": false,
       "vistos": 1
      },
-     "consultado_en": "2026-10-28T08:59:53.526944+00:00",
+     "consultado_en": "2026-10-28T14:12:34.482111+00:00",
      "copia": {
-      "filas": 3459,
-      "huella": "sha256:59777d5aeb55e24af6be416f89ea63bfbf37bb1010466bc48bc868de5b6f948c",
+      "filas": 5658,
+      "huella": "sha256:9fe588ed43f90cca33f9c82f9d770a65e9d42b86db4c5608419e821055af7bbf",
       "repetidas_en_la_fuente": 0,
       "ventana_desde": null,
-      "version": "20261028085953526944"
+      "version": "20261028141234482111"
      },
      "servido_desde": "copia"
     }

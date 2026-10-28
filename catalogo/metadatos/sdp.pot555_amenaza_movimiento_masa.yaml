@@ -4,9 +4,10 @@ metodo: manual
 cosechado: '2026-10-28'
 origen: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=amenaza-por-movimiento-en-masa-en-suelo-urbano-y-de-expansion-bogota-d-c
 pagina: https://datosabiertos.bogota.gov.co/dataset/amenaza-por-movimiento-en-masa-en-suelo-urbano-y-de-expansion-bogota-d-c
-titulo: Amenaza por movimiento en masa en suelo urbano y de expansión, Bogotá D.C.
+titulo: Amenaza por movimiento en masa en suelo urbano y de expansión, y en suelo rural, Bogotá D.C.
 descripcion: En el marco del Decreto 555 de 2021 (POT de Bogotá), áreas con condición de amenaza por
-  movimiento en masa en suelo urbano. Escala de captura 1:5.000. GeoJSON en la cartesiana de Bogotá
-  (PCS_CarMAGBOG); el CKAN cita MAGNA 4686 como sistema de referencia.
+  movimiento en masa en suelo urbano (escala de captura 1:5.000) y en suelo rural (1:25.000, conjunto
+  amenaza-por-movimiento-en-masa-en-suelo-rural-bogota-d-c, también CC BY 4.0). GeoJSON en la
+  cartesiana de Bogotá (PCS_CarMAGBOG); el CKAN cita MAGNA 4686 como sistema de referencia.
 idioma: Español
-filas: 3459
+filas: 5658
