@@ -1,0 +1,47 @@
+id: car.pomca_rio_bogota
+titulo: "Zonificación ambiental del POMCA del río Bogotá (CAR, 2019)"
+entidad: Corporación Autónoma Regional de Cundinamarca (CAR)
+competencia: ordena y maneja las cuencas de su jurisdicción con el POMCA (Decreto 1640 de 2012, hoy en el Decreto 1076 de 2015)
+acto: Resolución CAR 957 de 2019
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/3c3c4bf77c5b44c5a06add73374fb2f6?f=json
+  cita: "licenseInfo: enlace a Creative Commons Atribución 4.0 (CAR, Corpoguavio, Corporinoquia)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR), POMCA del río Bogotá"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem «Zonificación Ambiental POMCA Río Bogotá - 2120 año 2019» del dueño de las rondas
+# (ArcGIS Online). Capa 0: la zonificación adoptada por la Resolución CAR 957 de 2019. Cada POMCA de
+# la CAR es un servicio aparte: este es el del río Bogotá.
+url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []  # solo la cuenca del río Bogotá (lo dice la descripción)
+  periodo: "POMCA vigente del río Bogotá (2019)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  CAT_ORD: {nombre: categoria_ordenacion, tipo: str, desc: "categoría de ordenación: conservación y protección ambiental, o uso múltiple"}
+  ZO_US_MA: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)"}
+  SZO_US_M: {nombre: subzona_uso_manejo, tipo: str, desc: "subzona de uso y manejo"}
+  NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, ARUM…)"}
+  DESCRIP: {nombre: descripcion, tipo: str, desc: "descripción de la subzona con su sigla"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: CAR, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un polígono de zonificación ambiental; 11 588 en la cuenca del río Bogotá"
+  clave: {columna: OBJECTID_1, unica: true}
+  operaciones: {filtrar: 0.35, contar: 0.2}
+  hallazgos:
+  - "un punto toca un solo polígono: Chapinero es «Áreas urbanas municipales y distritales (ZU)»"
+  - "la capa está en EPSG:3116 y acepta un punto en 4326"
+  - "un polígono pesa ~27 KB con geometría: se consulta sin ella"
+  decision: "en vivo por punto"
