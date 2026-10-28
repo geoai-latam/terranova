@@ -36,8 +36,10 @@
 - **Consecuencias:**
   - El código estuvo público una semana bajo Apache 2.0. Quien lo clonó conserva esa licencia sobre
     esa versión: no se puede revocar. GitHub registraba 0 forks y 0 estrellas.
-  - **Pendiente del dueño:** la licencia del código de aquí en adelante (los archivos `LICENSE` y
-    `LICENSE-DATA.md` siguen como estaban hasta que lo decida). Las obligaciones de atribución y
-    ShareAlike de las fuentes siguen aplicando a los datos que se sirven, sea cual sea la licencia
-    del código.
+  - **Licencia propietaria** (decisión del dueño, 2026-10-28): código, catálogo y documentación son
+    de GeoAI LATAM, con todos los derechos reservados (`LICENSE`). Los datos que se entregan
+    conservan la licencia y la atribución de su fuente (ADR-0019), y lo derivado de fuentes
+    CC BY-SA que se distribuya, como los datasets curados, sigue siendo CC BY-SA
+    (`LICENSE-DATA.md`). Los conectores vendorizados vienen de GEO_COPILOT, del mismo dueño, que
+    sigue público con Apache 2.0 en su propio repo.
   - Ya no hay CI ilimitado ni «cualquiera puede montar su propia instancia».

@@ -13,7 +13,6 @@ from terranova import __version__
 from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo, Fuente, Herramienta
 
-REPO = "https://github.com/geoai-latam/terranova"
 FUENTE_DESCRIBIR = "fuente_describir"
 DESCRIBIR = (
     "qué años cubre la fuente, si es geográfica (geometría, CRS, extensión, capas), qué significa "
@@ -71,7 +70,7 @@ def llms_txt(c: Catalogo) -> str:
     lineas += [
         "## Opcional",
         "",
-        f"- [Código y decisiones]({REPO}): Apache 2.0; catálogo y datos CC BY-SA 4.0.",
+        "- [Fuentes y sus licencias](/v1/fuentes): cada dato conserva la licencia de su fuente.",
         "- [OpenAPI](/openapi.json)",
         "- [Tarjeta MCP](/.well-known/mcp/server-card.json)",
         "",
@@ -87,9 +86,8 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
         "version": __version__,
         "description": (
             "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
-            "(contrato rt/1). Abierto y gratuito."
+            "(contrato rt/1)."
         ),
-        "repository": REPO,
         "transport": {"type": "streamable-http", "endpoint": "/mcp"},
         "profiles": [
             {

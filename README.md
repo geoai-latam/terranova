@@ -54,5 +54,5 @@ puerta, el catálogo y la operación encima de ellos. GEO Copilot es su primer c
 
 ## Licencia
 
-Código: [Apache 2.0](LICENSE). Catálogo y datasets: [CC BY-SA 4.0](LICENSE-DATA.md). Cada dato
-conserva la licencia y la atribución de su fuente.
+Propietaria: © 2026 GeoAI LATAM, todos los derechos reservados ([LICENSE](LICENSE)). Cada dato
+que Terranova entrega conserva la licencia y la atribución de su fuente ([LICENSE-DATA.md](LICENSE-DATA.md)).
