@@ -1,0 +1,55 @@
+id: car_pomca_en_punto
+version: 1
+familia: ambiente
+fuente: car.pomca_zonificacion
+pregunta: "¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca?"
+descripcion: >
+  Zonificación ambiental del Plan de Ordenación y Manejo de la Cuenca (POMCA) que rige en un punto de
+  la jurisdicción de la CAR, en nueve cuencas: río Bogotá, Carare-Minero, Garagoa, río Negro, Alto
+  Suárez, Medio y Bajo Suárez, río Seco y otros directos al Magdalena, Guavio y Guayuriba. Da la
+  cuenca, la categoría de ordenación (conservación y protección ambiental, o uso múltiple), la zona y
+  la subzona de uso y manejo. Es determinante ambiental del ordenamiento municipal. Para la cuenca
+  del río Sumapaz (Fusagasugá, Melgar…), car_pomca_rio_sumapaz_en_punto; si no hay resultado, el
+  punto está fuera de estas cuencas. (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas:
+  - Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0
+  - Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0
+  - Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0
+  - Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2
+  - Zonificacion_POMCA_AltoSuarez/FeatureServer/0
+  - Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0
+  - Zonificacion_POMCA_Seco/FeatureServer/0
+  - ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0
+  - ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0
+  argumentos:
+    geometria: ninguna  # un polígono pesa decenas de KB
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    max_features: 5  # sin out_fields: cada capa nombra distinto sus campos (ver los alias)
+  campos: [CAT_ORD, ZO_US_MA, SZO_US_M, NOMENCLAT, DESCRIP]
+derivados:
+  cuenca:
+    de: capa
+    valores:
+      Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0: río Bogotá
+      Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0: río Carare-Minero
+      Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0: río Garagoa
+      Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2: río Negro
+      Zonificacion_POMCA_AltoSuarez/FeatureServer/0: río Alto Suárez
+      Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0: río Medio y Bajo Suárez
+      Zonificacion_POMCA_Seco/FeatureServer/0: río Seco y otros directos al Magdalena
+      ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0: río Guavio
+      ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0: río Guayuriba
+salida: PomcaCarEnPunto
+cobro: punto
+canario:
+  # Quetame (cuenca del Guayuriba); medido el 2026-10-28 en las nueve capas: solo responde la del
+  # Guayuriba, con uso múltiple, áreas de restauración, sigla UM1.
+  entrada: {lon: -73.86, lat: 4.33}
+  verdad: {cuenca: río Guayuriba, categoria_ordenacion: "Uso Multiple", zona_uso_manejo: "Areas de Restauración", sigla: UM1}
+  campos: [categoria_ordenacion, cuenca, descripcion, sigla, subzona_uso_manejo, zona_uso_manejo]
+  latencia_max_ms: 8000

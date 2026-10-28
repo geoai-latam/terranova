@@ -9,7 +9,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_consejos_comunitarios_en_punto` | ¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_resguardos_en_punto` | ¿En qué resguardo indígena formalizado cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_bogota_en_punto` | ¿Qué zonificación ambiental del POMCA del río Bogotá tiene este punto? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
+| `car_pomca_rio_sumapaz_en_punto` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este punto? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 10 |
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
 | `ideam_calidad_aire_municipio` | ¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…) | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |

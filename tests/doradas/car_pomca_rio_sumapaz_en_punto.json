@@ -1,0 +1,90 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T14:03:39+00:00",
+ "herramienta": "car_pomca_rio_sumapaz_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.364,
+     4.337,
+     -74.364,
+     4.337
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "out_fields": [
+     "T_CAT_ORD",
+     "T_ZON_USO",
+     "T_SUBZON_USO",
+     "NOMENCLAT"
+    ],
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "NOMENCLAT": "ZU",
+          "T_CAT_ORD": "Uso Multiple",
+          "T_SUBZON_USO": "Areas urbanas, municipales y distritales",
+          "T_ZON_USO": "Areas Urbanas"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Zonificación Ambiental POMCA Río Sumapaz"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.364,
+      4.337,
+      -74.364,
+      4.337
+     ],
+     "capa": "Zonificación Ambiental POMCA Río Sumapaz",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.364,
+       4.337,
+       -74.364,
+       4.337
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "T_CAT_ORD",
+       "T_ZON_USO",
+       "T_SUBZON_USO",
+       "NOMENCLAT"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

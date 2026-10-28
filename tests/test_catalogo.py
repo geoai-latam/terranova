@@ -77,6 +77,18 @@ CASOS = [
         _set(campos__CODIGO_ANTERIOR={"nombre": "codigo_predial", "tipo": "str", "desc": "x"}),
         "mismo nombre",
     ),
+    (
+        FUENTE,
+        _set(
+            campos__CODIGO={
+                "nombre": "codigo_predial",
+                "tipo": "str",
+                "desc": "x",
+                "alias": ["CODIGO"],
+            }
+        ),
+        "alias repite",
+    ),
     (FUENTE, _set(frescura__sla_actualizacion="mensual"), "sla_actualizacion"),
     (FUENTE, _set(campo_inventado=1), "campo_inventado"),
     (FUENTE, _set(id="igac.otra"), "debe llamarse"),
@@ -241,7 +253,9 @@ def test_toda_fuente_tiene_ficha_tecnica() -> None:
     assert not sin_ficha, f"fuentes sin catalogo/metadatos/<id>.yaml (spec 08): {sin_ficha}"
     for fid, m in catalogo.metadatos.items():
         protocolo = catalogo.fuentes[fid].protocolo
-        if protocolo in ("socrata", "arcgis_rest"):
+        # una fuente de varios servicios ArcGIS (su url es la carpeta) no tiene un ítem que cosechar
+        varios = str(catalogo.fuentes[fid].url).endswith("/rest/services")
+        if protocolo in ("socrata", "arcgis_rest") and not varios:
             assert m.metodo == "cosechado", f"{fid}: {protocolo} se cosecha, no se escribe a mano"
 
 
@@ -325,3 +339,23 @@ def test_toda_herramienta_que_pide_nit_dice_como_buscarlo() -> None:
         if pide_nit(h) and not any(b in h.descripcion for b in busquedas)
     ]
     assert not sin_guia, f"piden NIT y no dicen cómo buscarlo: {sorted(sin_guia)}"
+
+
+def test_un_alias_toma_el_campo_que_cada_capa_nombra_distinto() -> None:
+    """Los POMCA de la CAR llaman CAT_ORD, CAT_ORD_A o CATEGORIA a la categoría (2026-10-28)."""
+    from terranova.ejecutor import mapear_fila
+
+    catalogo = cargar()
+    h = catalogo.herramientas["car_pomca_en_punto"]
+    fuente = catalogo.fuentes[h.fuente]
+    seco = "Zonificacion_POMCA_Seco/FeatureServer/0"
+    fila = {"FIRST_CAT_ORD": "02", "CATEGORIA": "Uso Múltiple", "FIRST_NOMENCLAT": "ZU", "x": 1}
+    assert mapear_fila(h, fuente, fila, seco) == {
+        "categoria_ordenacion": "Uso Múltiple",
+        "sigla": "ZU",
+        "cuenca": "río Seco y otros directos al Magdalena",
+    }
+    negro = "Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2"
+    assert mapear_fila(h, fuente, {"CAT_ORD_A": "Uso Multiple"}, negro)["categoria_ordenacion"] == (
+        "Uso Multiple"
+    )

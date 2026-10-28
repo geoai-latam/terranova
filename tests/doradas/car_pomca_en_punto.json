@@ -1,0 +1,590 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T14:03:38+00:00",
+ "herramienta": "car_pomca_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionAmbientalSP"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "ZonificacionAmbientalSP",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Zonificación Ambiental POMCA Río Garagoa 3507"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "Zonificación Ambiental POMCA Río Garagoa 3507",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionBogota_4"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "ZonificacionBogota_4",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_AltoSuarez/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Zonificacion_POMCA_AltoSuarez"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "Zonificacion_POMCA_AltoSuarez",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_AltoSuarez/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_AltoSuarez/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "MedioBajoSuarez_240102_ZonificacionAmbiental"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "MedioBajoSuarez_240102_ZonificacionAmbiental",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionAmbiental_POMCA_Guavio"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "ZonificacionAmbiental_POMCA_Guavio",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Seco/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionAmbiental_POMCA_SP"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "ZonificacionAmbiental_POMCA_SP",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Seco/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Seco/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Carare_2312_ZonificacionAmbiental"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "Carare_2312_ZonificacionAmbiental",
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 0,
+     "traidos": 0,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  },
+  {
+   "argumentos": {
+    "bbox": [
+     -73.86,
+     4.33,
+     -73.86,
+     4.33
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "DESCRIP": "Áreas transformadas que presentan deterioro ambiental y que pueden ser recuperadas para continuar con el tipo de uso múltiple definido de acuerdo a su aptitud.",
+          "NOMENCLAT": "UM1",
+          "OBJECTID": 5000,
+          "SZO_US_M": "Areas de recuperación para el uso múltiple",
+          "Shape__Area": 733066.4241943359,
+          "Shape__Length": 11481.58770171967,
+          "ZO_US_MA": "Areas de Restauración",
+          "simb": "08"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionAmbiental_POMCA_Guayuriba"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.86,
+      4.33,
+      -73.86,
+      4.33
+     ],
+     "capa": "ZonificacionAmbiental_POMCA_Guayuriba",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.86,
+       4.33,
+       -73.86,
+       4.33
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "*"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

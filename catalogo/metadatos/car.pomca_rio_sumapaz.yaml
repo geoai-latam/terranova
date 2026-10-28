@@ -1,0 +1,41 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: car.pomca_rio_sumapaz
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=d00420d48a5142a2940bf11b567c791b
+titulo: Zonificación Ambiental POMCA Río Sumapaz
+descripcion: 'Contiene la Zonificación Ambiental del Plan de Ordenación y Manejo de la Cuenca del Río
+  Sumapaz, Subzona Hidrográfica con código 2119, Adoptado mediante Resolución CAR 149 de 2023. Este POMCA
+  fue formulado de acuerdo con el Decreto del Ministerio del Medio Ambiente 1076 de 2015. Mayor información
+  en la dirección: https://www.car.gov.co/vercontenido/81 |categoria:Ambiente y Desarrollo Sostenible|cobertura:Departamental'
+publicado: '2023-09-14'
+datos_actualizados: '2024-08-22'
+etiquetas:
+- POMCA
+- Sumapaz
+- POMCA Sumapaz
+filas: 31909
+geografia:
+  geometria: poligono
+  crs: EPSG:9377
+  extension:
+  - 4800387.6713
+  - 1970275.8587999996
+  - 4866516.28
+  - 2061716.9783999994
+  capas:
+    '0': Zonificación Ambiental POMCA Río Sumapaz
+campos:
+  T_CAT_ORD:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: T_CAT_ORD
+  T_ZON_USO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: T_ZON_USO
+  T_SUBZON_USO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: T_SUBZON_USO
+  NOMENCLAT:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NOMENCLAT
