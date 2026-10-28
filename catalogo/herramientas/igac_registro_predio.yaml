@@ -23,7 +23,7 @@ consulta:
 salida: RegistroPredio
 derivados:
   municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
-creditos: 10
+cobro: registro
 canario:
   entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_1, corte 06_2026
   verdad:

@@ -22,7 +22,7 @@ consulta:
     max_filas: 200
   campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad, tiporol, nombrerol]
 salida: MedicamentoPorExpediente
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en i7cb-raxc: 5 presentaciones × 2 roles = 10 filas; la primera, el
   # fabricante (PFIZERS.A. DE C.V., escrito así en la fuente).

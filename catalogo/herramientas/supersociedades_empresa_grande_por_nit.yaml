@@ -22,7 +22,7 @@ consulta:
     max_filas: 200
   campos: [nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte]
 salida: EmpresaGrandePorNit
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en 6cat-2gcs: Ecopetrol, corte 2021 → ingresos $84.95 (billones).
   entrada: {nit: 899999068}

@@ -31,7 +31,7 @@ derivados:
   sede: {de: columna, campo: sede, tipo: str}
   estudiantes: {de: columna, campo: estudiantes, tipo: int}
   promedio_global: {de: columna, campo: promedio_global, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en kgxf-xxbe: la I.E. Diversificado de Chía (125175000493), 20102 → 153
   # estudiantes (los periodos de 2010 no traen puntaje global).

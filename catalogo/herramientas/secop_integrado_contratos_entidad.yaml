@@ -33,7 +33,7 @@ derivados:
   anio: {de: columna, campo: anio, tipo: int}
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en rpmr-utcd: Municipio de Pitalito, 2018 en SECOP I → 1 contrato, $9 995 000.
   entrada: {nit_entidad: 891180077}

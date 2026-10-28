@@ -32,7 +32,7 @@ derivados:
   ejecucion_financiera: {de: columna, campo: ejecucion_financiera, tipo: float}
   ejecutor: {de: columna, campo: ejecutor, tipo: str}
   valor_proyectos: {de: suma, campo: valor_total, tipo: float}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en mzgh-shtp: Abejorral (05002; prueba el cero inicial) ejecuta 5 proyectos;
   # el primero, 2013050020003, está TERMINADO.

@@ -26,7 +26,7 @@ consulta:
     max_filas: 5000
   campos: [codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad]
 salida: EstacionesEnZona
-creditos: 5
+cobro: zona
 canario:
   # Medido el 2026-10-21 en https://www.datos.gov.co/resource/hp9r-jxuu.json con
   # $where=latitud::number between 4.852 and 4.856 AND longitud::number between -74.035 and -74.030

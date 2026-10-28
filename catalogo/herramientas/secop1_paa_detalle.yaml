@@ -24,7 +24,7 @@ consulta:
 salida: Secop1PaaDetalle
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en azeg-sgqg (idpaa = 372838): 239
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

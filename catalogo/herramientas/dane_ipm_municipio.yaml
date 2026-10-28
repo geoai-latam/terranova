@@ -21,7 +21,7 @@ consulta:
 salida: IpmMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en el anexo censal 2018: Chía (25175) → 6,7 % total, 6,3 % cabeceras, 8,6 % rural.
   entrada: {municipio_divipola: "25175"}

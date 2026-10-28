@@ -28,7 +28,7 @@ consulta:
 salida: RuesEmpresasBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en c82u-588k: «ECOPETROL» da 50 personas jurídicas o entidades (asociaciones,
   # fondos de empleados, la sociedad misma…). Crece con los registros: mínimo.
