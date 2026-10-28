@@ -2,6 +2,52 @@
 
 *Actualizado: 2026-10-28.*
 
+## Estado consolidado del producto (2026-10-28, `main` en #182)
+
+Esta sección es la foto vigente; las de abajo son el registro de cómo se llegó aquí.
+
+- **En producción:** https://terrnova.com sirve el commit de `main` (REST `/v1` y MCP, contrato
+  `rt/1`, llave obligatoria). Los 17 servicios del compose están arriba: puerta, Postgres (PostGIS +
+  pgvector), Redis, Caddy, los 6 conectores, embeddings, descubrimiento, canarios, copias, respaldo,
+  Prometheus y Grafana.
+- **Catálogo:** 207 herramientas sobre 180 fuentes (178 publicadas y 2 en borrador) de 49 entidades.
+  177 fuentes son colombianas y 3 globales. Por familia: estadísticas 44, territorio 43, contratación 42,
+  justicia 27, ambiente 21, empresas 18, normativa 11 y meta 1.
+- **Cómo se sirven:** 155 fuentes en vivo y 25 por copia (12,4 M filas vigentes en `copia`). Entre
+  las copias están el SINIC en 333 municipios (6,1 M terrenos), el comex de la DIAN, los anexos del
+  DANE (IPC, PIB, proyecciones de población, CNPV), las alertas diarias del IDEAM y las capas de
+  Bogotá. Las copias que el datacenter no alcanza se bajan desde Colombia con
+  `interno/despliegue/refrescar_desde_colombia.sh`.
+- **Salud medida al cierre:**
+  - Canario diario: 165 de 180 fuentes en verde tras el despliegue.
+  - Los rojos de ese corrido eran casi todos de latencia (el canario corrió con todo en frío). Medidos
+    uno por uno después, 12 de 13 quedaron dentro de su tope; policía lesiones, en el límite (10,6 s
+    contra 10 s).
+  - Rojos reales: SECOP modificaciones, porque la fuente se republicó con menos filas (corregido en
+    #182), y `dane_poblacion_municipio`, porque el geoportal del DANE está caído. Ese responde
+    `fuente_lenta` en problem+json; la población proyectada (`dane_poblacion_proyectada_municipio`)
+    lo cubre.
+  - `nasa.firms` no tiene datos (no hay ventana fija para una verdad).
+- **Pruebas:** CI verde (lint, tipos, pruebas con piso de cobertura, catálogo, descripciones, pip-audit
+  y trivy). El e2e con LLM real (gpt-5.4-mini) de la última tanda dio 29 de 29.
+- **Repo:** `main` limpio, sin ramas ni worktrees abiertos (salvo el de este PR).
+- **Pendiente del dueño (no hay trabajo técnico abierto):**
+  1. Registrar el refresco diario desde Colombia: `programar_refresco.ps1`. Sin él, las alertas del
+     IDEAM (SLA de un día) se quedan viejas.
+  2. El correo soporte@terrnova.com y la sonda externa (UptimeRobot).
+  3. La revisión legal de los términos y la privacidad, para publicarlos con el SLA.
+  4. El token de Copernicus para ERA5-Land, que reemplaza a Open-Meteo.
+  5. Decisiones abiertas: la base legal de las licencias DANE para los planes de pago, la DIAN
+     («sin fines de lucro»), los excedentes de créditos y la URL de Inspow.
+- **Huecos conocidos de fuentes (no son tareas):**
+  - El censo 2018 por geoportal del DANE está caído.
+  - La deforestación del IDEAM solo sale en PDF.
+  - Las alertas hidrológicas OSPA vienen por subzona.
+  - La llegada de desplazados del RUV no se sirve: la fuente la mide mal.
+  - El estado de los puentes no se publica (lo último es de 2015).
+  - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
+    el visualizador del IDEAM.
+
 ## Auditoría integral (2026-10-26)
 
 Una auditoría integral del código y el comportamiento encontró, por impacto: disponibilidad de la
@@ -536,8 +582,12 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **81 herramientas** de ~
 
 ## Pendiente de decidir
 
+Lo vigente está en el [estado consolidado](#estado-consolidado-del-producto-2026-10-28-main-en-182)
+(pendientes del dueño).
 
 ## Siguiente paso concreto
+
+*Registro del 2026-10-23; lo vigente está en el estado consolidado, arriba.*
 
 **Al 2026-10-23 (madrugada del 24): 153 herramientas sobre 130 fuentes, más que las ~139 abiertas de la referencia**, cada una con perfil (spec 07), ficha técnica (spec 08), canario medido en la fuente y dorada grabada en vivo. Olas 1 y 2 cerradas, salvo lo que no se puede servir sin carga ni permiso. De la ola 3 ya están: Corte Constitucional (índice y texto), normas en HTML (Función Pública, Normograma DIAN, CREG), anexos del DANE (IPM, GEIH), usuarios aduaneros de la DIAN, historia registral por folio, IPM municipal, Superfinanciera, Supersolidaria, REPS, los siete reportes de delitos de la Policía Nacional, Medicina Legal, las once modalidades del SIEVCAC del CNMH, víctimas de minas, proyectos y presupuesto de regalías, EVA agrícola e internet fijo. **Banco de agente (2026-10-23, `scripts/banco_agente.py`, gpt-5.4-mini, 60 preguntas en seis familias, cada una en su perfil):** herramienta correcta 97 % (ADR-0006 pide ≥ 90 %), éxito estricto 73 %, 2,2 llamadas y ~17 000 tokens por pregunta. Halló dos fallas de la puerta, ya corregidas: el esquema de `ficha_lugar` con `oneOf` arriba hacía que OpenAI rechazara la lista entera de herramientas, y el esquema de entrada no decía la forma de los códigos (el agente leyó «DIVIPOLA seguido de 000» en la ficha técnica y mandó 25175000). `/mcp` completo (150) ya pasa el tope de 128 herramientas de OpenAI: esos clientes usan los perfiles por familia. **Segunda ronda (mismo día):** con las herramientas de nombre a código (`dane_divipola_buscar` y `secop_entidades_municipio`, en todos los perfiles), SUIN-Juriscol (`suin_norma`, `suin_normas_anio`) y `secop_contratos_entidad_anio`, el éxito estricto subió a 83 % (herramienta correcta 93 %). Se corrigió además: las búsquedas por nombre (RUES, Superfinanciera, Supersolidaria, DIVIPOLA) ponen primero la coincidencia más corta (con orden alfabético, «ECOPETROL» llenaba los 50 con asociaciones); SECOP por municipio no distingue mayúsculas; las herramientas por NIT de entidad devuelven el nombre de la entidad en cada fila, para que un NIT supuesto se note; y una fuente que a veces responde vacío sin error (zonas de reserva campesina de la ANT, ~25 %) se reintenta hasta 3 veces antes de decir «no encontrado» (`comportamiento.reintentos_si_vacio`). Lo que queda es del modelo mini y no de la puerta: a veces supone un NIT pese a la instrucción, suma mal filas que ya vienen totalizadas o prefiere Función Pública a SUIN para la vigencia (respuesta correcta en esa fuente). Las fuentes lentas o caídas (RUNAP ~35 s, BanRep 502, ANT «Unable to complete operation») se informan como «no se pudo», no como «no hay». Siguiente: la pieza «scrape con estado». Piezas nuevas en GEO Copilot: `arcgis_estadisticas`, `web_html`, `web_tabla` y el intermedio TLS verificado de Función Pública. Avance frente a Croma en [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md#avance-frente-a-croma).
 

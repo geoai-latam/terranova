@@ -14,7 +14,8 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: u8cx-r425
-    # Spec 07: la fuente trae copias exactas (33 filas, 21 distintas en CO1.PCCNTR.3712964).
+    # Spec 07: la fuente traía copias exactas (33 filas, 21 distintas en CO1.PCCNTR.3712964); el
+    # 2026-10-28 se republicó sin ellas (16 filas). El distinct se queda por si vuelven.
     select: "distinct id_contrato, identificador_modificacion, proposito_modificacion, descripcion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion"
     where: "id_contrato = '{id_contrato}'"
     order: "fecha_de_aprobacion, identificador_modificacion"
@@ -25,9 +26,10 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
-  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
+  # Medido el 2026-10-28 en u8cx-r425 (republicado ese día): el contrato de Pitalito, terminado en
+  # 2023, tiene 16 modificaciones (la última del 2024-08-14). Antes traía 21: la fuente sí borra.
   entrada: {id_contrato: CO1.PCCNTR.3712964}
   verdad: {id_contrato: CO1.PCCNTR.3712964}
-  minimos: {numero_registros: 21}
+  minimos: {numero_registros: 16}
   campos: [descripcion, dias_extendidos, estado, fecha_aprobacion, id_contrato, id_modificacion, numero_registros, proposito, valor_modificacion]
   latencia_max_ms: 10000
