@@ -126,8 +126,10 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
   - **Ingeridas por túnel desde Colombia:** RUNAP 1.936 áreas (268 s), UPRA 178.973 zonas (549 s),
     capacidad de uso 64.771 polígonos (854 s), vocación de uso. Seis herramientas pasan a la copia
     con sus doradas regrabadas y los canarios con las verdades de la fuente. **Conflictos de uso**
-    (548.423 polígonos; la fuente tarda ~50 s por consulta, sea cual sea la página) sigue en vivo
-    hasta terminar su copia.
+    (548.423 polígonos) se bajó desde el servidor en 19 min (2–5 s por página de 2.000): el IGAC sí
+    se deja copiar desde el datacenter, así que su refresco va en el job diario del servidor. Con
+    él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
+    lugar.
 
 ## Dónde estamos
 
