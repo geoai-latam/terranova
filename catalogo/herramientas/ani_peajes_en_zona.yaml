@@ -1,0 +1,33 @@
+id: ani_peajes_en_zona
+version: 1
+familia: territorio
+fuente: ani.peajes
+pregunta: "¿Qué peajes de la ANI hay en esta zona?"
+descripcion: >
+  Peajes de las concesiones de la ANI dentro de un rectángulo: nombre, estado, proyecto de concesión,
+  código de la vía, municipio y departamento. Solo los peajes concesionados por la ANI; los peajes del
+  INVÍAS no están aquí. Para las concesiones, ani_concesiones_viales_en_zona.
+  (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [5]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: completa
+    out_fields: [nombre, estado, proyecto, codvia, municipio, departamento]
+    max_features: 200
+  campos: [nombre, estado, proyecto, codvia, municipio, departamento]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: PeajesEnZona
+cobro: zona
+canario:
+  # Norte de Bogotá; medido el 2026-10-28 en la capa 5: 5 peajes (FUSCA, ANDES, UNISABANA, LA CABAÑA
+  # y SOPÓ).
+  entrada: {bbox: [-74.10, 4.80, -73.90, 5.05]}
+  minimos: {numero_registros: 5}
+  campos: [codigo_via, departamento, estado_peaje, municipio, numero_registros, peaje, proyecto_peaje]
+  latencia_max_ms: 8000

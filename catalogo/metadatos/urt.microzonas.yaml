@@ -1,0 +1,67 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: urt.microzonas
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=d18d0490c21c45b1bf5fdf0b82493264
+titulo: Open_Data_Microzonas
+descripcion: '4. Descripción de los datos : Este producto contiene información de las Microzonas que se
+  han definido como areas de intervencion para el tramite administrativo y judicial, definidas por las
+  Direcciones Territoriales de la Unidad Administrativa Especial de Gestión de Restitución de Tierras
+  Despojadas, mediante el cual se definen las áreas geográficas en las cuales se realizará el estudio
+  y tramite de las solicitudes recibidas.. 4.1.Detalles 4.1.1.Nivel de Detalle (Escala): De acuerdo a
+  la fuente para la definicion de la Microzona (Límite Departamental, Municipal, Corregimiental, Veredal,
+  Sector o Fisiográfico). 4.1.2.Tipo de Representación Espacial: Vectorial. 4.1.3.Idioma: Castellano.
+  4.1.4.Conjunto de Carácteres: utf8. 4.1.5.Categoría Temática: Cobertura Terrestre. 4.1.6.Ambiente de
+  Desarrollo: ESRI - ArcGIS 10.8.1 4.2.Extensión o Cubrimiento 4.2.1.Descripción de Cubrimiento: La cobertura
+  contiene la información espacial de los municipios, veredas, corregimientos, sectores o predios de Colombia
+  agrupados geográficamente en zonas (Microzonas) donde la Unidad Administrativa Especial de Gestión de
+  Restitución de Tierras Despojadas realizará el estudio y tramite de las solicitudes r…'
+publicado: '2018-08-31'
+datos_actualizados: '2026-10-27'
+etiquetas:
+- Microzonas
+- Microfocalizacion
+- Microzona
+filas: 1314
+geografia:
+  geometria: poligono
+  crs: EPSG:4686
+  extension:
+  - -78.95549665291239
+  - -4.238850728305895
+  - -66.91430096608882
+  - 12.460621350474499
+  capas:
+    '3': Open_Data_Microzonas
+campos:
+  id_microzona:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: id_microzona
+    minimo: '1'
+    maximo: '1547'
+    comparacion: numero
+  cod_dane:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: cod_dane
+  depto:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: depto
+  mpio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: mpio
+  n_res_m:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: n_res_m
+  fecha_res_vigente:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: fecha_res_vigente
+    minimo: '2012-04-11'
+    maximo: '2026-08-28'
+    comparacion: fecha
+  territorial:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: territorial
+  estado_micro:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: estado_micro

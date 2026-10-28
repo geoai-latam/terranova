@@ -1,0 +1,30 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.peajes
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer?f=json
+filas: 150
+geografia:
+  geometria: punto
+  crs: EPSG:4686
+  capas:
+    '5': Peajes
+campos:
+  nombre:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre
+  estado:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Estado
+  proyecto:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Proyecto
+  codvia:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CodVia
+  departamento:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Departamento
+  municipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Municipio

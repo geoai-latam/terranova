@@ -1,0 +1,42 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.concesiones_viales
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer?f=json
+filas: 47
+geografia:
+  geometria: linea
+  crs: EPSG:4686
+  capas:
+    '3': Carretero
+campos:
+  nombrepr:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NombrePr
+  generacion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Generacion
+  lngcnc:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: LngCnc
+    minimo: '17960'
+    maximo: '504435'
+    comparacion: numero
+  etp:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: etp
+  prcavn:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: PrcAvn
+    minimo: '0.0'
+    maximo: '1'
+    comparacion: numero
+  vlrcnt:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: VlrCnt
+    minimo: '3466752028.73'
+    maximo: '5090472461167.0'
+    comparacion: numero
+  concesionario:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Concesionario

@@ -1,0 +1,50 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: car.rondas_delimitadas
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=f0e7dd0ebf6241d7b6e3c8a4ebce7e1d
+titulo: Delimitación de Rondas
+descripcion: 'Rondas Delimitadas CAR: El artículo 83 del Decreto 2811 de 1974, Código Nacional de Recursos
+  Naturales, establece que: &quot;salvo derechos adquiridos por particulares, son bienes inalienables
+  e imprescriptibles del Estado: (a) el álveo o cauce natural de las corrientes; (b) el lecho de los depósitos
+  naturales de agua, (c) las playas marítimas, fluviales y lacustres; y (d) una faja paralela a la línea
+  de mareas máximas o a la del cauce permanente de Ríos y lagos hasta de 30 metros de ancho...&quot;.
+  El Artículo 2.2.3.2.13.18. del Decreto 1076 de 2015 establece que para proteger determinadas fuentes
+  o depósitos de aguas, las autoridades ambientales podrán alindar zonas aledañas a ellos, en las cuales
+  se prohiba o restrinja el ejercicio de actividades, tales como: vertimiento de aguas negras, uso de
+  fertilizantes o pesticidas, cría de especies de ganado depredador y otras similares. Que según el artículo
+  2.2.3.2.1.1. de dicho decreto, para cumplir los fines del artículo 2° del Decreto ley 2811 de 1974,
+  las corporaciones autónomas regionales deben adoptar las decisiones de su competencia en lo correspondiente
+  al manejo de las aguas, cauces, riberas, ocupación de cauces, declaración d…'
+publicado: '2019-02-08'
+datos_actualizados: '2024-12-10'
+etiquetas:
+- Rondas
+- Rh
+- CAR
+- Delimitación de Rondas
+filas: 203
+geografia:
+  geometria: poligono
+  crs: EPSG:3116
+  extension:
+  - -74.83928965848044
+  - 4.174445425554958
+  - -73.53338216499593
+  - 5.755749627929515
+  capas:
+    '0': Rondas Delimitadas CAR
+campos:
+  Fuente:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Fuente
+  Acto_Admin:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Acto_Admin
+  Fecha:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Fecha
+    minimo: '2009-07-08'
+    maximo: '2024-11-01'
+    comparacion: fecha

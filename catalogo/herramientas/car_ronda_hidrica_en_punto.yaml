@@ -1,0 +1,31 @@
+id: car_ronda_hidrica_en_punto
+version: 1
+familia: ambiente
+fuente: car.rondas_delimitadas
+pregunta: "¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca?"
+descripcion: >
+  Ronda hídrica delimitada por la CAR Cundinamarca que contiene un punto: el cuerpo de agua (río,
+  quebrada, laguna, embalse), el acto administrativo que la delimita y su fecha. La ronda es suelo de
+  protección. Solo cubre la jurisdicción de la CAR y las rondas ya delimitadas: si no hay resultado,
+  no quiere decir que el punto esté fuera de toda ronda.
+  (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    geometria: ninguna  # franjas de decenas de miles de vértices
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [Fuente, Acto_Admin, Fecha]
+    max_features: 5
+  campos: [Fuente, Acto_Admin, Fecha]
+salida: RondaHidricaEnPunto
+cobro: punto
+canario:
+  # Río Apulo (Cundinamarca); medido el 2026-10-28 en la capa 0: Resolución 0352 de 2018.
+  entrada: {lon: -74.522902, lat: 4.631558}
+  verdad: {cuerpo_de_agua: "Río Apulo", acto_administrativo: "Resolución 0352 de 2018"}
+  campos: [acto_administrativo, cuerpo_de_agua, fecha_acto]
+  latencia_max_ms: 5000

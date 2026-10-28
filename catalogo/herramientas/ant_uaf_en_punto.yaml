@@ -1,0 +1,30 @@
+id: ant_uaf_en_punto
+version: 1
+familia: territorio
+fuente: ant.unidad_agricola_familiar
+pregunta: "¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto?"
+descripcion: >
+  Rango de la Unidad Agrícola Familiar (UAF) que fija la ANT para la zona (unidad física homogénea)
+  que contiene un punto: extensión mínima y máxima en hectáreas, municipio (DIVIPOLA) y el acto que
+  la adopta. La UAF cambia dentro de un mismo municipio según la zona.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    geometria: ninguna
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [Departamento, Municipio, Cod_Dane, T_UAF_MIN_AC, T_UAF_MAX_AC, Calculo_UAF, Resultado, clase_ufh, Acto_Administrativo]
+    max_features: 5
+  campos: [Departamento, Municipio, Cod_Dane, T_UAF_MIN_AC, T_UAF_MAX_AC, Calculo_UAF, Resultado, clase_ufh, Acto_Administrativo]
+salida: UafEnPunto
+cobro: punto
+canario:
+  # Chía (Cundinamarca); medido el 2026-10-28 en la capa 0: UAF de 2,3 a 7,1 ha, acto 506 de 2025.
+  entrada: {lon: -74.0262, lat: 4.8619}
+  verdad: {municipio_divipola: "25175", uaf_min_ha: 2.3, uaf_max_ha: 7.1}
+  campos: [acto_administrativo, calculo, clase_ufh, departamento, municipio, municipio_divipola, resultado, uaf_max_ha, uaf_min_ha]
+  latencia_max_ms: 5000

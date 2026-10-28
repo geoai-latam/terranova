@@ -1,0 +1,174 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:38:37+00:00",
+ "herramienta": "ani_peajes_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.1,
+     4.8,
+     -73.9,
+     5.05
+    ],
+    "geometria": "completa",
+    "max_features": 200,
+    "out_fields": [
+     "nombre",
+     "estado",
+     "proyecto",
+     "codvia",
+     "municipio",
+     "departamento"
+    ],
+    "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/5"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.028931,
+           4.835358
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "codvia": "5501",
+          "departamento": "Cundinamarca",
+          "estado": "Funcionamiento",
+          "municipio": "Chía",
+          "nombre": "FUSCA",
+          "proyecto": "IP - Accesos Norte a Bogotá"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.033081,
+           4.830003
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "codvia": "45A04",
+          "departamento": "Cundinamarca",
+          "estado": "Funcionamiento",
+          "municipio": "Chía",
+          "nombre": "ANDES",
+          "proyecto": "IP - Accesos Norte a Bogotá"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.031464,
+           4.855403
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "codvia": "45A04",
+          "departamento": "Cundinamarca",
+          "estado": "Funcionamiento",
+          "municipio": "Chía",
+          "nombre": "UNISABANA",
+          "proyecto": "IP - Accesos Norte a Bogotá"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.945587,
+           4.809454
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "codvia": "5009",
+          "departamento": "Cundinamarca",
+          "estado": "Funcionamiento",
+          "municipio": "Guasca",
+          "nombre": "LA CABAÑA",
+          "proyecto": "Perimetral de Oriente de Cundinamarca"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.936084,
+           4.841656
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "codvia": "50CN03",
+          "departamento": "Cundinamarca",
+          "estado": "Funcionamiento",
+          "municipio": "Sopó",
+          "nombre": "SOPÓ",
+          "proyecto": "Perimetral de Oriente de Cundinamarca"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Peajes"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.1,
+      4.8,
+      -73.9,
+      5.05
+     ],
+     "capa": "Peajes",
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.1,
+       4.8,
+       -73.9,
+       5.05
+      ],
+      "max_features": 200,
+      "out_fields": [
+       "nombre",
+       "estado",
+       "proyecto",
+       "codvia",
+       "municipio",
+       "departamento"
+      ],
+      "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/5",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Point",
+     "total_en_servicio": 5,
+     "traidos": 5,
+     "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/5"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

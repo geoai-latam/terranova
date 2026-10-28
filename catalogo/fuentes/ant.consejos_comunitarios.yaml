@@ -1,0 +1,46 @@
+id: ant.consejos_comunitarios
+titulo: Consejos comunitarios titulados (territorios colectivos de comunidades negras)
+entidad: Agencia Nacional de Tierras (ANT)
+competencia: titula colectivamente las tierras de las comunidades negras (Ley 70 de 1993; Decreto 2363 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/abf2f9f6727b4073902c1f57c280d5dc?f=json
+  cita: "Este conjunto de datos se distribuye bajo la Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Tierras, Dirección de Asuntos Étnicos"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem del dueño `Datos_Abiertos_ANT`; su url es el proxy público de ArcGIS Online hacia el servidor
+# de la ANT (el mismo patrón que los resguardos). Capa 0: polígonos de los consejos titulados.
+url: https://utility.arcgis.com/usrsvcs/servers/abf2f9f6727b4073902c1f57c280d5dc/rest/services/DatosAbiertos/Consejo_Comunitario_Titulado/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  NOMBRE: {nombre: nombre, tipo: str, desc: "nombre del consejo comunitario"}
+  DEPARTAMENTO: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento"}
+  MUNICIPIO: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  ULTIMO_TIPO_ACTO_ADMIN: {nombre: tipo_acto, tipo: str, desc: "tipo del último acto administrativo (resolución)"}
+  ULTIMO_NUMERO_ACTO_ADMIN: {nombre: numero_acto, tipo: str, desc: "número del último acto administrativo"}
+  ULTIMA_FECHA_ACTO_ADMIN: {nombre: fecha_acto, tipo: date, desc: "fecha del último acto administrativo"}
+  AREA_TOTAL_ACTOS_ADMIN: {nombre: area_ha_actos, tipo: float, desc: "área total en hectáreas según los actos administrativos"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: ANT, theme: territorios_etnicos}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un consejo comunitario titulado; 347 en el país (p. ej. el Mayor del Medio Atrato, ACIA)"
+  clave: {columna: NOMBRE, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.3, ordenar: 0.3, agrupar: 0.3}
+  hallazgos:
+  - "el punto de prueba (Medio Atrato) toca un solo consejo"
+  - "solo títulos colectivos formalizados: las solicitudes en trámite no están en esta capa"
+  decision: "en vivo por punto"
