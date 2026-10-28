@@ -1,0 +1,37 @@
+id: dane_pib_crecimiento_trimestral
+version: 1
+familia: estadisticas
+fuente: dane.pib_crecimiento_trimestral
+pregunta: "¿Cuánto creció el PIB de Colombia en los últimos trimestres?"
+descripcion: >
+  Crecimiento anual del Producto Interno Bruto (PIB) de Colombia en los últimos trimestres, según las
+  cuentas nacionales trimestrales del DANE: % frente al mismo trimestre del año anterior, series
+  encadenadas de volumen (base 2015), datos originales. Primero el más reciente. Los años rotulados
+  «pr» son preliminares y «p», provisionales. Sale de la copia de Terranova del anexo del último
+  trimestre publicado.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {trimestres: int}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_pib_crecimiento
+    filtros: {Concepto: Producto Interno Bruto}
+    select: [Concepto, columna, subcolumna, valor]
+    order: [-_fila]
+    limite: "{trimestres}"
+  campos: [Concepto, columna, subcolumna, valor]
+salida: PibCrecimientoTrimestral
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+cobro: registro
+canario:
+  # Medido el 2026-10-28 en anex-ProduccionConstantes-IItrim2026.xlsx: el último es el II trimestre
+  # de 2026, +3,52 %. El último trimestre cambia cada vez que sale uno nuevo: el canario mira la
+  # actividad y cuántas filas llegan.
+  entrada: {trimestres: 8}
+  verdad: {actividad: Producto Interno Bruto}
+  minimos: {numero_registros: 8}
+  campos: [actividad, anio, crecimiento_anual_pct, numero_registros, trimestre]
+  latencia_max_ms: 5000

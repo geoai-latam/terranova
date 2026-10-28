@@ -1,0 +1,36 @@
+id: dane_ipc_indice_anio
+version: 1
+familia: estadisticas
+fuente: dane.ipc_indices
+pregunta: "¿Cuál fue la inflación (IPC) en Colombia? Índice mes a mes en un año"
+descripcion: >
+  Índice de Precios al Consumidor (IPC) total nacional del DANE, mes a mes en un año (desde 2003;
+  diciembre de 2018 = 100). La inflación anual de un mes es el índice de ese mes dividido por el del
+  mismo mes del año anterior, menos 1 (pida los dos años); la mensual, el índice del mes sobre el del
+  mes anterior, menos 1. Los meses que aún no salen no vienen. Sale de la copia de Terranova del
+  anexo del último mes publicado.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_ipc_indices
+    filtros: {columna: "{anio}"}
+    select: [Mes, columna, valor]
+    order: [_fila]
+    limite: 12
+  campos: [Mes, columna, valor]
+salida: IpcIndiceAnio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+cobro: registro
+canario:
+  # Medido el 2026-10-28 en anex-IPC-Indices-sep2026.xlsx: 2025 está cerrado; enero 146,24 (el
+  # primero), diciembre 152,27.
+  entrada: {anio: 2025}
+  verdad: {anio: "2025", mes: Enero, indice: 146.24}
+  minimos: {numero_registros: 12}
+  campos: [anio, indice, mes, numero_registros]
+  latencia_max_ms: 5000

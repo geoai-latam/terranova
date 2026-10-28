@@ -1,0 +1,106 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:02:58+00:00",
+ "herramienta": "dane_pib_crecimiento_trimestral",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "Concepto": "Producto Interno Bruto"
+    },
+    "limite": 8,
+    "order": [
+     "-_fila"
+    ],
+    "select": [
+     "Concepto",
+     "columna",
+     "subcolumna",
+     "valor"
+    ],
+    "tabla": "dane_pib_crecimiento"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "Concepto",
+       "columna",
+       "subcolumna",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2026pr",
+        "subcolumna": "II",
+        "valor": 3.523392637718743
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2026pr",
+        "subcolumna": "I",
+        "valor": 2.18689357910678
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2025pr",
+        "subcolumna": "IV",
+        "valor": 2.07017600835529
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2025pr",
+        "subcolumna": "III",
+        "valor": 3.7842551970940406
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2025pr",
+        "subcolumna": "II",
+        "valor": 1.8809049645717408
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2025pr",
+        "subcolumna": "I",
+        "valor": 2.5594458552818224
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2024p",
+        "subcolumna": "IV",
+        "valor": 2.5876883793671652
+       },
+       {
+        "Concepto": "Producto Interno Bruto",
+        "columna": "2024p",
+        "subcolumna": "III",
+        "valor": 1.568572457771424
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 82,
+      "truncado": true,
+      "vistos": 8
+     },
+     "consultado_en": "2026-10-28T20:02:19.135685+00:00",
+     "copia": {
+      "filas": 1230,
+      "huella": "sha256:dd6f4e369abb5e2d7b414b54ccde487a00d1f9ac4e3b4578c214e837bc013803",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028200219135685"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

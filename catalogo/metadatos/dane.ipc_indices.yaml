@@ -1,0 +1,11 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dane.ipc_indices
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://www.dane.gov.co/files/operaciones/IPC/sep2026/anex-IPC-Indices-sep2026.xlsx
+pagina: https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc
+titulo: Total, Índice de Precios al Consumidor (IPC). Índices - Serie de empalme 2003 - 2026
+idioma: Español
+filas: 288
+descripcion: Hoja IndicesIPC, un mes por fila y un año por columna; número índice, base diciembre de 2018
+  = 100. Actualizado el 7 de octubre de 2026 (corte de septiembre).

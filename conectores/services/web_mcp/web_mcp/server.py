@@ -144,14 +144,16 @@ def web_html(url: str, params: dict | None = None, buscar: str | None = None, en
                  "`fila_encabezado` (1 = primera), `rellenar` (las N primeras columnas combinadas se rellenan "
                  "hacia abajo), `filas_encabezado` (2 si el año va arriba combinado y debajo los meses o las "
                  "zonas), `largo_desde` (posición desde la que las columnas pasan a filas `columna`/`valor`: "
-                 "un año por columna → un año por fila) y `filtros` {columna: valor}. Los hechos dicen el archivo, "
+                 "un año por columna → un año por fila), `hasta_fila` (última fila que se lee, para una hoja con "
+                 "varias tablas apiladas) y `filtros` {columna: valor}. Los hechos dicen el archivo, "
                  "las hojas y cuántas filas cumplen."),
     annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
     meta=geo_meta(inputs={}, outputs=["table"], cost="medium"),
 )
 def web_tabla(url: str | None = None, pagina: str | None = None, enlace_con: str | None = None,
               hoja: str | None = None, fila_encabezado: int = 1, rellenar: int = 0, largo_desde: int | None = None,
-              filtros: dict | None = None, max_filas: int = 2000, filas_encabezado: int = 1) -> CallToolResult:
+              filtros: dict | None = None, max_filas: int = 2000, filas_encabezado: int = 1,
+              hasta_fila: int | None = None) -> CallToolResult:
     def leer() -> dict:
         archivo = url
         if archivo is None:
@@ -168,6 +170,8 @@ def web_tabla(url: str | None = None, pagina: str | None = None, enlace_con: str
         r = fuentes.pedir(archivo, None)
         try:
             crudas, hojas = tablas.filas_crudas(r.content, archivo, hoja)
+            if hasta_fila is not None:  # una hoja con varias tablas apiladas (PIB): solo la primera
+                crudas = crudas[:hasta_fila]
             registros = tablas.filtrar(tablas.tabla(crudas, fila_encabezado, rellenar, largo_desde, filas_encabezado),
                                        filtros)
         except ValueError as exc:
