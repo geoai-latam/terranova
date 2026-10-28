@@ -1,0 +1,41 @@
+id: dian_comex_exportaciones_por_subpartida
+version: 1
+familia: estadisticas
+fuente: dian.comex_exportaciones
+pregunta: "¿Cuánto exportó Colombia de una subpartida arancelaria en un año?"
+descripcion: >
+  Valor y volumen de las exportaciones de Colombia para una SUBPARTIDA arancelaria (NANDINA de 10
+  dígitos) en un AÑO: valor FOB (en dólares y en pesos), peso neto en kilos y cantidad, sumados de
+  todas las declaraciones de exportación de ese año. Son cifras estadísticas del DANE (no
+  probatorias) y NO incluyen el detalle por empresa: el microdato abierto no trae NIT. Sale de la
+  copia de Terranova (ADR-0024); la procedencia dice la fecha de la copia y la ventana de meses que
+  cubre, así que un año en curso puede estar incompleto.
+  (Fuente: DANE, Estadísticas de Exportaciones; licencia: CC BY-SA 4.0.)
+entrada: {subpartida: subpartida, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: uno
+  tool: consultar_copia
+  argumentos:
+    tabla: dian_comex_exportaciones
+    filtros: {subpartida: "{subpartida}", anio: "{anio}"}
+    agregados:
+      valor_fob_usd: "sum:valor_fob_usd"
+      valor_fob_pesos: "sum:valor_fob_pesos"
+      peso_neto_kg: "sum:peso_neto_kg"
+      cantidad: "sum:cantidad"
+      lineas: "sum:lineas"
+    limite: 2
+  campos: [valor_fob_usd, valor_fob_pesos, peso_neto_kg, cantidad, lineas]
+salida: ComexExportacionSubpartida
+derivados: {}
+creditos: 2
+canario:
+  # Medido el 2026-10-26 en los microdatos ANDA 859 (año 2025 completo, ZIP Expo_2025). La subpartida
+  # 2709000000 (petróleo crudo, la mayor exportación del país) suma FOB US$9.930.919.822 en 2025; solo
+  # enero ya son US$876.117.891. Se usa `minimos` porque las cifras provisionales del DANE pueden
+  # revisarse, pero nunca por debajo de un mes ya observado.
+  entrada: {subpartida: "2709000000", anio: "2025"}
+  minimos: {valor_fob_usd: 876117891}
+  campos: [cantidad, lineas, peso_neto_kg, valor_fob_pesos, valor_fob_usd]
+  latencia_max_ms: 5000

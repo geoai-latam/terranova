@@ -1,0 +1,74 @@
+id: dian.comex_importaciones
+titulo: "Importaciones de Colombia por subpartida arancelaria (DANE, microdato)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas de comercio exterior a partir de las declaraciones de importación ante la DIAN
+acto: null
+# El microdato de importaciones del DANE (ANDA, catálogo 856) trae una fila por línea de declaración,
+# con columnas AGREGABLES (subpartida NANDINA, país de origen, valores CIF/FOB, pesos, cantidades):
+# NO hay NIT, cédula ni nombre de declarante (verificado en el diccionario DDI 2026-10-26). Terranova
+# lo COPIA (ADR-0024) y lo PRE-AGREGA a (año, mes, subpartida, país de origen) en la ingesta: no se
+# guarda ninguna línea individual. La licencia del portal es CC BY-SA 4.0 declarada.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-26
+  evidencia: https://www.datos.gov.co/api/views/2eyg-yu5f.json
+  cita: '"License": "https://creativecommons.org/licenses/by-sa/4.0/legalcode" (DANE, Portal de Datos Abiertos)'
+uso_comercial: si
+clasificacion_licencia: verde
+clase_acceso: bulk
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística (DANE), Estadísticas de Importaciones. Elaborado a partir de las declaraciones de importación de la DIAN."
+protocolo: archivo
+conector: copia
+url: https://microdatos.dane.gov.co/index.php/catalog/856/get-microdata
+modo: copia
+copia:
+  origen: zip_dane
+  tabla: dian_comex_importaciones
+  clave: clave
+  subpartida_csv: NABAN
+  pais_csv: PAISGEN
+  pais_col: pais_origen
+  medidas: {valor_cif_pesos: VACIP, valor_cif_usd: VACID, valor_fob_usd: VAFODO, peso_neto_kg: PNK, cantidad: CANU}
+  indices: [subpartida, pais_origen, anio]
+  descargas:
+    - https://microdatos.dane.gov.co/index.php/catalog/856/download/24417
+    - https://microdatos.dane.gov.co/index.php/catalog/856/download/24464
+    - https://microdatos.dane.gov.co/index.php/catalog/856/download/24821
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura:
+  pais: CO
+  excluye: ["el detalle por empresa/NIT (no está en el microdato abierto del DANE)", "los meses fuera de la ventana de los ZIP copiados"]
+datos_personales: ninguno
+estado: publicada
+campos:
+  clave: {nombre: clave, tipo: str, desc: "clave sintética de la fila pre-agregada (año-mes-subpartida-país)"}
+  anio: {nombre: anio, tipo: str, desc: "año de la declaración (AAAA)"}
+  mes: {nombre: mes, tipo: int, desc: "mes de la declaración (1–12)"}
+  subpartida: {nombre: subpartida, tipo: str, desc: "subpartida arancelaria NANDINA de 10 dígitos (NABAN)"}
+  pais_origen: {nombre: pais_origen, tipo: str, desc: "código DANE del país de origen de la mercancía (PAISGEN)"}
+  valor_cif_pesos: {nombre: valor_cif_pesos, tipo: float, desc: "valor CIF en pesos colombianos (suma, VACIP)"}
+  valor_cif_usd: {nombre: valor_cif_usd, tipo: float, desc: "valor CIF en dólares (suma, VACID)"}
+  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, desc: "valor FOB en dólares (suma, VAFODO)"}
+  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, desc: "peso neto en kilogramos (suma, PNK)"}
+  cantidad: {nombre: cantidad, tipo: float, desc: "cantidad en unidades físicas de la subpartida (suma, CANU)"}
+  lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-26'
+  fila: "una fila pre-agregada por (año, mes, subpartida, país de origen); noviembre 2025 (FECH 2511): 316.459 líneas de declaración, 5.373 subpartidas, total FOB US$5.567 M; copiado de los ZIP ANDA 856 (ADR-0024)"
+  clave:
+    columna: clave
+    unica: true
+  operaciones:
+    contar: 0.1
+    agrupar: 0.6
+    filtrar: 0.3
+  hallazgos:
+  - "el microdato NO trae NIT, cédula ni nombre de declarante (diccionario DDI): es agregable y sin persona (ADR-0014)"
+  - "se pre-agrega a (año, mes, subpartida, país) en la ingesta; la herramienta suma aún más en la consulta"
+  - "FECH viene como AAMM (2511 = noviembre de 2025); los valores usan formato europeo (285.792,00)"
+  - "el detalle por empresa/NIT NO está en esta fuente abierta (es otra publicación de la DIAN)"
+  decision: "copia pre-agregada por subpartida y país; la herramienta consulta el total por subpartida y año, y dice la fecha de la copia"

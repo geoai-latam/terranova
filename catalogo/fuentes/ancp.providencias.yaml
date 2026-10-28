@@ -3,16 +3,16 @@ titulo: "Relatoría de Colombia Compra Eficiente: providencias"
 entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
 competencia: rectora del sistema de compra pública; emite conceptos sobre la contratación (Decreto 4170 de 2011)
 acto: null
-# Conceptos y providencias de la relatoría de la ANCP-CCE. La Ley 23 de 1982 (art. 41) permite
-# reproducir actos administrativos y decisiones con copia fiel; que cubra los conceptos (doctrina) no
-# está confirmado: queda por verificar (ADR-0019). Solo salen el título, la fecha y el enlace.
+# Providencias de la relatoría de la ANCP-CCE (decisiones de compra pública). Entidad pública, sin
+# datos personales (solo título, fecha y enlace), sin reserva ni prohibición de uso. El sitio no
+# declara licencia, así que es dato público reutilizable (ADR-0019 enmienda: ámbar, sirve con aviso).
 licencia:
   spdx: null
   url: https://relatoria.colombiacompra.gov.co/
   verificada: null
   evidencia: https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/conceptos
   cita: "sin licencia declarada en el sitio"
-uso_comercial: por_verificar
+uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Colombia Compra Eficiente, Relatoría (providencias)"
 protocolo: api_propia
@@ -22,7 +22,8 @@ modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
 cobertura: {pais: CO}
 datos_personales: ninguno
-estado: borrador
+estado: publicada
+clasificacion_licencia: ambar
 campos:
   id: {nombre: id, tipo: int, desc: "identificador en la relatoría"}
   date: {nombre: fecha, tipo: date, desc: "fecha de publicación"}
@@ -42,4 +43,4 @@ perfil:
   hallazgos:
   - la búsqueda es la de WordPress, sin lematizar
   - sin licencia declarada en el sitio
-  decision: en vivo; solo con llave de evaluación
+  decision: en vivo; ámbar, sirve con aviso

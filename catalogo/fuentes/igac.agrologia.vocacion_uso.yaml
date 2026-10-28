@@ -15,11 +15,20 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: IGAC, Subdirección de Agrología"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Capa 0 Vocacion_Uso_Tierras, de la obra Suelos y Tierras de Colombia 2016. El campo Area no
 # declara unidad: queda fuera.
 url: https://mapas.igac.gov.co/server/rest/services/agrologia/vocaciondeusoterritorionacional/MapServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS. En vivo, un punto tardaba ~50 s desde el servidor (medido el
+# 2026-10-27). Escala 1:100.000: simplificar a ~11 m al copiar no cambia el resultado.
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: igac_vocacion_uso
+  clave: OBJECTID
+  por_pagina: 500
+  tolerancia: 0.0001
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
 cobertura:
   pais: CO
@@ -27,10 +36,12 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  OBJECTID: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la fuente republica la capa)"}
   UCVocacion: {nombre: unidad_vocacion, tipo: str, desc: "símbolo de la unidad de vocación (p. ej. CTIf)"}
   Vocacion: {nombre: vocacion, tipo: str, desc: "clase de vocación: agrícola, ganadera, agroforestal, forestal o de conservación"}
   Uso_principal: {nombre: uso_principal, tipo: str, desc: "uso principal que debe tener la tierra"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -45,4 +56,4 @@ perfil:
   - el MapServer no cuenta valores distintos
   - ordenar el país tarda 16 s
   - el punto de prueba toca un solo elemento
-  decision: en vivo solo por punto
+  decision: copia (en vivo, ~50 s por punto); por punto

@@ -16,9 +16,20 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Unidad de Planificación Rural Agropecuaria (UPRA), precios comerciales de la tierra rural agropecuaria"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 url: https://sig.upra.gov.co/server/rest/services/mercado_tierras_rurales/rango_precios_nacional/MapServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS, ingerida desde Colombia. El servidor no logra ni conectarse al de
+# la UPRA (90 s sin respuesta; desde Colombia, 1,2 s: medido el 2026-10-27). Se simplifica a
+# ~5 m al copiar: completa pesaría ~4 GB (4,7 MB cada 200 zonas).
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: upra_rango_precios
+  clave: objectid
+  por_pagina: 1000
+  tolerancia: 5e-05
+  indices: [cod_dane_mpio]
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
 cobertura:
   pais: CO
@@ -27,6 +38,7 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la fuente republica la capa)"}
   departamen: {nombre: departamento, tipo: str, desc: "departamento"}
   municipio: {nombre: municipio, tipo: str, desc: "municipio"}
   cod_dane_mpio: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
@@ -37,6 +49,7 @@ campos:
   area_ha: {nombre: area_ha, tipo: float, desc: "área de la zona, en hectáreas"}
   consecutivo: {nombre: consecutivo, tipo: int, desc: "consecutivo de la zona"}
 comportamiento: {orden_coordenadas: lon_lat}
+capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: UPRA, theme: territorio, accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -50,4 +63,4 @@ perfil:
   - "Chía no está en la capa: queda fuera de las áreas del mercado de tierras"
   - "el rango es texto («Mayor que 60 - hasta 70») y la capa no declara la unidad"
   - "las categorías E-… (zonas urbanas, resguardos) no son precios"
-  decision: "en vivo por punto y agregado por municipio con estadísticas en el servicio"
+  decision: copia (el servicio no responde al datacenter); por punto y agregado por municipio

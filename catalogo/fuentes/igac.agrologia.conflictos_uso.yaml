@@ -15,12 +15,21 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: IGAC, Subdirección de Agrología"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Capa 0 Conflictos_2012. La capa 1 (conflictos_SAyP) tiene otro esquema y no se usa; la capa 0 no
 # responde en San Andrés (-81.70, 12.55, medido el 2026-10-21). El campo area no declara unidad:
 # queda fuera.
 url: https://mapas.igac.gov.co/server/rest/services/agrologia/conflictos2012territorionacional/MapServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS. En vivo, un punto tardaba ~50 s desde el servidor (medido el
+# 2026-10-27). Escala 1:100.000: simplificar a ~11 m al copiar no cambia el resultado.
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: igac_conflictos_uso
+  clave: OBJECTID_1
+  por_pagina: 2000  # ~50 s por consulta sea cual sea el tamaño: páginas grandes (548 mil polígonos)
+  tolerancia: 0.0001
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
 cobertura:
   periodo: "estudio de 2012"
@@ -29,9 +38,11 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  OBJECTID_1: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la fuente republica la capa)"}
   UCConfli: {nombre: unidad_conflicto, tipo: str, desc: "símbolo de la unidad de conflicto (p. ej. U2)"}
   T_Conflicto: {nombre: tipo_conflicto, tipo: str, desc: "tipo e intensidad del conflicto de uso (p. ej. subutilización moderada)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -47,4 +58,4 @@ perfil:
   - el MapServer no cuenta valores distintos
   - contar, ordenar y agrupar el país tarda 45 a 53 s
   - el punto de prueba toca un solo elemento
-  decision: en vivo solo por punto
+  decision: copia (en vivo, ~50 s por punto); por punto

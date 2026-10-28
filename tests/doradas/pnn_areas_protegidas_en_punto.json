@@ -1,28 +1,29 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T04:00:48+00:00",
+ "grabado": "2026-10-27T21:18:08+00:00",
  "herramienta": "pnn_areas_protegidas_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -73.75,
-     4.55,
+    "geometria": "simplificada",
+    "limite": 20,
+    "order": [
+     "ap_nombre"
+    ],
+    "punto": [
      -73.75,
      4.55
     ],
-    "geometria": "simplificada",
-    "max_features": 20,
-    "out_fields": [
+    "select": [
      "ap_nombre",
      "ap_categoria",
      "organizacion",
      "area_ha_total_resolucion",
      "fecha_inscrita"
     ],
-    "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
+    "tabla": "runap"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -41,7 +42,7 @@
           "ap_categoria": "Parque Nacional Natural",
           "ap_nombre": "Chingaza",
           "area_ha_total_resolucion": 77289.97,
-          "fecha_inscrita": 1309410000000,
+          "fecha_inscrita": "2011-06-30",
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -49,51 +50,27 @@
        ],
        "type": "FeatureCollection"
       },
-      "kind": "feature_collection",
-      "name": "Registro Unico Nacional AP"
+      "kind": "feature_collection"
      }
     ],
     "facts": {
-     "bbox": [
-      -73.75,
-      4.55,
-      -73.75,
-      4.55
-     ],
-     "capa": "Registro Unico Nacional AP",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -73.75,
-       4.55,
-       -73.75,
-       4.55
-      ],
-      "max_features": 20,
-      "out_fields": [
-       "ap_nombre",
-       "ap_categoria",
-       "organizacion",
-       "area_ha_total_resolucion",
-       "fecha_inscrita"
-      ],
-      "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0",
-      "where": "1=1"
+     "consultado_en": "2026-10-27T21:13:23.447747+00:00",
+     "copia": {
+      "filas": 1936,
+      "huella": "sha256:4cc62a6efadd1ef6d275735778e158ff3b42501d92d3eed61006727c763db8a6",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261027211323447747"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer/0"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }

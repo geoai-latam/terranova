@@ -1,0 +1,75 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-26T12:32:00+00:00",
+ "herramienta": "sigep_planta_por_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "niveljerarquicoempleo",
+    "id": "2jzx-383z",
+    "max_filas": 200,
+    "order": "servidores DESC",
+    "portal": "datos.gov.co",
+    "select": "niveljerarquicoempleo, count(*) AS servidores",
+    "where": "codigosigep = '6194'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "niveljerarquicoempleo",
+       "servidores"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "niveljerarquicoempleo": "TÉCNICO",
+        "servidores": "13963"
+       },
+       {
+        "niveljerarquicoempleo": "PROFESIONAL",
+        "servidores": "6377"
+       },
+       {
+        "niveljerarquicoempleo": "ASISTENCIAL",
+        "servidores": "1952"
+       },
+       {
+        "niveljerarquicoempleo": "ASESOR",
+        "servidores": "82"
+       },
+       {
+        "niveljerarquicoempleo": "DIRECTIVO",
+        "servidores": "61"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "completo": true,
+     "conjunto": "2jzx-383z",
+     "consulta": {
+      "conjunto": "2jzx-383z",
+      "group": "niveljerarquicoempleo",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "niveljerarquicoempleo, count(*) AS servidores",
+      "where": "(codigosigep = '6194')"
+     },
+     "filas": 5,
+     "filas_que_resume": 22435,
+     "filtro_soql": "(codigosigep = '6194')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

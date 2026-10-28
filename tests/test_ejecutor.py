@@ -217,3 +217,92 @@ async def test_fila_con_todo_none_es_no_encontrado() -> None:
     )
     assert sobre.estado == "no_encontrado"
     assert sobre.datos == {}
+
+
+_PREDIO_CONSTRUCCIONES = "251750100000000430026000000000"
+
+
+class _CapaRuralCae:
+    """Fuente de dos capas (R_CONSTRUCCION …/12 y U_CONSTRUCCION …/3): la urbana responde con datos
+    y la rural se cae. WS6: el sobre sale `parcial`, no en error entero."""
+
+    def __init__(self) -> None:
+        import json
+        import pathlib
+
+        dorada = pathlib.Path(__file__).parent / "doradas" / "igac_construcciones_en_predio.json"
+        llamadas = json.loads(dorada.read_text(encoding="utf-8"))["llamadas"]
+        self._urbana: dict[str, Any] = next(
+            ll["respuesta"] for ll in llamadas if ll["argumentos"]["url"].endswith("/3")
+        )
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        from terranova.conector import ErrorConector
+
+        if str(argumentos.get("url", "")).endswith("/12"):
+            raise ErrorConector("capa rural caída", "fuente_no_disponible")
+        return self._urbana
+
+
+class _TodasLasCapasCaen:
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        from terranova.conector import ErrorConector
+
+        raise ErrorConector("todo caído", "fuente_no_disponible")
+
+
+def test_paridad_rest_mcp_entero_estricto() -> None:
+    """ADR-0004: REST (modelo pydantic estricto) y MCP (`validar_entrada`) aceptan y rechazan la
+    misma entrada. Antes `5.0` pasaba por MCP y lo rechazaba REST: misma herramienta, dos reglas."""
+    from pydantic import ValidationError
+
+    from terranova.app import modelo_entrada
+
+    h = CATALOGO.herramientas["banrep_dtf_recientes"]  # `ultimas`: int
+    modelo = modelo_entrada(h)
+
+    def rest_acepta(e: dict[str, Any]) -> bool:
+        try:
+            modelo(**e)
+            return True
+        except ValidationError:
+            return False
+
+    def mcp_acepta(e: dict[str, Any]) -> bool:
+        try:
+            validar_entrada(h, dict(e))
+            return True
+        except ErrorEntrada:
+            return False
+
+    for e in ({"ultimas": 5}, {"ultimas": 5.0}, {"ultimas": "5"}, {"ultimas": True}):
+        assert rest_acepta(e) == mcp_acepta(e), e
+    assert mcp_acepta({"ultimas": 5}) and not mcp_acepta({"ultimas": 5.0})  # 5.0 no es 5
+
+
+@pytest.mark.anyio
+async def test_una_capa_caida_degrada_a_parcial() -> None:
+    """WS6: con una capa caída y otra con datos, el sobre es `parcial` con aviso (no «encontrado»
+    ni error entero): «no se pudo» de una parte no se disfraza de dato completo."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _CapaRuralCae()})
+    sobre = await ej.ejecutar(
+        "igac_construcciones_en_predio", {"codigo": _PREDIO_CONSTRUCCIONES}, plan="evaluacion"
+    )
+    assert sobre.estado == "parcial"
+    assert any("no respondieron" in a for a in sobre.avisos)
+    assert sobre.datos.get("elementos")  # los datos de la capa que sí respondió
+
+
+@pytest.mark.anyio
+async def test_todas_las_capas_caidas_falla_entero() -> None:
+    """Si TODAS las capas se caen no hay parcial que valga: se falla como antes (fuente caída)."""
+    from terranova.ejecutor import Ejecutor
+    from terranova.errores import ErrorEjecucion
+
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _TodasLasCapasCaen()})
+    with pytest.raises(ErrorEjecucion):
+        await ej.ejecutar(
+            "igac_construcciones_en_predio", {"codigo": _PREDIO_CONSTRUCCIONES}, plan="evaluacion"
+        )

@@ -113,12 +113,12 @@ def montaje(monkeypatch: pytest.MonkeyPatch) -> Iterator[tuple[RegistroSqlite, F
     monkeypatch.setitem(modulo_cuota.NIVELES, "con_llave", 15)  # alcanza para una consulta de 10
     registro, fuente = RegistroSqlite(":memory:", "p" * 40), Fuente()
     puerta.usar_conectores({"arcgis-mcp": fuente})
-    puerta.registro = registro
-    puerta.cuota = CuotaMemoria(capacidad=3, por_minuto=60)
+    puerta.ESTADO.registro = registro
+    puerta.ESTADO.cuota = CuotaMemoria(capacidad=3, por_minuto=60)
     try:
         yield registro, fuente
     finally:
-        puerta.registro, puerta.cuota = None, None
+        puerta.ESTADO.registro, puerta.ESTADO.cuota = None, None
         puerta.usar_conectores(None)
 
 

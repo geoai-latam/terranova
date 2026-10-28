@@ -3,15 +3,17 @@ titulo: Estadísticas catastrales por municipio del IGAC (predios, áreas y aval
 entidad: Instituto Geográfico Agustín Codazzi (IGAC)
 competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
 acto: null
-# El ítem de ArcGIS Online no declara licencia (consultado el 2026-10-22). Queda en evaluación
-# (ADR-0019) hasta que el IGAC la confirme por escrito (F0.8).
+# El ítem de ArcGIS Online no declara licencia (consultado el 2026-10-22). Son estadísticas
+# catastrales agregadas por municipio (sin datos personales), de una entidad pública, sin reserva ni
+# prohibición de uso: dato público reutilizable (ADR-0019 enmienda: ámbar, sirve con aviso). Si el
+# IGAC confirma por escrito que aplica la Res. 616/2020 (CC BY 4.0), pasa a verde (F0.8).
 licencia:
   spdx: null
   url: null
   verificada: null
   evidencia: https://www.arcgis.com/sharing/rest/content/items/61b10dc94329461094419a32e129415e?f=json
   cita: "licenseInfo vacío"
-uso_comercial: por_verificar
+uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: IGAC, Estadísticas catastrales municipales"
 protocolo: arcgis_rest
@@ -23,7 +25,8 @@ modo: en_vivo
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
 cobertura: {pais: CO, columna_tiempo: VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_}
 datos_personales: ninguno  # agregados municipales
-estado: borrador
+estado: publicada
+clasificacion_licencia: ambar
 campos:
   MpCodigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
   MUNICIPIO: {nombre: municipio, tipo: str, desc: "nombre del municipio"}

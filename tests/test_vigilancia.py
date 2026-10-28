@@ -161,13 +161,13 @@ async def test_v1_estado_es_publico(tmp_path: Path) -> None:
     reg.registrar(
         _r("igac_predio_en_punto", "igac.catastro.terreno", "2026-10-22T00:00:00.000+00:00")
     )
-    puerta.canarios = reg
+    puerta.ESTADO.canarios = reg
     try:
         transporte = httpx.ASGITransport(app=crear_api())
         async with httpx.AsyncClient(transport=transporte, base_url="http://puerta") as c:
             r = await c.get("/v1/estado")
     finally:
-        puerta.canarios = None
+        puerta.ESTADO.canarios = None
     assert r.status_code == 200
     estado = {e["fuente_id"]: e["estado"] for e in r.json()}
     assert estado["igac.catastro.terreno"] == "verde" and estado["pnn.runap"] == "sin_datos"

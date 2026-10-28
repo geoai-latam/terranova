@@ -13,6 +13,7 @@ import os
 import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from dataclasses import dataclass, field
 from typing import Any
 
 from fastmcp import FastMCP
@@ -73,16 +74,34 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
     },
 }
 
-_conectores: dict[str, Conector] | None = None
-_almacen: Almacen | None = None
-# El estado de los cortacircuitos vive lo que vive la puerta (una por réplica).
-PROTECCION = Proteccion()
+
+@dataclass
+class EstadoPuerta:
+    """Todo el estado mutable de una puerta (una por réplica), en un objeto en vez de variables de
+    módulo sueltas: se construye, se reinicia (`detener`) y en pruebas se puede tener aislado.
+
+    El proceso vivo usa una sola instancia (`ESTADO`): las herramientas MCP de FastMCP son llamadas
+    sueltas, sin un asa a la aplicación ASGI, así que comparten este registro del módulo. Lo que
+    gana la encapsulación es cohesión y aislamiento: dos `EstadoPuerta()` no comparten nada."""
+
+    conectores: dict[str, Conector] | None = None
+    almacen: Almacen | None = None
+    registro: Registro | None = None  # None = sin identidad (solo pruebas en memoria)
+    cuota: Cuota | None = None
+    outbox: Outbox | None = None
+    canarios: RegistroCanarios | None = None
+    curado: Restricciones | None = None
+    # El estado de los cortacircuitos vive lo que vive la puerta (una por réplica).
+    proteccion: Proteccion = field(default_factory=Proteccion)
+    iniciados: dict[str, Conector] = field(default_factory=dict)
+
+
+ESTADO = EstadoPuerta()
 
 
 def usar_conectores(conectores: dict[str, Conector] | None) -> None:
     """Inyecta los conectores (las pruebas pasan unos falsos)."""
-    global _conectores
-    _conectores = conectores
+    ESTADO.conectores = conectores
 
 
 def plan_actual() -> Plan:
@@ -254,7 +273,7 @@ async def _medir(
         momento=ahora_iso(),
     )
     # el INSERT del outbox va fuera del event loop (no bloquea la ruta caliente)
-    await asyncio.to_thread(registrar_sin_fallar, outbox, evento)
+    await asyncio.to_thread(registrar_sin_fallar, ESTADO.outbox, evento)
 
 
 async def ejecutar_idempotente(
@@ -262,46 +281,51 @@ async def ejecutar_idempotente(
 ) -> tuple[Sobre, bool]:
     """Con `Idempotency-Key`, la misma llave y clave devuelven el mismo sobre sin volver a ejecutar,
     cobrar ni medir (E2E-10). (sobre, repetido)."""
-    if not clave or principal is None or _almacen is None:
+    if not clave or principal is None or ESTADO.almacen is None:
         return await ejecutar(ficha, entrada, principal), False
     if len(clave) > 128:
         raise ErrorEntrada("Idempotency-Key", "hasta 128 caracteres")
     k = "terranova:idem:" + hashlib.sha256(f"{principal.llave_id}\n{clave}".encode()).hexdigest()
     pedido = huella({"herramienta": ficha, "entrada": entrada})
-    previo = await _almacen.leer(k)
+    previo = await ESTADO.almacen.leer(k)
     if previo is not None:
         if previo["pedido"] != pedido:
             raise ErrorEntrada("Idempotency-Key", "ya se usó con otra herramienta o entrada")
         return Sobre.model_validate(previo["sobre"]), True
     sobre = await ejecutar(ficha, entrada, principal)
-    await _almacen.guardar(k, {"pedido": pedido, "sobre": sobre.model_dump(mode="json")}, 24 * 3600)
+    await ESTADO.almacen.guardar(
+        k, {"pedido": pedido, "sobre": sobre.model_dump(mode="json")}, 24 * 3600
+    )
     return sobre, False
 
 
 async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | None) -> Sobre:
-    if _conectores is None:
+    if ESTADO.conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
     h = CATALOGO.herramientas.get(ficha)
     es_ficha = ficha == ficha_lugar.HERRAMIENTA
     familia = ficha_lugar.FAMILIA if es_ficha else h.familia if h is not None else None
-    if registro is not None:
+    if ESTADO.registro is not None:
         if principal is None:
             raise ErrorEjecucion("no_autenticado", "falta una llave válida (Authorization: Bearer)")
         if familia is not None and not principal.puede(familia):
             raise ErrorEjecucion("sin_permiso", f"la llave no tiene el scope «{familia}»")
     plan = principal.plan if principal is not None else plan_actual()
-    ejecutor = Ejecutor(CATALOGO, _conectores, _almacen, proteccion=PROTECCION)
+    ejecutor = Ejecutor(CATALOGO, ESTADO.conectores, ESTADO.almacen, proteccion=ESTADO.proteccion)
 
     async def correr() -> Sobre:
         if es_ficha:
             # las partes fuera de los scopes de la llave no se consultan (salen en avisos)
             puede = principal.puede if principal is not None else (lambda _f: True)
-            return await ficha_lugar.ficha(ejecutor, entrada, plan=plan, puede=puede, curado=curado)
+            return await ficha_lugar.ficha(
+                ejecutor, entrada, plan=plan, puede=puede, curado=ESTADO.curado
+            )
         return await ejecutor.ejecutar(ficha, entrada, plan=plan)
 
     costo = ficha_lugar.TOPE_CREDITOS if es_ficha else h.creditos if h is not None else None
-    if cuota is None or principal is None or costo is None:
+    if ESTADO.cuota is None or principal is None or costo is None:
         return await correr()
+    cuota = ESTADO.cuota
     # ADR-0010: se reserva el costo antes de llamar y se devuelve lo que no se cobró
     reservado, _ = await cuota.reservar(principal.org, principal.nivel, costo)
     if not reservado:
@@ -320,31 +344,22 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
     return sobre
 
 
-_iniciados: dict[str, Conector] = {}
-registro: Registro | None = None  # None = sin identidad (solo pruebas en memoria)
-cuota: Cuota | None = None
-outbox: Outbox | None = None
-canarios: RegistroCanarios | None = None
-curado: Restricciones | None = None
-
-
 async def iniciar() -> None:
     """Conectores, caché, cuota y protección para toda la puerta. Si ya hay conectores (las pruebas
     los inyectan), no hace nada."""
-    global _almacen, registro, cuota, outbox, canarios, curado
-    if _conectores is not None:
+    if ESTADO.conectores is not None:
         return
-    registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
+    ESTADO.registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
-    _almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
-    cuota = cuota_desde_entorno(redis_url)
+    ESTADO.almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
+    ESTADO.cuota = cuota_desde_entorno(redis_url)
     bd = os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
-    outbox = OutboxSql(bd)
-    canarios = RegistroCanarios(bd)
-    curado = restricciones_desde_entorno()
+    ESTADO.outbox = OutboxSql(bd)
+    ESTADO.canarios = RegistroCanarios(bd)
+    ESTADO.curado = restricciones_desde_entorno()
     _medir_al_raspar()
-    _iniciados.update(conectores_desde_entorno(CATALOGO))
-    for nombre, c in _iniciados.items():
+    ESTADO.iniciados.update(conectores_desde_entorno(CATALOGO))
+    for nombre, c in ESTADO.iniciados.items():
         if isinstance(c, ConectorMCP):
             try:
                 await c.abrir()
@@ -352,37 +367,38 @@ async def iniciar() -> None:
                 # su primera llamada reabre la sesión; mientras, sus herramientas responden
                 # fuente_no_disponible y el cortacircuitos protege
                 logger.warning("conector %s no disponible al arrancar", nombre, exc_info=True)
-    usar_conectores(dict(_iniciados))
+    usar_conectores(dict(ESTADO.iniciados))
 
 
 def _medir_al_raspar() -> None:
     """Lo que `/metrics` lee al momento: circuitos, último canario y outbox pendiente."""
     metricas.AL_RASPAR.circuitos = lambda: [
-        (f, PROTECCION.abierto(f)) for f in sorted(PROTECCION.circuitos)
+        (f, ESTADO.proteccion.abierto(f)) for f in sorted(ESTADO.proteccion.circuitos)
     ]
     metricas.AL_RASPAR.canarios = lambda: (
-        [(r.fuente_id, r.ok) for r in canarios.ultimos()] if canarios is not None else []
+        [(r.fuente_id, r.ok) for r in ESTADO.canarios.ultimos()]
+        if ESTADO.canarios is not None
+        else []
     )
     metricas.AL_RASPAR.outbox = lambda: (
-        outbox.pendientes() if isinstance(outbox, OutboxSql) else None
+        ESTADO.outbox.pendientes() if isinstance(ESTADO.outbox, OutboxSql) else None
     )
 
 
 async def detener() -> None:
-    global _almacen, registro, cuota, outbox, canarios, curado
-    if not _iniciados:
+    if not ESTADO.iniciados:
         return
     usar_conectores(None)
-    _almacen = None
-    registro = None
-    cuota = None
-    outbox = None
-    canarios = None
-    curado = None
-    for c in _iniciados.values():
+    ESTADO.almacen = None
+    ESTADO.registro = None
+    ESTADO.cuota = None
+    ESTADO.outbox = None
+    ESTADO.canarios = None
+    ESTADO.curado = None
+    for c in ESTADO.iniciados.values():
         if isinstance(c, ConectorMCP):
             await c.cerrar()
-    _iniciados.clear()
+    ESTADO.iniciados.clear()
 
 
 @asynccontextmanager

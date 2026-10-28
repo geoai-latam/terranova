@@ -1,5 +1,5 @@
-# Dependabot mantiene al día las dependencias y las imágenes base, con PR semanales (ADR-0001: el
-# repo es público; las actualizaciones de seguridad no deben depender de que alguien se acuerde).
+# Dependabot mantiene al día las dependencias y las imágenes base, con PR semanales: las
+# actualizaciones de seguridad no deben depender de que alguien se acuerde.
 version: 2
 updates:
   - package-ecosystem: uv

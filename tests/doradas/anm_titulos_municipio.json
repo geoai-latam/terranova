@@ -1,0 +1,139 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-26T12:06:30+00:00",
+ "herramienta": "anm_titulos_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "mineral",
+    "id": "42ha-fhvj",
+    "max_filas": 200,
+    "order": "mineral",
+    "portal": "datos.gov.co",
+    "select": "mineral, count(distinct codigo_expediente) AS titulos",
+    "where": "codigo_dane = '76892'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "mineral",
+       "titulos"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "mineral": "ARCILLA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "ARENAS Y GRAVAS NATURALES Y SILICEAS",
+        "titulos": "2"
+       },
+       {
+        "mineral": "ASOCIADOS",
+        "titulos": "1"
+       },
+       {
+        "mineral": "BASALTOS",
+        "titulos": "2"
+       },
+       {
+        "mineral": "CALIZA",
+        "titulos": "9"
+       },
+       {
+        "mineral": "CALIZA TRITURADA O MOLIDA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "CONGLOMERADO (ROCA O PIEDRA)",
+        "titulos": "1"
+       },
+       {
+        "mineral": "DEMAS_CONCESIBLES",
+        "titulos": "4"
+       },
+       {
+        "mineral": "DIABASA",
+        "titulos": "2"
+       },
+       {
+        "mineral": "DOLOMITA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "GRANITO",
+        "titulos": "1"
+       },
+       {
+        "mineral": "MAGNESIO",
+        "titulos": "1"
+       },
+       {
+        "mineral": "MAGNESITA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "MATERIAL DE ARRASTRE",
+        "titulos": "1"
+       },
+       {
+        "mineral": "MATERIALES DE CONSTRUCCION",
+        "titulos": "12"
+       },
+       {
+        "mineral": "MATERIALES DE CONSTRUCCIÓN",
+        "titulos": "1"
+       },
+       {
+        "mineral": "MATERIALES PETREOS",
+        "titulos": "1"
+       },
+       {
+        "mineral": "RECEBO (MIG)",
+        "titulos": "1"
+       },
+       {
+        "mineral": "ROCA MUERTA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "ROCA O PIEDRA CALIZA EN BRUTO",
+        "titulos": "1"
+       },
+       {
+        "mineral": "SILICE",
+        "titulos": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 21,
+      "truncado": false,
+      "vistos": 21
+     },
+     "completo": true,
+     "conjunto": "42ha-fhvj",
+     "consulta": {
+      "conjunto": "42ha-fhvj",
+      "group": "mineral",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "mineral, count(distinct codigo_expediente) AS titulos",
+      "where": "(codigo_dane = '76892')"
+     },
+     "filas": 21,
+     "filas_que_resume": 121,
+     "filtro_soql": "(codigo_dane = '76892')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

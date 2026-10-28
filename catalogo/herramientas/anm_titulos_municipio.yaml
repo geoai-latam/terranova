@@ -1,0 +1,33 @@
+id: anm_titulos_municipio
+version: 1
+familia: territorio
+fuente: anm.titulos_mineros
+pregunta: "¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno?"
+descripcion: >
+  Minerales autorizados en un municipio (código DANE / DIVIPOLA) y cuántos títulos mineros amparan
+  cada mineral, ordenados por mineral. No se publica el nombre del titular (ADR-0014).
+  (Fuente: Agencia Nacional de Minería (ANM), RUCOM; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 42ha-fhvj
+    portal: datos.gov.co
+    select: "mineral, count(distinct codigo_expediente) AS titulos"
+    where: "codigo_dane = '{municipio_divipola}'"
+    group: "mineral"
+    order: "mineral"
+    max_filas: 200
+  campos: [mineral, codigo_expediente, codigo_dane]
+salida: TitulosMineroMunicipio
+derivados:
+  titulos: {de: columna, campo: titulos, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-26 en 42ha-fhvj: Yumbo (76892); 1er mineral (orden alfabético) ARCILLA, 1 título.
+  entrada: {municipio_divipola: "76892"}
+  verdad: {mineral: "ARCILLA", titulos: 1}
+  campos: [mineral, titulos]
+  latencia_max_ms: 15000

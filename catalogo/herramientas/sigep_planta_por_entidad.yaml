@@ -1,0 +1,35 @@
+id: sigep_planta_por_entidad
+version: 1
+familia: estadisticas
+fuente: funcionpublica.sigep_servidores
+pregunta: "¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico?"
+descripcion: >
+  Número de servidores públicos activos de una entidad del Estado (por su código SIGEP), desglosado
+  por nivel jerárquico del empleo y ordenado de mayor a menor. Son agregados de planta: no se expone
+  ningún dato de persona (ADR-0014).
+  (Fuente: Función Pública (SIGEP); licencia: CC BY-SA 4.0.)
+entrada: {codigo_entidad: codigo_sigep}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 2jzx-383z
+    portal: datos.gov.co
+    select: "niveljerarquicoempleo, count(*) AS servidores"
+    where: "codigosigep = '{codigo_entidad}'"
+    group: "niveljerarquicoempleo"
+    order: "servidores DESC"
+    max_filas: 200
+  campos: [codigosigep, niveljerarquicoempleo]
+salida: PlantaEntidadNivel
+derivados:
+  servidores: {de: columna, campo: servidores, tipo: int}
+creditos: 2
+canario:
+  # Medido el 2026-10-26 en 2jzx-383z: la Fiscalía (codigosigep 6194) tiene 22 435 servidores;
+  # el nivel con más (orden desc) es TÉCNICO con 13 963.
+  entrada: {codigo_entidad: "6194"}
+  verdad: {nivel_jerarquico: "TÉCNICO", servidores: 13963}
+  campos: [nivel_jerarquico, servidores]
+  latencia_max_ms: 15000

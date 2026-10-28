@@ -5,9 +5,8 @@ fuente: ancp.conceptos
 pregunta: "¿Qué conceptos de Colombia Compra Eficiente hablan de esto?"
 descripcion: >
   Busca en la relatoría de Colombia Compra Eficiente (conceptos) por palabras: los 20 más recientes con
-  título, fecha y enlace al texto, y cuántos hay en total. Mientras la licencia no esté confirmada,
-  solo responde con llaves de evaluación.
-  (Fuente: Colombia Compra Eficiente; licencia: por verificar.)
+  título, fecha y enlace al texto, y cuántos hay en total.
+  (Fuente: Colombia Compra Eficiente; licencia: dato público reutilizable.)
 entrada: {texto: nombre}
 consulta:
   operacion: buscar

@@ -5,24 +5,23 @@ fuente: upra.rango_precios_nacional
 pregunta: "¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA?"
 descripcion: >
   Rangos de precio comercial de la tierra rural agropecuaria de un municipio (DIVIPOLA) según la
-  UPRA, por año de estudio: hectáreas y número de zonas en cada rango, calculados en el servicio.
+  UPRA, por año de estudio: hectáreas y número de zonas en cada rango.
   Cubre 18 departamentos con estudios de 2015 a 2023; las categorías E-… (zonas urbanas,
   resguardos) son exclusiones, no precios.
+  Sale de la copia de Terranova de la capa de la UPRA.
   (Fuente: UPRA; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo
   resultado: lista
-  tool: arcgis_estadisticas
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    url: "{url_capa}"
-    where: "cod_dane_mpio = '{municipio_divipola}'"
-    agrupar: [vigencia, cod_precios, rango_precios]
-    medidas:
-      - {tipo: sum, campo: area_ha, nombre: hectareas}
-      - {tipo: count, campo: consecutivo, nombre: zonas}
-    orden: [vigencia, cod_precios]
+    tabla: upra_rango_precios
+    filtros: {cod_dane_mpio: "{municipio_divipola}"}
+    select: [vigencia, cod_precios, rango_precios]
+    group: [vigencia, cod_precios, rango_precios]
+    agregados: {hectareas: "sum:area_ha", zonas: count}
+    order: [vigencia, cod_precios]
   campos: [vigencia, cod_precios, rango_precios, area_ha, consecutivo, cod_dane_mpio]
 salida: RangosPrecioMunicipio
 derivados:

@@ -1,0 +1,71 @@
+id: dian.comex_exportaciones
+titulo: "Exportaciones de Colombia por subpartida arancelaria (DANE, microdato)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas de comercio exterior a partir de las declaraciones de exportación (DEX) ante la DIAN
+acto: null
+# Microdato de exportaciones del DANE (ANDA, catálogo 859): una fila por línea de declaración (DEX),
+# con columnas AGREGABLES (subpartida NANDINA POSAR, país de destino, valor FOB en dólares y pesos,
+# peso, cantidad). NO hay NIT, cédula ni nombre de exportador. Terranova lo COPIA (ADR-0024) y lo
+# PRE-AGREGA a (año, mes, subpartida, país de destino). Licencia del portal: CC BY-SA 4.0 declarada.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-26
+  evidencia: https://www.datos.gov.co/api/views/y9ug-aa8r.json
+  cita: '"License": "https://creativecommons.org/licenses/by-sa/4.0/legalcode" (DANE, Portal de Datos Abiertos)'
+uso_comercial: si
+clasificacion_licencia: verde
+clase_acceso: bulk
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística (DANE), Estadísticas de Exportaciones. Elaborado a partir de las declaraciones de exportación de la DIAN."
+protocolo: archivo
+conector: copia
+url: https://microdatos.dane.gov.co/index.php/catalog/859/get-microdata
+modo: copia
+copia:
+  origen: zip_dane
+  tabla: dian_comex_exportaciones
+  clave: clave
+  subpartida_csv: POSAR
+  pais_csv: PAIS
+  pais_col: pais_destino
+  medidas: {valor_fob_usd: FOBDOL, valor_fob_pesos: FOBPES, peso_neto_kg: PNK, cantidad: CANTI}
+  indices: [subpartida, pais_destino, anio]
+  descargas:
+    - https://microdatos.dane.gov.co/index.php/catalog/859/download/24765
+    - https://microdatos.dane.gov.co/index.php/catalog/859/download/24810
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura:
+  pais: CO
+  excluye: ["el detalle por empresa/NIT (no está en el microdato abierto del DANE)", "los meses fuera de la ventana de los ZIP copiados"]
+datos_personales: ninguno
+estado: publicada
+campos:
+  clave: {nombre: clave, tipo: str, desc: "clave sintética de la fila pre-agregada (año-mes-subpartida-país)"}
+  anio: {nombre: anio, tipo: str, desc: "año de la declaración (AAAA)"}
+  mes: {nombre: mes, tipo: int, desc: "mes de la declaración (1–12)"}
+  subpartida: {nombre: subpartida, tipo: str, desc: "subpartida arancelaria NANDINA de 10 dígitos (POSAR)"}
+  pais_destino: {nombre: pais_destino, tipo: str, desc: "código DANE del país de destino de la mercancía (PAIS)"}
+  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, desc: "valor FOB en dólares (suma, FOBDOL)"}
+  valor_fob_pesos: {nombre: valor_fob_pesos, tipo: float, desc: "valor FOB en pesos colombianos (suma, FOBPES)"}
+  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, desc: "peso neto en kilogramos (suma, PNK)"}
+  cantidad: {nombre: cantidad, tipo: float, desc: "cantidad en unidades físicas de la subpartida (suma, CANTI)"}
+  lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: '2026-10-26'
+  fila: "una fila pre-agregada por (año, mes, subpartida, país de destino); año 2025: 192.262 filas; mayores exportaciones por FOB: petróleo crudo (2709000000) US$9.930 M, café (0901119000) US$5.783 M, oro (7108120000) US$4.604 M, carbón (2701120010) US$3.860 M; copiado de los ZIP ANDA 859 (ADR-0024)"
+  clave:
+    columna: clave
+    unica: true
+  operaciones:
+    contar: 0.1
+    agrupar: 0.6
+    filtrar: 0.3
+  hallazgos:
+  - "el microdato NO trae NIT, cédula ni nombre de exportador: es agregable y sin persona (ADR-0014)"
+  - "se pre-agrega a (año, mes, subpartida, país de destino) en la ingesta; la herramienta suma más en la consulta"
+  - "las exportaciones se valoran FOB (no CIF); FOBDOL en dólares, FOBPES en pesos; FECH es AAMM; formato europeo"
+  - "el detalle por empresa/NIT NO está en esta fuente abierta (es otra publicación de la DIAN)"
+  decision: "copia pre-agregada por subpartida y país de destino; la herramienta consulta el total por subpartida y año, y dice la fecha de la copia"

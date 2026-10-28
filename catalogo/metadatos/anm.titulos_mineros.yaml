@@ -1,0 +1,111 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: anm.titulos_mineros
+metodo: cosechado
+cosechado: '2026-10-26'
+origen: https://www.datos.gov.co/api/views/42ha-fhvj.json
+pagina: https://www.datos.gov.co/d/42ha-fhvj
+titulo: ANM RUCOM Explotador Minero Autorizado-Título Minero
+descripcion: Es el acto administrativo escrito (documento) mediante el cual se otorga el derecho a explorar
+  y explotar el suelo y el subsuelo minero de propiedad de la Nación
+publicado: '2018-12-12'
+datos_actualizados: '2026-03-18'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Minas y Energía
+etiquetas:
+- rucom
+- registro único de comercializadores de minerales
+- explotador minero autorizado-título minero
+filas: 12914
+campos:
+  codigo_expediente:
+    tipo_fuente: text
+    etiqueta: CODIGO_EXPEDIENTE
+    descripcion: Es el identificador único que permite registrar, consultar y hacer seguimiento a un trámite
+      minero específico desde su solicitud hasta la finalización del contrato de concesión o su archivo.
+    nulos: 0
+    minimo: 00009-15
+    maximo: ZORZANA
+    comparacion: texto
+  mineral:
+    tipo_fuente: text
+    etiqueta: MINERAL
+    descripcion: '1. Sustancia homogénea originada por un proceso genético natural con composición química,
+      estructura cristalina y propiedades físicas constantes dentro de ciertos límites. 2. Individuos
+      minerales que se caracterizan por una estructura cristalina determinada y por una composición química,
+      que pertenecen a un rango de variaciones continuas y que se encuentran en equilibrio bajo unas condiciones
+      termodinámicas determinadas. 3. El Código de Minas define el mineral como la sustancia cristalina,
+      por lo general inorgánica, con características físicas y químicas propias debido a un agrupamiento
+      atómico específico.FUENTE: res_40599_15_glosario_tecnico_minero.pdf'
+    nulos: 0
+    minimo: AFINES
+    maximo: ZAHORRA
+    comparacion: texto
+  planta_beneficio:
+    tipo_fuente: text
+    etiqueta: PLANTA_BENEFICIO
+    descripcion: 'conjunto de instalaciones, equipos y obras donde se realizan operaciones de tratamiento
+      de los minerales para recuperar o concentrar los valores contenidos en ellos.FUENTE: Decreto 1073
+      de 2015 (Decreto Único Reglamentario del Sector Administrativo de Minas y Energía), artículo 2.2.5.1.5.'
+    nulos: 0
+    minimo: 'NO'
+    maximo: SI
+    comparacion: texto
+    valores:
+      POR CONFIRMAR: 9066
+      'NO': 2507
+      SI: 1341
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: 'Elemento utilizado para identificar una entidad territorial fundamental de la división
+      político-administrativa del Estado Colombiano, con autonomía política, fiscal y administrativa dentro
+      de los límites que le señalen la Constitución y las leyes de la República. De conformidad con el
+      artículo 311 de la Constitución Política y con la Ley 136 de 1994 (junio 2).FUENTE: https://lenguaje.mintic.gov.co/utiliza-el-lenguaje/diccionario-de-elementos'
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  departamento:
+    tipo_fuente: text
+    etiqueta: DEPARTAMENTO
+    descripcion: 'Elemento de dato que contiene el nombre de entidades territoriales, las cuales tienen
+      autonomía para la administración de los asuntos seccionales y la planificación y promoción del desarrollo
+      económico y social dentro de su territorio en los términos establecidos por la Constitución. Los
+      departamentos ejercen funciones administrativas, de coordinación, de complementariedad de la acción
+      municipal, de intermediación entre la Nación y los municipios y de prestación de los servicios que
+      determinen la Constitución y las leyes.FUENTE: https://lenguaje.mintic.gov.co/utiliza-el-lenguaje/diccionario-de-elementos'
+    nulos: 0
+    minimo: ANTIOQUIA
+    maximo: VICHADA
+    comparacion: texto
+    valores:
+      BOYACA: 2162
+      ANTIOQUIA: 1821
+      CUNDINAMARCA: 1184
+      NORTE SANTANDER: 944
+      SANTANDER: 889
+      CAUCA: 729
+      TOLIMA: 697
+      BOLIVAR: 640
+      VALLE: 558
+      CALDAS: 507
+      META: 461
+      CESAR: 460
+      CASANARE: 303
+      ATLANTICO: 204
+      HUILA: 200
+      CORDOBA: 187
+      RISARALDA: 173
+      NARIÑO: 140
+      CHOCO: 137
+      GUAJIRA: 87
+  codigo_dane:
+    tipo_fuente: number
+    etiqueta: CODIGO_DANE
+    descripcion: Elemento de dato que hace referencia al código otorgado por el Departamento Administrativo
+      Nacional de Estadística DANE a un Ente territorial
+    nulos: 0
+    minimo: '5001'
+    maximo: '99999'
+    comparacion: numero

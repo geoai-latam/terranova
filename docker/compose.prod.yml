@@ -1,0 +1,41 @@
+# Producción en una sola VPS (ADR-0030): se suma a compose.yml. En el servidor, `docker/.env` lleva
+# `COMPOSE_FILE=compose.yml:compose.prod.yml`, así `docker compose …` toma los dos sin `-f`. Los
+# secretos siguen solo en ese .env (nunca aquí).
+#
+#   docker compose up -d --build --no-deps puerta-a                  # desplegar la puerta
+#   docker compose up -d --no-deps canarios copias descubrimiento respaldo
+#   docker compose --profile observabilidad up -d --no-deps prometheus grafana
+#
+# `--no-deps` evita recrear Postgres y los conectores al desplegar una sola pieza.
+services:
+  caddy:
+    # TLS público: Caddy escucha 80/443 del host y saca el certificado de TERRANOVA_DOMINIO
+    ports: !override
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      TERRANOVA_REPLICAS: puerta-a:8100
+    depends_on: !override [puerta-a]
+
+  # una sola réplica en 12 GB: puerta-b queda tras un perfil que nadie enciende
+  puerta-b:
+    profiles: [dos-replicas]
+
+  copias:
+    # las descargas grandes (ZIP del DANE, capas ArcGIS) van a disco, no a la tmpfs en memoria
+    environment:
+      TERRANOVA_CONECTORES: "{}"
+      TMPDIR: /descargas
+    tmpfs: !reset []
+    read_only: false
+    mem_limit: 2g
+    volumes:
+      - /opt/terranova/descargas:/descargas
+
+  grafana:
+    # Grafana solo escucha en 127.0.0.1 del servidor (se entra por túnel SSH): quien llega ya pasó
+    # la llave SSH, así que puede ver los tableros sin cuenta; editar sigue pidiendo el admin
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer

@@ -7,12 +7,14 @@ name = "terranova"
 version = "0.0.1"
 description = "Puerta única (MCP + REST) sobre fuentes oficiales colombianas y globales, con el contrato rt/1"
 readme = "README.md"
-license = "Apache-2.0"
+license = "LicenseRef-Propietaria"
 requires-python = ">=3.13"
 authors = [{ name = "GeoAI LATAM" }]
 dependencies = [
     "fastapi>=0.120",
     "fastmcp==4.1.3",
+    # la puerta siempre habla HTTP: ConectorMCP (conectores en vivo) y la ingesta de copias (zip/socrata)
+    "httpx>=0.28",
     "prometheus-client>=0.21,<1",
     "pyyaml>=6.0.3",
 ]
@@ -43,7 +45,6 @@ descubrimiento = [
 # sola. Si se sube aquí, se sube también en .pre-commit-config.yaml.
 dev = [
     "fakeredis[lua]>=2.26",
-    "httpx>=0.28",
     "hypothesis>=6.120",
     "jsonschema>=4.23",
     "mypy==2.4.0",
@@ -65,6 +66,9 @@ packages = ["src/terranova"]
 [tool.ruff]
 target-version = "py313"
 line-length = 100
+# `conectores/` es código vendorizado de los microservicios MCP (geo_mcp_kit + los 6 conectores):
+# tiene su propio estilo/tooling, no se lintea con las reglas del núcleo de Terranova.
+extend-exclude = ["conectores"]
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP", "BLE", "RUF"]

@@ -111,8 +111,9 @@ dataset de «vertimientos» aunque no compartan términos; y lo **fusiona por RR
 español del almacén, `ts_rank`, que pondera por IDF). Medido en vivo (2026-10-25, 2000 datasets): el
 puro-vectorial mete ruido en el top y falla algunos tipeos; el híbrido mejora la precisión, y el FTS por
 IDF evita que las palabras comunes inflen un falso positivo (lo que sí pasó con una frecuencia de
-términos cruda). Modelo multilingüe **local y fijado** (`paraphrase-multilingual-MiniLM-L12-v2`, ONNX vía
-`fastembed`, extra `terranova[descubrimiento]`); la versión se fija para que el **canario sea
+términos cruda). Modelo multilingüe **local y fijado** (desde #136, `intfloat/multilingual-e5-large`,
+dim 1024; antes `paraphrase-multilingual-MiniLM-L12-v2`; ONNX vía `fastembed`, extra
+`terranova[descubrimiento]`); la versión se fija para que el **canario sea
 reproducible**. Hay un **piso de similitud** (lo poco parecido no se muestra) y **desempate por valor**
 (licencia > vivo), para que la relevancia mande sin pisar la honestidad. **Límite conocido:** los
 embeddings devuelven *lo más parecido*, no *«no lo tengo»*; para una pregunta cuya fuente no está en el
@@ -128,7 +129,15 @@ gibberish con pinta de palabras:** medido con pruebas de usuario humano, «asdkj
 —el coseno absoluto de este modelo no está calibrado, así que ningún piso fijo los separa (subirlo mata
 buenas). Mitiga: el **cliente LLM juzga** los candidatos (Terranova es recuperación honesta, no el juez),
 y un modelo grande calibra mejor. El gibberish claro sin palabras («xzxzxz 12345», 0,37) sí cae bajo el
-piso. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
+piso. **Medido con e5-large en producción (2026-10-27, #136/#137):** e5 comprime los cosenos en
+0,75–0,92, así que el piso se recalibró a **0,84**, medido sobre 33.726 datasets y 100 consultas:
+- Las 20 consultas ajenas al catálogo (máximo 0,838) ya no traen candidatos.
+- Las 20 temáticas sí los traen.
+- Lo que MiniLM no separaba ahora se separa: «asdkjfh qwerty» da 0,778 (fuera) y «cuanto cuesta un
+  remedio» da 0,861 (dentro, 8 candidatos).
+
+Las preguntas largas con coordenadas, NIT o años puntúan más bajo: el buscador rinde mejor con el tema
+de la pregunta. **Reconciliación con [ADR-0012](../decisions/0012-la-puerta-no-usa-llm.md):**
 los embeddings viven **solo aquí** (sugerir *qué fuente* mirar), **nunca en la ruta del dato** —el
 ejecutor, los conectores y el sobre `rt/1` siguen sin modelo y deterministas—. Sin el extra, el buscador
 cae al **léxico** (nada se rompe). Las **API de búsqueda de los portales** (Socrata `q=`, ArcGIS Hub

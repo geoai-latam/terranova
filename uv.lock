@@ -2903,6 +2903,7 @@ source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "fastmcp" },
+    { name = "httpx" },
     { name = "prometheus-client" },
     { name = "pyyaml" },
 ]
@@ -2929,7 +2930,6 @@ redis = [
 [package.dev-dependencies]
 dev = [
     { name = "fakeredis", extra = ["lua"] },
-    { name = "httpx" },
     { name = "hypothesis" },
     { name = "jsonschema" },
     { name = "mypy" },
@@ -2948,6 +2948,7 @@ requires-dist = [
     { name = "fastembed", marker = "extra == 'descubrimiento'", specifier = ">=0.4,<0.8" },
     { name = "fastmcp", specifier = "==4.1.3" },
     { name = "geopandas", marker = "extra == 'datasets'", specifier = ">=1.0" },
+    { name = "httpx", specifier = ">=0.28" },
     { name = "pandera", extras = ["geopandas"], marker = "extra == 'datasets'", specifier = ">=0.20" },
     { name = "prometheus-client", specifier = ">=0.21,<1" },
     { name = "psycopg", extras = ["binary"], marker = "extra == 'postgres'", specifier = ">=3.2,<4" },
@@ -2963,7 +2964,6 @@ provides-extras = ["redis", "postgres", "datasets", "descubrimiento"]
 [package.metadata.requires-dev]
 dev = [
     { name = "fakeredis", extras = ["lua"], specifier = ">=2.26" },
-    { name = "httpx", specifier = ">=0.28" },
     { name = "hypothesis", specifier = ">=6.120" },
     { name = "jsonschema", specifier = ">=4.23" },
     { name = "mypy", specifier = "==2.4.0" },
