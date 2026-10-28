@@ -300,8 +300,13 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
   medición; el saldo de un mes vive 40 días en Redis.
 - **Antes de desplegar:** las organizaciones internas pasan a `ampliado`. Hecho el 2026-10-27
   (`geoai`, la única).
-- **Pendiente:** excedentes y paquetes adicionales; licencias DANE y Open-Meteo para los planes de
-  pago; términos de servicio.
+- **Pendiente:** excedentes y paquetes adicionales; licencias DANE y DIAN (términos «sin fines de
+  lucro») para los planes de pago; términos de servicio.
+- **Open-Meteo retirado (2026-10-28):** su API gratis es solo no comercial y Terranova ya cobra.
+  Salen `open_meteo_clima_serie`, su fuente y su dorada; ADR-0021 queda superada. El reemplazo es
+  ERA5-Land del CDS de Copernicus (CC BY 4.0), que espera la llave del CDS.
+- **SLA:** soporte en soporte@terrnova.com (lunes a viernes, 8:00 a 18:00, hora de Colombia) y sonda
+  externa UptimeRobot sobre `GET /salud` cada 5 minutos. `/salud` no toca fuentes ni la base.
 
 ## Dónde estamos
 

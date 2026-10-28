@@ -264,6 +264,12 @@ def crear_api() -> FastAPI:
             "reinicia": reinicio(ahora).isoformat(),
         }
 
+    @api.get("/salud", include_in_schema=False)
+    async def salud() -> dict[str, str]:
+        """Para la sonda externa del SLA: responde si la puerta está viva, sin llamar a ninguna
+        fuente ni a la base (nunca carga contra servidores del Estado)."""
+        return {"estado": "ok"}
+
     @api.get("/llms.txt", include_in_schema=False)
     async def llms() -> PlainTextResponse:
         return PlainTextResponse(

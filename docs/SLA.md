@@ -2,7 +2,7 @@
 
 > **Borrador.** No es vinculante hasta que se publique junto con los términos de servicio. Las
 > cifras salen de lo que hoy se mide (spec 05) y de un despliegue en un solo servidor (ADR-0030).
-> Lo marcado [POR COMPLETAR] lo define el dueño.
+> El canal de soporte y la sonda ya están definidos.
 
 ## 1. Qué cubre
 
@@ -34,8 +34,9 @@ Un 99,5 % mensual admite hasta unas 3 h 39 min de indisponibilidad en un mes de 
     `fuente_lenta`);
   - los 4xx (entrada, llave, saldo, tasa).
 - Si la puerta no responde en absoluto, ese tiempo cuenta entero como indisponible.
-- La medición sale de las métricas de la puerta y de una sonda externa
-  [POR COMPLETAR: proveedor de la sonda].
+- La medición sale de las métricas de la puerta y de una sonda externa (UptimeRobot), que consulta
+  `https://terrnova.com/salud` cada 5 minutos desde fuera del servidor. Una consulta fallida
+  cuenta como 5 minutos sin servicio.
 
 **Fuentes:** el estado de cada una se publica en `/estado`, según su canario diario. Es
 información, no un compromiso de disponibilidad.
@@ -66,8 +67,7 @@ No cuentan como indisponibilidad:
 - **Plan Gratis:** soporte de mejor esfuerzo, sin tiempos garantizados.
 - **Fuente caída** (fuera de nuestro control): se atiende como severidad 3. Se informa en
   `/estado` y, si se puede, se sirve una copia marcada como tal.
-- **Canal de soporte:** [POR COMPLETAR: correo o canal de soporte]. Incluya el `solicitud_id` de la
-  respuesta afectada.
+- **Canal de soporte:** soporte@terrnova.com. Incluya el `solicitud_id` de la respuesta afectada.
 
 ## 6. Créditos de servicio (solo A medida)
 

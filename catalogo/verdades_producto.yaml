@@ -141,11 +141,11 @@ verdades:
     medicion: "earthquake.usgs.gov/fdsnws/event/1/count?minmagnitude=3&… = 0"
   - id: t19
     familia: territorio
-    pregunta: "¿Cuánto llovió en Bogotá en enero de 2023?"
-    herramienta: open_meteo_clima_serie
-    entrada: {lon: -74.0721, lat: 4.711, desde: "2023-01-01", hasta: "2023-01-31"}
-    verdad: {precipitacion_total_mm: 92.2, temperatura_media_c: 12.0}
-    medicion: "archive-api.open-meteo.com (ERA5), suma diaria; vuelto a medir el 2026-10-25 (era 91,5: Open-Meteo reprocesa)"
+    pregunta: "¿Cuánto llovió el 17-10-2026 en la estación del IDEAM del aeropuerto de Valledupar?"
+    herramienta: ideam_lluvia_diaria_estacion
+    entrada: {codigo_estacion: "0028025502", desde: "2026-10-17", hasta: "2026-10-17"}
+    verdad: {codigo_sensor: "0240", mm: 9.16, observaciones: 144}
+    medicion: "datos.gov.co s54a-sgyg (IDEAM), medido el 2026-10-28: sensor 0240, 9,16 mm en 144 observaciones"
   - id: t20
     familia: territorio
     pregunta: "¿Cuánta gente vive en Bogotá según el censo de 2018?"

@@ -60,10 +60,11 @@ async def test_licencia_por_verificar_no_responde_a_una_llave_normal() -> None:
 
 @pytest.mark.anyio
 async def test_licencia_no_comercial_responde_con_aviso() -> None:
-    """Open-Meteo (ADR-0021): responde mientras Terranova sea gratuito, con aviso."""
-    h = CATALOGO.herramientas["open_meteo_clima_serie"]
+    """Una fuente con `uso_comercial: no` (DIAN) responde con el aviso en `procedencia`."""
+    h = CATALOGO.herramientas["dian_usuario_aduanero_por_nit"]
+    conector = CATALOGO.fuentes[h.fuente].conector
     grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
-    ej = Ejecutor(CATALOGO, {"amenazas-mcp": Conector(grabado["llamadas"][0]["respuesta"])})
+    ej = Ejecutor(CATALOGO, {conector: Conector(grabado["llamadas"][0]["respuesta"])})
     sobre = await ej.ejecutar(h.id, h.canario.entrada)
     assert sobre.procedencia[0].licencia.uso_comercial == "no"
     assert any("no comercial" in a for a in sobre.avisos)

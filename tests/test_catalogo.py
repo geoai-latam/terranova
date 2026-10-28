@@ -302,19 +302,18 @@ def test_ids_parecidos_para_un_error_accionable() -> None:
     from terranova.catalogo import cargar, ids_parecidos
 
     catalogo = cargar()
-    assert ids_parecidos(catalogo, "open-meteo")[:2] == [
-        "open_meteo.era5",
-        "open_meteo_clima_serie",
-    ]
+    assert ids_parecidos(catalogo, "dian-usuarios")[:1] == ["dian.usuarios_aduaneros"]
     assert "medicinalegal.homicidios" in ids_parecidos(catalogo, "Medicina Legal")
     assert ids_parecidos(catalogo, "xyzzy") == [] and ids_parecidos(catalogo, "--") == []
 
 
 def test_la_licencia_dice_si_no_hay_uso_comercial() -> None:
     """Con «licencia: CC BY 4.0» a secas, un agente dijo que Open-Meteo se podía usar
-    comercialmente; su API gratuita es solo no comercial (GEO Copilot, plan de fiabilidad)."""
-    h = cargar().herramientas["open_meteo_clima_serie"]
-    assert h.descripcion.rstrip().endswith("licencia: CC BY 4.0, sin uso comercial.)")
+    comercialmente; su API gratuita era solo no comercial (GEO Copilot, plan de fiabilidad)."""
+    c = cargar()
+    for h in c.herramientas.values():
+        if c.fuentes[h.fuente].uso_comercial == "no":
+            assert "sin uso comercial" in h.descripcion, h.id
 
 
 def test_toda_herramienta_que_pide_nit_dice_como_buscarlo() -> None:
