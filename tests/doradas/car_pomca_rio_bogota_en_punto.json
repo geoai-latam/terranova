@@ -1,0 +1,93 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T09:08:54+00:00",
+ "herramienta": "car_pomca_rio_bogota_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.03,
+     4.86,
+     -74.03,
+     4.86
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "out_fields": [
+     "CAT_ORD",
+     "ZO_US_MA",
+     "SZO_US_M",
+     "NOMENCLAT",
+     "DESCRIP"
+    ],
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "DESCRIP": "Areas de recuperacion para el uso multiple (ARUM)",
+          "NOMENCLAT": "ARUM",
+          "SZO_US_M": "Areas de recuperación para el uso múltiple",
+          "ZO_US_MA": "Areas de Restauración"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "ZonificacionBogota_4"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.03,
+      4.86,
+      -74.03,
+      4.86
+     ],
+     "capa": "ZonificacionBogota_4",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.03,
+       4.86,
+       -74.03,
+       4.86
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "CAT_ORD",
+       "ZO_US_MA",
+       "SZO_US_M",
+       "NOMENCLAT",
+       "DESCRIP"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

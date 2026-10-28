@@ -1,0 +1,46 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: car.pomca_rio_bogota
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificacion_POMCA_Bogota_2120_2019/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=3c3c4bf77c5b44c5a06add73374fb2f6
+titulo: Zonificación Ambiental POMCA Río Bogotá - 2120 año 2019
+descripcion: Zonificación Ambiental del Plan de Ordenación y Manejo de la Cuenca - POMCA del Río Bogotá,
+  según Decreto 1640 de 2012 adoptada mediante Resolución CAR 957 del 02-abr-2019. Más información en
+  la URL https://www.car.gov.co/vercontenido/41 |categoria:Ambiente y Desarrollo Sostenible|cobertura:Departamental
+publicado: '2019-04-17'
+datos_actualizados: '2019-04-30'
+etiquetas:
+- ' Zonificacion'
+- Ambiental
+- Bogota
+- pomcas
+- Zonificación Ambiental
+- POMCA
+filas: 11588
+geografia:
+  geometria: poligono
+  crs: EPSG:3116
+  extension:
+  - -74.83324444902128
+  - 4.2655775101378675
+  - -73.51485228620572
+  - 5.297593482118362
+  capas:
+    '0': ZonificacionBogota_4
+campos:
+  CAT_ORD:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CAT_ORD
+  ZO_US_MA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ZO_US_MA
+  SZO_US_M:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: SZO_US_M
+  NOMENCLAT:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NOMENCLAT
+  DESCRIP:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: DESCRIP

@@ -1,0 +1,33 @@
+id: car_pomca_rio_bogota_en_punto
+version: 1
+familia: ambiente
+fuente: car.pomca_rio_bogota
+pregunta: "¿Qué zonificación ambiental del POMCA del río Bogotá tiene este punto?"
+descripcion: >
+  Zonificación ambiental del Plan de Ordenación y Manejo de la Cuenca (POMCA) del río Bogotá en un
+  punto (Resolución CAR 957 de 2019). Da la categoría de ordenación (conservación y protección
+  ambiental, o uso múltiple), la zona y la subzona de uso y manejo: áreas protegidas, de protección,
+  de restauración, de producción sostenible o urbanas. Es determinante ambiental del ordenamiento
+  municipal. Solo cubre la cuenca del río Bogotá: si no hay resultado, el punto está fuera de ella.
+  (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    geometria: ninguna  # ~27 KB por polígono
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [CAT_ORD, ZO_US_MA, SZO_US_M, NOMENCLAT, DESCRIP]
+    max_features: 5
+  campos: [CAT_ORD, ZO_US_MA, SZO_US_M, NOMENCLAT, DESCRIP]
+salida: PomcaRioBogotaEnPunto
+cobro: punto
+canario:
+  # Norte de la Sabana (Chía-Cajicá); medido el 2026-10-28 en la capa 0: uso múltiple, áreas de
+  # restauración, recuperación para el uso múltiple (ARUM).
+  entrada: {lon: -74.03, lat: 4.86}
+  verdad: {categoria_ordenacion: "Uso Multiple", zona_uso_manejo: "Areas de Restauración", sigla: ARUM}
+  campos: [categoria_ordenacion, descripcion, sigla, subzona_uso_manejo, zona_uso_manejo]
+  latencia_max_ms: 5000
