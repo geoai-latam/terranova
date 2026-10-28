@@ -294,6 +294,11 @@ class Copia(_Ficha):
     # Capa de un servicio ArcGIS (origen arcgis): se copia con su geometría, en EPSG:4326, a una
     # columna `_geom` con índice espacial; `consultar_copia` la cruza con un punto o un bbox.
     capa: int | None = Field(default=None, ge=0, description="capa del servicio (origen arcgis)")
+    geometria: bool = Field(
+        default=True,
+        description="copiar la geometría (origen arcgis); sin ella, solo los atributos: p. ej. los "
+        "totales del censo por municipio, que se consultan por código",
+    )
     por_pagina: int = Field(
         default=500, ge=1, le=2000, description="elementos por petición (polígonos pesados: menos)"
     )
@@ -335,8 +340,10 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
         if (self.origen == "arcgis") != (self.capa is not None):
             raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
-        if self.tolerancia is not None and self.origen != "arcgis":
-            raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS")
+        if self.tolerancia is not None and not (self.origen == "arcgis" and self.geometria):
+            raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS con geometría")
+        if not self.geometria and self.origen != "arcgis":
+            raise ValueError("ADR-0024: `geometria: false` solo aplica a una capa ArcGIS")
         lee_conector = (self.conector is not None, self.tool is not None)
         if lee_conector != ((self.origen == "conector"),) * 2:
             raise ValueError(
@@ -364,7 +371,7 @@ class Copia(_Ficha):
     @property
     def espacial(self) -> bool:
         """Lleva geometría (`_geom`): se puede cruzar con un punto o un bbox."""
-        return self.origen == "arcgis"
+        return self.origen == "arcgis" and self.geometria
 
     @property
     def columnas_usadas(self) -> set[str]:
@@ -574,7 +581,7 @@ class Consulta(_Ficha):
 
 
 # Vocabulario cerrado de campos que calcula la puerta (ADR-0012: nada de código suelto por fuente).
-DE_ELEMENTO = frozenset({"capa", "prefijo", "columna"})
+DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo"})
 DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "completitud_total"})
 
 
@@ -583,13 +590,23 @@ class Derivado(_Ficha):
 
     Por elemento: `capa` (valor según la capa que respondió, `valores`), `prefijo` (los `n`
     primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
-    resultado, p. ej. un alias de un `select` agregado). Del resultado: `conteo`, `suma` y
+    resultado, p. ej. un alias de un `select` agregado) y `codigo` (el significado de un código
+    de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre oficial del departamento
+    por su código DIVIPOLA). Del resultado: `conteo`, `suma` y
     `maximo` de `campo`, `primero` (el `campo` del primer elemento) y `completitud_total` (el
     total que dio la fuente).
     """
 
     de: Literal[
-        "capa", "prefijo", "columna", "conteo", "suma", "maximo", "primero", "completitud_total"
+        "capa",
+        "prefijo",
+        "columna",
+        "codigo",
+        "conteo",
+        "suma",
+        "maximo",
+        "primero",
+        "completitud_total",
     ]
     campo: str | None = None
     n: int | None = Field(default=None, ge=1)
@@ -598,13 +615,15 @@ class Derivado(_Ficha):
 
     @model_validator(mode="after")
     def _completo(self) -> Self:
-        necesita_campo = {"prefijo", "columna", "suma", "maximo", "primero"}
+        necesita_campo = {"prefijo", "columna", "codigo", "suma", "maximo", "primero"}
         if self.de in necesita_campo and not self.campo:
             raise ValueError(f"un derivado «{self.de}» necesita `campo`")
         if self.de == "prefijo" and self.n is None:
             raise ValueError("un derivado «prefijo» necesita `n`")
         if self.de == "capa" and not self.valores:
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
+        if self.de == "codigo" and not self.valores:
+            raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
         return self
 
     @property
@@ -767,6 +786,7 @@ def validar(catalogo: Catalogo) -> list[str]:
         for nombre, d in h.derivados.items():
             if d.de in (
                 "prefijo",
+                "codigo",
                 "suma",
                 "maximo",
                 "primero",

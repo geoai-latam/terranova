@@ -240,6 +240,9 @@ def mapear_fila(
             out[nombre] = str(base)[: d.n] if base else None
         elif d.de == "columna":
             out[nombre] = convertir(fila.get(d.campo or ""), d.tipo)
+        elif d.de == "codigo":
+            base = out.get(d.campo or "")
+            out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
     return out
 
 

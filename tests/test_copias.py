@@ -659,3 +659,45 @@ def test_el_filtro_toma_el_tipo_de_la_columna() -> None:
     """La GEIH guarda el año como texto («2001»); la herramienta lo recibe como número."""
     plan = plan_de_consulta(GEIH, {"filtros": {"columna": 2001}, "order": ["_fila"]})
     assert plan.parametros[:1] == ("2001",)
+
+
+def test_derivado_codigo_da_el_significado_del_codigo() -> None:
+    """El censo copia el código del departamento; el nombre oficial sale de la ficha."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["dane_poblacion_municipio"]
+    deptos = {"11": "BOGOTÁ, D.C.", "25": "CUNDINAMARCA"}
+    con = h.model_copy(
+        update={
+            "derivados": {
+                "departamento_nombre": Derivado(
+                    de="codigo", campo="municipio_divipola", valores=deptos
+                )
+            }
+        }
+    )
+    fuente = CATALOGO.fuentes[h.fuente]
+    clave = next(k for k, c in fuente.campos.items() if c.nombre == "municipio_divipola")
+    assert mapear_fila(con, fuente, {clave: "11"}, None)["departamento_nombre"] == "BOGOTÁ, D.C."
+    assert mapear_fila(con, fuente, {clave: "99"}, None)["departamento_nombre"] is None
+    assert mapear_fila(con, fuente, {}, None)["departamento_nombre"] is None
+
+
+def test_copia_arcgis_sin_geometria_no_pide_ni_guarda_geometria() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+    from terranova.copias import descargar_arcgis
+
+    assert RUNAP.copia is not None
+    sin = RUNAP.model_copy(update={"copia": RUNAP.copia.model_copy(update={"geometria": False})})
+    assert sin.copia is not None and not sin.copia.espacial
+    http = ArcgisFalso(3, {"count": 3})
+    paginas = list(descargar_arcgis(sin, cliente=http, pausa_s=0))
+    assert http.pedidos[1][1]["returnGeometry"] == "false"
+    assert "_geom" not in paginas[0][0] and paginas[0][0]["ap_nombre"] == "Área 1"
+    with pytest.raises(ErrorCopia, match="no tiene geometría"):  # sin geometría no hay cruce
+        plan_de_consulta(sin, {"punto": [-74.0, 4.6]})
+    with pytest.raises(ValidationError, match="solo aplica a una capa ArcGIS"):
+        Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", geometria=False)
