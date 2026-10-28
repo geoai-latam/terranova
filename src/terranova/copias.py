@@ -523,6 +523,59 @@ def descargar_conector(
     yield [{**{c: fila.get(c) for c in columnas}, FILA: i} for i, fila in enumerate(filas, start=1)]
 
 
+# --- un GeoJSON publicado como archivo (origen geojson) -------------------------------------------
+
+
+def descargar_geojson(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Baja los GeoJSON declarados y rinde sus rasgos por página: la lista blanca y la geometría,
+    en las coordenadas del archivo (si no son lon/lat, `construir` las reproyecta).
+
+    `desde` se ignora (se copia el archivo entero). Si la clave no viene en las propiedades (un
+    GeoJSON exportado de un escritorio no trae OBJECTID), es el orden del rasgo en los archivos,
+    desde 1: la copia se rehace entera, así que no tiene que coincidir entre versiones."""
+    import httpx
+
+    assert fuente.copia is not None
+    copia = fuente.copia
+    columnas = list(fuente.campos)
+    propio = cliente is None
+    http = cliente or httpx.Client(
+        timeout=600, follow_redirects=True, headers={"User-Agent": "terranova-copias/1"}
+    )
+    orden = 0
+    try:
+        for url in copia.descargas:
+            r = http.get(url)
+            r.raise_for_status()
+            rasgos = r.json().get("features") or []
+            if not rasgos:
+                raise ErrorCopia(f"el GeoJSON {url} llegó sin rasgos: la copia no se publica")
+            for inicio in range(0, len(rasgos), 1000):
+                pagina = []
+                for rasgo in rasgos[inicio : inicio + 1000]:
+                    orden += 1
+                    propiedades = rasgo.get("properties") or {}
+                    fila = {c: propiedades.get(c) for c in columnas}
+                    if fila.get(copia.clave) in (None, ""):
+                        fila[copia.clave] = orden
+                    fila[GEOMETRIA] = rasgo.get("geometry")
+                    pagina.append(fila)
+                yield pagina
+    finally:
+        if propio:
+            http.close()
+
+
+def _geograficas(proyeccion: str) -> str:
+    """Lon/lat sobre el mismo elipsoide de `proyeccion`, sin cambio de datum: la cartesiana de
+    Bogotá infla el GRS80 2 550 m para que sus lat/lon sean las de MAGNA-SIRGAS; pasar por WGS84
+    con `towgs84=0` las corría ~1,4 m."""
+    elipsoide = [t for t in proyeccion.split() if t.split("=")[0] in ("+a", "+b", "+rf", "+ellps")]
+    return " ".join(["+proj=longlat", *elipsoide, "+no_defs"])
+
+
 # --- ingesta de los microdatos de comercio exterior del DANE (ZIP, origen zip_dane) ------------
 #
 # El DANE publica las estadísticas de importaciones (ANDA, catálogo 856) como ZIP de microdatos: un
@@ -819,6 +872,13 @@ class AlmacenCopias:
                 self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
             if copia.texto:
                 self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
+            if copia.espacial and copia.proyeccion:
+                # llegaron en las coordenadas del archivo, rotuladas 4326: se pasan a lon/lat
+                self._c.execute(
+                    f'UPDATE {fisica} SET "{GEOMETRIA}" = ST_SetSRID(ST_Transform('
+                    f'ST_SetSRID("{GEOMETRIA}", 0), %s::text, %s::text), 4326)',
+                    (copia.proyeccion, _geograficas(copia.proyeccion)),
+                )
             if copia.espacial:
                 self._reparar_geometrias(fuente, fisica)
                 self._c.execute(f'CREATE INDEX ON {fisica} USING gist ("{GEOMETRIA}")')

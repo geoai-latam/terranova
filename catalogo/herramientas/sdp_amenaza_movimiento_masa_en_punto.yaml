@@ -1,0 +1,39 @@
+id: sdp_amenaza_movimiento_masa_en_punto
+version: 1
+familia: territorio
+fuente: sdp.pot555_amenaza_movimiento_masa
+pregunta: "¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT?"
+descripcion: >
+  Categoría de amenaza por movimiento en masa (deslizamientos: baja, media o alta) del POT de
+  Bogotá (Decreto 555 de 2021) en un punto del suelo urbano o de expansión. Solo cruza las áreas que
+  el POT zonifica: «no encontrado» quiere decir que el punto no cae en ninguna, por estar en suelo
+  rural, fuera de Bogotá o en un área que el POT no zonifica para esta amenaza. Es la zonificación
+  general, no un estudio del predio. Sale de la copia de Terranova.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_pot555_amenaza_movimiento_masa
+    punto: ["{lon}", "{lat}"]
+    filtros: {AREA_ZONIF: ÁREA ZONIFICABLE}
+    select: [CATEGORIZA, AREA_ZONIF, CLASE_SUEL, ESCENARIO, ACTO_ADMIN, NUMERO_ACT]
+    geometria: simplificada
+    order: [_fila]
+    limite: 5
+  campos: [CATEGORIZA, AREA_ZONIF, CLASE_SUEL, ESCENARIO, ACTO_ADMIN, NUMERO_ACT]
+derivados:
+  amenaza:
+    de: codigo
+    campo: categoria_amenaza
+    valores: {"1": baja, "2": media, "3": alta}
+salida: AmenazaMovimientoMasaEnPunto
+cobro: punto
+canario:
+  # San Cristóbal (ladera); medido el 2026-10-28 en el GeoJSON de la SDP: CATEGORIZA 3, ÁREA
+  # ZONIFICABLE, Urbano. La capa del IDIGER de 2016 da «Amenaza Alta» en el mismo punto.
+  entrada: {lon: -74.0911, lat: 4.5692}
+  verdad: {categoria_amenaza: "3", amenaza: alta, numero_acto: "555"}
+  campos: [amenaza, area_zonificacion, categoria_amenaza, clase_suelo, escenario, numero_acto, tipo_acto]
+  latencia_max_ms: 5000
