@@ -1,0 +1,80 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T08:33:29+00:00",
+ "herramienta": "sdp_tratamiento_urbanistico_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "OBJECTID"
+    ],
+    "punto": [
+     -74.0565,
+     4.6486
+    ],
+    "select": [
+     "CODIGO_TRATAMIENTO",
+     "NOMBRE_TRATAMIENTO",
+     "TIPOLOGIA",
+     "ALTURA_MAXIMA",
+     "CÓDIGO_SUBTRATAMIENTO",
+     "NUMERO_ACTO_ADMINISTRATIVO",
+     "FECHA_ACTO_ADMINISTRATIVO"
+    ],
+    "tabla": "sdp_pot555_tratamiento"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05475,
+           4.64872
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4-6",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " "
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-28T08:06:45.960595+00:00",
+     "copia": {
+      "filas": 5754,
+      "huella": "sha256:7e727cecba40a679d811d0f38e89dea57af819032017a7cab04630f5b2499fc2",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028080645960595"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

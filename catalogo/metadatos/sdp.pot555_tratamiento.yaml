@@ -1,0 +1,35 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: sdp.pot555_tratamiento
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://serviciosg.sdp.gov.co/server/rest/services/POT555/NORMA_URBAN%C3%8DSTICA_Y_OT/MapServer?f=json
+filas: 5754
+geografia:
+  geometria: poligono
+  capas:
+    '2': Tratamiento urbanístico
+campos:
+  OBJECTID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  CODIGO_TRATAMIENTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código Tratamiento
+  NOMBRE_TRATAMIENTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre Tratamiento
+  TIPOLOGIA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Tipología
+  ALTURA_MAXIMA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Altura Máxima
+  NUMERO_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Número Acto Administrativo
+  FECHA_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Fecha Acto Administrativo
+  CÓDIGO_SUBTRATAMIENTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código Subtratamiento

@@ -208,7 +208,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `invias_peaje_tarifas` | ¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 1 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
+| `sdp_area_actividad_en_punto` | ¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_estrato_en_punto` | ¿Qué estrato socioeconómico tiene este punto de Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
+| `sdp_tratamiento_urbanistico_en_punto` | ¿Qué tratamiento urbanístico y qué altura máxima tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `uaecd_valor_referencia_en_punto` | ¿Cuál es el valor de referencia del m² de terreno en este punto de Bogotá? | Unidad Administrativa Especial de Catastro Distrital (UAECD) | CC-BY-4.0 | 10 |
 | `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 10 |

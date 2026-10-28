@@ -446,11 +446,14 @@ def _valores_codificados(
             )
         except httpx.HTTPError:
             continue  # sin conteo la ficha sigue con los códigos: solo no dice cuáles faltan
-        salida[nombre] = {
-            str(f["attributes"][nombre]): int(f["attributes"]["n"])
-            for f in datos.get("features") or []
-            if f["attributes"].get(nombre) is not None
-        }
+        cuentas: dict[str, int] = {}
+        for f in datos.get("features") or []:
+            atributos = f.get("attributes") or {}
+            # el alias del conteo vuelve en mayúsculas en algunos servidores (SDP Bogotá: «N»)
+            n = next((v for k, v in atributos.items() if k.lower() == "n"), None)
+            if atributos.get(nombre) is not None and n is not None:
+                cuentas[str(atributos[nombre])] = int(n)
+        salida[nombre] = cuentas
     return salida
 
 

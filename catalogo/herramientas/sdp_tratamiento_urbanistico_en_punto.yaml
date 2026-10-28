@@ -1,0 +1,32 @@
+id: sdp_tratamiento_urbanistico_en_punto
+version: 1
+familia: territorio
+fuente: sdp.pot555_tratamiento
+pregunta: "¿Qué tratamiento urbanístico y qué altura máxima tiene este punto de Bogotá según el POT?"
+descripcion: >
+  Tratamiento urbanístico del POT de Bogotá (Decreto 555 de 2021) en un punto: consolidación,
+  renovación urbana, desarrollo, conservación o mejoramiento integral, con la altura máxima permitida
+  en pisos, la tipología y el subtratamiento cuando aplican. Es la norma general: un predio puede
+  tener normas específicas (planes parciales, bienes de interés cultural). Solo Bogotá. Sale de la
+  copia de Terranova. Para los usos, sdp_area_actividad_en_punto.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_pot555_tratamiento
+    punto: ["{lon}", "{lat}"]
+    select: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 5
+  campos: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+salida: TratamientoUrbanisticoEnPunto
+cobro: punto
+canario:
+  # Chapinero; medido el 2026-10-28 en la capa 2: Consolidación, altura máxima 4-6, Decreto 555.
+  entrada: {lon: -74.0565, lat: 4.6486}
+  verdad: {tratamiento: "Consolidación", altura_maxima: "4-6", numero_acto: "555"}
+  campos: [altura_maxima, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tipologia, tratamiento]
+  latencia_max_ms: 5000
