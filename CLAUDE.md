@@ -11,18 +11,19 @@
 ## Qué es
 
 Puerta única (MCP + REST `/v1`) sobre fuentes oficiales colombianas y globales, con el contrato
-`rt/1`. Cada respuesta lleva procedencia, licencia, completitud y `servido_desde`. Es open source y
-gratuita. **Terranova es autocontenida:** todas las herramientas viven y funcionan aquí. Los
-conectores (microservicios MCP que van a la fuente) están vendorizados en `conectores/` (services +
+`rt/1`. Cada respuesta lleva procedencia, licencia, completitud y `servido_desde`. Es un producto
+comercial: hoy gratuito (ADR-0020) y con el repo privado (ADR-0001 enmendada). **Terranova es
+autocontenida:** todas las herramientas viven y funcionan aquí. Los conectores (microservicios MCP
+que van a la fuente) están vendorizados en `conectores/` (services +
 `packages/geo_mcp_kit`); el `copia` y el descubrimiento son internos. GEO Copilot no es una
 dependencia: será solo un cliente más que se conecta por el MCP de Terranova.
 
 ## Reglas del proyecto
 
 - **Idioma:** español en documentos, mensajes de commit, nombres de dominio y herramientas.
-- **Repo público:** nada interno ni personal se versiona. Ni secretos, ni datos personales, ni notas
-  de estrategia o legales (eso va en `interno/`). Antes de cada commit, revisa
-  `git diff --cached --stat`.
+- **Repo privado, con la higiene de uno público:** nada interno ni personal se versiona. Ni
+  secretos, ni datos personales, ni notas de estrategia o legales (eso va en `interno/`). Antes de
+  cada commit, revisa `git diff --cached --stat`.
 - **Por fases con gate:** no se empieza una fase sin cerrar el gate de la anterior. Cada spec se
   cierra con su criterio de aceptación medido, no con «parece que funciona».
 - **La puerta no usa LLM** (ADR-0012). La lógica de las fuentes sale del catálogo, no de código

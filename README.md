@@ -17,7 +17,7 @@ datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus,
   (`vistos/total`) y desde dónde se sirvió** (fuente, copia, curado, caché u obsoleto).
 - **Territorio de primera clase:** predio en un punto, cruces espaciales, ficha de un lugar,
   restricciones, amenazas e imágenes.
-- **Gratuito y abierto:** código Apache 2.0; catálogo y datasets CC BY-SA 4.0.
+- **Gratuito por ahora** (ADR-0020). El repo es privado: Terranova es un producto comercial (enmienda de la ADR-0001).
 
 ## Principios
 
@@ -54,5 +54,5 @@ puerta, el catálogo y la operación encima de ellos. GEO Copilot es su primer c
 
 ## Licencia
 
-Código: [Apache 2.0](LICENSE). Catálogo y datasets: [CC BY-SA 4.0](LICENSE-DATA.md). Cada dato
-conserva la licencia y la atribución de su fuente.
+Propietaria: © 2026 GeoAI LATAM, todos los derechos reservados ([LICENSE](LICENSE)). Cada dato
+que Terranova entrega conserva la licencia y la atribución de su fuente ([LICENSE-DATA.md](LICENSE-DATA.md)).
