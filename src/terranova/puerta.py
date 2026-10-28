@@ -36,7 +36,7 @@ from terranova.catalogo import (
 )
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import PATRON_TEXTO_LIMPIO, Sobre, huella, nueva_solicitud_id
-from terranova.cuota import Cuota, cuota_desde_entorno, segundos_hasta_el_mes_siguiente
+from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
 from terranova.curado import Restricciones, restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -108,6 +108,17 @@ def plan_actual() -> Plan:
     """El plan de quien llama. Hasta la identidad (F3.2) sale de `TERRANOVA_PLAN`; por defecto
     `normal`, el seguro: una fuente con licencia por verificar no responde."""
     return "evaluacion" if os.environ.get("TERRANOVA_PLAN") == "evaluacion" else "normal"
+
+
+def mensaje_saldo_agotado(org: str, ahora: float) -> str:
+    """Igual por REST y por MCP (ADR-0004): cuándo se renueva y, si hay, dónde subir de plan."""
+    mensaje = (
+        f"la organización {org} agotó sus créditos del mes; "
+        f"se renuevan el {reinicio(ahora).date().isoformat()} (UTC)"
+    )
+    if url := os.environ.get("TERRANOVA_URL_PLANES"):
+        mensaje += f" o al subir de plan: {url}"
+    return mensaje
 
 
 def esquema_entrada(h: Herramienta) -> dict[str, Any]:
@@ -329,10 +340,11 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
     # ADR-0010: se reserva el costo antes de llamar y se devuelve lo que no se cobró
     reservado, _ = await cuota.reservar(principal.org, principal.nivel, costo)
     if not reservado:
+        ahora = time.time()
         raise ErrorEjecucion(
             "saldo_agotado",
-            f"la organización {principal.org} agotó sus créditos del mes",
-            segundos_hasta_el_mes_siguiente(time.time()),
+            mensaje_saldo_agotado(principal.org, ahora),
+            segundos_hasta_el_mes_siguiente(ahora),
         )
     try:
         sobre = await correr()

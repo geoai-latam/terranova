@@ -24,7 +24,7 @@ consulta:
 salida: RuesEstablecimientosPorNit
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en nb3d-v3n7: Ecopetrol (899999068) tiene 3; la primera matrícula es 2167505,
   # «LA TIENDA ECOPETROL», en Bogotá.

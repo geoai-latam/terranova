@@ -21,7 +21,7 @@ consulta:
     limite: 5
   campos: [UCCapacida, Descripcio]
 salida: CapacidadUsoEnPunto
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {unidad_capacidad: "2c", descripcion_capacidad: "Capacidad alta para agricultura"}

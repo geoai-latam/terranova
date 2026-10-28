@@ -25,6 +25,7 @@ def test_registro_en_postgres() -> None:
     r.fijar_nivel(org, "ampliado")
     r.fijar_nivel(org, "ampliado")  # upsert
     assert (q := r.verificar(llave)) is not None and q.nivel == "ampliado"
+    assert (org, "ampliado", 1) in r.listar_orgs()
     (ll,) = r.listar(org)
     assert ll.ultimo_uso is not None
     assert r.revocar(ll.llave_id) and not r.revocar(ll.llave_id)

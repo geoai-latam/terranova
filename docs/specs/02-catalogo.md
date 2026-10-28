@@ -41,7 +41,7 @@ descripcion: >
 entrada: {lon: float, lat: float}
 consulta: {operacion: en_punto, capa: 1, campos: [CODIGO, …]}
 salida: PredioEnPunto          # modelo Pydantic; de él salen OpenAPI y outputSchema
-creditos: 10
+cobro: punto                   # tipo de pregunta; los créditos salen de la tarifa (ADR-0010)
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {codigo_predial: "251750000000000050067000000000"}
@@ -52,6 +52,7 @@ canario:
 
 - Esquema Pydantic de ambos archivos; identificadores únicos; toda herramienta apunta a una fuente
   existente; toda fuente tiene licencia y atribución; ninguna fuente `datos_personales: presentes`
-  publicada; toda herramienta tiene canario con verdad; descripción con cierre de fuente y licencia.
+  publicada; toda herramienta tiene canario con verdad; descripción con cierre de fuente y licencia;
+  el `cobro` corresponde a la operación (lo espacial se cobra como espacial y nada más).
 - Generación: el catálogo produce las rutas REST, las herramientas MCP, los modelos de salida
   declarados, la página de documentación y la tabla de estado.

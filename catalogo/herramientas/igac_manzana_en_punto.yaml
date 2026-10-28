@@ -25,7 +25,7 @@ salida: ManzanaEnPunto
 # `municipio_divipola`, de los 5 primeros dígitos del código de la manzana.
 derivados:
   municipio_divipola: {de: prefijo, campo: codigo_manzana, n: 5}
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
   verdad: {codigo_manzana: "25175010000000043", codigo_barrio: "2517501000000", municipio_divipola: "25175"}

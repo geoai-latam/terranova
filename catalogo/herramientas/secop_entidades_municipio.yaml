@@ -29,7 +29,7 @@ salida: EntidadesMunicipio
 derivados:
   contratos_todos_los_anios: {de: columna, campo: contratos_todos_los_anios, tipo: int}
   valor_todos_los_anios: {de: columna, campo: valor_todos_los_anios, tipo: float}
-creditos: 3
+cobro: codigo
 canario:
   # Medido el 2026-10-23 en jbjy-vk9h: Chía, 8 entidades; la que más contrata es la Alcaldía
   # (899999172) con 5920 contratos. El número crece cada día: mínimo.

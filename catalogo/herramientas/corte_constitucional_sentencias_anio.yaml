@@ -24,7 +24,7 @@ consulta:
 salida: SentenciasCorteConstitucionalAnio
 derivados:
   sentencias: {de: columna, campo: sentencias, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en v2k4-2t8s: 2008 → C 260, SU 3, T 994. El año está cerrado.
   entrada: {anio: 2008}

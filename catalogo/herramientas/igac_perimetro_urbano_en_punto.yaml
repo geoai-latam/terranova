@@ -22,7 +22,7 @@ consulta:
     max_features: 5
   campos: [NOMBRE_GEOGRAFICO, CODIGO_NOMBRE, TIPO_AVALUO, DEPARTAMENTO_CODIGO, MUNICIPIO_CODIGO]
 salida: PerimetroUrbanoEnPunto
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
   verdad: {nombre_centro_poblado: CHIA, tipo_avaluo: "01", departamento_divipola: "25", municipio_codigo: "175"}

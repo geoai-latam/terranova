@@ -80,7 +80,7 @@
 | `sin_permiso` | 403 | la llave no tiene el scope | no |
 | `licencia_no_habilitada` | 403 | fuente con licencia `por_verificar` y llave que no es de evaluación (ADR-0007) | no |
 | `no_existe` | 404 | herramienta o recurso inexistente | no |
-| `saldo_agotado` | 429 | créditos del mes agotados (con `Retry-After` hasta el reinicio del mes; sin 402: es gratuito) | no |
+| `saldo_agotado` | 402 | créditos del mes agotados (con `Retry-After` hasta el reinicio del mes; el mensaje dice la fecha y dónde subir de plan, ADR-0029) | no |
 | `limite_tasa` | 429 | exceso de tasa (con `Retry-After`). Por MCP solo gasta `tools/call`: abrir la sesión o listar herramientas no toca fuentes | no |
 | `fuente_no_disponible` | 502 | la fuente respondió error o no conecta | no |
 | `fuente_respuesta_invalida` | 502 | la fuente cambió de esquema o respondió basura | no |

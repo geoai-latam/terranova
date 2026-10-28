@@ -19,7 +19,7 @@ consulta:
 salida: NormogramaDianBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: el Decreto 1165 de 2019 tiene 3 apariciones de «ARTÍCULO 1o».
   entrada: {documento: decreto_1165_2019, buscar: ARTÍCULO 1o}

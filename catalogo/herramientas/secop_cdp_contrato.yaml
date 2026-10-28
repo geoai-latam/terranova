@@ -26,7 +26,7 @@ consulta:
 salida: SecopCdpContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en a86w-fh92 (id_contrato = CO1.PCCNTR.5588480): 4 filas, 2
   # distintas (un CDP, dos BPIN); el primero con el orden de la ficha da la verdad. Mínimo: crecen.

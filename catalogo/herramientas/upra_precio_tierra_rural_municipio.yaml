@@ -31,7 +31,7 @@ derivados:
   departamento: {de: primero, campo: departamento}
   poligonos: {de: conteo, tipo: int}
   area_ha_total: {de: suma, campo: area_ha, tipo: float}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-21 en
   # https://www.datos.gov.co/resource/rttb-pk7n.json?$where=cod_dane_m='25214' (0,6 s): 116 polígonos,

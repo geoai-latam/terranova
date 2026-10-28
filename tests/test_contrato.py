@@ -341,8 +341,10 @@ def test_parametro_invalido_nombra_el_parametro() -> None:
         )
 
 
-def test_saldo_agotado_es_429_y_no_402() -> None:
-    assert HTTP_DE["saldo_agotado"] == 429
+def test_saldo_agotado_es_402_y_la_tasa_429() -> None:
+    """ADR-0029: el saldo se arregla pagando (402); la tasa, esperando (429, se reintenta)."""
+    assert HTTP_DE["saldo_agotado"] == 402
+    assert HTTP_DE["limite_tasa"] == 429
 
 
 def test_solicitud_id_ordenable_y_unico() -> None:

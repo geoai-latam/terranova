@@ -23,7 +23,7 @@ consulta:
 salida: ProponentesProceso
 derivados:
   numero_proponentes: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en hgi6-6wh3: la fase de oferta del proceso de Pitalito tiene 1 proponente.
   entrada: {id_proceso: CO1.REQ.3004001}
