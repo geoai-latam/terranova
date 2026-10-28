@@ -455,7 +455,7 @@ def descargar_arcgis(
 # orden de la fuente, para las tablas que no tienen una columna única.
 
 FILA = "_fila"
-MAX_FILAS_CONECTOR = 50_000  # tope que se le pide al conector; si la fuente da más, no se publica
+MAX_FILAS_CONECTOR = 100_000  # tope que se le pide al conector; si la fuente da más, no se publica
 
 
 def _conector_para(nombre: str) -> Any:

@@ -1,0 +1,87 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T17:21:10+00:00",
+ "herramienta": "dane_poblacion_proyectada_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "AÑO": "2026",
+     "MPIO": "25175"
+    },
+    "limite": 5,
+    "order": [
+     "_fila"
+    ],
+    "select": [
+     "MPIO",
+     "DPMP",
+     "DPNOM",
+     "AÑO",
+     "ÁREA GEOGRÁFICA",
+     "TOTAL"
+    ],
+    "tabla": "dane_proyecciones_municipal"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "AÑO",
+       "DPMP",
+       "DPNOM",
+       "MPIO",
+       "TOTAL",
+       "ÁREA GEOGRÁFICA"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "AÑO": 2026,
+        "DPMP": "Chía",
+        "DPNOM": "Cundinamarca",
+        "MPIO": "25175",
+        "TOTAL": 139448,
+        "ÁREA GEOGRÁFICA": "Cabecera Municipal"
+       },
+       {
+        "AÑO": 2026,
+        "DPMP": "Chía",
+        "DPNOM": "Cundinamarca",
+        "MPIO": "25175",
+        "TOTAL": 38102,
+        "ÁREA GEOGRÁFICA": "Centros Poblados y Rural Disperso"
+       },
+       {
+        "AÑO": 2026,
+        "DPMP": "Chía",
+        "DPNOM": "Cundinamarca",
+        "MPIO": "25175",
+        "TOTAL": 177550,
+        "ÁREA GEOGRÁFICA": "Total"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "consultado_en": "2026-10-28T17:20:23.774977+00:00",
+     "copia": {
+      "filas": 84229,
+      "huella": "sha256:62d9257f0c9829ac9ee5858426bf24cfc91eeae1ee33c342dd8734720c424692",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028172023774977"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

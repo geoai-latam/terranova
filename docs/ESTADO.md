@@ -210,12 +210,28 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
   - Bajadas desde Colombia en 30 s; los 5 canarios pasan desde la copia con las verdades de la
     fuente.
   - Las privaciones pasan a su propia fuente (`dane.ipm_municipal_2018_privaciones`).
-- **Falta la población del censo 2018** (`dane_poblacion_municipio`): el geoportal del DANE
-  (`geoportal.dane.gov.co`, capa 800 del CNPV) no abría conexión ni desde Colombia el 28-10. Se
-  reintenta; su copia sería del origen `arcgis` sin geometría (1.122 municipios, SLA de 10 años).
+- **Población proyectada por municipio y año (`dane_poblacion_proyectada_municipio`):** las
+  proyecciones oficiales 2018-2042 (actualización del 30-07-2025), por cabecera, rural y total.
+  - Por copia del xlsx: 84 229 filas en 20 s desde Colombia.
+  - El tope de filas del `web_tabla` y de la copia sube de 50 mil a 100 mil.
+  - Es la cifra oficial entre censos. Corrige la omisión censal: Bogotá 2018 tiene 7 391 056
+    proyectados contra 7 181 469 censados.
+- **Sigue caída la población del censo 2018** (`dane_poblacion_municipio`, en vivo):
+  - El geoportal del DANE (`geoportal.dane.gov.co`, capa 800 del CNPV) no abría conexión ni desde
+    Colombia el 28-10.
+  - Por la tarde la portada ya respondía, pero el servicio de ArcGIS daba 500 de IIS tras 55 s.
+  - Se reintenta. Su copia sería del origen `arcgis` sin geometría (1 122 municipios, SLA de
+    10 años).
 - **Refresco desde Colombia en un paso:** un script interno abre el túnel, levanta el `web-mcp` con
-  una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 10 copias que solo
-  se bajan desde Colombia (DANE, RUNAP, UPRA, comercio exterior y SECOP).
+  una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 17 copias que solo
+  se bajan desde Colombia:
+  - las del DANE;
+  - RUNAP y UPRA;
+  - comercio exterior y SECOP;
+  - las 5 de Bogotá;
+  - el SINIC.
+
+  Si nada venció tarda ~20 s. Falta programarlo como tarea semanal en la máquina del dueño.
 
 ## Repo privado y licencia propietaria (2026-10-28, #147)
 
