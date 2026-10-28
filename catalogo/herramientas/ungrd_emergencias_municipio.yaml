@@ -1,0 +1,38 @@
+id: ungrd_emergencias_municipio
+version: 1
+familia: ambiente
+fuente: ungrd.emergencias
+pregunta: "¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron?"
+descripcion: >
+  Emergencias que la UNGRD registró en un municipio (DIVIPOLA) desde 2025: fecha, tipo de evento
+  (inundación, movimiento en masa, incendio…), muertos, heridos, desaparecidos, personas y familias
+  afectadas, viviendas destruidas y averiadas, y vías afectadas. Una fila por emergencia (la fuente
+  publica cada una dos veces y aquí se cuenta una). Los años anteriores a 2025 no están en esta fuente.
+  (Fuente: UNGRD; licencia: CC BY 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 2343-nuqp
+    portal: datos.gov.co
+    select: "distinct codigo_emergencia, fecha, departamento, municipio, codificaci_n_segun_divipola, evento, muertos, heridos, desapa, personas, familias, viv_destru, viv_aver, vias"
+    where: "codificaci_n_segun_divipola = '{municipio_divipola}'"
+    order: "fecha, codigo_emergencia"
+    max_filas: 500
+  campos: [codigo_emergencia, fecha, departamento, municipio, codificaci_n_segun_divipola, evento, muertos, heridos, desapa, personas, familias, viv_destru, viv_aver, vias]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+  total_muertos: {de: suma, campo: muertos, tipo: int}
+salida: EmergenciasMunicipio
+cobro: codigo
+canario:
+  # Medido el 2026-10-28 en 2343-nuqp: Medellín (05001) tuvo 9 emergencias distintas en 2025 (18
+  # filas: la fuente repite cada una) con 3 muertos; la primera, el 13 de junio, un movimiento en masa
+  # con 2 muertos.
+  entrada: {municipio_divipola: "05001"}
+  verdad: {codigo_emergencia: 3548, evento: "MOVIMIENTO EN MASA", muertos: 2, total_muertos: 3}
+  minimos: {numero_registros: 9}
+  campos: [codigo_emergencia, departamento, desaparecidos, evento, familias_afectadas, fecha, heridos, muertos, municipio, municipio_divipola, numero_registros, personas_afectadas, total_muertos, vias_afectadas, viviendas_averiadas, viviendas_destruidas]
+  latencia_max_ms: 15000

@@ -1,0 +1,111 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invias.peajes
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/68qj-5xux.json
+pagina: https://www.datos.gov.co/d/68qj-5xux
+titulo: Peajes
+descripcion: Peajes registrados sobre La Red Vial Nacional
+publicado: '2024-10-18'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+filas: 179
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  nombre_peaje:
+    tipo_fuente: text
+    etiqueta: Nombre Peaje
+    descripcion: Nombre del Peaje
+  ubicaci_n:
+    tipo_fuente: text
+    etiqueta: Ubicación
+    descripcion: Ubicación
+    nulos: 16
+    comparacion: texto
+  sector:
+    tipo_fuente: text
+    etiqueta: Sector
+    descripcion: Sector
+    nulos: 4
+    comparacion: texto
+  sentido:
+    tipo_fuente: text
+    etiqueta: Sentido
+    descripcion: Sentido
+    nulos: 16
+    comparacion: texto
+  categoria_i:
+    tipo_fuente: number
+    etiqueta: Categoria I
+    descripcion: Categoría I
+    nulos: 0
+    minimo: '0'
+    maximo: '23000'
+    comparacion: numero
+  categoria_ii:
+    tipo_fuente: number
+    etiqueta: Categoria II
+    descripcion: Categoría II
+    nulos: 0
+    minimo: '0'
+    maximo: '48500'
+    comparacion: numero
+  categoria_iii:
+    tipo_fuente: number
+    etiqueta: Categoria III
+    descripcion: Categoría III
+    nulos: 0
+    minimo: '0'
+    maximo: '52100'
+    comparacion: numero
+  categoria_iv:
+    tipo_fuente: number
+    etiqueta: Categoria IV
+    descripcion: Categoría IV
+    nulos: 0
+    minimo: '0'
+    maximo: '81100'
+    comparacion: numero
+  categoria_v:
+    tipo_fuente: number
+    etiqueta: Categoria V
+    descripcion: Categoría V
+    nulos: 0
+    minimo: '0'
+    maximo: '109100'
+    comparacion: numero
+  c_digo_peaje:
+    tipo_fuente: number
+    etiqueta: Código Peaje
+    descripcion: Código del Peaje
+    nulos: 7
+    minimo: '1'
+    maximo: '180'
+    comparacion: numero
+  latitud:
+    tipo_fuente: number
+    etiqueta: Latitud
+    descripcion: Latitud
+    nulos: 0
+    minimo: '0'
+    maximo: '11.60651378'
+    comparacion: numero
+  longitud:
+    tipo_fuente: number
+    etiqueta: Longitud
+    descripcion: Longitud
+    nulos: 0
+    minimo: '-77.28445244000001'
+    maximo: '11.60651378'
+    comparacion: numero
+  responsable:
+    tipo_fuente: text
+    etiqueta: Responsable
+    descripcion: Responsable
+    nulos: 10
+    comparacion: texto

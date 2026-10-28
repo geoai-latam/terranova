@@ -12,9 +12,11 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
 | `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
+| `ideam_lluvia_diaria_estacion` | ¿Cuánto llovió cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 2 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
+| `ungrd_emergencias_municipio` | ¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron? | Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD) | CC-BY-4.0 | 1 |
 | `usgs_sismos_en_zona` | ¿Qué sismos hubo en esta zona en este periodo? | U.S. Geological Survey (USGS) | LicenseRef-dominio-publico-EEUU | 20 |
 
 ## contratacion
@@ -107,6 +109,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
+| `ins_calidad_agua_municipio` | ¿Es potable el agua en este municipio? (IRCA del INS, año por año) | Instituto Nacional de Salud (INS) | CC-BY-SA-4.0 | 1 |
 | `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
@@ -201,6 +204,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_vocacion_uso_en_punto` | ¿Cuál es la vocación de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_zona_fisica_en_punto` | ¿Qué características físicas tiene la zona homogénea del IGAC en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `invias_peaje_tarifas` | ¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 1 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
 | `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 10 |

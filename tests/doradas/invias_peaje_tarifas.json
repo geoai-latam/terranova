@@ -1,0 +1,79 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:59:12+00:00",
+ "herramienta": "invias_peaje_tarifas",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "68qj-5xux",
+    "max_filas": 20,
+    "order": "nombre_peaje, c_digo_peaje",
+    "portal": "datos.gov.co",
+    "select": "c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud",
+    "where": "upper(nombre_peaje) like upper('%Río Frío%')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "c_digo_peaje",
+       "categoria_i",
+       "categoria_ii",
+       "categoria_iii",
+       "categoria_iv",
+       "categoria_v",
+       "latitud",
+       "longitud",
+       "nombre_peaje",
+       "responsable",
+       "sector",
+       "sentido",
+       "ubicaci_n"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "c_digo_peaje": "4",
+        "categoria_i": "12800",
+        "categoria_ii": "13700",
+        "categoria_iii": "29300",
+        "categoria_iv": "37200",
+        "categoria_v": "41800",
+        "latitud": "3.99550925",
+        "longitud": "-76.3284967",
+        "nombre_peaje": "Río Frío",
+        "responsable": "INVIAS",
+        "sector": "Mediacanoa - Roldanillo",
+        "sentido": "Norte – Sur  / Sur - Norte",
+        "ubicaci_n": "Mediacanoa - Ansermanuevo"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "68qj-5xux",
+     "consulta": {
+      "conjunto": "68qj-5xux",
+      "max_filas": 20,
+      "portal": "datos.gov.co",
+      "select": "c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud",
+      "where": "(upper(nombre_peaje) like upper('%Río Frío%'))"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(upper(nombre_peaje) like upper('%Río Frío%'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

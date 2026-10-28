@@ -1,0 +1,115 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.precipitacion
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/s54a-sgyg.json
+pagina: https://www.datos.gov.co/d/s54a-sgyg
+titulo: Precipitación
+descripcion: 'Contiene datos sobre la cantidad de lluvia registrada cada 10 minutos en diferentes estaciones
+  meteorológicas ubicadas sobre el territorio colombiano. Los cuales han sido verificados mediante un
+  control de calidad básico, de acuerdo con las recomendaciones de la Organización Meteorológica Mundial
+  (OMM). Por lo anterior, se han corregido o eliminado valores que no han cumplido con estos controles
+  y podrían requerir validaciones adicionales según el uso específico. Este conjunto de datos puede ser
+  útil para analizar el comportamiento de la precipitación, determinar fenómenos extremos, realizar estudios
+  climáticos e hidrológicos o apoyar sistemas de alerta temprana. Se recomienda a los usuarios aplicar
+  criterios adicionales de verificación para usos sensibles o técnicos especializados. Los datos disponibles
+  a través de este medio pueden ser libremente consumidos bajo los siguientes clausulas: 1. Los datos
+  a visualizar o descargar a continuación no han sido validados por el IDEAM. 2. Los datos aquí dispuestos
+  son datos crudos instantáneos provenientes de los sensores de las estaciones automáticas de la red propia
+  y/o producto de convenios interadministrativos con terceras entidades. 3…'
+publicado: '2019-08-27'
+datos_actualizados: '2026-10-27'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- estación
+- precipitación
+- ideam
+filas: 165294457
+campos:
+  codigoestacion:
+    tipo_fuente: text
+    etiqueta: CodigoEstacion
+    descripcion: Corresponde al valor de identificación de la estación dentro del catálogo de estaciones
+    nulos: 0
+    minimo: '0011017020'
+    maximo: '5311700154'
+    comparacion: texto
+  codigosensor:
+    tipo_fuente: text
+    etiqueta: CodigoSensor
+    descripcion: Código de identificación asignado al sensor
+    nulos: 0
+    minimo: '0240'
+    maximo: '0240'
+    comparacion: texto
+    valores:
+      '0240': 165294457
+  fechaobservacion:
+    tipo_fuente: calendar_date
+    etiqueta: FechaObservacion
+    descripcion: Fecha en la cual se realiza la medición
+    nulos: 0
+    minimo: '2003-01-20T15:20:00.000'
+    maximo: '2022-04-26T23:59:00.000'
+    comparacion: fecha
+  valorobservado:
+    tipo_fuente: number
+    etiqueta: ValorObservado
+    descripcion: Valor medido
+    nulos: 0
+    minimo: '0'
+    maximo: '30'
+    comparacion: numero
+    valores:
+      '0': 156981526
+      '0.1': 2956397
+      '0.2': 1431349
+      '0.3': 557090
+      '0.4': 513835
+      '0.6': 267861
+      '0.5': 262754
+      '0.8': 173350
+      '0.7': 146746
+      '1': 116075
+      '6.7': 113977
+      '0.9': 91669
+      '1.2': 74923
+      '1.1': 63483
+      '0.01': 56104
+      '1.4': 54479
+      '1.3': 44681
+      '1.6': 43309
+      '2': 35052
+      '1.5': 35046
+  nombreestacion:
+    tipo_fuente: text
+    etiqueta: NombreEstacion
+    descripcion: Corresponde a la identificación de la estación dentro del catálogo de estaciones
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del departamento donde se ubica la estación
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del Municipio donde se localiza la estación
+    nulos: 0
+    minimo: ÁBREGO
+    comparacion: texto
+  descripcionsensor:
+    tipo_fuente: text
+    etiqueta: DescripcionSensor
+    descripcion: Precipitación
+    nulos: 0
+    minimo: Precipitacion
+    maximo: Precipitacion
+    comparacion: texto
+    valores:
+      Precipitacion: 165240246

@@ -69,6 +69,8 @@ PATRONES_ENTRADA: dict[str, str] = {
     "subpartida": r"^[0-9]{10}$",
     # año de cuatro dígitos (2000 a 2099)
     "anio": r"^20[0-9]{2}$",
+    # estación de la red del IDEAM: 10 dígitos con ceros a la izquierda (0028025502)
+    "codigo_estacion_ideam": r"^[0-9]{10}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -95,6 +97,10 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "codigo_sigep": ("código SIGEP de la entidad (Función Pública)", "6194"),
     "subpartida": ("subpartida arancelaria NANDINA de 10 dígitos", "8517130000"),
     "anio": ("año de cuatro dígitos", "2025"),
+    "codigo_estacion_ideam": (
+        "código de la estación del IDEAM, 10 dígitos con ceros a la izquierda",
+        "0028025502",
+    ),
 }
 
 TipoEntrada = Literal[
@@ -122,6 +128,7 @@ TipoEntrada = Literal[
     "codigo_sigep",
     "subpartida",
     "anio",
+    "codigo_estacion_ideam",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 

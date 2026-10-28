@@ -1,0 +1,52 @@
+id: ungrd.emergencias
+titulo: "Emergencias atendidas por la UNGRD (reporte anual, versión 2: desde 2025)"
+entidad: Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD)
+competencia: coordina el Sistema Nacional de Gestión del Riesgo de Desastres y consolida el reporte de emergencias (Ley 1523 de 2012)
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/2343-nuqp.json
+  cita: "Creative Commons Attribution 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# La versión 2 del reporte (2343-nuqp) cubre 2025 y las vigencias siguientes; los años anteriores
+# están en conjuntos con otro esquema (rgre-6ak4, 4t8v-ywmw, 4fd8-ptcr) y no entran aquí.
+url: https://www.datos.gov.co/resource/2343-nuqp.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "2025 en adelante"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigo_emergencia: {nombre: codigo_emergencia, tipo: int, desc: "código de la emergencia en la UNGRD"}
+  fecha: {nombre: fecha, tipo: date, desc: "fecha del evento"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  codificaci_n_segun_divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio (la fuente lo guarda como número: Medellín = 5001)"}
+  evento: {nombre: evento, tipo: str, desc: "tipo de evento (inundación, movimiento en masa, incendio…)"}
+  muertos: {nombre: muertos, tipo: int, desc: "personas fallecidas"}
+  heridos: {nombre: heridos, tipo: int, desc: "personas heridas"}
+  desapa: {nombre: desaparecidos, tipo: int, desc: "personas desaparecidas"}
+  personas: {nombre: personas_afectadas, tipo: int, desc: "personas afectadas"}
+  familias: {nombre: familias_afectadas, tipo: int, desc: "familias afectadas"}
+  viv_destru: {nombre: viviendas_destruidas, tipo: int, desc: "viviendas destruidas"}
+  viv_aver: {nombre: viviendas_averiadas, tipo: int, desc: "viviendas averiadas"}
+  vias: {nombre: vias_afectadas, tipo: int, desc: "vías afectadas"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: UNGRD, theme: riesgo, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una emergencia en un municipio con sus afectaciones; 13 012 filas para 6 505 emergencias de 2025"
+  clave: {columna: codigo_emergencia, unica: false}
+  operaciones: {filtrar: 0.6, contar: 0.4, agrupar: 0.5}
+  hallazgos:
+  - "cada emergencia aparece dos veces, con filas idénticas (13 012 filas, 6 505 códigos): se piden con distinct, si no las sumas salen al doble"
+  - "la DIVIPOLA es un número en la fuente (5001), pero el filtro acepta el texto con cero ('05001')"
+  - "Chía no tuvo emergencias reportadas en 2025; Medellín tuvo 9"
+  decision: "en vivo por municipio con distinct (una fila por emergencia)"

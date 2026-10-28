@@ -1,0 +1,209 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:59:14+00:00",
+ "herramienta": "ungrd_emergencias_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "2343-nuqp",
+    "max_filas": 500,
+    "order": "fecha, codigo_emergencia",
+    "portal": "datos.gov.co",
+    "select": "distinct codigo_emergencia, fecha, departamento, municipio, codificaci_n_segun_divipola, evento, muertos, heridos, desapa, personas, familias, viv_destru, viv_aver, vias",
+    "where": "codificaci_n_segun_divipola = '05001'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codificaci_n_segun_divipola",
+       "codigo_emergencia",
+       "departamento",
+       "desapa",
+       "evento",
+       "familias",
+       "fecha",
+       "heridos",
+       "muertos",
+       "municipio",
+       "personas",
+       "vias",
+       "viv_aver",
+       "viv_destru"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "3548",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "MOVIMIENTO EN MASA",
+        "familias": "2",
+        "fecha": "2025-06-13T00:00:00.000",
+        "heridos": "4",
+        "muertos": "2",
+        "municipio": "MEDELLIN",
+        "personas": "6",
+        "vias": "0",
+        "viv_aver": "0",
+        "viv_destru": "2"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "3692",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "MOVIMIENTO EN MASA",
+        "familias": "302",
+        "fecha": "2025-06-24T00:00:00.000",
+        "heridos": "4",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "881",
+        "vias": "2",
+        "viv_aver": "0",
+        "viv_destru": "12"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "3862",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "INCENDIO ESTRUCTURAL",
+        "familias": "0",
+        "fecha": "2025-07-08T00:00:00.000",
+        "heridos": "0",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "0",
+        "vias": "0",
+        "viv_aver": "0",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "4273",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "INCENDIO FORESTAL",
+        "familias": "3",
+        "fecha": "2025-07-29T00:00:00.000",
+        "heridos": "0",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "15",
+        "vias": "0",
+        "viv_aver": "3",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "4560",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "ACCIDENTE TRANSPORTE AEREO",
+        "familias": "0",
+        "fecha": "2025-08-15T00:00:00.000",
+        "heridos": "2",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "2",
+        "vias": "0",
+        "viv_aver": "0",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "4666",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "INCENDIO ESTRUCTURAL",
+        "familias": "1",
+        "fecha": "2025-08-22T00:00:00.000",
+        "heridos": "0",
+        "muertos": "1",
+        "municipio": "MEDELLIN",
+        "personas": "4",
+        "vias": "0",
+        "viv_aver": "1",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "5280",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "INCENDIO ESTRUCTURAL",
+        "familias": "0",
+        "fecha": "2025-09-17T00:00:00.000",
+        "heridos": "0",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "0",
+        "vias": "0",
+        "viv_aver": "0",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "6308",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "INCENDIO ESTRUCTURAL",
+        "familias": "0",
+        "fecha": "2025-12-07T00:00:00.000",
+        "heridos": "6",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "6",
+        "vias": "0",
+        "viv_aver": "1",
+        "viv_destru": "0"
+       },
+       {
+        "codificaci_n_segun_divipola": "5001",
+        "codigo_emergencia": "6434",
+        "departamento": "ANTIOQUIA",
+        "desapa": "0",
+        "evento": "ACCIDENTE TRANSPORTE TERRESTRE",
+        "familias": "0",
+        "fecha": "2025-12-22T00:00:00.000",
+        "heridos": "12",
+        "muertos": "0",
+        "municipio": "MEDELLIN",
+        "personas": "0",
+        "vias": "0",
+        "viv_aver": "1",
+        "viv_destru": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 9,
+      "truncado": false,
+      "vistos": 9
+     },
+     "completo": true,
+     "conjunto": "2343-nuqp",
+     "consulta": {
+      "conjunto": "2343-nuqp",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "distinct codigo_emergencia, fecha, departamento, municipio, codificaci_n_segun_divipola, evento, muertos, heridos, desapa, personas, familias, viv_destru, viv_aver, vias",
+      "where": "(codificaci_n_segun_divipola = '05001')"
+     },
+     "filas": 9,
+     "filas_que_resume": 18,
+     "filtro_soql": "(codificaci_n_segun_divipola = '05001')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
