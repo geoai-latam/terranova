@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import time
 from collections.abc import AsyncIterator, Iterator
 from datetime import UTC, datetime
 from pathlib import Path
@@ -15,7 +16,13 @@ from terranova import cuota as modulo_cuota
 from terranova import puerta
 from terranova.app import crear_aplicacion
 from terranova.conector import ErrorConector
-from terranova.cuota import CuotaMemoria, CuotaRedis, mes, segundos_hasta_el_mes_siguiente
+from terranova.cuota import (
+    CuotaMemoria,
+    CuotaRedis,
+    mes,
+    reinicio,
+    segundos_hasta_el_mes_siguiente,
+)
 from terranova.identidad import RegistroSqlite
 
 
@@ -83,6 +90,24 @@ async def test_el_saldo_vuelve_con_el_mes(cual: int, monkeypatch: pytest.MonkeyP
 def test_segundos_hasta_enero() -> None:
     diciembre = datetime(2026, 12, 31, 23, 0, tzinfo=UTC).timestamp()
     assert segundos_hasta_el_mes_siguiente(diciembre) == 3600
+    assert reinicio(diciembre) == datetime(2027, 1, 1, tzinfo=UTC)
+
+
+def test_los_planes_de_pago_crecen_y_el_gratis_es_el_menor() -> None:
+    """ADR-0029: cada plan de pago da más que el anterior; ninguno da menos que el gratis."""
+    pago = [modulo_cuota.NIVELES[n] for n in ("basico", "pro", "empresa", "escala")]
+    assert pago == sorted(pago) and len(set(pago)) == len(pago)
+    assert min(modulo_cuota.NIVELES.values()) == modulo_cuota.NIVELES["con_llave"]
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+async def test_un_nivel_desconocido_cae_en_el_gratis(cual: int) -> None:
+    """Un nivel que no existe nunca da más saldo que el gratis (la CLI además lo rechaza)."""
+    c = _cuotas(Reloj())[cual]
+    gratis = modulo_cuota.NIVELES["con_llave"]
+    assert (await c.reservar("x", "inventado", gratis))[0]
+    assert not (await c.reservar("x", "inventado", 1))[0]
 
 
 # --- por la aplicación ---------------------------------------------------------------------
@@ -130,9 +155,14 @@ async def cliente() -> AsyncIterator[httpx.AsyncClient]:
 
 
 @pytest.mark.anyio
-async def test_saldo_agotado_es_429_y_una_falla_no_descuenta(
-    montaje: tuple[RegistroSqlite, Fuente], cliente: httpx.AsyncClient
+async def test_saldo_agotado_es_402_y_una_falla_no_descuenta(
+    montaje: tuple[RegistroSqlite, Fuente],
+    cliente: httpx.AsyncClient,
+    monkeypatch: pytest.MonkeyPatch,
 ) -> None:
+    """ADR-0029: sin saldo, 402 (hay un plan que pagar) con la fecha de reinicio y el enlace a los
+    planes; 429 queda solo para la tasa."""
+    monkeypatch.setenv("TERRANOVA_URL_PLANES", "https://cuenta.terranova.test/planes")
     registro, fuente = montaje
     cabecera = {
         "Authorization": f"Bearer {registro.crear('geoai', {'*'}, prueba=False, expira=None)}"
@@ -145,8 +175,22 @@ async def test_saldo_agotado_es_429_y_una_falla_no_descuenta(
     assert r.status_code == 200 and r.json()["creditos"] == 10
     assert "ratelimit" in r.headers and "ratelimit-policy" in r.headers
     r = await cliente.post(PREDIO, json=CHIA, headers=cabecera)
-    assert r.status_code == 429 and r.json()["code"] == "saldo_agotado"
+    problema = r.json()
+    assert r.status_code == 402 and problema["code"] == "saldo_agotado"
+    assert problema["status"] == 402 and r.headers["content-type"] == "application/problem+json"
     assert int(r.headers["retry-after"]) > 0
+    assert reinicio(time.time()).date().isoformat() in problema["detail"]
+    assert "https://cuenta.terranova.test/planes" in problema["detail"]
+
+
+def test_mensaje_de_saldo_sin_url_de_planes(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("TERRANOVA_URL_PLANES", raising=False)
+    octubre = datetime(2026, 10, 22, tzinfo=UTC).timestamp()
+    mensaje = puerta.mensaje_saldo_agotado("geoai", octubre)
+    assert (
+        mensaje
+        == "la organización geoai agotó sus créditos del mes; se renuevan el 2026-11-01 (UTC)"
+    )
 
 
 @pytest.mark.anyio
@@ -196,6 +240,7 @@ async def test_uso_del_mes(
     assert (await cliente.post(PREDIO, json=CHIA, headers=cabecera)).status_code == 200
     despues = (await cliente.get("/v1/uso", headers=cabecera)).json()
     assert despues["usados"] == 10 and despues["disponibles"] == 5
+    assert despues["reinicia"] == reinicio(time.time()).isoformat()
 
 
 @pytest.mark.anyio

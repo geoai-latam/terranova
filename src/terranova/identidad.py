@@ -57,6 +57,7 @@ class Registro(Protocol):
     def listar(self, org: str | None = None) -> list[Llave]: ...
     def verificar(self, llave: str) -> Principal | None: ...
     def fijar_nivel(self, org: str, nivel: str) -> None: ...
+    def listar_orgs(self) -> list[tuple[str, str, int]]: ...
 
 
 def _ahora() -> str:
@@ -90,6 +91,17 @@ class RegistroSql:
             "INSERT INTO orgs VALUES (?, ?) ON CONFLICT(org) DO UPDATE SET nivel = excluded.nivel",
             (org, nivel),
         )
+
+    def listar_orgs(self) -> list[tuple[str, str, int]]:
+        """(org, nivel, llaves vigentes) de toda org con nivel fijado o con llaves. Sin fila en
+        `orgs`, el nivel es `con_llave`: así se ve quién quedaría en el gratis."""
+        filas, _ = self._bd.ejecutar(
+            "SELECT t.org, COALESCE(o.nivel, 'con_llave'), "
+            "(SELECT COUNT(*) FROM llaves l WHERE l.org = t.org AND l.revocada IS NULL) "
+            "FROM (SELECT org FROM orgs UNION SELECT org FROM llaves) t "
+            "LEFT JOIN orgs o ON o.org = t.org ORDER BY t.org"
+        )
+        return [(f[0], f[1], int(f[2])) for f in filas]
 
     def _huella(self, llave: str) -> str:
         return hmac.new(self._pimienta, llave.encode(), hashlib.sha256).hexdigest()
