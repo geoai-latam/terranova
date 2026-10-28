@@ -1,0 +1,67 @@
+id: invias.red_vial
+titulo: "Red vial nacional de carreteras (INVÍAS)"
+entidad: Instituto Nacional de Vías (INVÍAS)
+competencia: administra la red vial nacional no concesionada y lleva su inventario (Decreto 2618 de 2013)
+acto: null
+# El ítem del portal ArcGIS del INVÍAS («RedVial - Oficial», b3325d61618f4d0081aa2e9d43d4957e) no
+# declara licencia (licenseInfo vacío). El INVÍAS publica esta misma capa en datos.gov.co («Red Vial»,
+# ie7y-asdn: mismas columnas y mismos dominios codificados) con CC BY-SA 4.0, y sin licencia se
+# trataría igual como BY-SA (ADR-0019).
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/ie7y-asdn.json
+  cita: '"licenseId": "CC_40_BY_SA" (Creative Commons Attribution | Share Alike 4.0 International)'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Nacional de Vías (INVÍAS), Red Vial Nacional"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Servicio MapaCarreteras/RedVial del ArcGIS Server del INVÍAS, capa 1. Se consulta aquí y no en
+# datos.gov.co porque el `within_box` de Socrata sobre líneas exige que el tramo quepa ENTERO en el
+# rectángulo (medido: un rectángulo de 300 m sobre la vía Sopó-Briceño no la encuentra); ArcGIS
+# responde «cruza el rectángulo». Las columnas de auditoría (created_user, last_edited_user) no
+# entran a la lista blanca.
+url: https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/RedVial/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigotramo: {nombre: codigo_tramo, tipo: str, desc: "código del tramo de la red vial nacional (p. ej. 50CN03); es el que usan los puentes (`via`)"}
+  ruta: {nombre: ruta, tipo: str, desc: "número de la ruta nacional (45, 50, 55…)"}
+  nombreruta: {nombre: nombre_ruta, tipo: str, desc: "nombre de la ruta (Troncal Central, Troncal Central del Norte…)"}
+  sector: {nombre: sector, tipo: str, desc: "sector del tramo, de origen a destino"}
+  administrador: {nombre: administrador, tipo: str, desc: "código de quién administra el tramo (ver administrador_nombre)"}
+  territorial: {nombre: territorial, tipo: str, desc: "código de la dirección territorial del INVÍAS (ver territorial_nombre)"}
+  categoria: {nombre: categoria, tipo: str, desc: "código de la categoría de la vía (ver categoria_nombre)"}
+  superficie: {nombre: superficie, tipo: str, desc: "código de la superficie de rodadura (ver superficie_nombre)"}
+  calzada: {nombre: calzada, tipo: str, desc: "código del tipo de calzada (ver calzada_nombre)"}
+  postereferenciainicial: {nombre: pr_inicial, tipo: int, desc: "poste de referencia (PR, kilómetro) donde empieza el tramo"}
+  distanciainicial: {nombre: pr_inicial_m, tipo: float, desc: "metros después del PR inicial donde empieza el tramo"}
+  postereferenciafinal: {nombre: pr_final, tipo: int, desc: "poste de referencia (PR, kilómetro) donde termina el tramo"}
+  distanciafinal: {nombre: pr_final_m, tipo: float, desc: "metros después del PR final donde termina el tramo"}
+  Shape__Length: {nombre: longitud_m, tipo: float, desc: "longitud del trazo en metros (MAGNA-SIRGAS Origen Nacional)"}
+  revisionestado: {nombre: revision, tipo: str, desc: "si el INVÍAS ya revisó los atributos del tramo (ver revision_nombre)"}
+  last_edited_date: {nombre: fecha_ultima_edicion, tipo: date, desc: "última edición del tramo en el servicio del INVÍAS"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [1]
+dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un trozo de tramo de la red vial nacional; 662 en el país (611 combinaciones de tramo, sector y PR), 25 al norte de Bogotá"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.3, agrupar: 0.3}
+  hallazgos:
+  - "las vías son líneas: se consulta por zona (rectángulo que cruza el tramo), no por punto"
+  - "la superficie está «Por Definir» (o vacía) en 542 de 662 trozos; solo 118 dicen Pavimentada y 2 Sin Pavimentar"
+  - "605 de 662 trozos dicen «No Revisado»: el INVÍAS no ha verificado sus atributos"
+  - "algunas columnas codificadas traen el texto en vez del código («Por Definir» en categoría, «No Revisado» en revisión): se traducen ambos"
+  - "un mismo sector puede venir partido en varios trozos con los mismos atributos (Variante Portachuelo: 6)"
+  - "datos.gov.co (ie7y-asdn) publica la misma capa con 715 filas, varias repetidas exactas"
+  decision: "en vivo por zona (bbox) en el ArcGIS del INVÍAS"

@@ -1,0 +1,60 @@
+id: invias_puentes_en_zona
+version: 1
+familia: territorio
+fuente: invias.puentes
+pregunta: "¿Qué puentes de la red vial nacional hay en esta zona?"
+descripcion: >
+  Puentes del inventario del INVÍAS dentro de un rectángulo [lon_min, lat_min, lon_max, lat_max]:
+  nombre, tramo y carretera, PR, quién lo administra, número de luces, longitud y luz máxima, ancho
+  del tablero, material, sistema estructural, año de construcción y fecha de la última inspección.
+  La fuente NO publica el estado ni la calificación del puente: solo el inventario, y las
+  inspecciones registradas son de 2015 o antes (casi todas de 2012). Solo puentes de la red vial
+  nacional (INVÍAS y concesiones). Para la vía, invias_red_vial_en_zona.
+  (Fuente: INVÍAS; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: datos_consultar
+  argumentos:
+    id: nsdj-ep2p
+    portal: datos.gov.co
+    # spec 07: el año de construcción viene dividido por mil (1.926 = 1926)
+    select: "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
+    columna_geo: point
+    bbox: "{bbox}"
+    order: "via, poste_de_referencia, distancia, nombre"
+    max_filas: 3000
+  campos: [nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n, fecha_de_inspecci_n]
+# Dominios codificados de la capa de puentes del INVÍAS (MapaCarreteras/Puente/FeatureServer/1?f=json),
+# medidos el 2026-10-28; un código fuera del dominio sale sin nombre.
+derivados:
+  material_nombre:
+    de: codigo
+    campo: material
+    valores: {"10": Concreto ciclópeo, "11": Concreto sin refuerzo, "20": Concreto reforzado in situ, "21": Concreto reforzado prefabricado e in situ, "30": Concreto presforzado in situ, "31": Concreto presforzado prefabricado, "32": Concreto presforzado prefabricado e in situ, "50": Acero, "51": Acero y concreto, "60": Piedra o roca, "70": Ladrillo}
+  sistema_longitudinal_nombre:
+    de: codigo
+    campo: sistema_longitudinal
+    valores: {"10": Simplemente apoyado de sección constante, "11": Simplemente apoyado de sección variable, "20": Viga continua de sección constante, "21": Viga continua de sección variable, "30": Viga Gerber de sección constante, "31": Viga Gerber de sección variable, "40": Pórtico de sección constante, "41": Pórtico de sección variable, "42": Cajón (box culvert), "50": Puente colgante, "60": Puente atirantado}
+  seccion_transversal_nombre:
+    de: codigo
+    campo: seccion_transversal
+    valores: {"10": Losa, "11": Losa y viga (1 viga), "12": Losa y viga (2 vigas), "13": Losa y viga (3 vigas), "14": Losa y viga (4 o más vigas), "30": Viga cajón (1 cajón), "31": Viga cajón (2 o más cajones), "40": Armadura de paso inferior, "41": Armadura de paso superior, "42": Armadura de paso a través, "50": Arco superior, "51": Arco inferior abierto, "52": Arco inferior cerrado, "80": Provisional tipo Bailey, "81": Provisional tipo Callender Hamilton}
+  numero_registros: {de: conteo, tipo: int}
+salida: PuentesEnZona
+cobro: zona
+canario:
+  # Medido el 2026-10-28 en https://www.datos.gov.co/resource/nsdj-ep2p.json con
+  # $where=within_box(point, 4.995, -73.975, 4.990, -73.965): un solo puente, «Bavaria» en el tramo
+  # 55CN01 (Briceño - Zipaquirá - Te de Nemocón), concesión departamental, de acero (50), 40,2 m,
+  # construido en 1926 (la fuente: 1.926), inspeccionado el 2012.07.07.
+  entrada: {bbox: [-73.975, 4.990, -73.965, 4.995]}
+  verdad:
+    puente: Bavaria
+    codigo_tramo: 55CN01
+    material_nombre: Acero
+    anio_construccion: 1926
+    longitud_m: 40.2
+    numero_registros: 1
+  campos: [administrador, ancho_tablero_m, anio_construccion, carretera, codigo_tramo, fecha_inspeccion, longitud_m, luces, luz_maxima_m, material, material_nombre, numero_registros, pr, pr_m, puente, seccion_transversal, seccion_transversal_nombre, sistema_longitudinal, sistema_longitudinal_nombre]
+  latencia_max_ms: 8000

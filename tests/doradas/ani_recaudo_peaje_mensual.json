@@ -1,0 +1,158 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:38:34+00:00",
+ "herramienta": "ani_recaudo_peaje_mensual",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "idpeaje, peaje, date_trunc_ym(desde)",
+    "id": "qac6-9mkr",
+    "max_filas": 500,
+    "order": "peaje, desde",
+    "portal": "datos.gov.co",
+    "previo_group": "idpeaje, peaje, desde, hasta, recaudo, recaudofsv, recaudosobrante",
+    "previo_select": "idpeaje, peaje, desde, hasta, recaudo, recaudofsv, recaudosobrante",
+    "select": "idpeaje, peaje, date_trunc_ym(desde) AS desde, sum(recaudo) AS recaudo, sum(recaudofsv) AS recaudofsv, sum(recaudosobrante) AS recaudosobrante",
+    "where": "upper(peaje) like upper('%Siberia%') AND date_extract_y(desde) = 2021"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "desde",
+       "idpeaje",
+       "peaje",
+       "recaudo",
+       "recaudofsv",
+       "recaudosobrante"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "desde": "2021-01-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "6742170600",
+        "recaudofsv": "106519000",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-02-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "6599922300",
+        "recaudofsv": "104581000",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-03-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "7608415600",
+        "recaudofsv": "121334800",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-04-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "6114071300",
+        "recaudofsv": "93703400",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-05-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "6076402100",
+        "recaudofsv": "86403400",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-06-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "7517992100",
+        "recaudofsv": "116861200",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-07-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "8115703100",
+        "recaudofsv": "128731800",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-08-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "8087508500",
+        "recaudofsv": "128598800",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-09-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "7597040900",
+        "recaudofsv": "118707600",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-10-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "8361985900",
+        "recaudofsv": "133510000",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-11-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "8062163300",
+        "recaudofsv": "126660800",
+        "recaudosobrante": "0"
+       },
+       {
+        "desde": "2021-12-01T00:00:00.000",
+        "idpeaje": "15",
+        "peaje": "SIBERIA",
+        "recaudo": "9284133800",
+        "recaudofsv": "149471600",
+        "recaudosobrante": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "qac6-9mkr",
+     "consulta": {
+      "conjunto": "qac6-9mkr",
+      "group": "idpeaje, peaje, date_trunc_ym(desde)",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "previo_group": "idpeaje, peaje, desde, hasta, recaudo, recaudofsv, recaudosobrante",
+      "select": "idpeaje, peaje, date_trunc_ym(desde) AS desde, sum(recaudo) AS recaudo, sum(recaudofsv) AS recaudofsv, sum(recaudosobrante) AS recaudosobrante",
+      "where": "(upper(peaje) like upper('%Siberia%') AND date_extract_y(desde) = 2021)"
+     },
+     "filas": 12,
+     "filas_que_resume": 16,
+     "filtro_soql": "(upper(peaje) like upper('%Siberia%') AND date_extract_y(desde) = 2021)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

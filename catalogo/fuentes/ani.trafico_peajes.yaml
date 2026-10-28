@@ -1,0 +1,44 @@
+id: ani.trafico_peajes
+titulo: Tráfico vehicular en los peajes de la ANI
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/8yi9-t44c.json
+  cita: '"licenseId": "CC_40_BY_SA" (Creative Commons Attribution | Share Alike 4.0 International)'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/8yi9-t44c.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, columna_tiempo: desde}
+datos_personales: ninguno
+estado: publicada
+campos:
+  idpeaje: {nombre: id_peaje, tipo: int, desc: "código del peaje en la ANI"}
+  peaje: {nombre: peaje, tipo: str, desc: "nombre del peaje (el mismo de ani_peajes_en_zona)"}
+  desde: {nombre: mes, tipo: date, desc: "primer día del mes"}
+  hasta: {nombre: hasta, tipo: date, desc: "último día del periodo"}
+  cantidadtrafico: {nombre: vehiculos, tipo: int, desc: "vehículos que pasaron por el peaje (la fuente los da por categoría de tarifa; la herramienta los suma)"}
+  cantidadevasores: {nombre: evasores, tipo: int, desc: "vehículos que pasaron sin pagar (evasores)"}
+  cantidadexentos787: {nombre: exentos, tipo: int, desc: "vehículos exentos de pago (Ley 787 de 2002)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: ANI, theme: transporte, accrualPeriodicity: semiannual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "el tráfico de un mes en un peaje de la ANI para una categoría de tarifa; 149 944 filas de 162 peajes, de enero de 2014 a mayo de 2026"
+  clave: {columna: idpeaje, unica: false}
+  operaciones: {filtrar: 0.6, contar: 1.9, agrupar: 0.6}
+  hallazgos:
+  - "una fila por peaje, mes y categoría de tarifa (I a VII y especiales): el total del mes se suma en la consulta"
+  - "sin filas repetidas por peaje, categoría y mes; todos los periodos empiezan el día 1"
+  - "el último mes publicado es mayo de 2026 (128 peajes); hay peajes que dejaron de reportar en 2015"
+  - "los nombres coinciden con los de la capa de peajes de la ANI (FUSCA, ANDES, LA CABAÑA, SOPÓ); los peajes del INVÍAS no están"
+  decision: "en vivo por nombre del peaje y año, agregado por mes"

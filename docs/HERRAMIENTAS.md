@@ -200,6 +200,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 |---|---|---|---|---|
 | `ani_concesiones_viales_en_zona` | ¿Qué concesiones viales de la ANI pasan por esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
 | `ani_peajes_en_zona` | ¿Qué peajes de la ANI hay en esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
+| `ani_recaudo_peaje_mensual` | ¿Cuánto dinero recaudó este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
+| `ani_trafico_peaje_mensual` | ¿Cuántos vehículos pasaron por este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
 | `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
 | `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
 | `ant_uaf_en_punto` | ¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
@@ -226,6 +228,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_zona_fisica_en_punto` | ¿Qué características físicas tiene la zona homogénea del IGAC en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `invias_peaje_tarifas` | ¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 1 |
+| `invias_puentes_en_zona` | ¿Qué puentes de la red vial nacional hay en esta zona? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 20 |
+| `invias_red_vial_en_zona` | ¿Qué vía nacional pasa por esta zona, quién la administra y está pavimentada? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 20 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
 | `sdp_amenaza_movimiento_masa_en_punto` | ¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_area_actividad_en_punto` | ¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |

@@ -1,0 +1,56 @@
+id: invias.puentes
+titulo: "Puentes de la red vial nacional (INVÍAS)"
+entidad: Instituto Nacional de Vías (INVÍAS)
+competencia: administra la red vial nacional no concesionada y lleva el inventario de sus puentes (Decreto 2618 de 2013)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/nsdj-ep2p.json
+  cita: '"licenseId": "CC_40_BY_SA" (Creative Commons Attribution | Share Alike 4.0 International)'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Nacional de Vías (INVÍAS). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/nsdj-ep2p.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  nombre: {nombre: puente, tipo: str, desc: "nombre del puente"}
+  via: {nombre: codigo_tramo, tipo: str, desc: "código del tramo de la red vial nacional donde está (el de invias_red_vial_en_zona)"}
+  carretera: {nombre: carretera, tipo: str, desc: "carretera (origen - destino)"}
+  poste_de_referencia: {nombre: pr, tipo: int, desc: "poste de referencia (PR, kilómetro) del puente"}
+  distancia: {nombre: pr_m, tipo: float, desc: "metros después del PR"}
+  administrador: {nombre: administrador, tipo: str, desc: "quién lo administra como lo escribe la fuente (INVIAS, ANI, Conc. Depart.)"}
+  luces: {nombre: luces, tipo: int, desc: "número de luces (vanos) del puente"}
+  luz_maxima: {nombre: luz_maxima_m, tipo: float, desc: "luz (vano) más larga, en metros"}
+  luz_total: {nombre: longitud_m, tipo: float, desc: "longitud total del puente (suma de las luces), en metros"}
+  tablero: {nombre: ancho_tablero_m, tipo: float, desc: "ancho del tablero, en metros"}
+  material: {nombre: material, tipo: str, desc: "código del material (ver material_nombre)"}
+  secci_n_longitudinal: {nombre: sistema_longitudinal, tipo: str, desc: "código del sistema estructural longitudinal (ver sistema_longitudinal_nombre)"}
+  secci_n_transversal: {nombre: seccion_transversal, tipo: str, desc: "código de la sección transversal (ver seccion_transversal_nombre)"}
+  # La fuente publica el año dividido por mil (1.926 = 1926); la herramienta lo pide multiplicado.
+  fecha_de_construcci_n: {nombre: anio_construccion, tipo: int, desc: "año de construcción"}
+  fecha_de_inspecci_n: {nombre: fecha_inspeccion, tipo: str, desc: "fecha de la última inspección registrada, como la publica la fuente (AAAA.MM.DD)"}
+comportamiento: {max_por_pagina: 50000, orden_coordenadas: lon_lat}
+dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un puente de la red vial nacional; 2 830 en el país, 20 al norte de Bogotá"
+  clave: {columna: nombre, unica: false}
+  operaciones: {filtrar: 0.5, contar: 0.5, agrupar: 8.0}
+  hallazgos:
+  - "la fuente no publica el estado ni la calificación del puente: solo el inventario y la fecha de la última inspección"
+  - "las inspecciones son viejas: 2 363 de 2012, ninguna después de 2015; 47 dicen «verificar»"
+  - "el año de construcción viene dividido por mil (1.926); se pide multiplicado por mil en la consulta"
+  - "hay años de construcción dudosos: 11 de los 23 puentes de la vía 5501 (Bogotá-Tunja) dicen 2008, también «La Caro Antiguo»; se entregan como los publica la fuente"
+  - "el material trae códigos fuera del dominio del INVÍAS (12, 13, 14, 40, 41, 80, 90, 92 en 128 puentes): salen sin nombre"
+  - "algunos puentes gemelos (uno por calzada) comparten nombre, PR y longitud"
+  - "la capa de consulta del ArcGIS del INVÍAS (MapaCarreteras/Puente) tiene 3 266 puentes y la misma falta de estado"
+  decision: "en vivo por zona (within_box sobre la columna de ubicación)"

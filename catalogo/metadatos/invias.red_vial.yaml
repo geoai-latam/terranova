@@ -1,0 +1,185 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invias.red_vial
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/RedVial/FeatureServer?f=json
+titulo: RedVialConsulta
+filas: 662
+geografia:
+  geometria: linea
+  crs: EPSG:9377
+  capas:
+    '1': RedVial
+campos:
+  categoria:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Categoria
+    valores:
+      '1': 492
+      '2': 49
+      Por Definir: 46
+      '4': 43
+      '3': 20
+    codigos:
+      '1': Primer Orden
+      '2': Segundo Orden
+      '3': Tercer Orden
+      '4': Por Definir
+  codigotramo:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Codigo Tramo
+  postereferenciainicial:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Poste de Referencia Inicial
+    minimo: '0'
+    maximo: '131'
+    comparacion: numero
+  distanciainicial:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Distancia Inicial
+    minimo: '0.0'
+    maximo: '2775.0'
+    comparacion: numero
+  postereferenciafinal:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Poste de Referencia Final
+    minimo: '0'
+    maximo: '170'
+    comparacion: numero
+  distanciafinal:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Distancia Final
+    minimo: '0.0'
+    maximo: '3045.0'
+    comparacion: numero
+  nombreruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre Ruta
+  sector:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Sector
+  administrador:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Administrador
+    valores:
+      '1': 373
+      '2': 246
+      '3': 23
+      '6': 12
+      '5': 7
+    codigos:
+      '1': INVIAS
+      '2': ANI
+      '3': Concesión Departamental
+      '4': FINDETER
+      '5': Vías Desuso
+      '6': INVIAS - Convenios
+  superficie:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Superficie
+    valores:
+      '3': 489
+      '1': 118
+      ' ': 43
+      '2': 2
+    codigos:
+      '1': Pavimentada
+      '2': Sin Pavimentar
+      '3': Por Definir
+  calzada:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Calzada
+    valores:
+      '1': 358
+      '2': 240
+      '3': 54
+    codigos:
+      '1': Sencilla
+      '2': Doble
+      '3': Por Definir
+  ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Ruta
+  last_edited_date:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: last_edited_date
+    minimo: '2025-05-30'
+    maximo: '2026-10-07'
+    comparacion: fecha
+  territorial:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Territorial
+    valores:
+      '28': 86
+      '1': 60
+      '12': 44
+      '25': 40
+      '8': 34
+      '16': 30
+      '14': 29
+      '22': 26
+      '21': 24
+      '24': 23
+      '17': 23
+      '11': 22
+      '4': 22
+      '2': 18
+      '18': 18
+      '26': 16
+      '15': 16
+      '0': 14
+      '5': 13
+      '20': 13
+      '9': 13
+      '3': 12
+      '7': 11
+      '13': 11
+      '23': 10
+      '6': 9
+      '19': 7
+      '10': 6
+      '27': 2
+    codigos:
+      '10': Chocó
+      '11': Córdoba
+      '12': Cundinamarca
+      '13': Guajira
+      '14': Huila
+      '15': Magdalena
+      '16': Meta
+      '17': Nariño
+      '18': Norte de Santander
+      '19': Putumayo
+      '20': Quindío
+      '21': Risaralda
+      '22': Santander
+      '23': Sucre
+      '24': Tolima
+      '25': Valle del Cauca
+      '26': Ocaña
+      '27': Planta Central
+      '1': Antioquia
+      '2': Atlántico
+      '3': Bolívar
+      '4': Boyacá
+      '5': Caldas
+      '6': Caquetá
+      '7': Casanare
+      '8': Cauca
+      '9': Cesar
+      '0': No Aplica
+      '28': ANI
+      '29': Por Definir
+  Shape__Length:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: st_length(shape)
+  revisionestado:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: revisionestado
+    valores:
+      No Revisado: 605
+      '1': 42
+      '2': 1
+    codigos:
+      '1': Revisado
+      '2': No Revisado

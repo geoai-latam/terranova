@@ -1,0 +1,87 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:38:45+00:00",
+ "herramienta": "invias_puentes_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -73.975,
+     4.99,
+     -73.965,
+     4.995
+    ],
+    "columna_geo": "point",
+    "id": "nsdj-ep2p",
+    "max_filas": 3000,
+    "order": "via, poste_de_referencia, distancia, nombre",
+    "portal": "datos.gov.co",
+    "select": "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.9709113,
+           4.9927709
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "administrador": "Conc. Depart.",
+          "carretera": "Briceño - Zipaquirá - Te de Nemocón",
+          "distancia": "480",
+          "fecha_de_construcci_n": "1926.000",
+          "fecha_de_inspecci_n": "2012.07.07",
+          "luces": "1",
+          "luz_maxima": "40.2",
+          "luz_total": "40.2",
+          "material": "50",
+          "nombre": "Bavaria",
+          "poste_de_referencia": "6",
+          "secci_n_longitudinal": "10",
+          "secci_n_transversal": "31",
+          "tablero": "11.2",
+          "via": "55CN01"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "nsdj-ep2p"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "nsdj-ep2p",
+     "consulta": {
+      "conjunto": "nsdj-ep2p",
+      "max_filas": 3000,
+      "portal": "datos.gov.co",
+      "select": "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point",
+      "where": "(within_box(point, 4.995, -73.975, 4.99, -73.965))"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(within_box(point, 4.995, -73.975, 4.99, -73.965))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

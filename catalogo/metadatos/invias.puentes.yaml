@@ -1,0 +1,227 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: invias.puentes
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/nsdj-ep2p.json
+pagina: https://www.datos.gov.co/d/nsdj-ep2p
+titulo: Puentes
+descripcion: Puentes registrados sobre La Red Vial Nacional
+publicado: '2024-10-28'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+etiquetas:
+- transporte
+- puente
+filas: 2830
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  administrador:
+    tipo_fuente: text
+    etiqueta: Administrador
+    descripcion: Entidad administradora
+    nulos: 0
+    minimo: ANI
+    maximo: INVIAS
+    comparacion: texto
+    valores:
+      INVIAS: 1455
+      ANI: 1326
+      Conc. Depart.: 48
+      ANI (verificar): 1
+  carretera:
+    tipo_fuente: text
+    etiqueta: Carretera
+    descripcion: Nombre de la carretera sobre la que se encuentra el puente
+    nulos: 0
+    comparacion: texto
+  poste_de_referencia:
+    tipo_fuente: number
+    etiqueta: Poste de Referencia
+    descripcion: Poste de Referencia más cercano
+    nulos: 0
+    minimo: '0'
+    maximo: '164'
+    comparacion: numero
+  distancia:
+    tipo_fuente: number
+    etiqueta: Distancia
+    descripcion: Distancia del puente al Poste de Referencia indicado
+    nulos: 0
+    minimo: '0'
+    maximo: '3006'
+    comparacion: numero
+  fecha_de_construcci_n:
+    tipo_fuente: number
+    etiqueta: Fecha de Construcción
+    descripcion: Fecha de construcción del puente
+    nulos: 0
+    minimo: '1.926'
+    maximo: '2.015'
+    comparacion: numero
+  fecha_de_inspecci_n:
+    tipo_fuente: text
+    etiqueta: Fecha de Inspección
+    descripcion: Ultima fecha de inspección del puente
+    nulos: 0
+    minimo: 2001.10.03
+    maximo: verificar
+    comparacion: texto
+  luces:
+    tipo_fuente: number
+    etiqueta: Luces
+    descripcion: Numero de luces
+    nulos: 0
+    minimo: '1'
+    maximo: '61'
+    comparacion: numero
+    valores:
+      '1': 2036
+      '2': 291
+      '3': 284
+      '4': 103
+      '5': 49
+      '6': 22
+      '7': 10
+      '8': 8
+      '9': 6
+      '10': 5
+      '12': 4
+      '15': 3
+      '28': 2
+      '61': 1
+      '18': 1
+      '20': 1
+      '19': 1
+      '13': 1
+      '14': 1
+      '11': 1
+  luz_maxima:
+    tipo_fuente: number
+    etiqueta: Luz Maxima
+    descripcion: Luz o vano máximo
+    nulos: 0
+    minimo: '0'
+    maximo: '218.9'
+    comparacion: numero
+  luz_total:
+    tipo_fuente: number
+    etiqueta: Luz Total
+    descripcion: Luz o vano total del puente
+    nulos: 0
+    minimo: '0'
+    maximo: '1135'
+    comparacion: numero
+  material:
+    tipo_fuente: number
+    etiqueta: Material
+    descripcion: 'Material del Puente. [ 10: "Concreto ciclópeo", 11: "Concreto sin refuerzo", 20: "Concreto
+      reforzado, in situ", 21: "Concreto reforzado, prefabricado & in situ", 30: "Concreto presforzado,
+      in situ", 31: "Concreto presforzado, prefabricado", 32: "Concreto presforzado, prefabricado & in
+      situ", 50: "Acero", 51: "Acero y concreto ", 60: "Piedra o roca", 70: "Ladrillo" ]'
+    nulos: 0
+    minimo: '10'
+    maximo: '92'
+    comparacion: numero
+    valores:
+      '20': 1554
+      '30': 341
+      '32': 213
+      '21': 210
+      '51': 155
+      '50': 91
+      '31': 81
+      '14': 66
+      '92': 28
+      '10': 27
+      '13': 17
+      '11': 15
+      '70': 13
+      '12': 12
+      '80': 2
+      '60': 2
+      '41': 1
+      '40': 1
+      '90': 1
+  nombre:
+    tipo_fuente: text
+    etiqueta: Nombre
+    descripcion: Nombre del puente
+  secci_n_longitudinal:
+    tipo_fuente: number
+    etiqueta: Sección Longitudinal
+    descripcion: 'Sección Longitudinal en Puentes. [ 10: "Simplemente apoyado, sección transversal constante",
+      11: "Simplemente apoyado, sección transversal variable", 20: "Viga continua, sección transversal
+      constante", 21: "Viga continua, sección transversal variable", 30: "Viga Gerber, sección transversal
+      constante", 31: "Viga Gerber, sección transversal variable", 40: "Pórtico, sección transversal ",
+      41: "Pórtico, sección transversal variable", 42: "Cajones (box culvert)", 50: "Puente colgante",
+      60: "Puente atirantado" ]'
+    nulos: 0
+    minimo: '10'
+    maximo: '92'
+    comparacion: numero
+    valores:
+      '10': 2236
+      '11': 154
+      '42': 137
+      '20': 126
+      '21': 54
+      '92': 39
+      '50': 23
+      '40': 18
+      '31': 14
+      '41': 9
+      '30': 8
+      '60': 6
+      '91': 4
+      '90': 2
+  secci_n_transversal:
+    tipo_fuente: number
+    etiqueta: Sección Transversal
+    descripcion: 'Sección Transversal en Puentes. [ 10: "Losa", 11: "Losa/viga, 1 viga", 12: "Losa/viga,
+      2 vigas", 13: "Losa/viga, 3 vigas", 14: "Losa/viga, 4 o más vigas", 30: "Trabe cajón, 1 cajón",
+      31: "Trabe cajón, 2 ó más cajones", 40: "Armadura de paso inferior", 41: "Armadura de paso superior",
+      42: "Armadura de paso a través", 50: "Arco superior", 51: "Arco inferior, tipo abierto", 52: "Arco
+      inferior, tipo cerrado", 80: "Provisional, tipo Bailey", 81: "Provisional, tipo Callender Hamilton"
+      ]'
+    nulos: 0
+    minimo: '10'
+    maximo: '92'
+    comparacion: numero
+    valores:
+      '14': 1564
+      '13': 505
+      '10': 201
+      '12': 191
+      '52': 85
+      '30': 56
+      '40': 45
+      '92': 42
+      '42': 37
+      '50': 29
+      '31': 20
+      '51': 19
+      '41': 16
+      '80': 11
+      '11': 7
+      '81': 2
+  tablero:
+    tipo_fuente: number
+    etiqueta: Tablero
+    descripcion: Superficie de un puente
+    nulos: 0
+    minimo: '0'
+    maximo: '1010'
+    comparacion: numero
+  via:
+    tipo_fuente: text
+    etiqueta: Via
+    descripcion: Código de la via
+    nulos: 0
+    minimo: '0301'
+    maximo: 90SC02
+    comparacion: texto

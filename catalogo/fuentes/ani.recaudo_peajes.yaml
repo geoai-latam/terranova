@@ -1,0 +1,43 @@
+id: ani.recaudo_peajes
+titulo: Recaudo en los peajes de la ANI
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/qac6-9mkr.json
+  cita: '"licenseId": "CC_40_BY_SA" (Creative Commons Attribution | Share Alike 4.0 International)'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/qac6-9mkr.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, columna_tiempo: desde}
+datos_personales: ninguno
+estado: publicada
+campos:
+  idpeaje: {nombre: id_peaje, tipo: int, desc: "código del peaje en la ANI"}
+  peaje: {nombre: peaje, tipo: str, desc: "nombre del peaje (el mismo de ani_peajes_en_zona)"}
+  desde: {nombre: mes, tipo: date, desc: "primer día del mes (la fuente parte algunos meses en periodos por cambio de tarifa; la herramienta los junta)"}
+  recaudo: {nombre: recaudo, tipo: int, desc: "dinero recaudado en el peaje, en pesos"}
+  recaudofsv: {nombre: recaudo_fsv, tipo: int, desc: "parte del recaudo para el Fondo de Seguridad Vial (FSV), en pesos"}
+  recaudosobrante: {nombre: recaudo_sobrante, tipo: int, desc: "recaudo sobrante como lo reporta la ANI, en pesos"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: ANI, theme: transporte, accrualPeriodicity: semiannual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "el recaudo de un peaje de la ANI en un periodo (casi siempre un mes); 17 134 filas de 162 peajes, de enero de 2014 a mayo de 2026"
+  clave: {columna: idpeaje, unica: false}
+  operaciones: {filtrar: 0.7, contar: 5.3, agrupar: 0.7}
+  hallazgos:
+  - "junio de 2021 viene repetido en muchos peajes: SIBERIA tiene 5 filas (dos iguales de $7 517 992 100 y tres en cero); sumar sin más dobla el mes"
+  - "se quitan primero las filas idénticas (mismo peaje, periodo y valores) y luego se suma por mes: SIBERIA 2021 da $90 167 509 500 y no $97 685 501 600"
+  - "algunos meses vienen partidos en periodos por cambio de tarifa (desde el 19 o el 23 del mes): se juntan en el mes"
+  - "el último mes publicado es mayo de 2026"
+  decision: "en vivo por nombre del peaje y año, sin repetidos y agregado por mes"

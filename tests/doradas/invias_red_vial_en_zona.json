@@ -1,0 +1,132 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:38:46+00:00",
+ "herramienta": "invias_red_vial_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -73.953,
+     4.924,
+     -73.95,
+     4.927
+    ],
+    "geometria": "simplificada",
+    "max_features": 500,
+    "out_fields": [
+     "codigotramo",
+     "ruta",
+     "nombreruta",
+     "sector",
+     "administrador",
+     "territorial",
+     "categoria",
+     "superficie",
+     "calzada",
+     "postereferenciainicial",
+     "distanciainicial",
+     "postereferenciafinal",
+     "distanciafinal",
+     "Shape__Length",
+     "revisionestado",
+     "last_edited_date"
+    ],
+    "url": "https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/RedVial/FeatureServer/1"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.94252,
+           4.91404
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Shape__Length": 4132.84716786908,
+          "administrador": "1",
+          "calzada": "1",
+          "categoria": "1",
+          "codigotramo": "50CN03",
+          "distanciafinal": 500.0,
+          "distanciainicial": 505.0,
+          "last_edited_date": 1762911824000,
+          "nombreruta": "Conexión Transversal Buenaventura - Puerto Carreño y Troncal Central del Norte",
+          "postereferenciafinal": 14,
+          "postereferenciainicial": 10,
+          "revisionestado": "1",
+          "ruta": "50",
+          "sector": "Sopó - Cruce Ruta 55 (Briceño)",
+          "superficie": "1",
+          "territorial": "12"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "RedVial"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -73.953,
+      4.924,
+      -73.95,
+      4.927
+     ],
+     "capa": "RedVial",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -73.953,
+       4.924,
+       -73.95,
+       4.927
+      ],
+      "max_features": 500,
+      "out_fields": [
+       "codigotramo",
+       "ruta",
+       "nombreruta",
+       "sector",
+       "administrador",
+       "territorial",
+       "categoria",
+       "superficie",
+       "calzada",
+       "postereferenciainicial",
+       "distanciainicial",
+       "postereferenciafinal",
+       "distanciafinal",
+       "Shape__Length",
+       "revisionestado",
+       "last_edited_date"
+      ],
+      "url": "https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/RedVial/FeatureServer/1",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://hermes2.invias.gov.co/server/rest/services/MapaCarreteras/RedVial/FeatureServer/1"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

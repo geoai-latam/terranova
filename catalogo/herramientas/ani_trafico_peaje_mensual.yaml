@@ -1,0 +1,40 @@
+id: ani_trafico_peaje_mensual
+version: 1
+familia: territorio
+fuente: ani.trafico_peajes
+pregunta: "¿Cuántos vehículos pasaron por este peaje de la ANI cada mes de un año?"
+descripcion: >
+  Tráfico mensual de un peaje de las concesiones de la ANI, buscado por su nombre (o parte de él,
+  como sale en ani_peajes_en_zona) en un AÑO: vehículos que pasaron en el mes (todas las categorías
+  sumadas), evasores y exentos de pago (Ley 787 de 2002). Datos de 2014 a mayo de 2026; la ANI los
+  actualiza cada semestre. Un nombre corto puede traer varios peajes (ANDES también trae FLANDES):
+  cada fila dice de qué peaje es. Solo peajes de la ANI; los del INVÍAS no publican tráfico aquí. Para
+  el dinero recaudado, ani_recaudo_peaje_mensual.
+  (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre, anio: anio}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 8yi9-t44c
+    portal: datos.gov.co
+    # spec 07: una fila por categoría de tarifa; el total del mes se suma aquí
+    select: "idpeaje, peaje, desde, max(hasta) AS hasta, sum(cantidadtrafico) AS cantidadtrafico, sum(cantidadevasores) AS cantidadevasores, sum(cantidadexentos787) AS cantidadexentos787"
+    where: "upper(peaje) like upper('%{nombre}%') AND date_extract_y(desde) = {anio}"
+    group: "idpeaje, peaje, desde"
+    order: "peaje, desde"
+    max_filas: 500
+  campos: [idpeaje, peaje, desde, hasta, cantidadtrafico, cantidadevasores, cantidadexentos787]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+  total_vehiculos: {de: suma, campo: vehiculos, tipo: int}
+salida: TraficoPeajeMensual
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 8yi9-t44c: FUSCA (id 17) en 2025, 12 meses; enero 117 742 vehículos
+  # (668 exentos, 0 evasores) y el año 1 737 307. Desde el servidor tardó 9,3 s (tope: 20 s).
+  entrada: {nombre: Fusca, anio: "2025"}
+  verdad: {peaje: FUSCA, id_peaje: 17, mes: "2025-01-01", vehiculos: 117742, numero_registros: 12, total_vehiculos: 1737307}
+  campos: [evasores, exentos, hasta, id_peaje, mes, numero_registros, peaje, total_vehiculos, vehiculos]
+  latencia_max_ms: 20000
