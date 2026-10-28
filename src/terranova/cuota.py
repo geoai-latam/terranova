@@ -56,8 +56,8 @@ class Cuota(Protocol):
 
     async def devolver(self, org: str, creditos: int) -> None: ...
 
-    async def usados(self, org: str) -> int:
-        """Créditos usados este mes por la organización."""
+    async def usados(self, org: str, en_mes: str | None = None) -> int:
+        """Créditos usados por la organización en `en_mes` (AAAA-MM; por defecto, este mes)."""
         ...
 
 
@@ -102,8 +102,8 @@ class CuotaMemoria:
             clave = f"{org}:{mes(self.reloj())}"
             self._usados[clave] = max(0, self._usados.get(clave, 0) - creditos)
 
-    async def usados(self, org: str) -> int:
-        return self._usados.get(f"{org}:{mes(self.reloj())}", 0)
+    async def usados(self, org: str, en_mes: str | None = None) -> int:
+        return self._usados.get(f"{org}:{en_mes or mes(self.reloj())}", 0)
 
 
 # Atómicos en Redis: compartidos entre réplicas.
@@ -159,8 +159,9 @@ class CuotaRedis:
         if creditos > 0:
             await self._r.decrby(f"terranova:saldo:{org}:{mes(self.reloj())}", creditos)
 
-    async def usados(self, org: str) -> int:
-        return int(await self._r.get(f"terranova:saldo:{org}:{mes(self.reloj())}") or 0)
+    async def usados(self, org: str, en_mes: str | None = None) -> int:
+        # el saldo de un mes vive 40 días en Redis; después, solo queda la medición
+        return int(await self._r.get(f"terranova:saldo:{org}:{en_mes or mes(self.reloj())}") or 0)
 
 
 def cuota_desde_entorno(redis_url: str | None) -> Cuota:

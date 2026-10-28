@@ -53,6 +53,7 @@ def test_outbox_en_postgres_sin_duplicados() -> None:
     o.registrar(e)
     o.registrar(e)
     assert o.eventos(org) == [e]
+    assert o.consumo("2026-10", org) == [(org, "h", 10, 1)]  # SUM/COUNT de Postgres → int
 
 
 def test_restricciones_curadas_en_postgis(tmp_path: Path) -> None:

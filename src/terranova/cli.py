@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     import pathlib
 
     from terranova.descubrimiento import DatasetDescubrible
+    from terranova.identidad import Registro
 
 
 def llaves(argumentos: list[str]) -> int:
@@ -75,6 +76,46 @@ def _miles(n: int) -> str:
     return f"{n:,}".replace(",", ".")
 
 
+def _uso_orgs(registro: Registro, org: str | None, en_mes: str | None) -> int:
+    """Saldo y consumo del mes: lo usado sale de la cuota (lo que la puerta descuenta) y el
+    detalle por herramienta, de la medición. Sin Redis, lo usado se suma de la medición."""
+    import asyncio
+    import os
+    import re
+    import time
+
+    from terranova.cuota import NIVELES, cuota_desde_entorno, mes
+    from terranova.medicion import OutboxSql
+
+    en_mes = en_mes or mes(time.time())
+    if not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", en_mes):
+        print(f"mes inválido «{en_mes}»: use AAAA-MM", file=sys.stderr)
+        return 2
+    niveles = {o: n for o, n, _ in registro.listar_orgs()}
+    por_org: dict[str, list[tuple[str, int, int]]] = {}
+    for o, herramienta, creditos, peticiones in OutboxSql(
+        os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
+    ).consumo(en_mes, org):
+        por_org.setdefault(o, []).append((herramienta, creditos, peticiones))
+    redis_url = os.environ.get("TERRANOVA_REDIS_URL")
+    cuota = cuota_desde_entorno(redis_url) if redis_url else None
+    lista = [org] if org else sorted(set(niveles) | set(por_org))
+    print(f"mes {en_mes}")
+    for o in lista:
+        detalle = por_org.get(o, [])
+        nivel = niveles.get(o, "con_llave")
+        limite = NIVELES.get(nivel, NIVELES["con_llave"])
+        medidos = sum(c for _, c, _ in detalle)
+        usados = asyncio.run(cuota.usados(o, en_mes)) if cuota else medidos
+        top = ", ".join(f"{h} {_miles(c)}" for h, c, _ in detalle[:3] if c) or "-"
+        print(
+            f"{o}  {nivel}  límite {_miles(limite)}  usados {_miles(usados)}  "
+            f"disponibles {_miles(max(0, limite - usados))}  "
+            f"peticiones {_miles(sum(n for _, _, n in detalle))}  top: {top}"
+        )
+    return 0
+
+
 def orgs(argumentos: list[str]) -> int:
     """Nivel del saldo mensual de cada organización (ADR-0029)."""
     from terranova.cuota import NIVELES
@@ -85,9 +126,14 @@ def orgs(argumentos: list[str]) -> int:
     nivel.add_argument("org")
     nivel.add_argument("nivel", choices=list(NIVELES))
     sub.add_parser("listar")
+    uso = sub.add_parser("uso", help="saldo y consumo del mes por organización")
+    uso.add_argument("--org")
+    uso.add_argument("--mes", help="AAAA-MM; por defecto, el mes en curso (UTC)")
     a = parser.parse_args(argumentos)
 
     registro = registro_desde_entorno()
+    if a.accion == "uso":
+        return _uso_orgs(registro, a.org, a.mes)
     if a.accion == "nivel":
         registro.fijar_nivel(a.org, a.nivel)
         print(f"{a.org}: nivel {a.nivel} ({_miles(NIVELES[a.nivel])} créditos al mes)")
