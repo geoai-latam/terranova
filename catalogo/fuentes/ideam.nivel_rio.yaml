@@ -1,0 +1,48 @@
+id: ideam.nivel_rio
+titulo: "Nivel instantáneo de los ríos en las estaciones del IDEAM (datos de sensores)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: opera la red hidrometeorológica nacional y publica sus observaciones (Decreto 1277 de 1994)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/bdmn-sqnh.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Millones de lecturas: siempre se filtra por estación y rango de fechas y se agrega por día en la
+# fuente. Las estaciones (su código y ubicación) están en ideam.estaciones.
+url: https://www.datos.gov.co/resource/bdmn-sqnh.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigoestacion: {nombre: codigo_estacion, tipo: str, desc: "código de la estación (con ceros a la izquierda, 10 dígitos)"}
+  nombreestacion: {nombre: estacion, tipo: str, desc: "nombre de la estación"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio de la estación"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la estación"}
+  zonahidrografica: {nombre: zona_hidrografica, tipo: str, desc: "zona hidrográfica de la estación"}
+  codigosensor: {nombre: codigo_sensor, tipo: str, desc: "código del sensor"}
+  descripcionsensor: {nombre: sensor, tipo: str, desc: "descripción del sensor (nivel instantáneo)"}
+  unidadmedida: {nombre: unidad, tipo: str, desc: "unidad de la lectura (mt: metros)"}
+  fechaobservacion: {nombre: fecha_observacion, tipo: datetime, desc: "fecha y hora de la lectura"}
+  valorobservado: {nombre: nivel_m, tipo: float, desc: "nivel del río sobre el cero de la mira de la estación, en metros"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: IDEAM, theme: agua, accrualPeriodicity: continuous}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una lectura instantánea del nivel en una estación; Bolombolo (río Cauca) da 24 por día y La Virginia ~480"
+  clave: {columna: fechaobservacion, unica: false}
+  operaciones: {filtrar: 0.9, agrupar: 0.6}
+  hallazgos:
+  - "el nivel es la lectura sobre el cero de la mira de cada estación, no una profundidad: no se compara entre estaciones (a la misma hora, La Virginia daba 17,8 m y la mayoría entre 0,2 y 5,5 m)"
+  - "la frecuencia cambia por estación: 24 lecturas por día en Bolombolo, ~480 en La Virginia y una sola en Montería el 20-10-2026"
+  - "unas 180 estaciones reportaron en una hora del 27-10-2026"
+  decision: "en vivo por estación y rango de fechas, agregado por día y por sensor (promedio, mínimo y máximo)"

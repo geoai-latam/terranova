@@ -1,0 +1,133 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.nivel_rio
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/bdmn-sqnh.json
+pagina: https://www.datos.gov.co/d/bdmn-sqnh
+titulo: Nivel Instantáneo del Rio
+descripcion: 'Nivel instantáneo del río (medición horaria). Altura de la superficie del agua en relación
+  con un punto de referencia, generalmente el lecho del río. El nivel es monitoreado, registrado y transmitido
+  de forma horaria. Los datos disponibles a través de este medio pueden ser libremente consumidos bajo
+  las siguientes cláusulas: 1. Los datos a visualizar o descargar a continuación no han sido validados
+  por el IDEAM. 2. Los datos aquí dispuestos son datos crudos instantáneos provenientes de los sensores
+  de las estaciones automáticas de la red propia y/o producto de convenios interadministrativos con terceras
+  entidades. 3. Los datos son puestos a disposición de la ciudadanía como mecanismo de transparencia y
+  para proveer una herramienta de apoyo a la gestión del riesgo territorial y como datos abiertos en cumplimiento
+  de la Ley 1712 de 2014. 4. Es posible que los datos aquí dispuestos tengan cierto retraso en el tiempo
+  debido a las frecuencias de envío de datos de los sensores y los medios de transmisión utilizados. 5.
+  Los datos presenten errores y/o inconsistencias estando incluso por fuera de los límites considerados
+  normales, producto de fallas en los sensores de origen. 6. El poster…'
+publicado: '2019-08-27'
+datos_actualizados: '2026-10-28'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- nivel
+filas: 21762190
+campos:
+  codigoestacion:
+    tipo_fuente: text
+    etiqueta: CodigoEstacion
+    descripcion: Corresponde al valor de identificación de la estación dentro del catálogo de estaciones
+    nulos: 0
+    minimo: '0011017020'
+    maximo: '5311700154'
+    comparacion: texto
+  codigosensor:
+    tipo_fuente: text
+    etiqueta: CodigoSensor
+    descripcion: Código de identificación asignado al sensor
+    nulos: 0
+    minimo: 0229
+    maximo: '0230'
+    comparacion: texto
+    valores:
+      '0230': 21228053
+      0229: 534137
+  fechaobservacion:
+    tipo_fuente: calendar_date
+    etiqueta: FechaObservacion
+    descripcion: Fecha en la cual se realiza la medición
+    nulos: 0
+    minimo: '2001-01-01T00:32:00.000'
+    maximo: '2026-10-27T23:57:00.000'
+    comparacion: fecha
+  valorobservado:
+    tipo_fuente: number
+    etiqueta: ValorObservado
+    descripcion: Valor medido
+    nulos: 0
+    minimo: '0'
+    maximo: '500'
+    comparacion: numero
+  nombreestacion:
+    tipo_fuente: text
+    etiqueta: NombreEstacion
+    descripcion: Corresponde a la identificación de la estación dentro del catálogo de estaciones
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del departamento donde se ubica la estación
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VAUPÉS
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del Municipio donde se localiza la estación
+    nulos: 0
+    minimo: Abejorral
+    maximo: ZIPAQUIRÁ
+    comparacion: texto
+  zonahidrografica:
+    tipo_fuente: text
+    etiqueta: ZonaHidrografica
+    descripcion: Zona hidrográfica sobre la cual está ubicada la estación
+    nulos: 0
+    maximo: VAUPES
+    comparacion: texto
+    valores:
+      ALTO MAGDALENA: 5977754
+      CAUCA: 3375525
+      META: 2621574
+      MEDIO MAGDALENA: 2309185
+      SOGAMOSO: 928283
+      BAJO MAGDALENA- CAUCA -SAN JORGE: 881596
+      BAJO MAGDALENA: 705603
+      CATATUMBO: 546996
+      CESAR: 431664
+      PATÍA: 415775
+      CARIBE - GUAJIRA: 409816
+      ATRATO - DARIÉN: 405279
+      MIRA: 319103
+      ARAUCA: 276678
+      CAQUETÁ: 270511
+      SINÚ: 268392
+      NECHÍ: 211700
+      SALDAÑA: 187295
+      CARIBE - LITORAL: 186843
+      <nil>: 159117
+  descripcionsensor:
+    tipo_fuente: text
+    etiqueta: DescripcionSensor
+    descripcion: Nivel instantáneo
+    nulos: 0
+    comparacion: texto
+    valores:
+      Nivel Instantaneo: 16968326
+      NIVEL INSTANTANEO: 4259727
+      GPRS - NIVEL: 534137
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: UnidadMedida
+    descripcion: Metros
+    nulos: 0
+    minimo: M
+    maximo: mt
+    comparacion: texto
+    valores:
+      mt: 21228053
+      M: 534137

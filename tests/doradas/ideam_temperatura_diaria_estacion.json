@@ -1,0 +1,93 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:03:07+00:00",
+ "herramienta": "ideam_temperatura_diaria_estacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, dia",
+    "id": "sbwg-7ju4",
+    "max_filas": 500,
+    "order": "dia, codigosensor",
+    "portal": "datos.gov.co",
+    "select": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minima, max(valorobservado) AS maxima, count(*) AS observaciones",
+    "where": "codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigoestacion",
+       "codigosensor",
+       "departamento",
+       "descripcionsensor",
+       "dia",
+       "maxima",
+       "minima",
+       "municipio",
+       "nombreestacion",
+       "observaciones",
+       "promedio",
+       "unidadmedida"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigoestacion": "0028025502",
+        "codigosensor": "0068",
+        "departamento": "Cesar",
+        "descripcionsensor": "TEMPERATURA DEL AIRE A 2 m",
+        "dia": "2026-10-17T00:00:00.000",
+        "maxima": "33.6",
+        "minima": "23.5",
+        "municipio": "Valledupar",
+        "nombreestacion": "AEROPUERTO ALFONSO LÓPEZ - AUT [28025502]",
+        "observaciones": "24",
+        "promedio": "27.2083333333333333",
+        "unidadmedida": "°C"
+       },
+       {
+        "codigoestacion": "0028025502",
+        "codigosensor": "0071",
+        "departamento": "Cesar",
+        "descripcionsensor": "GPRS - TEMPERATURA DEL AIRE A 2 m",
+        "dia": "2026-10-17T00:00:00.000",
+        "maxima": "34.4",
+        "minima": "23.2",
+        "municipio": "Valledupar",
+        "nombreestacion": "AEROPUERTO ALFONSO LÓPEZ - AUT [28025502]",
+        "observaciones": "720",
+        "promedio": "27.0326388888888889",
+        "unidadmedida": "°C"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "sbwg-7ju4",
+     "consulta": {
+      "conjunto": "sbwg-7ju4",
+      "group": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, dia",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minima, max(valorobservado) AS maxima, count(*) AS observaciones",
+      "where": "(codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59')"
+     },
+     "filas": 2,
+     "filas_que_resume": 744,
+     "filtro_soql": "(codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
