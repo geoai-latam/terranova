@@ -184,7 +184,8 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
     (Bogotá, Carare-Minero, Garagoa, Negro, Alto Suárez, Medio y Bajo Suárez, Seco, Guavio,
     Guayuriba). El Sumapaz va en `car_pomca_rio_sumapaz_en_punto`, como BY-SA, porque su ítem no
     declara licencia.
-  - IGAC SINIC: predio en un punto de 21 ciudades con gestor catastral propio (#169).
+  - IGAC SINIC: predio en un punto de 21 ciudades con gestor catastral propio (#169). Desde la
+    etapa 2 (#181) cubre los 333 municipios que la base del IGAC no tiene.
 - **Piezas nuevas de la copia:**
   - Un rasgo cuya geometría el servicio no sabe dar ya no tumba la copia. Se rescata la página
     sin geometría y luego las geometrías por rangos de la clave; el rasgo roto queda sin geometría,
@@ -196,10 +197,50 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
   - Honestidad (#160): una fuente que dice «hay N» y no entrega ninguno es «no se pudo».
 - **No se puede:** las alertas tempranas de deforestación del IDEAM solo salen en boletines PDF, sin
   API ni bulk (ADR-0018).
-- **Pendiente:**
-  - La etapa 2 del SINIC, con los ~264 municipios restantes. La etapa 1 (21 municipios, 2 347 361
-    terrenos) se ingirió desde Colombia en 3,2 h; unos pocos terrenos llegan sin geometría.
-  - Todas las copias de Bogotá y el SINIC entran en el refresco desde Colombia.
+- **SINIC etapa 2 (#181):** 6 134 392 terrenos de 333 municipios.
+  - Dos ingestas por túnel se cayeron: una por un corte de red a 1 h 9 min, la otra porque el PC se
+    quedó sin memoria.
+  - Lo que funcionó:
+    1. Se cargó en un Postgres local con la imagen del servidor, con la ingesta dentro de Docker:
+       1 h 40 min.
+    2. Se pasó con `pg_dump` (699 MB) y `rsync --partial`, que se puede retomar.
+    3. Se publicó como lo hace la copia: la vista cambia y `copia.versiones` la marca vigente, en
+       una sola transacción.
+  - Unos pocos terrenos llegan sin geometría porque el servicio no la da; quedan con aviso.
+
+## Segunda tanda de fuentes colombianas (2026-10-28, #172–#181)
+
+Todas tienen licencia verificada por ítem, perfil, canario medido en la fuente y dorada grabada en
+el servidor. La prueba de punta a punta con gpt-5.4-mini contra producción dio 21 de 21 éxitos
+(#172, #174–#178), con las respuestas revisadas una a una. Las fallas que se vieron son del agente,
+no de la puerta: listar las alertas más viejas en vez de las recientes, o dar solo el total cuando
+se pidió mes a mes.
+
+- **IDEAM:**
+  - Temperatura y nivel de los ríos por estación y día, y normales climatológicas (#174, en vivo).
+  - Alertas diarias por deslizamiento e incendio forestal por municipio (#176). Son por copia del CSV
+    nocturno de la OSPA, con el origen nuevo `csv`; `bart.ideam.gov.co` no responde al datacenter.
+- **ANH (#175):** producción de crudo y gas, y regalías liquidadas, por campo y por municipio.
+  - El crudo y las regalías no traen DIVIPOLA: se piden por nombre y departamento.
+  - Nuevo tipo de entrada `campo_hidrocarburos`.
+- **Aerocivil y Supertransporte (#177):** pasajeros y carga por aeropuerto (IATA), operaciones (OACI),
+  y toneladas y contenedores por zona portuaria.
+  - Los pasajeros son origen-destino del viaje, no el tramo volado: la descripción lo dice.
+- **INVÍAS y ANI (#178):** red vial nacional y puentes en una zona (por el ArcGIS de hermes2), y
+  tráfico y recaudo mensual de los peajes de la ANI.
+  - El estado de los puentes no se publica: las inspecciones son de 2015 o antes.
+- **UARIV y ADRES (#180), solo sumas (ADR-0014):** víctimas del RUV por municipio y por hecho, el
+  desplazamiento (expulsión) por año, y los afiliados al régimen contributivo y al subsidiado por EPS.
+  - El RUV acumula un corte por mes: se toma el más reciente.
+  - La «llegada» de desplazados no se sirve porque la fuente no la mide bien: 27 106 llegadas contra
+    816 111 expulsados en 2002.
+- **DANE:**
+  - Población proyectada por municipio y año, 2018-2042 (#172).
+  - Índice del IPC mes a mes desde 2003 y crecimiento anual del PIB trimestral (#179), por copia
+    de sus anexos.
+  - `web_tabla` gana `hasta_fila`, para las hojas con varias tablas apiladas.
+  - El SDMX del BanRep no tiene IPC, PIB ni desempleo (33 dataflows medidos). El desempleo ya lo da
+    la GEIH.
 
 ## Copias del DANE (2026-10-28)
 
@@ -223,15 +264,18 @@ El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta v
   - Se reintenta. Su copia sería del origen `arcgis` sin geometría (1 122 municipios, SLA de
     10 años).
 - **Refresco desde Colombia en un paso:** un script interno abre el túnel, levanta el `web-mcp` con
-  una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 17 copias que solo
+  una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 21 copias que solo
   se bajan desde Colombia:
-  - las del DANE;
+  - las del DANE (con la población proyectada, el IPC y el PIB);
+  - las 2 alertas diarias del IDEAM;
   - RUNAP y UPRA;
   - comercio exterior y SECOP;
   - las 5 de Bogotá;
   - el SINIC.
 
-  Si nada venció tarda ~20 s. Falta programarlo como tarea semanal en la máquina del dueño.
+  Si nada venció tarda ~20 s. Tiene que correr cada día, por las alertas del IDEAM. Hay un script
+  interno listo para registrarlo como tarea diaria de Windows: falta que el dueño lo corra, porque
+  crear una tarea persistente en su máquina le toca a él.
 
 ## Repo privado y licencia propietaria (2026-10-28, #147)
 
