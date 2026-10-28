@@ -5,10 +5,13 @@ Postgres (despliegue con varias réplicas, ADR-0015). El SQL se escribe una vez,
 En Postgres se usa un **pool con reconexión** (`psycopg_pool`): un blip/failover/idle de la base no
 tumba la autenticación (antes, una sola conexión en `__init__` sin reintento la dejaba inservible),
 y el tráfico deja de serializar en una única conexión bajo lock. El arranque no bloquea si la base
-aún no está (`open(wait=False)`). SQLite (un solo proceso) mantiene su conexión con candado."""
+aún no está (`open(wait=False)`). El pool se cierra al salir del proceso: si lo cierra el recolector
+durante el apagado, sus hilos fallan («cannot join current thread»). SQLite (un solo proceso)
+mantiene su conexión con candado."""
 
 from __future__ import annotations
 
+import atexit
 import importlib
 import os
 import sqlite3
@@ -33,6 +36,7 @@ class Conexion:
                 open=False,
             )
             self._pool.open(wait=False)  # no bloquea el arranque si la base aún no responde
+            atexit.register(self._pool.close)
         else:
             self._candado = threading.Lock()
             if texto != ":memory:":
