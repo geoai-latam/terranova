@@ -701,3 +701,65 @@ def test_copia_arcgis_sin_geometria_no_pide_ni_guarda_geometria() -> None:
         plan_de_consulta(sin, {"punto": [-74.0, 4.6]})
     with pytest.raises(ValidationError, match="solo aplica a una capa ArcGIS"):
         Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", geometria=False)
+
+
+class ArcgisConRasgoRoto:
+    """Una capa de 10 rasgos (claves 1..10) donde la geometría del 7 rompe la consulta: cualquier
+    página que lo incluya CON geometría llega vacía, sin error (SINIC, objectid 1420608)."""
+
+    ROTO = 7
+
+    def __init__(self, rechaza: bool = False) -> None:
+        self.pedidos: list[dict[str, Any]] = []
+        self.rechaza = rechaza  # SDP: la consulta falla con 400 en vez de llegar vacía
+
+    def get(self, url: str, params: dict[str, Any]) -> _Respuesta:
+        self.pedidos.append(params)
+        if params.get("returnCountOnly"):
+            return _Respuesta({"count": 10})
+        donde = params["where"]
+        if ">=" in donde:
+            desde, hasta = int(donde.split(">=")[1].split()[0]), int(donde.split("<=")[1])
+            claves = list(range(desde, hasta + 1))
+        else:
+            desde = int(donde.split(">")[1]) if ">" in donde else 0
+            claves = [c for c in range(1, 11) if c > desde][: params.get("resultRecordCount", 10)]
+        con_geometria = params.get("returnGeometry") != "false"
+        if con_geometria and self.ROTO in claves:
+            if self.rechaza:
+                return _Respuesta({"error": {"code": 400, "message": "Failed to execute query."}})
+            return _Respuesta({"type": "FeatureCollection", "features": []})
+        rasgos = [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Polygon", "coordinates": _CUADRO} if con_geometria else None,
+                "properties": {"objectid": c, "ap_nombre": f"Área {c}", "fecha_inscrita": 0},
+            }
+            for c in claves
+        ]
+        return _Respuesta({"type": "FeatureCollection", "features": rasgos})
+
+
+@pytest.mark.parametrize("rechaza", [False, True], ids=["vacia", "rechazada"])
+def test_un_rasgo_sin_geometria_no_tumba_la_copia(
+    rechaza: bool, capsys: pytest.CaptureFixture[str]
+) -> None:
+    from terranova.copias import descargar_arcgis
+
+    http = ArcgisConRasgoRoto(rechaza)
+    paginas = list(descargar_arcgis(RUNAP, cliente=http, pausa_s=0))
+    filas = [f for p in paginas for f in p]
+    assert [f["objectid"] for f in filas] == list(range(1, 11))  # ninguno se pierde
+    assert [f["objectid"] for f in filas if f["_geom"] is None] == [7]  # solo el roto
+    assert "1 elementos sin geometría" in capsys.readouterr().err
+
+
+def test_el_filtro_solo_va_con_una_capa_arcgis() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+
+    with pytest.raises(ValidationError, match="`filtro` solo aplica a una capa ArcGIS"):
+        Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", filtro="a = 1")
+    with pytest.raises(ValidationError):  # nada de comillas dobles ni punto y coma
+        Copia(origen="arcgis", capa=0, tabla="t", clave="id", filtro='a = "x"; drop')

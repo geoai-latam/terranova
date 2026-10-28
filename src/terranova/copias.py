@@ -260,6 +260,10 @@ def ewkt(geometria: dict[str, Any]) -> str:
     return f"SRID=4326;{cuerpos[str(tipo)]()}"
 
 
+class ConsultaRechazada(ValueError):
+    """El servicio ArcGIS rechazó la consulta (`{"error": {"code": 400}}`): no se reintenta."""
+
+
 def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 5) -> dict[str, Any]:
     """Una petición al servicio; ArcGIS responde los errores con 200 y `{"error": …}`.
 
@@ -273,13 +277,77 @@ def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 5
             r.raise_for_status()
             datos: dict[str, Any] = r.json()
             if "error" in datos:
-                raise ValueError(f"ArcGIS: {datos['error']}")
+                error = datos["error"]
+                if isinstance(error, dict) and error.get("code") == 400:
+                    raise ConsultaRechazada(f"ArcGIS: {error}")
+                raise ValueError(f"ArcGIS: {error}")
             return datos
+        except ConsultaRechazada:
+            raise  # la misma consulta fallará igual: no se espera ni se repite
         except Exception:
             if intento == intentos:
                 raise
             time.sleep(30 * intento)  # cortesía con la fuente: no se insiste de inmediato
     return {}
+
+
+def _rescatar_pagina(
+    http: Any, url: str, base: dict[str, Any], donde: str, copia: Any, fuente_id: str
+) -> list[dict[str, Any]]:
+    """La página sin geometría (¿de verdad terminó la capa?) y, si trae rasgos, sus geometrías por
+    tandas de la clave: el que el servicio no sabe dar queda sin geometría, con aviso."""
+    import sys
+
+    sin = (
+        _pedir_arcgis(
+            http,
+            url,
+            {
+                **base,
+                "where": donde,
+                "resultRecordCount": copia.por_pagina,
+                "returnGeometry": "false",
+            },
+        ).get("features")
+        or []
+    )
+    if not sin:
+        return []  # la capa sí terminó
+    claves: list[int] = [int((r.get("properties") or {})[copia.clave]) for r in sin]
+    geometrias: dict[int, Any] = {}
+    rotas: list[int] = []
+    pendientes = [claves]
+    sin_orden = {k: v for k, v in base.items() if k != "orderByFields"}
+    while pendientes:
+        lote = pendientes.pop()
+        # por rango de la clave, no `IN (…)`: 2 000 claves en la URL dan 414 (SINIC). Las claves de
+        # la página son contiguas dentro del filtro, así que el rango trae exactamente esas
+        rango = f"{copia.clave} >= {lote[0]} AND {copia.clave} <= {lote[-1]}"
+        donde_lote = f"({copia.filtro}) AND {rango}" if copia.filtro else rango
+        try:
+            rasgos = (
+                _pedir_arcgis(http, url, {**sin_orden, "where": donde_lote}).get("features") or []
+            )
+        except ConsultaRechazada:
+            rasgos = []  # algún rasgo del lote no sabe dar su geometría: se parte el lote
+        if len(rasgos) == len(lote):
+            for r in rasgos:
+                geometrias[int((r.get("properties") or {})[copia.clave])] = r.get("geometry")
+        elif len(lote) == 1:
+            rotas.extend(lote)
+        else:
+            mitad = len(lote) // 2
+            pendientes += [lote[:mitad], lote[mitad:]]
+    if rotas:
+        print(
+            f"aviso {fuente_id}: {len(rotas)} elementos sin geometría (el servicio no la da): "
+            f"{copia.clave} {rotas[:10]}",
+            file=sys.stderr,
+        )
+    return [
+        {"properties": r.get("properties"), "geometry": geometrias.get(c)}
+        for r, c in zip(sin, claves, strict=True)
+    ]
 
 
 def descargar_arcgis(
@@ -302,6 +370,7 @@ def descargar_arcgis(
     copia = fuente.copia
     url = f"{fuente.url}/{copia.capa}/query"
     columnas = list(fuente.campos)
+    filtro = copia.filtro or "1=1"  # una parte de la capa, si la ficha lo declara
     base: dict[str, Any] = {
         "outFields": ",".join(columnas),
         "returnGeometry": "true" if copia.espacial else "false",
@@ -318,7 +387,7 @@ def descargar_arcgis(
     try:
         try:
             conteo = _pedir_arcgis(
-                http, url, {"where": "1=1", "returnCountOnly": "true", "f": "json"}, intentos=1
+                http, url, {"where": filtro, "returnCountOnly": "true", "f": "json"}, intentos=1
             )
             esperado: int | None = int(conteo["count"])
         except Exception as exc:  # noqa: BLE001 — sin conteo se copia igual, sin esa verificación
@@ -328,11 +397,25 @@ def descargar_arcgis(
         ultima: int | None = None
         while True:
             time.sleep(pausa)
-            donde = "1=1" if ultima is None else f"{copia.clave} > {ultima}"
-            datos = _pedir_arcgis(
-                http, url, {**base, "where": donde, "resultRecordCount": copia.por_pagina}
-            )
+            siguiente = f"{copia.clave} > {ultima}"
+            if ultima is None:
+                donde = filtro
+            else:
+                donde = f"({copia.filtro}) AND {siguiente}" if copia.filtro else siguiente
+            try:
+                datos = _pedir_arcgis(
+                    http, url, {**base, "where": donde, "resultRecordCount": copia.por_pagina}
+                )
+            except ConsultaRechazada:
+                if not copia.espacial:
+                    raise
+                datos = {}  # la geometría de un rasgo rompe la consulta (SDP: «Failed to execute»)
             rasgos = datos.get("features") or []
+            if not rasgos and copia.espacial:
+                # una página con geometría puede llegar vacía, o rechazada, aunque haya elementos:
+                # un solo rasgo cuya geometría el servicio no sabe dar la tumba entera (SINIC,
+                # objectid 1420608; SDP, área de actividad)
+                rasgos = _rescatar_pagina(http, url, base, donde, copia, fuente.id)
             if not rasgos:
                 break
             pagina = []

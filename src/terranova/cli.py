@@ -193,6 +193,7 @@ def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
     import time
+    import traceback
     from collections.abc import Callable, Iterator
     from datetime import UTC, date, datetime
     from typing import Any
@@ -262,7 +263,12 @@ def copias(argumentos: list[str]) -> int:
                 )
             except Exception as exc:  # noqa: BLE001 — una copia rota no detiene las demás
                 bien = False
-                print(f"FALLO {fuente.id}: {type(exc).__name__}: {exc}", file=sys.stderr)
+                donde = traceback.extract_tb(exc.__traceback__)[-1]  # dónde, sin repetir horas
+                print(
+                    f"FALLO {fuente.id}: {type(exc).__name__}: {exc} "
+                    f"({os.path.basename(donde.filename)}:{donde.lineno})",
+                    file=sys.stderr,
+                )
         return bien
 
     while True:
