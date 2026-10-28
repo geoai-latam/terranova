@@ -1,0 +1,55 @@
+id: sdp.estratificacion_manzana
+titulo: "Estrato socioeconómico por manzana en Bogotá (SDP)"
+entidad: Secretaría Distrital de Planeación de Bogotá (SDP)
+competencia: adopta la estratificación socioeconómica urbana de Bogotá (Ley 142 de 1994, art. 101)
+acto: Decreto 394 de 2017
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=estratificacion-para-bogota
+  cita: "license_id: CC-BY-4.0 (Creative Commons Attribution 4.0); la capa de IDECA cita a la SDP como autora"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Secretaría Distrital de Planeación (SDP), Bogotá, estratificación por manzana"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024): la capa la sirve IDECA (catastro distrital), que no responde a la IP del
+# datacenter; desde Colombia sí. Se ingiere desde Colombia. Una fila por manzana.
+conector: copia
+url: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/ordenamientoterritorial/estratificacion/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 1
+  tabla: sdp_estratificacion_manzana
+  clave: OBJECTID
+  por_pagina: 2000
+  indices: [CODIGO_MANZANA]
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []
+  periodo: "estratificación urbana vigente de Bogotá"
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador de la manzana en la capa"}
+  CODIGO_MANZANA: {nombre: manzana, tipo: str, desc: "código de la manzana"}
+  ESTRATO: {nombre: estrato, tipo: int, desc: "estrato de 1 a 6; 0 y 9 son sin estrato (manzana no residencial), 7 sin información"}
+  NORMATIVA: {nombre: normativa, tipo: str, desc: "acto que fija el estrato, abreviado (DEC394: Decreto 394 de 2017)"}
+  NUMERO_ACTO_ADMINISTRATIVO: {nombre: numero_acto, tipo: str, desc: "número del acto"}
+  FECHA_ACTO_ADMINISTRATIVO: {nombre: fecha_acto, tipo: date, desc: "fecha del acto"}
+capas_servicio: [1]
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: SDP Bogotá, theme: ordenamiento}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una manzana de Bogotá con su estrato; 45 051 manzanas"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.6, contar: 0.4}
+  hallazgos:
+  - "el punto de prueba (Chapinero) toca una sola manzana: estrato 4, Decreto 394 de 2017"
+  - "el estrato es de la manzana, no del predio: un predio puede tener uno distinto por reclamación"
+  - "el servicio de IDECA no responde desde el datacenter de la UE; desde Colombia sí"
+  decision: "por copia espacial ingerida desde Colombia, por punto"
