@@ -19,7 +19,7 @@ consulta:
 salida: CandidatosCatalogo
 derivados:
   coincidencias: {de: completitud_total, tipo: int}
-creditos: 1
+cobro: codigo
 canario:
   # La verdad se mide en el almacén desplegado (pgvector con los dos catálogos ingeridos): una
   # consulta semántica trae al menos un candidato competente. El mínimo es 1 (crece con el catálogo).

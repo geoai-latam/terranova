@@ -25,7 +25,7 @@ consulta:
 salida: TituloMineroExpediente
 derivados:
   registros: {de: columna, campo: registros, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-26 en 42ha-fhvj: el expediente ABQ-101 ampara DIABASA y ROCA MUERTA en Yumbo
   # (Valle, 76892); 1ra por mineral DIABASA, 4 registros.

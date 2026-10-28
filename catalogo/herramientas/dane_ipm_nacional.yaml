@@ -23,7 +23,7 @@ consulta:
 salida: IpmNacional
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en anex-PMultidimensional-2025.xlsx: Nacional 2010, 29,7 %.
   entrada: {dominio: Nacional}

@@ -24,7 +24,7 @@ consulta:
 salida: SecopEjecucionContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   entrada: {id_contrato: CO1.PCCNTR.5709738}
   verdad: {id_contrato: CO1.PCCNTR.5709738}

@@ -23,7 +23,7 @@ consulta:
 salida: Secop1ModificacionesAdjudicacion
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en u5b4-ae3s (id_adjudicacion = 10878821): 3
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

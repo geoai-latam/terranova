@@ -23,7 +23,7 @@ consulta:
 salida: SecopModificacionesContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
   entrada: {id_contrato: CO1.PCCNTR.3712964}

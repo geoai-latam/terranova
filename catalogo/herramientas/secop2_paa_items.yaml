@@ -25,7 +25,7 @@ consulta:
 salida: Secop2PaaItems
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en 9sue-ezhx: el plan 2025 del municipio de Pitalito (702330010) tiene 582
   # ítems distintos (754 filas). Es el plan cerrado del año.

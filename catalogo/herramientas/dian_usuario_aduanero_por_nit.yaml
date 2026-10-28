@@ -21,7 +21,7 @@ consulta:
 salida: UsuarioAduaneroPorNit
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22: la Aerocivil (899999059) tiene 6 habilitaciones de aeropuerto.
   entrada: {nit: "899999059"}

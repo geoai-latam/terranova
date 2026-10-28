@@ -28,7 +28,7 @@ derivados:
   resoluciones: {de: columna, campo: resoluciones, tipo: int}
   sanciones: {de: columna, campo: sanciones, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en 73dx-n59j: en 2024, el primer sector (orden alfabético) es «Actividades
   # de parques y atracciones», con 1 resolución y 1 sanción de $30 487 584. En todo 2024: 312

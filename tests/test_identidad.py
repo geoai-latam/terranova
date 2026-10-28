@@ -11,7 +11,7 @@ from typing import Any
 import httpx
 import pytest
 
-from terranova import puerta
+from terranova import cli, puerta
 from terranova.app import crear_aplicacion
 from terranova.identidad import FORMATO, RegistroSqlite, bearer
 
@@ -52,6 +52,60 @@ def test_revocada_vencida_o_falsa_no_entra(registro: RegistroSqlite) -> None:
     assert registro.verificar("no-es-una-llave") is None
     otra_pimienta = RegistroSqlite(":memory:", "q" * 40)
     assert otra_pimienta.verificar(llave) is None
+
+
+@pytest.mark.parametrize("nivel", ["basico", "pro", "empresa", "escala", "ampliado", "con_llave"])
+def test_los_planes_de_pago_se_fijan_y_llegan_a_la_llave(
+    registro: RegistroSqlite, nivel: str
+) -> None:
+    llave = registro.crear("acme", {"*"}, prueba=False, expira=None)
+    registro.fijar_nivel("acme", nivel)
+    principal = registro.verificar(llave)
+    assert principal is not None and principal.nivel == nivel
+
+
+def test_un_nivel_que_no_existe_se_rechaza(registro: RegistroSqlite) -> None:
+    with pytest.raises(ValueError, match="nivel"):
+        registro.fijar_nivel("acme", "premium")
+
+
+def test_listar_orgs_muestra_quien_quedaria_en_el_gratis(registro: RegistroSqlite) -> None:
+    """Antes de bajar el gratis (ADR-0029) hay que ver qué orgs no tienen nivel fijado."""
+    registro.crear("sin-nivel", {"*"}, prueba=False, expira=None)
+    revocada = registro.crear("con-pago", {"*"}, prueba=False, expira=None)
+    registro.crear("con-pago", {"*"}, prueba=True, expira=None)
+    registro.fijar_nivel("con-pago", "pro")
+    registro.fijar_nivel("solo-nivel", "ampliado")  # sin llaves todavía
+    principal = registro.verificar(revocada)
+    assert principal is not None and registro.revocar(principal.llave_id)
+    assert registro.listar_orgs() == [
+        ("con-pago", "pro", 1),
+        ("sin-nivel", "con_llave", 1),
+        ("solo-nivel", "ampliado", 0),
+    ]
+
+
+def test_cli_orgs_nivel_y_listar(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setenv("TERRANOVA_PIMIENTA", PIMIENTA)
+    monkeypatch.setenv("TERRANOVA_BD", str(tmp_path / "t.db"))
+    RegistroSqlite(tmp_path / "t.db", PIMIENTA).crear("acme", {"*"}, prueba=False, expira=None)
+    assert cli.orgs(["nivel", "acme", "pro"]) == 0
+    assert "acme: nivel pro (110.000 créditos al mes)" in capsys.readouterr().out
+    assert cli.orgs(["listar"]) == 0
+    assert capsys.readouterr().out.split() == [
+        "acme",
+        "pro",
+        "110.000",
+        "créditos/mes",
+        "1",
+        "llaves",
+        "vigentes",
+    ]
+    with pytest.raises(SystemExit) as salida:  # argparse: un nivel que no existe no se fija
+        cli.orgs(["nivel", "acme", "premium"])
+    assert salida.value.code == 2
 
 
 def test_la_pimienta_es_obligatoria_y_larga() -> None:

@@ -103,6 +103,10 @@ CASOS = [
     (HERRAMIENTA, _set(canario__minimos={"codigo_predial": 1}), "a la vez en verdad y minimos"),
     (HERRAMIENTA, _set(canario__minimos={"inventado": 1}), "no salen"),
     (HERRAMIENTA, _set(entrada={"lon": "texto_libre", "lat": "float"}), "entrada"),
+    # ADR-0010 (enmienda): lo espacial se cobra como espacial, y el crédito no se pone a mano
+    (HERRAMIENTA, _set(cobro="registro"), "no corresponde a la operación"),
+    (HERRAMIENTA, _set(cobro="gratis"), "cobro"),
+    (HERRAMIENTA, _set(creditos=10), "creditos"),
     (FUENTE, _set(cobertura__pais="Colombia"), "pais"),
     (
         FUENTE,

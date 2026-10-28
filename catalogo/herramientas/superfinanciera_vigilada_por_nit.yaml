@@ -25,7 +25,7 @@ consulta:
 salida: VigiladaSuperfinancieraPorNit
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-23 en sr9n-792w: Bancolombia (890903938) es la entidad 7 del tipo 1, en Medellín.
   entrada: {nit: "890903938"}

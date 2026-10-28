@@ -3,7 +3,8 @@
     terranova llaves crear --org geoai --scopes territorio,ambiente [--prueba] [--expira 2027-01-01]
     terranova llaves revocar llv_…
     terranova llaves listar [--org geoai]
-    terranova orgs nivel geoai ampliado      (saldo mensual: con_llave 20 000, ampliado 200 000)
+    terranova orgs nivel geoai pro           (nivel del saldo mensual: ver NIVELES en cuota.py)
+    terranova orgs listar                    (org, nivel, créditos al mes y llaves vigentes)
     terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
     terranova copias actualizar [fuente …] [--cada-horas 24] [--solo-vencidas]   (G3: copias)
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
@@ -67,6 +68,33 @@ def llaves(argumentos: list[str]) -> int:
             f"{ll.llave_id}  {ll.org}  {ll.plan}  {','.join(sorted(ll.scopes))}  {estado}  "
             f"creada {ll.creada}  último uso {ll.ultimo_uso or '-'}"
         )
+    return 0
+
+
+def _miles(n: int) -> str:
+    return f"{n:,}".replace(",", ".")
+
+
+def orgs(argumentos: list[str]) -> int:
+    """Nivel del saldo mensual de cada organización (ADR-0029)."""
+    from terranova.cuota import NIVELES
+
+    parser = argparse.ArgumentParser(prog="terranova orgs")
+    sub = parser.add_subparsers(dest="accion", required=True)
+    nivel = sub.add_parser("nivel")
+    nivel.add_argument("org")
+    nivel.add_argument("nivel", choices=list(NIVELES))
+    sub.add_parser("listar")
+    a = parser.parse_args(argumentos)
+
+    registro = registro_desde_entorno()
+    if a.accion == "nivel":
+        registro.fijar_nivel(a.org, a.nivel)
+        print(f"{a.org}: nivel {a.nivel} ({_miles(NIVELES[a.nivel])} créditos al mes)")
+        return 0
+    for org, niv, vigentes in registro.listar_orgs():
+        creditos = _miles(NIVELES.get(niv, NIVELES["con_llave"]))
+        print(f"{org}  {niv}  {creditos} créditos/mes  {vigentes} llaves vigentes")
     return 0
 
 
@@ -485,10 +513,8 @@ def main() -> None:
         sys.exit(canarios(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:
         sys.exit(llaves(argumentos[1:]))
-    if argumentos[:2] == ["orgs", "nivel"] and len(argumentos) == 4:
-        registro_desde_entorno().fijar_nivel(argumentos[2], argumentos[3])
-        print(f"{argumentos[2]}: nivel {argumentos[3]}")
-        sys.exit(0)
+    if argumentos[:1] == ["orgs"]:
+        sys.exit(orgs(argumentos[1:]))
     if argumentos and argumentos[0] in ("consultar", "herramientas", "fuentes", "uso"):
         from terranova import cliente  # cliente delgado del REST (ADR-0027); no carga el núcleo
 

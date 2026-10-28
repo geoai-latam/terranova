@@ -23,7 +23,7 @@ consulta:
 salida: MercadoLaboralNacional
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en anex-GEIH-ago2026.xlsx: en 2001, el primer indicador (% de población en
   # edad de trabajar) de enero vale 68,372…; el año está cerrado.

@@ -18,7 +18,7 @@ consulta:
 salida: ConceptosBuscar
 derivados:
   coincidencias: {de: completitud_total, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en la API de la relatoría (search=garantias): 1207 conceptos (X-WP-Total).
   # Crece con cada publicación: es un mínimo.

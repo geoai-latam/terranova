@@ -23,7 +23,7 @@ consulta:
 salida: SecopCronogramaProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en f3ev-294c (id_del_proceso = CO1.BDOS.2898382): 2
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

@@ -34,7 +34,7 @@ derivados:
   promedio_global: {de: columna, campo: promedio_global, tipo: float}
   promedio_matematicas: {de: columna, campo: promedio_matematicas, tipo: float}
   promedio_lectura_critica: {de: columna, campo: promedio_lectura_critica, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en kgxf-xxbe (group periodo, having n ≥ 10, orden por periodo): el primer
   # grupo de Chía es 20101 con 464 estudiantes.

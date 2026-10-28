@@ -1,6 +1,6 @@
 # ADR-0020 · Gratuito al inicio
 
-- **Estado:** aceptada (2026-10-21).
+- **Estado:** reemplazada por la [ADR-0029](0029-de-pago-freemium.md) (2026-10-27). Aceptada el 2026-10-21.
 - **Decisión:**
   - Terranova se ofrece gratis y abierto.
   - Se mantiene la llave por persona u organización, para saber quién usa qué, proteger las fuentes

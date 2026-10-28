@@ -21,7 +21,7 @@ consulta:
     max_features: 5
   campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
 salida: ResguardoEnPunto
-creditos: 10
+cobro: punto
 canario:
   # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
   entrada: {lon: -70.5, lat: 0.8}

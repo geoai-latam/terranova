@@ -24,7 +24,7 @@ consulta:
 salida: CaracteristicasPredio
 derivados:
   numero_unidades: {de: conteo, tipo: int}
-creditos: 10
+cobro: registro
 canario:
   entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_2, corte 06_2026
   verdad: {numero_unidades: 2, zona_economica: "006"}

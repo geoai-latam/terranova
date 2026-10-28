@@ -17,7 +17,7 @@ consulta:
     codigo: "{municipio_divipola}"
   campos: [codigo, municipio, departamento, personas, viviendas, hogares]
 salida: PoblacionMunicipio
-creditos: 10
+cobro: registro
 # Medido el 2026-10-22 (UTC) en la capa 800 del servicio, where MPIO_CDPMP='11001'.
 canario:
   entrada: {municipio_divipola: "11001"}

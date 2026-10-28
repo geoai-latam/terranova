@@ -25,7 +25,7 @@ consulta:
 salida: Secop1ProcesoPorConstancia
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en f789-7hwg (numero_de_constancia = 19-12-10176235): 1
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

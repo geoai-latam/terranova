@@ -25,7 +25,7 @@ consulta:
 salida: SuitOfertaTramitesEntidad
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en k7xp-z2d2: Alcaldía de Chía (899999172), 2021 → 115 filas distintas; la
   # primera, el SISBEN (10043) con 10 123 solicitudes.

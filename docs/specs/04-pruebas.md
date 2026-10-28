@@ -43,7 +43,7 @@ estado.
 | E2E-01 | Crear org y llave por CLI → llamar `igac_predio_en_punto` por REST | 200, `rt/1` válido, verdad de Chía, licencia del ítem, 10 créditos descontados |
 | E2E-02 | La misma llamada por MCP (cliente FastMCP y Claude Code) | misma huella que E2E-01 |
 | E2E-03 | Llave revocada | 401 en < 5 s tras revocar, por REST y MCP |
-| E2E-04 | Saldo agotado y exceso de tasa | 429 `saldo_agotado` con saldo 0 y 429 `limite_tasa`, ambos con `Retry-After`; sin sobreconsumo concurrente |
+| E2E-04 | Saldo agotado y exceso de tasa | 402 `saldo_agotado` con saldo 0 y 429 `limite_tasa`, ambos con `Retry-After`; sin sobreconsumo concurrente |
 | E2E-05 | Fuente caída (conector detenido) | `fuente_no_disponible` rápido; no descuenta; con caché previa: `obsoleto` + aviso |
 | E2E-06 | Fuente con licencia `por_verificar` con llave normal | `licencia_no_habilitada`; con llave de evaluación responde |
 | E2E-07 | Ficha del predio de Chía | todas las partes con procedencia; verdades; p95 < 15 s |
