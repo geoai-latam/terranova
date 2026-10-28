@@ -301,6 +301,12 @@ class Copia(_Ficha):
     # Capa de un servicio ArcGIS (origen arcgis): se copia con su geometría, en EPSG:4326, a una
     # columna `_geom` con índice espacial; `consultar_copia` la cruza con un punto o un bbox.
     capa: int | None = Field(default=None, ge=0, description="capa del servicio (origen arcgis)")
+    filtro: str | None = Field(
+        default=None,
+        pattern=r"^[A-Za-z0-9_ ,'()=<>.-]+$",
+        description="`where` de la capa (origen arcgis): copia solo una parte, p. ej. los "
+        "municipios que el catastro del IGAC no cubre",
+    )
     geometria: bool = Field(
         default=True,
         description="copiar la geometría (origen arcgis); sin ella, solo los atributos: p. ej. los "
@@ -349,6 +355,8 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
         if self.tolerancia is not None and not (self.origen == "arcgis" and self.geometria):
             raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS con geometría")
+        if self.filtro is not None and self.origen != "arcgis":
+            raise ValueError("ADR-0024: `filtro` solo aplica a una capa ArcGIS")
         if not self.geometria and self.origen != "arcgis":
             raise ValueError("ADR-0024: `geometria: false` solo aplica a una capa ArcGIS")
         lee_conector = (self.conector is not None, self.tool is not None)
