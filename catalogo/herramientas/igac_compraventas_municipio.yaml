@@ -27,7 +27,7 @@ derivados:
   compraventas: {de: columna, campo: compraventas, tipo: int}
   con_valor: {de: columna, campo: con_valor, tipo: int}
   valor_promedio_cop: {de: columna, campo: valor_promedio, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en 7y2j-43cv (cod_natujur 125, group year_radica): Chía, 2015 → 1055
   # compraventas sin valor. El conjunto está cerrado en 2023.

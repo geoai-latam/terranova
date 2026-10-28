@@ -24,7 +24,7 @@ consulta:
 salida: SecopGarantiasContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-27 en la fuente (gjp9-cutm): 2 pólizas de Aseguradora Solidaria, 8 amparos.
   # El contrato de antes (CO1.PCCNTR.3712964, 9 filas el 2026-10-22) ya no tiene filas: SECOP

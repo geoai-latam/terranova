@@ -22,7 +22,7 @@ consulta:
     max_filas: 500
   campos: [nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total]
 salida: TramitesEntidad
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en dd24-8p6w: el Ministerio de Educación, noviembre de 2018 → 18.
   entrada: {nit_entidad: 899999001}

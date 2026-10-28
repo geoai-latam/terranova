@@ -21,7 +21,7 @@ consulta:
     max_features: 5
   campos: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
 salida: ZonaReservaCampesinaEnPunto
-creditos: 10
+cobro: punto
 canario:
   # ZRC de Cabrera (Cundinamarca); medido el 2026-10-21 en la capa 0 (punto), 0,6 s.
   entrada: {lon: -74.46, lat: 3.88}

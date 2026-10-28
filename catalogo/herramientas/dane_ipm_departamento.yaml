@@ -26,7 +26,7 @@ consulta:
 salida: IpmDepartamento
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en anex-PMultidimensional-Departamental-2025.xlsx: Antioquia 2018, total,
   # 15,3 %; 8 años × 3 zonas = 24 filas.

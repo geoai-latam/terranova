@@ -4,10 +4,10 @@
   429 `limite_tasa` con `Retry-After`.
 - **Saldo**: créditos del mes por organización según su nivel. El costo se RESERVA de forma atómica
   antes de llamar a la fuente y se devuelve lo que no se cobró (error, caché, fuera de cobertura):
-  con llamadas simultáneas no hay sobreconsumo. Sin saldo, 429 `saldo_agotado` hasta el mes
-siguiente.
+  con llamadas simultáneas no hay sobreconsumo. Sin saldo, 402 `saldo_agotado` hasta el mes
+  siguiente (ADR-0029).
 
-El cobro protege las fuentes y reparte el gasto; no es para cobrar (ADR-0020).
+El saldo se entrega el día 1 de cada mes (UTC) y no se acumula: lo no gastado se pierde.
 """
 
 from __future__ import annotations
@@ -19,17 +19,30 @@ from collections.abc import Callable
 from datetime import UTC, datetime
 from typing import Any, Protocol
 
-NIVELES = {"con_llave": 20_000, "ampliado": 200_000}
+# Créditos al mes por nivel (ADR-0029). `con_llave` es el gratis; `ampliado`, el de entidades
+# públicas, academia y uso interno; los demás, los planes de pago.
+NIVELES = {
+    "con_llave": 1_500,
+    "basico": 25_000,
+    "pro": 110_000,
+    "empresa": 375_000,
+    "escala": 1_100_000,
+    "ampliado": 200_000,
+}
 
 
 def mes(ahora: float) -> str:
     return datetime.fromtimestamp(ahora, UTC).strftime("%Y-%m")
 
 
-def segundos_hasta_el_mes_siguiente(ahora: float) -> int:
+def reinicio(ahora: float) -> datetime:
+    """Cuándo se renueva el saldo: el día 1 del mes siguiente, a las 00:00 UTC."""
     d = datetime.fromtimestamp(ahora, UTC)
-    siguiente = datetime(d.year + (d.month == 12), d.month % 12 + 1, 1, tzinfo=UTC)
-    return max(1, math.ceil(siguiente.timestamp() - ahora))
+    return datetime(d.year + (d.month == 12), d.month % 12 + 1, 1, tzinfo=UTC)
+
+
+def segundos_hasta_el_mes_siguiente(ahora: float) -> int:
+    return max(1, math.ceil(reinicio(ahora).timestamp() - ahora))
 
 
 class Cuota(Protocol):

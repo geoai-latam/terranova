@@ -24,7 +24,7 @@ consulta:
 salida: SentenciaCorteConstitucional
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en v2k4-2t8s: T-760/08, tutela del 2008-07-31 (salud).
   entrada: {sentencia: "T-760/08"}

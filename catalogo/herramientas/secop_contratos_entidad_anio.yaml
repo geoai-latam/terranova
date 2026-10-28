@@ -32,7 +32,7 @@ derivados:
   valor_total: {de: columna, campo: valor_total, tipo: float}
   total_contratos: {de: suma, campo: contratos, tipo: int}
   valor_total_anio: {de: suma, campo: valor_total, tipo: float}
-creditos: 3
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en jbjy-vk9h: la Alcaldía de Chía (899999172) en 2023, 924 contratos en 29
   # grupos; el más grande, prestación de servicios por contratación directa: 726 (año cerrado).

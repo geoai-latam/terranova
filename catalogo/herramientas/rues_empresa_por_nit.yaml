@@ -22,7 +22,7 @@ consulta:
     max_filas: 200
   campos: [nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec]
 salida: EmpresaPorNit
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en c82u-588k: Ecopetrol, matrícula 1291197 de Bogotá.
   entrada: {nit: 899999068}

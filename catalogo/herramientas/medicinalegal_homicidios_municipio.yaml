@@ -26,7 +26,7 @@ salida: MedicinalegalHomicidiosMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en vtub-3de2: Chía 2024, 8 víctimas; el primer grupo tiene 1.
   entrada: {municipio_divipola: "25175", anio: 2024}

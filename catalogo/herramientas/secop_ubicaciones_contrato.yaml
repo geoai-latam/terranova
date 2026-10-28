@@ -24,7 +24,7 @@ consulta:
 salida: SecopUbicacionesContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en gra4-pcp2 (id_contrato = CO1.PCCNTR.3795896): 1
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

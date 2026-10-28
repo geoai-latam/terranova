@@ -27,6 +27,17 @@ ID_FUENTE = r"^[a-z0-9_]+(\.[a-z0-9_]+)+$"
 ID_HERRAMIENTA = r"^[a-z][a-z0-9]*(_[a-z0-9]+)+$"
 DURACION_ISO = r"^P(?:\d+[YMWD])+(?:T(?:\d+[HMS])+)?$|^PT(?:\d+[HMS])+$"
 
+# Créditos por tipo de pregunta (ADR-0010, enmienda del 2026-10-27): el cliente paga por lo que
+# pregunta, no por cómo la puerta lo trae; pasar una fuente a copia no cambia su precio.
+Cobro = Literal["codigo", "registro", "agregado", "punto", "zona"]
+TARIFA: dict[str, int] = {
+    "codigo": 1,  # de nombre a código y buscador del catálogo
+    "registro": 2,  # un registro o una serie simple (por id, NIT, código)
+    "agregado": 5,  # agregados o búsqueda de texto (por municipio, por año)
+    "punto": 10,  # espacial en un punto
+    "zona": 20,  # espacial en una zona o ráster
+}
+
 # Tipos de entrada. Los que tienen patrón los valida la puerta antes de llamar; solo esos y los
 # numéricos se pueden meter dentro de un texto de la consulta (un `where`): un `str` libre ahí sería
 # inyección SQL/SoQL.
@@ -607,13 +618,25 @@ class Herramienta(_Ficha):
     derivados: dict[str, Derivado] = Field(
         default_factory=dict, description="campos rt/1 que calcula la puerta"
     )
-    creditos: int = Field(ge=0)
+    cobro: Cobro
     canario: Canario
+
+    @property
+    def creditos(self) -> int:
+        return TARIFA[self.cobro]
 
     @model_validator(mode="after")
     def _propias(self) -> Self:
         if set(self.canario.entrada) != set(self.entrada):
             raise ValueError("la entrada del canario no coincide con la de la herramienta")
+        # lo espacial se cobra como espacial y nada más (un ráster en un punto cuenta como zona)
+        espacial = {"en_punto": {"punto", "zona"}, "en_zona": {"zona"}}
+        permitidos = espacial.get(self.consulta.operacion, {"codigo", "registro", "agregado"})
+        if self.cobro not in permitidos:
+            raise ValueError(
+                f"cobro «{self.cobro}» no corresponde a la operación {self.consulta.operacion}: "
+                f"uno de {sorted(permitidos)}"
+            )
         return self
 
 

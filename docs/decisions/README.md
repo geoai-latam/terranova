@@ -13,7 +13,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0007 | Catálogo como código con compuerta de licencia y lista blanca de campos | **aceptada** |
 | 0008 | En vivo por defecto; copia y curado solo cuando agregan valor; caché con frescura declarada | **aceptada** |
 | 0009 | Llaves API por organización ahora; OAuth 2.1 después | **aceptada** |
-| 0010 | Créditos como unidad de cuota por llave (Redis) y medición por evento; fallas y caché no descuentan; 429 al agotar | **aceptada** |
+| 0010 | Créditos como unidad de cuota por llave (Redis) y medición por evento; fallas y caché no descuentan; crédito por tipo de pregunta; 402 al agotar | **aceptada** (enmendada) |
 | 0011 | Errores RFC 9457 con código estable, idénticos en REST y MCP | **aceptada** |
 | 0012 | La puerta no usa LLM | **aceptada** |
 | 0013 | Observabilidad OTel + Prometheus; canarios diarios (Actions y servidor) | **aceptada** |
@@ -23,9 +23,10 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0017 | Lotes de 50 y trabajos lentos con `Prefer: wait` → 202 | **aceptada** |
 | 0018 | Política de acceso: API/bulk sí, HTML público con cortesía, backend interno solo con permiso escrito (en ningún plan sin él), captcha nunca | **aceptada** |
 | 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | **aceptada** |
-| 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | **aceptada** |
+| 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | reemplazada por 0029 |
 | 0021 | Open-Meteo (GloFAS, ERA5) con el API gratis mientras sea gratuito; salida a Copernicus directo | **aceptada** |
 | 0022 | Agrología del IGAC en vivo con caché hasta tener copia (licencia por ítem y descarga de capacidad pendientes) | **aceptada** |
+| 0029 | Freemium de pago: nivel gratis y planes por saldo mensual que no se acumula; 402 al agotar; el cobro vive fuera de la puerta | **aceptada** |
 
 - [ADR-0001 · Repo público `terranova`](0001-repo-publico-terranova.md)
 - [ADR-0002 · La puerta llama a los conectores por MCP en red interna](0002-la-puerta-llama-a-los-conectores-por-mcp-en-red-interna.md)
@@ -55,4 +56,5 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0026 · Cobertura de datos abiertos: conector genérico + buscador de catálogo (G6), no un tool por dataset](0026-cobertura-datos-abiertos-buscador-no-tool-por-dataset.md)
 - [ADR-0027 · CLI de cliente: un cliente delgado del REST /v1, con `catalogo buscar` y `verificar <archivo>`](0027-cli-de-cliente.md)
 - [ADR-0028 · Descubrimiento del catálogo con embeddings (buscador semántico), reconciliado con ADR-0012](0028-descubrimiento-con-embeddings.md)
+- [ADR-0029 · De gratuito a freemium de pago](0029-de-pago-freemium.md)
 - [ADR-0030 · Despliegue en una VPS única con Docker Compose (no nube gestionada) para el arranque](0030-despliegue-vps-unica-compose.md)
