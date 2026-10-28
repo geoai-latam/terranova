@@ -589,6 +589,15 @@ class Ejecutor:
             total = procedencia[0].completitud.total
         elif all(p.completitud.total is not None for p in procedencia):
             total = sum(p.completitud.total or 0 for p in procedencia)
+        # honestidad: la fuente dijo que hay `total` y no entregó ninguno (una página que llegó
+        # vacía, un corte): eso es «no se pudo», nunca «no encontrado». Con SINCHI, el conector
+        # contó 1 polígono y su página vino vacía; el sobre decía «no encontrado» (2026-10-28).
+        if not elementos and not capas_incompletas and total and total > 0:
+            raise ErrorEjecucion(
+                "fuente_respuesta_invalida",
+                f"la fuente dice que hay {total} y no entregó ninguno: no se pudo leer la "
+                "respuesta",
+            )
         agregados = {
             nombre: derivar_resultado(d, elementos, total)
             for nombre, d in h.derivados.items()
