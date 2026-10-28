@@ -1,0 +1,61 @@
+id: dane.pib_crecimiento_trimestral
+titulo: "Crecimiento anual del PIB trimestral por actividad económica (DANE, cuentas nacionales, base 2015)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004), entre ellas las cuentas nacionales
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE).
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  verificada: null
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: DANE, PIB_T (cuentas nacionales trimestrales)"
+protocolo: archivo
+# Copia (ADR-0024, origen conector): el DANE responde 403 al datacenter, así que el anexo se baja
+# desde Colombia con `web_tabla`. El archivo cambia de nombre cada trimestre
+# (anex-ProduccionConstantes-IItrim2026.xlsx): se descubre en la página. El «Cuadro 1» apila varias
+# tablas (niveles, crecimiento anual, año corrido…): se lee solo la del crecimiento anual, de la
+# fila 45 a la 62.
+conector: copia
+url: https://www.dane.gov.co/index.php/estadisticas-por-tema/cuentas-nacionales/cuentas-nacionales-trimestrales/pib-informacion-tecnica
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: 'anex-ProduccionConstantes-[IV]+trim[0-9]{4}\.xlsx'
+    hoja: Cuadro 1
+    fila_encabezado: 45
+    filas_encabezado: 2
+    largo_desde: 4
+    hasta_fila: 62
+  tabla: dane_pib_crecimiento
+  clave: _fila
+  indices: [Concepto]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura: {pais: CO, periodo: "primer trimestre de 2006 al último publicado"}
+datos_personales: ninguno
+estado: publicada
+clasificacion_licencia: ambar
+campos:
+  Concepto: {nombre: actividad, tipo: str, desc: "Producto Interno Bruto, Valor agregado bruto, impuestos o una de las 12 agrupaciones de actividades (CIIU Rev. 4)"}
+  columna: {nombre: anio, tipo: str, desc: "año; «2025pr» es preliminar y «p», provisional"}
+  subcolumna: {nombre: trimestre, tipo: str, desc: "trimestre (I, II, III, IV)"}
+  valor: {nombre: crecimiento_anual_pct, tipo: float, desc: "crecimiento frente al mismo trimestre del año anterior, %, series encadenadas de volumen, datos originales (sin desestacionalizar)"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
+dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "el crecimiento anual de una actividad (o del PIB) en un trimestre"
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "el Cuadro 1 apila los niveles (miles de millones de pesos), el crecimiento anual, el año corrido y más tablas: se lee solo la del crecimiento anual"
+  - "los años recientes vienen rotulados «2025pr» (preliminar) y «2026pr»: no se filtra por año, se piden los últimos trimestres"
+  - "corte del II trimestre de 2026 (actualizado el 18 de agosto): el PIB creció 3,52 % frente al II de 2025 y 2,19 % en el I"
+  decision: "por copia (el DANE bloquea al datacenter) del anexo del último trimestre; los últimos N trimestres por actividad"

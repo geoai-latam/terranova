@@ -1,0 +1,59 @@
+id: dane.ipc_indices
+titulo: "Índice de Precios al Consumidor (IPC), total nacional, serie mensual de empalme desde 2003 (DANE)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004); el IPC es la medida oficial de la inflación
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE).
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  verificada: null
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: DANE, Índice de Precios al Consumidor (IPC)"
+protocolo: archivo
+# Copia (ADR-0024, origen conector): el DANE responde 403 al datacenter, así que el anexo se baja
+# desde Colombia con `web_tabla`. El archivo cambia de nombre cada mes (anex-IPC-Indices-sep2026.xlsx):
+# se descubre en la página. La variación anual no sale en un .xlsx (el anexo de variaciones es un .xls
+# solo con las mensuales): se calcula con el índice.
+conector: copia
+url: https://www.dane.gov.co/index.php/estadisticas-por-tema/precios-y-costos/indice-de-precios-al-consumidor-ipc
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: 'anex-IPC-Indices-[a-z]{3}[0-9]{4}\.xlsx'
+    hoja: IndicesIPC
+    fila_encabezado: 9
+    largo_desde: 2
+    hasta_fila: 21
+  tabla: dane_ipc_indices
+  clave: _fila
+  indices: [columna]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "enero de 2003 al último mes publicado (base diciembre de 2018 = 100)"}
+datos_personales: ninguno
+estado: publicada
+clasificacion_licencia: ambar
+campos:
+  Mes: {nombre: mes, tipo: str, desc: "mes (Enero, Febrero, …)"}
+  columna: {nombre: anio, tipo: str, desc: "año"}
+  valor: {nombre: indice, tipo: float, desc: "número índice del IPC total nacional (diciembre de 2018 = 100)"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
+dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "el índice del IPC de un mes; serie de empalme mensual desde enero de 2003"
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "tabla ancha: un mes por fila y un año por columna; se pasa a una fila por mes y año"
+  - "el corte de septiembre de 2026 (actualizado el 7 de octubre) llega hasta 2026-09: septiembre 161,00 contra 151,48 un año antes"
+  - "debajo de la tabla vienen la fuente y notas: la copia lee hasta la fila 21"
+  - "el anexo de variaciones (anex-IPC-Variacion) es un .xls con solo las variaciones mensuales; la anual se calcula con el índice"
+  decision: "por copia (el DANE bloquea al datacenter) del anexo de índices del último mes, por año"

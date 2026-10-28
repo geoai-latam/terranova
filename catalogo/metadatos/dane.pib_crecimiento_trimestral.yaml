@@ -1,0 +1,12 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dane.pib_crecimiento_trimestral
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://www.dane.gov.co/files/operaciones/PIB/anex-ProduccionConstantes-IItrim2026.xlsx
+pagina: https://www.dane.gov.co/index.php/estadisticas-por-tema/cuentas-nacionales/cuentas-nacionales-trimestrales/pib-informacion-tecnica
+titulo: Producto Interno Bruto desde el enfoque de la producción. Series encadenadas de volumen con año
+  de referencia 2015
+idioma: Español
+filas: 1230
+descripcion: Cuadro 1 (12 agrupaciones CIIU Rev. 4), tabla de la tasa de crecimiento anual, datos
+  originales, 2006 al II trimestre de 2026. Actualizado el 18 de agosto de 2026.
