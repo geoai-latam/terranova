@@ -16,6 +16,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 2 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
+| `sinchi_perdida_bosque_en_punto` | ¿Este punto de la Amazonia perdió bosque entre 2022 y 2024? | Instituto Amazónico de Investigaciones Científicas (SINCHI) | CC-BY-4.0 | 10 |
 | `ungrd_emergencias_municipio` | ¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron? | Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD) | CC-BY-4.0 | 1 |
 | `usgs_sismos_en_zona` | ¿Qué sismos hubo en esta zona en este periodo? | U.S. Geological Survey (USGS) | LicenseRef-dominio-publico-EEUU | 20 |
 
