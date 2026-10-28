@@ -1,0 +1,11 @@
+# Ficha técnica escrita a mano (spec 08): la fuente no publica metadatos legibles.
+fuente: dane.proyecciones_poblacion_municipal
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://www.dane.gov.co/files/censo2018/proyecciones-de-poblacion/Municipal/PPED-AreaMun-2018-2042_VP.xlsx
+pagina: https://www.dane.gov.co/index.php/estadisticas-por-tema/demografia-y-poblacion/proyecciones-de-poblacion
+titulo: Proyecciones de población municipal por área geográfica, periodo 2018-2042
+idioma: Español
+filas: 84229
+descripcion: Hojas Índice, PPED (nota metodológica) y PobMunicipalxÁrea (los datos). Actualizado el 30
+  de julio de 2025 con el modelo de componentes de cohortes, enfoque multirregional.

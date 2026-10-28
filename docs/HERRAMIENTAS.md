@@ -108,6 +108,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_poblacion_proyectada_municipio` | ¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dian_comex_exportaciones_por_subpartida` | ¿Cuánto exportó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `dian_comex_importaciones_por_subpartida` | ¿Cuánto importó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |

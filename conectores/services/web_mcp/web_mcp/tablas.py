@@ -16,7 +16,7 @@ import csv
 import io
 from typing import Any
 
-MAX_FILAS = 50000  # la copia de Terranova pide la tabla entera (GEIH: ~10 mil filas)
+MAX_FILAS = 100000  # la copia de Terranova pide la tabla entera (proyecciones municipales: ~84 mil)
 MAX_BYTES = 25_000_000
 
 

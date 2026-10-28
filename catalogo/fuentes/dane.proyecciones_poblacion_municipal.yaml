@@ -1,0 +1,63 @@
+id: dane.proyecciones_poblacion_municipal
+titulo: "Proyecciones de población municipal por área, 2018-2042 (DANE, actualización post-COVID)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004); las proyecciones son la cifra oficial de población entre censos
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE). Son
+# agregados municipales, sin persona ni reserva → dato público reutilizable (ámbar, ADR-0019).
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  verificada: null
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: DANE, Proyecciones de población municipal por área 2018-2042"
+protocolo: archivo
+# Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la hoja se
+# baja entera desde Colombia con `web_tabla` (encabezado en la fila 8; ~84 mil filas, por eso el
+# tope de 100 mil del conector).
+conector: copia
+url: https://www.dane.gov.co/files/censo2018/proyecciones-de-poblacion/Municipal/PPED-AreaMun-2018-2042_VP.xlsx
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    url: "{url_fuente}"
+    hoja: PobMunicipalxÁrea
+    fila_encabezado: 8
+  tabla: dane_proyecciones_municipal
+  clave: _fila
+  indices: [MPIO]
+# El DANE las rehace cuando cambia la tendencia (la última, el 30-07-2025); no tienen fecha fija.
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
+cobertura: {pais: CO, periodo: "2018-2042 (proyección; actualizada el 30-07-2025)"}
+datos_personales: ninguno
+estado: publicada
+clasificacion_licencia: ambar
+# Ojo: en el archivo MPIO es el código y DPMP el nombre del municipio (los rótulos van cruzados).
+campos:
+  DP: {nombre: departamento_divipola, tipo: str, desc: "departamento, DIVIPOLA de 2 dígitos"}
+  DPNOM: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
+  MPIO: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA de 5 dígitos"}
+  DPMP: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  AÑO: {nombre: anio, tipo: int, desc: "año de la proyección (2018 a 2042)"}
+  ÁREA GEOGRÁFICA: {nombre: area, tipo: str, desc: "Cabecera Municipal, Centros Poblados y Rural Disperso, o Total"}
+  TOTAL: {nombre: poblacion, tipo: int, desc: "personas proyectadas al 30 de junio del año, en esa área"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en la hoja (la copia la numera)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un municipio, un año y un área (cabecera, centros poblados y rural disperso, o total)"
+  clave: {columna: "MPIO + AÑO + ÁREA GEOGRÁFICA", unica: true}
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "84 225 filas: 1 123 municipios × 25 años (2018-2042) × 3 áreas, sin repetidas; al pie vienen 4 notas (fuente, Barrancominas, Nuevo Belén de Bajirá, fecha) que la copia guarda sin municipio"
+  - "Mapiripana (94663) sale con 0 desde 2020: desde 2019 es parte de Barrancominas"
+  - "no es el censo: corrige la omisión censal (Bogotá 2018: 7 391 056 proyectados contra 7 181 469 censados)"
+  decision: "por copia (el DANE bloquea al datacenter): la hoja PobMunicipalxÁrea entera, por DIVIPOLA y año"

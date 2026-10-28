@@ -1,0 +1,35 @@
+id: dane_poblacion_proyectada_municipio
+version: 1
+familia: estadisticas
+fuente: dane.proyecciones_poblacion_municipal
+pregunta: "¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE?"
+descripcion: >
+  Población proyectada de un municipio (DIVIPOLA) en un año de 2018 a 2042, según las proyecciones
+  oficiales del DANE (actualización del 30-07-2025): cabecera municipal, centros poblados y rural
+  disperso, y total. Es la cifra oficial de población entre censos; para lo censado en 2018 está
+  dane_poblacion_municipio. Sale de la copia de Terranova del archivo del DANE.
+  (Fuente: DANE; licencia: términos de uso del DANE.)
+entrada: {municipio_divipola: divipola, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_proyecciones_municipal
+    filtros: {MPIO: "{municipio_divipola}", AÑO: "{anio}"}
+    select: [MPIO, DPMP, DPNOM, AÑO, ÁREA GEOGRÁFICA, TOTAL]
+    order: [_fila]
+    limite: 5
+  campos: [MPIO, DPMP, DPNOM, AÑO, ÁREA GEOGRÁFICA, TOTAL]
+salida: PoblacionProyectadaMunicipio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+cobro: registro
+canario:
+  # Medido el 2026-10-28 en PPED-AreaMun-2018-2042_VP.xlsx: Chía (25175) en 2026 → cabecera 139 448,
+  # centros poblados y rural disperso 38 102, total 177 550 (la primera fila es la cabecera).
+  entrada: {municipio_divipola: "25175", anio: "2026"}
+  verdad: {municipio_divipola: "25175", anio: 2026, area: Cabecera Municipal, poblacion: 139448}
+  minimos: {numero_registros: 3}
+  campos: [anio, area, departamento, municipio, municipio_divipola, numero_registros, poblacion]
+  latencia_max_ms: 5000
