@@ -1,0 +1,233 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:21:49+00:00",
+ "herramienta": "ideam_alertas_deslizamiento_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "COD_DANE": "05001"
+    },
+    "limite": 15,
+    "order": [
+     "-FECHA_EJECUCION"
+    ],
+    "select": [
+     "COD_DANE",
+     "MUNICIPIO",
+     "DEPARTAMENTO",
+     "REGION",
+     "TEXTO_AMENAZA",
+     "ACUMULADO_TRES",
+     "ACUMULADO_DIEZ",
+     "DIAS_LLUVIA",
+     "FECHA_EJECUCION"
+    ],
+    "tabla": "ideam_alertas_deslizamiento"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ACUMULADO_DIEZ",
+       "ACUMULADO_TRES",
+       "COD_DANE",
+       "DEPARTAMENTO",
+       "DIAS_LLUVIA",
+       "FECHA_EJECUCION",
+       "MUNICIPIO",
+       "REGION",
+       "TEXTO_AMENAZA"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ACUMULADO_DIEZ": 84.3,
+        "ACUMULADO_TRES": 31.7,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 24.0,
+        "FECHA_EJECUCION": "2026-10-27",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "ACUMULADO_DIEZ": 81.2,
+        "ACUMULADO_TRES": 35.7,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 24.0,
+        "FECHA_EJECUCION": "2026-10-26",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": 72.7,
+        "ACUMULADO_TRES": 41.3,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 24.0,
+        "FECHA_EJECUCION": "2026-10-25",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": null,
+        "ACUMULADO_TRES": null,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": null,
+        "FECHA_EJECUCION": "2026-10-24",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": null,
+        "ACUMULADO_TRES": null,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": null,
+        "FECHA_EJECUCION": "2026-10-23",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "ACUMULADO_DIEZ": 42.2,
+        "ACUMULADO_TRES": 25.6,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 22.0,
+        "FECHA_EJECUCION": "2026-10-22",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "ALTA"
+       },
+       {
+        "ACUMULADO_DIEZ": 83.2,
+        "ACUMULADO_TRES": 31.3,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 22.0,
+        "FECHA_EJECUCION": "2026-10-21",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "ACUMULADO_DIEZ": 92.6,
+        "ACUMULADO_TRES": 15.8,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 23.0,
+        "FECHA_EJECUCION": "2026-10-20",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": 95.7,
+        "ACUMULADO_TRES": 19.5,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 23.0,
+        "FECHA_EJECUCION": "2026-10-19",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": null,
+        "ACUMULADO_TRES": null,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": null,
+        "FECHA_EJECUCION": "2026-10-18",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "ACUMULADO_DIEZ": 132.9,
+        "ACUMULADO_TRES": 33.9,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 21.0,
+        "FECHA_EJECUCION": "2026-10-17",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "ACUMULADO_DIEZ": 127.3,
+        "ACUMULADO_TRES": 11.5,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 20.0,
+        "FECHA_EJECUCION": "2026-10-16",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "ACUMULADO_DIEZ": 126.3,
+        "ACUMULADO_TRES": 13.6,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 19.0,
+        "FECHA_EJECUCION": "2026-10-15",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "ALTA"
+       },
+       {
+        "ACUMULADO_DIEZ": 129.7,
+        "ACUMULADO_TRES": 44.8,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 19.0,
+        "FECHA_EJECUCION": "2026-10-14",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "ALTA"
+       },
+       {
+        "ACUMULADO_DIEZ": 103.0,
+        "ACUMULADO_TRES": 42.7,
+        "COD_DANE": "05001",
+        "DEPARTAMENTO": "ANTIOQUIA",
+        "DIAS_LLUVIA": 18.0,
+        "FECHA_EJECUCION": "2026-10-13",
+        "MUNICIPIO": "MEDELLÍN",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "ALTA"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 109,
+      "truncado": true,
+      "vistos": 15
+     },
+     "consultado_en": "2026-10-28T19:21:04.478225+00:00",
+     "copia": {
+      "filas": 97645,
+      "huella": "sha256:3e9124952976f9f9e07159893ede122e2bae2380de006b3556ccba45d991052e",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028192104478225"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+id: ideam.alertas_deslizamiento
+titulo: "Alertas diarias por deslizamiento de tierra por municipio (IDEAM, OSPA)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: emite las alertas hidrometeorológicas del país (Decreto 1277 de 1994; Ley 1523 de 2012, SNGRD)
+acto: null
+# La ficha de datos.gov.co (m3en-ptx7) declara CC BY-SA 4.0 y enlaza al CSV del IDEAM.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/m3en-ptx7.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM), Oficina del Servicio de Pronósticos y Alertas"
+protocolo: archivo
+# Copia (ADR-0024, origen csv): el IDEAM publica cada noche un CSV con las alertas del año, sin API
+# (en datos.gov.co la vista solo enlaza al archivo y su `resource` da 403). bart.ideam.gov.co no
+# responde al datacenter: se baja desde Colombia con el refresco diario.
+conector: copia
+url: https://bart.ideam.gov.co/ospa/DatosAbiertos/Alertas_Deslizamientos/alertas_deslizamientos.csv
+modo: copia
+copia:
+  origen: csv
+  descargas: [https://bart.ideam.gov.co/ospa/DatosAbiertos/Alertas_Deslizamientos/alertas_deslizamientos.csv]
+  separador: ";"
+  ceros: {COD_DANE: 5}
+  tabla: ideam_alertas_deslizamiento
+  clave: _fila
+  indices: [COD_DANE]
+# Sale un boletín cada noche (~23:30) con las alertas de ese día.
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO, periodo: "el año en curso (el archivo acumula desde el 1 de enero)"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  COD_DANE: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA de 5 dígitos"}
+  MUNICIPIO: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  DEPARTAMENTO: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
+  REGION: {nombre: region, tipo: str, desc: "región natural (ANDINA, CARIBE, PACÍFICO…)"}
+  TEXTO_AMENAZA: {nombre: nivel_alerta, tipo: str, desc: "nivel de la alerta: ALTA (roja), MODERADA (naranja) o BAJA (amarilla)"}
+  ACUMULADO_TRES: {nombre: lluvia_3_dias_mm, tipo: float, desc: "lluvia acumulada en los últimos 3 días, mm (a veces vacía)"}
+  ACUMULADO_DIEZ: {nombre: lluvia_10_dias_mm, tipo: float, desc: "lluvia acumulada en los últimos 10 días, mm (a veces vacía)"}
+  DIAS_LLUVIA: {nombre: dias_con_lluvia, tipo: float, desc: "días con lluvia en el periodo de cálculo (a veces vacío)"}
+  FECHA_EJECUCION: {nombre: fecha, tipo: date, desc: "día del boletín que emitió la alerta"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el archivo (la copia la numera)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un municipio con alerta en el boletín de un día"
+  clave: {columna: "COD_DANE + FECHA_EJECUCION", unica: true}
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "97 645 filas del 01-01 al 27-10-2026 (300 boletines, de 111 a 736 municipios cada uno; el del 27-10 trae 472: 84 en alta, 171 en moderada y 217 en baja)"
+  - "solo lista los municipios con alerta: un municipio que no sale en el boletín de un día no tenía alerta ese día"
+  - "el OBJECTID se reinicia en cada boletín (no sirve de clave); la fecha viene día/mes/año"
+  - "670 filas traen el DIVIPOLA sin el cero inicial (5893 por 05893), sobre todo de enero a mayo: la copia lo rellena"
+  - "72 de las 472 alertas del 27-10 vienen sin los acumulados de lluvia"
+  decision: "por copia diaria del CSV del IDEAM, desde Colombia; se consulta por DIVIPOLA, lo más reciente primero"

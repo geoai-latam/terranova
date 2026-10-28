@@ -568,6 +568,69 @@ def descargar_geojson(
             http.close()
 
 
+# --- un CSV publicado como archivo (origen csv) -----------------------------------------------
+
+
+def descargar_csv(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Baja los CSV declarados y rinde sus filas por página: solo la lista blanca, con `_fila` en
+    el orden de los archivos (desde 1), las fechas día/mes/año en ISO y los ceros de `ceros`.
+
+    `desde` se ignora (se copia el archivo entero). Un CSV sin filas, o al que le falta una columna
+    de la lista blanca, no se publica."""
+    import csv
+    import io
+
+    import httpx
+
+    assert fuente.copia is not None
+    copia = fuente.copia
+    columnas = [c for c in fuente.campos if c != FILA]
+    fechas = [c for c in columnas if fuente.campos[c].tipo == "date"]
+    propio = cliente is None
+    http = cliente or httpx.Client(
+        timeout=600, follow_redirects=True, headers={"User-Agent": "terranova-copias/1"}
+    )
+    filas: list[dict[str, Any]] = []
+    try:
+        for url in copia.descargas:
+            r = http.get(url)
+            r.raise_for_status()
+            try:
+                texto = r.content.decode("utf-8-sig")
+            except UnicodeDecodeError:
+                texto = r.content.decode("latin-1")
+            lector = csv.DictReader(io.StringIO(texto), delimiter=copia.separador)
+            lector.fieldnames = [n.strip() for n in lector.fieldnames or []]
+            if faltan := sorted(set(columnas) - set(lector.fieldnames)):
+                raise ErrorCopia(f"al CSV {url} le faltan columnas: {faltan}")
+            for registro in lector:
+                fila = {c: (registro.get(c) or "").strip() for c in columnas}
+                for c in fechas:
+                    fila[c] = _fecha_dia_mes(fila[c])
+                for c, ancho in copia.ceros.items():
+                    if fila.get(c):
+                        fila[c] = fila[c].zfill(ancho)
+                filas.append({**fila, FILA: len(filas) + 1})
+    finally:
+        if propio:
+            http.close()
+    if not filas:
+        raise ErrorCopia("los CSV llegaron sin filas: la copia no se publica")
+    for inicio in range(0, len(filas), PAGINA):
+        yield filas[inicio : inicio + PAGINA]
+
+
+def _fecha_dia_mes(texto: str) -> str:
+    """'27/10/2026' -> '2026-10-27' (en Colombia la fecha va día primero); lo demás, tal cual."""
+    partes = texto.split("/")
+    if len(partes) == 3 and all(p.isdigit() for p in partes) and len(partes[2]) == 4:
+        dia, mes, anio = (int(p) for p in partes)
+        return f"{anio:04d}-{mes:02d}-{dia:02d}"
+    return texto
+
+
 def _geograficas(proyeccion: str) -> str:
     """Lon/lat sobre el mismo elipsoide de `proyeccion`, sin cambio de datum: la cartesiana de
     Bogotá infla el GRS80 2 550 m para que sus lat/lon sean las de MAGNA-SIRGAS; pasar por WGS84

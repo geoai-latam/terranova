@@ -203,6 +203,7 @@ def copias(argumentos: list[str]) -> int:
         AlmacenCopias,
         descargar_arcgis,
         descargar_conector,
+        descargar_csv,
         descargar_geojson,
         descargar_socrata,
         descargar_zip_dane,
@@ -225,6 +226,7 @@ def copias(argumentos: list[str]) -> int:
         "arcgis": descargar_arcgis,
         "conector": descargar_conector,
         "geojson": descargar_geojson,
+        "csv": descargar_csv,
     }
     url = os.environ.get("TERRANOVA_COPIAS_URL") or os.environ.get("TERRANOVA_CURADO_URL")
     if not url:

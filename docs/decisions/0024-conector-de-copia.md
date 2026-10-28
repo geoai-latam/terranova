@@ -148,3 +148,24 @@
     baja).
   - Pruebas sin red: numeración entre archivos, solo la lista blanca, archivo vacío y las reglas del
     origen. Prueba en PostGIS: un cuadro en la cartesiana se encuentra por su lon/lat.
+
+## Enmienda (2026-10-28): CSV publicado como archivo (origen `csv`)
+
+- **Contexto:** las alertas diarias del IDEAM (OSPA) por deslizamiento y por incendios de la
+  cobertura vegetal no tienen API. Cada noche se regenera un CSV con todas las alertas del año en
+  `bart.ideam.gov.co`. En datos.gov.co la vista solo enlaza al archivo (su `resource` da 403), y
+  `bart` no responde al datacenter.
+- **Decisión:**
+  - **Origen `csv`.** La ficha declara las URLs en `descargas` y el `separador`. Se copia la lista
+    blanca de columnas, y la clave (`_fila`) es el orden de la fila en los archivos.
+  - Las columnas de tipo `date` que vienen día/mes/año pasan a ISO (en Colombia la fecha va día
+    primero).
+  - **`ceros`:** rellena una columna con ceros a la izquierda hasta un ancho, porque el IDEAM a
+    veces publica el DIVIPOLA 05893 como 5893.
+  - Un CSV sin filas, o al que le falta una columna de la lista blanca, no se publica.
+- **Confirmación:**
+  - Se bajaron desde Colombia 97.645 alertas por deslizamiento (12 s) y 43.898 por incendio (5 s).
+  - Las doradas, grabadas en el servidor desde la copia, coinciden con el archivo: Medellín tuvo
+    alerta moderada el 27-10-2026 y Bogotá, alerta baja por incendio.
+  - Pruebas sin red: numeración entre archivos, solo la lista blanca, fechas ISO, ceros, archivo
+    vacío o sin una columna, y las reglas del origen.

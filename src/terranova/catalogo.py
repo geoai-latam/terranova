@@ -283,7 +283,7 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata", "zip_dane", "arcgis", "conector", "geojson"]
+    origen: Literal["socrata", "zip_dane", "arcgis", "conector", "geojson", "csv"]
     conjunto: str | None = Field(
         default=None,
         pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
@@ -291,8 +291,18 @@ class Copia(_Ficha):
     )
     descargas: list[str] = Field(
         default_factory=list,
-        description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane) o de los GeoJSON "
-        "publicados a copiar tal cual (origen geojson)",
+        description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane), de los GeoJSON "
+        "(origen geojson) o de los CSV (origen csv) publicados a copiar tal cual",
+    )
+    # CSV publicado como archivo (origen csv), p. ej. las alertas diarias del IDEAM, que no tienen
+    # API: se copian la lista blanca de columnas y las fechas día/mes/año pasan a ISO.
+    separador: str = Field(
+        default=",", min_length=1, max_length=1, description="separador del CSV (origen csv)"
+    )
+    ceros: dict[str, int] = Field(
+        default_factory=dict,
+        description="columnas a rellenar con ceros a la izquierda hasta ese ancho (origen csv): "
+        "el IDEAM a veces publica el DIVIPOLA 05893 como 5893",
     )
     # GeoJSON publicado como archivo (origen geojson), p. ej. en un CKAN cuando el servicio ArcGIS
     # de la entidad no está en pie. Si sus coordenadas no son EPSG:4326, `proyeccion` dice cuáles
@@ -384,6 +394,10 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: origen `geojson` exige `descargas` (URLs de los GeoJSON)")
         if self.proyeccion is not None and self.origen != "geojson":
             raise ValueError("ADR-0024: `proyeccion` solo aplica al origen `geojson`")
+        if self.origen == "csv" and not self.descargas:
+            raise ValueError("ADR-0024: origen `csv` exige `descargas` (URLs de los CSV)")
+        if (self.separador != "," or self.ceros) and self.origen != "csv":
+            raise ValueError("ADR-0024: `separador` y `ceros` solo aplican al origen `csv`")
         lee_conector = (self.conector is not None, self.tool is not None)
         if lee_conector != ((self.origen == "conector"),) * 2:
             raise ValueError(
