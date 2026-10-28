@@ -47,3 +47,6 @@
   - **Validación:** el catálogo rechaza un `cobro` espacial en una operación que no lo es, y uno no
     espacial en `en_punto` o `en_zona` (un ráster en un punto se cobra como `zona`). El promedio del
     catálogo pasa de 4,43 a 4,33 créditos por consulta.
+- **Enmienda (2026-10-27): 402 al agotar el saldo.** Con planes de pago (ADR-0029) sí hay algo que
+  pagar: `saldo_agotado` vuelve a 402, con `Retry-After` hasta el reinicio y la fecha en el mensaje.
+  429 queda solo para `limite_tasa`. Los niveles pasan a ser los de la ADR-0029.
