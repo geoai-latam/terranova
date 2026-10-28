@@ -1,0 +1,43 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: sdp.pot555_area_actividad
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://serviciosg.sdp.gov.co/server/rest/services/POT555/NORMA_URBAN%C3%8DSTICA_Y_OT/MapServer?f=json
+filas: 1168
+geografia:
+  geometria: poligono
+  capas:
+    '9': Areas de Actividad
+campos:
+  OBJECTID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  CODIGO_AREA_ACTIVIDAD:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código Área Actividad
+  NOMBRE_AREA_ACTIVIDAD:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre Área Actividad
+  ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Acto Administrativo
+    valores:
+      DEC: 967
+      RES: 201
+    codigos:
+      RES: Resolucion
+      DEC: Decreto
+      MEM: Memorando
+      OFI: Oficio
+      ACU: Acuerdo
+      ACT: Acto
+      DNH: Dato No Hallado
+      RAD: Radicado
+      REF: Referencia
+      SENT: Sentencia
+  NUMERO_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Número Acto Adminstrativo
+  FECHA_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Fecha Número Acto Adminstrativo

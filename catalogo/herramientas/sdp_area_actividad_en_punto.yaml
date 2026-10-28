@@ -1,0 +1,33 @@
+id: sdp_area_actividad_en_punto
+version: 1
+familia: territorio
+fuente: sdp.pot555_area_actividad
+pregunta: "¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT?"
+descripcion: >
+  Área de actividad del POT de Bogotá (Decreto 555 de 2021) en un punto, que define los usos del
+  suelo permitidos (de proximidad, estructurante, de grandes servicios metropolitanos, entre otras),
+  con el acto que la adopta. Es la norma general: los usos exactos dependen además del tamaño y la
+  ubicación del predio. Solo Bogotá. Sale de la copia de Terranova. Para la altura y el tratamiento,
+  sdp_tratamiento_urbanistico_en_punto.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_pot555_area_actividad
+    punto: ["{lon}", "{lat}"]
+    select: [CODIGO_AREA_ACTIVIDAD, NOMBRE_AREA_ACTIVIDAD, ACTO_ADMINISTRATIVO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 5
+  campos: [CODIGO_AREA_ACTIVIDAD, NOMBRE_AREA_ACTIVIDAD, ACTO_ADMINISTRATIVO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+salida: AreaActividadEnPunto
+cobro: punto
+canario:
+  # Chapinero; medido el 2026-10-28 en la capa 9: Área de Actividad de Proximidad - AAP- Generadora
+  # de soportes urbanos (AAPGSU), Resolución 1094.
+  entrada: {lon: -74.0565, lat: 4.6486}
+  verdad: {codigo_area_actividad: AAPGSU, numero_acto: "1094"}
+  campos: [area_actividad, codigo_area_actividad, fecha_acto, numero_acto, tipo_acto]
+  latencia_max_ms: 5000

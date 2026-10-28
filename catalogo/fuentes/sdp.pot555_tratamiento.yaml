@@ -1,0 +1,55 @@
+id: sdp.pot555_tratamiento
+titulo: "Tratamientos urbanísticos del POT de Bogotá (Decreto 555 de 2021)"
+entidad: Secretaría Distrital de Planeación de Bogotá (SDP)
+competencia: formula y adopta el Plan de Ordenamiento Territorial de Bogotá (Decreto 555 de 2021)
+acto: Decreto 555 de 2021
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=tratamiento-urbanistico-bogota-d-c
+  cita: "license_id: CC-BY-4.0 (Creative Commons Attribution 4.0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Secretaría Distrital de Planeación (SDP), Bogotá, POT Decreto 555 de 2021"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024): el servidor de la SDP no responde a la IP del datacenter; desde Colombia
+# sí. Se ingiere desde Colombia. Capa 2 del servicio NORMA_URBANÍSTICA_Y_OT.
+conector: copia
+url: https://serviciosg.sdp.gov.co/server/rest/services/POT555/NORMA_URBAN%C3%8DSTICA_Y_OT/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 2
+  tabla: sdp_pot555_tratamiento
+  clave: OBJECTID
+  por_pagina: 1000
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+  periodo: "POT vigente de Bogotá (Decreto 555 de 2021)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador del polígono en la capa"}
+  CODIGO_TRATAMIENTO: {nombre: codigo_tratamiento, tipo: str, desc: "código del tratamiento urbanístico"}
+  NOMBRE_TRATAMIENTO: {nombre: tratamiento, tipo: str, desc: "tratamiento urbanístico (consolidación, renovación, desarrollo, conservación, mejoramiento)"}
+  TIPOLOGIA: {nombre: tipologia, tipo: str, desc: "tipología edificatoria, cuando aplica"}
+  ALTURA_MAXIMA: {nombre: altura_maxima, tipo: str, desc: "altura máxima permitida en pisos, como rango («4-6»)"}
+  CÓDIGO_SUBTRATAMIENTO: {nombre: subtratamiento, tipo: str, desc: "subtratamiento, cuando aplica"}
+  NUMERO_ACTO_ADMINISTRATIVO: {nombre: numero_acto, tipo: str, desc: "número del acto que lo adopta"}
+  FECHA_ACTO_ADMINISTRATIVO: {nombre: fecha_acto, tipo: date, desc: "fecha del acto"}
+capas_servicio: [2]
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: SDP Bogotá, theme: ordenamiento}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un polígono de tratamiento urbanístico; 5 754 en Bogotá"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.5, contar: 0.4}
+  hallazgos:
+  - "el punto de prueba (Chapinero) toca un solo polígono: consolidación, altura 4-6"
+  - "el servicio de la SDP no responde desde el datacenter de la UE; desde Colombia sí"
+  decision: "por copia espacial ingerida desde Colombia, por punto"
