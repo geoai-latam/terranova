@@ -567,3 +567,95 @@ def test_la_reparacion_va_por_tandas_y_deja_los_poligonos_enormes(
     # el cruce por punto responde igual sobre el moño sin reparar
     filas, total = almacen.consultar(plan_de_consulta(RUNAP, {"punto": [-74.9, 6.5]}))
     assert total == 1 and filas[0]["objectid"] == 4
+
+
+# --- origen conector: la tabla entera que da la tool del conector (xlsx del DANE) ---------------
+
+GEIH = CATALOGO.fuentes["dane.geih_nacional"]
+
+
+class ConectorFalso:
+    """Un conector MCP que da una tabla y anota cómo lo llamaron."""
+
+    def __init__(self, filas: list[dict[str, Any]], total: int | None = None) -> None:
+        self.filas, self.total = filas, len(filas) if total is None else total
+        self.llamadas: list[tuple[str, dict[str, Any]]] = []
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        self.llamadas.append((herramienta, argumentos))
+        vistos = len(self.filas)
+        return {
+            "artifacts": [
+                {
+                    "kind": "table",
+                    "columns": list(self.filas[0]) if self.filas else [],
+                    "rows": self.filas,
+                }
+            ],
+            "facts": {
+                "completitud": {
+                    "vistos": vistos,
+                    "total": self.total,
+                    "truncado": vistos < self.total,
+                }
+            },
+        }
+
+
+def test_descargar_conector_copia_la_tabla_entera_y_numera_las_filas() -> None:
+    from terranova.copias import descargar_conector
+
+    filas = [
+        {"Concepto": "TD", "columna": "2026", "subcolumna": "Ene", "valor": 11.6, "otra": "x"},
+        {"Concepto": "TD", "columna": "2026", "subcolumna": "Feb", "valor": 10.3, "otra": "y"},
+    ]
+    conector = ConectorFalso(filas)
+    paginas = list(descargar_conector(GEIH, conector=conector))
+    assert paginas == [
+        [
+            {"Concepto": "TD", "columna": "2026", "subcolumna": "Ene", "valor": 11.6, "_fila": 1},
+            {"Concepto": "TD", "columna": "2026", "subcolumna": "Feb", "valor": 10.3, "_fila": 2},
+        ]
+    ]  # solo la lista blanca; `otra` no entra
+    tool, argumentos = conector.llamadas[0]
+    assert tool == "web_tabla" and argumentos["pagina"] == GEIH.url  # {url_fuente} resuelto
+    assert argumentos["hoja"] == "Total nacional" and "filtros" not in argumentos
+    assert argumentos["max_filas"] >= 50_000  # la tabla entera, no el tope de una consulta
+
+
+def test_descargar_conector_no_publica_una_tabla_cortada_o_vacia() -> None:
+    from terranova.copias import descargar_conector
+
+    fila = {"Concepto": "TD", "columna": "2026", "subcolumna": "Ene", "valor": 11.6}
+    with pytest.raises(ErrorCopia, match="cortó la tabla"):
+        list(descargar_conector(GEIH, conector=ConectorFalso([fila], total=2)))
+    with pytest.raises(ErrorCopia, match="tabla vacía"):
+        list(descargar_conector(GEIH, conector=ConectorFalso([])))
+
+
+def test_el_origen_conector_pide_conector_y_tool_y_no_lleva_filtros() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+
+    with pytest.raises(ValidationError, match="`conector` y `tool` van con el origen"):
+        Copia(origen="conector", tabla="t", clave="_fila")
+    with pytest.raises(ValidationError, match="`conector` y `tool` van con el origen"):
+        Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", tool="web_tabla")
+    with pytest.raises(ValidationError, match="los filtros van en la herramienta"):
+        Copia(
+            origen="conector",
+            conector="web-mcp",
+            tool="web_tabla",
+            tabla="t",
+            clave="_fila",
+            argumentos={"filtros": {"ID": "05001"}},
+        )
+    with pytest.raises(ValidationError, match="`argumentos` solo aplica"):
+        Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", argumentos={"x": 1})
+
+
+def test_el_filtro_toma_el_tipo_de_la_columna() -> None:
+    """La GEIH guarda el año como texto («2001»); la herramienta lo recibe como número."""
+    plan = plan_de_consulta(GEIH, {"filtros": {"columna": 2001}, "order": ["_fila"]})
+    assert plan.parametros[:1] == ("2001",)

@@ -7,16 +7,19 @@ descripcion: >
   Incidencia de la pobreza multidimensional de un municipio (DIVIPOLA) según la medida censal 2018
   del DANE: total, cabeceras y centros poblados y rural disperso, en %. Es una aproximación con el
   censo: el DANE advierte que no es comparable con el IPM oficial (dane_ipm_departamento).
+  Sale de la copia de Terranova del anexo censal del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo
   resultado: lista
-  tool: web_tabla
+  tool: consultar_copia
   argumentos:
-    url: "{url_fuente}"
-    hoja: 4_IPM Mpio dominios
+    tabla: dane_ipm_municipal
     filtros: {ID: "{municipio_divipola}"}
+    select: [ID, Municipio, IPM, Cabeceras, IPM Centros poblados y rural disperso]
+    order: [_fila]
+    limite: 5
   campos: [ID, Municipio, IPM, Cabeceras, IPM Centros poblados y rural disperso]
 salida: IpmMunicipio
 derivados:
@@ -27,4 +30,4 @@ canario:
   entrada: {municipio_divipola: "25175"}
   verdad: {municipio_divipola: "25175", ipm_total: 6.7, ipm_cabeceras: 6.3, ipm_rural: 8.6}
   campos: [ipm_cabeceras, ipm_rural, ipm_total, municipio, municipio_divipola, numero_registros]
-  latencia_max_ms: 30000
+  latencia_max_ms: 5000

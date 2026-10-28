@@ -1,0 +1,57 @@
+id: dane.ipm_municipal_2018_privaciones
+titulo: "Privaciones de la medida de pobreza multidimensional municipal censal 2018 (anexo del DANE)"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: produce las estadísticas oficiales (Decreto 262 de 2004)
+acto: null
+# Términos del DANE: uso libre citando «Fuente: DANE». Es una aproximación con el censo 2018: el DANE
+# advierte que no es comparable con el IPM oficial (encuesta).
+licencia:
+  spdx: LicenseRef-dane-terminos
+  url: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  verificada: null
+  evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: DANE, medida de pobreza multidimensional de fuente censal 2018"
+protocolo: archivo
+# Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la
+# tabla se baja entera desde Colombia con el mismo `web_tabla` que la servía en vivo.
+conector: copia
+url: https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    url: "{url_fuente}"
+    hoja: "6_Privaciones IPM Dpt-Mpio"
+    fila_encabezado: 2
+    largo_desde: 3
+  tabla: dane_privaciones_municipal
+  clave: _fila
+  indices: [ID]
+frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
+cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
+datos_personales: ninguno
+estado: publicada
+clasificacion_licencia: ambar
+campos:
+  ID: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
+  Municipio: {nombre: municipio, tipo: str, desc: "municipio (las tildes vienen dañadas en el archivo)"}
+  columna: {nombre: privacion, tipo: str, desc: "indicador de privación (analfabetismo, trabajo informal…)"}
+  valor: {nombre: porcentaje, tipo: float, desc: "hogares con la privación, %"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-22
+  fila: "un municipio y una de sus 15 privaciones (16 830 filas: 1 122 municipios × 15)"
+  clave: {columna: ID, unica: true}
+  operaciones: {filtrar: 3.0}
+  hallazgos:
+  - "los nombres con tilde vienen dañados en el archivo (CHÍA sale con un carácter de reemplazo): se consulta por DIVIPOLA"
+  - "el DANE advierte que es una aproximación censal, no comparable con el IPM oficial de la encuesta"
+  decision: "por copia (el DANE bloquea al datacenter): la hoja 6 del anexo censal, por DIVIPOLA"

@@ -255,7 +255,7 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata", "zip_dane", "arcgis"]
+    origen: Literal["socrata", "zip_dane", "arcgis", "conector"]
     conjunto: str | None = Field(
         default=None,
         pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
@@ -293,8 +293,25 @@ class Copia(_Ficha):
         description="simplificación al copiar, en grados (maxAllowableOffset; 0,0001 ≈ 11 m): "
         "solo si la escala de la fuente es más gruesa que eso",
     )
+    # Lo que un conector MCP lee de la fuente (origen conector), entero y tal cual lo sirve en vivo:
+    # p. ej. una hoja de un xlsx del DANE por `web_tabla`, sin filtros. Así la copia no duplica el
+    # lector de la fuente. `{url_fuente}` en los argumentos se cambia por la `url` de la ficha.
+    conector: str | None = Field(
+        default=None, description="conector MCP que lee la fuente (origen conector)"
+    )
+    tool: str | None = Field(
+        default=None,
+        pattern=r"^[a-z][a-z0-9_]*$",
+        description="tool del conector (origen conector)",
+    )
+    argumentos: dict[str, Any] = Field(
+        default_factory=dict, description="argumentos de la tool, sin filtros (origen conector)"
+    )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
-    clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
+    clave: str = Field(
+        description="columna única y estable: ordena las páginas y la huella (`_fila`: el orden "
+        "de la fila en lo que dio el conector, para tablas sin columna única)"
+    )
     ventana: Ventana | None = None
     indices: list[str] = Field(default_factory=list)
     texto: list[str] = Field(
@@ -309,6 +326,17 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
         if self.tolerancia is not None and self.origen != "arcgis":
             raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS")
+        lee_conector = (self.conector is not None, self.tool is not None)
+        if lee_conector != ((self.origen == "conector"),) * 2:
+            raise ValueError(
+                "ADR-0024: `conector` y `tool` van con el origen `conector` (y solo con él)"
+            )
+        if self.argumentos and self.origen != "conector":
+            raise ValueError("ADR-0024: `argumentos` solo aplica al origen `conector`")
+        if "filtros" in self.argumentos:
+            raise ValueError(
+                "ADR-0024: la copia es la fuente entera; los filtros van en la herramienta"
+            )
         if self.origen == "zip_dane":
             if not self.descargas:
                 raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")

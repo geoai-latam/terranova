@@ -97,3 +97,30 @@
   - Prueba en PostGIS: cruce por punto y por zona, reparación de un polígono inválido y una carga
     rota que no deja tabla.
   - Doradas regrabadas desde las copias reales.
+
+## Enmienda (2026-10-28): copias de lo que lee un conector (origen `conector`)
+
+- **Contexto:** las 5 herramientas del DANE que leen anexos xlsx (IPM municipal, privaciones, IPM
+  departamental, IPM nacional y GEIH) caían en producción: `www.dane.gov.co` responde 403 a la IP del
+  datacenter, y no se evade (ADR-0018). El lector de esas hojas (encabezados de varias filas, formato
+  largo) ya vive en `web_tabla` del conector `web-mcp`.
+- **Decisión:**
+  - **Origen `conector`.** La ficha declara el `conector`, la `tool` y sus `argumentos`, sin filtros
+    (la copia es la fuente entera; los filtros van en la herramienta). El job le pide la tabla al
+    mismo conector que la servía en vivo y la guarda tal cual: lo copiado es idéntico a lo que se
+    servía y no hay un segundo lector que mantener.
+  - **`_fila`**, el orden de la fila en lo que dio el conector, sirve de clave a las tablas sin
+    columna única (los anexos en formato largo).
+  - Si el conector dice que cortó la tabla (completitud truncada o menos filas que su total) o la da
+    vacía, la copia no se publica. `web_tabla` sube su tope a 50.000 filas (la GEIH tiene ~10 mil).
+  - Un filtro toma el tipo de la columna en la ficha (un año que entra como número contra una columna
+    de texto).
+  - La hoja de privaciones pasa a una fuente propia (`dane.ipm_municipal_2018_privaciones`): cada
+    copia es una tabla.
+- **Confirmación:**
+  - Las 5 copias se bajaron desde Colombia en 30 s (1.122, 16.830, 784, 153 y 10.190 filas) y sus 5
+    canarios pasan desde la copia con las verdades medidas en la fuente.
+  - Pruebas sin red: la tabla entera con `_fila` y solo la lista blanca, el corte y la tabla vacía
+    que no se publican, las reglas del origen y el tipo del filtro.
+  - El refresco desde Colombia (el DANE publica la GEIH cada mes) corre con
+    `copias actualizar --solo-vencidas`, con el `web-mcp` local y un túnel al servidor.

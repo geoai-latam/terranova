@@ -119,12 +119,15 @@ def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
     import time
+    from collections.abc import Callable, Iterator
     from datetime import UTC, date, datetime
+    from typing import Any
 
-    from terranova.catalogo import cargar
+    from terranova.catalogo import Fuente, cargar
     from terranova.copias import (
         AlmacenCopias,
         descargar_arcgis,
+        descargar_conector,
         descargar_socrata,
         descargar_zip_dane,
         toca_actualizar,
@@ -139,10 +142,12 @@ def copias(argumentos: list[str]) -> int:
         help="rehacer solo las que no existen o van por la mitad de su SLA (refresco recurrente)",
     )
     a = parser.parse_args(argumentos)
-    descargas = {
+    # cada origen baja la fuente a su manera; todos dan páginas de filas (ADR-0024)
+    descargas: dict[str, Callable[[Fuente, date | None], Iterator[list[dict[str, Any]]]]] = {
         "socrata": descargar_socrata,
         "zip_dane": descargar_zip_dane,
         "arcgis": descargar_arcgis,
+        "conector": descargar_conector,
     }
     url = os.environ.get("TERRANOVA_COPIAS_URL") or os.environ.get("TERRANOVA_CURADO_URL")
     if not url:

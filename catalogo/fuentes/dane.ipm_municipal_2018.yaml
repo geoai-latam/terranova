@@ -15,9 +15,21 @@ uso_comercial: si
 clase_acceso: bulk
 atribucion: "Fuente: DANE, medida de pobreza multidimensional de fuente censal 2018"
 protocolo: archivo
-conector: web-mcp
+# Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la
+# tabla se baja entera desde Colombia con el mismo `web_tabla` que la servía en vivo.
+conector: copia
 url: https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx
-modo: en_vivo
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    url: "{url_fuente}"
+    hoja: 4_IPM Mpio dominios
+  tabla: dane_ipm_municipal
+  clave: _fila
+  indices: [ID]
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
 cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
 datos_personales: ninguno
@@ -29,8 +41,7 @@ campos:
   IPM: {nombre: ipm_total, tipo: float, desc: "incidencia total, %"}
   Cabeceras: {nombre: ipm_cabeceras, tipo: float, desc: "incidencia en cabeceras, %"}
   IPM Centros poblados y rural disperso: {nombre: ipm_rural, tipo: float, desc: "incidencia en centros poblados y rural disperso, %"}
-  columna: {nombre: privacion, tipo: str, desc: "indicador de privación (analfabetismo, trabajo informal…)"}
-  valor: {nombre: porcentaje, tipo: float, desc: "hogares con la privación, %"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
@@ -42,4 +53,4 @@ perfil:
   hallazgos:
   - "los nombres con tilde vienen dañados en el archivo (CHÍA sale con un carácter de reemplazo): se consulta por DIVIPOLA"
   - "el DANE advierte que es una aproximación censal, no comparable con el IPM oficial de la encuesta"
-  decision: "en vivo por DIVIPOLA, leyendo el anexo de 3 MB"
+  decision: "por copia (el DANE bloquea al datacenter): la hoja 4 del anexo censal, por DIVIPOLA"

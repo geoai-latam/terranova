@@ -137,7 +137,10 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     condiciones, parametros = [], []
     for columna, valor in (argumentos.get("filtros") or {}).items():
         condiciones.append(f"{_columna(columna, permitidas)} = %s")
-        parametros.append(valor)
+        # al tipo de la columna en la ficha: un año que entra como número (2001) contra una columna
+        # de texto («2001») haría fallar la consulta (text = integer)
+        campo = fuente.campos.get(columna)
+        parametros.append(str(valor) if campo and campo.tipo == "str" else valor)
     if (texto := argumentos.get("texto")) is not None:
         if not fuente.copia.texto:
             raise ErrorCopia(f"{fuente.id} no tiene columnas de texto en su copia")
@@ -356,6 +359,83 @@ def descargar_arcgis(
     finally:
         if propio:
             http.close()
+
+
+# --- lo que un conector MCP lee de la fuente (origen conector) ------------------------------------
+#
+# Para fuentes cuyo lector ya vive en un conector (p. ej. las hojas de los xlsx del DANE, que
+# `web_tabla` sabe leer con sus encabezados de varias filas y su formato largo): la copia le pide
+# al conector la tabla entera, sin filtros, y la guarda tal cual. Así lo copiado es idéntico a lo
+# que se servía en vivo y no hay un segundo lector que mantener. `_fila` numera las filas en el
+# orden de la fuente, para las tablas que no tienen una columna única.
+
+FILA = "_fila"
+MAX_FILAS_CONECTOR = 50_000  # tope que se le pide al conector; si la fuente da más, no se publica
+
+
+def _conector_para(nombre: str) -> Any:
+    """El conector MCP `nombre` con la URL y la llave del entorno (como la puerta)."""
+    import json
+    import os
+
+    from terranova.conector import CONECTORES_POR_DEFECTO, ConectorMCP
+
+    crudo = os.environ.get("TERRANOVA_CONECTORES")
+    urls = json.loads(crudo) if crudo else dict(CONECTORES_POR_DEFECTO)
+    if nombre not in urls:
+        raise ErrorCopia(f"el conector {nombre} no está en TERRANOVA_CONECTORES")
+    llave = os.environ.get(
+        "TERRANOVA_LLAVE_" + nombre.upper().replace("-", "_"),
+        os.environ.get("TERRANOVA_CONECTOR_LLAVE", ""),
+    )
+    if not llave:
+        raise ErrorCopia(f"falta la llave del conector {nombre} (TERRANOVA_CONECTOR_LLAVE)")
+    return ConectorMCP(urls[nombre], llave, timeout_s=600)
+
+
+def descargar_conector(
+    fuente: Fuente, desde: date | None = None, *, conector: Any = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Una página: la tabla entera que da la tool del conector con los argumentos de la ficha.
+
+    `desde` se ignora (se copia la tabla entera). Si el conector dice que cortó (completitud con
+    `truncado` o menos filas que su total), la copia no se publica."""
+    import asyncio
+
+    copia = fuente.copia
+    assert copia is not None and copia.tool and copia.conector
+    tool, nombre_conector = copia.tool, copia.conector
+    argumentos = {
+        k: v.replace("{url_fuente}", fuente.url) if isinstance(v, str) else v
+        for k, v in copia.argumentos.items()
+    }
+    argumentos.setdefault("max_filas", MAX_FILAS_CONECTOR)
+    propio = conector is None
+    mcp = conector or _conector_para(nombre_conector)
+
+    async def pedir() -> dict[str, Any]:
+        try:
+            resultado: dict[str, Any] = await mcp.llamar(tool, argumentos)
+            return resultado
+        finally:
+            if propio:
+                await mcp.cerrar()
+
+    respuesta = asyncio.run(pedir())
+    tablas = [a for a in respuesta.get("artifacts") or [] if a.get("kind") == "table"]
+    if len(tablas) != 1:
+        raise ErrorCopia(f"{copia.tool} no dio una tabla (dio {len(tablas)})")
+    filas = tablas[0].get("rows") or []
+    completitud = (respuesta.get("facts") or {}).get("completitud") or {}
+    total = completitud.get("total")
+    if completitud.get("truncado") or (total is not None and total != len(filas)):
+        raise ErrorCopia(
+            f"{copia.tool} cortó la tabla ({len(filas)} de {total}): la copia no se publica"
+        )
+    if not filas:
+        raise ErrorCopia(f"{copia.tool} dio una tabla vacía: la copia no se publica")
+    columnas = [c for c in fuente.campos if c != FILA]
+    yield [{**{c: fila.get(c) for c in columnas}, FILA: i} for i, fila in enumerate(filas, start=1)]
 
 
 # --- ingesta de los microdatos de comercio exterior del DANE (ZIP, origen zip_dane) ------------

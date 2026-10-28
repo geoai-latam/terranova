@@ -1,27 +1,31 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T03:54:10+00:00",
+ "grabado": "2026-10-28T03:49:30+00:00",
  "herramienta": "dane_ipm_nacional",
  "llamadas": [
   {
    "argumentos": {
-    "enlace_con": "anex-PMultidimensional-[0-9]{4}\\.xlsx",
-    "fila_encabezado": 9,
     "filtros": {
      "columna_1": "Nacional"
     },
-    "hoja": "IPM_Dominios",
-    "largo_desde": 2,
-    "pagina": "https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-multidimensional",
-    "rellenar": 1
+    "limite": 100,
+    "order": [
+     "_fila"
+    ],
+    "select": [
+     "columna_1",
+     "columna",
+     "valor"
+    ],
+    "tabla": "dane_ipm_nacional"
    },
-   "conector": "web-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
       "columns": [
-       "columna_1",
        "columna",
+       "columna_1",
        "valor"
       ],
       "kind": "table",
@@ -79,7 +83,7 @@
        {
         "columna": "2021***",
         "columna_1": "Nacional",
-        "valor": 16
+        "valor": 16.0
        },
        {
         "columna": "2022",
@@ -105,31 +109,23 @@
      }
     ],
     "facts": {
-     "archivo": "https://www.dane.gov.co/files/operaciones/PM/anex-PMultidimensional-2025.xlsx",
      "completitud": {
       "total": 15,
       "truncado": false,
       "vistos": 15
      },
-     "filas": 15,
-     "hoja": "IPM_Dominios",
-     "hojas": [
-      "Indice",
-      "IPM_Dominios",
-      "IPM_Indicadores",
-      "IC_IPM",
-      "Intensidad IPM",
-      "Incidencia Ajustada_IPM",
-      "Contribuciones IA_IPM",
-      "IPM_Sexo ",
-      "IC_IPM_Sexo",
-      "IPM_Sexo Jefe  ",
-      "IC_IPM_Sexo Jefe "
-     ]
-    },
-    "geo_result": "1"
+     "consultado_en": "2026-10-28T03:49:13.527465+00:00",
+     "copia": {
+      "filas": 153,
+      "huella": "sha256:6165435e0ef8853e81070dd1c0311426f22f48596b1200e96ed97baeac4e5ae4",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028034913527465"
+     },
+     "servido_desde": "copia"
+    }
    },
-   "tool": "web_tabla"
+   "tool": "consultar_copia"
   }
  ]
 }

@@ -1,21 +1,26 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T03:54:08+00:00",
+ "grabado": "2026-10-28T03:49:29+00:00",
  "herramienta": "dane_ipm_departamento",
  "llamadas": [
   {
    "argumentos": {
-    "enlace_con": "anex-PMultidimensional-Departamental-[0-9]{4}\\.xlsx",
-    "fila_encabezado": 12,
-    "filas_encabezado": 2,
     "filtros": {
      "Departamento": "Antioquia"
     },
-    "hoja": "IPM_Departamentos",
-    "largo_desde": 2,
-    "pagina": "https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-multidimensional"
+    "limite": 100,
+    "order": [
+     "_fila"
+    ],
+    "select": [
+     "Departamento",
+     "columna",
+     "subcolumna",
+     "valor"
+    ],
+    "tabla": "dane_ipm_departamental"
    },
-   "conector": "web-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -97,7 +102,7 @@
         "Departamento": "Antioquia",
         "columna": "2021***",
         "subcolumna": "Centros poblados y rural disperso",
-        "valor": 28
+        "valor": 28.0
        },
        {
         "Departamento": "Antioquia",
@@ -109,7 +114,7 @@
         "Departamento": "Antioquia",
         "columna": "2022",
         "subcolumna": "Cabeceras",
-        "valor": 7
+        "valor": 7.0
        },
        {
         "Departamento": "Antioquia",
@@ -175,33 +180,23 @@
      }
     ],
     "facts": {
-     "archivo": "https://www.dane.gov.co/files/operaciones/PM/anex-PMultidimensional-Departamental-2025.xlsx",
      "completitud": {
       "total": 24,
       "truncado": false,
       "vistos": 24
      },
-     "filas": 24,
-     "hoja": "IPM_Departamentos",
-     "hojas": [
-      "Índice",
-      "IPM_Regiones",
-      "IPM_Departamentos",
-      "IPM_Indicadores_Región",
-      "IPM_Indicadores_Departamento ",
-      "IC_IPM",
-      "Intensidad_IPM",
-      "Incidencia_Ajustada_IPM",
-      "Contribuciones IA_IPM",
-      "IPM_Sexo",
-      "IC_IPM_Sexo",
-      "IPM_Sexo Jefe",
-      "IC_IPM_Sexo Jefe "
-     ]
-    },
-    "geo_result": "1"
+     "consultado_en": "2026-10-28T03:49:02.807991+00:00",
+     "copia": {
+      "filas": 784,
+      "huella": "sha256:9b165c046e68e7527d6c0d4192e6f51206d804691ed60f4913e40a25fcaa64d6",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028034902807991"
+     },
+     "servido_desde": "copia"
+    }
    },
-   "tool": "web_tabla"
+   "tool": "consultar_copia"
   }
  ]
 }
