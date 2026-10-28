@@ -1,0 +1,76 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T08:45:01+00:00",
+ "herramienta": "sdp_estrato_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "OBJECTID"
+    ],
+    "punto": [
+     -74.0565,
+     4.6486
+    ],
+    "select": [
+     "CODIGO_MANZANA",
+     "ESTRATO",
+     "NORMATIVA",
+     "NUMERO_ACTO_ADMINISTRATIVO",
+     "FECHA_ACTO_ADMINISTRATIVO"
+    ],
+    "tabla": "sdp_estratificacion_manzana"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05624,
+           4.64803
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_MANZANA": "00820421",
+          "ESTRATO": 4,
+          "FECHA_ACTO_ADMINISTRATIVO": "2017-07-28",
+          "NORMATIVA": "DEC394",
+          "NUMERO_ACTO_ADMINISTRATIVO": "394"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-28T08:43:38.055384+00:00",
+     "copia": {
+      "filas": 45051,
+      "huella": "sha256:b963bd6c696aa0e6d85f7e91930cf98ee3e74e8f9338954109512c592719367d",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028084338055384"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
