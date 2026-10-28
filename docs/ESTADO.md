@@ -131,6 +131,30 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
     lugar.
 
+## Estado, SLA y guía para clientes (2026-10-28)
+
+- **`GET /estado`:** página pública de estado, en HTML, sin dependencias externas y legible en
+  móvil. Muestra la puerta y cada fuente en verde, ámbar o rojo, según su último canario:
+  - ámbar = unas herramientas pasan y otras no, o el canario tiene más de 48 h;
+  - lleva la hora de la última verificación;
+  - **sin porcentajes de disponibilidad:** no hay histórico medido.
+
+  Con los canarios de producción del 2026-10-28: 121 verdes, 13 rojas, 1 ámbar y 1 sin canario.
+  `src/terranova/pagina_estado.py`; `/v1/estado` (JSON) no cambia.
+- **`docs/SLA.md`** (borrador):
+  - 99,5 % mensual de la puerta en los planes de pago, sin compromiso en Gratis;
+  - créditos de servicio solo en A medida;
+  - las fuentes oficiales quedan excluidas;
+  - tiempos de atención por severidad.
+
+  Coincide con el SLO de la spec 05. Pendiente: el canal de soporte y una sonda externa para
+  medir la disponibilidad.
+- **`docs/CLIENTES.md`:** inicio rápido (curl verificado contra producción), MCP con perfiles
+  (Cursor, Claude Code, Claude Desktop), llaves, créditos por tipo de pregunta, `/v1/uso`, el
+  sobre `rt/1`, errores y estado. Sin precios: viven en Inspow.
+- **`llms.txt`** ya no dice «abierta y gratuita» (ADR-0029). Ahora menciona `/v1/uso`, el 402 y
+  `/estado`.
+
 ## Copias del DANE (2026-10-28)
 
 - **Las 5 herramientas del DANE que leen anexos xlsx salen de copia:** IPM municipal, privaciones,
