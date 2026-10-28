@@ -24,7 +24,7 @@ consulta:
 salida: RepsSedesMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-23 en c36g-9fc2: Chía tiene 138 sedes de instituciones; la primera en orden es
   # ACCIONAR SALUD IPS SAS (251750250401).

@@ -22,7 +22,7 @@ consulta:
     max_filas: 100
   campos: [ano, c_digo_departamento, departamento, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia]
 salida: EducacionPorDepartamento
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en ji8i-4anb, ordenado por año: el primer año es 2011.
   entrada: {departamento_divipola: 25}

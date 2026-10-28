@@ -21,7 +21,7 @@ consulta:
     max_filas: 200
   campos: [expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad]
 salida: RegistroSanitarioPorExpediente
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en ui32-p9f2: el expediente 2 son galletas (registro vencido).
   entrada: {expediente: 2}

@@ -26,7 +26,7 @@ salida: MedicinalegalSuicidiosMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en f75u-mirk: Chía 2024, 15 víctimas; el primer grupo tiene 9.
   entrada: {municipio_divipola: "25175", anio: 2024}

@@ -22,7 +22,7 @@ consulta:
     limite: 5
   campos: [UCVocacion, Vocacion, Uso_principal]
 salida: VocacionUsoEnPunto
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {unidad_vocacion: CTIf, vocacion: "Agrícola", uso_principal: "Cultivos transitorios intensivos de clima frío"}

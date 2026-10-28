@@ -23,7 +23,7 @@ consulta:
     limite: 20
   campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
 salida: AreasProtegidasEnPunto
-creditos: 10
+cobro: punto
 canario:
   # PNN Chingaza; medido el 2026-10-21 en la capa 0 (punto, esriSpatialRelIntersects), 0,6 s.
   entrada: {lon: -73.75, lat: 4.55}

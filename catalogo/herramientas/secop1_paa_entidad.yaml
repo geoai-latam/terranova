@@ -27,7 +27,7 @@ consulta:
 salida: PaaEntidad
 derivados:
   versiones: {de: columna, campo: versiones, tipo: int}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en prdx-nxyp (Cabuyaro, Meta): 4 planes; el de 2020 es el 244479, con
   # $1 557 290 000 y 11 versiones.

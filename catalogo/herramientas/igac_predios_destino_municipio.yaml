@@ -31,7 +31,7 @@ derivados:
   predios: {de: columna, campo: predios, tipo: int}
   area_terreno: {de: columna, campo: area_terreno, tipo: float}
   area_construida: {de: columna, campo: area_construida, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en la capa 17 (corte 06_2026): Chía, destino A (habitacional), 52 961 predios.
   # Cambia con cada corte: mínimo.

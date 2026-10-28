@@ -26,7 +26,7 @@ salida: PoliciaHurtoComercioResidenciasMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en 6sqw-8cg5: Chía 2024 suma 361 casos; el primer grupo (entidades comerciales, sin género: la víctima es un negocio) tiene 220.
   entrada: {municipio_divipola: "25175", anio: 2024}

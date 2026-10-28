@@ -26,7 +26,7 @@ salida: ZonaGeoeconomicaEnPunto
 derivados:
   zona: {de: capa, valores: {"11": rural, "13": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona económica 006
   verdad:

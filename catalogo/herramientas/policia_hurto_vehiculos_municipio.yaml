@@ -26,7 +26,7 @@ salida: PoliciaHurtoVehiculosMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en 9vha-vh9n: Chía 2024 suma 95 casos; el primer grupo tiene 10.
   entrada: {municipio_divipola: "25175", anio: 2024}

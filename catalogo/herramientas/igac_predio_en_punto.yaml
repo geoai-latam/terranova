@@ -28,7 +28,7 @@ salida: PredioEnPunto
 derivados:
   zona: {de: capa, valores: {"14": rural, "7": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {codigo_predial: "251750000000000050067000000000", zona: rural, municipio_divipola: "25175"}

@@ -24,7 +24,7 @@ consulta:
 salida: Secop1ProcesoHistoricoPorConstancia
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en qddk-cgux: la constancia 15-13-3881619 (Covarachía, 2015) es un proceso
   # sin adjudicar; en la vigente (f789-7hwg) no está.
