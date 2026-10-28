@@ -2,14 +2,15 @@ id: sinic_predio_en_punto
 version: 1
 familia: territorio
 fuente: igac.sinic_terreno
-pregunta: "¿Qué predio hay en este punto de Bogotá, Medellín, Cali, Barranquilla o Bucaramanga?"
+pregunta: "¿Qué predio hay en este punto de Bogotá, Medellín, Cali, Antioquia, Cundinamarca o el Valle?"
 descripcion: >
   Predio (terreno) que contiene un punto en los municipios con gestor catastral propio, del Sistema
   Nacional de Información Catastral (SINIC) del IGAC: número predial nacional, zona, condición (PH,
-  NPH), destinación económica, tipo de predio y de derecho. Hoy cubre Bogotá, Medellín y el Valle de
-  Aburrá, Cali, Barranquilla y su área, Bucaramanga y su área, Soacha, Jamundí, Cartagena y Palmira.
-  Para los municipios del catastro del IGAC, igac_predio_en_punto. Sin propietarios. Sale de la copia
-  de Terranova (linderos simplificados a ~1 m).
+  NPH), destinación económica, tipo de predio y de derecho. Cubre los 333 municipios que la base del
+  IGAC no tiene: Bogotá, Medellín y el Valle de Aburrá, Cali, Barranquilla, Bucaramanga, Cartagena,
+  Catastro Antioquia, Cundinamarca, el Valle del Cauca y otros gestores propios. Para los demás
+  municipios, igac_predio_en_punto. Sin propietarios. Sale de la copia de Terranova (linderos
+  simplificados a ~1 m).
   (Fuente: IGAC, SINIC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

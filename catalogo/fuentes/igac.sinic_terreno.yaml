@@ -16,10 +16,11 @@ clase_acceso: api
 atribucion: "Fuente: IGAC, Sistema Nacional de Información Catastral (SINIC), con datos de los gestores catastrales"
 protocolo: arcgis_rest
 # Copia espacial (ADR-0024): el servicio del SINIC no responde a la IP del datacenter y desde Colombia
-# sí. Etapa 1: los 21 municipios de los gestores de las grandes ciudades (Bogotá y sus contratos
-# Cartagena, Palmira y Santa Rosa de Cabal; Medellín y el Valle de Aburrá; Cali; Barranquilla y su
-# área; Bucaramanga y su área; Soacha; Jamundí), 2,35 M de terrenos simplificados a ~1 m. Los demás
-# municipios con gestor propio van en otra etapa; los del IGAC ya están en igac.catastro.terreno.
+# sí. Copia los 333 municipios que la base pública del IGAC (igac.catastro.terreno) no cubre y el
+# SINIC sí (catalogo/cobertura/cobertura_catastral.yaml cruzado con el conteo del SINIC por
+# municipio): los gestores descentralizados (Bogotá, Medellín, Cali, Barranquilla, Bucaramanga,
+# Catastro Antioquia, Cundinamarca, Valle del Cauca…) y 52 municipios del IGAC sin datos en su base.
+# 6,13 M de terrenos simplificados a ~1 m. Etapa 1 (21 municipios) el 2026-10-28; etapa 2, el resto.
 conector: copia
 url: https://sigi.igac.gov.co/habilitacion/rest/services/sinic/SINIC_DA/FeatureServer
 modo: copia
@@ -30,13 +31,47 @@ copia:
   clave: objectid
   por_pagina: 2000
   tolerancia: 0.00001
-  filtro: "cod_divipola IN ('05001', '05079', '05088', '05212', '05308', '05380', '08001', '08296', '08573', '11001', '13001', '25754', '25799', '66682', '68001', '68307', '68547', '76001', '76126', '76364', '76520')"
+  filtro: >-
+    cod_divipola IN ('05001', '05002', '05004', '05021', '05030', '05031', '05034', '05036',
+    '05038', '05040', '05042', '05044', '05045', '05051', '05055', '05059', '05079', '05086',
+    '05088', '05091', '05093', '05101', '05107', '05113', '05120', '05125', '05129', '05134',
+    '05138', '05142', '05145', '05147', '05148', '05150', '05154', '05172', '05190', '05197',
+    '05206', '05209', '05212', '05234', '05237', '05240', '05250', '05264', '05266', '05282',
+    '05284', '05306', '05308', '05310', '05313', '05315', '05318', '05321', '05347', '05353',
+    '05360', '05361', '05364', '05368', '05376', '05380', '05390', '05400', '05411', '05425',
+    '05440', '05467', '05475', '05480', '05483', '05490', '05495', '05501', '05541', '05543',
+    '05576', '05579', '05585', '05591', '05604', '05607', '05615', '05628', '05631', '05642',
+    '05647', '05649', '05652', '05656', '05658', '05659', '05660', '05664', '05665', '05667',
+    '05670', '05674', '05679', '05686', '05690', '05697', '05736', '05756', '05761', '05789',
+    '05790', '05792', '05809', '05819', '05837', '05842', '05847', '05854', '05856', '05858',
+    '05861', '05873', '05885', '05887', '05890', '05893', '05895', '08001', '08296', '08372',
+    '08433', '08549', '08573', '08638', '08758', '11001', '13001', '13670', '15001', '15176',
+    '15861', '17001', '18001', '20001', '20614', '23001', '23660', '25019', '25035', '25040',
+    '25053', '25095', '25123', '25126', '25151', '25154', '25168', '25178', '25200', '25214',
+    '25224', '25245', '25258', '25260', '25269', '25279', '25281', '25288', '25290', '25293',
+    '25297', '25299', '25307', '25312', '25317', '25320', '25326', '25328', '25335', '25368',
+    '25372', '25386', '25394', '25398', '25407', '25436', '25438', '25483', '25486', '25489',
+    '25491', '25506', '25518', '25524', '25530', '25535', '25580', '25592', '25594', '25596',
+    '25599', '25645', '25653', '25662', '25718', '25736', '25743', '25754', '25758', '25769',
+    '25777', '25779', '25781', '25793', '25797', '25799', '25805', '25807', '25815', '25839',
+    '25841', '25843', '25845', '25862', '25867', '25871', '25873', '25875', '25878', '25885',
+    '25898', '25899', '27025', '27050', '27073', '27075', '27077', '27135', '27150', '27160',
+    '27250', '27372', '27413', '27425', '27450', '27491', '27580', '27600', '27745', '27787',
+    '27810', '41001', '41006', '41206', '41298', '47001', '50001', '52473', '52520', '54001',
+    '54003', '54099', '54109', '54128', '54172', '54206', '54245', '54250', '54261', '54344',
+    '54398', '54670', '54673', '54720', '54800', '54820', '54874', '63001', '63111', '63190',
+    '63212', '63272', '63302', '63470', '63548', '63594', '66170', '66400', '66682', '68001',
+    '68081', '68276', '68307', '68432', '68547', '73001', '76001', '76020', '76041', '76054',
+    '76100', '76126', '76130', '76147', '76233', '76243', '76246', '76250', '76275', '76318',
+    '76364', '76377', '76403', '76497', '76520', '76563', '76606', '76622', '76736', '76823',
+    '76828', '76834', '76863', '76892', '81794', '85001', '85400', '91263', '91405', '91407',
+    '91430', '91460', '91530', '91669', '94343')
   indices: [numero_predial_nacional, cod_divipola]
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P6M}
 cobertura:
   pais: CO
   excluye: []
-  periodo: "corte vigente del SINIC (etapa 1: 21 municipios de gestores descentralizados)"
+  periodo: "corte vigente del SINIC (333 municipios que la base pública del IGAC no cubre)"
 datos_personales: ninguno
 estado: publicada
 campos:
@@ -56,13 +91,13 @@ dcat: {publisher: IGAC, theme: catastro}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
   medido: 2026-10-28
-  fila: "el terreno de un predio de un gestor catastral; 11 M en el país, 6 M en los 285 municipios con gestor propio, 2,35 M en la etapa 1"
+  fila: "el terreno de un predio de un gestor catastral; 11 M en el país, 6,13 M en los 333 municipios que la base del IGAC no cubre"
   clave: {columna: objectid, unica: true}
   operaciones: {filtrar: 0.6, contar: 0.8}
   hallazgos:
   - "cubre los gestores descentralizados que la base del IGAC no tiene (Bogotá, Medellín, Cali…)"
   - "un terreno de Medellín tiene 418 vértices en promedio: a ~1 m quedan 49 (9 KB → 1,4 KB)"
   - "no trae propietarios ni avalúos: solo número predial y atributos del terreno"
-  - "Pereira y el AMCO tienen 0 terrenos en el SINIC"
+  - "Pereira y el AMCO tienen 0 terrenos en el SINIC; 13 municipios sin datos en la base del IGAC tampoco los tienen"
   - "el servicio no responde desde el datacenter de la UE; desde Colombia sí"
-  decision: "por copia espacial ingerida desde Colombia, por etapas de municipios"
+  decision: "por copia espacial ingerida desde Colombia, de los municipios que la base del IGAC no cubre"

@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T11:39:43+00:00",
+ "grabado": "2026-10-28T20:56:36+00:00",
  "herramienta": "sinic_predio_en_punto",
  "llamadas": [
   {
@@ -67,13 +67,13 @@
       "truncado": false,
       "vistos": 1
      },
-     "consultado_en": "2026-10-28T08:27:04.122009+00:00",
+     "consultado_en": "2026-10-28T18:53:19.319989+00:00",
      "copia": {
-      "filas": 2347361,
-      "huella": "sha256:162c4270be1b477de40eb2faad73ed8b81f4228f324c369da2da37acd58db97f",
+      "filas": 6134392,
+      "huella": "sha256:300694f7387765b360a47172e053b0ed94505010e0f097412a3edd725e24116c",
       "repetidas_en_la_fuente": 0,
       "ventana_desde": null,
-      "version": "20261028082704122009"
+      "version": "20261028185319319989"
      },
      "servido_desde": "copia"
     }
