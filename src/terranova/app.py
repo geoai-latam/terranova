@@ -14,12 +14,13 @@ import os
 import time
 from collections.abc import Awaitable, Callable, MutableMapping
 from contextlib import AsyncExitStack
+from datetime import UTC, datetime
 from typing import Annotated, Any
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
 from pydantic.json_schema import SkipJsonSchema
@@ -34,6 +35,7 @@ from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
+from terranova.pagina_estado import pagina_estado
 from terranova.vigilancia import estado_por_fuente
 
 Scope = MutableMapping[str, Any]
@@ -297,6 +299,15 @@ def crear_api() -> FastAPI:
         o `sin_datos`. Público, como el catálogo."""
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return estado_por_fuente(ultimos, puerta.CATALOGO)
+
+    @api.get("/estado", include_in_schema=False)
+    async def pagina_de_estado() -> HTMLResponse:
+        """Página pública de estado: la puerta y cada fuente según su último canario."""
+        ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
+        return HTMLResponse(
+            pagina_estado(ultimos, puerta.CATALOGO, datetime.now(UTC)),
+            headers={"Cache-Control": "public, max-age=60"},
+        )
 
     @api.get("/v1/fuentes", tags=["catálogo"], operation_id="listar_fuentes")
     async def fuentes() -> list[dict[str, Any]]:

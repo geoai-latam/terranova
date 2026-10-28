@@ -14,6 +14,7 @@
 | `GET /v1/trabajos/{id}` | estado de un trabajo lento (M2) |
 | `GET /v1/uso` | saldo y consumo de la propia llave |
 | `GET /v1/estado` | estado por fuente (canarios) |
+| `GET /estado` | página pública de estado (HTML, fuera del OpenAPI): la puerta y cada fuente en verde, ámbar o rojo según su último canario |
 | `GET /openapi.json`, `/llms.txt` | descripción para personas y agentes |
 
 Encabezados: `Authorization`, `Idempotency-Key`, `Prefer: wait=N` (M2), `X-Request-Id`,

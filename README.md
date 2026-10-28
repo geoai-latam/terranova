@@ -35,6 +35,8 @@ datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus,
 | Documento | Qué tiene |
 |---|---|
 | [docs/ESTADO.md](docs/ESTADO.md) | dónde estamos y el siguiente paso |
+| [docs/CLIENTES.md](docs/CLIENTES.md) | guía para clientes: llave, primera consulta, MCP, créditos, errores |
+| [docs/SLA.md](docs/SLA.md) | borrador del acuerdo de nivel de servicio |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | fases F0–F7, cada spec con su aceptación, gates, definición de terminado |
 | [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | diagrama y división del trabajo |
 | [docs/decisions/](docs/decisions/README.md) | 20 ADR (MADR) |
