@@ -73,6 +73,7 @@ services:
       - caddy_datos:/data
     environment:
       TERRANOVA_DOMINIO: ${TERRANOVA_DOMINIO:-:80}
+      TERRANOVA_REPLICAS: puerta-a:8100 puerta-b:8100
     depends_on: [puerta-a, puerta-b]
     networks: [borde]
     mem_limit: 256m
@@ -101,7 +102,9 @@ services:
     <<: *puerta
     build: !reset null
     pull_policy: never
-    command: ["terranova", "copias", "actualizar", "--cada-horas", "24"]
+    # cada día revisa y rehace solo las copias que faltan o van por la mitad de su SLA (una capa
+    # de agrología con SLA de un año no se rebaja a diario)
+    command: ["terranova", "copias", "actualizar", "--solo-vencidas", "--cada-horas", "24"]
 
   # G6 (ADR-0028): una vez al día cosecha los dos catálogos DCAT (Socrata + ICDE), pide los vectores
   # al microservicio `embeddings` y los aterriza en PostGIS/pgvector (`descubrimiento.datasets`). La
