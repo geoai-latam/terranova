@@ -1,0 +1,49 @@
+id: urt.microzonas
+titulo: Zonas microfocalizadas para la restitución de tierras
+entidad: Unidad de Restitución de Tierras (URT)
+competencia: microfocaliza las zonas donde se tramitan las solicitudes de restitución (Ley 1448 de 2011, art. 76; Decreto 4829 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/d18d0490c21c45b1bf5fdf0b82493264?f=json
+  cita: "Creative Commons Attribution-ShareAlike 4.0 International Public License."
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad de Restitución de Tierras (URT)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem `Open_Data_Microzonas` del dueño `Open_Data_uaegrtd` (ArcGIS Online de la URT). Capa 3: los
+# polígonos de las microzonas con su resolución y estado. Solo la zona, nunca las solicitudes ni las
+# sentencias por predio (llevan a víctimas con nombre: ADR-0014).
+url: https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_microzona: {nombre: id_microzona, tipo: int, desc: "identificador de la microzona en la URT"}
+  cod_dane: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  depto: {nombre: departamento, tipo: str, desc: "departamento"}
+  mpio: {nombre: municipio, tipo: str, desc: "municipio"}
+  n_res_m: {nombre: resolucion, tipo: str, desc: "resolución de microfocalización vigente"}
+  fecha_res_vigente: {nombre: fecha_resolucion, tipo: date, desc: "fecha de la resolución vigente"}
+  estado_micro: {nombre: estado, tipo: str, desc: "estado de la microzona (abierta, cerrada…)"}
+  territorial: {nombre: territorial, tipo: str, desc: "dirección territorial de la URT que la atiende"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [3]
+dcat: {publisher: URT, theme: tierras}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una zona microfocalizada para la restitución de tierras; 1 314 en el país, 8 en El Carmen de Bolívar"
+  clave: {columna: id_microzona, unica: true}
+  operaciones: {filtrar: 0.5, contar: 0.2, ordenar: 0.3, agrupar: 0.2}
+  hallazgos:
+  - "el punto de prueba (El Carmen de Bolívar) toca una sola microzona"
+  - "estar en una microzona no dice que un predio tenga solicitud: dice que la URT puede tramitarlas ahí"
+  decision: "en vivo por punto; solo la zona, sin solicitudes ni sentencias por predio (ADR-0014)"

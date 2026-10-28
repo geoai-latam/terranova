@@ -1,0 +1,32 @@
+id: ant_consejos_comunitarios_en_punto
+version: 1
+familia: ambiente
+fuente: ant.consejos_comunitarios
+pregunta: "¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto?"
+descripcion: >
+  Consejo comunitario titulado por la ANT (territorio colectivo de comunidades negras, Ley 70 de
+  1993) que contiene un punto: nombre, departamento y municipio (DIVIPOLA), último acto
+  administrativo y área. Solo títulos formalizados; las solicitudes en trámite no están. Para
+  resguardos indígenas, ant_resguardos_en_punto.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    geometria: simplificada  # territorios grandes (el ACIA tiene ~695 mil ha)
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    max_features: 5
+  campos: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ConsejoComunitarioEnPunto
+cobro: punto
+canario:
+  # Medio Atrato (Chocó); medido el 2026-10-28 en la capa 0: Consejo Comunitario Mayor del Medio
+  # Atrato (ACIA), municipio 27001, Resolución 4566.
+  entrada: {lon: -76.70, lat: 6.20}
+  verdad: {nombre: "Consejo Comunitario Mayor del Medio Atrato - ACIA", municipio_divipola: "27001", numero_acto: "4566"}
+  campos: [area_ha_actos, departamento_divipola, fecha_acto, municipio_divipola, nombre, numero_acto, tipo_acto]
+  latencia_max_ms: 5000

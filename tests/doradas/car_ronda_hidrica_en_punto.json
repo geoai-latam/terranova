@@ -1,0 +1,87 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:38:38+00:00",
+ "herramienta": "car_ronda_hidrica_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.522902,
+     4.631558,
+     -74.522902,
+     4.631558
+    ],
+    "geometria": "ninguna",
+    "max_features": 5,
+    "out_fields": [
+     "Fuente",
+     "Acto_Admin",
+     "Fecha"
+    ],
+    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": null,
+         "properties": {
+          "Acto_Admin": "Resolución 0352 de 2018",
+          "Fecha": 1519084800000,
+          "Fuente": "Río Apulo"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Rondas Delimitadas CAR"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.522902,
+      4.631558,
+      -74.522902,
+      4.631558
+     ],
+     "capa": "Rondas Delimitadas CAR",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.522902,
+       4.631558,
+       -74.522902,
+       4.631558
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "Fuente",
+       "Acto_Admin",
+       "Fecha"
+      ],
+      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

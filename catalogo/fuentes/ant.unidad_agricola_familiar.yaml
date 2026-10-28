@@ -1,0 +1,48 @@
+id: ant.unidad_agricola_familiar
+titulo: Unidad Agrícola Familiar (UAF) por unidad física homogénea
+entidad: Agencia Nacional de Tierras (ANT)
+competencia: fija la extensión de la UAF por zona (Ley 160 de 1994, art. 38; Decreto 2363 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/e69b4c3567704b7e8c80301ad36da98b?f=json
+  cita: "Esta obra está bajo una Licencia Creative Commons Atribución-CompartirIgual 4.0 Internacional (CC BY-SA 4.0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Tierras"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem del dueño `Datos_Abiertos_ANT` (proxy público de ArcGIS Online). Capa 0: rangos de la UAF por
+# unidad física homogénea (UFH) dentro de cada municipio.
+url: https://utility.arcgis.com/usrsvcs/servers/e69b4c3567704b7e8c80301ad36da98b/rest/services/DatosAbiertos/Unidad_Agricola_Familiar/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  Departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  Municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  Cod_Dane: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  T_UAF_MIN_AC: {nombre: uaf_min_ha, tipo: float, desc: "extensión mínima de la UAF en la zona, en hectáreas"}
+  T_UAF_MAX_AC: {nombre: uaf_max_ha, tipo: float, desc: "extensión máxima de la UAF en la zona, en hectáreas"}
+  Calculo_UAF: {nombre: calculo, tipo: str, desc: "si la zona tiene cálculo de UAF o no aplica"}
+  Resultado: {nombre: resultado, tipo: str, desc: "resultado del cálculo (con rango UAF, sin cálculo…)"}
+  clase_ufh: {nombre: clase_ufh, tipo: str, desc: "clase de la unidad física homogénea"}
+  Acto_Administrativo: {nombre: acto_administrativo, tipo: str, desc: "acto que adopta la UAF del municipio"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: ANT, theme: tierras}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una unidad física homogénea de un municipio con su rango de UAF; Chía tiene 12"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.4, ordenar: 0.4, agrupar: 0.6}
+  hallazgos:
+  - "la UAF cambia dentro de un mismo municipio (por zona): se responde por punto, no por municipio"
+  - "el punto de prueba (Chía) toca una sola zona"
+  decision: "en vivo por punto"

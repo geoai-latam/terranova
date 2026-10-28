@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:31:39+00:00",
+ "herramienta": "ant_consejos_comunitarios_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -76.7,
+     6.2,
+     -76.7,
+     6.2
+    ],
+    "geometria": "simplificada",
+    "max_features": 5,
+    "out_fields": [
+     "NOMBRE",
+     "DEPARTAMENTO",
+     "MUNICIPIO",
+     "ULTIMO_TIPO_ACTO_ADMIN",
+     "ULTIMO_NUMERO_ACTO_ADMIN",
+     "ULTIMA_FECHA_ACTO_ADMIN",
+     "AREA_TOTAL_ACTOS_ADMIN"
+    ],
+    "url": "https://utility.arcgis.com/usrsvcs/servers/abf2f9f6727b4073902c1f57c280d5dc/rest/services/DatosAbiertos/Consejo_Comunitario_Titulado/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -76.3763,
+           5.78344
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 695245.1124,
+          "DEPARTAMENTO": "27",
+          "MUNICIPIO": "27001",
+          "NOMBRE": "Consejo Comunitario Mayor del Medio Atrato - ACIA",
+          "ULTIMA_FECHA_ACTO_ADMIN": 883353600000,
+          "ULTIMO_NUMERO_ACTO_ADMIN": "4566",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Consejo Comunitario Titulado"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -76.7,
+      6.2,
+      -76.7,
+      6.2
+     ],
+     "capa": "Consejo Comunitario Titulado",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -76.7,
+       6.2,
+       -76.7,
+       6.2
+      ],
+      "max_features": 5,
+      "out_fields": [
+       "NOMBRE",
+       "DEPARTAMENTO",
+       "MUNICIPIO",
+       "ULTIMO_TIPO_ACTO_ADMIN",
+       "ULTIMO_NUMERO_ACTO_ADMIN",
+       "ULTIMA_FECHA_ACTO_ADMIN",
+       "AREA_TOTAL_ACTOS_ADMIN"
+      ],
+      "url": "https://utility.arcgis.com/usrsvcs/servers/abf2f9f6727b4073902c1f57c280d5dc/rest/services/DatosAbiertos/Consejo_Comunitario_Titulado/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polygon",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://utility.arcgis.com/usrsvcs/servers/abf2f9f6727b4073902c1f57c280d5dc/rest/services/DatosAbiertos/Consejo_Comunitario_Titulado/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

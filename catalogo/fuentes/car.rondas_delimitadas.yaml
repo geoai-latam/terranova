@@ -1,0 +1,44 @@
+id: car.rondas_delimitadas
+titulo: Rondas hídricas delimitadas por la CAR Cundinamarca
+entidad: Corporación Autónoma Regional de Cundinamarca (CAR)
+competencia: delimita las rondas hídricas de su jurisdicción (Decreto 2811 de 1974, art. 83; Ley 1450 de 2011, art. 206; Decreto 2245 de 2017)
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/f0e7dd0ebf6241d7b6e3c8a4ebce7e1d?f=json
+  cita: "Esta obra está bajo una Licencia Creative Commons Atribución 4.0 Internacional."
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Ítem «Delimitación de Rondas» del dueño `publicador_CARCundinamarca` (ArcGIS Online). Capa 0: las
+# rondas delimitadas por acto administrativo. Los polígonos son franjas muy detalladas (el río Apulo
+# tiene 43 mil vértices): se piden sin geometría.
+url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []  # cubre solo la jurisdicción de la CAR (lo dice la descripción)
+datos_personales: ninguno
+estado: publicada
+campos:
+  Fuente: {nombre: cuerpo_de_agua, tipo: str, desc: "río, quebrada, laguna o embalse cuya ronda se delimitó"}
+  Acto_Admin: {nombre: acto_administrativo, tipo: str, desc: "acto que delimita la ronda"}
+  Fecha: {nombre: fecha_acto, tipo: date, desc: "fecha del acto"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: CAR, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "la ronda delimitada de un cuerpo de agua con su acto; 203 en la jurisdicción de la CAR"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.3, contar: 0.2, ordenar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el punto de prueba (río Apulo) toca una sola ronda"
+  - "solo las rondas que la CAR ya delimitó: un punto fuera de ellas puede estar en una ronda sin delimitar"
+  - "polígonos de decenas de miles de vértices: se consultan sin geometría"
+  decision: "en vivo por punto"

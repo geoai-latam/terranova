@@ -1,0 +1,46 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ant.unidad_agricola_familiar
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://utility.arcgis.com/usrsvcs/servers/e69b4c3567704b7e8c80301ad36da98b/rest/services/DatosAbiertos/Unidad_Agricola_Familiar/FeatureServer?f=json
+titulo: Map
+filas: 9265
+geografia:
+  geometria: poligono
+  crs: EPSG:9377
+  capas:
+    '0': Rangos UAF por UFH
+campos:
+  Departamento:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Departamento
+  Municipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Municipio
+  Cod_Dane:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código DANE
+  Calculo_UAF:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Calculo UAF
+  Acto_Administrativo:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Acto Administrativo
+  clase_ufh:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Clase UFH
+  T_UAF_MIN_AC:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Extensión mínima en hectáreas de UAF por UFH
+    minimo: '0.0'
+    maximo: '105.9'
+    comparacion: numero
+  T_UAF_MAX_AC:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Extensión máxima en hectáreas de UAF por UFH
+    minimo: '0.0'
+    maximo: '308.0'
+    comparacion: numero
+  Resultado:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Resultado

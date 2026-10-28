@@ -1,0 +1,50 @@
+id: ani.concesiones_viales
+titulo: Concesiones viales de la ANI (corredores carreteros)
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+# La ANI declara CC BY-SA 4.0 en su página de datos abiertos para «Concesiones ANI» y «Tarifas de
+# Peajes ANI», que son los mismos datos de estas capas.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.ani.gov.co/datos-abiertos/
+  cita: "Concesiones ANI … Licencia: Atribución/Reconocimiento-Compartir Igual 4.0 Internacional"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Servicio `Hosted/ModosANI` del ArcGIS Server de la ANI, capa 3 Carretero: los corredores de las
+# concesiones viales, por generación y etapa. Las columnas de auditoría (created_user,
+# last_edited_user) no entran a la lista blanca.
+url: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+datos_personales: ninguno
+estado: publicada
+campos:
+  nombrepr: {nombre: proyecto, tipo: str, desc: "nombre del proyecto de concesión vial"}
+  generacion: {nombre: generacion, tipo: str, desc: "generación de concesiones (1G a 5G)"}
+  etp: {nombre: etapa, tipo: str, desc: "etapa del proyecto (preconstrucción, construcción, operación…)"}
+  concesionario: {nombre: concesionario, tipo: str, desc: "empresa concesionaria"}
+  lngcnc: {nombre: longitud_concesionada_m, tipo: int, desc: "longitud concesionada, en metros"}
+  prcavn: {nombre: avance_obra, tipo: float, desc: "avance de obra (0 a 1) cuando la ANI lo reporta"}
+  vlrcnt: {nombre: valor_contrato, tipo: float, desc: "valor del contrato en pesos"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [3]
+dcat: {publisher: ANI, theme: transporte}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un corredor de concesión vial; 47 en el país, 4 al norte de Bogotá"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.3}
+  hallazgos:
+  - "las vías son líneas: se consulta por zona, no por punto"
+  - "el avance de obra viene vacío en proyectos que no han empezado construcción"
+  decision: "en vivo por zona (bbox)"
