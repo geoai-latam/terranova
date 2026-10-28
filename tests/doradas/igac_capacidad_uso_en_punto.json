@@ -1,25 +1,26 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T04:00:38+00:00",
+ "grabado": "2026-10-27T22:46:05+00:00",
  "herramienta": "igac_capacidad_uso_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -74.0262,
-     4.8619,
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "OBJECTID"
+    ],
+    "punto": [
      -74.0262,
      4.8619
     ],
-    "geometria": "simplificada",
-    "max_features": 5,
-    "out_fields": [
+    "select": [
      "UCCapacida",
      "Descripcio"
     ],
-    "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0"
+    "tabla": "igac_capacidad_uso"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -43,48 +44,27 @@
        ],
        "type": "FeatureCollection"
       },
-      "kind": "feature_collection",
-      "name": "Correlación_Capacidad_Uso_100k"
+      "kind": "feature_collection"
      }
     ],
     "facts": {
-     "bbox": [
-      -74.0262,
-      4.8619,
-      -74.0262,
-      4.8619
-     ],
-     "capa": "Correlación_Capacidad_Uso_100k",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -74.0262,
-       4.8619,
-       -74.0262,
-       4.8619
-      ],
-      "max_features": 5,
-      "out_fields": [
-       "UCCapacida",
-       "Descripcio"
-      ],
-      "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0",
-      "where": "1=1"
+     "consultado_en": "2026-10-27T22:31:18.527823+00:00",
+     "copia": {
+      "filas": 64771,
+      "huella": "sha256:0a87c0ec98320d21a52cc1df5d5f91a55b616f65e7c7310b555f451b3e1f19e1",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261027223118527823"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/capacidaddeusodelastierrasterritorionacional/MapServer/0"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }

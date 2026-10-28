@@ -26,10 +26,11 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
 creditos: 5
 canario:
-  # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; 3 pólizas × 3 amparos = 9 filas.
-  # Los registros solo crecen.
-  entrada: {id_contrato: CO1.PCCNTR.3712964}
-  verdad: {id_contrato: CO1.PCCNTR.3712964}
-  minimos: {numero_registros: 9}
+  # Medido el 2026-10-27 en la fuente (gjp9-cutm): 2 pólizas de Aseguradora Solidaria, 8 amparos.
+  # El contrato de antes (CO1.PCCNTR.3712964, 9 filas el 2026-10-22) ya no tiene filas: SECOP
+  # re-publica las pólizas, así que los registros de un contrato NO solo crecen (lo halló el e2e).
+  entrada: {id_contrato: CO1.PCCNTR.10000376}
+  verdad: {id_contrato: CO1.PCCNTR.10000376, aseguradora: ASEGURADORA SOLIDARIA DE COLOMBIA}
+  minimos: {numero_registros: 8}
   campos: [aseguradora, estado, fecha_creacion, fecha_fin, id_contrato, numero_poliza, numero_registros, subtipo_poliza, tipo_poliza, valor]
   latencia_max_ms: 10000

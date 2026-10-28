@@ -8,18 +8,19 @@ descripcion: >
   publica la UPRA, su código, categoría para el mercado de tierras, año del estudio (vigencia),
   área de la zona y municipio. Cubre 18 departamentos; cada uno tiene su año de estudio (2015 a
   2023), así que el precio es el de ese año. Fuera de las áreas del mercado de tierras no hay dato.
+  Sale de la copia de Terranova de la capa de la UPRA.
   (Fuente: UPRA; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    tabla: upra_rango_precios
+    punto: ["{lon}", "{lat}"]
+    select: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
     geometria: ninguna
-    out_fields: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
-    max_features: 5
+    order: [objectid]
+    limite: 5
   campos: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
 salida: PrecioTierraEnPunto
 creditos: 5

@@ -7,7 +7,7 @@ name = "terranova"
 version = "0.0.1"
 description = "Puerta única (MCP + REST) sobre fuentes oficiales colombianas y globales, con el contrato rt/1"
 readme = "README.md"
-license = "Apache-2.0"
+license = "LicenseRef-Propietaria"
 requires-python = ">=3.13"
 authors = [{ name = "GeoAI LATAM" }]
 dependencies = [

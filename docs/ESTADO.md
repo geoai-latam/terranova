@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-26.*
+*Actualizado: 2026-10-28.*
 
 ## Auditoría integral (2026-10-26)
 
@@ -39,6 +39,138 @@ verde (WS1–WS7):
   ASGI documentado y el catálogo se necesita al importar para construir las herramientas.
 - **Pendiente de la auditoría (dueño):** la base legal DANE (WS3) y el despliegue en la VM (WS5:
   endurecimiento con prueba; e2e de las 153 herramientas; primera promoción y afinado del piso G6).
+
+## Despliegue en producción (2026-10-27)
+
+**Terranova está desplegada, pública y autocontenida**, sirviendo datos reales. Decisión de infra en
+[ADR-0030](decisions/0030-despliegue-vps-unica-compose.md): una sola VPS con todo el `docker compose`,
+sin servicios gestionados (~10–30× más barata que la nube grande).
+
+- **Pública con TLS:** API en un dominio propio con certificado Let's Encrypt automático (Caddy); REST
+  `/v1` y MCP, autenticación por llave (401 sin llave), http→https.
+- **Stack:** Postgres (PostGIS + pgvector) + Redis + puerta (1 réplica) + Caddy + los 6 conectores +
+  el microservicio de embeddings. Ajustado a 12 GB (1 réplica, Redis con tope, `mem_limit`).
+- **Autocontenida (#134):** los 6 conectores (datos-abiertos, arcgis, dane, web, imagery, amenazas) y
+  `geo_mcp_kit` se vendorizaron a `conectores/`. **Terranova ya no depende de geo-copilot**: todas las
+  herramientas viven y corren aquí; geo-copilot será solo un cliente más por el MCP.
+- **Datos:** comex (importaciones + exportaciones) servido por copia (ingesta por túnel desde una IP
+  colombiana); el resto de las fuentes en vivo por sus conectores.
+- **Bugs reales que destapó el primer despliegue, corregidos:** #130 (ZIP sin cerrar en Windows), #133
+  (`httpx` fuera del runtime + base de Postgres en bullseye con PGDG roto → bookworm), #134 (CA público
+  excluido por `*.pem`; `conectores/` fuera del lint).
+- **Canarios (prueba completa):** 121 verdes / 14 no-verde de 135; **cero fallos nuevos** del
+  despliegue. Los 14: 6 diferidos por decisión (fuentes DANE bloqueadas por IP de datacenter +
+  `catalogo_buscar`), 5 fuentes lentas conocidas (agrología/RUNAP/UPRA), 1 copia de SECOP sin ingerir,
+  1 sin canario por diseño (FIRMS), 1 transitorio.
+- **Patrón confirmado:** las llamadas en vivo (respuestas chicas) funcionan desde el datacenter; las
+  **descargas grandes** (copias y la cosecha del catálogo DCAT) se caen o se bloquean (el DANE bloquea
+  la IP del datacenter, 403 — no se evade, ADR-0018) → las **copias y cosechas se ingieren desde una IP
+  colombiana** (túnel). Pendiente: respaldo a objeto off-site, el lote de fuentes DANE y el refresco
+  recurrente de copias desde Colombia.
+- **SECOP-copia ingerida** (por túnel): 3.661.398 filas desde 2023; `secop_contratos_buscar` responde.
+- **Descubrimiento en producción con e5-large (#136, #137).** La cosecha del catálogo DCAT **no** estaba
+  bloqueada: los cortes eran transitorios. Ahora reintenta con backoff y corre completa en el servidor
+  (Socrata: 33.726 datasets sin fallos). El cuello real era el embebido:
+  - e5-large en CPU va a ~1,3 textos/s.
+  - El servicio con lotes de 64 superaba los 3 GB y el kernel lo mataba: ahora va de a 8, con 4g.
+  - Hay **caché de vectores por huella** (modelo + texto): la ingesta retoma tras un corte y la pasada
+    diaria solo embebe lo nuevo. La primera pasada tomó ~6 h.
+
+  `descubrimiento.datasets` tiene **los dos catálogos completos con vector**: 33.726 datasets de
+  Socrata y 10.000 capas de ICDE (el tope conocido del feed). El **canario de `catalogo_buscar` está
+  verde**. Los resultados son pertinentes: «calidad del agua en ríos» trae el ICA de los ríos de Cali
+  y del río Cauca.
+- **Piso de similitud recalibrado para e5 (#139): 0,40 → 0,84**, medido en producción con 100
+  consultas:
+  - Las 20 ajenas al catálogo (coseno máximo 0,838) ya no traen nada.
+  - Las 20 temáticas sí traen candidatos.
+  - «bitcoin», «receta de arepas» y «asdkjfh qwerty» dan `no_encontrado`.
+  - «calidad del agua en ríos» da 48 coincidencias (antes, el catálogo entero).
+
+  Solo responde a llaves de evaluación mientras la licencia de los catálogos DCAT siga por verificar
+  (ADR-0019).
+- **E2E con LLM real de las 159 herramientas en producción (2026-10-27,
+  [`scripts/e2e_agente.py`](../scripts/e2e_agente.py)).** Un agente con `gpt-5.4-mini` se conecta
+  por MCP remoto (TLS + llave de evaluación) al perfil de cada familia. Para cada herramienta recibe
+  la pregunta del catálogo con los datos de su canario, y se mide contra la verdad del canario.
+
+  **Resultado:** **138 éxitos de 159 (87 %)**, herramienta correcta 99 %, entrada correcta 99 %,
+  1,9 llamadas y ~21 000 tokens por pregunta. Cada caso que no salió en éxito se revisó a mano. En
+  ninguno la puerta dijo «no hay» cuando no pudo consultar: siempre «no pude», con la causa.
+  - **8 cortes pasajeros** (SECOP 503, IDEAM 503): al repetir, los 8 dan éxito.
+  - **Bloqueos por IP del datacenter, persistentes:** DANE (6, ya conocido y diferido) y **RUNAP de
+    PNN (2, hallazgo nuevo):** 403 desde el servidor y 200 desde Colombia. No se evade (ADR-0018):
+    va al lote de copias ingeridas desde Colombia.
+  - **UPRA (2):** timeout; es la fuente lenta conocida.
+  - **Verdad vieja de un canario:** `secop_garantias_contrato`. SECOP re-publicó las pólizas y el
+    contrato del canario quedó sin filas; la puerta respondió bien «0 pólizas». Se midió una verdad
+    nueva y se grabó su dorada.
+  - **Ambigüedad del catálogo:** facturas vs. plan de pagos de SECOP. El plan de pagos se describía
+    como «facturas y pagos»; ahora cada descripción remite a la otra.
+  - **Falso negativo de la medida:** `suin_norma` (respuesta correcta; el canario dice «ley» y el
+    agente mandó «LEY»). El banco ahora compara la entrada sin distinguir mayúsculas.
+- **Copias espaciales de capas ArcGIS (2026-10-27, enmienda de la ADR-0024).** RUNAP (403 de
+  Cloudflare al datacenter), UPRA (inalcanzable desde la UE; desde Colombia responde en 1,2 s) y la
+  agrología del IGAC (~54 s por punto desde la UE) se sirven ahora desde una copia en PostGIS:
+  - **Origen `arcgis` en el conector de copia:** baja la capa entera con su lista blanca y la geometría
+    en EPSG:4326, simplificada si la ficha lo declara (`tolerancia`; agrología a ~11 m, por debajo del
+    error de un mapa 1:100.000). Pagina por la clave (`clave > última`), no por desplazamiento: en el
+    IGAC, ~2 s por página contra ~50 s. Si el conteo del servicio no cuadra, la copia no se publica.
+  - **`consultar_copia` espacial:** `punto` y `bbox` (ST_Intersects, índice GiST), geometría
+    `completa | simplificada | ninguna`, responde una colección de rasgos. Las geometrías inválidas se
+    reparan al cargar (ST_MakeValid), por tandas y solo hasta 50.000 vértices. Un único UPDATE sobre
+    conflictos de uso hizo que el kernel matara a Postgres por memoria (se recuperó en ~5 s). Los 12
+    polígonos inválidos enormes quedan como vienen, y el cruce por punto los responde igual.
+  - **`copias actualizar --solo-vencidas`:** solo rehace las copias que faltan o van por la mitad de
+    su SLA; el refresco recurrente desde Colombia puede correr seguido sin rebajar nada.
+  - **Ingeridas por túnel desde Colombia:** RUNAP 1.936 áreas (268 s), UPRA 178.973 zonas (549 s),
+    capacidad de uso 64.771 polígonos (854 s), vocación de uso. Seis herramientas pasan a la copia
+    con sus doradas regrabadas y los canarios con las verdades de la fuente. **Conflictos de uso**
+    (548.423 polígonos) se bajó desde el servidor en 19 min (2–5 s por página de 2.000): el IGAC sí
+    se deja copiar desde el datacenter, así que su refresco va en el job diario del servidor. Con
+    él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
+    lugar.
+
+## Repo privado y licencia propietaria (2026-10-28, #147)
+
+- **El repo `geoai-latam/terranova` pasa a privado** (enmienda de la ADR-0001), porque Terranova es un
+  producto comercial. Se mantiene la higiene de un repo público (gitleaks sigue en el CI).
+  **Por ahora sigue público, a propósito y solo mientras se consolida el MVP.** Los 2.000 min/mes de
+  Actions privados de la cuenta ya los gastó `GEO_COPILOT` en octubre, y con el tope de gasto en 0
+  el CI no corría. Se vuelve a privado apenas termine la consolidación, idealmente con GitHub Pro y
+  un presupuesto de Actions. Mientras tanto, la licencia propietaria ya protege el código.
+- **Licencia propietaria:** © GeoAI LATAM, todos los derechos reservados. Los datos que se entregan
+  conservan la licencia de su fuente, y lo derivado de CC BY-SA sigue siendo CC BY-SA. `/llms.txt` y
+  la tarjeta MCP ya no dicen «Apache» ni «abierto».
+- **El servidor baja el código con una llave de despliegue de solo lectura.**
+- **El CI está ajustado a los 2.000 min/mes de un repo privado:** cada PR corre solo lo que cubre lo
+  que tocó, y hay una pasada completa diaria sobre main a las 06:00 UTC.
+- **Pendiente del dueño:**
+  - Términos de servicio (necesarios antes de vender; el `LICENSE` remite a ellos).
+  - Qué hacer con GEO Copilot. Hoy llama a sus propias copias de los 6 conectores en vez del MCP de
+    Terranova, y su repo `geo-copilot` es público.
+
+## Operación del MVP encendida (2026-10-28, #143–#145)
+
+- **Servidor en `main` limpio:** `docker/compose.prod.yml` versionado (sin secretos) reemplaza los
+  parches a mano. Caddy toma las réplicas de `TERRANOVA_REPLICAS`, `puerta-b` queda tras un perfil, y
+  se despliega siempre con `--no-deps` (sin él compose recrea Postgres).
+- **Jobs diarios encendidos:**
+  - `canarios`: primer pase, **153 verdes de 159**. Los 6 rojos son del DANE, que bloquea al datacenter.
+  - `copias --solo-vencidas`: las 8 copias al día.
+  - `descubrimiento`.
+  - `respaldo`: `pg_dump` diario con 14 días de retención; el primero pesó 1,7 GB.
+- **Prometheus y Grafana encendidos** (perfil `observabilidad`). Prometheus descubre las réplicas por
+  DNS; Grafana solo escucha en `127.0.0.1` del servidor y se ve por túnel SSH, en solo lectura.
+- **Ficha de un lugar en producción:** 200, con áreas protegidas y agrología por copia. Sale `parcial`
+  en ~15 s porque la población del DANE cae en `fuente_lenta` (bloqueo de IP); se arregla con la copia
+  del DANE.
+- **Pendiente del dueño:**
+  - Canal de alertas (`TERRANOVA_ALERTA_URL`, pospuesto).
+  - Respaldo fuera del servidor: se baja a la máquina del dueño con un script interno.
+  - Base legal de la licencia DANE.
+  - Qué hacer con `OutboxAtascado`: los eventos de uso solo crecen porque no hay sistema de cobro que
+    los consuma (ADR-0020).
 
 ## Dónde estamos
 

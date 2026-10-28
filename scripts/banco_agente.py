@@ -155,10 +155,11 @@ async def _pregunta(
         ok_entrada = True
     else:
         ok_herramienta = bool(propias)
+        # sin distinguir mayúsculas: «LEY» y «ley» son la misma entrada (la puerta usa upper)
         ok_entrada = any(
             ll["herramienta"] != esperada  # la alternativa tiene su propia entrada
-            or {k: str(a) for k, a in ll["argumentos"].items()}
-            == {k: str(a) for k, a in v["entrada"].items()}
+            or {k: str(a).casefold() for k, a in ll["argumentos"].items()}
+            == {k: str(a).casefold() for k, a in v["entrada"].items()}
             for ll in propias
         )
         if not ok_herramienta:
