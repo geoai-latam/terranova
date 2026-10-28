@@ -1,0 +1,108 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T07:36:49+00:00",
+ "herramienta": "uaecd_valor_referencia_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "ninguna",
+    "limite": 30,
+    "order": [
+     "ANO"
+    ],
+    "punto": [
+     -74.0565,
+     4.6486
+    ],
+    "select": [
+     "MANCODIGO",
+     "V_REF",
+     "ANO"
+    ],
+    "tabla": "uaecd_valor_referencia"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ANO",
+       "MANCODIGO",
+       "V_REF"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ANO": "2017-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3400000.0
+       },
+       {
+        "ANO": "2018-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3500000.0
+       },
+       {
+        "ANO": "2019-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3500000.0
+       },
+       {
+        "ANO": "2020-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3500000.0
+       },
+       {
+        "ANO": "2021-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3600000.0
+       },
+       {
+        "ANO": "2022-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3600000.0
+       },
+       {
+        "ANO": "2023-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3830000.0
+       },
+       {
+        "ANO": "2024-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 3830000.0
+       },
+       {
+        "ANO": "2025-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 4300000.0
+       },
+       {
+        "ANO": "2026-01-01",
+        "MANCODIGO": "008204021",
+        "V_REF": 5800000.0
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 10,
+      "truncado": false,
+      "vistos": 10
+     },
+     "consultado_en": "2026-10-28T07:27:52.201205+00:00",
+     "copia": {
+      "filas": 427839,
+      "huella": "sha256:62de59db1a04178e545a7c3b3b44f3a62fb39697c89abfd84c6f288354293109",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028072752201205"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
