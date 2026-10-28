@@ -1,0 +1,32 @@
+id: car_pomca_rio_sumapaz_en_punto
+version: 1
+familia: ambiente
+fuente: car.pomca_rio_sumapaz
+pregunta: "¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este punto?"
+descripcion: >
+  Zonificación ambiental del Plan de Ordenación y Manejo de la Cuenca (POMCA) del río Sumapaz en un
+  punto (Resolución CAR 149 de 2023): categoría de ordenación (conservación y protección ambiental, o
+  uso múltiple), zona y subzona de uso y manejo, con su sigla. Cubre Fusagasugá, Arbeláez, Pasca,
+  Silvania, Melgar y el resto de la cuenca. Para las otras cuencas de la CAR, car_pomca_en_punto; si
+  no hay resultado, el punto está fuera de la cuenca del Sumapaz.
+  (Fuente: CAR Cundinamarca; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    geometria: ninguna
+    url: "{url_capa}"
+    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
+    out_fields: [T_CAT_ORD, T_ZON_USO, T_SUBZON_USO, NOMENCLAT]
+    max_features: 5
+  campos: [T_CAT_ORD, T_ZON_USO, T_SUBZON_USO, NOMENCLAT]
+salida: PomcaRioSumapazEnPunto
+cobro: punto
+canario:
+  # Fusagasugá; medido el 2026-10-28 en la capa 0: uso múltiple, áreas urbanas, ZU.
+  entrada: {lon: -74.364, lat: 4.337}
+  verdad: {categoria_ordenacion: "Uso Multiple", zona_uso_manejo: "Areas Urbanas", sigla: ZU}
+  campos: [categoria_ordenacion, sigla, subzona_uso_manejo, zona_uso_manejo]
+  latencia_max_ms: 5000

@@ -1,0 +1,22 @@
+# Ficha técnica escrita a mano (spec 08): la fuente son nueve servicios, uno por POMCA; se resume lo
+# que dicen sus ítems de ArcGIS Online.
+fuente: car.pomca_zonificacion
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services?f=json
+pagina: https://www.car.gov.co/vercontenido/41
+titulo: Zonificación ambiental de los POMCA de la jurisdicción de la CAR
+descripcion: Nueve servicios de la CAR en ArcGIS Online, uno por POMCA (río Bogotá, Carare-Minero,
+  Garagoa, río Negro, Alto Suárez, Medio y Bajo Suárez, río Seco y otros directos al Magdalena,
+  Guavio y Guayuriba), cada uno con la zonificación ambiental adoptada por su resolución, formulada
+  según el Decreto 1076 de 2015.
+idioma: Español
+filas: 516999
+geografia:
+  geometria: poligono
+campos:
+  CAT_ORD: {tipo_fuente: esriFieldTypeString, etiqueta: CAT_ORD}
+  ZO_US_MA: {tipo_fuente: esriFieldTypeString, etiqueta: ZO_US_MA}
+  SZO_US_M: {tipo_fuente: esriFieldTypeString, etiqueta: SZO_US_M}
+  NOMENCLAT: {tipo_fuente: esriFieldTypeString, etiqueta: NOMENCLAT}
+  DESCRIP: {tipo_fuente: esriFieldTypeString, etiqueta: DESCRIP}
