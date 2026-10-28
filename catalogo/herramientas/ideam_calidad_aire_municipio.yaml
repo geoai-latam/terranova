@@ -1,0 +1,40 @@
+id: ideam_calidad_aire_municipio
+version: 1
+familia: ambiente
+fuente: ideam.calidad_aire
+pregunta: "¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…)"
+descripcion: >
+  Calidad del aire de un municipio (DIVIPOLA) en un año, por estación y contaminante, según el
+  SISAIRE del IDEAM: concentración promedio y máxima horaria (µg/m³) de PM2.5, PM10, O3, NO2, SO2 y
+  CO, con las horas medidas (pocas horas = promedio poco representativo). La norma colombiana de
+  referencia es la Resolución 2254 de 2017. Datos de 2020 a 2025; solo municipios con estaciones.
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: g4t8-zkc3
+    portal: datos.gov.co
+    select: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas"
+    where: "codigo_municipio::number = ('{municipio_divipola}')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '{anio}-%'"
+    group: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad"
+    order: "msfl_code, nombre_est"
+    max_filas: 500
+  campos: [estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad]
+derivados:
+  promedio: {de: columna, campo: promedio, tipo: float}
+  maximo: {de: columna, campo: maximo, tipo: float}
+  horas: {de: columna, campo: horas, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+salida: CalidadAireMunicipio
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en g4t8-zkc3: Medellín 2025 tiene 36 series (15 de PM2.5); la primera en el
+  # orden es CO en la estación Politécnico JIC (9023), 8 270 horas.
+  entrada: {municipio_divipola: "05001", anio: "2025"}
+  verdad: {contaminante: CO, estacion_id: "9023", horas: 8270}
+  minimos: {numero_registros: 30}
+  campos: [autoridad, contaminante, estacion, estacion_id, horas, maximo, numero_registros, promedio, unidad]
+  latencia_max_ms: 20000

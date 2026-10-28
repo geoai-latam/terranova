@@ -1,0 +1,421 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T07:47:21+00:00",
+ "herramienta": "ideam_calidad_aire_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad",
+    "id": "g4t8-zkc3",
+    "max_filas": 500,
+    "order": "msfl_code, nombre_est",
+    "portal": "datos.gov.co",
+    "select": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas",
+    "where": "codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estacion_id",
+       "horas",
+       "maximo",
+       "msfl_code",
+       "nombre_est",
+       "nombre_fgda",
+       "promedio",
+       "sigla_unidad"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estacion_id": "9023",
+        "horas": "8270",
+        "maximo": "7513.37",
+        "msfl_code": "CO",
+        "nombre_est": "POLITÉCNICO JIC",
+        "nombre_fgda": "AMVA",
+        "promedio": "1976.8366650544135429",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31994",
+        "horas": "7162",
+        "maximo": "121.27",
+        "msfl_code": "NO2",
+        "nombre_est": "ALMACÉN GENERAL DE EPM",
+        "nombre_fgda": "AMVA",
+        "promedio": "37.3543800614353533",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31371",
+        "horas": "8200",
+        "maximo": "87.61",
+        "msfl_code": "NO2",
+        "nombre_est": "ALTAVISTA",
+        "nombre_fgda": "AMVA",
+        "promedio": "20.9195268292682927",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31854",
+        "horas": "7091",
+        "maximo": "148.7",
+        "msfl_code": "NO2",
+        "nombre_est": "FISCALÍA SECTOR CARIBE",
+        "nombre_fgda": "AMVA",
+        "promedio": "44.4982780989987308",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9023",
+        "horas": "8425",
+        "maximo": "189.03",
+        "msfl_code": "NO2",
+        "nombre_est": "POLITÉCNICO JIC",
+        "nombre_fgda": "AMVA",
+        "promedio": "44.7153234421364985",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "29509",
+        "horas": "7948",
+        "maximo": "153.37",
+        "msfl_code": "NO2",
+        "nombre_est": "TRÁFICO CENTRO",
+        "nombre_fgda": "AMVA",
+        "promedio": "42.3247596879718168",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31371",
+        "horas": "7426",
+        "maximo": "191.6818269",
+        "msfl_code": "O3",
+        "nombre_est": "ALTAVISTA",
+        "nombre_fgda": "AMVA",
+        "promedio": "29.3527643714629680",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31854",
+        "horas": "6988",
+        "maximo": "198.1562386",
+        "msfl_code": "O3",
+        "nombre_est": "FISCALÍA SECTOR CARIBE",
+        "nombre_fgda": "AMVA",
+        "promedio": "24.3602394125067258",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31946",
+        "horas": "8204",
+        "maximo": "201.4915416",
+        "msfl_code": "O3",
+        "nombre_est": "PARQUE BIBLIOTECA TOMÁS CARRASQUILLA - LA QUINTANA",
+        "nombre_fgda": "AMVA",
+        "promedio": "32.6261978348137494",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31852",
+        "horas": "8263",
+        "maximo": "237.1989034",
+        "msfl_code": "O3",
+        "nombre_est": "TANQUE MIRAFLORES",
+        "nombre_fgda": "AMVA",
+        "promedio": "28.8177709325697688",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "32034",
+        "horas": "7467",
+        "maximo": "240.7304008",
+        "msfl_code": "O3",
+        "nombre_est": "UNIVERSIDAD CES",
+        "nombre_fgda": "AMVA",
+        "promedio": "29.8973880973148520",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31994",
+        "horas": "7666",
+        "maximo": "135.0",
+        "msfl_code": "PM10",
+        "nombre_est": "ALMACÉN GENERAL DE EPM",
+        "nombre_fgda": "AMVA",
+        "promedio": "33.7939525176102270",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31371",
+        "horas": "7961",
+        "maximo": "172.0",
+        "msfl_code": "PM10",
+        "nombre_est": "ALTAVISTA",
+        "nombre_fgda": "AMVA",
+        "promedio": "52.4680567767868358",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9102",
+        "horas": "120",
+        "maximo": "50.89",
+        "msfl_code": "PM10",
+        "nombre_est": "CORANTIOQUIA",
+        "nombre_fgda": "AMVA",
+        "promedio": "24.7562500000000000",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9025",
+        "horas": "8191",
+        "maximo": "132.43",
+        "msfl_code": "PM10",
+        "nombre_est": "ÉXITO SAN ANTONIO",
+        "nombre_fgda": "AMVA",
+        "promedio": "41.9384446343547796",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9023",
+        "horas": "8189",
+        "maximo": "107.96",
+        "msfl_code": "PM10",
+        "nombre_est": "POLITÉCNICO JIC",
+        "nombre_fgda": "AMVA",
+        "promedio": "28.0268225668579802",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9060",
+        "horas": "110",
+        "maximo": "48.83",
+        "msfl_code": "PM10",
+        "nombre_est": "POLITÉCNICO JIC (S)",
+        "nombre_fgda": "AMVA",
+        "promedio": "27.7680909090909091",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "30585",
+        "horas": "98",
+        "maximo": "37.04",
+        "msfl_code": "PM10",
+        "nombre_est": "TANQUE MIRAFLORES (S)",
+        "nombre_fgda": "AMVA",
+        "promedio": "17.3958163265306122",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "29509",
+        "horas": "8145",
+        "maximo": "106.0",
+        "msfl_code": "PM10",
+        "nombre_est": "TRÁFICO CENTRO",
+        "nombre_fgda": "AMVA",
+        "promedio": "39.9803560466543892",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31994",
+        "horas": "7917",
+        "maximo": "69.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "ALMACÉN GENERAL DE EPM",
+        "nombre_fgda": "AMVA",
+        "promedio": "17.0573449538966780",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31371",
+        "horas": "7991",
+        "maximo": "117.8",
+        "msfl_code": "PM2.5",
+        "nombre_est": "ALTAVISTA",
+        "nombre_fgda": "AMVA",
+        "promedio": "19.2837229383055938",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31366",
+        "horas": "8046",
+        "maximo": "94.5",
+        "msfl_code": "PM2.5",
+        "nombre_est": "BIBLIOTECA FERNANDO B.",
+        "nombre_fgda": "AMVA",
+        "promedio": "14.4552535421327368",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31854",
+        "horas": "8068",
+        "maximo": "123.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "FISCALÍA SECTOR CARIBE",
+        "nombre_fgda": "AMVA",
+        "promedio": "16.4903321764997521",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31364",
+        "horas": "8309",
+        "maximo": "194.8",
+        "msfl_code": "PM2.5",
+        "nombre_est": "I.E. CIRO MENDIA",
+        "nombre_fgda": "AMVA",
+        "promedio": "16.2325935732338428",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31373",
+        "horas": "8077",
+        "maximo": "62.71",
+        "msfl_code": "PM2.5",
+        "nombre_est": "I.E. JOSÉ FÉLIX",
+        "nombre_fgda": "AMVA",
+        "promedio": "13.6835074904048533",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31369",
+        "horas": "8129",
+        "maximo": "178.85",
+        "msfl_code": "PM2.5",
+        "nombre_est": "I.E. PEDRO JUSTO B.",
+        "nombre_fgda": "AMVA",
+        "promedio": "18.2695349981547546",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "30855",
+        "horas": "4681",
+        "maximo": "230.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "ITA-LGO",
+        "nombre_fgda": "CORANTIOQUIA",
+        "promedio": "22.0211493270668661",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31907",
+        "horas": "4566",
+        "maximo": "70.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "MED-ALTA2",
+        "nombre_fgda": "CORANTIOQUIA",
+        "promedio": "14.2490144546649146",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31946",
+        "horas": "8417",
+        "maximo": "106.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "PARQUE BIBLIOTECA TOMÁS CARRASQUILLA - LA QUINTANA",
+        "nombre_fgda": "AMVA",
+        "promedio": "15.3235119401211833",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "9060",
+        "horas": "95",
+        "maximo": "31.34",
+        "msfl_code": "PM2.5",
+        "nombre_est": "POLITÉCNICO JIC (S)",
+        "nombre_fgda": "AMVA",
+        "promedio": "17.5329473684210526",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31855",
+        "horas": "7655",
+        "maximo": "93.49",
+        "msfl_code": "PM2.5",
+        "nombre_est": "SANTA ELENA",
+        "nombre_fgda": "AMVA",
+        "promedio": "7.4980718484650555",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "29509",
+        "horas": "8197",
+        "maximo": "85.0",
+        "msfl_code": "PM2.5",
+        "nombre_est": "TRÁFICO CENTRO",
+        "nombre_fgda": "AMVA",
+        "promedio": "23.7865072587532024",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "32034",
+        "horas": "8068",
+        "maximo": "51.02",
+        "msfl_code": "PM2.5",
+        "nombre_est": "UNIVERSIDAD CES",
+        "nombre_fgda": "AMVA",
+        "promedio": "10.5801834407535944",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31367",
+        "horas": "7881",
+        "maximo": "170.2",
+        "msfl_code": "PM2.5",
+        "nombre_est": "VILLAHERMOSA",
+        "nombre_fgda": "AMVA",
+        "promedio": "13.9886727572643066",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "31854",
+        "horas": "5890",
+        "maximo": "69.21",
+        "msfl_code": "SO2",
+        "nombre_est": "FISCALÍA SECTOR CARIBE",
+        "nombre_fgda": "AMVA",
+        "promedio": "7.5884668930390492",
+        "sigla_unidad": "ug/m3"
+       },
+       {
+        "estacion_id": "29509",
+        "horas": "8304",
+        "maximo": "61.19",
+        "msfl_code": "SO2",
+        "nombre_est": "TRÁFICO CENTRO",
+        "nombre_fgda": "AMVA",
+        "promedio": "7.0573241811175337",
+        "sigla_unidad": "ug/m3"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 36,
+      "truncado": false,
+      "vistos": 36
+     },
+     "completo": true,
+     "conjunto": "g4t8-zkc3",
+     "consulta": {
+      "conjunto": "g4t8-zkc3",
+      "group": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas",
+      "where": "(codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')"
+     },
+     "filas": 36,
+     "filas_que_resume": 246215,
+     "filtro_soql": "(codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
