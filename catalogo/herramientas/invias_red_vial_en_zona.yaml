@@ -1,0 +1,72 @@
+id: invias_red_vial_en_zona
+version: 1
+familia: territorio
+fuente: invias.red_vial
+pregunta: "¿Qué vía nacional pasa por esta zona, quién la administra y está pavimentada?"
+descripcion: >
+  Tramos de la red vial nacional de carreteras que cruzan un rectángulo [lon_min, lat_min, lon_max,
+  lat_max]: código del tramo, ruta, sector, quién lo administra (INVÍAS, ANI, concesión
+  departamental…), dirección territorial del INVÍAS, categoría, superficie (pavimentada o no),
+  calzada sencilla o doble, PR inicial y final y longitud. Para «qué vía pasa por este punto», un
+  rectángulo pequeño alrededor (unos 300 m). La superficie está «Por Definir» en la mayoría de los
+  tramos y casi todos dicen «No Revisado»: la fuente aún no lo sabe, no es que no esté pavimentada.
+  Solo la red nacional (no las vías departamentales ni las municipales). Para los puentes,
+  invias_puentes_en_zona; para las concesiones, ani_concesiones_viales_en_zona.
+  (Fuente: INVÍAS; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [1]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: simplificada
+    out_fields: [codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
+    max_features: 500
+  campos: [codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
+# Dominios codificados de la capa 1 del servicio (MapaCarreteras/RedVial/FeatureServer/1?f=json),
+# medidos el 2026-10-28. Algunas filas traen el texto en vez del código: también se traduce.
+derivados:
+  administrador_nombre:
+    de: codigo
+    campo: administrador
+    valores: {"1": INVÍAS, "2": ANI, "3": Concesión Departamental, "4": FINDETER, "5": Vías en desuso, "6": INVÍAS - Convenios}
+  territorial_nombre:
+    de: codigo
+    campo: territorial
+    valores: {"0": No aplica, "1": Antioquia, "2": Atlántico, "3": Bolívar, "4": Boyacá, "5": Caldas, "6": Caquetá, "7": Casanare, "8": Cauca, "9": Cesar, "10": Chocó, "11": Córdoba, "12": Cundinamarca, "13": Guajira, "14": Huila, "15": Magdalena, "16": Meta, "17": Nariño, "18": Norte de Santander, "19": Putumayo, "20": Quindío, "21": Risaralda, "22": Santander, "23": Sucre, "24": Tolima, "25": Valle del Cauca, "26": Ocaña, "27": Planta Central, "28": ANI, "29": Por Definir}
+  categoria_nombre:
+    de: codigo
+    campo: categoria
+    valores: {"1": Primer Orden, "2": Segundo Orden, "3": Tercer Orden, "4": Por Definir, "Por Definir": Por Definir}
+  superficie_nombre:
+    de: codigo
+    campo: superficie
+    valores: {"1": Pavimentada, "2": Sin Pavimentar, "3": Por Definir}
+  calzada_nombre:
+    de: codigo
+    campo: calzada
+    valores: {"1": Sencilla, "2": Doble, "3": Por Definir}
+  revision_nombre:
+    de: codigo
+    campo: revision
+    valores: {"1": Revisado, "2": No Revisado, "No Revisado": No Revisado}
+  numero_registros: {de: conteo, tipo: int}
+salida: RedVialEnZona
+cobro: zona
+canario:
+  # Sobre la vía Sopó-Briceño; medido el 2026-10-28 en la capa 1: un solo trozo, el 50CN03 «Sopó -
+  # Cruce Ruta 55 (Briceño)» (ruta 50, PR 10+505 a 14+500), administrado por el INVÍAS (código 1),
+  # territorial Cundinamarca (12), primer orden, pavimentado, calzada sencilla y revisado.
+  entrada: {bbox: [-73.953, 4.924, -73.950, 4.927]}
+  verdad:
+    codigo_tramo: 50CN03
+    sector: "Sopó - Cruce Ruta 55 (Briceño)"
+    administrador_nombre: INVÍAS
+    superficie_nombre: Pavimentada
+    calzada_nombre: Sencilla
+    pr_inicial: 10
+    numero_registros: 1
+  campos: [administrador, administrador_nombre, calzada, calzada_nombre, categoria, categoria_nombre, codigo_tramo, fecha_ultima_edicion, longitud_m, nombre_ruta, numero_registros, pr_final, pr_final_m, pr_inicial, pr_inicial_m, revision, revision_nombre, ruta, sector, superficie, superficie_nombre, territorial, territorial_nombre]
+  latencia_max_ms: 8000

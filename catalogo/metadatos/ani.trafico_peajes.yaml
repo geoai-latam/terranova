@@ -1,0 +1,86 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.trafico_peajes
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/8yi9-t44c.json
+pagina: https://www.datos.gov.co/d/8yi9-t44c
+titulo: Tráfico Vehicular ANI
+descripcion: Registro de tráfico de vehículos que circulan en los peajes de la ANI.
+publicado: '2021-03-24'
+datos_actualizados: '2026-09-02'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+filas: 149944
+campos:
+  idpeaje:
+    tipo_fuente: number
+    etiqueta: IdPeaje
+    nulos: 0
+    minimo: '1'
+    maximo: '221'
+    comparacion: numero
+  peaje:
+    tipo_fuente: text
+    etiqueta: Peaje
+    nulos: 0
+    minimo: ABURRÁ
+    maximo: ZARAGOZA
+    comparacion: texto
+  desde:
+    tipo_fuente: calendar_date
+    etiqueta: Desde
+    nulos: 0
+    minimo: '2014-01-01T00:00:00.000'
+    maximo: '2026-05-01T00:00:00.000'
+    comparacion: fecha
+  hasta:
+    tipo_fuente: calendar_date
+    etiqueta: Hasta
+    nulos: 0
+    minimo: '2014-01-31T00:00:00.000'
+    maximo: '2026-05-31T00:00:00.000'
+    comparacion: fecha
+  cantidadtrafico:
+    tipo_fuente: number
+    etiqueta: CantidadTrafico
+    nulos: 0
+    minimo: '0'
+    maximo: '1124159'
+    comparacion: numero
+  cantidadevasores:
+    tipo_fuente: number
+    etiqueta: CantidadEvasores
+    nulos: 0
+    minimo: '0'
+    maximo: '273071'
+    comparacion: numero
+    valores:
+      '0': 148063
+      '1': 948
+      '2': 283
+      '3': 173
+      '4': 80
+      '5': 65
+      '6': 46
+      '7': 33
+      '8': 31
+      '9': 20
+      '10': 12
+      '11': 12
+      '14': 12
+      '12': 8
+      '18': 8
+      '16': 6
+      '19': 5
+      '15': 5
+      '17': 4
+      '31': 4
+  cantidadexentos787:
+    tipo_fuente: number
+    etiqueta: CantidadExentos787
+    nulos: 0
+    minimo: '0'
+    maximo: '101300'
+    comparacion: numero

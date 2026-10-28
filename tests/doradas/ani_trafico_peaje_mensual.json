@@ -1,0 +1,168 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:38:43+00:00",
+ "herramienta": "ani_trafico_peaje_mensual",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "idpeaje, peaje, desde",
+    "id": "8yi9-t44c",
+    "max_filas": 500,
+    "order": "peaje, desde",
+    "portal": "datos.gov.co",
+    "select": "idpeaje, peaje, desde, max(hasta) AS hasta, sum(cantidadtrafico) AS cantidadtrafico, sum(cantidadevasores) AS cantidadevasores, sum(cantidadexentos787) AS cantidadexentos787",
+    "where": "upper(peaje) like upper('%Fusca%') AND date_extract_y(desde) = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cantidadevasores",
+       "cantidadexentos787",
+       "cantidadtrafico",
+       "desde",
+       "hasta",
+       "idpeaje",
+       "peaje"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "668",
+        "cantidadtrafico": "117742",
+        "desde": "2025-01-01T00:00:00.000",
+        "hasta": "2025-01-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "762",
+        "cantidadtrafico": "135297",
+        "desde": "2025-02-01T00:00:00.000",
+        "hasta": "2025-02-28T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "800",
+        "cantidadtrafico": "149913",
+        "desde": "2025-03-01T00:00:00.000",
+        "hasta": "2025-03-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "774",
+        "cantidadtrafico": "138272",
+        "desde": "2025-04-01T00:00:00.000",
+        "hasta": "2025-04-30T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "761",
+        "cantidadtrafico": "151390",
+        "desde": "2025-05-01T00:00:00.000",
+        "hasta": "2025-05-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "593",
+        "cantidadtrafico": "137829",
+        "desde": "2025-06-01T00:00:00.000",
+        "hasta": "2025-06-30T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "663",
+        "cantidadtrafico": "123663",
+        "desde": "2025-07-01T00:00:00.000",
+        "hasta": "2025-07-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "955",
+        "cantidadtrafico": "160313",
+        "desde": "2025-08-01T00:00:00.000",
+        "hasta": "2025-08-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "908",
+        "cantidadtrafico": "156483",
+        "desde": "2025-09-01T00:00:00.000",
+        "hasta": "2025-09-30T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "927",
+        "cantidadtrafico": "147695",
+        "desde": "2025-10-01T00:00:00.000",
+        "hasta": "2025-10-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "849",
+        "cantidadtrafico": "158862",
+        "desde": "2025-11-01T00:00:00.000",
+        "hasta": "2025-11-30T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       },
+       {
+        "cantidadevasores": "0",
+        "cantidadexentos787": "849",
+        "cantidadtrafico": "159848",
+        "desde": "2025-12-01T00:00:00.000",
+        "hasta": "2025-12-31T00:00:00.000",
+        "idpeaje": "17",
+        "peaje": "FUSCA"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "8yi9-t44c",
+     "consulta": {
+      "conjunto": "8yi9-t44c",
+      "group": "idpeaje, peaje, desde",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "idpeaje, peaje, desde, max(hasta) AS hasta, sum(cantidadtrafico) AS cantidadtrafico, sum(cantidadevasores) AS cantidadevasores, sum(cantidadexentos787) AS cantidadexentos787",
+      "where": "(upper(peaje) like upper('%Fusca%') AND date_extract_y(desde) = 2025)"
+     },
+     "filas": 12,
+     "filas_que_resume": 108,
+     "filtro_soql": "(upper(peaje) like upper('%Fusca%') AND date_extract_y(desde) = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

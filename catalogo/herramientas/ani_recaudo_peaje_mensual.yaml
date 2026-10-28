@@ -1,0 +1,43 @@
+id: ani_recaudo_peaje_mensual
+version: 1
+familia: territorio
+fuente: ani.recaudo_peajes
+pregunta: "¿Cuánto dinero recaudó este peaje de la ANI cada mes de un año?"
+descripcion: >
+  Recaudo mensual de un peaje de las concesiones de la ANI, buscado por su nombre (o parte de él,
+  como sale en ani_peajes_en_zona) en un AÑO: pesos recaudados, la parte del Fondo de Seguridad Vial
+  y el sobrante, por mes. La fuente repite algunos meses (junio de 2021) y parte otros por cambio de
+  tarifa: aquí cada mes sale una vez, sin repetidos. Datos de 2014 a mayo de 2026. Un nombre corto
+  puede traer varios peajes: cada fila dice de cuál es. Solo peajes de la ANI. Para los vehículos,
+  ani_trafico_peaje_mensual.
+  (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre, anio: anio}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: qac6-9mkr
+    portal: datos.gov.co
+    # spec 07: primero sin filas idénticas (junio de 2021 viene repetido), luego suma por mes
+    previo_select: "idpeaje, peaje, desde, hasta, recaudo, recaudofsv, recaudosobrante"
+    previo_group: "idpeaje, peaje, desde, hasta, recaudo, recaudofsv, recaudosobrante"
+    where: "upper(peaje) like upper('%{nombre}%') AND date_extract_y(desde) = {anio}"
+    select: "idpeaje, peaje, date_trunc_ym(desde) AS desde, sum(recaudo) AS recaudo, sum(recaudofsv) AS recaudofsv, sum(recaudosobrante) AS recaudosobrante"
+    group: "idpeaje, peaje, date_trunc_ym(desde)"
+    order: "peaje, desde"
+    max_filas: 500
+  campos: [idpeaje, peaje, desde, recaudo, recaudofsv, recaudosobrante]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+  total_recaudo: {de: suma, campo: recaudo, tipo: int}
+salida: RecaudoPeajeMensual
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en qac6-9mkr: SIBERIA (id 15) en 2021, 12 meses; enero $6 742 170 600 y el
+  # año $90 167 509 500 sin repetidos (sumando las 16 filas crudas saldría $97 685 501 600: junio
+  # viene dos veces).
+  entrada: {nombre: Siberia, anio: "2021"}
+  verdad: {peaje: SIBERIA, id_peaje: 15, mes: "2021-01-01", recaudo: 6742170600, numero_registros: 12, total_recaudo: 90167509500}
+  campos: [id_peaje, mes, numero_registros, peaje, recaudo, recaudo_fsv, recaudo_sobrante, total_recaudo]
+  latencia_max_ms: 20000

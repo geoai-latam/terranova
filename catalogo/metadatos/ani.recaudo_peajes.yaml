@@ -1,0 +1,58 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.recaudo_peajes
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/qac6-9mkr.json
+pagina: https://www.datos.gov.co/d/qac6-9mkr
+titulo: Recaudo Vehicular ANI
+descripcion: Registro de recaudo de vehículos que circulan en los peajes de la ANI.
+publicado: '2021-11-12'
+datos_actualizados: '2026-09-02'
+frecuencia_declarada: Semestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+filas: 17134
+campos:
+  idpeaje:
+    tipo_fuente: number
+    etiqueta: IdPeaje
+    nulos: 0
+    minimo: '1'
+    maximo: '221'
+    comparacion: numero
+  peaje:
+    tipo_fuente: text
+    etiqueta: Peaje
+    nulos: 0
+    minimo: ABURRÁ
+    maximo: ZARAGOZA
+    comparacion: texto
+  desde:
+    tipo_fuente: calendar_date
+    etiqueta: Desde
+    nulos: 0
+    minimo: '2014-01-01T00:00:00.000'
+    maximo: '2026-05-01T00:00:00.000'
+    comparacion: fecha
+  recaudofsv:
+    tipo_fuente: number
+    etiqueta: RecaudoFsv
+    nulos: 0
+    minimo: '0'
+    maximo: '1200900008'
+    comparacion: numero
+  recaudosobrante:
+    tipo_fuente: number
+    etiqueta: RecaudoSobrante
+    nulos: 0
+    minimo: '0'
+    maximo: '1757435700'
+    comparacion: numero
+  recaudo:
+    tipo_fuente: number
+    etiqueta: Recaudo
+    nulos: 0
+    minimo: '0'
+    maximo: '20068493700'
+    comparacion: numero
