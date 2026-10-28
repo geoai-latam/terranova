@@ -1,0 +1,179 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: aerocivil.trafico_origen_destino
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/gb6w-ynu4.json
+pagina: https://www.datos.gov.co/d/gb6w-ynu4
+titulo: Transporte Aéreo Comercial – Tráfico Origen‑Destino (Colombia)
+descripcion: Este conjunto de datos contiene información estadística sobre la operación del transporte
+  aéreo comercial en Colombia, correspondiente a los trayectos realizados entre aeropuertos de origen
+  y destino, para el período comprendido entre los años 2020 y 2026 Incluye variables como empresa aérea,
+  período de operación (año y mes), aeropuerto de origen y destino, ciudad y país, tipo de vuelo, tipo
+  de tráfico (nacional o internacional), número de pasajeros transportados y carga más correo movilizados.
+  La información es recolectada y acopiada por la Unidad Administrativa Especial de Aeronáutica Civil
+  con fines de seguimiento, control y análisis del sector aeronáutico.
+publicado: '2026-04-20'
+datos_actualizados: '2026-08-06'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+filas: 478010
+campos:
+  sigla_empresa:
+    tipo_fuente: text
+    etiqueta: Sigla Empresa
+    descripcion: Sigla OACI con la cual se identifica la empresa ante la Unidad Administrativa Especial
+      de Aeronáutica civil
+    nulos: 0
+    minimo: 0EC
+    maximo: WGN
+    comparacion: texto
+  nombre:
+    tipo_fuente: text
+    etiqueta: Nombre
+    descripcion: Nombre que identifica la empresa ante la Unidad Administrativa Especial de Aeronáutica
+      civil
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    descripcion: año de la información a registrar (YYYY).
+    nulos: 0
+    minimo: '2020'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2025': 88464
+      '2024': 83506
+      '2023': 78023
+      '2022': 68432
+      '2021': 68139
+      '2026': 45935
+      '2020': 45511
+  n_mero_de_mes:
+    tipo_fuente: number
+    etiqueta: Número de Mes
+    descripcion: Mes de la información a registrar (MM).
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '3': 47573
+      '2': 46991
+      '1': 45828
+      '5': 40171
+      '6': 40164
+      '4': 40022
+      '12': 40014
+      '11': 37416
+      '10': 36648
+      '9': 34714
+      '8': 34425
+      '7': 34044
+  origen:
+    tipo_fuente: text
+    etiqueta: Origen
+    descripcion: Corresponde a la sigla IATA del aeropuerto donde se origina el trayecto
+    nulos: 0
+    minimo: 1GH
+    maximo: ZZZ
+    comparacion: texto
+  nombre_origen:
+    tipo_fuente: text
+    etiqueta: Nombre Origen
+    descripcion: Nombre del aeropuerto de origen.
+  ciudad_origen:
+    tipo_fuente: text
+    etiqueta: Ciudad Origen
+    descripcion: Ciudad del aeropuerto de origen.
+    nulos: 0
+    minimo: '0'
+    maximo: ZURICH
+    comparacion: texto
+  pais_origen:
+    tipo_fuente: text
+    etiqueta: Pais Origen
+    descripcion: País del aeropuerto de origen.
+    nulos: 0
+    minimo: '0'
+    maximo: WISCONSIN
+    comparacion: texto
+  destino:
+    tipo_fuente: text
+    etiqueta: Destino
+    descripcion: Corresponde a la sigla IATA del aeropuerto donde termina el trayecto
+    nulos: 0
+    minimo: 1GH
+    maximo: ZZZ
+    comparacion: texto
+  nombre_destino:
+    tipo_fuente: text
+    etiqueta: Nombre Destino
+    descripcion: Nombre del aeropuerto de Destino.
+  ciudad_destino:
+    tipo_fuente: text
+    etiqueta: Ciudad Destino
+    descripcion: Ciudad del aeropuerto de Destino.
+    nulos: 0
+    minimo: '0'
+    maximo: ZURICH
+    comparacion: texto
+  pais_destino:
+    tipo_fuente: text
+    etiqueta: Pais Destino
+    descripcion: País del aeropuerto de Destino.
+    nulos: 0
+    minimo: '0'
+    maximo: ZAMBIA
+    comparacion: texto
+  tr_fico_n_i:
+    tipo_fuente: text
+    etiqueta: Tráfico (N/I)
+    descripcion: 'Tráfico ''E: Especial, I: Internacional, N: Nacional'
+    nulos: 0
+    minimo: E
+    maximo: N
+    comparacion: texto
+    valores:
+      I: 311929
+      N: 153841
+      E: 12240
+  tipo_vuelo:
+    tipo_fuente: text
+    etiqueta: Tipo Vuelo
+    descripcion: 'Determina el tipo de operación entre el correspondiente par de ciudades (Origen-Destino)A
+      : Adicional C: Charter N: No Regular R: Regular T: Taxi Aereo'
+    nulos: 0
+    minimo: A
+    maximo: T
+    comparacion: texto
+    valores:
+      R: 371501
+      T: 89768
+      C: 10669
+      A: 6072
+  pasajeros:
+    tipo_fuente: number
+    etiqueta: Pasajeros
+    descripcion: Se entiende como todos los pasajeros por cuyo transporte la línea aérea percibe remuneración
+      comercial. Inclúyanse, por ejemplo, a) los pasajeros que viajan en virtud de ofertas promocionales
+      (p. ej., “dos por uno”) o programas de fidelidad (p. ej., utilización de puntos de pasajeros frecuentes)
+      que se ofrecen al público; b) los pasajeros cuyos viajes constituyen una compensación por un embarque
+      denegado; c) los pasajeros que viajan valiéndose de descuentos concedidos a las empresas; y d) los
+      pasajeros que viajan con tarifas preferenciales (funcionarios gubernamentales, marinos, militares,
+      jóvenes, estudiantes, etc.). Exclúyanse, por ejemplo, a) las personas que viajan gratuitamente;
+      b) las que viajan valiéndose de tarifas o rebajas a las que sólo tienen acceso los empleados de
+      los transportistas aéreos o sus agentes, o que se conceden únicamente para viajes de negocios de
+      los transportistas mismos; y c) las criaturas que no ocupan silla.
+    nulos: 52
+    minimo: '0'
+    maximo: '80532'
+    comparacion: numero
+  carga_correo_kg:
+    tipo_fuente: number
+    etiqueta: Carga_Correo (Kg)
+    descripcion: 'Carga: Debe entenderse como el total carga de pago transportada en el correspondiente
+      trayecto. Debe reportarse en kilogramos. Correo: Corresponde al total del correo en kilogramos transportado
+      en el correspondiente trayecto. El correo incluye toda la correspondencia y otros objetos enviados
+      por una administración postal para ser entregados a otra. Debe reportarse en kilogramos'

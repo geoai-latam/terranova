@@ -73,6 +73,11 @@ PATRONES_ENTRADA: dict[str, str] = {
     "codigo_estacion_ideam": r"^[0-9]{10}$",
     # campo de hidrocarburos (ANH): como `nombre`, pero con dígitos (BALLENA 2, LLANOS-58-4)
     "campo_hidrocarburos": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 .-]{0,79}$",
+    # aeropuerto en la Aerocivil: sigla IATA de 3 caracteres (BOG); los aeródromos sin IATA llevan
+    # una sigla propia de la Aerocivil con dígitos (1GH)
+    "codigo_iata": r"^[A-Z0-9]{3}$",
+    # indicador de lugar OACI del aeródromo (SKBO); algunos aeródromos menores tienen 3 caracteres
+    "codigo_oaci": r"^[A-Z0-9]{3,4}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -104,6 +109,8 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
         "0028025502",
     ),
     "campo_hidrocarburos": ("nombre del campo de hidrocarburos (ANH)", "Rubiales"),
+    "codigo_iata": ("sigla IATA del aeropuerto, 3 caracteres en mayúscula", "BOG"),
+    "codigo_oaci": ("indicador OACI del aeródromo, 4 caracteres en mayúscula", "SKBO"),
 }
 
 TipoEntrada = Literal[
@@ -133,6 +140,8 @@ TipoEntrada = Literal[
     "anio",
     "codigo_estacion_ideam",
     "campo_hidrocarburos",
+    "codigo_iata",
+    "codigo_oaci",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 

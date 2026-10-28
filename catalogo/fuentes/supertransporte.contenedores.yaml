@@ -1,0 +1,48 @@
+id: supertransporte.contenedores
+titulo: "Contenedores (TEU) por zona portuaria y sociedad portuaria (Supertransporte)"
+entidad: Superintendencia de Transporte (Supertransporte)
+competencia: inspecciona, vigila y controla a las sociedades portuarias y consolida el tráfico portuario que estas reportan (Decreto 2409 de 2018)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/7tvr-cx9w.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Superintendencia de Transporte. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# ~2 800 filas desde 2018: una por zona, sociedad portuaria, embalaje (TEU llenos o vacíos) y mes. Los
+# tipos de tráfico sin movimiento vienen vacíos, no en cero: el total se suma con coalesce.
+url: https://www.datos.gov.co/resource/7tvr-cx9w.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, periodo: "2018 al año en curso"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  zona_portuaria: {nombre: zona_portuaria, tipo: str, desc: "zona portuaria"}
+  sociedad_portuaria: {nombre: sociedad_portuaria, tipo: str, desc: "sociedad portuaria que reporta"}
+  tipo_de_embalaje: {nombre: embalaje, tipo: str, desc: "TEUS llenos o TEUS vacios"}
+  exportacion: {nombre: exportacion_teu, tipo: int, desc: "exportación, en TEU (contenedores de 20 pies)"}
+  importacion: {nombre: importacion_teu, tipo: int, desc: "importación, en TEU"}
+  transbordo: {nombre: transbordo_teu, tipo: int, desc: "transbordo, en TEU"}
+  transito_internacional: {nombre: transito_internacional_teu, tipo: int, desc: "tránsito internacional, en TEU"}
+  fluvial: {nombre: fluvial_teu, tipo: int, desc: "tráfico fluvial, en TEU"}
+  cabotaje: {nombre: cabotaje_teu, tipo: int, desc: "cabotaje, en TEU"}
+  vigencia_anno: {nombre: anio, tipo: int, desc: "año"}
+  vigencia_mes: {nombre: mes, tipo: int, desc: "mes (1 a 12)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Supertransporte, theme: transporte, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una sociedad portuaria, un embalaje (TEU llenos o vacíos) y un mes con sus TEU por tipo de tráfico; 2 815 filas de 2018 a 2026; la zona de Cartagena da 11 grupos en 2025"
+  clave: {columna: sociedad_portuaria, unica: false}
+  operaciones: {filtrar: 0.5, agrupar: 0.9}
+  hallazgos:
+  - "los tipos de tráfico sin movimiento vienen vacíos, no en cero (transbordo vacío en 1 592 de 2 815 filas): sumar las columnas directo daría vacío, el total se suma con coalesce"
+  - "una sociedad puede reportar solo algunos meses (Puerto de Mamonal: 6 meses en 2025): van los meses con datos"
+  decision: "en vivo por zona o sociedad y año, agregado por sociedad y embalaje con el total de TEU"

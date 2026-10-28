@@ -1,0 +1,185 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:27:43+00:00",
+ "herramienta": "supertransporte_contenedores_puerto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "zona_portuaria, sociedad_portuaria, tipo_de_embalaje",
+    "id": "7tvr-cx9w",
+    "max_filas": 300,
+    "order": "zona_portuaria, sociedad_portuaria, tipo_de_embalaje",
+    "portal": "datos.gov.co",
+    "select": "zona_portuaria, sociedad_portuaria, tipo_de_embalaje, sum(exportacion) AS teu_exportacion, sum(importacion) AS teu_importacion, sum(transbordo) AS teu_transbordo, sum(transito_internacional) AS teu_transito_internacional, sum(cabotaje) AS teu_cabotaje, sum(fluvial) AS teu_fluvial, sum(coalesce(exportacion, 0) + coalesce(importacion, 0) + coalesce(transbordo, 0) + coalesce(transito_internacional, 0) + coalesce(cabotaje, 0) + coalesce(fluvial, 0)) AS teu_total, count(distinct vigencia_mes) AS meses_con_datos, max(vigencia_mes) AS hasta_mes",
+    "where": "(upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND vigencia_anno = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_mes",
+       "meses_con_datos",
+       "sociedad_portuaria",
+       "teu_cabotaje",
+       "teu_exportacion",
+       "teu_importacion",
+       "teu_total",
+       "teu_transbordo",
+       "teu_transito_internacional",
+       "tipo_de_embalaje",
+       "zona_portuaria"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "COMPAÑIA DE PUERTOS ASOCIADOS S.A.",
+        "teu_exportacion": "24411",
+        "teu_importacion": "39253",
+        "teu_total": "84498",
+        "teu_transito_internacional": "20834",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "COMPAÑIA DE PUERTOS ASOCIADOS S.A.",
+        "teu_exportacion": "46513",
+        "teu_importacion": "25901",
+        "teu_total": "76807",
+        "teu_transito_internacional": "4393",
+        "tipo_de_embalaje": "TEUS vacios",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "10",
+        "meses_con_datos": "6",
+        "sociedad_portuaria": "PUERTO DE MAMONAL S.A.",
+        "teu_importacion": "192",
+        "teu_total": "192",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "11",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA PUERTO BAHIA SA",
+        "teu_cabotaje": "450",
+        "teu_exportacion": "962",
+        "teu_importacion": "6947",
+        "teu_total": "9642",
+        "teu_transbordo": "1283",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA PUERTO BAHIA SA",
+        "teu_cabotaje": "1194",
+        "teu_exportacion": "2061",
+        "teu_importacion": "40",
+        "teu_total": "13391",
+        "teu_transbordo": "10096",
+        "tipo_de_embalaje": "TEUS vacios",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA REGIONAL DE CARTAGENA SA",
+        "teu_cabotaje": "52136",
+        "teu_exportacion": "116215",
+        "teu_importacion": "128266",
+        "teu_total": "879880",
+        "teu_transbordo": "583263",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA REGIONAL DE CARTAGENA SA",
+        "teu_cabotaje": "25413",
+        "teu_exportacion": "56170",
+        "teu_importacion": "27066",
+        "teu_total": "305198",
+        "teu_transbordo": "196549",
+        "tipo_de_embalaje": "TEUS vacios",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA TRANSMARSYP S.A.",
+        "teu_cabotaje": "6035",
+        "teu_total": "6035",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "SOCIEDAD PORTUARIA TRANSMARSYP S.A.",
+        "teu_cabotaje": "403",
+        "teu_total": "403",
+        "tipo_de_embalaje": "TEUS vacios",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "TERMINAL DE CONTENEDORES DE CARTAGENA S. A.",
+        "teu_cabotaje": "26413",
+        "teu_exportacion": "217059",
+        "teu_importacion": "274673",
+        "teu_total": "2062775",
+        "teu_transbordo": "1544630",
+        "tipo_de_embalaje": "TEUS llenos",
+        "zona_portuaria": "CARTAGENA"
+       },
+       {
+        "hasta_mes": "12",
+        "meses_con_datos": "12",
+        "sociedad_portuaria": "TERMINAL DE CONTENEDORES DE CARTAGENA S. A.",
+        "teu_cabotaje": "22833",
+        "teu_exportacion": "78002",
+        "teu_importacion": "19145",
+        "teu_total": "602915",
+        "teu_transbordo": "482935",
+        "tipo_de_embalaje": "TEUS vacios",
+        "zona_portuaria": "CARTAGENA"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 11,
+      "truncado": false,
+      "vistos": 11
+     },
+     "completo": true,
+     "conjunto": "7tvr-cx9w",
+     "consulta": {
+      "conjunto": "7tvr-cx9w",
+      "group": "zona_portuaria, sociedad_portuaria, tipo_de_embalaje",
+      "max_filas": 300,
+      "portal": "datos.gov.co",
+      "select": "zona_portuaria, sociedad_portuaria, tipo_de_embalaje, sum(exportacion) AS teu_exportacion, sum(importacion) AS teu_importacion, sum(transbordo) AS teu_transbordo, sum(transito_internacional) AS teu_transito_internacional, sum(cabotaje) AS teu_cabotaje, sum(fluvial) AS teu_fluvial, sum(coalesce(exportacion, 0) + coalesce(importacion, 0) + coalesce(transbordo, 0) + coalesce(transito_internacional, 0) + coalesce(cabotaje, 0) + coalesce(fluvial, 0)) AS teu_total, count(distinct vigencia_mes) AS meses_con_datos, max(vigencia_mes) AS hasta_mes",
+      "where": "((upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND vigencia_anno = 2025)"
+     },
+     "filas": 11,
+     "filas_que_resume": 125,
+     "filtro_soql": "((upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND vigencia_anno = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

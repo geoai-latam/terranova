@@ -102,6 +102,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `aerocivil_aeropuertos_buscar` | ¿Cuál es la sigla del aeropuerto de esta ciudad en las estadísticas de la Aerocivil? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 1 |
+| `aerocivil_operaciones_aeropuerto` | ¿Cuántas operaciones aéreas (llegadas y salidas) tuvo este aeródromo en un año? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 5 |
+| `aerocivil_trafico_aeropuerto` | ¿Cuántos pasajeros y cuánta carga movió este aeropuerto en un año, mes a mes? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 5 |
 | `anh_crudo_campo` | ¿Cuánto petróleo (crudo) produjo este campo en un año, mes a mes y por municipio? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
 | `anh_crudo_municipio` | ¿Cuánto petróleo (crudo) produjo este municipio en un año, mes a mes? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
 | `anh_gas_campo` | ¿Cuánto gas produjo este campo en un año, mes a mes y por municipio? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
@@ -136,6 +139,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 2 |
 | `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 5 |
 | `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
+| `supertransporte_contenedores_puerto` | ¿Cuántos contenedores (TEU) movió esta zona portuaria (o sociedad portuaria) en un año? | Superintendencia de Transporte (Supertransporte) | CC-BY-SA-4.0 | 5 |
+| `supertransporte_trafico_portuario` | ¿Cuántas toneladas movió esta zona portuaria (o sociedad portuaria) en un año? | Superintendencia de Transporte (Supertransporte) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 2 |
 
 ## justicia

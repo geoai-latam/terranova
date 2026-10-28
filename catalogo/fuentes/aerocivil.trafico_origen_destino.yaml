@@ -1,0 +1,57 @@
+id: aerocivil.trafico_origen_destino
+titulo: "Transporte aéreo comercial: tráfico origen-destino de pasajeros y carga (Aerocivil)"
+entidad: Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil)
+competencia: autoridad aeronáutica de Colombia; recoge y publica las estadísticas del transporte aéreo comercial (Decreto 1294 de 2021)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/gb6w-ynu4.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# ~478 000 filas de 2020 a 2026: una por aerolínea, mes, par origen-destino, tráfico y tipo de vuelo.
+# Es tráfico ORIGEN-DESTINO del viaje (Pasto→Madrid aparece aunque no haya vuelo directo), no el
+# movimiento físico del aeropuerto: las conexiones no se cuentan en el aeropuerto donde se hacen.
+url: https://www.datos.gov.co/resource/gb6w-ynu4.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, periodo: "2020 a 2026"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  sigla_empresa: {nombre: sigla_aerolinea, tipo: str, desc: "sigla OACI de la aerolínea"}
+  nombre: {nombre: aerolinea, tipo: str, desc: "nombre de la aerolínea"}
+  a_o: {nombre: anio, tipo: int, desc: "año"}
+  n_mero_de_mes: {nombre: mes, tipo: int, desc: "mes (1 a 12)"}
+  origen: {nombre: origen, tipo: str, desc: "sigla IATA del aeropuerto donde empieza el trayecto (la Aerocivil usa siglas propias para aeródromos sin IATA)"}
+  nombre_origen: {nombre: aeropuerto_origen, tipo: str, desc: "nombre del aeropuerto de origen"}
+  ciudad_origen: {nombre: ciudad_origen, tipo: str, desc: "ciudad del aeropuerto de origen"}
+  pais_origen: {nombre: pais_origen, tipo: str, desc: "país del aeropuerto de origen"}
+  destino: {nombre: destino, tipo: str, desc: "sigla IATA del aeropuerto donde termina el trayecto"}
+  nombre_destino: {nombre: aeropuerto_destino, tipo: str, desc: "nombre del aeropuerto de destino"}
+  ciudad_destino: {nombre: ciudad_destino, tipo: str, desc: "ciudad del aeropuerto de destino"}
+  pais_destino: {nombre: pais_destino, tipo: str, desc: "país del aeropuerto de destino"}
+  tr_fico_n_i: {nombre: trafico, tipo: str, desc: "tráfico: N nacional, I internacional, E especial"}
+  tipo_vuelo: {nombre: tipo_vuelo, tipo: str, desc: "tipo de vuelo: R regular, N no regular, A adicional, C chárter, T taxi aéreo"}
+  pasajeros: {nombre: pasajeros, tipo: int, desc: "pasajeros con remuneración comercial (no cuenta a quienes viajan gratis ni a los infantes sin silla)"}
+  carga_correo_kg: {nombre: carga_correo_kg, tipo: float, desc: "carga de pago más correo, en kilogramos"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Aerocivil, theme: transporte, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una aerolínea, un mes y un par origen-destino del viaje con sus pasajeros y kilos; 478 010 filas de 2020 a 2026; El Dorado (BOG) suma 31 637 filas en 2025"
+  clave: {columna: origen, unica: false}
+  operaciones: {filtrar: 1.4, contar: 2.2, agrupar: 2.2}
+  hallazgos:
+  - "es tráfico ORIGEN-DESTINO del viaje, no por tramo volado: Pasto→Madrid suma 933 pasajeros de Avianca en 2025 sin vuelo directo; el que conecta en El Dorado no se cuenta en BOG"
+  - "en aeropuertos sin vuelos internacionales el tráfico internacional va en un solo sentido: Pasto 2025 tiene 962 pasajeros internacionales que salen en enero y 0 que llegan"
+  - "un aeropuerto se cuenta por las filas donde es origen más las filas donde es destino: se agrega en la fuente con sum(case(…)) en una sola consulta"
+  - "el nombre del aeropuerto cambia de grafía entre años («PASTO - ANTONIO NARIQO» en 2020-2021, «NARIÑO» después) pero la sigla es la misma"
+  - "52 filas sin pasajeros (nulas); la carga es carga más correo, en kg"
+  decision: "en vivo por sigla del aeropuerto y año, agregado por mes y tráfico; un buscador por ciudad o nombre da la sigla"

@@ -1,0 +1,38 @@
+id: aerocivil_operaciones_aeropuerto
+version: 1
+familia: estadisticas
+fuente: aerocivil.operaciones
+pregunta: "¿Cuántas operaciones aéreas (llegadas y salidas) tuvo este aeródromo en un año?"
+descripcion: >
+  Operaciones aéreas registradas por las torres de control de la Aerocivil en un aeródromo en un
+  año, mes a mes, por tipo de operación (LLEGADA, SALIDA, TOQUE Y DESPEGUE) y tráfico (N nacional,
+  I internacional), con el total del año. Cuenta todos los vuelos: comerciales, aviación general y
+  militares. El aeródromo va por su indicador OACI de 4 caracteres (SKBO El Dorado, SKRG Rionegro,
+  SKCL Cali, SKCG Cartagena), no por la sigla IATA. Datos de 2017 al año en curso.
+  (Fuente: Aerocivil; licencia: CC BY-SA 4.0.)
+entrada: {aeropuerto_oaci: codigo_oaci, anio: anio}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: jh8x-n6h6
+    portal: datos.gov.co
+    select: "aeropuerto_operacion, anio, mes, tipo_operacion, trafico, sum(totaloperaciones) AS operaciones_mes"
+    where: "aeropuerto_operacion = '{aeropuerto_oaci}' AND anio = '{anio}'"
+    group: "aeropuerto_operacion, anio, mes, tipo_operacion, trafico"
+    order: "mes, tipo_operacion, trafico"
+    max_filas: 200
+  campos: [aeropuerto_operacion, anio, mes, tipo_operacion, trafico]
+derivados:
+  operaciones_mes: {de: columna, campo: operaciones_mes, tipo: int}
+  total_operaciones_anio: {de: suma, campo: operaciones_mes, tipo: int}
+salida: OperacionesAeropuerto
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en jh8x-n6h6: El Dorado (SKBO) 2025 da 48 filas y 390 331 operaciones; la
+  # primera, enero, llegadas internacionales: 5 354.
+  entrada: {aeropuerto_oaci: "SKBO", anio: "2025"}
+  verdad: {mes: "01", tipo_operacion: LLEGADA, trafico: I, operaciones_mes: 5354, total_operaciones_anio: 390331}
+  campos: [aeropuerto_oaci, anio, mes, operaciones_mes, tipo_operacion, total_operaciones_anio, trafico]
+  latencia_max_ms: 15000

@@ -1,0 +1,48 @@
+id: aerocivil_trafico_aeropuerto
+version: 1
+familia: estadisticas
+fuente: aerocivil.trafico_origen_destino
+pregunta: "¿Cuántos pasajeros y cuánta carga movió este aeropuerto en un año, mes a mes?"
+descripcion: >
+  Pasajeros y carga (carga más correo, en kg) del transporte aéreo comercial que salen de y llegan
+  a un aeropuerto en un año, mes a mes y por tráfico (nacional, internacional, especial), según la
+  Aerocivil, con el total del año. El aeropuerto va por su sigla IATA (BOG, MDE, CLO, CTG…; la da
+  aerocivil_aeropuertos_buscar). Es tráfico ORIGEN-DESTINO del viaje, no el movimiento físico del
+  aeropuerto: quien conecta en él no se cuenta allí, y en aeropuertos sin vuelos internacionales la
+  fuente cuenta los pasajeros internacionales que salen pero no los que llegan. Datos de 2020 a 2026.
+  (Fuente: Aerocivil; licencia: CC BY-SA 4.0.)
+entrada: {codigo_aeropuerto: codigo_iata, anio: anio}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: gb6w-ynu4
+    portal: datos.gov.co
+    select: "a_o, n_mero_de_mes, tr_fico_n_i, max(case(origen = '{codigo_aeropuerto}', nombre_origen, true, nombre_destino)) AS aeropuerto, sum(case(origen = '{codigo_aeropuerto}', pasajeros, true, 0)) AS pasajeros_salen, sum(case(destino = '{codigo_aeropuerto}', pasajeros, true, 0)) AS pasajeros_llegan, sum(pasajeros) AS pasajeros_total, sum(case(origen = '{codigo_aeropuerto}', carga_correo_kg, true, 0)) AS carga_sale_kg, sum(case(destino = '{codigo_aeropuerto}', carga_correo_kg, true, 0)) AS carga_llega_kg, sum(carga_correo_kg) AS carga_total_kg"
+    where: "(origen = '{codigo_aeropuerto}' OR destino = '{codigo_aeropuerto}') AND a_o = {anio}"
+    group: "a_o, n_mero_de_mes, tr_fico_n_i"
+    order: "a_o, n_mero_de_mes, tr_fico_n_i"
+    max_filas: 100
+  campos: [a_o, n_mero_de_mes, tr_fico_n_i]
+derivados:
+  aeropuerto: {de: columna, campo: aeropuerto, tipo: str}
+  tipo_trafico: {de: codigo, campo: trafico, valores: {N: nacional, I: internacional, E: especial}}
+  pasajeros_salen: {de: columna, campo: pasajeros_salen, tipo: int}
+  pasajeros_llegan: {de: columna, campo: pasajeros_llegan, tipo: int}
+  pasajeros_total: {de: columna, campo: pasajeros_total, tipo: int}
+  carga_sale_kg: {de: columna, campo: carga_sale_kg, tipo: float}
+  carga_llega_kg: {de: columna, campo: carga_llega_kg, tipo: float}
+  carga_total_kg: {de: columna, campo: carga_total_kg, tipo: float}
+  total_pasajeros_anio: {de: suma, campo: pasajeros_total, tipo: int}
+  total_carga_kg_anio: {de: suma, campo: carga_total_kg, tipo: float}
+salida: TraficoAeropuerto
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en gb6w-ynu4: El Dorado (BOG) 2025 da 24 filas (12 meses x nacional e
+  # internacional) y 39 048 819 pasajeros origen-destino; la primera, enero internacional, 705 833
+  # pasajeros que salen y 689 064 que llegan.
+  entrada: {codigo_aeropuerto: "BOG", anio: "2025"}
+  verdad: {mes: 1, tipo_trafico: internacional, pasajeros_salen: 705833, pasajeros_llegan: 689064, total_pasajeros_anio: 39048819}
+  campos: [aeropuerto, anio, carga_llega_kg, carga_sale_kg, carga_total_kg, mes, pasajeros_llegan, pasajeros_salen, pasajeros_total, tipo_trafico, total_carga_kg_anio, total_pasajeros_anio, trafico]
+  latencia_max_ms: 15000
