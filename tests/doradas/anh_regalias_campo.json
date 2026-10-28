@@ -1,0 +1,184 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:50+00:00",
+ "herramienta": "anh_regalias_campo",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "campo, departamento, municipio, tipohidrocarburo, a_o, mes",
+    "id": "j7js-yk74",
+    "max_filas": 500,
+    "order": "campo, departamento, municipio, tipohidrocarburo, mes",
+    "portal": "datos.gov.co",
+    "previo_group": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+    "previo_select": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+    "select": "campo, departamento, municipio, tipohidrocarburo, a_o, mes, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen",
+    "where": "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND a_o = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "campo",
+       "departamento",
+       "mes",
+       "municipio",
+       "pesos",
+       "tipohidrocarburo",
+       "volumen"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "1",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "84065575789",
+        "tipohidrocarburo": "O",
+        "volumen": "419226.19"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "2",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "74322307935",
+        "tipohidrocarburo": "O",
+        "volumen": "354924.01"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "3",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "88307813173",
+        "tipohidrocarburo": "O",
+        "volumen": "397399.11"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "4",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "92097091551",
+        "tipohidrocarburo": "O",
+        "volumen": "377746.64"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "5",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "93034258877",
+        "tipohidrocarburo": "O",
+        "volumen": "409737.62"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "6",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "97739087715",
+        "tipohidrocarburo": "O",
+        "volumen": "408445.41"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "7",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "102862527000",
+        "tipohidrocarburo": "O",
+        "volumen": "425718.55"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "8",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "97354386443",
+        "tipohidrocarburo": "O",
+        "volumen": "420538.52"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "9",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "83192966204",
+        "tipohidrocarburo": "O",
+        "volumen": "421158.40"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "10",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "89283302651",
+        "tipohidrocarburo": "O",
+        "volumen": "410354.05"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "11",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "84208362779",
+        "tipohidrocarburo": "O",
+        "volumen": "383192.98"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "12",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "84906164608",
+        "tipohidrocarburo": "O",
+        "volumen": "382168.86"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "j7js-yk74",
+     "consulta": {
+      "conjunto": "j7js-yk74",
+      "group": "campo, departamento, municipio, tipohidrocarburo, a_o, mes",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "previo_group": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+      "select": "campo, departamento, municipio, tipohidrocarburo, a_o, mes, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND a_o = 2024)"
+     },
+     "filas": 12,
+     "filas_que_resume": 36,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND a_o = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

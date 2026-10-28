@@ -1,0 +1,50 @@
+id: anh.produccion_gas
+titulo: "Producción fiscalizada de gas por campo y municipio (ANH, mensual desde 2014)"
+entidad: Agencia Nacional de Hidrocarburos (ANH)
+competencia: fiscaliza la producción de hidrocarburos y liquida las regalías (Decreto-Ley 4137 de 2011; Ley 2056 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/5dux-bfvx.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Hidrocarburos (ANH), producción fiscalizada de gas. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Aquí CodDaneMunicipio sí es el DIVIPOLA (número, sin el cero inicial). La producción viene como
+# texto con separador de miles («224,353.07»): se suma en la fuente con replace(…)::number.
+url: https://www.datos.gov.co/resource/5dux-bfvx.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, columna_tiempo: vigencia}
+datos_personales: ninguno
+estado: publicada
+campos:
+  vigencia: {nombre: anio, tipo: int, desc: "año de la producción"}
+  mes: {nombre: mes, tipo: int, desc: "mes de la producción (1 a 12)"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento, en mayúsculas y sin tildes como lo escribe la ANH"}
+  coddanemunicipio: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio (número, sin el cero inicial: 5001); x9999 es «MUNICIPIO NN» y x9000 «PENDIENTE CERTIFICADO IGAC»"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio como lo escribe la ANH"}
+  operadora: {nombre: operadora, tipo: str, desc: "empresa operadora que reporta la producción"}
+  contrato: {nombre: contrato, tipo: str, desc: "contrato de exploración y producción o de asociación"}
+  campo: {nombre: campo, tipo: str, desc: "campo de hidrocarburos"}
+  produccionkpc: {nombre: produccion_kpc_texto, tipo: str, desc: "producción del mes en miles de pies cúbicos (kpc), como texto con separador de miles («224,353.07»)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Agencia Nacional de Hidrocarburos, theme: minas y energía, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "la producción de gas de un campo (con su contrato y operadora) en un municipio y un mes, en kpc; 71 311 filas de enero de 2014 a marzo de 2026"
+  clave: {columna: vigencia + mes + coddanemunicipio + contrato + campo, unica: false}  # dos filas si cambió la operadora en el mes
+  operaciones: {filtrar: 0.4, agrupar: 0.4}
+  hallazgos:
+  - "CodDaneMunicipio es el DIVIPOLA como número (Tauramena = 85410; Medellín sería 5001): el filtro acepta el código con cero"
+  - "la producción es texto con separador de miles: replace(…, ',', '')::number"
+  - "3 252 filas sin campo ni producción (de 2014 a 2025): no suman nada"
+  - "noviembre de 2025 está incompleto: 261 filas y 8,2 millones de kpc frente a ~560 filas y ~37 millones en los demás meses"
+  - "las unidades son kpc en el mes: diciembre de 2025 suma 36,9 millones de kpc (~1 190 millones de pies cúbicos diarios)"
+  - "un campo puede repartirse entre municipios y contratos (Cusiana: Tauramena y Aguazul, contratos Tauramena y Río Chitamena)"
+  decision: "en vivo por municipio (DIVIPOLA) o por campo y año, sumando por mes en la fuente"

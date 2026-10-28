@@ -1,0 +1,56 @@
+id: anh.regalias_liquidadas
+titulo: "Liquidación definitiva de regalías de hidrocarburos por campo (ANH, mensual desde 2010)"
+entidad: Agencia Nacional de Hidrocarburos (ANH)
+competencia: fiscaliza la producción de hidrocarburos y liquida las regalías (Decreto-Ley 4137 de 2011; Ley 2056 de 2020)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/j7js-yk74.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Hidrocarburos (ANH), liquidación de regalías por campo. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Las regalías que se causan por producir (lo que la ANH liquida campo a campo), no lo que gasta una
+# entidad territorial: eso es minhacienda.regalias_ejecucion. Sin código DIVIPOLA: el municipio va
+# por nombre y departamento. Los valores son texto con separador de miles; la fuente repite líneas
+# (febrero de 2026 entero), así que se agrupa primero por línea de liquidación y luego se suma.
+url: https://www.datos.gov.co/resource/j7js-yk74.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, columna_tiempo: a_o}
+datos_personales: ninguno
+estado: publicada
+campos:
+  a_o: {nombre: anio, tipo: int, desc: "año de la producción liquidada"}
+  mes: {nombre: mes, tipo: int, desc: "mes de la producción liquidada (1 a 12)"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento productor, en mayúsculas y sin tildes como lo escribe la ANH"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio productor como lo escribe la ANH; «MUNICIPIO NN» es producción que no se puede asignar por situaciones judiciales"}
+  contrato: {nombre: contrato, tipo: str, desc: "contrato de exploración y producción o de asociación"}
+  campo: {nombre: campo, tipo: str, desc: "campo de hidrocarburos"}
+  tipoprod: {nombre: tipo_produccion, tipo: str, desc: "tipo de producción de la línea de liquidación (B, I, P, PI, QB, QI)"}
+  tipohidrocarburo: {nombre: tipo_hidrocarburo_codigo, tipo: str, desc: "O = petróleo, G = gas"}
+  porcregalia: {nombre: porcentaje_regalia, tipo: str, desc: "porcentaje de regalía aplicado (0.08 = 8 %)"}
+  regimenreg: {nombre: regimen, tipo: str, desc: "régimen legal de la regalía (Ley 141 20 %, Ley 756 8 % variable…)"}
+  prodgravableblskpc: {nombre: produccion_gravable_texto, tipo: str, desc: "producción gravable de la línea, en barriles o kpc, como texto con separador de miles"}
+  volumenregaliablskpc: {nombre: volumen_regalia_texto, tipo: str, desc: "volumen de regalía de la línea, en barriles o kpc, como texto con separador de miles"}
+  regaliascop: {nombre: regalias_cop_texto, tipo: str, desc: "regalías liquidadas de la línea en pesos, como texto con separador de miles"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Agencia Nacional de Hidrocarburos, theme: minas y energía, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una línea de liquidación (campo, municipio, mes, tipo de producción, hidrocarburo y régimen) con su producción gravable, volumen y valor de regalía; 218 034 filas de enero de 2010 a marzo de 2026"
+  clave: {columna: a_o + mes + municipio + contrato + campo + tipoprod + tipohidrocarburo + regimenreg + porcregalia, unica: false}
+  operaciones: {filtrar: 0.5, agrupar: 0.5}  # con la etapa previa que quita las líneas repetidas
+  hallazgos:
+  - "no hay código DIVIPOLA: el municipio y el departamento van por nombre, sin tildes salvo unos pocos (SAN MARTÍN, PURIFICACIÓN)"
+  - "febrero de 2026 viene repetido: 2 910 filas y 868 000 millones de pesos, el doble de los demás meses; las copias solo difieren en que una no trae latitud ni longitud. En otros meses hay pocas líneas repetidas (de 2 a 18)"
+  - "se quitan las líneas idénticas en campo, municipio, mes, tipo, hidrocarburo, régimen, porcentaje, producción gravable, volumen y valor antes de sumar"
+  - "una misma producción gravable puede liquidarse en dos regímenes (Rubiales, básica: 12 % y 20 %): la producción gravable no se suma, solo regalías y volumen"
+  - "los valores son texto con separador de miles («80,433,936,928»): replace(…, ',', '')::number"
+  - "es lo que se liquida por producir, no lo que recibe o gasta el municipio (eso es la ejecución del SGR, MinHacienda)"
+  decision: "en vivo por campo o por municipio (nombre y departamento) y año, sin líneas repetidas, sumando regalías y volumen"

@@ -1,0 +1,48 @@
+id: anh_regalias_municipio
+version: 1
+familia: estadisticas
+fuente: anh.regalias_liquidadas
+pregunta: "¿Cuántas regalías generó la producción de petróleo y gas de este municipio en un año, por campo?"
+descripcion: >
+  Regalías que la ANH liquidó por la producción de hidrocarburos en un municipio en un año, por
+  campo y por hidrocarburo (petróleo o gas), en pesos y en volumen de regalía (barriles o kpc), con
+  el total del año. Es lo que se causa por producir en el municipio, no lo que el municipio recibe
+  o gasta del Sistema General de Regalías: eso es minhacienda_regalias_municipio. El municipio va
+  por nombre y con su departamento (p. ej. Puerto Gaitán, Meta): la fuente no trae código DIVIPOLA
+  y se compara sin tildes, mayúsculas ni espacios. Datos de 2010 a marzo de 2026; las líneas que la
+  fuente repite (todo febrero de 2026) se cuentan una vez.
+  (Fuente: ANH; licencia: CC BY-SA 4.0.)
+entrada: {departamento: nombre, municipio: nombre, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: j7js-yk74
+    portal: datos.gov.co
+    # Spec 07: la fuente repite líneas de liquidación (febrero de 2026 entero, con y sin
+    # coordenadas): primero un grupo por línea, luego la suma.
+    previo_select: "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop"
+    previo_group: "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop"
+    select: "departamento, municipio, campo, tipohidrocarburo, a_o, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen"
+    where: "replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('{departamento}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND a_o = {anio}"
+    group: "departamento, municipio, campo, tipohidrocarburo, a_o"
+    order: "departamento, municipio, campo, tipohidrocarburo"
+    max_filas: 500
+  campos: [departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop]
+derivados:
+  hidrocarburo: {de: codigo, campo: tipo_hidrocarburo_codigo, valores: {O: petróleo, G: gas}}
+  regalias_pesos: {de: columna, campo: pesos, tipo: float}
+  volumen_regalia: {de: columna, campo: volumen, tipo: float}
+  regalias_total_pesos: {de: suma, campo: regalias_pesos, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: RegaliasMunicipioProduccion
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en j7js-yk74: Puerto Gaitán (Meta) 2024, 29 filas (campo e hidrocarburo);
+  # la primera, Cabiona (petróleo), $3 163 929 685; el año, $1 704 793 478 038.
+  entrada: {departamento: "Meta", municipio: "Puerto Gaitán", anio: 2024}
+  verdad: {campo: CABIONA, hidrocarburo: petróleo, regalias_pesos: 3163929685.0, regalias_total_pesos: 1704793478038.0}
+  minimos: {numero_registros: 29}
+  campos: [anio, campo, departamento, hidrocarburo, municipio, numero_registros, regalias_pesos, regalias_total_pesos, tipo_hidrocarburo_codigo, volumen_regalia]
+  latencia_max_ms: 20000

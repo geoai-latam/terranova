@@ -1,0 +1,168 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:39+00:00",
+ "herramienta": "anh_crudo_campo",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "campo, departamento, municipio, operadora, vigencia, mes",
+    "id": "fdvb-hsrf",
+    "max_filas": 500,
+    "order": "campo, departamento, municipio, operadora, mes",
+    "portal": "datos.gov.co",
+    "select": "campo, departamento, municipio, operadora, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles",
+    "where": "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "barriles",
+       "campo",
+       "departamento",
+       "mes",
+       "municipio",
+       "operadora",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "barriles": "3077162.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "1",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "2693773.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "2",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "2967649.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "3",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "2844681.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "4",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3041711.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "5",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3011298.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "6",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3135927.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "7",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3114092.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "8",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3092200.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "9",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "3064711.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "10",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "2896263.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "11",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "2920792.00",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "mes": "12",
+        "municipio": "PUERTO GAITAN",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "fdvb-hsrf",
+     "consulta": {
+      "conjunto": "fdvb-hsrf",
+      "group": "campo, departamento, municipio, operadora, vigencia, mes",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "campo, departamento, municipio, operadora, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)"
+     },
+     "filas": 12,
+     "filas_que_resume": 12,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Rubiales'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

@@ -1,0 +1,212 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: anh.regalias_liquidadas
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/j7js-yk74.json
+pagina: https://www.datos.gov.co/d/j7js-yk74
+titulo: Consolidación de liquidación de regalías por campo
+descripcion: 'Información de liquidación definitiva de regalías por campo de hidrocarburos desde el año
+  2010 hasta la fecha. Notas: - Para los registros que no tienen información de geolocalización, su valor
+  en Latitud y Longitud será de 0. -Existen registros con Departamentos denominados ''Departamento NN''
+  o Municipios denominados ''Municipio NN'', que corresponde a situaciones judiciales por las cuales no
+  se les puede asignar a la entidad territorial la información generada.'
+publicado: '2025-10-07'
+datos_actualizados: '2026-06-02'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Minas y Energía
+etiquetas:
+- regalías
+- producción
+- hidrocarburos
+- anh
+- volumen
+filas: 218034
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: 'Nombre de ente territorial tipo Departamento (Ej: SANTANDER)'
+    nulos: 0
+    minimo: ANTIOQUIA
+    maximo: VICHADA
+    comparacion: texto
+    valores:
+      CASANARE: 80916
+      META: 30252
+      HUILA: 22646
+      ARAUCA: 15299
+      SANTANDER: 14349
+      TOLIMA: 11375
+      PUTUMAYO: 9746
+      CESAR: 7325
+      BOYACA: 4677
+      NORTE DE SANTANDER: 4188
+      ANTIOQUIA: 3878
+      SUCRE: 2545
+      BOLIVAR: 2332
+      GUAJIRA: 2140
+      CORDOBA: 2118
+      MAGDALENA: 1247
+      CUNDINAMARCA: 859
+      CAUCA: 729
+      DEPARTAMENTO NN: 635
+      ATLANTICO: 456
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: 'Nombre de ente territorial tipo Municipio (Ej: PUERTO NARE)'
+    nulos: 0
+    minimo: ABEJORRAL
+    maximo: YOPAL
+    comparacion: texto
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    descripcion: Año de registro de regalía definitiva
+    nulos: 0
+    minimo: '2010'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2025': 17428
+      '2023': 16954
+      '2024': 16883
+      '2017': 16868
+      '2022': 15483
+      '2019': 14923
+      '2021': 14764
+      '2018': 14586
+      '2020': 14290
+      '2015': 12578
+      '2014': 11924
+      '2016': 11618
+      '2013': 10016
+      '2012': 8970
+      '2011': 7993
+      '2010': 6894
+      '2026': 5862
+  mes:
+    tipo_fuente: number
+    etiqueta: Mes
+    descripcion: Mes de registro de regalía definitiva
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '2': 21166
+      '3': 19923
+      '1': 19774
+      '10': 17834
+      '11': 17805
+      '12': 17698
+      '8': 17545
+      '9': 17461
+      '7': 17426
+      '4': 17287
+      '5': 17170
+      '6': 16945
+  contrato:
+    tipo_fuente: text
+    etiqueta: Contrato
+    descripcion: Nombre de contrato de hidrocarburo
+    nulos: 0
+    minimo: ABANICO
+    maximo: YAMU
+    comparacion: texto
+  campo:
+    tipo_fuente: text
+    etiqueta: Campo
+    descripcion: Nombre de campo de hidrocarburo
+    nulos: 0
+    minimo: ABANICO
+    maximo: ZORZAL
+    comparacion: texto
+  tipoprod:
+    tipo_fuente: text
+    etiqueta: TipoProd
+    descripcion: 'Tipo de Producción (QB: quema de producción básica, P: producción crudo pesada, B: producción
+      básica, I: producción incremental, QI: quema de producción incremental)'
+    nulos: 0
+    minimo: B
+    maximo: QI
+    comparacion: texto
+    valores:
+      B: 144219
+      QB: 38494
+      I: 23509
+      P: 7968
+      QI: 3074
+      PI: 770
+  tipohidrocarburo:
+    tipo_fuente: text
+    etiqueta: TipoHidrocarburo
+    descripcion: 'Tipo de Hidrocarburo (G: Gas, O: Oil-Petróleo)'
+    nulos: 0
+    minimo: G
+    maximo: O
+    comparacion: texto
+    valores:
+      O: 128742
+      G: 89292
+  porcregalia:
+    tipo_fuente: text
+    etiqueta: PorcRegalia
+    descripcion: Porcentaje de la producción gravable a la cual se le liquidan regalías
+    nulos: 0
+    minimo: '0.04'
+    maximo: '0.20'
+    comparacion: texto
+    valores:
+      '0.20': 73583
+      '0.08': 61068
+      '0.06': 45703
+      '0.12': 26665
+      '0.09': 4129
+      '0.05': 2587
+      '0.07': 2275
+      '0.10': 875
+      '0.15': 740
+      '0.11': 278
+      '0.16': 63
+      '0.04': 40
+      '0.13': 28
+  prodgravableblskpc:
+    tipo_fuente: text
+    etiqueta: ProdGravableBlsKpc
+    descripcion: cantidad de petróleo o gas natural que se extrae y sobre la cual se aplican impuestos
+      o gravámenes (Barriles o Kilopies cúbicos)
+    nulos: 0
+    minimo: '0.00'
+    comparacion: texto
+  volumenregaliablskpc:
+    tipo_fuente: text
+    etiqueta: VolumenRegaliaBlsKpc
+    descripcion: Volumen de la producción Gravable a la cual se le aplican regalías (Barriles o en Kilopies
+      cúbicos)
+    nulos: 0
+    minimo: '0.00'
+    comparacion: texto
+  regaliascop:
+    tipo_fuente: text
+    etiqueta: RegaliasCOP
+    descripcion: Valor de las regalías en pesos colombianos
+    nulos: 0
+    minimo: '0'
+    comparacion: texto
+  regimenreg:
+    tipo_fuente: text
+    etiqueta: RegimenReg
+    descripcion: Norma que aplica para el cálculo de la regalía
+    nulos: 0
+    comparacion: texto
+    valores:
+      Ley 756 8% variable: 115557
+      Ley 141 20%: 73760
+      ARTICULO 39 LEY 756: 26332
+      Ley 508 5% variable: 2385

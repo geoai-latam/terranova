@@ -1,0 +1,40 @@
+id: anh_gas_campo
+version: 1
+familia: estadisticas
+fuente: anh.produccion_gas
+pregunta: "¿Cuánto gas produjo este campo en un año, mes a mes y por municipio?"
+descripcion: >
+  Producción fiscalizada de gas de un campo de hidrocarburos (p. ej. Cusiana, Chuchupa, Ballena) en
+  un año, mes a mes, en kpc (miles de pies cúbicos en el mes), según la ANH, separada por municipio
+  y empresa operadora, con el total del año. El nombre del campo se compara sin tildes, mayúsculas
+  ni espacios, pero completo: Chuchupa y Chuchupa 2 son campos distintos. Datos de 2014 a marzo de
+  2026; noviembre de 2025 está incompleto en la fuente. Para crudo, anh_crudo_campo.
+  (Fuente: ANH; licencia: CC BY-SA 4.0.)
+entrada: {campo: campo_hidrocarburos, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 5dux-bfvx
+    portal: datos.gov.co
+    select: "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc"
+    where: "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('{campo}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = {anio}"
+    group: "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes"
+    order: "campo, departamento, municipio, operadora, mes"
+    max_filas: 500
+  campos: [campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes, produccionkpc]
+derivados:
+  produccion_kpc: {de: columna, campo: kpc, tipo: float}
+  produccion_total_kpc: {de: suma, campo: produccion_kpc, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: ProduccionGasCampo
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 5dux-bfvx: Cusiana 2024 en Aguazul (en 0) y Tauramena, Ecopetrol, 24
+  # filas (Ecopetrol; dos contratos sumados); el año, 25 710 005 kpc.
+  entrada: {campo: "Cusiana", anio: 2024}
+  verdad: {campo: CUSIANA, municipio: AGUAZUL, mes: 1, produccion_kpc: 0.0, produccion_total_kpc: 25710005.0}
+  minimos: {numero_registros: 24}
+  campos: [anio, campo, departamento, mes, municipio, municipio_divipola, numero_registros, operadora, produccion_kpc, produccion_total_kpc]
+  latencia_max_ms: 20000

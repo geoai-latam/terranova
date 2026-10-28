@@ -1,0 +1,144 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: anh.produccion_gas
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/5dux-bfvx.json
+pagina: https://www.datos.gov.co/d/5dux-bfvx
+titulo: Produccion Fiscalizada Gas Consolidada
+descripcion: 'Producción fiscalizada de gas por campo desde el año 2014 hasta 2026. Nota: Existen registros
+  asociados a "MunicipiosNN" que corresponde a producción que no puede asignarse a un municipio por situaciones
+  ajenas a la Agencia Nacional de Hidrocarburos. Los campos de geolocalización que no se encuentran disponibles
+  tienen la longitud en 0 y la latitud en 0'
+publicado: '2025-10-07'
+datos_actualizados: '2026-06-02'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Minas y Energía
+etiquetas:
+- producción
+- gas
+- hidrocarburos
+- fiscalizada
+filas: 71311
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  vigencia:
+    tipo_fuente: number
+    etiqueta: Vigencia
+    descripcion: Año de la producción
+    nulos: 0
+    minimo: '2014'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2024': 6779
+      '2023': 6623
+      '2025': 6459
+      '2022': 6270
+      '2019': 6080
+      '2021': 6075
+      '2020': 6063
+      '2017': 5948
+      '2018': 5946
+      '2015': 5541
+      '2016': 3991
+      '2014': 3860
+      '2026': 1676
+  mes:
+    tipo_fuente: number
+    etiqueta: Mes
+    descripcion: Número de mes de la producción
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '1': 6410
+      '2': 6271
+      '3': 6266
+      '6': 5942
+      '5': 5941
+      '12': 5899
+      '7': 5847
+      '10': 5833
+      '8': 5828
+      '9': 5814
+      '4': 5711
+      '11': 5549
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del Departamento
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+    valores:
+      CASANARE: 22360
+      META: 8491
+      SANTANDER: 5119
+      CESAR: 5050
+      HUILA: 4321
+      PUTUMAYO: 4200
+      ARAUCA: 3744
+      TOLIMA: 3433
+      GUAJIRA: 2556
+      SUCRE: 2205
+      BOYACA: 1860
+      CORDOBA: 1756
+      NORTE DE SANTANDER: 1392
+      ANTIOQUIA: 1244
+      MAGDALENA: 971
+      BOLIVAR: 695
+      DEPARTAMENTO NN: 599
+      CAUCA: 367
+      ATLANTICO: 344
+      CUNDINAMARCA: 331
+  coddanemunicipio:
+    tipo_fuente: number
+    etiqueta: CodDaneMunicipio
+    descripcion: Código que el DANE asigna al Municipio
+    nulos: 0
+    minimo: '5002'
+    maximo: '919999'
+    comparacion: numero
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Nombre del Municipio
+    nulos: 0
+    minimo: ABEJORRAL
+    maximo: YOPAL
+    comparacion: texto
+  operadora:
+    tipo_fuente: text
+    etiqueta: Operadora
+    descripcion: Nombre de la empresa operadora que tiene asignada la producción del campo
+    nulos: 0
+    comparacion: texto
+  contrato:
+    tipo_fuente: text
+    etiqueta: Contrato
+    descripcion: Nombre del contrato de hidrocarburos de donde se obtiene la producción de gas
+    nulos: 0
+    minimo: ABANICO
+    maximo: YAMU
+    comparacion: texto
+  campo:
+    tipo_fuente: text
+    etiqueta: Campo
+    descripcion: Campo en donde se encuentran los pozos de donde se obtiene la producción de gas
+    nulos: 3252
+    minimo: ABANICO
+    maximo: ZORZAL
+    comparacion: texto
+  produccionkpc:
+    tipo_fuente: text
+    etiqueta: ProduccionKpc
+    descripcion: Valor en kilo pies cúbicos de la producción de gas
+    nulos: 3272
+    minimo: '0.00'
+    comparacion: texto

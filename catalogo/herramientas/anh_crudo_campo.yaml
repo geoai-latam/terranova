@@ -1,0 +1,41 @@
+id: anh_crudo_campo
+version: 1
+familia: estadisticas
+fuente: anh.produccion_crudo
+pregunta: "¿Cuánto petróleo (crudo) produjo este campo en un año, mes a mes y por municipio?"
+descripcion: >
+  Producción fiscalizada de crudo de un campo de hidrocarburos (p. ej. Rubiales, Castilla, Caño
+  Limón) en un año, mes a mes, en barriles, según la ANH, separada por municipio y empresa
+  operadora, con el total del año. El nombre del campo se compara sin tildes, mayúsculas ni
+  espacios, pero completo: Castilla y Castilla Norte son campos distintos. Datos de 2014 a marzo de
+  2026; noviembre de 2025 está incompleto en la fuente. Para gas, anh_gas_campo; para regalías,
+  anh_regalias_campo.
+  (Fuente: ANH; licencia: CC BY-SA 4.0.)
+entrada: {campo: campo_hidrocarburos, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: fdvb-hsrf
+    portal: datos.gov.co
+    select: "campo, departamento, municipio, operadora, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles"
+    where: "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('{campo}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = {anio}"
+    group: "campo, departamento, municipio, operadora, vigencia, mes"
+    order: "campo, departamento, municipio, operadora, mes"
+    max_filas: 500
+  campos: [campo, departamento, municipio, operadora, vigencia, mes, produccion_bls]
+derivados:
+  produccion_barriles: {de: columna, campo: barriles, tipo: float}
+  produccion_total_barriles: {de: suma, campo: produccion_barriles, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: ProduccionCrudoCampo
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en fdvb-hsrf: Rubiales 2024, Puerto Gaitán (Meta), Ecopetrol, 12 meses;
+  # enero 3 077 162 barriles; el año, 35 860 259 barriles.
+  entrada: {campo: "Rubiales", anio: 2024}
+  verdad: {campo: RUBIALES, municipio: PUERTO GAITAN, operadora: "ECOPETROL S.A.", mes: 1, produccion_barriles: 3077162.0, produccion_total_barriles: 35860259.0}
+  minimos: {numero_registros: 12}
+  campos: [anio, campo, departamento, mes, municipio, numero_registros, operadora, produccion_barriles, produccion_total_barriles]
+  latencia_max_ms: 20000

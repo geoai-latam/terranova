@@ -1,0 +1,324 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:54+00:00",
+ "herramienta": "anh_regalias_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "departamento, municipio, campo, tipohidrocarburo, a_o",
+    "id": "j7js-yk74",
+    "max_filas": 500,
+    "order": "departamento, municipio, campo, tipohidrocarburo",
+    "portal": "datos.gov.co",
+    "previo_group": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+    "previo_select": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+    "select": "departamento, municipio, campo, tipohidrocarburo, a_o, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen",
+    "where": "replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND a_o = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "campo",
+       "departamento",
+       "municipio",
+       "pesos",
+       "tipohidrocarburo",
+       "volumen"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2024",
+        "campo": "CABIONA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "3163929685",
+        "tipohidrocarburo": "O",
+        "volumen": "11305.46"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CAJUA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "19906150737",
+        "tipohidrocarburo": "O",
+        "volumen": "95541.33"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CAÑO SUR ESTE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "259480909635",
+        "tipohidrocarburo": "O",
+        "volumen": "1230532.50"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CARACARA SUR A",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "21643619",
+        "tipohidrocarburo": "G",
+        "volumen": "906.60"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CARACARA SUR A",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "11364326805",
+        "tipohidrocarburo": "O",
+        "volumen": "42275.05"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CARACARA SUR B Y C",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "9436092",
+        "tipohidrocarburo": "G",
+        "volumen": "391.48"
+       },
+       {
+        "a_o": "2024",
+        "campo": "CARACARA SUR B Y C",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "7700486501",
+        "tipohidrocarburo": "O",
+        "volumen": "28741.51"
+       },
+       {
+        "a_o": "2024",
+        "campo": "ELIZITA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "4902950929",
+        "tipohidrocarburo": "O",
+        "volumen": "18203.56"
+       },
+       {
+        "a_o": "2024",
+        "campo": "GUARROJO",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "2675475421",
+        "tipohidrocarburo": "O",
+        "volumen": "10538.57"
+       },
+       {
+        "a_o": "2024",
+        "campo": "HAMACA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "30428148554",
+        "tipohidrocarburo": "O",
+        "volumen": "164606.52"
+       },
+       {
+        "a_o": "2024",
+        "campo": "JASPE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "52511715",
+        "tipohidrocarburo": "O",
+        "volumen": "244.05"
+       },
+       {
+        "a_o": "2024",
+        "campo": "MAUTE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "2611305456",
+        "tipohidrocarburo": "O",
+        "volumen": "11795.97"
+       },
+       {
+        "a_o": "2024",
+        "campo": "OCELOTE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "95686",
+        "tipohidrocarburo": "G",
+        "volumen": "3.36"
+       },
+       {
+        "a_o": "2024",
+        "campo": "OCELOTE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "51293497230",
+        "tipohidrocarburo": "O",
+        "volumen": "199806.52"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PEGUITA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "9698975967",
+        "tipohidrocarburo": "O",
+        "volumen": "36030.22"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PEGUITA II",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "4049986867",
+        "tipohidrocarburo": "O",
+        "volumen": "15039.24"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PEGUITA III",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "3589335368",
+        "tipohidrocarburo": "O",
+        "volumen": "13358.51"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PEGUITA SW",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "4449775930",
+        "tipohidrocarburo": "O",
+        "volumen": "16565.57"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PENDARE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "25742663106",
+        "tipohidrocarburo": "O",
+        "volumen": "116236.34"
+       },
+       {
+        "a_o": "2024",
+        "campo": "Pendare Norte",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "31758956668",
+        "tipohidrocarburo": "O",
+        "volumen": "143340.96"
+       },
+       {
+        "a_o": "2024",
+        "campo": "PINTADO",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "7000343180",
+        "tipohidrocarburo": "O",
+        "volumen": "27617.81"
+       },
+       {
+        "a_o": "2024",
+        "campo": "QUIFA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "141845197393",
+        "tipohidrocarburo": "O",
+        "volumen": "650077.51"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RANCHO QUEMADO",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "555036318",
+        "tipohidrocarburo": "O",
+        "volumen": "2017.45"
+       },
+       {
+        "a_o": "2024",
+        "campo": "RUBIALES",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "1071373844725",
+        "tipohidrocarburo": "O",
+        "volumen": "4810610.34"
+       },
+       {
+        "a_o": "2024",
+        "campo": "SABANERO",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "5077306833",
+        "tipohidrocarburo": "O",
+        "volumen": "23637.78"
+       },
+       {
+        "a_o": "2024",
+        "campo": "TORO SENTADO",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "1699177534",
+        "tipohidrocarburo": "O",
+        "volumen": "6211.41"
+       },
+       {
+        "a_o": "2024",
+        "campo": "TORO SENTADO NORTE",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "3446439548",
+        "tipohidrocarburo": "O",
+        "volumen": "12670.95"
+       },
+       {
+        "a_o": "2024",
+        "campo": "TORO SENTADO WEST",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "814058049",
+        "tipohidrocarburo": "O",
+        "volumen": "2955.82"
+       },
+       {
+        "a_o": "2024",
+        "campo": "UNUMA",
+        "departamento": "META",
+        "municipio": "PUERTO GAITAN",
+        "pesos": "81512487",
+        "tipohidrocarburo": "O",
+        "volumen": "306.24"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 29,
+      "truncado": false,
+      "vistos": 29
+     },
+     "completo": true,
+     "conjunto": "j7js-yk74",
+     "consulta": {
+      "conjunto": "j7js-yk74",
+      "group": "departamento, municipio, campo, tipohidrocarburo, a_o",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "previo_group": "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop",
+      "select": "departamento, municipio, campo, tipohidrocarburo, a_o, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND a_o = 2024)"
+     },
+     "filas": 29,
+     "filas_que_resume": 375,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND a_o = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

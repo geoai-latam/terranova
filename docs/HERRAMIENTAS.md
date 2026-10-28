@@ -100,6 +100,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `anh_crudo_campo` | ¿Cuánto petróleo (crudo) produjo este campo en un año, mes a mes y por municipio? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
+| `anh_crudo_municipio` | ¿Cuánto petróleo (crudo) produjo este municipio en un año, mes a mes? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
+| `anh_gas_campo` | ¿Cuánto gas produjo este campo en un año, mes a mes y por municipio? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
+| `anh_gas_municipio` | ¿Cuánto gas produjo este municipio en un año, mes a mes? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
+| `anh_regalias_campo` | ¿Cuántas regalías generó este campo petrolero o de gas en un año, mes a mes? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
+| `anh_regalias_municipio` | ¿Cuántas regalías generó la producción de petróleo y gas de este municipio en un año, por campo? | Agencia Nacional de Hidrocarburos (ANH) | CC-BY-SA-4.0 | 5 |
 | `banrep_dtf_recientes` | ¿Cuál es la DTF? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_ibr_recientes` | ¿Cómo va el IBR en sus distintos plazos? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |

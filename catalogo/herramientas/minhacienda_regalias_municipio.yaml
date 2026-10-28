@@ -6,7 +6,9 @@ pregunta: "¿Cuánta plata de regalías tiene presupuestada este municipio y cu�
 descripcion: >
   Presupuesto de inversión del Sistema General de Regalías de un municipio (DIVIPOLA) en el bienio
   vigente, por fondo o asignación: presupuesto, proyectos aprobados y recursos aprobados en pesos.
-  Solo el bienio en curso: el anterior no se publica aquí.
+  Solo el bienio en curso: el anterior no se publica aquí. Es la plata que el municipio tiene para
+  invertir; las regalías que se causan por producir petróleo y gas (liquidación de la ANH) están en
+  anh_regalias_municipio y anh_regalias_campo.
   (Fuente: MinHacienda; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
