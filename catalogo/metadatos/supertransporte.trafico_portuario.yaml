@@ -1,0 +1,235 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supertransporte.trafico_portuario
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/5r3g-zv5z.json
+pagina: https://www.datos.gov.co/d/5r3g-zv5z
+titulo: Trafico Portuario Marítimo En Colombia
+descripcion: 'Consolida los datos de la cantidad en toneladas y el tipo de carga transportada por las
+  embarcaciones marítimas y fluviales por sociedad portuaria en cada una de las zonas portuarias del país,
+  con registros de llegada y salida de artículos y productos. Datos desde el 1 de enero de 2018. Nota:
+  Los datos de Tráfico Portuario pueden presentar actualizaciones en las cifras, atendiendo a las solicitudes
+  allegadas por las sociedades portuarias a la superintendencia de transporte por errores en la transmisión
+  de los datos. Las actualizaciones se verán reflejadas en posteriores publicaciones, con el fin de garantizar
+  la exactitud del dato estadístico. La información publicada en datos abiertos del tráfico portuario
+  es referencial y solo la ST podrá certificar la misma para cada sociedad portuaria.'
+publicado: '2022-06-21'
+datos_actualizados: '2026-10-01'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+etiquetas:
+- supertransporte
+- trafico
+- puertos
+- portuario
+- mar
+- maritimo
+filas: 9683
+campos:
+  zona_portuaria:
+    tipo_fuente: text
+    etiqueta: 'ZONA PORTUARIA               '
+    descripcion: Lugar donde se encuentra ubicado un puerto
+    nulos: 0
+    minimo: BARRANCABERMEJA
+    comparacion: texto
+    valores:
+      CARTAGENA: 3315
+      BARRANQUILLA: 2011
+      BUENAVENTURA: 1123
+      SANTA MARTA: 610
+      GUAJIRA: 550
+      SAN ANDRES: 408
+      G. MORROSQUILLO: 392
+      TURBO: 321
+      BARRANCABERMEJA: 296
+      Z.P. RIO MAGDALENA: 238
+      TUMACO: 212
+      CIENAGA: 207
+  sociedad_portuaria:
+    tipo_fuente: text
+    etiqueta: SOCIEDAD PORTUARIA
+    descripcion: Sociedad portuaria
+    nulos: 0
+    comparacion: texto
+  tipo_servicio:
+    tipo_fuente: text
+    etiqueta: TIPO DE SERVICIO
+    descripcion: Nombre de la clasificación de tipo de servicio
+    nulos: 0
+    minimo: PRIVADO
+    maximo: PUBLICO
+    comparacion: texto
+    valores:
+      PUBLICO: 8020
+      PRIVADO: 1663
+  tipo_carga:
+    tipo_fuente: text
+    etiqueta: TIPO DE CARGA
+    descripcion: Nombre de la clasificación del Tipo de carga
+    nulos: 0
+    comparacion: texto
+    valores:
+      GRANEL LIQUIDO: 2953
+      GENERAL: 2092
+      GRANEL SOLIDO DIFER. DE CARBON: 1902
+      CONTENEDORES: 1578
+      CARBON AL GRANEL: 1158
+  exportacion:
+    tipo_fuente: number
+    etiqueta: EXPORTACION
+    descripcion: Tráfico de carga de exportación definida en toneladas
+    nulos: 0
+    minimo: '0'
+    maximo: '3418965'
+    comparacion: numero
+  importacion:
+    tipo_fuente: number
+    etiqueta: IMPORTACIÓN
+    descripcion: Tráfico de carga de importación definida en toneladas
+    nulos: 0
+    minimo: '0'
+    maximo: '1600188'
+    comparacion: numero
+  transbordo:
+    tipo_fuente: number
+    etiqueta: TRANSBORDO
+    descripcion: Información de transbordo
+    nulos: 0
+    minimo: '0'
+    maximo: '1761321'
+    comparacion: numero
+  transito_internacional:
+    tipo_fuente: number
+    etiqueta: TRANSITO INTERNACIONAL
+    descripcion: Información de tránsito internacional
+    nulos: 0
+    minimo: '0'
+    maximo: '72238'
+    comparacion: numero
+    valores:
+      '0': 9446
+      '26': 3
+      '100': 3
+      '108': 2
+      '165': 2
+      '63': 2
+      '156': 2
+      '46': 2
+      '284': 2
+      '176': 2
+      '54': 2
+      '197': 2
+      '140': 2
+      '93': 2
+      '30': 2
+      '127': 2
+      '35': 2
+      '6000': 1
+      '122': 1
+      '13260': 1
+  fluvial:
+    tipo_fuente: number
+    etiqueta: FLUVIAL
+    descripcion: Tránsito Fluvial definida en toneladas
+    nulos: 0
+    minimo: '0'
+    maximo: '157133'
+    comparacion: numero
+  cabotaje:
+    tipo_fuente: number
+    etiqueta: CABOTAJE
+    descripcion: Tránsito Cabotaje definida en toneladas
+    nulos: 0
+    minimo: '0'
+    maximo: '1595355'
+    comparacion: numero
+  movilizaciones_a_bordo:
+    tipo_fuente: number
+    etiqueta: MOVILIZACIONES A BORDO
+    descripcion: MOVILIZACIONES A BORDO
+    nulos: 0
+    minimo: '0'
+    maximo: '12376'
+    comparacion: numero
+    valores:
+      '0': 9674
+      '1500': 1
+      '43': 1
+      '3': 1
+      '4024': 1
+      '6000': 1
+      '234': 1
+      '12376': 1
+      '716': 1
+      '4246': 1
+  transitoria:
+    tipo_fuente: number
+    etiqueta: TRANSITORIA
+    descripcion: TRANSITORIA
+    nulos: 0
+    minimo: '0'
+    maximo: '4997'
+    comparacion: numero
+    valores:
+      '0': 9538
+      '139': 2
+      '373': 2
+      '270': 2
+      '380': 2
+      '218': 1
+      '599': 1
+      '1335': 1
+      '169': 1
+      '224': 1
+      '82': 1
+      '166': 1
+      '635': 1
+      '391': 1
+      '348': 1
+      '142': 1
+      '264': 1
+      '112': 1
+      '1877': 1
+      '500': 1
+  anno_vigencia:
+    tipo_fuente: number
+    etiqueta: AÑO VIGENCIA
+    descripcion: año en que se genera la información
+    nulos: 0
+    minimo: '2018'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2022': 1161
+      '2018': 1158
+      '2023': 1156
+      '2021': 1146
+      '2024': 1145
+      '2019': 1137
+      '2020': 1121
+      '2025': 1112
+      '2026': 547
+  mes_vigencia:
+    tipo_fuente: number
+    etiqueta: MES VIGENCIA
+    descripcion: mes en que se genera la información
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '3': 860
+      '4': 848
+      '1': 848
+      '6': 840
+      '2': 833
+      '5': 832
+      '7': 815
+      '8': 811
+      '9': 759
+      '12': 753
+      '11': 744
+      '10': 740

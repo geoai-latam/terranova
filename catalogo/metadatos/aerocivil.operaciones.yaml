@@ -1,0 +1,135 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: aerocivil.operaciones
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/jh8x-n6h6.json
+pagina: https://www.datos.gov.co/d/jh8x-n6h6
+titulo: Operaciones aéreas acumuladas en Colombia
+descripcion: 'Conjunto de datos que consolida el total de operaciones aéreas registradas en los aeródromos
+  de Colombia con periodicidad mensual, correspondiente al periodo comprendido entre el año 2017 y el
+  año en curso. La información se presenta de forma agregada y desagregada según los campos: año, mes,
+  aeropuerto operación, origen, destino, empresa, explotador, tipo de vuelo, tipo de tráfico, tipo de
+  operación y total operaciones. Estos datos se emplean para el análisis estadístico del transporte aéreo
+  y el seguimiento de la actividad aeronáutica nacional e internacional. Se aclara que los campos EMPRESA
+  y EXPLOTADOR no forman parte de la información capturada directamente en las fuentes de datos de origen,
+  por lo cual pueden presentar registros en blanco. Estos campos son calculados de manera derivada a partir
+  del callsign y de la matrícula de la aeronave, respectivamente, información obtenida de los sistemas
+  de vigilancia y control, las fajas de progreso, los diarios de superficie y las planillas registradas
+  en las torres de control. El conjunto de datos se actualiza trimestralmente, incorporando en cada ciclo
+  los archivos correspondientes a los periodos faltantes hasta completar el año e…'
+publicado: '2026-02-05'
+datos_actualizados: '2026-08-20'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+filas: 1291442
+campos:
+  anio:
+    tipo_fuente: text
+    etiqueta: ANIO
+    descripcion: Periodo cronológico anual en el que se registran las operaciones aéreas.
+    nulos: 0
+    minimo: '2017'
+    maximo: '2026'
+    comparacion: texto
+    valores:
+      '2022': 145920
+      '2021': 142499
+      '2019': 140288
+      '2023': 138179
+      '2025': 138138
+      '2024': 135734
+      '2018': 130791
+      '2017': 127969
+      '2020': 111360
+      '2026': 80564
+  mes:
+    tipo_fuente: text
+    etiqueta: MES
+    descripcion: Periodo cronológico mensual en el que se registran las operaciones aéreas.
+    nulos: 0
+    minimo: '01'
+    maximo: '12'
+    comparacion: texto
+    valores:
+      '03': 113145
+      '07': 111069
+      '02': 110291
+      '01': 109569
+      '05': 108735
+      '06': 108336
+      '12': 108221
+      '10': 106994
+      '11': 105032
+      '04': 104184
+      09: 103373
+      08: 102493
+  aeropuerto_operacion:
+    tipo_fuente: text
+    etiqueta: AEROPUERTO_OPERACION
+    descripcion: Indicador de lugar OACI del aeropuerto de registro de la operación
+    nulos: 0
+    minimo: 2EC
+    maximo: ZZZZ
+    comparacion: texto
+  origen:
+    tipo_fuente: text
+    etiqueta: ORIGEN
+    descripcion: Punto de partida de la aeronave
+    nulos: 0
+    minimo: 2EC
+    maximo: ZZZZ
+    comparacion: texto
+  destino:
+    tipo_fuente: text
+    etiqueta: DESTINO
+    descripcion: Punto de llegada de la aeronave
+    nulos: 0
+    minimo: 2EC
+    maximo: ZZZZ
+    comparacion: texto
+  tipo_vuelo:
+    tipo_fuente: text
+    etiqueta: TIPO_VUELO
+    descripcion: Clasificación por propósito del vuelo
+    nulos: 26
+    minimo: G
+    maximo: X
+    comparacion: texto
+    valores:
+      N: 579339
+      G: 274704
+      M: 231900
+      S: 184630
+      X: 20843
+  trafico:
+    tipo_fuente: text
+    etiqueta: TRAFICO
+    descripcion: Clasificación geográfica del servicio
+    nulos: 0
+    minimo: I
+    maximo: N
+    comparacion: texto
+    valores:
+      N: 1168560
+      I: 122882
+  tipo_operacion:
+    tipo_fuente: text
+    etiqueta: TIPO_OPERACION
+    descripcion: Naturaleza del movimiento en pista
+    nulos: 0
+    minimo: LLEGADA
+    comparacion: texto
+    valores:
+      LLEGADA: 638664
+      SALIDA: 619194
+      TOQUE Y DESPEGUE: 33584
+  totaloperaciones:
+    tipo_fuente: number
+    etiqueta: TotalOperaciones
+    descripcion: Conteo volumétrico de movimientos
+    nulos: 0
+    minimo: '1'
+    maximo: '3219'
+    comparacion: numero

@@ -1,0 +1,443 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:27:39+00:00",
+ "herramienta": "aerocivil_operaciones_aeropuerto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "aeropuerto_operacion, anio, mes, tipo_operacion, trafico",
+    "id": "jh8x-n6h6",
+    "max_filas": 200,
+    "order": "mes, tipo_operacion, trafico",
+    "portal": "datos.gov.co",
+    "select": "aeropuerto_operacion, anio, mes, tipo_operacion, trafico, sum(totaloperaciones) AS operaciones_mes",
+    "where": "aeropuerto_operacion = 'SKBO' AND anio = '2025'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "aeropuerto_operacion",
+       "anio",
+       "mes",
+       "operaciones_mes",
+       "tipo_operacion",
+       "trafico"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "01",
+        "operaciones_mes": "5354",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "01",
+        "operaciones_mes": "11073",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "01",
+        "operaciones_mes": "5264",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "01",
+        "operaciones_mes": "11191",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "02",
+        "operaciones_mes": "4792",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "02",
+        "operaciones_mes": "10316",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "02",
+        "operaciones_mes": "4704",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "02",
+        "operaciones_mes": "10397",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "03",
+        "operaciones_mes": "5168",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "03",
+        "operaciones_mes": "11184",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "03",
+        "operaciones_mes": "5103",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "03",
+        "operaciones_mes": "11220",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "04",
+        "operaciones_mes": "5356",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "04",
+        "operaciones_mes": "10339",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "04",
+        "operaciones_mes": "5294",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "04",
+        "operaciones_mes": "10398",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "05",
+        "operaciones_mes": "5417",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "05",
+        "operaciones_mes": "10673",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "05",
+        "operaciones_mes": "5342",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "05",
+        "operaciones_mes": "10751",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "06",
+        "operaciones_mes": "5250",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "06",
+        "operaciones_mes": "10328",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "06",
+        "operaciones_mes": "5166",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "06",
+        "operaciones_mes": "10416",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "07",
+        "operaciones_mes": "5489",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "07",
+        "operaciones_mes": "10736",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "07",
+        "operaciones_mes": "5419",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "07",
+        "operaciones_mes": "10806",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "08",
+        "operaciones_mes": "5493",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "08",
+        "operaciones_mes": "10805",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "08",
+        "operaciones_mes": "5407",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "08",
+        "operaciones_mes": "10891",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "09",
+        "operaciones_mes": "5154",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "09",
+        "operaciones_mes": "10695",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "09",
+        "operaciones_mes": "5060",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "09",
+        "operaciones_mes": "10784",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "10",
+        "operaciones_mes": "5511",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "10",
+        "operaciones_mes": "11280",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "10",
+        "operaciones_mes": "5426",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "10",
+        "operaciones_mes": "11341",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "11",
+        "operaciones_mes": "5366",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "11",
+        "operaciones_mes": "11593",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "11",
+        "operaciones_mes": "5261",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "11",
+        "operaciones_mes": "11701",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "12",
+        "operaciones_mes": "5683",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "12",
+        "operaciones_mes": "12137",
+        "tipo_operacion": "LLEGADA",
+        "trafico": "N"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "12",
+        "operaciones_mes": "5606",
+        "tipo_operacion": "SALIDA",
+        "trafico": "I"
+       },
+       {
+        "aeropuerto_operacion": "SKBO",
+        "anio": "2025",
+        "mes": "12",
+        "operaciones_mes": "12191",
+        "tipo_operacion": "SALIDA",
+        "trafico": "N"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 48,
+      "truncado": false,
+      "vistos": 48
+     },
+     "completo": true,
+     "conjunto": "jh8x-n6h6",
+     "consulta": {
+      "conjunto": "jh8x-n6h6",
+      "group": "aeropuerto_operacion, anio, mes, tipo_operacion, trafico",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "aeropuerto_operacion, anio, mes, tipo_operacion, trafico, sum(totaloperaciones) AS operaciones_mes",
+      "where": "(aeropuerto_operacion = 'SKBO' AND anio = '2025')"
+     },
+     "filas": 48,
+     "filas_que_resume": 18476,
+     "filtro_soql": "(aeropuerto_operacion = 'SKBO' AND anio = '2025')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

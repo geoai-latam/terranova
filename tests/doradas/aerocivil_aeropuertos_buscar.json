@@ -1,0 +1,87 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:27:38+00:00",
+ "herramienta": "aerocivil_aeropuertos_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "origen, nombre_origen, ciudad_origen, pais_origen",
+    "id": "gb6w-ynu4",
+    "max_filas": 30,
+    "order": "pasajeros_salen DESC, origen",
+    "portal": "datos.gov.co",
+    "select": "origen, nombre_origen, ciudad_origen, pais_origen, min(a_o) AS desde, max(a_o) AS hasta, sum(pasajeros) AS pasajeros_salen",
+    "where": "upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad_origen",
+       "desde",
+       "hasta",
+       "nombre_origen",
+       "origen",
+       "pais_origen",
+       "pasajeros_salen"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad_origen": "PASTO",
+        "desde": "2022",
+        "hasta": "2026",
+        "nombre_origen": "PASTO - ANTONIO NARIÑO",
+        "origen": "PSO",
+        "pais_origen": "COLOMBIA",
+        "pasajeros_salen": "1703937"
+       },
+       {
+        "ciudad_origen": "PASTO",
+        "desde": "2020",
+        "hasta": "2021",
+        "nombre_origen": "PASTO - ANTONIO NARIQO",
+        "origen": "PSO",
+        "pais_origen": "COLOMBIA",
+        "pasajeros_salen": "209469"
+       },
+       {
+        "ciudad_origen": "PASTO",
+        "desde": "2020",
+        "hasta": "2020",
+        "nombre_origen": "BANCO DE LA REPUBLICA-PASTO",
+        "origen": "BNC",
+        "pais_origen": "COLOMBIA",
+        "pasajeros_salen": "0"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 3,
+      "truncado": false,
+      "vistos": 3
+     },
+     "completo": true,
+     "conjunto": "gb6w-ynu4",
+     "consulta": {
+      "conjunto": "gb6w-ynu4",
+      "group": "origen, nombre_origen, ciudad_origen, pais_origen",
+      "max_filas": 30,
+      "portal": "datos.gov.co",
+      "select": "origen, nombre_origen, ciudad_origen, pais_origen, min(a_o) AS desde, max(a_o) AS hasta, sum(pasajeros) AS pasajeros_salen",
+      "where": "(upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%'))"
+     },
+     "filas": 3,
+     "filas_que_resume": 4367,
+     "filtro_soql": "(upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

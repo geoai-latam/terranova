@@ -1,0 +1,38 @@
+id: aerocivil_aeropuertos_buscar
+version: 1
+familia: estadisticas
+fuente: aerocivil.trafico_origen_destino
+pregunta: "¿Cuál es la sigla del aeropuerto de esta ciudad en las estadísticas de la Aerocivil?"
+descripcion: >
+  Busca aeropuertos por el nombre de la ciudad o del aeropuerto (o parte de él) en las estadísticas
+  de transporte aéreo de la Aerocivil y da su sigla IATA (la que pide aerocivil_trafico_aeropuerto),
+  el nombre con que lo reporta la fuente, la ciudad y el país, los años con vuelos comerciales y los
+  pasajeros que salieron de él desde 2020. Un mismo aeropuerto puede salir con dos grafías.
+  (Fuente: Aerocivil; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: gb6w-ynu4
+    portal: datos.gov.co
+    select: "origen, nombre_origen, ciudad_origen, pais_origen, min(a_o) AS desde, max(a_o) AS hasta, sum(pasajeros) AS pasajeros_salen"
+    where: "upper(ciudad_origen) like upper('%{nombre}%') OR upper(nombre_origen) like upper('%{nombre}%')"
+    group: "origen, nombre_origen, ciudad_origen, pais_origen"
+    order: "pasajeros_salen DESC, origen"
+    max_filas: 30
+  campos: [origen, nombre_origen, ciudad_origen, pais_origen]
+derivados:
+  desde: {de: columna, campo: desde, tipo: int}
+  hasta: {de: columna, campo: hasta, tipo: int}
+  pasajeros_salen: {de: columna, campo: pasajeros_salen, tipo: int}
+salida: AeropuertosAerocivil
+cobro: codigo
+canario:
+  # Medido el 2026-10-28 en gb6w-ynu4: «Pasto» da 3 filas; la primera, PSO «PASTO - ANTONIO NARIÑO»
+  # desde 2022 (2020-2021 salen con la grafía rota «NARIQO»).
+  entrada: {nombre: "Pasto"}
+  verdad: {origen: PSO, aeropuerto_origen: "PASTO - ANTONIO NARIÑO", desde: 2022}
+  campos: [aeropuerto_origen, ciudad_origen, desde, hasta, origen, pais_origen, pasajeros_salen]
+  latencia_max_ms: 15000

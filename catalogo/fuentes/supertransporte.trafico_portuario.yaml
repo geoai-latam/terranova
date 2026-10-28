@@ -1,0 +1,55 @@
+id: supertransporte.trafico_portuario
+titulo: "Tráfico portuario en Colombia: toneladas por zona portuaria, sociedad y tipo de carga (Supertransporte)"
+entidad: Superintendencia de Transporte (Supertransporte)
+competencia: inspecciona, vigila y controla a las sociedades portuarias y consolida el tráfico portuario que estas reportan (Decreto 2409 de 2018)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/5r3g-zv5z.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Superintendencia de Transporte. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# ~9 700 filas desde 2018: una por zona portuaria, sociedad portuaria, tipo de servicio, tipo de carga
+# y mes. La Supertransporte avisa que las cifras se corrigen cuando una sociedad retransmite y que
+# son referenciales (solo ella las certifica).
+url: https://www.datos.gov.co/resource/5r3g-zv5z.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, periodo: "2018 al año en curso"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  zona_portuaria: {nombre: zona_portuaria, tipo: str, desc: "zona portuaria (Cartagena, Buenaventura, Ciénaga…)"}
+  sociedad_portuaria: {nombre: sociedad_portuaria, tipo: str, desc: "sociedad portuaria que reporta"}
+  tipo_servicio: {nombre: tipo_servicio, tipo: str, desc: "servicio PUBLICO o PRIVADO"}
+  tipo_carga: {nombre: tipo_carga, tipo: str, desc: "tipo de carga (contenedores, carbón, granel líquido, granel sólido, general)"}
+  exportacion: {nombre: exportacion_t, tipo: float, desc: "exportación, en toneladas"}
+  importacion: {nombre: importacion_t, tipo: float, desc: "importación, en toneladas"}
+  transbordo: {nombre: transbordo_t, tipo: float, desc: "transbordo, en toneladas"}
+  transito_internacional: {nombre: transito_internacional_t, tipo: float, desc: "tránsito internacional, en toneladas"}
+  fluvial: {nombre: fluvial_t, tipo: float, desc: "tráfico fluvial, en toneladas"}
+  cabotaje: {nombre: cabotaje_t, tipo: float, desc: "cabotaje (entre puertos del país), en toneladas"}
+  movilizaciones_a_bordo: {nombre: movilizaciones_a_bordo_t, tipo: float, desc: "movilizaciones a bordo, en toneladas"}
+  transitoria: {nombre: transitoria_t, tipo: float, desc: "carga transitoria, en toneladas"}
+  anno_vigencia: {nombre: anio, tipo: int, desc: "año"}
+  mes_vigencia: {nombre: mes, tipo: int, desc: "mes (1 a 12)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Supertransporte, theme: transporte, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una sociedad portuaria, un tipo de servicio y de carga y un mes con sus toneladas por tipo de tráfico; 9 683 filas de 2018 a agosto de 2026; la zona de Cartagena tiene 405 filas en 2025"
+  clave: {columna: sociedad_portuaria, unica: false}
+  operaciones: {filtrar: 0.5, contar: 0.5, agrupar: 1.2}
+  hallazgos:
+  - "no hay filas repetidas (zona, sociedad, servicio, carga y mes únicos) y ninguna columna de toneladas viene vacía: se suman directo"
+  - "12 zonas portuarias escritas sin tildes y abreviadas (CIENAGA, G. MORROSQUILLO, Z.P. RIO MAGDALENA): se busca por parte del nombre"
+  - "algunos nombres de sociedad llegan con la Ñ rota (el carácter de reemplazo U+FFFD en «COMPAÑIA DE PUERTOS ASOCIADOS»): buscar por la parte sin Ñ"
+  - "2026 llega con menos filas por mes (54 en agosto frente a ~95 en 2025): un año en curso puede estar incompleto, por eso van los meses con datos"
+  - "la Supertransporte avisa que las cifras son referenciales y se corrigen cuando una sociedad retransmite"
+  decision: "en vivo por zona o sociedad y año, agregado por sociedad y tipo de carga con el total de toneladas"

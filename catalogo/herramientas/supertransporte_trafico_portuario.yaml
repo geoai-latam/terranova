@@ -1,0 +1,53 @@
+id: supertransporte_trafico_portuario
+version: 1
+familia: estadisticas
+fuente: supertransporte.trafico_portuario
+pregunta: "¿Cuántas toneladas movió esta zona portuaria (o sociedad portuaria) en un año?"
+descripcion: >
+  Toneladas movidas en un año por las sociedades portuarias de una zona portuaria, o por una
+  sociedad portuaria, buscada por su nombre o parte de él SIN TILDES, como lo escribe la fuente (zonas:
+  CARTAGENA, BARRANQUILLA, BUENAVENTURA, SANTA MARTA, CIENAGA, MORROSQUILLO, GUAJIRA, TURBO, TUMACO,
+  SAN ANDRES, BARRANCABERMEJA, RIO MAGDALENA): por sociedad y tipo de carga (contenedores, carbón, granel líquido, granel sólido,
+  general), con exportación, importación, transbordo, tránsito internacional, cabotaje, fluvial,
+  movilizaciones a bordo y carga transitoria, su suma y el total del año. Trae hasta qué mes hay
+  datos (un año en curso está incompleto). Desde 2018. La Supertransporte avisa que las cifras son
+  referenciales y pueden corregirse.
+  (Fuente: Superintendencia de Transporte; licencia: CC BY-SA 4.0.)
+entrada: {zona_o_sociedad: nombre, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 5r3g-zv5z
+    portal: datos.gov.co
+    select: "zona_portuaria, sociedad_portuaria, tipo_carga, sum(exportacion) AS t_exportacion, sum(importacion) AS t_importacion, sum(transbordo) AS t_transbordo, sum(transito_internacional) AS t_transito_internacional, sum(cabotaje) AS t_cabotaje, sum(fluvial) AS t_fluvial, sum(movilizaciones_a_bordo) AS t_movilizaciones_a_bordo, sum(transitoria) AS t_transitoria, sum(exportacion + importacion + transbordo + transito_internacional + cabotaje + fluvial + movilizaciones_a_bordo + transitoria) AS t_total, count(distinct mes_vigencia) AS meses_con_datos, max(mes_vigencia) AS hasta_mes"
+    where: "(upper(zona_portuaria) like upper('%{zona_o_sociedad}%') OR upper(sociedad_portuaria) like upper('%{zona_o_sociedad}%')) AND anno_vigencia = {anio}"
+    group: "zona_portuaria, sociedad_portuaria, tipo_carga"
+    order: "zona_portuaria, sociedad_portuaria, tipo_carga"
+    max_filas: 500
+  campos: [zona_portuaria, sociedad_portuaria, tipo_carga]
+derivados:
+  toneladas_exportacion: {de: columna, campo: t_exportacion, tipo: float}
+  toneladas_importacion: {de: columna, campo: t_importacion, tipo: float}
+  toneladas_transbordo: {de: columna, campo: t_transbordo, tipo: float}
+  toneladas_transito_internacional: {de: columna, campo: t_transito_internacional, tipo: float}
+  toneladas_cabotaje: {de: columna, campo: t_cabotaje, tipo: float}
+  toneladas_fluvial: {de: columna, campo: t_fluvial, tipo: float}
+  toneladas_movilizaciones_a_bordo: {de: columna, campo: t_movilizaciones_a_bordo, tipo: float}
+  toneladas_transitoria: {de: columna, campo: t_transitoria, tipo: float}
+  toneladas: {de: columna, campo: t_total, tipo: float}
+  meses_con_datos: {de: columna, campo: meses_con_datos, tipo: int}
+  hasta_mes: {de: columna, campo: hasta_mes, tipo: int}
+  total_toneladas_anio: {de: suma, campo: toneladas, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: TraficoPortuario
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 5r3g-zv5z: la zona de Cartagena movió 51 461 527 toneladas en 2025, en
+  # 39 grupos de sociedad y tipo de carga; el primero, Algranel S.A. (granel líquido), 222 993 t.
+  entrada: {zona_o_sociedad: "Cartagena", anio: "2025"}
+  verdad: {sociedad_portuaria: "ALGRANEL S.A.", tipo_carga: "GRANEL LIQUIDO", toneladas: 222993, total_toneladas_anio: 51461527}
+  minimos: {numero_registros: 39}
+  campos: [hasta_mes, meses_con_datos, numero_registros, sociedad_portuaria, tipo_carga, toneladas, toneladas_cabotaje, toneladas_exportacion, toneladas_fluvial, toneladas_importacion, toneladas_movilizaciones_a_bordo, toneladas_transbordo, toneladas_transito_internacional, toneladas_transitoria, total_toneladas_anio, zona_portuaria]
+  latencia_max_ms: 10000

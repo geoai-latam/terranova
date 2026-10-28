@@ -1,0 +1,49 @@
+id: aerocivil.operaciones
+titulo: "Operaciones aéreas (llegadas y salidas) por aeródromo y mes (Aerocivil)"
+entidad: Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil)
+competencia: autoridad aeronáutica de Colombia; presta los servicios de tránsito aéreo y registra las operaciones en las torres de control (Decreto 1294 de 2021)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/jh8x-n6h6.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# ~1,3 millones de filas de 2017 al año en curso. El año y el mes son TEXTO («2025», «01»). La
+# empresa y el explotador los deriva la Aerocivil del indicativo y la matrícula: vienen vacíos en
+# muchas filas y no entran a la lista blanca.
+url: https://www.datos.gov.co/resource/jh8x-n6h6.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P3M}
+cobertura: {pais: CO, periodo: "2017 al año en curso"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  anio: {nombre: anio, tipo: str, desc: "año (texto en la fuente)"}
+  mes: {nombre: mes, tipo: str, desc: "mes con dos dígitos (texto en la fuente: «01»)"}
+  aeropuerto_operacion: {nombre: aeropuerto_oaci, tipo: str, desc: "indicador OACI del aeródromo donde se registró la operación"}
+  origen: {nombre: origen_oaci, tipo: str, desc: "aeródromo de salida de la aeronave (OACI)"}
+  destino: {nombre: destino_oaci, tipo: str, desc: "aeródromo de llegada de la aeronave (OACI)"}
+  tipo_vuelo: {nombre: tipo_vuelo, tipo: str, desc: "tipo de vuelo del plan de vuelo OACI: S regular, N no regular, G aviación general, M militar, X otro"}
+  trafico: {nombre: trafico, tipo: str, desc: "tráfico: N nacional, I internacional"}
+  tipo_operacion: {nombre: tipo_operacion, tipo: str, desc: "LLEGADA, SALIDA o TOQUE Y DESPEGUE"}
+  totaloperaciones: {nombre: operaciones, tipo: int, desc: "número de operaciones"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Aerocivil, theme: transporte, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un aeródromo, un mes, un origen y destino, un tipo de vuelo y de operación con su conteo; 1 291 442 filas de 2017 a 2026; El Dorado (SKBO) tiene 18 476 filas en 2025"
+  clave: {columna: aeropuerto_operacion, unica: false}
+  operaciones: {filtrar: 1.4, contar: 7.7, agrupar: 1.6}
+  hallazgos:
+  - "el aeródromo va por indicador OACI (SKBO), no por la sigla IATA del tráfico de pasajeros (BOG)"
+  - "año y mes son texto («2025», «01»): se comparan como texto"
+  - "cuenta todos los vuelos (tipo S regular, N no regular, G aviación general, M militar, X otro), no solo los comerciales"
+  - "empresa y explotador vienen vacíos en 721 269 y 203 491 filas (la Aerocivil los deriva del indicativo y la matrícula): quedan fuera"
+  decision: "en vivo por indicador OACI y año, agregado por mes, tipo de operación y tráfico"

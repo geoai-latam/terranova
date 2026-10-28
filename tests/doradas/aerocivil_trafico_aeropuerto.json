@@ -1,0 +1,351 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:27:41+00:00",
+ "herramienta": "aerocivil_trafico_aeropuerto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "a_o, n_mero_de_mes, tr_fico_n_i",
+    "id": "gb6w-ynu4",
+    "max_filas": 100,
+    "order": "a_o, n_mero_de_mes, tr_fico_n_i",
+    "portal": "datos.gov.co",
+    "select": "a_o, n_mero_de_mes, tr_fico_n_i, max(case(origen = 'BOG', nombre_origen, true, nombre_destino)) AS aeropuerto, sum(case(origen = 'BOG', pasajeros, true, 0)) AS pasajeros_salen, sum(case(destino = 'BOG', pasajeros, true, 0)) AS pasajeros_llegan, sum(pasajeros) AS pasajeros_total, sum(case(origen = 'BOG', carga_correo_kg, true, 0)) AS carga_sale_kg, sum(case(destino = 'BOG', carga_correo_kg, true, 0)) AS carga_llega_kg, sum(carga_correo_kg) AS carga_total_kg",
+    "where": "(origen = 'BOG' OR destino = 'BOG') AND a_o = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "a_o",
+       "aeropuerto",
+       "carga_llega_kg",
+       "carga_sale_kg",
+       "carga_total_kg",
+       "n_mero_de_mes",
+       "pasajeros_llegan",
+       "pasajeros_salen",
+       "pasajeros_total",
+       "tr_fico_n_i"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "20368059",
+        "carga_sale_kg": "38438798",
+        "carga_total_kg": "58806857",
+        "n_mero_de_mes": "1",
+        "pasajeros_llegan": "689064",
+        "pasajeros_salen": "705833",
+        "pasajeros_total": "1394897",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3169256",
+        "carga_sale_kg": "6188149",
+        "carga_total_kg": "9357405",
+        "n_mero_de_mes": "1",
+        "pasajeros_llegan": "1084070",
+        "pasajeros_salen": "885354",
+        "pasajeros_total": "1969424",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "20425997",
+        "carga_sale_kg": "34488835",
+        "carga_total_kg": "54914832",
+        "n_mero_de_mes": "2",
+        "pasajeros_llegan": "560388",
+        "pasajeros_salen": "563960",
+        "pasajeros_total": "1124348",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3249861",
+        "carga_sale_kg": "6415550",
+        "carga_total_kg": "9665411",
+        "n_mero_de_mes": "2",
+        "pasajeros_llegan": "865594",
+        "pasajeros_salen": "800183",
+        "pasajeros_total": "1665729",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "22181612.9",
+        "carga_sale_kg": "32889544",
+        "carga_total_kg": "55071156.9",
+        "n_mero_de_mes": "3",
+        "pasajeros_llegan": "600253",
+        "pasajeros_salen": "650868",
+        "pasajeros_total": "1251121",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3758183",
+        "carga_sale_kg": "6983029",
+        "carga_total_kg": "10741072",
+        "n_mero_de_mes": "3",
+        "pasajeros_llegan": "952018",
+        "pasajeros_salen": "869680",
+        "pasajeros_total": "1821680",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "21421975",
+        "carga_sale_kg": "44921386",
+        "carga_total_kg": "66343361",
+        "n_mero_de_mes": "4",
+        "pasajeros_llegan": "635565",
+        "pasajeros_salen": "662199",
+        "pasajeros_total": "1297764",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3635493",
+        "carga_sale_kg": "6537149",
+        "carga_total_kg": "10172602",
+        "n_mero_de_mes": "4",
+        "pasajeros_llegan": "894061",
+        "pasajeros_salen": "845139",
+        "pasajeros_total": "1739195",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "22097106",
+        "carga_sale_kg": "36304168",
+        "carga_total_kg": "58401274",
+        "n_mero_de_mes": "5",
+        "pasajeros_llegan": "647356",
+        "pasajeros_salen": "675342",
+        "pasajeros_total": "1322698",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3662275",
+        "carga_sale_kg": "7138163",
+        "carga_total_kg": "10800188",
+        "n_mero_de_mes": "5",
+        "pasajeros_llegan": "902170",
+        "pasajeros_salen": "844748",
+        "pasajeros_total": "1746899",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "20750601.84",
+        "carga_sale_kg": "28847761.5",
+        "carga_total_kg": "49598363.34",
+        "n_mero_de_mes": "6",
+        "pasajeros_llegan": "679677",
+        "pasajeros_salen": "709933",
+        "pasajeros_total": "1389610",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3362174",
+        "carga_sale_kg": "6311326",
+        "carga_total_kg": "9673500",
+        "n_mero_de_mes": "6",
+        "pasajeros_llegan": "956503",
+        "pasajeros_salen": "922622",
+        "pasajeros_total": "1879124",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "22177750.5",
+        "carga_sale_kg": "28313752",
+        "carga_total_kg": "50491502.5",
+        "n_mero_de_mes": "7",
+        "pasajeros_llegan": "778160",
+        "pasajeros_salen": "713191",
+        "pasajeros_total": "1491351",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3364299",
+        "carga_sale_kg": "6867861",
+        "carga_total_kg": "10232160",
+        "n_mero_de_mes": "7",
+        "pasajeros_llegan": "1030083",
+        "pasajeros_salen": "956157",
+        "pasajeros_total": "1986222",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "22376552",
+        "carga_sale_kg": "30364363",
+        "carga_total_kg": "52740915",
+        "n_mero_de_mes": "8",
+        "pasajeros_llegan": "712818",
+        "pasajeros_salen": "734707",
+        "pasajeros_total": "1447525",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3626654",
+        "carga_sale_kg": "7341604",
+        "carga_total_kg": "10968258",
+        "n_mero_de_mes": "8",
+        "pasajeros_llegan": "1011410",
+        "pasajeros_salen": "929481",
+        "pasajeros_total": "1940890",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "26749050",
+        "carga_sale_kg": "32712876",
+        "carga_total_kg": "59461926",
+        "n_mero_de_mes": "9",
+        "pasajeros_llegan": "649255",
+        "pasajeros_salen": "671842",
+        "pasajeros_total": "1321097",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "4106044",
+        "carga_sale_kg": "5596189",
+        "carga_total_kg": "9702233",
+        "n_mero_de_mes": "9",
+        "pasajeros_llegan": "971044",
+        "pasajeros_salen": "902036",
+        "pasajeros_total": "1873080",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "25369564",
+        "carga_sale_kg": "33297745",
+        "carga_total_kg": "58667309",
+        "n_mero_de_mes": "10",
+        "pasajeros_llegan": "701352",
+        "pasajeros_salen": "697470",
+        "pasajeros_total": "1398822",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3809934",
+        "carga_sale_kg": "7216051",
+        "carga_total_kg": "11025985",
+        "n_mero_de_mes": "10",
+        "pasajeros_llegan": "1031665",
+        "pasajeros_salen": "981135",
+        "pasajeros_total": "2012800",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "26274522",
+        "carga_sale_kg": "32912245",
+        "carga_total_kg": "59186767",
+        "n_mero_de_mes": "11",
+        "pasajeros_llegan": "683275",
+        "pasajeros_salen": "634294",
+        "pasajeros_total": "1317569",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3832401",
+        "carga_sale_kg": "7265907",
+        "carga_total_kg": "11098302",
+        "n_mero_de_mes": "11",
+        "pasajeros_llegan": "1053095",
+        "pasajeros_salen": "1007966",
+        "pasajeros_total": "2061060",
+        "tr_fico_n_i": "N"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "28355140",
+        "carga_sale_kg": "33057959",
+        "carga_total_kg": "61413099",
+        "n_mero_de_mes": "12",
+        "pasajeros_llegan": "771064",
+        "pasajeros_salen": "692649",
+        "pasajeros_total": "1463713",
+        "tr_fico_n_i": "I"
+       },
+       {
+        "a_o": "2025",
+        "aeropuerto": "BOGOTA - EL DORADO",
+        "carga_llega_kg": "3712651",
+        "carga_sale_kg": "8015304",
+        "carga_total_kg": "11727871",
+        "n_mero_de_mes": "12",
+        "pasajeros_llegan": "1026463",
+        "pasajeros_salen": "1105748",
+        "pasajeros_total": "2132201",
+        "tr_fico_n_i": "N"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 24,
+      "truncado": false,
+      "vistos": 24
+     },
+     "completo": true,
+     "conjunto": "gb6w-ynu4",
+     "consulta": {
+      "conjunto": "gb6w-ynu4",
+      "group": "a_o, n_mero_de_mes, tr_fico_n_i",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "a_o, n_mero_de_mes, tr_fico_n_i, max(case(origen = 'BOG', nombre_origen, true, nombre_destino)) AS aeropuerto, sum(case(origen = 'BOG', pasajeros, true, 0)) AS pasajeros_salen, sum(case(destino = 'BOG', pasajeros, true, 0)) AS pasajeros_llegan, sum(pasajeros) AS pasajeros_total, sum(case(origen = 'BOG', carga_correo_kg, true, 0)) AS carga_sale_kg, sum(case(destino = 'BOG', carga_correo_kg, true, 0)) AS carga_llega_kg, sum(carga_correo_kg) AS carga_total_kg",
+      "where": "((origen = 'BOG' OR destino = 'BOG') AND a_o = 2025)"
+     },
+     "filas": 24,
+     "filas_que_resume": 31637,
+     "filtro_soql": "((origen = 'BOG' OR destino = 'BOG') AND a_o = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

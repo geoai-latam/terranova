@@ -1,0 +1,46 @@
+id: supertransporte_contenedores_puerto
+version: 1
+familia: estadisticas
+fuente: supertransporte.contenedores
+pregunta: "¿Cuántos contenedores (TEU) movió esta zona portuaria (o sociedad portuaria) en un año?"
+descripcion: >
+  Contenedores movidos en un año, en TEU (unidades de 20 pies), por las sociedades portuarias de una
+  zona portuaria (CARTAGENA, BUENAVENTURA, BARRANQUILLA, SANTA MARTA…) o por una sociedad portuaria,
+  buscada por su nombre o parte de él SIN TILDES, como lo escribe la fuente: por sociedad y embalaje (TEU llenos o vacíos), con
+  exportación, importación, transbordo, tránsito internacional, cabotaje y fluvial, su suma y el
+  total del año. Trae hasta qué mes hay datos (un año en curso está incompleto). Desde 2018.
+  (Fuente: Superintendencia de Transporte; licencia: CC BY-SA 4.0.)
+entrada: {zona_o_sociedad: nombre, anio: anio}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 7tvr-cx9w
+    portal: datos.gov.co
+    select: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje, sum(exportacion) AS teu_exportacion, sum(importacion) AS teu_importacion, sum(transbordo) AS teu_transbordo, sum(transito_internacional) AS teu_transito_internacional, sum(cabotaje) AS teu_cabotaje, sum(fluvial) AS teu_fluvial, sum(coalesce(exportacion, 0) + coalesce(importacion, 0) + coalesce(transbordo, 0) + coalesce(transito_internacional, 0) + coalesce(cabotaje, 0) + coalesce(fluvial, 0)) AS teu_total, count(distinct vigencia_mes) AS meses_con_datos, max(vigencia_mes) AS hasta_mes"
+    where: "(upper(zona_portuaria) like upper('%{zona_o_sociedad}%') OR upper(sociedad_portuaria) like upper('%{zona_o_sociedad}%')) AND vigencia_anno = {anio}"
+    group: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje"
+    order: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje"
+    max_filas: 300
+  campos: [zona_portuaria, sociedad_portuaria, tipo_de_embalaje]
+derivados:
+  teu_exportacion: {de: columna, campo: teu_exportacion, tipo: int}
+  teu_importacion: {de: columna, campo: teu_importacion, tipo: int}
+  teu_transbordo: {de: columna, campo: teu_transbordo, tipo: int}
+  teu_transito_internacional: {de: columna, campo: teu_transito_internacional, tipo: int}
+  teu_cabotaje: {de: columna, campo: teu_cabotaje, tipo: int}
+  teu_fluvial: {de: columna, campo: teu_fluvial, tipo: int}
+  teu: {de: columna, campo: teu_total, tipo: int}
+  meses_con_datos: {de: columna, campo: meses_con_datos, tipo: int}
+  hasta_mes: {de: columna, campo: hasta_mes, tipo: int}
+  total_teu_anio: {de: suma, campo: teu, tipo: int}
+salida: ContenedoresPuerto
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 7tvr-cx9w: la zona de Cartagena movió 4 041 736 TEU en 2025 (11 grupos);
+  # el primero, Compañía de Puertos Asociados (Compas), TEU llenos: 84 498.
+  entrada: {zona_o_sociedad: "Cartagena", anio: "2025"}
+  verdad: {sociedad_portuaria: "COMPAÑIA DE PUERTOS ASOCIADOS S.A.", embalaje: "TEUS llenos", teu: 84498, total_teu_anio: 4041736}
+  campos: [embalaje, hasta_mes, meses_con_datos, sociedad_portuaria, teu, teu_cabotaje, teu_exportacion, teu_fluvial, teu_importacion, teu_transbordo, teu_transito_internacional, total_teu_anio, zona_portuaria]
+  latencia_max_ms: 10000

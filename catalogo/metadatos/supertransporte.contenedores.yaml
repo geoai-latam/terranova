@@ -1,0 +1,166 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: supertransporte.contenedores
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/7tvr-cx9w.json
+pagina: https://www.datos.gov.co/d/7tvr-cx9w
+titulo: Número de contenedores según tráfico portuario por zonas portuarias de Colombia.
+descripcion: Presenta el número de contenedores TEUS (contendedores de 20 pies) según tráfico portuario
+  por zonas portuarias de Colombia. Esta información esta en proceso de ser evaluada por el DANE para
+  recertificación.
+publicado: '2021-05-21'
+datos_actualizados: '2026-10-01'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Transporte
+etiquetas:
+- contenedores
+- feus
+- teus
+- tráfico portuario
+- unidades de contendedores
+- supertransporte
+filas: 2815
+campos:
+  zona_portuaria:
+    tipo_fuente: text
+    etiqueta: Zona portuaria
+    descripcion: Zona geográfica donde se encuentra ubicada la sociedad portuaria
+    nulos: 0
+    minimo: BARRANCABERMEJA
+    maximo: TURBO
+    comparacion: texto
+    valores:
+      CARTAGENA: 1076
+      BUENAVENTURA: 602
+      BARRANQUILLA: 323
+      TURBO: 227
+      SAN ANDRES: 208
+      GUAJIRA: 140
+      SANTA MARTA: 131
+      BARRANCABERMEJA: 107
+      G. MORROSQUILLO: 1
+  sociedad_portuaria:
+    tipo_fuente: text
+    etiqueta: Sociedad Portuaria
+    descripcion: Sociedad portuaria
+    nulos: 0
+    comparacion: texto
+    valores:
+      SOCIEDAD PORTUARIA REGIONAL DE CARTAGENA SA: 208
+      SAN ANDRES PORT SOCIETY SA: 208
+      SOCIEDAD PORTUARIA TERMINAL DE CONTENEDORES DE BUENAVENTURA S.A.: 208
+      TERMINAL DE CONTENEDORES DE CARTAGENA S. A.: 208
+      SOCIEDAD PUERTO INDUSTRIAL AGUADULCE S.A.: 208
+      SOCIEDAD PORTUARIA REGIONAL DE BARRANQUILLA S.A.: 207
+      COMPAÑIA DE PUERTOS ASOCIADOS S.A.: 193
+      SOCIEDAD PORTUARIA TRANSMARSYP S.A.: 190
+      SOCIEDAD PORTUARIA PUERTO BAHIA SA: 189
+      SOCIEDAD PORTUARIA REGIONAL DE BUENAVENTURA S.A: 186
+      CERREJON ZONA NORTE S.A.: 134
+      SOCIEDAD PORTUARIA REGIONAL DE SANTA MARTA SA: 131
+      UNIBAN LOGISTICA S.A: 119
+      PALERMO SOCIEDAD PORTUARIA S.A: 114
+      SOCIEDAD PORTUARIA IMPALA TERMINALS BARRANCABERMEJA S.A.: 107
+      PUERTO DE MAMONAL S.A.: 85
+      C.I. UNIÓN DE BANANEROS DE URABA S.A. - UNIBAN: 64
+      PROMOTORA BANANERA S.A: 44
+      PUERTO BRISA S.A.: 6
+      PUERTO BUENAVISTA S.A: 4
+  tipo_de_embalaje:
+    tipo_fuente: text
+    etiqueta: Tipo de embalaje
+    descripcion: Contenedores (expresados en TEUS)
+    nulos: 0
+    comparacion: texto
+    valores:
+      TEUS llenos: 1489
+      TEUS vacios: 1326
+  exportacion:
+    tipo_fuente: number
+    etiqueta: Exportación
+    descripcion: Tipo de tráfico portuario ( Salida de mercancías del país en TEUS)
+    nulos: 764
+    minimo: '0'
+    maximo: '38575'
+    comparacion: numero
+  importacion:
+    tipo_fuente: number
+    etiqueta: Importación
+    descripcion: Tipo de tráfico portuario (Ingreso de mercancías al país en TEUS)
+    nulos: 683
+    minimo: '0'
+    maximo: '55147'
+    comparacion: numero
+  transbordo:
+    tipo_fuente: number
+    etiqueta: Transbordo
+    descripcion: Tipo de tráfico portuario ( Mercancía transbordada en TEUS)
+    nulos: 1592
+    minimo: '0'
+    maximo: '162300'
+    comparacion: numero
+  transito_internacional:
+    tipo_fuente: number
+    etiqueta: Tránsito Internacional
+    descripcion: Tipo de tráfico portuario (Mercancía en tránsito en TEUS)
+    nulos: 2542
+    minimo: '0'
+    maximo: '5893'
+    comparacion: numero
+  fluvial:
+    tipo_fuente: number
+    etiqueta: Fluvial
+    descripcion: Tipo de tráfico portuario
+    nulos: 2708
+    minimo: '1'
+    maximo: '487'
+    comparacion: numero
+  cabotaje:
+    tipo_fuente: number
+    etiqueta: Cabotaje
+    descripcion: Tipo de tráfico portuario
+    nulos: 1522
+    minimo: '0'
+    maximo: '7310'
+    comparacion: numero
+  vigencia_anno:
+    tipo_fuente: number
+    etiqueta: vigencia_anno
+    descripcion: Año
+    nulos: 0
+    minimo: '2018'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2021': 350
+      '2022': 347
+      '2020': 342
+      '2023': 335
+      '2024': 329
+      '2019': 325
+      '2018': 319
+      '2025': 314
+      '2026': 154
+  vigencia_mes:
+    tipo_fuente: number
+    etiqueta: vigencia_mes
+    descripcion: Mes
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '1': 250
+      '2': 248
+      '6': 243
+      '4': 242
+      '5': 242
+      '3': 240
+      '7': 237
+      '8': 232
+      '9': 227
+      '11': 219
+      '10': 218
+      '12': 217
