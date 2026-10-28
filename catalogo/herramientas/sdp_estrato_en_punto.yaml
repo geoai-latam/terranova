@@ -1,0 +1,36 @@
+id: sdp_estrato_en_punto
+version: 1
+familia: territorio
+fuente: sdp.estratificacion_manzana
+pregunta: "¿Qué estrato socioeconómico tiene este punto de Bogotá?"
+descripcion: >
+  Estrato socioeconómico (1 a 6) de la manzana de Bogotá que contiene un punto, según la
+  estratificación urbana de la Secretaría Distrital de Planeación, con el acto que lo fija. Es el
+  estrato de la manzana: un predio puede tener otro por reclamación, y las manzanas no residenciales
+  salen sin estrato. Solo suelo urbano de Bogotá. Sale de la copia de Terranova.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_estratificacion_manzana
+    punto: ["{lon}", "{lat}"]
+    select: [CODIGO_MANZANA, ESTRATO, NORMATIVA, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 5
+  campos: [CODIGO_MANZANA, ESTRATO, NORMATIVA, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+derivados:
+  estrato_nombre:
+    de: codigo
+    campo: estrato
+    valores: {"0": sin estrato, "1": estrato 1 (bajo-bajo), "2": estrato 2 (bajo), "3": estrato 3 (medio-bajo), "4": estrato 4 (medio), "5": estrato 5 (medio-alto), "6": estrato 6 (alto), "7": sin información, "9": sin estrato}
+salida: EstratoEnPunto
+cobro: punto
+canario:
+  # Chapinero; medido el 2026-10-28 en la capa 1: manzana 00820421, estrato 4, Decreto 394 de 2017.
+  entrada: {lon: -74.0565, lat: 4.6486}
+  verdad: {manzana: "00820421", estrato: 4, numero_acto: "394"}
+  campos: [estrato, estrato_nombre, fecha_acto, manzana, normativa, numero_acto]
+  latencia_max_ms: 5000

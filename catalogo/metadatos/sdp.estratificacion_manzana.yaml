@@ -1,0 +1,52 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: sdp.estratificacion_manzana
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/ordenamientoterritorial/estratificacion/MapServer?f=json
+titulo: Estratificación por manzana
+descripcion: Unidades geográficas tipo manzana a las cuales se les asocia la variable de estrato socioeconómico,
+  siendo esta, la clasificación de los inmuebles residenciales que deben recibir servicios públicos. Se
+  realiza principalmente para cobrar de manera diferencial por estratos los servicios públicos domiciliarios,
+  permitiendo asignar subsidios y cobrar contribuciones.
+filas: 45051
+geografia:
+  geometria: poligono
+  capas:
+    '1': Manzanas de estrato
+campos:
+  OBJECTID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  CODIGO_MANZANA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Identificador Único Código Manzana
+  ESTRATO:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Estrato
+    valores:
+      '2': 15736
+      '3': 12052
+      '1': 7025
+      '0': 5882
+      '4': 2438
+      '5': 1038
+      '6': 880
+    codigos:
+      '0': Sin estrato
+      '1': Estrato 1
+      '2': Estrato 2
+      '3': Estrato 3
+      '4': Estrato 4
+      '5': Estrato 5
+      '6': Estrato 6
+      '7': Sin información
+      '9': Sin estrato
+  NORMATIVA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Normativa
+  NUMERO_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Número Acto Administrativo
+  FECHA_ACTO_ADMINISTRATIVO:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Fecha Acto Administrativo
