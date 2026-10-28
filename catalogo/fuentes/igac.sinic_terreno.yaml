@@ -1,0 +1,68 @@
+id: igac.sinic_terreno
+titulo: "Terrenos de los gestores catastrales descentralizados (SINIC, IGAC)"
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: administra el Sistema Nacional de Información Catastral, que integra los catastros de todos los gestores (Ley 1955 de 2019, art. 79; Decreto 148 de 2020)
+acto: null
+# El ítem «Base Catastral SINIC Dato Abierto» dice «Sin limitaciones de uso»; no es una licencia
+# estándar, así que se trata como CC BY-SA 4.0 (ADR-0019) hasta que el IGAC lo confirme.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/5bb0ee2c15d146049e7d2f158aad34c4?f=json
+  cita: "Sin limitaciones de uso (ítem SINIC_DA del IGAC); se trata como CC BY-SA 4.0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, Sistema Nacional de Información Catastral (SINIC), con datos de los gestores catastrales"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024): el servicio del SINIC no responde a la IP del datacenter y desde Colombia
+# sí. Etapa 1: los 21 municipios de los gestores de las grandes ciudades (Bogotá y sus contratos
+# Cartagena, Palmira y Santa Rosa de Cabal; Medellín y el Valle de Aburrá; Cali; Barranquilla y su
+# área; Bucaramanga y su área; Soacha; Jamundí), 2,35 M de terrenos simplificados a ~1 m. Los demás
+# municipios con gestor propio van en otra etapa; los del IGAC ya están en igac.catastro.terreno.
+conector: copia
+url: https://sigi.igac.gov.co/habilitacion/rest/services/sinic/SINIC_DA/FeatureServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 3
+  tabla: sinic_terreno
+  clave: objectid
+  por_pagina: 2000
+  tolerancia: 0.00001
+  filtro: "cod_divipola IN ('05001', '05079', '05088', '05212', '05308', '05380', '08001', '08296', '08573', '11001', '13001', '25754', '25799', '66682', '68001', '68307', '68547', '76001', '76126', '76364', '76520')"
+  indices: [numero_predial_nacional, cod_divipola]
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P6M}
+cobertura:
+  pais: CO
+  excluye: []
+  periodo: "corte vigente del SINIC (etapa 1: 21 municipios de gestores descentralizados)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del terreno en la capa"}
+  cod_divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  numero_predial_nacional: {nombre: numero_predial, tipo: str, desc: "número predial nacional (30 dígitos)"}
+  zona: {nombre: zona, tipo: str, desc: "zona (urbana o rural)"}
+  condicion_predio: {nombre: condicion_predio, tipo: str, desc: "condición del predio (NPH, PH matriz…)"}
+  destinacion_economica: {nombre: destinacion_economica, tipo: str, desc: "destinación económica (habitacional, comercial…)"}
+  tipo_predio: {nombre: tipo_predio, tipo: str, desc: "tipo de predio (privado, público…)"}
+  tipo_derecho: {nombre: tipo_derecho, tipo: str, desc: "tipo de derecho (dominio, posesión…)"}
+capas_servicio: [3]
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: catastro}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "el terreno de un predio de un gestor catastral; 11 M en el país, 6 M en los 285 municipios con gestor propio, 2,35 M en la etapa 1"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.6, contar: 0.8}
+  hallazgos:
+  - "cubre los gestores descentralizados que la base del IGAC no tiene (Bogotá, Medellín, Cali…)"
+  - "un terreno de Medellín tiene 418 vértices en promedio: a ~1 m quedan 49 (9 KB → 1,4 KB)"
+  - "no trae propietarios ni avalúos: solo número predial y atributos del terreno"
+  - "Pereira y el AMCO tienen 0 terrenos en el SINIC"
+  - "el servicio no responde desde el datacenter de la UE; desde Colombia sí"
+  decision: "por copia espacial ingerida desde Colombia, por etapas de municipios"

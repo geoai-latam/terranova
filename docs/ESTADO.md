@@ -155,6 +155,48 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
 - **`llms.txt`** ya no dice «abierta y gratuita» (ADR-0029). Ahora menciona `/v1/uso`, el 402 y
   `/estado`.
 
+## Diez fuentes colombianas nuevas (2026-10-28, #158–#169)
+
+Cada fuente lleva una licencia verificada por ítem, un perfil medido, un canario medido en la fuente
+y una dorada grabada en el servidor. La prueba de punta a punta con gpt-5.4-mini contra producción
+dio 18 de 18 éxitos (10 en las olas 1 y 2, 8 en la ola 3), con las respuestas revisadas una a una.
+El SINIC llegó al final: tiene canario y dorada, y su prueba de punta a punta va tras el despliegue.
+
+- **Olas 1 y 2, en vivo (#158, #159):**
+  - ANT: consejos comunitarios y UAF.
+  - URT: zonas microfocalizadas.
+  - CAR: rondas hídricas.
+  - ANI: concesiones viales y peajes.
+  - INS: calidad del agua (IRCA).
+  - UNGRD: emergencias por municipio.
+  - IDEAM: lluvia diaria por estación.
+  - INVÍAS: tarifas de peajes.
+- **Ola 3:**
+  - IDEAM: calidad del aire por municipio y año (#163).
+  - SINCHI: pérdida de bosque en la Amazonia, por copia (#161).
+  - Bogotá, por copia ingerida desde Colombia (IDECA y la SDP no responden a la VPS):
+    - valor de referencia del m² de la UAECD (#162);
+    - POT 555: tratamiento urbanístico y área de actividad (#165);
+    - estrato por manzana (#166);
+    - amenaza por movimiento en masa (#167).
+  - CAR: zonificación del POMCA del río Bogotá, en vivo (#168).
+  - IGAC SINIC: predio en un punto de 21 ciudades con gestor catastral propio (#169).
+- **Piezas nuevas de la copia:**
+  - Un rasgo cuya geometría el servicio no sabe dar ya no tumba la copia. Se rescata la página
+    sin geometría y luego las geometrías por rangos de la clave; el rasgo roto queda sin geometría,
+    con aviso.
+  - `filtro` copia una parte de una capa ArcGIS.
+  - Origen `geojson` (enmienda de la ADR-0024), con `proyeccion` para la cartesiana de Bogotá.
+  - Honestidad (#160): una fuente que dice «hay N» y no entrega ninguno es «no se pudo».
+- **No se puede:** las alertas tempranas de deforestación del IDEAM solo salen en boletines PDF, sin
+  API ni bulk (ADR-0018).
+- **Pendiente:**
+  - La etapa 2 del SINIC, con los ~264 municipios restantes. La etapa 1 (21 municipios, 2 347 361
+    terrenos) se ingirió desde Colombia en 3,2 h; unos pocos terrenos llegan sin geometría.
+  - El suelo rural de la amenaza de Bogotá (otro GeoJSON, de 110 MB).
+  - Los otros 9 POMCA de la CAR, que siguen el mismo patrón.
+  - Todas las copias de Bogotá y el SINIC entran en el refresco desde Colombia.
+
 ## Copias del DANE (2026-10-28)
 
 - **Las 5 herramientas del DANE que leen anexos xlsx salen de copia:** IPM municipal, privaciones,

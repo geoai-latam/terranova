@@ -1,0 +1,34 @@
+id: sinic_predio_en_punto
+version: 1
+familia: territorio
+fuente: igac.sinic_terreno
+pregunta: "¿Qué predio hay en este punto de Bogotá, Medellín, Cali, Barranquilla o Bucaramanga?"
+descripcion: >
+  Predio (terreno) que contiene un punto en los municipios con gestor catastral propio, del Sistema
+  Nacional de Información Catastral (SINIC) del IGAC: número predial nacional, zona, condición (PH,
+  NPH), destinación económica, tipo de predio y de derecho. Hoy cubre Bogotá, Medellín y el Valle de
+  Aburrá, Cali, Barranquilla y su área, Bucaramanga y su área, Soacha, Jamundí, Cartagena y Palmira.
+  Para los municipios del catastro del IGAC, igac_predio_en_punto. Sin propietarios. Sale de la copia
+  de Terranova (linderos simplificados a ~1 m).
+  (Fuente: IGAC, SINIC; licencia: CC BY-SA 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  tool: consultar_copia
+  argumentos:
+    tabla: sinic_terreno
+    punto: ["{lon}", "{lat}"]
+    select: [cod_divipola, departamento, municipio, numero_predial_nacional, zona, condicion_predio, destinacion_economica, tipo_predio, tipo_derecho]
+    geometria: simplificada
+    order: [numero_predial_nacional]
+    limite: 5
+  campos: [cod_divipola, departamento, municipio, numero_predial_nacional, zona, condicion_predio, destinacion_economica, tipo_predio, tipo_derecho]
+salida: PredioSinicEnPunto
+cobro: punto
+canario:
+  # Chapinero (Bogotá); medido el 2026-10-28 en la capa 3: número predial 110010182020400210003900000000,
+  # PH matriz, habitacional, dominio.
+  entrada: {lon: -74.0565, lat: 4.6486}
+  verdad: {numero_predial: "110010182020400210003900000000", municipio_divipola: "11001", destinacion_economica: Habitacional}
+  campos: [condicion_predio, departamento, destinacion_economica, municipio, municipio_divipola, numero_predial, tipo_derecho, tipo_predio, zona]
+  latencia_max_ms: 5000

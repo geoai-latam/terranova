@@ -1,0 +1,84 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T11:39:43+00:00",
+ "herramienta": "sinic_predio_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "numero_predial_nacional"
+    ],
+    "punto": [
+     -74.0565,
+     4.6486
+    ],
+    "select": [
+     "cod_divipola",
+     "departamento",
+     "municipio",
+     "numero_predial_nacional",
+     "zona",
+     "condicion_predio",
+     "destinacion_economica",
+     "tipo_predio",
+     "tipo_derecho"
+    ],
+    "tabla": "sinic_terreno"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05634,
+           4.64858
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "cod_divipola": "11001",
+          "condicion_predio": "PH.Matriz",
+          "departamento": "BOGOTÁ. D.C.",
+          "destinacion_economica": "Habitacional",
+          "municipio": "BOGOTÁ. D.C.",
+          "numero_predial_nacional": "110010182020400210003900000000",
+          "tipo_derecho": "Dominio",
+          "tipo_predio": "Predio.Privado",
+          "zona": "Urbana"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-28T08:27:04.122009+00:00",
+     "copia": {
+      "filas": 2347361,
+      "huella": "sha256:162c4270be1b477de40eb2faad73ed8b81f4228f324c369da2da37acd58db97f",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028082704122009"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

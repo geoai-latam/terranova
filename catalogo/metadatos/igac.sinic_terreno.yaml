@@ -1,0 +1,69 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.sinic_terreno
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://sigi.igac.gov.co/habilitacion/rest/services/sinic/SINIC_DA/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=5bb0ee2c15d146049e7d2f158aad34c4
+titulo: Base Catastral SINIC Dato Abierto
+descripcion: Capa geográfica asociada a la información catastral nacional reportada por los gestores catastrales
+  de forma bimestral en el SINIC que representa los terrenos, construcciones y unidades de construcción.
+publicado: '2026-09-10'
+etiquetas:
+- SINIC
+- Base Catastral Nacional
+- Catastro Multipropósito
+- Construcción
+- DRH
+- Gestión Catastral
+- Gestor Catastral
+- Habilitación Catastral
+- IGAC
+- LADM
+- Objeto Territorial Legal
+- Predio
+- RIC
+- Servicio Público Catastral
+- Terreno
+- Unidad de construcción
+filas: 11016836
+geografia:
+  geometria: poligono
+  crs: EPSG:9377
+  extension:
+  - -118.0
+  - -90.0
+  - -28.0
+  - 90.0
+  capas:
+    '3': capa_ladm_terreno
+campos:
+  objectid:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: objectid
+  cod_divipola:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código Divipola
+  departamento:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Departamento
+  municipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Municipio
+  numero_predial_nacional:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Número Predial Nacional
+  zona:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Zona
+  condicion_predio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Condición Predio
+  destinacion_economica:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Destinación Económica
+  tipo_predio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Tipo Predio
+  tipo_derecho:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Tipo Derecho
