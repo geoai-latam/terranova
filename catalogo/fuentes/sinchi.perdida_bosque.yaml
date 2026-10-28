@@ -1,0 +1,55 @@
+id: sinchi.perdida_bosque
+titulo: "Pérdida de bosque en la Amazonia colombiana 2022-2024 (SINCHI, 1:100.000)"
+entidad: Instituto Amazónico de Investigaciones Científicas (SINCHI)
+competencia: monitorea las coberturas y el bosque de la Amazonia colombiana (Ley 99 de 1993, art. 20; SIAT-AC)
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://datos.siatac.co/api/search/v1/collections/all/items/633aa22498b542ccbd666cfd9faa271c
+  cita: "license: CC-BY-4.0 (Capa multitemporal de pérdida de bosque de la Amazonia colombiana. Escala 1:100.000. Periodo 2022-2024)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Amazónico de Investigaciones Científicas SINCHI, SIAT-AC"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024): cada consulta en vivo tarda 9-13 s sobre cuatro multipolígonos
+# gigantes; en PostGIS el cruce por punto es inmediato. ~25 MB simplificados a ~55 m (la escala
+# 1:100.000 ya tiene un error de ese orden).
+conector: copia
+# `MAC_DatosAbiertos/TMAPB_Region_100K_2022_2024`, capa 0: cuatro multipolígonos, uno por clase
+# (conservado, otras coberturas, pérdida, recuperado). El `area_ha` de cada uno es el total de la clase
+# en toda la región, no el del punto: no entra a la lista blanca.
+url: https://gis.siatac.co/arcgis/rest/services/MAC_DatosAbiertos/TMAPB_Region_100K_2022_2024/FeatureServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: sinchi_perdida_bosque
+  clave: objectid
+  por_pagina: 1
+  tolerancia: 0.0005
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P2Y}
+cobertura:
+  pais: CO
+  excluye: []
+  periodo: "2022 a 2024 (región amazónica)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  objectid: {nombre: id_clase, tipo: int, desc: "identificador de la clase en la capa"}
+  deforestacion: {nombre: clase, tipo: str, desc: "clase del cambio del bosque entre 2022 y 2024: Conservado, Perdida, Recuperado u Otras coberturas"}
+capas_servicio: [0]
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: SINCHI, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una clase del cambio de bosque 2022-2024 como un multipolígono: 4 en toda la Amazonia colombiana (pérdida: 286 625 ha)"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4}
+  hallazgos:
+  - "solo cubre la región amazónica; fuera de ella no hay respuesta"
+  - "cada clase es un multipolígono gigante (la pérdida tiene 12 860 anillos): en vivo, 9-13 s por consulta"
+  - "el área de la fila es el total regional de la clase, no se expone"
+  decision: "por copia espacial (simplificada a ~55 m), cruce por punto en PostGIS"

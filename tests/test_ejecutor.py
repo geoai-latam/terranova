@@ -219,6 +219,36 @@ async def test_fila_con_todo_none_es_no_encontrado() -> None:
     assert sobre.datos == {}
 
 
+class _ContoPeroNoEntrego:
+    """El conector cuenta N elementos y su página llega vacía (SINCHI, 2026-10-28): los hechos lo
+    dicen («vistos 0 de 1, truncado») pero no hay ningún elemento."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "artifacts": [
+                {
+                    "kind": "feature_collection",
+                    "data": {"type": "FeatureCollection", "features": []},
+                }
+            ],
+            "facts": {"completitud": {"vistos": 0, "total": 1, "truncado": True}},
+        }
+
+
+@pytest.mark.anyio
+async def test_vacio_con_total_no_es_no_encontrado() -> None:
+    """Si la fuente dice que hay elementos y no entrega ninguno, es «no se pudo», nunca «no
+    encontrado» (CLAUDE.md: honestidad de estado)."""
+    from terranova.ejecutor import Ejecutor
+    from terranova.errores import ErrorEjecucion
+
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _ContoPeroNoEntrego()})
+    with pytest.raises(ErrorEjecucion) as exc:
+        await ej.ejecutar("ant_resguardos_en_punto", {"lon": -70.5, "lat": 0.8})
+    assert exc.value.codigo == "fuente_respuesta_invalida"
+    assert "no entregó ninguno" in str(exc.value)
+
+
 _PREDIO_CONSTRUCCIONES = "251750100000000430026000000000"
 
 
