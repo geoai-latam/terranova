@@ -225,8 +225,11 @@ def mapear_fila(
     """La fila con SOLO la lista blanca (regla 10), renombrada y con los derivados por elemento."""
     out: dict[str, Any] = {}
     for clave, campo in fuente.campos.items():
-        if campo.origen == "fila" and clave in fila:
-            valor = fila[clave]
+        if campo.origen != "fila":
+            continue
+        presente = next((c for c in (clave, *campo.alias) if c in fila), None)
+        if presente is not None:
+            valor = fila[presente]
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
             out[campo.nombre] = convertir(valor, campo.tipo)

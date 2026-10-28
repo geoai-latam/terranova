@@ -1,0 +1,51 @@
+id: car.pomca_zonificacion
+titulo: "Zonificación ambiental de los POMCA de la jurisdicción de la CAR (nueve cuencas)"
+entidad: Corporación Autónoma Regional de Cundinamarca (CAR)
+competencia: ordena y maneja las cuencas de su jurisdicción con el POMCA (Decreto 1640 de 2012, hoy en el Decreto 1076 de 2015)
+acto: null  # cada POMCA tiene su resolución de adopción (el del río Bogotá, la Resolución CAR 957 de 2019)
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/51959f1d58964e638e2ce7de554e6f9d?f=json
+  cita: "licenseInfo de los nueve ítems: «Esta obra está bajo una Licencia Creative Commons Atribución 4.0 Internacional»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR), zonificación ambiental de los POMCA"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Cada POMCA es un servicio aparte del dueño de las rondas (ArcGIS Online); la url es la carpeta de
+# servicios y cada capa de la herramienta, «<servicio>/FeatureServer/<capa>». Ítems: río Bogotá
+# 3c3c4bf7…, Carare-Minero 51959f1d…, Garagoa f403ac83…, río Negro e5d74c3b…, Alto Suárez 19baebbb…,
+# Medio y Bajo Suárez 36d79938… (con la CAS y Corpoboyacá), río Seco 355dfb4e…, Guavio cbfc885c…,
+# Guayuriba 15f2dbc9…; los nueve dicen CC BY 4.0. El del Sumapaz no declara licencia: va aparte
+# (car.pomca_rio_sumapaz). Las capas nombran distinto los mismos campos: de ahí los alias.
+url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []  # solo las nueve cuencas (lo dice la descripción de la herramienta)
+  periodo: "POMCA vigentes de la jurisdicción de la CAR (2019-2023)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  CAT_ORD: {nombre: categoria_ordenacion, tipo: str, desc: "categoría de ordenación: conservación y protección ambiental, o uso múltiple", alias: [CAT_ORD_A, CATEGORIA]}
+  ZO_US_MA: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)", alias: [ZO_US_M_A, ZONA]}
+  SZO_US_M: {nombre: subzona_uso_manejo, tipo: str, desc: "subzona de uso y manejo", alias: [SZO_US_M_A, SUBZONA]}
+  NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, ARUM…); algunas capas la dejan en blanco", alias: [FIRST_NOMENCLAT]}
+  DESCRIP: {nombre: descripcion, tipo: str, desc: "descripción de la subzona"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: CAR, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un polígono de zonificación ambiental; 516 999 en las nueve cuencas (de 33 en Alto Suárez a 172 069 en el río Negro)"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.2}
+  hallazgos:
+  - "un punto cae en una sola cuenca: Ubaté (Alto Suárez), Gachetá (Guavio), Villeta y Pacho (río Negro), Girardot y Chía (río Bogotá), Puerto Salgar (río Seco), Quetame (Guayuriba); Medina en ninguna"
+  - "las capas llaman a la categoría CAT_ORD, CAT_ORD_A o CATEGORIA (en el río Seco, FIRST_CAT_ORD es un código)"
+  - "el río Negro y el Alto Suárez dejan la sigla en blanco en parte de sus polígonos"
+  - "las capas están en EPSG:3116 o 9377 y aceptan un punto en 4326"
+  decision: "en vivo por punto, las nueve capas a la vez"

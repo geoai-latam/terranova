@@ -199,6 +199,12 @@ class Campo(_Ficha):
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
         "en general «1,234» es ambiguo",
     )
+    alias: list[str] = Field(
+        default_factory=list,
+        description="otros nombres del mismo campo en capas de servicios distintos (los POMCA de "
+        "la CAR llaman CAT_ORD, CAT_ORD_A o CATEGORIA a la categoría): vale el primero que traiga "
+        "la fila",
+    )
 
     @model_validator(mode="after")
     def _codigos_con_norma(self) -> Self:
@@ -560,6 +566,11 @@ class Fuente(_Ficha):
         nombres = [c.nombre for c in self.campos.values()]
         if len(nombres) != len(set(nombres)):
             raise ValueError("dos campos de la fuente van al mismo nombre rt/1")
+        alias = [a for c in self.campos.values() for a in c.alias]
+        if len(alias) != len(set(alias)) or set(alias) & set(self.campos):
+            raise ValueError("un alias repite un campo de la fuente u otro alias")
+        if alias and self.copia is not None:
+            raise ValueError("ADR-0024: los alias son de capas en vivo; la copia trae una tabla")
         return self
 
     @property
