@@ -1,0 +1,36 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: uaecd.valor_referencia
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/catastro/valorreferencia/MapServer?f=json
+titulo: Mediana del valor comercial por metro cuadrado de terreno por manzana – Valor de referencia
+descripcion: Servicio que proporciona una medida de tendencia central de los valores comerciales por metro
+  cuadrado de terreno de los predios ubicados en una misma manzana, para áreas urbanas y de expansión
+  urbana en la ciudad de Bogotá. Excluye el suelo protegido y los predios de espacio público. Dichos valores
+  son obtenidos a partir del proceso catastral de zonas homogéneas geoeconómicas realizados anualmente
+  por la UAECD y se utiliza para fines fiscales, estadísticos y administrativos. Fueron recopilados entre
+  los años 2017 a 2026.
+filas: 427839
+geografia:
+  geometria: poligono
+  crs: EPSG:4326
+  extension:
+  - -74.364678
+  - 3.984782
+  - -74.009643
+  - 4.832934
+  capas:
+    '0': Mediana del valor comercial por metro cuadrado de terreno por manzana – Valor de referencia
+campos:
+  OBJECTID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  MANCODIGO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Identificador único de la manzana
+  V_REF:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Mediana del valor comercial por m2 de terreno – Valor de referencia (COP)
+  ANO:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: Año

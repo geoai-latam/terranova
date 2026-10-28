@@ -1,0 +1,36 @@
+id: uaecd_valor_referencia_en_punto
+version: 1
+familia: territorio
+fuente: uaecd.valor_referencia
+pregunta: "¿Cuál es el valor de referencia del m² de terreno en este punto de Bogotá?"
+descripcion: >
+  Valor de referencia del suelo en Bogotá que calcula el catastro distrital (UAECD): la mediana del
+  valor comercial por m² de terreno de la manzana que contiene un punto, en pesos, año por año desde
+  2017. Es un valor de referencia por manzana, no el avalúo de un predio. Solo zonas urbanas y de
+  expansión de Bogotá. Sale de la copia de Terranova.
+  (Fuente: UAECD; licencia: CC BY 4.0.)
+entrada: {lon: float, lat: float}
+consulta:
+  operacion: en_punto
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: uaecd_valor_referencia
+    punto: ["{lon}", "{lat}"]
+    select: [MANCODIGO, V_REF, ANO]
+    geometria: ninguna
+    order: [ANO]
+    limite: 30
+  campos: [MANCODIGO, V_REF, ANO]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: ValorReferenciaEnPunto
+cobro: punto
+canario:
+  # Chapinero; medido el 2026-10-28 en la capa 0: manzana 008204021, 10 años; 2017 → $3 400 000 por
+  # m², 2026 → $5 800 000.
+  entrada: {lon: -74.0565, lat: 4.6486}
+  verdad: {manzana: "008204021", valor_m2: 3400000.0}
+  minimos: {numero_registros: 10}
+  campos: [manzana, numero_registros, valor_m2, vigencia]
+  latencia_max_ms: 5000

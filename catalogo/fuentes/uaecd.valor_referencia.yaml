@@ -1,0 +1,53 @@
+id: uaecd.valor_referencia
+titulo: "Valor de referencia del m² de terreno por manzana en Bogotá (UAECD)"
+entidad: Unidad Administrativa Especial de Catastro Distrital (UAECD)
+competencia: gestor catastral de Bogotá; calcula el valor de referencia del suelo por manzana (Acuerdo 004 de 2012; Decreto 583 de 2015)
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=valor-de-referencia-por-metro-cuadrado-de-terreno
+  cita: "license_id: CC-BY-4.0 (Creative Commons Attribution 4.0), recurso Esri REST catastro/valorreferencia/MapServer/0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad Administrativa Especial de Catastro Distrital (UAECD), Bogotá"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024): el servicio de la UAECD no responde a la IP del datacenter (la consulta
+# no llega en 40 s) y desde Colombia sí; se ingiere desde Colombia. Una fila por manzana y año.
+conector: copia
+url: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/catastro/valorreferencia/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: uaecd_valor_referencia
+  clave: OBJECTID
+  por_pagina: 2000
+  indices: [MANCODIGO]
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: []
+  periodo: "2017 a 2026 (zonas urbanas y de expansión de Bogotá)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa"}
+  MANCODIGO: {nombre: manzana, tipo: str, desc: "código de la manzana catastral"}
+  V_REF: {nombre: valor_m2, tipo: float, desc: "mediana del valor comercial por m² de terreno de la manzana, en pesos"}
+  ANO: {nombre: vigencia, tipo: date, desc: "año del valor (1 de enero de la vigencia)"}
+capas_servicio: [0]
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: UAECD, theme: catastro}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una manzana de Bogotá en un año con su valor por m²; 427 839 filas (unas 45 mil manzanas por año)"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.6, contar: 0.4}
+  hallazgos:
+  - "un punto toca la misma manzana una vez por año: una manzana de Chapinero tiene 10 valores, de 2017 a 2026"
+  - "solo zonas urbanas y de expansión: en suelo rural no hay valor"
+  - "el servicio no responde desde el datacenter de la UE; desde Colombia sí"
+  decision: "por copia espacial ingerida desde Colombia; por punto, todos los años de la manzana"
