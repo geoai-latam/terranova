@@ -37,15 +37,17 @@ def llms_txt(c: Catalogo) -> str:
     lineas = [
         "# Terranova",
         "",
-        "> Puerta única, abierta y gratuita, sobre fuentes oficiales colombianas y globales. Cada "
-        "respuesta es un sobre rt/1 con procedencia, licencia, completitud y `servido_desde`.",
+        "> Puerta única sobre fuentes oficiales colombianas y globales, con un plan gratis y "
+        "planes de pago por créditos (ADR-0029). Cada respuesta es un sobre rt/1 con "
+        "procedencia, licencia, completitud y `servido_desde`.",
         "",
         "Acceso: `Authorization: Bearer <llave>` (rt_live_… o rt_test_…).",
         "MCP por streamable HTTP en `/mcp` (todo) o `/mcp/<familia>`; REST en "
         "`POST /v1/co/<familia>/<herramienta>`, con el mismo sobre.",
         "Estados: `encontrado`, `no_encontrado`, `fuera_de_cobertura` (no descuenta), `parcial`. "
         "Errores en problem+json con un código estable (p. ej. `fuente_no_disponible`).",
-        "Catálogo público en `/v1/fuentes`.",
+        "Catálogo público en `/v1/fuentes`. Saldo del mes en `GET /v1/uso`; sin saldo, 402 "
+        "`saldo_agotado`. Estado de las fuentes en `/estado`.",
         "",
         "## Ficha técnica de una fuente",
         "",
