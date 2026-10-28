@@ -285,7 +285,8 @@ def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 5
 def descargar_arcgis(
     fuente: Fuente, desde: date | None = None, *, cliente: Any = None, pausa_s: float | None = None
 ) -> Iterator[list[dict[str, Any]]]:
-    """Páginas de la capa: la lista blanca y la geometría GeoJSON en EPSG:4326 (`_geom`).
+    """Páginas de la capa: la lista blanca y, si la ficha la copia, la geometría GeoJSON en
+    EPSG:4326 (`_geom`).
 
     `desde` se ignora (se copia la capa entera). Se pagina por la clave (`clave > última vista`,
     ordenado por ella) hasta una página vacía (no se confía en `exceededTransferLimit`): con
@@ -303,7 +304,7 @@ def descargar_arcgis(
     columnas = list(fuente.campos)
     base: dict[str, Any] = {
         "outFields": ",".join(columnas),
-        "returnGeometry": "true",
+        "returnGeometry": "true" if copia.espacial else "false",
         "outSR": "4326",
         "geometryPrecision": "6",  # ~0,1 m
         "orderByFields": copia.clave,
@@ -337,9 +338,10 @@ def descargar_arcgis(
             pagina = []
             for rasgo in rasgos:
                 propiedades = rasgo.get("properties") or {}
-                pagina.append(
-                    {**{c: propiedades.get(c) for c in columnas}, GEOMETRIA: rasgo.get("geometry")}
-                )
+                fila = {c: propiedades.get(c) for c in columnas}
+                if copia.espacial:
+                    fila[GEOMETRIA] = rasgo.get("geometry")
+                pagina.append(fila)
             clave = pagina[-1].get(copia.clave)
             if (
                 not isinstance(clave, int)
