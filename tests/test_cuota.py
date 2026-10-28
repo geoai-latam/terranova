@@ -87,6 +87,20 @@ async def test_el_saldo_vuelve_con_el_mes(cual: int, monkeypatch: pytest.MonkeyP
     assert mes(reloj.t) == "2026-11" and (await c.reservar("geoai", "con_llave", 10))[0]
 
 
+@pytest.mark.anyio
+@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+async def test_usados_de_un_mes_anterior(cual: int) -> None:
+    """`terranova orgs uso --mes` lee el saldo de otro mes sin tocar el del mes en curso."""
+    reloj = Reloj(datetime(2026, 10, 31, 23, 0, tzinfo=UTC).timestamp())
+    c = _cuotas(reloj)[cual]
+    await c.reservar("geoai", "pro", 30)
+    reloj.t += 2 * 3600
+    await c.reservar("geoai", "pro", 5)
+    assert await c.usados("geoai") == 5
+    assert await c.usados("geoai", "2026-10") == 30
+    assert await c.usados("geoai", "2026-09") == 0
+
+
 def test_segundos_hasta_enero() -> None:
     diciembre = datetime(2026, 12, 31, 23, 0, tzinfo=UTC).timestamp()
     assert segundos_hasta_el_mes_siguiente(diciembre) == 3600

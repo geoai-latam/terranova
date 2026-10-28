@@ -134,3 +134,26 @@ def test_el_mismo_solicitud_id_no_se_duplica() -> None:
     o.registrar(e)
     o.registrar(e)
     assert len(o.eventos()) == 1
+
+
+def test_consumo_del_mes_por_org_y_herramienta(tmp_path: Path) -> None:
+    """Base de `terranova orgs uso`: suma por mes; una falla es petición con 0 créditos."""
+    o = OutboxSqlite(tmp_path / "m.db")
+    for i, (org, herramienta, creditos, momento) in enumerate(
+        [
+            ("acme", "igac_predio_en_punto", 10, "2026-10-01T00:00:00.000+00:00"),
+            ("acme", "igac_predio_en_punto", 10, "2026-10-31T23:59:59.999+00:00"),
+            ("acme", "secop_contrato", 2, "2026-10-15T12:00:00.000+00:00"),
+            ("acme", "secop_contrato", 0, "2026-10-15T12:00:01.000+00:00"),  # falla
+            ("acme", "secop_contrato", 2, "2026-09-30T23:59:59.999+00:00"),  # otro mes
+            ("beta", "dane_divipola_buscar", 1, "2026-10-02T00:00:00.000+00:00"),
+        ]
+    ):
+        o.registrar(Evento(f"s{i}", org, "llv_x", herramienta, creditos, "ok", None, momento))
+    assert o.consumo("2026-10") == [
+        ("acme", "igac_predio_en_punto", 20, 2),
+        ("acme", "secop_contrato", 2, 2),
+        ("beta", "dane_divipola_buscar", 1, 1),
+    ]
+    assert o.consumo("2026-09", "acme") == [("acme", "secop_contrato", 2, 1)]
+    assert o.consumo("2026-11") == []

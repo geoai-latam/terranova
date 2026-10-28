@@ -76,6 +76,16 @@ class OutboxSql:
         )
         return [Evento(*f) for f in filas]
 
+    def consumo(self, en_mes: str, org: str | None = None) -> list[tuple[str, str, int, int]]:
+        """(org, herramienta, créditos, peticiones) del mes `en_mes` (AAAA-MM), de mayor a menor."""
+        filas, _ = self._bd.ejecutar(
+            "SELECT org, herramienta, SUM(creditos), COUNT(*) FROM eventos WHERE momento LIKE ?"
+            + (" AND org = ?" if org else "")
+            + " GROUP BY org, herramienta ORDER BY org, SUM(creditos) DESC, herramienta",
+            (f"{en_mes}-%", org) if org else (f"{en_mes}-%",),
+        )
+        return [(o, h, int(c), int(n)) for o, h, c, n in filas]
+
 
 OutboxSqlite = OutboxSql  # nombre de F3.4
 

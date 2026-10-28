@@ -192,8 +192,12 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
   definida, dónde subir de plan. 429 queda solo para la tasa. `GET /v1/uso` dice `reinicia`.
 - **`terranova orgs listar`:** cada organización con su nivel, sus créditos al mes y sus llaves
   vigentes. Muestra las que no tienen nivel fijado.
-- **Antes de desplegar (dueño):** correr `terranova orgs listar` en el servidor y pasar a `ampliado`
-  las organizaciones internas (GEO Copilot, e2e, evaluación). Si no, quedan con 1.500 créditos.
+- **`terranova orgs uso [--org X] [--mes AAAA-MM]`:** saldo y consumo del mes de cada organización:
+  límite, usados (de la cuota en Redis, lo que la puerta descuenta), disponibles, peticiones y las
+  tres herramientas que más créditos gastan (de la medición). Sin Redis, lo usado sale de la
+  medición; el saldo de un mes vive 40 días en Redis.
+- **Antes de desplegar:** las organizaciones internas pasan a `ampliado`. Hecho el 2026-10-27
+  (`geoai`, la única).
 - **Pendiente:** excedentes y paquetes adicionales; licencias DANE y Open-Meteo para los planes de
   pago; términos de servicio.
 

@@ -251,3 +251,74 @@ async def test_ejecutar_con_identidad_exige_principal_y_scope(
     with pytest.raises(ErrorEjecucion) as exc:
         await puerta.ejecutar("igac_predio_en_punto", CHIA, principal)
     assert exc.value.codigo == "sin_permiso"
+
+
+def _eventos_de_octubre(bd: Path) -> None:
+    from terranova.medicion import Evento, OutboxSql
+
+    o = OutboxSql(bd)
+    for i, (herramienta, creditos) in enumerate(
+        [("igac_predio_en_punto", 10), ("igac_predio_en_punto", 10), ("secop_contrato", 2)]
+    ):
+        o.registrar(
+            Evento(
+                f"s{i}",
+                "acme",
+                "llv_x",
+                herramienta,
+                creditos,
+                "ok",
+                None,
+                "2026-10-20T10:00:00+00:00",
+            )
+        )
+
+
+def test_cli_orgs_uso_sin_redis_suma_la_medicion(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    bd = tmp_path / "t.db"
+    monkeypatch.setenv("TERRANOVA_PIMIENTA", PIMIENTA)
+    monkeypatch.setenv("TERRANOVA_BD", str(bd))
+    monkeypatch.delenv("TERRANOVA_REDIS_URL", raising=False)
+    r = RegistroSqlite(bd, PIMIENTA)
+    r.crear("acme", {"*"}, prueba=False, expira=None)
+    r.fijar_nivel("acme", "basico")
+    r.fijar_nivel("quieta", "pro")  # sin consumo: sale igual, con todo disponible
+    _eventos_de_octubre(bd)
+    assert cli.orgs(["uso", "--mes", "2026-10"]) == 0
+    assert capsys.readouterr().out.splitlines() == [
+        "mes 2026-10",
+        "acme  basico  límite 25.000  usados 22  disponibles 24.978  peticiones 3  "
+        "top: igac_predio_en_punto 20, secop_contrato 2",
+        "quieta  pro  límite 110.000  usados 0  disponibles 110.000  peticiones 0  top: -",
+    ]
+    assert cli.orgs(["uso", "--org", "acme", "--mes", "2026-09"]) == 0
+    assert "acme  basico  límite 25.000  usados 0" in capsys.readouterr().out
+    assert cli.orgs(["uso", "--mes", "2026-13"]) == 2
+    assert "mes inválido" in capsys.readouterr().err
+
+
+def test_cli_orgs_uso_con_redis_lee_el_saldo_de_la_cuota(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Con Redis, «usados» es lo que la puerta descuenta (la cuota), no la suma de la medición."""
+    import fakeredis
+
+    from terranova import cuota
+
+    bd = tmp_path / "t.db"
+    monkeypatch.setenv("TERRANOVA_PIMIENTA", PIMIENTA)
+    monkeypatch.setenv("TERRANOVA_BD", str(bd))
+    monkeypatch.setenv("TERRANOVA_REDIS_URL", "redis://falso")
+    servidor = fakeredis.FakeServer()
+    fakeredis.FakeRedis(server=servidor).set("terranova:saldo:acme:2026-10", 25_000)
+    monkeypatch.setattr(
+        cuota,
+        "cuota_desde_entorno",
+        lambda _url: cuota.CuotaRedis(fakeredis.FakeAsyncRedis(server=servidor)),
+    )
+    RegistroSqlite(bd, PIMIENTA).fijar_nivel("acme", "basico")
+    _eventos_de_octubre(bd)
+    assert cli.orgs(["uso", "--org", "acme", "--mes", "2026-10"]) == 0
+    assert "usados 25.000  disponibles 0  peticiones 3" in capsys.readouterr().out
