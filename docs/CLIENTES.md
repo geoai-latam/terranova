@@ -193,7 +193,8 @@ ejemplo, CC BY-SA exige compartir igual.
 ### Errores
 
 Los errores llegan en `application/problem+json` (RFC 9457), con un `code` estable y el
-`solicitud_id` que debe darnos si escribe a soporte:
+`solicitud_id` que debe darnos si escribe a soporte (soporte@terrnova.com, de lunes a viernes de
+8:00 a 18:00, hora de Colombia):
 
 | HTTP | `code` | Qué hacer |
 |---|---|---|

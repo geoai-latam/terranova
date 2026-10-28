@@ -17,7 +17,6 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ideam_calidad_aire_municipio` | ¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…) | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
 | `ideam_lluvia_diaria_estacion` | ¿Cuánto llovió cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
-| `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 2 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
 | `sinchi_perdida_bosque_en_punto` | ¿Este punto de la Amazonia perdió bosque entre 2022 y 2024? | Instituto Amazónico de Investigaciones Científicas (SINCHI) | CC-BY-4.0 | 10 |

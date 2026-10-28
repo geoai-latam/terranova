@@ -24,7 +24,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0018 | Política de acceso: API/bulk sí, HTML público con cortesía, backend interno solo con permiso escrito (en ningún plan sin él), captcha nunca | **aceptada** |
 | 0019 | Licencia por ítem; CC BY-SA como supuesto por defecto | **aceptada** |
 | 0020 | Gratuito al inicio: sin cobro, con llave y cuota para proteger las fuentes | reemplazada por 0029 |
-| 0021 | Open-Meteo (GloFAS, ERA5) con el API gratis mientras sea gratuito; salida a Copernicus directo | **aceptada** |
+| 0021 | Open-Meteo (GloFAS, ERA5) con el API gratis mientras sea gratuito; salida a Copernicus directo | **superada** (ADR-0029; retirada el 2026-10-28) |
 | 0022 | Agrología del IGAC en vivo con caché hasta tener copia (licencia por ítem y descarga de capacidad pendientes) | **aceptada** |
 | 0029 | Freemium de pago: nivel gratis y planes por saldo mensual que no se acumula; 402 al agotar; el cobro vive fuera de la puerta | **aceptada** |
 

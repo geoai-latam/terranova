@@ -69,4 +69,5 @@ dependencia: será solo un cliente más que se conecta por el MCP de Terranova.
 - `datos_abiertos_mcp` no acepta `$group` (ola 1 lo agrega en GEO Copilot).
 - `ogc_mcp` sirve capas del SGC, cuya licencia es restrictiva: quedan fuera del catálogo de
   Terranova.
-- GloFAS y ERA5 llegan por Open-Meteo: su API gratis es solo no comercial.
+- Open-Meteo quedó fuera (su API gratis es solo no comercial): el clima va por ERA5-Land del CDS de
+  Copernicus. El código de Open-Meteo sigue en `amenazas-mcp`, pero ninguna herramienta lo usa.

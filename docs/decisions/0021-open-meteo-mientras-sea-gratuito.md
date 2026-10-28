@@ -1,6 +1,9 @@
 # ADR-0021 · Open-Meteo mientras Terranova sea gratuito
 
-- **Estado:** aceptada (2026-10-21).
+- **Estado:** superada (2026-10-28). Con los planes de pago (ADR-0029) Terranova dejó de ser
+  gratuita, que era la condición de esta decisión. Se retiró `open_meteo_clima_serie` y su fuente;
+  el reemplazo es ERA5-Land directo del CDS de Copernicus (CC BY 4.0, uso comercial permitido), la
+  salida que ya preveía esta ADR.
 - **Contexto:**
   - GloFAS (caudales) y ERA5 (clima) llegan a GEO Copilot por Open-Meteo (`amenazas-mcp`).
   - El API gratis de Open-Meteo es solo para uso no comercial. Sus términos ponen como ejemplo

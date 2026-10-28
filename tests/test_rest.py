@@ -202,6 +202,12 @@ async def test_mcp_sin_sesion_lo_atiende_cualquier_replica() -> None:
 
 
 @pytest.mark.anyio
+async def test_salud_para_la_sonda_sin_llave(rest: httpx.AsyncClient) -> None:
+    r = await rest.get("/salud")
+    assert r.status_code == 200 and r.json() == {"estado": "ok"}
+
+
+@pytest.mark.anyio
 async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     llms = await rest.get("/llms.txt")
     assert llms.status_code == 200 and llms.text.startswith("# Terranova")
