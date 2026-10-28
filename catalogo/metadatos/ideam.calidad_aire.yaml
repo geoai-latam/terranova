@@ -1,0 +1,148 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.calidad_aire
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/g4t8-zkc3.json
+pagina: https://www.datos.gov.co/d/g4t8-zkc3
+titulo: Calidad del Aire en Colombia
+descripcion: La base de datos histórica de concentraciones de calidad del aire tiene como finalidad apoyar
+  la evaluación del estado de la calidad del aire en el territorio nacional, servir como insumo para el
+  análisis ambiental, la formulación, seguimiento y evaluación de políticas públicas, planes, programas
+  y proyectos relacionados con la gestión de la calidad del aire, así como facilitar el desarrollo de
+  estudios técnicos, científicos y académicos. Además, busca promover el acceso a la información ambiental
+  por parte de la ciudadanía, en el marco de los principios de transparencia y gobierno abierto. De conformidad
+  con lo dispuesto en el artículo 23 de la Resolución 2254 de 2017, el Instituto de Hidrología, Meteorología
+  y Estudios Ambientales – IDEAM, como entidad adscrita al Ministerio de Ambiente y Desarrollo Sostenible,
+  administra el Subsistema de Información sobre Calidad del Aire – SISAIRE y consolida y divulga la información
+  sobre el estado de la calidad del aire reportada por las autoridades ambientales competentes. En este
+  marco, la base de datos histórica de calidad del aire corresponde a información recopilada por el IDEAM
+  dentro de la Operación Estadística de Monitoreo y Seguimie…
+publicado: '2026-10-24'
+datos_actualizados: '2026-10-24'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- calidad del aire
+- sisaire
+- ideam
+filas: 39788828
+campos:
+  estacion_id:
+    tipo_fuente: text
+    etiqueta: ESTACION_ID
+    descripcion: Identificación de la estación
+    nulos: 0
+    minimo: '19566'
+    maximo: '9173'
+    comparacion: texto
+  nombre_fgda:
+    tipo_fuente: text
+    etiqueta: NOMBRE_FGDA
+    descripcion: Nombre de la autoridad ambiental
+  nombre_est:
+    tipo_fuente: text
+    etiqueta: NOMBRE_EST
+    descripcion: Nombre de la estación
+  msfl_code:
+    tipo_fuente: text
+    etiqueta: MSFL_CODE
+    descripcion: Nombre del contaminante atmosférico
+    nulos: 0
+    minimo: CO
+    maximo: VViento
+    comparacion: texto
+    valores:
+      PM2.5: 4583670
+      PM10: 3936509
+      VViento: 3841841
+      DViento: 3803788
+      PLiquida: 3322035
+      P: 3097426
+      TAire10: 2270684
+      HAire10: 1887163
+      O3: 1877251
+      TAire2: 1835251
+      SO2: 1834858
+      NO2: 1747285
+      HAire2: 1578408
+      RGlobal: 1520459
+      CO: 1431029
+      'NO': 965537
+      RUVb: 255554
+      PST: 80
+  med_concentracion_estandar:
+    tipo_fuente: number
+    etiqueta: MED_CONCENTRACION_ESTANDAR
+    descripcion: Valor de la concentración del contaminante atmosférico medido por la estación
+    nulos: 0
+    minimo: '0.0'
+    maximo: '678003'
+    comparacion: numero
+  med_fecha_inicio:
+    tipo_fuente: text
+    etiqueta: MED_FECHA_INICIO
+    descripcion: Fecha y hora inicio de la medición
+    nulos: 0
+    comparacion: texto
+  sigla_unidad:
+    tipo_fuente: text
+    etiqueta: SIGLA_UNIDAD
+    descripcion: Sigla con la que se denomina a la unidad de medida de la variable
+    nulos: 0
+    maximo: Wh/m2
+    comparacion: texto
+    valores:
+      ug/m3: 16376219
+      °C: 4105935
+      m/s: 3841841
+      °: 3803788
+      '%': 3465571
+      mm: 3322035
+      mmHg: 3097426
+      Wh/m2: 1520459
+      uWh/cm2nm: 255554
+  departamento:
+    tipo_fuente: text
+    etiqueta: DEPARTAMENTO
+    descripcion: Nombre del departamento
+    nulos: 0
+    minimo: Antioquia
+    comparacion: texto
+    valores:
+      Bogotá, D.C.: 9613143
+      Antioquia: 9128131
+      Valle del Cauca: 4703790
+      Cundinamarca: 2944398
+      Boyacá: 2906535
+      Cesar: 2640247
+      La Guajira: 2081851
+      Santander: 1962212
+      Magdalena: 1250784
+      Atlántico: 643011
+      Bolívar: 636085
+      Meta: 516759
+      Norte de Santander: 358449
+      Caldas: 144955
+      Risaralda: 86935
+      Cauca: 84791
+      Córdoba: 81657
+      Tolima: 2600
+      Huila: 1381
+      Quindío: 1114
+  codigo_municipio:
+    tipo_fuente: text
+    etiqueta: CODIGO_MUNICIPIO
+    descripcion: Código DANE del municipio
+    nulos: 0
+    minimo: '11001'
+    maximo: '8758'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Nombre del municipio
+    nulos: 0
+    maximo: Zipaquirá
+    comparacion: texto
