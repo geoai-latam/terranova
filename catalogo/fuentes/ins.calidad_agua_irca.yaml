@@ -1,0 +1,45 @@
+id: ins.calidad_agua_irca
+titulo: "Calidad del agua para consumo humano: IRCA por municipio y año (INS, SIVICAP)"
+entidad: Instituto Nacional de Salud (INS)
+competencia: vigila la calidad del agua para consumo humano y calcula el IRCA (Decreto 1575 de 2007; Resolución 2115 de 2007)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/nxt2-39c3.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Nacional de Salud (INS), SIVICAP. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/nxt2-39c3.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura: {pais: CO, periodo: "2007 a 2024"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  municipiocodigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+  a_o: {nombre: anio, tipo: int, desc: "año"}
+  irca: {nombre: irca, tipo: float, desc: "índice de riesgo de la calidad del agua (0 a 100; menos es mejor)"}
+  nivel_de_riesgo: {nombre: nivel_riesgo, tipo: str, desc: "nivel de riesgo (sin riesgo, bajo, medio, alto, inviable sanitariamente)"}
+  ircaurbano: {nombre: irca_urbano, tipo: str, desc: "IRCA urbano (texto: «ND» cuando no hay dato)"}
+  nivel_de_riesgo_urbano: {nombre: nivel_riesgo_urbano, tipo: str, desc: "nivel de riesgo urbano"}
+  ircarural: {nombre: irca_rural, tipo: str, desc: "IRCA rural (texto: «ND» cuando no hay dato)"}
+  nivel_de_riesgo_rural: {nombre: nivel_riesgo_rural, tipo: str, desc: "nivel de riesgo rural"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: INS, theme: salud, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un municipio en un año con su IRCA total, urbano y rural; 19 160 filas, Chía tiene 18 (2007 a 2024)"
+  clave: {columna: a_o, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.2, ordenar: 0.2, agrupar: 0.2}
+  hallazgos:
+  - "el IRCA urbano y rural vienen como texto, con «ND» cuando no hay dato: no se convierten a número"
+  - "en un municipio, el año es único (la clave medida es el año dentro del municipio)"
+  decision: "en vivo por municipio, todos los años"

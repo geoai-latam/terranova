@@ -1,0 +1,236 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ungrd.emergencias
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/2343-nuqp.json
+pagina: https://www.datos.gov.co/d/2343-nuqp
+titulo: Emergencias UNGRD V2
+descripcion: Dada la naturaleza del Reporte Anual de Emergencias y el cambio en sus columnas se publica
+  el reporte para el año 2025 y posibles vigencias futuras
+publicado: '2026-07-02'
+datos_actualizados: '2026-09-22'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- emergencias
+- ungrd
+- desastres
+- riesgos
+filas: 13012
+campos:
+  fecha:
+    tipo_fuente: calendar_date
+    etiqueta: FECHA
+    descripcion: Fecha de la ocurrencia del evento
+    nulos: 0
+    minimo: '2025-01-01T00:00:00.000'
+    maximo: '2025-12-31T00:00:00.000'
+    comparacion: fecha
+  departamento:
+    tipo_fuente: text
+    etiqueta: DEPARTAMENTO
+    descripcion: Departamento donde ocurrió el evento
+    nulos: 0
+    minimo: AMAZONAS
+    maximo: VICHADA
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Municipio en el cual ocurrió el evento
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  evento:
+    tipo_fuente: text
+    etiqueta: EVENTO
+    descripcion: Clasificación del evento según el fenómeno natural o antrópico no intencional
+    nulos: 0
+    maximo: VENDAVAL
+    comparacion: texto
+    valores:
+      INCENDIO FORESTAL: 5958
+      MOVIMIENTO EN MASA: 2546
+      INUNDACION: 1442
+      VENDAVAL: 1152
+      INCENDIO ESTRUCTURAL: 574
+      CRECIENTE SUBITA: 520
+      ACCIDENTE TRANSPORTE TERRESTRE: 124
+      AVENIDA TORRENCIAL: 110
+      CASO FORTUITO: 98
+      COLAPSO ESTRUCTURAL: 88
+      SISMO: 82
+      ACCIDENTE MINERO: 68
+      TORMENTA ELECTRICA: 36
+      SEQUIA: 34
+      INMERSION: 26
+      ACCIDENTE TRANSPORTE AEREO: 24
+      EROSION: 22
+      ACCIDENTE FLUVIAL: 16
+      GRANIZADA: 14
+      DESABASTECIMIENTO DE AGUA: 14
+  codificaci_n_segun_divipola:
+    tipo_fuente: number
+    etiqueta: CODIFICACIÓN SEGUN DIVIPOLA
+    descripcion: Código DIVIPOLA, asignado por el DANE al municipio donde ocurrió el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '99773'
+    comparacion: numero
+  muertos:
+    tipo_fuente: number
+    etiqueta: FALLECIDOS
+    descripcion: Cantidad de personas fallecidas a causa del evento
+    nulos: 0
+    minimo: '0'
+    maximo: '27'
+    comparacion: numero
+    valores:
+      '0': 12598
+      '1': 276
+      '2': 64
+      '3': 26
+      '4': 16
+      '5': 12
+      '6': 6
+      '9': 2
+      '7': 2
+      '14': 2
+      '12': 2
+      '10': 2
+      '27': 2
+      '17': 2
+  heridos:
+    tipo_fuente: number
+    etiqueta: HERIDOS
+    descripcion: Cantidad de personas heridas a causa del evento
+    nulos: 0
+    minimo: '0'
+    maximo: '39'
+    comparacion: numero
+    valores:
+      '0': 12570
+      '1': 150
+      '2': 84
+      '3': 60
+      '4': 36
+      '5': 22
+      '6': 14
+      '12': 12
+      '10': 6
+      '13': 6
+      '7': 6
+      '8': 6
+      '30': 4
+      '28': 4
+      '14': 4
+      '21': 4
+      '22': 4
+      '20': 2
+      '23': 2
+      '11': 2
+  desapa:
+    tipo_fuente: number
+    etiqueta: DESAPARECIDOS
+    descripcion: Cantidad de personas desaparecidas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '5'
+    comparacion: numero
+    valores:
+      '0': 12972
+      '1': 34
+      '2': 4
+      '5': 2
+  personas:
+    tipo_fuente: number
+    etiqueta: PERSONAS
+    descripcion: Número de personas afectadas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '44476'
+    comparacion: numero
+  familias:
+    tipo_fuente: number
+    etiqueta: FAMILIAS
+    descripcion: Número de familias afectadas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '13046'
+    comparacion: numero
+  viv_destru:
+    tipo_fuente: number
+    etiqueta: VIVIENDAS DESTRUIDAS
+    descripcion: Cantidad de viviendas destruidas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '1118'
+    comparacion: numero
+    valores:
+      '0': 12406
+      '1': 320
+      '2': 66
+      '3': 34
+      '5': 28
+      '4': 24
+      '6': 20
+      '18': 14
+      '10': 10
+      '7': 8
+      '8': 8
+      '17': 6
+      '13': 6
+      '20': 4
+      '9': 4
+      '25': 4
+      '11': 4
+      '24': 4
+      '46': 4
+      '15': 4
+  viv_aver:
+    tipo_fuente: number
+    etiqueta: VIVIVIENDAS AVERIADAS
+    descripcion: Cantidad de viviendas averiadas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '3506'
+    comparacion: numero
+  vias:
+    tipo_fuente: number
+    etiqueta: VIAS
+    descripcion: Cantidad de vías afectadas por el evento
+    nulos: 0
+    minimo: '0'
+    maximo: '126'
+    comparacion: numero
+    valores:
+      '0': 10838
+      '1': 1664
+      '2': 212
+      '3': 104
+      '4': 56
+      '5': 34
+      '8': 18
+      '6': 18
+      '7': 18
+      '9': 12
+      '10': 8
+      '12': 6
+      '16': 4
+      '17': 4
+      '24': 4
+      '11': 2
+      '20': 2
+      '14': 2
+      '18': 2
+      '23': 2
+  codigo_emergencia:
+    tipo_fuente: number
+    etiqueta: CODIGO EMERGENCIA
+    descripcion: Código de emergencia
+    nulos: 0
+    minimo: '1'
+    maximo: '6505'
+    comparacion: numero

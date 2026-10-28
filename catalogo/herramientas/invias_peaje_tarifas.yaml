@@ -1,0 +1,33 @@
+id: invias_peaje_tarifas
+version: 1
+familia: territorio
+fuente: invias.peajes
+pregunta: "¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo?"
+descripcion: >
+  Tarifas vigentes de un peaje de la red vial nacional a cargo del INVÍAS, buscado por su nombre (o
+  parte de él): categorías I a V en pesos (automóviles, buses, camiones de dos, tres-cuatro y cinco
+  ejes), el tramo y el sentido de cobro. Solo peajes del INVÍAS; los de las concesiones de la ANI
+  están en ani_peajes_en_zona.
+  (Fuente: INVÍAS; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 68qj-5xux
+    portal: datos.gov.co
+    select: "c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud"
+    where: "upper(nombre_peaje) like upper('%{nombre}%')"
+    order: "nombre_peaje, c_digo_peaje"
+    max_filas: 20
+  campos: [c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud]
+salida: PeajeTarifas
+cobro: codigo
+canario:
+  # Medido el 2026-10-28 en 68qj-5xux: Río Frío (Mediacanoa - Ansermanuevo), categoría I $12 800,
+  # categoría V $41 800.
+  entrada: {nombre: "Río Frío"}
+  verdad: {peaje: "Río Frío", tarifa_cat_i: 12800, tarifa_cat_v: 41800}
+  campos: [codigo_peaje, lat, lon, peaje, responsable, sector, sentido, tarifa_cat_i, tarifa_cat_ii, tarifa_cat_iii, tarifa_cat_iv, tarifa_cat_v, ubicacion]
+  latencia_max_ms: 8000

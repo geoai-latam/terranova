@@ -1,0 +1,84 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T06:59:10+00:00",
+ "herramienta": "ideam_lluvia_diaria_estacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, dia",
+    "id": "s54a-sgyg",
+    "max_filas": 500,
+    "order": "dia, codigosensor",
+    "portal": "datos.gov.co",
+    "select": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, date_trunc_ymd(fechaobservacion) AS dia, sum(valorobservado) AS mm, count(*) AS observaciones",
+    "where": "codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigoestacion",
+       "codigosensor",
+       "departamento",
+       "descripcionsensor",
+       "dia",
+       "mm",
+       "municipio",
+       "nombreestacion",
+       "observaciones"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigoestacion": "0028025502",
+        "codigosensor": "0240",
+        "departamento": "Cesar",
+        "descripcionsensor": "PRECIPITACIÓN",
+        "dia": "2026-10-17T00:00:00.000",
+        "mm": "9.16",
+        "municipio": "Valledupar",
+        "nombreestacion": "AEROPUERTO ALFONSO LÓPEZ - AUT [28025502]",
+        "observaciones": "144"
+       },
+       {
+        "codigoestacion": "0028025502",
+        "codigosensor": "0257",
+        "departamento": "Cesar",
+        "descripcionsensor": "GPRS - PRECIPITACIÓN",
+        "dia": "2026-10-17T00:00:00.000",
+        "mm": "4.1",
+        "municipio": "Valledupar",
+        "nombreestacion": "AEROPUERTO ALFONSO LÓPEZ - AUT [28025502]",
+        "observaciones": "720"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "s54a-sgyg",
+     "consulta": {
+      "conjunto": "s54a-sgyg",
+      "group": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, dia",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, date_trunc_ymd(fechaobservacion) AS dia, sum(valorobservado) AS mm, count(*) AS observaciones",
+      "where": "(codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59')"
+     },
+     "filas": 2,
+     "filas_que_resume": 864,
+     "filtro_soql": "(codigoestacion = '0028025502' AND fechaobservacion between '2026-10-17T00:00:00' and '2026-10-17T23:59:59')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

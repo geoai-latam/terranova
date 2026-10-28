@@ -1,0 +1,158 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ins.calidad_agua_irca
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/nxt2-39c3.json
+pagina: https://www.datos.gov.co/d/nxt2-39c3
+titulo: Calidad del Agua para Consumo Humano en Colombia
+descripcion: El Sistema de Información de la Vigilancia de la Calidad del Agua de Potable (SIVICAP) fue
+  creado con el propósito de monitorear la calidad del agua potable en el ámbito de la vigilancia en salud
+  pública para el país. A partir del SIVICAP se genera el Índice de Riesgo de la Calidad de Agua Potable
+  (IRCA) que mide en porcentaje el nivel de riesgo de ocurrencia de enfermedades relacionadas con el no
+  cumplimiento de características físicas, químicas y microbiológicas del agua para consumo humano. Este
+  conjunto de datos tiene los históricos del valor promedio anual del IRCA desagregados por departamento,
+  municipio, área urbana y area rural a partir de 2007.
+publicado: '2024-12-09'
+datos_actualizados: '2025-06-10'
+frecuencia_declarada: Anual
+cobertura_declarada: Departamental
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- irca
+- calidad de agua
+- agua de consumo
+- agua potable
+filas: 19160
+campos:
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Nombre del Departamento
+    nulos: 0
+    minimo: Amazonas
+    maximo: Vichada
+    comparacion: texto
+  municipiocodigo:
+    tipo_fuente: text
+    etiqueta: MunicipioCodigo
+    descripcion: 'Codigo DIVIPOLA del Municipio. La opción #TODOS indica que es un IRCA departamental
+      y se consideraron las muestras de vigilancia de la calidad del agua de todos sus municipios.'
+    nulos: 0
+    minimo: '05001'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: 'Nombre del Municipio. La opción #TODOS indica que es un IRCA departamental y se consideraron
+      las muestras de vigilancia de la calidad del agua de todos sus municipios.'
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  a_o:
+    tipo_fuente: number
+    etiqueta: Año
+    descripcion: Año
+    nulos: 0
+    minimo: '2007'
+    maximo: '2024'
+    comparacion: numero
+    valores:
+      '2019': 1113
+      '2018': 1109
+      '2013': 1089
+      '2014': 1089
+      '2017': 1086
+      '2010': 1085
+      '2012': 1085
+      '2011': 1082
+      '2021': 1073
+      '2009': 1069
+      '2016': 1061
+      '2008': 1060
+      '2015': 1056
+      '2024': 1038
+      '2020': 1037
+      '2007': 1026
+      '2023': 1009
+      '2022': 993
+  irca:
+    tipo_fuente: number
+    etiqueta: IRCA
+    descripcion: Indice de Riesgo de la Calidad del Agua para Consumo Humano representa un valor porcentual
+      calculado a partir de las muestras de vigilancia de la calidad del agua potable recopiladas a nivel
+      municipal o departamental, según corresponda. La opción ND indica que el valor no está disponible.
+    nulos: 0
+    minimo: '0.0'
+    maximo: '100.0'
+    comparacion: numero
+  nivel_de_riesgo:
+    tipo_fuente: text
+    etiqueta: Nivel de riesgo
+    descripcion: 'Intepretación del valor IRCA de acuerdo a la Resolución 2115 de 2007. El nivel de riesgo
+      según el valor del IRCA es: (I) 0% a 5% = Sin Riesgo; (II)5.1% a 14% = Riesgo bajo; (III) 4.1% a
+      35% = Riesgo medio; (IV) 35.1% a 80% = Riesgo Alto; (V) 80.1% a 100% = Inviable sanitariamente'
+    nulos: 0
+    comparacion: texto
+    valores:
+      Sin riesgo: 5979
+      Riesgo medio: 4658
+      Riesgo alto: 4193
+      Riesgo bajo: 3635
+      Inviable sanitariamente: 359
+      Bajo riesgo: 270
+      Alto riesgo: 66
+  ircaurbano:
+    tipo_fuente: text
+    etiqueta: IRCAurbano
+    descripcion: IRCA calculado considerando las muestras de vigilancia de la calidad del agua potable
+      recolectadas exclusivamente en el área URBANA de cada municipio o departamento, según corresponda.
+      La opción ND significa valor No Disponible.
+    nulos: 0
+    minimo: '0'
+    maximo: ND
+    comparacion: texto
+  nivel_de_riesgo_urbano:
+    tipo_fuente: text
+    etiqueta: Nivel de riesgo urbano
+    descripcion: 'Intepretación del valor IRCA de acuerdo a la Resolución 2115 de 2007. El nivel de riesgo
+      según el valor del IRCA es: (I) 0% a 5% = Sin Riesgo; (II)5.1% a 14% = Riesgo bajo; (III) 4.1% a
+      35% = Riesgo medio; (IV) 35.1% a 80% = Riesgo Alto; (V) 80.1% a 100% = Inviable sanitariamente'
+    nulos: 0
+    comparacion: texto
+    valores:
+      Sin riesgo: 8208
+      Riesgo bajo: 3470
+      Riesgo medio: 3379
+      Riesgo alto: 2245
+      ND: 1268
+      Inviable sanitariamente: 330
+      Bajo riesgo: 211
+      Alto riesgo: 49
+  ircarural:
+    tipo_fuente: text
+    etiqueta: IRCArural
+    descripcion: IRCA calculado considerando las muestras de vigilancia de la calidad del agua potable
+      recolectadas exclusivamente en el área RURAL de cada municipio o departamento, según corresponda.
+      La opción ND significa valor No Disponible.
+    nulos: 0
+    minimo: '0'
+    maximo: ND
+    comparacion: texto
+  nivel_de_riesgo_rural:
+    tipo_fuente: text
+    etiqueta: Nivel de riesgo rural
+    descripcion: 'Intepretación del valor IRCA de acuerdo a la Resolución 2115 de 2007. El nivel de riesgo
+      según el valor del IRCA es: (I) 0% a 5% = Sin Riesgo; (II)5.1% a 14% = Riesgo bajo; (III) 4.1% a
+      35% = Riesgo medio; (IV) 35.1% a 80% = Riesgo Alto; (V) 80.1% a 100% = Inviable sanitariamente'
+    nulos: 0
+    comparacion: texto
+    valores:
+      ND: 9615
+      Riesgo alto: 3996
+      Sin riesgo: 1893
+      Riesgo medio: 1683
+      Riesgo bajo: 1013
+      Inviable sanitariamente: 766
+      Bajo riesgo: 104
+      Alto riesgo: 90

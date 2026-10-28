@@ -1,0 +1,46 @@
+id: ideam.precipitacion
+titulo: "Precipitación observada en las estaciones del IDEAM (datos de sensores)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: opera la red hidrometeorológica nacional y publica sus observaciones (Decreto 1277 de 1994)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/s54a-sgyg.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Unos 165 millones de observaciones: siempre se filtra por estación y rango de fechas y se agrega por
+# día en la fuente. Las estaciones (su código y ubicación) están en ideam.estaciones.
+url: https://www.datos.gov.co/resource/s54a-sgyg.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigoestacion: {nombre: codigo_estacion, tipo: str, desc: "código de la estación (con ceros a la izquierda, 10 dígitos)"}
+  nombreestacion: {nombre: estacion, tipo: str, desc: "nombre de la estación"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio de la estación"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la estación"}
+  codigosensor: {nombre: codigo_sensor, tipo: str, desc: "código del sensor (una estación puede tener varios)"}
+  descripcionsensor: {nombre: sensor, tipo: str, desc: "descripción del sensor (precipitación, GPRS - precipitación…)"}
+  fechaobservacion: {nombre: fecha_observacion, tipo: datetime, desc: "fecha y hora de la observación"}
+  valorobservado: {nombre: valor_mm, tipo: float, desc: "precipitación del intervalo, en milímetros"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: IDEAM, theme: clima, accrualPeriodicity: continuous}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una observación de un sensor en un intervalo; ~165 millones; el aeropuerto de Valledupar da 864 por día (dos sensores)"
+  clave: {columna: fechaobservacion, unica: false}
+  operaciones: {filtrar: 0.7, agrupar: 4.1}
+  hallazgos:
+  - "una estación puede tener dos sensores de lluvia que miden distinto (cada 10 min y GPRS cada 2 min): el 17-10-2026 en Valledupar, 9,16 mm y 4,1 mm; sumarlos (13,26) sería falso"
+  - "el dato llega casi en tiempo real (el último observado era de hace horas)"
+  - "una serie de 10 días de una estación, agregada por día en la fuente, tarda ~4 s"
+  decision: "en vivo por estación y rango de fechas, agregado por día y por sensor"

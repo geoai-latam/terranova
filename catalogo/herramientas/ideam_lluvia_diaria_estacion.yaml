@@ -1,0 +1,38 @@
+id: ideam_lluvia_diaria_estacion
+version: 1
+familia: ambiente
+fuente: ideam.precipitacion
+pregunta: "¿Cuánto llovió cada día en esta estación del IDEAM?"
+descripcion: >
+  Lluvia acumulada por día (mm) en una estación del IDEAM entre dos fechas, separada por sensor: una
+  estación puede tener dos sensores de lluvia que miden distinto, y no se suman. Trae el número de
+  observaciones de cada día (un día con pocas tuvo huecos). El código de la estación tiene 10 dígitos
+  con ceros a la izquierda (ideam_estaciones_en_zona lo da). Rangos cortos: hasta unos 60 días.
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {codigo_estacion: codigo_estacion_ideam, desde: fecha, hasta: fecha}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: s54a-sgyg
+    portal: datos.gov.co
+    select: "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, date_trunc_ymd(fechaobservacion) AS dia, sum(valorobservado) AS mm, count(*) AS observaciones"
+    where: "codigoestacion = '{codigo_estacion}' AND fechaobservacion between '{desde}T00:00:00' and '{hasta}T23:59:59'"
+    group: "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, dia"
+    order: "dia, codigosensor"
+    max_filas: 500
+  campos: [codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor]
+derivados:
+  dia: {de: columna, campo: dia, tipo: date}
+  mm: {de: columna, campo: mm, tipo: float}
+  observaciones: {de: columna, campo: observaciones, tipo: int}
+salida: LluviaDiariaEstacion
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en s54a-sgyg: aeropuerto Alfonso López (Valledupar), 17-10-2026: sensor
+  # 0240 (cada 10 min) 9,16 mm en 144 observaciones; sensor 0257 (GPRS, cada 2 min) 4,1 mm en 720.
+  entrada: {codigo_estacion: "0028025502", desde: "2026-10-17", hasta: "2026-10-17"}
+  verdad: {codigo_sensor: "0240", mm: 9.16, observaciones: 144}
+  campos: [codigo_estacion, codigo_sensor, departamento, dia, estacion, mm, municipio, observaciones, sensor]
+  latencia_max_ms: 15000
