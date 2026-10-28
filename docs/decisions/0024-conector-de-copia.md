@@ -124,3 +124,27 @@
     que no se publican, las reglas del origen y el tipo del filtro.
   - El refresco desde Colombia (el DANE publica la GEIH cada mes) corre con
     `copias actualizar --solo-vencidas`, con el `web-mcp` local y un túnel al servidor.
+
+## Enmienda (2026-10-28): GeoJSON publicado como archivo (origen `geojson`)
+
+- **Contexto:** la amenaza por movimiento en masa del POT de Bogotá solo se puede bajar como archivo
+  del CKAN de Datos Abiertos Bogotá: el servicio ArcGIS de la SDP (`POT555/AMENAZAS_Y_RIESGOS`)
+  responde «not started». El GeoJSON viene exportado de un escritorio: sin clave y en la cartesiana
+  de Bogotá (PCS_CarMAGBOG), no en lon/lat.
+- **Decisión:**
+  - **Origen `geojson`.** La ficha declara las URLs del archivo en `descargas`; se copia la lista
+    blanca de las propiedades y la geometría.
+  - Sin clave en el archivo, la clave (`_fila`) es el orden del rasgo en los archivos, desde 1. La
+    copia se rehace entera, así que no tiene que coincidir entre versiones.
+  - **`proyeccion`:** la cadena proj de las coordenadas del archivo, si no son EPSG:4326. PostGIS
+    las pasa a lon/lat sobre el mismo elipsoide, sin cambio de datum: la cartesiana de Bogotá infla
+    el GRS80 2.550 m para que sus lat/lon sean las de MAGNA-SIRGAS, y pasar por WGS84 las corría
+    ~1,4 m.
+  - Un archivo sin rasgos no se publica.
+- **Confirmación:**
+  - El origen de la cartesiana vuelve exacto a lon −74,14659167 y lat 4,680486111.
+  - Los 3.459 polígonos caen dentro de Bogotá urbana.
+  - Dos puntos de control dan la misma categoría que la capa rotulada del IDIGER de 2016 (alta y
+    baja).
+  - Pruebas sin red: numeración entre archivos, solo la lista blanca, archivo vacío y las reglas del
+    origen. Prueba en PostGIS: un cuadro en la cartesiana se encuentra por su lon/lat.

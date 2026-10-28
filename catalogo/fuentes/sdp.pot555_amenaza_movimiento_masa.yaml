@@ -1,0 +1,58 @@
+id: sdp.pot555_amenaza_movimiento_masa
+titulo: "Amenaza por movimiento en masa en suelo urbano y de expansión de Bogotá (POT, Decreto 555 de 2021)"
+entidad: Secretaría Distrital de Planeación de Bogotá (SDP)
+competencia: formula y adopta el Plan de Ordenamiento Territorial de Bogotá (Decreto 555 de 2021), que zonifica la amenaza con estudios del IDIGER
+acto: Decreto 555 de 2021
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=amenaza-por-movimiento-en-masa-en-suelo-urbano-y-de-expansion-bogota-d-c
+  cita: "license_id: CC-BY-4.0 (Creative Commons Attribution 4.0)"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Fuente: Secretaría Distrital de Planeación (SDP), Bogotá, POT Decreto 555 de 2021"
+protocolo: archivo
+# Copia espacial (ADR-0024) del GeoJSON que la SDP publica en el CKAN de Datos Abiertos Bogotá: su
+# servicio ArcGIS (POT555/AMENAZAS_Y_RIESGOS) responde «not started», y el CKAN no responde a la IP
+# del datacenter; se ingiere desde Colombia. El archivo viene en la cartesiana de Bogotá
+# (PCS_CarMAGBOG, según su GeoPackage) y sin clave: se numera en el orden del archivo.
+conector: copia
+url: https://datosabiertos.bogota.gov.co/dataset/amenaza-por-movimiento-en-masa-en-suelo-urbano-y-de-expansion-bogota-d-c
+modo: copia
+copia:
+  origen: geojson
+  descargas:
+  - https://datosabiertos.bogota.gov.co/dataset/e4012cd7-e178-4868-a0f0-b857d243cd92/resource/8904ce1f-a4a4-4648-a684-bb62fd9182b8/download/amenaza_mm_urbano.geojson
+  proyeccion: "+proj=tmerc +lat_0=4.680486111 +lon_0=-74.14659167 +k=1 +x_0=92334.879 +y_0=109320.965 +a=6380687 +rf=298.257222101 +units=m +no_defs"
+  tabla: sdp_pot555_amenaza_movimiento_masa
+  clave: _fila
+  indices: [AREA_ZONIF]
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  excluye: ["suelo rural de Bogotá (está en otro archivo de la SDP)"]
+  periodo: "POT vigente de Bogotá (Decreto 555 de 2021)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  _fila: {nombre: id_elemento, tipo: int, desc: "orden del polígono en el archivo de la SDP (el archivo no trae clave)"}
+  CATEGORIZA: {nombre: categoria_amenaza, tipo: str, desc: "código de la categoría: 1 baja, 2 media, 3 alta (solo en área zonificable)"}
+  AREA_ZONIF: {nombre: area_zonificacion, tipo: str, desc: "ÁREA ZONIFICABLE o ÁREA NO ZONIFICABLE (allí el POT no zonifica la amenaza)"}
+  CLASE_SUEL: {nombre: clase_suelo, tipo: str, desc: "clase de suelo: Urbano o Expansión"}
+  ESCENARIO: {nombre: escenario, tipo: str, desc: "escenario de amenaza (movimiento en masa)"}
+  ACTO_ADMIN: {nombre: tipo_acto, tipo: str, desc: "tipo de acto (DEC)"}
+  NUMERO_ACT: {nombre: numero_acto, tipo: str, desc: "número del acto"}
+dcat: {publisher: SDP Bogotá, theme: riesgo}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "un polígono de amenaza por movimiento en masa; 3 459 en suelo urbano y de expansión"
+  clave: {columna: _fila, unica: true}
+  operaciones: {filtrar: 1.0, contar: 1.0}
+  hallazgos:
+  - "el CKAN no dice qué significa CATEGORIZA: cruzado con la capa rotulada del IDIGER (2016) en IDECA, 1 es baja (6 de 6 puntos), 2 media (6 de 6) y 3 alta (3 de 6; los otros 3 eran media en 2016)"
+  - "47 polígonos son ÁREA NO ZONIFICABLE con CATEGORIZA 1: ahí la capa de 2016 no tiene amenaza; no se rotulan como baja"
+  - "el archivo viene en la cartesiana de Bogotá (PCS_CarMAGBOG); se pasa a lon/lat sobre su mismo elipsoide"
+  - "el servicio ArcGIS de la SDP para amenazas responde «not started»"
+  decision: "por copia espacial del GeoJSON, ingerida desde Colombia, por punto"

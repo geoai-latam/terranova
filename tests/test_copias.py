@@ -763,3 +763,115 @@ def test_el_filtro_solo_va_con_una_capa_arcgis() -> None:
         Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", filtro="a = 1")
     with pytest.raises(ValidationError):  # nada de comillas dobles ni punto y coma
         Copia(origen="arcgis", capa=0, tabla="t", clave="id", filtro='a = "x"; drop')
+
+
+# --- un GeoJSON publicado como archivo (origen geojson) -------------------------------------------
+
+
+class GeojsonFalso:
+    """Un CKAN que sirve GeoJSON exportados de escritorio: sin OBJECTID, en la cartesiana de
+    Bogotá."""
+
+    def __init__(self, archivos: dict[str, list[dict[str, Any]]]) -> None:
+        self.archivos = archivos
+        self.pedidos: list[str] = []
+
+    def get(self, url: str) -> _Respuesta:
+        self.pedidos.append(url)
+        return _Respuesta({"type": "FeatureCollection", "features": self.archivos[url]})
+
+
+_CARMAGBOG = (
+    "+proj=tmerc +lat_0=4.680486111 +lon_0=-74.14659167 +k=1 +x_0=92334.879 +y_0=109320.965 "
+    "+a=6380687 +rf=298.257222101 +units=m +no_defs"
+)
+
+
+def _amenazas() -> Any:
+    from terranova.catalogo import Campo, Copia
+
+    return RUNAP.model_copy(
+        update={
+            "id": "sdp.prueba_geojson",
+            "copia": Copia(
+                origen="geojson",
+                descargas=["https://ckan/urbano.geojson", "https://ckan/rural.geojson"],
+                proyeccion=_CARMAGBOG,
+                tabla="prueba_geojson",
+                clave="_fila",
+            ),
+            "campos": {
+                "_fila": Campo(nombre="id_elemento", tipo="int", desc="orden del rasgo"),
+                "CATEGORIZA": Campo(nombre="categoria", tipo="str", desc="categoría"),
+            },
+        }
+    )
+
+
+def _cuadro_bogota(x: float, y: float, categoria: str) -> dict[str, Any]:
+    anillo = [[x, y], [x + 100, y], [x + 100, y + 100], [x, y + 100], [x, y]]
+    return {
+        "type": "Feature",
+        "properties": {"CATEGORIZA": categoria, "OTRA": "no va"},
+        "geometry": {"type": "Polygon", "coordinates": [anillo]},
+    }
+
+
+def test_geojson_numera_los_rasgos_sin_clave_entre_archivos() -> None:
+    from terranova.copias import descargar_geojson
+
+    http = GeojsonFalso(
+        {
+            "https://ckan/urbano.geojson": [_cuadro_bogota(92300, 109300, "1")] * 3,
+            "https://ckan/rural.geojson": [_cuadro_bogota(80000, 90000, "3")],
+        }
+    )
+    filas = [f for p in descargar_geojson(_amenazas(), cliente=http) for f in p]
+    assert [f["_fila"] for f in filas] == [1, 2, 3, 4]
+    assert [f["CATEGORIZA"] for f in filas] == ["1", "1", "1", "3"]
+    assert "OTRA" not in filas[0]  # solo la lista blanca
+    assert filas[0]["_geom"]["coordinates"][0][0] == [92300, 109300]  # tal cual: reproyecta PostGIS
+
+
+def test_geojson_vacio_no_se_publica() -> None:
+    from terranova.copias import descargar_geojson
+
+    http = GeojsonFalso({"https://ckan/urbano.geojson": [], "https://ckan/rural.geojson": []})
+    with pytest.raises(ErrorCopia, match="sin rasgos"):
+        list(descargar_geojson(_amenazas(), cliente=http))
+
+
+def test_la_proyeccion_solo_va_con_geojson() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+    from terranova.copias import _geograficas
+
+    with pytest.raises(ValidationError, match="`proyeccion` solo aplica"):
+        Copia(origen="arcgis", capa=0, tabla="t", clave="id", proyeccion=_CARMAGBOG)
+    with pytest.raises(ValidationError, match="exige `descargas`"):
+        Copia(origen="geojson", tabla="t", clave="id")
+    with pytest.raises(ValidationError):  # una cadena proj, nada más
+        Copia(origen="geojson", descargas=["u"], tabla="t", clave="id", proyeccion="'; drop")
+    assert _geograficas(_CARMAGBOG) == "+proj=longlat +a=6380687 +rf=298.257222101 +no_defs"
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_geojson_en_la_cartesiana_de_bogota_se_reproyecta() -> None:
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute("DROP SCHEMA IF EXISTS copia CASCADE")
+    almacen = AlmacenCopias(URL_PG)
+    fuente = _amenazas()
+    # el origen de la cartesiana (92334,879; 109320,965) es lon -74,14659167, lat 4,680486111
+    cuadro = _cuadro_bogota(92334.879 - 50, 109320.965 - 50, "2")
+    v = almacen.construir(
+        fuente, iter([[{"_fila": 1, "CATEGORIZA": "2", "_geom": cuadro["geometry"]}]]), None
+    )
+    assert v.filas == 1
+    filas, total = almacen.consultar(
+        plan_de_consulta(fuente, {"punto": [-74.14659167, 4.680486111], "select": ["CATEGORIZA"]})
+    )
+    assert filas == [{"CATEGORIZA": "2"}] and total == 1
+    assert almacen.consultar(plan_de_consulta(fuente, {"punto": [-74.1500, 4.680486111]}))[1] == 0
