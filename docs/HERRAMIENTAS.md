@@ -11,6 +11,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
+| `ideam_calidad_aire_municipio` | ¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…) | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
 | `ideam_lluvia_diaria_estacion` | ¿Cuánto llovió cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 2 |

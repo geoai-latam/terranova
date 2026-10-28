@@ -1,0 +1,49 @@
+id: ideam.calidad_aire
+titulo: "Calidad del aire en Colombia: concentraciones horarias por estación (IDEAM, SISAIRE)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: administra el Subsistema de Información sobre Calidad del Aire (SISAIRE) con los datos de las autoridades ambientales (Resolución 2254 de 2017)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/g4t8-zkc3.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IDEAM, SISAIRE (datos de las autoridades ambientales). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# ~40 millones de mediciones horarias (2020 a 2025): siempre se filtra por municipio y año y se agrega
+# en la fuente. El código del municipio viene sin el cero inicial («5001»): se compara como número.
+url: https://www.datos.gov.co/resource/g4t8-zkc3.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
+cobertura: {pais: CO, periodo: "2020 a 2025"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  estacion_id: {nombre: estacion_id, tipo: str, desc: "identificador de la estación en el SISAIRE"}
+  nombre_est: {nombre: estacion, tipo: str, desc: "nombre de la estación"}
+  nombre_fgda: {nombre: autoridad, tipo: str, desc: "autoridad ambiental que opera la estación"}
+  msfl_code: {nombre: contaminante, tipo: str, desc: "variable medida (PM2.5, PM10, O3, NO2, SO2, CO…)"}
+  sigla_unidad: {nombre: unidad, tipo: str, desc: "unidad de la concentración (µg/m³…)"}
+  med_concentracion_estandar: {nombre: concentracion, tipo: float, desc: "concentración horaria en condiciones de referencia"}
+  med_fecha_inicio: {nombre: fecha_inicio, tipo: str, desc: "inicio de la medición (texto AAAA-MM-DD hh:mm:ss)"}
+  codigo_municipio: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio (sin el cero inicial en la fuente)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: annual}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una medición horaria de una variable en una estación; ~40 M de filas de 2020 a 2025; Medellín tiene 36 series de contaminantes en 2025"
+  clave: {columna: estacion_id, unica: false}
+  operaciones: {filtrar: 0.6, agrupar: 5.7}  # desde el servidor, la herramienta completa tardó 17,9 s
+  hallazgos:
+  - "el código del municipio viene sin el cero inicial (Medellín = 5001): se compara como número"
+  - "la misma tabla mezcla contaminantes con variables meteorológicas (viento, lluvia, presión): se piden solo los contaminantes"
+  - "hay series con pocas horas (una estación de Medellín, 95 horas en 2025): las horas van en la respuesta para juzgar el promedio"
+  - "los datos llegan hasta 2025"
+  decision: "en vivo por municipio y año, agregado por estación y contaminante"
