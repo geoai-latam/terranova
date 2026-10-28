@@ -24,7 +24,7 @@ consulta:
     max_filas: 50
   campos: [cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud]
 salida: DivipolaMunicipios
-creditos: 1
+cobro: codigo
 canario:
   # Medido el 2026-10-23 en gdxc-w37w: «Chía» trae 4 municipios (Chía primero, luego Covarachía y Quinchía).
   entrada: {nombre: "Chía"}

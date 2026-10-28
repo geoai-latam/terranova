@@ -27,7 +27,7 @@ salida: ZonaFisicaEnPunto
 derivados:
   zona: {de: capa, valores: {"15": rural, "16": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
-creditos: 10
+cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona física 035
   verdad:

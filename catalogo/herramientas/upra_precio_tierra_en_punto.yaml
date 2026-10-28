@@ -23,7 +23,7 @@ consulta:
     limite: 5
   campos: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
 salida: PrecioTierraEnPunto
-creditos: 5
+cobro: punto
 canario:
   # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0: el punto (punto representativo de la
   # zona 78510) cae en Cota, rango «Mayor que 60 - hasta 70», vigencia 2016.

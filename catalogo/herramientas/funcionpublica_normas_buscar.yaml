@@ -20,7 +20,7 @@ consulta:
 salida: NormasFuncionPublicaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: «ley 1712 de 2014» da 10 resultados; el primero es la ley (i=56882).
   entrada: {texto: ley 1712 de 2014}

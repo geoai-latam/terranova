@@ -29,7 +29,7 @@ salida: ConstruccionesEnPredio
 derivados:
   zona: {de: capa, valores: {"12": rural, "3": urbana}}
   numero_construcciones: {de: conteo, tipo: int}
-creditos: 10
+cobro: registro
 canario:
   # Predio urbano de Chía (el de -74.0587, 4.8633): dos unidades, ambas «A», convencionales, 3 pisos.
   entrada: {codigo: "251750100000000430026000000000"}

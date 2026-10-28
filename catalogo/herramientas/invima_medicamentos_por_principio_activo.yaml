@@ -24,7 +24,7 @@ consulta:
     max_filas: 200
   campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad]
 salida: MedicamentosPorPrincipio
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en i7cb-raxc: 1 822 presentaciones vigentes con ibuprofeno; la primera por
   # expediente es el 31330 (Motrin 800 mg, Pfizer).

@@ -29,7 +29,7 @@ derivados:
   anio: {de: columna, campo: anio, tipo: int}
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en jbjy-vk9h: Municipio de Pitalito, 2018 → 14 contratos, $2 654 592 160.
   entrada: {nit_entidad: 891180077}

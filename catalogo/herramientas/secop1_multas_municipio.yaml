@@ -26,7 +26,7 @@ consulta:
 salida: Secop1MultasMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en 4n4q-k399: Girardot tiene 11 multas, todas a empresas o institutos; la
   # más reciente quedó en firme el 2019-11-05, por $12 216 540.

@@ -24,7 +24,7 @@ consulta:
 salida: VigiladasSuperfinancieraBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en sr9n-792w: «BANCOLOMBIA» da 7 entidades vigiladas. Puede cambiar: mínimo.
   entrada: {nombre: BANCOLOMBIA}

@@ -24,7 +24,7 @@ consulta:
 salida: EducacionPorEtc
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en sras-4t5p: Medellín (3759), 2011 → cobertura neta 108,49 %, deserción 3,69 %.
   entrada: {codigo_etc: 3759}

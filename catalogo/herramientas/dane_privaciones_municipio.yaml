@@ -23,7 +23,7 @@ consulta:
 salida: PrivacionesMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22: Chía (25175) tiene 15 privaciones; analfabetismo 2,6 %, trabajo informal 69,6 %.
   entrada: {municipio_divipola: "25175"}

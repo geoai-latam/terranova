@@ -27,7 +27,7 @@ consulta:
 salida: SupersociedadesSituacionFinanciera
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en pfdp-zks5 (nit = 830010665): 175
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

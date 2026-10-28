@@ -19,7 +19,7 @@ consulta:
 salida: CregResolucionBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: la Resolución CREG 101-131 de 2026 tiene 4 apariciones de «ARTÍCULO 1».
   entrada: {documento: resolucion_creg_101-131_2026, buscar: ARTÍCULO 1}

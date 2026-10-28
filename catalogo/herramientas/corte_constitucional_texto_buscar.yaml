@@ -19,7 +19,7 @@ consulta:
 salida: TextoSentenciaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: T-760/08 tiene 32 apariciones de «derecho fundamental a la salud».
   entrada: {anio: 2008, sentencia: T-760-08, buscar: derecho fundamental a la salud}

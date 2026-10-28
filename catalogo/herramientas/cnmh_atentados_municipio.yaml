@@ -27,7 +27,7 @@ derivados:
   victimas: {de: columna, campo: victimas, tipo: int}
   casos: {de: columna, campo: casos, tipo: int}
   total_victimas: {de: suma, campo: victimas, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en 4jfs-zi6u: GRANADA (05313), 28 víctimas en todos los años.
   # El CNMH revisa casos con cada corte: el total es un mínimo.

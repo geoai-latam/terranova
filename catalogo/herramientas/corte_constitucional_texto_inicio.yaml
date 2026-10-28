@@ -17,7 +17,7 @@ consulta:
     max_caracteres: 8000
   campos: [texto, titulo, caracteres]
 salida: TextoSentenciaInicio
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: T-760/08 tiene 1 398 924 caracteres; el texto empieza «T-760-08».
   entrada: {anio: 2008, sentencia: T-760-08}

@@ -29,7 +29,7 @@ consulta:
   campos: [valor_fob_usd, valor_fob_pesos, peso_neto_kg, cantidad, lineas]
 salida: ComexExportacionSubpartida
 derivados: {}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-26 en los microdatos ANDA 859 (año 2025 completo, ZIP Expo_2025). La subpartida
   # 2709000000 (petróleo crudo, la mayor exportación del país) suma FOB US$9.930.919.822 en 2025; solo
