@@ -222,6 +222,12 @@ def descargar_socrata(
 
 GEOMETRIA = "_geom"  # la columna de la geometría (EPSG:4326) en la copia y en las filas bajadas
 PAUSA_ARCGIS_S = 1.0
+# La reparación de geometrías va por tandas de la clave y deja como vienen los polígonos enormes:
+# un solo UPDATE sobre los 548 mil polígonos de conflictos de uso llevó el proceso de Postgres a
+# ~850 MB y el límite del contenedor lo mató; ST_MakeValid de UN polígono de 498 mil vértices pide
+# ~1 GB. El cruce por punto responde igual sobre un polígono inválido (anillos), sin error.
+REPARAR_POR_TANDA = 5000
+REPARAR_HASTA_VERTICES = 50_000
 
 
 def ewkt(geometria: dict[str, Any]) -> str:
@@ -251,8 +257,11 @@ def ewkt(geometria: dict[str, Any]) -> str:
     return f"SRID=4326;{cuerpos[str(tipo)]()}"
 
 
-def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 3) -> dict[str, Any]:
-    """Una petición al servicio; ArcGIS responde los errores con 200 y `{"error": …}`."""
+def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 5) -> dict[str, Any]:
+    """Una petición al servicio; ArcGIS responde los errores con 200 y `{"error": …}`.
+
+    Espera 30, 60, 90 y 120 s entre intentos: un 500 pasajero del IGAC tumbó una copia de
+    conflictos de uso a la página 68 de ~275, y la misma página respondió en 1 s minutos después."""
     import time
 
     for intento in range(1, intentos + 1):
@@ -266,7 +275,7 @@ def _pedir_arcgis(http: Any, url: str, params: dict[str, Any], intentos: int = 3
         except Exception:
             if intento == intentos:
                 raise
-            time.sleep(10 * intento)  # cortesía con la fuente: no se insiste de inmediato
+            time.sleep(30 * intento)  # cortesía con la fuente: no se insiste de inmediato
     return {}
 
 
@@ -534,7 +543,7 @@ def _pedir(http: Any, url: str, params: dict[str, Any], intentos: int = 3) -> li
         except Exception:
             if intento == intentos:
                 raise
-            time.sleep(10 * intento)  # cortesía con la fuente: no se insiste de inmediato
+            time.sleep(30 * intento)  # cortesía con la fuente: no se insiste de inmediato
     return []
 
 
@@ -646,12 +655,7 @@ class AlmacenCopias:
             if copia.texto:
                 self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
             if copia.espacial:
-                # un polígono inválido (autointersecciones, a veces por la simplificación) puede
-                # hacer fallar el cruce: se repara al copiar, no al consultar
-                self._c.execute(
-                    f'UPDATE {fisica} SET "{GEOMETRIA}" = ST_MakeValid("{GEOMETRIA}") '
-                    f'WHERE NOT ST_IsValid("{GEOMETRIA}")'
-                )
+                self._reparar_geometrias(fuente, fisica)
                 self._c.execute(f'CREATE INDEX ON {fisica} USING gist ("{GEOMETRIA}")')
                 self._c.execute(f"ANALYZE {fisica}")
         except BaseException:
@@ -670,6 +674,33 @@ class AlmacenCopias:
         )
         self._publicar(v, fisica)
         return v
+
+    def _reparar_geometrias(self, fuente: Fuente, fisica: str) -> None:
+        """Un polígono inválido (autointersecciones, a veces por la simplificación) puede hacer
+        fallar un cruce por zona: se repara al copiar, no al consultar, por tandas de la clave."""
+        import sys
+
+        assert fuente.copia is not None
+        clave, g = f'"{fuente.copia.clave}"', f'"{GEOMETRIA}"'
+        fila = self._c.execute(f"SELECT min({clave}), max({clave}) FROM {fisica}").fetchone()
+        if fila is None or fila[0] is None:
+            return
+        for inicio in range(int(fila[0]), int(fila[1]) + 1, REPARAR_POR_TANDA):
+            self._c.execute(
+                f"UPDATE {fisica} SET {g} = ST_MakeValid({g}) WHERE {clave} >= %s AND {clave} < %s"
+                f" AND ST_NPoints({g}) <= %s AND NOT ST_IsValid({g})",
+                (inicio, inicio + REPARAR_POR_TANDA, REPARAR_HASTA_VERTICES),
+            )
+        quedan = self._c.execute(
+            f"SELECT count(*) FROM {fisica} WHERE ST_NPoints({g}) > %s AND NOT ST_IsValid({g})",
+            (REPARAR_HASTA_VERTICES,),
+        ).fetchone()
+        if quedan and quedan[0]:
+            print(
+                f"aviso {fuente.id}: {quedan[0]} polígonos inválidos de más de "
+                f"{REPARAR_HASTA_VERTICES} vértices quedan como vienen de la fuente",
+                file=sys.stderr,
+            )
 
     def _publicar(self, v: Version, fisica: str) -> None:
         """La vista pasa a la versión nueva y el manifiesto la marca vigente, en una transacción."""
