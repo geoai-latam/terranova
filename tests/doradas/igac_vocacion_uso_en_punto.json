@@ -1,26 +1,27 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T04:00:46+00:00",
+ "grabado": "2026-10-27T22:58:29+00:00",
  "herramienta": "igac_vocacion_uso_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -74.0262,
-     4.8619,
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "OBJECTID"
+    ],
+    "punto": [
      -74.0262,
      4.8619
     ],
-    "geometria": "simplificada",
-    "max_features": 5,
-    "out_fields": [
+    "select": [
      "UCVocacion",
      "Vocacion",
      "Uso_principal"
     ],
-    "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/vocaciondeusoterritorionacional/MapServer/0"
+    "tabla": "igac_vocacion_uso"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -45,49 +46,27 @@
        ],
        "type": "FeatureCollection"
       },
-      "kind": "feature_collection",
-      "name": "Vocacion_Uso_Tierras"
+      "kind": "feature_collection"
      }
     ],
     "facts": {
-     "bbox": [
-      -74.0262,
-      4.8619,
-      -74.0262,
-      4.8619
-     ],
-     "capa": "Vocacion_Uso_Tierras",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -74.0262,
-       4.8619,
-       -74.0262,
-       4.8619
-      ],
-      "max_features": 5,
-      "out_fields": [
-       "UCVocacion",
-       "Vocacion",
-       "Uso_principal"
-      ],
-      "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/vocaciondeusoterritorionacional/MapServer/0",
-      "where": "1=1"
+     "consultado_en": "2026-10-27T22:46:18.191702+00:00",
+     "copia": {
+      "filas": 57080,
+      "huella": "sha256:3a768b934f3005213b3de898733b41bd3abda94a63a5e1bb433d8e999959a7ab",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261027224618191702"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://mapas.igac.gov.co/server/rest/services/agrologia/vocaciondeusoterritorionacional/MapServer/0"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }

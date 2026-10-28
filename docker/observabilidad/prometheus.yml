@@ -10,5 +10,10 @@ rule_files:
 scrape_configs:
   - job_name: terranova
     metrics_path: /metrics
-    static_configs:
-      - targets: ["puerta-a:8100", "puerta-b:8100"]
+    # por DNS de la red interna: una réplica que no corre (en la VPS única va solo puerta-a,
+    # ADR-0030) no resuelve y no cuenta como caída, así PuertaSinMetricas no salta en falso
+    dns_sd_configs:
+      - names: ["puerta-a", "puerta-b"]
+        type: A
+        port: 8100
+        refresh_interval: 30s

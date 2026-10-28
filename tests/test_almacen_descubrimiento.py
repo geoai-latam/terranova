@@ -253,3 +253,21 @@ def test_huella_de_modelo_no_se_mezcla() -> None:
     # otro modelo con la misma dim: se rechaza (no mezclar, ADR-0028)
     with pytest.raises(ValueError, match="no se puede mezclar"):
         alm.reemplazar("icde", [_ds("c", "y")], {"c": (1.0, 0.0, 0.0)}, modelo="modelo-B")
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_cache_de_vectores_por_huella() -> None:
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute(f"DROP SCHEMA IF EXISTS {ESQUEMA} CASCADE")
+
+    alm = AlmacenDescubrimiento(URL_PG, dim=3)
+    assert alm.vectores_por_huella(["h1"]) == {}
+    alm.guardar_vectores({"h1": (1.0, 0.0, 0.5), "h2": (0.0, 1.0, 0.0)})
+    alm.guardar_vectores({"h2": (0.0, 0.0, 1.0)})  # re-guardar la misma huella la pisa
+    assert alm.vectores_por_huella(["h1", "h2", "h3"]) == {
+        "h1": (1.0, 0.0, 0.5),
+        "h2": (0.0, 0.0, 1.0),
+    }

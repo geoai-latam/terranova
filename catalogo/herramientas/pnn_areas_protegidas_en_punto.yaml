@@ -8,18 +8,19 @@ descripcion: >
   autoridad ambiental, área según el acto y fecha de inscripción. Cubre todo el país y todas las
   categorías del SINAP (nacionales, regionales y reservas de la sociedad civil inscritas); un área
   declarada que aún no esté inscrita no aparece. Puede devolver varias si se traslapan.
+  Sale de la copia de Terranova (se rehace cada dos semanas): la procedencia dice de cuándo es.
   (Fuente: PNN; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
-    max_features: 20
+    tabla: runap
+    punto: ["{lon}", "{lat}"]
+    select: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+    geometria: simplificada
+    order: [ap_nombre]
+    limite: 20
   campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
 salida: AreasProtegidasEnPunto
 creditos: 10

@@ -6,7 +6,8 @@ encode zstd gzip
 # /metrics es de la red interna (Prometheus lee cada réplica directo): no sale por el borde
 respond /metrics 404
 
-reverse_proxy puerta-a:8100 puerta-b:8100 {
+# las réplicas de la puerta (TERRANOVA_REPLICAS; en la VPS única de ADR-0030, solo puerta-a)
+reverse_proxy {$TERRANOVA_REPLICAS} {
 	lb_policy least_conn
 	health_uri /v1/fuentes
 	health_interval 10s

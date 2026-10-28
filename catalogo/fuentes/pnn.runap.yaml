@@ -13,11 +13,20 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Parques Nacionales Naturales de Colombia, RUNAP"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # MapServer del propio PNN (la url que da el ítem del dueño). Capa 0: polígonos del RUNAP, de todas
 # las categorías (parques, reservas forestales protectoras, DMI, RNSC…).
 url: https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS, ingerida desde Colombia. El servicio del PNN responde a la IP del
+# datacenter con un reto antibots (403, medido el 2026-10-27): no se evade (ADR-0018). Polígonos
+# completos (son límites legales); el servicio no acepta simplificarlos (~35 MB cada 200).
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: runap
+  clave: objectid
+  por_pagina: 25
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura:
   columna_tiempo: fecha_inscrita
@@ -26,12 +35,14 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la fuente republica la capa)"}
   ap_nombre: {nombre: nombre, tipo: str, desc: "nombre del área protegida"}
   ap_categoria: {nombre: categoria, tipo: str, desc: "categoría de manejo (p. ej. Parque Nacional Natural)"}
   organizacion: {nombre: autoridad_ambiental, tipo: str, desc: "autoridad ambiental que la administra"}
   area_ha_total_resolucion: {nombre: area_ha_resolucion, tipo: float, desc: "área total en hectáreas según el acto de declaratoria"}
   fecha_inscrita: {nombre: fecha_inscripcion, tipo: date, desc: "fecha de inscripción en el RUNAP"}
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: PNN, theme: areas_protegidas}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -48,4 +59,4 @@ perfil:
   hallazgos:
   - 'un punto puede caer en varias áreas inscritas: la herramienta trae hasta 20'
   - el punto de prueba toca un solo elemento
-  decision: en vivo por punto y por zona
+  decision: copia (el servicio bloquea la IP del datacenter); por punto y por zona
