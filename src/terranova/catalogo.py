@@ -273,14 +273,25 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata", "zip_dane", "arcgis", "conector"]
+    origen: Literal["socrata", "zip_dane", "arcgis", "conector", "geojson"]
     conjunto: str | None = Field(
         default=None,
         pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
         description="id en datos.gov.co (socrata)",
     )
     descargas: list[str] = Field(
-        default_factory=list, description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane)"
+        default_factory=list,
+        description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane) o de los GeoJSON "
+        "publicados a copiar tal cual (origen geojson)",
+    )
+    # GeoJSON publicado como archivo (origen geojson), p. ej. en un CKAN cuando el servicio ArcGIS
+    # de la entidad no está en pie. Si sus coordenadas no son EPSG:4326, `proyeccion` dice cuáles
+    # son y PostGIS las pasa a lon/lat al copiar.
+    proyeccion: str | None = Field(
+        default=None,
+        pattern=r"^\+proj=[a-z0-9_]+( \+[a-z0-9_]+(=[A-Za-z0-9_.,-]+)?)*$",
+        description="cadena proj de las coordenadas del GeoJSON (origen geojson); se reproyecta a "
+        "lon/lat sobre el mismo elipsoide, sin cambio de datum",
     )
     # Mapeo del microdato de comercio exterior del DANE (origen zip_dane): se pre-agrega a
     # (año, mes, subpartida, país) sumando las medidas. Las columnas del CSV difieren impo/expo.
@@ -359,6 +370,10 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: `filtro` solo aplica a una capa ArcGIS")
         if not self.geometria and self.origen != "arcgis":
             raise ValueError("ADR-0024: `geometria: false` solo aplica a una capa ArcGIS")
+        if self.origen == "geojson" and not self.descargas:
+            raise ValueError("ADR-0024: origen `geojson` exige `descargas` (URLs de los GeoJSON)")
+        if self.proyeccion is not None and self.origen != "geojson":
+            raise ValueError("ADR-0024: `proyeccion` solo aplica al origen `geojson`")
         lee_conector = (self.conector is not None, self.tool is not None)
         if lee_conector != ((self.origen == "conector"),) * 2:
             raise ValueError(
@@ -386,7 +401,7 @@ class Copia(_Ficha):
     @property
     def espacial(self) -> bool:
         """Lleva geometría (`_geom`): se puede cruzar con un punto o un bbox."""
-        return self.origen == "arcgis" and self.geometria
+        return self.origen in ("arcgis", "geojson") and self.geometria
 
     @property
     def columnas_usadas(self) -> set[str]:

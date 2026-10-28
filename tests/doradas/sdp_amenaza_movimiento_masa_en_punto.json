@@ -1,0 +1,81 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T09:00:46+00:00",
+ "herramienta": "sdp_amenaza_movimiento_masa_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "AREA_ZONIF": "ÁREA ZONIFICABLE"
+    },
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "_fila"
+    ],
+    "punto": [
+     -74.0911,
+     4.5692
+    ],
+    "select": [
+     "CATEGORIZA",
+     "AREA_ZONIF",
+     "CLASE_SUEL",
+     "ESCENARIO",
+     "ACTO_ADMIN",
+     "NUMERO_ACT"
+    ],
+    "tabla": "sdp_pot555_amenaza_movimiento_masa"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09181,
+           4.57026
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMIN": "DEC",
+          "AREA_ZONIF": "ÁREA ZONIFICABLE",
+          "CATEGORIZA": "3",
+          "CLASE_SUEL": "Urbano",
+          "ESCENARIO": "MOVIMIENTO EN MASA",
+          "NUMERO_ACT": "555"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-28T08:59:53.526944+00:00",
+     "copia": {
+      "filas": 3459,
+      "huella": "sha256:59777d5aeb55e24af6be416f89ea63bfbf37bb1010466bc48bc868de5b6f948c",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028085953526944"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
