@@ -66,7 +66,7 @@ def test_verde_reciente_y_orden_por_gravedad() -> None:
     ultimos = [_r(h, f, "2026-10-28T06:00:00.000+00:00") for h in _herramientas_de(f)] + [
         _r(_herramientas_de(otra)[0], otra, "2026-10-28T06:00:00.000+00:00", ok=False)
     ]
-    estados = [e["estado"] for e in estado_fuentes(ultimos, CATALOGO, AHORA)]
+    estados = [str(e["estado"]) for e in estado_fuentes(ultimos, CATALOGO, AHORA)]
     assert estados[0] == "rojo" and "verde" in estados
     assert estados == sorted(estados, key=["rojo", "ambar", "verde", "sin_datos"].index)
 
