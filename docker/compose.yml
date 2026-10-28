@@ -43,6 +43,7 @@ x-puerta: &puerta
       "imagery-mcp": "http://imagery-mcp:9100/mcp", "web-mcp": "http://web-mcp:9940/mcp"}
     # G6 (ADR-0028): el buscador del catálogo embebe la consulta con el microservicio de embeddings
     TERRANOVA_EMBEDDINGS_URL: http://embeddings:9950
+    PYTHONUNBUFFERED: "1"  # los logs de los jobs salen en vivo en `docker logs`
   depends_on:
     postgres: {condition: service_healthy}
     redis: {condition: service_started}
@@ -92,6 +93,7 @@ services:
     build: !reset null
     pull_policy: never
     command: ["terranova", "canarios", "--cada-horas", "24"]
+    healthcheck: {disable: true}  # es un job, no sirve HTTP (el de la imagen es de la puerta)
     environment:
       <<: *entorno
       TERRANOVA_ALERTA_URL: ${TERRANOVA_ALERTA_URL:-}
@@ -105,6 +107,7 @@ services:
     # cada día revisa y rehace solo las copias que faltan o van por la mitad de su SLA (una capa
     # de agrología con SLA de un año no se rebaja a diario)
     command: ["terranova", "copias", "actualizar", "--solo-vencidas", "--cada-horas", "24"]
+    healthcheck: {disable: true}  # es un job, no sirve HTTP (el de la imagen es de la puerta)
 
   # G6 (ADR-0028): una vez al día cosecha los dos catálogos DCAT (Socrata + ICDE), pide los vectores
   # al microservicio `embeddings` y los aterriza en PostGIS/pgvector (`descubrimiento.datasets`). La
@@ -113,6 +116,7 @@ services:
     <<: *puerta
     build: !reset null
     pull_policy: never
+    healthcheck: {disable: true}  # es un job, no sirve HTTP (el de la imagen es de la puerta)
     entrypoint: ["sh", "-c"]
     command:
       - >-
