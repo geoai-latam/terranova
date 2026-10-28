@@ -131,6 +131,21 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
     lugar.
 
+## Repo privado y licencia propietaria (2026-10-28, #147)
+
+- **El repo `geoai-latam/terranova` es privado** (enmienda de la ADR-0001), porque Terranova es un
+  producto comercial. Se mantiene la higiene de un repo público (gitleaks sigue en el CI).
+- **Licencia propietaria:** © GeoAI LATAM, todos los derechos reservados. Los datos que se entregan
+  conservan la licencia de su fuente, y lo derivado de CC BY-SA sigue siendo CC BY-SA. `/llms.txt` y
+  la tarjeta MCP ya no dicen «Apache» ni «abierto».
+- **El servidor baja el código con una llave de despliegue de solo lectura.**
+- **El CI está ajustado a los 2.000 min/mes de un repo privado:** cada PR corre solo lo que cubre lo
+  que tocó, y hay una pasada completa diaria sobre main a las 06:00 UTC.
+- **Pendiente del dueño:**
+  - Términos de servicio (necesarios antes de vender; el `LICENSE` remite a ellos).
+  - Qué hacer con GEO Copilot. Hoy llama a sus propias copias de los 6 conectores en vez del MCP de
+    Terranova, y su repo `geo-copilot` es público.
+
 ## Operación del MVP encendida (2026-10-28, #143–#145)
 
 - **Servidor en `main` limpio:** `docker/compose.prod.yml` versionado (sin secretos) reemplaza los
