@@ -1,0 +1,57 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T07:24:13+00:00",
+ "herramienta": "sinchi_perdida_bosque_en_punto",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "ninguna",
+    "limite": 2,
+    "order": [
+     "objectid"
+    ],
+    "punto": [
+     -74.68082,
+     2.9347
+    ],
+    "select": [
+     "deforestacion"
+    ],
+    "tabla": "sinchi_perdida_bosque"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "deforestacion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "deforestacion": "Perdida"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-28T07:22:41.355509+00:00",
+     "copia": {
+      "filas": 4,
+      "huella": "sha256:c7bd652940e3b6246e595c6489e8618a42dbb08862d7f3f185063181506ff6a2",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028072241355509"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: sinchi.perdida_bosque
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://gis.siatac.co/arcgis/rest/services/MAC_DatosAbiertos/TMAPB_Region_100K_2022_2024/FeatureServer?f=json
+titulo: Map
+filas: 4
+geografia:
+  geometria: poligono
+  crs: EPSG:4170
+  capas:
+    '0': Pérdida de Bosque 100K
+campos:
+  deforestacion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: deforestacion
