@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T05:20:22+00:00",
+ "grabado": "2026-10-28T03:49:29+00:00",
  "herramienta": "dane_ipm_municipio",
  "llamadas": [
   {
@@ -8,19 +8,29 @@
     "filtros": {
      "ID": "25175"
     },
-    "hoja": "4_IPM Mpio dominios",
-    "url": "https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx"
+    "limite": 5,
+    "order": [
+     "_fila"
+    ],
+    "select": [
+     "ID",
+     "Municipio",
+     "IPM",
+     "Cabeceras",
+     "IPM Centros poblados y rural disperso"
+    ],
+    "tabla": "dane_ipm_municipal"
    },
-   "conector": "web-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
       "columns": [
-       "ID",
-       "Municipio",
-       "IPM",
        "Cabeceras",
-       "IPM Centros poblados y rural disperso"
+       "ID",
+       "IPM",
+       "IPM Centros poblados y rural disperso",
+       "Municipio"
       ],
       "kind": "table",
       "rows": [
@@ -35,26 +45,23 @@
      }
     ],
     "facts": {
-     "archivo": "https://www.dane.gov.co/files/investigaciones/condiciones_vida/pobreza/2018/informacion-censal/anexo-censal-pobreza-municipal-2018.xlsx",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "filas": 1,
-     "hoja": "4_IPM Mpio dominios",
-     "hojas": [
-      "2_IPM Mpio y Dpt",
-      "4_IPM Mpio dominios",
-      "6_Privaciones IPM Dpt-Mpio",
-      "8_Privaciones Mpio dominio",
-      "TB_REF",
-      "Visor"
-     ]
-    },
-    "geo_result": "1"
+     "consultado_en": "2026-10-28T03:49:06.584380+00:00",
+     "copia": {
+      "filas": 1122,
+      "huella": "sha256:5cb1d06f8ba1040022dc8bd498ba2d58363528f04b3b60c30a435c2d3599a34c",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028034906584380"
+     },
+     "servido_desde": "copia"
+    }
    },
-   "tool": "web_tabla"
+   "tool": "consultar_copia"
   }
  ]
 }

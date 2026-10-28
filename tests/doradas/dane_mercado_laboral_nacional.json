@@ -1,21 +1,26 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T03:54:12+00:00",
+ "grabado": "2026-10-28T03:50:11+00:00",
  "herramienta": "dane_mercado_laboral_nacional",
  "llamadas": [
   {
    "argumentos": {
-    "enlace_con": "anex-GEIH-[a-z]{3}[0-9]{4}\\.xlsx",
-    "fila_encabezado": 12,
-    "filas_encabezado": 2,
     "filtros": {
      "columna": 2001
     },
-    "hoja": "Total nacional",
-    "largo_desde": 2,
-    "pagina": "https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo"
+    "limite": 1000,
+    "order": [
+     "_fila"
+    ],
+    "select": [
+     "Concepto",
+     "columna",
+     "subcolumna",
+     "valor"
+    ],
+    "tabla": "dane_geih_nacional"
    },
-   "conector": "web-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -463,145 +468,145 @@
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Población total",
@@ -1111,151 +1116,151 @@
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Concepto",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 2001
+        "valor": 2001.0
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": "Ene"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": "Feb"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": "Mar"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": "Abr"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "May",
-        "valor": "May"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": "Jun"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": "Jul"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": "Ago"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": "Sep"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": "Oct"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": "Nov"
+        "valor": null
        },
        {
         "Concepto": null,
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": "Dic"
+        "valor": null
        },
        {
         "Concepto": "% población en edad de trabajar ",
@@ -1693,145 +1698,145 @@
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "TCDFTP",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "MCSFT",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Población total",
@@ -2341,113 +2346,95 @@
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Ene",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Feb",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Mar",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Abr",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "May",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Jun",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Jul",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Ago",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Sep",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Oct",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Nov",
-        "valor": 0
+        "valor": 0.0
        },
        {
         "Concepto": "Fuerza de trabajo potencial",
         "columna": "2001",
         "subcolumna": "Dic",
-        "valor": 0
+        "valor": 0.0
        }
       ]
      }
     ],
     "facts": {
-     "archivo": "https://www.dane.gov.co/files/operaciones/GEIH/anex-GEIH-ago2026.xlsx",
      "completitud": {
       "total": 397,
       "truncado": false,
       "vistos": 397
      },
-     "filas": 397,
-     "hoja": "Total nacional",
-     "hojas": [
-      "Índice",
-      "Ficha metodológica",
-      "Total nacional",
-      "Total nacional Trim",
-      "Total 13 ciudades A.M.",
-      "Total 23 ciudades A.M. Trim",
-      "Total 7 ciudades sin A.M.",
-      "Ocupados TN_T13_rama",
-      "Ocupados TN_posición",
-      "Ocupados TN_TCAB_TRES_rama_Trim",
-      "Ocupados 23 Ciudades_rama_Trim",
-      "Ocupados 23 Ciudades_pos_Trim",
-      "Pob_fuera_fuerza_trabajo_TN",
-      "Pob_fuera_fuerza_trab_T13ciud",
-      "Año_móvil_32_ciudades",
-      "Año_móvil_5_ciudades_interm",
-      "Año_móvil_5_ciudades_inter_Rama",
-      "Año_móvil_5_ciudades_inter_Posc",
-      "Otras_formas_trabajo",
-      "Total_nacional_IML_Sexo",
-      "Errores relativos"
-     ]
-    },
-    "geo_result": "1"
+     "consultado_en": "2026-10-28T03:48:51.513480+00:00",
+     "copia": {
+      "filas": 10190,
+      "huella": "sha256:bd5ba76929d9549e98d9bed26b95ef7a1089bfaf7ff076f85d2563a2f7bb0d1f",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028034851513480"
+     },
+     "servido_desde": "copia"
+    }
    },
-   "tool": "web_tabla"
+   "tool": "consultar_copia"
   }
  ]
 }

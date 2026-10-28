@@ -131,6 +131,22 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
     lugar.
 
+## Copias del DANE (2026-10-28)
+
+- **Las 5 herramientas del DANE que leen anexos xlsx salen de copia:** IPM municipal, privaciones,
+  IPM departamental, IPM nacional y GEIH. `www.dane.gov.co` responde 403 al datacenter.
+  - Origen nuevo `conector` (enmienda de la ADR-0024): el job le pide la tabla entera al mismo
+    `web_tabla` que la servía en vivo y la guarda tal cual.
+  - Bajadas desde Colombia en 30 s; los 5 canarios pasan desde la copia con las verdades de la
+    fuente.
+  - Las privaciones pasan a su propia fuente (`dane.ipm_municipal_2018_privaciones`).
+- **Falta la población del censo 2018** (`dane_poblacion_municipio`): el geoportal del DANE
+  (`geoportal.dane.gov.co`, capa 800 del CNPV) no abría conexión ni desde Colombia el 28-10. Se
+  reintenta; su copia sería del origen `arcgis` sin geometría (1.122 municipios, SLA de 10 años).
+- **Refresco desde Colombia en un paso:** un script interno abre el túnel, levanta el `web-mcp` con
+  una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 10 copias que solo
+  se bajan desde Colombia (DANE, RUNAP, UPRA, comercio exterior y SECOP).
+
 ## Repo privado y licencia propietaria (2026-10-28, #147)
 
 - **El repo `geoai-latam/terranova` pasa a privado** (enmienda de la ADR-0001), porque Terranova es un

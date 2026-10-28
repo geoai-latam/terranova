@@ -14,9 +14,25 @@ uso_comercial: si
 clase_acceso: bulk
 atribucion: "Fuente: Departamento Administrativo Nacional de Estadística"
 protocolo: archivo
-conector: web-mcp
+# Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la
+# tabla se baja entera desde Colombia con el mismo `web_tabla` que la servía en vivo.
+conector: copia
 url: https://www.dane.gov.co/index.php/estadisticas-por-tema/mercado-laboral/empleo-y-desempleo
-modo: en_vivo
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: 'anex-GEIH-[a-z]{3}[0-9]{4}\.xlsx'
+    hoja: "Total nacional"
+    fila_encabezado: 12
+    filas_encabezado: 2
+    largo_desde: 2
+  tabla: dane_geih_nacional
+  clave: _fila
+  indices: [columna]
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura: {pais: CO, periodo: "enero de 2001 al último mes publicado"}
 datos_personales: ninguno
@@ -27,6 +43,7 @@ campos:
   columna: {nombre: anio, tipo: str, desc: "año"}
   subcolumna: {nombre: mes, tipo: str, desc: "mes (Ene, Feb, …)"}
   valor: {nombre: valor, tipo: float, desc: "porcentaje para las tasas; miles de personas para las poblaciones"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -38,4 +55,4 @@ perfil:
   - "tabla ancha: el año combinado sobre 12 meses; se pasa a una fila por indicador y mes"
   - "algunos indicadores (TCDFTP) valen 0 en los primeros años: no se medían"
   - "los nombres de los indicadores traen espacios al final"
-  decision: "en vivo por año, descubriendo el anexo del mes"
+  decision: "por copia (el DANE bloquea al datacenter) del anexo del último mes, por año"

@@ -14,9 +14,25 @@ uso_comercial: si
 clase_acceso: bulk
 atribucion: "Fuente: Departamento Administrativo Nacional de Estadística"
 protocolo: archivo
-conector: web-mcp
+# Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la
+# tabla se baja entera desde Colombia con el mismo `web_tabla` que la servía en vivo.
+conector: copia
 url: https://www.dane.gov.co/index.php/estadisticas-por-tema/pobreza-y-condiciones-de-vida/pobreza-multidimensional
-modo: en_vivo
+modo: copia
+copia:
+  origen: conector
+  conector: web-mcp
+  tool: web_tabla
+  argumentos:
+    pagina: "{url_fuente}"
+    enlace_con: 'anex-PMultidimensional-Departamental-[0-9]{4}\.xlsx'
+    hoja: IPM_Departamentos
+    fila_encabezado: 12
+    filas_encabezado: 2
+    largo_desde: 2
+  tabla: dane_ipm_departamental
+  clave: _fila
+  indices: [Departamento]
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura: {pais: CO, periodo: "2018 a 2025 (anexo 2025)"}
 datos_personales: ninguno
@@ -27,6 +43,7 @@ campos:
   columna: {nombre: anio, tipo: str, desc: "año (como lo escribe el DANE: «2020**» lleva nota)"}
   valor: {nombre: valor, tipo: float, desc: "porcentaje"}
   subcolumna: {nombre: zona, tipo: str, desc: "Total, Cabeceras o Centros poblados y rural disperso"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
 perfil:
@@ -37,4 +54,4 @@ perfil:
   - "tabla ancha con el año combinado sobre tres zonas: se pasa a una fila por año y zona"
   - "2020 y 2021 vienen como «2020**» y «2021***»: llevan notas al pie de la hoja"
   - "el nombre del archivo lleva el año del último dato (anex-PMultidimensional-Departamental-2025.xlsx)"
-  decision: "en vivo por departamento, descubriendo el anexo vigente"
+  decision: "por copia (el DANE bloquea al datacenter) del anexo vigente, por departamento"
