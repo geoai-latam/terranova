@@ -36,7 +36,7 @@ datasets = [
 # torch) para el buscador semántico, servido por el microservicio (uvicorn). La versión del modelo
 # se fija en descubrimiento.py.
 descubrimiento = [
-    "fastembed>=0.4,<0.8",
+    "fastembed>=0.4,<0.10",
     "uvicorn>=0.30",
 ]
 
