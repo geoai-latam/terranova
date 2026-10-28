@@ -1,0 +1,48 @@
+id: ideam.temperatura
+titulo: "Temperatura del aire observada en las estaciones del IDEAM (datos de sensores)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: opera la red hidrometeorológica nacional y publica sus observaciones (Decreto 1277 de 1994)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/sbwg-7ju4.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Cientos de millones de observaciones: siempre se filtra por estación y rango de fechas y se agrega
+# por día en la fuente. Las estaciones (su código y ubicación) están en ideam.estaciones.
+url: https://www.datos.gov.co/resource/sbwg-7ju4.json
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  codigoestacion: {nombre: codigo_estacion, tipo: str, desc: "código de la estación (con ceros a la izquierda, 10 dígitos)"}
+  nombreestacion: {nombre: estacion, tipo: str, desc: "nombre de la estación"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio de la estación"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la estación"}
+  codigosensor: {nombre: codigo_sensor, tipo: str, desc: "código del sensor (una estación puede tener varios)"}
+  descripcionsensor: {nombre: sensor, tipo: str, desc: "descripción del sensor (temperatura del aire a 2 m, GPRS…)"}
+  unidadmedida: {nombre: unidad, tipo: str, desc: "unidad de la observación (°C)"}
+  fechaobservacion: {nombre: fecha_observacion, tipo: datetime, desc: "fecha y hora de la observación"}
+  valorobservado: {nombre: temperatura_c, tipo: float, desc: "temperatura del aire observada, en grados Celsius"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: IDEAM, theme: clima, accrualPeriodicity: continuous}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una observación instantánea de un sensor; el aeropuerto de Valledupar da 744 por día (un sensor horario y otro GPRS cada 2 min)"
+  clave: {columna: fechaobservacion, unica: false}
+  operaciones: {filtrar: 1.6, agrupar: 2.3}
+  hallazgos:
+  - "una estación puede tener dos sensores de temperatura que miden distinto: el 17-10-2026 en Valledupar, el horario (0068) dio 23,5 a 33,6 °C y el GPRS (0071) 23,2 a 34,4 °C; se separan por sensor"
+  - "son muestras instantáneas: la máxima y la mínima del día salen de las muestras, no del termómetro de máxima (ccvq-rp9s dio 34,6 °C ese día)"
+  - "hay días sin dato de un sensor (10 días de Valledupar dieron 16 series de 20)"
+  - "una serie de 10 días de una estación, agregada por día en la fuente, tarda ~3 s"
+  decision: "en vivo por estación y rango de fechas, agregado por día y por sensor (promedio, mínima y máxima)"

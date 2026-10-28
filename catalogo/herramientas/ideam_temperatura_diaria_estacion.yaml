@@ -1,0 +1,43 @@
+id: ideam_temperatura_diaria_estacion
+version: 1
+familia: ambiente
+fuente: ideam.temperatura
+pregunta: "¿Qué temperatura hizo cada día en esta estación del IDEAM?"
+descripcion: >
+  Temperatura del aire a 2 m por día (°C) en una estación del IDEAM entre dos fechas: promedio, mínima
+  y máxima de las observaciones del día, separadas por sensor (una estación puede tener un sensor
+  horario y otro GPRS que miden distinto; no se mezclan). Trae el número de observaciones de cada día
+  (un día con pocas tuvo huecos). La mínima y la máxima salen de las muestras, no de un termómetro de
+  extremos. El código de la estación tiene 10 dígitos con ceros a la izquierda (ideam_estaciones_en_zona
+  lo da). Rangos cortos: hasta unos 60 días.
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {codigo_estacion: codigo_estacion_ideam, desde: fecha, hasta: fecha}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: sbwg-7ju4
+    portal: datos.gov.co
+    select: "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minima, max(valorobservado) AS maxima, count(*) AS observaciones"
+    where: "codigoestacion = '{codigo_estacion}' AND fechaobservacion between '{desde}T00:00:00' and '{hasta}T23:59:59'"
+    group: "codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida, dia"
+    order: "dia, codigosensor"
+    max_filas: 500
+  campos: [codigoestacion, nombreestacion, municipio, departamento, codigosensor, descripcionsensor, unidadmedida]
+derivados:
+  dia: {de: columna, campo: dia, tipo: date}
+  promedio_c: {de: columna, campo: promedio, tipo: float}
+  minima_c: {de: columna, campo: minima, tipo: float}
+  maxima_c: {de: columna, campo: maxima, tipo: float}
+  observaciones: {de: columna, campo: observaciones, tipo: int}
+salida: TemperaturaDiariaEstacion
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en sbwg-7ju4: aeropuerto Alfonso López (Valledupar), 17-10-2026: sensor
+  # 0068 (horario) 23,5 a 33,6 °C en 24 observaciones; sensor 0071 (GPRS, cada 2 min) 23,2 a 34,4 °C
+  # en 720.
+  entrada: {codigo_estacion: "0028025502", desde: "2026-10-17", hasta: "2026-10-17"}
+  verdad: {codigo_sensor: "0068", minima_c: 23.5, maxima_c: 33.6, observaciones: 24}
+  campos: [codigo_estacion, codigo_sensor, departamento, dia, estacion, maxima_c, minima_c, municipio, observaciones, promedio_c, sensor, unidad]
+  latencia_max_ms: 15000

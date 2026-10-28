@@ -1,0 +1,81 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:03:03+00:00",
+ "herramienta": "ideam_nivel_rio_diario_estacion",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, dia",
+    "id": "bdmn-sqnh",
+    "max_filas": 500,
+    "order": "dia, codigosensor",
+    "portal": "datos.gov.co",
+    "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
+    "where": "codigoestacion = '0026207080' AND fechaobservacion between '2026-10-20T00:00:00' and '2026-10-20T23:59:59'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigoestacion",
+       "codigosensor",
+       "departamento",
+       "descripcionsensor",
+       "dia",
+       "lecturas",
+       "maximo",
+       "minimo",
+       "municipio",
+       "nombreestacion",
+       "promedio",
+       "unidadmedida",
+       "zonahidrografica"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigoestacion": "0026207080",
+        "codigosensor": "0230",
+        "departamento": "Antioquia",
+        "descripcionsensor": "NIVEL INSTANTANEO",
+        "dia": "2026-10-20T00:00:00.000",
+        "lecturas": "24",
+        "maximo": "3.11",
+        "minimo": "2.94",
+        "municipio": "Venecia",
+        "nombreestacion": "BOLOMBOLO - AUT [26207080]",
+        "promedio": "3.0033333333333333",
+        "unidadmedida": "mt",
+        "zonahidrografica": "Cauca"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "bdmn-sqnh",
+     "consulta": {
+      "conjunto": "bdmn-sqnh",
+      "group": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, dia",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
+      "where": "(codigoestacion = '0026207080' AND fechaobservacion between '2026-10-20T00:00:00' and '2026-10-20T23:59:59')"
+     },
+     "filas": 1,
+     "filas_que_resume": 24,
+     "filtro_soql": "(codigoestacion = '0026207080' AND fechaobservacion between '2026-10-20T00:00:00' and '2026-10-20T23:59:59')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

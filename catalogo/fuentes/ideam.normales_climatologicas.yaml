@@ -1,0 +1,61 @@
+id: ideam.normales_climatologicas
+titulo: "Normales climatológicas de Colombia por estación (IDEAM)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: opera la red hidrometeorológica nacional y publica la climatología del país (Decreto 1277 de 1994)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/nsz2-kzcq.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Una fila por estación, variable y periodo de referencia (1961-1990 a 1991-2020), con los doce meses
+# y el anual. El código de la estación viene sin los ceros iniciales («28025502»): se compara como número.
+url: https://www.datos.gov.co/resource/nsz2-kzcq.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P10Y}
+cobertura: {pais: CO, periodo: "1961-1990, 1971-2000, 1981-2010 y 1991-2020"}
+datos_personales: ninguno
+estado: publicada
+campos:
+  periodo: {nombre: periodo, tipo: str, desc: "periodo de referencia de la normal (1991-2020…)"}
+  par_metro: {nombre: variable, tipo: str, desc: "variable climatológica (precipitación, temperatura media, máxima o mínima, humedad relativa, brillo solar, evaporación, días con lluvia)"}
+  c_digo: {nombre: codigo_estacion, tipo: str, desc: "código de la estación (sin los ceros a la izquierda en la fuente)"}
+  categoria: {nombre: categoria, tipo: str, desc: "categoría de la estación (SP sinóptica principal, CO climatológica ordinaria, PM pluviométrica, AM agrometeorológica…)"}
+  estaci_n: {nombre: estacion, tipo: str, desc: "nombre de la estación"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio de la estación"}
+  departamento: {nombre: departamento, tipo: str, desc: "departamento de la estación"}
+  ao: {nombre: area_operativa, tipo: str, desc: "área operativa del IDEAM a la que pertenece la estación"}
+  altitud_m: {nombre: altitud_m, tipo: float, desc: "altitud de la estación, en metros"}
+  ene: {nombre: ene, tipo: float, desc: "valor normal de enero"}
+  feb: {nombre: feb, tipo: float, desc: "valor normal de febrero"}
+  mar: {nombre: mar, tipo: float, desc: "valor normal de marzo"}
+  abr: {nombre: abr, tipo: float, desc: "valor normal de abril"}
+  may: {nombre: may, tipo: float, desc: "valor normal de mayo"}
+  jun: {nombre: jun, tipo: float, desc: "valor normal de junio"}
+  jul: {nombre: jul, tipo: float, desc: "valor normal de julio"}
+  ago: {nombre: ago, tipo: float, desc: "valor normal de agosto"}
+  sep: {nombre: sep, tipo: float, desc: "valor normal de septiembre"}
+  oct: {nombre: oct, tipo: float, desc: "valor normal de octubre"}
+  nov: {nombre: nov, tipo: float, desc: "valor normal de noviembre"}
+  dic: {nombre: dic, tipo: float, desc: "valor normal de diciembre"}
+  anual: {nombre: anual, tipo: float, desc: "valor normal anual (total en precipitación y días con lluvia; media en las demás variables)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: IDEAM, theme: clima, accrualPeriodicity: irregular}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una estación, una variable y un periodo de 30 años, con los doce meses y el anual; 16 761 filas; el aeropuerto de Valledupar tiene 22"
+  clave: {columna: c_digo, unica: false}
+  operaciones: {filtrar: 0.4, agrupar: 7.1}
+  hallazgos:
+  - "el código de la estación es numérico y viene sin los ceros iniciales (28025502, no 0028025502): se compara como número"
+  - "no todas las estaciones tienen todas las variables ni los cuatro periodos (Valledupar no tiene precipitación de 1961-1990 ni de 1981-2010)"
+  - "la tabla no trae la unidad: según su descripción, precipitación en mm (total), días con lluvia ≥ 1 mm, temperaturas en °C, brillo solar en horas, humedad relativa en % y evaporación en mm/día"
+  - "el nombre de la estación cambia entre periodos (Alfonso López / Alfonso Lopez): se busca por código, no por nombre"
+  decision: "en vivo por código de estación, todas las variables y periodos (son pocas filas)"

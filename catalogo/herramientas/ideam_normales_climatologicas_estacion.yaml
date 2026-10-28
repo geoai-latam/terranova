@@ -1,0 +1,40 @@
+id: ideam_normales_climatologicas_estacion
+version: 1
+familia: ambiente
+fuente: ideam.normales_climatologicas
+pregunta: "¿Cuál es el clima normal (mes a mes) en esta estación del IDEAM?"
+descripcion: >
+  Normales climatológicas de una estación del IDEAM: el valor normal de cada mes y el anual, por
+  variable y periodo de 30 años (1961-1990, 1971-2000, 1981-2010, 1991-2020). Variables:
+  precipitación (mm, total del mes y del año), días con lluvia ≥ 1 mm, temperatura media, máxima y
+  mínima (°C), humedad relativa (%), brillo solar (horas) y evaporación (mm/día). No todas las
+  estaciones tienen todas las variables ni todos los periodos. Sirve para comparar lo observado con lo
+  normal. El código de la estación tiene 10 dígitos con ceros a la izquierda (ideam_estaciones_en_zona
+  lo da).
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {codigo_estacion: codigo_estacion_ideam}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: nsz2-kzcq
+    portal: datos.gov.co
+    select: "periodo, par_metro, c_digo, categoria, estaci_n, municipio, departamento, ao, altitud_m, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic, anual"
+    where: "c_digo = ('{codigo_estacion}')::number"
+    order: "par_metro, periodo DESC"
+    max_filas: 100
+  campos: [periodo, par_metro, c_digo, categoria, estaci_n, municipio, departamento, ao, altitud_m, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic, anual]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: NormalesClimatologicasEstacion
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en nsz2-kzcq: el aeropuerto Alfonso López de Valledupar (28025502) tiene
+  # 22 normales; la primera en el orden es brillo solar 1991-2020: enero 9,1 h, anual 7,4 h.
+  # Precipitación 1991-2020: 1 016,7 mm al año.
+  entrada: {codigo_estacion: "0028025502"}
+  verdad: {variable: "BRILLO SOLAR", periodo: "1991-2020", ene: 9.1, anual: 7.4}
+  minimos: {numero_registros: 20}
+  campos: [abr, ago, altitud_m, anual, area_operativa, categoria, codigo_estacion, departamento, dic, ene, estacion, feb, jul, jun, mar, may, municipio, nov, numero_registros, oct, periodo, sep, variable]
+  latencia_max_ms: 10000

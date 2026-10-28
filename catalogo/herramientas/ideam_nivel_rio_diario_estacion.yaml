@@ -1,0 +1,42 @@
+id: ideam_nivel_rio_diario_estacion
+version: 1
+familia: ambiente
+fuente: ideam.nivel_rio
+pregunta: "¿Cómo estuvo el nivel del río cada día en esta estación del IDEAM?"
+descripcion: >
+  Nivel del río por día (metros) en una estación hidrológica del IDEAM entre dos fechas: promedio,
+  mínimo y máximo de las lecturas del día, por sensor, con el número de lecturas (un día con pocas
+  tuvo huecos). El nivel se mide sobre el cero de la mira de cada estación: sirve para ver si el río
+  sube o baja en esa estación, no para comparar estaciones ni es la profundidad. El código de la
+  estación tiene 10 dígitos con ceros a la izquierda (ideam_estaciones_en_zona lo da). Rangos cortos:
+  hasta unos 60 días.
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {codigo_estacion: codigo_estacion_ideam, desde: fecha, hasta: fecha}
+consulta:
+  operacion: serie
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: bdmn-sqnh
+    portal: datos.gov.co
+    select: "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas"
+    where: "codigoestacion = '{codigo_estacion}' AND fechaobservacion between '{desde}T00:00:00' and '{hasta}T23:59:59'"
+    group: "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, dia"
+    order: "dia, codigosensor"
+    max_filas: 500
+  campos: [codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida]
+derivados:
+  dia: {de: columna, campo: dia, tipo: date}
+  promedio_m: {de: columna, campo: promedio, tipo: float}
+  minimo_m: {de: columna, campo: minimo, tipo: float}
+  maximo_m: {de: columna, campo: maximo, tipo: float}
+  lecturas: {de: columna, campo: lecturas, tipo: int}
+salida: NivelRioDiarioEstacion
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en bdmn-sqnh: Bolombolo (río Cauca, Venecia), 20-10-2026: sensor 0230,
+  # nivel de 2,94 a 3,11 m en 24 lecturas (promedio 3,00 m).
+  entrada: {codigo_estacion: "0026207080", desde: "2026-10-20", hasta: "2026-10-20"}
+  verdad: {codigo_sensor: "0230", minimo_m: 2.94, maximo_m: 3.11, lecturas: 24}
+  campos: [codigo_estacion, codigo_sensor, departamento, dia, estacion, lecturas, maximo_m, minimo_m, municipio, promedio_m, sensor, unidad, zona_hidrografica]
+  latencia_max_ms: 15000

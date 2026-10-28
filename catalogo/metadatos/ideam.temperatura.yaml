@@ -1,0 +1,92 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.temperatura
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/sbwg-7ju4.json
+pagina: https://www.datos.gov.co/d/sbwg-7ju4
+titulo: Temperatura Ambiente del Aire
+descripcion: 'Anteriormente este set de datos se denominaba: "Datos Hidrometeorológicos Crudos - Red de
+  Estaciones IDEAM" el cual se actualiza por "Temperatura Ambiente del Aire". Contiene datos de la temperatura
+  ambiente del aire registrada cada hora en diferentes estaciones meteorológicas ubicadas en el territorio
+  colombiano. Los cuales han sido verificados mediante un control de calidad básico, de acuerdo con las
+  recomendaciones de la Organización Meteorológica Mundial (OMM). Por lo anterior, se han corregido o
+  eliminado valores que no han cumplido con estos controles y podrían requerir validaciones adicionales
+  según el uso específico. Este conjunto de datos lo podemos utilizar para establecer el comportamiento
+  diario, mensual y anual de la temperatura máxima del aire, en análisis climatológico y modelos climáticos,
+  así como, en alertas tempranas. Se recomienda a los usuarios aplicar criterios adicionales de verificación
+  para usos sensibles o técnicos especializados. Los datos disponibles a través de este medio pueden ser
+  libremente consumidos bajo los siguientes clausulas: 1. Los datos a visualizar o descargar a continuación
+  no han sido validados por el IDEAM. 2. Los datos aquí dispuestos s…'
+publicado: '2019-07-02'
+datos_actualizados: '2026-10-28'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- datos
+filas: 93656616
+campos:
+  codigoestacion:
+    tipo_fuente: text
+    etiqueta: CodigoEstacion
+    nulos: 0
+    minimo: '0011025501'
+    maximo: '5311500149'
+    comparacion: texto
+  codigosensor:
+    tipo_fuente: text
+    etiqueta: CodigoSensor
+    nulos: 0
+    minimo: 0068
+    maximo: '0071'
+    comparacion: texto
+    valores:
+      0068: 79512221
+      '0071': 14144395
+  fechaobservacion:
+    tipo_fuente: calendar_date
+    etiqueta: FechaObservacion
+    nulos: 0
+    minimo: '2001-01-01T00:19:05.000'
+    maximo: '2026-10-25T23:58:00.000'
+    comparacion: fecha
+  valorobservado:
+    tipo_fuente: number
+    etiqueta: ValorObservado
+    nulos: 0
+    minimo: '0'
+    maximo: '50'
+    comparacion: numero
+  nombreestacion:
+    tipo_fuente: text
+    etiqueta: NombreEstacion
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    nulos: 0
+    minimo: Amazonas
+    maximo: VICHADA
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    nulos: 0
+    minimo: ÁBREGO
+    comparacion: texto
+  descripcionsensor:
+    tipo_fuente: text
+    etiqueta: DescripcionSensor
+    nulos: 0
+    comparacion: texto
+    valores:
+      Temp Aire 2 m: 72825413
+      GPRS - TEMPERATURA DEL AIRE A 2 m: 14144395
+      TEMPERATURA DEL AIRE A 2 m: 6686808
+  unidadmedida:
+    tipo_fuente: text
+    etiqueta: UnidadMedida
+    nulos: 0
+    comparacion: texto
+    valores:
+      °C: 93676991

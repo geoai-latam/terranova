@@ -1,0 +1,249 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.normales_climatologicas
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/nsz2-kzcq.json
+pagina: https://www.datos.gov.co/d/nsz2-kzcq
+titulo: Normales Climatológicas de Colombia
+descripcion: 'Tabla que contiene las medias mensuales y la media anual de los datos climatológicos, calculadas
+  para períodos de 30 años (1991-2020, 1981-2010, 1971-2000 y 1961-1990) en las estaciones que hacen parte
+  de la red meteorológica del Ideam y que cumplieron la Directriz 1203 de la OMM, cuyo nombre es: Directrices
+  de la OMM sobre el cálculo de las normales climáticas y la cual fue aplicada a los siguientes parámetros:
+  precipitación total (acumulada en mm), número de días con precipitación ≥ 1 mm, valores medios de las
+  temperaturas máxima, mínima y media diaria (°C), cantidad de horas de brillo solar (horas), humedad
+  relativa (%) y evaporación (mm/día).'
+publicado: '2025-07-01'
+datos_actualizados: '2026-10-13'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- cambio climático
+- clima
+- normales climatologicas
+filas: 16761
+campos:
+  periodo:
+    tipo_fuente: text
+    etiqueta: PERIODO
+    descripcion: Rango de años para el cual se presentan los valores de las normales climatológicas
+    nulos: 0
+    minimo: 1961-1990
+    maximo: 1991-2020
+    comparacion: texto
+    valores:
+      1981-2010: 5304
+      1991-2020: 5089
+      1971-2000: 4227
+      1961-1990: 2141
+  par_metro:
+    tipo_fuente: text
+    etiqueta: PARÁMETRO
+    descripcion: 'Indicador estadístico de un elemento climático (ejemplos: precipitación acumulada o
+      temperatura media'
+    nulos: 0
+    comparacion: texto
+    valores:
+      No. DE DIAS CON LLUVIA ≥ 1 mm: 5990
+      PRECIPITACIÓN: 5458
+      TEMPERATURA MÍNIMA: 1091
+      TEMPERATURA MEDIA: 992
+      TEMPERATURA MÁXIMA: 929
+      HUMEDAD RELATIVA: 918
+      BRILLO SOLAR: 825
+      EVAPORACIÓN: 558
+  c_digo:
+    tipo_fuente: number
+    etiqueta: CÓDIGO
+    descripcion: Número identificador de una estación meteorológica
+    nulos: 0
+    minimo: '11010010'
+    maximo: '2401500040'
+    comparacion: numero
+  categoria:
+    tipo_fuente: text
+    etiqueta: CATEGORIA
+    descripcion: Tipo de estación meteorológica
+    nulos: 0
+    minimo: AM
+    maximo: SS
+    comparacion: texto
+    valores:
+      PM: 7993
+      CO: 4240
+      CP: 1856
+      PG: 885
+      SP: 667
+      AM: 601
+      ME: 241
+      LM: 169
+      SS: 73
+      LG: 36
+  estaci_n:
+    tipo_fuente: text
+    etiqueta: ESTACIÓN
+    descripcion: Nombre de la estación meteorológica
+    nulos: 0
+    minimo: Abejorral
+    maximo: Zuluaga
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Municipio donde está instalada la estación meteorológica
+    nulos: 0
+    minimo: Abejorral
+    comparacion: texto
+  departamento:
+    tipo_fuente: text
+    etiqueta: DEPARTAMENTO
+    descripcion: Departamento donde está instalada la estación meteorológica
+    nulos: 0
+    minimo: Amazonas
+    maximo: Vichada
+    comparacion: texto
+  ao:
+    tipo_fuente: number
+    etiqueta: AO
+    descripcion: Área Operativa del IDEAM encargada del mantenimiento y operación de la estación meteorológica
+    nulos: 0
+    minimo: '1'
+    maximo: '11'
+    comparacion: numero
+    valores:
+      '9': 2199
+      '1': 2032
+      '8': 1899
+      '11': 1615
+      '2': 1543
+      '6': 1474
+      '5': 1416
+      '4': 1388
+      '10': 1221
+      '7': 1214
+      '3': 760
+  altitud_m:
+    tipo_fuente: number
+    etiqueta: ALTITUD (m)
+    descripcion: Altura sobre el nivel del mar en la que está ubicada la estación meteorológica
+    nulos: 0
+    minimo: '1'
+    maximo: '3824'
+    comparacion: numero
+  ene:
+    tipo_fuente: number
+    etiqueta: ENE
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '-0.7'
+    maximo: '1121.4'
+    comparacion: numero
+  feb:
+    tipo_fuente: number
+    etiqueta: FEB
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '-0.5'
+    maximo: '949.2'
+    comparacion: numero
+  mar:
+    tipo_fuente: number
+    etiqueta: MAR
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.0'
+    maximo: '1030.1'
+    comparacion: numero
+  abr:
+    tipo_fuente: number
+    etiqueta: ABR
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.1'
+    maximo: '1174.1'
+    comparacion: numero
+  may:
+    tipo_fuente: number
+    etiqueta: MAY
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.5'
+    maximo: '1252.9'
+    comparacion: numero
+  jun:
+    tipo_fuente: number
+    etiqueta: JUN
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.1'
+    maximo: '1092.2'
+    comparacion: numero
+  jul:
+    tipo_fuente: number
+    etiqueta: JUL
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.1'
+    maximo: '1051.1'
+    comparacion: numero
+  ago:
+    tipo_fuente: number
+    etiqueta: AGO
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.4'
+    maximo: '1089.2'
+    comparacion: numero
+  sep:
+    tipo_fuente: number
+    etiqueta: SEP
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '1.4'
+    maximo: '1211.2'
+    comparacion: numero
+  oct:
+    tipo_fuente: number
+    etiqueta: OCT
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '1.0'
+    maximo: '1258.0'
+    comparacion: numero
+  nov:
+    tipo_fuente: number
+    etiqueta: NOV
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.8'
+    maximo: '1276.1'
+    comparacion: numero
+  dic:
+    tipo_fuente: number
+    etiqueta: DIC
+    descripcion: Mes del año para el que se reporta el valor de la normal climatológica mensual en la
+      estación meteorológica
+    nulos: 0
+    minimo: '0.3'
+    maximo: '1213.8'
+    comparacion: numero
+  anual:
+    tipo_fuente: number
+    etiqueta: ANUAL
+    descripcion: Se entiende como el valor anual de la normal climatológica en la estación meteorológica
+    nulos: 0
+    minimo: '0.9'
+    maximo: '13381.5'
+    comparacion: numero
