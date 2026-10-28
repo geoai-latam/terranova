@@ -1,6 +1,7 @@
 """G6 (ADR-0026, spec 09): la ingesta del catálogo DCAT lee bien la Discovery API, sin red."""
 
 import json
+from collections.abc import Mapping
 from datetime import date
 from typing import Any
 
@@ -358,6 +359,141 @@ def test_ingerir_icde_pagina_y_deduplica() -> None:
     assert http.params[1] == {"page": 2}  # la segunda página pide ?page=2
 
 
+# ------------------------------------------- cosecha robusta a cortes desde el datacenter (b)
+class _RespTruncada(_Resp):
+    def json(self) -> dict[str, Any]:
+        raise json.JSONDecodeError("Expecting ',' delimiter", "{...", 3)  # JSON cortado a mitad
+
+
+class _HTTPConFallas:
+    """Ejecuta un guion: una excepción se lanza, «truncado» devuelve un JSON cortado y un dict es
+    una respuesta buena. Registra los params de cada GET."""
+
+    def __init__(self, guion: list[Any]) -> None:
+        self._guion = guion
+        self.params: list[dict[str, Any]] = []
+
+    def get(self, url: str, params: dict[str, Any] | None = None) -> _Resp:
+        self.params.append(params or {})
+        paso = self._guion.pop(0) if self._guion else {}
+        if isinstance(paso, Exception):
+            raise paso
+        if paso == "truncado":
+            return _RespTruncada({})
+        return _Resp(paso)
+
+
+def _sin_espera(_s: float) -> None:
+    pass
+
+
+def _status(codigo: int) -> Exception:
+    import httpx
+
+    req = httpx.Request("GET", "https://x")
+    return httpx.HTTPStatusError("e", request=req, response=httpx.Response(codigo, request=req))
+
+
+def test_ingerir_socrata_retoma_tras_un_corte() -> None:
+    import httpx
+
+    from terranova.descubrimiento import ingerir
+
+    http = _HTTPConFallas(
+        [
+            {"results": [_result("a-aaaa"), _result("b-bbbb")]},
+            httpx.RemoteProtocolError("Server disconnected without sending a response."),
+            {"results": [_result("c-cccc")]},
+        ]
+    )
+    ds = ingerir(http, por_pagina=2, dormir=_sin_espera)
+    assert [d.id_socrata for d in ds] == ["a-aaaa", "b-bbbb", "c-cccc"]
+    # el reintento pide la MISMA página (mismo scroll_id), no se salta ni repite datasets
+    assert http.params[1]["scroll_id"] == http.params[2]["scroll_id"] == "b-bbbb"
+
+
+def test_ingerir_icde_reintenta_un_json_truncado() -> None:
+    from terranova.descubrimiento import ingerir_dcat_us
+
+    p1 = {"dataset": [_dcat(identifier="https://x/item.html?id=" + "a" * 32)]}
+    http = _HTTPConFallas(["truncado", p1, {"dataset": []}])
+    ds = ingerir_dcat_us(http, dormir=_sin_espera)
+    assert [d.id_socrata for d in ds] == ["a" * 32]
+
+
+def test_get_json_no_reintenta_un_4xx() -> None:
+    import httpx
+
+    from terranova.descubrimiento import _get_json
+
+    http = _HTTPConFallas([_status(404), {"ok": 1}])
+    with pytest.raises(httpx.HTTPStatusError):
+        _get_json(http, "https://x", {}, dormir=_sin_espera)
+    assert len(http.params) == 1  # un 404 es error de la petición: no se insiste
+
+
+def test_get_json_reintenta_5xx_y_429() -> None:
+    from terranova.descubrimiento import _get_json
+
+    http = _HTTPConFallas([_status(503), _status(429), {"ok": 1}])
+    assert _get_json(http, "https://x", {}, dormir=_sin_espera) == {"ok": 1}
+
+
+def test_get_json_agota_los_intentos_y_propaga() -> None:
+    import httpx
+
+    from terranova.descubrimiento import _get_json
+
+    esperas: list[float] = []
+    http = _HTTPConFallas([httpx.ConnectError("x") for _ in range(4)])
+    with pytest.raises(httpx.ConnectError):
+        _get_json(http, "https://x", {}, intentos=4, espera_s=5, dormir=esperas.append)
+    assert len(http.params) == 4
+    assert esperas == [5, 10, 20]  # espera creciente entre intentos, ninguna tras el último
+
+
+def test_embedder_remoto_reintenta_si_el_servicio_corta() -> None:
+    import httpx
+
+    from terranova.descubrimiento import EmbedderRemoto
+
+    class _Cliente:
+        def __init__(self) -> None:
+            self.n = 0
+
+        def post(self, url: str, json: dict[str, Any]) -> httpx.Response:
+            self.n += 1
+            if self.n <= 3:  # el servicio se reinicia (p. ej. el kernel lo mató) y tarda en volver
+                raise httpx.RemoteProtocolError("Server disconnected")
+            req = httpx.Request("POST", url)
+            return httpx.Response(200, json={"vectores": [[0.1, 0.2]]}, request=req)
+
+    cli = _Cliente()
+    esperas: list[float] = []
+    emb = EmbedderRemoto("http://embeddings:9950", cli, dormir=esperas.append)
+    assert emb.documentos(["a"]) == [(0.1, 0.2)]
+    assert cli.n == 4
+    assert esperas == [5, 10, 20]  # 35 s en total: más que lo que tarda en recargar el modelo
+
+
+def test_fastembedder_pide_al_modelo_de_a_lotes_chicos() -> None:
+    from terranova.descubrimiento import LOTE_MODELO, FastEmbedder
+
+    class _Modelo:
+        def __init__(self) -> None:
+            self.lotes: list[int] = []
+
+        def embed(self, textos: list[str], batch_size: int) -> list[list[float]]:
+            self.lotes.append(batch_size)
+            return [[1.0] for _ in textos]
+
+    emb = FastEmbedder.__new__(FastEmbedder)  # sin cargar el modelo real
+    emb._modelo = _Modelo()
+    assert emb.documentos(["a", "b"]) == [(1.0,), (1.0,)]
+    assert emb._modelo.lotes == [LOTE_MODELO]
+    assert LOTE_MODELO <= 16  # e5-large con lotes de 64 reventó los 3 GB del servicio
+
+
 # ---------------------------------------------------------- promoción data-driven (pieza 6)
 def test_candidatos_a_promover_ordena_por_cobertura_medida() -> None:
     from terranova.descubrimiento import candidatos_a_promover
@@ -396,11 +532,73 @@ class _EmbedderCuentaLotes:
 
 
 def test_embeber_catalogo_trocea_en_lotes() -> None:
-    ds = [_reg(f"d{i}") for i in range(300)]
+    ds = [_reg(f"d{i}", titulo=f"dato {i}") for i in range(300)]
     emb = _EmbedderCuentaLotes()
     vectores = embeber_catalogo(ds, emb, lote=256)
     assert len(vectores) == 300
     assert emb.lotes == [256, 44]  # no manda todo en un POST
+
+
+class _CacheEnMemoria:
+    def __init__(self) -> None:
+        self.d: dict[str, tuple[float, ...]] = {}
+        self.guardados: list[int] = []
+
+    def vectores_por_huella(self, huellas: list[str]) -> dict[str, tuple[float, ...]]:
+        return {h: self.d[h] for h in huellas if h in self.d}
+
+    def guardar_vectores(self, pares: Mapping[str, tuple[float, ...]]) -> None:
+        self.d.update(pares)
+        self.guardados.append(len(pares))
+
+
+def test_embeber_catalogo_guarda_cada_lote_y_retoma_tras_un_corte() -> None:
+    ds = [_reg(f"d{i}", titulo=f"dato {i}") for i in range(10)]
+    cache = _CacheEnMemoria()
+
+    class _SeCaeEnElTercerLote(_EmbedderCuentaLotes):
+        def documentos(self, textos: list[str]) -> list[tuple[float, ...]]:
+            if len(self.lotes) == 2:
+                raise ConnectionError("corte")
+            return super().documentos(textos)
+
+    with pytest.raises(ConnectionError):
+        embeber_catalogo(ds, _SeCaeEnElTercerLote(), lote=3, cache=cache)
+    assert cache.guardados == [3, 3]  # lo hecho antes del corte quedó guardado
+
+    emb = _EmbedderCuentaLotes()
+    vectores = embeber_catalogo(ds, emb, lote=3, cache=cache)
+    assert len(vectores) == 10
+    assert emb.lotes == [3, 1]  # retoma: solo los 4 que faltaban
+    # una segunda pasada sin cambios no embebe nada
+    emb2 = _EmbedderCuentaLotes()
+    assert embeber_catalogo(ds, emb2, lote=3, cache=cache) == vectores
+    assert emb2.lotes == []
+
+
+def test_embeber_catalogo_re_embebe_lo_cambiado_y_con_otro_modelo() -> None:
+    cache = _CacheEnMemoria()
+    agua = _reg("a", titulo="agua")
+    embeber_catalogo([agua, _reg("b", titulo="bosque")], _EmbedderFalso(), cache=cache)
+    emb = _EmbedderCuentaLotes()
+    embeber_catalogo([agua, _reg("b", titulo="bosque nativo")], emb, cache=cache)
+    assert emb.lotes == [1]  # solo el que cambió de texto
+    emb_otro = _EmbedderCuentaLotes()
+    embeber_catalogo([_reg("a", titulo="agua")], emb_otro, cache=cache, modelo="otro/modelo")
+    assert emb_otro.lotes == [1]  # la huella lleva el modelo: otro modelo no reusa vectores
+
+
+def test_embeber_catalogo_embebe_una_vez_los_textos_repetidos() -> None:
+    emb = _EmbedderCuentaLotes()
+    vectores = embeber_catalogo([_reg("a"), _reg("b")], emb)  # mismo texto
+    assert emb.lotes == [1] and set(vectores) == {"a", "b"}
+
+
+def test_texto_para_embedding_tiene_tope() -> None:
+    from terranova.descubrimiento import MAX_CARACTERES_EMBEDDING
+
+    d = _reg("largo", titulo="x" * (MAX_CARACTERES_EMBEDDING * 3))
+    assert len(texto_para_embedding(d)) == MAX_CARACTERES_EMBEDDING
 
 
 def test_ingerir_dcat_avisa_si_trunca(caplog: pytest.LogCaptureFixture) -> None:

@@ -145,6 +145,19 @@ async def test_la_parte_lenta_termina_en_segundo_plano(sobres: dict[str, Sobre])
 @pytest.mark.anyio
 async def test_sin_licencia_ni_scope_la_parte_no_se_consulta(sobres: dict[str, Sobre]) -> None:
     ej = EjecutorFalso(sobres)
+    # Ya no hay fichas por_verificar reales (enmienda ADR-0019): se fuerza la de DANE a sintética
+    # para probar que una parte sin licencia habilitada se omite con plan normal.
+    fid = "dane.cnpv2018.municipio"
+    pv = CATALOGO.fuentes[fid].model_copy(
+        update={
+            "uso_comercial": "por_verificar",
+            "clasificacion_licencia": "verde",
+            "licencia": CATALOGO.fuentes[fid].licencia.model_copy(
+                update={"spdx": None, "verificada": None}
+            ),
+        }
+    )
+    ej.catalogo = CATALOGO.model_copy(update={"fuentes": {**CATALOGO.fuentes, fid: pv}})
     s = await f.ficha(ej, PUNTO, plan="normal", puede=lambda fam: fam != "ambiente", hoy=HOY)
     assert s.estado == "encontrado" and not s.errores  # omitir no es fallar
     assert "dane_poblacion_municipio" not in ej.llamadas

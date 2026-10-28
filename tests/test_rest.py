@@ -113,6 +113,18 @@ async def test_licencia_por_verificar_con_llave_normal_es_403(
     rest: httpx.AsyncClient, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     monkeypatch.setenv("TERRANOVA_PLAN", "normal")
+    # Ya no hay fichas por_verificar reales (enmienda ADR-0019): se fuerza una sintética.
+    fid = CATALOGO.herramientas["dane_poblacion_municipio"].fuente
+    f = CATALOGO.fuentes[fid]
+    sin_ver = f.model_copy(
+        update={
+            "uso_comercial": "por_verificar",
+            "clasificacion_licencia": "verde",
+            "licencia": f.licencia.model_copy(update={"spdx": None, "verificada": None}),
+        }
+    )
+    cat = CATALOGO.model_copy(update={"fuentes": {**CATALOGO.fuentes, fid: sin_ver}})
+    monkeypatch.setattr(puerta, "CATALOGO", cat)
     puerta.usar_conectores({})
     try:
         r = await rest.post(

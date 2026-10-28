@@ -98,8 +98,10 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
-| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | por verificar | 10 |
+| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 10 |
 | `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
+| `dian_comex_exportaciones_por_subpartida` | ¿Cuánto exportó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
+| `dian_comex_importaciones_por_subpartida` | ¿Cuánto importó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
@@ -112,6 +114,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
 | `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 1 |
 | `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 2 |
+| `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 | `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
 ## justicia
@@ -169,6 +172,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
+| `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |

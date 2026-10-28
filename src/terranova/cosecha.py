@@ -336,7 +336,8 @@ def cosechar(catalogo: Catalogo, fuente_id: str, hoy: date | None = None) -> Met
     hoy = hoy or date.today()
     with httpx.Client(headers={"User-Agent": USER_AGENT}, follow_redirects=True) as http:
         if fuente.protocolo == "socrata":
-            ident = fuente.copia.conjunto if fuente.copia else str(fuente.url).rsplit("/", 1)[-1]
+            conjunto = fuente.copia.conjunto if fuente.copia else None
+            ident = conjunto or str(fuente.url).rsplit("/", 1)[-1]
             ident = ident.removesuffix(".json")
             return de_socrata(
                 fuente, _get(http, f"https://www.datos.gov.co/api/views/{ident}.json"), hoy

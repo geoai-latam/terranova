@@ -1,0 +1,72 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-26T12:06:23+00:00",
+ "herramienta": "anm_titulo_por_expediente",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "mineral, municipio, departamento, codigo_dane",
+    "id": "42ha-fhvj",
+    "max_filas": 200,
+    "order": "mineral",
+    "portal": "datos.gov.co",
+    "select": "mineral, municipio, departamento, codigo_dane, count(*) AS registros",
+    "where": "codigo_expediente = 'ABQ-101'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigo_dane",
+       "departamento",
+       "mineral",
+       "municipio",
+       "registros"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigo_dane": "76892",
+        "departamento": "VALLE",
+        "mineral": "DIABASA",
+        "municipio": "YUMBO",
+        "registros": "4"
+       },
+       {
+        "codigo_dane": "76892",
+        "departamento": "VALLE",
+        "mineral": "ROCA MUERTA",
+        "municipio": "YUMBO",
+        "registros": "4"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "42ha-fhvj",
+     "consulta": {
+      "conjunto": "42ha-fhvj",
+      "group": "mineral, municipio, departamento, codigo_dane",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "mineral, municipio, departamento, codigo_dane, count(*) AS registros",
+      "where": "(codigo_expediente = 'ABQ-101')"
+     },
+     "filas": 2,
+     "filas_que_resume": 8,
+     "filtro_soql": "(codigo_expediente = 'ABQ-101')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

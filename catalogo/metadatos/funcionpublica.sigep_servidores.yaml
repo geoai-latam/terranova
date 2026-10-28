@@ -1,0 +1,130 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: funcionpublica.sigep_servidores
+metodo: cosechado
+cosechado: '2026-10-26'
+origen: https://www.datos.gov.co/api/views/2jzx-383z.json
+pagina: https://www.datos.gov.co/d/2jzx-383z
+titulo: Conjunto servidores públicos
+descripcion: 'Información de los servidores públicos con una vinculación activa en el Sistema de Información
+  y Gestión del Empleo Público -SIGEP, de acuerdo con el Título 17 del Decreto 1083 de 2015, no se incluye
+  planta privada, personal uniformado, docentes y trabajadores oficiales. conjPIDA25-Registro de Servidores
+  públicos Nos interesa conocer su opinión sobre nuestros conjuntos de datos. Lo invitamos a diligenciar
+  esta breve encuesta de satisfacción de datos abiertos: https://www.funcionpublica.gov.co/encuesta-institucional2'
+publicado: '2026-10-20'
+datos_actualizados: '2026-10-20'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Función pública
+etiquetas:
+- servidores públicos
+- entidades
+- vinculación
+- empleo público
+- sigep
+- pida
+filas: 272228
+campos:
+  codigosigep:
+    tipo_fuente: text
+    etiqueta: Codigo Sigep
+    descripcion: Número único de identificación de la Entidad.
+    nulos: 0
+    minimo: '0001'
+    maximo: '9948'
+    comparacion: texto
+  nombreentidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Denominación verbal dada a una Entidad.
+  orden:
+    tipo_fuente: text
+    etiqueta: Orden
+    descripcion: 'Campo de acción de la administración pública de acuerdo con el ordenamiento territorial:
+      nacional o territorial.'
+    nulos: 0
+    minimo: NACIONAL
+    maximo: TERRITORIAL
+    comparacion: texto
+    valores:
+      NACIONAL: 152899
+      TERRITORIAL: 119329
+  naturalezajuridica:
+    tipo_fuente: text
+    etiqueta: Naturaleza Jurídica
+    descripcion: Definición legal del organismo o entidad según su actividad o ubicación en la estructura
+      del Estado.
+    nulos: 0
+    comparacion: texto
+    valores:
+      ALCALDÍA: 56219
+      ESTABLECIMIENTO PÚBLICO: 45194
+      UNIDAD ADMINISTRATIVA ESPECIAL CON PERSONERÍA JURÍDICA: 25691
+      FISCALÍA GENERAL DE LA NACIÓN: 22435
+      GOBERNACIÓN: 19250
+      ESPECIAL: 16420
+      EMPRESAS SOCIALES DEL ESTADO: 15869
+      MINISTERIO: 9729
+      ENTE UNIVERSITARIO AUTÓNOMO: 8655
+      EMPRESAS INDUSTRIALES Y COMERCIALES DEL ESTADO: 8567
+      EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIO OFICIAL: 5767
+      SUPERINTENDENCIA CON PERSONERÍA JURÍDICA: 4874
+      ORGANOS AUTÓNOMOS: 4308
+      DEPARTAMENTO ADMINISTRATIVO: 3992
+      SOCIEDAD DE ECONOMÍA MIXTA: 3177
+      CONTRALORÍA GENERAL DE LA REPÚBLICA: 3109
+      PROCURADURÍA GENERAL DE LA NACIÓN: 2809
+      DEFENSORIA DEL PUEBLO: 2534
+      REGISTRADORA NACIONAL: 2088
+      UNIDAD ADMINISTRATIVA ESPECIAL SIN PERSONERÍA JURÍDICA: 1576
+  tipodenombramiento:
+    tipo_fuente: text
+    etiqueta: Tipo de Nombramiento
+    descripcion: Tipo de relación legal del servidor público con la entidad (carrera administrativa, libre
+      nombramiento y remoción, periodo fijo, elección popular, temporal, nombramiento provisional y periodo
+      de prueba
+    nulos: 0
+    comparacion: texto
+    valores:
+      CARRERA ADMINISTRATIVA: 191809
+      LIBRE NOMBRAMIENTO Y REMOCIÓN: 37262
+      TRABAJADOR OFICIAL: 19296
+      DOCENTES: 13327
+      PERIODO FIJO: 3202
+      PROVISIONAL: 2672
+      TEMPORAL: 1684
+      ELECCIÓN POPULAR: 1643
+      CARRERA DIPLOMÁTICA: 754
+      UNIDAD DE TRABAJO LEGISLATIVO: 542
+      CARRERA REGISTRAL: 31
+      TRANSITORIO: 6
+  niveljerarquicoempleo:
+    tipo_fuente: text
+    etiqueta: Nivel Jerarquico Empleo
+    descripcion: 'Clasificación según la naturaleza general de sus funciones, los empleos de las entidades
+      nacionales y territoriales se clasifican en los siguientes niveles jerárquicos: Nivel Directivo,
+      Nivel Asesor, Nivel Profesional, Nivel Técnico y Nivel Asistencial.'
+    nulos: 0
+    minimo: ADMINISTRATIVO
+    comparacion: texto
+    valores:
+      PROFESIONAL: 85272
+      ASISTENCIAL: 75006
+      TÉCNICO: 48253
+      DIRECTIVO: 14669
+      DOCENTE: 12962
+      NO APLICA: 11767
+      TRABAJADOR OFICIAL: 10220
+      ASESOR: 7463
+      ADMINISTRATIVO: 1615
+      ORIENTADOR DE DEFENSA O ESPÍRITU: 991
+      OPERATIVO: 737
+      CONTROLADOR DE TRÁNSITO AÉREO: 606
+      AUXILIAR: 471
+      DIRECTIVO DOCENTE: 461
+      BOMBERO AÉRONAUTICO: 442
+      TÉCNICO AÉRONAUTICO: 372
+      EJECUTIVO: 293
+      TÉCNICO AÉRONAUTICO ATSEP: 237
+      JUZGADOS: 141
+      INSPECTOR DE LA AVIACIÓN CIVIL: 118

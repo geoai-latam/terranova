@@ -50,6 +50,14 @@ PATRONES_ENTRADA: dict[str, str] = {
     "matricula_inmobiliaria": r"^[0-9A-Z]{2,4}-[0-9]{1,10}$",  # folio de matrícula: 50N-20849403
     "bpin": r"^[0-9]{13,14}$",  # proyecto del Banco de Proyectos (DNP): 2013157610001
     "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
+    # expediente de título minero (ANM): mayúsculas, dígitos y guion; sin comillas ni espacios
+    "expediente_minero": r"^[A-Z0-9][A-Z0-9-]{3,19}$",
+    # código SIGEP de la entidad (Función Pública): dígitos, con posible cero inicial (0870)
+    "codigo_sigep": r"^[0-9]{1,6}$",
+    # subpartida arancelaria NANDINA de 10 dígitos (comercio exterior DANE/DIAN): 8517130000
+    "subpartida": r"^[0-9]{10}$",
+    # año de cuatro dígitos (2000 a 2099)
+    "anio": r"^20[0-9]{2}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -72,6 +80,10 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "matricula_inmobiliaria": ("folio de matrícula: oficina, guion y número", "50N-20849403"),
     "bpin": ("código BPIN del proyecto, 13 o 14 dígitos", "2013157610001"),
     "nombre": ("nombre o parte de él: letras, espacios, puntos y guiones", "Bancolombia"),
+    "expediente_minero": ("código de expediente del título minero (ANM)", "ABQ-101"),
+    "codigo_sigep": ("código SIGEP de la entidad (Función Pública)", "6194"),
+    "subpartida": ("subpartida arancelaria NANDINA de 10 dígitos", "8517130000"),
+    "anio": ("año de cuatro dígitos", "2025"),
 }
 
 TipoEntrada = Literal[
@@ -95,6 +107,10 @@ TipoEntrada = Literal[
     "matricula_inmobiliaria",
     "bpin",
     "nombre",
+    "expediente_minero",
+    "codigo_sigep",
+    "subpartida",
+    "anio",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 
@@ -109,6 +125,18 @@ Familia = Literal[
     "meta",  # G6 (ADR-0026/0028): el buscador del catálogo, `catalogo_buscar`
 ]
 UsoComercial = Literal["si", "no", "por_verificar"]
+# ADR-0019 (enmienda 2026-10-26): clasificación de licencia por ítem.
+#   verde  → licencia abierta verificada; sirve a todas las llaves.
+#   ambar  → dato público reutilizable (Ley 1712/2014) con términos no verificados; sirve con
+#            aviso (traslada a la fuente la responsabilidad de exactitud/uso). No cabe persona.
+#   rojo   → bloqueado (persona, reserva legal o prohibición de redistribuir); no se publica.
+ClasificacionLicencia = Literal["verde", "ambar", "rojo"]
+# Aviso que acompaña cada respuesta de una fuente ámbar (modelo Superfinanciera Res.1519/2020).
+AVISO_DATO_PUBLICO = (
+    "Dato público reutilizable (Ley 1712/2014). La exactitud y vigencia son responsabilidad de la "
+    "entidad fuente; verifique los términos para su uso específico. Terranova normaliza y entrega, "
+    "no certifica."
+)
 
 
 class _Ficha(BaseModel):
@@ -227,8 +255,44 @@ class Ventana(_Ficha):
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata"]
-    conjunto: str = Field(pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$", description="id en datos.gov.co")
+    origen: Literal["socrata", "zip_dane", "arcgis"]
+    conjunto: str | None = Field(
+        default=None,
+        pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
+        description="id en datos.gov.co (socrata)",
+    )
+    descargas: list[str] = Field(
+        default_factory=list, description="URLs de los ZIP a copiar y pre-agregar (origen zip_dane)"
+    )
+    # Mapeo del microdato de comercio exterior del DANE (origen zip_dane): se pre-agrega a
+    # (año, mes, subpartida, país) sumando las medidas. Las columnas del CSV difieren impo/expo.
+    subpartida_csv: str | None = Field(
+        default=None, description="columna CSV de la subpartida NANDINA (NABAN impo, POSAR expo)"
+    )
+    pais_csv: str | None = Field(
+        default=None, description="columna CSV del país (PAISGEN impo, PAIS expo)"
+    )
+    pais_col: str | None = Field(
+        default=None,
+        description="columna de la lista blanca para el país (pais_origen/pais_destino)",
+    )
+    medidas: dict[str, str] = Field(
+        default_factory=dict,
+        description="medidas a sumar: {columna de la lista blanca: columna del CSV}",
+    )
+    # Capa de un servicio ArcGIS (origen arcgis): se copia con su geometría, en EPSG:4326, a una
+    # columna `_geom` con índice espacial; `consultar_copia` la cruza con un punto o un bbox.
+    capa: int | None = Field(default=None, ge=0, description="capa del servicio (origen arcgis)")
+    por_pagina: int = Field(
+        default=500, ge=1, le=2000, description="elementos por petición (polígonos pesados: menos)"
+    )
+    tolerancia: float | None = Field(
+        default=None,
+        gt=0,
+        le=0.001,
+        description="simplificación al copiar, en grados (maxAllowableOffset; 0,0001 ≈ 11 m): "
+        "solo si la escala de la fuente es más gruesa que eso",
+    )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
     clave: str = Field(description="columna única y estable: ordena las páginas y la huella")
     ventana: Ventana | None = None
@@ -237,10 +301,37 @@ class Copia(_Ficha):
         default_factory=list, description="columnas de la búsqueda de texto completo (español)"
     )
 
+    @model_validator(mode="after")
+    def _origen_coherente(self) -> Copia:
+        if self.origen == "socrata" and not self.conjunto:
+            raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
+        if (self.origen == "arcgis") != (self.capa is not None):
+            raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
+        if self.tolerancia is not None and self.origen != "arcgis":
+            raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS")
+        if self.origen == "zip_dane":
+            if not self.descargas:
+                raise ValueError("ADR-0024: origen `zip_dane` exige `descargas` (URLs de los ZIP)")
+            faltan = [
+                c for c in ("subpartida_csv", "pais_csv", "pais_col") if getattr(self, c) is None
+            ]
+            if faltan or not self.medidas:
+                raise ValueError(
+                    "ADR-0024: origen `zip_dane` exige subpartida_csv, pais_csv, pais_col y "
+                    f"medidas (faltan: {faltan or ['medidas']})"
+                )
+        return self
+
+    @property
+    def espacial(self) -> bool:
+        """Lleva geometría (`_geom`): se puede cruzar con un punto o un bbox."""
+        return self.origen == "arcgis"
+
     @property
     def columnas_usadas(self) -> set[str]:
         ventana = {self.ventana.columna} if self.ventana else set()
-        return {self.clave, *ventana, *self.indices, *self.texto}
+        extra = set(self.medidas) | ({self.pais_col} if self.pais_col else set())
+        return {self.clave, *ventana, *self.indices, *self.texto, *extra}
 
 
 Geometria = Literal["punto", "multipunto", "linea", "poligono", "raster"]
@@ -330,6 +421,12 @@ class Fuente(_Ficha):
     cobertura: Cobertura
     datos_personales: Literal["ninguno", "filtrados", "presentes"]
     estado: Literal["borrador", "publicada"]
+    clasificacion_licencia: ClasificacionLicencia = Field(
+        default="verde",
+        description="ADR-0019 (enmienda): verde=licencia abierta verificada; ambar=dato público "
+        "reutilizable, términos no verificados, sirve con aviso; rojo=bloqueado (persona, reserva "
+        "legal o prohibición expresa), no se publica.",
+    )
     campos: dict[str, Campo] = Field(
         min_length=1, description="lista blanca: campo de la fuente → rt/1"
     )
@@ -343,10 +440,29 @@ class Fuente(_Ficha):
 
     @model_validator(mode="after")
     def _reglas(self) -> Self:
-        if self.licencia.spdx is None and self.uso_comercial != "por_verificar":
-            raise ValueError("ADR-0019: sin licencia conocida, uso_comercial es por_verificar")
-        if self.uso_comercial != "por_verificar" and self.licencia.verificada is None:
-            raise ValueError("ADR-0007: uso_comercial decidido exige licencia verificada")
+        clf = self.clasificacion_licencia
+        if clf == "rojo" and self.estado != "borrador":
+            raise ValueError(
+                "ADR-0019 (enmienda): una fuente roja (persona, reserva legal o prohibición "
+                "expresa de redistribuir) no se publica; déjala en borrador"
+            )
+        if clf == "ambar":
+            # Dato público reutilizable (Ley 1712/2014): sirve sin SPDX verificado, con aviso.
+            # Queda exenta de ADR-0007 (licencia verificada), pero NO de la línea roja de personas.
+            if self.uso_comercial != "si":
+                raise ValueError(
+                    "ADR-0019 (enmienda): una fuente ámbar es dato público reutilizable, "
+                    "uso_comercial es «si» (el aviso traslada la responsabilidad de uso)"
+                )
+            if self.datos_personales == "presentes":
+                raise ValueError(
+                    "ADR-0014: datos personales presentes no caben en ámbar; esa fuente es roja"
+                )
+        else:  # verde (o rojo en borrador): reglas clásicas de ADR-0019/0007
+            if self.licencia.spdx is None and self.uso_comercial != "por_verificar":
+                raise ValueError("ADR-0019: sin licencia conocida, la fuente es ámbar o rojo")
+            if self.uso_comercial != "por_verificar" and self.licencia.verificada is None:
+                raise ValueError("ADR-0007: uso_comercial decidido exige licencia verificada")
         if self.clase_acceso == "interno_con_permiso" and self.permiso is None:
             raise ValueError("ADR-0018: un backend interno exige el permiso escrito")
         if self.estado == "publicada" and self.datos_personales == "presentes":
@@ -652,7 +768,11 @@ def _licencia_legible(fuente: Fuente) -> str:
     (su API gratuita es solo no comercial; GEO Copilot, plan de fiabilidad)."""
     spdx = fuente.licencia.spdx
     if spdx is None:
-        return "por verificar"
+        return (
+            "dato público reutilizable"
+            if fuente.clasificacion_licencia == "ambar"
+            else "por verificar"
+        )
     if spdx in LICENCIAS_LEGIBLES:
         legible = LICENCIAS_LEGIBLES[spdx]
     else:

@@ -36,7 +36,7 @@ REGISTRO = RegistroSql(":memory:", "p" * 40)
 LLAVE = REGISTRO.crear("schemathesis", {"*"}, prueba=True, expira=None)
 # antes de cargar el esquema: el arranque de la app ve conectores inyectados y no busca secretos
 puerta.usar_conectores(dict(VACIOS))
-puerta.registro = REGISTRO
+puerta.ESTADO.registro = REGISTRO
 schema = schemathesis.openapi.from_asgi("/openapi.json", crear_aplicacion())
 
 
@@ -52,9 +52,9 @@ class Llave:
 @pytest.fixture(autouse=True)
 def sin_red() -> Any:
     puerta.usar_conectores(dict(VACIOS))
-    puerta.registro = REGISTRO
+    puerta.ESTADO.registro = REGISTRO
     yield
-    puerta.registro = None
+    puerta.ESTADO.registro = None
     puerta.usar_conectores(None)
 
 

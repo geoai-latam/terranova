@@ -1,0 +1,72 @@
+# Ficha técnica manual (spec 08): el conector de copia no la cosecha de un API; los datos y el
+# diccionario salen del DDI del microdato del DANE (ANDA, catálogo 856). filas = las filas
+# pre-agregadas medidas para el año 2025 (dedup de los ZIP Impo_2025_1 + Impo_2025_2).
+fuente: dian.comex_importaciones
+metodo: manual
+cosechado: '2026-10-26'
+origen: https://microdatos.dane.gov.co/index.php/metadata/export/856/ddi
+pagina: https://microdatos.dane.gov.co/index.php/catalog/856/get-microdata
+titulo: Estadísticas de Importaciones - IMPO
+descripcion: >
+  Microdato de las importaciones de mercancías de Colombia, elaborado por el DANE a partir de las
+  declaraciones de importación presentadas ante la DIAN. Cada línea es una declaración; Terranova la
+  copia y la pre-agrega a (año, mes, subpartida NANDINA, país de origen) con los valores sumados. No
+  contiene NIT, cédula ni nombre de declarante.
+publicado: '2025-03-26'
+datos_actualizados: '2026-10-22'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Economía-Microdatos
+etiquetas: [comercio exterior, importaciones, subpartida, NANDINA, aduanas]
+filas: 392976
+campos:
+  anio:
+    tipo_fuente: text
+    descripcion: año de la declaración (de FECH, AAMM)
+    comparacion: texto
+  mes:
+    tipo_fuente: numeric
+    descripcion: mes de la declaración (1–12, de FECH)
+    comparacion: numero
+    minimo: '1'
+    maximo: '12'
+  subpartida:
+    tipo_fuente: text
+    etiqueta: NABAN
+    descripcion: subpartida arancelaria NANDINA de 10 dígitos
+    comparacion: texto
+  pais_origen:
+    tipo_fuente: text
+    etiqueta: PAISGEN
+    descripcion: código DANE del país de origen de la mercancía
+    comparacion: texto
+  valor_cif_pesos:
+    tipo_fuente: numeric
+    etiqueta: VACIP
+    descripcion: valor CIF en pesos colombianos (suma)
+    comparacion: numero
+  valor_cif_usd:
+    tipo_fuente: numeric
+    etiqueta: VACID
+    descripcion: valor CIF en dólares (suma)
+    comparacion: numero
+  valor_fob_usd:
+    tipo_fuente: numeric
+    etiqueta: VAFODO
+    descripcion: valor FOB en dólares (suma)
+    comparacion: numero
+  peso_neto_kg:
+    tipo_fuente: numeric
+    etiqueta: PNK
+    descripcion: peso neto en kilogramos (suma)
+    comparacion: numero
+  cantidad:
+    tipo_fuente: numeric
+    etiqueta: CANU
+    descripcion: cantidad en unidades físicas (suma)
+    comparacion: numero
+  lineas:
+    tipo_fuente: numeric
+    descripcion: número de líneas de declaración agregadas
+    comparacion: numero

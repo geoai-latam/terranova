@@ -1,9 +1,13 @@
 name: CI
 
+# El repo es privado (enmienda de la ADR-0001): GitHub Actions da 2.000 min/mes. Cada PR corre solo
+# los trabajos que cubren lo que tocó (trabajo `cambios`); al fusionar no se repite todo, y una
+# pasada completa diaria sobre main (y la manual) atrapa los choques entre PR.
 on:
-  push:
-    branches: [main]
   pull_request:
+  schedule:
+    - cron: "0 6 * * *"  # 01:00 en Colombia
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,10 +17,53 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  cambios:
+    name: qué cambió
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      codigo: ${{ steps.f.outputs.codigo }}
+      api: ${{ steps.f.outputs.api }}
+      postgres: ${{ steps.f.outputs.postgres }}
+      descubrimiento: ${{ steps.f.outputs.descubrimiento }}
+      imagen: ${{ steps.f.outputs.imagen }}
+      deps: ${{ steps.f.outputs.deps }}
+      observabilidad: ${{ steps.f.outputs.observabilidad }}
+      datasets: ${{ steps.f.outputs.datasets }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          fetch-depth: 0
+
+      # Fuera de un PR (pasada diaria o manual) corre todo. En un PR, cada trabajo corre si se tocó
+      # algo que cubre; tocar el CI o las dependencias lo corre todo.
+      - id: f
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          trabajos="codigo api postgres descubrimiento imagen deps observabilidad datasets"
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            for t in $trabajos; do echo "$t=true" >> "$GITHUB_OUTPUT"; done; exit 0
+          fi
+          git diff --name-only "origin/$BASE" HEAD > cambios.txt
+          cat cambios.txt
+          todo='^\.github/|^(pyproject\.toml|uv\.lock|\.python-version)$'
+          hay() { if grep -qE "$todo|$2" cambios.txt; then echo "$1=true"; else echo "$1=false"; fi >> "$GITHUB_OUTPUT"; }
+          hay codigo '^(src|catalogo|tests|scripts|esquemas)/|^Makefile$|^docs/HERRAMIENTAS\.md$'
+          hay api '^(src|catalogo|tests_lentos)/'
+          hay postgres '^src/|^catalogo/|^tests/(test_postgres|test_copias|conftest)\.py$'
+          hay descubrimiento '^src/terranova/(almacen_descubrimiento|descubrimiento|embeddings[a-z_]*|bd)\.py$|^tests/test_almacen_descubrimiento\.py$'
+          hay imagen '^(src|catalogo)/|^Dockerfile$|^\.dockerignore$'
+          hay deps '^$'
+          hay observabilidad '^docker/observabilidad/'
+          hay datasets '^src/terranova/restricciones[a-z_]*\.py$|^scripts/dataset_|^tests/test_restricciones\.py$'
+
   check:
     name: check (ruff, mypy, pytest)
+    needs: cambios
+    if: needs.cambios.outputs.codigo == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # la suite ya tarda ~9,5 min en CI; con 10 el job moría con todo en verde
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
@@ -42,12 +89,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      # ADR-0001: el repo es público; ningún secreto en toda la historia.
+      # Ningún secreto en toda la historia, aunque el repo sea privado (enmienda de la ADR-0001).
       - name: gitleaks
         run: docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.21.2 git /repo --redact -v
 
   schemathesis:
     name: schemathesis (OpenAPI publicado)
+    needs: cambios
+    if: needs.cambios.outputs.api == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -69,6 +118,8 @@ jobs:
 
   postgres:
     name: postgres (llaves y uso con varias réplicas)
+    needs: cambios
+    if: needs.cambios.outputs.postgres == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -100,6 +151,8 @@ jobs:
 
   descubrimiento:
     name: descubrimiento (catálogo con pgvector)
+    needs: cambios
+    if: needs.cambios.outputs.descubrimiento == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -131,6 +184,8 @@ jobs:
 
   imagen:
     name: imagen de la puerta
+    needs: cambios
+    if: needs.cambios.outputs.imagen == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -159,6 +214,8 @@ jobs:
 
   seguridad:
     name: seguridad (pip-audit)
+    needs: cambios
+    if: needs.cambios.outputs.deps == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -190,6 +247,8 @@ jobs:
 
   observabilidad:
     name: observabilidad (reglas de Prometheus)
+    needs: cambios
+    if: needs.cambios.outputs.observabilidad == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -203,6 +262,8 @@ jobs:
 
   datasets:
     name: datasets (restricciones, sin red)
+    needs: cambios
+    if: needs.cambios.outputs.datasets == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
