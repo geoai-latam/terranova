@@ -133,8 +133,12 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
 
 ## Repo privado y licencia propietaria (2026-10-28, #147)
 
-- **El repo `geoai-latam/terranova` es privado** (enmienda de la ADR-0001), porque Terranova es un
+- **El repo `geoai-latam/terranova` pasa a privado** (enmienda de la ADR-0001), porque Terranova es un
   producto comercial. Se mantiene la higiene de un repo público (gitleaks sigue en el CI).
+  **Por ahora sigue público, a propósito y solo mientras se consolida el MVP.** Los 2.000 min/mes de
+  Actions privados de la cuenta ya los gastó `GEO_COPILOT` en octubre, y con el tope de gasto en 0
+  el CI no corría. Se vuelve a privado apenas termine la consolidación, idealmente con GitHub Pro y
+  un presupuesto de Actions. Mientras tanto, la licencia propietaria ya protege el código.
 - **Licencia propietaria:** © GeoAI LATAM, todos los derechos reservados. Los datos que se entregan
   conservan la licencia de su fuente, y lo derivado de CC BY-SA sigue siendo CC BY-SA. `/llms.txt` y
   la tarjeta MCP ya no dicen «Apache» ni «abierto».
