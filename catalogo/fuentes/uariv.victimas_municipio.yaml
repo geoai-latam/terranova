@@ -1,0 +1,52 @@
+id: uariv.victimas_municipio
+titulo: "Registro Único de Víctimas (RUV): cifras de víctimas por municipio (UARIV, corte mensual)"
+entidad: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV)
+competencia: administra el Registro Único de Víctimas del conflicto armado (Ley 1448 de 2011, art. 154)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/ykxr-xynr.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV), Registro Único de Víctimas, cifras municipales. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Víctimas REGISTRADAS en el RUV (personas incluidas en el registro), no los hechos del conflicto que
+# documenta el CNMH (cnmh.*). Cada fila es una celda ya agregada por municipio, sexo, etnia,
+# discapacidad y ciclo vital, con celdas de 1: solo salen las sumas del municipio, nunca las celdas.
+# La tabla acumula un corte por mes (fecha_corte, texto dd/mm/aaaa desde 2024): se piden solo los
+# cortes de los últimos cuatro fines de mes (filtro por igualdad, rápido) y se queda el más reciente.
+url: https://www.datos.gov.co/resource/ykxr-xynr.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "corte mensual vigente (la tabla guarda cortes desde 2022)"}
+datos_personales: filtrados
+estado: publicada
+campos:
+  cod_ciudad_muni: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, como número (sin el cero inicial: 5001); 0 es «SIN DEFINIR»"}
+  fecha_corte: {nombre: fecha_corte, tipo: date, desc: "corte del registro del que salen las cifras (la fuente lo escribe dd/mm/aaaa)"}
+  per_ocu: {nombre: celda_ocurrencia, tipo: int, desc: "personas por ocurrencia en la celda; solo se sirve sumado"}
+  per_decla: {nombre: celda_declaracion, tipo: float, desc: "personas por declaración en la celda (texto «1.0»); solo se sirve sumado"}
+  per_ubic: {nombre: celda_ubicacion, tipo: int, desc: "personas por ubicación en la celda; solo se sirve sumado"}
+  per_sa: {nombre: celda_sujetos_atencion, tipo: int, desc: "sujetos de atención en la celda; solo se sirve sumado"}
+  eventos: {nombre: celda_eventos, tipo: int, desc: "eventos en la celda; solo se sirve sumado"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Unidad para la Atención y Reparación Integral a las Víctimas, theme: inclusion social, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una celda del RUV en un corte: municipio × sexo × etnia × discapacidad × ciclo vital, con las personas por ocurrencia, declaración, ubicación y sujetos de atención; 8,4 M de filas; Medellín, corte 30/09/2026: 472 celdas, 245 549 víctimas por ocurrencia"
+  clave: {columna: fecha_corte + cod_ciudad_muni + sexo + etnia + discapacidad + ciclo_vital, unica: false}
+  operaciones: {filtrar: 0.9, agrupar: 3.4}  # con el corte por igualdad; agrupar todos los cortes de Medellín tardó 107 s
+  hallazgos:
+  - "la tabla acumula los cortes mensuales (57 en Medellín, de enero de 2022 a septiembre de 2026): sumar sin fijar el corte multiplica las víctimas"
+  - "fecha_corte es texto en tres formatos: 2022/01/31 hasta agosto de 2024, 30/09/24 y «31/07/2024 00:00» sueltos, y dd/mm/aaaa desde entonces; el último fin de mes publicado es el corte vigente (el 30/09/2026 se publicó el 19/10/2026)"
+  - "filtrar el corte con substring() o like '%…' recorre la tabla (más de 100 s); por igualdad con los últimos cuatro fines de mes, calculados con get_utc_date(), tarda ~1 s"
+  - "cada fila es una celda cruzada por sexo, etnia, discapacidad y ciclo vital, con muchas celdas de 1: solo se sirven las sumas del municipio"
+  - "per_decla viene como texto («1.0» o «1»): se suma con ::number"
+  - "las cuatro medidas no se suman entre sí: ocurrencia (el hecho pasó en el municipio), declaración (declaró allí), ubicación (vive allí según el registro) y sujetos de atención (ubicadas y con derecho a la atención)"
+  - "si la UARIV dejara de publicar cuatro meses, no habría corte en la ventana y la herramienta no encontraría filas: el canario lo detecta"
+  decision: "en vivo por municipio (DIVIPOLA), sumando el corte más reciente de los últimos cuatro fines de mes"

@@ -1,0 +1,312 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:10:15+00:00",
+ "herramienta": "uariv_desplazamiento_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "vigencia",
+    "id": "krnc-8azs",
+    "max_filas": 200,
+    "order": "vigencia",
+    "portal": "datos.gov.co",
+    "previo_group": "vigencia, fecha_corte",
+    "previo_select": "vigencia, substring(fecha_corte, 7, 4) || '-' || substring(fecha_corte, 4, 2) || '-' || substring(fecha_corte, 1, 2) AS fi, (substring(fecha_corte, 7, 4) || substring(fecha_corte, 4, 2))::number AS clave, coalesce(sum(per_ocu), 0) AS ocu, coalesce(sum(eventos), 0) AS ev",
+    "select": "vigencia, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_expulsadas, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+    "where": "cod_ciudad_muni = 05837 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4))"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "fecha_corte",
+       "n_eventos",
+       "personas_expulsadas",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "958",
+        "personas_expulsadas": "955",
+        "vigencia": "1985"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "658",
+        "personas_expulsadas": "653",
+        "vigencia": "1986"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1009",
+        "personas_expulsadas": "1007",
+        "vigencia": "1987"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3462",
+        "personas_expulsadas": "3430",
+        "vigencia": "1988"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1008",
+        "personas_expulsadas": "1005",
+        "vigencia": "1989"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1715",
+        "personas_expulsadas": "1709",
+        "vigencia": "1990"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1109",
+        "personas_expulsadas": "1098",
+        "vigencia": "1991"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1699",
+        "personas_expulsadas": "1688",
+        "vigencia": "1992"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3305",
+        "personas_expulsadas": "3271",
+        "vigencia": "1993"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3971",
+        "personas_expulsadas": "3957",
+        "vigencia": "1994"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "17679",
+        "personas_expulsadas": "17104",
+        "vigencia": "1995"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "27242",
+        "personas_expulsadas": "26736",
+        "vigencia": "1996"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "17102",
+        "personas_expulsadas": "16890",
+        "vigencia": "1997"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "10483",
+        "personas_expulsadas": "10409",
+        "vigencia": "1998"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3661",
+        "personas_expulsadas": "3641",
+        "vigencia": "1999"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "7453",
+        "personas_expulsadas": "7376",
+        "vigencia": "2000"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "6384",
+        "personas_expulsadas": "6352",
+        "vigencia": "2001"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2703",
+        "personas_expulsadas": "2688",
+        "vigencia": "2002"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1736",
+        "personas_expulsadas": "1725",
+        "vigencia": "2003"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2338",
+        "personas_expulsadas": "2327",
+        "vigencia": "2004"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3360",
+        "personas_expulsadas": "3343",
+        "vigencia": "2005"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3308",
+        "personas_expulsadas": "3262",
+        "vigencia": "2006"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "5744",
+        "personas_expulsadas": "5702",
+        "vigencia": "2007"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "5335",
+        "personas_expulsadas": "5314",
+        "vigencia": "2008"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2277",
+        "personas_expulsadas": "2265",
+        "vigencia": "2009"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1497",
+        "personas_expulsadas": "1494",
+        "vigencia": "2010"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2360",
+        "personas_expulsadas": "2336",
+        "vigencia": "2011"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2181",
+        "personas_expulsadas": "2174",
+        "vigencia": "2012"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "3547",
+        "personas_expulsadas": "3529",
+        "vigencia": "2013"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "2307",
+        "personas_expulsadas": "2300",
+        "vigencia": "2014"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1857",
+        "personas_expulsadas": "1834",
+        "vigencia": "2015"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "949",
+        "personas_expulsadas": "937",
+        "vigencia": "2016"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1000",
+        "personas_expulsadas": "990",
+        "vigencia": "2017"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1151",
+        "personas_expulsadas": "1144",
+        "vigencia": "2018"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "980",
+        "personas_expulsadas": "975",
+        "vigencia": "2019"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "587",
+        "personas_expulsadas": "581",
+        "vigencia": "2020"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1183",
+        "personas_expulsadas": "1176",
+        "vigencia": "2021"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1862",
+        "personas_expulsadas": "1857",
+        "vigencia": "2022"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1293",
+        "personas_expulsadas": "1292",
+        "vigencia": "2023"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "775",
+        "personas_expulsadas": "774",
+        "vigencia": "2024"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1077",
+        "personas_expulsadas": "1059",
+        "vigencia": "2025"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "292",
+        "personas_expulsadas": "290",
+        "vigencia": "2026"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 42,
+      "truncado": false,
+      "vistos": 42
+     },
+     "completo": true,
+     "conjunto": "krnc-8azs",
+     "consulta": {
+      "conjunto": "krnc-8azs",
+      "group": "vigencia",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "previo_group": "vigencia, fecha_corte",
+      "select": "vigencia, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_expulsadas, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+      "where": "(cod_ciudad_muni = 05837 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))"
+     },
+     "filas": 42,
+     "filas_que_resume": 19003,
+     "filtro_soql": "(cod_ciudad_muni = 05837 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

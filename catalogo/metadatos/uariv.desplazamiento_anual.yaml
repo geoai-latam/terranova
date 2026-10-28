@@ -1,0 +1,61 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: uariv.desplazamiento_anual
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/krnc-8azs.json
+pagina: https://www.datos.gov.co/d/krnc-8azs
+titulo: REPORTE VICTIMAS DESPLAZAMIENTO ANUALIZADO OCURRENCIA Y LLEGADA  MUNICIPALES
+descripcion: EPORTE VICTIMAS DESPLAZAMIENTO ANUALIZADO OCURRENCIA Y LLEGADA MUNICIPALES
+publicado: '2021-12-30'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Inclusión Social y Reconciliación
+etiquetas:
+- uariv
+- unidad para las víctimas
+- hechos victimizantes
+- victimas
+- victimas por hecho anualizado
+filas: 23608295
+campos:
+  fecha_corte:
+    tipo_fuente: text
+    etiqueta: FECHA_CORTE
+    descripcion: FECHA CORTE REPORTE
+    nulos: 0
+    maximo: 31/12/2025
+    comparacion: texto
+  cod_ciudad_muni:
+    tipo_fuente: number
+    etiqueta: COD_CIUDAD_MUNI
+    descripcion: CODIGO MUNICIPAL
+    nulos: 33440
+    minimo: '0'
+    maximo: '99773'
+    comparacion: numero
+  vigencia:
+    tipo_fuente: number
+    etiqueta: VIGENCIA
+    descripcion: TIEMPO DETERMINADO DEL REPORTE
+    nulos: 0
+    minimo: '1985'
+    maximo: '2026'
+    comparacion: numero
+  per_ocu:
+    tipo_fuente: number
+    etiqueta: PER_OCU
+    descripcion: NUMERO DE PERSONAS AFECTADAS EN EVENTO VICTIMIZANTE
+    nulos: 33440
+    minimo: '0'
+    maximo: '10475'
+    comparacion: numero
+  eventos:
+    tipo_fuente: number
+    etiqueta: EVENTOS
+    descripcion: NUMERO DE EVENTO
+    nulos: 0
+    minimo: '0'
+    maximo: '154322'
+    comparacion: numero

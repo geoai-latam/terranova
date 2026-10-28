@@ -1,0 +1,100 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:09:59+00:00",
+ "herramienta": "adres_afiliados_subsidiado_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "dpr_nombre, mnc_nombre, ent_id, ent_nombre",
+    "id": "d7a5-cnra",
+    "max_filas": 200,
+    "order": "afiliados DESC, ent_id",
+    "portal": "datos.gov.co",
+    "select": "dpr_nombre, mnc_nombre, ent_id, ent_nombre, sum(cantidad::number) AS afiliados",
+    "where": "(replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre)"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "afiliados",
+       "dpr_nombre",
+       "ent_id",
+       "ent_nombre",
+       "mnc_nombre"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "afiliados": "72997",
+        "dpr_nombre": "NARINO",
+        "ent_id": "ESS118",
+        "ent_nombre": "EMSSANAR S.A.S.",
+        "mnc_nombre": "TUMACO"
+       },
+       {
+        "afiliados": "43956",
+        "dpr_nombre": "NARINO",
+        "ent_id": "EPSS41",
+        "ent_nombre": "NUEVA EPS S.A.",
+        "mnc_nombre": "TUMACO"
+       },
+       {
+        "afiliados": "20318",
+        "dpr_nombre": "NARINO",
+        "ent_id": "ESS062",
+        "ent_nombre": "ASMET SALUD EPS S.A.S.",
+        "mnc_nombre": "TUMACO"
+       },
+       {
+        "afiliados": "11321",
+        "dpr_nombre": "NARINO",
+        "ent_id": "EPSS37",
+        "ent_nombre": "NUEVA EPS S.A. -CM",
+        "mnc_nombre": "TUMACO"
+       },
+       {
+        "afiliados": "7102",
+        "dpr_nombre": "NARINO",
+        "ent_id": "EPSS05",
+        "ent_nombre": "ENTIDAD PROMOTORA DE SALUD SANITAS S.A.S. -CM",
+        "mnc_nombre": "TUMACO"
+       },
+       {
+        "afiliados": "5426",
+        "dpr_nombre": "NARINO",
+        "ent_id": "EPSI05",
+        "ent_nombre": "ENTIDAD PROMOTORA DE SALUD MALLAMAS EPSI",
+        "mnc_nombre": "TUMACO"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "completo": true,
+     "conjunto": "d7a5-cnra",
+     "consulta": {
+      "conjunto": "d7a5-cnra",
+      "group": "dpr_nombre, mnc_nombre, ent_id, ent_nombre",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "dpr_nombre, mnc_nombre, ent_id, ent_nombre, sum(cantidad::number) AS afiliados",
+      "where": "((replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre))"
+     },
+     "filas": 6,
+     "filas_que_resume": 4296,
+     "filtro_soql": "((replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Nariño'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('San Andrés de Tumaco'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

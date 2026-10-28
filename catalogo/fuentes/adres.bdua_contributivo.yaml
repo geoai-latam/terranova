@@ -1,0 +1,49 @@
+id: adres.bdua_contributivo
+titulo: "Población afiliada al régimen contributivo de salud por municipio y EPS (ADRES, BDUA)"
+entidad: Administradora de los Recursos del Sistema General de Seguridad Social en Salud (ADRES)
+competencia: administra la Base de Datos Única de Afiliados (BDUA) del sistema de salud (Ley 1753 de 2015, art. 66; Resolución 4622 de 2016)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/tq4m-hmg2.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: ADRES, Base de Datos Única de Afiliados (BDUA), población del régimen contributivo. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Cada fila es una celda ya agregada por municipio, EPS, sexo, grupo de edad, zona, tipo de afiliado,
+# estado, condición, nivel del Sisbén y grupo poblacional, con muchas celdas de 1 (ADR-0014): solo
+# salen sumas por municipio y EPS, agrupadas en la fuente; nunca las celdas. La fuente no trae código
+# DIVIPOLA: el municipio va por nombre y con su departamento, como en la ANH.
+url: https://www.datos.gov.co/resource/tq4m-hmg2.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "corte mensual vigente (la ADRES reemplaza la tabla)"}
+datos_personales: filtrados
+estado: publicada
+campos:
+  dpr_nombre: {nombre: departamento, tipo: str, desc: "departamento como lo escribe la BDUA, en mayúsculas sin tildes (VALLE, NARINO, BOGOTA D.C., SAN ANDRES)"}
+  mnc_nombre: {nombre: municipio, tipo: str, desc: "municipio como lo escribe la BDUA (SANTIAGO DE CALI, TUMACO, CARTAGENA, BOGOTA D.C.)"}
+  ent_id: {nombre: eps_codigo, tipo: str, desc: "código de la EPS en la BDUA (EPS037)"}
+  ent_nombre: {nombre: eps, tipo: str, desc: "nombre de la EPS; «-CM» son afiliados de este régimen en una EPS del otro, por movilidad"}
+  cantidad: {nombre: celda_afiliados, tipo: int, desc: "afiliados en la celda (muchas de 1); solo se sirve sumado por municipio y EPS"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Administradora de los Recursos del Sistema General de Seguridad Social en Salud, theme: salud, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una celda de la BDUA: municipio × EPS × sexo × grupo de edad × zona × tipo de afiliado × estado × condición × Sisbén × grupo poblacional, con su cantidad de afiliados; 637 506 filas, 23 120 347 afiliados, 32 EPS; Cali: 17 EPS, 1 492 604 afiliados"
+  clave: {columna: dpr_nombre + mnc_nombre + ent_id + tps_gnr_nombre + tps_grp_etr_id + zns_nombre + tps_afl_nombre + tps_est_afl_nombre + tps_cnd_bnf_nombre + tps_nvl_ssb_id + tps_grp_pbl_id, unica: false}
+  operaciones: {filtrar: 7.0, agrupar: 8.2}  # sin índice para el nombre normalizado: recorre la tabla
+  hallazgos:
+  - "verificado: no hay código DIVIPOLA ni de departamento, solo los nombres dpr_nombre y mnc_nombre"
+  - "270 899 de las 637 506 celdas (42 %) tienen un solo afiliado al cruzar sexo, edad, zona y lo demás: solo se sirven sumas por municipio y EPS, agrupadas en la fuente"
+  - "los nombres van en mayúsculas sin tildes, salvo la Ñ en unos (BRICEÑO, OCAÑA) y no en otros (NARINO), «NARI¥O» y «PUERTO NARI¥O» con la Ñ rota y NUEVO BELÉN DE BAJIRÁ con tildes"
+  - "abrevia o cambia nombres: VALLE (Valle del Cauca), SAN ANDRES (el archipiélago), SANTIAGO DE CALI, TUMACO (San Andrés de Tumaco), CARTAGENA (Cartagena de Indias), SAN PEDRO (San Pedro de los Milagros), PATIA (EL BORDO)"
+  - "comparar nombres normalizando la columna (replace anidados) tarda de 9 a 25 s; normalizando solo lo pedido y comparando la columna cruda, de 7 a 8 s"
+  - "con las reglas de comparación (igual, o «… DE nombre» en cualquier sentido; el departamento, prefijo en cualquier sentido), los 1 122 nombres oficiales del IGAC casan con un solo municipio de la BDUA o con ninguno (35, p. ej. Cartagena de Indias, San Pedro de los Milagros); una regla de sufijo o prefijo libre mezclaba Bello con Montebello y Buga con Bugalagrande, y «contiene» en el departamento mezclaba Santander con Norte de Santander"
+  - "las EPS con «-CM» son afiliados del contributivo en una EPS del subsidiado (movilidad): se sirven como vienen"
+  decision: "en vivo por departamento y municipio (nombres), sumando afiliados por EPS en la fuente"

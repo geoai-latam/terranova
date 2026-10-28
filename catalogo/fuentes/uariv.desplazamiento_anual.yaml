@@ -1,0 +1,48 @@
+id: uariv.desplazamiento_anual
+titulo: "Registro Único de Víctimas (RUV): víctimas de desplazamiento forzado por municipio y año (UARIV, corte mensual)"
+entidad: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV)
+competencia: administra el Registro Único de Víctimas del conflicto armado (Ley 1448 de 2011, art. 154)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/krnc-8azs.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV), Registro Único de Víctimas, desplazamiento anualizado por ocurrencia y llegada. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Personas registradas en el RUV como desplazadas desde un municipio, por año del desplazamiento.
+# Cada fila es una celda agregada por municipio, año, sexo, etnia, discapacidad y ciclo vital, con
+# celdas de 1: solo salen las sumas por municipio y año. Un corte por mes (dd/mm/aaaa): se piden los
+# últimos cuatro fines de mes por igualdad y se queda el más reciente. La «llegada» de la fuente no
+# se sirve: es una fracción mínima de la expulsión (ver el perfil).
+url: https://www.datos.gov.co/resource/krnc-8azs.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1M}
+cobertura: {pais: CO, columna_tiempo: vigencia}
+datos_personales: filtrados
+estado: publicada
+campos:
+  cod_ciudad_muni: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, como número (sin el cero inicial: 5001); 0 es «SIN DEFINIR»"}
+  vigencia: {nombre: anio, tipo: int, desc: "año del desplazamiento (1985 en adelante)"}
+  fecha_corte: {nombre: fecha_corte, tipo: date, desc: "corte del registro del que salen las cifras (la fuente lo escribe dd/mm/aaaa)"}
+  per_ocu: {nombre: celda_ocurrencia, tipo: int, desc: "personas desplazadas desde el municipio en la celda; solo se sirve sumado"}
+  eventos: {nombre: celda_eventos, tipo: int, desc: "eventos en la celda; solo se sirve sumado"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Unidad para la Atención y Reparación Integral a las Víctimas, theme: inclusion social, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una celda del RUV en un corte: municipio × año × sexo × etnia × discapacidad × ciclo vital, con las personas desplazadas desde el municipio (ocurrencia), las de «llegada» y los eventos; 23,6 M de filas; Turbo, corte 30/09/2026: 4 764 celdas, 158 649 personas expulsadas de 1985 a 2026"
+  clave: {columna: fecha_corte + cod_ciudad_muni + vigencia + sexo + etnia + discapacidad + ciclo_vital, unica: false}
+  operaciones: {filtrar: 4.1, agrupar: 5.6}
+  hallazgos:
+  - "la tabla acumula los cortes mensuales: sumar sin fijar el corte multiplica las víctimas; el filtro por igualdad con los últimos cuatro fines de mes es el único rápido"
+  - "per_llegada no es la recepción: en el país, 2002 suma 27 106 personas de llegada frente a 816 111 expulsadas (lo mismo en los cortes de 2025); Bogotá, 2 366 llegadas en 2001 y Turbo, 30 en 2024. No se sirve: respondería «cuántos llegaron» con una cifra que no lo es"
+  - "las víctimas de desplazamiento que hoy viven en un municipio están en uariv.victimas_hecho_municipio (ubicación), sin año"
+  - "cada fila es una celda cruzada por sexo, etnia, discapacidad y ciclo vital, con muchas celdas de 1: solo se sirven las sumas por año"
+  - "el año en curso está incompleto (Turbo 2026: 290 personas hasta septiembre)"
+  decision: "en vivo por municipio (DIVIPOLA), personas expulsadas y eventos por año, del corte más reciente de los últimos cuatro fines de mes"

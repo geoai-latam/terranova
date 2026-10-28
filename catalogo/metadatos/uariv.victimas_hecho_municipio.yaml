@@ -1,0 +1,109 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: uariv.victimas_hecho_municipio
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/9qih-4vkc.json
+pagina: https://www.datos.gov.co/d/9qih-4vkc
+titulo: Cifras de Víctimas por Hechos Municipal
+descripcion: 'Cifras de Víctimas por Hechos - Municipal: Este Reporte contiene Información del Año en
+  Curso y su actualización se realizar con una periodicidad Mensual. Si usted requiere realizar una consultar
+  de años anteriores por favor diríjase a la página de la Unidad para la Atención y la Reparación Integral
+  a las Víctimas. https://www.unidadvictimas.gov.co/es/planeacion-y-seguimiento/publicacion-de-datos-abiertos/161
+  Nota: El número de personas por hecho victimizante no refleja el total de víctimas únicas, debido a
+  que una persona pudo haber sufrido mas de un hecho victimizante.'
+publicado: '2020-03-03'
+datos_actualizados: '2026-10-19'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Inclusión Social y Reconciliación
+etiquetas:
+- unidad para las víctimas
+- cifras
+- hechos victimizantes
+- registro único de víctimas
+- cifras de víctimas por hechos municipal
+- unidad de victimas
+filas: 11121064
+campos:
+  fecha_corte:
+    tipo_fuente: text
+    etiqueta: FECHA_CORTE
+    descripcion: Fecha de corte a la fecha que se recolectaron los datos
+    nulos: 0
+    minimo: 2024/08/31
+    maximo: 31/12/2025
+    comparacion: texto
+  cod_ciudad_muni:
+    tipo_fuente: number
+    etiqueta: COD_CIUDAD_MUNI
+    descripcion: Corresponde al código de la ciudad o municipio que desea consultar
+    nulos: 0
+    minimo: '0'
+    maximo: '99773'
+    comparacion: numero
+  param_hecho:
+    tipo_fuente: number
+    etiqueta: PARAM_HECHO
+    descripcion: Número o código del hecho victimizante registrado
+    nulos: 0
+    minimo: '1'
+    maximo: '20'
+    comparacion: numero
+    valores:
+      '5': 3807160
+      '2': 1784053
+      '6': 1320295
+      '4': 648944
+      '12': 556604
+      '1': 539822
+      '3': 402020
+      '15': 308790
+      '8': 293068
+      '13': 287455
+      '11': 242153
+      '14': 222294
+      '20': 204470
+      '7': 177534
+      '9': 175411
+      '10': 150991
+  per_ocu:
+    tipo_fuente: number
+    etiqueta: PER_OCU
+    descripcion: Número de personas por ocurrencia
+    nulos: 2924041
+    minimo: '1'
+    maximo: '49416'
+    comparacion: numero
+  per_decla:
+    tipo_fuente: number
+    etiqueta: PER_DECLA
+    descripcion: Número de personas con Declaración
+    nulos: 4654998
+    minimo: '1'
+    maximo: '142711'
+    comparacion: numero
+  per_ubic:
+    tipo_fuente: number
+    etiqueta: PER_UBIC
+    descripcion: Número de victimas por Ubicación
+    nulos: 3603746
+    minimo: '1'
+    maximo: '236217'
+    comparacion: numero
+  per_sa:
+    tipo_fuente: number
+    etiqueta: PER_SA
+    descripcion: Número de víctimas por ubicación y sujetos a atención
+    nulos: 4253508
+    minimo: '1'
+    maximo: '128970'
+    comparacion: numero
+  eventos:
+    tipo_fuente: number
+    etiqueta: EVENTOS
+    descripcion: Número de eventos registrados
+    nulos: 3232056
+    minimo: '1'
+    maximo: '67913'
+    comparacion: numero

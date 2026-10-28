@@ -1,0 +1,52 @@
+id: uariv.victimas_hecho_municipio
+titulo: "Registro Único de Víctimas (RUV): víctimas por hecho victimizante y municipio (UARIV, corte mensual)"
+entidad: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV)
+competencia: administra el Registro Único de Víctimas del conflicto armado (Ley 1448 de 2011, art. 154)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.datos.gov.co/api/views/9qih-4vkc.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad para la Atención y Reparación Integral a las Víctimas (UARIV), Registro Único de Víctimas, cifras por hecho victimizante. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Víctimas REGISTRADAS en el RUV por hecho victimizante, no los hechos que documenta el CNMH
+# (cnmh.*). Una persona con dos hechos cuenta en los dos: las cifras por hecho no se suman. Cada
+# fila es una celda agregada por municipio, hecho, sexo, etnia, discapacidad y ciclo vital, con
+# celdas de 1: solo salen las sumas por municipio y hecho. Un corte por mes (dd/mm/aaaa): se piden
+# los últimos cuatro fines de mes por igualdad y se queda el más reciente de cada hecho.
+url: https://www.datos.gov.co/resource/9qih-4vkc.json
+modo: en_vivo
+frescura: {ttl_cache_s: 604800, sla_actualizacion: P1M}
+cobertura: {pais: CO, periodo: "corte mensual vigente (la tabla guarda cortes desde julio de 2024)"}
+datos_personales: filtrados
+estado: publicada
+campos:
+  cod_ciudad_muni: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, como número (sin el cero inicial: 5001); 0 es «SIN DEFINIR»"}
+  param_hecho: {nombre: hecho_codigo, tipo: str, desc: "código del hecho victimizante en el RUV (1 a 15 y 20 = sin información)"}
+  fecha_corte: {nombre: fecha_corte, tipo: date, desc: "corte del registro del que salen las cifras (la fuente lo escribe dd/mm/aaaa)"}
+  per_ocu: {nombre: celda_ocurrencia, tipo: int, desc: "personas por ocurrencia en la celda; solo se sirve sumado"}
+  per_decla: {nombre: celda_declaracion, tipo: int, desc: "personas por declaración en la celda; solo se sirve sumado"}
+  per_ubic: {nombre: celda_ubicacion, tipo: int, desc: "personas por ubicación en la celda; solo se sirve sumado"}
+  per_sa: {nombre: celda_sujetos_atencion, tipo: int, desc: "sujetos de atención en la celda; solo se sirve sumado"}
+  eventos: {nombre: celda_eventos, tipo: int, desc: "eventos en la celda; solo se sirve sumado"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Unidad para la Atención y Reparación Integral a las Víctimas, theme: inclusion social, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terranova.
+perfil:
+  medido: 2026-10-28
+  fila: "una celda del RUV en un corte: municipio × hecho × sexo × etnia × discapacidad × ciclo vital, con las personas por ocurrencia, declaración, ubicación y sujetos de atención y los eventos; 11,1 M de filas; Medellín, corte 30/09/2026: 16 hechos, 146 138 víctimas de desplazamiento por ocurrencia"
+  clave: {columna: fecha_corte + cod_ciudad_muni + param_hecho + sexo + etnia + discapacidad + ciclo_vital, unica: false}
+  operaciones: {filtrar: 0.7, agrupar: 11.0}  # agrupar los 27 cortes de Medellín pasó de 120 s
+  hallazgos:
+  - "la tabla acumula 27 cortes mensuales (julio de 2024 a septiembre de 2026): sumar sin fijar el corte multiplica las víctimas"
+  - "fecha_corte es texto en varios formatos (2024/08/31, 30/09/24, «31/07/2024 00:00», dd/mm/aaaa desde 2024): el filtro por igualdad con los últimos cuatro fines de mes toma los dd/mm/aaaa"
+  - "el texto del hecho cambia de codificación entre cortes («Desaparición» en unos, la «ó» rota en otros): se agrupa por param_hecho y el nombre lo pone el catálogo"
+  - "el número de personas por hecho no es el de víctimas únicas (lo advierte la UARIV): una persona con varios hechos cuenta en cada uno; el total único está en uariv.victimas_municipio"
+  - "en el corte vigente, el país suma 9 967 220 víctimas de desplazamiento por ocurrencia; Confinamiento (15) no trae ocurrencia en Medellín, solo ubicación"
+  - "cada fila es una celda cruzada por sexo, etnia, discapacidad y ciclo vital, con muchas celdas de 1: solo se sirven las sumas por hecho"
+  decision: "en vivo por municipio (DIVIPOLA), sumando por hecho el corte más reciente de los últimos cuatro fines de mes"

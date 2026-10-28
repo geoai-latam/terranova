@@ -102,6 +102,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `adres_afiliados_contributivo_municipio` | ¿Cuántos afiliados al régimen contributivo de salud hay en este municipio, por EPS? | Administradora de los Recursos del Sistema General de Seguridad Social en Salud (ADRES) | CC-BY-SA-4.0 | 5 |
+| `adres_afiliados_subsidiado_municipio` | ¿Cuántos afiliados al régimen subsidiado de salud hay en este municipio, por EPS? | Administradora de los Recursos del Sistema General de Seguridad Social en Salud (ADRES) | CC-BY-SA-4.0 | 5 |
 | `aerocivil_aeropuertos_buscar` | ¿Cuál es la sigla del aeropuerto de esta ciudad en las estadísticas de la Aerocivil? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 1 |
 | `aerocivil_operaciones_aeropuerto` | ¿Cuántas operaciones aéreas (llegadas y salidas) tuvo este aeródromo en un año? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 5 |
 | `aerocivil_trafico_aeropuerto` | ¿Cuántos pasajeros y cuánta carga movió este aeropuerto en un año, mes a mes? | Unidad Administrativa Especial de Aeronáutica Civil (Aerocivil) | CC-BY-SA-4.0 | 5 |
@@ -173,6 +175,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `policia_lesiones_municipio` | ¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
 | `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
 | `presidencia_victimas_minas_municipio` | ¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron? | Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia) | CC-BY-SA-4.0 | 5 |
+| `uariv_desplazamiento_municipio` | ¿Cuántas personas fueron desplazadas de este municipio cada año? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
+| `uariv_victimas_hecho_municipio` | ¿Cuántas víctimas registradas hay en este municipio por cada hecho victimizante (desplazamiento, homicidio, amenaza…)? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
+| `uariv_victimas_municipio` | ¿Cuántas víctimas del conflicto armado registradas hay en este municipio? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 
 ## meta
 

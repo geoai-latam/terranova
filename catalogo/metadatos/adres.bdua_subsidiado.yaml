@@ -1,0 +1,72 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: adres.bdua_subsidiado
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/d7a5-cnra.json
+pagina: https://www.datos.gov.co/d/d7a5-cnra
+titulo: Población Base de Datos Única de Afiliados BDUA del régimen subsidiado
+descripcion: 'Población BDUA del régimen subsidiado: Población Activa del régimen Subsidiado que se encuentra
+  almacenada en la Base de Datos Única de Afiliados - BDUA, entregada por las EPSS de acuerdo a la resolución
+  4622 del 2016.'
+publicado: '2020-07-02'
+datos_actualizados: '2026-10-03'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Salud y Protección Social
+etiquetas:
+- adres
+- bdua
+- régimen subsidiado
+filas: 1341642
+campos:
+  ent_id:
+    tipo_fuente: text
+    etiqueta: Código de la entidad
+    descripcion: 'Corresponde a 6 caracteres del código de la EPS (Ejemplo: EPS017 FAMISANAR, EPS002 SANITAS)'
+    nulos: 0
+    minimo: CCF033
+    maximo: ESS207
+    comparacion: texto
+    valores:
+      EPSS41: 327058
+      EPSS37: 200276
+      ESS024: 123445
+      EPSS05: 80516
+      EPSS02: 76713
+      ESS062: 68397
+      CCF055: 68035
+      ESS207: 67349
+      ESS118: 56694
+      EPSS17: 42971
+      EPSS40: 41594
+      EPSS10: 25875
+      EPSI05: 23549
+      EPSS34: 17158
+      EPSI01: 12766
+      CCF033: 12609
+      EPSS08: 12001
+      CCF050: 11923
+      EPSS18: 11499
+      EPSS42: 11219
+  ent_nombre:
+    tipo_fuente: text
+    etiqueta: Nombre de la entidad
+    descripcion: Corresponde al nombre de la EPS
+  dpr_nombre:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: Corresponde al código de departamento asignado por el DANE
+  mnc_nombre:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: Corresponde al código de municipio asignado por el DANE
+  cantidad:
+    tipo_fuente: text
+    etiqueta: cantidad
+    descripcion: Cantidad de registros que cumplen con las mismas variables y que están descritas en esta
+      tabla
+    nulos: 0
+    minimo: '1'
+    maximo: '999'
+    comparacion: texto

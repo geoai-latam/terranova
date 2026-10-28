@@ -1,0 +1,207 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:10:23+00:00",
+ "herramienta": "uariv_victimas_hecho_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "param_hecho",
+    "id": "9qih-4vkc",
+    "max_filas": 50,
+    "order": "param_hecho",
+    "portal": "datos.gov.co",
+    "previo_group": "param_hecho, fecha_corte",
+    "previo_select": "param_hecho, substring(fecha_corte, 7, 4) || '-' || substring(fecha_corte, 4, 2) || '-' || substring(fecha_corte, 1, 2) AS fi, (substring(fecha_corte, 7, 4) || substring(fecha_corte, 4, 2))::number AS clave, coalesce(sum(per_ocu), 0) AS ocu, coalesce(sum(per_decla), 0) AS decla, coalesce(sum(per_ubic), 0) AS ubic, coalesce(sum(per_sa), 0) AS sa, coalesce(sum(eventos), 0) AS ev",
+    "select": "param_hecho, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_ocurrencia, max(clave * 10000000000 + decla) % 10000000000 AS personas_declaracion, max(clave * 10000000000 + ubic) % 10000000000 AS personas_ubicacion, max(clave * 10000000000 + sa) % 10000000000 AS personas_sujetos_atencion, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+    "where": "cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4))"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "fecha_corte",
+       "n_eventos",
+       "param_hecho",
+       "personas_declaracion",
+       "personas_ocurrencia",
+       "personas_sujetos_atencion",
+       "personas_ubicacion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1547",
+        "param_hecho": "1",
+        "personas_declaracion": "2713",
+        "personas_ocurrencia": "1516",
+        "personas_sujetos_atencion": "2305",
+        "personas_ubicacion": "2608"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "28476",
+        "param_hecho": "2",
+        "personas_declaracion": "118539",
+        "personas_ocurrencia": "27472",
+        "personas_sujetos_atencion": "64643",
+        "personas_ubicacion": "66054"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "576",
+        "param_hecho": "3",
+        "personas_declaracion": "2206",
+        "personas_ocurrencia": "559",
+        "personas_sujetos_atencion": "1965",
+        "personas_ubicacion": "1991"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "6442",
+        "param_hecho": "4",
+        "personas_declaracion": "34262",
+        "personas_ocurrencia": "6342",
+        "personas_sujetos_atencion": "9028",
+        "personas_ubicacion": "10489"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "153867",
+        "param_hecho": "5",
+        "personas_declaracion": "529959",
+        "personas_ocurrencia": "146138",
+        "personas_sujetos_atencion": "332565",
+        "personas_ubicacion": "378192"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "103401",
+        "param_hecho": "6",
+        "personas_declaracion": "238495",
+        "personas_ocurrencia": "97644",
+        "personas_sujetos_atencion": "75154",
+        "personas_ubicacion": "89265"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "29",
+        "param_hecho": "7",
+        "personas_declaracion": "756",
+        "personas_ocurrencia": "29",
+        "personas_sujetos_atencion": "544",
+        "personas_ubicacion": "585"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "546",
+        "param_hecho": "8",
+        "personas_declaracion": "3081",
+        "personas_ocurrencia": "540",
+        "personas_sujetos_atencion": "1687",
+        "personas_ubicacion": "1971"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "240",
+        "param_hecho": "9",
+        "personas_declaracion": "1161",
+        "personas_ocurrencia": "235",
+        "personas_sujetos_atencion": "453",
+        "personas_ubicacion": "509"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "206",
+        "param_hecho": "10",
+        "personas_declaracion": "931",
+        "personas_ocurrencia": "204",
+        "personas_sujetos_atencion": "654",
+        "personas_ubicacion": "681"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "5",
+        "param_hecho": "11",
+        "personas_declaracion": "1023",
+        "personas_ocurrencia": "4",
+        "personas_sujetos_atencion": "2642",
+        "personas_ubicacion": "2843"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "1062",
+        "param_hecho": "12",
+        "personas_declaracion": "2802",
+        "personas_ocurrencia": "1056",
+        "personas_sujetos_atencion": "2812",
+        "personas_ubicacion": "3059"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "376",
+        "param_hecho": "13",
+        "personas_declaracion": "1512",
+        "personas_ocurrencia": "373",
+        "personas_sujetos_atencion": "996",
+        "personas_ubicacion": "1032"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "814",
+        "param_hecho": "14",
+        "personas_declaracion": "3052",
+        "personas_ocurrencia": "811",
+        "personas_sujetos_atencion": "884",
+        "personas_ubicacion": "973"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "0",
+        "param_hecho": "15",
+        "personas_declaracion": "0",
+        "personas_ocurrencia": "0",
+        "personas_sujetos_atencion": "2547",
+        "personas_ubicacion": "2560"
+       },
+       {
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "548",
+        "param_hecho": "20",
+        "personas_declaracion": "7056",
+        "personas_ocurrencia": "530",
+        "personas_sujetos_atencion": "1812",
+        "personas_ubicacion": "2038"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 16,
+      "truncado": false,
+      "vistos": 16
+     },
+     "completo": true,
+     "conjunto": "9qih-4vkc",
+     "consulta": {
+      "conjunto": "9qih-4vkc",
+      "group": "param_hecho",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "previo_group": "param_hecho, fecha_corte",
+      "select": "param_hecho, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_ocurrencia, max(clave * 10000000000 + decla) % 10000000000 AS personas_declaracion, max(clave * 10000000000 + ubic) % 10000000000 AS personas_ubicacion, max(clave * 10000000000 + sa) % 10000000000 AS personas_sujetos_atencion, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+      "where": "(cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))"
+     },
+     "filas": 16,
+     "filas_que_resume": 9372,
+     "filtro_soql": "(cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

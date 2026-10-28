@@ -1,0 +1,55 @@
+id: uariv_victimas_hecho_municipio
+version: 1
+familia: justicia
+fuente: uariv.victimas_hecho_municipio
+pregunta: "¿Cuántas víctimas registradas hay en este municipio por cada hecho victimizante (desplazamiento, homicidio, amenaza…)?"
+descripcion: >
+  Víctimas del conflicto armado incluidas en el Registro Único de Víctimas (RUV) de la UARIV en un
+  municipio (DIVIPOLA), por hecho victimizante (desplazamiento forzado, homicidio, amenaza,
+  desaparición forzada, secuestro, minas…), en el corte mensual vigente: personas por ocurrencia,
+  por declaración, por ubicación y sujetos de atención, y eventos. Una persona con varios hechos
+  cuenta en cada uno: las cifras por hecho no se suman (el total sin repetir está en
+  uariv_victimas_municipio). Son víctimas registradas, no hechos documentados por el CNMH
+  (herramientas cnmh_*). Solo sumas por hecho, nunca personas.
+  (Fuente: Unidad para las Víctimas (UARIV); licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    # Spec 07: los últimos cuatro fines de mes por igualdad y, por hecho, el corte más reciente
+    # (max(clave · 10¹⁰ + cifra) mod 10¹⁰, clave = AAAAMM). Se agrupa por el código: el texto del
+    # hecho cambia de codificación entre cortes.
+    id: "9qih-4vkc"
+    portal: datos.gov.co
+    previo_select: "param_hecho, substring(fecha_corte, 7, 4) || '-' || substring(fecha_corte, 4, 2) || '-' || substring(fecha_corte, 1, 2) AS fi, (substring(fecha_corte, 7, 4) || substring(fecha_corte, 4, 2))::number AS clave, coalesce(sum(per_ocu), 0) AS ocu, coalesce(sum(per_decla), 0) AS decla, coalesce(sum(per_ubic), 0) AS ubic, coalesce(sum(per_sa), 0) AS sa, coalesce(sum(eventos), 0) AS ev"
+    previo_group: "param_hecho, fecha_corte"
+    select: "param_hecho, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_ocurrencia, max(clave * 10000000000 + decla) % 10000000000 AS personas_declaracion, max(clave * 10000000000 + ubic) % 10000000000 AS personas_ubicacion, max(clave * 10000000000 + sa) % 10000000000 AS personas_sujetos_atencion, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos"
+    where: "cod_ciudad_muni = {municipio_divipola} AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4))"
+    group: "param_hecho"
+    order: "param_hecho"
+    max_filas: 50
+  campos: [cod_ciudad_muni, param_hecho, fecha_corte, per_ocu, per_decla, per_ubic, per_sa, eventos]
+derivados:
+  hecho:
+    de: codigo
+    campo: hecho_codigo
+    valores: {"1": "Acto terrorista, atentados, combates, enfrentamientos u hostigamientos", "2": "Amenaza", "3": "Delitos contra la libertad y la integridad sexual en el conflicto armado", "4": "Desaparición forzada", "5": "Desplazamiento forzado", "6": "Homicidio", "7": "Minas antipersonal, munición sin explotar y artefacto explosivo improvisado", "8": "Secuestro", "9": "Tortura", "10": "Vinculación de niños, niñas y adolescentes a actividades de grupos armados", "11": "Abandono o despojo forzado de tierras", "12": "Pérdida de bienes muebles o inmuebles", "13": "Lesiones personales físicas", "14": "Lesiones personales psicológicas", "15": "Confinamiento", "20": "Sin información"}
+  personas_ocurrencia: {de: columna, campo: personas_ocurrencia, tipo: int}
+  personas_declaracion: {de: columna, campo: personas_declaracion, tipo: int}
+  personas_ubicacion: {de: columna, campo: personas_ubicacion, tipo: int}
+  personas_sujetos_atencion: {de: columna, campo: personas_sujetos_atencion, tipo: int}
+  eventos: {de: columna, campo: n_eventos, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+salida: VictimasRuvHechoMunicipio
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 9qih-4vkc, corte 30/09/2026 de Medellín: 16 hechos; el primero (1, actos
+  # terroristas y combates) con 1 516 víctimas por ocurrencia; desplazamiento (5), 146 138. Las
+  # cifras crecen con cada corte: pisos.
+  entrada: {municipio_divipola: "05001"}
+  verdad: {hecho_codigo: "1", hecho: "Acto terrorista, atentados, combates, enfrentamientos u hostigamientos"}
+  minimos: {numero_registros: 15, personas_ocurrencia: 1500}
+  campos: [eventos, fecha_corte, hecho, hecho_codigo, numero_registros, personas_declaracion, personas_ocurrencia, personas_sujetos_atencion, personas_ubicacion]
+  latencia_max_ms: 20000
