@@ -1,0 +1,168 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:48+00:00",
+ "herramienta": "anh_gas_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "departamento, municipio, coddanemunicipio, vigencia, mes",
+    "id": "5dux-bfvx",
+    "max_filas": 100,
+    "order": "mes",
+    "portal": "datos.gov.co",
+    "select": "departamento, municipio, coddanemunicipio, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc, count(distinct campo) AS n_campos",
+    "where": "coddanemunicipio = 85410 AND vigencia = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "coddanemunicipio",
+       "departamento",
+       "kpc",
+       "mes",
+       "municipio",
+       "n_campos",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2367045.00",
+        "mes": "1",
+        "municipio": "TAURAMENA",
+        "n_campos": "17",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2292397.00",
+        "mes": "2",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2335024.00",
+        "mes": "3",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2375038.00",
+        "mes": "4",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2416408.00",
+        "mes": "5",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2306476.00",
+        "mes": "6",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2361230.00",
+        "mes": "7",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2374239.00",
+        "mes": "8",
+        "municipio": "TAURAMENA",
+        "n_campos": "17",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2308554.00",
+        "mes": "9",
+        "municipio": "TAURAMENA",
+        "n_campos": "17",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2345593.00",
+        "mes": "10",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2142572.00",
+        "mes": "11",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       },
+       {
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2239729.00",
+        "mes": "12",
+        "municipio": "TAURAMENA",
+        "n_campos": "18",
+        "vigencia": "2024"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "5dux-bfvx",
+     "consulta": {
+      "conjunto": "5dux-bfvx",
+      "group": "departamento, municipio, coddanemunicipio, vigencia, mes",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "departamento, municipio, coddanemunicipio, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc, count(distinct campo) AS n_campos",
+      "where": "(coddanemunicipio = 85410 AND vigencia = 2024)"
+     },
+     "filas": 12,
+     "filas_que_resume": 225,
+     "filtro_soql": "(coddanemunicipio = 85410 AND vigencia = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

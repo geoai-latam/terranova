@@ -1,0 +1,134 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: anh.produccion_crudo
+metodo: cosechado
+cosechado: '2026-10-28'
+origen: https://www.datos.gov.co/api/views/fdvb-hsrf.json
+pagina: https://www.datos.gov.co/d/fdvb-hsrf
+titulo: Produccion Fiscalizada Crudo Consolidada
+descripcion: Producción de petróleo (Crudo) fiscalizada extraída del Sistema de Información en donde se
+  registra la producción oficial reportada por las empresas Operadoras
+publicado: '2025-10-07'
+datos_actualizados: '2026-06-02'
+frecuencia_declarada: Trimestral
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Minas y Energía
+etiquetas:
+- hidrocarburos
+- producción
+- fiscalizada
+- petróleo
+filas: 53237
+geografia:
+  geometria: punto
+  crs: EPSG:4326
+campos:
+  vigencia:
+    tipo_fuente: number
+    etiqueta: Vigencia
+    descripcion: Año de la producción
+    nulos: 0
+    minimo: '2014'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2014': 4834
+      '2019': 4791
+      '2018': 4673
+      '2017': 4503
+      '2015': 4474
+      '2022': 4345
+      '2023': 4308
+      '2024': 4246
+      '2021': 4159
+      '2016': 4058
+      '2020': 4030
+      '2025': 3834
+      '2026': 982
+  mes:
+    tipo_fuente: number
+    etiqueta: Mes
+    descripcion: Mes de la producción
+    nulos: 0
+    minimo: '1'
+    maximo: '12'
+    comparacion: numero
+    valores:
+      '1': 4769
+      '3': 4745
+      '2': 4743
+      '12': 4404
+      '10': 4386
+      '9': 4363
+      '8': 4360
+      '4': 4358
+      '7': 4332
+      '5': 4318
+      '6': 4304
+      '11': 4155
+  departamento:
+    tipo_fuente: text
+    etiqueta: Departamento
+    descripcion: 'Nombre del departamento (Ej: Santander)'
+    nulos: 0
+    minimo: ANTIOQUIA
+    maximo: VICHADA
+    comparacion: texto
+    valores:
+      CASANARE: 19974
+      META: 9211
+      SANTANDER: 3808
+      HUILA: 3617
+      PUTUMAYO: 3318
+      ARAUCA: 3137
+      TOLIMA: 2747
+      CESAR: 1626
+      BOYACA: 1587
+      ANTIOQUIA: 1026
+      NORTE DE SANTANDER: 645
+      BOLIVAR: 528
+      SUCRE: 409
+      MAGDALENA: 385
+      CAUCA: 327
+      DEPARTAMENTO NN: 213
+      CUNDINAMARCA: 203
+      CORDOBA: 174
+      ATLANTICO: 130
+      NARIÑO: 117
+  municipio:
+    tipo_fuente: text
+    etiqueta: Municipio
+    descripcion: 'Nombre del municipio (Ej: Puerto Nare)'
+    nulos: 0
+    minimo: ACACIAS
+    maximo: YOPAL
+    comparacion: texto
+  operadora:
+    tipo_fuente: text
+    etiqueta: Operadora
+    descripcion: Nombre de la Operadora que tiene a cargo el campo de hidrocarburos
+    nulos: 0
+    comparacion: texto
+  contrato:
+    tipo_fuente: text
+    etiqueta: Contrato
+    descripcion: Nombre del Contrato de hidrocarburos
+    nulos: 0
+    minimo: ABANICO
+    maximo: YAMU
+    comparacion: texto
+  campo:
+    tipo_fuente: text
+    etiqueta: Campo
+    descripcion: Campo de hidrocarburos de donde proviene la producción de crudo
+    nulos: 0
+    minimo: ABANICO
+    maximo: ZORZAL
+    comparacion: texto
+  produccion_bls:
+    tipo_fuente: text
+    etiqueta: ProduccionBls
+    descripcion: Barriles de crudo producidos en el mes
+    nulos: 0
+    minimo: '0.00'
+    comparacion: texto

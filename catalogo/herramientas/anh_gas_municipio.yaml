@@ -1,0 +1,41 @@
+id: anh_gas_municipio
+version: 1
+familia: estadisticas
+fuente: anh.produccion_gas
+pregunta: "¿Cuánto gas produjo este municipio en un año, mes a mes?"
+descripcion: >
+  Producción fiscalizada de gas de un municipio (DIVIPOLA) en un año, mes a mes, en kpc (miles de
+  pies cúbicos en el mes), según la ANH, con el total del año y los campos que reportaron cada mes.
+  Datos de 2014 a marzo de 2026; noviembre de 2025 está incompleto en la fuente. Para crudo,
+  anh_crudo_municipio; el detalle por campo, anh_gas_campo.
+  (Fuente: ANH; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 5dux-bfvx
+    portal: datos.gov.co
+    select: "departamento, municipio, coddanemunicipio, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc, count(distinct campo) AS n_campos"
+    # Spec 07: el DIVIPOLA es un número en la fuente (5001); el código con cero se compara igual.
+    where: "coddanemunicipio = {municipio_divipola} AND vigencia = {anio}"
+    group: "departamento, municipio, coddanemunicipio, vigencia, mes"
+    order: "mes"
+    max_filas: 100
+  campos: [departamento, municipio, coddanemunicipio, vigencia, mes, campo, produccionkpc]
+derivados:
+  produccion_kpc: {de: columna, campo: kpc, tipo: float}
+  campos_reportados: {de: columna, campo: n_campos, tipo: int}
+  produccion_total_kpc: {de: suma, campo: produccion_kpc, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: ProduccionGasMunicipio
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en 5dux-bfvx: Tauramena (85410) 2024, 12 meses; enero 2 367 045 kpc de
+  # 17 campos; el año, 27 864 305 kpc.
+  entrada: {municipio_divipola: "85410", anio: 2024}
+  verdad: {municipio: TAURAMENA, mes: 1, produccion_kpc: 2367045.0, campos_reportados: 17, produccion_total_kpc: 27864305.0}
+  minimos: {numero_registros: 12}
+  campos: [anio, campos_reportados, departamento, mes, municipio, municipio_divipola, numero_registros, produccion_kpc, produccion_total_kpc]
+  latencia_max_ms: 20000

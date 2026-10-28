@@ -1,0 +1,301 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:45+00:00",
+ "herramienta": "anh_gas_campo",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes",
+    "id": "5dux-bfvx",
+    "max_filas": 500,
+    "order": "campo, departamento, municipio, operadora, mes",
+    "portal": "datos.gov.co",
+    "select": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc",
+    "where": "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "campo",
+       "coddanemunicipio",
+       "departamento",
+       "kpc",
+       "mes",
+       "municipio",
+       "operadora",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "1",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "2",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "3",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "4",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "5",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "6",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "7",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "8",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "9",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "10",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "11",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85010",
+        "departamento": "CASANARE",
+        "kpc": "0.00",
+        "mes": "12",
+        "municipio": "AGUAZUL",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2218937.00",
+        "mes": "1",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2152100.00",
+        "mes": "2",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2172808.00",
+        "mes": "3",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2213609.00",
+        "mes": "4",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2250679.00",
+        "mes": "5",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2141596.00",
+        "mes": "6",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2168576.00",
+        "mes": "7",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2186257.00",
+        "mes": "8",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2106714.00",
+        "mes": "9",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2144613.00",
+        "mes": "10",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "1944089.00",
+        "mes": "11",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       },
+       {
+        "campo": "CUSIANA",
+        "coddanemunicipio": "85410",
+        "departamento": "CASANARE",
+        "kpc": "2010027.00",
+        "mes": "12",
+        "municipio": "TAURAMENA",
+        "operadora": "ECOPETROL S.A.",
+        "vigencia": "2024"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 24,
+      "truncado": false,
+      "vistos": 24
+     },
+     "completo": true,
+     "conjunto": "5dux-bfvx",
+     "consulta": {
+      "conjunto": "5dux-bfvx",
+      "group": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)"
+     },
+     "filas": 24,
+     "filas_que_resume": 48,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

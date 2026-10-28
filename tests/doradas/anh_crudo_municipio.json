@@ -1,0 +1,155 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:10:41+00:00",
+ "herramienta": "anh_crudo_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "departamento, municipio, vigencia, mes",
+    "id": "fdvb-hsrf",
+    "max_filas": 100,
+    "order": "departamento, municipio, mes",
+    "portal": "datos.gov.co",
+    "select": "departamento, municipio, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles, count(distinct campo) AS n_campos",
+    "where": "replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND vigencia = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "barriles",
+       "departamento",
+       "mes",
+       "municipio",
+       "n_campos",
+       "vigencia"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "barriles": "6293701.00",
+        "departamento": "META",
+        "mes": "1",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "26",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "5285056.00",
+        "departamento": "META",
+        "mes": "2",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "26",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6212853.00",
+        "departamento": "META",
+        "mes": "3",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "26",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "5916973.00",
+        "departamento": "META",
+        "mes": "4",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "26",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6391299.00",
+        "departamento": "META",
+        "mes": "5",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "26",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6028635.00",
+        "departamento": "META",
+        "mes": "6",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "25",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6465810.00",
+        "departamento": "META",
+        "mes": "7",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "24",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6427320.00",
+        "departamento": "META",
+        "mes": "8",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "24",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "5796055.00",
+        "departamento": "META",
+        "mes": "9",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "25",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6322431.00",
+        "departamento": "META",
+        "mes": "10",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "25",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6109613.00",
+        "departamento": "META",
+        "mes": "11",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "25",
+        "vigencia": "2024"
+       },
+       {
+        "barriles": "6275761.00",
+        "departamento": "META",
+        "mes": "12",
+        "municipio": "PUERTO GAITAN",
+        "n_campos": "25",
+        "vigencia": "2024"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "completo": true,
+     "conjunto": "fdvb-hsrf",
+     "consulta": {
+      "conjunto": "fdvb-hsrf",
+      "group": "departamento, municipio, vigencia, mes",
+      "max_filas": 100,
+      "portal": "datos.gov.co",
+      "select": "departamento, municipio, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles, count(distinct campo) AS n_campos",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND vigencia = 2024)"
+     },
+     "filas": 12,
+     "filas_que_resume": 303,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Puerto Gaitán'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('Meta'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND vigencia = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

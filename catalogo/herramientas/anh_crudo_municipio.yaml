@@ -1,0 +1,45 @@
+id: anh_crudo_municipio
+version: 1
+familia: estadisticas
+fuente: anh.produccion_crudo
+pregunta: "¿Cuánto petróleo (crudo) produjo este municipio en un año, mes a mes?"
+descripcion: >
+  Producción fiscalizada de crudo de un municipio en un año, mes a mes, en barriles, según la ANH,
+  con el total del año y los campos que reportaron cada mes. El municipio va por nombre y con su
+  departamento (p. ej. Puerto Gaitán, Meta): la fuente no trae un código DIVIPOLA utilizable y se
+  compara sin tildes, mayúsculas ni espacios; si el nombre de la ANH es otro (CUCUTA, MOMPOS) y no
+  aparece, el detalle por campo está en anh_crudo_campo. Datos de 2014 a marzo de 2026; noviembre de
+  2025 está incompleto en la fuente. Para gas, anh_gas_municipio; para regalías,
+  anh_regalias_municipio.
+  (Fuente: ANH; licencia: CC BY-SA 4.0.)
+entrada: {departamento: nombre, municipio: nombre, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: fdvb-hsrf
+    portal: datos.gov.co
+    select: "departamento, municipio, vigencia, mes, sum(replace(produccion_bls, ',', '')::number) AS barriles, count(distinct campo) AS n_campos"
+    # Spec 07: sin DIVIPOLA (CodDaneMunicipio repite el departamento); nombres comparados sin tildes
+    # ni espacios, y el departamento pedido contiene el de la ANH («La Guajira» ⊇ GUAJIRA).
+    where: "replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('{departamento}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND vigencia = {anio}"
+    group: "departamento, municipio, vigencia, mes"
+    order: "departamento, municipio, mes"
+    max_filas: 100
+  campos: [departamento, municipio, vigencia, mes, campo, produccion_bls]
+derivados:
+  produccion_barriles: {de: columna, campo: barriles, tipo: float}
+  campos_reportados: {de: columna, campo: n_campos, tipo: int}
+  produccion_total_barriles: {de: suma, campo: produccion_barriles, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+salida: ProduccionCrudoMunicipio
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en fdvb-hsrf: Puerto Gaitán (Meta) 2024, 12 meses; enero 6 293 701
+  # barriles de 26 campos; el año, 73 525 507 barriles.
+  entrada: {departamento: "Meta", municipio: "Puerto Gaitán", anio: 2024}
+  verdad: {mes: 1, produccion_barriles: 6293701.0, campos_reportados: 26, produccion_total_barriles: 73525507.0}
+  minimos: {numero_registros: 12}
+  campos: [anio, campos_reportados, departamento, mes, municipio, numero_registros, produccion_barriles, produccion_total_barriles]
+  latencia_max_ms: 20000

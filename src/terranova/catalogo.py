@@ -71,6 +71,8 @@ PATRONES_ENTRADA: dict[str, str] = {
     "anio": r"^20[0-9]{2}$",
     # estación de la red del IDEAM: 10 dígitos con ceros a la izquierda (0028025502)
     "codigo_estacion_ideam": r"^[0-9]{10}$",
+    # campo de hidrocarburos (ANH): como `nombre`, pero con dígitos (BALLENA 2, LLANOS-58-4)
+    "campo_hidrocarburos": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9][A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9 .-]{0,79}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -101,6 +103,7 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
         "código de la estación del IDEAM, 10 dígitos con ceros a la izquierda",
         "0028025502",
     ),
+    "campo_hidrocarburos": ("nombre del campo de hidrocarburos (ANH)", "Rubiales"),
 }
 
 TipoEntrada = Literal[
@@ -129,6 +132,7 @@ TipoEntrada = Literal[
     "subpartida",
     "anio",
     "codigo_estacion_ideam",
+    "campo_hidrocarburos",
 ]
 SEGUROS_EN_TEXTO = frozenset({"int", "float", *PATRONES_ENTRADA})
 
