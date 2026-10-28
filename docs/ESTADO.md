@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-27.*
+*Actualizado: 2026-10-28.*
 
 ## Auditoría integral (2026-10-26)
 
@@ -130,6 +130,28 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     se deja copiar desde el datacenter, así que su refresco va en el job diario del servidor. Con
     él, las 7 herramientas de RUNAP, UPRA y agrología salen de la copia, y también la ficha de un
     lugar.
+
+## Operación del MVP encendida (2026-10-28, #143–#145)
+
+- **Servidor en `main` limpio:** `docker/compose.prod.yml` versionado (sin secretos) reemplaza los
+  parches a mano. Caddy toma las réplicas de `TERRANOVA_REPLICAS`, `puerta-b` queda tras un perfil, y
+  se despliega siempre con `--no-deps` (sin él compose recrea Postgres).
+- **Jobs diarios encendidos:**
+  - `canarios`: primer pase, **153 verdes de 159**. Los 6 rojos son del DANE, que bloquea al datacenter.
+  - `copias --solo-vencidas`: las 8 copias al día.
+  - `descubrimiento`.
+  - `respaldo`: `pg_dump` diario con 14 días de retención; el primero pesó 1,7 GB.
+- **Prometheus y Grafana encendidos** (perfil `observabilidad`). Prometheus descubre las réplicas por
+  DNS; Grafana solo escucha en `127.0.0.1` del servidor y se ve por túnel SSH, en solo lectura.
+- **Ficha de un lugar en producción:** 200, con áreas protegidas y agrología por copia. Sale `parcial`
+  en ~15 s porque la población del DANE cae en `fuente_lenta` (bloqueo de IP); se arregla con la copia
+  del DANE.
+- **Pendiente del dueño:**
+  - Canal de alertas (`TERRANOVA_ALERTA_URL`, pospuesto).
+  - Respaldo fuera del servidor: se baja a la máquina del dueño con un script interno.
+  - Base legal de la licencia DANE.
+  - Qué hacer con `OutboxAtascado`: los eventos de uso solo crecen porque no hay sistema de cobro que
+    los consuma (ADR-0020).
 
 ## Dónde estamos
 
