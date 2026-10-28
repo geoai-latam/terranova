@@ -89,3 +89,19 @@ def test_restricciones_curadas_en_postgis(tmp_path: Path) -> None:
     assert [f["nombre"] for f in c.filas] == ["Chingaza"]
     assert c.manifiesto["version"] == m.version and c.manifiesto["huella"] == m.huella
     assert asyncio.run(RestriccionesPostgis(URL).en_punto(-60.0, 10.0)).filas == []
+
+
+def test_el_pool_se_cierra_al_salir_del_proceso(monkeypatch: pytest.MonkeyPatch) -> None:
+    """La CLI (`terranova orgs uso`) no deja el pool para el recolector del apagado, donde sus
+    hilos fallan con «cannot join current thread»."""
+    import atexit
+
+    from terranova.bd import Conexion
+
+    assert URL
+    al_salir: list[object] = []
+    monkeypatch.setattr(atexit, "register", al_salir.append)
+    c = Conexion(URL)
+    assert c.ejecutar("SELECT 1")[0] == [(1,)]
+    assert al_salir == [c._pool.close]
+    c._pool.close()
