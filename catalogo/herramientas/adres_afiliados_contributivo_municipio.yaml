@@ -1,0 +1,46 @@
+id: adres_afiliados_contributivo_municipio
+version: 1
+familia: estadisticas
+fuente: adres.bdua_contributivo
+pregunta: "¿Cuántos afiliados al régimen contributivo de salud hay en este municipio, por EPS?"
+descripcion: >
+  Afiliados activos al régimen contributivo de salud en un municipio, por EPS, según la Base de Datos
+  Única de Afiliados (BDUA) de la ADRES, en su corte mensual vigente, con el total del municipio. El
+  municipio va por nombre y con su departamento (p. ej. Cali, Valle del Cauca): la fuente no trae
+  código DIVIPOLA y escribe los nombres a su modo (SANTIAGO DE CALI, TUMACO, CARTAGENA, VALLE, BOGOTA
+  D.C.); se comparan sin tildes y aceptan «X de nombre» en cualquier sentido. Si no aparece, pruebe
+  con el nombre corto (San Pedro para San Pedro de los Milagros). «-CM» en la EPS son afiliados por
+  movilidad entre regímenes. Para el otro régimen, adres_afiliados_subsidiado_municipio. Solo sumas por
+  EPS, nunca personas.
+  (Fuente: ADRES; licencia: CC BY-SA 4.0.)
+entrada: {departamento: nombre, municipio: nombre}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    # Spec 07: sin DIVIPOLA. Solo se normaliza lo pedido (constante) y la columna se compara cruda:
+    # normalizar la columna con replace anidados tardaba hasta 25 s. ADR-0014: se agrupa en la
+    # fuente por municipio y EPS; las celdas por sexo, edad y zona (muchas de 1) nunca salen.
+    id: "tq4m-hmg2"
+    portal: datos.gov.co
+    select: "dpr_nombre, mnc_nombre, ent_id, ent_nombre, sum(cantidad) AS afiliados"
+    where: "(replace(replace(replace(replace(replace(replace(replace(upper('{departamento}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('{departamento}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre)"
+    group: "dpr_nombre, mnc_nombre, ent_id, ent_nombre"
+    order: "afiliados DESC, ent_id"
+    max_filas: 200
+  campos: [dpr_nombre, mnc_nombre, ent_id, ent_nombre, cantidad]
+derivados:
+  afiliados: {de: columna, campo: afiliados, tipo: int}
+  total_afiliados: {de: suma, campo: afiliados, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+salida: AfiliadosContributivoMunicipio
+cobro: agregado
+canario:
+  # Medido el 2026-10-28 en tq4m-hmg2: Cali (Valle del Cauca) es SANTIAGO DE CALI en VALLE, 17 EPS
+  # y 1 492 604 afiliados. La tabla se reemplaza cada mes y el total sube o baja: piso holgado.
+  entrada: {departamento: "Valle del Cauca", municipio: "Cali"}
+  verdad: {departamento: "VALLE", municipio: "SANTIAGO DE CALI"}
+  minimos: {numero_registros: 10, total_afiliados: 1300000}
+  campos: [afiliados, departamento, eps, eps_codigo, municipio, numero_registros, total_afiliados]
+  latencia_max_ms: 20000

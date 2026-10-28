@@ -1,0 +1,71 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:10:31+00:00",
+ "herramienta": "uariv_victimas_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "cod_ciudad_muni",
+    "id": "ykxr-xynr",
+    "max_filas": 10,
+    "portal": "datos.gov.co",
+    "previo_group": "cod_ciudad_muni, fecha_corte",
+    "previo_select": "cod_ciudad_muni, substring(fecha_corte, 7, 4) || '-' || substring(fecha_corte, 4, 2) || '-' || substring(fecha_corte, 1, 2) AS fi, (substring(fecha_corte, 7, 4) || substring(fecha_corte, 4, 2))::number AS clave, coalesce(sum(per_ocu), 0) AS ocu, coalesce(sum(per_decla::number), 0) AS decla, coalesce(sum(per_ubic), 0) AS ubic, coalesce(sum(per_sa), 0) AS sa, coalesce(sum(eventos), 0) AS ev",
+    "select": "cod_ciudad_muni, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_ocurrencia, max(clave * 10000000000 + decla) % 10000000000 AS personas_declaracion, max(clave * 10000000000 + ubic) % 10000000000 AS personas_ubicacion, max(clave * 10000000000 + sa) % 10000000000 AS personas_sujetos_atencion, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+    "where": "cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4))"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cod_ciudad_muni",
+       "fecha_corte",
+       "n_eventos",
+       "personas_declaracion",
+       "personas_ocurrencia",
+       "personas_sujetos_atencion",
+       "personas_ubicacion"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cod_ciudad_muni": "5001",
+        "fecha_corte": "2026-09-30",
+        "n_eventos": "298135",
+        "personas_declaracion": "783837",
+        "personas_ocurrencia": "245549",
+        "personas_sujetos_atencion": "392116",
+        "personas_ubicacion": "451163"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "ykxr-xynr",
+     "consulta": {
+      "conjunto": "ykxr-xynr",
+      "group": "cod_ciudad_muni",
+      "max_filas": 10,
+      "portal": "datos.gov.co",
+      "previo_group": "cod_ciudad_muni, fecha_corte",
+      "select": "cod_ciudad_muni, max(fi) AS fecha_corte, max(clave * 10000000000 + ocu) % 10000000000 AS personas_ocurrencia, max(clave * 10000000000 + decla) % 10000000000 AS personas_declaracion, max(clave * 10000000000 + ubic) % 10000000000 AS personas_ubicacion, max(clave * 10000000000 + sa) % 10000000000 AS personas_sujetos_atencion, max(clave * 10000000000 + ev) % 10000000000 AS n_eventos",
+      "where": "(cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))"
+     },
+     "filas": 1,
+     "filas_que_resume": 1888,
+     "filtro_soql": "(cod_ciudad_muni = 05001 AND fecha_corte in (substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P1M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P2M' - 'P1D')::text, 1, 4), substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 9, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 6, 2) || '/' || substring((date_trunc_ym(to_floating_timestamp(get_utc_date(), 'America/Bogota')) - 'P3M' - 'P1D')::text, 1, 4)))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

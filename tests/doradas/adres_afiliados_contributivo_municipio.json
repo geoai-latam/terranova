@@ -1,0 +1,177 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T20:09:47+00:00",
+ "herramienta": "adres_afiliados_contributivo_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "dpr_nombre, mnc_nombre, ent_id, ent_nombre",
+    "id": "tq4m-hmg2",
+    "max_filas": 200,
+    "order": "afiliados DESC, ent_id",
+    "portal": "datos.gov.co",
+    "select": "dpr_nombre, mnc_nombre, ent_id, ent_nombre, sum(cantidad) AS afiliados",
+    "where": "(replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre)"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "afiliados",
+       "dpr_nombre",
+       "ent_id",
+       "ent_nombre",
+       "mnc_nombre"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "afiliados": "438661",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS010",
+        "ent_nombre": "EPS SURAMERICANA S.A.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "312546",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS005",
+        "ent_nombre": "ENTIDAD PROMOTORA DE SALUD SANITAS S.A.S.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "189426",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS037",
+        "ent_nombre": "NUEVA EPS S.A.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "177414",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS018",
+        "ent_nombre": "ENTIDAD PROMOTORA DE SALUD SERVICIO OCCIDENTAL DE SALUD S.A. S.O.S.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "153320",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS012",
+        "ent_nombre": "CAJA DE COMPENSACION FAMILIAR DEL VALLE DEL CAUCA \"COMFENALCO VALLE DE LA GENTE",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "150537",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS002",
+        "ent_nombre": "SALUD TOTAL ENTIDAD PROMOTORA DE SALUD DEL REGIMEN CONTRIBUTIVO Y DEL REGIMEN SUBSIDIADO S.A.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "26513",
+        "dpr_nombre": "VALLE",
+        "ent_id": "ESSC18",
+        "ent_nombre": "EMSSANAR S.A.S. -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "16002",
+        "dpr_nombre": "VALLE",
+        "ent_id": "ESSC24",
+        "ent_nombre": "COOSALUD EPS S.A. -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "7055",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS042",
+        "ent_nombre": "COOSALUD EPS S.A.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "6661",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS041",
+        "ent_nombre": "NUEVA EPS S.A. -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "5563",
+        "dpr_nombre": "VALLE",
+        "ent_id": "ESSC62",
+        "ent_nombre": "ASMET SALUD EPS S.A.S. -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "4318",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPS017",
+        "ent_nombre": "EPS FAMISANAR S.A.S.",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "4035",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EAS027",
+        "ent_nombre": "FONDO PASIVO SOCIAL DE LOS FERROCARRILES NACIONALES",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "539",
+        "dpr_nombre": "VALLE",
+        "ent_id": "EPSIC5",
+        "ent_nombre": "ENTIDAD PROMOTORA DE SALUD MALLAMAS EPSI -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "10",
+        "dpr_nombre": "VALLE",
+        "ent_id": "CCFC33",
+        "ent_nombre": "EPS FAMILIAR DE COLOMBIA S.A.S. -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "3",
+        "dpr_nombre": "VALLE",
+        "ent_id": "ESSC07",
+        "ent_nombre": "ASOCIACION MUTUAL SER EMPRESA SOLIDARIA DE SALUD ENTIDAD PROMOTORA DE SALUD - MUTUAL SER EPS -CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       },
+       {
+        "afiliados": "1",
+        "dpr_nombre": "VALLE",
+        "ent_id": "CCFC55",
+        "ent_nombre": "PROTEGER EPS S.A.S.-CM",
+        "mnc_nombre": "SANTIAGO DE CALI"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 17,
+      "truncado": false,
+      "vistos": 17
+     },
+     "completo": true,
+     "conjunto": "tq4m-hmg2",
+     "consulta": {
+      "conjunto": "tq4m-hmg2",
+      "group": "dpr_nombre, mnc_nombre, ent_id, ent_nombre",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "dpr_nombre, mnc_nombre, ent_id, ent_nombre, sum(cantidad) AS afiliados",
+      "where": "((replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre))"
+     },
+     "filas": 17,
+     "filas_que_resume": 6422,
+     "filtro_soql": "((replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like dpr_nombre || '%' OR dpr_nombre like replace(replace(replace(replace(replace(replace(replace(upper('Valle del Cauca'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || '%') AND (mnc_nombre in (replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') || ' D.C.') OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') OR replace(replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N') like '% DE ' || mnc_nombre OR mnc_nombre like '% DE ' || replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') OR replace(replace(replace(replace(replace(replace(upper('Cali'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U') like '% DE ' || mnc_nombre))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
