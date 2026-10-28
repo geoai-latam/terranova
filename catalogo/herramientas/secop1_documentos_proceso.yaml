@@ -23,7 +23,7 @@ consulta:
 salida: Secop1DocumentosProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en ps88-5e3v (numero_de_constancia = 26-21-55446): 32
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

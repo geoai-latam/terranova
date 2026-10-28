@@ -20,7 +20,7 @@ consulta:
     max_filas: 5
   campos: [divipola, municipio, departamen, gestor_cat, gestor_con, estado_act]
 salida: GestorCatastralMunicipio
-creditos: 5
+cobro: registro
 canario:
   entrada: {municipio_divipola: "11001"}  # Bogotá: gestor propio (UAECD), medido el 2026-10-22
   verdad:

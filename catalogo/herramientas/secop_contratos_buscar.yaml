@@ -26,7 +26,7 @@ consulta:
 salida: ContratosBuscar
 derivados:
   coincidencias: {de: completitud_total, tipo: int}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en jbjy-vk9h con la frase exacta (upper(objeto) like '%AUXILIAR DE
   # FARMACIA%') entre el 2026-07-01 y el 2026-10-01: 104 contratos. La búsqueda en español encuentra

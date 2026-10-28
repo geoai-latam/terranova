@@ -24,7 +24,7 @@ consulta:
 salida: TitulosMineroMunicipio
 derivados:
   titulos: {de: columna, campo: titulos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-26 en 42ha-fhvj: Yumbo (76892); 1er mineral (orden alfabético) ARCILLA, 1 título.
   entrada: {municipio_divipola: "76892"}

@@ -27,7 +27,7 @@ salida: RangosPrecioMunicipio
 derivados:
   hectareas: {de: columna, campo: hectareas, tipo: float}
   zonas: {de: columna, campo: zonas, tipo: int}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0 (agrupado por vigencia y rango): Cota,
   # 2016, el primer rango (4.1.1, «Mayor que 60 - hasta 70») suma 984,143 ha en 28 zonas.

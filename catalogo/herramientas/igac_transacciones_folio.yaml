@@ -25,7 +25,7 @@ consulta:
 salida: TransaccionesFolio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en 7y2j-43cv: el folio 50N-20849403 (Chía) tiene 8 anotaciones en 2020; la
   # primera (2) es una compraventa.

@@ -24,7 +24,7 @@ consulta:
     max_filas: 200
   campos: [expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad]
 salida: DispositivoPorExpediente
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en y4qt-w6tk: el expediente 217 es cera para huesos.
   entrada: {expediente: 217}

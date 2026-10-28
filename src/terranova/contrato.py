@@ -45,7 +45,7 @@ HTTP_DE: dict[str, int] = {
     "sin_permiso": 403,
     "licencia_no_habilitada": 403,
     "no_existe": 404,
-    "saldo_agotado": 429,
+    "saldo_agotado": 402,  # ADR-0029: hay un plan que pagar; 429 queda para la tasa
     "limite_tasa": 429,
     "fuente_no_disponible": 502,
     "fuente_respuesta_invalida": 502,

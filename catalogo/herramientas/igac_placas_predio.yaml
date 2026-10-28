@@ -23,7 +23,7 @@ consulta:
 salida: PlacasPredio
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 3
+cobro: registro
 canario:
   # Medido el 2026-10-22 en la capa 1: el predio urbano de Chía 251750100000001800901900000000 tiene
   # una placa, «7A Tejares de San Jose».

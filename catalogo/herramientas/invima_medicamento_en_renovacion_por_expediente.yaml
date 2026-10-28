@@ -25,7 +25,7 @@ consulta:
 salida: InvimaMedicamentoEnRenovacionPorExpediente
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en vgr4-gemg: el expediente 36344 tiene 28 filas distintas; la primera
   # (consecutivo 1) es BUSCAPINA® COMPOSITUM AMPOLLAS.

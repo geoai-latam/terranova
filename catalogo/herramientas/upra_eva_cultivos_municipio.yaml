@@ -30,7 +30,7 @@ derivados:
   area_cosechada: {de: columna, campo: area_cosechada, tipo: float}
   produccion: {de: columna, campo: produccion, tipo: float}
   area_sembrada_total: {de: suma, campo: area_sembrada, tipo: float}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en uejq-wxrr: Chía 2024, 16 cultivos y 300 ha sembradas; el primero,
   # Arveja: 15.00 ha sembradas y 42.05 t.

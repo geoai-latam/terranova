@@ -172,6 +172,31 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
   - Qué hacer con `OutboxAtascado`: los eventos de uso solo crecen porque no hay sistema de cobro que
     los consuma (ADR-0020).
 
+## Créditos por tipo de pregunta (2026-10-27, enmienda de la ADR-0010)
+
+- Los créditos de cada ficha estaban puestos a mano (1 a 20) y no seguían «en vivo 10, copia 1».
+- Ahora cada herramienta declara su `cobro` y el crédito sale de la tarifa: `codigo` 1, `registro`
+  2, `agregado` 5, `punto` 10 y `zona` 20.
+- El catálogo valida que lo espacial se cobre como espacial, y pasar una fuente a copia ya no cambia
+  su precio.
+- Cambian 113 de las 159 herramientas; el promedio pasa de 4,43 a 4,33 créditos por consulta.
+- Entra a producción en el siguiente despliegue de la puerta.
+
+## Planes de pago (2026-10-27, ADR-0029)
+
+- **La ADR-0029 reemplaza a la ADR-0020:** freemium de pago. Se cobra el servicio, nunca el dato.
+- **Niveles nuevos en `cuota.py`:** `con_llave` (gratis) baja de 20.000 a 1.500 créditos al mes, y
+  entran `basico`, `pro`, `empresa` y `escala`. `ampliado` sigue con 200.000. Los precios no están
+  en el repo.
+- **Saldo agotado: 402** (antes 429), con la fecha de reinicio y, si `TERRANOVA_URL_PLANES` está
+  definida, dónde subir de plan. 429 queda solo para la tasa. `GET /v1/uso` dice `reinicia`.
+- **`terranova orgs listar`:** cada organización con su nivel, sus créditos al mes y sus llaves
+  vigentes. Muestra las que no tienen nivel fijado.
+- **Antes de desplegar (dueño):** correr `terranova orgs listar` en el servidor y pasar a `ampliado`
+  las organizaciones internas (GEO Copilot, e2e, evaluación). Si no, quedan con 1.500 créditos.
+- **Pendiente:** excedentes y paquetes adicionales; licencias DANE y Open-Meteo para los planes de
+  pago; términos de servicio.
+
 ## Dónde estamos
 
 **Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).

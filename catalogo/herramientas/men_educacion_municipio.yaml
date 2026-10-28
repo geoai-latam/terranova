@@ -22,7 +22,7 @@ consulta:
     max_filas: 100
   campos: [a_o, c_digo_municipio, municipio, poblaci_n_5_16, tasa_matriculaci_n_5_16, cobertura_neta, cobertura_bruta, deserci_n, aprobaci_n, reprobaci_n, repitencia]
 salida: EducacionPorMunicipio
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en nudc-7mev, ordenado por año: el primer año es 2011.
   entrada: {municipio_divipola: "25175"}

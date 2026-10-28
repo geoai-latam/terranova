@@ -24,7 +24,7 @@ consulta:
 salida: SecopFacturasContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en ibyt-yi2f (id_contrato = CO1.PCCNTR.6232610): 4
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

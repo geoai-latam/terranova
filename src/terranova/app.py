@@ -29,7 +29,7 @@ from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
-from terranova.cuota import NIVELES, mes
+from terranova.cuota import NIVELES, mes, reinicio
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
@@ -213,7 +213,7 @@ def crear_api() -> FastAPI:
             tags=[h.familia],
             responses={
                 c: {"model": Problema, "content": {"application/problem+json": {}}}
-                for c in (400, 401, 403, 404, 429, 500, 502, 504)
+                for c in (400, 401, 402, 403, 404, 429, 500, 502, 504)
             },
             openapi_extra={"security": [{"llave": []}]},
         )
@@ -229,7 +229,7 @@ def crear_api() -> FastAPI:
         tags=["fichas"],
         responses={
             c: {"model": Problema, "content": {"application/problem+json": {}}}
-            for c in (400, 401, 403, 429, 500, 502, 504)
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
         },
         openapi_extra={"security": [{"llave": []}]},
     )
@@ -247,16 +247,19 @@ def crear_api() -> FastAPI:
         principal = getattr(request.state, "principal", None)
         if principal is None:
             return problema("no_autenticado", "falta una llave válida (Authorization: Bearer)")
+        ahora = time.time()
         usados = await puerta.ESTADO.cuota.usados(principal.org) if puerta.ESTADO.cuota else 0
         limite = NIVELES.get(principal.nivel, NIVELES["con_llave"])
         return {
             "org": principal.org,
             "nivel": principal.nivel,
             "plan": principal.plan,
-            "mes": mes(time.time()),
+            "mes": mes(ahora),
             "limite": limite,
             "usados": usados,
             "disponibles": max(0, limite - usados),
+            # el saldo no se acumula: el día 1 vuelve a `limite` (ADR-0029)
+            "reinicia": reinicio(ahora).isoformat(),
         }
 
     @api.get("/llms.txt", include_in_schema=False)
