@@ -118,7 +118,9 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
     IGAC, ~2 s por página contra ~50 s. Si el conteo del servicio no cuadra, la copia no se publica.
   - **`consultar_copia` espacial:** `punto` y `bbox` (ST_Intersects, índice GiST), geometría
     `completa | simplificada | ninguna`, responde una colección de rasgos. Las geometrías inválidas se
-    reparan al cargar (ST_MakeValid).
+    reparan al cargar (ST_MakeValid), por tandas y solo hasta 50.000 vértices. Un único UPDATE sobre
+    conflictos de uso hizo que el kernel matara a Postgres por memoria (se recuperó en ~5 s). Los 12
+    polígonos inválidos enormes quedan como vienen, y el cruce por punto los responde igual.
   - **`copias actualizar --solo-vencidas`:** solo rehace las copias que faltan o van por la mitad de
     su SLA; el refresco recurrente desde Colombia puede correr seguido sin rebajar nada.
   - **Ingeridas por túnel desde Colombia:** RUNAP 1.936 áreas (268 s), UPRA 178.973 zonas (549 s),

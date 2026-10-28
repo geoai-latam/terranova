@@ -73,7 +73,13 @@
     más gruesa: la agrología, a 1:100.000, se copia a ~11 m. Los límites legales, como el RUNAP,
     van completos.
   - **Geometría en la copia.** Va en `_geom` con índice GiST. Los polígonos inválidos se reparan
-    al cargar, no al consultar.
+    al cargar, no al consultar, por tandas de la clave (5.000) y solo hasta 50.000 vértices. Un
+    único UPDATE sobre los 548 mil polígonos de conflictos de uso llevó el proceso de Postgres a
+    ~850 MB y el límite del contenedor (1 GB) lo mató. `ST_MakeValid` de un solo polígono de 498
+    mil vértices pide ~1 GB, y el método `structure` (~300 MB) cambia el área de 0,88 a 1,69
+    grados². Los 12 polígonos enormes inválidos quedan como vienen, con aviso. El cruce por punto
+    responde igual sobre ellos (anillos), sin error. Con las tandas, toda la capa se repara en ~20 s
+    con un pico de ~335 MB.
   - **Cruce espacial en `consultar_copia`.**
     - `punto` ([lon, lat]) o `bbox`: `ST_Intersects`, con las coordenadas como parámetros.
     - `geometria` (`completa`, `simplificada` a ~55 m, como el conector ArcGIS, o `ninguna`):

@@ -530,3 +530,40 @@ def test_copia_espacial_en_postgis() -> None:
         ).fetchone()
     assert tablas == (1,)  # la que falló no quedó huérfana; la vigente sigue
     assert almacen.vigente("runap") == v
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_la_reparacion_va_por_tandas_y_deja_los_poligonos_enormes(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """ST_MakeValid de un polígono enorme pide ~1 GB: ese queda como viene, con aviso."""
+    import terranova.copias as copias
+
+    assert URL_PG
+    psycopg = pytest.importorskip("psycopg")
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute("DROP SCHEMA IF EXISTS copia CASCADE")
+    almacen = AlmacenCopias(URL_PG)
+    monkeypatch.setattr(copias, "REPARAR_POR_TANDA", 2)  # claves 1, 4, 7: tres tandas
+    monkeypatch.setattr(copias, "REPARAR_HASTA_VERTICES", 4)  # el moño tiene 5: «enorme»
+
+    def area(i: int, anillos: Any) -> dict[str, Any]:
+        return {
+            "objectid": i,
+            "ap_nombre": f"Área {i}",
+            "_geom": {"type": "Polygon", "coordinates": anillos},
+        }
+
+    chico = [[[-75.0, 6.0], [-74.0, 7.0], [-74.0, 6.0], [-75.0, 6.0]]]  # triángulo válido (4)
+    almacen.construir(RUNAP, iter([[area(1, chico), area(4, _MONO), area(7, chico)]]), None)
+    assert (
+        "1 polígonos inválidos de más de 4 vértices quedan como vienen" in capsys.readouterr().err
+    )
+    with psycopg.connect(URL_PG) as c:
+        validos = c.execute(
+            "SELECT objectid, ST_IsValid(_geom) FROM copia.runap ORDER BY objectid"
+        ).fetchall()
+    assert validos == [(1, True), (4, False), (7, True)]
+    # el cruce por punto responde igual sobre el moño sin reparar
+    filas, total = almacen.consultar(plan_de_consulta(RUNAP, {"punto": [-74.9, 6.5]}))
+    assert total == 1 and filas[0]["objectid"] == 4
