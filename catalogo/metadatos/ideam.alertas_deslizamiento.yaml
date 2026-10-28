@@ -1,0 +1,13 @@
+# Ficha técnica escrita a mano (spec 08): el CSV no publica metadatos legibles; la vista de datos.gov.co
+# (m3en-ptx7) solo enlaza al archivo.
+fuente: ideam.alertas_deslizamiento
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://bart.ideam.gov.co/ospa/DatosAbiertos/Alertas_Deslizamientos/alertas_deslizamientos.csv
+pagina: https://www.datos.gov.co/d/m3en-ptx7
+titulo: Alertas por deslizamientos de tierra detonados por lluvias
+idioma: Español
+filas: 97645
+descripcion: Un CSV separado por punto y coma con las alertas diarias del año por municipio
+  (OBJECTID, REGION, DEPARTAMENTO, MUNICIPIO, COD_DANE, TEXTO_AMENAZA, ACUMULADO_TRES, ACUMULADO_DIEZ,
+  DIAS_LLUVIA, FECHA_EJECUCION). Se regenera cada noche.

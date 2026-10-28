@@ -1,0 +1,13 @@
+# Ficha técnica escrita a mano (spec 08): el CSV no publica metadatos legibles; la vista de datos.gov.co
+# (vnzc-4d6e) solo enlaza al archivo.
+fuente: ideam.alertas_incendios
+metodo: manual
+cosechado: '2026-10-28'
+origen: https://bart.ideam.gov.co/ospa/DatosAbiertos/Alertas_Incendios/alertas_incendios.csv
+pagina: https://www.datos.gov.co/d/vnzc-4d6e
+titulo: Alertas por incendios de la cobertura vegetal
+idioma: Español
+filas: 43898
+descripcion: Un CSV separado por punto y coma con las alertas diarias del año por municipio
+  (OBJECTID, REGION, DEPARTAMENTO, MUNICIPIO, COD_DANE, TEXTO_AMENAZA, FECHA_EJECUCION). Se regenera
+  cada noche.

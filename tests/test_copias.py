@@ -856,6 +856,95 @@ def test_la_proyeccion_solo_va_con_geojson() -> None:
     assert _geograficas(_CARMAGBOG) == "+proj=longlat +a=6380687 +rf=298.257222101 +no_defs"
 
 
+class CsvFalso:
+    """Un servidor de archivos que sirve CSV en bytes (con BOM, como los del IDEAM)."""
+
+    def __init__(self, archivos: dict[str, str]) -> None:
+        self.archivos = archivos
+
+    def get(self, url: str) -> Any:
+        contenido = self.archivos[url].encode("utf-8-sig")
+
+        class _R:
+            content = contenido
+
+            def raise_for_status(self) -> None:
+                return None
+
+        return _R()
+
+
+def _alertas() -> Any:
+    from terranova.catalogo import Campo, Copia
+
+    return RUNAP.model_copy(
+        update={
+            "id": "ideam.prueba_csv",
+            "copia": Copia(
+                origen="csv",
+                descargas=["https://bart/a.csv", "https://bart/b.csv"],
+                separador=";",
+                ceros={"COD_DANE": 5},
+                tabla="prueba_csv",
+                clave="_fila",
+            ),
+            "campos": {
+                "COD_DANE": Campo(nombre="municipio_divipola", tipo="str", desc="DIVIPOLA"),
+                "TEXTO_AMENAZA": Campo(nombre="nivel", tipo="str", desc="nivel"),
+                "FECHA_EJECUCION": Campo(nombre="fecha", tipo="date", desc="fecha"),
+                "_fila": Campo(nombre="fila", tipo="int", desc="orden"),
+            },
+        }
+    )
+
+
+_CSV_A = (
+    "OBJECTID;COD_DANE;TEXTO_AMENAZA;FECHA_EJECUCION;OTRA\n"
+    "1;05001;ALTA;27/10/2026;no va\n"
+    "2;5893;BAJA;02/05/2026;no va\n"
+)
+_AMBOS = ("https://bart/a.csv", "https://bart/b.csv")
+
+
+def test_csv_numera_entre_archivos_con_fechas_iso_y_ceros() -> None:
+    from terranova.copias import descargar_csv
+
+    http = CsvFalso(dict.fromkeys(_AMBOS, _CSV_A))
+    filas = [f for p in descargar_csv(_alertas(), cliente=http) for f in p]
+    assert [f["_fila"] for f in filas] == [1, 2, 3, 4]
+    assert filas[0] == {
+        "COD_DANE": "05001",
+        "TEXTO_AMENAZA": "ALTA",
+        "FECHA_EJECUCION": "2026-10-27",  # día primero
+        "_fila": 1,
+    }  # solo la lista blanca: ni OBJECTID ni OTRA
+    assert filas[1]["COD_DANE"] == "05893"  # el cero que el archivo perdió
+
+
+def test_csv_vacio_o_sin_una_columna_no_se_publica() -> None:
+    from terranova.copias import descargar_csv
+
+    vacio = CsvFalso(dict.fromkeys(_AMBOS, "COD_DANE;TEXTO_AMENAZA;FECHA_EJECUCION\n"))
+    with pytest.raises(ErrorCopia, match="sin filas"):
+        list(descargar_csv(_alertas(), cliente=vacio))
+    sin_fecha = CsvFalso(dict.fromkeys(_AMBOS, "COD_DANE;TEXTO_AMENAZA\n05001;ALTA\n"))
+    with pytest.raises(ErrorCopia, match="faltan columnas"):
+        list(descargar_csv(_alertas(), cliente=sin_fecha))
+
+
+def test_las_reglas_del_origen_csv() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Copia
+
+    with pytest.raises(ValidationError, match="exige `descargas`"):
+        Copia(origen="csv", tabla="t", clave="_fila")
+    with pytest.raises(ValidationError, match="solo aplican al origen `csv`"):
+        Copia(origen="geojson", descargas=["u"], tabla="t", clave="_fila", separador=";")
+    with pytest.raises(ValidationError, match="solo aplican al origen `csv`"):
+        Copia(origen="geojson", descargas=["u"], tabla="t", clave="_fila", ceros={"C": 5})
+
+
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
 def test_geojson_en_la_cartesiana_de_bogota_se_reproyecta() -> None:
     assert URL_PG

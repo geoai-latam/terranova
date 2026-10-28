@@ -1,0 +1,182 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-10-28T19:21:49+00:00",
+ "herramienta": "ideam_alertas_incendios_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "COD_DANE": "11001"
+    },
+    "limite": 15,
+    "order": [
+     "-FECHA_EJECUCION"
+    ],
+    "select": [
+     "COD_DANE",
+     "MUNICIPIO",
+     "DEPARTAMENTO",
+     "REGION",
+     "TEXTO_AMENAZA",
+     "FECHA_EJECUCION"
+    ],
+    "tabla": "ideam_alertas_incendios"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "COD_DANE",
+       "DEPARTAMENTO",
+       "FECHA_EJECUCION",
+       "MUNICIPIO",
+       "REGION",
+       "TEXTO_AMENAZA"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-10-27",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-28",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-27",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-26",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-25",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-24",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-23",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-22",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-21",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-20",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "BAJA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-19",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-18",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-17",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-16",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "ALTA"
+       },
+       {
+        "COD_DANE": "11001",
+        "DEPARTAMENTO": "BOGOTÁ, D.C.",
+        "FECHA_EJECUCION": "2026-09-15",
+        "MUNICIPIO": "BOGOTÁ, D.C.",
+        "REGION": "ANDINA",
+        "TEXTO_AMENAZA": "MODERADA"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 82,
+      "truncado": true,
+      "vistos": 15
+     },
+     "consultado_en": "2026-10-28T19:21:14.033645+00:00",
+     "copia": {
+      "filas": 43898,
+      "huella": "sha256:ddf6a575fbb52ae55686da9f439b92d1d93e4846edf64dbae500cf386fea6e5e",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261028192114033645"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

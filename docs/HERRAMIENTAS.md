@@ -14,6 +14,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `car_pomca_rio_sumapaz_en_punto` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este punto? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 10 |
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
+| `ideam_alertas_deslizamiento_municipio` | ¿Hay alerta por deslizamiento en este municipio? ¿Cuáles fueron sus alertas recientes? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 2 |
+| `ideam_alertas_incendios_municipio` | ¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 2 |
 | `ideam_calidad_aire_municipio` | ¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…) | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
 | `ideam_lluvia_diaria_estacion` | ¿Cuánto llovió cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |

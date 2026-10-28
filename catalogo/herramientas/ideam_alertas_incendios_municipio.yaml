@@ -1,0 +1,37 @@
+id: ideam_alertas_incendios_municipio
+version: 1
+familia: ambiente
+fuente: ideam.alertas_incendios
+pregunta: "¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes?"
+descripcion: >
+  Las alertas más recientes por incendios de la cobertura vegetal (forestales) de un municipio
+  (DIVIPOLA), según los boletines diarios del IDEAM: fecha y nivel (ALTA = roja, MODERADA = naranja,
+  BAJA = amarilla). Primero la más reciente; hasta 15. El IDEAM publica cada noche (~23:30) solo
+  los municipios con alerta ese día: si la fecha más reciente no es la del último boletín, el
+  municipio no tiene alerta vigente; «no encontrado» = ninguna alerta en el año. Sale de la copia
+  diaria de Terranova (la fecha de la copia va en la procedencia).
+  (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: ideam_alertas_incendios
+    filtros: {COD_DANE: "{municipio_divipola}"}
+    select: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, FECHA_EJECUCION]
+    order: [-FECHA_EJECUCION]
+    limite: 15
+  campos: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, FECHA_EJECUCION]
+salida: AlertasIncendiosMunicipio
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+cobro: registro
+canario:
+  # Medido el 2026-10-28 en alertas_incendios.csv: Bogotá (11001) tuvo alerta en 82 de los 300
+  # boletines del año (la del 27-10, baja). La alerta del día cambia, así que el canario pide las 15
+  # más recientes. Ojo: el archivo se reinicia cada 1 de enero.
+  entrada: {municipio_divipola: "11001"}
+  minimos: {numero_registros: 15}
+  campos: [departamento, fecha, municipio, municipio_divipola, nivel_alerta, numero_registros, region]
+  latencia_max_ms: 5000
