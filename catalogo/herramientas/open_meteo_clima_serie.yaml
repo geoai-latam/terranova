@@ -23,7 +23,7 @@ consulta:
     fuente: era5
   campos: [precipitacion_total_periodo_mm, t_media_periodo_c, elevacion_modelo_m, dias]
 salida: ClimaSerie
-creditos: 10
+cobro: registro
 # Medido el 2026-10-22 (UTC) en archive-api.open-meteo.com con los parámetros del conector:
 # 31 días, suma de precipitation_sum 91,5 mm, media de temperature_2m_mean 12,0 °C, elevación 2557 m.
 # Periodo pasado y fijo.

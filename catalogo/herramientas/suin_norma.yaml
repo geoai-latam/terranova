@@ -24,7 +24,7 @@ consulta:
 salida: NormaSuin
 derivados:
   articulos_n: {de: columna, campo: art_culos, tipo: int}
-creditos: 1
+cobro: registro
 canario:
   # Medido el 2026-10-23 en fiev-nid6: Ley 1581 de 2012 (protección de datos personales).
   entrada: {tipo: ley, numero: 1581, anio: 2012}

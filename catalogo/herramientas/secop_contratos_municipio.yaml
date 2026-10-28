@@ -29,7 +29,7 @@ salida: ContratosMunicipio
 derivados:
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-21 (22:16 hora de Colombia) en https://www.datos.gov.co/resource/jbjy-vk9h.json
   # ?$select=count(*) as contratos, sum(valor_del_contrato) as valor_total

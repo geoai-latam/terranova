@@ -19,7 +19,7 @@ consulta:
     max_caracteres: 6000
   campos: [texto, titulo, caracteres]
 salida: NormaFuncionPublicaInicio
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: la Ley 1712 de 2014 (56882) tiene 39 656 caracteres.
   entrada: {norma: 56882}

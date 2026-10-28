@@ -23,7 +23,7 @@ consulta:
 salida: ViasEnZona
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: zona
 canario:
   # Medido el 2026-10-22: el rectángulo del centro de Chía tiene 29 tramos urbanos (CALLE 11 a 17,
   # AV PRADILLA…).

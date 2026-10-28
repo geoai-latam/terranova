@@ -24,7 +24,7 @@ consulta:
 salida: EstadisticasCatastralesMunicipio
 derivados:
   numero_filas: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en Municipios_Estadisticas (MpCodigo='25175'): 120 filas de 2017 a 2025;
   # crece con cada reporte anual, así que es un mínimo.

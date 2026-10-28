@@ -26,7 +26,7 @@ salida: AreasProtegidasEnZona
 # `total` es el de `completitud` (returnCountOnly del servicio), no un campo de cada área.
 derivados:
   total: {de: completitud_total, tipo: int}
-creditos: 20
+cobro: zona
 canario:
   # Bbox de la prueba de ogc_mcp en GEO Copilot (Bogotá y alrededores). Medido el 2026-10-21 con
   # returnCountOnly sobre la capa 0 (envelope, esriSpatialRelIntersects): 169, 1,3 s.

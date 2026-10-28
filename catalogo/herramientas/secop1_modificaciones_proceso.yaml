@@ -23,7 +23,7 @@ consulta:
 salida: Secop1ModificacionesProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en 36vw-pbq2 (id_proceso = 17-4-7436473): 3
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

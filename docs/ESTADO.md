@@ -172,6 +172,16 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
   - Qué hacer con `OutboxAtascado`: los eventos de uso solo crecen porque no hay sistema de cobro que
     los consuma (ADR-0020).
 
+## Créditos por tipo de pregunta (2026-10-27, enmienda de la ADR-0010)
+
+- Los créditos de cada ficha estaban puestos a mano (1 a 20) y no seguían «en vivo 10, copia 1».
+- Ahora cada herramienta declara su `cobro` y el crédito sale de la tarifa: `codigo` 1, `registro`
+  2, `agregado` 5, `punto` 10 y `zona` 20.
+- El catálogo valida que lo espacial se cobre como espacial, y pasar una fuente a copia ya no cambia
+  su precio.
+- Cambian 113 de las 159 herramientas; el promedio pasa de 4,43 a 4,33 créditos por consulta.
+- Entra a producción en el siguiente despliegue de la puerta.
+
 ## Dónde estamos
 
 **Gates F0 a F4 cerrados (2026-10-22).** La puerta está completa: REST y MCP generados del catálogo, identidad, cuota, medición, caché, cortacircuitos y despliegue con dos réplicas. E2E-01 a E2E-08 en verde. El gate F4 se cerró sin esperar la copia de agrología del IGAC (ADR-0023: tope de la ficha en 12 s). Siguen **F5** (expansión hasta la paridad, por olas) y **F6** (GEO Copilot como cliente).

@@ -24,7 +24,7 @@ salida: CoberturaSueloEnPunto
 derivados:
   clase_dominante: {de: primero, campo: clase_cobertura}
   codigo_clase_dominante: {de: primero, campo: codigo_clase, tipo: int}
-creditos: 20
+cobro: zona
 # Medido el 2026-10-22 (UTC) leyendo la ventana ±0,005° de ESA_WorldCover_10m_2021_v200_N03W075_Map.tif
 # (Kennedy, Bogotá): 50 Construido 90,8 %, 30 Pastizal 5,2 %, 10 Árboles 2,7 %; el píxel del punto es 50.
 canario:

@@ -25,7 +25,7 @@ consulta:
 salida: InvimaMedicamentoVencidoPorExpediente
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en vwwf-4ftk: el expediente 2203 tiene 3 filas distintas; la primera
   # (consecutivo 1) es ACETAMINOFEN JARABE X 150 MG / 5 ML.

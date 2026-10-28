@@ -27,7 +27,7 @@ derivados:
   proyectos_aprobados: {de: columna, campo: proyectos_aprobados, tipo: int}
   recursos_aprobados: {de: columna, campo: recursos_aprobados, tipo: float}
   presupuesto_total: {de: suma, campo: presupuesto, tipo: float}
-creditos: 1
+cobro: registro
 canario:
   # Medido el 2026-10-23 en g4qj-2p2e: Chía, Vigencia 2025 - 2026, ASIGNACIONES DIRECTAS: $106027949.00.
   # Cambia con el bienio (2027): entonces se vuelve a medir.

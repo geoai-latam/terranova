@@ -31,7 +31,7 @@ salida: Secop2PaaEntidad
 derivados:
   items: {de: columna, campo: items, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en 9sue-ezhx: Pitalito 2025, la primera entidad por código es el
   # municipio (702330010), versión 40, 582 ítems y $54 007 710 964.
