@@ -25,7 +25,7 @@ consulta:
 salida: PlantaEntidadNivel
 derivados:
   servidores: {de: columna, campo: servidores, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-26 en 2jzx-383z: la Fiscalía (codigosigep 6194) tiene 22 435 servidores;
   # el nivel con más (orden desc) es TÉCNICO con 13 963.

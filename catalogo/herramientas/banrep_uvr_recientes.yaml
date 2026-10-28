@@ -19,7 +19,7 @@ consulta:
 salida: UvrRecientes
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en DF_UVR_DAILY_HIST con lastNObservations: 2 serie(s), unidad y frecuencia como
   # dice la ficha. Los valores cambian a diario: el canario mira la forma y cuántas filas llegan.

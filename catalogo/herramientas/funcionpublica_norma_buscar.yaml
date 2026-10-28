@@ -20,7 +20,7 @@ consulta:
 salida: NormaFuncionPublicaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-22: la Ley 1712 de 2014 (56882) tiene 2 apariciones de «ARTÍCULO 5».
   entrada: {norma: 56882, buscar: ARTÍCULO 5}

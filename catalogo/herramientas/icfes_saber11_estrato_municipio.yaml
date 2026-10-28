@@ -30,7 +30,7 @@ salida: Saber11EstratoMunicipio
 derivados:
   estudiantes: {de: columna, campo: estudiantes, tipo: int}
   promedio_global: {de: columna, campo: promedio_global, tipo: float}
-creditos: 5
+cobro: agregado
 canario:
   # Medido el 2026-10-22 en kgxf-xxbe: Chía 20224, estrato 1 → 71 estudiantes y 248,37 de promedio;
   # estrato 5 → 64 y 313,22. Hay 65 sin estrato.

@@ -25,7 +25,7 @@ consulta:
 salida: SecopCompromisosContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en skc9-met7 (id_contrato = CO1.PCCNTR.100201): 1
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.

@@ -9,81 +9,81 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_resguardos_en_punto` | ¿En qué resguardo indígena formalizado cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
-| `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
-| `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 10 |
+| `ideam_estaciones_en_zona` | ¿Qué estaciones hidrometeorológicas hay en esta zona? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
+| `open_meteo_clima_serie` | ¿Cuánto llovió y qué temperatura hizo en este punto en este periodo? | Open-Meteo (datos de Copernicus Climate Change Service, ERA5) | CC-BY-4.0 | 2 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
-| `usgs_sismos_en_zona` | ¿Qué sismos hubo en esta zona en este periodo? | U.S. Geological Survey (USGS) | LicenseRef-dominio-publico-EEUU | 10 |
+| `usgs_sismos_en_zona` | ¿Qué sismos hubo en esta zona en este periodo? | U.S. Geological Survey (USGS) | LicenseRef-dominio-publico-EEUU | 20 |
 
 ## contratacion
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `ancp_conceptos_buscar` | ¿Qué conceptos de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 2 |
-| `ancp_providencias_buscar` | ¿Qué providencias de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 2 |
-| `dnp_proyecto_sgr_por_bpin` | ¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 1 |
-| `dnp_proyectos_sgr_municipio` | ¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 2 |
-| `secop1_adiciones_adjudicacion` | ¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_documentos_proceso` | ¿Qué documentos publicó la entidad en este proceso de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_modificaciones_adjudicacion` | ¿Qué cambios tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_modificaciones_proceso` | ¿Qué cambios tuvo este proceso de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_multas_municipio` | ¿Qué multas y sanciones a contratistas se impusieron en este municipio (SECOP I)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_origen_recursos_adjudicacion` | ¿De dónde salen los recursos de esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_paa_detalle` | ¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `ancp_conceptos_buscar` | ¿Qué conceptos de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
+| `ancp_providencias_buscar` | ¿Qué providencias de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
+| `dnp_proyecto_sgr_por_bpin` | ¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 2 |
+| `dnp_proyectos_sgr_municipio` | ¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 5 |
+| `secop1_adiciones_adjudicacion` | ¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_documentos_proceso` | ¿Qué documentos publicó la entidad en este proceso de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_modificaciones_adjudicacion` | ¿Qué cambios tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_modificaciones_proceso` | ¿Qué cambios tuvo este proceso de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_multas_municipio` | ¿Qué multas y sanciones a contratistas se impusieron en este municipio (SECOP I)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_origen_recursos_adjudicacion` | ¿De dónde salen los recursos de esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_paa_detalle` | ¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop1_paa_entidad` | ¿Qué planes anuales de adquisiciones publicó esta entidad en SECOP I y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_proceso_historico_por_constancia` | ¿Qué es este proceso antiguo de SECOP I (2004–2017) y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_proceso_por_constancia` | ¿Qué es este proceso de SECOP I y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop1_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP I y quién ganó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop1_proceso_historico_por_constancia` | ¿Qué es este proceso antiguo de SECOP I (2004–2017) y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_proceso_por_constancia` | ¿Qué es este proceso de SECOP I y a quién se adjudicó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop1_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP I y quién ganó? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop2_paa_entidad` | ¿Cuánto planea comprar esta entidad en el año según su plan anual de adquisiciones de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop2_paa_items` | ¿Qué piensa comprar esta entidad según su plan anual de adquisiciones de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_adiciones_contrato` | ¿Qué adiciones tuvo este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_bpin_proceso` | ¿Con qué proyecto de inversión (BPIN) se financia este proceso o contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_cdp_contrato` | ¿Qué certificados de disponibilidad presupuestal (CDP) tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_compromisos_contrato` | ¿Qué compromisos presupuestales respaldan este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop2_paa_items` | ¿Qué piensa comprar esta entidad según su plan anual de adquisiciones de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_adiciones_contrato` | ¿Qué adiciones tuvo este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_bpin_proceso` | ¿Con qué proyecto de inversión (BPIN) se financia este proceso o contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_cdp_contrato` | ¿Qué certificados de disponibilidad presupuestal (CDP) tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_compromisos_contrato` | ¿Qué compromisos presupuestales respaldan este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_contrato_por_id` | ¿Qué dice este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_contratos_buscar` | ¿Qué contratos de SECOP II hablan de esto en su objeto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_entidad` | ¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_contratos_entidad_anio` | ¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
+| `secop_contratos_entidad_anio` | ¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_municipio` | ¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_contratos_proveedor` | ¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
-| `secop_convenio_interadministrativo` | ¿Qué es este convenio interadministrativo de SECOP? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_cronograma_proceso` | ¿Cuál es el cronograma de este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_ejecucion_contrato` | ¿Cómo va la ejecución de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_entidades_municipio` | ¿Qué entidades estatales contratan en este municipio y cuál es su NIT? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 3 |
-| `secop_facturas_contrato` | ¿Qué facturas tiene registradas este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_garantias_contrato` | ¿Qué pólizas de garantía tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_contratos_proveedor` | ¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_convenio_interadministrativo` | ¿Qué es este convenio interadministrativo de SECOP? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_cronograma_proceso` | ¿Cuál es el cronograma de este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_ejecucion_contrato` | ¿Cómo va la ejecución de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_entidades_municipio` | ¿Qué entidades estatales contratan en este municipio y cuál es su NIT? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 1 |
+| `secop_facturas_contrato` | ¿Qué facturas tiene registradas este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_garantias_contrato` | ¿Qué pólizas de garantía tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_integrado_contratos_entidad` | ¿Cuántos contratos firmó esta entidad cada año, sumando SECOP I y SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_modificaciones_contrato` | ¿Qué modificaciones tuvo este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_pagos_contrato` | ¿Qué pagos tiene registrados este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_proceso_por_id` | ¿Qué es este proceso de contratación de SECOP II y en qué estado está? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_rubros_contrato` | ¿De qué rubros presupuestales sale la plata de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_sanciones_contrato` | ¿Este contrato de SECOP II tiene multas o sanciones? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_suspensiones_contrato` | ¿Este contrato de SECOP II estuvo suspendido? ¿Cuándo y por qué? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
-| `secop_ubicaciones_contrato` | ¿Dónde se ejecuta este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_modificaciones_contrato` | ¿Qué modificaciones tuvo este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_pagos_contrato` | ¿Qué pagos tiene registrados este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_proceso_por_id` | ¿Qué es este proceso de contratación de SECOP II y en qué estado está? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_rubros_contrato` | ¿De qué rubros presupuestales sale la plata de este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_sanciones_contrato` | ¿Este contrato de SECOP II tiene multas o sanciones? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_suspensiones_contrato` | ¿Este contrato de SECOP II estuvo suspendido? ¿Cuándo y por qué? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_ubicaciones_contrato` | ¿Dónde se ejecuta este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 
 ## empresas
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `dian_usuario_aduanero_por_nit` | ¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-dian-terminos | 3 |
+| `dian_usuario_aduanero_por_nit` | ¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-dian-terminos | 2 |
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
-| `invima_medicamentos_por_titular` | ¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 3 |
-| `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
-| `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 3 |
+| `invima_medicamentos_por_titular` | ¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
+| `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 2 |
+| `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
 | `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
 | `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
 | `superfinanciera_vigilada_por_nit` | ¿Esta empresa está vigilada por la Superintendencia Financiera? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 2 |
-| `superfinanciera_vigiladas_buscar` | ¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 2 |
-| `supersociedades_caratula` | ¿Qué datos generales reportó esta sociedad con sus estados financieros? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersociedades_flujo_efectivo` | ¿Cómo se movió la caja de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersociedades_otro_resultado_integral` | ¿Qué otro resultado integral reportó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersociedades_resultado_integral` | ¿Cuánto vendió, gastó y ganó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersociedades_situacion_financiera` | ¿Cómo está el balance (activos, pasivos, patrimonio) de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 5 |
-| `supersolidaria_entidades_buscar` | ¿Esta cooperativa o fondo de empleados está registrado ante la Supersolidaria? | Superintendencia de la Economía Solidaria | CC-BY-SA-4.0 | 2 |
+| `superfinanciera_vigiladas_buscar` | ¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 5 |
+| `supersociedades_caratula` | ¿Qué datos generales reportó esta sociedad con sus estados financieros? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersociedades_empresa_grande_por_nit` | ¿Está esta empresa entre las 10 000 más grandes? ¿Cuánto vende y cuánto vale? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersociedades_flujo_efectivo` | ¿Cómo se movió la caja de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersociedades_otro_resultado_integral` | ¿Qué otro resultado integral reportó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersociedades_resultado_integral` | ¿Cuánto vendió, gastó y ganó esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersociedades_situacion_financiera` | ¿Cómo está el balance (activos, pasivos, patrimonio) de esta sociedad? | Superintendencia de Sociedades | CC-BY-SA-4.0 | 2 |
+| `supersolidaria_entidades_buscar` | ¿Esta cooperativa o fondo de empleados está registrado ante la Supersolidaria? | Superintendencia de la Economía Solidaria | CC-BY-SA-4.0 | 5 |
 
 ## estadisticas
 
@@ -94,57 +94,57 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
-| `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
-| `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
-| `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
-| `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
-| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 10 |
-| `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 3 |
+| `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dian_comex_exportaciones_por_subpartida` | ¿Cuánto exportó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `dian_comex_importaciones_por_subpartida` | ¿Cuánto importó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
 | `icfes_saber11_colegio` | ¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_estrato_municipio` | ¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
 | `icfes_saber11_municipio` | ¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qué puntaje promedio sacaron? | Instituto Colombiano para la Evaluación de la Educación (ICFES) | CC-BY-SA-4.0 | 5 |
-| `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
-| `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
-| `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
-| `invima_registro_sanitario_por_expediente` | ¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
-| `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
+| `invima_dispositivo_por_expediente` | ¿Qué dispositivo médico ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamento_por_expediente` | ¿Qué dice el INVIMA del medicamento con este expediente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamentos_por_principio_activo` | ¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_registro_sanitario_por_expediente` | ¿Qué producto (alimento, cosmético, aseo…) ampara este expediente del INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `men_educacion_departamento` | ¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `men_educacion_etc` | ¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
-| `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 5 |
-| `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 1 |
-| `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 2 |
-| `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
-| `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
+| `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
+| `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 2 |
+| `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 5 |
+| `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
+| `upra_precio_tierra_rural_municipio` | ¿Cuánto vale la tierra rural en este municipio, según UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 2 |
 
 ## justicia
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `cnmh_acciones_belicas_municipio` | ¿Cuántas víctimas y bajas en combate hubo en este municipio por acciones bélicas? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_asesinatos_selectivos_municipio` | ¿Cuántos asesinatos selectivos del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_ataques_poblados_municipio` | ¿Cuántas víctimas dejaron los ataques a poblados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_atentados_municipio` | ¿Cuántas víctimas de atentados terroristas ha tenido este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_dano_bienes_municipio` | ¿Cuántas víctimas dejaron los ataques a bienes civiles en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_desaparicion_forzada_municipio` | ¿Cuántas personas fueron desaparecidas a la fuerza en este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_masacres_municipio` | ¿Cuántas víctimas de masacres ha tenido este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_minas_municipio` | ¿Cuántas víctimas de minas antipersonal registra la memoria histórica en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_reclutamiento_municipio` | ¿Cuántos niños, niñas y adolescentes fueron reclutados por grupos armados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_secuestro_municipio` | ¿Cuántos secuestros del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
-| `cnmh_violencia_sexual_municipio` | ¿Cuántas víctimas de violencia sexual en el conflicto armado registra este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 2 |
+| `cnmh_acciones_belicas_municipio` | ¿Cuántas víctimas y bajas en combate hubo en este municipio por acciones bélicas? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_asesinatos_selectivos_municipio` | ¿Cuántos asesinatos selectivos del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_ataques_poblados_municipio` | ¿Cuántas víctimas dejaron los ataques a poblados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_atentados_municipio` | ¿Cuántas víctimas de atentados terroristas ha tenido este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_dano_bienes_municipio` | ¿Cuántas víctimas dejaron los ataques a bienes civiles en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_desaparicion_forzada_municipio` | ¿Cuántas personas fueron desaparecidas a la fuerza en este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_masacres_municipio` | ¿Cuántas víctimas de masacres ha tenido este municipio en el conflicto armado? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_minas_municipio` | ¿Cuántas víctimas de minas antipersonal registra la memoria histórica en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_reclutamiento_municipio` | ¿Cuántos niños, niñas y adolescentes fueron reclutados por grupos armados en este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_secuestro_municipio` | ¿Cuántos secuestros del conflicto armado hubo en este municipio, por año y por grupo? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
+| `cnmh_violencia_sexual_municipio` | ¿Cuántas víctimas de violencia sexual en el conflicto armado registra este municipio? | Centro Nacional de Memoria Histórica (CNMH) | CC-BY-SA-4.0 | 5 |
 | `corte_constitucional_sentencia` | ¿Qué dice el índice de la Corte Constitucional sobre esta sentencia? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
-| `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 2 |
-| `medicinalegal_homicidios_municipio` | ¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
-| `medicinalegal_muertes_accidentales_municipio` | ¿Cuántas muertes accidentales (ahogamientos, caídas, electrocuciones…) hubo en este municipio en el año? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
-| `medicinalegal_suicidios_municipio` | ¿Cuántos suicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 2 |
-| `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado o de carga hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_delitos_sexuales_municipio` | ¿Cuántos delitos sexuales se denunciaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_homicidios_transito_municipio` | ¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_hurto_comercio_residencias_municipio` | ¿Cuántos robos a comercios y viviendas hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_hurto_vehiculos_municipio` | ¿Cuántos carros y motos se robaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_lesiones_municipio` | ¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 2 |
-| `presidencia_victimas_minas_municipio` | ¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron? | Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia) | CC-BY-SA-4.0 | 2 |
+| `corte_constitucional_sentencias_anio` | ¿Cuántas sentencias profirió la Corte Constitucional en un año? | Corte Constitucional | CC-BY-SA-4.0 | 5 |
+| `medicinalegal_homicidios_municipio` | ¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
+| `medicinalegal_muertes_accidentales_municipio` | ¿Cuántas muertes accidentales (ahogamientos, caídas, electrocuciones…) hubo en este municipio en el año? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
+| `medicinalegal_suicidios_municipio` | ¿Cuántos suicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
+| `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado o de carga hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_delitos_sexuales_municipio` | ¿Cuántos delitos sexuales se denunciaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_homicidios_transito_municipio` | ¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_hurto_comercio_residencias_municipio` | ¿Cuántos robos a comercios y viviendas hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_hurto_vehiculos_municipio` | ¿Cuántos carros y motos se robaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_lesiones_municipio` | ¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_violencia_intrafamiliar_municipio` | ¿Cuántos casos de violencia intrafamiliar hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `presidencia_victimas_minas_municipio` | ¿Cuántas víctimas de minas antipersonal ha tenido este municipio, y cuántas murieron? | Presidencia de la República (Oficina del Alto Comisionado para la Paz, Descontamina Colombia) | CC-BY-SA-4.0 | 5 |
 
 ## meta
 
@@ -156,49 +156,49 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `corte_constitucional_texto_buscar` | ¿Qué dice esta sentencia de la Corte Constitucional sobre este tema? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 2 |
-| `corte_constitucional_texto_inicio` | ¿De qué trata esta sentencia de la Corte Constitucional? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 2 |
-| `creg_resolucion_buscar` | ¿Qué dice esta resolución de la CREG sobre este tema? | Comisión de Regulación de Energía y Gas (CREG) | LicenseRef-ley23-1982-art41 | 2 |
-| `dian_normograma_buscar` | ¿Qué dice esta norma tributaria o aduanera sobre este tema? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-ley23-1982-art41 | 2 |
-| `funcionpublica_norma_buscar` | ¿Qué dice esta norma sobre este tema? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
-| `funcionpublica_norma_inicio` | ¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
-| `funcionpublica_normas_buscar` | ¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 2 |
-| `suin_norma` | ¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 1 |
-| `suin_normas_anio` | ¿Cuántas leyes, decretos y resoluciones de este año están cargados en SUIN-Juriscol? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 1 |
+| `corte_constitucional_texto_buscar` | ¿Qué dice esta sentencia de la Corte Constitucional sobre este tema? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
+| `corte_constitucional_texto_inicio` | ¿De qué trata esta sentencia de la Corte Constitucional? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
+| `creg_resolucion_buscar` | ¿Qué dice esta resolución de la CREG sobre este tema? | Comisión de Regulación de Energía y Gas (CREG) | LicenseRef-ley23-1982-art41 | 5 |
+| `dian_normograma_buscar` | ¿Qué dice esta norma tributaria o aduanera sobre este tema? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-ley23-1982-art41 | 5 |
+| `funcionpublica_norma_buscar` | ¿Qué dice esta norma sobre este tema? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 5 |
+| `funcionpublica_norma_inicio` | ¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 5 |
+| `funcionpublica_normas_buscar` | ¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)? | Departamento Administrativo de la Función Pública (DAFP) | LicenseRef-ley23-1982-art41 | 5 |
+| `suin_norma` | ¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 2 |
+| `suin_normas_anio` | ¿Cuántas leyes, decretos y resoluciones de este año están cargados en SUIN-Juriscol? | Ministerio de Justicia y del Derecho | CC-BY-SA-4.0 | 5 |
 | `suit_oferta_tramites_entidad` | ¿Qué trámites ofrece esta entidad y cuántas solicitudes tuvo cada uno en el año? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
-| `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
+| `suit_tramites_entidad` | ¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 2 |
 
 ## territorio
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
 | `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
-| `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
+| `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
-| `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_compraventas_municipio` | ¿Cuántas compraventas de inmuebles hubo en este municipio cada año y por cuánto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
 | `igac_conflictos_uso_en_punto` | ¿Hay conflicto de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
-| `igac_construcciones_en_predio` | ¿Qué construcciones tiene registradas este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `igac_estadisticas_catastrales_municipio` | ¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año? | Instituto Geográfico Agustín Codazzi (IGAC) | por verificar | 5 |
-| `igac_gestor_catastral_municipio` | ¿Quién hace el catastro de este municipio? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
+| `igac_construcciones_en_predio` | ¿Qué construcciones tiene registradas este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
+| `igac_estadisticas_catastrales_municipio` | ¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año? | Instituto Geográfico Agustín Codazzi (IGAC) | por verificar | 2 |
+| `igac_gestor_catastral_municipio` | ¿Quién hace el catastro de este municipio? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_manzana_en_punto` | ¿En qué manzana urbana del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_perimetro_urbano_en_punto` | ¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `igac_placas_predio` | ¿Qué dirección (placa) tiene este predio según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 3 |
+| `igac_placas_predio` | ¿Qué dirección (placa) tiene este predio según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_predio_en_punto` | ¿Qué predio del catastro IGAC hay en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_predio_por_codigo` | ¿Qué predio del catastro IGAC tiene este número predial? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_predios_destino_municipio` | ¿Cuántos predios hay en este municipio por destino económico (habitacional, comercial, agropecuario…)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
-| `igac_registro_predio` | ¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `igac_registro_predio` | ¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_sector_en_punto` | ¿En qué sector catastral del IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `igac_transacciones_folio` | ¿Qué actos se han registrado sobre este inmueble (por su folio de matrícula)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 3 |
+| `igac_transacciones_folio` | ¿Qué actos se han registrado sobre este inmueble (por su folio de matrícula)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_vereda_en_punto` | ¿En qué vereda del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `igac_vias_en_zona` | ¿Qué calles y vías hay en esta zona según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
+| `igac_vias_en_zona` | ¿Qué calles y vías hay en esta zona según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 20 |
 | `igac_vocacion_uso_en_punto` | ¿Cuál es la vocación de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_zona_fisica_en_punto` | ¿Qué características físicas tiene la zona homogénea del IGAC en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_zona_geoeconomica_en_punto` | ¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
-| `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 3 |
-| `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 2 |
-| `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
+| `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
+| `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
+| `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 10 |
 | `upra_rangos_precio_municipio` | ¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 
 ## Ficha técnica de una fuente

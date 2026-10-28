@@ -25,7 +25,7 @@ consulta:
 salida: InternetFijoMunicipio
 derivados:
   accesos: {de: columna, campo: accesos, tipo: int}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en n48w-gutb: Chía 2023, 30 grupos; el primero, trimestre 1
   # CABLE: 25973 accesos.

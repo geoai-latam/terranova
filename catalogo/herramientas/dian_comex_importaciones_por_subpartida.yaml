@@ -30,7 +30,7 @@ consulta:
   campos: [valor_cif_pesos, valor_cif_usd, valor_fob_usd, peso_neto_kg, cantidad, lineas]
 salida: ComexImportacionSubpartida
 derivados: {}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-26 en los microdatos ANDA 856 (año 2025 completo, ZIP Impo_2025_1 + Impo_2025_2).
   # La subpartida 8517130000 (teléfonos móviles) importa en NOVIEMBRE de 2025 FOB US$188.197.179; el

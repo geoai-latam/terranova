@@ -25,7 +25,7 @@ consulta:
 salida: InvimaMedicamentoOtrosEstadosPorExpediente
 derivados:
   numero_registros: {de: conteo, tipo: int}
-creditos: 2
+cobro: registro
 canario:
   # Medido el 2026-10-22 en spzp-dfuc: el expediente 3277 tiene 8 filas distintas; la primera
   # (consecutivo 1) es HIDERAX S® 50 MG.

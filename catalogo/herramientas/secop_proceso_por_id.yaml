@@ -24,7 +24,7 @@ consulta:
 salida: ProcesoPorId
 derivados:
   numero_fases: {de: conteo, tipo: int}
-creditos: 5
+cobro: registro
 canario:
   # Medido el 2026-10-22 en p6dx-8zbt: el proceso de compra del contrato CO1.PCCNTR.3712964
   # (Pitalito, 2022) tiene dos fases, CO1.REQ.2978420 y CO1.REQ.3004001.

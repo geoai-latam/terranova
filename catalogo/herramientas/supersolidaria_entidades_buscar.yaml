@@ -25,7 +25,7 @@ consulta:
 salida: SupersolidariaEntidadesBuscar
 derivados:
   ultimo_reporte: {de: columna, campo: ultimo_reporte, tipo: str}
-creditos: 2
+cobro: agregado
 canario:
   # Medido el 2026-10-23 en kg2d-yfyg: «CONFIAR» da 2 entidades; con la coincidencia más corta primero,
   # la Fundación Confiar (811-007-658-1), que reportó por última vez en 2020.

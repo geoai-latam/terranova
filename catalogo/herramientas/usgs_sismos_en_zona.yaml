@@ -21,7 +21,7 @@ consulta:
 salida: SismosEnZona
 derivados:
   magnitud_maxima: {de: maximo, campo: magnitud, tipo: float}
-creditos: 10
+cobro: zona
 # Medido el 2026-10-22 (UTC) en /fdsnws/event/1/count (139) y /query?orderby=magnitude&limit=1
 # (M 5.6 mww, «7 km E of Cartago, Colombia», 2024-01-19). Ventana pasada y fija: solo cambia si la
 # USGS revisa su catálogo.
