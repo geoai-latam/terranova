@@ -95,7 +95,21 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     cubre Bogotá;
   - t22 acepta `upra_rangos_precio_municipio`;
   - las dos UPRA dicen qué trae cada una (el total o el desglose por rango).
-- **Siguiente:** desplegar y volver a correr los dos bancos (mini y Claude Code).
+- **Segunda corrida con cliente real** (#189 y #191 desplegados, mismas 180 preguntas):
+  - perfil, catálogo y `/mcp` completo dan **88 % de éxito y 98 % de herramienta correcta**; antes
+    eran 82–83 % y 93–97 %;
+  - tokens por pregunta: 21 139, 31 702 y 33 757;
+  - se arreglaron t06 y t12 (geometría) y t21 y t22 (descripciones UPRA).
+- **Abierto:**
+  - **Las listas grandes:** t11 (169 áreas protegidas) sigue sobre el tope de Claude Code. Son
+    ~59 000 caracteres, de los que 37 000 son `datos`. Con `/mcp` completo, Opus partió el
+    rectángulo en cuatro y llegó a 169. La siguiente palanca es paginar o resumir las listas largas
+    en `datos`.
+  - Las fallas comunes a todo, que no dependen del modo:
+    - el `bbox` de t16 y t17;
+    - t18;
+    - la TRM de s09;
+    - t20, por el DANE caído.
 
 ## Auditoría integral (2026-10-26)
 
