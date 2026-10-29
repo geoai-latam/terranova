@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T03:48:23+00:00",
+ "grabado": "2026-10-29T14:12:35+00:00",
  "herramienta": "ideam_estaciones_en_zona",
  "llamadas": [
   {
@@ -17,7 +17,7 @@
     "max_filas": 5000,
     "order": "codigo",
     "portal": "datos.gov.co",
-    "select": "codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
+    "select": "distinct codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -58,11 +58,23 @@
      }
     ],
     "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
      "completo": true,
      "conjunto": "hp9r-jxuu",
-     "cumplen_en_el_portal": 1,
+     "consulta": {
+      "conjunto": "hp9r-jxuu",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "distinct codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad",
+      "where": "(latitud::number between 4.852 and 4.856 AND longitud::number between -74.035 and -74.03)"
+     },
      "elementos": 1,
      "filas": 1,
+     "filas_que_resume": 2,
      "filtro_soql": "(latitud::number between 4.852 and 4.856 AND longitud::number between -74.035 and -74.03)",
      "portal": "datos.gov.co"
     },

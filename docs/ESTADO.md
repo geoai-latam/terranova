@@ -134,6 +134,18 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     - `3` igual a `3.0`;
     - las entradas `libres` de la verdad (s09: «los últimos días» no dice cuántos).
   - t17 nombra su rectángulo: la cifra depende de él.
+  - **Medido tras el despliegue (#194):**
+    - Opus en vivo (perfil y catálogo, por túnel a la puerta) pasa t11 y t17: «169 áreas
+      protegidas», «139 sismos, el mayor de 5,6».
+    - Re-evaluada con el evaluador nuevo, la corrida anterior de 180 preguntas pasa de 88 % a 93 %
+      en los tres modos.
+    - `/mcp` completo no se pudo medir en vivo: la red local intercepta terrnova.com y por túnel
+      su lista de herramientas (1,4 MB) no alcanza a cargar.
+  - **Estaciones del IDEAM sin repetir:** el conjunto `hp9r-jxuu` trae cada estación dos veces,
+    idéntica (19 828 filas, 9 914 códigos). `ideam_estaciones_en_zona` pide `distinct`: alrededor de
+    Chía salían 88 filas y son 44 estaciones.
+  - **Evaluador:** `geometria` y `pagina` son de presentación y no cuentan como otra entrada; el
+    mini los manda con su valor por defecto.
 
 ## Auditoría integral (2026-10-26)
 
