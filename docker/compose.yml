@@ -71,6 +71,7 @@ services:
       - "127.0.0.1:${TERRANOVA_PUERTO_LOCAL:-8180}:80"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ../web/publico:/srv/web:ro
       - caddy_datos:/data
     environment:
       TERRANOVA_DOMINIO: ${TERRANOVA_DOMINIO:-:80}
