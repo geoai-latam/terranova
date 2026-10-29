@@ -173,22 +173,31 @@ class IndiceHerramientas:
         resumen = [i for i in orden[1:] if self.docs[i].herramienta == ficha_lugar.HERRAMIENTA]
         orden = [i for i in orden if i not in resumen] + resumen
         if familia:
-            orden = [i for i in orden if self.docs[i].familia == familia]
+            # la familia acota, pero no oculta el mejor: el agente la adivina (banco de escala:
+            # filtró «territorio» y no vio las áreas protegidas, que son de «ambiente»)
+            propios = [i for i in orden if self.docs[i].familia == familia]
+            if orden and orden[0] not in propios:
+                propios = [orden[0], *propios]
+            orden = propios
         return [self.docs[i] for i in orden[:k]]
 
 
 #: Qué cubre cada familia, para que el agente sepa qué existe antes de buscar (Speakeasy: con
 #: búsqueda semántica sola, el modelo a veces no busca porque no sabe qué hay).
 TEMAS_FAMILIA = {
-    "territorio": "catastro y predios (IGAC, Bogotá), amenazas y riesgo, áreas protegidas, POT, "
-    "minería, red vial, aeropuertos y puertos",
+    "territorio": "catastro y predios (IGAC, Bogotá, SINIC), uso del suelo, estrato y POT de "
+    "Bogotá, minería (ANM), red vial, puentes y peajes (INVÍAS, ANI), UAF, precio de la tierra en "
+    "un punto, restitución de tierras, DIVIPOLA",
     "contratacion": "contratos públicos SECOP I y II, procesos, proveedores, planes de compras",
     "empresas": "RUES por NIT o nombre, Supersociedades, Superfinanciera, Supersolidaria",
     "normativa": "normas (SUIN, Función Pública, DIAN, CREG), sentencias de la Corte",
     "justicia": "delitos y lesiones (Policía), víctimas (RUV, CNMH), Medicina Legal, minas",
     "estadisticas": "población (DANE), IPC, PIB, empleo, pobreza (IPM), educación (ICFES), "
-    "salud (REPS, ADRES), comercio exterior, hidrocarburos (ANH), tráfico aéreo y peajes",
-    "ambiente": "clima y estaciones IDEAM, alertas, calidad del aire, bosques, incendios",
+    "salud (REPS, ADRES, INVIMA), comercio exterior, hidrocarburos (ANH), tráfico aéreo y "
+    "portuario, precio de la tierra rural por municipio (UPRA)",
+    "ambiente": "áreas protegidas (RUNAP), resguardos, consejos comunitarios y zonas de reserva "
+    "campesina (ANT), cobertura del suelo, POMCA y rondas (CAR), clima y estaciones IDEAM, "
+    "alertas, calidad del aire, bosques, incendios, sismos, emergencias",
     "meta": "buscador de datasets abiertos del catálogo nacional",
 }
 

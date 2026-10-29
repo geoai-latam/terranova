@@ -48,7 +48,7 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
-## MCP a escala (2026-10-28, #183–#184, ADR-0031)
+## MCP a escala (2026-10-28 a 29, #183–#187, ADR-0031)
 
 - **Pregunta:** con 209 herramientas, ¿sigue siendo MCP plano el camino? Se investigó cómo lo
   resuelven otros proveedores y clientes, y se midió con el banco de escala
@@ -64,11 +64,20 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   beta hasta ≥ 85 %. La confirmación de la ADR-0006 queda cumplida.
 - **Evaluador:** el banco contaba como falla un municipio dicho por su nombre, aunque la puerta lo
   resuelve. Ahora compara la entrada como la ve la puerta.
-- **Hallazgos abiertos del banco:**
-  - el buscador del catálogo pone `ficha_lugar` arriba en preguntas de un punto;
-  - las descripciones hermanas SINIC/IGAC y las dos de UPRA se confunden;
-  - el agente rellena `codigo` de `ficha_lugar` con ceros;
-  - `fuente_describir` recibe ids con punto o nombres de familia.
+- **Arreglos (#186):** el ranking de `ficha_lugar`, la desambiguación SINIC/IGAC, el `codigo` con
+  ceros de la ficha y `fuente_describir` con ids con punto o nombres de familia.
+- **Curva de tamaño (2026-10-29, ADR-0031 §7):**
+  - 35, 90, 140 y 209 herramientas visibles dan los mismos aciertos (49 o 50 de 59). La precisión no
+    cae con el tamaño; lo que crece es el costo, unos 470 tokens por herramienta y pregunta.
+  - **Regla:** un perfil tiene como tope 90 herramientas (costo y topes de Windsurf y VS Code). Una
+    familia que lo pase se parte por tema. Hoy la mayor tiene 44.
+- **Catálogo:** 44 de 59 (83 % de herramienta correcta). La causa: el mapa de familias de
+  `buscar_herramienta` ponía áreas protegidas, resguardos y sismos en territorio, pero son de
+  `ambiente`, así que el filtro por familia ocultaba la herramienta. Se corrigió el mapa y el filtro
+  ya no oculta el mejor resultado. Sigue en beta.
+- **Siguiente:** desplegar y correr solo el escenario catálogo; si llega a ≥ 85 %, sale de beta.
+  Después, la guía de conexión por cliente.
+- **Abierto:** las dos herramientas de UPRA se confunden (t21, t22).
 
 ## Auditoría integral (2026-10-26)
 

@@ -59,6 +59,27 @@ def test_filtra_por_familia() -> None:
     assert hallados and {d.familia for d in hallados} == {"contratacion"}
 
 
+def test_la_familia_equivocada_no_oculta_la_mejor() -> None:
+    indice = IndiceHerramientas(documentos(puerta.CATALOGO))
+    hallados = _ids(indice, "resguardo indígena en un punto", familia="territorio")
+    assert hallados[0] == "ant_resguardos_en_punto"  # es de «ambiente»
+    assert {puerta.CATALOGO.herramientas[h].familia for h in hallados[1:]} == {"territorio"}
+
+
+@pytest.mark.parametrize(
+    ("herramienta", "tema"),
+    [
+        ("pnn_areas_protegidas_en_punto", "áreas protegidas"),
+        ("ant_resguardos_en_punto", "resguardos"),
+        ("usgs_sismos_en_zona", "sismos"),
+        ("aerocivil_trafico_aeropuerto", "tráfico aéreo"),
+    ],
+)
+def test_el_mapa_pone_cada_tema_en_su_familia(herramienta: str, tema: str) -> None:
+    familia = puerta.CATALOGO.herramientas[herramienta].familia
+    assert [f for f, t in perfil_catalogo.TEMAS_FAMILIA.items() if tema in t] == [familia]
+
+
 def test_la_ficha_va_despues_de_la_capa_especifica() -> None:
     docs = [
         Documento("ficha_lugar", "territorio", "ficha lugar resguardo area protegida cobertura"),
