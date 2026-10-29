@@ -152,6 +152,12 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     Chía salían 88 filas y son 44 estaciones.
   - **Evaluador:** `geometria` y `pagina` son de presentación y no cuentan como otra entrada; el
     mini los manda con su valor por defecto.
+  - **Canarios y copias a hora fija (2026-10-29):** `--cada-horas 24` contaba desde el arranque del
+    contenedor, y cada despliegue movía la hora. Al recrearlos, los canarios corrieron a media
+    mañana de Colombia y salieron 16 rojos, 15 de ellos solo por lentitud: datos.gov.co está más
+    cargado de día. Ahora el compose usa `--a-las HH:MM` (UTC):
+    - copias a las 08:00 UTC (03:00 en Colombia);
+    - canarios a las 09:00 UTC (04:00 en Colombia), con las copias ya rehechas.
   - **t20 cerrado:** la copia del censo 2018 se cargó desde Colombia (1 122 municipios, 8 s). La
     puerta responde desde la copia con la verdad del canario (Bogotá: 7 181 469 personas,
     2 523 519 viviendas, 2 514 482 hogares). Opus pasa t20 en perfil y catálogo, y también t16

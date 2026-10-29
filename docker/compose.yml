@@ -93,7 +93,8 @@ services:
     <<: *puerta
     build: !reset null
     pull_policy: never
-    command: ["terranova", "canarios", "--cada-horas", "24"]
+    # a hora fija (UTC): 04:00 en Colombia, con las fuentes descargadas; un despliegue no la mueve
+    command: ["terranova", "canarios", "--a-las", "09:00"]
     healthcheck: {disable: true}  # es un job, no sirve HTTP (el de la imagen es de la puerta)
     environment:
       <<: *entorno
@@ -107,7 +108,8 @@ services:
     pull_policy: never
     # cada día revisa y rehace solo las copias que faltan o van por la mitad de su SLA (una capa
     # de agrología con SLA de un año no se rebaja a diario)
-    command: ["terranova", "copias", "actualizar", "--solo-vencidas", "--cada-horas", "24"]
+    # 03:00 en Colombia: las copias se rehacen antes de los canarios y fuera de horas laborales
+    command: ["terranova", "copias", "actualizar", "--solo-vencidas", "--a-las", "08:00"]
     healthcheck: {disable: true}  # es un job, no sirve HTTP (el de la imagen es de la puerta)
 
   # G6 (ADR-0028): una vez al día cosecha los dos catálogos DCAT (Socrata + ICDE), pide los vectores
