@@ -335,8 +335,6 @@ def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
     if not isinstance(elementos, list) or (len(elementos) <= POR_PAGINA and pagina == 1):
         return sobre
     paginas = max(1, -(-len(elementos) // POR_PAGINA))
-    if pagina > paginas:
-        raise ValueError(f"la lista tiene {len(elementos)} elementos: {paginas} página(s)")
     ini = (pagina - 1) * POR_PAGINA
     tramo = elementos[ini : ini + POR_PAGINA]
     datos = {**sobre.datos, "elementos": tramo}
@@ -358,6 +356,11 @@ def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
         f"Lista larga: van los elementos {ini + 1}-{ini + len(tramo)} de {len(elementos)} (página "
         f"{pagina} de {paginas}).{siguiente} Los totales de `datos` cuentan la lista completa."
     )
+    if not tramo:  # una página que no existe no es un error: vacía, y se dice cuántas hay
+        aviso = (
+            f"La página {pagina} no existe: la lista tiene {len(elementos)} elementos en {paginas} "
+            "página(s). Los totales de `datos` cuentan la lista completa."
+        )
     return sobre.model_copy(
         update={
             "entrada": {**sobre.entrada, PAGINA: pagina},

@@ -22,7 +22,7 @@
      - Los totales y agregados de `datos` (p. ej. `total`, `total_en_catalogo`, `magnitud_maxima`)
        no cambian: cuentan la lista completa.
      - La `huella` pasa a ser la de lo servido (regla 7), y `entrada.pagina` dice qué página es.
-     - Una página que no existe es `parametro_invalido`, con el número de páginas.
+     - Una página que no existe no es un error: llega vacía, con un aviso que dice cuántas hay.
   3. **La fuente, la caché y la idempotencia ven la consulta sin la página**: pedir la página 2 no
      vuelve a la fuente si la lista está en caché.
   4. **Igual en MCP y en REST** (ADR-0004): se pagina en `puerta.ejecutar`, antes de resumir la

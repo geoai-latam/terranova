@@ -83,8 +83,9 @@ async def test_una_lista_larga_sale_por_paginas() -> None:
     assert ultima.datos["elementos"] == lista.datos["elementos"][100:]
     assert "101-120 de 120 (página 3 de 3)" in ultima.avisos[-1]
     assert "Pida" not in ultima.avisos[-1]
-    with pytest.raises(ValueError, match="3 página"):
-        paginar(lista, 4)
+    fuera = paginar(lista, 4)  # no existe: vacía y dice cuántas hay, no es un error
+    assert fuera.datos["elementos"] == [] and fuera.datos["total"] == 120
+    assert "La página 4 no existe" in fuera.avisos[-1] and "3 página" in fuera.avisos[-1]
 
 
 @pytest.mark.anyio
@@ -114,11 +115,10 @@ async def test_la_puerta_pagina_y_valida(monkeypatch: pytest.MonkeyPatch) -> Non
     segunda = await puerta.ejecutar(LISTA, ZONA | {PAGINA: 2})
     assert segunda.datos["elementos"][0] == {"nombre": "Área 50", "area_ha": 50}
     assert pedidas == [ZONA]  # la fuente (y la caché) ven la consulta sin la página
-    for mala in ("2", 0, True):
+    assert (await puerta.ejecutar(LISTA, ZONA | {PAGINA: 2.0})).entrada[PAGINA] == 2
+    for mala in ("2", 0, True, 2.5):
         with pytest.raises(ErrorEntrada, match="pagina"):
             await puerta.ejecutar(LISTA, ZONA | {PAGINA: mala})
-    with pytest.raises(ErrorEntrada, match="3 página"):
-        await puerta.ejecutar(LISTA, ZONA | {PAGINA: 9})
 
 
 @pytest.mark.anyio
@@ -130,6 +130,8 @@ async def test_pagina_solo_en_las_herramientas_de_lista() -> None:
         transporte = httpx.ASGITransport(app=crear_api())
         async with httpx.AsyncClient(transport=transporte, base_url="http://puerta") as rest:
             cero = await rest.post(f"/v1/co/ambiente/{LISTA}", json=ZONA | {PAGINA: 0})
+            media = await rest.post(f"/v1/co/ambiente/{LISTA}", json=ZONA | {PAGINA: 1.5})
+            texto = await rest.post(f"/v1/co/ambiente/{LISTA}", json=ZONA | {PAGINA: "1"})
             punto = {"lon": -74, "lat": 4.8, PAGINA: 1}
             sobra = await rest.post(f"/v1/co/territorio/{PREDIO}", json=punto)
     finally:
@@ -137,3 +139,4 @@ async def test_pagina_solo_en_las_herramientas_de_lista() -> None:
     assert PAGINA in esquemas[LISTA]["properties"] and PAGINA not in esquemas[LISTA]["required"]
     assert PAGINA not in esquemas[PREDIO]["properties"]  # forma «uno»
     assert cero.status_code == 400 and sobra.status_code == 400
+    assert media.status_code == 400 and texto.status_code == 400

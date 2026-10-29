@@ -280,13 +280,12 @@ async def ejecutar(
         if PAGINA in entrada and pagina_lista(ficha):
             entrada = dict(entrada)
             pagina = entrada.pop(PAGINA)
+            if isinstance(pagina, float) and pagina.is_integer():
+                pagina = int(pagina)  # 3.0 es un entero en JSON Schema
             if not isinstance(pagina, int) or isinstance(pagina, bool) or pagina < 1:
                 raise ErrorEntrada(PAGINA, "debe ser un entero desde 1")
         sobre = await _ejecutar(ficha, entrada, principal)
-        try:
-            sobre = paginar(sobre, pagina)  # la caché y la idempotencia guardan la lista entera
-        except ValueError as exc:
-            raise ErrorEntrada(PAGINA, str(exc)) from exc
+        sobre = paginar(sobre, pagina)  # la caché y la idempotencia guardan la lista entera
     except ValidationError as exc:
         # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
         # rotulado): es la fuente la que respondió algo inválido, no un error nuestro ni «no hay».

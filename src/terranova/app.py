@@ -22,7 +22,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
-from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, create_model, model_validator
 from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -92,9 +92,16 @@ _CAMPO_GEOMETRIA: Any = (
     Field(default=None, description=ESQUEMA_GEOMETRIA["description"]),
 )
 
+
+def _entero_exacto(valor: Any) -> Any:
+    # 3.0 es un entero en JSON Schema (Schemathesis lo manda); 3.5 sigue siendo inválido
+    return int(valor) if isinstance(valor, float) and valor.is_integer() else valor
+
+
 _CAMPO_PAGINA: Any = (
-    # el mínimo va en el tipo: en el `Field` de una unión, el esquema sale con `ge` y sin `minimum`
-    Annotated[int, Field(ge=1)] | SkipJsonSchema[None],  # type: ignore[misc]
+    # el mínimo va en el tipo y antes del validador: en otro orden el esquema sale con `ge` y sin
+    # `minimum`, y Schemathesis manda 0
+    Annotated[int, Field(ge=1), BeforeValidator(_entero_exacto)] | SkipJsonSchema[None],  # type: ignore[misc]
     Field(default=None, description=ESQUEMA_PAGINA["description"]),
 )
 
