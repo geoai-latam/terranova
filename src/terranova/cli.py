@@ -5,8 +5,8 @@
     terranova llaves listar [--org geoai]
     terranova orgs nivel geoai pro           (nivel del saldo mensual: ver NIVELES en cuota.py)
     terranova orgs listar                    (org, nivel, créditos al mes y llaves vigentes)
-    terranova canarios [--cada-horas 24]     (F7.1: canarios en vivo, guardados en TERRANOVA_BD)
-    terranova copias actualizar [fuente …] [--cada-horas 24] [--solo-vencidas]   (G3: copias)
+    terranova canarios [--a-las 09:00 | --cada-horas 24]   (F7.1: canarios, en TERRANOVA_BD)
+    terranova copias actualizar [fuente …] [--a-las 08:00 | --cada-horas 24] [--solo-vencidas]
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
     terranova catalogo-dcat buscar "<consulta>" [--entidad E] [--limite N]         (G6: buscador)
     terranova catalogo-dcat promover [--banco f.yaml]   (G6: cola de promoción data-driven)
@@ -24,7 +24,9 @@ from __future__ import annotations
 import argparse
 import contextlib
 import sys
-from datetime import date
+import time
+from collections.abc import Callable
+from datetime import UTC, date, datetime, timedelta
 from typing import TYPE_CHECKING
 
 from terranova.identidad import registro_desde_entorno
@@ -34,6 +36,52 @@ if TYPE_CHECKING:
 
     from terranova.descubrimiento import DatasetDescubrible
     from terranova.identidad import Registro
+
+
+def hora_utc(texto: str) -> tuple[int, int]:
+    """`HH:MM` (UTC) para `--a-las`."""
+    try:
+        h, m = (int(x) for x in texto.split(":"))
+    except ValueError:
+        h = m = -1
+    if not (0 <= h < 24 and 0 <= m < 60):
+        raise argparse.ArgumentTypeError(f"{texto!r}: se espera HH:MM, p. ej. 09:00")
+    return h, m
+
+
+def segundos_hasta(hora: tuple[int, int], ahora: datetime) -> float:
+    """Segundos hasta la próxima `hora` (UTC); si ya pasó hoy, la de mañana."""
+    objetivo = ahora.replace(hour=hora[0], minute=hora[1], second=0, microsecond=0)
+    if objetivo <= ahora:
+        objetivo += timedelta(days=1)
+    return (objetivo - ahora).total_seconds()
+
+
+def repetir(
+    una_vez: Callable[[], bool], a_las: tuple[int, int] | None, cada_horas: float | None
+) -> int:
+    """Una vez, o en bucle para los jobs del compose.
+
+    Con `a_las`, cada día a esa hora UTC, y no al arrancar: con `--cada-horas` el ciclo contaba
+    desde el arranque del contenedor y cada despliegue movía la hora. Los canarios pasaron de las
+    23:00 a media mañana de Colombia, con las fuentes más cargadas, y salían en rojo por lentos.
+    """
+    while True:
+        if a_las is not None:
+            time.sleep(segundos_hasta(a_las, datetime.now(UTC)))
+        bien = una_vez()
+        if a_las is None and not cada_horas:
+            return 0 if bien else 1
+        if a_las is None and cada_horas:
+            time.sleep(cada_horas * 3600)
+
+
+def _opciones_de_repeticion(parser: argparse.ArgumentParser) -> None:
+    cuando = parser.add_mutually_exclusive_group()
+    cuando.add_argument(
+        "--a-las", type=hora_utc, help="cada día a esta hora UTC, HH:MM (servicio del compose)"
+    )
+    cuando.add_argument("--cada-horas", type=float, help="repetir cada N horas desde el arranque")
 
 
 def llaves(argumentos: list[str]) -> int:
@@ -148,7 +196,6 @@ def canarios(argumentos: list[str]) -> int:
     """Una corrida (o una cada N horas) de todos los canarios; sale 1 si alguno quedó rojo."""
     import asyncio
     import os
-    import time
 
     from terranova.catalogo import cargar
     from terranova.conector import ConectorMCP, conectores_desde_entorno
@@ -156,7 +203,7 @@ def canarios(argumentos: list[str]) -> int:
     from terranova.vigilancia import RegistroCanarios, alertar, correr
 
     parser = argparse.ArgumentParser(prog="terranova canarios")
-    parser.add_argument("--cada-horas", type=float, help="repetir (servicio del compose)")
+    _opciones_de_repeticion(parser)
     a = parser.parse_args(argumentos)
     registro = RegistroCanarios(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
 
@@ -182,20 +229,14 @@ def canarios(argumentos: list[str]) -> int:
         alertar(resultados, os.environ.get("TERRANOVA_ALERTA_URL"))
         return all(r.ok for r in resultados)
 
-    while True:
-        verde = asyncio.run(una_vez())
-        if not a.cada_horas:
-            return 0 if verde else 1
-        time.sleep(a.cada_horas * 3600)
+    return repetir(lambda: asyncio.run(una_vez()), a.a_las, a.cada_horas)
 
 
 def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
-    import time
     import traceback
-    from collections.abc import Callable, Iterator
-    from datetime import UTC, date, datetime
+    from collections.abc import Iterator
     from typing import Any
 
     from terranova.catalogo import Fuente, cargar
@@ -212,7 +253,7 @@ def copias(argumentos: list[str]) -> int:
 
     parser = argparse.ArgumentParser(prog="terranova copias actualizar")
     parser.add_argument("fuentes", nargs="*", help="ids de fuente (por defecto, todas las copias)")
-    parser.add_argument("--cada-horas", type=float, help="repetir (servicio del compose)")
+    _opciones_de_repeticion(parser)
     parser.add_argument(
         "--solo-vencidas",
         action="store_true",
@@ -275,11 +316,7 @@ def copias(argumentos: list[str]) -> int:
                 )
         return bien
 
-    while True:
-        bien = una_vez()
-        if not a.cada_horas:
-            return 0 if bien else 1
-        time.sleep(a.cada_horas * 3600)
+    return repetir(una_vez, a.a_las, a.cada_horas)
 
 
 def catalogo_dcat(argumentos: list[str]) -> int:
