@@ -826,7 +826,7 @@ def aliados() -> str:
             "Terranova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
         )
         + """
-<section class="seccion"><div class="envoltura" style="display:grid;gap:16px">
+<section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
 <div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
 <p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com →</a></p></div></div>

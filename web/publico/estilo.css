@@ -294,7 +294,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .mas { margin-top: 18px; }
 
 /* ---------- aliados ---------- */
-.aliado { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center; padding: 28px; border-radius: var(--radio-lg); background: var(--superficie); box-shadow: inset 0 0 0 1px var(--linea); }
+.aliado { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: center; padding: 32px 0; border-top: 1px solid var(--tinta); }
+.aliado + .aliado { border-top-color: var(--linea); }
 .aliado img { width: 200px; height: auto; }
 .aliado .pendiente { font: 600 22px/1.2 var(--font-sans); letter-spacing: -0.02em; }
 .aliado .pendiente small { display: block; font: 400 12.5px/16px var(--font-sans); color: var(--tinta-tenue); margin-top: 6px; letter-spacing: 0; }
@@ -378,7 +379,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .pasos p { margin: 0; color: var(--tinta-suave); font-size: 15.5px; max-width: 560px; }
 .pasos .deja { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
 .pasos .deja code { font: 500 12.5px/1 var(--font-mono); padding: 5px 7px; border: 1px solid var(--linea-fuerte); color: var(--tinta); background: var(--fondo); }
-.pasos li.puerta { background: var(--superficie-invertida); color: var(--tinta-invertida); border-bottom-color: var(--superficie-invertida);
+.pasos li.puerta { --pad-puerta: min(20px, var(--margen)); background: var(--superficie-invertida); color: var(--tinta-invertida); border-bottom-color: var(--superficie-invertida);
   margin: 0 calc(-1 * var(--pad-puerta, 20px)); padding-left: var(--pad-puerta, 20px); padding-right: var(--pad-puerta, 20px); }
 .pasos li.puerta .n { color: var(--ambar-500); }
 .pasos li.puerta p { color: #B9C6BF; }
