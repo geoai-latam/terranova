@@ -511,6 +511,8 @@ def crear_aplicacion() -> Aplicacion:
         ruta = f"/mcp/{familia}"
         servidor = puerta.crear_servidor(familia, con_ciclo=False)
         mcp[ruta] = servidor.http_app(path=ruta, **OPCIONES_MCP)
+    ruta = f"/mcp/{puerta.PERFIL_CATALOGO}"
+    mcp[ruta] = puerta.crear_servidor_catalogo(con_ciclo=False).http_app(path=ruta, **OPCIONES_MCP)
     return Aplicacion(crear_api(), mcp)
 
 

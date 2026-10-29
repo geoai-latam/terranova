@@ -145,6 +145,16 @@ async def _pregunta(
                 }
             )
             mensajes.append({"role": "tool", "tool_call_id": tc["id"], "content": texto[:8000]})
+    return {
+        **_evaluar(v, llamadas),
+        "respuesta": respuesta,
+        "tokens": tokens,
+        "segundos": round(time.perf_counter() - t0, 1),
+    }
+
+
+def _evaluar(v: dict[str, Any], llamadas: list[dict[str, Any]]) -> dict[str, Any]:
+    """La medida del banco sobre las llamadas que hizo el agente (herramienta, entrada, verdad)."""
     esperada = v["herramienta"]
     # una alternativa válida (misma verdad en otra herramienta) también cuenta
     validas = {esperada, *(v.get("alternativas") or [])}
@@ -190,9 +200,6 @@ async def _pregunta(
         "entrada_correcta": ok_entrada,
         "exito": ok_herramienta and ok_entrada and not fallas,
         "fallas": fallas,
-        "respuesta": respuesta,
-        "tokens": tokens,
-        "segundos": round(time.perf_counter() - t0, 1),
     }
 
 

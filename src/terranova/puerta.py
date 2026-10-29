@@ -8,13 +8,14 @@ from __future__ import annotations
 
 import asyncio
 import hashlib
+import json
 import logging
 import os
 import time
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
@@ -24,7 +25,7 @@ from mcp.types import TextContent, ToolAnnotations
 from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
-from terranova import metricas
+from terranova import metricas, perfil_catalogo
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
 from terranova.catalogo import (
     FORMAS_ENTRADA,
@@ -46,6 +47,9 @@ from terranova.medicion import Evento, Outbox, OutboxSql, registrar_sin_fallar
 from terranova.medicion import ahora as ahora_iso
 from terranova.proteccion import Proteccion
 from terranova.vigilancia import RegistroCanarios
+
+if TYPE_CHECKING:
+    from terranova.descubrimiento import Embedder
 
 logger = logging.getLogger("terranova.puerta")
 CATALOGO: Catalogo = cargar()
@@ -192,17 +196,22 @@ class HerramientaDelCatalogo(Tool):
         return herramienta
 
     async def run(self, arguments: dict[str, Any]) -> ToolResult:
-        try:
-            sobre = await ejecutar(self._ficha, arguments, principal_de_la_peticion())
-        except ErrorEntrada as exc:
-            raise ToolError(f"parametro_invalido: {exc}") from exc
-        except ErrorEjecucion as exc:
-            raise ToolError(f"{exc.codigo}: {exc}") from exc
-        pares = ", ".join(f"{k}={v}" for k, v in list(sobre.datos.items())[:6])
-        return ToolResult(
-            content=[TextContent(type="text", text=f"{sobre.estado}: {pares}"[:1000])],
-            structured_content=sobre.model_dump(mode="json"),
-        )
+        return await _correr(self._ficha, arguments)
+
+
+async def _correr(ficha: str, arguments: dict[str, Any]) -> ToolResult:
+    """Una herramienta del catálogo como resultado MCP: el sobre en `structured_content`."""
+    try:
+        sobre = await ejecutar(ficha, arguments, principal_de_la_peticion())
+    except ErrorEntrada as exc:
+        raise ToolError(f"parametro_invalido: {exc}") from exc
+    except ErrorEjecucion as exc:
+        raise ToolError(f"{exc.codigo}: {exc}") from exc
+    pares = ", ".join(f"{k}={v}" for k, v in list(sobre.datos.items())[:6])
+    return ToolResult(
+        content=[TextContent(type="text", text=f"{sobre.estado}: {pares}"[:1000])],
+        structured_content=sobre.model_dump(mode="json"),
+    )
 
 
 def principal_de_la_peticion() -> Principal | None:
@@ -471,3 +480,125 @@ def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> Fas
 
 FAMILIAS = sorted({h.familia for h in CATALOGO.herramientas.values()})
 puerta = crear_servidor()
+
+
+# Perfil «catálogo» (`/mcp/catalogo`): buscar → consultar, para los clientes que no buscan
+# herramientas por su cuenta. Las herramientas de siempre siguen siendo el contrato: `consultar`
+# corre el mismo `ejecutar` (misma validación, mismo sobre, mismos créditos y scopes).
+PERFIL_CATALOGO = "catalogo"
+_INDICE: perfil_catalogo.IndiceHerramientas | None = None
+
+
+def _embedder_herramientas() -> Embedder | None:
+    url = os.environ.get("TERRANOVA_EMBEDDINGS_URL")
+    if not url:
+        return None
+    from terranova.descubrimiento import EmbedderRemoto
+
+    return EmbedderRemoto(url, timeout_s=60, intentos=2)
+
+
+def indice_herramientas() -> perfil_catalogo.IndiceHerramientas:
+    global _INDICE
+    if _INDICE is None:
+        _INDICE = perfil_catalogo.indice_desde_entorno(CATALOGO, _embedder_herramientas)
+        _INDICE.vectorizar_en_segundo_plano()
+    return _INDICE
+
+
+def _resumen_herramienta(id_: str) -> dict[str, Any]:
+    if id_ == ficha_lugar.HERRAMIENTA:
+        return {
+            "herramienta": id_,
+            "familia": ficha_lugar.FAMILIA,
+            "pregunta": ficha_lugar.PREGUNTA,
+            "descripcion": " ".join(ficha_lugar.DESCRIPCION.split())[:600],
+            "entrada": ficha_lugar.ESQUEMA_ENTRADA,
+        }
+    h = CATALOGO.herramientas[id_]
+    esquema = esquema_entrada(h)
+    return {
+        "herramienta": h.id,
+        "familia": h.familia,
+        "pregunta": h.pregunta,
+        "descripcion": " ".join(h.descripcion.split())[:600],
+        "entrada": {"properties": esquema["properties"], "required": esquema["required"]},
+        "creditos": h.creditos,
+    }
+
+
+def buscar_herramienta(pregunta: str, familia: str | None = None) -> dict[str, Any]:
+    """Busca en el catálogo de Terranova las herramientas que responden una pregunta y devuelve
+    las mejores con su entrada (propiedades y obligatorias), lista para `consultar`. Familias:
+    {familias}. Si ninguna sirve, busque de nuevo con otras palabras (el tema, la entidad o el
+    dato que se pide) o filtre por `familia`. Sale del catálogo: no consulta fuentes ni gasta
+    créditos."""
+    if familia is not None and familia not in FAMILIAS:
+        raise ToolError(
+            f"parametro_invalido: familia «{familia}»; use una de {', '.join(FAMILIAS)}"
+        )
+    indice = indice_herramientas()
+    hallados = indice.buscar(pregunta, familia)
+    return {
+        "modo": indice.modo,
+        "herramientas": [_resumen_herramienta(d.herramienta) for d in hallados],
+    }
+
+
+async def consultar(herramienta: str, entrada: dict[str, Any] | str) -> ToolResult:
+    """Ejecuta una herramienta del catálogo de Terranova (la que dio `buscar_herramienta`) con su
+    entrada. Responde el sobre rt/1: estado (encontrado, no_encontrado, parcial), datos y
+    procedencia con la licencia. Gasta los créditos de esa herramienta."""
+    if herramienta not in CATALOGO.herramientas and herramienta != ficha_lugar.HERRAMIENTA:
+        parecidos = ids_parecidos(CATALOGO, herramienta)
+        pista = f"; ¿quiso decir {', '.join(parecidos)}?" if parecidos else ""
+        raise ToolError(f"no_existe: no hay herramienta «{herramienta}»{pista}")
+    if isinstance(entrada, str):  # algunos modelos mandan el objeto como texto JSON
+        try:
+            entrada = json.loads(entrada or "{}")
+        except json.JSONDecodeError as exc:
+            raise ToolError("parametro_invalido: `entrada` debe ser un objeto JSON") from exc
+    if not isinstance(entrada, dict):
+        raise ToolError("parametro_invalido: `entrada` debe ser un objeto JSON")
+    return await _correr(herramienta, entrada)
+
+
+def crear_servidor_catalogo(*, con_ciclo: bool = True) -> FastMCP:
+    """`/mcp/catalogo`: buscar_herramienta, consultar, fuente_describir y los resolvedores."""
+    servidor = FastMCP(
+        f"terranova-{PERFIL_CATALOGO}",
+        instructions=INSTRUCCIONES_CATALOGO,
+        lifespan=_ciclo if con_ciclo else None,
+    )
+    solo_lectura = ToolAnnotations(read_only_hint=True, idempotent_hint=True)
+    servidor.tool(
+        buscar_herramienta,
+        description=" ".join(buscar_herramienta.__doc__.split()).format(  # type: ignore[union-attr]
+            familias=perfil_catalogo.mapa_de_familias(CATALOGO)
+        ),
+        annotations=solo_lectura.model_copy(update={"open_world_hint": False}),
+        tags={"catalogo"},
+    )
+    servidor.tool(
+        consultar,
+        annotations=solo_lectura.model_copy(update={"open_world_hint": True}),
+        tags={"catalogo"},
+    )
+    for id_ in sorted(HERRAMIENTAS_COMUNES):
+        servidor.add_tool(HerramientaDelCatalogo.desde(CATALOGO.herramientas[id_]))
+    servidor.tool(
+        fuente_describir,
+        annotations=solo_lectura.model_copy(update={"open_world_hint": False}),
+        tags={"catalogo"},
+    )
+    indice_herramientas()
+    return servidor
+
+
+INSTRUCCIONES_CATALOGO = (
+    "Fuentes oficiales colombianas con procedencia y licencia en cada respuesta (contrato rt/1). "
+    "Para responder: 1) `buscar_herramienta` con la pregunta; 2) `consultar` con el id y la "
+    "entrada que trae el resultado. Si el resultado no sirve, busque otra vez con otras palabras. "
+    "Para pasar un nombre de municipio a su código DIVIPOLA use `dane_divipola_buscar`; para el "
+    "NIT de una entidad pública, `secop_entidades_municipio`. No suponga códigos."
+)
