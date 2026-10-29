@@ -52,7 +52,7 @@ async def test_por_defecto_el_poligono_es_su_envolvente(mcp: Client[Any]) -> Non
     rasgo = _rasgo(sobre)
     assert rasgo["geometry"] is None
     assert rasgo["bbox"] == [-74.03, 4.86, -74.02, 4.87]
-    assert rasgo["properties"]["codigo_predial"] == sobre.datos["codigo_predial"]
+    assert rasgo["properties"] == {"elemento": 0}  # los atributos ya van en `datos`
     assert AVISO_GEOMETRIA in sobre.avisos
 
 
@@ -61,6 +61,7 @@ async def test_con_geometria_true_viene_completa(mcp: Client[Any]) -> None:
     r = await mcp.call_tool(PREDIO, CHIA | {GEOMETRIA: True})
     sobre = Sobre.model_validate(r.structured_content)
     assert _rasgo(sobre)["geometry"]["coordinates"] == [ANILLO]
+    assert _rasgo(sobre)["properties"]["codigo_predial"] == sobre.datos["codigo_predial"]
     assert AVISO_GEOMETRIA not in sobre.avisos
 
 
@@ -110,3 +111,13 @@ async def test_los_puntos_quedan_y_datos_no_cambia() -> None:
 async def _completo() -> Sobre:
     puerta.usar_conectores({"arcgis-mcp": ConectorFalso({14: [PREDIO_POLIGONO]})})
     return await puerta.ejecutar(PREDIO, CHIA | {GEOMETRIA: True})
+
+
+@pytest.mark.anyio
+async def test_en_una_lista_cada_rasgo_apunta_a_su_elemento() -> None:
+    try:
+        completo = await _completo()
+    finally:
+        puerta.usar_conectores(None)
+    lista = completo.model_copy(update={"datos": {"elementos": [{"otro": 1}, completo.datos]}})
+    assert _rasgo(resumir_geometria(lista))["properties"] == {"elemento": 1}

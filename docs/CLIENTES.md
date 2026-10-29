@@ -191,7 +191,7 @@ Campos del sobre:
 | `datos` | el resultado |
 | `huella` | `sha256` de `datos`, para verificar que no cambió |
 | `avisos` | lo que debe saber: total desconocido, datos no recientes, copia vencida… |
-| `geo_result` | las geometrías, en EPSG:4326 (lon, lat). Los puntos llegan completos; cada polígono o línea, como su envolvente (`bbox`, con `geometry: null`), salvo que pida `geometria: true` |
+| `geo_result` | las geometrías, en EPSG:4326 (lon, lat). Los puntos llegan completos; cada polígono o línea, como su envolvente (`bbox`, con `geometry: null`) y con `properties.elemento`, su posición en `datos`, salvo que pida `geometria: true` |
 | `procedencia` | una entrada por fuente consultada (detalle abajo) |
 
 Cada entrada de `procedencia` trae:

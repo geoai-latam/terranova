@@ -29,8 +29,8 @@ ESQUEMA_GEOMETRIA: Final[dict[str, Any]] = {
     "completos.",
 }
 AVISO_GEOMETRIA = (
-    "Geometría resumida: cada polígono o línea va como su envolvente (bbox). Pida "
-    "`geometria: true` para la forma completa."
+    "Geometría resumida: cada polígono o línea va como su envolvente (bbox), con sus atributos en "
+    "`datos` (`properties.elemento` es su posición). Pida `geometria: true` para la forma completa."
 )
 CRS_PERMITIDOS = ("EPSG:4326", "EPSG:9377")
 
@@ -316,9 +316,12 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
     """Cada polígono o línea de `geo_result` como su envolvente, con `geometry: null` y `bbox`
     (RFC 7946 §5); los puntos quedan. Un polígono pesa de 20 a 300 KB y los clientes MCP no se lo
     pasan al modelo: Claude Code lo manda a un archivo y el agente no ve los datos (ADR-0032).
-    `datos` y la huella no cambian."""
+    Las propiedades repiten un elemento de `datos`: van como su posición (`elemento`), que con
+    169 áreas protegidas era otro 60 % del sobre. `datos` y la huella no cambian."""
     if sobre.geo_result is None:
         return sobre
+    elementos = sobre.datos.get("elementos")
+    lista = elementos if isinstance(elementos, list) else [sobre.datos]
     artefactos, resumido = [], False
     for art in sobre.geo_result.artifacts:
         datos = art.data
@@ -329,6 +332,11 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
                 if isinstance(g, dict) and g.get("type") not in ("Point", "MultiPoint"):
                     caja = _envolvente(g.get("coordinates"))
                     rasgo = {**rasgo, "geometry": None} | ({"bbox": caja} if caja else {})
+                    posicion = next(
+                        (i for i, e in enumerate(lista) if e == rasgo.get("properties")), None
+                    )
+                    if posicion is not None:
+                        rasgo["properties"] = {"elemento": posicion}
                     resumido = True
                 rasgos.append(rasgo)
             datos = {**datos, "features": rasgos}
