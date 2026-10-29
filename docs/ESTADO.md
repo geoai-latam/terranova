@@ -99,7 +99,13 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   organización, la tabla de errores es la del código y el soporte excluye festivos.
 - **Siguiente:** llevar el lenguaje de la landing a las páginas interiores (todavía con rótulos
   de cejilla y etiquetas en mayúsculas).
-- **Pendiente del dueño:** desplegar (`git pull` y reiniciar Caddy en la VPS), el buzón
+- **Desplegado (2026-10-29):** la VPS quedó en #201. Caddy hubo que recrearlo
+  (`docker compose up -d --no-deps caddy`): llevaba la configuración anterior a #190 sin el montaje
+  `/srv/web` y todo el sitio daba 404. Verificado por https://terrnova.com: las páginas, las
+  escenas, `/v1` y `/mcp` (401 sin llave). Las ramas fusionadas se borraron.
+- **Sistema de diseño:** `docs/DISENO.md` (reglas que no se leen en el CSS). Para ver el sitio en
+  local: `web/servir.py` y `web/capturar.py`.
+- **Pendiente del dueño:** el buzón
   soporte@terrnova.com que reciben los formularios por correo, el logo oficial de Atalaya Mapas,
   el texto legal definitivo y la URL de Inspow para «Empieza gratis», que hoy pide la llave por
   correo.

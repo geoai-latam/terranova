@@ -36,3 +36,4 @@ docker/respaldos/
 
 # excepción: el CA intermedio PÚBLICO que web-mcp añade al bundle (no es secreto)
 !conectores/services/web_mcp/certificados/*.pem
+capturas/
