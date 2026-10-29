@@ -59,6 +59,20 @@ def test_filtra_por_familia() -> None:
     assert hallados and {d.familia for d in hallados} == {"contratacion"}
 
 
+def test_la_ficha_va_despues_de_la_capa_especifica() -> None:
+    docs = [
+        Documento("ficha_lugar", "territorio", "ficha lugar resguardo area protegida cobertura"),
+        Documento("ant_resguardos_en_punto", "territorio", "resguardo indigena en punto"),
+        Documento("otra", "territorio", "resguardo"),
+    ]
+    assert _ids(IndiceHerramientas(docs), "resguardo indigena ficha lugar")[0] == "ficha_lugar"
+    assert _ids(IndiceHerramientas(docs), "resguardo indigena en este punto") == [
+        "ant_resguardos_en_punto",
+        "otra",
+        "ficha_lugar",
+    ]
+
+
 def test_bm25_sin_tildes_ni_plurales_ni_numeros() -> None:
     bm25 = Bm25(["Contratación pública del municipio", "Clima diario de la estación en 2024"])
     a, b = bm25.puntajes("contratos municipales de 2024")

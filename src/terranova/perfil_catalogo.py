@@ -167,6 +167,11 @@ class IndiceHerramientas:
             for i, pos in r.items():
                 puntaje[i] = puntaje.get(i, 0.0) + 1.0 / (_RRF + pos)
         orden = sorted(puntaje, key=lambda i: -puntaje[i])
+        # la ficha casa con toda pregunta de un punto (su texto nombra todas sus partes): si no es
+        # la primera, va al final, para que el agente vea antes la capa específica (banco de
+        # escala: con la específica primera, eligió la ficha de t11 a t15)
+        resumen = [i for i in orden[1:] if self.docs[i].herramienta == ficha_lugar.HERRAMIENTA]
+        orden = [i for i in orden if i not in resumen] + resumen
         if familia:
             orden = [i for i in orden if self.docs[i].familia == familia]
         return [self.docs[i] for i in orden[:k]]

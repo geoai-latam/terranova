@@ -55,7 +55,10 @@ DESCRIPCION = (
     "campesina (ANT), vocación, capacidad y conflictos de uso del suelo (IGAC), cobertura (ESA "
     "WorldCover), sismos M≥3 del último año a ~55 km (USGS), población (DANE) y precio de la "
     "tierra rural (UPRA). Partes en paralelo, cada una con su procedencia y licencia; si una "
-    "falla, la ficha sale «parcial» con el error de esa parte. Tope de 12 s."
+    "falla, la ficha sale «parcial» con el error de esa parte. Tope de 12 s. Es el resumen de "
+    "todo un lugar: si la pregunta es por una sola capa o por una zona (áreas protegidas en un "
+    "rectángulo, el resguardo, la cobertura, los sismos de una región), use la herramienta de esa "
+    "capa."
 )
 Punto = tuple[float, float]
 _EN_SEGUNDO_PLANO: set[asyncio.Future[Any]] = set()
@@ -153,7 +156,8 @@ ESQUEMA_ENTRADA: dict[str, Any] = {
         "codigo": {
             "type": "string",
             "pattern": r"^[0-9]{30}$",
-            "description": "Número predial nacional (30 dígitos)",
+            "description": "Número predial nacional (30 dígitos). Solo sin punto: con lon y lat,"
+            " no se envía",
         },
     },
     "additionalProperties": False,
@@ -429,7 +433,11 @@ async def ficha(
         predio = None
         tarea_predio = asyncio.ensure_future(una(PREDIO_EN_PUNTO, _punto(punto, hoy)))
     else:
-        raise ErrorEntrada("entrada", "se espera {lon, lat} o {codigo}")
+        # el banco de escala vio al agente rellenar `codigo` con ceros junto al punto, seis veces
+        # seguidas: el error dice qué quitar
+        raise ErrorEntrada(
+            "entrada", "envíe solo {lon, lat} o solo {codigo}, no los dos (sin codigo si hay punto)"
+        )
 
     async def segunda_etapa() -> list[tuple[Parte, Sobre | ErrorEjecucion]]:
         nonlocal predio
