@@ -29,7 +29,15 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
-from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
+from terranova.contrato import (
+    ESQUEMA_GEOMETRIA,
+    GEOMETRIA,
+    HTTP_DE,
+    PATRON_TEXTO_LIMPIO,
+    Problema,
+    Sobre,
+    nueva_solicitud_id,
+)
 from terranova.cuota import NIVELES, mes, reinicio
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -76,11 +84,32 @@ def _tipo(nombre: str, tipo: str) -> Any:
     return Annotated[str, Field(max_length=200, pattern=PATRON_TEXTO_LIMPIO)]
 
 
+# opcional y sin `null` en el esquema (Schemathesis): ausente es la envolvente (ADR-0032)
+_CAMPO_GEOMETRIA: Any = (
+    bool | SkipJsonSchema[None],  # type: ignore[misc]  # un tipo como valor (create_model)
+    Field(default=None, description=ESQUEMA_GEOMETRIA["description"]),
+)
+
+
+class _EntradaRest(BaseModel):
+    # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _sin_nulos(cls, datos: Any) -> Any:
+        # un opcional ausente se omite: `null` no está en el esquema (Schemathesis)
+        if isinstance(datos, dict) and (nulos := [k for k, v in datos.items() if v is None]):
+            raise ValueError(f"{', '.join(nulos)}: se omite, no se manda null")
+        return datos
+
+
 def modelo_entrada(h: Herramienta) -> type[BaseModel]:
     campos: dict[str, Any] = {n: (_tipo(n, t), ...) for n, t in h.entrada.items()}
+    if puerta.trae_geometria(h):
+        campos[GEOMETRIA] = _CAMPO_GEOMETRIA
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
-    # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
-    return create_model(nombre, __config__=ConfigDict(extra="forbid", strict=True), **campos)
+    return create_model(nombre, __base__=_EntradaRest, **campos)
 
 
 def problema(
@@ -104,27 +133,19 @@ def problema(
     )
 
 
-class FichaEntrada(BaseModel):
+class FichaEntrada(_EntradaRest):
     """Un punto (`lon`, `lat`) o un número predial (`codigo`), no los dos."""
 
-    model_config = ConfigDict(
-        extra="forbid",
-        strict=True,
-        json_schema_extra={"oneOf": ficha_lugar.ALTERNATIVAS_ENTRADA},
-    )
+    model_config = ConfigDict(json_schema_extra={"oneOf": ficha_lugar.ALTERNATIVAS_ENTRADA})
     # sin `null` en el esquema: un campo ausente se omite, no se manda vacío (Schemathesis)
     lon: Annotated[float, Field(ge=-180, le=180)] | SkipJsonSchema[None] = None
     lat: Annotated[float, Field(ge=-90, le=90)] | SkipJsonSchema[None] = None
     codigo: (
         Annotated[str, Field(pattern=PATRONES_ENTRADA["codigo_predial"])] | SkipJsonSchema[None]
     ) = None
-
-    @model_validator(mode="before")
-    @classmethod
-    def _sin_nulos(cls, datos: Any) -> Any:
-        if isinstance(datos, dict) and (nulos := [k for k, v in datos.items() if v is None]):
-            raise ValueError(f"{', '.join(nulos)}: se omite, no se manda null")
-        return datos
+    geometria: bool | SkipJsonSchema[None] = Field(
+        default=None, description=ESQUEMA_GEOMETRIA["description"]
+    )
 
 
 def _ruta(ficha: str, Entrada: type[BaseModel]) -> Callable[..., Awaitable[Any]]:

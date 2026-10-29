@@ -25,6 +25,8 @@ from itertools import pairwise
 from typing import Any, cast
 
 from terranova.contrato import (
+    ESQUEMA_GEOMETRIA,
+    GEOMETRIA,
     Artefacto,
     Cache,
     CodigoError,
@@ -159,6 +161,7 @@ ESQUEMA_ENTRADA: dict[str, Any] = {
             "description": "Número predial nacional (30 dígitos). Solo sin punto: con lon y lat,"
             " no se envía",
         },
+        GEOMETRIA: ESQUEMA_GEOMETRIA,
     },
     "additionalProperties": False,
 }
