@@ -127,7 +127,8 @@ verdades:
     medicion: "datos.gov.co hp9r-jxuu, where por latitud/longitud"
   - id: t17
     familia: territorio
-    pregunta: "¿Cuántos sismos de magnitud 4 o más hubo en Colombia y alrededores en 2024, y cuál fue el mayor?"
+    # la cifra depende del rectángulo: «Colombia y alrededores» sin él no tiene una sola verdad
+    pregunta: "¿Cuántos sismos de magnitud 4 o más hubo en 2024 en el rectángulo -79.1, -4.3, -66.8, 13.5 (Colombia y alrededores), y cuál fue el mayor?"
     herramienta: usgs_sismos_en_zona
     entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-01-01", hasta: "2025-01-01", magnitud_min: 4.0}
     verdad: {total_en_catalogo: 139, magnitud_maxima: 5.6}
@@ -436,6 +437,7 @@ verdades:
     pregunta: "¿Cuál es la TRM de los últimos días?"
     herramienta: banrep_trm_recientes
     entrada: {ultimas: 5}
+    libres: [ultimas]  # «los últimos días» no dice cuántos
     verdad: {unidad: COP, frecuencia: D}
     medicion: "BanRep SDMX, serie TRM"
   - id: s10

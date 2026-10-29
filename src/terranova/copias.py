@@ -370,7 +370,9 @@ def descargar_arcgis(
     copia = fuente.copia
     url = f"{fuente.url}/{copia.capa}/query"
     columnas = list(fuente.campos)
-    filtro = copia.filtro or "1=1"  # una parte de la capa, si la ficha lo declara
+    # una parte de la capa, si la ficha lo declara; si no, toda: por la clave, que nunca es nula,
+    # y no con `1=1`, que el geoportal del DANE rechaza con un 500 (como cualquier paréntesis)
+    filtro = copia.filtro or f"{copia.clave} IS NOT NULL"
     base: dict[str, Any] = {
         "outFields": ",".join(columnas),
         "returnGeometry": "true" if copia.espacial else "false",

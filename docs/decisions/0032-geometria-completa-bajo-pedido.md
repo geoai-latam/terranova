@@ -40,8 +40,9 @@
   4. `geometria: true` devuelve el sobre como antes.
 - **Resultado:** el banco con cliente real volvió a correr con esto desplegado. Perfil, catálogo y
   `/mcp` completo pasaron de 82–83 % a 88 % de éxito, y de 93–97 % a 98 % de herramienta correcta.
-  Queda una lista de 169 elementos (t11) sobre el tope: el siguiente paso es paginar las listas
-  largas.
+  Queda una lista de 169 elementos (t11) sobre el tope: la resuelve la
+  [ADR-0033](0033-listas-largas-por-paginas.md), que pagina las listas largas y deja también los
+  puntos apuntando a su elemento.
 - **Consecuencias:**
   - **Cambio visible para los clientes REST** que dibujaban polígonos: deben pedir
     `geometria: true`. Hoy no hay clientes de pago (ADR-0020), y GEO Copilot todavía no consume

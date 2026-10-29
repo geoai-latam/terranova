@@ -38,11 +38,14 @@ from terranova.catalogo import (
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
+    ESQUEMA_PAGINA,
     GEOMETRIA,
+    PAGINA,
     PATRON_TEXTO_LIMPIO,
     Sobre,
     huella,
     nueva_solicitud_id,
+    paginar,
     resumir_geometria,
 )
 from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
@@ -147,6 +150,12 @@ def admite_geometria(ficha: str) -> bool:
     return ficha == ficha_lugar.HERRAMIENTA or (h is not None and trae_geometria(h))
 
 
+def pagina_lista(ficha: str) -> bool:
+    """Devuelve una lista en `datos.elementos`: solo estas aceptan `pagina` (ADR-0033)."""
+    h = CATALOGO.herramientas.get(ficha)
+    return h is not None and h.consulta.forma == "lista"
+
+
 def esquema_entrada(h: Herramienta) -> dict[str, Any]:
     propiedades = {}
     for nombre, tipo in h.entrada.items():
@@ -158,6 +167,8 @@ def esquema_entrada(h: Herramienta) -> dict[str, Any]:
         propiedades[nombre] = esquema
     if trae_geometria(h):
         propiedades[GEOMETRIA] = ESQUEMA_GEOMETRIA
+    if pagina_lista(h.id):
+        propiedades[PAGINA] = ESQUEMA_PAGINA
     return {
         "type": "object",
         "properties": propiedades,
@@ -259,14 +270,23 @@ async def ejecutar(
         ficha if ficha in CATALOGO.herramientas or ficha == ficha_lugar.HERRAMIENTA else "otra"
     )
     inicio = time.monotonic()
-    completa = False
+    completa, pagina = False, 1
     try:
         if GEOMETRIA in entrada and admite_geometria(ficha):
             entrada = dict(entrada)
             completa = entrada.pop(GEOMETRIA)
             if not isinstance(completa, bool):
                 raise ErrorEntrada(GEOMETRIA, "debe ser true o false")
+        if PAGINA in entrada and pagina_lista(ficha):
+            entrada = dict(entrada)
+            pagina = entrada.pop(PAGINA)
+            if not isinstance(pagina, int) or isinstance(pagina, bool) or pagina < 1:
+                raise ErrorEntrada(PAGINA, "debe ser un entero desde 1")
         sobre = await _ejecutar(ficha, entrada, principal)
+        try:
+            sobre = paginar(sobre, pagina)  # la caché y la idempotencia guardan la lista entera
+        except ValueError as exc:
+            raise ErrorEntrada(PAGINA, str(exc)) from exc
     except ValidationError as exc:
         # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
         # rotulado): es la fuente la que respondió algo inválido, no un error nuestro ni «no hay».

@@ -394,7 +394,9 @@ class ArcgisFalso:
         if params.get("returnCountOnly"):
             return _Respuesta(self.conteo)
         donde = params["where"]
-        desde = -1 if donde == "1=1" or self.desordenada else int(donde.split(">")[1])
+        desde = (
+            -1 if donde.endswith("IS NOT NULL") or self.desordenada else int(donde.split(">")[1])
+        )
         claves = [c for c in (3 * i + 1 for i in range(self.n)) if c > desde]
         rasgos = [
             {
@@ -419,7 +421,9 @@ def test_descargar_arcgis_pagina_por_la_clave_hasta_vaciar() -> None:
     assert set(params["outFields"].split(",")) == set(RUNAP.campos)
     assert paginas[0][0]["_geom"]["type"] == "Polygon" and paginas[0][0]["ap_nombre"] == "Área 1"
     # por la clave, no por desplazamiento: la segunda página arranca tras la última clave vista
-    assert params["where"] == "1=1" and http.pedidos[2][1]["where"] == "objectid > 73"
+    # sin paréntesis ni `1=1`: el geoportal del DANE rechaza los dos con un 500
+    assert params["where"] == "objectid IS NOT NULL"
+    assert http.pedidos[2][1]["where"] == "objectid > 73"
     assert "resultOffset" not in http.pedidos[2][1]
     vistas = [f["objectid"] for p in paginas for f in p]
     assert len(set(vistas)) == 60  # ni repetidas ni perdidas pese a los huecos

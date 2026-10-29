@@ -83,6 +83,9 @@ en contexto, no la precisión.
 - **Geometría:** por MCP, como por REST, cada polígono llega como su envolvente (`bbox`). Pida
   `geometria: true` solo si va a dibujar la forma completa: un polígono pesa de 20 a 300 KB y la
   mayoría de los clientes no se lo pasan al modelo.
+- **Listas largas:** si `datos.elementos` pasa de 50, llega por páginas de 50 (ADR-0033), con un
+  aviso que dice cuántos hay y cómo pedir la siguiente (`pagina: 2`). Los totales y agregados de
+  `datos` cuentan la lista completa.
 - **Tarjeta del servidor:** `/.well-known/mcp/server-card.json`.
 
 Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
@@ -188,10 +191,10 @@ Campos del sobre:
 
 | Campo | Contenido |
 |---|---|
-| `datos` | el resultado |
+| `datos` | el resultado. Una lista de más de 50 elementos llega por páginas (`pagina: 2`, …); sus totales cuentan todos |
 | `huella` | `sha256` de `datos`, para verificar que no cambió |
 | `avisos` | lo que debe saber: total desconocido, datos no recientes, copia vencida… |
-| `geo_result` | las geometrías, en EPSG:4326 (lon, lat). Los puntos llegan completos; cada polígono o línea, como su envolvente (`bbox`, con `geometry: null`) y con `properties.elemento`, su posición en `datos`, salvo que pida `geometria: true` |
+| `geo_result` | las geometrías, en EPSG:4326 (lon, lat). Los puntos llegan completos; cada polígono o línea, como su envolvente (`bbox`, con `geometry: null`). Cada rasgo lleva en `properties.elemento` su posición en `datos`, salvo que pida `geometria: true` |
 | `procedencia` | una entrada por fuente consultada (detalle abajo) |
 
 Cada entrada de `procedencia` trae:

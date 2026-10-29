@@ -196,12 +196,15 @@ def test_divipola_por_nombre_ambiguo_lista_los_codigos() -> None:
 
 class _FilaVaciaTabla:
     """La fuente devuelve una fila pero vacía (ninguna columna de la lista blanca): todos los campos
-    mapean a None (WS2). Tabla sin geometría (dane.cnpv2018 vía dane-mcp)."""
+    mapean a None (WS2). Tabla sin geometría (dane.cnpv2018, por su copia)."""
 
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         return {
             "artifacts": [{"kind": "table", "columns": [], "rows": [{}]}],
-            "facts": {"completitud": {"vistos": 1, "total": 1, "truncado": False}},
+            "facts": {
+                "completitud": {"vistos": 1, "total": 1, "truncado": False},
+                "consultado_en": "2026-10-29T13:00:00+00:00",  # de cuándo es la copia
+            },
         }
 
 
@@ -211,7 +214,7 @@ async def test_fila_con_todo_none_es_no_encontrado() -> None:
     todos a None (forma «uno», sin derivados) se reporta honestamente como `no_encontrado`."""
     from terranova.ejecutor import Ejecutor
 
-    ej = Ejecutor(CATALOGO, {"dane-mcp": _FilaVaciaTabla()})
+    ej = Ejecutor(CATALOGO, {"copia": _FilaVaciaTabla()})
     sobre = await ej.ejecutar(
         "dane_poblacion_municipio", {"municipio_divipola": "25175"}, plan="evaluacion"
     )

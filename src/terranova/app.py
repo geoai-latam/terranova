@@ -31,8 +31,10 @@ from terranova import metricas, puerta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
+    ESQUEMA_PAGINA,
     GEOMETRIA,
     HTTP_DE,
+    PAGINA,
     PATRON_TEXTO_LIMPIO,
     Problema,
     Sobre,
@@ -90,6 +92,11 @@ _CAMPO_GEOMETRIA: Any = (
     Field(default=None, description=ESQUEMA_GEOMETRIA["description"]),
 )
 
+_CAMPO_PAGINA: Any = (
+    int | SkipJsonSchema[None],  # type: ignore[misc]
+    Field(default=None, ge=1, description=ESQUEMA_PAGINA["description"]),
+)
+
 
 class _EntradaRest(BaseModel):
     # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
@@ -108,6 +115,8 @@ def modelo_entrada(h: Herramienta) -> type[BaseModel]:
     campos: dict[str, Any] = {n: (_tipo(n, t), ...) for n, t in h.entrada.items()}
     if puerta.trae_geometria(h):
         campos[GEOMETRIA] = _CAMPO_GEOMETRIA
+    if puerta.pagina_lista(h.id):
+        campos[PAGINA] = _CAMPO_PAGINA  # ausente es la primera (ADR-0033)
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
     return create_model(nombre, __base__=_EntradaRest, **campos)
 

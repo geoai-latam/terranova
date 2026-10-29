@@ -118,16 +118,22 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     eran 82–83 % y 93–97 %;
   - tokens por pregunta: 21 139, 31 702 y 33 757;
   - se arreglaron t06 y t12 (geometría) y t21 y t22 (descripciones UPRA).
-- **Abierto:**
-  - **Las listas grandes:** t11 (169 áreas protegidas) sigue sobre el tope de Claude Code. Son
-    ~59 000 caracteres, de los que 37 000 son `datos`. Con `/mcp` completo, Opus partió el
-    rectángulo en cuatro y llegó a 169. La siguiente palanca es paginar o resumir las listas largas
-    en `datos`.
-  - Las fallas comunes a todo, que no dependen del modo:
-    - el `bbox` de t16 y t17;
-    - t18;
-    - la TRM de s09;
-    - t20, por el DANE caído.
+- **Listas largas y fallas comunes (2026-10-29, ADR-0033):**
+  - **Listas por páginas:** si `datos.elementos` pasa de 50, sale por páginas de 50 (parámetro
+    común `pagina`), con un aviso que dice cómo seguir. Los totales de `datos` cuentan todo.
+  - Los puntos de `geo_result` también apuntan a su elemento (`properties.elemento`).
+  - Medido sobre los sobres reales de producción: t11 pasa de 59 538 a 19 141 caracteres y t17 de
+    39 025 a 15 310, con `total: 169` y `total_en_catalogo: 139` intactos.
+  - **t20 (censo 2018):** el geoportal del DANE no abre conexión desde la VPS (desde Colombia
+    responde en 0,3 s). `dane.cnpv2018.municipio` pasa a copia del origen `arcgis` sin geometría:
+    1 122 municipios en 3 s, bajados desde Colombia. Ese servidor rechaza `1=1` y los paréntesis
+    con un 500, así que la copia ArcGIS sin filtro pide ahora `clave IS NOT NULL`.
+  - **Evaluador del banco:** acepta una entrada equivalente:
+    - un `bbox` a ≤ 0,1° por borde (t16, t18);
+    - un `hasta` del día siguiente (rango excluido, t18);
+    - `3` igual a `3.0`;
+    - las entradas `libres` de la verdad (s09: «los últimos días» no dice cuántos).
+  - t17 nombra su rectángulo: la cifra depende de él.
 
 ## Auditoría integral (2026-10-26)
 
