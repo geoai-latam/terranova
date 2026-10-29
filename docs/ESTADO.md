@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-28.*
+*Actualizado: 2026-10-29.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -47,6 +47,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Sitio público (2026-10-29, #190)
+
+- **Qué:** la cara pública de terrnova.com con el sistema de diseño v4: fondo claro, Geist, y 3D
+  con datos reales (predios de Santa Marta y un mapa hexagonal de cobertura). Páginas: `/`,
+  `/servicios`, `/fuentes` (buscador del catálogo), `/precios`, `/desarrolladores`, `/aliados`,
+  `/contacto`, `/terminos` y `/privacidad` (ambas en revisión legal) y `404`. `/estado` sigue
+  saliendo de la puerta (`pagina_estado.py`), ya con el mismo lenguaje visual.
+- **Cómo:** `web/construir.py` genera `web/publico/` desde el catálogo real; ninguna cifra se
+  escribe a mano. Se regenera con `uv run python web/construir.py` tras cambiar el catálogo, y
+  `tests/test_web.py` falla si las páginas quedan viejas. Caddy sirve el sitio con `file_server`
+  (matcher `@sitio`, montado en `/srv/web`); el resto va a la puerta igual que antes.
+- **Validado:** capturas con Edge headless a 1440 y 390 px sin desborde horizontal, el Caddyfile
+  probado en un contenedor y `make check` en verde.
+- **Pendiente del dueño:** desplegar (`git pull` y reiniciar Caddy en la VPS), el buzón
+  soporte@terrnova.com que reciben los formularios por correo, el logo oficial de Atalaya Mapas,
+  el texto legal definitivo y la URL de Inspow para «Probar gratis», que hoy pide la llave por
+  correo.
 
 ## MCP a escala (2026-10-28 a 29, #183–#187, ADR-0031)
 
