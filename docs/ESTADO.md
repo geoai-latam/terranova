@@ -48,6 +48,28 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## MCP a escala (2026-10-28, #183–#184, ADR-0031)
+
+- **Pregunta:** con 209 herramientas, ¿sigue siendo MCP plano el camino? Se investigó cómo lo
+  resuelven otros proveedores y clientes, y se midió con el banco de escala
+  (`scripts/banco_mcp_escala.py`, gpt-5.4-mini, 60 preguntas, cinco escenarios contra `terrnova.com`).
+- **Resultado (éxito con el evaluador corregido / herramienta correcta / tokens por pregunta):**
+  - perfil por familia: 87 % / 98 % / 22 488;
+  - plano: 82 % / 93 % / 94 923;
+  - catálogo: 72 % / 77 % / 11 004;
+  - búsqueda por familias: 72 % / 82 % / 8 872;
+  - búsqueda: 70 % / 82 % / 8 996.
+- **Decisión (ADR-0031):** se mantienen las herramientas tipadas. El perfil por familia es la vía
+  recomendada y `/mcp` completo sigue. `/mcp/catalogo` (buscar → consultar, nuevo en #183) queda en
+  beta hasta ≥ 85 %. La confirmación de la ADR-0006 queda cumplida.
+- **Evaluador:** el banco contaba como falla un municipio dicho por su nombre, aunque la puerta lo
+  resuelve. Ahora compara la entrada como la ve la puerta.
+- **Hallazgos abiertos del banco:**
+  - el buscador del catálogo pone `ficha_lugar` arriba en preguntas de un punto;
+  - las descripciones hermanas SINIC/IGAC y las dos de UPRA se confunden;
+  - el agente rellena `codigo` de `ficha_lugar` con ceros;
+  - `fuente_describir` recibe ids con punto o nombres de familia.
+
 ## Auditoría integral (2026-10-26)
 
 Una auditoría integral del código y el comportamiento encontró, por impacto: disponibilidad de la
