@@ -5,7 +5,8 @@ fuente: upra.rango_precios_nacional
 pregunta: "¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA?"
 descripcion: >
   Rangos de precio comercial de la tierra rural agropecuaria de un municipio (DIVIPOLA) según la
-  UPRA, por año de estudio: hectáreas y número de zonas en cada rango.
+  UPRA, por año de estudio: hectáreas y número de zonas en cada rango, sin el total. Para el total
+  de hectáreas con precio de un municipio del estudio de 2022: upra_precio_tierra_rural_municipio.
   Cubre 18 departamentos con estudios de 2015 a 2023; las categorías E-… (zonas urbanas,
   resguardos) son exclusiones, no precios.
   Sale de la copia de Terranova de la capa de la UPRA.

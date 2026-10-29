@@ -66,7 +66,7 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   el texto legal definitivo y la URL de Inspow para «Probar gratis», que hoy pide la llave por
   correo.
 
-## MCP a escala (2026-10-28 a 29, #183–#187, ADR-0031)
+## MCP a escala (2026-10-28 a 29, #183–#189, ADR-0031 y ADR-0032)
 
 - **Pregunta:** con 209 herramientas, ¿sigue siendo MCP plano el camino? Se investigó cómo lo
   resuelven otros proveedores y clientes, y se midió con el banco de escala
@@ -96,10 +96,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Arreglo (#187): se corrigió el mapa y el filtro ya no oculta el mejor resultado.
   - Tercera corrida, desplegado: 51 de 60 (85 %, 93 % de herramienta correcta, ~10 500 tokens por
     pregunta). **Sale de beta.**
-- **Siguiente:** la guía de conexión por cliente:
-  - ChatGPT, Windsurf y n8n van a `/mcp/catalogo` o a un perfil;
-  - Claude, Cursor y VS Code van a un perfil o a `/mcp`.
-- **Abierto:** las dos herramientas de UPRA se confunden (t21, t22).
+- **Cliente real (2026-10-29, `scripts/banco_claude_code.py`):** Opus 5.5 desde Claude Code en
+  modo headless, 180 corridas.
+  - **Resultados** (éxito / herramienta correcta / tokens por pregunta):
+    - perfil: 83 % / 97 % / 22 897;
+    - catálogo: 82 % / 93 % / 32 574;
+    - `/mcp` completo: 82 % / 93 % / 34 534.
+  - **El modelo no era el problema:** Opus acierta lo mismo que el mini.
+  - Con Claude, `/mcp` completo sale barato, porque busca sus herramientas.
+  - **Hallazgo:** la geometría completa (de 25 000 a 294 000 caracteres) no le llega al modelo.
+- **Geometría bajo pedido (ADR-0032):** el parámetro común `geometria`. Por defecto, cada polígono
+  o línea sale como su envolvente (`bbox`); los puntos salen completos. Es igual en MCP y en REST.
+- **Guía para clientes** (`docs/CLIENTES.md`): qué URL usar según el cliente.
+- **Banco:**
+  - t06 pregunta ahora por la base pública del gestor IGAC, porque SINIC también es del IGAC y sí
+    cubre Bogotá;
+  - t22 acepta `upra_rangos_precio_municipio`;
+  - las dos UPRA dicen qué trae cada una (el total o el desglose por rango).
+- **Siguiente:** desplegar y volver a correr los dos bancos (mini y Claude Code).
 
 ## Auditoría integral (2026-10-26)
 

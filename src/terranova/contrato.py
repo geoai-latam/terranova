@@ -18,6 +18,20 @@ from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validato
 
 CONTRATO: Final = "rt/1"
 MAX_TEXTO = 4000  # caracteres por campo de texto de la fuente (regla 9)
+
+#: Parámetro común de las herramientas que pueden devolver geometría (ADR-0032).
+GEOMETRIA = "geometria"
+ESQUEMA_GEOMETRIA: Final[dict[str, Any]] = {
+    "type": "boolean",
+    "default": False,
+    "description": "true: el polígono o la línea completa de cada elemento en geo_result (puede "
+    "pesar cientos de KB). Sin él, cada uno sale como su envolvente (bbox); los puntos salen "
+    "completos.",
+}
+AVISO_GEOMETRIA = (
+    "Geometría resumida: cada polígono o línea va como su envolvente (bbox), con sus atributos en "
+    "`datos` (`properties.elemento` es su posición). Pida `geometria: true` para la forma completa."
+)
 CRS_PERMITIDOS = ("EPSG:4326", "EPSG:9377")
 
 Estado = Literal["encontrado", "no_encontrado", "fuera_de_cobertura", "parcial"]
@@ -296,6 +310,57 @@ def _coordenadas_lon_lat(fc: Any) -> None:
     for rasgo in fc.get("features", []):
         geometria = rasgo.get("geometry") or {}
         recorrer(geometria.get("coordinates"))
+
+
+def resumir_geometria(sobre: Sobre) -> Sobre:
+    """Cada polígono o línea de `geo_result` como su envolvente, con `geometry: null` y `bbox`
+    (RFC 7946 §5); los puntos quedan. Un polígono pesa de 20 a 300 KB y los clientes MCP no se lo
+    pasan al modelo: Claude Code lo manda a un archivo y el agente no ve los datos (ADR-0032).
+    Las propiedades repiten un elemento de `datos`: van como su posición (`elemento`), que con
+    169 áreas protegidas era otro 60 % del sobre. `datos` y la huella no cambian."""
+    if sobre.geo_result is None:
+        return sobre
+    elementos = sobre.datos.get("elementos")
+    lista = elementos if isinstance(elementos, list) else [sobre.datos]
+    artefactos, resumido = [], False
+    for art in sobre.geo_result.artifacts:
+        datos = art.data
+        if art.kind == "feature_collection" and isinstance(datos, dict):
+            rasgos = []
+            for rasgo in datos.get("features", []):
+                g = rasgo.get("geometry")
+                if isinstance(g, dict) and g.get("type") not in ("Point", "MultiPoint"):
+                    caja = _envolvente(g.get("coordinates"))
+                    rasgo = {**rasgo, "geometry": None} | ({"bbox": caja} if caja else {})
+                    posicion = next(
+                        (i for i, e in enumerate(lista) if e == rasgo.get("properties")), None
+                    )
+                    if posicion is not None:
+                        rasgo["properties"] = {"elemento": posicion}
+                    resumido = True
+                rasgos.append(rasgo)
+            datos = {**datos, "features": rasgos}
+        artefactos.append(art.model_copy(update={"data": datos}))
+    if not resumido:
+        return sobre
+    geo = sobre.geo_result.model_copy(update={"artifacts": artefactos})
+    return sobre.model_copy(update={"geo_result": geo, "avisos": [*sobre.avisos, AVISO_GEOMETRIA]})
+
+
+def _envolvente(coordenadas: Any) -> list[float] | None:
+    xs: list[float] = []
+    ys: list[float] = []
+
+    def recorrer(c: Any) -> None:
+        if isinstance(c, list) and len(c) >= 2 and all(isinstance(x, int | float) for x in c[:2]):
+            xs.append(float(c[0]))
+            ys.append(float(c[1]))
+        elif isinstance(c, list):
+            for x in c:
+                recorrer(x)
+
+    recorrer(coordenadas)
+    return [min(xs), min(ys), max(xs), max(ys)] if xs else None
 
 
 def nueva_solicitud_id() -> str:

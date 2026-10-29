@@ -36,7 +36,15 @@ from terranova.catalogo import (
     ids_parecidos,
 )
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
-from terranova.contrato import PATRON_TEXTO_LIMPIO, Sobre, huella, nueva_solicitud_id
+from terranova.contrato import (
+    ESQUEMA_GEOMETRIA,
+    GEOMETRIA,
+    PATRON_TEXTO_LIMPIO,
+    Sobre,
+    huella,
+    nueva_solicitud_id,
+    resumir_geometria,
+)
 from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
 from terranova.curado import Restricciones, restricciones_desde_entorno
 from terranova.ejecutor import Ejecutor, Plan
@@ -125,6 +133,20 @@ def mensaje_saldo_agotado(org: str, ahora: float) -> str:
     return mensaje
 
 
+def trae_geometria(h: Herramienta) -> bool:
+    """Puede devolver geometría: lo espacial, las capas ArcGIS y las copias con geometría. Solo
+    estas aceptan `geometria` (ADR-0032)."""
+    f = CATALOGO.fuentes.get(h.fuente)
+    return h.consulta.operacion in ("en_punto", "en_zona") or (
+        f is not None and (f.conector == "arcgis-mcp" or (f.copia is not None and f.copia.espacial))
+    )
+
+
+def admite_geometria(ficha: str) -> bool:
+    h = CATALOGO.herramientas.get(ficha)
+    return ficha == ficha_lugar.HERRAMIENTA or (h is not None and trae_geometria(h))
+
+
 def esquema_entrada(h: Herramienta) -> dict[str, Any]:
     propiedades = {}
     for nombre, tipo in h.entrada.items():
@@ -134,6 +156,8 @@ def esquema_entrada(h: Herramienta) -> dict[str, Any]:
         elif nombre == "lat":
             esquema |= {"minimum": -90, "maximum": 90, "description": "Latitud EPSG:4326"}
         propiedades[nombre] = esquema
+    if trae_geometria(h):
+        propiedades[GEOMETRIA] = ESQUEMA_GEOMETRIA
     return {
         "type": "object",
         "properties": propiedades,
@@ -235,7 +259,13 @@ async def ejecutar(
         ficha if ficha in CATALOGO.herramientas or ficha == ficha_lugar.HERRAMIENTA else "otra"
     )
     inicio = time.monotonic()
+    completa = False
     try:
+        if GEOMETRIA in entrada and admite_geometria(ficha):
+            entrada = dict(entrada)
+            completa = entrada.pop(GEOMETRIA)
+            if not isinstance(completa, bool):
+                raise ErrorEntrada(GEOMETRIA, "debe ser true o false")
         sobre = await _ejecutar(ficha, entrada, principal)
     except ValidationError as exc:
         # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
@@ -251,6 +281,8 @@ async def ejecutar(
         await _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
         metricas.SOLICITUDES.labels(etiqueta, "error", codigo).inc()
         raise
+    if not completa:
+        sobre = resumir_geometria(sobre)
     servido = _servido(sobre)
     await _medir(principal, ficha, sobre.solicitud_id, sobre.creditos, sobre.estado, servido)
     metricas.SOLICITUDES.labels(etiqueta, sobre.estado, "").inc()
