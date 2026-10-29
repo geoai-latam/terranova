@@ -42,11 +42,13 @@ _PALABRAS_VACIAS = frozenset(
 
 def _normalizar(texto: str) -> list[str]:
     """Minúsculas, sin tildes, partido en palabras y recortado a 6 letras: «contratos» y
-    «contratación» caen en «contra», «municipio» y «municipal» en «munici». Burdo pero estable."""
+    «contratación» caen en «contra», «municipio» y «municipal» en «munici». Burdo pero estable.
+    Sin números: un año o un código es el valor de la pregunta, no su tema («contratos de 2024»
+    traía las herramientas cuyas descripciones citan 2024)."""
     plano = unicodedata.normalize("NFKD", texto.lower())
     plano = "".join(c for c in plano if not unicodedata.combining(c))
     palabras = re.findall(r"[a-z0-9]+", plano.replace("_", " "))
-    return [p[:6] for p in palabras if p not in _PALABRAS_VACIAS and len(p) > 1]
+    return [p[:6] for p in palabras if p not in _PALABRAS_VACIAS and len(p) > 1 and not p.isdigit()]
 
 
 @dataclass(frozen=True)
