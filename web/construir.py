@@ -298,16 +298,17 @@ CODIGO = """<div class="codigo">
 </div>"""
 
 
-def planes_html(dest="Pro") -> str:
+def planes_html() -> str:
+    # Un solo botón primario (Gratis): ningún plan de pago se destaca sin un dato que lo respalde.
     filas = []
     for n, c in PLANES:
         boton = (
             '<a class="boton p" href="/precios#empezar">Empezar gratis</a>'
-            if n == "Gratis" and dest != n
-            else f'<a class="boton {"p" if n == dest else "s"}" href="/contacto?asunto=plan-{n.lower()}">{"Empezar gratis" if n == "Gratis" else "Pedir este plan"}</a>'
+            if n == "Gratis"
+            else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower()}">Pedir este plan</a>'
         )
         filas.append(
-            f'<div class="plan{" dest" if n == dest else ""}"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
+            f'<div class="plan"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
             f'<span class="eq">≈ {miles(c // 10)} consultas de predio por punto</span>{boton}</div>'
         )
     return '<div class="planes">' + "".join(filas) + "</div>"
@@ -457,11 +458,11 @@ def inicio() -> str:
 
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Confianza</span><h2 class="t2">Reglas que no se negocian</h2></div>
-<div class="rejilla r4">
-<div class="bloque"><h3 class="t3">Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
-<div class="bloque"><h3 class="t3">Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
-<div class="bloque"><h3 class="t3">Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div class="bloque"><h3 class="t3">La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
+<div class="columnas c4">
+<div><h3>Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
+<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
+<div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
+<div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
 </div>
 <div style="margin-top:40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
 <span class="rotulo">Aliados y proyectos</span>
