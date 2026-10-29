@@ -40,7 +40,6 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   5. Decisiones abiertas: la base legal de las licencias DANE para los planes de pago, la DIAN
      («sin fines de lucro»), los excedentes de créditos y la URL de Inspow.
 - **Huecos conocidos de fuentes (no son tareas):**
-  - El censo 2018 por geoportal del DANE está caído.
   - La deforestación del IDEAM solo sale en PDF.
   - Las alertas hidrológicas OSPA vienen por subzona.
   - La llegada de desplazados del RUV no se sirve: la fuente la mide mal.
@@ -146,6 +145,10 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     Chía salían 88 filas y son 44 estaciones.
   - **Evaluador:** `geometria` y `pagina` son de presentación y no cuentan como otra entrada; el
     mini los manda con su valor por defecto.
+  - **t20 cerrado:** la copia del censo 2018 se cargó desde Colombia (1 122 municipios, 8 s). La
+    puerta responde desde la copia con la verdad del canario (Bogotá: 7 181 469 personas,
+    2 523 519 viviendas, 2 514 482 hogares). Opus pasa t20 en perfil y catálogo, y también t16
+    tras quitar las estaciones repetidas.
 
 ## Auditoría integral (2026-10-26)
 
@@ -402,12 +405,8 @@ se pidió mes a mes.
   - El tope de filas del `web_tabla` y de la copia sube de 50 mil a 100 mil.
   - Es la cifra oficial entre censos. Corrige la omisión censal: Bogotá 2018 tiene 7 391 056
     proyectados contra 7 181 469 censados.
-- **Sigue caída la población del censo 2018** (`dane_poblacion_municipio`, en vivo):
-  - El geoportal del DANE (`geoportal.dane.gov.co`, capa 800 del CNPV) no abría conexión ni desde
-    Colombia el 28-10.
-  - Por la tarde la portada ya respondía, pero el servicio de ArcGIS daba 500 de IIS tras 55 s.
-  - Se reintenta. Su copia sería del origen `arcgis` sin geometría (1 122 municipios, SLA de
-    10 años).
+- **La población del censo 2018** (`dane_poblacion_municipio`) se sirve por copia desde el
+  29-10-2026 (#194): el geoportal del DANE no abre conexión desde la VPS.
 - **Refresco desde Colombia en un paso:** un script interno abre el túnel, levanta el `web-mcp` con
   una llave de un solo uso y corre `copias actualizar --solo-vencidas` sobre las 21 copias que solo
   se bajan desde Colombia:
