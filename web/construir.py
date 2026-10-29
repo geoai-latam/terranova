@@ -119,10 +119,6 @@ def simbolo(trazo="#0E2A22", dentro="#0E2A22", punto="#E0A13A", clase="") -> str
     )
 
 
-FLECHA = (
-    '<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12">'
-    '<path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>'
-)
 PULSO = (
     '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'
@@ -367,17 +363,14 @@ def inicio() -> str:
 <section class="seccion"><div class="envoltura">
 <div class="cab"><span class="rotulo">Cómo funciona</span><h2 class="t2">De la pregunta a la respuesta con prueba</h2>
 <p class="entrada">Una sola puerta, por MCP y por API REST, sobre {N_FUENTES} fuentes oficiales. La puerta no interpreta preguntas: valida la llave, cobra los créditos y llama a la herramienta del catálogo.</p></div>
-<div class="flujo">
-<div class="bloque"><span class="num">1 · quién pregunta</span><h3 class="t3">Tu agente o tu sistema</h3><ul class="lista"><li>Agentes por <code>/mcp</code></li><li>Sistemas por <code>/v1</code></li><li>Equipos SIG por archivos</li></ul><span class="pie">Claude, ChatGPT, n8n, Python</span></div>
-{FLECHA}
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">2 · la puerta</span>{simbolo("#6CC3B3", "#E0A13A", "#0B231C", "")[:-6].replace('<svg class=""', '<svg style="width:34px;height:34px"')}</svg><ul class="lista"><li>Llave y cuota</li><li>Créditos por consulta</li><li>Contrato <code>rt/1</code></li></ul><span class="pie">sin LLM en la puerta</span></div>
-{FLECHA}
-<div class="bloque"><span class="num">3 · catálogo</span><h3 class="t3">{N_HERR} herramientas</h3><ul class="lista"><li>{len([f for f in POR_FAMILIA if f != "meta"])} familias</li><li>Perfiles MCP por familia</li><li>Licencia por fuente</li></ul><span class="pie">GET /v1/herramientas</span></div>
-{FLECHA}
-<div class="bloque"><span class="num">4 · fuente oficial</span><h3 class="t3">{N_FUENTES} fuentes</h3><ul class="lista"><li>{MODOS["en_vivo"]} en vivo</li><li>{MODOS["copia"]} desde copia</li><li>{N_ENTIDADES} entidades</li></ul><span class="pie">IGAC, DANE, Banrep…</span></div>
-{FLECHA}
-<div class="bloque vivo"><span class="num">5 · respuesta</span><h3 class="t3">El dato con su prueba</h3><ul class="lista"><li>Estado honesto</li><li>Entidad y licencia</li><li>Desde dónde y cuándo</li><li>Huella <code>sha256</code></li></ul><span class="pie">«no encontrado» ≠ «no se pudo»</span></div>
-</div>
+<ol class="pasos">
+<li><span class="n">01</span><h3>Tu agente o tu sistema</h3><p>Pregunta por MCP en <code>/mcp</code> o por REST en <code>/v1</code>. Claude, ChatGPT, n8n o un script de Python: la puerta no distingue.</p><span class="deja"><code>herramienta</code></span></li>
+<li class="puerta"><span class="n">02</span><h3>La puerta</h3><p>Valida la llave y descuenta los créditos según la tarifa. No interpreta la pregunta: aquí no hay LLM.</p><span class="deja"><code>creditos</code><code>solicitud_id</code></span></li>
+<li><span class="n">03</span><h3>El catálogo</h3><p>{N_HERR} herramientas en {len([f for f in POR_FAMILIA if f != "meta"])} familias. Cada una sabe a qué fuente ir y con qué licencia sale el dato.</p><span class="deja"><code>licencia</code></span></li>
+<li><span class="n">04</span><h3>La fuente oficial</h3><p>{N_FUENTES} fuentes de {N_ENTIDADES} entidades: {MODOS["en_vivo"]} se consultan en vivo y {MODOS["copia"]} desde una copia del bulk oficial.</p><span class="deja"><code>procedencia</code><code>servido_desde</code></span></li>
+<li><span class="n">05</span><h3>La respuesta</h3><p>El dato con su estado: «no encontrado» y «no se pudo» nunca se confunden. La huella permite comprobar después que no cambió.</p><span class="deja"><code>estado</code><code>huella</code></span></li>
+</ol>
+<p class="fuente-dato pasos-pie">Columna derecha: el campo de la respuesta <code>rt/1</code> que deja cada paso.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">

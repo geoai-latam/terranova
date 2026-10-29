@@ -178,15 +178,8 @@ code, pre, kbd { font-family: var(--font-mono); }
 .inv .sello-i { color: var(--ambar-500); }
 
 /* ---------- cómo funciona ---------- */
-.flujo { display: grid; grid-template-columns: 1.1fr 24px 1fr 24px 1fr 24px 1fr 24px 1.15fr; align-items: stretch; }
-.flujo .flecha { display: flex; align-items: center; justify-content: center; color: var(--linea-fuerte); }
-.flujo .bloque { padding: 20px 18px 16px; }
-.flujo .bloque .lista { font-size: 14.5px; gap: 6px; }
-.flujo .bloque .pie { font: 400 12px/16px var(--font-mono); }
 @media (max-width: 1080px) {
-  .flujo { grid-template-columns: 1fr; gap: 0; }
-  .flujo .flecha { height: 28px; transform: rotate(90deg); }
-}
+    }
 
 /* ---------- cifras ---------- */
 .cifra b { display: block; font: 700 clamp(36px, 4vw, 52px)/1 var(--font-sans); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
@@ -385,3 +378,24 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .rotulos .barrio { left: 30%; top: 30px; font: 600 12px/1 var(--font-sans); letter-spacing: .28em; text-transform: uppercase; color: var(--tinta);
   text-shadow: 0 0 4px var(--fondo), 0 0 8px var(--fondo); }
 .escena:not(.viva) .rotulos { display: none; }
+
+/* ---------- cómo funciona: secuencia con filetes, sin cajas ---------- */
+.pasos { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--tinta); counter-reset: none; }
+.pasos li { display: grid; grid-template-columns: 56px 240px minmax(0, 1fr) 260px; gap: 24px; align-items: baseline;
+  padding: 22px 0; border-bottom: 1px solid var(--linea); }
+.pasos .n { font: 500 13px/1 var(--font-mono); color: var(--tinta-tenue); }
+.pasos h3 { font: 600 19px/1.3 var(--font-sans); letter-spacing: -.01em; margin: 0; }
+.pasos p { margin: 0; color: var(--tinta-suave); font-size: 15.5px; max-width: 560px; }
+.pasos .deja { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.pasos .deja code { font: 500 12.5px/1 var(--font-mono); padding: 5px 7px; border: 1px solid var(--linea-fuerte); color: var(--tinta); background: var(--fondo); }
+.pasos li.puerta { background: var(--superficie-invertida); color: var(--tinta-invertida); border-bottom-color: var(--superficie-invertida);
+  margin: 0 calc(-1 * var(--pad-puerta, 20px)); padding-left: var(--pad-puerta, 20px); padding-right: var(--pad-puerta, 20px); }
+.pasos li.puerta .n { color: var(--ambar-500); }
+.pasos li.puerta p { color: #B9C6BF; }
+.pasos li.puerta .deja code { background: transparent; border-color: rgba(243,239,228,.35); color: var(--tinta-invertida); }
+.pasos-pie { margin-top: 14px; }
+@media (max-width: 960px) {
+  .pasos li { grid-template-columns: 40px minmax(0, 1fr); gap: 6px 16px; }
+  .pasos li > p, .pasos li > .deja { grid-column: 2; }
+  .pasos .deja { justify-content: flex-start; margin-top: 8px; }
+}
