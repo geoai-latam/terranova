@@ -409,23 +409,24 @@ def inicio() -> str:
 <div><code>huella</code><p><code>sha256</code> de los datos, para comprobar después que no cambiaron.</p></div>
 </div>
 </div>
-<div class="estados">
-<div class="estado e1"><b>encontrado</b><p>La fuente respondió y hay datos.</p></div>
-<div class="estado e2"><b>no_encontrado</b><p>La fuente respondió y no hay datos para esa entrada.</p></div>
-<div class="estado e3"><b>parcial</b><p>Una consulta compuesta con partes que fallaron, cada una en <code>errores</code>.</p></div>
-<div class="estado e4"><b>fuera_de_cobertura</b><p>La entrada está fuera de lo que cubre la fuente. No descuenta.</p></div>
-</div>
-<div class="aviso-error"><code>502 fuente_no_disponible</code><span>Cuando la fuente oficial no responde llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. Los errores no descuentan créditos.</span></div>
+<dl class="estados">
+<div class="e1"><dt>encontrado</dt><dd>La fuente respondió y hay datos.</dd></div>
+<div class="e2"><dt>no_encontrado</dt><dd>La fuente respondió y no hay datos para esa entrada. Es una respuesta, no una falla.</dd></div>
+<div class="e3"><dt>parcial</dt><dd>Una consulta compuesta con partes que fallaron; cada una queda en <code>errores</code>.</dd></div>
+<div class="e4"><dt>fuera_de_cobertura</dt><dd>La entrada está fuera de lo que cubre la fuente. No descuenta créditos.</dd></div>
+<div class="e5"><dt>502 fuente_no_disponible</dt><dd>La fuente oficial no respondió. Llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. No descuenta.</dd></div>
+</dl>
 </div></section>
 
 <section class="seccion inv"><div class="envoltura">
 <div class="cab"><span class="rotulo">Servicios</span><h2 class="t2">Agentes que hacen el trabajo territorial</h2>
 <p class="entrada">La capa de datos se vende sola, por consulta. Sobre ella construimos y operamos el trabajo completo con tu equipo.</p></div>
-<div class="rejilla r4">
-<div class="bloque oscuro"><h3 class="t3">Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con prueba.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p><span class="pie">Por proceso o licencia</span></div>
-<div class="bloque oscuro" style="box-shadow:inset 0 0 0 1.5px var(--teal-400)"><h3 class="t3">Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p><span class="pie" style="color:var(--teal-400)">En producción · por consulta</span></div>
+<div class="columnas c4">
+<div class="activa"><span class="et">en producción · por consulta</span><h3>Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p></div>
+<div><span class="et">por entrega</span><h3>Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con la prueba de cada hallazgo.</p></div>
+<div><span class="et">por entrega</span><h3>Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p></div>
+<div><span class="et">por proceso o licencia</span><h3>Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p></div>
+</div>
 </div>
 <p class="entrada" style="margin-top:28px;font-size:16px">Un agente hace el trabajo, otro lo evalúa sin ver su razonamiento y una persona aprueba. <a class="enlace" href="/servicios">Cómo trabajamos →</a></p>
 </div></section>
@@ -440,11 +441,11 @@ def inicio() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Casos</span><h2 class="t2">Preguntas sobre lugares, no sobre personas</h2>
 <p class="entrada">Así se ve el trabajo. Todavía no mostramos clientes: estos casos son ilustrativos y sus cifras son posibles, no medidas.</p></div>
-<div class="rejilla r3">
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="pie">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="pie">Ficha del lugar con su procedencia</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="pie">Un expediente por solicitud</span></div>
-</div>
+<div class="columnas c3">
+<div><span class="sello-i">ilustrativo</span><h3>Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="res">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="res">Ficha del lugar con su procedencia</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="res">Un expediente por solicitud</span></div>
+</div></div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
