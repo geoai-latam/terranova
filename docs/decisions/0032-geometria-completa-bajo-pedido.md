@@ -27,7 +27,13 @@
      `geometry: null` y `bbox` (RFC 7946 §5), y un aviso que dice cómo pedir la forma completa.
      - Los puntos salen completos, porque pesan poco y son lo que un mapa de sismos o estaciones
        necesita.
+     - Las `properties` de cada elemento repiten uno de `datos`. Van como su posición
+       (`{"elemento": i}`).
      - `datos` y la `huella` no cambian.
+     - **Medido en producción:**
+       - un resguardo pasa de 65 856 a 2 626 caracteres;
+       - 169 áreas protegidas, de 294 000 a 93 756 solo con la envolvente;
+       - las 169 áreas, sin propiedades repetidas, quedan en unos 57 000.
   3. **Igual en MCP y en REST** (ADR-0004): el resumen se hace en `puerta.ejecutar`, el camino
      común. La caché, la idempotencia y las composiciones internas (la ficha usa el polígono del
      predio para hallar su punto interior) siguen con la geometría completa.
