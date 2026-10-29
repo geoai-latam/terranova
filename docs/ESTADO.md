@@ -90,6 +90,13 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   animaciones ya no dicen «ejemplo» y las escenas 3D llevan luz con sombras, un crecimiento desde el
   predio consultado y una onda en la GPU; la de cobertura crece desde Bogotá, con ciudades y conteo
   al pasar el puntero.
+- **Contenido verificado (2026-10-29):** cada afirmación del sitio se contrastó con el catálogo,
+  el código y la fuente. La TRM capturada (3.162,35 del 29-10-2026) coincide con datos.gov.co. Los
+  conteos solo cuentan fuentes publicadas (178 de 46 entidades; NASA FIRMS es borrador y salió).
+  Las viñetas ya no nombran herramientas con el canario en rojo (población del censo, Saber 11) ni
+  la DIAN, cuyos términos prohíben el uso con fines de lucro. Las licencias se describen como en la
+  enmienda de ADR-0019 (abierta verificada o dato público con aviso), los créditos se descuentan por
+  organización, la tabla de errores es la del código y el soporte excluye festivos.
 - **Siguiente:** llevar el lenguaje de la landing a las páginas interiores (todavía con rótulos
   de cejilla y etiquetas en mayúsculas).
 - **Pendiente del dueño:** desplegar (`git pull` y reiniciar Caddy en la VPS), el buzón
