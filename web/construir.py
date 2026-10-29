@@ -721,10 +721,99 @@ def cruces_html() -> str:
     return '<div class="cruces">' + "".join(grupos) + "</div>"
 
 
+def licencia_corta(spdx: str | None) -> str:
+    if not spdx:
+        return "licencia por verificar"
+    if spdx.startswith("CC-"):
+        return (
+            spdx.replace("-", " ").replace("CC BY SA", "CC BY-SA").replace("CC BY ND", "CC BY-ND")
+        )
+    return {
+        "LicenseRef-banrep-aviso-legal": "aviso legal del Banco",
+        "LicenseRef-dane-terminos": "términos del DANE",
+    }.get(spdx, "licencia propia de la entidad")
+
+
+# Lo que muestran las viñetas sale del catálogo: herramientas, entidades y licencias reales.
+TIPOS_REVISION = {
+    "Predios y parcelas": ("Predio", "por coordenada"),
+    "Empresas y proveedores": ("Empresa", "por NIT"),
+    "Contratos y sanciones": ("Contratista", "por NIT"),
+}
+PREGUNTAS_ASISTENTE = [
+    "banrep_trm_recientes",
+    "dane_poblacion_municipio",
+    "pnn_areas_protegidas_en_punto",
+    "secop_contratos_municipio",
+    "rues_empresa_por_nit",
+    "igac_predio_en_punto",
+    "upra_precio_tierra_rural_municipio",
+    "ideam_alertas_incendios_municipio",
+]
+OTRAS_ASISTENTE = [
+    "icfes_saber11_municipio",
+    "invima_registro_sanitario_por_expediente",
+    "anh_crudo_municipio",
+    "policia_hurto_vehiculos_municipio",
+]
+CARRILES_VIGILANCIA = [
+    ("SECOP II", "Colombia Compra Eficiente", "Nuevo contrato de una entidad que vigilas"),
+    ("SUIN-Juriscol", "MinJusticia", "Cambió una norma que sigues"),
+    ("IDEAM", "IDEAM", "Alerta de incendio en un municipio que vigilas"),
+    ("SIC", "SIC", "Nueva sanción en el sector que sigues"),
+]
+INDICADORES_TABLERO = [
+    ("dane_poblacion_municipio", "Población"),
+    ("dane_ipm_municipio", "Pobreza"),
+    ("men_educacion_municipio", "Educación"),
+    ("adres_afiliados_subsidiado_municipio", "Salud"),
+]
+
+
+def datos_vineta(tipo: str) -> object:
+    por_id = {h.id: h for h in HERR}
+
+    def entidad(hid: str) -> str:
+        return nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad)
+
+    if tipo == "revision":
+        return [
+            {
+                "tipo": TIPOS_REVISION[g][0],
+                "como": TIPOS_REVISION[g][1],
+                "fuentes": [{"t": t, "e": entidad(i)} for i, t in items],
+            }
+            for g, items in CRUCES
+        ]
+    if tipo == "asistente":
+        preguntas = []
+        for i in PREGUNTAS_ASISTENTE:
+            f = CAT.fuentes[por_id[i].fuente]
+            preguntas.append(
+                {"p": por_id[i].pregunta, "e": entidad(i), "l": licencia_corta(f.licencia.spdx)}
+            )
+        nodos = list(
+            dict.fromkeys([p["e"] for p in preguntas] + [entidad(i) for i in OTRAS_ASISTENTE])
+        )
+        return {"preguntas": preguntas, "nodos": nodos}
+    if tipo == "vigilancia":
+        sistemas = sistemas_validados()
+        for s, e, _ in CARRILES_VIGILANCIA:
+            assert s == e or s in sistemas[e], f"{s} no es un sistema de {e}"
+        return [{"s": s, "e": e, "ev": ev} for s, e, ev in CARRILES_VIGILANCIA]
+    if tipo == "tablero":
+        return [{"t": t, "e": entidad(i)} for i, t in INDICADORES_TABLERO]
+    return None
+
+
 def vineta(tipo: str) -> str:
-    return (
-        f'<div class="vineta" data-vineta="{tipo}" role="img" aria-label="{ETIQUETAS[tipo]}"></div>'
+    datos = datos_vineta(tipo)
+    attr = (
+        f' data-datos="{escape(json.dumps(datos, ensure_ascii=False))}"'
+        if datos is not None
+        else ""
     )
+    return f'<div class="vineta" data-vineta="{tipo}"{attr} role="img" aria-label="{ETIQUETAS[tipo]}"><div class="rotulos-v" aria-hidden="true"></div></div>'
 
 
 def metodo_html() -> str:
@@ -735,8 +824,9 @@ def metodo_html() -> str:
 def servicios_landing() -> str:
     p, *otros = SERVICIOS
     filas = "".join(
-        f'<article class="serv">{vineta(s["id"])}<p class="para">{s["para"]}</p><h3>{s["titulo"]}</h3>'
-        f'<p>{s["texto"]}</p><p class="con">Con datos de {s["con"]}</p></article>'
+        f'<article class="serv">{vineta(str(s["id"]))}<div class="txt"><p class="para">{s["para"]}</p><h3>{s["titulo"]}</h3>'
+        f'<p>{s["texto"]}</p><p class="con">Con datos de {s["con"]}</p>'
+        f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></div></article>'
         for s in otros
     )
     return f"""<article class="serv-grande">
@@ -847,7 +937,6 @@ def chips_familias(como_boton=False) -> str:
 
 # ---------------------------------------------------------------- páginas
 def inicio() -> str:
-    n_fam = len([f for f in POR_FAMILIA if f != "meta"])
     c = f"""
 <section class="heroe">
 <div class="escena" data-escena="predios" role="img" aria-label="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D. El predio consultado sube cuando llega su respuesta. Arrastra para girar.">
@@ -880,22 +969,13 @@ def inicio() -> str:
 <div class="botones fin-serv"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios en detalle</a></div>
 </div></section>
 
-<section class="seccion sup" id="fuentes"><div class="envoltura">
+<section class="seccion" id="fuentes"><div class="envoltura">
 <div class="cab ancha">
 <h2 class="t2">{N_FUENTES} fuentes de {N_ENTIDADES} entidades, detrás de una sola puerta</h2>
-<p class="entrada">De SECOP y el RUES al catastro del IGAC, el censo del DANE y las alertas del IDEAM. {MODOS["en_vivo"]} fuentes se consultan en vivo y {MODOS["copia"]} desde una copia del archivo oficial. La puerta no usa modelos de lenguaje: la misma pregunta da siempre la misma consulta.</p>
-</div>
-{indice_fuentes()}
-<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las fuentes globales. <a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="cab">
-<h2 class="t2">Qué le puedes preguntar</h2>
-<p class="entrada">Cada herramienta responde una pregunta concreta. Estas son algunas de las {N_HERR}, en {n_fam} familias, agrupadas por el trabajo que resuelven.</p>
+<p class="entrada">De SECOP y el RUES al catastro del IGAC, el censo del DANE y las alertas del IDEAM. Cada herramienta responde una pregunta concreta; estas son algunas de las {N_HERR}, agrupadas por el trabajo que resuelven.</p>
 </div>
 {sectores()}
-<p class="mas-s"><a class="enlace" href="/fuentes">Ver las {N_HERR} herramientas</a></p>
+<p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
 </div></section>
 
 <section class="seccion sup conecta" id="conecta"><div class="envoltura dos">
@@ -1049,7 +1129,7 @@ def servicios() -> str:
 <p class="con">Con datos de {s["con"]}</p>
 <a class="boton p" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>
 </div>
-<div class="fig">{vineta(s["id"])}{entregable(s["id"])}</div>
+<div class="fig">{vineta(str(s["id"]))}{entregable(str(s["id"]))}</div>
 {extra}
 </div></section>""")
     pasos = "".join(f"<li><b>{a}</b><span>{b[0].upper() + b[1:]}</span></li>" for a, b in METODO)
@@ -1107,8 +1187,6 @@ def fuentes() -> str:
         f'<tr><td><code>{escape(k)}</code></td><td class="n">{v}</td></tr>'
         for k, v in LICENCIAS.most_common()
     )
-    ent = Counter(corta(f.entidad) for f in CAT.fuentes.values()).most_common(12)
-    ent_html = "".join(f'<span class="chip">{escape(e)} <b>{n}</b></span>' for e, n in ent)
     c = (
         portada(
             "Fuentes y herramientas",
@@ -1126,11 +1204,15 @@ def fuentes() -> str:
 <noscript><p class="suave">El catálogo completo también está en <a class="enlace" href="/v1/herramientas">/v1/herramientas</a> y en <a class="enlace" href="/llms.txt">/llms.txt</a>.</p></noscript>
 </div></section>
 
-<section class="seccion sup"><div class="envoltura">
+<section class="seccion sup" id="entidades"><div class="envoltura">
+<div class="cab ancha"><h2 class="t2">Quién publica los datos</h2>
+<p class="entrada">{N_ENTIDADES} entidades y los sistemas que publican. {MODOS["en_vivo"]} fuentes se consultan en vivo y {MODOS["copia"]} desde una copia del archivo oficial, con su fecha de corte en cada respuesta.</p></div>
+{indice_fuentes()}
+<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las fuentes globales.</p>
+</div></section>
+
+<section class="seccion"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px">
-<div><span class="rotulo">Entidades</span><h2 class="t2" style="margin:12px 0 20px">Quién publica los datos</h2>
-<div class="chips">{ent_html}</div>
-<p class="suave" style="margin-top:16px">{MODOS["en_vivo"]} fuentes se consultan en vivo y {MODOS["copia"]} desde una copia del bulk oficial, con su fecha de corte en cada respuesta.</p></div>
 <div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">Licencia verificada por fuente</h2>
 <div class="desliza"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
 <p class="suave" style="margin-top:12px">Cada respuesta trae la licencia y la atribución que debes citar. CC BY-SA exige compartir igual.</p></div>

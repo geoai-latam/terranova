@@ -67,14 +67,22 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   respuesta `rt/1` anotada. Las entidades se cuentan por nombre, sin el índice propio: son 47.
 - **Servicios y precios en la landing:** la página habla también al público general. Tras el héroe
   van dos caminos (te hacemos el trabajo / conecta tu agente); los servicios son la segunda
-  sección, en una banda oscura y cada uno con su viñeta three.js (`escena-vinetas.js`): la
-  revisión de una lista de predios, empresas o contratos (12 cruces con herramientas reales, en tres
-  grupos), el tablero de municipios, el barrido de vigilancia y el asistente que consulta las
-  fuentes. «Cada respuesta trae su prueba» es una pila 3D con las capas de una respuesta real de la
-  TRM, en lugar del JSON. `/servicios` se rehízo: cada servicio con su viñeta y una maqueta de lo que
-  se recibe (sellada como ilustrativa, salvo la del asistente, que es real), cómo trabajamos y cómo
-  se cobra. El sitio no dice que un agente hace el trabajo: lo hace el equipo. El índice de fuentes nombra los sistemas conocidos de cada entidad (SECOP, RUES,
-  SINIC, censo…); `construir.py` valida que cada sistema salga de los títulos del catálogo. Los
+  sección, en una banda oscura, cada uno en una fila con su viñeta three.js (`escena-vinetas.js`).
+  Las viñetas nombran cosas reales que `construir.py` toma del catálogo (`data-datos`):
+  - la revisión de una lista: cada predio, empresa o contratista se cruza con sus cuatro fuentes
+    (12 herramientas reales) y entra al expediente;
+  - el tablero: el mapa de Colombia en celdas (`co.json`), con los indicadores de DANE,
+    MinEducación y ADRES;
+  - la vigilancia: carriles de SECOP II, SUIN-Juriscol, IDEAM y la SIC que cruzan la línea de hoy;
+  - el asistente: preguntas reales del catálogo que viajan a la entidad que las responde, con su
+    licencia.
+  «Cada respuesta trae su prueba» es una pila 3D con las capas de una respuesta real de la TRM, en
+  lugar del JSON. `/servicios` se rehízo: cada servicio con su viñeta y, debajo, una maqueta de lo
+  que se recibe (sellada como ilustrativa, salvo la del asistente, que es real), cómo trabajamos y
+  cómo se cobra. El sitio no dice que un agente hace el trabajo: lo hace el equipo. La lista larga
+  de entidades salió de la landing y quedó en `/fuentes#entidades`: nombra los sistemas conocidos de
+  cada entidad (SECOP, RUES, SINIC, censo…), y `construir.py` valida cada uno contra los títulos
+  del catálogo. Los
   precios van en la landing sin el detalle de créditos por consulta, que queda en `/precios`. Las
   animaciones ya no dicen «ejemplo» y las escenas 3D llevan luz con sombras, un crecimiento desde el
   predio consultado y una onda en la GPU; la de cobertura crece desde Bogotá, con ciudades y conteo

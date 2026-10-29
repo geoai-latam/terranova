@@ -1,11 +1,12 @@
 // Viñetas 3D de los servicios y de la prueba de cada respuesta. Cada elemento [data-vineta] tiene
-// su propio lienzo, se crea al acercarse a la vista y solo dibuja mientras se ve. Son esquemas: no
-// muestran cifras inventadas, solo cómo se mueve el trabajo.
+// su propio lienzo, se crea al acercarse a la vista y solo dibuja mientras se ve. Lo que nombran
+// (entidades, sistemas, preguntas, licencias) llega del catálogo en data-datos; los resultados que
+// se ven pasar son un esquema del trabajo, no cifras.
 import { cargarThree, quieto, suave, visible } from './comun3d.js';
 
 const C = {
   crema: '#F3EFE4', hueso: '#E4E9E2', teal: '#6CC3B3', tealOsc: '#236E62', ambar: '#E0A13A',
-  bosque: '#0E2A22', linea: '#3E6157',
+  bosque: '#0E2A22', suelo: '#163830', apagado: '#3F6158', linea: '#2F5248',
 };
 
 const els = [...document.querySelectorAll('[data-vineta]')];
@@ -22,25 +23,42 @@ async function iniciar(el) {
   const THREE = await cargarThree();
   const tipo = el.dataset.vineta;
   const oscuro = el.dataset.fondo !== 'claro';
+  const datos = el.dataset.datos ? JSON.parse(el.dataset.datos) : null;
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   el.prepend(renderer.domElement);
   const scene = new THREE.Scene();
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 4000);
-  scene.add(new THREE.HemisphereLight('#FFFFFF', oscuro ? '#28463D' : '#AEB9B1', oscuro ? 1.7 : 2.1));
-  const sol = new THREE.DirectionalLight('#FFF8EC', oscuro ? 1.3 : 1.4); sol.position.set(-200, 400, 260); scene.add(sol);
+  scene.add(new THREE.HemisphereLight('#FFFFFF', oscuro ? '#28463D' : '#AEB9B1', oscuro ? 1.6 : 2.1));
+  const sol = new THREE.DirectionalLight('#FFF6E6', oscuro ? 1.5 : 1.4);
+  sol.position.set(-220, 420, 260); scene.add(sol);
 
-  const v = VINETAS[tipo](THREE, scene, el);
-  const st = { az: v.az ?? -0.7, pol: v.pol ?? 0.95, px: 0 };
+  // Rótulos en HTML, anclados a puntos de la escena: el texto se lee nítido a cualquier tamaño.
+  const capa = el.querySelector('.rotulos-v');
+  const rotulo = (html, cls = '') => {
+    const s = document.createElement('span'); s.className = 'rv ' + cls; s.innerHTML = html; capa.append(s); return s;
+  };
+  const v = VINETAS[tipo](THREE, scene, { el, datos, rotulo });
+  if (v.sombras && el.clientWidth >= 420) {
+    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    sol.castShadow = true; const l = v.sombras;
+    Object.assign(sol.shadow.camera, { left: -l, right: l, top: l, bottom: -l, near: 1, far: 2000 });
+    sol.shadow.mapSize.set(1024, 1024); sol.shadow.bias = -0.0006; sol.shadow.normalBias = 0.4;
+  }
+  const st = { az: v.az ?? -0.5, pol: v.pol ?? 0.95, px: 0 };
+  const v3 = new THREE.Vector3();
+  const pantalla = (x, y, z) => { v3.set(x, y, z).project(cam); return [(v3.x + 1) / 2 * el.clientWidth, (1 - v3.y) / 2 * el.clientHeight]; };
+  const poner = (s, x, y, z) => { const [a, b] = pantalla(x, y, z); s.style.transform = `translate(${a.toFixed(1)}px, ${b.toFixed(1)}px)`; };
   function tam() {
     const w = el.clientWidth, h = el.clientHeight; renderer.setSize(w, h, false);
-    const H = v.alto * (w / h < 1.1 ? 1.25 : 1), W = H * w / h;
+    el.classList.toggle('angosta', w < 520);  // en pantallas chicas, solo los rótulos principales
+    const H = (w < 520 && v.altoAngosto || v.alto) * (w / h < 1.15 ? 1.22 : 1), W = H * w / h;
     cam.left = -W / 2; cam.right = W / 2; cam.top = H / 2 + (v.sube ?? 0); cam.bottom = -H / 2 + (v.sube ?? 0);
     cam.updateProjectionMatrix();
   }
   new ResizeObserver(tam).observe(el); tam();
-  // Un leve paralaje con el puntero: la escena responde, sin pedir que la arrastren.
-  el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); st.px = ((e.clientX - r.left) / r.width - 0.5); });
+  // Un leve paralaje con el puntero: la escena responde sin pedir que la arrastren.
+  el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); st.px = (e.clientX - r.left) / r.width - 0.5; });
   el.addEventListener('pointerleave', () => { st.px = 0; });
 
   let corre = true, t0 = null, az = st.az;
@@ -49,12 +67,12 @@ async function iniciar(el) {
     if (t0 === null) t0 = t;
     const s = quieto ? (v.quieto ?? 4) : (t - t0) / 1000;
     v.paso(s);
-    az += ((st.az + st.px * 0.5 + (quieto || v.fijo ? 0 : Math.sin(s * 0.12) * 0.18)) - az) * 0.05;
-    const R = 1500;
-    cam.position.set(R * Math.sin(st.pol) * Math.sin(az), R * Math.cos(st.pol), R * Math.sin(st.pol) * Math.cos(az));
-    cam.lookAt(0, v.mira ?? 0, 0);
+    az += ((st.az + st.px * 0.35 + (quieto ? 0 : Math.sin(s * 0.11) * (v.vaiven ?? 0.08))) - az) * 0.05;
+    const R = 1500, m = (el.clientWidth < 520 && v.miraAngosta) || v.mira || [0, 0, 0];
+    cam.position.set(m[0] + R * Math.sin(st.pol) * Math.sin(az), m[1] + R * Math.cos(st.pol), m[2] + R * Math.sin(st.pol) * Math.cos(az));
+    cam.lookAt(m[0], m[1], m[2]);
     renderer.render(scene, cam);
-    if (v.rotular) v.rotular(cam);
+    if (v.rotular) v.rotular(poner);
     el.classList.add('viva');
     if (corre && !quieto) requestAnimationFrame(cuadro);
   }
@@ -62,193 +80,298 @@ async function iniciar(el) {
 }
 
 const lam = (THREE, color, extra = {}) => new THREE.MeshLambertMaterial({ color, ...extra });
-const mezcla = (THREE, a, b, k) => new THREE.Color(a).lerp(new THREE.Color(b), k);
 const borde = (THREE, geo, color, op = 0.5) => new THREE.LineSegments(new THREE.EdgesGeometry(geo, 30), new THREE.LineBasicMaterial({ color, transparent: true, opacity: op }));
-// Un pseudoazar fijo: la misma escena cada vez.
-const azar = semilla => () => { semilla = (semilla * 16807) % 2147483647; return (semilla - 1) / 2147483646; };
+const tramo = (k, a, b) => suave((k - a) / (b - a));
+// Un punto en un arco entre dos posiciones: lo que viaja de un lado a otro, salta.
+const arco = (out, a, b, k, alto) => out.set(a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k + Math.sin(k * Math.PI) * alto, a[2] + (b[2] - a[2]) * k);
+const suelo = THREE => { const m = new THREE.Mesh(new THREE.PlaneGeometry(2400, 2400), new THREE.ShadowMaterial({ color: '#000000', opacity: 0.32 })); m.rotation.x = -Math.PI / 2; m.position.y = -0.05; m.receiveShadow = true; return m; };
+
+function textura(THREE, ancho, alto, dibujar) {
+  const lienzo = document.createElement('canvas'); lienzo.width = ancho; lienzo.height = alto;
+  dibujar(lienzo.getContext('2d'), getComputedStyle(document.body).fontFamily);
+  const tex = new THREE.CanvasTexture(lienzo); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  return tex;
+}
 
 const VINETAS = {
-  // Revisión de una lista: predios, empresas y contratos pasan por la compuerta de las fuentes
-  // oficiales; salen en teal si no hay hallazgos y en ámbar, más altos, si hay algo que revisar.
-  revision(THREE, scene) {
-    const N = 14, PASO = 46, VEL = 26;
-    const formas = [
-      () => { const s = new THREE.Shape([[-15, -12], [14, -14], [17, 9], [-4, 15], [-16, 6]].map(p => new THREE.Vector2(...p))); return new THREE.ExtrudeGeometry(s, { depth: 4, bevelEnabled: false }).rotateX(-Math.PI / 2); },
-      () => new THREE.BoxGeometry(24, 4, 30).translate(0, 2, 0),
-      () => new THREE.CylinderGeometry(14, 14, 4, 6).translate(0, 2, 0),
-    ];
-    const items = [];
-    for (let i = 0; i < N; i++) {
-      const g = formas[i % 3](), m = lam(THREE, C.hueso);
-      const mesh = new THREE.Mesh(g, m); mesh.add(borde(THREE, g, C.bosque, 0.25));
-      const revisar = [2, 6, 9, 13].includes(i);
-      // Lo que hay que revisar sale con una banderita ámbar.
-      let bandera = null;
-      if (revisar) {
-        bandera = new THREE.Group();
-        const asta = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 22, 6).translate(0, 11, 0), lam(THREE, C.crema));
-        const tela = new THREE.Mesh(new THREE.PlaneGeometry(11, 7).translate(5.5, 18, 0), new THREE.MeshLambertMaterial({ color: C.ambar, side: THREE.DoubleSide }));
-        bandera.add(asta, tela); bandera.position.set(6, 4, 4); mesh.add(bandera);
-      }
-      scene.add(mesh); items.push({ mesh, m, revisar, bandera, fase: i * PASO });
-    }
-    // La compuerta: un marco con una cortina translúcida que barre.
-    const marco = new THREE.Group();
-    const barra = (w, h, d, x, y) => { const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), lam(THREE, C.tealOsc)); b.position.set(x, y, 0); marco.add(b); };
-    barra(4, 70, 4, 0, 35 - 2); marco.children[0].position.z = -34; barra(4, 70, 4, 0, 33); marco.children[1].position.z = 34;
-    const dintel = new THREE.Mesh(new THREE.BoxGeometry(4, 4, 72), lam(THREE, C.tealOsc)); dintel.position.y = 68; marco.add(dintel);
-    const cortina = new THREE.Mesh(new THREE.PlaneGeometry(68, 64), new THREE.MeshBasicMaterial({ color: C.teal, transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false }));
-    cortina.rotation.y = Math.PI / 2; cortina.position.y = 34; marco.add(cortina);
-    const haz = new THREE.Mesh(new THREE.PlaneGeometry(68, 1.6), new THREE.MeshBasicMaterial({ color: C.teal, transparent: true, opacity: 0.9, side: THREE.DoubleSide }));
-    haz.rotation.y = Math.PI / 2; marco.add(haz);
-    scene.add(marco);
-    // La banda por donde corren.
-    const banda = new THREE.Mesh(new THREE.BoxGeometry(N * PASO, 2, 56), lam(THREE, '#1B3B32')); banda.position.y = -1.2; scene.add(banda);
-    const rayas = new THREE.Group();
-    for (let i = 0; i < N * 2; i++) { const l = new THREE.Mesh(new THREE.PlaneGeometry(1, 56), new THREE.MeshBasicMaterial({ color: C.linea })); l.rotation.x = -Math.PI / 2; l.position.y = 0.05; rayas.add(l); }
-    scene.add(rayas);
-    const largo = N * PASO, OK = new THREE.Color(C.teal), MAL = new THREE.Color(C.ambar), BASE = new THREE.Color(C.hueso);
-    return {
-      alto: 215, az: -0.62, pol: 1.0, mira: 22, sube: 14,
-      paso(s) {
-        haz.position.y = 34 + Math.sin(s * 2.4) * 30;
-        rayas.children.forEach((l, i) => { l.position.x = ((i * PASO / 2 + s * VEL) % largo) - largo / 2; });
-        for (const it of items) {
-          const x = ((it.fase + s * VEL) % largo) - largo / 2;
-          const k = suave((x + 4) / 30);  // 0 antes de la compuerta, 1 después
-          it.mesh.position.set(x, k * (it.revisar ? 18 : 6), 0);
-          it.m.color.copy(BASE).lerp(it.revisar ? MAL : OK, k);
-          it.mesh.rotation.y = it.revisar ? k * 0.25 : 0;
-          if (it.bandera) { it.bandera.scale.setScalar(Math.max(0.001, suave((x - 14) / 16))); it.bandera.children[1].rotation.y = Math.sin(s * 5 + it.fase) * 0.3; }
-        }
-      },
+  // Revisión de una lista. Cada ítem (un predio, una empresa, un contratista) sale de la lista, se
+  // cruza con las cuatro fuentes que le tocan y entra al expediente con su resultado.
+  revision(THREE, scene, { datos, rotulo }) {
+    const grupos = datos, T = 3.8;
+    const orden = [0, 1, 2, 0, 1, 2];
+    const revisar = [[0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 0, 0]];
+    scene.add(suelo(THREE));
+    // Las fichas: una textura por tipo.
+    const texs = grupos.map(g => textura(THREE, 512, 360, (x, f) => {
+      x.fillStyle = '#FFFFFF'; x.fillRect(0, 0, 512, 360);
+      x.fillStyle = '#12261F'; x.font = `600 74px ${f}`; x.fillText(g.tipo, 40, 120);
+      x.fillStyle = '#56645E'; x.font = `400 38px ${f}`; x.fillText(g.como, 40, 178);
+      x.fillStyle = '#D9DED6'; [236, 276, 316].forEach((y, i) => x.fillRect(40, y, [380, 300, 340][i], 14));
+    }));
+    const FW = 64, FD = 44, FH = 3;
+    const cuerpoG = new THREE.BoxGeometry(FW, FH, FD); cuerpoG.translate(0, FH / 2, 0);
+    const tapaG = new THREE.PlaneGeometry(FW - 2, FD - 2); tapaG.rotateX(-Math.PI / 2);
+    const ficha = g => {
+      const grupo = new THREE.Group();
+      const m = lam(THREE, '#CFD8D1'), b = new THREE.Mesh(cuerpoG, m); b.castShadow = true;
+      const t = new THREE.Mesh(tapaG, new THREE.MeshBasicMaterial({ map: texs[g] })); t.position.y = FH + 0.05;
+      grupo.add(b, t); scene.add(grupo); return { grupo, m };
     };
-  },
-
-  // Tableros: los municipios como prismas hexagonales; cada pocos segundos cambia el indicador y
-  // las alturas se reacomodan.
-  tablero(THREE, scene) {
-    const r = azar(11), R = 11, cols = 11, filas = 8;
-    const geo = new THREE.CylinderGeometry(R * 0.9, R * 0.9, 1, 6); geo.translate(0, 0.5, 0);
-    const n = cols * filas, mesh = new THREE.InstancedMesh(geo, lam(THREE, '#FFFFFF', { flatShading: true }), n);
-    const pos = [], capas = [[], [], []];
-    for (let f = 0; f < filas; f++) for (let c = 0; c < cols; c++) {
-      const x = (c - cols / 2 + (f % 2) * 0.5) * R * 1.75, z = (f - filas / 2) * R * 1.52;
-      pos.push([x, z]);
-      const d = Math.hypot(x / 90, z / 60);
-      capas[0].push(Math.max(0, 1 - d) * 0.8 + r() * 0.3);
-      capas[1].push(r() ** 2);
-      capas[2].push(Math.max(0, Math.sin(x / 30) * 0.5 + 0.5) * (0.4 + r() * 0.6));
-    }
-    scene.add(mesh);
-    const o = new THREE.Object3D(), A = new THREE.Color('#2D5248'), B = new THREE.Color(C.teal), X = new THREE.Color(C.ambar);
-    const piso = new THREE.Mesh(new THREE.PlaneGeometry(240, 170), lam(THREE, '#173A31')); piso.rotation.x = -Math.PI / 2; piso.position.y = -0.2; scene.add(piso);
-    const ciclo = 3.2;
+    const LISTA = [-150, 0, -18], MESA = [-52, 0, 0], EXP = [-52, 0, 86];
+    // La lista: una pila que no se acaba.
+    for (let i = 0; i < 6; i++) { const f = ficha(i % 3); f.grupo.position.set(LISTA[0] + (i % 2) * 1.5, i * (FH + 0.6), LISTA[2] - (i % 3)); }
+    const fichas = Array.from({ length: 7 }, (_, i) => ficha(orden[i % 6]));
+    // Las fuentes: cuatro losas con su rótulo; cambian según el tipo de ítem.
+    const ZS = [-72, -24, 24, 72], FX = 62;
+    const losas = ZS.map(z => {
+      const g = new THREE.BoxGeometry(40, 4, 30); g.translate(0, 2, 0);
+      const m = lam(THREE, C.apagado), mesh = new THREE.Mesh(g, m); mesh.position.set(FX, 0, z); mesh.castShadow = true;
+      mesh.add(borde(THREE, g, C.teal, 0.3)); scene.add(mesh);
+      const haz = new THREE.Mesh(new THREE.SphereGeometry(2.4, 14, 10), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(haz);
+      return { mesh, m, haz, rl: rotulo('', 'fuente'), z };
+    });
+    const rLista = rotulo('Tu lista', 'lugar'), rExp = rotulo('Expediente', 'lugar lado');
+    const OK = new THREE.Color(C.teal), MAL = new THREE.Color(C.ambar), APAG = new THREE.Color(C.apagado), FICHA = new THREE.Color('#CFD8D1');
+    const p = new THREE.Vector3();
+    let item = -1;
     return {
-      alto: 245, az: -0.5, pol: 0.92, mira: 10, sube: 4,
+      alto: 286, altoAngosto: 330, miraAngosta: [34, 0, 2], az: -0.2, pol: 0.8, mira: [6, 0, 2], sombras: 230, vaiven: 0.06, quieto: 2.6,
       paso(s) {
-        const i = Math.floor(s / ciclo) % 3, j = (i + 1) % 3, k = suave(((s % ciclo) - 2.2) / 1);
-        const top = Math.floor(s / ciclo) % n;
-        for (let q = 0; q < n; q++) {
-          const v = capas[i][q] + (capas[j][q] - capas[i][q]) * k;
-          o.position.set(pos[q][0], 0, pos[q][1]); o.scale.set(1, 2 + v * 70, 1); o.updateMatrix(); mesh.setMatrixAt(q, o.matrix);
-          mesh.setColorAt(q, (q * 37 + top * 13) % n === 0 ? X : A.clone().lerp(B, Math.min(1, v * 1.1)));
+        const n = Math.floor(s / T), k = s - n * T, tipo = orden[n % 6], res = revisar[n % 6];
+        if (n !== item) {
+          item = n;
+          losas.forEach((l, j) => { const f = grupos[tipo].fuentes[j]; l.rl.innerHTML = `<b>${f.t}</b><small>${f.e}</small><i></i>`; });
         }
-        mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor.needsUpdate = true;
-      },
-    };
-  },
-
-  // Vigilancia: un barrido pasa sobre lo que vigilas; cuando algo cambia, sube una señal ámbar.
-  vigilancia(THREE, scene) {
-    const r = azar(3), N = 46, RAD = 100;
-    const disco = new THREE.Mesh(new THREE.CircleGeometry(RAD + 8, 64), lam(THREE, '#173A31')); disco.rotation.x = -Math.PI / 2; scene.add(disco);
-    for (const rr of [35, 70, RAD + 8]) {
-      const a = new THREE.Mesh(new THREE.RingGeometry(rr - 0.4, rr + 0.4, 96), new THREE.MeshBasicMaterial({ color: C.linea })); a.rotation.x = -Math.PI / 2; a.position.y = 0.1; scene.add(a);
-    }
-    const puntos = [];
-    const g = new THREE.CylinderGeometry(2.6, 2.6, 5, 12); g.translate(0, 2.5, 0);
-    for (let i = 0; i < N; i++) {
-      const a = r() * Math.PI * 2, d = 14 + Math.sqrt(r()) * (RAD - 14);
-      const m = lam(THREE, '#5E8077'), p = new THREE.Mesh(g, m); p.position.set(Math.cos(a) * d, 0, Math.sin(a) * d);
-      scene.add(p); puntos.push({ p, m, a: (a + Math.PI * 2) % (Math.PI * 2) });
-    }
-    // El barrido: un abanico translúcido.
-    const abanico = new THREE.Mesh(new THREE.CircleGeometry(RAD + 6, 48, 0, 0.7), new THREE.MeshBasicMaterial({ color: C.teal, transparent: true, opacity: 0.22, side: THREE.DoubleSide, depthWrite: false }));
-    abanico.rotation.x = -Math.PI / 2; abanico.position.y = 0.4; scene.add(abanico);
-    const filo = new THREE.Mesh(new THREE.PlaneGeometry(RAD + 6, 1.4), new THREE.MeshBasicMaterial({ color: C.teal, side: THREE.DoubleSide }));
-    filo.geometry.translate((RAD + 6) / 2, 0, 0); filo.rotation.x = -Math.PI / 2; filo.position.y = 0.5; scene.add(filo);
-    // La señal: un poste y una onda en el punto que cambió.
-    const poste = new THREE.Mesh(new THREE.CylinderGeometry(0.8, 0.8, 1, 8).translate(0, 0.5, 0), lam(THREE, C.ambar));
-    const cabeza = new THREE.Mesh(new THREE.OctahedronGeometry(5), lam(THREE, C.ambar, { flatShading: true }));
-    const onda = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 48), new THREE.MeshBasicMaterial({ color: C.ambar, transparent: true, side: THREE.DoubleSide }));
-    onda.rotation.x = -Math.PI / 2; scene.add(poste, cabeza, onda);
-    const VEL = 1.1, VUELTA = Math.PI * 2 / VEL, elegidos = [7, 22, 31, 12, 40];
-    const gris = new THREE.Color('#5E8077'), luz = new THREE.Color(C.teal), amb = new THREE.Color(C.ambar);
-    return {
-      alto: 190, az: -0.4, pol: 0.88, sube: 12, quieto: VUELTA * 0.6,
-      paso(s) {
-        const ang = (s * VEL) % (Math.PI * 2);
-        abanico.rotation.z = ang - 0.7; filo.rotation.z = ang;
-        const vuelta = Math.floor(s / VUELTA), sel = puntos[elegidos[vuelta % elegidos.length]];
-        for (const pt of puntos) {
-          const atras = ((ang - (Math.PI * 2 - pt.a)) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-          const brillo = Math.exp(-atras * 2.2);
-          pt.m.color.copy(gris).lerp(luz, brillo);
-          pt.p.scale.y = 1 + brillo * 0.8;
-        }
-        // La señal aparece cuando el barrido pasa por el punto elegido de esta vuelta.
-        const paso = ((ang - (Math.PI * 2 - sel.a)) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
-        const k = suave(paso / 1.2), alto = 10 + k * 34;
-        sel.m.color.copy(amb); sel.p.scale.y = 1.6;
-        poste.position.copy(sel.p.position); poste.scale.y = alto;
-        cabeza.position.set(sel.p.position.x, alto + 5, sel.p.position.z); cabeza.rotation.y = s * 1.5; cabeza.scale.setScalar(0.3 + k * 0.7);
-        const ro = suave(paso / 2.4) * 34;
-        onda.position.set(sel.p.position.x, 0.6, sel.p.position.z); onda.scale.setScalar(4 + ro); onda.material.opacity = Math.max(0, 1 - ro / 34);
-      },
-    };
-  },
-
-  // Asistente: la pregunta sale del centro hacia las fuentes que hacen falta y vuelve con la
-  // respuesta; las fuentes que responden se encienden.
-  asistente(THREE, scene) {
-    const N = 12, RAD = 92;
-    const nucleo = new THREE.Mesh(new THREE.IcosahedronGeometry(17, 1), lam(THREE, C.crema, { flatShading: true }));
-    nucleo.position.y = 20; scene.add(nucleo);
-    const anillo = new THREE.Mesh(new THREE.TorusGeometry(26, 0.8, 8, 80), lam(THREE, C.ambar)); anillo.position.y = 20; anillo.rotation.x = Math.PI / 2.3; scene.add(anillo);
-    const base = new THREE.Mesh(new THREE.CircleGeometry(RAD + 18, 64), lam(THREE, '#173A31')); base.rotation.x = -Math.PI / 2; scene.add(base);
-    const nodos = [], lineas = [];
-    const gn = new THREE.BoxGeometry(14, 14, 14); gn.translate(0, 7, 0);
-    for (let i = 0; i < N; i++) {
-      const a = (i / N) * Math.PI * 2, x = Math.cos(a) * RAD, z = Math.sin(a) * RAD;
-      const m = lam(THREE, '#4E7268'), n = new THREE.Mesh(gn, m); n.position.set(x, 0, z); n.add(borde(THREE, gn, C.teal, 0.35)); scene.add(n);
-      const lg = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 20, 0), new THREE.Vector3(x, 7, z)]);
-      const lm = new THREE.LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0.18 }), l = new THREE.Line(lg, lm); scene.add(l);
-      nodos.push({ n, m, x, z }); lineas.push(lm);
-    }
-    const pulsos = [0, 1, 2].map(() => { const p = new THREE.Mesh(new THREE.SphereGeometry(3.2, 16, 12), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(p); return p; });
-    const rondas = [[1, 5, 8], [3, 9, 11], [0, 4, 6], [2, 7, 10]];
-    const apagado = new THREE.Color('#4E7268'), prendido = new THREE.Color(C.teal), CICLO = 3.4;
-    return {
-      alto: 200, az: -0.5, pol: 0.95, mira: 8, sube: 8,
-      paso(s) {
-        nucleo.rotation.y = s * 0.4; anillo.rotation.z = s * 0.8;
-        const ronda = rondas[Math.floor(s / CICLO) % rondas.length], f = (s % CICLO) / CICLO;
-        // Ida (0–0.4), espera (0.4–0.55), vuelta (0.55–0.95).
-        const ida = suave(f / 0.4), vuelta = suave((f - 0.55) / 0.4), q = f < 0.55 ? ida : 1 - vuelta;
-        nodos.forEach((nd, i) => {
-          const en = ronda.includes(i), luz = en ? Math.max(0, Math.min(1, (f - 0.35) * 6)) * (f < 0.97 ? 1 : 0) : 0;
-          nd.m.color.copy(apagado).lerp(prendido, luz); nd.n.position.y = luz * 6; lineas[i].opacity = en ? 0.18 + 0.6 * Math.min(1, f * 3) * (1 - vuelta * 0.7) : 0.12;
+        // La ficha en curso: de la lista a la mesa, el cruce, y al expediente.
+        const actual = fichas[n % 7], hechas = n % 6;
+        arco(p, [LISTA[0], 6 * (FH + 0.6), LISTA[2]], MESA, tramo(k, 0, 0.6), 26);
+        if (k > 3.0) arco(p, MESA, [EXP[0], hechas * (FH + 0.8), EXP[2]], tramo(k, 3.0, 3.6), 22);
+        actual.grupo.position.copy(p); actual.grupo.visible = true;
+        actual.m.color.copy(FICHA).lerp(res.some(Boolean) ? MAL : OK, tramo(k, 2.7, 3.0));
+        // Las fichas ya revisadas forman el expediente; al llenarse, empieza uno nuevo.
+        fichas.forEach((f, i) => {
+          const edad = (n % 7 - i + 7) % 7;
+          if (edad === 0) return;
+          f.grupo.visible = edad <= hechas;
+          if (f.grupo.visible) f.grupo.position.set(EXP[0], (hechas - edad) * (FH + 0.8), EXP[2]);
         });
-        ronda.forEach((i, j) => { const nd = nodos[i]; pulsos[j].position.set(nd.x * q, 20 + (7 - 20) * q + Math.sin(q * Math.PI) * 14, nd.z * q); pulsos[j].visible = f < 0.96; });
-        nucleo.scale.setScalar(1 + Math.max(0, Math.sin((f - 0.9) * Math.PI * 10)) * 0.08 * (f > 0.9 ? 1 : 0));
+        losas.forEach((l, j) => {
+          const t0 = 0.75 + j * 0.5, viaje = tramo(k, t0, t0 + 0.3), on = tramo(k, t0 + 0.28, t0 + 0.45);
+          arco(l.haz.position, [MESA[0] + 20, 6, MESA[2]], [FX - 16, 6, l.z], viaje, 12);
+          l.haz.visible = viaje > 0 && viaje < 1;
+          const fuera = k > 3.3 ? 1 - tramo(k, 3.3, 3.7) : 1;
+          l.m.color.copy(APAG).lerp(res[j] ? MAL : OK, on * fuera);
+          l.mesh.position.y = on * fuera * (res[j] ? 9 : 4);
+          l.rl.classList.toggle('ok', on > 0.5 && k < 3.3 && !res[j]);
+          l.rl.classList.toggle('mal', on > 0.5 && k < 3.3 && !!res[j]);
+        });
+      },
+      rotular(poner) {
+        losas.forEach(l => poner(l.rl, FX + 24, l.mesh.position.y + 4, l.z));
+        poner(rLista, LISTA[0], 34, LISTA[2] - 22); poner(rExp, EXP[0] + 38, 2, EXP[2] + 4);
+      },
+    };
+  },
+
+  // Tablero: el mapa de Colombia en celdas; se eligen los municipios de un cliente, suben, y sus
+  // indicadores llegan al tablero de al lado, cada uno con la entidad que lo publica.
+  tablero(THREE, scene, { datos, rotulo }) {
+    scene.add(suelo(THREE));
+    const K = 17, OX = -96, CX = -73.2, CY = 4.6;
+    const X = lon => (lon - CX) * K + OX, Z = lat => -(lat - CY) * K;
+    const zonas = [['Bogotá', -74.08, 4.65], ['Medellín', -75.57, 6.25], ['Barranquilla', -74.8, 10.96]];
+    const rCiudad = zonas.map(z => rotulo(z[0], 'ciudad'));
+    // Cuatro losas del tablero a la derecha, cada una con sus barras.
+    const TX = [62, 164], TZ = [-38, 34];
+    const tiles = datos.map((d, i) => {
+      const x = TX[i % 2], z = TZ[Math.floor(i / 2)];
+      const base = new THREE.Mesh(new THREE.BoxGeometry(94, 2.4, 60).translate(0, 1.2, 0), lam(THREE, '#EEF1EC'));
+      base.position.set(x, 0, z); base.receiveShadow = true; base.castShadow = true; scene.add(base);
+      const barras = [];
+      for (let b = 0; b < 5; b++) {
+        const bm = new THREE.Mesh(new THREE.BoxGeometry(6.4, 1, 6.4).translate(0, 0.5, 0), lam(THREE, b === 4 ? C.tealOsc : '#A6D8CC'));
+        bm.position.set(x + 8 + b * 8.4, 2.4, z + 8); bm.castShadow = true; scene.add(bm); barras.push(bm);
+      }
+      return { x, z, barras, r: rotulo(`<b>${d.t}</b><small>${d.e}</small>`, 'tile') };
+    });
+    const sel = new Uint8Array(6000), retraso = new Float32Array(6000);
+    let malla = null, celdas = [];
+    fetch('/datos/co.json').then(r => r.json()).then(D => {
+      const r = D.R * K * 0.85, geo = new THREE.CylinderGeometry(r, r, 1, 6); geo.translate(0, 0.5, 0);
+      malla = new THREE.InstancedMesh(geo, lam(THREE, '#FFFFFF', { flatShading: true }), D.land.length);
+      malla.castShadow = true; malla.receiveShadow = true;
+      celdas = D.land; scene.add(malla);
+    });
+    const o = new THREE.Object3D(), base = new THREE.Color('#4A7066'), alta = new THREE.Color(C.teal), col = new THREE.Color();
+    const T = 4.6;
+    // El hilo: un punto por indicador, que viaja de los municipios a su losa.
+    const hilo = tiles.map(() => { const h = new THREE.Mesh(new THREE.SphereGeometry(2.2, 12, 8), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(h); return h; });
+    let zona = -1;
+    const altura = (n, i) => 0.25 + 0.75 * Math.abs(Math.sin(n * 2.1 + i * 1.7 + (i % 3)));
+    return {
+      alto: 310, az: -0.14, pol: 0.86, mira: [30, 0, 4], sombras: 300, vaiven: 0.05, quieto: 3.5,
+      paso(s) {
+        if (!malla) return;
+        const n = Math.floor(s / T), k = s - n * T, zi = n % zonas.length, [, lo, la] = zonas[zi];
+        if (zi !== zona) {
+          zona = zi;
+          celdas.forEach((c, i) => {
+            const a = Math.atan2(c[1] - la, c[0] - lo), d = Math.hypot(c[0] - lo, (c[1] - la) * 1.1);
+            const rad = 0.95 * (0.8 + 0.2 * Math.sin(a * 3 + zi * 2));
+            sel[i] = d < rad ? 1 : 0; retraso[i] = d / rad * 0.5;
+          });
+          rCiudad.forEach((rc, i) => rc.classList.toggle('activa', i === zi));
+        }
+        const baja = 1 - tramo(k, T - 0.5, T);
+        celdas.forEach((c, i) => {
+          const e = sel[i] ? suave((k - retraso[i]) / 0.6) * baja : 0;
+          o.position.set(X(c[0]), 0, Z(c[1])); o.scale.set(1, 1.4 + e * 9, 1); o.updateMatrix(); malla.setMatrixAt(i, o.matrix);
+          malla.setColorAt(i, col.copy(base).lerp(alta, e));
+        });
+        malla.instanceMatrix.needsUpdate = true; malla.instanceColor.needsUpdate = true;
+        const origen = [X(lo), 12, Z(la)];
+        tiles.forEach((t, i) => {
+          const v = tramo(k, 1.1 + i * 0.25, 1.6 + i * 0.25);
+          arco(hilo[i].position, origen, [t.x + 20, 6, t.z + 8], v, 40);
+          hilo[i].visible = v > 0 && v < 1;
+          const llega = tramo(k, 1.5 + i * 0.25, 2.2 + i * 0.25) * baja;
+          t.barras.forEach((b, j) => { b.scale.y = 1 + llega * altura(n, j + i * 6) * 30; });
+        });
+      },
+      rotular(poner) {
+        zonas.forEach(([, lo, la], i) => poner(rCiudad[i], X(lo), 14, Z(la)));
+        tiles.forEach(t => poner(t.r, t.x - 43, 2.6, t.z - 20));
+      },
+    };
+  },
+
+  // Vigilancia: lo que publica cada fuente pasa por su carril; cuando algo que vigilas cruza la
+  // línea de hoy, se levanta y llega a tus alertas.
+  vigilancia(THREE, scene, { datos, rotulo }) {
+    const carriles = datos, ZS = [-54, -18, 18, 54], X0 = -110, X1 = 96, HOY = 56, VEL = 24, LARGO = X1 - X0;
+    scene.add(suelo(THREE));
+    ZS.forEach(z => {
+      const c = new THREE.Mesh(new THREE.PlaneGeometry(LARGO, 20), lam(THREE, '#1D4238')); c.rotation.x = -Math.PI / 2; c.position.set((X0 + X1) / 2, 0.1, z); c.receiveShadow = true; scene.add(c);
+      for (let x = X0 + 10; x < X1; x += 26) { const t = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 20), new THREE.MeshBasicMaterial({ color: C.linea })); t.rotation.x = -Math.PI / 2; t.position.set(x, 0.15, z); scene.add(t); }
+    });
+    // La línea de hoy.
+    const linea = new THREE.Mesh(new THREE.PlaneGeometry(132, 34), new THREE.MeshBasicMaterial({ color: C.teal, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
+    linea.rotation.y = Math.PI / 2; linea.position.set(HOY, 17, 0); scene.add(linea);
+    const filo = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.2, 132), new THREE.MeshBasicMaterial({ color: C.teal })); filo.position.set(HOY, 34, 0); scene.add(filo);
+    const piso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.4, 132), new THREE.MeshBasicMaterial({ color: C.teal })); piso.position.set(HOY, 0.3, 0); scene.add(piso);
+    // La bandeja de alertas.
+    const BAN = [132, 0, 0];
+    const bandeja = new THREE.Mesh(new THREE.BoxGeometry(40, 3, 30).translate(0, 1.5, 0), lam(THREE, '#EEF1EC')); bandeja.position.set(...BAN); bandeja.castShadow = bandeja.receiveShadow = true; scene.add(bandeja);
+    const avisos = Array.from({ length: 6 }, () => { const m = new THREE.Mesh(new THREE.BoxGeometry(30, 1.6, 20).translate(0, 0.8, 0), lam(THREE, C.ambar)); m.castShadow = true; m.visible = false; scene.add(m); return m; });
+    // Los eventos: cada carril con su ritmo; algunos son de lo que vigilas.
+    const ev = [], g = new THREE.BoxGeometry(13, 6, 11); g.translate(0, 3, 0);
+    carriles.forEach((_, i) => {
+      for (let j = 0; j < 7; j++) {
+        const m = lam(THREE, '#55786E'), mesh = new THREE.Mesh(g, m); mesh.castShadow = true; scene.add(mesh);
+        ev.push({ mesh, m, carril: i, fase: j * (LARGO / 7) + ((i * 37 + j * 23) % 19), vigila: (i + j * 3) % 7 === 0 });
+      }
+    });
+    const rCar = carriles.map(c => rotulo(`<b>${c.s}</b><small>${c.e}</small>`, 'carril'));
+    const rHoy = rotulo('hoy', 'lugar'), rBan = rotulo('Tus alertas', 'lugar'), rAviso = rotulo('', 'aviso');
+    const GRIS = new THREE.Color('#55786E'), AMB = new THREE.Color(C.ambar), CREMA = new THREE.Color('#BFD3CB');
+    const p = new THREE.Vector3();
+    let ultimo = null, visto = -10;
+    return {
+      alto: 262, az: -0.14, pol: 0.9, mira: [-34, 0, 6], sombras: 240, vaiven: 0.05, quieto: 6,
+      paso(s) {
+        let llegadas = 0, reciente = null;
+        for (const e of ev) {
+          const recorrido = e.fase + s * VEL, vuelta = Math.floor(recorrido / LARGO), x = X0 + (recorrido % LARGO);
+          const z = ZS[e.carril], orilla = Math.min(1, (x - X0) / 14, (X1 - x) / 14);
+          const pasado = e.vigila ? suave((x - HOY) / 10) : 0;
+          e.mesh.position.set(x, pasado * 7, z); e.mesh.scale.setScalar(Math.max(0.01, orilla));
+          e.m.color.copy(e.vigila ? CREMA : GRIS).lerp(AMB, pasado);
+          if (e.vigila) {
+            // Una alerta por cada vez que algo vigilado cruza la línea de hoy.
+            llegadas += vuelta + (x > HOY ? 1 : 0);
+            const t = (x - HOY) / VEL;  // segundos desde que cruzó
+            if (x > HOY && t < 1.2 && (!reciente || t < reciente.t)) reciente = { e, t, x, z };
+          }
+        }
+        const total = llegadas % 6;
+        avisos.forEach((a, i) => { a.visible = i < total; a.position.set(BAN[0], 3 + i * 1.9, BAN[2]); });
+        if (reciente) {
+          const a = avisos[Math.max(0, total - 1)];
+          arco(p, [reciente.x, 8, reciente.z], [BAN[0], 3 + Math.max(0, total - 1) * 1.9, BAN[2]], suave(reciente.t / 1.0), 30);
+          a.position.copy(p); a.visible = true; visto = s;
+          if (ultimo !== reciente.e) {
+            ultimo = reciente.e; const c = carriles[reciente.e.carril];
+            rAviso.innerHTML = `<i></i><span><small>${c.s}</small>${c.ev}</span>`;
+          }
+        }
+        rAviso.classList.toggle('ver', !!ultimo && s - visto < 2.4);
+      },
+      rotular(poner) {
+        rCar.forEach((r, i) => poner(r, X0 - 4, 1, ZS[i]));
+        poner(rHoy, HOY, 2, 74); poner(rBan, BAN[0], 4, BAN[2] + 22);
+      },
+    };
+  },
+
+  // Asistente: la pregunta, de una herramienta real, viaja a la entidad que la responde y vuelve
+  // con su fuente y su licencia.
+  asistente(THREE, scene, { datos, rotulo }) {
+    const { preguntas, nodos } = datos, N = nodos.length, RAD = 112, T = 4.4;
+    scene.add(suelo(THREE));
+    const disco = new THREE.Mesh(new THREE.CylinderGeometry(RAD + 26, RAD + 26, 1.2, 96), lam(THREE, '#1A3F35')); disco.position.y = 0.4; disco.receiveShadow = true; scene.add(disco);
+    // El centro: tu asistente, una pieza de tres placas.
+    const centro = new THREE.Group(); scene.add(centro);
+    [[34, 4, C.hueso], [28, 3, C.teal], [22, 3, C.crema]].forEach(([r, h, c], i) => {
+      const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 6).translate(0, h / 2, 0), lam(THREE, c, { flatShading: true }));
+      m.position.y = 1.2 + i * 4.2; m.castShadow = true; centro.add(m);
+    });
+    const onda = new THREE.Mesh(new THREE.RingGeometry(0.92, 1, 64), new THREE.MeshBasicMaterial({ color: C.ambar, transparent: true, side: THREE.DoubleSide }));
+    onda.rotation.x = -Math.PI / 2; onda.position.y = 1.4; scene.add(onda);
+    const gn = new THREE.CylinderGeometry(9, 9, 6, 6); gn.translate(0, 3, 0);
+    const ns = nodos.map((e, i) => {
+      const a = (i / N) * Math.PI * 2 - Math.PI / 2, x = Math.cos(a) * RAD, z = Math.sin(a) * RAD;
+      const m = lam(THREE, C.apagado, { flatShading: true }), mesh = new THREE.Mesh(gn, m); mesh.position.set(x, 1.2, z); mesh.castShadow = true; scene.add(mesh);
+      const lm = new THREE.LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0.16 });
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 8, 0), new THREE.Vector3(x, 5, z)]), lm));
+      return { e, x, z, mesh, m, lm, r: rotulo(e, 'nodo') };
+    });
+    const ida = new THREE.Mesh(new THREE.SphereGeometry(3, 16, 12), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(ida);
+    const rPreg = rotulo('', 'burbuja'), rResp = rotulo('', 'respuesta');
+    const APAG = new THREE.Color(C.apagado), LUZ = new THREE.Color(C.teal);
+    let ronda = -1;
+    return {
+      alto: 330, az: 0, pol: 0.93, mira: [0, 0, 10], sombras: 200, vaiven: 0.1, quieto: 2.2,
+      paso(s) {
+        const n = Math.floor(s / T), k = s - n * T, q = preguntas[n % preguntas.length];
+        const nd = ns.find(x => x.e === q.e);
+        if (n !== ronda) {
+          ronda = n;
+          rPreg.textContent = q.p;
+          rResp.innerHTML = `<span>Responde</span> <b>${q.e}</b><small>con su fuente y su licencia: ${q.l}</small>`;
+        }
+        rPreg.classList.toggle('ver', k > 0.1 && k < T - 0.3);
+        rResp.classList.toggle('ver', k > 2.6 && k < T - 0.3);
+        const v1 = tramo(k, 0.7, 1.4), v2 = tramo(k, 1.9, 2.6);
+        arco(ida.position, [0, 12, 0], [nd.x, 8, nd.z], k < 1.65 ? v1 : 1 - v2, 26); ida.visible = k > 0.7 && k < 2.6;
+        const luz = tramo(k, 1.3, 1.5) * (1 - tramo(k, T - 0.5, T));
+        ns.forEach(x => {
+          const es = x === nd;
+          x.m.color.copy(APAG).lerp(LUZ, es ? luz : 0); x.mesh.position.y = 1.2 + (es ? luz * 6 : 0);
+          x.lm.opacity = es ? 0.16 + 0.7 * luz : 0.12; x.r.classList.toggle('activo', es && luz > 0.5);
+        });
+        const e = tramo(k, 2.6, 3.6);
+        onda.scale.setScalar(20 + e * 60); onda.material.opacity = k > 2.6 ? 1 - e : 0;
+        centro.rotation.y = s * 0.25;
+      },
+      rotular(poner) {
+        ns.forEach(x => poner(x.r, x.x * 1.18, 4, x.z * 1.18));
       },
     };
   },
 
   // La prueba de una respuesta: el dato y sus capas (procedencia, licencia, de dónde se sirvió y
   // la huella) se separan para leerse y se vuelven a juntar. Valores de una respuesta real.
-  prueba(THREE, scene, el) {
+  prueba(THREE, scene, { el }) {
     const capas = JSON.parse(el.dataset.capas);
     const W = 220, D = 130, G = 7, n = capas.length;
     const forma = new THREE.Shape(); const rr = 10, w = W / 2, d = D / 2;
@@ -258,44 +381,45 @@ const VINETAS = {
     geo.rotateX(-Math.PI / 2);
     // La cara superior lleva el texto como textura (plano encima de la losa).
     const tapa = new THREE.PlaneGeometry(W - 6, D - 6); tapa.rotateX(-Math.PI / 2);
-    const fuente = getComputedStyle(document.body).fontFamily;
     const losas = capas.map((c, i) => {
-      const lienzo = document.createElement('canvas'); lienzo.width = 1024; lienzo.height = 600;
-      const x = lienzo.getContext('2d');
-      x.fillStyle = i === 0 ? '#FFFFFF' : '#F6F7F4'; x.fillRect(0, 0, 1024, 600);
-      // Con las capas abiertas, de cada losa de abajo solo se ve su borde cercano: ahí va el texto.
-      const y0 = i === 0 ? 120 : 330;
-      x.fillStyle = i === 0 ? '#8F570B' : '#236E62'; x.font = `500 44px "Geist Mono", ui-monospace, monospace`; x.fillText(c.campo, 64, y0);
-      x.fillStyle = '#12261F'; x.font = `600 ${i === 0 ? 84 : 68}px ${fuente}`;
-      const palabras = c.valor.split(' '); let linea = '', y = i === 0 ? 270 : y0 + 96;
-      for (const p of palabras) { const t = linea ? linea + ' ' + p : p; if (x.measureText(t).width > 890 && linea) { x.fillText(linea, 64, y); linea = p; y += i === 0 ? 96 : 78; } else linea = t; }
-      x.fillText(linea, 64, y);
-      if (c.nota) { x.fillStyle = '#4E5E57'; x.font = `400 38px ${fuente}`; x.fillText(c.nota, 64, i === 0 ? 530 : 545); }
-      const tex = new THREE.CanvasTexture(lienzo); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+      const tex = textura(THREE, 1024, 600, (x, fuente) => {
+        x.fillStyle = i === 0 ? '#FFFFFF' : '#F6F7F4'; x.fillRect(0, 0, 1024, 600);
+        // Con las capas abiertas, de cada losa de abajo solo se ve su borde cercano: ahí va el texto.
+        const y0 = i === 0 ? 120 : 330;
+        x.fillStyle = i === 0 ? '#8F570B' : '#236E62'; x.font = '500 44px "Geist Mono", ui-monospace, monospace'; x.fillText(c.campo, 64, y0);
+        x.fillStyle = '#12261F'; x.font = `600 ${i === 0 ? 84 : 68}px ${fuente}`;
+        const palabras = c.valor.split(' '); let linea = '', y = i === 0 ? 270 : y0 + 96;
+        for (const p of palabras) { const t = linea ? linea + ' ' + p : p; if (x.measureText(t).width > 890 && linea) { x.fillText(linea, 64, y); linea = p; y += i === 0 ? 96 : 78; } else linea = t; }
+        x.fillText(linea, 64, y);
+        if (c.nota) { x.fillStyle = '#4E5E57'; x.font = `400 38px ${fuente}`; x.fillText(c.nota, 64, i === 0 ? 530 : 545); }
+      });
       const g = new THREE.Group();
-      const cuerpo = new THREE.Mesh(geo, lam(THREE, i === 0 ? C.ambar : '#DCE3DA'));
+      const m = lam(THREE, i === 0 ? C.ambar : '#DCE3DA');
       const cara = new THREE.Mesh(tapa, new THREE.MeshBasicMaterial({ map: tex })); cara.position.y = G + 0.9;
-      g.add(cuerpo, cara); scene.add(g);
-      return g;
+      g.add(new THREE.Mesh(geo, m), cara); scene.add(g);
+      return { g, m, base: new THREE.Color(i === 0 ? C.ambar : '#DCE3DA') };
     });
     const sombra = new THREE.Mesh(new THREE.PlaneGeometry(W * 1.3, D * 1.5), new THREE.MeshBasicMaterial({ color: '#0E2A22', transparent: true, opacity: 0.08, depthWrite: false }));
     sombra.rotation.x = -Math.PI / 2; sombra.position.y = -2; scene.add(sombra);
     const notas = [...document.querySelectorAll('[data-capa]')];
-    const CICLO = 10, SEP = 64;
+    const CICLO = 11, SEP = 64, VIVO = new THREE.Color(C.teal);
+    const brillo = new Float32Array(n);
     let activa = -1;
     return {
-      alto: 420, az: -0.55, pol: 0.9, mira: 120, fijo: false, quieto: 4,
+      alto: 420, az: -0.55, pol: 0.9, mira: [0, 120, 0], vaiven: 0.12, quieto: 4,
       paso(s) {
         const f = (s % CICLO) / CICLO;
-        // Juntas (0–0.12), se abren (0.12–0.3), abiertas (0.3–0.82), se cierran (0.82–1).
-        const k = f < 0.12 ? 0 : f < 0.3 ? suave((f - 0.12) / 0.18) : f < 0.82 ? 1 : 1 - suave((f - 0.82) / 0.18);
-        losas.forEach((g, i) => {
+        // Juntas (0–0.1), se abren (0.1–0.26), abiertas (0.26–0.84), se cierran (0.84–1).
+        const k = f < 0.1 ? 0 : f < 0.26 ? suave((f - 0.1) / 0.16) : f < 0.84 ? 1 : 1 - suave((f - 0.84) / 0.16);
+        const turno = k === 1 ? Math.min(n - 1, Math.floor((f - 0.26) / 0.58 * n)) : -1;
+        losas.forEach((l, i) => {
           const desde = n - 1 - i;  // la de arriba es el dato
-          g.position.y = desde * (G + 1.2) + k * desde * SEP;
-          g.position.x = k * desde * -6;
+          brillo[i] += ((i === turno ? 1 : 0) - brillo[i]) * 0.12;
+          l.g.position.y = desde * (G + 1.2) + k * desde * SEP;
+          l.g.position.x = k * desde * -6 + brillo[i] * 16;
+          l.m.color.copy(l.base).lerp(VIVO, i === 0 ? 0 : brillo[i] * 0.8);
         });
-        // Con las capas abiertas, cada nota se ilumina por turnos.
-        const turno = k === 1 ? Math.min(n - 1, Math.floor((f - 0.3) / 0.52 * n)) : -1;
+        // Con las capas abiertas, cada nota se ilumina por turnos, junto con su capa.
         if (turno !== activa) { activa = turno; notas.forEach(nt => nt.classList.toggle('activa', +nt.dataset.capa === turno)); }
         sombra.material.opacity = 0.08 + 0.04 * (1 - k);
       },
