@@ -13,6 +13,10 @@ escenarios de exposición:
 - `perfil`: el perfil de la familia de la herramienta esperada (`/mcp/<familia>`). Es una cota
   superior: supone que el usuario conectó justo el perfil que hacía falta.
 - `catalogo`: el perfil catálogo (`/mcp/catalogo`: buscar_herramienta → consultar).
+- `perfil+N` (p. ej. `perfil+90`): el perfil de la pregunta más herramientas de otras familias hasta
+  sumar N, a la vista. Junto con `perfil` y `plano` da la curva de precisión contra tamaño: cuánto
+  puede crecer un perfil antes de partirlo (ADR-0031). Las de relleno salen en un orden fijo (hash
+  del nombre), las mismas en cada corrida.
 
 Se mide lo mismo que el banco de agente (herramienta, entrada, verdad) más tokens, vueltas al LLM,
 llamadas y segundos. Una pregunta a la vez (sin carga sobre las fuentes); retoma desde `--salida`.
@@ -27,6 +31,7 @@ Uso: `uv run scripts/banco_mcp_escala.py --base https://… --llave rt_test_… 
 
 import argparse
 import asyncio
+import hashlib
 import json
 import os
 import sys
@@ -42,7 +47,7 @@ from banco_agente import BANCO, SISTEMA, _evaluar, _plano  # misma medida que el
 from fastmcp import Client
 from fastmcp.client.transports import StreamableHttpTransport
 
-from terranova import perfil_catalogo
+from terranova import perfil_catalogo, puerta
 from terranova.catalogo import cargar
 from terranova.ficha import FAMILIA as FAMILIA_FICHA
 from terranova.ficha import HERRAMIENTA as FICHA
@@ -75,8 +80,30 @@ def _funcion(t: Any, diferida: bool = False) -> dict[str, Any]:
     return f | {"defer_loading": True} if diferida else f
 
 
+def _familia_pregunta(v: dict[str, Any]) -> str:
+    return _familia_de(v["herramienta"]) if v.get("herramienta") else str(v["familia"])
+
+
+def _tamano(escenario: str) -> int | None:
+    """N de `perfil+N`; None en los demás escenarios."""
+    base, _, n = escenario.partition("+")
+    return int(n) if base == "perfil" and n.isdigit() else None
+
+
+def seleccion(tools: list[Any], familia: str, n: int) -> list[Any]:
+    """El perfil de `familia` (con las comunes y fuente_describir) y relleno de otras familias en
+    orden fijo hasta sumar `n`."""
+    comunes = puerta.HERRAMIENTAS_COMUNES | {"fuente_describir"}
+    propias = [t for t in tools if _familia_de(t.name) == familia or t.name in comunes]
+    otras = sorted(
+        (t for t in tools if t not in propias),
+        key=lambda t: hashlib.sha1(t.name.encode()).hexdigest(),
+    )
+    return propias + otras[: max(0, n - len(propias))]
+
+
 def herramientas_responses(escenario: str, tools: list[Any]) -> list[dict[str, Any]]:
-    if escenario in ("plano", "perfil", "catalogo"):
+    if escenario in ("plano", "perfil", "catalogo") or _tamano(escenario):
         return [_funcion(t) for t in tools]
     if escenario == "busqueda":
         return [
@@ -215,7 +242,7 @@ async def _pregunta(
 
 def _ruta(escenario: str, v: dict[str, Any]) -> str:
     if escenario == "perfil":
-        return f"/mcp/{_familia_de(v['herramienta'] or '')}"
+        return f"/mcp/{_familia_pregunta(v)}"
     if escenario == "catalogo":
         return "/mcp/catalogo"
     return "/mcp"
@@ -229,10 +256,7 @@ def resumen(resultados: list[dict[str, Any]]) -> None:
         f"\n{'escenario':<18} {'n':>3} {'éxito':>6} {'herram.':>7} {'entrada':>7} "
         f"{'tok/preg':>9} {'vueltas':>7} {'llamadas':>8} {'seg':>6} {'err LLM':>7}"
     )
-    for e in ESCENARIOS:
-        rs = por.get(e)
-        if not rs:
-            continue
+    for e, rs in por.items():
         n = len(rs)
 
         def pct(k: str, rs: list[dict[str, Any]] = rs, n: int = n) -> str:
@@ -295,9 +319,14 @@ async def main(argv: list[str]) -> int:
                     continue
                 ruta = _ruta(e, v)
                 mcp = await cliente(ruta)
-                if (e, ruta) not in listas:
-                    listas[(e, ruta)] = herramientas_responses(e, await mcp.list_tools())
-                r = await _pregunta(v, e, mcp, http, listas[(e, ruta)])
+                n = _tamano(e)
+                clave = (e, _familia_pregunta(v) if n else ruta)
+                if clave not in listas:
+                    tools = await mcp.list_tools()
+                    if n:
+                        tools = seleccion(tools, clave[1], n)
+                    listas[clave] = herramientas_responses(e, tools)
+                r = await _pregunta(v, e, mcp, http, listas[clave])
                 hechos.append(r)
                 with a.salida.open("a", encoding="utf-8") as f:
                     f.write(json.dumps(r, ensure_ascii=False) + "\n")

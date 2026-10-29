@@ -60,6 +60,15 @@ async def test_fuente_describir_por_mcp_acepta_la_herramienta() -> None:
 
 
 @pytest.mark.anyio
+async def test_fuente_describir_entiende_lo_que_manda_el_agente() -> None:
+    # banco de escala: la herramienta escrita con punto y el nombre de una familia
+    r = await puerta.puerta.call_tool("fuente_describir", {"fuente": "icfes.saber11_municipio"})
+    assert r.structured_content is not None and r.structured_content["id"] == "icfes.saber11"
+    with pytest.raises(Exception, match=r"es una familia.*p\. ej\."):
+        await puerta.puerta.call_tool("fuente_describir", {"fuente": "justicia"})
+
+
+@pytest.mark.anyio
 async def test_rest_sirve_la_ficha_tecnica() -> None:
     from terranova.app import app
 

@@ -445,8 +445,15 @@ def fuente_describir(fuente: str) -> dict[str, Any]:
     cuándo se actualizó y qué alertas tiene (datos atrasados, filas repetidas, licencia). Acepta el
     id de una fuente (`icfes.saber11`) o de una de sus herramientas (`icfes_saber11_municipio`).
     Sale del catálogo: no consulta la fuente ni gasta créditos."""
-    h = CATALOGO.herramientas.get(fuente)
+    # el agente escribe la herramienta con punto («dane.poblacion_municipio») o pasa una familia
+    h = CATALOGO.herramientas.get(fuente) or CATALOGO.herramientas.get(fuente.replace(".", "_"))
     fuente_id = h.fuente if h is not None else fuente
+    if fuente_id not in CATALOGO.fuentes and fuente in FAMILIAS:
+        ejemplos = sorted(x.id for x in CATALOGO.herramientas.values() if x.familia == fuente)[:3]
+        raise ToolError(
+            f"no_existe: «{fuente}» es una familia, no una fuente; pase el id de una fuente o de"
+            f" una herramienta (p. ej. {', '.join(ejemplos)})"
+        )
     if fuente_id not in CATALOGO.fuentes:
         parecidos = ids_parecidos(CATALOGO, fuente)
         pista = f"; ¿quiso decir {', '.join(parecidos)}?" if parecidos else ""
