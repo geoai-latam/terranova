@@ -38,6 +38,10 @@
      común. La caché, la idempotencia y las composiciones internas (la ficha usa el polígono del
      predio para hallar su punto interior) siguen con la geometría completa.
   4. `geometria: true` devuelve el sobre como antes.
+- **Resultado:** el banco con cliente real volvió a correr con esto desplegado. Perfil, catálogo y
+  `/mcp` completo pasaron de 82–83 % a 88 % de éxito, y de 93–97 % a 98 % de herramienta correcta.
+  Queda una lista de 169 elementos (t11) sobre el tope: el siguiente paso es paginar las listas
+  largas.
 - **Consecuencias:**
   - **Cambio visible para los clientes REST** que dibujaban polígonos: deben pedir
     `geometria: true`. Hoy no hay clientes de pago (ADR-0020), y GEO Copilot todavía no consume
