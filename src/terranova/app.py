@@ -93,8 +93,9 @@ _CAMPO_GEOMETRIA: Any = (
 )
 
 _CAMPO_PAGINA: Any = (
-    int | SkipJsonSchema[None],  # type: ignore[misc]
-    Field(default=None, ge=1, description=ESQUEMA_PAGINA["description"]),
+    # el mínimo va en el tipo: en el `Field` de una unión, el esquema sale con `ge` y sin `minimum`
+    Annotated[int, Field(ge=1)] | SkipJsonSchema[None],  # type: ignore[misc]
+    Field(default=None, description=ESQUEMA_PAGINA["description"]),
 )
 
 
