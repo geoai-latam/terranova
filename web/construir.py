@@ -192,10 +192,53 @@ def pagina(
 """
 
 
-def portada(rotulo: str, titulo: str, entrada: str, extra: str = "") -> str:
-    return f"""<section class="portada"><div class="envoltura"><div class="cab">
+def portada(rotulo: str, titulo: str, entrada: str, extra: str = "", lado: str = "") -> str:
+    clase = "envoltura con-lado" if lado else "envoltura"
+    return f"""<section class="portada"><div class="{clase}"><div class="cab">
 <span class="rotulo">{rotulo}</span><h1 class="t1">{titulo}</h1><p class="entrada">{entrada}</p>{extra}
-</div></div></section>"""
+</div>{lado}</div></section>"""
+
+
+# ---------------------------------------------------------------- figuras de portada (datos reales)
+def lado_familias() -> str:
+    tope = max(POR_FAMILIA.values())
+    filas = "".join(
+        f'<a class="fila" href="/fuentes?familia={f}"><span>{FAMILIAS[f]}</span>'
+        f'<i style="--v:{n / tope:.3f}"></i><b>{n}</b></a>'
+        for f, n in POR_FAMILIA.most_common()
+        if f != "meta"
+    )
+    return f"""<figure class="lado-fig barras"><figcaption>Herramientas por familia</figcaption>{filas}
+<p class="fuente-dato">catálogo de producción · {N_HERR} herramientas</p></figure>"""
+
+
+def lado_tarifa() -> str:
+    tope = max(c for _, c, _, _ in TARIFA)
+    cols = "".join(
+        f'<div class="col"><b>{c}</b><i style="--v:{c / tope:.3f}"></i><span>{t}</span></div>'
+        for t, c, _, _ in TARIFA
+    )
+    return f"""<figure class="lado-fig escalera"><figcaption>Créditos por consulta</figcaption><div class="cols">{cols}</div>
+<p class="fuente-dato">caché, errores y «fuera de cobertura» no descuentan</p></figure>"""
+
+
+def lado_capas() -> str:
+    capas = [
+        ("Analítica", "calcula"),
+        ("Desarrollo", "construye"),
+        ("Automatización", "opera"),
+    ]
+    filas = "".join(f'<div class="capa"><b>{n}</b><span>{v}</span></div>' for n, v in capas)
+    return f"""<figure class="lado-fig capas"><figcaption>Cuatro capas, una prueba</figcaption>{filas}
+<div class="capa base"><b>Datos Terranova</b><span>{N_HERR} herramientas · {N_FUENTES} fuentes</span></div>
+<p class="fuente-dato">cada capa se apoya en la de datos</p></figure>"""
+
+
+def lado_puertas() -> str:
+    return """<figure class="lado-fig puertas"><figcaption>Dos puertas, un contrato</figcaption>
+<div class="p"><span class="et">agentes</span><code>POST /mcp</code><small>MCP · streamable HTTP · perfiles por familia</small></div>
+<div class="p"><span class="et">sistemas</span><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code><small>REST · OpenAPI en /docs</small></div>
+<div class="p uno"><span class="et">las dos</span><code>Authorization: Bearer rt_live_…</code><small>misma llave · respuesta rt/1</small></div></figure>"""
 
 
 TARJETA_GEO = """<div class="tarjeta" data-k="geo">
@@ -507,6 +550,7 @@ def servicios() -> str:
             "El trabajo territorial completo, con prueba en cada paso",
             "Analítica, desarrollo y automatización sobre la capa de datos Terranova. Los agentes hacen el trabajo y tu equipo decide.",
             '<div class="botones" style="margin-top:8px"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>',
+            lado_capas(),
         )
         + f"""
 <section class="seccion"><div class="envoltura">
@@ -569,6 +613,7 @@ def fuentes() -> str:
             "Fuentes y herramientas",
             f"{N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales",
             f"Cada herramienta responde una pregunta concreta con una fuente de una de las {N_ENTIDADES} entidades del catálogo. Busca por tema, entidad o nombre.",
+            lado=lado_familias(),
         )
         + f"""
 <section class="seccion"><div class="envoltura" data-catalogo>
@@ -615,6 +660,7 @@ def precios() -> str:
             "Precios",
             "Pagas por consulta, no por el dato",
             "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato.",
+            lado=lado_tarifa(),
         )
         + f"""
 <section class="seccion"><div class="envoltura">
@@ -672,6 +718,7 @@ def desarrolladores() -> str:
             "Desarrolladores",
             "Conecta tu agente o tu sistema",
             "MCP por streamable HTTP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1 en las dos.",
+            lado=lado_puertas(),
         )
         + f"""
 <section class="seccion"><div class="envoltura doc">

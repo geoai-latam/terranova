@@ -28,9 +28,12 @@
 <button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>
 <main id="contenido">
-<section class="portada"><div class="envoltura"><div class="cab">
+<section class="portada"><div class="envoltura con-lado"><div class="cab">
 <span class="rotulo">Desarrolladores</span><h1 class="t1">Conecta tu agente o tu sistema</h1><p class="entrada">MCP por streamable HTTP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1 en las dos.</p>
-</div></div></section>
+</div><figure class="lado-fig puertas"><figcaption>Dos puertas, un contrato</figcaption>
+<div class="p"><span class="et">agentes</span><code>POST /mcp</code><small>MCP · streamable HTTP · perfiles por familia</small></div>
+<div class="p"><span class="et">sistemas</span><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code><small>REST · OpenAPI en /docs</small></div>
+<div class="p uno"><span class="et">las dos</span><code>Authorization: Bearer rt_live_…</code><small>misma llave · respuesta rt/1</small></div></figure></div></section>
 <section class="seccion"><div class="envoltura doc">
 <nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
 <div class="prosa">
