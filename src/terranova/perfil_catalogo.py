@@ -187,14 +187,14 @@ class IndiceHerramientas:
 TEMAS_FAMILIA = {
     "territorio": "catastro y predios (IGAC, Bogotá, SINIC), uso del suelo, estrato y POT de "
     "Bogotá, minería (ANM), red vial, puentes y peajes (INVÍAS, ANI), UAF, precio de la tierra en "
-    "un punto, restitución de tierras, DIVIPOLA",
+    "un punto y sus rangos por municipio (UPRA), restitución de tierras, DIVIPOLA",
     "contratacion": "contratos públicos SECOP I y II, procesos, proveedores, planes de compras",
     "empresas": "RUES por NIT o nombre, Supersociedades, Superfinanciera, Supersolidaria",
     "normativa": "normas (SUIN, Función Pública, DIAN, CREG), sentencias de la Corte",
     "justicia": "delitos y lesiones (Policía), víctimas (RUV, CNMH), Medicina Legal, minas",
     "estadisticas": "población (DANE), IPC, PIB, empleo, pobreza (IPM), educación (ICFES), "
     "salud (REPS, ADRES, INVIMA), comercio exterior, hidrocarburos (ANH), tráfico aéreo y "
-    "portuario, precio de la tierra rural por municipio (UPRA)",
+    "portuario, total de tierra rural con precio por municipio (UPRA)",
     "ambiente": "áreas protegidas (RUNAP), resguardos, consejos comunitarios y zonas de reserva "
     "campesina (ANT), cobertura del suelo, POMCA y rondas (CAR), clima y estaciones IDEAM, "
     "alertas, calidad del aire, bosques, incendios, sismos, emergencias",

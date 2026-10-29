@@ -48,7 +48,7 @@ verdades:
     medicion: "ArcGIS R_CONSTRUCCION + U_CONSTRUCCION, where TERRENO_CODIGO"
   - id: t06
     familia: territorio
-    pregunta: "¿Hay datos del catastro IGAC para un predio en Bogotá (-74.0721, 4.711)?"
+    pregunta: "¿La base catastral pública del gestor IGAC tiene el predio de este punto de Bogotá (-74.0721, 4.711)?"
     herramienta: igac_predio_en_punto
     entrada: {lon: -74.0721, lat: 4.711}
     estado: fuera_de_cobertura
@@ -164,6 +164,7 @@ verdades:
     familia: territorio
     pregunta: "¿Cuánto vale la tierra rural en Chía según la UPRA?"
     herramienta: upra_precio_tierra_rural_municipio
+    alternativas: [upra_rangos_precio_municipio]  # tampoco tiene a Chía: misma verdad
     entrada: {municipio_divipola: "25175"}
     estado: no_encontrado
     medicion: "datos.gov.co rttb-pk7n: ninguna fila con cod_dane_m 25175 ni municipio Chía"

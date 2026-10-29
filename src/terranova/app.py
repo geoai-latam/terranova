@@ -29,7 +29,15 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
-from terranova.contrato import HTTP_DE, PATRON_TEXTO_LIMPIO, Problema, Sobre, nueva_solicitud_id
+from terranova.contrato import (
+    ESQUEMA_GEOMETRIA,
+    GEOMETRIA,
+    HTTP_DE,
+    PATRON_TEXTO_LIMPIO,
+    Problema,
+    Sobre,
+    nueva_solicitud_id,
+)
 from terranova.cuota import NIVELES, mes, reinicio
 from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -76,8 +84,17 @@ def _tipo(nombre: str, tipo: str) -> Any:
     return Annotated[str, Field(max_length=200, pattern=PATRON_TEXTO_LIMPIO)]
 
 
+# opcional y sin `null` en el esquema (Schemathesis): ausente es la envolvente (ADR-0032)
+_CAMPO_GEOMETRIA: Any = (
+    bool | SkipJsonSchema[None],  # type: ignore[misc]  # un tipo como valor (create_model)
+    Field(default=None, description=ESQUEMA_GEOMETRIA["description"]),
+)
+
+
 def modelo_entrada(h: Herramienta) -> type[BaseModel]:
     campos: dict[str, Any] = {n: (_tipo(n, t), ...) for n, t in h.entrada.items()}
+    if puerta.trae_geometria(h):
+        campos[GEOMETRIA] = _CAMPO_GEOMETRIA
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
     # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
     return create_model(nombre, __config__=ConfigDict(extra="forbid", strict=True), **campos)
@@ -118,6 +135,9 @@ class FichaEntrada(BaseModel):
     codigo: (
         Annotated[str, Field(pattern=PATRONES_ENTRADA["codigo_predial"])] | SkipJsonSchema[None]
     ) = None
+    geometria: bool | SkipJsonSchema[None] = Field(
+        default=None, description=ESQUEMA_GEOMETRIA["description"]
+    )
 
     @model_validator(mode="before")
     @classmethod

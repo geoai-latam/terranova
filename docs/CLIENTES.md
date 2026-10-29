@@ -1,7 +1,7 @@
 # Guía para clientes
 
 Terranova es una sola puerta, por REST y por MCP, a fuentes oficiales colombianas y globales. Hoy son
-159 herramientas sobre 136 fuentes. Cada respuesta llega en el mismo sobre `rt/1`, que dice:
+207 herramientas sobre 180 fuentes. Cada respuesta llega en el mismo sobre `rt/1`, que dice:
 
 - de qué fuente sale el dato;
 - con qué licencia;
@@ -54,18 +54,35 @@ Las rutas de catálogo son públicas y no gastan créditos. Las herramientas sig
 ### Por MCP (agentes y asistentes)
 
 La puerta habla MCP por *streamable HTTP*, con la misma llave en la cabecera `Authorization`.
+Hay tres entradas, con las mismas herramientas por debajo:
 
-- **`/mcp`:** todas las herramientas.
-- **`/mcp/<familia>`:** un perfil con las de una sola familia. Las familias son `territorio`,
-  `contratacion`, `empresas`, `normativa`, `justicia`, `estadisticas`, `ambiente` y `meta` (el
-  buscador del catálogo).
+- **`/mcp`:** todas las herramientas (más de 200).
+- **`/mcp/<familia>`:** un perfil con las de una sola familia, de 14 a 47 herramientas. Las
+  familias son:
+  - `territorio`, `contratacion`, `empresas`, `normativa`, `justicia`, `estadisticas` y
+    `ambiente`;
+  - `meta`, el buscador del catálogo.
+- **`/mcp/catalogo`:** pocas herramientas genéricas. `buscar_herramienta` encuentra la que
+  responde la pregunta, con su entrada, y `consultar` la ejecuta.
 
-**Use un perfil si su cliente tiene tope de herramientas.** Por ejemplo, los modelos de OpenAI
-aceptan 128 y `/mcp` las pasa.
+**Cuál usar según su cliente** (medido con el banco de escala, ADR-0031):
 
-- **En todos los perfiles:** las herramientas de nombre a código (DIVIPOLA, entidades de SECOP) y
-  `fuente_describir`, que da la ficha técnica de una fuente y no gasta créditos.
-- **La ficha de un lugar:** en `/mcp` y en `/mcp/territorio`.
+| Cliente | Use | Por qué |
+|---|---|---|
+| Claude (Code, Desktop, claude.ai), Cursor, VS Code ≥ 1.118 | `/mcp` o un perfil | buscan herramientas por su cuenta: con `/mcp` aciertan igual que con un perfil y gastan ~35 000 tokens por pregunta |
+| ChatGPT, Windsurf, n8n, Zapier, LangChain, Copilot Studio | `/mcp/catalogo` | no buscan herramientas o tienen tope (Windsurf 100, modelos de OpenAI 128); el catálogo cuesta lo mismo aunque el catálogo crezca (~10 000 tokens) |
+| Un caso de uso de un solo dominio (catastro, contratación…) | `/mcp/<familia>` | lo más preciso y lo más rápido: el modelo ve solo las herramientas de su tema |
+
+Opus 5.5 y gpt-5.4-mini acertaron lo mismo en los tres modos: lo que cambia entre ellos es el costo
+en contexto, no la precisión.
+
+- **En todos los perfiles:**
+  - las herramientas de nombre a código (DIVIPOLA, entidades de SECOP);
+  - `fuente_describir`, que da la ficha técnica de una fuente y no gasta créditos.
+- **La ficha de un lugar:** en `/mcp`, `/mcp/territorio` y por `consultar` en `/mcp/catalogo`.
+- **Geometría:** por MCP, como por REST, cada polígono llega como su envolvente (`bbox`). Pida
+  `geometria: true` solo si va a dibujar la forma completa: un polígono pesa de 20 a 300 KB y la
+  mayoría de los clientes no se lo pasan al modelo.
 - **Tarjeta del servidor:** `/.well-known/mcp/server-card.json`.
 
 Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
@@ -174,7 +191,7 @@ Campos del sobre:
 | `datos` | el resultado |
 | `huella` | `sha256` de `datos`, para verificar que no cambió |
 | `avisos` | lo que debe saber: total desconocido, datos no recientes, copia vencida… |
-| `geo_result` | las geometrías, en EPSG:4326 (lon, lat) salvo que pida `crs_salida: EPSG:9377` |
+| `geo_result` | las geometrías, en EPSG:4326 (lon, lat). Los puntos llegan completos; cada polígono o línea, como su envolvente (`bbox`, con `geometry: null`), salvo que pida `geometria: true` |
 | `procedencia` | una entrada por fuente consultada (detalle abajo) |
 
 Cada entrada de `procedencia` trae:
