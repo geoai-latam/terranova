@@ -5,6 +5,7 @@
 1. `docs/ESTADO.md`: dónde estamos y el siguiente paso. **Actualízalo al cerrar cada tarea.**
 2. `docs/ROADMAP.md`: la fase actual, sus specs, su aceptación y su gate.
 3. Las ADR que toque la tarea (`docs/decisions/`) y la spec correspondiente (`docs/specs/`).
+   Si la tarea toca el sitio (`web/`), `docs/DISENO.md`.
 4. Contexto interno, si hace falta (estrategia, comparación con otros servicios, legal):
    `interno/`. No se versiona.
 
