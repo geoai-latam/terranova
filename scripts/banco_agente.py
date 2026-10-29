@@ -29,6 +29,8 @@ from fastmcp import Client
 from terranova import ficha as ficha_lugar
 from terranova import puerta
 from terranova.conector import ConectorMCP, conectores_desde_entorno
+from terranova.ejecutor import _municipios, municipio_por_nombre
+from terranova.errores import ErrorEntrada
 
 RAIZ = Path(__file__).resolve().parents[1]
 BANCO = RAIZ / "catalogo" / "verdades_producto.yaml"
@@ -153,6 +155,22 @@ async def _pregunta(
     }
 
 
+def _entrada_comparable(argumentos: dict[str, Any]) -> dict[str, str]:
+    """La entrada como la ve la puerta: sin distinguir mayúsculas («LEY» y «ley», la puerta usa
+    upper) y con el municipio dicho por su nombre resuelto a su código, como hace la puerta
+    («Chía, Cundinamarca» es 25175: el banco de escala contaba como falla 13 llamadas que la
+    puerta respondió bien)."""
+    salida = {}
+    for k, a in argumentos.items():
+        if "divipola" in k and isinstance(a, str) and not a.isdigit():
+            try:
+                a = municipio_por_nombre(k, a, _municipios())
+            except ErrorEntrada:
+                pass
+        salida[k] = str(a).casefold()
+    return salida
+
+
 def _evaluar(v: dict[str, Any], llamadas: list[dict[str, Any]]) -> dict[str, Any]:
     """La medida del banco sobre las llamadas que hizo el agente (herramienta, entrada, verdad)."""
     esperada = v["herramienta"]
@@ -165,11 +183,9 @@ def _evaluar(v: dict[str, Any], llamadas: list[dict[str, Any]]) -> dict[str, Any
         ok_entrada = True
     else:
         ok_herramienta = bool(propias)
-        # sin distinguir mayúsculas: «LEY» y «ley» son la misma entrada (la puerta usa upper)
         ok_entrada = any(
             ll["herramienta"] != esperada  # la alternativa tiene su propia entrada
-            or {k: str(a).casefold() for k, a in ll["argumentos"].items()}
-            == {k: str(a).casefold() for k, a in v["entrada"].items()}
+            or _entrada_comparable(ll["argumentos"]) == _entrada_comparable(v["entrada"])
             for ll in propias
         )
         if not ok_herramienta:
