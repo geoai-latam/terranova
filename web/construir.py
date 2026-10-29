@@ -110,15 +110,17 @@ def nombre_entidad(entidad: str) -> str:
 CAT = cargar(RAIZ.parent / "catalogo")
 HERR = sorted(CAT.herramientas.values(), key=lambda h: (h.familia, h.id))
 N_HERR = len(HERR)
-N_FUENTES = len(CAT.fuentes)
+# Solo cuentan las fuentes publicadas: un borrador no se sirve y no se anuncia.
+PUBLICADAS = [f for f in CAT.fuentes.values() if f.estado == "publicada"]
+N_FUENTES = len(PUBLICADAS)
 # Fuentes por entidad, sin el índice propio de Terranova, que no es una fuente oficial.
 ENTIDADES = Counter(
-    nombre_entidad(f.entidad) for f in CAT.fuentes.values() if not f.entidad.startswith("Terranova")
+    nombre_entidad(f.entidad) for f in PUBLICADAS if not f.entidad.startswith("Terranova")
 )
 N_ENTIDADES = len(ENTIDADES)
 POR_FAMILIA = Counter(h.familia for h in HERR)
-MODOS = Counter(f.modo for f in CAT.fuentes.values())
-LICENCIAS = Counter(f.licencia.spdx or "sin SPDX" for f in CAT.fuentes.values())
+MODOS = Counter(f.modo for f in PUBLICADAS)
+LICENCIAS = Counter(f.licencia.spdx or "dato público, sin SPDX" for f in PUBLICADAS)
 
 
 def catalogo_json() -> str:
@@ -181,7 +183,7 @@ def encabezado(ruta: str) -> str:
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terranova</a>
-<p class="desc">Respuestas territoriales con la fuente oficial y su prueba. Licencia verificada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Respuestas territoriales con la fuente oficial y su prueba. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:{CORREO}">{CORREO}</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
@@ -327,7 +329,6 @@ SISTEMAS = {
     "MinJusticia": ["SUIN-Juriscol"],
     "MinSalud": ["REPS"],
     "MinTIC": ["Internet fijo"],
-    "NASA FIRMS": ["Focos de calor"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],
     "SIC": ["Sanciones"],
@@ -343,7 +344,7 @@ SISTEMAS = {
 
 def sistemas_validados() -> dict[str, list[str]]:
     titulos: dict[str, str] = {}
-    for f in CAT.fuentes.values():
+    for f in PUBLICADAS:
         n = nombre_entidad(f.entidad)
         titulos[n] = titulos.get(n, "") + " " + f.titulo.casefold()
     assert set(SISTEMAS) == set(ENTIDADES), set(SISTEMAS) ^ set(ENTIDADES)
@@ -546,7 +547,7 @@ CRUCES = [
             ("rues_empresa_por_nit", "Registro mercantil (RUES)"),
             ("supersociedades_situacion_financiera", "Estados financieros"),
             ("superfinanciera_vigilada_por_nit", "Vigilancia de la Superfinanciera"),
-            ("dian_usuario_aduanero_por_nit", "Usuario aduanero (DIAN)"),
+            ("rues_establecimientos_por_nit", "Establecimientos de comercio (RUES)"),
         ],
     ),
     (
@@ -672,7 +673,7 @@ TIPOS_REVISION = {
 }
 PREGUNTAS_ASISTENTE = [
     "banrep_trm_recientes",
-    "dane_poblacion_municipio",
+    "dane_poblacion_proyectada_municipio",
     "pnn_areas_protegidas_en_punto",
     "secop_contratos_municipio",
     "rues_empresa_por_nit",
@@ -681,7 +682,7 @@ PREGUNTAS_ASISTENTE = [
     "ideam_alertas_incendios_municipio",
 ]
 OTRAS_ASISTENTE = [
-    "icfes_saber11_municipio",
+    "ins_calidad_agua_municipio",
     "invima_registro_sanitario_por_expediente",
     "anh_crudo_municipio",
     "policia_hurto_vehiculos_municipio",
@@ -693,7 +694,7 @@ CARRILES_VIGILANCIA = [
     ("SIC", "SIC", "Nueva sanción en el sector que sigues"),
 ]
 INDICADORES_TABLERO = [
-    ("dane_poblacion_municipio", "Población"),
+    ("dane_poblacion_proyectada_municipio", "Población"),
     ("dane_ipm_municipio", "Pobreza"),
     ("men_educacion_municipio", "Educación"),
     ("adres_afiliados_subsidiado_municipio", "Salud"),
@@ -951,8 +952,8 @@ def inicio() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><h2 class="t2">Reglas que no se negocian</h2></div>
 <div class="columnas c4">
-<div><h3>Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
-<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
+<div><h3>Licencia por fuente</h3><p>Cada fuente sale con su licencia abierta verificada o como dato público reutilizable, con aviso; las de licencia por verificar no llegan a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
+<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas de personas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
 <div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
 <div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
 </div>
@@ -1130,7 +1131,7 @@ def fuentes() -> str:
 
 <section class="seccion"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px">
-<div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">Licencia verificada por fuente</h2>
+<div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">La licencia de cada fuente</h2>
 <div class="desliza"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
 <p class="suave" style="margin-top:12px">Cada respuesta trae la licencia y la atribución que debes citar. CC BY-SA exige compartir igual.</p></div>
 </div>
@@ -1185,8 +1186,8 @@ def precios() -> str:
 <div class="botones" style="margin-top:8px"><a class="boton p" href="mailto:{CORREO}?subject=Llave%20del%20plan%20Gratis">Pedir mi llave</a><a class="boton s" href="/desarrolladores">Ver cómo conectarse</a></div></div>
 <div class="bloque"><h3 class="t3">Llaves</h3>
 <div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
-<tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia verificada para uso comercial.</td></tr>
-<tr><td><code>rt_test_</code></td><td>Evaluación, con vencimiento: además, fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
+<tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>
+<tr><td><code>rt_test_</code></td><td>Evaluación, que puede tener vencimiento: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
 <p>Cada llave tiene sus familias. Si una llave se filtra, avísanos: la revocamos y te enviamos otra, con el mismo saldo y el mismo plan.</p></div>
 </div>
 </div></section>
@@ -1195,8 +1196,8 @@ def precios() -> str:
 <div class="cab"><span class="rotulo">Preguntas frecuentes</span><h2 class="t2">Lo que suelen preguntar</h2></div>
 <div class="prosa" style="max-width:860px">
 <h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Puedes subir de plan en cualquier momento.</p>
-<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción solo ven fuentes con licencia verificada para uso comercial. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
-<h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
+<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta dice su licencia y, si es un dato público con condiciones propias de la entidad, trae un aviso. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
+<h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
 <h3>¿Hay límite de tasa?</h3><p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
 <h3>¿Y los servicios?</h3><p>No van en estos planes. Se evalúan, el precio se fija antes de empezar y nunca se cobra por hora. <a href="/servicios">Ver servicios</a>.</p>
 </div>
@@ -1268,11 +1269,11 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 
 <h2 id="perfiles">Perfiles</h2>
 <table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas</td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
+<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
 <tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una sola familia</td><td>Un caso de uso de un solo tema: lo más preciso y lo más rápido</td></tr>
 <tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas genéricas que buscan en el catálogo</td><td>Clientes con tope de herramientas, como los modelos de OpenAI (128)</td></tr>
 </tbody></table>
-<p>Familias: {perfiles}. Todos los perfiles traen las herramientas de nombre a código y <code>fuente_describir</code>, que no gasta créditos.</p>
+<p>Familias: {perfiles}. Todos los perfiles traen las herramientas de nombre a código (1 crédito) y <code>fuente_describir</code>, que no gasta créditos.</p>
 
 <h2 id="rest">API REST</h2>
 <p>Las herramientas siguen el patrón <code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code>, con la entrada en JSON. La ficha de un lugar está en <code>POST /v1/fichas</code>. El esquema completo, con la entrada de cada herramienta, está en <a href="/openapi.json"><code>/openapi.json</code></a> y se navega en <a href="/docs"><code>/docs</code></a>.</p>
@@ -1290,7 +1291,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td><code>estado</code></td><td><code>encontrado</code>, <code>no_encontrado</code>, <code>fuera_de_cobertura</code> o <code>parcial</code></td></tr>
 <tr><td><code>datos</code></td><td>El resultado</td></tr>
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
-<tr><td><code>procedencia</code></td><td>Por fuente: entidad, URL, norma, licencia, atribución, <code>servido_desde</code>, <code>consultado_en</code> y <code>completitud</code></td></tr>
+<tr><td><code>procedencia</code></td><td>Por fuente: entidad, URL, norma (si la hay), licencia, atribución, <code>servido_desde</code>, <code>consultado_en</code> y <code>completitud</code></td></tr>
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 salvo que pidas <code>crs_salida: EPSG:9377</code></td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
@@ -1298,15 +1299,15 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terranova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
 
 <h2 id="errores">Errores</h2>
-<p>En <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
+<p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
 <div class="desliza"><table class="tabla"><thead><tr><th>HTTP</th><th><code>code</code></th><th>Qué hacer</th></tr></thead><tbody>
-<tr><td class="n">400</td><td><code>parametro_invalido</code>, <code>zona_demasiado_grande</code></td><td>Corregir la entrada; <code>param</code> dice cuál</td></tr>
+<tr><td class="n">400</td><td><code>parametro_invalido</code></td><td>Corregir la entrada; <code>param</code> dice cuál</td></tr>
 <tr><td class="n">401</td><td><code>no_autenticado</code></td><td>Falta la llave o no es válida</td></tr>
 <tr><td class="n">402</td><td><code>saldo_agotado</code></td><td>Se acabaron los créditos del mes; dice cuándo se renuevan</td></tr>
 <tr><td class="n">403</td><td><code>sin_permiso</code>, <code>licencia_no_habilitada</code></td><td>La llave no cubre esa familia o esa fuente</td></tr>
-<tr><td class="n">404</td><td><code>no_existe</code></td><td>La herramienta o la fuente no existe; sugiere ids parecidos</td></tr>
+<tr><td class="n">404</td><td><code>no_existe</code></td><td>La herramienta o la fuente no existe; la ficha de fuente sugiere ids parecidos</td></tr>
 <tr><td class="n">429</td><td><code>limite_tasa</code></td><td>Espera lo que dice <code>Retry-After</code></td></tr>
-<tr><td class="n">502</td><td><code>fuente_no_disponible</code></td><td><b>No se pudo:</b> la fuente oficial falló; reintenta más tarde</td></tr>
+<tr><td class="n">502</td><td><code>fuente_no_disponible</code>, <code>fuente_respuesta_invalida</code></td><td><b>No se pudo:</b> la fuente oficial falló o respondió algo que no se puede leer; reintenta más tarde</td></tr>
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
@@ -1316,7 +1317,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <ul><li><a href="/llms.txt"><code>/llms.txt</code></a>: el catálogo en texto para agentes.</li>
 <li><a href="/.well-known/mcp/server-card.json"><code>/.well-known/mcp/server-card.json</code></a>: la tarjeta del servidor MCP.</li>
 <li><a href="/estado"><code>/estado</code></a>: el estado de la puerta y de cada fuente según su canario diario.</li>
-<li>Soporte: <a href="mailto:{CORREO}">{CORREO}</a>, de lunes a viernes de 8:00 a 18:00, hora de Colombia.</li></ul>
+<li>Soporte: <a href="mailto:{CORREO}">{CORREO}</a>, de lunes a viernes de 8:00 a 18:00, hora de Colombia, sin festivos.</li></ul>
 </div>
 </div></section>
 """
@@ -1356,7 +1357,7 @@ def contacto() -> str:
         portada(
             "Contacto",
             "Escríbenos",
-            "Respondemos de lunes a viernes, de 8:00 a 18:00, hora de Colombia.",
+            "Respondemos de lunes a viernes, de 8:00 a 18:00, hora de Colombia, sin festivos.",
         )
         + f"""
 <section class="seccion"><div class="envoltura">
@@ -1423,7 +1424,7 @@ def paginas() -> dict[str, str]:
             "Las condiciones de uso de Terranova.",
             [
                 "Los datos vienen de fuentes oficiales con su licencia; al reutilizarlos, citas la atribución que trae cada respuesta.",
-                "Las llaves de producción solo ven fuentes con licencia verificada para uso comercial.",
+                "Las llaves de producción no ven fuentes con licencia por verificar; cada respuesta dice su licencia.",
                 "Los créditos se renuevan el día 1 de cada mes y no se acumulan.",
                 "Los errores, la caché y lo que está fuera de cobertura no descuentan créditos.",
             ],
@@ -1433,10 +1434,10 @@ def paginas() -> dict[str, str]:
             "Privacidad",
             "Qué datos tratamos y cómo.",
             [
-                "No hay búsquedas por cédula ni por nombre, ni perfiles de personas.",
+                "No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas.",
                 "Los campos que salen de cada fuente están en una lista blanca.",
                 "Guardamos de tu llave solo su huella (HMAC), nunca la llave.",
-                "Medimos el uso por llave para descontar créditos.",
+                "Medimos el uso de cada llave; los créditos se descuentan del saldo de tu organización.",
             ],
         ),
         "404.html": no_encontrada(),
