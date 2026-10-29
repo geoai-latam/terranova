@@ -69,12 +69,38 @@ def corta(entidad: str) -> str:
     return m.group(1) if m else entidad
 
 
+# Nombre corto de cada entidad: la sigla del catálogo o un nombre de uso común. También une las
+# entidades que el catálogo escribe de dos formas (Confecámaras).
+NOMBRE_CORTO = {
+    "Policía Nacional de Colombia": "Policía Nacional",
+    "Superintendencia de Sociedades": "Supersociedades",
+    "Instituto Nacional de Medicina Legal y Ciencias Forenses": "Medicina Legal",
+    "Ministerio de Hacienda y Crédito Público": "MinHacienda",
+    "Ministerio de Justicia y del Derecho": "MinJusticia",
+    "Ministerio de Salud y Protección Social": "MinSalud",
+    "Superintendencia de la Economía Solidaria": "Supersolidaria",
+    "consorcio WorldCover": "ESA WorldCover",
+}
+GLOBALES = ("USGS", "ESA WorldCover", "LANCE/FIRMS")
+
+
+def nombre_entidad(entidad: str) -> str:
+    if entidad.startswith("Presidencia de la República"):
+        return "Presidencia"
+    c = corta(entidad)
+    return NOMBRE_CORTO.get(c, c)
+
+
 # ---------------------------------------------------------------- catálogo real
 CAT = cargar(RAIZ.parent / "catalogo")
 HERR = sorted(CAT.herramientas.values(), key=lambda h: (h.familia, h.id))
 N_HERR = len(HERR)
 N_FUENTES = len(CAT.fuentes)
-N_ENTIDADES = len({f.entidad for f in CAT.fuentes.values()})
+# Fuentes por entidad, sin el índice propio de Terranova, que no es una fuente oficial.
+ENTIDADES = Counter(
+    nombre_entidad(f.entidad) for f in CAT.fuentes.values() if not f.entidad.startswith("Terranova")
+)
+N_ENTIDADES = len(ENTIDADES)
 POR_FAMILIA = Counter(h.familia for h in HERR)
 MODOS = Counter(f.modo for f in CAT.fuentes.values())
 LICENCIAS = Counter(f.licencia.spdx or "sin SPDX" for f in CAT.fuentes.values())
@@ -132,7 +158,7 @@ def encabezado(ruta: str) -> str:
     return f"""<header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terranova, inicio">{simbolo()}Terranova</a>
 <nav class="menu" aria-label="Principal">{menu}</nav>
-<div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Probar gratis</a></div>
+<div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Empieza gratis</a></div>
 <button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>"""
 
@@ -237,64 +263,266 @@ def lado_puertas() -> str:
 <div class="p uno"><span class="et">las dos</span><code>Authorization: Bearer rt_live_…</code><small>misma llave · respuesta rt/1</small></div></figure>"""
 
 
-TARJETA_GEO = """<div class="tarjeta" data-k="geo">
-<div class="top"><span class="herr">sinic_predio_en_punto</span><span class="sello">ejemplo · capturado 2026-10-29</span></div>
-<dl><dt>estado</dt><dd class="ok">encontrado</dd><dt>predial</dt><dd>4700101090000025808…</dd>
-<dt>destinación</dt><dd>Habitacional · urbano</dd><dt>entidad</dt><dd>IGAC · SINIC</dd>
-<dt>licencia</dt><dd>CC-BY-SA-4.0 · comercial: sí</dd><dt>servido</dt><dd>copia del 2026-10-28 · 0,56 s</dd></dl>
-<div class="huella"><span>huella</span><b>sha256:7a2cc965…</b></div></div>"""
-TARJETA_TRM = """<div class="tarjeta" data-k="nogeo"{oculta}>
-<div class="top"><span class="herr">banrep_trm_recientes</span><span class="sello">ejemplo · capturado 2026-10-29</span></div>
-<dl><dt>estado</dt><dd class="ok">encontrado</dd><dt>TRM</dt><dd>3.162,35 COP · 2026-10-29</dd>
-<dt>serie</dt><dd>diaria · CCSP</dd><dt>entidad</dt><dd>Banco de la República</dd>
-<dt>licencia</dt><dd>banrep-aviso-legal · comercial: sí</dd><dt>servido</dt><dd>fuente en vivo · 07:14 UTC</dd></dl>
-<div class="huella"><span>huella</span><b>sha256:ac30c9f5…</b></div></div>"""
+def muro_entidades() -> str:
+    # Tamaño por número de fuentes (raíz cuadrada, para que las de una fuente se lean).
+    out = []
+    for nom, n in sorted(ENTIDADES.items(), key=lambda x: (-x[1], x[0])):
+        clase = ' class="glob"' if nom in GLOBALES else ""
+        fuentes = "fuente" if n == 1 else "fuentes"
+        out.append(
+            f'<li{clase} style="--t:{14 + 8 * n**0.5:.1f}px">{escape(nom)}'
+            f'<span class="sr">: </span><sup>{n}<span class="sr"> {fuentes}</span></sup></li>'
+        )
+    return '<ul class="muro">' + "".join(out) + "</ul>"
 
-CODIGO = """<div class="codigo">
-<div class="panel">
-<div class="pest" role="tablist" aria-label="Formas de conectarse"><button role="tab" aria-selected="true" data-t="cc">Claude Code</button><button role="tab" aria-selected="false" tabindex="-1" data-t="js">mcp.json</button><button role="tab" aria-selected="false" tabindex="-1" data-t="rs">REST</button></div>
-<pre data-t="cc"><span class="c"># Una vez: registra la puerta en tu agente</span>
-<span class="f">claude mcp add</span> --transport http terranova \\
+
+# Lo que copia el botón «Copiar instrucción para tu agente».
+INSTRUCCION = (
+    "Conéctate al servidor MCP de Terranova en https://terrnova.com/mcp (transporte HTTP) con la "
+    "cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRANOVA_LLAVE. Úsalo "
+    "para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, "
+    "ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en "
+    "«procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: "
+    "https://terrnova.com/llms.txt"
+)
+
+# Dos respuestas reales de producción, recortadas. La consola del héroe las reproduce por turnos.
+TURNOS = [
+    {
+        "k": "predio",
+        "boton": "Predio en Santa Marta",
+        "pregunta": "¿Qué predio hay en 11,2211 N, 74,1572 W?",
+        "herr": "sinic_predio_en_punto",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("predial", "4700101090000025808…"),
+            ("destinación", "Habitacional, urbano"),
+            ("entidad", "IGAC, SINIC"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "copia del 2026-10-28 en 0,56 s"),
+        ],
+        "huella": "sha256:7a2cc965…",
+    },
+    {
+        "k": "trm",
+        "boton": "TRM de hoy",
+        "pregunta": "¿A cuánto quedó la TRM hoy?",
+        "herr": "banrep_trm_recientes",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("TRM", "3.162,35 COP"),
+            ("fecha", "2026-10-29"),
+            ("entidad", "Banco de la República"),
+            ("licencia", "banrep-aviso-legal, uso comercial sí"),
+            ("servido", "fuente en vivo, 07:14 UTC"),
+        ],
+        "huella": "sha256:ac30c9f5…",
+    },
+]
+
+
+def consola() -> str:
+    creditos = {h.id: h.creditos for h in HERR}
+    pest, turnos = [], []
+    for i, t in enumerate(TURNOS):
+        assert t["herr"] in creditos, t["herr"]
+        sel = "true" if i == 0 else "false"
+        pest.append(
+            f'<button type="button" role="tab" id="c-p{i}" aria-controls="c-t{i}" aria-selected="{sel}"'
+            f"{'' if i == 0 else ' tabindex="-1"'}><i></i>{t['boton']}</button>"
+        )
+        filas = "".join(f"<dt>{a}</dt><dd>{b}</dd>" for a, b in t["filas"])
+        turnos.append(
+            f'<div class="turno" role="tabpanel" id="c-t{i}" aria-labelledby="c-p{i}" data-k="{t["k"]}"{"" if i == 0 else " hidden"}>'
+            f'<p class="preg"><span class="tu">Tu agente</span><span class="txt">{t["pregunta"]}</span></p>'
+            f'<p class="llama"><code>{t["herr"]}</code><span>{creditos[t["herr"]]} créditos</span></p>'
+            f"<dl>{filas}</dl>"
+            f'<p class="pie"><span>huella <b>{t["huella"]}</b></span><span class="sello">ejemplo · capturado 2026-10-29</span></p></div>'
+        )
+    return (
+        '<div class="consola" data-consola>'
+        f'<div class="pest" role="tablist" aria-label="Respuestas de ejemplo">{"".join(pest)}</div>'
+        + "".join(turnos)
+        + "</div>"
+    )
+
+
+# Conexión por cliente: los mismos comandos de la guía de desarrolladores.
+CLIENTES = [
+    (
+        "Claude Code",
+        """<span class="f">claude mcp add</span> --transport http terranova \\
   <span class="s">https://terrnova.com/mcp</span> \\
-  --header <span class="s">"Authorization: Bearer $TERRANOVA_LLAVE"</span>
-
-<span class="c"># Luego pregunta en lenguaje natural</span>
-&gt; ¿Cuál es la TRM de hoy?</pre>
-<pre data-t="js" hidden>{
+  --header <span class="s">"Authorization: Bearer $TERRANOVA_LLAVE"</span>""",
+    ),
+    (
+        "Cursor",
+        """{
   <span class="k">"mcpServers"</span>: {
     <span class="k">"terranova"</span>: {
       <span class="k">"url"</span>: <span class="s">"https://terrnova.com/mcp/territorio"</span>,
       <span class="k">"headers"</span>: { <span class="k">"Authorization"</span>: <span class="s">"Bearer rt_live_..."</span> }
     }
   }
-}</pre>
-<pre data-t="rs" hidden><span class="f">curl</span> -X POST \\
+}""",
+    ),
+    (
+        "Claude Desktop",
+        """{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"terranova"</span>: {
+      <span class="k">"command"</span>: <span class="s">"npx"</span>,
+      <span class="k">"args"</span>: [<span class="s">"mcp-remote"</span>, <span class="s">"https://terrnova.com/mcp/ambiente"</span>,
+               <span class="s">"--header"</span>, <span class="s">"Authorization: Bearer ${TERRANOVA_LLAVE}"</span>],
+      <span class="k">"env"</span>: { <span class="k">"TERRANOVA_LLAVE"</span>: <span class="s">"rt_live_..."</span> }
+    }
+  }
+}""",
+    ),
+    (
+        "curl",
+        """<span class="f">curl</span> -X POST \\
   <span class="s">https://terrnova.com/v1/co/estadisticas/banrep_trm_recientes</span> \\
   -H <span class="s">"Authorization: Bearer $TERRANOVA_LLAVE"</span> \\
   -H <span class="s">"Content-Type: application/json"</span> \\
-  -d <span class="s">'{"ultimas": 1}'</span></pre>
-<div class="pie"><span>MCP por HTTP · REST /v1</span><span>2 créditos</span></div>
-</div>
-<div class="panel">
-<div class="pest"><button aria-selected="true" tabindex="-1">Respuesta</button><span class="meta">200 · rt/1</span></div>
-<pre>{
+  -d <span class="s">'{"ultimas": 1}'</span>""",
+    ),
+    (
+        "Python",
+        """<span class="f">import</span> os, httpx
+
+r = httpx.post(
+    <span class="s">"https://terrnova.com/v1/co/territorio/dane_divipola_buscar"</span>,
+    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['TERRANOVA_LLAVE']}"</span>},
+    json={<span class="s">"nombre"</span>: <span class="s">"Cali"</span>},
+)
+<span class="f">print</span>(r.json()[<span class="s">"estado"</span>], r.json()[<span class="s">"procedencia"</span>][<span class="n">0</span>][<span class="s">"entidad"</span>])""",
+    ),
+]
+
+
+def conexion() -> str:
+    pest = "".join(
+        f'<button role="tab" aria-selected="{"true" if i == 0 else "false"}"{"" if i == 0 else ' tabindex="-1"'} data-t="c{i}">{n}</button>'
+        for i, (n, _) in enumerate(CLIENTES)
+    )
+    pres = "".join(
+        f'<pre data-t="c{i}"{"" if i == 0 else " hidden"}>{c}</pre>'
+        for i, (_, c) in enumerate(CLIENTES)
+    )
+    return f"""<div class="codigo uno"><div class="panel">
+<div class="pest" role="tablist" aria-label="Clientes">{pest}<button class="copiar" type="button" data-copiar-pre>Copiar</button></div>
+{pres}
+<div class="pie"><span>La llave va en la variable TERRANOVA_LLAVE, nunca en el código</span></div>
+</div></div>"""
+
+
+RESPUESTA_JSON = """<pre class="json">{
   <span class="k">"contrato"</span>: <span class="s">"rt/1"</span>,
   <span class="k">"herramienta"</span>: <span class="s">"banrep_trm_recientes@1"</span>,
-  <span class="k">"estado"</span>: <span class="s">"encontrado"</span>,
+  <span class="k" data-n="estado">"estado"</span>: <span class="s">"encontrado"</span>,
   <span class="k">"datos"</span>: { <span class="k">"elementos"</span>: [
     { <span class="k">"fecha"</span>: <span class="s">"20261029"</span>, <span class="k">"valor"</span>: <span class="n">3162.35</span>, <span class="k">"unidad"</span>: <span class="s">"COP"</span> }
   ]},
-  <span class="k">"procedencia"</span>: [{
+  <span class="k" data-n="procedencia">"procedencia"</span>: [{
     <span class="k">"entidad"</span>: <span class="s">"Banco de la República"</span>,
-    <span class="k">"licencia"</span>: { <span class="k">"uso_comercial"</span>: <span class="s">"si"</span> },
-    <span class="k">"servido_desde"</span>: <span class="s">"fuente"</span>,
+    <span class="k" data-n="licencia">"licencia"</span>: {
+      <span class="k">"spdx"</span>: <span class="s">"LicenseRef-banrep-aviso-legal"</span>,
+      <span class="k">"uso_comercial"</span>: <span class="s">"si"</span>
+    },
+    <span class="k" data-n="servido_desde">"servido_desde"</span>: <span class="s">"fuente"</span>,
     <span class="k">"consultado_en"</span>: <span class="s">"2026-10-29T07:14:56Z"</span>
   }],
-  <span class="k">"huella"</span>: <span class="s">"sha256:ac30c9f5…"</span>,
-  <span class="k">"creditos"</span>: <span class="n">2</span>
-}</pre>
-<div class="pie"><span>ejemplo · capturado 2026-10-29 · recortado</span><span>req_01M6386A…</span></div>
-</div>
+  <span class="k" data-n="huella">"huella"</span>: <span class="s">"sha256:ac30c9f5…"</span>,
+  <span class="k">"creditos"</span>: <span class="n">2</span>,
+  <span class="k">"solicitud_id"</span>: <span class="s">"req_01M6386A94TBHKDR3557YN9FX0"</span>
+}</pre>"""
+
+
+# Preguntas por sector: herramientas reales del catálogo (la construcción falla si alguna no existe).
+SECTORES = [
+    (
+        "Agro y exportación",
+        "Debida diligencia de un lote antes de exportar: áreas protegidas, pérdida de bosque, cobertura del suelo y territorios étnicos.",
+        [
+            "pnn_areas_protegidas_en_punto",
+            "sinchi_perdida_bosque_en_punto",
+            "esa_cobertura_suelo_en_punto",
+            "ant_resguardos_en_punto",
+            "upra_eva_cultivos_municipio",
+        ],
+    ),
+    (
+        "Inmobiliario y construcción",
+        "El predio, lo que dice el POT, las amenazas y el valor del suelo, antes de comprar o de diseñar.",
+        [
+            "igac_predio_en_punto",
+            "sdp_tratamiento_urbanistico_en_punto",
+            "sdp_amenaza_movimiento_masa_en_punto",
+            "igac_zona_geoeconomica_en_punto",
+            "igac_compraventas_municipio",
+        ],
+    ),
+    (
+        "Banca y crédito",
+        "Contexto de una empresa o de un crédito rural: registro mercantil, estados financieros, precio de la tierra e indicadores.",
+        [
+            "rues_empresa_por_nit",
+            "supersociedades_situacion_financiera",
+            "upra_precio_tierra_en_punto",
+            "banrep_trm_recientes",
+            "dane_ipm_municipio",
+        ],
+    ),
+    (
+        "Contratación pública",
+        "Seguimiento de contratos, entidades y proyectos de regalías en SECOP y en el DNP.",
+        [
+            "secop_contratos_entidad",
+            "secop_ejecucion_contrato",
+            "secop_contratos_proveedor",
+            "secop_sanciones_contrato",
+            "dnp_proyectos_sgr_municipio",
+        ],
+    ),
+    (
+        "Gobierno y territorio",
+        "Los indicadores de un municipio para planear, priorizar o reportar.",
+        [
+            "dane_poblacion_proyectada_municipio",
+            "men_educacion_municipio",
+            "ins_calidad_agua_municipio",
+            "ideam_alertas_deslizamiento_municipio",
+            "uariv_victimas_municipio",
+        ],
+    ),
+]
+
+
+def sectores() -> str:
+    por_id = {h.id: h for h in HERR}
+    pest, paneles = [], []
+    for i, (nombre, para, ids) in enumerate(SECTORES):
+        sel = "true" if i == 0 else "false"
+        pest.append(
+            f'<button type="button" role="tab" id="s-p{i}" aria-controls="s-t{i}" aria-selected="{sel}"'
+            f"{'' if i == 0 else ' tabindex="-1"'}>{nombre}</button>"
+        )
+        filas = []
+        for hid in ids:
+            h = por_id[hid]
+            ent = nombre_entidad(CAT.fuentes[h.fuente].entidad)
+            filas.append(
+                f'<li><p>{escape(h.pregunta)}</p><span class="id"><code>{h.id}</code> {escape(ent)}</span>'
+                f'<span class="cr">{h.creditos} {"crédito" if h.creditos == 1 else "créditos"}</span></li>'
+            )
+        paneles.append(
+            f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}"{"" if i == 0 else " hidden"}>'
+            f'<p class="para">{para}</p><ol>{"".join(filas)}</ol></div>'
+        )
+    return f"""<div class="sectores">
+<div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical">{"".join(pest)}</div>
+<div>{"".join(paneles)}</div>
 </div>"""
 
 
@@ -303,7 +531,7 @@ def planes_html() -> str:
     filas = []
     for n, c in PLANES:
         boton = (
-            '<a class="boton p" href="/precios#empezar">Empezar gratis</a>'
+            '<a class="boton p" href="/precios#empezar">Empieza gratis</a>'
             if n == "Gratis"
             else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower()}">Pedir este plan</a>'
         )
@@ -341,48 +569,81 @@ def chips_familias(como_boton=False) -> str:
 
 # ---------------------------------------------------------------- páginas
 def inicio() -> str:
+    n_fam = len([f for f in POR_FAMILIA if f != "meta"])
     c = f"""
-<section class="heroe"><div class="envoltura">
-<div class="izq">
-<h1 class="t1">Respuestas territoriales verificables</h1>
-<p class="entrada">Agentes que hacen el trabajo territorial sobre la fuente oficial. Cada respuesta llega con su entidad, su licencia y su huella.</p>
-<div class="botones"><a class="boton p" href="/precios#empezar">Probar gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
-<div class="cifras"><div><b>{N_HERR}</b><span>herramientas</span></div><div><b>{N_FUENTES}</b><span>fuentes oficiales</span></div><div><b>{N_ENTIDADES}</b><span>entidades</span></div></div>
-<p class="fuente-dato">Catálogo de producción · 29-10-2026</p>
-</div>
-<div class="escena" data-escena="predios" role="img" aria-label="Predios reales de Santa Marta en 3D, con el predio consultado resaltado. Arrastra para girar.">
+<section class="heroe">
+<div class="escena" data-escena="predios" role="img" aria-label="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D. El predio consultado sube cuando llega su respuesta. Arrastra para girar.">
 <img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
 <div class="rotulos" aria-hidden="true"></div>
-<p class="gira">Arrastra para girar</p>
-{TARJETA_GEO}
-<p class="lectura"><b>11,2211 N · 74,1572 W</b> · 11 de Noviembre, Santa Marta · predios IGAC SINIC · calles © OpenStreetMap</p>
+<p class="lectura"><b>11,2211 N, 74,1572 W</b> Santa Marta. Predios IGAC SINIC, calles © OpenStreetMap</p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
+</div>
+<div class="envoltura h-texto"><div class="izq">
+<h1 class="t0">Los datos oficiales de Colombia, listos para tu agente</h1>
+<p class="entrada">Una sola llave para consultar {N_FUENTES} fuentes de {N_ENTIDADES} entidades por MCP o API REST. Cada respuesta trae la entidad, la licencia y la huella del dato.</p>
+<div class="botones"><a class="boton p" href="/precios#empezar">Empieza gratis</a><button class="boton s" type="button" data-copiar="#instruccion">Copiar instrucción para tu agente</button></div>
+<p class="nota">El plan Gratis trae 1.500 créditos al mes. Una consulta cuesta de 1 a 20.</p>
+</div></div>
+<div class="envoltura h-consola">{consola()}</div>
+</section>
+
+<section class="seccion conecta"><div class="envoltura dos">
+<div class="cab">
+<h2 class="t2">Conéctalo en un minuto</h2>
+<p class="entrada">Funciona con cualquier cliente MCP y con cualquier sistema que haga una petición HTTP. Pide tu llave y pega la configuración de tu cliente.</p>
+<div class="instruccion">
+<p class="et">O deja que tu agente se configure solo con esta instrucción:</p>
+<p id="instruccion">{INSTRUCCION}</p>
+<button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
+</div>
+</div>
+{conexion()}
+</div></section>
+
+<section class="seccion sup"><div class="envoltura">
+<div class="cab ancha">
+<h2 class="t2">{N_ENTIDADES} entidades detrás de una sola puerta</h2>
+<p class="entrada">{N_HERR} herramientas sobre {N_FUENTES} fuentes: {MODOS["en_vivo"]} se consultan en vivo y {MODOS["copia"]} desde una copia del archivo oficial. La puerta valida la llave, cobra los créditos y llama a la herramienta del catálogo. No usa modelos de lenguaje: la misma pregunta da siempre la misma consulta.</p>
+</div>
+{muro_entidades()}
+<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las fuentes globales. <a class="enlace" href="/fuentes">Ver fuentes y licencias</a></p>
+</div></section>
+
+<section class="seccion"><div class="envoltura">
+<div class="cab">
+<h2 class="t2">Qué le puedes preguntar</h2>
+<p class="entrada">Cada herramienta responde una pregunta concreta. Estas son algunas de las {N_HERR}, en {n_fam} familias, agrupadas por el trabajo que resuelven.</p>
+</div>
+{sectores()}
+<p class="mas-s"><a class="enlace" href="/fuentes">Ver las {N_HERR} herramientas</a></p>
+</div></section>
+
+<section class="seccion sup"><div class="envoltura">
+<div class="cab">
+<h2 class="t2">Cada respuesta trae su prueba</h2>
+<p class="entrada">El mismo sobre <code>rt/1</code> para las {N_HERR} herramientas. Lo que necesitas para confiar en el dato viene en la respuesta, no en un documento aparte.</p>
+</div>
+<div class="anotada">
+<div class="codigo uno"><div class="panel">{RESPUESTA_JSON}<div class="pie"><span>banrep_trm_recientes, respuesta real recortada</span><span class="sello">ejemplo · capturado 2026-10-29</span></div></div></div>
+<div class="notas">
+<div><code>estado</code><p>Encontrado, no encontrado, fuera de cobertura o parcial. «No se pudo» nunca es un estado: es un error con su código, y no descuenta créditos.</p></div>
+<div><code>procedencia</code><p>La entidad que publica el dato, la URL de la consulta y la norma que le da la competencia.</p></div>
+<div><code>licencia</code><p>SPDX, enlace y si permite uso comercial, verificada fuente por fuente.</p></div>
+<div><code>servido_desde</code><p>En vivo, desde una copia del archivo oficial o desde caché. Un dato viejo siempre llega con aviso.</p></div>
+<div><code>huella</code><p><code>sha256</code> de los datos, para comprobar después que no cambiaron.</p></div>
+</div>
 </div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">Cómo funciona</span><h2 class="t2">De la pregunta a la respuesta con prueba</h2>
-<p class="entrada">Una sola puerta, por MCP y por API REST, sobre {N_FUENTES} fuentes oficiales. La puerta no interpreta preguntas: valida la llave, cobra los créditos y llama a la herramienta del catálogo.</p></div>
-<ol class="pasos">
-<li><span class="n">01</span><h3>Tu agente o tu sistema</h3><p>Pregunta por MCP en <code>/mcp</code> o por REST en <code>/v1</code>. Claude, ChatGPT, n8n o un script de Python: la puerta no distingue.</p><span class="deja"><code>herramienta</code></span></li>
-<li class="puerta"><span class="n">02</span><h3>La puerta</h3><p>Valida la llave y descuenta los créditos según la tarifa. No interpreta la pregunta: aquí no hay LLM.</p><span class="deja"><code>creditos</code><code>solicitud_id</code></span></li>
-<li><span class="n">03</span><h3>El catálogo</h3><p>{N_HERR} herramientas en {len([f for f in POR_FAMILIA if f != "meta"])} familias. Cada una sabe a qué fuente ir y con qué licencia sale el dato.</p><span class="deja"><code>licencia</code></span></li>
-<li><span class="n">04</span><h3>La fuente oficial</h3><p>{N_FUENTES} fuentes de {N_ENTIDADES} entidades: {MODOS["en_vivo"]} se consultan en vivo y {MODOS["copia"]} desde una copia del bulk oficial.</p><span class="deja"><code>procedencia</code><code>servido_desde</code></span></li>
-<li><span class="n">05</span><h3>La respuesta</h3><p>El dato con su estado: «no encontrado» y «no se pudo» nunca se confunden. La huella permite comprobar después que no cambió.</p><span class="deja"><code>estado</code><code>huella</code></span></li>
-</ol>
-<p class="fuente-dato pasos-pie">Columna derecha: el campo de la respuesta <code>rt/1</code> que deja cada paso.</p>
-</div></section>
-
-<section class="seccion sup"><div class="envoltura">
 <div class="cobertura">
-<div style="display:flex;flex-direction:column;gap:20px;padding:8px 0">
-<span class="rotulo">Cobertura</span>
+<div class="texto-cob">
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
 <p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
 <div class="filas"><div><b>6,1 M</b><span>predios en el SINIC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
 <div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
-<p class="fuente-dato">IGAC SINIC · muestra del 3 % · 28-10-2026</p>
+<p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
 </div>
 <div class="escena" data-escena="cobertura" role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra. Arrastra para girar.">
 <img class="respaldo" src="/img/mapa-colombia.webp" alt="" loading="lazy">
@@ -390,96 +651,55 @@ def inicio() -> str:
 <p class="lectura">Pasa sobre una columna</p>
 </div>
 </div>
-<div style="margin-top:48px;display:grid;gap:16px">
-<h3 class="t3">Qué más puedes consultar</h3>
-{chips_familias()}
-<p><a class="enlace" href="/fuentes">Ver las {N_HERR} herramientas y sus fuentes →</a></p>
-</div>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">La respuesta por dentro</span><h2 class="t2">Cada respuesta trae su prueba</h2>
-<p class="entrada">El mismo sobre <code>rt/1</code> para las {N_HERR} herramientas. Lo que importa para confiar en el dato viene en la respuesta, no en un documento aparte.</p></div>
-<div class="anotada">
-<div>{TARJETA_TRM.format(oculta="")}</div>
-<div class="notas">
-<div><code>estado</code><p>Encontrado, no encontrado, fuera de cobertura o parcial. «No se pudo» nunca es un estado: es un error con su código.</p></div>
-<div><code>procedencia</code><p>La entidad, la URL de la consulta y la norma que le da la competencia.</p></div>
-<div><code>licencia</code><p>SPDX, enlace y si permite uso comercial, verificada fuente por fuente.</p></div>
-<div><code>servido_desde</code><p>En vivo, desde una copia del bulk oficial, curado, caché u obsoleto (siempre con aviso).</p></div>
-<div><code>huella</code><p><code>sha256</code> de los datos, para comprobar después que no cambiaron.</p></div>
-</div>
-</div>
-<dl class="estados">
-<div class="e1"><dt>encontrado</dt><dd>La fuente respondió y hay datos.</dd></div>
-<div class="e2"><dt>no_encontrado</dt><dd>La fuente respondió y no hay datos para esa entrada. Es una respuesta, no una falla.</dd></div>
-<div class="e3"><dt>parcial</dt><dd>Una consulta compuesta con partes que fallaron; cada una queda en <code>errores</code>.</dd></div>
-<div class="e4"><dt>fuera_de_cobertura</dt><dd>La entrada está fuera de lo que cubre la fuente. No descuenta créditos.</dd></div>
-<div class="e5"><dt>502 fuente_no_disponible</dt><dd>La fuente oficial no respondió. Llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. No descuenta.</dd></div>
-</dl>
 </div></section>
 
 <section class="seccion inv"><div class="envoltura">
-<div class="cab"><span class="rotulo">Servicios</span><h2 class="t2">Agentes que hacen el trabajo territorial</h2>
-<p class="entrada">La capa de datos se vende sola, por consulta. Sobre ella construimos y operamos el trabajo completo con tu equipo.</p></div>
+<div class="cab">
+<h2 class="t2">¿Prefieres que hagamos el trabajo?</h2>
+<p class="entrada">Sobre la misma capa de datos construimos y operamos el trabajo territorial con tu equipo. Un agente lo hace, otro lo revisa sin ver su razonamiento y una persona aprueba.</p>
+</div>
 <div class="columnas c4">
-<div class="activa"><span class="et">en producción · por consulta</span><h3>Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p></div>
-<div><span class="et">por entrega</span><h3>Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con la prueba de cada hallazgo.</p></div>
-<div><span class="et">por entrega</span><h3>Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p></div>
-<div><span class="et">por proceso o licencia</span><h3>Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p></div>
+<div class="activa"><span class="et">En producción, por consulta</span><h3>Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p></div>
+<div><span class="et">Por entrega</span><h3>Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con la prueba de cada hallazgo.</p></div>
+<div><span class="et">Por entrega</span><h3>Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p></div>
+<div><span class="et">Por proceso o licencia</span><h3>Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p></div>
 </div>
-</div>
-<p class="entrada" style="margin-top:28px;font-size:16px">Un agente hace el trabajo, otro lo evalúa sin ver su razonamiento y una persona aprueba. <a class="enlace" href="/servicios">Cómo trabajamos →</a></p>
+<div class="botones" style="margin-top:40px"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Cómo trabajamos</a></div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">Para agentes y desarrolladores</span><h2 class="t2">Conecta en un minuto</h2>
-<p class="entrada">Tu agente elige la herramienta y Terranova responde con la prueba. Perfiles MCP por familia para clientes con tope de herramientas.</p></div>
-{CODIGO}
-<p style="margin-top:20px"><a class="enlace" href="/desarrolladores">Guía de conexión completa →</a></p>
-</div></section>
-
-<section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Casos</span><h2 class="t2">Preguntas sobre lugares, no sobre personas</h2>
-<p class="entrada">Así se ve el trabajo. Todavía no mostramos clientes: estos casos son ilustrativos y sus cifras son posibles, no medidas.</p></div>
-<div class="columnas c3">
-<div><span class="sello-i">ilustrativo</span><h3>Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="res">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
-<div><span class="sello-i">ilustrativo</span><h3>Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="res">Ficha del lugar con su procedencia</span></div>
-<div><span class="sello-i">ilustrativo</span><h3>Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="res">Un expediente por solicitud</span></div>
-</div></div>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">Precios</span><h2 class="t2">Pagas por consulta, no por el dato</h2>
-<p class="entrada">Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta. Los errores, la caché y lo que está fuera de cobertura no descuentan.</p></div>
+<div class="cab">
+<h2 class="t2">Pagas por consulta, no por el dato</h2>
+<p class="entrada">Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta. Los errores, la caché y lo que está fuera de cobertura no descuentan.</p>
+</div>
 {planes_html()}
-<p style="margin-top:20px"><a class="enlace" href="/precios">Tarifa por tipo de pregunta y preguntas frecuentes →</a></p>
+<p style="margin-top:20px"><a class="enlace" href="/precios">Tarifa por tipo de pregunta y preguntas frecuentes</a></p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Confianza</span><h2 class="t2">Reglas que no se negocian</h2></div>
+<div class="cab"><h2 class="t2">Reglas que no se negocian</h2></div>
 <div class="columnas c4">
 <div><h3>Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
 <div><h3>Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
 <div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
 <div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
 </div>
-<div style="margin-top:40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
-<span class="rotulo">Aliados y proyectos</span>
-<a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy" style="height:36px;width:auto"></a>
-<a href="/aliados" class="t3" style="text-decoration:none">Atalaya Mapas</a>
+<div class="aliados-fila">
+<span>Aliados</span>
+<a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy"></a>
+<a href="/aliados" class="t3">Atalaya Mapas</a>
 </div>
 </div></section>
 
 <section class="seccion"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">Prueba una consulta hoy</h2><p class="entrada">1.500 créditos al mes sin costo. Si tienes un proyecto, cuéntanos y lo evaluamos.</p></div>
-<div class="botones"><a class="boton p" href="/precios#empezar">Probar gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
+<div class="cab" style="margin:0"><h2 class="t2">Haz tu primera consulta hoy</h2><p class="entrada">1.500 créditos al mes sin costo. Si tienes un proyecto, cuéntanos y lo evaluamos.</p></div>
+<div class="botones"><a class="boton p" href="/precios#empezar">Empieza gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div></section>
 """
     return pagina(
         "/",
-        "Terranova · Respuestas territoriales verificables",
-        f"Una puerta por MCP y API REST a {N_FUENTES} fuentes oficiales de Colombia. Cada respuesta con su entidad, su licencia y su huella.",
+        "Terranova · Los datos oficiales de Colombia, listos para tu agente",
+        f"Una sola llave para consultar {N_FUENTES} fuentes oficiales de Colombia por MCP o API REST. Cada respuesta con su entidad, su licencia y su huella.",
         c,
         ("escena-predios.js", "escena-cobertura.js"),
     )
@@ -829,7 +1049,7 @@ def aliados() -> str:
 <section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
 <div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
-<p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com →</a></p></div></div>
+<p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
 <div class="aliado"><div class="pendiente">Atalaya Mapas<small>Logo oficial pendiente</small></div>
 <div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía. Mientras llega su logo oficial, aquí va solo su nombre.</p></div></div>
 </div></section>

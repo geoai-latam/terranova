@@ -66,7 +66,21 @@ def test_reglas_de_marca_y_secretos() -> None:
         assert "<title>" in html and 'name="description"' in html
 
 
-def test_casos_ilustrativos_van_sellados() -> None:
+def test_ejemplos_van_sellados() -> None:
+    # La landing muestra respuestas reales capturadas (consola y respuesta anotada), cada una con su
+    # sello; si vuelve un caso ilustrativo, también va sellado.
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
-    assert html.count('class="sello-i">ilustrativo<') == 3
-    assert html.count("ejemplo · capturado") >= 2
+    assert html.count("ejemplo · capturado") >= 3
+    assert html.count("ilustrativo") == html.count('class="sello-i">ilustrativo<')
+
+
+def test_preguntas_por_sector_son_herramientas_reales() -> None:
+    sys.path.insert(0, str(RAIZ / "src"))
+    from terranova.catalogo import cargar
+
+    ids = set(cargar(RAIZ / "catalogo").herramientas)
+    html = (PUBLICO / "index.html").read_text(encoding="utf-8")
+    sector = html[html.index('class="sectores"') :]
+    citadas = re.findall(r'<span class="id"><code>([a-z0-9_]+)</code>', sector)
+    assert len(citadas) == 25
+    assert set(citadas) <= ids
