@@ -181,7 +181,7 @@ async def test_la_aplicacion_reparte_mcp_y_rest() -> None:
         await aplicacion({"type": "http", "path": ruta}, None, None)
     assert llegadas == ["mcp", "mcp", "territorio", "api", "api"]
     rutas = set(crear_aplicacion().mcp)
-    assert rutas == {"/mcp"} | {f"/mcp/{f}" for f in puerta.FAMILIAS}
+    assert rutas == {"/mcp", "/mcp/catalogo"} | {f"/mcp/{f}" for f in puerta.FAMILIAS}
 
 
 @pytest.mark.anyio
