@@ -161,6 +161,9 @@ async def _pregunta(
 # cierra el rango con el día pedido o con el siguiente. La verdad se sigue exigiendo en la
 # respuesta: un rectángulo que cambia la cifra falla por la cifra, no por la entrada.
 TOLERANCIA_BBOX = 0.1  # grados por borde, ~11 km
+# opcionales de presentación (ADR-0032 y ADR-0033): no cambian la consulta a la fuente. El mini los
+# manda con su valor por defecto (`geometria: false`, `pagina: 1`) y eso no es otra entrada.
+PRESENTACION = frozenset({"geometria", "pagina"})
 FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 
@@ -198,7 +201,7 @@ def _mismo_valor(clave: str, dado: Any, esperado: Any) -> bool:
 def _misma_entrada(dada: dict[str, Any], v: dict[str, Any]) -> bool:
     """La entrada del agente equivale a la de la verdad; las `libres` (p. ej. cuántas TRM pide
     para «los últimos días») valen con cualquier valor, o sin él."""
-    libres = set(v.get("libres") or ())
+    libres = set(v.get("libres") or ()) | PRESENTACION
     esperada = v["entrada"]
     if set(dada) - libres != set(esperada) - libres:
         return False

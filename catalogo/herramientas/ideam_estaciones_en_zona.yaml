@@ -17,7 +17,9 @@ consulta:
   argumentos:
     id: hp9r-jxuu
     portal: datos.gov.co
-    select: "codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
+    # `distinct`: el conjunto trae cada estación dos veces, idéntica (19 828 filas, 9 914 códigos;
+    # medido el 29-10-2026), y una lista de 44 estaciones salía de 88
+    select: "distinct codigo, nombre, categoria, tecnologia, estado, departamento, municipio, altitud, latitud, longitud, fecha_instalacion, fecha_suspension, entidad"
     # `ubicaci_n` trae lat y lon invertidas: se filtra con las columnas numéricas
     lat: latitud
     lon: longitud
