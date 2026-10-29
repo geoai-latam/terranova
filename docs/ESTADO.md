@@ -71,8 +71,10 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   Las viñetas nombran cosas reales que `construir.py` toma del catálogo (`data-datos`):
   - la revisión de una lista: cada predio, empresa o contratista se cruza con sus cuatro fuentes
     (12 herramientas reales) y entra al expediente;
-  - el tablero: tu municipio frente a diez comparables; con cada indicador (DANE, MinEducación,
-    ADRES) las columnas se reordenan y se mueve la línea del promedio;
+  - el tablero: un tablero despiezado en capas (vista explotada) que se arma sobre su ventana: el
+    mapa de Colombia en hexágonos extruidos, el ranking de tu municipio frente a diez comparables y
+    una tarjeta por indicador (DANE, MinEducación, ADRES) con su tendencia; con cada indicador
+    cambian las tres capas y un pulso une el municipio en el mapa con su columna;
   - la vigilancia: carriles de SECOP II, SUIN-Juriscol, IDEAM y la SIC que cruzan la línea de hoy;
   - el asistente: preguntas reales del catálogo que viajan a la entidad que las responde, con su
     licencia.

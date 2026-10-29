@@ -173,55 +173,184 @@ const VINETAS = {
     };
   },
 
-  // Tablero: tu municipio frente a los comparables. Con cada indicador (y la entidad que lo
-  // publica) las columnas se reordenan y la línea del promedio se mueve. Alturas de esquema.
+  // Tablero: un tablero de verdad, despiezado en capas como una vista explotada. Abajo, la
+  // ventana; encima flotan el mapa de Colombia en columnas, el ranking de tu municipio frente a los
+  // comparables y las tarjetas de cada indicador, unidos por hilos finos. Con cada indicador (y la
+  // entidad que lo publica) cambian las tres capas a la vez. Alturas de esquema, sin cifras.
   tablero(THREE, scene, { datos, rotulo }) {
-    const N = 11, PASO = 17, TU = 3, T = 3.6, ALTO = 92;
+    const T = 4.2, ARMA = 1.9, N = 11, TU = 3, HB = 34;
     scene.add(suelo(THREE));
-    const largo = N * PASO + 18;
-    const zocalo = new THREE.Mesh(new THREE.BoxGeometry(largo, 3, 34).translate(0, 1.5, 0), lam(THREE, '#1E463C'));
-    zocalo.receiveShadow = true; scene.add(zocalo);
-    // Las guías del fondo: cuatro líneas a la misma altura en todos los indicadores.
-    for (let i = 1; i <= 4; i++) {
-      const l = new THREE.Mesh(new THREE.BoxGeometry(largo, 0.35, 0.35), new THREE.MeshBasicMaterial({ color: C.linea }));
-      l.position.set(0, 3 + i * ALTO / 4, -17); scene.add(l);
-    }
-    const valor = (ind, j) => { const x = Math.sin(j * 12.9898 + ind * 78.233) * 43758.5453; return 0.18 + 0.82 * (x - Math.floor(x)); };
-    const geo = new THREE.BoxGeometry(11, 1, 11); geo.translate(0, 0.5, 0);
-    const cols = Array.from({ length: N }, (_, j) => {
-      const m = lam(THREE, j === TU ? C.ambar : '#86C6B8'), mesh = new THREE.Mesh(geo, m);
-      mesh.castShadow = true; mesh.receiveShadow = true; mesh.position.y = 3; scene.add(mesh);
-      return { mesh, x: 0, h: 0.3 };
+    const ruido = (a, b) => { const x = Math.sin(a * 12.9898 + b * 78.233) * 43758.5453; return x - Math.floor(x); };
+    // Una losa de esquinas apenas redondeadas, con su filo claro: la pieza de cada capa.
+    const losa = (w, d, color, alto = 2) => {
+      const r = 3, s = new THREE.Shape(), x = w / 2, z = d / 2;
+      s.moveTo(-x + r, -z); s.lineTo(x - r, -z); s.quadraticCurveTo(x, -z, x, -z + r); s.lineTo(x, z - r);
+      s.quadraticCurveTo(x, z, x - r, z); s.lineTo(-x + r, z); s.quadraticCurveTo(-x, z, -x, z - r);
+      s.lineTo(-x, -z + r); s.quadraticCurveTo(-x, -z, -x + r, -z);
+      const g = new THREE.ExtrudeGeometry(s, { depth: alto, bevelEnabled: false, curveSegments: 4 }); g.rotateX(-Math.PI / 2);
+      const grupo = new THREE.Group(), m = new THREE.Mesh(g, lam(THREE, color));
+      m.castShadow = true; m.receiveShadow = true;
+      const filo = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(s.getPoints(4).map(p => new THREE.Vector3(p.x, alto + 0.05, -p.y))),
+        new THREE.LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0.5 }));
+      grupo.add(m, filo); scene.add(grupo); grupo.userData = { w, d };
+      return grupo;
+    };
+    // La ventana: barra con sus tres puntos, menú lateral y la huella de cada capa que flota encima.
+    const ventana = losa(330, 224, '#12322B', 3);
+    ventana.add(new THREE.Mesh(new THREE.BoxGeometry(326, 0.8, 14).translate(0, 3.4, -104), lam(THREE, '#1A4238')));
+    [0, 1, 2].forEach(i => { const p = new THREE.Mesh(new THREE.CylinderGeometry(1.8, 1.8, 0.8, 14), lam(THREE, i ? '#3F6158' : C.ambar)); p.position.set(-152 + i * 7, 4, -104); ventana.add(p); });
+    ventana.add(new THREE.Mesh(new THREE.BoxGeometry(30, 0.8, 196).translate(-146, 3.4, 10), lam(THREE, '#173B33')));
+    for (let i = 0; i < 7; i++) ventana.add(new THREE.Mesh(new THREE.BoxGeometry(i === 1 ? 20 : 16, 0.5, 2.6).translate(-148 + (i === 1 ? 2 : 0), 4, -80 + i * 13), lam(THREE, i === 1 ? C.teal : '#33574D')));
+    const huella = (x, z, w, d) => {
+      const pts = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([a, b]) => new THREE.Vector3(x + a * w / 2, 3.1, z + b * d / 2));
+      ventana.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0.22 })));
+    };
+    // Las capas que flotan: [losa, x, altura, z].
+    const mapa = losa(148, 196, '#1B4339'), rank = losa(132, 74, '#1B4339');
+    const tarjetas = datos.map(() => losa(60, 32, '#1F4A3F'));
+    const capas = [[mapa, -66, 34, 6], [rank, 82, 58, 54], ...tarjetas.map((t, j) => [t, 50 + (j % 2) * 68, 78, -86 + Math.floor(j / 2) * 46])];
+    capas.forEach(([g, x, , z]) => huella(x, z, g.userData.w, g.userData.d));
+
+    // El mapa: los puntos de Colombia agregados en hexágonos grandes, para que cada columna se lea.
+    const S = 0.56, K = 10.2, R = S * K / Math.sqrt(3) * 0.9;
+    const o = new THREE.Object3D(), col = new THREE.Color();
+    let malla = null, celdas = [], elegidas = [];
+    fetch('/datos/co.json').then(r => r.json()).then(D => {
+      const cuenta = new Map();
+      for (const [lon, lat] of D.land) {
+        const f = Math.round((lat + 4.3) / (S * 0.866)), c = Math.round((lon + 79.2) / S - (f % 2) * 0.5);
+        cuenta.set(f * 1000 + c, (cuenta.get(f * 1000 + c) || 0) + 1);
+      }
+      for (const [k, n] of cuenta) {
+        if (n < 4) continue;
+        const f = Math.floor(k / 1000), c = k % 1000;
+        const lon = -79.2 + (c + (f % 2) * 0.5) * S, lat = -4.3 + f * S * 0.866;
+        if (lon < -79.6) continue;  // las islas quedan fuera del recuadro
+        celdas.push({ x: (lon + 73.1) * K, z: -(lat - 4.1) * K, lon, lat, h: 0.1, hObj: 0.1 });
+      }
+      const g = new THREE.CylinderGeometry(R, R, 1, 6); g.translate(0, 0.5, 0);
+      malla = new THREE.InstancedMesh(g, lam(THREE, '#FFFFFF', { flatShading: true }), celdas.length);
+      malla.castShadow = true; malla.receiveShadow = true; malla.position.y = 2; mapa.add(malla);
+      // El municipio elegido cambia con cada indicador: cerca de varias ciudades, para que la escena varíe.
+      const cerca = (lo, la) => celdas.reduce((b, c, i) => Math.hypot(c.lon - lo, c.lat - la) < Math.hypot(celdas[b].lon - lo, celdas[b].lat - la) ? i : b, 0);
+      elegidas = [[-74.1, 4.6], [-75.6, 6.2], [-76.5, 3.4], [-74.8, 10.9], [-73.1, 7.1]].map(p => cerca(...p));
+      ind = -1;
     });
-    const prom = new THREE.Mesh(new THREE.BoxGeometry(largo + 6, 0.9, 0.9), new THREE.MeshBasicMaterial({ color: C.crema }));
-    scene.add(prom);
-    const rTit = rotulo('', 'titulo-t'), rTu = rotulo('Tu municipio', 'tu'), rProm = rotulo('promedio', 'prom');
-    let ind = -1, promedio = 0.5, promH = 0.5;
+    const anillo = new THREE.Mesh(new THREE.RingGeometry(0.86, 1, 48), new THREE.MeshBasicMaterial({ color: C.ambar, transparent: true, side: THREE.DoubleSide, depthWrite: false }));
+    anillo.rotation.x = -Math.PI / 2; mapa.add(anillo);
+
+    // El ranking: once columnas; la de tu municipio, en ámbar, y la línea del promedio.
+    const gb = new THREE.BoxGeometry(6.6, 1, 6.6); gb.translate(0, 0.5, 0);
+    const barras = Array.from({ length: N }, (_, j) => {
+      const m = new THREE.Mesh(gb, lam(THREE, j === TU ? C.ambar : '#86C6B8')); m.castShadow = true; m.position.set(0, 2, 6); rank.add(m);
+      return { m, x: (j - 5) * 9.6, h: 0.2, xObj: 0, hObj: 0.2 };
+    });
+    for (let i = 1; i <= 3; i++) { const l = new THREE.Mesh(new THREE.BoxGeometry(110, 0.3, 0.3), new THREE.MeshBasicMaterial({ color: C.linea })); l.position.set(0, 2 + i * HB / 3, -4); rank.add(l); }
+    const prom = new THREE.Mesh(new THREE.BoxGeometry(112, 0.7, 0.7), new THREE.MeshBasicMaterial({ color: C.crema })); rank.add(prom);
+    let promH = 0.5, promObj = 0.5;
+
+    // Las tarjetas: la tendencia de cada indicador, una cinta que se dibuja tramo a tramo.
+    const P = 9, gs = new THREE.BoxGeometry(1, 1.1, 1.1);
+    const cintas = tarjetas.map(t => Array.from({ length: P - 1 }, () => { const m = new THREE.Mesh(gs, new THREE.MeshBasicMaterial({ color: C.teal })); t.add(m); return m; }));
+    const punto = new THREE.Mesh(new THREE.SphereGeometry(1.6, 12, 8), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(punto);
+
+    // Los hilos de la vista explotada: de las esquinas de cada capa a su huella en la ventana.
+    const hilos = new THREE.LineSegments(new THREE.BufferGeometry(), new THREE.LineBasicMaterial({ color: C.teal, transparent: true, opacity: 0.3 }));
+    hilos.geometry.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(capas.length * 4 * 6), 3)); scene.add(hilos);
+    // El pulso que va del municipio en el mapa a su columna en el ranking.
+    const pulso = new THREE.Mesh(new THREE.SphereGeometry(2.2, 14, 10), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(pulso);
+    const estela = new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({ length: 24 }, () => new THREE.Vector3())),
+      new THREE.LineBasicMaterial({ color: C.ambar, transparent: true, opacity: 0.55 })); scene.add(estela);
+
+    const rTit = rotulo('', 'titulo-t'), rTu = rotulo('Tu municipio', 'tu');
+    const rTarj = datos.map(d => rotulo(`<b>${d.t}</b><small>${d.e}</small>`, 'tarj'));
+    const rRank = rotulo('Frente a 10 comparables', 'capa'), rMapa = rotulo('Por zona', 'capa');
+    const BASE = new THREE.Color('#24493F'), ALTA = new THREE.Color('#B4EBDD'), AMB = new THREE.Color(C.ambar);
+    const a3 = new THREE.Vector3(), b3 = new THREE.Vector3();
+    let ind = -1, sel = -1;
     return {
-      alto: 186, az: -0.42, pol: 1.06, mira: [6, 36, 0], sombras: 160, vaiven: 0.07, quieto: 1.5,
+      alto: 298, altoAngosto: 350, az: -0.58, pol: 0.84, mira: [4, 60, 10], miraAngosta: [6, 84, 10], sombras: 230, vaiven: 0.06, quieto: ARMA + 1.6,
       paso(s) {
-        const n = Math.floor(s / T), i = n % datos.length;
+        // Se arma: de una pila plana sobre la ventana a la vista explotada; luego flota apenas.
+        const k = tramo(s, 0.15, ARMA);
+        capas.forEach(([g, x, y, z], j) => g.position.set(x, 3 + (y - 3) * k + j * 1.4 * (1 - k) + Math.sin(s * 0.9 + j * 1.3) * 1.2 * k, z));
+        const t = Math.max(0, s - ARMA * 0.8), n = Math.floor(t / T), f = t - n * T, i = n % datos.length;
         if (n !== ind) {
           ind = n;
-          rTit.innerHTML = `<b>${datos[i].t}</b><small>${datos[i].e} · tu municipio frente a ${N - 1} comparables</small>`;
-          const vs = cols.map((_, j) => valor(i, j)), orden = vs.map((v, j) => [v, j]).sort((a, b) => b[0] - a[0]);
-          orden.forEach(([v, j], r) => { cols[j].xObj = (r - (N - 1) / 2) * PASO; cols[j].hObj = v; });
-          promedio = vs.reduce((a, b) => a + b, 0) / N;
+          rTit.innerHTML = `<b>${datos[i].t}</b><small>Publica: ${datos[i].e} · tu municipio frente a los comparables</small>`;
+          rTarj.forEach((r, j) => r.classList.toggle('activa', j === i));
+          // Un patrón que cambia con el territorio, no ruido: así se lee como un mapa de verdad.
+          celdas.forEach(c => {
+            const v = 0.5 + 0.42 * Math.sin(c.lon * 0.62 + i * 1.9) * Math.cos(c.lat * 0.38 + i * 2.6) + 0.22 * (ruido(c.lon + i, c.lat) - 0.5);
+            c.hObj = Math.min(1, Math.max(0.05, v));
+          });
+          sel = elegidas.length ? elegidas[n % elegidas.length] : -1;
+          const vs = barras.map((_, j) => 0.2 + 0.8 * ruido(i + 3, j)), orden = vs.map((v, j) => [v, j]).sort((a, b) => b[0] - a[0]);
+          orden.forEach(([v, j], r) => { barras[j].xObj = (r - (N - 1) / 2) * 9.6; barras[j].hObj = v; });
+          promObj = vs.reduce((a, b) => a + b, 0) / N;
         }
-        rTit.classList.toggle('ver', s - n * T > 0.15);
-        cols.forEach((c, j) => {
-          // Cada columna llega a su sitio con un pequeño desfase: el reordenamiento se lee.
-          const f = Math.min(1, Math.max(0, (s - n * T - j * 0.03) / 0.9));
-          c.x += (c.xObj - c.x) * (0.06 + 0.1 * f); c.h += (c.hObj - c.h) * (0.06 + 0.1 * f);
-          c.mesh.position.x = c.x; c.mesh.scale.y = Math.max(0.5, c.h * ALTO);
+        rTit.classList.toggle('ver', k > 0.7 && f > 0.15);
+        const ent = tramo(f, 0.1, 0.8);
+        if (malla) {
+          celdas.forEach((c, q) => {
+            c.h += (c.hObj - c.h) * 0.06;
+            const alto = (0.8 + c.h * 13 + (q === sel ? 18 * ent : 0)) * (0.15 + 0.85 * k);
+            o.position.set(c.x, 0, c.z); o.scale.set(1, alto, 1); o.updateMatrix(); malla.setMatrixAt(q, o.matrix);
+            malla.setColorAt(q, q === sel ? col.copy(ALTA).lerp(AMB, ent) : col.copy(BASE).lerp(ALTA, Math.pow(c.h, 1.4)));
+          });
+          malla.instanceMatrix.needsUpdate = true; malla.instanceColor.needsUpdate = true;
+        }
+        barras.forEach((b, j) => {
+          const g = Math.min(1, Math.max(0, (f - 0.3 - j * 0.03) / 0.9));
+          b.x += (b.xObj - b.x) * (0.05 + 0.1 * g); b.h += (b.hObj - b.h) * (0.05 + 0.1 * g);
+          b.m.position.x = b.x; b.m.scale.y = Math.max(0.4, b.h * HB * k);
         });
-        promH += (promedio - promH) * 0.08;
-        prom.position.set(0, 3 + promH * ALTO, 7);
+        promH += (promObj - promH) * 0.07; prom.position.set(0, 2 + promH * HB * k, 11);
+        // La cinta de la tarjeta activa se dibuja; las demás quedan quietas y apagadas.
+        cintas.forEach((cinta, j) => {
+          const activa = j === i, dib = activa ? tramo(f, 0.5, 1.8) * (P - 1) : P - 1;
+          const y = p => 3 + 2 + ruido(j * 7 + (activa ? i : 0), p) * 10;
+          cinta.forEach((m, p) => {
+            const x0 = -22 + p * 44 / (P - 1), x1 = x0 + 44 / (P - 1), y0 = y(p), y1 = y(p + 1), dx = x1 - x0, dy = y1 - y0;
+            const vis = Math.min(1, Math.max(0, dib - p));
+            m.visible = vis > 0;
+            m.scale.x = Math.max(0.001, Math.hypot(dx, dy) * vis); m.position.set(x0 + dx * vis / 2, y0 + dy * vis / 2, 6); m.rotation.z = Math.atan2(dy, dx);
+            m.material.color.set(activa ? C.ambar : '#4E7D71');
+          });
+          if (activa) {
+            const pi = Math.min(P - 1, Math.floor(dib)), r = dib - pi;
+            punto.position.set(-22 + dib * 44 / (P - 1), y(pi) + (y(Math.min(P - 1, pi + 1)) - y(pi)) * r, 6);
+            tarjetas[j].localToWorld(punto.position);
+          }
+        });
+        punto.visible = k > 0.9;
+        // Del municipio elegido a su columna en el ranking, en arco, con estela.
+        if (malla && sel >= 0) {
+          const c = celdas[sel];
+          mapa.localToWorld(a3.set(c.x, 2 + (0.8 + c.h * 13 + 18 * ent) * (0.15 + 0.85 * k), c.z));
+          rank.localToWorld(b3.set(barras[TU].x, 2 + barras[TU].h * HB * k, 6));
+          const u = tramo(f, 0.55, 1.5), A = [a3.x, a3.y, a3.z], B = [b3.x, b3.y, b3.z];
+          arco(pulso.position, A, B, u, 34); pulso.visible = u > 0.01 && u < 0.99 && k > 0.9;
+          const pos = estela.geometry.attributes.position;
+          for (let p = 0; p < 24; p++) { arco(a3, A, B, Math.max(0, u - p * 0.012), 34); pos.setXYZ(p, a3.x, a3.y, a3.z); }
+          pos.needsUpdate = true; estela.visible = pulso.visible;
+          anillo.position.set(c.x, 2.3, c.z); const e = tramo(f, 0.1, 1.3); anillo.scale.setScalar(3 + e * 18); anillo.material.opacity = (1 - e) * 0.9 * k;
+        }
+        const pos = hilos.geometry.attributes.position;
+        let q = 0;
+        capas.forEach(([g]) => {
+          const { w, d } = g.userData, p = g.position;
+          [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([a, b]) => {
+            pos.setXYZ(q++, p.x + a * w / 2, p.y, p.z + b * d / 2); pos.setXYZ(q++, p.x + a * w / 2, 3.1, p.z + b * d / 2);
+          });
+        });
+        pos.needsUpdate = true; hilos.material.opacity = 0.16 * k;
       },
       rotular(poner) {
-        const tu = cols[TU];
-        poner(rTu, tu.x, 3 + tu.h * ALTO + 6, 0);
-        poner(rProm, -largo / 2 - 5, 3 + promH * ALTO, 7);
+        tarjetas.forEach((t, j) => { const p = t.position; poner(rTarj[j], p.x - 28, p.y + 2, p.z - 13); });
+        const r = rank.position, m = mapa.position;
+        poner(rRank, r.x - 64, r.y + 2, r.z + 35); poner(rMapa, m.x - 72, m.y + 2, m.z + 96);
+        if (malla && sel >= 0) { const c = celdas[sel]; poner(rTu, m.x + c.x, m.y + 2 + 0.8 + c.h * 13 + 16, m.z + c.z); }
       },
     };
   },

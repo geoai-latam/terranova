@@ -623,7 +623,7 @@ SERVICIOS = [
 
 ETIQUETAS = {
     "revision": "Esquema animado: predios, empresas y contratos pasan por una compuerta; salen en verde si no hay hallazgos y en ámbar si hay algo que revisar.",
-    "tablero": "Esquema animado: tu municipio frente a municipios comparables; con cada indicador, las columnas se reordenan.",
+    "tablero": "Esquema animado: un tablero despiezado en capas, con el mapa de Colombia por zonas, tu municipio frente a los comparables y la tendencia de cada indicador; con cada indicador cambian las tres capas.",
     "vigilancia": "Esquema animado: un barrido recorre lo que vigilas y una señal sube donde algo cambió.",
     "asistente": "Esquema animado: la pregunta viaja a las fuentes que hacen falta y vuelve con la respuesta.",
 }
