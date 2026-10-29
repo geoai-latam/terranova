@@ -41,7 +41,7 @@
 <div class="escena" data-escena="predios" role="img" aria-label="Predios reales de Santa Marta en 3D, con el predio consultado resaltado. Arrastra para girar.">
 <img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
-<div class="seg" role="group" aria-label="Ejemplo de respuesta"><button type="button" aria-pressed="true" data-k="geo">Geo</button><button type="button" aria-pressed="false" data-k="nogeo">No geo</button></div>
+<div class="rotulos" aria-hidden="true"></div>
 <p class="gira">Arrastra para girar</p>
 <div class="tarjeta" data-k="geo">
 <div class="top"><span class="herr">sinic_predio_en_punto</span><span class="sello">ejemplo · capturado 2026-10-29</span></div>
@@ -49,13 +49,7 @@
 <dt>destinación</dt><dd>Habitacional · urbano</dd><dt>entidad</dt><dd>IGAC · SINIC</dd>
 <dt>licencia</dt><dd>CC-BY-SA-4.0 · comercial: sí</dd><dt>servido</dt><dd>copia del 2026-10-28 · 0,56 s</dd></dl>
 <div class="huella"><span>huella</span><b>sha256:7a2cc965…</b></div></div>
-<div class="tarjeta" data-k="nogeo" hidden>
-<div class="top"><span class="herr">banrep_trm_recientes</span><span class="sello">ejemplo · capturado 2026-10-29</span></div>
-<dl><dt>estado</dt><dd class="ok">encontrado</dd><dt>TRM</dt><dd>3.162,35 COP · 2026-10-29</dd>
-<dt>serie</dt><dd>diaria · CCSP</dd><dt>entidad</dt><dd>Banco de la República</dd>
-<dt>licencia</dt><dd>banrep-aviso-legal · comercial: sí</dd><dt>servido</dt><dd>fuente en vivo · 07:14 UTC</dd></dl>
-<div class="huella"><span>huella</span><b>sha256:ac30c9f5…</b></div></div>
-<p class="lectura"><b>11,2211 N · 74,1572 W</b> · Santa Marta · IGAC SINIC</p>
+<p class="lectura"><b>11,2211 N · 74,1572 W</b> · 11 de Noviembre, Santa Marta · predios IGAC SINIC · calles © OpenStreetMap</p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 </div></section>
@@ -63,17 +57,14 @@
 <section class="seccion"><div class="envoltura">
 <div class="cab"><span class="rotulo">Cómo funciona</span><h2 class="t2">De la pregunta a la respuesta con prueba</h2>
 <p class="entrada">Una sola puerta, por MCP y por API REST, sobre 180 fuentes oficiales. La puerta no interpreta preguntas: valida la llave, cobra los créditos y llama a la herramienta del catálogo.</p></div>
-<div class="flujo">
-<div class="bloque"><span class="num">1 · quién pregunta</span><h3 class="t3">Tu agente o tu sistema</h3><ul class="lista"><li>Agentes por <code>/mcp</code></li><li>Sistemas por <code>/v1</code></li><li>Equipos SIG por archivos</li></ul><span class="pie">Claude, ChatGPT, n8n, Python</span></div>
-<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">2 · la puerta</span><svg style="width:34px;height:34px" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#6CC3B3" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#E0A13A"/><circle cx="32" cy="46" r="3.5" fill="#0B231C"/></svg><ul class="lista"><li>Llave y cuota</li><li>Créditos por consulta</li><li>Contrato <code>rt/1</code></li></ul><span class="pie">sin LLM en la puerta</span></div>
-<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
-<div class="bloque"><span class="num">3 · catálogo</span><h3 class="t3">207 herramientas</h3><ul class="lista"><li>7 familias</li><li>Perfiles MCP por familia</li><li>Licencia por fuente</li></ul><span class="pie">GET /v1/herramientas</span></div>
-<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
-<div class="bloque"><span class="num">4 · fuente oficial</span><h3 class="t3">180 fuentes</h3><ul class="lista"><li>155 en vivo</li><li>25 desde copia</li><li>49 entidades</li></ul><span class="pie">IGAC, DANE, Banrep…</span></div>
-<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>
-<div class="bloque vivo"><span class="num">5 · respuesta</span><h3 class="t3">El dato con su prueba</h3><ul class="lista"><li>Estado honesto</li><li>Entidad y licencia</li><li>Desde dónde y cuándo</li><li>Huella <code>sha256</code></li></ul><span class="pie">«no encontrado» ≠ «no se pudo»</span></div>
-</div>
+<ol class="pasos">
+<li><span class="n">01</span><h3>Tu agente o tu sistema</h3><p>Pregunta por MCP en <code>/mcp</code> o por REST en <code>/v1</code>. Claude, ChatGPT, n8n o un script de Python: la puerta no distingue.</p><span class="deja"><code>herramienta</code></span></li>
+<li class="puerta"><span class="n">02</span><h3>La puerta</h3><p>Valida la llave y descuenta los créditos según la tarifa. No interpreta la pregunta: aquí no hay LLM.</p><span class="deja"><code>creditos</code><code>solicitud_id</code></span></li>
+<li><span class="n">03</span><h3>El catálogo</h3><p>207 herramientas en 7 familias. Cada una sabe a qué fuente ir y con qué licencia sale el dato.</p><span class="deja"><code>licencia</code></span></li>
+<li><span class="n">04</span><h3>La fuente oficial</h3><p>180 fuentes de 49 entidades: 155 se consultan en vivo y 25 desde una copia del bulk oficial.</p><span class="deja"><code>procedencia</code><code>servido_desde</code></span></li>
+<li><span class="n">05</span><h3>La respuesta</h3><p>El dato con su estado: «no encontrado» y «no se pudo» nunca se confunden. La huella permite comprobar después que no cambió.</p><span class="deja"><code>estado</code><code>huella</code></span></li>
+</ol>
+<p class="fuente-dato pasos-pie">Columna derecha: el campo de la respuesta <code>rt/1</code> que deja cada paso.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
@@ -117,23 +108,24 @@
 <div><code>huella</code><p><code>sha256</code> de los datos, para comprobar después que no cambiaron.</p></div>
 </div>
 </div>
-<div class="estados">
-<div class="estado e1"><b>encontrado</b><p>La fuente respondió y hay datos.</p></div>
-<div class="estado e2"><b>no_encontrado</b><p>La fuente respondió y no hay datos para esa entrada.</p></div>
-<div class="estado e3"><b>parcial</b><p>Una consulta compuesta con partes que fallaron, cada una en <code>errores</code>.</p></div>
-<div class="estado e4"><b>fuera_de_cobertura</b><p>La entrada está fuera de lo que cubre la fuente. No descuenta.</p></div>
-</div>
-<div class="aviso-error"><code>502 fuente_no_disponible</code><span>Cuando la fuente oficial no responde llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. Los errores no descuentan créditos.</span></div>
+<dl class="estados">
+<div class="e1"><dt>encontrado</dt><dd>La fuente respondió y hay datos.</dd></div>
+<div class="e2"><dt>no_encontrado</dt><dd>La fuente respondió y no hay datos para esa entrada. Es una respuesta, no una falla.</dd></div>
+<div class="e3"><dt>parcial</dt><dd>Una consulta compuesta con partes que fallaron; cada una queda en <code>errores</code>.</dd></div>
+<div class="e4"><dt>fuera_de_cobertura</dt><dd>La entrada está fuera de lo que cubre la fuente. No descuenta créditos.</dd></div>
+<div class="e5"><dt>502 fuente_no_disponible</dt><dd>La fuente oficial no respondió. Llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. No descuenta.</dd></div>
+</dl>
 </div></section>
 
 <section class="seccion inv"><div class="envoltura">
 <div class="cab"><span class="rotulo">Servicios</span><h2 class="t2">Agentes que hacen el trabajo territorial</h2>
 <p class="entrada">La capa de datos se vende sola, por consulta. Sobre ella construimos y operamos el trabajo completo con tu equipo.</p></div>
-<div class="rejilla r4">
-<div class="bloque oscuro"><h3 class="t3">Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con prueba.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p><span class="pie">Por proceso o licencia</span></div>
-<div class="bloque oscuro" style="box-shadow:inset 0 0 0 1.5px var(--teal-400)"><h3 class="t3">Datos</h3><p>La capa Terranova: 207 herramientas sobre 180 fuentes, por MCP, API REST y archivos.</p><span class="pie" style="color:var(--teal-400)">En producción · por consulta</span></div>
+<div class="columnas c4">
+<div class="activa"><span class="et">en producción · por consulta</span><h3>Datos</h3><p>La capa Terranova: 207 herramientas sobre 180 fuentes, por MCP, API REST y archivos.</p></div>
+<div><span class="et">por entrega</span><h3>Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con la prueba de cada hallazgo.</p></div>
+<div><span class="et">por entrega</span><h3>Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p></div>
+<div><span class="et">por proceso o licencia</span><h3>Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p></div>
+</div>
 </div>
 <p class="entrada" style="margin-top:28px;font-size:16px">Un agente hace el trabajo, otro lo evalúa sin ver su razonamiento y una persona aprueba. <a class="enlace" href="/servicios">Cómo trabajamos →</a></p>
 </div></section>
@@ -193,27 +185,27 @@
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Casos</span><h2 class="t2">Preguntas sobre lugares, no sobre personas</h2>
 <p class="entrada">Así se ve el trabajo. Todavía no mostramos clientes: estos casos son ilustrativos y sus cifras son posibles, no medidas.</p></div>
-<div class="rejilla r3">
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="pie">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="pie">Ficha del lugar con su procedencia</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="pie">Un expediente por solicitud</span></div>
-</div>
+<div class="columnas c3">
+<div><span class="sello-i">ilustrativo</span><h3>Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="res">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="res">Ficha del lugar con su procedencia</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="res">Un expediente por solicitud</span></div>
+</div></div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
 <div class="cab"><span class="rotulo">Precios</span><h2 class="t2">Pagas por consulta, no por el dato</h2>
 <p class="entrada">Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta. Los errores, la caché y lo que está fuera de cobertura no descuentan.</p></div>
-<div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><span class="eq">≈ 150 consultas de predio por punto</span><a class="boton p" href="/precios#empezar">Empezar gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><span class="eq">≈ 2.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-básico">Pedir este plan</a></div><div class="plan dest"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><span class="eq">≈ 11.000 consultas de predio por punto</span><a class="boton p" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><span class="eq">≈ 37.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><span class="eq">≈ 110.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
+<div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><span class="eq">≈ 150 consultas de predio por punto</span><a class="boton p" href="/precios#empezar">Empezar gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><span class="eq">≈ 2.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-básico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><span class="eq">≈ 11.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><span class="eq">≈ 37.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><span class="eq">≈ 110.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
 <p style="margin-top:20px"><a class="enlace" href="/precios">Tarifa por tipo de pregunta y preguntas frecuentes →</a></p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Confianza</span><h2 class="t2">Reglas que no se negocian</h2></div>
-<div class="rejilla r4">
-<div class="bloque"><h3 class="t3">Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. 141 de las 180 son CC BY-SA 4.0.</p></div>
-<div class="bloque"><h3 class="t3">Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
-<div class="bloque"><h3 class="t3">Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div class="bloque"><h3 class="t3">La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
+<div class="columnas c4">
+<div><h3>Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. 141 de las 180 son CC BY-SA 4.0.</p></div>
+<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
+<div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
+<div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
 </div>
 <div style="margin-top:40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
 <span class="rotulo">Aliados y proyectos</span>

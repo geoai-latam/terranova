@@ -119,10 +119,6 @@ def simbolo(trazo="#0E2A22", dentro="#0E2A22", punto="#E0A13A", clase="") -> str
     )
 
 
-FLECHA = (
-    '<div class="flecha" aria-hidden="true"><svg width="24" height="12" viewBox="0 0 24 12">'
-    '<path d="M0 6h21M17 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></div>'
-)
 PULSO = (
     '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>'
@@ -302,16 +298,17 @@ CODIGO = """<div class="codigo">
 </div>"""
 
 
-def planes_html(dest="Pro") -> str:
+def planes_html() -> str:
+    # Un solo botón primario (Gratis): ningún plan de pago se destaca sin un dato que lo respalde.
     filas = []
     for n, c in PLANES:
         boton = (
             '<a class="boton p" href="/precios#empezar">Empezar gratis</a>'
-            if n == "Gratis" and dest != n
-            else f'<a class="boton {"p" if n == dest else "s"}" href="/contacto?asunto=plan-{n.lower()}">{"Empezar gratis" if n == "Gratis" else "Pedir este plan"}</a>'
+            if n == "Gratis"
+            else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower()}">Pedir este plan</a>'
         )
         filas.append(
-            f'<div class="plan{" dest" if n == dest else ""}"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
+            f'<div class="plan"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
             f'<span class="eq">≈ {miles(c // 10)} consultas de predio por punto</span>{boton}</div>'
         )
     return '<div class="planes">' + "".join(filas) + "</div>"
@@ -356,11 +353,10 @@ def inicio() -> str:
 <div class="escena" data-escena="predios" role="img" aria-label="Predios reales de Santa Marta en 3D, con el predio consultado resaltado. Arrastra para girar.">
 <img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
-<div class="seg" role="group" aria-label="Ejemplo de respuesta"><button type="button" aria-pressed="true" data-k="geo">Geo</button><button type="button" aria-pressed="false" data-k="nogeo">No geo</button></div>
+<div class="rotulos" aria-hidden="true"></div>
 <p class="gira">Arrastra para girar</p>
 {TARJETA_GEO}
-{TARJETA_TRM.format(oculta=" hidden")}
-<p class="lectura"><b>11,2211 N · 74,1572 W</b> · Santa Marta · IGAC SINIC</p>
+<p class="lectura"><b>11,2211 N · 74,1572 W</b> · 11 de Noviembre, Santa Marta · predios IGAC SINIC · calles © OpenStreetMap</p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 </div></section>
@@ -368,17 +364,14 @@ def inicio() -> str:
 <section class="seccion"><div class="envoltura">
 <div class="cab"><span class="rotulo">Cómo funciona</span><h2 class="t2">De la pregunta a la respuesta con prueba</h2>
 <p class="entrada">Una sola puerta, por MCP y por API REST, sobre {N_FUENTES} fuentes oficiales. La puerta no interpreta preguntas: valida la llave, cobra los créditos y llama a la herramienta del catálogo.</p></div>
-<div class="flujo">
-<div class="bloque"><span class="num">1 · quién pregunta</span><h3 class="t3">Tu agente o tu sistema</h3><ul class="lista"><li>Agentes por <code>/mcp</code></li><li>Sistemas por <code>/v1</code></li><li>Equipos SIG por archivos</li></ul><span class="pie">Claude, ChatGPT, n8n, Python</span></div>
-{FLECHA}
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">2 · la puerta</span>{simbolo("#6CC3B3", "#E0A13A", "#0B231C", "")[:-6].replace('<svg class=""', '<svg style="width:34px;height:34px"')}</svg><ul class="lista"><li>Llave y cuota</li><li>Créditos por consulta</li><li>Contrato <code>rt/1</code></li></ul><span class="pie">sin LLM en la puerta</span></div>
-{FLECHA}
-<div class="bloque"><span class="num">3 · catálogo</span><h3 class="t3">{N_HERR} herramientas</h3><ul class="lista"><li>{len([f for f in POR_FAMILIA if f != "meta"])} familias</li><li>Perfiles MCP por familia</li><li>Licencia por fuente</li></ul><span class="pie">GET /v1/herramientas</span></div>
-{FLECHA}
-<div class="bloque"><span class="num">4 · fuente oficial</span><h3 class="t3">{N_FUENTES} fuentes</h3><ul class="lista"><li>{MODOS["en_vivo"]} en vivo</li><li>{MODOS["copia"]} desde copia</li><li>{N_ENTIDADES} entidades</li></ul><span class="pie">IGAC, DANE, Banrep…</span></div>
-{FLECHA}
-<div class="bloque vivo"><span class="num">5 · respuesta</span><h3 class="t3">El dato con su prueba</h3><ul class="lista"><li>Estado honesto</li><li>Entidad y licencia</li><li>Desde dónde y cuándo</li><li>Huella <code>sha256</code></li></ul><span class="pie">«no encontrado» ≠ «no se pudo»</span></div>
-</div>
+<ol class="pasos">
+<li><span class="n">01</span><h3>Tu agente o tu sistema</h3><p>Pregunta por MCP en <code>/mcp</code> o por REST en <code>/v1</code>. Claude, ChatGPT, n8n o un script de Python: la puerta no distingue.</p><span class="deja"><code>herramienta</code></span></li>
+<li class="puerta"><span class="n">02</span><h3>La puerta</h3><p>Valida la llave y descuenta los créditos según la tarifa. No interpreta la pregunta: aquí no hay LLM.</p><span class="deja"><code>creditos</code><code>solicitud_id</code></span></li>
+<li><span class="n">03</span><h3>El catálogo</h3><p>{N_HERR} herramientas en {len([f for f in POR_FAMILIA if f != "meta"])} familias. Cada una sabe a qué fuente ir y con qué licencia sale el dato.</p><span class="deja"><code>licencia</code></span></li>
+<li><span class="n">04</span><h3>La fuente oficial</h3><p>{N_FUENTES} fuentes de {N_ENTIDADES} entidades: {MODOS["en_vivo"]} se consultan en vivo y {MODOS["copia"]} desde una copia del bulk oficial.</p><span class="deja"><code>procedencia</code><code>servido_desde</code></span></li>
+<li><span class="n">05</span><h3>La respuesta</h3><p>El dato con su estado: «no encontrado» y «no se pudo» nunca se confunden. La huella permite comprobar después que no cambió.</p><span class="deja"><code>estado</code><code>huella</code></span></li>
+</ol>
+<p class="fuente-dato pasos-pie">Columna derecha: el campo de la respuesta <code>rt/1</code> que deja cada paso.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
@@ -417,23 +410,24 @@ def inicio() -> str:
 <div><code>huella</code><p><code>sha256</code> de los datos, para comprobar después que no cambiaron.</p></div>
 </div>
 </div>
-<div class="estados">
-<div class="estado e1"><b>encontrado</b><p>La fuente respondió y hay datos.</p></div>
-<div class="estado e2"><b>no_encontrado</b><p>La fuente respondió y no hay datos para esa entrada.</p></div>
-<div class="estado e3"><b>parcial</b><p>Una consulta compuesta con partes que fallaron, cada una en <code>errores</code>.</p></div>
-<div class="estado e4"><b>fuera_de_cobertura</b><p>La entrada está fuera de lo que cubre la fuente. No descuenta.</p></div>
-</div>
-<div class="aviso-error"><code>502 fuente_no_disponible</code><span>Cuando la fuente oficial no responde llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. Los errores no descuentan créditos.</span></div>
+<dl class="estados">
+<div class="e1"><dt>encontrado</dt><dd>La fuente respondió y hay datos.</dd></div>
+<div class="e2"><dt>no_encontrado</dt><dd>La fuente respondió y no hay datos para esa entrada. Es una respuesta, no una falla.</dd></div>
+<div class="e3"><dt>parcial</dt><dd>Una consulta compuesta con partes que fallaron; cada una queda en <code>errores</code>.</dd></div>
+<div class="e4"><dt>fuera_de_cobertura</dt><dd>La entrada está fuera de lo que cubre la fuente. No descuenta créditos.</dd></div>
+<div class="e5"><dt>502 fuente_no_disponible</dt><dd>La fuente oficial no respondió. Llega un error, nunca un sobre vacío ni un dato viejo disfrazado de actual. No descuenta.</dd></div>
+</dl>
 </div></section>
 
 <section class="seccion inv"><div class="envoltura">
 <div class="cab"><span class="rotulo">Servicios</span><h2 class="t2">Agentes que hacen el trabajo territorial</h2>
 <p class="entrada">La capa de datos se vende sola, por consulta. Sobre ella construimos y operamos el trabajo completo con tu equipo.</p></div>
-<div class="rejilla r4">
-<div class="bloque oscuro"><h3 class="t3">Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con prueba.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p><span class="pie">Por entrega</span></div>
-<div class="bloque oscuro"><h3 class="t3">Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p><span class="pie">Por proceso o licencia</span></div>
-<div class="bloque oscuro" style="box-shadow:inset 0 0 0 1.5px var(--teal-400)"><h3 class="t3">Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p><span class="pie" style="color:var(--teal-400)">En producción · por consulta</span></div>
+<div class="columnas c4">
+<div class="activa"><span class="et">en producción · por consulta</span><h3>Datos</h3><p>La capa Terranova: {N_HERR} herramientas sobre {N_FUENTES} fuentes, por MCP, API REST y archivos.</p></div>
+<div><span class="et">por entrega</span><h3>Analítica</h3><p>Reglas por obligación, cruces y modelos calibrados en Colombia. Un expediente con la prueba de cada hallazgo.</p></div>
+<div><span class="et">por entrega</span><h3>Desarrollo</h3><p>Agentes y aplicaciones dentro del sistema de tu equipo, sobre la capa de datos.</p></div>
+<div><span class="et">por proceso o licencia</span><h3>Automatización</h3><p>Procesos que verifican, vigilan y reportan solos, con registro de cada paso.</p></div>
+</div>
 </div>
 <p class="entrada" style="margin-top:28px;font-size:16px">Un agente hace el trabajo, otro lo evalúa sin ver su razonamiento y una persona aprueba. <a class="enlace" href="/servicios">Cómo trabajamos →</a></p>
 </div></section>
@@ -448,11 +442,11 @@ def inicio() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Casos</span><h2 class="t2">Preguntas sobre lugares, no sobre personas</h2>
 <p class="entrada">Así se ve el trabajo. Todavía no mostramos clientes: estos casos son ilustrativos y sus cifras son posibles, no medidas.</p></div>
-<div class="rejilla r3">
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="pie">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="pie">Ficha del lugar con su procedencia</span></div>
-<div class="bloque"><span class="sello-i">ilustrativo</span><h3 class="t3">Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="pie">Un expediente por solicitud</span></div>
-</div>
+<div class="columnas c3">
+<div><span class="sello-i">ilustrativo</span><h3>Debida diligencia EUDR</h3><p>Un exportador de café revisa un lote de parcelas contra áreas protegidas, cobertura del suelo y restricciones antes de embarcar.</p><span class="res">Sin hallazgos en 1.510 de 1.900 parcelas; 390 a revisión humana</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Antes de construir</h3><p>Un desarrollador consulta el predio, su destinación, las áreas protegidas y las amenazas de la zona en una sola ficha de lugar.</p><span class="res">Ficha del lugar con su procedencia</span></div>
+<div><span class="sello-i">ilustrativo</span><h3>Contexto para crédito</h3><p>Una entidad financiera agrega al estudio de un crédito rural el contexto del municipio: estadísticas, contratación pública y ambiente.</p><span class="res">Un expediente por solicitud</span></div>
+</div></div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
@@ -464,11 +458,11 @@ def inicio() -> str:
 
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Confianza</span><h2 class="t2">Reglas que no se negocian</h2></div>
-<div class="rejilla r4">
-<div class="bloque"><h3 class="t3">Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
-<div class="bloque"><h3 class="t3">Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
-<div class="bloque"><h3 class="t3">Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div class="bloque"><h3 class="t3">La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
+<div class="columnas c4">
+<div><h3>Licencia por fuente</h3><p>Sin licencia verificada, una fuente no sale a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
+<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
+<div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
+<div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
 </div>
 <div style="margin-top:40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
 <span class="rotulo">Aliados y proyectos</span>
@@ -562,9 +556,9 @@ def servicios() -> str:
 <div class="cab"><span class="rotulo">Método</span><h2 class="t2">Un agente hace, otro evalúa, una persona aprueba</h2>
 <p class="entrada">En cada capa el trabajo pasa por tres manos. El evaluador no ve el razonamiento del que hizo el trabajo: solo el resultado y su prueba.</p></div>
 <div class="rejilla r3">
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">1</span><h3 class="t3">El agente hace</h3><p>Consulta las fuentes oficiales por la capa de datos y arma el resultado con la procedencia de cada dato.</p></div>
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">2</span><h3 class="t3">Otro agente evalúa</h3><p>Revisa el resultado contra las fuentes sin ver cómo se llegó a él. Lo que no cuadra vuelve.</p></div>
-<div class="bloque oscuro"><span class="num" style="color:inherit;opacity:.6">3</span><h3 class="t3">Una persona aprueba</h3><p>Alguien de tu equipo o del nuestro firma la entrega. Nada sale sin esa aprobación.</p></div>
+<div class="bloque oscuro"><span class="num" style="color:var(--ambar-500)">1</span><h3 class="t3">El agente hace</h3><p>Consulta las fuentes oficiales por la capa de datos y arma el resultado con la procedencia de cada dato.</p></div>
+<div class="bloque oscuro"><span class="num" style="color:var(--ambar-500)">2</span><h3 class="t3">Otro agente evalúa</h3><p>Revisa el resultado contra las fuentes sin ver cómo se llegó a él. Lo que no cuadra vuelve.</p></div>
+<div class="bloque oscuro"><span class="num" style="color:var(--ambar-500)">3</span><h3 class="t3">Una persona aprueba</h3><p>Alguien de tu equipo o del nuestro firma la entrega. Nada sale sin esa aprobación.</p></div>
 </div>
 <p class="entrada" style="margin-top:28px;font-size:16px">Cada entrega deja una pieza reutilizable: una fuente nueva, una regla, un modelo o una plantilla.</p>
 </div></section>
@@ -832,7 +826,7 @@ def aliados() -> str:
             "Terranova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
         )
         + """
-<section class="seccion"><div class="envoltura" style="display:grid;gap:16px">
+<section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
 <div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
 <p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com →</a></p></div></div>

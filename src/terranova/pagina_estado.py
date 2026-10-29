@@ -94,7 +94,7 @@ a{color:inherit}
 letter-spacing:-.02em;text-decoration:none}
 .e-marca svg{width:26px;height:26px}
 .e-cab nav{display:flex;gap:4px;font-size:14.5px}
-.e-cab nav a{text-decoration:none;color:var(--suave);padding:7px 12px;border-radius:999px}
+.e-cab nav a{text-decoration:none;color:var(--suave);padding:7px 12px;border-radius:3px}
 .e-cab nav a:hover{background:var(--superficie);color:var(--tinta)}
 .e-portada{padding:clamp(48px,7vw,88px) 0 32px}
 .rotulo{font:500 14px/20px var(--sans);color:var(--tenue)}
@@ -103,14 +103,14 @@ h1{font:700 clamp(36px,5.4vw,58px)/1.04 var(--sans);letter-spacing:-.04em;margin
 margin:0}
 .e-meta{font:400 13px/20px var(--mono);color:var(--tenue);margin-top:18px}
 .puerta{display:flex;gap:18px;align-items:center;background:var(--bosque);color:#F3EFE4;
-border-radius:20px;padding:22px 26px;margin:8px 0 48px}
+border-radius:4px;padding:22px 26px;margin:8px 0 48px}
 .puerta p{margin:0}.puerta .suave{color:#B9C6BF;font-size:14.5px}
 .puerta .punto{width:12px;height:12px;background:#6CC3B3;box-shadow:0 0 0 6px rgba(108,195,179,.18)}
 h2{font:700 clamp(24px,3vw,32px)/1.1 var(--sans);letter-spacing:-.03em;margin:0 0 10px}
 .suave{color:var(--suave)}
 .e-nota{font-size:15px;color:var(--suave);max-width:680px;margin:0 0 6px}
 .e-cifras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0 18px}
-.e-cifra{background:var(--superficie);border:1px solid var(--linea);border-radius:12px;
+.e-cifra{background:var(--superficie);border:1px solid var(--linea);border-radius:3px;
 padding:14px 16px}
 .e-cifra b{display:block;font:700 30px/1.1 var(--sans);letter-spacing:-.03em}
 .e-cifra span{font-size:13.5px;color:var(--suave)}
@@ -119,7 +119,7 @@ padding:14px 16px}
 .rojo .punto{background:var(--rojo)}
 .e-cifra .punto{margin-right:6px}
 .franja{display:flex;flex-wrap:wrap;gap:3px;margin:0 0 32px}
-.franja i{width:11px;height:11px;border-radius:3px;background:var(--gris);opacity:.45}
+.franja i{width:11px;height:11px;border-radius:1px;background:var(--gris);opacity:.45}
 .franja i.verde{background:var(--verde);opacity:1}.franja i.ambar{background:var(--ambar);opacity:1}
 .franja i.rojo{background:var(--rojo);opacity:1}
 ul{list-style:none;margin:0 0 64px;padding:0;border-top:1px solid var(--linea)}
