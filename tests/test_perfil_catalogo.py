@@ -59,9 +59,9 @@ def test_filtra_por_familia() -> None:
     assert hallados and {d.familia for d in hallados} == {"contratacion"}
 
 
-def test_bm25_sin_tildes_ni_plurales() -> None:
-    bm25 = Bm25(["Contratación pública del municipio", "Clima diario de la estación"])
-    a, b = bm25.puntajes("contratos municipales")
+def test_bm25_sin_tildes_ni_plurales_ni_numeros() -> None:
+    bm25 = Bm25(["Contratación pública del municipio", "Clima diario de la estación en 2024"])
+    a, b = bm25.puntajes("contratos municipales de 2024")
     assert a > 0 and b == 0
 
 
