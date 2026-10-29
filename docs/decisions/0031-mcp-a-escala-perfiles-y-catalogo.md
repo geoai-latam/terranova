@@ -102,9 +102,9 @@
   3. **`/mcp` completo sigue** para los clientes que buscan herramientas por su cuenta y para quien
      quiere todo en una URL. Funciona (93 % de herramienta correcta) pero es caro en contexto. La guía
      para clientes lo dice.
-  4. **`/mcp/catalogo` queda como perfil beta** para los clientes con tope o sin búsqueda (ChatGPT,
-     Windsurf, n8n…) y para preguntas que cruzan familias. Sale de beta cuando el banco lo lleve
-     a ≥ 85 % de éxito; antes hay que corregir el ranking de `ficha_lugar`.
+  4. **`/mcp/catalogo` es el perfil para los clientes con tope o sin búsqueda** (ChatGPT, Windsurf,
+     n8n…) y para las preguntas que cruzan familias. Fue beta hasta llegar a ≥ 85 % de éxito en el
+     banco. Lo logró en la tercera corrida (2026-10-29, abajo).
   5. **No se adopta:** modo código, `tools/list_changed`, *toolsets* dinámicos por sesión ni un
      enrutador con LLM en la puerta (ADR-0012).
   6. **Confirmación de la ADR-0006: cumplida.** La herramienta correcta da 93 % con `/mcp` completo y
@@ -131,6 +131,21 @@
     4. `fuente_describir` recibía ids con punto o nombres de familia (#186);
     5. el mapa de familias del catálogo y el filtro que ocultaba la mejor herramienta (segunda
        corrida).
-  - El catálogo sale de beta cuando una corrida con el arreglo 5 lo lleve a ≥ 85 % de éxito.
+  - **Tercera corrida (2026-10-29, solo catálogo, con el arreglo 5 desplegado y el buscador
+    híbrido):**
+    - **Resultado:** 51 de 60 de éxito (85 %), 93 % de herramienta correcta y 10 480 tokens por
+      pregunta. Sin t20 (DANE agotado) son 51 de 59, a la par del perfil y de plano (49 de 59) con
+      la mitad de tokens que el perfil.
+    - **Sale de beta**, con la salvedad del ruido: queda justo en el umbral, y una corrida varía
+      unas 3 preguntas.
+    - **Lo que falla es común a todos los escenarios:**
+      - el `bbox` de t16 y t17;
+      - t18 y t19;
+      - UPRA en t21;
+      - s09.
+    - **Fallas nuevas, propias del catálogo:**
+      - t06: responde sin consultar que Bogotá no es del IGAC, lo cual es cierto, pero no llama a la
+        herramienta;
+      - e01: busca la empresa por nombre en vez de por NIT.
   - Si el catálogo crece, la palanca es la regla de escala (§7): partir familias grandes en
     subperfiles, no aplanar.
