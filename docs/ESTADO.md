@@ -71,12 +71,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
     cae con el tamaño; lo que crece es el costo, unos 470 tokens por herramienta y pregunta.
   - **Regla:** un perfil tiene como tope 90 herramientas (costo y topes de Windsurf y VS Code). Una
     familia que lo pase se parte por tema. Hoy la mayor tiene 44.
-- **Catálogo:** 44 de 59 (83 % de herramienta correcta). La causa: el mapa de familias de
-  `buscar_herramienta` ponía áreas protegidas, resguardos y sismos en territorio, pero son de
-  `ambiente`, así que el filtro por familia ocultaba la herramienta. Se corrigió el mapa y el filtro
-  ya no oculta el mejor resultado. Sigue en beta.
-- **Siguiente:** desplegar y correr solo el escenario catálogo; si llega a ≥ 85 %, sale de beta.
-  Después, la guía de conexión por cliente.
+- **Catálogo:**
+  - Segunda corrida: 44 de 59 (83 % de herramienta correcta). El mapa de familias de
+    `buscar_herramienta` ponía áreas protegidas, resguardos y sismos en territorio, pero son de
+    `ambiente`, así que el filtro por familia ocultaba la herramienta.
+  - Arreglo (#187): se corrigió el mapa y el filtro ya no oculta el mejor resultado.
+  - Tercera corrida, desplegado: 51 de 60 (85 %, 93 % de herramienta correcta, ~10 500 tokens por
+    pregunta). **Sale de beta.**
+- **Siguiente:** la guía de conexión por cliente:
+  - ChatGPT, Windsurf y n8n van a `/mcp/catalogo` o a un perfil;
+  - Claude, Cursor y VS Code van a un perfil o a `/mcp`.
 - **Abierto:** las dos herramientas de UPRA se confunden (t21, t22).
 
 ## Auditoría integral (2026-10-26)
