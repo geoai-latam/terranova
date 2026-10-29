@@ -569,6 +569,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .rv.titulo-t small { margin-top: 3px; font-size: 12px; }
 .rv.tu { translate: -50% -100%; font-weight: 600; color: var(--ambar-500); }
 .rv.prom { translate: -100% -50%; padding-right: 6px; text-align: right; font: 400 11px/1 var(--font-mono); color: rgba(243,239,228,.7); }
+.rv.tarj { font-size: 11.5px; color: rgba(243,239,228,.62); transition: color .3s; }
+.rv.tarj b { font-weight: 600; }
+.rv.tarj small { font-size: 10.5px; }
+.rv.tarj.activa { color: var(--ambar-500); }
+.rv.tarj.activa small { color: rgba(243,239,228,.75); }
+.rv.capa { font: 400 11px/1 var(--font-mono); color: rgba(243,239,228,.55); }
 .rv.tile small { color: #56645E; }
 .rv.carril { translate: -100% -50%; text-align: right; padding-right: 10px; }
 .rv.nodo { translate: -50% -50%; text-align: center; font-size: 11.5px; color: rgba(243,239,228,.62); transition: color .3s; }
@@ -591,6 +597,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .vineta.angosta .rv.fuente i { display: none; }
 .vineta.angosta .rv.nodo:not(.activo) { opacity: 0; }
 .vineta.angosta .rv.burbuja, .vineta.angosta .rv.aviso { font-size: 11.5px; top: 10px; }
+.vineta.angosta .rv.capa, .vineta.angosta .rv.tarj { opacity: 0; }
 .vineta.angosta .rv.titulo-t { left: 12px; top: 10px; }
 .vineta.angosta .rv.titulo-t small { display: block; }
 .vineta.angosta .rv.prom { display: none; }
