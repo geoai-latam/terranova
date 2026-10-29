@@ -6,7 +6,10 @@ const esc = document.querySelector('[data-escena="predios"]');
 if (esc) iniciar(esc).catch(err => console.warn('escena de predios:', err));
 
 async function iniciar(esc) {
-  const [THREE, D] = await Promise.all([cargarThree(), fetch('/datos/sm.json').then(r => r.json())]);
+  const [THREE, D, C] = await Promise.all([
+    cargarThree(), fetch('/datos/sm.json').then(r => r.json()),
+    fetch('/datos/calles.json').then(r => r.json()).catch(() => ({ calles: [] })),
+  ]);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   esc.prepend(renderer.domElement);
@@ -101,16 +104,15 @@ async function iniciar(esc) {
   });
   esc.addEventListener('pointerleave', () => { pintar(hover, '#FFFFFF'); hover = -1; lectura.innerHTML = base; });
 
-  // Geo / No geo
-  let modo = 'geo';
-  esc.querySelectorAll('.seg button').forEach(bt => {
-    bt.addEventListener('pointerdown', e => e.stopPropagation());
-    bt.addEventListener('click', () => {
-      modo = bt.dataset.k;
-      esc.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === bt)));
-      esc.querySelectorAll('.tarjeta').forEach(t => { t.hidden = t.dataset.k !== modo; });
-    });
+  // Rótulos: nombres de calle (OpenStreetMap) alineados con la calle y siempre derechos; el barrio va fijo arriba.
+  const capa = esc.querySelector('.rotulos');
+  const rotulos = C.calles.map(c => {
+    const e = document.createElement('span'); e.className = 'calle'; e.textContent = c.n; capa.append(e);
+    return { e, c };
   });
+  if (C.barrio) {
+    const e = document.createElement('span'); e.className = 'barrio'; e.textContent = 'Barrio ' + C.barrio + ' · Santa Marta'; capa.append(e);
+  }
 
   // Escala, norte y línea guía siguen a la cámara.
   const esb = esc.querySelector('.escala i'), est = esc.querySelector('.escala span'), nor = esc.querySelector('.norte svg');
@@ -122,8 +124,18 @@ async function iniciar(esc) {
     esb.style.width = (L * pxm).toFixed(1) + 'px'; est.textContent = L + ' m';
     const a = pantalla(0, 0, 0), b = pantalla(0, 0, -100);
     nor.style.transform = 'rotate(' + (Math.atan2(b[0] - a[0], -(b[1] - a[1])) * 180 / Math.PI).toFixed(1) + 'deg)';
-    const t = esc.querySelector('.tarjeta:not([hidden])');
-    if (modo === 'geo' && t) {
+    for (const { e, c } of rotulos) {
+      const p = pantalla(c.x, 0.5, -c.y);
+      let ang = 0;
+      if (c.dx || c.dy) {
+        const q = pantalla(c.x + c.dx, 0.5, -(c.y + c.dy));
+        ang = Math.atan2(q[1] - p[1], q[0] - p[0]) * 180 / Math.PI;
+        if (ang > 90) ang -= 180; else if (ang < -90) ang += 180;
+      }
+      e.style.transform = `translate(${p[0].toFixed(1)}px, ${p[1].toFixed(1)}px) translate(-50%, -50%) rotate(${ang.toFixed(1)}deg)`;
+    }
+    const t = esc.querySelector('.tarjeta');
+    if (t) {
       const top = pantalla(oc.x, obj.scale.y, -oc.y), er = esc.getBoundingClientRect(), tr = t.getBoundingClientRect();
       gl.setAttribute('x1', top[0]); gl.setAttribute('y1', top[1]);
       gl.setAttribute('x2', tr.left - er.left + tr.width * 0.72); gl.setAttribute('y2', tr.top - er.top);

@@ -356,11 +356,10 @@ def inicio() -> str:
 <div class="escena" data-escena="predios" role="img" aria-label="Predios reales de Santa Marta en 3D, con el predio consultado resaltado. Arrastra para girar.">
 <img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
-<div class="seg" role="group" aria-label="Ejemplo de respuesta"><button type="button" aria-pressed="true" data-k="geo">Geo</button><button type="button" aria-pressed="false" data-k="nogeo">No geo</button></div>
+<div class="rotulos" aria-hidden="true"></div>
 <p class="gira">Arrastra para girar</p>
 {TARJETA_GEO}
-{TARJETA_TRM.format(oculta=" hidden")}
-<p class="lectura"><b>11,2211 N · 74,1572 W</b> · Santa Marta · IGAC SINIC</p>
+<p class="lectura"><b>11,2211 N · 74,1572 W</b> · 11 de Noviembre, Santa Marta · predios IGAC SINIC · calles © OpenStreetMap</p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 </div></section>

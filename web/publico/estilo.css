@@ -13,7 +13,7 @@
   --estado-fuera-de-cobertura: #3F5F7A; --error: #A3362A;
   --sombra-tarjeta: 0 1px 2px rgba(14,42,34,.05), 0 12px 32px rgba(14,42,34,.07);
   --sombra-flotante: 0 12px 32px rgba(14,42,34,.18);
-  --radio-sm: 8px; --radio-md: 12px; --radio-lg: 20px; --radio-xl: 28px; --radio-pill: 999px;
+  --radio-sm: 2px; --radio-md: 3px; --radio-lg: 4px; --radio-xl: 6px; --radio-pill: 3px;
   --font-sans: Geist, "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "JetBrains Mono", Consolas, monospace;
   --ancho: 1200px; --margen: clamp(16px, 4.5vw, 56px); --seccion: clamp(64px, 9vw, 112px);
@@ -123,8 +123,7 @@ code, pre, kbd { font-family: var(--font-mono); }
 .escena .guia { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
 .escena .guia line { stroke: var(--tinta); stroke-width: 1; }
 .escena .guia circle { fill: var(--fondo); stroke: var(--tinta); stroke-width: 1.5; }
-.escena .seg { position: absolute; right: var(--margen); top: 28px; z-index: 3; }
-.escena .gira { position: absolute; right: var(--margen); top: 76px; font-size: 12.5px; color: var(--tinta-tenue); pointer-events: none; }
+.escena .gira { position: absolute; right: var(--margen); bottom: 62px; font-size: 12.5px; color: var(--tinta-tenue); pointer-events: none; }
 .escena .lectura { position: absolute; left: 0; bottom: 24px; font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); pointer-events: none; max-width: 60%; z-index: 2; }
 .escena .lectura b { font-weight: 500; color: var(--tinta); }
 .escena .mueble { position: absolute; right: var(--margen); bottom: 24px; display: flex; align-items: flex-end; gap: 18px;
@@ -141,11 +140,6 @@ code, pre, kbd { font-family: var(--font-mono); }
   .escena canvas { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 64px); mask-image: linear-gradient(180deg, transparent 0, #000 64px); }
 }
 
-/* ---------- control segmentado ---------- */
-.seg { display: inline-flex; padding: 3px; border-radius: var(--radio-pill); background: var(--fondo); box-shadow: inset 0 0 0 1px var(--linea); font: 500 13.5px/18px var(--font-sans); }
-.seg button { all: unset; padding: 5px 13px; border-radius: var(--radio-pill); color: var(--tinta-suave); cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--tinta); color: var(--fondo); }
-.seg button:focus-visible { outline: 2px solid var(--foco); outline-offset: 2px; }
 
 /* ---------- respuesta rt/1 ---------- */
 .tarjeta { background: var(--superficie-invertida); color: var(--tinta-invertida); border-radius: var(--radio-lg); padding: 18px 20px;
@@ -288,7 +282,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .prosa p, .prosa ul, .prosa ol { margin: 0 0 16px; color: var(--tinta-suave); }
 .prosa ul, .prosa ol { padding-left: 22px; }
 .prosa li { margin: 6px 0; }
-.prosa code { font-size: .88em; background: var(--superficie); padding: 1px 6px; border-radius: 6px; color: var(--tinta); }
+.prosa code { font-size: .88em; background: var(--superficie); padding: 1px 6px; border-radius: 2px; color: var(--tinta); }
 .prosa pre.suelto code { background: none; padding: 0; color: inherit; }
 .prosa pre { margin: 0 0 18px; }
 .prosa a { color: var(--verificado); text-underline-offset: 3px; }
@@ -361,12 +355,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lado-fig figcaption { font: 500 13px/18px var(--font-mono); color: var(--tinta-tenue); margin-bottom: 14px; }
 .lado-fig .fuente-dato { margin: 14px 0 0; }
 .barras .fila { display: grid; grid-template-columns: 104px minmax(0, 1fr) 32px; gap: 12px; align-items: center; padding: 5px 0; text-decoration: none; color: var(--tinta); font-size: 14px; }
-.barras .fila i { display: block; height: 10px; border-radius: 999px; background: var(--teal-700); width: calc(var(--v) * 100%); min-width: 6px; transition: background .15s; }
+.barras .fila i { display: block; height: 10px; border-radius: 1px; background: var(--teal-700); width: calc(var(--v) * 100%); min-width: 6px; transition: background .15s; }
 .barras .fila:hover i { background: var(--acento-relleno); }
 .barras .fila b { font: 600 13px/1 var(--font-mono); text-align: right; }
 .escalera .cols { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: end; height: 190px; }
 .escalera .col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; height: 100%; }
-.escalera .col i { display: block; width: 100%; border-radius: 8px 8px 3px 3px; background: var(--teal-700); height: calc(var(--v) * 130px + 6px); }
+.escalera .col i { display: block; width: 100%; border-radius: 1px; background: var(--teal-700); height: calc(var(--v) * 130px + 6px); }
 .escalera .col:last-child i { background: var(--acento-relleno); }
 .escalera .col b { font: 600 15px/1 var(--font-mono); }
 .escalera .col span { font-size: 12.5px; color: var(--tinta-suave); }
@@ -382,3 +376,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .puertas .uno { background: var(--superficie-invertida); border: 0; border-radius: var(--radio-md); padding: 12px 14px; margin-top: 6px; }
 .puertas .uno code { color: var(--tinta-invertida); } .puertas .uno small { color: #B9C6BF; } .puertas .uno .et { color: var(--ambar-500); }
 @media (max-width: 900px) { .portada .con-lado { grid-template-columns: minmax(0, 1fr); align-items: start; } }
+
+/* ---------- rótulos del mapa de predios ---------- */
+.rotulos { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+.rotulos span { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.rotulos .calle { font: 500 10.5px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-suave);
+  text-shadow: 0 0 3px var(--fondo), 0 0 3px var(--fondo), 0 0 6px var(--fondo); }
+.rotulos .barrio { left: 30%; top: 30px; font: 600 12px/1 var(--font-sans); letter-spacing: .28em; text-transform: uppercase; color: var(--tinta);
+  text-shadow: 0 0 4px var(--fondo), 0 0 8px var(--fondo); }
+.escena:not(.viva) .rotulos { display: none; }
