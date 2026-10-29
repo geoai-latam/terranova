@@ -60,11 +60,25 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   (matcher `@sitio`, montado en `/srv/web`); el resto va a la puerta igual que antes.
 - **Validado:** capturas con Edge headless a 1440 y 390 px sin desborde horizontal, el Caddyfile
   probado en un contenedor y `make check` en verde.
-- **Landing nueva (#193, #197):** el héroe muestra el producto funcionando. El mapa de predios va a
+- **Landing nueva (#193, #197, #198):** el héroe muestra el producto funcionando. El mapa de predios va a
   todo lo ancho y una consola reproduce dos respuestas reales capturadas (predio y TRM); el predio
   sube cuando llega su respuesta. Siguen la instrucción copiable para el agente, la configuración
   por cliente, el muro de entidades, 25 preguntas reales por sector (sin casos ilustrativos) y la
   respuesta `rt/1` anotada. Las entidades se cuentan por nombre, sin el índice propio: son 47.
+- **Servicios y precios en la landing:** la página habla también al público general. Tras el héroe
+  van dos caminos (te hacemos el trabajo / conecta tu agente); los servicios son la segunda
+  sección, en una banda oscura y cada uno con su viñeta three.js (`escena-vinetas.js`): la
+  revisión de una lista de predios, empresas o contratos (12 cruces con herramientas reales, en tres
+  grupos), el tablero de municipios, el barrido de vigilancia y el asistente que consulta las
+  fuentes. «Cada respuesta trae su prueba» es una pila 3D con las capas de una respuesta real de la
+  TRM, en lugar del JSON. `/servicios` se rehízo: cada servicio con su viñeta y una maqueta de lo que
+  se recibe (sellada como ilustrativa, salvo la del asistente, que es real), cómo trabajamos y cómo
+  se cobra. El sitio no dice que un agente hace el trabajo: lo hace el equipo. El índice de fuentes nombra los sistemas conocidos de cada entidad (SECOP, RUES,
+  SINIC, censo…); `construir.py` valida que cada sistema salga de los títulos del catálogo. Los
+  precios van en la landing sin el detalle de créditos por consulta, que queda en `/precios`. Las
+  animaciones ya no dicen «ejemplo» y las escenas 3D llevan luz con sombras, un crecimiento desde el
+  predio consultado y una onda en la GPU; la de cobertura crece desde Bogotá, con ciudades y conteo
+  al pasar el puntero.
 - **Siguiente:** llevar el lenguaje de la landing a las páginas interiores (todavía con rótulos
   de cejilla y etiquetas en mayúsculas).
 - **Pendiente del dueño:** desplegar (`git pull` y reiniciar Caddy en la VPS), el buzón

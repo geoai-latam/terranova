@@ -110,7 +110,19 @@ if (con) {
   con.addEventListener('focusout', () => { pausa = false; });
   new IntersectionObserver(es => es.forEach(e => { enVista = e.isIntersecting; })).observe(con.closest('.heroe') || con);
   if (auto) con.classList.add('corre');
-  elegir(0);
+  // Espera a que la escena 3D esté lista (hasta 3 s) para que la onda llegue con la respuesta;
+  // mientras tanto, el cursor parpadea en la pregunta vacía.
+  const escena = document.querySelector('[data-escena="predios"]');
+  if (!auto || !escena || document.documentElement.dataset.escena === 'lista') elegir(0);
+  else {
+    const t = turnos[0], x = t.querySelector('.txt');
+    x.dataset.texto = x.textContent; x.textContent = ''; x.classList.add('escribe');
+    piezas(t).forEach(e => e.classList.add('espera'));
+    let ya = false;
+    const arrancar = () => { if (!ya) { ya = true; elegir(0); } };
+    document.addEventListener('terranova:escena', arrancar, { once: true });
+    setTimeout(arrancar, 3000);
+  }
 }
 
 // Catálogo: filtra las herramientas por texto y familia sobre /datos/catalogo.json (generado del catálogo real).

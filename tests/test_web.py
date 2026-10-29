@@ -70,7 +70,8 @@ def test_ejemplos_van_sellados() -> None:
     # La landing muestra respuestas reales capturadas (consola y respuesta anotada), cada una con su
     # sello; si vuelve un caso ilustrativo, también va sellado.
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
-    assert html.count("ejemplo · capturado") >= 3
+    assert html.count("capturado el ") >= 3
+    assert "ejemplo" not in html.lower()
     assert html.count("ilustrativo") == html.count('class="sello-i">ilustrativo<')
 
 
