@@ -563,10 +563,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .rv.fuente.ok i, .rv.fuente.mal i { height: 15px; margin-top: 2px; }
 .rv.fuente.ok i::before { content: "Sin hallazgos"; color: var(--teal-400); }
 .rv.fuente.mal i::before { content: "Para revisar"; color: var(--ambar-500); }
-.rv.ciudad { padding-left: 9px; margin-top: -6px; font-size: 11.5px; color: rgba(243,239,228,.55); transition: color .3s; }
-.rv.ciudad::before { content: ""; position: absolute; left: 0; top: 50%; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: currentColor; }
-.rv.ciudad.activa { color: var(--ambar-500); }
-.rv.tile { margin: 2px 0 0 4px; color: #12261F; font-size: 11.5px; }
+.rv.titulo-t { left: 18px; top: 16px; opacity: 0; translate: 0 4px; transition: opacity .35s, translate .35s; }
+.rv.titulo-t.ver { opacity: 1; translate: 0 0; }
+.rv.titulo-t b { display: block; font: 650 17px/1.2 var(--font-sans); letter-spacing: -0.01em; color: var(--tinta-invertida); }
+.rv.titulo-t small { margin-top: 3px; font-size: 12px; }
+.rv.tu { translate: -50% -100%; font-weight: 600; color: var(--ambar-500); }
+.rv.prom { translate: -100% -50%; padding-right: 6px; text-align: right; font: 400 11px/1 var(--font-mono); color: rgba(243,239,228,.7); }
 .rv.tile small { color: #56645E; }
 .rv.carril { translate: -100% -50%; text-align: right; padding-right: 10px; }
 .rv.nodo { translate: -50% -50%; text-align: center; font-size: 11.5px; color: rgba(243,239,228,.62); transition: color .3s; }
@@ -589,6 +591,9 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .vineta.angosta .rv.fuente i { display: none; }
 .vineta.angosta .rv.nodo:not(.activo) { opacity: 0; }
 .vineta.angosta .rv.burbuja, .vineta.angosta .rv.aviso { font-size: 11.5px; top: 10px; }
+.vineta.angosta .rv.titulo-t { left: 12px; top: 10px; }
+.vineta.angosta .rv.titulo-t small { display: block; }
+.vineta.angosta .rv.prom { display: none; }
 .vineta.angosta .rv.burbuja, .vineta.angosta .rv.respuesta { left: 10px; }
 .vineta.angosta .rv.respuesta { bottom: 10px; }
 .vineta.angosta .rv.aviso { right: 10px; max-width: 190px; }

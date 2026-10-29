@@ -38,6 +38,11 @@
 <nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
+<div class="instruccion">
+<p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
+<p id="instruccion">Conéctate al servidor MCP de Terranova en https://terrnova.com/mcp (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRANOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
+<button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
+</div>
 <ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
 <li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
 <pre class="suelto"><code>export TERRANOVA_LLAVE=rt_live_...

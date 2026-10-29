@@ -443,76 +443,6 @@ def consola() -> str:
     )
 
 
-# Conexión por cliente: los mismos comandos de la guía de desarrolladores.
-CLIENTES = [
-    (
-        "Claude Code",
-        """<span class="f">claude mcp add</span> --transport http terranova \\
-  <span class="s">https://terrnova.com/mcp</span> \\
-  --header <span class="s">"Authorization: Bearer $TERRANOVA_LLAVE"</span>""",
-    ),
-    (
-        "Cursor",
-        """{
-  <span class="k">"mcpServers"</span>: {
-    <span class="k">"terranova"</span>: {
-      <span class="k">"url"</span>: <span class="s">"https://terrnova.com/mcp/territorio"</span>,
-      <span class="k">"headers"</span>: { <span class="k">"Authorization"</span>: <span class="s">"Bearer rt_live_..."</span> }
-    }
-  }
-}""",
-    ),
-    (
-        "Claude Desktop",
-        """{
-  <span class="k">"mcpServers"</span>: {
-    <span class="k">"terranova"</span>: {
-      <span class="k">"command"</span>: <span class="s">"npx"</span>,
-      <span class="k">"args"</span>: [<span class="s">"mcp-remote"</span>, <span class="s">"https://terrnova.com/mcp/ambiente"</span>,
-               <span class="s">"--header"</span>, <span class="s">"Authorization: Bearer ${TERRANOVA_LLAVE}"</span>],
-      <span class="k">"env"</span>: { <span class="k">"TERRANOVA_LLAVE"</span>: <span class="s">"rt_live_..."</span> }
-    }
-  }
-}""",
-    ),
-    (
-        "curl",
-        """<span class="f">curl</span> -X POST \\
-  <span class="s">https://terrnova.com/v1/co/estadisticas/banrep_trm_recientes</span> \\
-  -H <span class="s">"Authorization: Bearer $TERRANOVA_LLAVE"</span> \\
-  -H <span class="s">"Content-Type: application/json"</span> \\
-  -d <span class="s">'{"ultimas": 1}'</span>""",
-    ),
-    (
-        "Python",
-        """<span class="f">import</span> os, httpx
-
-r = httpx.post(
-    <span class="s">"https://terrnova.com/v1/co/territorio/dane_divipola_buscar"</span>,
-    headers={<span class="s">"Authorization"</span>: <span class="s">f"Bearer {os.environ['TERRANOVA_LLAVE']}"</span>},
-    json={<span class="s">"nombre"</span>: <span class="s">"Cali"</span>},
-)
-<span class="f">print</span>(r.json()[<span class="s">"estado"</span>], r.json()[<span class="s">"procedencia"</span>][<span class="n">0</span>][<span class="s">"entidad"</span>])""",
-    ),
-]
-
-
-def conexion() -> str:
-    pest = "".join(
-        f'<button role="tab" aria-selected="{"true" if i == 0 else "false"}"{"" if i == 0 else ' tabindex="-1"'} data-t="c{i}">{n}</button>'
-        for i, (n, _) in enumerate(CLIENTES)
-    )
-    pres = "".join(
-        f'<pre data-t="c{i}"{"" if i == 0 else " hidden"}>{c}</pre>'
-        for i, (_, c) in enumerate(CLIENTES)
-    )
-    return f"""<div class="codigo uno"><div class="panel">
-<div class="pest" role="tablist" aria-label="Clientes">{pest}<button class="copiar" type="button" data-copiar-pre>Copiar</button></div>
-{pres}
-<div class="pie"><span>La llave va en la variable TERRANOVA_LLAVE, nunca en el código</span></div>
-</div></div>"""
-
-
 # Preguntas por sector: herramientas reales del catálogo (la construcción falla si alguna no existe).
 SECTORES = [
     (
@@ -693,7 +623,7 @@ SERVICIOS = [
 
 ETIQUETAS = {
     "revision": "Esquema animado: predios, empresas y contratos pasan por una compuerta; salen en verde si no hay hallazgos y en ámbar si hay algo que revisar.",
-    "tablero": "Esquema animado: municipios como prismas cuyas alturas cambian con cada indicador.",
+    "tablero": "Esquema animado: tu municipio frente a municipios comparables; con cada indicador, las columnas se reordenan.",
     "vigilancia": "Esquema animado: un barrido recorre lo que vigilas y una señal sube donde algo cambió.",
     "asistente": "Esquema animado: la pregunta viaja a las fuentes que hacen falta y vuelve con la respuesta.",
 }
@@ -956,7 +886,7 @@ def inicio() -> str:
 
 <section class="caminos"><div class="envoltura">
 <a class="camino" href="#servicios"><span class="para">Para empresas, entidades y consultoras</span><h2>Te entregamos el trabajo hecho</h2><p>Revisamos predios, armamos expedientes y tableros, y vigilamos cambios, con la fuente oficial de cada dato. No necesitas programar.</p><span class="ir">Ver servicios</span></a>
-<a class="camino" href="#conecta"><span class="para">Para equipos técnicos</span><h2>Conecta tu agente o tu sistema</h2><p>Una sola llave para consultar las fuentes por MCP o API REST, con la prueba en cada respuesta.</p><span class="ir">Ver cómo se conecta</span></a>
+<a class="camino" href="/desarrolladores"><span class="para">Para equipos técnicos</span><h2>Conecta tu agente o tu sistema</h2><p>Una sola llave para consultar las fuentes por MCP o API REST, con la prueba en cada respuesta.</p><span class="ir">Ver cómo se conecta</span></a>
 </div></section>
 
 <section class="seccion inv servicios-l" id="servicios"><div class="envoltura">
@@ -976,19 +906,6 @@ def inicio() -> str:
 </div>
 {sectores()}
 <p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
-</div></section>
-
-<section class="seccion sup conecta" id="conecta"><div class="envoltura dos">
-<div class="cab">
-<h2 class="t2">Conéctalo con tu llave en un minuto</h2>
-<p class="entrada">Para equipos técnicos: funciona con cualquier cliente MCP y con cualquier sistema que haga una petición HTTP. Pide tu llave y pega la configuración de tu cliente.</p>
-<div class="instruccion">
-<p class="et">O deja que tu agente se configure solo con esta instrucción:</p>
-<p id="instruccion">{INSTRUCCION}</p>
-<button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
-</div>
-</div>
-{conexion()}
 </div></section>
 
 <section class="seccion"><div class="envoltura">
@@ -1308,6 +1225,11 @@ def desarrolladores() -> str:
 <nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
+<div class="instruccion">
+<p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
+<p id="instruccion">{INSTRUCCION}</p>
+<button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
+</div>
 <ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
 <li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
 <pre class="suelto"><code>export TERRANOVA_LLAVE=rt_live_...

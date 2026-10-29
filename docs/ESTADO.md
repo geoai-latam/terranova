@@ -71,8 +71,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   Las viñetas nombran cosas reales que `construir.py` toma del catálogo (`data-datos`):
   - la revisión de una lista: cada predio, empresa o contratista se cruza con sus cuatro fuentes
     (12 herramientas reales) y entra al expediente;
-  - el tablero: el mapa de Colombia en celdas (`co.json`), con los indicadores de DANE,
-    MinEducación y ADRES;
+  - el tablero: tu municipio frente a diez comparables; con cada indicador (DANE, MinEducación,
+    ADRES) las columnas se reordenan y se mueve la línea del promedio;
   - la vigilancia: carriles de SECOP II, SUIN-Juriscol, IDEAM y la SIC que cruzan la línea de hoy;
   - el asistente: preguntas reales del catálogo que viajan a la entidad que las responde, con su
     licencia.
@@ -82,7 +82,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   cómo se cobra. El sitio no dice que un agente hace el trabajo: lo hace el equipo. La lista larga
   de entidades salió de la landing y quedó en `/fuentes#entidades`: nombra los sistemas conocidos de
   cada entidad (SECOP, RUES, SINIC, censo…), y `construir.py` valida cada uno contra los títulos
-  del catálogo. Los
+  del catálogo. La sección «Conéctalo con tu llave» salió de la landing: el camino técnico lleva a
+  `/desarrolladores`, cuyo inicio rápido trae ahora la instrucción copiable para el agente. Los
   precios van en la landing sin el detalle de créditos por consulta, que queda en `/precios`. Las
   animaciones ya no dicen «ejemplo» y las escenas 3D llevan luz con sombras, un crecimiento desde el
   predio consultado y una onda en la GPU; la de cobertura crece desde Bogotá, con ciudades y conteo

@@ -173,74 +173,55 @@ const VINETAS = {
     };
   },
 
-  // Tablero: el mapa de Colombia en celdas; se eligen los municipios de un cliente, suben, y sus
-  // indicadores llegan al tablero de al lado, cada uno con la entidad que lo publica.
+  // Tablero: tu municipio frente a los comparables. Con cada indicador (y la entidad que lo
+  // publica) las columnas se reordenan y la línea del promedio se mueve. Alturas de esquema.
   tablero(THREE, scene, { datos, rotulo }) {
+    const N = 11, PASO = 17, TU = 3, T = 3.6, ALTO = 92;
     scene.add(suelo(THREE));
-    const K = 17, OX = -96, CX = -73.2, CY = 4.6;
-    const X = lon => (lon - CX) * K + OX, Z = lat => -(lat - CY) * K;
-    const zonas = [['Bogotá', -74.08, 4.65], ['Medellín', -75.57, 6.25], ['Barranquilla', -74.8, 10.96]];
-    const rCiudad = zonas.map(z => rotulo(z[0], 'ciudad'));
-    // Cuatro losas del tablero a la derecha, cada una con sus barras.
-    const TX = [62, 164], TZ = [-38, 34];
-    const tiles = datos.map((d, i) => {
-      const x = TX[i % 2], z = TZ[Math.floor(i / 2)];
-      const base = new THREE.Mesh(new THREE.BoxGeometry(94, 2.4, 60).translate(0, 1.2, 0), lam(THREE, '#EEF1EC'));
-      base.position.set(x, 0, z); base.receiveShadow = true; base.castShadow = true; scene.add(base);
-      const barras = [];
-      for (let b = 0; b < 5; b++) {
-        const bm = new THREE.Mesh(new THREE.BoxGeometry(6.4, 1, 6.4).translate(0, 0.5, 0), lam(THREE, b === 4 ? C.tealOsc : '#A6D8CC'));
-        bm.position.set(x + 8 + b * 8.4, 2.4, z + 8); bm.castShadow = true; scene.add(bm); barras.push(bm);
-      }
-      return { x, z, barras, r: rotulo(`<b>${d.t}</b><small>${d.e}</small>`, 'tile') };
+    const largo = N * PASO + 18;
+    const zocalo = new THREE.Mesh(new THREE.BoxGeometry(largo, 3, 34).translate(0, 1.5, 0), lam(THREE, '#1E463C'));
+    zocalo.receiveShadow = true; scene.add(zocalo);
+    // Las guías del fondo: cuatro líneas a la misma altura en todos los indicadores.
+    for (let i = 1; i <= 4; i++) {
+      const l = new THREE.Mesh(new THREE.BoxGeometry(largo, 0.35, 0.35), new THREE.MeshBasicMaterial({ color: C.linea }));
+      l.position.set(0, 3 + i * ALTO / 4, -17); scene.add(l);
+    }
+    const valor = (ind, j) => { const x = Math.sin(j * 12.9898 + ind * 78.233) * 43758.5453; return 0.18 + 0.82 * (x - Math.floor(x)); };
+    const geo = new THREE.BoxGeometry(11, 1, 11); geo.translate(0, 0.5, 0);
+    const cols = Array.from({ length: N }, (_, j) => {
+      const m = lam(THREE, j === TU ? C.ambar : '#86C6B8'), mesh = new THREE.Mesh(geo, m);
+      mesh.castShadow = true; mesh.receiveShadow = true; mesh.position.y = 3; scene.add(mesh);
+      return { mesh, x: 0, h: 0.3 };
     });
-    const sel = new Uint8Array(6000), retraso = new Float32Array(6000);
-    let malla = null, celdas = [];
-    fetch('/datos/co.json').then(r => r.json()).then(D => {
-      const r = D.R * K * 0.85, geo = new THREE.CylinderGeometry(r, r, 1, 6); geo.translate(0, 0.5, 0);
-      malla = new THREE.InstancedMesh(geo, lam(THREE, '#FFFFFF', { flatShading: true }), D.land.length);
-      malla.castShadow = true; malla.receiveShadow = true;
-      celdas = D.land; scene.add(malla);
-    });
-    const o = new THREE.Object3D(), base = new THREE.Color('#4A7066'), alta = new THREE.Color(C.teal), col = new THREE.Color();
-    const T = 4.6;
-    // El hilo: un punto por indicador, que viaja de los municipios a su losa.
-    const hilo = tiles.map(() => { const h = new THREE.Mesh(new THREE.SphereGeometry(2.2, 12, 8), new THREE.MeshBasicMaterial({ color: C.ambar })); scene.add(h); return h; });
-    let zona = -1;
-    const altura = (n, i) => 0.25 + 0.75 * Math.abs(Math.sin(n * 2.1 + i * 1.7 + (i % 3)));
+    const prom = new THREE.Mesh(new THREE.BoxGeometry(largo + 6, 0.9, 0.9), new THREE.MeshBasicMaterial({ color: C.crema }));
+    scene.add(prom);
+    const rTit = rotulo('', 'titulo-t'), rTu = rotulo('Tu municipio', 'tu'), rProm = rotulo('promedio', 'prom');
+    let ind = -1, promedio = 0.5, promH = 0.5;
     return {
-      alto: 310, az: -0.14, pol: 0.86, mira: [30, 0, 4], sombras: 300, vaiven: 0.05, quieto: 3.5,
+      alto: 186, az: -0.42, pol: 1.06, mira: [6, 36, 0], sombras: 160, vaiven: 0.07, quieto: 1.5,
       paso(s) {
-        if (!malla) return;
-        const n = Math.floor(s / T), k = s - n * T, zi = n % zonas.length, [, lo, la] = zonas[zi];
-        if (zi !== zona) {
-          zona = zi;
-          celdas.forEach((c, i) => {
-            const a = Math.atan2(c[1] - la, c[0] - lo), d = Math.hypot(c[0] - lo, (c[1] - la) * 1.1);
-            const rad = 0.95 * (0.8 + 0.2 * Math.sin(a * 3 + zi * 2));
-            sel[i] = d < rad ? 1 : 0; retraso[i] = d / rad * 0.5;
-          });
-          rCiudad.forEach((rc, i) => rc.classList.toggle('activa', i === zi));
+        const n = Math.floor(s / T), i = n % datos.length;
+        if (n !== ind) {
+          ind = n;
+          rTit.innerHTML = `<b>${datos[i].t}</b><small>${datos[i].e} · tu municipio frente a ${N - 1} comparables</small>`;
+          const vs = cols.map((_, j) => valor(i, j)), orden = vs.map((v, j) => [v, j]).sort((a, b) => b[0] - a[0]);
+          orden.forEach(([v, j], r) => { cols[j].xObj = (r - (N - 1) / 2) * PASO; cols[j].hObj = v; });
+          promedio = vs.reduce((a, b) => a + b, 0) / N;
         }
-        const baja = 1 - tramo(k, T - 0.5, T);
-        celdas.forEach((c, i) => {
-          const e = sel[i] ? suave((k - retraso[i]) / 0.6) * baja : 0;
-          o.position.set(X(c[0]), 0, Z(c[1])); o.scale.set(1, 1.4 + e * 9, 1); o.updateMatrix(); malla.setMatrixAt(i, o.matrix);
-          malla.setColorAt(i, col.copy(base).lerp(alta, e));
+        rTit.classList.toggle('ver', s - n * T > 0.15);
+        cols.forEach((c, j) => {
+          // Cada columna llega a su sitio con un pequeño desfase: el reordenamiento se lee.
+          const f = Math.min(1, Math.max(0, (s - n * T - j * 0.03) / 0.9));
+          c.x += (c.xObj - c.x) * (0.06 + 0.1 * f); c.h += (c.hObj - c.h) * (0.06 + 0.1 * f);
+          c.mesh.position.x = c.x; c.mesh.scale.y = Math.max(0.5, c.h * ALTO);
         });
-        malla.instanceMatrix.needsUpdate = true; malla.instanceColor.needsUpdate = true;
-        const origen = [X(lo), 12, Z(la)];
-        tiles.forEach((t, i) => {
-          const v = tramo(k, 1.1 + i * 0.25, 1.6 + i * 0.25);
-          arco(hilo[i].position, origen, [t.x + 20, 6, t.z + 8], v, 40);
-          hilo[i].visible = v > 0 && v < 1;
-          const llega = tramo(k, 1.5 + i * 0.25, 2.2 + i * 0.25) * baja;
-          t.barras.forEach((b, j) => { b.scale.y = 1 + llega * altura(n, j + i * 6) * 30; });
-        });
+        promH += (promedio - promH) * 0.08;
+        prom.position.set(0, 3 + promH * ALTO, 7);
       },
       rotular(poner) {
-        zonas.forEach(([, lo, la], i) => poner(rCiudad[i], X(lo), 14, Z(la)));
-        tiles.forEach(t => poner(t.r, t.x - 43, 2.6, t.z - 20));
+        const tu = cols[TU];
+        poner(rTu, tu.x, 3 + tu.h * ALTO + 6, 0);
+        poner(rProm, -largo / 2 - 5, 3 + promH * ALTO, 7);
       },
     };
   },
