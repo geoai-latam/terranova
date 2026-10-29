@@ -56,7 +56,7 @@ code, pre, kbd { font-family: var(--font-mono); }
 .mono { font-family: var(--font-mono); }
 .fuente-dato { font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); }
 .inv .fuente-dato { color: rgba(243,239,228,.6); }
-.rejilla { display: grid; gap: 16px; }
+.rejilla { display: grid; gap: 8px 32px; }
 .r2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .r3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .r4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -158,15 +158,16 @@ code, pre, kbd { font-family: var(--font-mono); }
 .tarjeta .huella b { font-weight: 500; color: var(--teal-400); }
 
 /* ---------- tarjetas y bloques ---------- */
-.bloque { background: var(--superficie); border-radius: var(--radio-lg); box-shadow: inset 0 0 0 1px var(--linea); padding: 24px; display: flex; flex-direction: column; gap: 10px; }
-.sup .bloque { background: var(--fondo); }
-.bloque.vivo { background: var(--fondo); box-shadow: inset 0 0 0 1.5px var(--verificado); }
-.bloque.oscuro { background: var(--superficie-invertida); color: var(--tinta-invertida); box-shadow: none; }
+/* bloque = columna con filete superior, no tarjeta */
+.bloque { border-top: 1px solid var(--linea-fuerte); padding: 18px 0 12px; display: flex; flex-direction: column; gap: 10px; }
+.bloque .num { font: 500 12px/16px var(--font-mono); color: var(--tinta-tenue); text-transform: uppercase; letter-spacing: .05em; }
+.bloque.vivo { border-top: 3px solid var(--acento-relleno); padding-top: 16px; }
+.bloque.oscuro { color: var(--tinta-invertida); border-top-color: rgba(243,239,228,.28); }
 .bloque p { color: var(--tinta-suave); }
 .bloque.oscuro p { color: rgba(243,239,228,.78); }
-.bloque .pie { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--linea); font: 400 13px/18px var(--font-sans); color: var(--tinta-tenue); }
-.bloque.vivo .pie { color: var(--verificado); }
-.bloque.oscuro .pie { border-color: rgba(243,239,228,.14); color: rgba(243,239,228,.6); }
+.bloque .pie { margin-top: auto; padding-top: 10px; font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); }
+.bloque.vivo .pie { color: var(--acento); }
+.bloque.oscuro .pie { color: rgba(243,239,228,.6); }
 .num { font: 500 12.5px/16px var(--font-mono); color: var(--tinta-tenue); }
 .lista { list-style: none; padding: 0; display: grid; gap: 8px; color: var(--tinta-suave); }
 .lista li { position: relative; padding-left: 18px; }
@@ -325,7 +326,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 @media print { .barra, .escena, .pie-sitio { display: none; } body { background: #fff; } }
 
 /* bloques dentro de una sección invertida: un escalón más claro para que se lean como tarjetas */
-.inv .bloque.oscuro { background: var(--bosque-700); box-shadow: inset 0 0 0 1px rgba(243,239,228,.08); }
+
 
 /* que nada empuje el ancho en móvil: código largo y rutas se parten o se desplazan dentro de su caja */
 .prosa pre { max-width: 100%; overflow-x: auto; }
