@@ -19,6 +19,7 @@ import os
 import re
 import sys
 import time
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -155,20 +156,53 @@ async def _pregunta(
     }
 
 
-def _entrada_comparable(argumentos: dict[str, Any]) -> dict[str, str]:
-    """La entrada como la ve la puerta: sin distinguir mayúsculas («LEY» y «ley», la puerta usa
-    upper) y con el municipio dicho por su nombre resuelto a su código, como hace la puerta
-    («Chía, Cundinamarca» es 25175: el banco de escala contaba como falla 13 llamadas que la
-    puerta respondió bien)."""
-    salida = {}
-    for k, a in argumentos.items():
-        if "divipola" in k and isinstance(a, str) and not a.isdigit():
-            try:
-                a = municipio_por_nombre(k, a, _municipios())
-            except ErrorEntrada:
-                pass
-        salida[k] = str(a).casefold()
-    return salida
+# Una entrada equivalente también cuenta: el agente no tiene por qué adivinar el rectángulo exacto
+# con que se midió la verdad («junto a la Universidad de La Sabana», «a ~55 km de Chía») ni si
+# cierra el rango con el día pedido o con el siguiente. La verdad se sigue exigiendo en la
+# respuesta: un rectángulo que cambia la cifra falla por la cifra, no por la entrada.
+TOLERANCIA_BBOX = 0.1  # grados por borde, ~11 km
+FECHA = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def _comparable(clave: str, valor: Any) -> Any:
+    """Un valor como lo ve la puerta: sin distinguir mayúsculas («LEY» y «ley», la puerta usa
+    upper), el número sin su forma (3 y 3.0) y el municipio dicho por su nombre resuelto a su
+    código, como hace la puerta («Chía, Cundinamarca» es 25175: el banco de escala contaba como
+    falla 13 llamadas que la puerta respondió bien)."""
+    if "divipola" in clave and isinstance(valor, str) and not valor.isdigit():
+        try:
+            valor = municipio_por_nombre(clave, valor, _municipios())
+        except ErrorEntrada:
+            pass
+    if isinstance(valor, int | float) and not isinstance(valor, bool):
+        return float(valor)
+    if isinstance(valor, list):
+        return [_comparable(clave, x) for x in valor]
+    return str(valor).casefold()
+
+
+def _mismo_valor(clave: str, dado: Any, esperado: Any) -> bool:
+    dado, esperado = _comparable(clave, dado), _comparable(clave, esperado)
+    if clave == "bbox" and isinstance(dado, list) and isinstance(esperado, list):
+        return len(dado) == len(esperado) and all(
+            isinstance(a, float) and isinstance(b, float) and abs(a - b) <= TOLERANCIA_BBOX
+            for a, b in zip(dado, esperado, strict=False)
+        )
+    if clave == "hasta" and isinstance(dado, str) and FECHA.match(dado) and FECHA.match(esperado):
+        # «hasta el 22» se pide como 22 (incluido) o como 23 (el día siguiente, excluido)
+        dia = date.fromisoformat(dado) - date.fromisoformat(esperado)
+        return dia in (timedelta(0), timedelta(days=1))
+    return bool(dado == esperado)
+
+
+def _misma_entrada(dada: dict[str, Any], v: dict[str, Any]) -> bool:
+    """La entrada del agente equivale a la de la verdad; las `libres` (p. ej. cuántas TRM pide
+    para «los últimos días») valen con cualquier valor, o sin él."""
+    libres = set(v.get("libres") or ())
+    esperada = v["entrada"]
+    if set(dada) - libres != set(esperada) - libres:
+        return False
+    return all(_mismo_valor(k, dada[k], esperada[k]) for k in set(esperada) - libres)
 
 
 def _evaluar(v: dict[str, Any], llamadas: list[dict[str, Any]]) -> dict[str, Any]:
@@ -185,7 +219,7 @@ def _evaluar(v: dict[str, Any], llamadas: list[dict[str, Any]]) -> dict[str, Any
         ok_herramienta = bool(propias)
         ok_entrada = any(
             ll["herramienta"] != esperada  # la alternativa tiene su propia entrada
-            or _entrada_comparable(ll["argumentos"]) == _entrada_comparable(v["entrada"])
+            or _misma_entrada(ll["argumentos"], v)
             for ll in propias
         )
         if not ok_herramienta:

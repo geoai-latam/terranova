@@ -18,7 +18,7 @@ CATALOGO = cargar()
 FAMILIAS = {"territorio", "contratacion", "empresas", "normativa", "justicia", "estadisticas"}
 ESTADOS = {"no_encontrado", "fuera_de_cobertura"}
 CAMPOS = {"id", "familia", "pregunta", "herramienta", "entrada", "fuente", "verdad", "minimos"}
-CAMPOS |= {"estado", "medicion", "nota", "alternativas"}
+CAMPOS |= {"estado", "medicion", "nota", "alternativas", "libres"}
 
 
 def test_sesenta_preguntas_en_seis_familias() -> None:
@@ -36,6 +36,7 @@ def test_cada_verdad_esta_bien_formada(v: dict[str, Any]) -> None:
     assert v.get("verdad") or v.get("minimos") or v.get("estado") in ESTADOS
     if "estado" in v:
         assert v["estado"] in ESTADOS and not v.get("verdad")
+    assert set(v.get("libres") or ()) <= set(v.get("entrada") or {})
     h = v["herramienta"]
     if h is None:
         assert v.get("fuente") and "." in v["fuente"]  # fuente objetivo (M2)

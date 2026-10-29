@@ -138,6 +138,10 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
         "municipio_divipola": "25175",
     }
     (rasgo,) = sobre["geo_result"]["artifacts"][0]["data"]["features"]
+    assert rasgo["properties"] == {"elemento": 0}  # sus atributos ya van en `datos` (ADR-0033)
+    completo = (await cliente_con.call_tool(PREDIO, CHIA | {"geometria": True})).structured_content
+    assert completo is not None
+    (rasgo,) = completo["geo_result"]["artifacts"][0]["data"]["features"]
     assert rasgo["properties"] == sobre["datos"]  # regla 10: nada de GLOBALID ni codigo_municipio
     assert {p["licencia"]["spdx"] for p in sobre["procedencia"]} == {"CC-BY-SA-4.0"}
 

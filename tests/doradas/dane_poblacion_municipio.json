@@ -1,36 +1,67 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T03:48:20+00:00",
+ "grabado": "2026-10-29T13:05:22+00:00",
  "herramienta": "dane_poblacion_municipio",
  "llamadas": [
   {
    "argumentos": {
-    "codigo": "11001"
-   },
-   "conector": "dane-mcp",
-   "respuesta": {
-    "artifacts": [],
-    "facts": {
-     "encontrados": 1,
-     "municipios": [
-      {
-       "centroide": [
-        -74.1810727016,
-        4.31610769809
-       ],
-       "codigo": "11001",
-       "departamento": "BOGOTÁ, D.C.",
-       "hogares": 2514482,
-       "municipio": "BOGOTÁ, D.C.",
-       "personas": 7181469,
-       "viviendas": 2523519
-      }
-     ],
-     "nota": "cifras del Censo Nacional de Población y Vivienda 2018 (población CENSADA), no proyecciones a hoy"
+    "filtros": {
+     "MPIO_CDPMP": "11001"
     },
-    "geo_result": "1"
+    "limite": 5,
+    "select": [
+     "MPIO_CDPMP",
+     "MPIO_CNMBR",
+     "DPTO_CCDGO",
+     "STP27_PERS",
+     "STVIVIENDA",
+     "TSP16_HOG"
+    ],
+    "tabla": "dane_cnpv2018_municipio"
    },
-   "tool": "dane_municipios"
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "DPTO_CCDGO",
+       "MPIO_CDPMP",
+       "MPIO_CNMBR",
+       "STP27_PERS",
+       "STVIVIENDA",
+       "TSP16_HOG"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "DPTO_CCDGO": "11",
+        "MPIO_CDPMP": "11001",
+        "MPIO_CNMBR": "BOGOTÁ, D.C.",
+        "STP27_PERS": 7181469,
+        "STVIVIENDA": 2523519,
+        "TSP16_HOG": 2514482
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-10-29T13:04:53.022832+00:00",
+     "copia": {
+      "filas": 1122,
+      "huella": "sha256:70c42b07f2c33b041f09286f678d3b34e1e15c79d5e161a9f93daf5f725a8fcd",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261029130453022832"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
   }
  ]
 }

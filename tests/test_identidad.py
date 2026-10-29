@@ -142,7 +142,7 @@ def con_identidad(registro: RegistroSqlite) -> Iterator[RegistroSqlite]:
     puerta.usar_conectores(
         {
             "arcgis-mcp": Grabado("igac_predio_en_punto"),
-            "dane-mcp": Grabado("dane_poblacion_municipio"),
+            "copia": Grabado("dane_poblacion_municipio"),
         }
     )
     puerta.ESTADO.registro = registro

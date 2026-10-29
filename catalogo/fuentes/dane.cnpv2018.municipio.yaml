@@ -17,12 +17,22 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: DANE, Censo Nacional de Población y Vivienda 2018"
 protocolo: arcgis_rest
-conector: dane-mcp
-# Capa 800 (municipio) del CNPV integrado al MGN. Los campos de la fuente llevan prefijo S
-# (STP27_PERS personas, STVIVIENDA viviendas, TSP16_HOG hogares); dane-mcp los entrega ya con los
-# nombres de abajo, que son los que ve el ejecutor.
+# Copia (ADR-0024, arcgis sin geometría): el geoportal del DANE no responde a la IP del datacenter
+# (medido el 29-10-2026: sin conexión desde la VPS, 0,3 s desde Colombia), así que la copia se baja
+# desde Colombia. Son cifras cerradas del censo 2018: una sola ingesta vale por años.
+conector: copia
+# Capa 800 (municipio) del CNPV integrado al MGN. Los conteos llevan prefijo S o T (STP27_PERS
+# personas, STVIVIENDA viviendas, TSP16_HOG hogares).
 url: https://geoportal.dane.gov.co/mparcgis/rest/services/MARCO_INTEGRADO/Serv_DatosCNPV2018_Integrados_MGN2018/MapServer
-modo: en_vivo
+modo: copia
+copia:
+  origen: arcgis
+  capa: 800
+  geometria: false
+  tabla: dane_cnpv2018_municipio
+  clave: OBJECTID
+  por_pagina: 2000
+  indices: [MPIO_CDPMP]
 # Cifras cerradas del censo 2018: no cambian hasta el próximo censo.
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P10Y}
 cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
@@ -32,12 +42,13 @@ datos_personales: ninguno  # solo agregados municipales (reserva estadística)
 estado: publicada
 clasificacion_licencia: ambar
 campos:
-  codigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, 5 dígitos (MPIO_CDPMP)"}
-  municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio (MPIO_CNMBR)"}
-  departamento: {nombre: departamento, tipo: str, desc: "nombre del departamento"}
-  personas: {nombre: poblacion_censada, tipo: int, desc: "personas censadas en 2018 (STP27_PERS); no es una proyección"}
-  viviendas: {nombre: viviendas, tipo: int, desc: "viviendas censadas en 2018 (STVIVIENDA)"}
-  hogares: {nombre: hogares, tipo: int, desc: "hogares censados en 2018 (TSP16_HOG)"}
+  MPIO_CDPMP: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, 5 dígitos"}
+  MPIO_CNMBR: {nombre: municipio, tipo: str, desc: "nombre del municipio"}
+  DPTO_CCDGO: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento, 2 dígitos"}
+  STP27_PERS: {nombre: poblacion_censada, tipo: int, desc: "personas censadas en 2018; no es una proyección"}
+  STVIVIENDA: {nombre: viviendas, tipo: int, desc: "viviendas censadas en 2018"}
+  TSP16_HOG: {nombre: hogares, tipo: int, desc: "hogares censados en 2018"}
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador del municipio en la capa 800"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terranova.
@@ -52,4 +63,4 @@ perfil:
   hallazgos:
   - 'es el censo 2018: no es la población de hoy'
   - 'el MapServer no cuenta valores distintos: la unicidad se midió agrupando'
-  decision: en vivo por código
+  decision: "por copia de la capa 800 sin geometría (una ingesta; cifras cerradas)"

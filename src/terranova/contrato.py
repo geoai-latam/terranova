@@ -32,6 +32,20 @@ AVISO_GEOMETRIA = (
     "Geometría resumida: cada polígono o línea va como su envolvente (bbox), con sus atributos en "
     "`datos` (`properties.elemento` es su posición). Pida `geometria: true` para la forma completa."
 )
+AVISO_ELEMENTO = (
+    "Los atributos de cada rasgo de geo_result van en `datos` "
+    "(`properties.elemento` es su posición)."
+)
+#: Parámetro común de las herramientas que devuelven una lista (ADR-0033).
+PAGINA = "pagina"
+POR_PAGINA: Final = 50
+ESQUEMA_PAGINA: Final[dict[str, Any]] = {
+    "type": "integer",
+    "minimum": 1,
+    "default": 1,
+    "description": f"Página de `datos.elementos`, de {POR_PAGINA} en {POR_PAGINA}. Los totales y "
+    "agregados de `datos` cuentan la lista completa.",
+}
 CRS_PERMITIDOS = ("EPSG:4326", "EPSG:9377")
 
 Estado = Literal["encontrado", "no_encontrado", "fuera_de_cobertura", "parcial"]
@@ -312,17 +326,67 @@ def _coordenadas_lon_lat(fc: Any) -> None:
         recorrer(geometria.get("coordinates"))
 
 
+def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
+    """Una página de `datos.elementos` (y de sus rasgos en `geo_result`) cuando la lista pasa de
+    `POR_PAGINA`. Los totales y agregados de `datos` se calcularon con la lista completa y no
+    cambian; la huella pasa a ser la de lo servido (regla 7). Una lista de 169 áreas protegidas
+    pesaba 57 000 caracteres y Claude Code no se la pasaba al modelo (ADR-0033)."""
+    elementos = sobre.datos.get("elementos")
+    if not isinstance(elementos, list) or (len(elementos) <= POR_PAGINA and pagina == 1):
+        return sobre
+    paginas = max(1, -(-len(elementos) // POR_PAGINA))
+    ini = (pagina - 1) * POR_PAGINA
+    tramo = elementos[ini : ini + POR_PAGINA]
+    datos = {**sobre.datos, "elementos": tramo}
+    geo = sobre.geo_result
+    if geo is not None:
+        propios = {_canonico(e) for e in tramo}
+        artefactos = []
+        for art in geo.artifacts:
+            fc = art.data
+            if art.kind == "feature_collection" and isinstance(fc, dict):
+                rasgos = [
+                    r for r in fc.get("features", []) if _canonico(r.get("properties")) in propios
+                ]
+                fc = {**fc, "features": rasgos}
+            artefactos.append(art.model_copy(update={"data": fc}))
+        geo = geo.model_copy(update={"artifacts": artefactos})
+    siguiente = f" Pida `pagina: {pagina + 1}` para los siguientes." if pagina < paginas else ""
+    aviso = (
+        f"Lista larga: van los elementos {ini + 1}-{ini + len(tramo)} de {len(elementos)} (página "
+        f"{pagina} de {paginas}).{siguiente} Los totales de `datos` cuentan la lista completa."
+    )
+    if not tramo:  # una página que no existe no es un error: vacía, y se dice cuántas hay
+        aviso = (
+            f"La página {pagina} no existe: la lista tiene {len(elementos)} elementos en {paginas} "
+            "página(s). Los totales de `datos` cuentan la lista completa."
+        )
+    return sobre.model_copy(
+        update={
+            "entrada": {**sobre.entrada, PAGINA: pagina},
+            "datos": datos,
+            "huella": huella(datos),
+            "geo_result": geo,
+            "avisos": [*sobre.avisos, aviso],
+        }
+    )
+
+
 def resumir_geometria(sobre: Sobre) -> Sobre:
     """Cada polígono o línea de `geo_result` como su envolvente, con `geometry: null` y `bbox`
     (RFC 7946 §5); los puntos quedan. Un polígono pesa de 20 a 300 KB y los clientes MCP no se lo
     pasan al modelo: Claude Code lo manda a un archivo y el agente no ve los datos (ADR-0032).
-    Las propiedades repiten un elemento de `datos`: van como su posición (`elemento`), que con
-    169 áreas protegidas era otro 60 % del sobre. `datos` y la huella no cambian."""
+    Las propiedades repiten un elemento de `datos`: van como su posición (`elemento`), también en
+    los puntos. Con 169 áreas protegidas eran otro 60 % del sobre; con 141 sismos, el 60 % de la
+    capa. `datos` y la huella no cambian."""
     if sobre.geo_result is None:
         return sobre
     elementos = sobre.datos.get("elementos")
     lista = elementos if isinstance(elementos, list) else [sobre.datos]
-    artefactos, resumido = [], False
+    posiciones: dict[str, int] = {}
+    for i, e in enumerate(lista):
+        posiciones.setdefault(_canonico(e), i)
+    artefactos, envolventes, referidos = [], False, False
     for art in sobre.geo_result.artifacts:
         datos = art.data
         if art.kind == "feature_collection" and isinstance(datos, dict):
@@ -332,19 +396,23 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
                 if isinstance(g, dict) and g.get("type") not in ("Point", "MultiPoint"):
                     caja = _envolvente(g.get("coordinates"))
                     rasgo = {**rasgo, "geometry": None} | ({"bbox": caja} if caja else {})
-                    posicion = next(
-                        (i for i, e in enumerate(lista) if e == rasgo.get("properties")), None
-                    )
-                    if posicion is not None:
-                        rasgo["properties"] = {"elemento": posicion}
-                    resumido = True
+                    envolventes = True
+                posicion = posiciones.get(_canonico(rasgo.get("properties")))
+                if posicion is not None:
+                    rasgo = {**rasgo, "properties": {"elemento": posicion}}
+                    referidos = True
                 rasgos.append(rasgo)
             datos = {**datos, "features": rasgos}
         artefactos.append(art.model_copy(update={"data": datos}))
-    if not resumido:
+    if not (envolventes or referidos):
         return sobre
     geo = sobre.geo_result.model_copy(update={"artifacts": artefactos})
-    return sobre.model_copy(update={"geo_result": geo, "avisos": [*sobre.avisos, AVISO_GEOMETRIA]})
+    aviso = AVISO_GEOMETRIA if envolventes else AVISO_ELEMENTO
+    return sobre.model_copy(update={"geo_result": geo, "avisos": [*sobre.avisos, aviso]})
+
+
+def _canonico(valor: Any) -> str:
+    return json.dumps(valor, ensure_ascii=False, sort_keys=True, default=str)
 
 
 def _envolvente(coordenadas: Any) -> list[float] | None:

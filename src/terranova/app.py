@@ -22,7 +22,7 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
-from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, create_model, model_validator
 from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
@@ -31,8 +31,10 @@ from terranova import metricas, puerta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
+    ESQUEMA_PAGINA,
     GEOMETRIA,
     HTTP_DE,
+    PAGINA,
     PATRON_TEXTO_LIMPIO,
     Problema,
     Sobre,
@@ -91,6 +93,19 @@ _CAMPO_GEOMETRIA: Any = (
 )
 
 
+def _entero_exacto(valor: Any) -> Any:
+    # 3.0 es un entero en JSON Schema (Schemathesis lo manda); 3.5 sigue siendo inválido
+    return int(valor) if isinstance(valor, float) and valor.is_integer() else valor
+
+
+_CAMPO_PAGINA: Any = (
+    # el mínimo va en el tipo y antes del validador: en otro orden el esquema sale con `ge` y sin
+    # `minimum`, y Schemathesis manda 0
+    Annotated[int, Field(ge=1), BeforeValidator(_entero_exacto)] | SkipJsonSchema[None],  # type: ignore[misc]
+    Field(default=None, description=ESQUEMA_PAGINA["description"]),
+)
+
+
 class _EntradaRest(BaseModel):
     # estricto: `false` no es 0.0 ni "1" es 1 (Schemathesis, F3.5)
     model_config = ConfigDict(extra="forbid", strict=True)
@@ -108,6 +123,8 @@ def modelo_entrada(h: Herramienta) -> type[BaseModel]:
     campos: dict[str, Any] = {n: (_tipo(n, t), ...) for n, t in h.entrada.items()}
     if puerta.trae_geometria(h):
         campos[GEOMETRIA] = _CAMPO_GEOMETRIA
+    if puerta.pagina_lista(h.id):
+        campos[PAGINA] = _CAMPO_PAGINA  # ausente es la primera (ADR-0033)
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
     return create_model(nombre, __base__=_EntradaRest, **campos)
 
