@@ -60,9 +60,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   (matcher `@sitio`, montado en `/srv/web`); el resto va a la puerta igual que antes.
 - **Validado:** capturas con Edge headless a 1440 y 390 px sin desborde horizontal, el Caddyfile
   probado en un contenedor y `make check` en verde.
+- **Landing nueva (#193, #197):** el héroe muestra el producto funcionando. El mapa de predios va a
+  todo lo ancho y una consola reproduce dos respuestas reales capturadas (predio y TRM); el predio
+  sube cuando llega su respuesta. Siguen la instrucción copiable para el agente, la configuración
+  por cliente, el muro de entidades, 25 preguntas reales por sector (sin casos ilustrativos) y la
+  respuesta `rt/1` anotada. Las entidades se cuentan por nombre, sin el índice propio: son 47.
+- **Siguiente:** llevar el lenguaje de la landing a las páginas interiores (todavía con rótulos
+  de cejilla y etiquetas en mayúsculas).
 - **Pendiente del dueño:** desplegar (`git pull` y reiniciar Caddy en la VPS), el buzón
   soporte@terrnova.com que reciben los formularios por correo, el logo oficial de Atalaya Mapas,
-  el texto legal definitivo y la URL de Inspow para «Probar gratis», que hoy pide la llave por
+  el texto legal definitivo y la URL de Inspow para «Empieza gratis», que hoy pide la llave por
   correo.
 
 ## MCP a escala (2026-10-28 a 29, #183–#189, ADR-0031 y ADR-0032)
