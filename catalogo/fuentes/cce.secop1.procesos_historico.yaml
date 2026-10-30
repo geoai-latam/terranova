@@ -45,7 +45,7 @@ campos:
   ruta_proceso_en_secop_i: {nombre: url_proceso, tipo: str, desc: "enlace al proceso en SECOP I"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un proceso (o adjudicación) de SECOP I cargado entre 2004 y 2017; 6 122 505 en total"

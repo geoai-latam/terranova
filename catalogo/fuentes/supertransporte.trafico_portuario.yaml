@@ -40,7 +40,7 @@ campos:
   mes_vigencia: {nombre: mes, tipo: int, desc: "mes (1 a 12)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Supertransporte, theme: transporte, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una sociedad portuaria, un tipo de servicio y de carga y un mes con sus toneladas por tipo de tráfico; 9 683 filas de 2018 a agosto de 2026; la zona de Cartagena tiene 405 filas en 2025"

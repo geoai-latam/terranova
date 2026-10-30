@@ -30,7 +30,7 @@ campos:
   recursosaprobadosasignadosspgr: {nombre: recursos_aprobados, tipo: float, desc: "recursos aprobados en proyectos, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Ministerio de Hacienda y Crédito Público, theme: hacienda, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un fondo del SGR en una entidad territorial en el bienio vigente; 5 334 filas"

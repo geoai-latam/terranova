@@ -586,7 +586,7 @@ def _resumen_herramienta(id_: str) -> dict[str, Any]:
 
 
 def buscar_herramienta(pregunta: str, familia: str | None = None) -> dict[str, Any]:
-    """Busca en el catálogo de Terranova las herramientas que responden una pregunta y devuelve
+    """Busca en el catálogo de Terrnova las herramientas que responden una pregunta y devuelve
     las mejores con su entrada (propiedades y obligatorias), lista para `consultar`. Familias:
     {familias}. Si ninguna sirve, busque de nuevo con otras palabras (el tema, la entidad o el
     dato que se pide) o filtre por `familia`. Sale del catálogo: no consulta fuentes ni gasta
@@ -604,7 +604,7 @@ def buscar_herramienta(pregunta: str, familia: str | None = None) -> dict[str, A
 
 
 async def consultar(herramienta: str, entrada: dict[str, Any] | str) -> ToolResult:
-    """Ejecuta una herramienta del catálogo de Terranova (la que dio `buscar_herramienta`) con su
+    """Ejecuta una herramienta del catálogo de Terrnova (la que dio `buscar_herramienta`) con su
     entrada. Responde el sobre rt/1: estado (encontrado, no_encontrado, parcial), datos y
     procedencia con la licencia. Gasta los créditos de esa herramienta."""
     if herramienta not in CATALOGO.herramientas and herramienta != ficha_lugar.HERRAMIENTA:

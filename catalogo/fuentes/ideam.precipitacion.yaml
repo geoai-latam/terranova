@@ -33,7 +33,7 @@ campos:
   valorobservado: {nombre: valor_mm, tipo: float, desc: "precipitación del intervalo, en milímetros"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: IDEAM, theme: clima, accrualPeriodicity: continuous}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una observación de un sensor en un intervalo; ~165 millones; el aeropuerto de Valledupar da 864 por día (dos sensores)"

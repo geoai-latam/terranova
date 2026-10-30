@@ -1,6 +1,6 @@
-# ADR-0021 · Open-Meteo mientras Terranova sea gratuito
+# ADR-0021 · Open-Meteo mientras Terrnova sea gratuito
 
-- **Estado:** superada (2026-10-28). Con los planes de pago (ADR-0029) Terranova dejó de ser
+- **Estado:** superada (2026-10-28). Con los planes de pago (ADR-0029) Terrnova dejó de ser
   gratuita, que era la condición de esta decisión. Se retiró `open_meteo_clima_serie` y su fuente;
   el reemplazo es ERA5-Land directo del CDS de Copernicus (CC BY 4.0, uso comercial permitido), la
   salida que ya preveía esta ADR.
@@ -24,7 +24,7 @@
   - Caché obligatoria con TTL largo (las series históricas no cambian) y tope propio por debajo del
     límite, porque toda la puerta sale por una IP. Si se acerca al tope, se responde
     `fuente_no_disponible`, nunca un dato viejo disfrazado de actual.
-  - Antes de abrir Terranova al público se pide confirmación escrita a info@open-meteo.com para el uso
+  - Antes de abrir Terrnova al público se pide confirmación escrita a info@open-meteo.com para el uso
     desde un servidor que reparte resultados. El borrador está en `interno/`; lo envía el dueño.
 - **Salida (en M2, o antes si cambia ADR-0020 o Open-Meteo dice que no):** ir directo a Copernicus,
   a ERA5 en el CDS y a GloFAS en el EWDS. Así se quita la dependencia no comercial y el límite por IP.

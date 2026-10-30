@@ -1,4 +1,4 @@
-# Terranova: guía para cada sesión
+# Terrnova: guía para cada sesión
 
 ## Lee primero
 
@@ -13,11 +13,11 @@
 
 Puerta única (MCP + REST `/v1`) sobre fuentes oficiales colombianas y globales, con el contrato
 `rt/1`. Cada respuesta lleva procedencia, licencia, completitud y `servido_desde`. Es un producto
-comercial: hoy gratuito (ADR-0020) y con el repo privado (ADR-0001 enmendada). **Terranova es
+comercial: hoy gratuito (ADR-0020) y con el repo privado (ADR-0001 enmendada). **Terrnova es
 autocontenida:** todas las herramientas viven y funcionan aquí. Los conectores (microservicios MCP
 que van a la fuente) están vendorizados en `conectores/` (services +
 `packages/geo_mcp_kit`); el `copia` y el descubrimiento son internos. GEO Copilot no es una
-dependencia: será solo un cliente más que se conecta por el MCP de Terranova.
+dependencia: será solo un cliente más que se conecta por el MCP de Terrnova.
 
 ## Reglas del proyecto
 
@@ -69,6 +69,6 @@ dependencia: será solo un cliente más que se conecta por el MCP de Terranova.
   usa copia.
 - `datos_abiertos_mcp` no acepta `$group` (ola 1 lo agrega en GEO Copilot).
 - `ogc_mcp` sirve capas del SGC, cuya licencia es restrictiva: quedan fuera del catálogo de
-  Terranova.
+  Terrnova.
 - Open-Meteo quedó fuera (su API gratis es solo no comercial): el clima va por ERA5-Land del CDS de
   Copernicus. El código de Open-Meteo sigue en `amenazas-mcp`, pero ninguna herramienta lo usa.

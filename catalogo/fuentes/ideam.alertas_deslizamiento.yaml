@@ -46,7 +46,7 @@ campos:
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el archivo (la copia la numera)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un municipio con alerta en el boletín de un día"

@@ -32,7 +32,7 @@ campos:
   art_culos: {nombre: articulos, tipo: str, desc: "número de artículos (texto en la fuente)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Ministerio de Justicia y del Derecho, theme: justicia, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "una norma; 89 366 filas para 88 010 combinaciones de tipo, número y año"

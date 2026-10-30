@@ -7,7 +7,7 @@ descripcion: >
   Población proyectada de un municipio (DIVIPOLA) en un año de 2018 a 2042, según las proyecciones
   oficiales del DANE (actualización del 30-07-2025): cabecera municipal, centros poblados y rural
   disperso, y total. Es la cifra oficial de población entre censos; para lo censado en 2018 está
-  dane_poblacion_municipio. Sale de la copia de Terranova del archivo del DANE.
+  dane_poblacion_municipio. Sale de la copia de Terrnova del archivo del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola, anio: anio}
 consulta:

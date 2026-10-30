@@ -40,7 +40,7 @@ campos:
   regaliascop: {nombre: regalias_cop_texto, tipo: str, desc: "regalías liquidadas de la línea en pesos, como texto con separador de miles"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Agencia Nacional de Hidrocarburos, theme: minas y energía, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una línea de liquidación (campo, municipio, mes, tipo de producción, hidrocarburo y régimen) con su producción gravable, volumen y valor de regalía; 218 034 filas de enero de 2010 a marzo de 2026"

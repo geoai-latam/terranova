@@ -1,6 +1,6 @@
 # Guía para clientes
 
-Terranova es una sola puerta, por REST y por MCP, a fuentes oficiales colombianas y globales. Hoy son
+Terrnova es una sola puerta, por REST y por MCP, a fuentes oficiales colombianas y globales. Hoy son
 207 herramientas sobre 180 fuentes. Cada respuesta llega en el mismo sobre `rt/1`, que dice:
 
 - de qué fuente sale el dato;
@@ -18,9 +18,9 @@ Puerta: `https://terrnova.com`. Los precios y el alta están en el portal de pla
    (1 crédito):
 
    ```bash
-   export TERRANOVA_LLAVE=rt_live_...
+   export TERRNOVA_LLAVE=rt_live_...
    curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
-     -H "Authorization: Bearer $TERRANOVA_LLAVE" \
+     -H "Authorization: Bearer $TERRNOVA_LLAVE" \
      -H "Content-Type: application/json" \
      -d '{"nombre":"Cali"}'
    ```
@@ -34,7 +34,7 @@ Puerta: `https://terrnova.com`. Los precios y el alta están en el portal de pla
 3. **Mire su saldo:**
 
    ```bash
-   curl -s https://terrnova.com/v1/uso -H "Authorization: Bearer $TERRANOVA_LLAVE"
+   curl -s https://terrnova.com/v1/uso -H "Authorization: Bearer $TERRNOVA_LLAVE"
    ```
 
 ### Qué herramienta usar
@@ -93,7 +93,7 @@ Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
 ```json
 {
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "url": "https://terrnova.com/mcp/territorio",
       "headers": { "Authorization": "Bearer rt_live_..." }
     }
@@ -104,8 +104,8 @@ Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
 Claude Code:
 
 ```bash
-claude mcp add --transport http terranova https://terrnova.com/mcp \
-  --header "Authorization: Bearer $TERRANOVA_LLAVE"
+claude mcp add --transport http terrnova https://terrnova.com/mcp \
+  --header "Authorization: Bearer $TERRNOVA_LLAVE"
 ```
 
 Claude Desktop y otros clientes que solo hablan por stdio, con el puente `mcp-remote`:
@@ -113,11 +113,11 @@ Claude Desktop y otros clientes que solo hablan por stdio, con el puente `mcp-re
 ```json
 {
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${TERRANOVA_LLAVE}"],
-      "env": { "TERRANOVA_LLAVE": "rt_live_..." }
+               "--header", "Authorization: Bearer ${TERRNOVA_LLAVE}"],
+      "env": { "TERRNOVA_LLAVE": "rt_live_..." }
     }
   }
 }
@@ -185,7 +185,7 @@ Toda consulta que llega a la fuente devuelve un sobre con `estado`:
 | `parcial` | una consulta compuesta (la ficha de un lugar) con partes que fallaron; cada falla está en `errores` | solo lo que respondió |
 
 **«No encontrado» no es «no se pudo».** Cuando la fuente no responde, no llega un sobre vacío sino
-un error (ver abajo). Terranova nunca inventa un dato ni hace pasar uno viejo por actual.
+un error (ver abajo). Terrnova nunca inventa un dato ni hace pasar uno viejo por actual.
 
 Campos del sobre:
 

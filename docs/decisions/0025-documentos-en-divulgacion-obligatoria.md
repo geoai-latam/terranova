@@ -5,7 +5,7 @@
 - **Contexto:**
   - Colombia Compra Eficiente publica, en datos abiertos, el número de documento del contratista y
     del proponente de cada contrato y proceso. Cuando es persona natural, es su cédula.
-  - Terranova ocultaba ese número y dejaba solo su tipo (ADR-0014, spec 06 §13.3). Así no se puede
+  - Terrnova ocultaba ese número y dejaba solo su tipo (ADR-0014, spec 06 §13.3). Así no se puede
     distinguir a dos contratistas con el mismo nombre ni cruzar un contrato con el RUES.
   - El dueño decidió que se muestre como lo expone la fuente: «nosotros solo mostramos»
     (2026-10-22).
@@ -25,7 +25,7 @@
 - **Consecuencias:**
   - La fuente sigue marcada `datos_personales: filtrados`: muestra el documento del contratista,
     pero filtra lo demás.
-  - Si Colombia Compra deja de publicar un documento, Terranova deja de mostrarlo (sale lo que
+  - Si Colombia Compra deja de publicar un documento, Terrnova deja de mostrarlo (sale lo que
     sale de la fuente).
   - Aplica solo a SECOP. Cualquier otra fuente con documentos de personas se decide aparte.
 - **Confirmación:**

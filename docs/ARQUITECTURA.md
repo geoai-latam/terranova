@@ -46,7 +46,7 @@ flowchart LR
   de la spec 05 y Grafana los muestra, solo en la máquina (perfil `observabilidad`).
 - **Despliegue.** Una sola VPS con todo el compose (ADR-0030). Caddy es lo único expuesto.
 
-**Repo privado (ADR-0001, enmienda del 2026-10-28):** Terranova es un producto comercial. El repo
+**Repo privado (ADR-0001, enmienda del 2026-10-28):** Terrnova es un producto comercial. El repo
 mantiene la higiene de uno público (ni secretos ni datos personales). Cada dato servido conserva la
 licencia y la atribución de su fuente. Lo que da valor, además del catálogo, es **operarlo**: mantener
 las fuentes al día, con canarios verdes, copias frescas y respuesta a las caídas.

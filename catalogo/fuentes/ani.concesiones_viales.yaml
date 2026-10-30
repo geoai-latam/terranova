@@ -38,7 +38,7 @@ campos:
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [3]
 dcat: {publisher: ANI, theme: transporte}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un corredor de concesión vial; 47 en el país, 4 al norte de Bogotá"

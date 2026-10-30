@@ -42,7 +42,7 @@ campos:
   entidad: {nombre: entidad_propietaria, tipo: str, desc: "entidad dueña de la estación"}
 comportamiento: {p95_ms_medido: 1200, max_por_pagina: 50000, orden_coordenadas: lon_lat}
 dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una estación del catálogo; 9 914 códigos para 9 914 filas en toda la tabla

@@ -30,7 +30,7 @@ campos:
   latitud: {nombre: latitud, tipo: float, coma_decimal: true, desc: "latitud de la cabecera municipal (EPSG:4326)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: DANE, theme: territorio, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un municipio; 1 122 filas, código único"

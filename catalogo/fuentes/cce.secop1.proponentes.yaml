@@ -30,7 +30,7 @@ campos:
   numero_contrato: {nombre: numero_contrato, tipo: str, desc: "número del contrato, si lo hubo"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un proponente de un proceso; 3 filas para 2 proponentes en 09-1-47723

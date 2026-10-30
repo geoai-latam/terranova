@@ -137,10 +137,10 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
               previo_group: str | None = None) -> tuple[list[dict], int | None]:
     """(filas o features, total que cumple el filtro). Paginado; SoQL lo ejecuta el portal.
 
-    `group`/`having` (Terranova F5, G1): agrupar exige un `select` con agregados; sin `order`, se
+    `group`/`having` (Terrnova F5, G1): agrupar exige un `select` con agregados; sin `order`, se
     ordena por las columnas del grupo para que las páginas sean estables.
 
-    `previo_select`/`previo_group` (Terranova, spec 07): una etapa antes del agregado, para fuentes
+    `previo_select`/`previo_group` (Terrnova, spec 07): una etapa antes del agregado, para fuentes
     que repiten registros. El ICFES trae dos veces a cada estudiante en algunos periodos: se agrupa
     primero por estudiante y luego se cuenta y promedia sobre esos grupos (`… |> SELECT …`).
     """
@@ -159,7 +159,7 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
     while len(salida) < maximo:
         params: dict[str, Any] = {"$limit": min(PAGINA, maximo - len(salida)), "$offset": len(salida)}
         # sin orden, las páginas de SODA no son estables (filas repetidas o saltadas): `:id` por defecto.
-        # Con agregados no: `:id` no está en el group by y SODA responde 400 (Terranova, canario SECOP).
+        # Con agregados no: `:id` no está en el group by y SODA responde 400 (Terrnova, canario SECOP).
         orden = order or group or (None if filas.es_agregado(select) else ":id")
         params.update({k: v for k, v in (("$select", select), ("$where", where), ("$group", group),
                                          ("$having", having), ("$order", orden)) if v})

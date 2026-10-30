@@ -1,4 +1,4 @@
-"""Tablas de un archivo publicado, Excel o CSV (Terranova F5): anexos del DANE y directorios de la DIAN.
+"""Tablas de un archivo publicado, Excel o CSV (Terrnova F5): anexos del DANE y directorios de la DIAN.
 
 - El archivo vigente se descubre en su página índice (`pagina` + `enlace_con`): la DIAN pone la fecha
   en el nombre de su archivo diario y el DANE el mes en el de su anexo.
@@ -16,7 +16,7 @@ import csv
 import io
 from typing import Any
 
-MAX_FILAS = 100000  # la copia de Terranova pide la tabla entera (proyecciones municipales: ~84 mil)
+MAX_FILAS = 100000  # la copia de Terrnova pide la tabla entera (proyecciones municipales: ~84 mil)
 MAX_BYTES = 25_000_000
 
 

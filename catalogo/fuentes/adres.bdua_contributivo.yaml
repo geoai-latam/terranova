@@ -32,7 +32,7 @@ campos:
   cantidad: {nombre: celda_afiliados, tipo: int, desc: "afiliados en la celda (muchas de 1); solo se sirve sumado por municipio y EPS"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Administradora de los Recursos del Sistema General de Seguridad Social en Salud, theme: salud, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una celda de la BDUA: municipio × EPS × sexo × grupo de edad × zona × tipo de afiliado × estado × condición × Sisbén × grupo poblacional, con su cantidad de afiliados; 637 506 filas, 23 120 347 afiliados, 32 EPS; Cali: 17 EPS, 1 492 604 afiliados"

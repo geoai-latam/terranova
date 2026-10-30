@@ -3,7 +3,7 @@ titulo: "Usuarios aduaneros autorizados por la DIAN (vigentes)"
 entidad: Dirección de Impuestos y Aduanas Nacionales (DIAN)
 competencia: autoridad aduanera (Decreto 1165 de 2019)
 acto: null
-# Términos de la DIAN: sin fines de lucro y sin licencia; Terranova es gratuita, pero el uso comercial queda en «no».
+# Términos de la DIAN: sin fines de lucro y sin licencia; Terrnova es gratuita, pero el uso comercial queda en «no».
 licencia:
   spdx: LicenseRef-dian-terminos
   url: https://www.dian.gov.co/Paginas/Privacidad.aspx
@@ -31,7 +31,7 @@ campos:
   Código Muisca: {nombre: codigo_muisca, tipo: str, desc: "código en MUISCA"}
   Nombre Área: {nombre: area, tipo: str, desc: "área o lugar habilitado"}
 dcat: {publisher: "Dirección de Impuestos y Aduanas Nacionales (DIAN)", accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una habilitación aduanera de un usuario; 2 320 en el archivo del 2026-10-22; la Aerocivil tiene 6"

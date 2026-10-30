@@ -35,7 +35,7 @@ campos:
   tipodenombramiento: {nombre: tipo_nombramiento, tipo: str, desc: "tipo de nombramiento del empleo"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo de la Función Pública, theme: empleo_publico, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-26'
   fila: "un servidor público activo; 272 228 filas, 3 884 entidades (codigosigep); FISCALIA (6194) la mayor con 22 435; NACIONAL 152 899 / TERRITORIAL 119 329"

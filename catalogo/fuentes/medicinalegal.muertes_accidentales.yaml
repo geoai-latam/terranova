@@ -30,7 +30,7 @@ campos:
   mecanismo_causal_de_la_lesion_fatal: {nombre: mecanismo, tipo: str, desc: "mecanismo causal de la lesión fatal (arma de fuego, cortopunzante…)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Instituto Nacional de Medicina Legal y Ciencias Forenses, theme: salud, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "una víctima; 33 254 de 2015 a 2024"

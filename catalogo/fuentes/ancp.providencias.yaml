@@ -31,7 +31,7 @@ campos:
   link: {nombre: url, tipo: str, desc: "enlace al texto en la relatoría"}
 comportamiento: {max_por_pagina: 100}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una providencia publicada en la relatoría; 3 175 en total

@@ -50,7 +50,7 @@ campos:
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en la hoja (la copia la numera)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un municipio, un año y un área (cabecera, centros poblados y rural disperso, o total)"

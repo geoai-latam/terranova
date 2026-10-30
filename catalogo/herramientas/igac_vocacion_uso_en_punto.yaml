@@ -7,7 +7,7 @@ descripcion: >
   Vocación de uso de las tierras (IGAC, escala 1:100.000, Suelos y Tierras de Colombia 2016) en
   un punto: unidad, clase de vocación (agrícola, ganadera, agroforestal, forestal o de
   conservación) y uso principal. Cobertura nacional; a esa escala no sirve para un predio.
-  Sale de la copia de Terranova de la capa del IGAC.
+  Sale de la copia de Terrnova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

@@ -9,7 +9,7 @@ descripcion: >
   BAJA = amarilla). Primero la más reciente; hasta 15. El IDEAM publica cada noche (~23:30) solo
   los municipios con alerta ese día: si la fecha más reciente no es la del último boletín, el
   municipio no tiene alerta vigente; «no encontrado» = ninguna alerta en el año. Sale de la copia
-  diaria de Terranova (la fecha de la copia va en la procedencia).
+  diaria de Terrnova (la fecha de la copia va en la procedencia).
   (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:

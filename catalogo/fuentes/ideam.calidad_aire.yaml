@@ -35,7 +35,7 @@ campos:
   departamento: {nombre: departamento, tipo: str, desc: "departamento"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una medición horaria de una variable en una estación; ~40 M de filas de 2020 a 2025; Medellín tiene 36 series de contaminantes en 2025"

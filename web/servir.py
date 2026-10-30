@@ -43,5 +43,5 @@ class Manejador(http.server.SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    print(f"Terranova en local: http://localhost:{PUERTO}", flush=True)
+    print(f"Terrnova en local: http://localhost:{PUERTO}", flush=True)
     http.server.ThreadingHTTPServer(("127.0.0.1", PUERTO), Manejador).serve_forever()

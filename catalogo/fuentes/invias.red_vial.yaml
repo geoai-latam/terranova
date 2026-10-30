@@ -51,7 +51,7 @@ campos:
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [1]
 dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un trozo de tramo de la red vial nacional; 662 en el país (611 combinaciones de tramo, sector y PR), 25 al norte de Bogotá"

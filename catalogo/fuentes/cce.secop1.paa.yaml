@@ -31,7 +31,7 @@ campos:
   limite_minima_cuantia: {nombre: limite_minima_cuantia, tipo: float, desc: "límite de mínima cuantía, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una versión del plan anual de una entidad; 44 filas para 4 planes (hasta 11 versiones del mismo)

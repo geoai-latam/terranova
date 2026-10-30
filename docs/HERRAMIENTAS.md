@@ -183,7 +183,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terranova (índice de metadatos sobre fuentes oficiales) | por verificar | 1 |
+| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terrnova (índice de metadatos sobre fuentes oficiales) | por verificar | 1 |
 
 ## normativa
 

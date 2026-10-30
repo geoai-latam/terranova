@@ -31,7 +31,7 @@ campos:
   no_de_accesos: {nombre: accesos, tipo: str, desc: "número de accesos (texto en la fuente)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: MinTIC, theme: tic, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un proveedor, municipio, segmento, tecnología y velocidad en un trimestre; 2 795 052 filas"

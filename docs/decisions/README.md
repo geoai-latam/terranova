@@ -48,7 +48,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0018 · Política de acceso a las fuentes](0018-politica-de-acceso-a-las-fuentes.md)
 - [ADR-0019 · Licencias por ítem y BY-SA por defecto](0019-licencias-por-item-y-by-sa-por-defecto.md)
 - [ADR-0020 · Gratuito al inicio](0020-gratuito-al-inicio.md)
-- [ADR-0021 · Open-Meteo mientras Terranova sea gratuito](0021-open-meteo-mientras-sea-gratuito.md)
+- [ADR-0021 · Open-Meteo mientras Terrnova sea gratuito](0021-open-meteo-mientras-sea-gratuito.md)
 - [ADR-0022 · Agrología del IGAC en vivo, con caché, hasta tener copia](0022-agrologia-igac-en-vivo-hasta-tener-copia.md)
 - [ADR-0023 · Tope de la ficha en 12 s: el gate F4 no espera la copia de agrología](0023-tope-de-la-ficha-12-s.md)
 - [ADR-0024 · Conector de copia (G3): copias en PostGIS servidas por la puerta](0024-conector-de-copia.md)

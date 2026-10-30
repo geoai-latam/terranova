@@ -9,7 +9,7 @@ descripcion: >
   de hectáreas con precio de un municipio del estudio de 2022: upra_precio_tierra_rural_municipio.
   Cubre 18 departamentos con estudios de 2015 a 2023; las categorías E-… (zonas urbanas,
   resguardos) son exclusiones, no precios.
-  Sale de la copia de Terranova de la capa de la UPRA.
+  Sale de la copia de Terrnova de la capa de la UPRA.
   (Fuente: UPRA; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:

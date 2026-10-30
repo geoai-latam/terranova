@@ -764,7 +764,7 @@ def _aviso_de_copia(hechos: dict[str, Any]) -> str:
         if hechos.get("servido_desde") == "obsoleto"
         else ""
     )
-    return f"Sale de la copia de Terranova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
+    return f"Sale de la copia de Terrnova del {fecha}{desde}, no de la fuente en vivo.{vencida}"
 
 
 def a_2d(geometria: Any) -> Any:

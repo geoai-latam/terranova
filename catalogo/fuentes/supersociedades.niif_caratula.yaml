@@ -31,7 +31,7 @@ campos:
   numero_radicado: {nombre: radicado, tipo: str, desc: "número de radicado"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Supersociedades, theme: comercio, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un concepto de un estado financiero en un periodo de un reporte; 77 filas en 3 reportes del NIT

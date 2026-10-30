@@ -5,7 +5,7 @@ competencia: produce las estadísticas de comercio exterior a partir de las decl
 acto: null
 # El microdato de importaciones del DANE (ANDA, catálogo 856) trae una fila por línea de declaración,
 # con columnas AGREGABLES (subpartida NANDINA, país de origen, valores CIF/FOB, pesos, cantidades):
-# NO hay NIT, cédula ni nombre de declarante (verificado en el diccionario DDI 2026-10-26). Terranova
+# NO hay NIT, cédula ni nombre de declarante (verificado en el diccionario DDI 2026-10-26). Terrnova
 # lo COPIA (ADR-0024) y lo PRE-AGREGA a (año, mes, subpartida, país de origen) en la ingesta: no se
 # guarda ninguna línea individual. La licencia del portal es CC BY-SA 4.0 declarada.
 licencia:
@@ -55,7 +55,7 @@ campos:
   lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-26'
   fila: "una fila pre-agregada por (año, mes, subpartida, país de origen); noviembre 2025 (FECH 2511): 316.459 líneas de declaración, 5.373 subpartidas, total FOB US$5.567 M; copiado de los ZIP ANDA 856 (ADR-0024)"

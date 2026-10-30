@@ -27,7 +27,7 @@ campos:
   sector: {nombre: sector, tipo: str, desc: "sector económico"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de Industria y Comercio, theme: comercio, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un sancionado en una resolución; 2024: 327 filas para 312 resoluciones'

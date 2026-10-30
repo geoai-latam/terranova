@@ -32,7 +32,7 @@ campos:
   descripci_n: {nombre: descripcion, tipo: str, desc: "descripción del artículo o entrega"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un plan de ejecución de un contrato; 6 para CO1.PCCNTR.5709738

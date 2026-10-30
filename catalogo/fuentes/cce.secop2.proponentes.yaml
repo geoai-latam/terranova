@@ -31,7 +31,7 @@ campos:
   fecha_publicaci_n: {nombre: fecha_publicacion, tipo: date, desc: "fecha de publicación del proceso"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un proponente de un proceso; 1 para CO1.REQ.3004001

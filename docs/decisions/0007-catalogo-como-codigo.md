@@ -9,7 +9,7 @@
   - `uso_comercial: si`: responde a todas las llaves.
   - `uso_comercial: por_verificar`: solo responde a llaves de plan `evaluacion`; las demás reciben
     `licencia_no_habilitada`. Una fuente sin licencia verificada no sale a producción.
-  - `uso_comercial: no` (licencias no comerciales): responde mientras Terranova sea gratuito y sin
+  - `uso_comercial: no` (licencias no comerciales): responde mientras Terrnova sea gratuito y sin
     ingresos (ADR-0020), con aviso en `procedencia` de que el uso posterior debe ser no comercial.
     Si cambia ADR-0020, pasa a `licencia_no_habilitada`.
   - Licencias que no permiten redistribuir (SGC): la fuente no entra al catálogo.

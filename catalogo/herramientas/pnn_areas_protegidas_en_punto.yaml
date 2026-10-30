@@ -8,7 +8,7 @@ descripcion: >
   autoridad ambiental, área según el acto y fecha de inscripción. Cubre todo el país y todas las
   categorías del SINAP (nacionales, regionales y reservas de la sociedad civil inscritas); un área
   declarada que aún no esté inscrita no aparece. Puede devolver varias si se traslapan.
-  Sale de la copia de Terranova (se rehace cada dos semanas): la procedencia dice de cuándo es.
+  Sale de la copia de Terrnova (se rehace cada dos semanas): la procedencia dice de cuándo es.
   (Fuente: PNN; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

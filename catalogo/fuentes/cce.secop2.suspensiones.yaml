@@ -28,7 +28,7 @@ campos:
   fecha_de_aprobacion: {nombre: fecha_aprobacion, tipo: date, desc: "fecha de aprobación"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una suspensión o reanudación; 20 filas, 10 distintas, en CO1.PCCNTR.3712964

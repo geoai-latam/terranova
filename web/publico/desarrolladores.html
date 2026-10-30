@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Desarrolladores · Terranova</title>
+<title>Desarrolladores · Terrnova</title>
 <meta name="description" content="Conecta tu agente por MCP o tu sistema por API REST. Inicio rápido, perfiles por familia, contrato rt/1 y errores.">
 <link rel="canonical" href="https://terrnova.com/desarrolladores">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Terranova">
-<meta property="og:title" content="Desarrolladores · Terranova">
+<meta property="og:site_name" content="Terrnova">
+<meta property="og:title" content="Desarrolladores · Terrnova">
 <meta property="og:description" content="Conecta tu agente por MCP o tu sistema por API REST. Inicio rápido, perfiles por familia, contrato rt/1 y errores.">
 <meta property="og:url" content="https://terrnova.com/desarrolladores">
 <meta property="og:locale" content="es_CO">
@@ -22,7 +22,7 @@
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra"><div class="envoltura">
-<a class="marca" href="/" aria-label="Terranova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terranova</a>
+<a class="marca" href="/" aria-label="Terrnova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
 <nav class="menu" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/#precios">Precios</a><a href="/desarrolladores" aria-current="page">Desarrolladores</a></nav>
 <div class="der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Empieza gratis</a></div>
 <button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -40,14 +40,14 @@
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
 <p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
-<p id="instruccion">Conéctate al servidor MCP de Terranova en https://terrnova.com/mcp (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRANOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
+<p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
 <ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
 <li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
-<pre class="suelto"><code>export TERRANOVA_LLAVE=rt_live_...
+<pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
-  -H "Authorization: Bearer $TERRANOVA_LLAVE" \
+  -H "Authorization: Bearer $TERRNOVA_LLAVE" \
   -H "Content-Type: application/json" \
   -d '{"nombre":"Cali"}'</code></pre>
 <p>La respuesta trae <code>"estado":"encontrado"</code>, los municipios que coinciden en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. La búsqueda respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
@@ -56,12 +56,12 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <h2 id="mcp">MCP</h2>
 <p>La puerta habla MCP por <i>streamable HTTP</i>, con la llave en la cabecera <code>Authorization</code>.</p>
 <p>Claude Code:</p>
-<pre class="suelto"><code>claude mcp add --transport http terranova https://terrnova.com/mcp \
-  --header "Authorization: Bearer $TERRANOVA_LLAVE"</code></pre>
+<pre class="suelto"><code>claude mcp add --transport http terrnova https://terrnova.com/mcp \
+  --header "Authorization: Bearer $TERRNOVA_LLAVE"</code></pre>
 <p>Cursor y otros clientes que aceptan <code>url</code> y <code>headers</code>:</p>
 <pre class="suelto"><code>{
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "url": "https://terrnova.com/mcp/territorio",
       "headers": { "Authorization": "Bearer rt_live_..." }
     }
@@ -70,11 +70,11 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <p>Claude Desktop y otros clientes que solo hablan por stdio, con el puente <code>mcp-remote</code>:</p>
 <pre class="suelto"><code>{
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${TERRANOVA_LLAVE}"],
-      "env": { "TERRANOVA_LLAVE": "rt_live_..." }
+               "--header", "Authorization: Bearer ${TERRNOVA_LLAVE}"],
+      "env": { "TERRNOVA_LLAVE": "rt_live_..." }
     }
   }
 }</code></pre>
@@ -108,7 +108,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 salvo que pidas <code>crs_salida: EPSG:9377</code></td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
 </tbody></table>
-<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terranova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
+<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
 
 <h2 id="errores">Errores</h2>
 <p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
@@ -135,13 +135,13 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 </main>
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
-<div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#E0A13A"/><circle cx="32" cy="46" r="3.5" fill="#0B231C"/></svg>Terranova</a>
+<div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#E0A13A"/><circle cx="32" cy="46" r="3.5" fill="#0B231C"/></svg>Terrnova</a>
 <p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
 </div>
-<div class="ab"><span>© 2026 Terranova · terrnova.com</span><span>4,6097 N · 74,0817 W · Bogotá</span></div>
+<div class="ab"><span>© 2026 Terrnova · terrnova.com</span><span>4,6097 N · 74,0817 W · Bogotá</span></div>
 </div></footer>
 </body>
 </html>

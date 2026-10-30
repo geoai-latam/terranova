@@ -8,7 +8,7 @@ descripcion: >
   publica la UPRA, su código, categoría para el mercado de tierras, año del estudio (vigencia),
   área de la zona y municipio. Cubre 18 departamentos; cada uno tiene su año de estudio (2015 a
   2023), así que el precio es el de ese año. Fuera de las áreas del mercado de tierras no hay dato.
-  Sale de la copia de Terranova de la capa de la UPRA.
+  Sale de la copia de Terrnova de la capa de la UPRA.
   (Fuente: UPRA; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

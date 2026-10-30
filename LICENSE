@@ -1,4 +1,4 @@
-Terranova
+Terrnova
 Copyright (c) 2026 GeoAI LATAM. Todos los derechos reservados.
 
 Este software, su código fuente, el catálogo (fichas de fuentes y herramientas, mapeos, canarios,
@@ -9,7 +9,7 @@ No se concede ninguna licencia ni derecho de uso, copia, modificación, distribu
 venta, total o parcial, sin autorización previa y por escrito de GeoAI LATAM. El acceso a este
 repositorio no implica ninguna licencia.
 
-El uso del servicio Terranova (la API y el MCP) se rige por sus términos de servicio, no por este
+El uso del servicio Terrnova (la API y el MCP) se rige por sus términos de servicio, no por este
 archivo.
 
 Excepciones:
@@ -18,5 +18,5 @@ Excepciones:
   se distribuyeron bajo la licencia Apache 2.0, que sigue aplicando a quien las haya obtenido
   entonces.
 - Las dependencias de terceros conservan sus propias licencias.
-- Los datos que Terranova entrega conservan la licencia y la atribución de su fuente: ver
+- Los datos que Terrnova entrega conservan la licencia y la atribución de su fuente: ver
   LICENSE-DATA.md.

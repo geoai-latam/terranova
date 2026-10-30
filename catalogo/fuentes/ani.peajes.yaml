@@ -36,7 +36,7 @@ campos:
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [5]
 dcat: {publisher: ANI, theme: transporte}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un peaje de una concesión de la ANI; 150 en el país, 5 al norte de Bogotá"

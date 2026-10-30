@@ -165,7 +165,7 @@ ClasificacionLicencia = Literal["verde", "ambar", "rojo"]
 # Aviso que acompaña cada respuesta de una fuente ámbar (modelo Superfinanciera Res.1519/2020).
 AVISO_DATO_PUBLICO = (
     "Dato público reutilizable (Ley 1712/2014). La exactitud y vigencia son responsabilidad de la "
-    "entidad fuente; verifique los términos para su uso específico. Terranova normaliza y entrega, "
+    "entidad fuente; verifique los términos para su uso específico. Terrnova normaliza y entrega, "
     "no certifica."
 )
 

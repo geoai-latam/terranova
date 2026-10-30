@@ -35,7 +35,7 @@ campos:
   produccion_bls: {nombre: produccion_bls_texto, tipo: str, desc: "producción del mes en barriles, como texto con separador de miles («9,663.00»)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Agencia Nacional de Hidrocarburos, theme: minas y energía, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "la producción de un campo (con su contrato y operadora) en un municipio y un mes, en barriles; 53 237 filas de enero de 2014 a marzo de 2026"

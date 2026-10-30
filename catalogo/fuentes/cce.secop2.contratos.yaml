@@ -51,7 +51,7 @@ campos:
   urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II (la fuente lo da como {url: …})"}
 comportamiento: {p95_ms_medido: 2800, max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un contrato electrónico; 1 para CO1.PCCNTR.5141215

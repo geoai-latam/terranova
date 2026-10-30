@@ -45,7 +45,7 @@ campos:
   subcolumna: {nombre: zona, tipo: str, desc: "Total, Cabeceras o Centros poblados y rural disperso"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un departamento, año y zona; 2018 a 2025"

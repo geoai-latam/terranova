@@ -7,7 +7,7 @@ descripcion: >
   Área de actividad del POT de Bogotá (Decreto 555 de 2021) en un punto, que define los usos del
   suelo permitidos (de proximidad, estructurante, de grandes servicios metropolitanos, entre otras),
   con el acto que la adopta. Es la norma general: los usos exactos dependen además del tamaño y la
-  ubicación del predio. Solo Bogotá. Sale de la copia de Terranova. Para la altura y el tratamiento,
+  ubicación del predio. Solo Bogotá. Sale de la copia de Terrnova. Para la altura y el tratamiento,
   sdp_tratamiento_urbanistico_en_punto.
   (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}

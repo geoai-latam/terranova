@@ -1,4 +1,4 @@
-"""Construye el sitio público de Terranova (terrnova.com) en web/publico/.
+"""Construye el sitio público de Terrnova (terrnova.com) en web/publico/.
 
 Las páginas se arman aquí con el catálogo real: conteos, familias, fuentes y licencias salen de
 `catalogo/`, nunca escritos a mano. Lo estático (estilo.css, js/, datos/sm.json, datos/co.json, img/)
@@ -113,9 +113,9 @@ N_HERR = len(HERR)
 # Solo cuentan las fuentes publicadas: un borrador no se sirve y no se anuncia.
 PUBLICADAS = [f for f in CAT.fuentes.values() if f.estado == "publicada"]
 N_FUENTES = len(PUBLICADAS)
-# Fuentes por entidad, sin el índice propio de Terranova, que no es una fuente oficial.
+# Fuentes por entidad, sin el índice propio de Terrnova, que no es una fuente oficial.
 ENTIDADES = Counter(
-    nombre_entidad(f.entidad) for f in PUBLICADAS if not f.entidad.startswith("Terranova")
+    nombre_entidad(f.entidad) for f in PUBLICADAS if not f.entidad.startswith("Terrnova")
 )
 N_ENTIDADES = len(ENTIDADES)
 POR_FAMILIA = Counter(h.familia for h in HERR)
@@ -173,7 +173,7 @@ def encabezado(ruta: str) -> str:
         f'<a href="{h}"{' aria-current="page"' if h == ruta else ""}>{t}</a>' for h, t in NAV
     )
     return f"""<header class="barra"><div class="envoltura">
-<a class="marca" href="/" aria-label="Terranova, inicio">{simbolo()}Terranova</a>
+<a class="marca" href="/" aria-label="Terrnova, inicio">{simbolo()}Terrnova</a>
 <nav class="menu" aria-label="Principal">{menu}</nav>
 <div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Empieza gratis</a></div>
 <button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
@@ -182,13 +182,13 @@ def encabezado(ruta: str) -> str:
 
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
-<div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terranova</a>
+<div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terrnova</a>
 <p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:{CORREO}">{CORREO}</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
 </div>
-<div class="ab"><span>© 2026 Terranova · terrnova.com</span><span>4,6097 N · 74,0817 W · Bogotá</span></div>
+<div class="ab"><span>© 2026 Terrnova · terrnova.com</span><span>4,6097 N · 74,0817 W · Bogotá</span></div>
 </div></footer>"""
 
 
@@ -196,7 +196,7 @@ def pagina(
     ruta: str, titulo: str, descripcion: str, cuerpo: str, scripts: tuple[str, ...] = ()
 ) -> str:
     canon = DOMINIO + (ruta if ruta != "/" else "/")
-    tit = titulo if ruta == "/" else f"{titulo} · Terranova"
+    tit = titulo if ruta == "/" else f"{titulo} · Terrnova"
     mods = "".join(f'\n<script type="module" src="/js/{s}"></script>' for s in scripts)
     if any(s.startswith("escena-") for s in scripts):
         # three.js empieza a bajar con la página, no cuando el módulo de la escena lo pide.
@@ -210,7 +210,7 @@ def pagina(
 <meta name="description" content="{escape(descripcion)}">
 <link rel="canonical" href="{canon}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Terranova">
+<meta property="og:site_name" content="Terrnova">
 <meta property="og:title" content="{escape(tit)}">
 <meta property="og:description" content="{escape(descripcion)}">
 <meta property="og:url" content="{canon}">
@@ -375,8 +375,8 @@ def indice_fuentes() -> str:
 
 # Lo que copia el botón «Copiar instrucción para tu agente».
 INSTRUCCION = (
-    "Conéctate al servidor MCP de Terranova en https://terrnova.com/mcp (transporte HTTP) con la "
-    "cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRANOVA_LLAVE. Úsalo "
+    "Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp (transporte HTTP) con la "
+    "cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo "
     "para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, "
     "ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en "
     "«procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: "
@@ -1105,7 +1105,7 @@ def inicio() -> str:
 """
     return pagina(
         "/",
-        "Terranova · Del dato oficial a la solución",
+        "Terrnova · Del dato oficial a la solución",
         f"Una capa de datos con {N_FUENTES} fuentes oficiales de Colombia y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
         ("escena-predios.js", "escena-vinetas.js"),
@@ -1215,7 +1215,7 @@ def servicios() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><h2 class="t2">Lo que ya existe, con su alcance</h2></div>
 <div class="columnas c2">
-<div><h3>GEO Copilot</h3><p>Un asistente territorial, proyecto del fundador. Hoy es un cliente más de la capa de datos: se conecta por el MCP de Terranova, como cualquier otro sistema.</p></div>
+<div><h3>GEO Copilot</h3><p>Un asistente territorial, proyecto del fundador. Hoy es un cliente más de la capa de datos: se conecta por el MCP de Terrnova, como cualquier otro sistema.</p></div>
 <div><h3>Vectorización de ortofotos del IGAC</h3><p>Un modelo de segmentación sobre ortofotos del IGAC, desarrollado como tesis de maestría del fundador (mIoU 0,694). Es investigación, no un modelo de producción.</p></div>
 </div>
 </div></section>
@@ -1386,9 +1386,9 @@ def desarrolladores() -> str:
 </div>
 <ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
 <li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
-<pre class="suelto"><code>export TERRANOVA_LLAVE=rt_live_...
+<pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
-  -H "Authorization: Bearer $TERRANOVA_LLAVE" \\
+  -H "Authorization: Bearer $TERRNOVA_LLAVE" \\
   -H "Content-Type: application/json" \\
   -d '{{"nombre":"Cali"}}'</code></pre>
 <p>La respuesta trae <code>"estado":"encontrado"</code>, los municipios que coinciden en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. La búsqueda respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
@@ -1397,12 +1397,12 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <h2 id="mcp">MCP</h2>
 <p>La puerta habla MCP por <i>streamable HTTP</i>, con la llave en la cabecera <code>Authorization</code>.</p>
 <p>Claude Code:</p>
-<pre class="suelto"><code>claude mcp add --transport http terranova https://terrnova.com/mcp \\
-  --header "Authorization: Bearer $TERRANOVA_LLAVE"</code></pre>
+<pre class="suelto"><code>claude mcp add --transport http terrnova https://terrnova.com/mcp \\
+  --header "Authorization: Bearer $TERRNOVA_LLAVE"</code></pre>
 <p>Cursor y otros clientes que aceptan <code>url</code> y <code>headers</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
-    "terranova": {{
+    "terrnova": {{
       "url": "https://terrnova.com/mcp/territorio",
       "headers": {{ "Authorization": "Bearer rt_live_..." }}
     }}
@@ -1411,11 +1411,11 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <p>Claude Desktop y otros clientes que solo hablan por stdio, con el puente <code>mcp-remote</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
-    "terranova": {{
+    "terrnova": {{
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${{TERRANOVA_LLAVE}}"],
-      "env": {{ "TERRANOVA_LLAVE": "rt_live_..." }}
+               "--header", "Authorization: Bearer ${{TERRNOVA_LLAVE}}"],
+      "env": {{ "TERRNOVA_LLAVE": "rt_live_..." }}
     }}
   }}
 }}</code></pre>
@@ -1449,7 +1449,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 salvo que pidas <code>crs_salida: EPSG:9377</code></td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
 </tbody></table>
-<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terranova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
+<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
 
 <h2 id="errores">Errores</h2>
 <p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
@@ -1488,7 +1488,7 @@ def aliados() -> str:
         portada(
             "Aliados",
             "Proyectos hermanos",
-            "Terranova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
+            "Terrnova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
         )
         + """
 <section class="seccion"><div class="envoltura" style="display:grid;gap:0">
@@ -1501,7 +1501,7 @@ def aliados() -> str:
 """
     )
     return pagina(
-        "/aliados", "Aliados", "GeoAI LATAM y Atalaya Mapas, proyectos hermanos de Terranova.", c
+        "/aliados", "Aliados", "GeoAI LATAM y Atalaya Mapas, proyectos hermanos de Terrnova.", c
     )
 
 
@@ -1574,7 +1574,7 @@ def paginas() -> dict[str, str]:
         "terminos.html": legal(
             "/terminos",
             "Términos de servicio",
-            "Las condiciones de uso de Terranova.",
+            "Las condiciones de uso de Terrnova.",
             [
                 "Los datos vienen de fuentes oficiales con su licencia; al reutilizarlos, citas la atribución que trae cada respuesta.",
                 "Las llaves de producción no ven fuentes con licencia por verificar; cada respuesta dice su licencia.",

@@ -33,7 +33,7 @@ campos:
   ciclo_del_cultivo: {nombre: ciclo, tipo: str, desc: "ciclo: transitorio, anual o permanente"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: UPRA, theme: agricultura, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un cultivo (y su desagregación) en un municipio y un periodo; 166 732 filas de 2019 a 2025"

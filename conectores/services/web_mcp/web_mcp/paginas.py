@@ -1,4 +1,4 @@
-"""Texto de una página HTML pública (Terranova F5, G4 parte 2): normas y sentencias.
+"""Texto de una página HTML pública (Terrnova F5, G4 parte 2): normas y sentencias.
 
 Las normas del Gestor Normativo de Función Pública, la CREG o el Normograma DIAN y el texto de las
 sentencias de la Corte Constitucional son HTML estático. De una página sale:

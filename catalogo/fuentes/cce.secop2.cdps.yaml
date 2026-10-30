@@ -37,7 +37,7 @@ campos:
   nit_proveedor: {nombre: documento_contratista, tipo: str, desc: "documento del contratista (ADR-0025)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un CDP por cada proyecto BPIN que financia, y cada par dos veces; 4 filas, 2 distintas, en CO1.PCCNTR.5588480

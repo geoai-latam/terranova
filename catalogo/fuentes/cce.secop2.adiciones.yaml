@@ -28,7 +28,7 @@ campos:
   fecharegistro: {nombre: fecha_registro, tipo: date, desc: "fecha de registro"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una adición de un contrato; 16 para CO1.PCCNTR.3712964

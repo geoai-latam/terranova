@@ -35,7 +35,7 @@ campos:
   numero_de_requisitos: {nombre: requisitos, tipo: int, desc: "número de requisitos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: "Departamento Administrativo de la Función Pública", accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un trámite de una entidad en un año, repetido hasta 9 veces igual; Chía 2021: 115 filas distintas"

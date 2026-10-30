@@ -42,7 +42,7 @@ campos:
   VIGENCIA: {nombre: vigencia, tipo: date, desc: "vigencia del estudio de la zona; a menudo vacía o imposible (ver el perfil)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'una zona homogénea física; Chía: 410 rurales y 428 urbanas'

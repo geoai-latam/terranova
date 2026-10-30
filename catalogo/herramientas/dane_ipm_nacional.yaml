@@ -6,7 +6,7 @@ pregunta: "¿Cómo ha evolucionado la pobreza multidimensional en Colombia?"
 descripcion: >
   Incidencia de la pobreza multidimensional (IPM) según el DANE para un dominio (Nacional, Cabecera,
   Centros poblados y rural disperso, o una región), por año desde 2010, en porcentaje. Sale de la copia
-  de Terranova del anexo vigente del DANE.
+  de Terrnova del anexo vigente del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {dominio: nombre}
 consulta:

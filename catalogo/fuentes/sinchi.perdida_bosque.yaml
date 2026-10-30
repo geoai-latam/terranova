@@ -42,7 +42,7 @@ campos:
 capas_servicio: [0]
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: SINCHI, theme: ambiente}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una clase del cambio de bosque 2022-2024 como un multipolígono: 4 en toda la Amazonia colombiana (pérdida: 286 625 ha)"

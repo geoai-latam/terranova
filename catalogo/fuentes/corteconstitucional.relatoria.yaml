@@ -30,7 +30,7 @@ campos:
   texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
 comportamiento: {max_por_pagina: 20}
 dcat: {publisher: "Corte Constitucional", theme: normativa, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un fragmento del texto de una sentencia; T-760/08 tiene 1,4 M caracteres y 32 apariciones de «derecho fundamental a la salud»"

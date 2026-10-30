@@ -31,7 +31,7 @@ campos:
   Fecha: {nombre: fecha_acto, tipo: date, desc: "fecha del acto"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: CAR, theme: ambiente}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "la ronda delimitada de un cuerpo de agua con su acto; 203 en la jurisdicción de la CAR"

@@ -31,7 +31,7 @@ campos:
   fecha_de_creaci_n: {nombre: fecha_creacion, tipo: date, desc: "creación del cronograma"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: las fechas del cronograma de un proceso; 2 filas (proceso y portafolio)

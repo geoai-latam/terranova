@@ -35,7 +35,7 @@ campos:
   eventos: {nombre: celda_eventos, tipo: int, desc: "eventos en la celda; solo se sirve sumado"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Unidad para la Atención y Reparación Integral a las Víctimas, theme: inclusion social, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una celda del RUV en un corte: municipio × sexo × etnia × discapacidad × ciclo vital, con las personas por ocurrencia, declaración, ubicación y sujetos de atención; 8,4 M de filas; Medellín, corte 30/09/2026: 472 celdas, 245 549 víctimas por ocurrencia"

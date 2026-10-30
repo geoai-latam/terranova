@@ -31,7 +31,7 @@ campos:
   codigo_municipio: {nombre: municipio_codigo_capa, tipo: str, desc: "código de municipio que trae la capa; errado en algunos (23175 para Chía)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: territorio, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un tramo de vía (línea) con su nombre; 139 587 urbanos y 5 430 rurales; 29 tramos en el centro de Chía"

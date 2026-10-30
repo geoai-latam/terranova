@@ -41,7 +41,7 @@ campos:
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: IGAC, theme: agrologia, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un polígono de una unidad de capacidad de uso; 64 771 en el país

@@ -62,11 +62,11 @@ spec y su prueba antes de usarla en una ola.
 | Pieza | Qué es | Dónde vive | Destraba |
 |---|---|---|---|
 | **G1 · Agregados en Socrata** | `datos_consultar` con `$group` y conteos, con un **n mínimo** por celda (ICFES: n ≥ 10) | `datos_abiertos_mcp` (GEO Copilot) | ICFES, MinEducación, transacciones, SECOP agregado |
-| **G2 · Corte mensual del IGAC** | Descubre el nombre vigente de `Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>` y lo deja en el catálogo; el canario avisa del cambio de mes | Terranova (job) + catálogo | las ~13 herramientas catastrales |
-| **G3 · Conector de copia** | Bulk o Socrata → PostGIS en `copia.*`, con huella, versión vigente, frescura (TTL de la fuente) y job programado. La puerta sirve `servido_desde: copia` y nunca presenta una copia vencida como actual (ADR-0008). Generaliza el pipeline de F4.1 | Terranova | SECOP (búsquedas y medianas), transacciones, TerriData, anexos DANE, directorio DIAN |
+| **G2 · Corte mensual del IGAC** | Descubre el nombre vigente de `Base_Catastral_Publica_del_Gestor_IGAC_<MM>_<AAAA>` y lo deja en el catálogo; el canario avisa del cambio de mes | Terrnova (job) + catálogo | las ~13 herramientas catastrales |
+| **G3 · Conector de copia** | Bulk o Socrata → PostGIS en `copia.*`, con huella, versión vigente, frescura (TTL de la fuente) y job programado. La puerta sirve `servido_desde: copia` y nunca presenta una copia vencida como actual (ADR-0008). Generaliza el pipeline de F4.1 | Terrnova | SECOP (búsquedas y medianas), transacciones, TerriData, anexos DANE, directorio DIAN |
 | **G4 · Conector de scrape con estado** | Navega formularios WebForms/JSF (ViewState), con tasa baja, `User-Agent` propio, caché y copia, y registra URL y fecha. Respeta `robots.txt`. **Nunca** captchas, logins ni retos de identidad (ADR-0018) | nuevo `html_mcp` (GEO Copilot) | normas, jurisprudencia, SIPI, Imprenta, ANM |
-| **G5 · Herramientas de la fábrica** | `scripts/nueva_fuente.py` (andamio de fichas), medición de «horas por fuente» y el tablero de avance (canario verde / objetivo) | Terranova | todas |
-| **G6 · Catálogo descubrible + buscador** | Ingiere el catálogo DCAT de datos.gov.co como copia de metadatos y expone `catalogo_buscar` (qué fuente responde qué, con entidad, licencia e id); la cola larga se alcanza por el conector genérico y las olas se **promueven** desde el catálogo por valor/uso, no a mano (ADR-0026, [spec 09](specs/09-descubrimiento.md)) | Terranova + `datos_abiertos_mcp` | toda la cola larga de datos.gov.co; ordena qué promover |
+| **G5 · Herramientas de la fábrica** | `scripts/nueva_fuente.py` (andamio de fichas), medición de «horas por fuente» y el tablero de avance (canario verde / objetivo) | Terrnova | todas |
+| **G6 · Catálogo descubrible + buscador** | Ingiere el catálogo DCAT de datos.gov.co como copia de metadatos y expone `catalogo_buscar` (qué fuente responde qué, con entidad, licencia e id); la cola larga se alcanza por el conector genérico y las olas se **promueven** desde el catálogo por valor/uso, no a mano (ADR-0026, [spec 09](specs/09-descubrimiento.md)) | Terrnova + `datos_abiertos_mcp` | toda la cola larga de datos.gov.co; ordena qué promover |
 
 Reglas de las copias en local:
 
@@ -123,10 +123,10 @@ derechos de petición (F0.8).
 
 Croma publica unas 177 herramientas para Colombia; unas 139 salen de fuentes abiertas y factibles
 (la comparación fuente por fuente está en `interno/`). Al 2026-10-23 (madrugada del 24), **153 herramientas sobre 130 fuentes**: el número de la referencia abierta ya se
-superó. No es la misma lista: lo que Croma sirve y Terranova no está en la última columna, con su razón.
-A cambio, Terranova cubre seguridad, memoria del conflicto, regalías y agro, que la referencia no trae.
+superó. No es la misma lista: lo que Croma sirve y Terrnova no está en la última columna, con su razón.
+A cambio, Terrnova cubre seguridad, memoria del conflicto, regalías y agro, que la referencia no trae.
 
-| Grupo | Terranova | Lo que falta y por qué |
+| Grupo | Terrnova | Lo que falta y por qué |
 |---|---|---|
 | Territorio (IGAC, UPRA, DANE, agrología, áreas protegidas, ANT, EVA agrícola, DIVIPOLA) | 26 | avalúo por predio (Geovisor: backend interno, espera permiso, ola 6); medianas de transacciones (necesitan copia) |
 | Contratación (SECOP I y II, proyectos del SGR) | 42 | ofertas por proceso (contar un mes pasa de 300 s: sería carga) |

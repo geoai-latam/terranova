@@ -34,7 +34,7 @@ campos:
   repitencia: {nombre: repitencia, tipo: float, desc: "repitencia, %"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Ministerio de Educación Nacional, theme: educacion, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una entidad territorial certificada en un año; 97 ETC de 2011 a 2024 (1 336 filas); Medellín (3759) tiene 14"

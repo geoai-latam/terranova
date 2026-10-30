@@ -9,7 +9,7 @@ descripcion: >
   no encuentra «escolares»). Da los 50 más recientes, con entidad, contratista, valor y fecha, y
   cuántos hay en total. Es una búsqueda por texto del objeto, NO por municipio ni entidad; para el
   conteo y el valor total de un municipio usa secop_contratos_municipio. Sale de la copia de
-  Terranova, actualizada a diario: cubre los contratos firmados desde la ventana de la copia (la
+  Terrnova, actualizada a diario: cubre los contratos firmados desde la ventana de la copia (la
   procedencia lo dice), no todo el histórico.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {texto: nombre}

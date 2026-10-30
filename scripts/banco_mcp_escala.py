@@ -1,4 +1,4 @@
-"""Banco de escala MCP: ¿cómo debe exponer Terranova cientos de herramientas? (investigación del
+"""Banco de escala MCP: ¿cómo debe exponer Terrnova cientos de herramientas? (investigación del
 2026-10-28, `interno/investigacion/MCP_A_ESCALA_2026-10-28.md`).
 
 Las mismas preguntas del banco de agente (`catalogo/verdades_producto.yaml`) se responden con un LLM
@@ -56,7 +56,7 @@ ESCENARIOS = ("plano", "busqueda", "busqueda_familias", "perfil", "catalogo")
 MAX_VUELTAS = 6
 CATALOGO = cargar()
 SISTEMA_CATALOGO = (
-    "Eres un asistente que responde preguntas sobre Colombia con las herramientas de Terranova. "
+    "Eres un asistente que responde preguntas sobre Colombia con las herramientas de Terrnova. "
     "Busca la herramienta con `buscar_herramienta` y llámala con `consultar`; no inventes cifras. "
     "Si ninguna herramienta cubre la pregunta, dilo. Responde en español, en pocas líneas, con la "
     "cifra, el año y la fuente."
@@ -111,7 +111,7 @@ def herramientas_responses(escenario: str, tools: list[Any]) -> list[dict[str, A
             {
                 "type": "namespace",
                 "name": "terranova",
-                "description": "Fuentes oficiales colombianas (Terranova). Familias: "
+                "description": "Fuentes oficiales colombianas (Terrnova). Familias: "
                 + perfil_catalogo.mapa_de_familias(CATALOGO),
                 "tools": [_funcion(t, diferida=True) for t in tools],
             },
@@ -123,7 +123,7 @@ def herramientas_responses(escenario: str, tools: list[Any]) -> list[dict[str, A
         {
             "type": "namespace",
             "name": f"terranova_{familia}",
-            "description": f"Terranova, {familia}: "
+            "description": f"Terrnova, {familia}: "
             + perfil_catalogo.TEMAS_FAMILIA.get(familia, ""),
             "tools": [_funcion(t, diferida=True) for t in lista],
         }

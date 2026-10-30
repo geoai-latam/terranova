@@ -30,7 +30,7 @@ campos:
   texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
 comportamiento: {max_por_pagina: 20}
 dcat: {publisher: "Comisión de Regulación de Energía y Gas (CREG)", theme: normativa, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un fragmento de una resolución; la 101-131 de 2026 tiene 17 345 caracteres y 4 apariciones de «ARTÍCULO 1»"

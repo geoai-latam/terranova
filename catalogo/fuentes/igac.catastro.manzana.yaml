@@ -34,7 +34,7 @@ campos:
   CODIGO_ANTERIOR: {nombre: codigo_manzana_anterior, tipo: str, desc: "código anterior de la manzana"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'una manzana urbana; Chía: 272 polígonos para 270 códigos'

@@ -177,7 +177,7 @@ def pagina_estado(ultimos: list[Resultado], catalogo: Catalogo, ahora: datetime)
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Estado del servicio · Terranova</title>
+<title>Estado del servicio · Terrnova</title>
 <meta name="description" content="La puerta y cada fuente oficial según su último canario.">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -186,14 +186,14 @@ def pagina_estado(ultimos: list[Resultado], catalogo: Catalogo, ahora: datetime)
 </head>
 <body>
 <header class="e-cab"><div class="env">
-<a class="e-marca" href="/" aria-label="Terranova, inicio">{_SIMBOLO}Terranova</a>
+<a class="e-marca" href="/" aria-label="Terrnova, inicio">{_SIMBOLO}Terrnova</a>
 <nav aria-label="Principal"><a class="op" href="/fuentes">Fuentes</a>
 <a class="op" href="/desarrolladores">Desarrolladores</a><a href="/contacto">Contacto</a></nav>
 </div></header>
 <main class="env">
 <section class="e-portada">
 <span class="rotulo">Estado del servicio</span>
-<h1>Estado de Terranova</h1>
+<h1>Estado de Terrnova</h1>
 <p class="entrada">Solo lo que se mide: el último canario de cada fuente y su hora. No hay
 histórico de disponibilidad, así que aquí no hay porcentajes.</p>
 <p class="e-meta">Generada el {_hora(ahora)} · datos en JSON:
@@ -221,7 +221,7 @@ conocida, medida en la fuente. Última verificación: {verificacion}.</p>
 <footer class="e-pie"><div class="env">
 <span><a href="/">Inicio</a><a href="/fuentes">Fuentes</a><a href="/precios">Precios</a><a
 href="/terminos">Términos</a></span>
-<span>© 2026 Terranova · terrnova.com</span>
+<span>© 2026 Terrnova · terrnova.com</span>
 </div></footer>
 </body>
 </html>

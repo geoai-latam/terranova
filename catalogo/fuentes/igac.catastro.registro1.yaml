@@ -42,7 +42,7 @@ campos:
   AREA_CONSTRUIDA: {nombre: area_construida_m2, tipo: float, desc: "área construida, m²"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un predio en el registro 1 público (sin propietarios); Chía: 66 936'

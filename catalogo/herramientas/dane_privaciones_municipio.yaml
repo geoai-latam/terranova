@@ -7,7 +7,7 @@ descripcion: >
   Las 15 privaciones de la medida de pobreza multidimensional censal 2018 del DANE en un municipio
   (DIVIPOLA): porcentaje de hogares con analfabetismo, bajo logro educativo, sin aseguramiento en
   salud, hacinamiento crítico, trabajo informal, etc. Una fila por privación. Sale de la copia de
-  Terranova del anexo censal del DANE.
+  Terrnova del anexo censal del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola}
 consulta:

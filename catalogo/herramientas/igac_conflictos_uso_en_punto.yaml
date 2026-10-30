@@ -6,7 +6,7 @@ pregunta: "¿Hay conflicto de uso de la tierra en este punto?"
 descripcion: >
   Conflicto de uso de las tierras (IGAC, 2012, escala 1:100.000) en un punto: unidad y tipo de
   conflicto con su intensidad (p. ej. subutilización moderada). Cobertura nacional continental, sin San Andrés y Providencia; a esa escala no sirve para un predio.
-  Sale de la copia de Terranova de la capa del IGAC.
+  Sale de la copia de Terrnova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

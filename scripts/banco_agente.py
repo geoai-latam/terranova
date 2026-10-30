@@ -37,7 +37,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 BANCO = RAIZ / "catalogo" / "verdades_producto.yaml"
 MAX_VUELTAS = 5
 SISTEMA = (
-    "Eres un asistente que responde preguntas sobre Colombia con las herramientas de Terranova. "
+    "Eres un asistente que responde preguntas sobre Colombia con las herramientas de Terrnova. "
     + puerta.INSTRUCCIONES
     + " Usa las herramientas; no inventes cifras. Si ninguna herramienta cubre la pregunta, dilo. "
     "Responde en español, en pocas líneas, con la cifra, el año y la fuente."
