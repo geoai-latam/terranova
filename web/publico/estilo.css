@@ -529,21 +529,6 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 /* ---------- consola: «llama a» y la herramienta ---------- */
 .consola .llama { justify-content: flex-start; gap: 8px; }
 
-/* ---------- dos caminos: el público general y los equipos técnicos ---------- */
-.caminos { border-bottom: 1px solid var(--linea); }
-.caminos .envoltura { display: grid; grid-template-columns: 1fr 1fr; }
-.camino { display: flex; flex-direction: column; gap: 10px; padding: clamp(32px, 4vw, 52px) clamp(24px, 4vw, 56px) clamp(32px, 4vw, 48px) 0; text-decoration: none; color: var(--tinta); }
-.camino + .camino { border-left: 1px solid var(--linea); padding-left: clamp(24px, 4vw, 56px); padding-right: 0; }
-.camino .para { font-size: 14.5px; color: var(--tinta-tenue); }
-.camino h2 { font: 650 clamp(24px, 2.6vw, 34px)/1.12 var(--font-sans); letter-spacing: -0.03em; }
-.camino p { color: var(--tinta-suave); max-width: 480px; }
-.camino .ir { margin-top: 6px; font-weight: 600; color: var(--verificado); }
-.camino:hover h2 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
-@media (max-width: 760px) {
-  .caminos .envoltura { grid-template-columns: 1fr; }
-  .camino, .camino + .camino { padding: 28px 0; border-left: 0; }
-  .camino + .camino { border-top: 1px solid var(--linea); }
-}
 
 /* ---------- viñetas 3D (servicios y prueba) ---------- */
 .vineta { position: relative; overflow: hidden; border-radius: var(--radio-xl); background: radial-gradient(120% 90% at 50% 38%, #17392F 0%, #0F2C24 60%, #0C251E 100%); box-shadow: inset 0 0 0 1px rgba(243,239,228,.08); }
@@ -606,16 +591,18 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .vineta.angosta .rv.aviso { right: 10px; max-width: 190px; }
 .mas-s { display: flex; gap: 12px 32px; flex-wrap: wrap; }
 
-/* ---------- servicios en la landing: banda oscura ---------- */
+/* ---------- servicios en la landing: banda clara; las viñetas oscuras van como piezas sueltas ---------- */
 .servicios-l .cab { max-width: 900px; }
 .servicios-l .t1 { font-size: clamp(40px, 5.6vw, 64px); }
 .serv .para, .serv-grande .para, .sv-det .para { font-size: 14.5px; color: var(--tinta-tenue); }
 .inv .para { color: #9FB2A9; }
 .serv-grande { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); grid-template-areas: "txt vin" "cru cru";
-  gap: 40px clamp(28px, 4.5vw, 64px); align-items: center; border-top: 1px solid rgba(243,239,228,.2); padding-top: clamp(32px, 4vw, 48px); }
+  gap: 40px clamp(28px, 4.5vw, 64px); align-items: center; border-top: 1px solid var(--linea-fuerte); padding-top: clamp(32px, 4vw, 48px); }
+.inv .serv-grande { border-top-color: rgba(243,239,228,.2); }
 .serv-grande .txt { grid-area: txt; display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
 .serv-grande h3 { font: 650 clamp(30px, 3.6vw, 46px)/1.05 var(--font-sans); letter-spacing: -0.035em; }
-.serv-grande .txt > p:not(.para) { color: #C9D4CE; font-size: 17.5px; max-width: 560px; }
+.serv-grande .txt > p:not(.para) { color: var(--tinta-suave); font-size: 17.5px; max-width: 560px; }
+.inv .serv-grande .txt > p:not(.para) { color: #C9D4CE; }
 .serv-grande .vineta { grid-area: vin; aspect-ratio: 16 / 11; }
 .serv-grande .cruces { grid-area: cru; }
 
@@ -631,7 +618,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .inv .cruces li span { color: #9FB2A9; }
 
 .servs { display: grid; gap: clamp(48px, 6vw, 80px); margin-top: clamp(56px, 7vw, 96px); }
-.serv { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-areas: "vin txt"; gap: 24px clamp(28px, 4.5vw, 64px); align-items: center; padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid rgba(243,239,228,.14); }
+.serv { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-template-areas: "vin txt"; gap: 24px clamp(28px, 4.5vw, 64px); align-items: center; padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--linea-fuerte); }
+.inv .serv { border-top-color: rgba(243,239,228,.14); }
 .serv:nth-child(even) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); grid-template-areas: "txt vin"; }
 .serv .txt { grid-area: txt; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
 .serv .txt .enlace { margin-top: 4px; }
@@ -767,3 +755,23 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   font: 400 12.5px/1 var(--font-sans); box-shadow: 0 6px 16px rgba(14,42,34,.2); }
 .rotulos .dato b { font: 600 13px/1 var(--font-mono); color: var(--ambar-500); margin-right: 3px; }
 .rotulos .dato[hidden] { display: none; }
+
+/* ---------- portada: las cuatro capas y las soluciones por sector ---------- */
+.capas-l { border-bottom: 1px solid var(--linea); }
+.capas-l .columnas { row-gap: 32px; }
+.capas-l .capa-d { border-top: 3px solid var(--acento-relleno); padding-top: 16px; }
+.capas-l .capa-d .enlace { margin-top: auto; }
+.dos-formas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 48px; margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--linea); }
+.dos-formas p { color: var(--tinta-suave); }
+.dos-formas b { color: var(--tinta); font-weight: 600; }
+.dos-formas .enlace { white-space: nowrap; }
+@media (max-width: 760px) { .dos-formas { grid-template-columns: 1fr; } }
+#por-que .columnas { row-gap: 36px; }
+#fuentes .chips { margin-bottom: 40px; }
+.panel-s .sub-s { font: 500 14px/20px var(--font-sans); color: var(--tinta-tenue); margin: 0 0 10px; }
+.panel-s .sub-s + ol { margin-bottom: 0; }
+.soluciones { list-style: none; margin: 0 0 32px; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--tinta); }
+.soluciones li { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--linea); }
+.soluciones .capa { font: 400 13px/26px var(--font-mono); color: var(--verificado); }
+.soluciones p { font: 500 clamp(16px, 1.4vw, 18px)/1.45 var(--font-sans); letter-spacing: -0.01em; }
+@media (max-width: 560px) { .soluciones li { grid-template-columns: 1fr; } .soluciones .capa { line-height: 18px; } }

@@ -83,5 +83,5 @@ def test_preguntas_por_sector_son_herramientas_reales() -> None:
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
     sector = html[html.index('class="sectores"') :]
     citadas = re.findall(r'<span class="id"><code>([a-z0-9_]+)</code>', sector)
-    assert len(citadas) == 25
+    assert len(citadas) == 30
     assert set(citadas) <= ids

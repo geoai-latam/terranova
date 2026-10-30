@@ -183,7 +183,7 @@ def encabezado(ruta: str) -> str:
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terranova</a>
-<p class="desc">Respuestas territoriales con la fuente oficial y su prueba. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:{CORREO}">{CORREO}</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
@@ -383,11 +383,11 @@ INSTRUCCION = (
     "https://terrnova.com/llms.txt"
 )
 
-# Dos respuestas reales de producción, recortadas. La consola del héroe las reproduce por turnos.
+# Tres respuestas reales de producción, recortadas, de familias distintas. La consola del héroe las reproduce por turnos.
 TURNOS = [
     {
         "k": "predio",
-        "boton": "Predio en Santa Marta",
+        "boton": "Predio",
         "pregunta": "¿Qué predio hay en 11,2211 N, 74,1572 W?",
         "herr": "sinic_predio_en_punto",
         "filas": [
@@ -399,21 +399,41 @@ TURNOS = [
             ("servido", "copia del 2026-10-28 en 0,56 s"),
         ],
         "huella": "sha256:7a2cc965…",
+        "fecha": "2026-10-29",
     },
     {
-        "k": "trm",
-        "boton": "TRM de hoy",
-        "pregunta": "¿A cuánto quedó la TRM hoy?",
-        "herr": "banrep_trm_recientes",
+        "k": "empresa",
+        "boton": "Empresa",
+        "pregunta": "¿La empresa con NIT 899999068 tiene la matrícula al día?",
+        "herr": "rues_empresa_por_nit",
         "filas": [
             ("estado", '<span class="ok">encontrado</span>'),
-            ("TRM", "3.162,35 COP"),
-            ("fecha", "2026-10-29"),
-            ("entidad", "Banco de la República"),
-            ("licencia", "banrep-aviso-legal, uso comercial sí"),
-            ("servido", "fuente en vivo, 07:14 UTC"),
+            ("empresa", "ECOPETROL S A"),
+            ("matrícula", "1291197, cámara de Bogotá"),
+            ("situación", "ACTIVA, renovada en 2026"),
+            ("entidad", "Confecámaras, RUES"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "fuente en vivo en 2,4 s"),
         ],
-        "huella": "sha256:ac30c9f5…",
+        "huella": "sha256:2acc04ec…",
+        "fecha": "2026-10-30",
+    },
+    {
+        "k": "norma",
+        "boton": "Norma",
+        "pregunta": "¿La Ley 1581 de 2012 sigue vigente?",
+        "herr": "suin_norma",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("norma", "Ley estatutaria 1581 de 2012"),
+            ("vigencia", "Vigente"),
+            ("expedida", "Congreso de Colombia, 30 artículos"),
+            ("entidad", "MinJusticia, SUIN-Juriscol"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "fuente en vivo en 2,9 s"),
+        ],
+        "huella": "sha256:6fcc3fe7…",
+        "fecha": "2026-10-30",
     },
 ]
 
@@ -434,7 +454,7 @@ def consola() -> str:
             f'<p class="preg"><span class="tu">Tu agente</span><span class="txt">{t["pregunta"]}</span></p>'
             f'<p class="llama"><span>llama a</span><code>{t["herr"]}</code></p>'
             f"<dl>{filas}</dl>"
-            f'<p class="pie"><span>huella <b>{t["huella"]}</b></span><span class="sello">capturado el 2026-10-29</span></p></div>'
+            f'<p class="pie"><span>huella <b>{t["huella"]}</b></span><span class="sello">capturado el {t["fecha"]}</span></p></div>'
         )
     return (
         '<div class="consola" data-consola>'
@@ -446,6 +466,17 @@ def consola() -> str:
 
 # Preguntas por sector: herramientas reales del catálogo (la construcción falla si alguna no existe).
 SECTORES = [
+    (
+        "Legal y cumplimiento",
+        "Normas vigentes, jurisprudencia y sanciones, para conceptos, auditorías y debida diligencia.",
+        [
+            "suin_norma",
+            "corte_constitucional_sentencia",
+            "funcionpublica_normas_buscar",
+            "creg_resolucion_buscar",
+            "sic_sanciones_por_sector",
+        ],
+    ),
     (
         "Agro y exportación",
         "Debida diligencia de un lote antes de exportar: áreas protegidas, pérdida de bosque, cobertura del suelo y territorios étnicos.",
@@ -504,10 +535,106 @@ SECTORES = [
 ]
 
 
+# Soluciones de ejemplo por sector: lo que se construye encima de la puerta con las herramientas del
+# panel. Son ilustrativas (lo posible, no clientes) y van selladas.
+CAPAS = ("Datos", "Analítica", "Automatización", "Agentes")
+SOLUCIONES = {
+    "Banca y crédito": [
+        (
+            "Analítica",
+            "Antes de aprobar un crédito: la empresa en el RUES y en Supersociedades, y el predio en garantía en el catastro.",
+        ),
+        (
+            "Automatización",
+            "Un aviso cuando un cliente cambia el estado de su matrícula mercantil.",
+        ),
+        (
+            "Analítica",
+            "Precio de la tierra, vocación del suelo e indicadores del municipio para originar crédito agropecuario.",
+        ),
+    ],
+    "Contratación pública": [
+        (
+            "Analítica",
+            "Revisar a un contratista antes de adjudicar: sus contratos, multas y sanciones en SECOP.",
+        ),
+        (
+            "Automatización",
+            "Vigilar los contratos de una entidad y avisar cuando hay adiciones o modificaciones.",
+        ),
+        (
+            "Agentes",
+            "Un asistente que responde cuánto contrató el municipio, con quién y cómo va cada contrato.",
+        ),
+    ],
+    "Legal y cumplimiento": [
+        (
+            "Agentes",
+            "Un asistente de conceptos que cita la norma vigente y la sentencia de la Corte.",
+        ),
+        ("Automatización", "Alertas cuando sale o cambia una norma del tema que sigues."),
+        (
+            "Analítica",
+            "La vigencia de cada norma citada en un informe, revisada antes de entregarlo.",
+        ),
+    ],
+    "Agro y exportación": [
+        (
+            "Analítica",
+            "Debida diligencia por finca para la EUDR: áreas protegidas, pérdida de bosque y territorios étnicos.",
+        ),
+        (
+            "Automatización",
+            "Las alertas de incendio del IDEAM en los municipios de tus proveedores, cada día.",
+        ),
+        (
+            "Analítica",
+            "Qué se cultiva, cuánto y dónde, por municipio, para planear compras o expansión.",
+        ),
+    ],
+    "Inmobiliario y construcción": [
+        (
+            "Analítica",
+            "La ficha de un predio antes de comprar: catastro, POT, amenazas y valor del suelo.",
+        ),
+        (
+            "Analítica",
+            "Compraventas por municipio para valorar un portafolio o elegir dónde construir.",
+        ),
+        (
+            "Agentes",
+            "Un asistente para el equipo comercial que responde qué se puede construir en un lote de Bogotá.",
+        ),
+    ],
+    "Gobierno y territorio": [
+        (
+            "Analítica",
+            "Un tablero municipal comparado: población, pobreza, educación, salud y seguridad.",
+        ),
+        ("Automatización", "Un informe periódico que se arma solo con las cifras de cada fuente."),
+        (
+            "Automatización",
+            "Alertas de deslizamiento e incendio del IDEAM para los municipios que atiendes.",
+        ),
+    ],
+}
+ORDEN_SECTORES = [
+    "Banca y crédito",
+    "Contratación pública",
+    "Legal y cumplimiento",
+    "Agro y exportación",
+    "Inmobiliario y construcción",
+    "Gobierno y territorio",
+]
+
+
 def sectores() -> str:
     por_id = {h.id: h for h in HERR}
+    assert sorted(ORDEN_SECTORES) == sorted(s[0] for s in SECTORES) == sorted(SOLUCIONES)
+    assert all(c in CAPAS for v in SOLUCIONES.values() for c, _ in v)
+    orden = sorted(SECTORES, key=lambda s: ORDEN_SECTORES.index(s[0]))
     pest, paneles = [], []
-    for i, (nombre, para, ids) in enumerate(SECTORES):
+    for i, (nombre, para, ids) in enumerate(orden):
         sel = "true" if i == 0 else "false"
         pest.append(
             f'<button type="button" role="tab" id="s-p{i}" aria-controls="s-t{i}" aria-selected="{sel}"'
@@ -520,9 +647,15 @@ def sectores() -> str:
             filas.append(
                 f'<li><p>{escape(h.pregunta)}</p><span class="id"><code>{h.id}</code> {escape(ent)}</span></li>'
             )
+        sols = "".join(
+            f'<li><span class="capa">{c}</span><p>{escape(s)}</p></li>'
+            for c, s in SOLUCIONES[nombre]
+        )
         paneles.append(
             f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}"{"" if i == 0 else " hidden"}>'
-            f'<p class="para">{para}</p><ol>{"".join(filas)}</ol></div>'
+            f'<p class="para">{para}</p>'
+            f'<h4 class="sub-s">Soluciones que se construyen {SELLO_I}</h4><ul class="soluciones">{sols}</ul>'
+            f'<h4 class="sub-s">Con herramientas como</h4><ol>{"".join(filas)}</ol></div>'
         )
     return f"""<div class="sectores">
 <div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical">{"".join(pest)}</div>
@@ -567,7 +700,7 @@ SERVICIOS = [
     {
         "id": "revision",
         "para": "Para bancos, aseguradoras, exportadores, compradores de tierra y áreas de cumplimiento",
-        "titulo": "Revisamos tu lista contra las fuentes oficiales",
+        "titulo": "Debida diligencia: revisamos tu lista contra las fuentes oficiales",
         "texto": "Nos das una lista de predios, empresas o contratos. Revisamos cada uno contra las fuentes oficiales y te entregamos un expediente por ítem, con la fuente de cada hallazgo y los casos dudosos señalados. Sirve para aprobar un crédito, vincular un proveedor, comprar tierra o cumplir la regulación europea contra la deforestación (EUDR).",
         "recibes": [
             "Un expediente por ítem, en PDF y en datos",
@@ -580,9 +713,9 @@ SERVICIOS = [
     },
     {
         "id": "tablero",
-        "para": "Para alcaldías, gobernaciones, gremios, ONG y consultoras",
-        "titulo": "Tableros e informes territoriales",
-        "texto": "Los indicadores de tus municipios en un solo lugar: población, pobreza, educación, salud, seguridad, contratación y ambiente, actualizados desde la fuente y comparables entre municipios.",
+        "para": "Para empresas, gremios, alcaldías, gobernaciones y ONG",
+        "titulo": "Analítica: tableros e informes",
+        "texto": "Los indicadores que sigues en un solo lugar: población, pobreza, educación, salud, seguridad, contratación, empresas y ambiente, actualizados desde la fuente y comparables entre municipios, sectores y años.",
         "recibes": [
             "Un tablero en la web, con tu marca",
             "Un informe periódico listo para presentar",
@@ -595,8 +728,8 @@ SERVICIOS = [
     {
         "id": "vigilancia",
         "para": "Para veedurías y áreas legales, de compras y de cumplimiento",
-        "titulo": "Vigilancia y alertas",
-        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, una alerta del IDEAM o una nueva sanción, con el registro de cada cambio.",
+        "titulo": "Automatización: vigilancia, alertas y procesos",
+        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, una alerta del IDEAM o una nueva sanción, con el registro de cada cambio. Y automatizamos los cruces y reportes que tu equipo hoy hace a mano.",
         "recibes": [
             "Alertas por correo o en tu sistema",
             "Un resumen semanal de lo que cambió",
@@ -609,7 +742,7 @@ SERVICIOS = [
     {
         "id": "asistente",
         "para": "Para equipos que quieren su propio asistente",
-        "titulo": "Asistentes y aplicaciones a la medida",
+        "titulo": "Agentes: asistentes y aplicaciones a la medida",
         "texto": "Un asistente que responde con los datos oficiales de tu sector, dentro de tu sistema, tu SIG o tu ERP, y con la fuente de cada respuesta.",
         "recibes": [
             "El asistente funcionando en tu entorno",
@@ -878,35 +1011,63 @@ def inicio() -> str:
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0">Los datos oficiales de Colombia, listos para usar</h1>
-<p class="entrada">Consúltalos con tu agente o tu sistema, o déjanos hacer el trabajo por ti. {N_FUENTES} fuentes de {N_ENTIDADES} entidades, y cada respuesta con su entidad, su licencia y su huella.</p>
-<div class="botones"><a class="boton p" href="/precios#empezar">Empieza gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
+<h1 class="t0">Del dato oficial a la solución</h1>
+<p class="entrada">Una capa de datos con {N_FUENTES} fuentes de {N_ENTIDADES} entidades (empresas, contratos, normas, estadísticas, territorio y ambiente) y, encima, la analítica, las automatizaciones y los agentes que tu equipo necesita. Lo construyes tú con tu agente o lo construimos contigo.</p>
+<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 </div></div>
 <div class="envoltura h-consola">{consola()}</div>
 </section>
 
-<section class="caminos"><div class="envoltura">
-<a class="camino" href="#servicios"><span class="para">Para empresas, entidades y consultoras</span><h2>Te entregamos el trabajo hecho</h2><p>Revisamos predios, armamos expedientes y tableros, y vigilamos cambios, con la fuente oficial de cada dato. No necesitas programar.</p><span class="ir">Ver servicios</span></a>
-<a class="camino" href="/desarrolladores"><span class="para">Para equipos técnicos</span><h2>Conecta tu agente o tu sistema</h2><p>Una sola llave para consultar las fuentes por MCP o API REST, con la prueba en cada respuesta.</p><span class="ir">Ver cómo se conecta</span></a>
+<section class="seccion capas-l" id="capas"><div class="envoltura">
+<div class="cab ancha">
+<h2 class="t2">Una puerta a los datos y tres capas encima</h2>
+<p class="entrada">La capa de datos es el producto: se paga con un plan mensual y empieza gratis. Las otras tres son soluciones que se construyen sobre ella, con la fuente oficial de cada dato.</p>
+</div>
+<div class="columnas c4">
+<div class="capa-d"><span class="et">el producto</span><h3>Datos</h3><p>{N_FUENTES} fuentes oficiales por MCP o API REST, con la entidad, la licencia y la fecha en cada respuesta. Tu agente las consulta solo.</p><a class="enlace" href="/desarrolladores">Cómo se conecta</a></div>
+<div><span class="et">encima</span><h3>Analítica</h3><p>Cruces, revisiones y tableros: una empresa, un predio o un contrato revisados contra varias fuentes, o los indicadores que sigues, actualizados desde la fuente.</p></div>
+<div><span class="et">encima</span><h3>Automatización</h3><p>Vigilancias, alertas y reportes que corren solos y dejan registro de cada cambio, con su fecha y su fuente.</p></div>
+<div><span class="et">encima</span><h3>Agentes</h3><p>Asistentes que responden con el dato oficial dentro de tu sistema, tu SIG o tu ERP, y citan la fuente de cada respuesta.</p></div>
+</div>
+<div class="dos-formas">
+<p><b>Tú, con tu agente.</b> Conecta la puerta y construye encima. El plan gratis trae {miles(PLANES[0][1])} créditos al mes. <a class="enlace" href="/precios#empezar">Conecta tu agente gratis</a></p>
+<p><b>Nosotros, contigo.</b> Nuestro equipo construye la solución a precio fijo, acordado antes de empezar. <a class="enlace" href="#servicios">Ver cómo trabajamos</a></p>
+</div>
 </div></section>
 
-<section class="seccion inv servicios-l" id="servicios"><div class="envoltura">
+
+<section class="seccion" id="fuentes"><div class="envoltura">
 <div class="cab ancha">
-<h2 class="t1">Hacemos el trabajo territorial por tu equipo</h2>
-<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué necesitas decidir y te entregamos el resultado, con la fuente oficial y la licencia de cada dato.</p>
+<h2 class="t2">Soluciones para cada sector</h2>
+<p class="entrada">Lo que se construye sobre la puerta en cada sector y las herramientas que usa. Son {N_HERR} herramientas en siete familias; cada una responde una pregunta concreta.</p>
+</div>
+{chips_familias()}
+{sectores()}
+<p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
+</div></section>
+
+<section class="seccion sup servicios-l" id="servicios"><div class="envoltura">
+<div class="cab ancha">
+<h2 class="t1">O lo construimos contigo</h2>
+<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué quieres resolver y nuestro equipo construye la solución sobre la capa de datos, con la fuente oficial y la licencia de cada dato.</p>
 </div>
 {servicios_landing()}
 {metodo_html()}
 <div class="botones fin-serv"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios en detalle</a></div>
 </div></section>
 
-<section class="seccion" id="fuentes"><div class="envoltura">
+
+<section class="seccion" id="por-que"><div class="envoltura">
 <div class="cab ancha">
-<h2 class="t2">{N_FUENTES} fuentes de {N_ENTIDADES} entidades, detrás de una sola puerta</h2>
-<p class="entrada">De SECOP y el RUES al catastro del IGAC, el censo del DANE y las alertas del IDEAM. Cada herramienta responde una pregunta concreta; estas son algunas de las {N_HERR}, agrupadas por el trabajo que resuelven.</p>
+<h2 class="t2">Por qué no basta con buscar en la web</h2>
+<p class="entrada">Un agente con buscador encuentra páginas. Una decisión necesita el dato oficial, saber de dónde salió y si se puede usar.</p>
 </div>
-{sectores()}
-<p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
+<div class="columnas c4">
+<div><h3>Cada entidad publica a su manera</h3><p>{N_ENTIDADES} entidades y {N_FUENTES} fuentes, entre portales de datos abiertos, servicios de mapas, archivos y páginas. Aquí todas responden con el mismo contrato.</p></div>
+<div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M. Las herramientas ya cuentan bien.</p></div>
+<div><h3>Probado cada madrugada</h3><p>Cada herramienta se prueba a diario contra un dato medido en la fuente, y el resultado es público. <a class="enlace" href="/estado">Ver el estado</a></p></div>
+<div><h3>Empresas y lugares, no personas</h3><p>La puerta no usa un modelo de lenguaje: la misma pregunta da la misma consulta. Y no busca personas por cédula ni por nombre: cumple la ley de datos personales por diseño.</p></div>
+</div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
@@ -917,23 +1078,6 @@ def inicio() -> str:
 {prueba_html()}
 </div></section>
 
-<section class="seccion sup"><div class="envoltura">
-<div class="cobertura">
-<div class="texto-cob">
-<h2 class="t2">Dónde hay predio SINIC hoy</h2>
-<p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
-<div class="filas"><div><b>6,1 M</b><span>predios en el SINIC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
-<div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
-<p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
-</div>
-<div class="escena" data-escena="cobertura" role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra. Arrastra para girar.">
-<img class="respaldo" src="/img/mapa-colombia.webp" alt="" loading="lazy">
-<div class="rotulos" aria-hidden="true"></div>
-<p class="gira">Arrastra para girar</p>
-<p class="lectura">Pasa sobre una columna</p>
-</div>
-</div>
-</div></section>
 
 <section class="seccion" id="precios"><div class="envoltura">
 <div class="cab">
@@ -949,32 +1093,22 @@ def inicio() -> str:
 </div>
 </div></section>
 
-<section class="seccion sup"><div class="envoltura">
-<div class="cab"><h2 class="t2">Reglas que no se negocian</h2></div>
-<div class="columnas c4">
-<div><h3>Licencia por fuente</h3><p>Cada fuente sale con su licencia abierta verificada o como dato público reutilizable, con aviso; las de licencia por verificar no llegan a producción. {LICENCIAS["CC-BY-SA-4.0"]} de las {N_FUENTES} son CC BY-SA 4.0.</p></div>
-<div><h3>Sin perfiles de personas</h3><p>No hay búsquedas de personas por cédula ni por nombre. Los campos que salen están en una lista blanca.</p></div>
-<div><h3>Estado público</h3><p>Cada fuente tiene un canario diario con una verdad medida en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div><h3>La puerta no usa LLM</h3><p>La lógica de cada fuente vive en el catálogo. La misma entrada da la misma consulta, siempre.</p></div>
+<section class="seccion sup"><div class="envoltura cierre">
+<div class="cab" style="margin:0"><h2 class="t2">Empieza por lo que quieres resolver</h2><p class="entrada">Conecta tu agente gratis o cuéntanos el problema y te proponemos la solución con un precio fijo.</p></div>
+<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 </div>
-<div class="aliados-fila">
+<div class="envoltura aliados-fila">
 <span>Aliados</span>
 <a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy"></a>
 <a href="/aliados" class="t3">Atalaya Mapas</a>
-</div>
-</div></section>
-
-<section class="seccion"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">Empieza hoy</h2><p class="entrada">Prueba la capa de datos gratis o cuéntanos tu proyecto y te proponemos un precio fijo.</p></div>
-<div class="botones"><a class="boton p" href="/precios#empezar">Empieza gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div></section>
 """
     return pagina(
         "/",
-        "Terranova · Los datos oficiales de Colombia, listos para usar",
-        f"Consulta {N_FUENTES} fuentes oficiales de Colombia con tu agente o tu sistema, o déjanos hacer el trabajo: debida diligencia de predios, tableros y alertas, con la fuente de cada dato.",
+        "Terranova · Del dato oficial a la solución",
+        f"Una capa de datos con {N_FUENTES} fuentes oficiales de Colombia y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
-        ("escena-predios.js", "escena-cobertura.js", "escena-vinetas.js"),
+        ("escena-predios.js", "escena-vinetas.js"),
     )
 
 
@@ -1054,7 +1188,7 @@ def servicios() -> str:
     c = f"""
 <section class="sv-heroe"><div class="envoltura">
 <div class="txt">
-<h1 class="t1">Te entregamos el trabajo territorial hecho</h1>
+<h1 class="t1">Te entregamos el trabajo hecho</h1>
 <p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades. Con la fuente y la licencia de cada dato, y un precio fijo antes de empezar.</p>
 <div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="#revision">Ver los servicios</a></div>
 </div>
@@ -1087,14 +1221,14 @@ def servicios() -> str:
 </div></section>
 
 <section class="seccion"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">¿Tienes un proyecto territorial?</h2><p class="entrada">Escríbenos con la decisión que quieres tomar. Respondemos con lo que se puede probar y un precio fijo.</p></div>
+<div class="cab" style="margin:0"><h2 class="t2">¿Tienes un proyecto?</h2><p class="entrada">Escríbenos con la decisión que quieres tomar. Respondemos con lo que se puede probar y un precio fijo.</p></div>
 <div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div></section>
 """
     return pagina(
         "/servicios",
         "Servicios",
-        "Revisiones de predios, empresas y contratos, tableros territoriales, alertas y asistentes sobre fuentes oficiales, con la fuente de cada dato y precio fijo antes de empezar.",
+        "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales, con la fuente de cada dato y precio fijo antes de empezar.",
         c,
         ("escena-vinetas.js",),
     )
@@ -1130,6 +1264,24 @@ def fuentes() -> str:
 </div></section>
 
 <section class="seccion"><div class="envoltura">
+<div class="cobertura">
+<div class="texto-cob">
+<h2 class="t2">Dónde hay predio SINIC hoy</h2>
+<p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
+<div class="filas"><div><b>6,1 M</b><span>predios en el SINIC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
+<div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
+<p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
+</div>
+<div class="escena" data-escena="cobertura" role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra. Arrastra para girar.">
+<img class="respaldo" src="/img/mapa-colombia.webp" alt="" loading="lazy">
+<div class="rotulos" aria-hidden="true"></div>
+<p class="gira">Arrastra para girar</p>
+<p class="lectura">Pasa sobre una columna</p>
+</div>
+</div>
+</div></section>
+
+<section class="seccion"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px">
 <div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">La licencia de cada fuente</h2>
 <div class="desliza"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
@@ -1152,6 +1304,7 @@ def fuentes() -> str:
         "Fuentes y herramientas",
         f"Busca entre {N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales: territorio, contratación, estadísticas, justicia, ambiente, empresas y normativa.",
         c,
+        ("escena-cobertura.js",),
     )
 
 
@@ -1373,7 +1526,7 @@ def contacto() -> str:
     return pagina(
         "/contacto",
         "Contacto",
-        "Escríbenos para un proyecto territorial, para pedir tu llave o para soporte.",
+        "Escríbenos para un proyecto, para pedir tu llave o para soporte.",
         c,
     )
 
