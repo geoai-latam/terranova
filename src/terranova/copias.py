@@ -866,19 +866,31 @@ class Version:
 class AlmacenCopias:
     """Versiones de las copias en PostGIS: tabla nueva por corrida, vista vigente y manifiesto."""
 
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, timeout_ms: int | None = None) -> None:
         self._url = url
+        self._timeout_ms = timeout_ms
         self._conexion: Any = None
 
     @property
     def _c(self) -> Any:
         """La conexión, abierta al primer uso: la puerta arranca aunque la base no esté."""
-        if self._conexion is None:
+        c = self._conexion
+        if c is None or c.closed or c.broken:
+            # Se reconecta sola: un reinicio de Postgres ya no deja las copias caídas hasta
+            # reiniciar la puerta. Con `timeout_ms`, ninguna consulta pasa de ese tope.
             import importlib
 
             psycopg: Any = importlib.import_module("psycopg")  # extra opcional `postgres`
-            self._conexion = psycopg.connect(self._url, autocommit=True)
+            opciones = (
+                {"options": f"-c statement_timeout={self._timeout_ms}"} if self._timeout_ms else {}
+            )
+            self._conexion = psycopg.connect(self._url, autocommit=True, **opciones)
         return self._conexion
+
+    def rota(self) -> bool:
+        """La conexión se cayó (la siguiente consulta reconecta)."""
+        c = self._conexion
+        return c is not None and bool(c.closed or c.broken)
 
     def _asegurar_esquema(self) -> None:
         self._c.execute(f"CREATE SCHEMA IF NOT EXISTS {ESQUEMA}")
@@ -1161,6 +1173,19 @@ class ConectorCopia:
         self, fuente: Fuente, plan: Plan
     ) -> tuple[Version | None, tuple[list[dict[str, Any]], int | None]]:
         assert fuente.copia is not None
+        try:
+            return self._leer_una_vez(fuente, plan)
+        except Exception:
+            if not self._almacen.rota():
+                raise
+            return self._leer_una_vez(
+                fuente, plan
+            )  # la conexión se cayó: un reintento, ya reconectada
+
+    def _leer_una_vez(
+        self, fuente: Fuente, plan: Plan
+    ) -> tuple[Version | None, tuple[list[dict[str, Any]], int | None]]:
+        assert fuente.copia is not None
         version = self._almacen.vigente(fuente.copia.tabla)
         if version is None:
             return None, ([], None)
@@ -1172,4 +1197,5 @@ def conector_desde_entorno(catalogo: Catalogo) -> ConectorCopia | None:
     import os
 
     url = os.environ.get("TERRANOVA_COPIAS_URL") or os.environ.get("TERRANOVA_CURADO_URL")
-    return ConectorCopia(catalogo, AlmacenCopias(url)) if url else None
+    tope = int(os.environ.get("TERRANOVA_COPIAS_TIMEOUT_MS", "15000"))
+    return ConectorCopia(catalogo, AlmacenCopias(url, timeout_ms=tope)) if url else None

@@ -35,7 +35,7 @@ class Resultado:
     fuente_id: str
     momento: str
     ok: bool
-    codigo: str  # "verde", "verdad_distinta", "esquema_cambiado", "lento" o el código rt/1
+    codigo: str  # "verde", "verdad_distinta", "esquema_cambiado", "lento", "vencido" o el de rt/1
     detalle: str
     latencia_ms: int
 
@@ -101,6 +101,10 @@ async def correr(
                 esquema = all(d.startswith(PREFIJO_ESQUEMA) for d in diferencias)
                 codigo = "esquema_cambiado" if esquema else "verdad_distinta"
                 detalle = "; ".join(diferencias)
+            elif any(p.servido_desde == "obsoleto" for p in sobre.procedencia):
+                # la verdad coincide, pero la copia pasó su plazo de frescura (ADR-0008): no es
+                # verde, aunque la respuesta al cliente sí lo diga con su aviso
+                codigo, detalle = "vencido", "la copia pasó su plazo de frescura"
             elif ms > h.canario.latencia_max_ms:
                 codigo, detalle = "lento", f"{ms} ms > {h.canario.latencia_max_ms} ms"
             else:
@@ -119,6 +123,20 @@ async def correr(
     return resultados
 
 
+# Fallas que no son caídas: la fuente responde bien pero lenta, o la copia está vencida.
+DEGRADADOS = frozenset({"lento", "vencido"})
+
+
+def _estado(rs: list[Resultado]) -> str:
+    """`verde` si todas pasan; `degradada` si lo único que falla es lentitud o una copia vencida;
+    `rojo` si hay una falla de verdad."""
+    if not rs:
+        return "sin_datos"
+    if all(r.ok for r in rs):
+        return "verde"
+    return "degradada" if all(r.ok or r.codigo in DEGRADADOS for r in rs) else "rojo"
+
+
 def estado_por_fuente(ultimos: list[Resultado], catalogo: Catalogo) -> list[dict[str, Any]]:
     """`GET /v1/estado`: por fuente, verde si todas sus herramientas lo están."""
     por_fuente: dict[str, list[Resultado]] = {}
@@ -130,7 +148,7 @@ def estado_por_fuente(ultimos: list[Resultado], catalogo: Catalogo) -> list[dict
         salida.append(
             {
                 "fuente_id": f,
-                "estado": "sin_datos" if not rs else "verde" if all(r.ok for r in rs) else "rojo",
+                "estado": _estado(rs),
                 "herramientas": [
                     {k: v for k, v in asdict(r).items() if k != "fuente_id"} for r in rs
                 ],

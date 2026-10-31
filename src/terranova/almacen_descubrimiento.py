@@ -57,19 +57,31 @@ def _rrf(rankings: list[list[str]], k: int = 60) -> dict[str, float]:
 class AlmacenDescubrimiento:
     """La tabla `descubrimiento.datasets` (metadatos + vector), refrescada entera por catálogo."""
 
-    def __init__(self, url: str, dim: int = DIM_EMBEDDING) -> None:
+    def __init__(self, url: str, dim: int = DIM_EMBEDDING, timeout_ms: int | None = None) -> None:
         self._url = url
         self._dim = dim
+        self._timeout_ms = timeout_ms
         self._conexion: Any = None
 
     @property
     def _c(self) -> Any:
-        if self._conexion is None:
+        c = self._conexion
+        if c is None or c.closed or c.broken:
+            # Se reconecta sola: un reinicio de Postgres ya no deja las copias caídas hasta
+            # reiniciar la puerta. Con `timeout_ms`, ninguna consulta pasa de ese tope.
             import importlib
 
             psycopg: Any = importlib.import_module("psycopg")  # extra opcional `postgres`
-            self._conexion = psycopg.connect(self._url, autocommit=True)
+            opciones = (
+                {"options": f"-c statement_timeout={self._timeout_ms}"} if self._timeout_ms else {}
+            )
+            self._conexion = psycopg.connect(self._url, autocommit=True, **opciones)
         return self._conexion
+
+    def rota(self) -> bool:
+        """La conexión se cayó (la siguiente consulta reconecta)."""
+        c = self._conexion
+        return c is not None and bool(c.closed or c.broken)
 
     def asegurar_esquema(self) -> None:
         self._c.execute("CREATE EXTENSION IF NOT EXISTS vector")
@@ -433,4 +445,5 @@ def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:
             embedder = FastEmbedder()
         except ImportError:
             embedder = None
-    return ConectorCatalogo(AlmacenDescubrimiento(url), embedder)
+    tope = int(os.environ.get("TERRANOVA_COPIAS_TIMEOUT_MS", "15000"))
+    return ConectorCatalogo(AlmacenDescubrimiento(url, timeout_ms=tope), embedder)

@@ -177,8 +177,35 @@ async def test_bogota_esta_fuera_de_cobertura_y_no_descuenta(cliente_con: Client
 @pytest.mark.anyio
 @_con(ConectorFalso({}, falla="fuente_lenta"))
 async def test_el_codigo_del_conector_llega_al_cliente(cliente_con: Client[Any]) -> None:
-    with pytest.raises(ToolError, match=r"^fuente_lenta: "):
+    with pytest.raises(ToolError, match=r'"code": "fuente_lenta"'):
         await cliente_con.call_tool(PREDIO, CHIA)
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({}, falla="fuente_respuesta_invalida"))
+async def test_el_error_mcp_lleva_el_objeto_de_problema(cliente_con: Client[Any]) -> None:
+    """ADR-0011, spec 01 §6.3: por MCP, `isError` con el mismo objeto que el problem+json de REST
+    (código, título, estado HTTP y solicitud_id), no solo un texto."""
+    r = await cliente_con.call_tool(PREDIO, CHIA, raise_on_error=False)
+    assert r.is_error
+    problema = r.structured_content
+    assert problema is not None
+    assert problema["code"] == "fuente_respuesta_invalida" and problema["status"] == 502
+    assert problema["solicitud_id"].startswith("req_")
+
+
+@pytest.mark.anyio
+@_con(ConectorFalso({14: [PREDIO_CHIA]}))
+async def test_el_texto_mcp_lleva_procedencia_y_licencia(cliente_con: Client[Any]) -> None:
+    """Un cliente que solo lee `content` también ve de dónde salió el dato y con qué licencia."""
+    import json
+
+    r = await cliente_con.call_tool(PREDIO, CHIA)
+    texto = json.loads(r.content[0].text)  # type: ignore[union-attr]
+    assert texto["estado"] == "encontrado"
+    assert texto["datos"]["codigo_predial"] == CODIGO_CHIA
+    assert texto["procedencia"] and "licencia" in texto["procedencia"][0]
+    assert "huella" in texto and "geo_result" not in texto
 
 
 @pytest.mark.anyio

@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import hmac
 import os
@@ -66,6 +67,10 @@ def _ahora() -> str:
 
 class RegistroSql:
     """Llaves en SQLite (desarrollo, una réplica) o Postgres (varias réplicas, ADR-0015)."""
+
+    async def ping(self) -> None:
+        """Para `/listo`: la base de llaves responde."""
+        await asyncio.to_thread(self._bd.ejecutar, "SELECT 1")
 
     def __init__(self, destino: str | Path, pimienta: str) -> None:
         if len(pimienta) < 32:

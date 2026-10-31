@@ -47,6 +47,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## La puerta resiste sus propias fallas (2026-10-31, auditoría integral C3, C4, C6, C14)
+
+- **Nada sale como un 500 en texto plano:** lo que falle fuera de FastAPI (llave, tasa o créditos
+  con Postgres o Redis caídos) responde problem+json `error_interno` con su `solicitud_id` y suma
+  `rt_errores_internos`.
+- **`/listo`:** 200 si responden la base de llaves y Redis; 503 con la parte que falla. `/salud`
+  sigue diciendo solo que el proceso vive. La sonda externa del SLA debe mirar `/listo`.
+- **La caché deja pasar:** si Redis falla, la consulta sigue hacia la fuente sin caché
+  (`rt_cache_fallos`). Los créditos siguen necesitando Redis: sin él, `error_interno`.
+- **Copias y descubrimiento se reconectan solos** y cortan cada consulta a los 15 s
+  (`TERRANOVA_COPIAS_TIMEOUT_MS`), con un reintento si la conexión se cayó. Antes, un reinicio de
+  Postgres dejaba las 26 copias en `fuente_no_disponible` hasta reiniciar la puerta.
+- **MCP:** el texto (`content`) lleva el sobre en JSON, con estado, datos, avisos, procedencia,
+  licencia, completitud y huella (sin la geometría; tope de 24.000 caracteres). Los errores salen
+  con `isError` y el objeto de problema en `structuredContent`, como pide la spec 01 §6.3.
+- **Canarios:** una copia vencida sale `vencido`, no verde. En `/estado` y `/v1/estado`, lo que
+  solo está lento o vencido se ve degradado (ámbar o `degradada`), no rojo.
+
 ## La portada vende soluciones y la marca es Terrnova (2026-10-31)
 
 - **Marca:** se escribe **Terrnova**, como el dominio. Cambió en todo el texto versionado (sitio,

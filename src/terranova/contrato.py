@@ -249,6 +249,43 @@ class Problema(_Modelo):
         return self
 
 
+TITULOS_ERROR: Final[dict[str, str]] = {
+    "limite_tasa": "Demasiadas consultas seguidas",
+    "saldo_agotado": "Créditos del mes agotados",
+    "no_autenticado": "Falta una llave válida",
+    "sin_permiso": "La llave no tiene permiso para esta familia",
+    "parametro_invalido": "Parámetro inválido",
+    "licencia_no_habilitada": "Licencia no habilitada para esta llave",
+    "no_existe": "No existe",
+    "fuente_no_disponible": "La fuente no está disponible",
+    "fuente_lenta": "La fuente no respondió a tiempo",
+    "fuente_respuesta_invalida": "La fuente respondió algo inválido",
+    "error_interno": "Error interno",
+}
+
+
+def problema_de(
+    codigo: str,
+    detalle: str,
+    *,
+    param: str | None = None,
+    reintentar: int | None = None,
+    fuente_id: str | None = None,
+) -> Problema:
+    """El objeto de error de `rt/1` (RFC 9457): el mismo por REST (problem+json) y por MCP
+    (`isError` con este objeto en `structuredContent`, ADR-0011)."""
+    return Problema(
+        title=TITULOS_ERROR.get(codigo, codigo),
+        status=HTTP_DE[codigo],
+        code=codigo,  # type: ignore[arg-type]
+        detail=detalle[:500],
+        param=param,
+        fuente_id=fuente_id,
+        reintentar_en_s=reintentar,
+        solicitud_id=nueva_solicitud_id(),
+    )
+
+
 def huella(datos: dict[str, Any]) -> str:
     """sha256 del JSON canónico (claves ordenadas, sin espacios, UTF-8)."""
     canonico = json.dumps(datos, ensure_ascii=False, sort_keys=True, separators=(",", ":"))

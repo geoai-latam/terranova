@@ -106,3 +106,21 @@ async def test_get_estado_es_publico_y_html(tmp_path: Path) -> None:
     assert "max-age=60" in r.headers["cache-control"]
     assert CATALOGO.fuentes["igac.catastro.terreno"].titulo in r.text
     assert "/estado" not in esquema["paths"]  # fuera del OpenAPI, como /llms.txt
+
+
+def test_lenta_o_vencida_no_es_roja() -> None:
+    """Una fuente que responde bien pero lenta, o cuya copia está vencida, se ve degradada (ámbar),
+    no caída: rojo queda para las fallas de verdad (auditoría integral, 2026-10-31)."""
+    lenta, vencida, caida = CON_HERRAMIENTAS[:3]
+    momento = "2026-10-28T06:00:00.000+00:00"
+
+    def r(fuente: str, codigo: str) -> Resultado:
+        return Resultado(_herramientas_de(fuente)[0], fuente, momento, False, codigo, "", 100)
+
+    ultimos = [r(lenta, "lento"), r(vencida, "vencido"), r(caida, "fuente_no_disponible")]
+    estado = {e["fuente_id"]: e["estado"] for e in estado_fuentes(ultimos, CATALOGO, AHORA)}
+    assert estado[lenta] == "ambar" and estado[vencida] == "ambar" and estado[caida] == "rojo"
+    from terranova.vigilancia import estado_por_fuente
+
+    api = {e["fuente_id"]: e["estado"] for e in estado_por_fuente(ultimos, CATALOGO)}
+    assert api[lenta] == "degradada" and api[vencida] == "degradada" and api[caida] == "rojo"

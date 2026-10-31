@@ -35,7 +35,8 @@ Un 99,5 % mensual admite hasta unas 3 h 39 min de indisponibilidad en un mes de 
   - los 4xx (entrada, llave, saldo, tasa).
 - Si la puerta no responde en absoluto, ese tiempo cuenta entero como indisponible.
 - La medición sale de las métricas de la puerta y de una sonda externa (UptimeRobot), que consulta
-  `https://terrnova.com/salud` cada 5 minutos desde fuera del servidor. Una consulta fallida
+  `https://terrnova.com/listo` cada 5 minutos desde fuera del servidor (`/listo` revisa también la
+  base y Redis; `/salud` solo dice que el proceso vive). Una consulta fallida
   cuenta como 5 minutos sin servicio.
 
 **Fuentes:** el estado de cada una se publica en `/estado`, según su canario diario. Es

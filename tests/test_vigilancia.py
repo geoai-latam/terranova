@@ -202,3 +202,25 @@ def test_canario_piso_de_conteo_de_elementos() -> None:
 
     assert any("elementos" in p for p in comprobar(_h({"elementos": 3}), _s(2)))  # corta → roja
     assert not any("elementos" in p for p in comprobar(_h({"elementos": 3}), _s(3)))  # cumple
+
+
+@pytest.mark.anyio
+async def test_copia_vencida_no_sale_verde() -> None:
+    """La verdad coincide, pero la copia pasó su plazo de frescura: el canario dice `vencido` (antes
+    salía verde aunque la copia llevara días sin refrescarse)."""
+    from types import SimpleNamespace
+
+    h = CATALOGO.herramientas["igac_vereda_en_punto"]
+    catalogo = CATALOGO.model_copy(update={"herramientas": {h.id: h}})
+    datos = {**dict.fromkeys(h.canario.campos, "x"), **h.canario.verdad}
+
+    class _Vencida:
+        async def ejecutar(self, *a: Any, **k: Any) -> Any:
+            return SimpleNamespace(
+                estado="encontrado",
+                datos=datos,
+                procedencia=[SimpleNamespace(servido_desde="obsoleto")],
+            )
+
+    (r,) = await correr(catalogo, _Vencida(), reloj=lambda: 0.0)  # type: ignore[arg-type]
+    assert not r.ok and r.codigo == "vencido"

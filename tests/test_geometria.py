@@ -72,7 +72,7 @@ async def test_geometria_solo_en_las_herramientas_que_la_traen(mcp: Client[Any])
     assert GEOMETRIA not in esquemas[PREDIO]["required"]
     assert GEOMETRIA in esquemas["ficha_lugar"]["properties"]
     assert GEOMETRIA not in esquemas[SIN_GEOMETRIA]["properties"]
-    with pytest.raises(ToolError, match="parametro_invalido: geometria"):
+    with pytest.raises(ToolError, match='"param": "geometria"'):
         await mcp.call_tool(PREDIO, CHIA | {GEOMETRIA: "si"})
 
 
