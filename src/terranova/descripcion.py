@@ -1,7 +1,10 @@
 """Descripción de la puerta para personas y agentes (F3.6), generada del catálogo.
 
 - `llms_txt()`: `/llms.txt` (formato llmstxt.org).
-- `tarjeta_mcp()`: `/.well-known/mcp/server-card.json`.
+- `tarjeta_mcp()`: `/.well-known/mcp/server-card.json` (formato propio, con perfiles y
+  herramientas).
+- `tarjeta_estandar()`: `/mcp/server-card` (SEP-2127, sin herramientas) y `ai_catalogo()`:
+  `/.well-known/ai-catalog.json`. Los mismos datos que `server.json` del registro oficial de MCP.
 - `herramientas_md()`: `docs/HERRAMIENTAS.md`, versionado y comprobado en CI.
 """
 
@@ -78,6 +81,68 @@ def llms_txt(c: Catalogo) -> str:
         "",
     ]
     return "\n".join(lineas)
+
+
+# Identidad del servidor en el registro oficial de MCP (espacio de nombres verificado por DNS en
+# terrnova.com) y en su tarjeta estándar (SEP-2127). `server.json`, en la raíz del repo, dice lo
+# mismo; una prueba los compara.
+NOMBRE_REGISTRO = "com.terrnova/terrnova"
+DESCRIPCION_CORTA = (
+    "Datos oficiales de Colombia: predios, empresas, contratos y normas, con fuente y licencia"
+)
+URL_MCP = "https://terrnova.com/mcp"
+CABECERA_LLAVE = {
+    "name": "Authorization",
+    "description": "La llave de Terrnova como Bearer (rt_live_… o rt_test_…)",
+    "isRequired": True,
+    "isSecret": True,
+    "value": "Bearer {llave}",
+    "variables": {
+        "llave": {"description": "Tu llave de Terrnova", "isRequired": True, "isSecret": True}
+    },
+}
+
+
+def tarjeta_estandar() -> dict[str, Any]:
+    """La tarjeta del servidor según la SEP-2127: identidad y cómo conectarse, sin herramientas
+    (esas se listan por `tools/list`)."""
+    return {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": NOMBRE_REGISTRO,
+        "title": "Terrnova",
+        "version": __version__,
+        "description": DESCRIPCION_CORTA,
+        "websiteUrl": "https://terrnova.com",
+        "icons": [
+            {
+                "src": "https://terrnova.com/favicon.svg",
+                "mimeType": "image/svg+xml",
+                "sizes": ["any"],
+            }
+        ],
+        "remotes": [
+            {
+                "type": "streamable-http",
+                "url": URL_MCP,
+                "headers": [CABECERA_LLAVE],
+                "supportedProtocolVersions": PROTOCOLOS,
+            }
+        ],
+    }
+
+
+def ai_catalogo() -> dict[str, Any]:
+    """`/.well-known/ai-catalog.json` (AI Catalog 1.0): apunta a la tarjeta estándar."""
+    return {
+        "specVersion": "1.0",
+        "entries": [
+            {
+                "identifier": "urn:air:terrnova.com:mcp:terrnova",
+                "type": "application/mcp-server-card+json",
+                "url": f"{URL_MCP}/server-card",
+            }
+        ],
+    }
 
 
 def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:

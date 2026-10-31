@@ -90,7 +90,10 @@ en contexto, no la precisión.
 - **Listas largas:** si `datos.elementos` pasa de 50, llega por páginas de 50 (ADR-0033), con un
   aviso que dice cuántos hay y cómo pedir la siguiente (`pagina: 2`). Los totales y agregados de
   `datos` cuentan la lista completa.
-- **Tarjeta del servidor:** `/.well-known/mcp/server-card.json`.
+- **Tarjeta del servidor:** la estándar (SEP-2127) en `/mcp/server-card`, con el catálogo de IA
+  en `/.well-known/ai-catalog.json`; la propia, con perfiles y herramientas, en
+  `/.well-known/mcp/server-card.json`. En el registro oficial de MCP, el servidor es
+  `com.terrnova/terrnova` (`server.json` en la raíz del repo).
 
 Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
 

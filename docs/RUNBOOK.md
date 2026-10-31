@@ -157,3 +157,20 @@ El mensaje llega en menos de un minuto. Si no llega: `docker compose logs alertm
 chat mal puestos, o el bot no tiene permiso de escribir en el grupo).
 
 Prometheus guarda 400 días de historia: alcanza para medir el SLA de cualquier mes del año.
+
+## 7. Publicar en el registro oficial de MCP
+
+`server.json` (raíz del repo) describe el servidor remoto: `com.terrnova/terrnova`, en
+`https://terrnova.com/mcp`, con la llave en `Authorization`. Una prueba lo compara con la tarjeta
+estándar que sirve la puerta. Publicarlo es un acto externo: lo hace o lo aprueba el dueño.
+
+1. Llave Ed25519 (OpenSSL 3), guardada fuera del repo:
+   `openssl genpkey -algorithm Ed25519 -out mcp-registro.pem`.
+2. Registro TXT en el **apex** de `terrnova.com`:
+   `v=MCPv1; k=ed25519; p=<llave pública en base64>`. La llave pública sale de
+   `openssl pkey -in mcp-registro.pem -pubout -outform DER | tail -c 32 | base64`.
+3. Con `mcp-publisher`, desde la raíz del repo:
+   `mcp-publisher login dns --domain terrnova.com --private-key <64 hex de la llave privada>`,
+   luego `mcp-publisher validate` y `mcp-publisher publish`.
+4. Cada publicación nueva necesita una `version` mayor en `server.json` (y en la tarjeta, que la toma
+   del paquete).
