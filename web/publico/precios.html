@@ -33,7 +33,7 @@
 </div><figure class="lado-fig escalera"><figcaption>Créditos por consulta</figcaption><div class="cols"><div class="col"><b>1</b><i style="--v:0.050"></i><span>código</span></div><div class="col"><b>2</b><i style="--v:0.100"></i><span>registro</span></div><div class="col"><b>5</b><i style="--v:0.250"></i><span>agregado</span></div><div class="col"><b>10</b><i style="--v:0.500"></i><span>punto</span></div><div class="col"><b>20</b><i style="--v:1.000"></i><span>zona</span></div></div>
 <p class="fuente-dato">caché, errores y «fuera de cobertura» no descuentan</p></figure></div></section>
 <section class="seccion"><div class="envoltura">
-<div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><span class="eq">≈ 150 consultas de predio por punto</span><a class="boton p" href="/precios#empezar">Empieza gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><span class="eq">≈ 2.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-básico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><span class="eq">≈ 11.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><span class="eq">≈ 37.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><span class="eq">≈ 110.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
+<div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><span class="eq">≈ 150 consultas de predio por punto</span><a class="boton p" href="/precios#empezar">Empieza gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><span class="eq">≈ 2.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-basico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><span class="eq">≈ 11.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><span class="eq">≈ 37.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><span class="eq">≈ 110.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
 <p class="fuente-dato" style="margin-top:14px">Los precios en pesos de cada plan se confirman al pedirlo. Los servicios se cotizan aparte.</p>
 </div></section>
 
@@ -50,9 +50,16 @@
 
 <section class="seccion" id="empezar"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px;align-items:start">
-<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave gratis</h2>
-<p class="entrada">El plan Gratis trae 1.500 créditos al mes. Escríbenos con tu nombre, tu organización y qué quieres consultar. La llave llega por un canal privado y una sola vez.</p>
-<div class="botones" style="margin-top:8px"><a class="boton p" href="mailto:soporte@terrnova.com?subject=Llave%20del%20plan%20Gratis">Pedir mi llave</a><a class="boton s" href="/desarrolladores">Ver cómo conectarse</a></div></div>
+<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave de prueba</h2>
+<p class="entrada">Te llega un enlace al correo; al abrirlo ves tu llave una sola vez. Trae 300 créditos y vence en 30 días: sirve para probar. Para el plan Gratis de 1.500 créditos al mes o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
+<form class="formulario" method="post" action="/v1/alta">
+<label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
+<label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
+<label>Organización <small>(opcional)</small><input name="organizacion" maxlength="120" autocomplete="organization"></label>
+<label>Qué quieres consultar <small>(opcional)</small><textarea name="uso" rows="2" maxlength="500"></textarea></label>
+<label class="casilla"><input type="checkbox" name="acepto" value="si" required> Acepto la <a class="enlace" href="/privacidad">política de privacidad</a>.</label><label class="trampa" aria-hidden="true">No llenes este campo<input name="web" tabindex="-1" autocomplete="off"></label>
+<button class="boton p" type="submit">Enviarme el enlace</button>
+</form></div>
 <div class="bloque"><h3 class="t3">Llaves</h3>
 <div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
 <tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>

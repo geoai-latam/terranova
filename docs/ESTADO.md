@@ -47,6 +47,19 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Alta de la llave de prueba con correo verificado (2026-10-31, ADR-0034, auditoría C11 y C12)
+
+- `/precios#empezar` tiene un formulario: llega un enlace al correo (vence en 24 h), se confirma
+  con un botón y la llave se ve una sola vez. Nivel `prueba`: 300 créditos al mes, todas las
+  familias, vence a los 30 días. Una llave por correo, cinco altas por hora por IP, sin correos
+  desechables y con un campo trampa contra robots.
+- `/contacto` tiene un formulario propio: guarda el mensaje y lo reenvía a soporte. Los botones del
+  sitio que eran `mailto:` llevan al formulario con el asunto puesto.
+- **Pendiente del dueño:** un proveedor de correo saliente (SMTP con TLS) con SPF y DKIM para
+  `terrnova.com`, y sus datos en `TERRANOVA_SMTP_URL` y `TERRANOVA_CORREO_DE`. Sin eso, el alta
+  dice que no está disponible y remite a soporte. También confirmar los números de la llave de
+  prueba (300 créditos y 30 días).
+
 ## Reglas nuevas del catálogo (2026-10-31, auditoría integral C2 y C17)
 
 - **Sin uso comercial no se publica** salvo una `excepcion_uso_comercial` escrita con su decisión.

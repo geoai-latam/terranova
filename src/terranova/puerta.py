@@ -26,6 +26,7 @@ from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas, perfil_catalogo
+from terranova.alta import Altas, altas_desde_entorno
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis, AlmacenTolerante
 from terranova.catalogo import (
     FORMAS_ENTRADA,
@@ -107,6 +108,7 @@ class EstadoPuerta:
     outbox: Outbox | None = None
     canarios: RegistroCanarios | None = None
     curado: Restricciones | None = None
+    altas: Altas | None = None  # alta de llaves y contacto (ADR-0034)
     # El estado de los cortacircuitos vive lo que vive la puerta (una por réplica).
     proteccion: Proteccion = field(default_factory=Proteccion)
     iniciados: dict[str, Conector] = field(default_factory=dict)
@@ -459,6 +461,7 @@ async def iniciar() -> None:
     if ESTADO.conectores is not None:
         return
     ESTADO.registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
+    ESTADO.altas = altas_desde_entorno(ESTADO.registro)
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     ESTADO.almacen = AlmacenTolerante(AlmacenRedis(redis_url)) if redis_url else AlmacenMemoria()
     ESTADO.cuota = cuota_desde_entorno(redis_url)

@@ -775,3 +775,15 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .soluciones .capa { font: 400 13px/26px var(--font-mono); color: var(--verificado); }
 .soluciones p { font: 500 clamp(16px, 1.4vw, 18px)/1.45 var(--font-sans); letter-spacing: -0.01em; }
 @media (max-width: 560px) { .soluciones li { grid-template-columns: 1fr; } .soluciones .capa { line-height: 18px; } }
+
+/* ---------- formularios propios: alta de la llave y contacto (ADR-0034) ---------- */
+.formulario { display: grid; gap: 14px; max-width: 560px; margin-top: 8px; }
+.formulario label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+.formulario label small { font-weight: 400; color: var(--tinta-tenue); }
+.formulario input, .formulario textarea, .formulario select { font: 400 16px/1.4 var(--font-sans); color: var(--tinta);
+  background: #fff; border: 0; border-radius: var(--radio-md); box-shadow: inset 0 0 0 1px var(--linea-fuerte); padding: 11px 12px; }
+.formulario input:focus, .formulario textarea:focus, .formulario select:focus { outline: 2px solid var(--foco); outline-offset: 2px; }
+.formulario .casilla { display: flex; gap: 10px; align-items: baseline; font-weight: 400; color: var(--tinta-suave); }
+.formulario .casilla input { box-shadow: none; padding: 0; width: auto; }
+.formulario .boton { justify-self: start; border: 0; cursor: pointer; font-family: var(--font-sans); }
+.trampa { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

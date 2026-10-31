@@ -29,6 +29,8 @@ from terranova.bd import Conexion
 # Créditos al mes por nivel (ADR-0029). `con_llave` es el gratis; `ampliado`, el de entidades
 # públicas, academia y uso interno; los demás, los planes de pago.
 NIVELES = {
+    # la llave del alta automática (ADR-0034): pocos créditos, para probar; número a confirmar
+    "prueba": 300,
     "con_llave": 1_500,
     "basico": 25_000,
     "pro": 110_000,

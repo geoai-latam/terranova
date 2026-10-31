@@ -164,6 +164,65 @@ def catalogo_json() -> str:
     )
 
 
+# La llave del alta automática (ADR-0034): pocos créditos y vencimiento. Salen del código.
+sys.path.insert(0, str(RAIZ.parent / "src"))
+from terranova.alta import VIGENCIA_LLAVE  # noqa: E402
+from terranova.cuota import NIVELES  # noqa: E402
+
+CREDITOS_PRUEBA = NIVELES["prueba"]
+DIAS_PRUEBA = VIGENCIA_LLAVE.days
+
+TRAMPA = (
+    '<label class="trampa" aria-hidden="true">No llenes este campo'
+    '<input name="web" tabindex="-1" autocomplete="off"></label>'
+)
+ACEPTO = (
+    '<label class="casilla"><input type="checkbox" name="acepto" value="si" required> Acepto la '
+    '<a class="enlace" href="/privacidad">política de privacidad</a>.</label>'
+)
+
+
+def formulario_alta() -> str:
+    return f"""<form class="formulario" method="post" action="/v1/alta">
+<label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
+<label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
+<label>Organización <small>(opcional)</small><input name="organizacion" maxlength="120" autocomplete="organization"></label>
+<label>Qué quieres consultar <small>(opcional)</small><textarea name="uso" rows="2" maxlength="500"></textarea></label>
+{ACEPTO}{TRAMPA}
+<button class="boton p" type="submit">Enviarme el enlace</button>
+</form>"""
+
+
+ASUNTOS_CONTACTO = [
+    ("proyecto", "Un proyecto o una solución"),
+    ("debida-diligencia", "Debida diligencia"),
+    ("tablero", "Tablero o informe"),
+    ("vigilancia", "Alertas y automatización"),
+    ("asistente", "Asistente o agente"),
+    ("plan-gratis", "El plan Gratis"),
+    ("plan-basico", "Plan Básico"),
+    ("plan-pro", "Plan Pro"),
+    ("plan-empresa", "Plan Empresa"),
+    ("plan-escala", "Plan Escala"),
+    ("gobierno-academia", "Gobierno, academia o veeduría"),
+    ("soporte", "Soporte"),
+    ("otro", "Otro"),
+]
+
+
+def formulario_contacto() -> str:
+    opciones = "".join(f'<option value="{v}">{t}</option>' for v, t in ASUNTOS_CONTACTO)
+    return f"""<form class="formulario" method="post" action="/v1/contacto" data-asunto>
+<label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
+<label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
+<label>Organización <small>(opcional)</small><input name="organizacion" maxlength="120" autocomplete="organization"></label>
+<label>Asunto<select name="asunto">{opciones}</select></label>
+<label>Mensaje<textarea name="mensaje" rows="6" required maxlength="4000"></textarea></label>
+{ACEPTO}{TRAMPA}
+<button class="boton p" type="submit">Enviar</button>
+</form>"""
+
+
 # ---------------------------------------------------------------- piezas comunes
 def simbolo(trazo="#0E2A22", dentro="#0E2A22", punto="#E0A13A", clase="") -> str:
     return (
@@ -974,7 +1033,7 @@ def planes_html(detalle: bool = True) -> str:
         boton = (
             '<a class="boton p" href="/precios#empezar">Empieza gratis</a>'
             if n == "Gratis"
-            else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower()}">Pedir este plan</a>'
+            else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower().replace("á", "a")}">Pedir este plan</a>'
         )
         filas.append(
             f'<div class="plan"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
@@ -1348,9 +1407,9 @@ def precios() -> str:
 
 <section class="seccion" id="empezar"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px;align-items:start">
-<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave gratis</h2>
-<p class="entrada">El plan Gratis trae 1.500 créditos al mes. Escríbenos con tu nombre, tu organización y qué quieres consultar. La llave llega por un canal privado y una sola vez.</p>
-<div class="botones" style="margin-top:8px"><a class="boton p" href="mailto:{CORREO}?subject=Llave%20del%20plan%20Gratis">Pedir mi llave</a><a class="boton s" href="/desarrolladores">Ver cómo conectarse</a></div></div>
+<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave de prueba</h2>
+<p class="entrada">Te llega un enlace al correo; al abrirlo ves tu llave una sola vez. Trae {miles(CREDITOS_PRUEBA)} créditos y vence en {DIAS_PRUEBA} días: sirve para probar. Para el plan Gratis de {miles(PLANES[0][1])} créditos al mes o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
+{formulario_alta()}</div>
 <div class="bloque"><h3 class="t3">Llaves</h3>
 <div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
 <tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>
@@ -1528,10 +1587,14 @@ def contacto() -> str:
         )
         + f"""
 <section class="seccion"><div class="envoltura">
+<div class="rejilla r2" style="gap:48px;align-items:start;margin-bottom:56px">
+<div>{formulario_contacto()}</div>
+<div class="bloque"><h3 class="t3">Qué pasa después</h3><p>Guardamos tu mensaje y te respondemos al correo que dejaste, en horario hábil. Para una llave de prueba no hace falta escribir: <a class="enlace" href="/precios#empezar">pídela aquí</a>.</p></div>
+</div>
 <div class="rejilla r3">
-<div class="bloque"><span class="num">servicios</span><h3 class="t3">Cuéntanos tu proyecto</h3><p>Qué decisión quieres tomar, sobre qué lugares y con qué plazo. Respondemos con lo que se puede probar y un precio fijo.</p><a class="boton p" href="mailto:{CORREO}?subject=Proyecto%20territorial" style="margin-top:auto">Escribir</a></div>
-<div class="bloque"><span class="num">datos</span><h3 class="t3">Pide tu llave</h3><p>Tu nombre, tu organización y qué quieres consultar. La llave del plan Gratis llega por un canal privado.</p><a class="boton s" href="mailto:{CORREO}?subject=Llave%20del%20plan%20Gratis" style="margin-top:auto">Pedir llave</a></div>
-<div class="bloque"><span class="num">soporte</span><h3 class="t3">Algo no funciona</h3><p>Incluye el <code>solicitud_id</code> de la respuesta. Si una fuente está caída, míralo primero en <a class="enlace" href="/estado">el estado</a>.</p><a class="boton s" href="mailto:{CORREO}?subject=Soporte" style="margin-top:auto">Escribir a soporte</a></div>
+<div class="bloque"><span class="num">servicios</span><h3 class="t3">Cuéntanos tu proyecto</h3><p>Qué decisión quieres tomar, sobre qué lugares y con qué plazo. Respondemos con lo que se puede probar y un precio fijo.</p><a class="boton s" href="/contacto?asunto=proyecto" style="margin-top:auto">Escribir</a></div>
+<div class="bloque"><span class="num">datos</span><h3 class="t3">Pide tu llave</h3><p>La de prueba llega al instante a tu correo. Para el plan Gratis o uno de pago, escríbenos con tu organización y qué quieres consultar.</p><a class="boton s" href="/precios#empezar" style="margin-top:auto">Pedir llave de prueba</a></div>
+<div class="bloque"><span class="num">soporte</span><h3 class="t3">Algo no funciona</h3><p>Incluye el <code>solicitud_id</code> de la respuesta. Si una fuente está caída, míralo primero en <a class="enlace" href="/estado">el estado</a>.</p><a class="boton s" href="/contacto?asunto=soporte" style="margin-top:auto">Escribir a soporte</a></div>
 </div>
 <p class="fuente-dato" style="margin-top:24px">{CORREO}</p>
 </div></section>
@@ -1605,6 +1668,8 @@ def paginas() -> dict[str, str]:
                 "Los campos que salen de cada fuente están en una lista blanca.",
                 "Guardamos de tu llave solo su huella (HMAC), nunca la llave.",
                 "Medimos el uso de cada llave; los créditos se descuentan del saldo de tu organización.",
+                "Si pides una llave o nos escribes, guardamos tu nombre, tu correo, tu organización y lo que nos cuentes, para darte la llave y responderte. De tu conexión solo guardamos una huella (HMAC) de la IP, para limitar abusos; nunca la IP.",
+                "No vendemos ni compartimos esos datos. Para verlos, corregirlos o borrarlos, escríbenos.",
             ],
         ),
         "404.html": no_encontrada(),

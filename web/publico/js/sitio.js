@@ -165,3 +165,10 @@ if (cat) {
     datos = d; pintar();
   }).catch(() => { conteo.textContent = 'No se pudo cargar el catálogo. Está también en /v1/herramientas.'; });
 }
+
+// Contacto: el asunto llega en ?asunto= desde los botones del sitio y se preselecciona.
+const formAsunto = document.querySelector('[data-asunto] select[name="asunto"]');
+if (formAsunto) {
+  const pedido = new URLSearchParams(location.search).get('asunto');
+  if (pedido && [...formAsunto.options].some(o => o.value === pedido)) formAsunto.value = pedido;
+}
