@@ -126,6 +126,16 @@ Sobre el REST `/v1` que ya existe, los canales que faltan para quien pregunta, a
 
 F7.1 y F7.2 empiezan en paralelo con F3: los canarios valen desde la primera herramienta.
 
+## F8 · Fase comercial
+
+La puerta está en producción y el embudo convierte cero (auditoría integral, 2026-10-31). F8 pone la
+capa de datos y las soluciones de encima frente a compradores reales. Mientras dura, **las olas
+nuevas de F5 se congelan**: una fuente entra solo si la pide un prospecto o si cierra un hueco de
+confianza. Detalle, specs y gate en la [spec 11](specs/11-fase-comercial.md).
+
+**Gate F8:** 2 pilotos cobrados o una propuesta firmada, y 150 llaves de prueba con una activación
+≥ 40 % (o la lección escrita de por qué no).
+
 ## Definición de terminado
 
 **M1** — todos: gates F0–F4 y F6; E2E-01 a E2E-11 y E2E-14 verdes; canarios 7 días; SLO de
