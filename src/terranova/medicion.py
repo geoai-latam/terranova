@@ -47,6 +47,13 @@ class OutboxSql:
                 herramienta TEXT NOT NULL, creditos INTEGER NOT NULL, resultado TEXT NOT NULL,
                 servido_desde TEXT, momento TEXT NOT NULL, enviado INTEGER NOT NULL DEFAULT 0)"""
         )
+        # el consumo por mes y el embudo leen por momento, por organización y por llave
+        for indice in (
+            "CREATE INDEX IF NOT EXISTS eventos_momento ON eventos (momento)",
+            "CREATE INDEX IF NOT EXISTS eventos_org_momento ON eventos (org, momento)",
+            "CREATE INDEX IF NOT EXISTS eventos_llave_momento ON eventos (llave_id, momento)",
+        ):
+            self._bd.ejecutar(indice)
 
     def registrar(self, evento: Evento) -> None:
         e = evento

@@ -5,6 +5,7 @@
     terranova llaves listar [--org geoai]
     terranova orgs nivel geoai pro           (nivel del saldo mensual: ver NIVELES en cuota.py)
     terranova orgs listar                    (org, nivel, créditos al mes y llaves vigentes)
+    terranova embudo [--semanas 8]           (F8.5: altas, primera llamada, activación, activas)
     terranova canarios [--a-las 09:00 | --cada-horas 24]   (F7.1: canarios, en TERRANOVA_BD)
     terranova copias actualizar [fuente …] [--a-las 08:00 | --cada-horas 24] [--solo-vencidas]
     terranova catalogo-dcat ingerir [--fuente socrata|icde] [--limite-paginas N]   (G6: cosechar)
@@ -590,6 +591,21 @@ def _catalogo_buscar(argumentos: list[str]) -> int:
     return 0
 
 
+def embudo(argumentos: list[str]) -> int:
+    """Las métricas del embudo de la spec 11 (F8.5), de la base de `TERRANOVA_BD`."""
+    import os
+
+    from terranova.bd import Conexion
+    from terranova.embudo import informe, medir
+
+    p = argparse.ArgumentParser(prog="terranova embudo")
+    p.add_argument("--semanas", type=int, default=8)
+    a = p.parse_args(argumentos)
+    bd = Conexion(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
+    print(informe(medir(bd, semanas=a.semanas)))
+    return 0
+
+
 def main() -> None:
     # la salida lleva tildes y flechas (→); la consola de Windows es cp1252 por defecto
     with contextlib.suppress(Exception):
@@ -610,6 +626,8 @@ def main() -> None:
         sys.exit(llaves(argumentos[1:]))
     if argumentos[:1] == ["orgs"]:
         sys.exit(orgs(argumentos[1:]))
+    if argumentos[:1] == ["embudo"]:
+        sys.exit(embudo(argumentos[1:]))
     if argumentos and argumentos[0] in ("consultar", "herramientas", "fuentes", "uso"):
         from terranova import cliente  # cliente delgado del REST (ADR-0027); no carga el núcleo
 
