@@ -109,6 +109,7 @@ async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[An
     # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08)
     assert set(herramientas) == set(puerta.CATALOGO.herramientas) | {
         "ficha_lugar",
+        "ficha_empresa",
         "fuente_describir",
     }
     describir = herramientas["fuente_describir"]

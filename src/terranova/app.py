@@ -30,7 +30,7 @@ from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
-from terranova import metricas, puerta
+from terranova import ficha_empresa, metricas, puerta
 from terranova.alta import ErrorAlta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
@@ -131,6 +131,12 @@ def problema(
         media_type="application/problem+json",
         headers=cabeceras,
     )
+
+
+class FichaEmpresaEntrada(_EntradaRest):
+    """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, sin dígito de verificación."""
+
+    nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
 
 
 class FichaEntrada(_EntradaRest):
@@ -249,6 +255,22 @@ def crear_api() -> FastAPI:
         operation_id=ficha_lugar.HERRAMIENTA,
         summary=ficha_lugar.PREGUNTA,
         description=ficha_lugar.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
+
+    api.add_api_route(
+        "/v1/fichas/empresa",
+        _ruta(ficha_empresa.HERRAMIENTA, FichaEmpresaEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=ficha_empresa.HERRAMIENTA,
+        summary=ficha_empresa.PREGUNTA,
+        description=ficha_empresa.DESCRIPCION,
         tags=["fichas"],
         responses={
             c: {"model": Problema, "content": {"application/problem+json": {}}}
@@ -650,7 +672,7 @@ class Aplicacion:
     async def _atender(self, scope: Scope, receive: Any, send: Any) -> None:
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
-        protegida = ruta.startswith("/v1/co/") or ruta in ("/v1/uso", "/v1/fichas")
+        protegida = ruta.startswith(("/v1/co/", "/v1/fichas")) or ruta == "/v1/uso"
         if scope["type"] == "http" and (app is not self.api or protegida):
             # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
             if puerta.ESTADO.registro is not None:

@@ -36,6 +36,7 @@ from terranova.catalogo import (
     cargar,
     ids_parecidos,
 )
+from terranova.compuestas import COMPUESTAS, Compuesta
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
@@ -210,28 +211,32 @@ class HerramientaDelCatalogo(Tool):
         return herramienta
 
     @classmethod
-    def ficha_de_lugar(cls) -> HerramientaDelCatalogo:
-        """`ficha_lugar` (spec 03 §8.3): compone herramientas del catálogo, no es una ficha."""
+    def compuesta(cls, c: Compuesta) -> HerramientaDelCatalogo:
+        """Una ficha compuesta (`ficha_lugar`, `ficha_empresa`): junta herramientas del catálogo."""
         herramienta = cls(
-            name=ficha_lugar.HERRAMIENTA,
-            title=ficha_lugar.PREGUNTA,
-            description=ficha_lugar.DESCRIPCION,
-            parameters=ficha_lugar.ESQUEMA_ENTRADA,
+            name=c.herramienta,
+            title=c.pregunta,
+            description=c.descripcion,
+            parameters=c.esquema_entrada,
             output_schema=ESQUEMA_SOBRE,
             annotations=ToolAnnotations(
                 read_only_hint=True, idempotent_hint=True, open_world_hint=True
             ),
-            tags={ficha_lugar.FAMILIA},
+            tags={c.familia},
             meta={
                 "terranova": {
-                    "familia": ficha_lugar.FAMILIA,
-                    "version": ficha_lugar.VERSION,
-                    "creditos": ficha_lugar.TOPE_CREDITOS,
+                    "familia": c.familia,
+                    "version": c.version,
+                    "creditos": c.tope_creditos,
                 }
             },
         )
-        herramienta._ficha = ficha_lugar.HERRAMIENTA
+        herramienta._ficha = c.herramienta
         return herramienta
+
+    @classmethod
+    def ficha_de_lugar(cls) -> HerramientaDelCatalogo:
+        return cls.compuesta(COMPUESTAS[ficha_lugar.HERRAMIENTA])
 
     async def run(self, arguments: dict[str, Any]) -> ToolResult:
         return await _correr(self._ficha, arguments)
@@ -305,9 +310,7 @@ async def ejecutar(
     Con identidad (la aplicación), el plan y los scopes salen de la llave; sin ella (pruebas en
     memoria), el plan sale de `TERRANOVA_PLAN`. Cada solicitud deja un evento de uso (F3.4).
     """
-    etiqueta = (
-        ficha if ficha in CATALOGO.herramientas or ficha == ficha_lugar.HERRAMIENTA else "otra"
-    )
+    etiqueta = ficha if ficha in CATALOGO.herramientas or ficha in COMPUESTAS else "otra"
     inicio = time.monotonic()
     completa, pagina = False, 1
     try:
@@ -413,8 +416,8 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
     if ESTADO.conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
     h = CATALOGO.herramientas.get(ficha)
-    es_ficha = ficha == ficha_lugar.HERRAMIENTA
-    familia = ficha_lugar.FAMILIA if es_ficha else h.familia if h is not None else None
+    compuesta = COMPUESTAS.get(ficha)
+    familia = compuesta.familia if compuesta else h.familia if h is not None else None
     if ESTADO.registro is not None:
         if principal is None:
             raise ErrorEjecucion("no_autenticado", "falta una llave válida (Authorization: Bearer)")
@@ -424,15 +427,15 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
     ejecutor = Ejecutor(CATALOGO, ESTADO.conectores, ESTADO.almacen, proteccion=ESTADO.proteccion)
 
     async def correr() -> Sobre:
-        if es_ficha:
+        if compuesta is not None:
             # las partes fuera de los scopes de la llave no se consultan (salen en avisos)
             puede = principal.puede if principal is not None else (lambda _f: True)
-            return await ficha_lugar.ficha(
+            return await compuesta.correr(
                 ejecutor, entrada, plan=plan, puede=puede, curado=ESTADO.curado
             )
         return await ejecutor.ejecutar(ficha, entrada, plan=plan)
 
-    costo = ficha_lugar.TOPE_CREDITOS if es_ficha else h.creditos if h is not None else None
+    costo = compuesta.tope_creditos if compuesta else h.creditos if h is not None else None
     if ESTADO.cuota is None or principal is None or costo is None:
         return await correr()
     cuota = ESTADO.cuota
@@ -564,8 +567,9 @@ def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> Fas
     for h in CATALOGO.herramientas.values():
         if familia is None or h.familia == familia or h.id in HERRAMIENTAS_COMUNES:
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
-    if familia in (None, ficha_lugar.FAMILIA):
-        servidor.add_tool(HerramientaDelCatalogo.ficha_de_lugar())
+    for c in COMPUESTAS.values():
+        if familia in (None, c.familia):
+            servidor.add_tool(HerramientaDelCatalogo.compuesta(c))
     servidor.tool(
         fuente_describir,
         annotations=ToolAnnotations(
@@ -605,13 +609,15 @@ def indice_herramientas() -> perfil_catalogo.IndiceHerramientas:
 
 
 def _resumen_herramienta(id_: str) -> dict[str, Any]:
-    if id_ == ficha_lugar.HERRAMIENTA:
+    if id_ in COMPUESTAS:
+        c = COMPUESTAS[id_]
         return {
             "herramienta": id_,
-            "familia": ficha_lugar.FAMILIA,
-            "pregunta": ficha_lugar.PREGUNTA,
-            "descripcion": " ".join(ficha_lugar.DESCRIPCION.split())[:600],
-            "entrada": ficha_lugar.ESQUEMA_ENTRADA,
+            "familia": c.familia,
+            "pregunta": c.pregunta,
+            "descripcion": " ".join(c.descripcion.split())[:600],
+            "entrada": c.esquema_entrada,
+            "creditos": c.tope_creditos,
         }
     h = CATALOGO.herramientas[id_]
     esquema = esquema_entrada(h)
@@ -647,7 +653,7 @@ async def consultar(herramienta: str, entrada: dict[str, Any] | str) -> ToolResu
     """Ejecuta una herramienta del catálogo de Terrnova (la que dio `buscar_herramienta`) con su
     entrada. Responde el sobre rt/1: estado (encontrado, no_encontrado, parcial), datos y
     procedencia con la licencia. Gasta los créditos de esa herramienta."""
-    if herramienta not in CATALOGO.herramientas and herramienta != ficha_lugar.HERRAMIENTA:
+    if herramienta not in CATALOGO.herramientas and herramienta not in COMPUESTAS:
         parecidos = ids_parecidos(CATALOGO, herramienta)
         pista = f"; ¿quiso decir {', '.join(parecidos)}?" if parecidos else ""
         raise ToolError(f"no_existe: no hay herramienta «{herramienta}»{pista}")

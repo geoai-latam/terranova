@@ -34,7 +34,10 @@ def _ids(indice: IndiceHerramientas, consulta: str, **kw: Any) -> list[str]:
 
 def test_cada_herramienta_del_catalogo_tiene_su_documento() -> None:
     docs = documentos(puerta.CATALOGO)
-    assert {d.herramienta for d in docs} == set(puerta.CATALOGO.herramientas) | {"ficha_lugar"}
+    assert {d.herramienta for d in docs} == set(puerta.CATALOGO.herramientas) | {
+        "ficha_lugar",
+        "ficha_empresa",
+    }
     assert all(d.texto for d in docs)
 
 

@@ -22,8 +22,8 @@ from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo
+from terranova.compuestas import COMPUESTAS
 
 if TYPE_CHECKING:
     from terranova.descubrimiento import Embedder
@@ -68,13 +68,14 @@ def documentos(catalogo: Catalogo) -> list[Documento]:
         if f is not None:
             partes += [f.titulo, f.entidad]
         docs.append(Documento(h.id, h.familia, " · ".join(" ".join(p.split()) for p in partes)))
-    docs.append(
-        Documento(
-            ficha_lugar.HERRAMIENTA,
-            ficha_lugar.FAMILIA,
-            f"ficha lugar · {ficha_lugar.PREGUNTA} · {ficha_lugar.DESCRIPCION}",
+    for c in COMPUESTAS.values():
+        docs.append(
+            Documento(
+                c.herramienta,
+                c.familia,
+                f"{c.herramienta.replace('_', ' ')} · {c.pregunta} · {c.descripcion}",
+            )
         )
-    )
     return docs
 
 
@@ -170,7 +171,7 @@ class IndiceHerramientas:
         # la ficha casa con toda pregunta de un punto (su texto nombra todas sus partes): si no es
         # la primera, va al final, para que el agente vea antes la capa específica (banco de
         # escala: con la específica primera, eligió la ficha de t11 a t15)
-        resumen = [i for i in orden[1:] if self.docs[i].herramienta == ficha_lugar.HERRAMIENTA]
+        resumen = [i for i in orden[1:] if self.docs[i].herramienta in COMPUESTAS]
         orden = [i for i in orden if i not in resumen] + resumen
         if familia:
             # la familia acota, pero no oculta el mejor: el agente la adivina (banco de escala:

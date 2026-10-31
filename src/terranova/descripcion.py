@@ -13,8 +13,8 @@ from __future__ import annotations
 from typing import Any
 
 from terranova import __version__
-from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo, Fuente, Herramienta
+from terranova.compuestas import COMPUESTAS
 
 FUENTE_DESCRIBIR = "fuente_describir"
 DESCRIBIR = (
@@ -56,10 +56,13 @@ def llms_txt(c: Catalogo) -> str:
         "",
         f"- [{FUENTE_DESCRIBIR}](/v1/fuentes): {DESCRIBIR}",
         "",
-        "## Ficha de un lugar",
+        "## Fichas: varias fuentes en una respuesta",
         "",
-        f"- [{ficha_lugar.HERRAMIENTA}](/v1/fichas): {ficha_lugar.DESCRIPCION} "
-        f"Hasta {ficha_lugar.TOPE_CREDITOS} créditos (la suma de las partes).",
+        *(
+            f"- [{c.herramienta}]({c.ruta_rest}): {c.descripcion} "
+            f"Hasta {c.tope_creditos} créditos (la suma de las partes)."
+            for c in COMPUESTAS.values()
+        ),
         "",
     ]
     for familia, hs in _familias(c).items():
@@ -160,7 +163,7 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
             {
                 "name": familia,
                 "endpoint": f"/mcp/{familia}",
-                "tools": len(hs) + (familia == ficha_lugar.FAMILIA),
+                "tools": len(hs) + sum(c.familia == familia for c in COMPUESTAS.values()),
             }
             for familia, hs in familias.items()
         ],
@@ -174,11 +177,12 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
         ]
         + [
             {
-                "name": ficha_lugar.HERRAMIENTA,
-                "title": ficha_lugar.PREGUNTA,
-                "family": ficha_lugar.FAMILIA,
-                "credits": ficha_lugar.TOPE_CREDITOS,
+                "name": c.herramienta,
+                "title": c.pregunta,
+                "family": c.familia,
+                "credits": c.tope_creditos,
             }
+            for c in COMPUESTAS.values()
         ],
     }
 
@@ -204,11 +208,14 @@ def herramientas_md(c: Catalogo) -> str:
         "",
         f"`{FUENTE_DESCRIBIR}` (MCP en `/mcp`; REST en `GET /v1/fuentes/{{id}}`): {DESCRIBIR}",
         "",
-        "## Ficha de un lugar",
-        "",
-        f"`{ficha_lugar.HERRAMIENTA}` (MCP en `/mcp` y `/mcp/{ficha_lugar.FAMILIA}`; REST en "
-        f"`POST /v1/fichas`): {ficha_lugar.DESCRIPCION} Cuesta la suma de las partes que "
-        f"respondieron, hasta {ficha_lugar.TOPE_CREDITOS} créditos.",
+        "## Fichas: varias fuentes en una respuesta",
         "",
     ]
+    for comp in COMPUESTAS.values():
+        lineas += [
+            f"`{comp.herramienta}` (MCP en `/mcp` y `/mcp/{comp.familia}`; REST en "
+            f"`POST {comp.ruta_rest}`): {comp.descripcion} Cuesta la suma de las partes que "
+            f"respondieron, hasta {comp.tope_creditos} créditos.",
+            "",
+        ]
     return "\n".join(lineas)
