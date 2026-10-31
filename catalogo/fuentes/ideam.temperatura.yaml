@@ -34,7 +34,7 @@ campos:
   valorobservado: {nombre: temperatura_c, tipo: float, desc: "temperatura del aire observada, en grados Celsius"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: IDEAM, theme: clima, accrualPeriodicity: continuous}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una observación instantánea de un sensor; el aeropuerto de Valledupar da 744 por día (un sensor horario y otro GPRS cada 2 min)"

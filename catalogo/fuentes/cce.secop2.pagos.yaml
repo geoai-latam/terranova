@@ -34,7 +34,7 @@ campos:
   nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un pago del plan de pagos; 3 para CO1.PCCNTR.3712964

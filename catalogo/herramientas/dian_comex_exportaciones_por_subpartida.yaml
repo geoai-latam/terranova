@@ -8,7 +8,7 @@ descripcion: >
   dígitos) en un AÑO: valor FOB (en dólares y en pesos), peso neto en kilos y cantidad, sumados de
   todas las declaraciones de exportación de ese año. Son cifras estadísticas del DANE (no
   probatorias) y NO incluyen el detalle por empresa: el microdato abierto no trae NIT. Sale de la
-  copia de Terranova (ADR-0024); la procedencia dice la fecha de la copia y la ventana de meses que
+  copia de Terrnova (ADR-0024); la procedencia dice la fecha de la copia y la ventana de meses que
   cubre, así que un año en curso puede estar incompleto.
   (Fuente: DANE, Estadísticas de Exportaciones; licencia: CC BY-SA 4.0.)
 entrada: {subpartida: subpartida, anio: anio}

@@ -38,7 +38,7 @@ campos:
   a_o_de_corte: {nombre: anio_corte, tipo: int, desc: "año de corte"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de Sociedades, theme: comercio, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una empresa en un año de corte; 5 años para el NIT 899999068

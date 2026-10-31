@@ -33,7 +33,7 @@ campos:
   modalidad: {nombre: modalidad, tipo: str, desc: "modalidad"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Instituto Nacional de Vigilancia de Medicamentos y Alimentos, theme: salud, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un registro o notificación sanitaria; 1 para el expediente 2

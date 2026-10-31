@@ -37,7 +37,7 @@ campos:
 # `codigo_municipio` de la fuente no se usa: para Chía dice 23175 (el DIVIPOLA es 25175), medido el 2026-10-22
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un perímetro urbano (cabecera o centro poblado); 2 403 en el país

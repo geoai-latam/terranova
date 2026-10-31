@@ -30,7 +30,7 @@ campos:
   cantidadexentos787: {nombre: exentos, tipo: int, desc: "vehículos exentos de pago (Ley 787 de 2002)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: ANI, theme: transporte, accrualPeriodicity: semiannual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "el tráfico de un mes en un peaje de la ANI para una categoría de tarifa; 149 944 filas de 162 peajes, de enero de 2014 a mayo de 2026"

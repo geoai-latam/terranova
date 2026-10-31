@@ -5,7 +5,7 @@ competencia: produce las estadísticas de comercio exterior a partir de las decl
 acto: null
 # Microdato de exportaciones del DANE (ANDA, catálogo 859): una fila por línea de declaración (DEX),
 # con columnas AGREGABLES (subpartida NANDINA POSAR, país de destino, valor FOB en dólares y pesos,
-# peso, cantidad). NO hay NIT, cédula ni nombre de exportador. Terranova lo COPIA (ADR-0024) y lo
+# peso, cantidad). NO hay NIT, cédula ni nombre de exportador. Terrnova lo COPIA (ADR-0024) y lo
 # PRE-AGREGA a (año, mes, subpartida, país de destino). Licencia del portal: CC BY-SA 4.0 declarada.
 licencia:
   spdx: CC-BY-SA-4.0
@@ -52,7 +52,7 @@ campos:
   lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-26'
   fila: "una fila pre-agregada por (año, mes, subpartida, país de destino); año 2025: 192.262 filas; mayores exportaciones por FOB: petróleo crudo (2709000000) US$9.930 M, café (0901119000) US$5.783 M, oro (7108120000) US$4.604 M, carbón (2701120010) US$3.860 M; copiado de los ZIP ANDA 859 (ADR-0024)"

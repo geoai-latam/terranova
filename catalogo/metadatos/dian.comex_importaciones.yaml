@@ -9,7 +9,7 @@ pagina: https://microdatos.dane.gov.co/index.php/catalog/856/get-microdata
 titulo: Estadísticas de Importaciones - IMPO
 descripcion: >
   Microdato de las importaciones de mercancías de Colombia, elaborado por el DANE a partir de las
-  declaraciones de importación presentadas ante la DIAN. Cada línea es una declaración; Terranova la
+  declaraciones de importación presentadas ante la DIAN. Cada línea es una declaración; Terrnova la
   copia y la pre-agrega a (año, mes, subpartida NANDINA, país de origen) con los valores sumados. No
   contiene NIT, cédula ni nombre de declarante.
 publicado: '2025-03-26'

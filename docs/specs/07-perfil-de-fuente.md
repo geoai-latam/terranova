@@ -27,7 +27,7 @@ no responder.
 ## El perfil
 
 Cada ficha de fuente lleva un bloque `perfil:`, medido en la fuente (nunca copiado de la respuesta de
-Terranova) y fechado:
+Terrnova) y fechado:
 
 ```yaml
 perfil:

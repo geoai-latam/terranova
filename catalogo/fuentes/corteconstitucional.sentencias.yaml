@@ -33,7 +33,7 @@ campos:
   av_apv: {nombre: aclaracion_voto, tipo: str, desc: "si hubo aclaración de voto (s.d.: sin dato)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: "Corte Constitucional", accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una sentencia; 29 513 de 1992-02-25 a 2026-09-30, todas distintas"

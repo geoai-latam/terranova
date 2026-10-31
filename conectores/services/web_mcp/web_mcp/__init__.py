@@ -1,1 +1,1 @@
-"""web-mcp: APIs web públicas con buenas maneras (Terranova F5, G4)."""
+"""web-mcp: APIs web públicas con buenas maneras (Terrnova F5, G4)."""

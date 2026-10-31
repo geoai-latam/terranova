@@ -6,7 +6,7 @@ pregunta: "¿Cómo estuvo el desempleo y el empleo en Colombia en este año?"
 descripcion: >
   Mercado laboral del total nacional según la GEIH del DANE, mes a mes en un año (desde 2001): tasa
   global de participación, de ocupación, de desocupación (desempleo), de subocupación y las
-  poblaciones (en miles). Sale de la copia de Terranova del anexo del último mes publicado.
+  poblaciones (en miles). Sale de la copia de Terrnova del anexo del último mes publicado.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {anio: int}
 consulta:

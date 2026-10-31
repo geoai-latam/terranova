@@ -127,7 +127,7 @@ rankea mejor; se decide al desplegar, midiendo con el banco de verdades. **El pi
 gibberish con pinta de palabras:** medido con pruebas de usuario humano, «asdkjfh qwerty» puntúa 0,47
 (cae en páginas municipales genéricas) y una consulta buena como «cuanto cuesta un remedio» puntúa 0,469
 —el coseno absoluto de este modelo no está calibrado, así que ningún piso fijo los separa (subirlo mata
-buenas). Mitiga: el **cliente LLM juzga** los candidatos (Terranova es recuperación honesta, no el juez),
+buenas). Mitiga: el **cliente LLM juzga** los candidatos (Terrnova es recuperación honesta, no el juez),
 y un modelo grande calibra mejor. El gibberish claro sin palabras («xzxzxz 12345», 0,37) sí cae bajo el
 piso. **Medido con e5-large en producción (2026-10-27, #136/#137):** e5 comprime los cosenos en
 0,75–0,92, así que el piso se recalibró a **0,84**, medido sobre 33.726 datasets y 100 consultas:

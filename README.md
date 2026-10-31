@@ -1,4 +1,4 @@
-# Terranova
+# Terrnova
 
 **Respuestas verificables sobre un lugar de Colombia, desde las fuentes oficiales abiertas, por MCP y
 REST, con la fuente y la licencia en cada respuesta.**
@@ -17,7 +17,7 @@ datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus,
   (`vistos/total`) y desde dónde se sirvió** (fuente, copia, curado, caché u obsoleto).
 - **Territorio de primera clase:** predio en un punto, cruces espaciales, ficha de un lugar,
   restricciones, amenazas e imágenes.
-- **Gratuito por ahora** (ADR-0020). El repo es privado: Terranova es un producto comercial (enmienda de la ADR-0001).
+- **Gratuito por ahora** (ADR-0020). El repo es privado: Terrnova es un producto comercial (enmienda de la ADR-0001).
 
 ## Principios
 
@@ -51,10 +51,10 @@ datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus,
 ## Relación con GEO Copilot
 
 Los conectores (12 servidores MCP: ArcGIS, OGC, datos abiertos, DANE, imágenes, amenazas, rutas…)
-viven en [geoai-latam/geo-copilot](https://github.com/geoai-latam/geo-copilot). Terranova es la
+viven en [geoai-latam/geo-copilot](https://github.com/geoai-latam/geo-copilot). Terrnova es la
 puerta, el catálogo y la operación encima de ellos. GEO Copilot es su primer cliente.
 
 ## Licencia
 
 Propietaria: © 2026 GeoAI LATAM, todos los derechos reservados ([LICENSE](LICENSE)). Cada dato
-que Terranova entrega conserva la licencia y la atribución de su fuente ([LICENSE-DATA.md](LICENSE-DATA.md)).
+que Terrnova entrega conserva la licencia y la atribución de su fuente ([LICENSE-DATA.md](LICENSE-DATA.md)).

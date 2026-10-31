@@ -195,7 +195,7 @@ def _ruta(ficha: str, Entrada: type[BaseModel]) -> Callable[..., Awaitable[Any]]
 
 def crear_api() -> FastAPI:
     api = FastAPI(
-        title="Terranova",
+        title="Terrnova",
         version="1",
         description=(
             "Puerta única sobre fuentes oficiales colombianas y globales. Cada respuesta es un "

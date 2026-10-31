@@ -49,7 +49,7 @@ campos:
   valor: {nombre: crecimiento_anual_pct, tipo: float, desc: "crecimiento frente al mismo trimestre del año anterior, %, series encadenadas de volumen, datos originales (sin desestacionalizar)"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "el crecimiento anual de una actividad (o del PIB) en un trimestre"

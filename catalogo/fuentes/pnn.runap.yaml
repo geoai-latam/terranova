@@ -44,7 +44,7 @@ campos:
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
 capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: PNN, theme: areas_protegidas}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un área protegida inscrita en el RUNAP; 1 936 en el país

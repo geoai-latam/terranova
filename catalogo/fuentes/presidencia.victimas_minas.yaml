@@ -30,7 +30,7 @@ campos:
   estado: {nombre: sexo, tipo: str, desc: "sexo de la víctima (la fuente lo publica en la columna «estado»)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Presidencia de la República, theme: seguridad, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "una víctima; 12 390 de 1990 a 2023"

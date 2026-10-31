@@ -33,7 +33,7 @@ campos:
   nivel_de_riesgo_rural: {nombre: nivel_riesgo_rural, tipo: str, desc: "nivel de riesgo rural"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: INS, theme: salud, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un municipio en un año con su IRCA total, urbano y rural; 19 160 filas, Chía tiene 18 (2007 a 2024)"

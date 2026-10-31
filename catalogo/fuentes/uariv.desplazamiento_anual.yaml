@@ -33,7 +33,7 @@ campos:
   eventos: {nombre: celda_eventos, tipo: int, desc: "eventos en la celda; solo se sirve sumado"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Unidad para la Atención y Reparación Integral a las Víctimas, theme: inclusion social, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una celda del RUV en un corte: municipio × año × sexo × etnia × discapacidad × ciclo vital, con las personas desplazadas desde el municipio (ocurrencia), las de «llegada» y los eventos; 23,6 M de filas; Turbo, corte 30/09/2026: 4 764 celdas, 158 649 personas expulsadas de 1985 a 2026"

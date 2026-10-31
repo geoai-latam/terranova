@@ -30,7 +30,7 @@ campos:
   id_persona: {nombre: victima, tipo: int, desc: "identificador anónimo de la víctima"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Centro Nacional de Memoria Histórica, theme: memoria, accrualPeriodicity: semiannual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "una víctima en un caso; 10 654 filas, hasta 2026"

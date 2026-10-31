@@ -14,7 +14,7 @@ _DISTINTAS = re.compile(r"^\s*distinct\b", re.IGNORECASE)
 def es_agregado(select: str | None) -> bool:
     """`select` con agregados o `distinct`: el resultado son grupos, no filas del conjunto.
 
-    `distinct` (Terranova, spec 07): SECOP II publica copias exactas de algunas modificaciones (33 filas
+    `distinct` (Terrnova, spec 07): SECOP II publica copias exactas de algunas modificaciones (33 filas
     para 16). Que lleguen menos filas que las del filtro no es un corte.
     """
     return bool(select and (_AGREGADO.search(select) or _DISTINTAS.search(select)))

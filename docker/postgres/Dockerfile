@@ -1,4 +1,4 @@
-# Postgres de Terranova: pgvector (catálogo de descubrimiento, G6/ADR-0028) + PostGIS (dataset
+# Postgres de Terrnova: pgvector (catálogo de descubrimiento, G6/ADR-0028) + PostGIS (dataset
 # curado de restricciones, F4.1). Base pgvector:pg17 (Debian bookworm): la imagen postgis:17-3.5
 # quedaba en Debian bullseye, cuyo repo PGDG ya no trae Release file y rompía `apt-get`.
 FROM pgvector/pgvector:pg17

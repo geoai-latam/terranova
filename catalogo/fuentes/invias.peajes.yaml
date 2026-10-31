@@ -36,7 +36,7 @@ campos:
   longitud: {nombre: lon, tipo: float, desc: "longitud del peaje"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un peaje del INVÍAS con sus tarifas por categoría; 179 filas, 172 códigos de peaje"

@@ -39,7 +39,7 @@ campos:
   fecha_de_inspecci_n: {nombre: fecha_inspeccion, tipo: str, desc: "fecha de la última inspección registrada, como la publica la fuente (AAAA.MM.DD)"}
 comportamiento: {max_por_pagina: 50000, orden_coordenadas: lon_lat}
 dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un puente de la red vial nacional; 2 830 en el país, 20 al norte de Bogotá"

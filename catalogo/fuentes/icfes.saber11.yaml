@@ -33,7 +33,7 @@ campos:
   fami_estratovivienda: {nombre: estrato, tipo: str, desc: "estrato de la vivienda del estudiante (sin dato si vacío); solo agregado"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Colombiano para la Evaluación de la Educación, theme: educacion, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un estudiante en un periodo del examen; Chía: 26 929 filas para 23 014 estudiantes'

@@ -46,7 +46,7 @@ campos:
   valor: {nombre: indice, tipo: float, desc: "número índice del IPC total nacional (diciembre de 2018 = 100)"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "el índice del IPC de un mes; serie de empalme mensual desde enero de 2003"

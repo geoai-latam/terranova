@@ -50,7 +50,7 @@ campos:
   urlproceso: {nombre: url_proceso, tipo: str, desc: "enlace público al proceso en SECOP II"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un contrato de SECOP II firmado desde 2023, copiado de jbjy-vk9h en PostGIS (ADR-0024)

@@ -31,7 +31,7 @@ campos:
   TERRENO_CODIGO: {nombre: codigo_predial, tipo: str, desc: "número predial del terreno al que pertenece la placa"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: territorio, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una placa domiciliaria (línea) de un terreno; el predio 251750100000001800901900000000 tiene una: «7A Tejares de San Jose»"

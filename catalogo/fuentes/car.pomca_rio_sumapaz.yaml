@@ -34,7 +34,7 @@ campos:
   NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, AIA…)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: CAR, theme: ambiente}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un polígono de zonificación ambiental; 31 909 en la cuenca del río Sumapaz"

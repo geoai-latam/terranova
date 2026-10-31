@@ -6,11 +6,11 @@
 
 ## 1. Qué cubre
 
-**Cubre:** la puerta de Terranova (`https://terrnova.com`), es decir, la API REST `/v1`, el MCP
+**Cubre:** la puerta de Terrnova (`https://terrnova.com`), es decir, la API REST `/v1`, el MCP
 (`/mcp` y sus perfiles) y las rutas de catálogo.
 
 **No cubre la disponibilidad de las fuentes oficiales.** Son de terceros (entidades públicas
-colombianas y organismos globales) y Terranova no las controla. Cuando una fuente falla, la puerta
+colombianas y organismos globales) y Terrnova no las controla. Cuando una fuente falla, la puerta
 responde «no se pudo» (`fuente_no_disponible`, `fuente_lenta`), no descuenta créditos y no inventa
 el dato.
 

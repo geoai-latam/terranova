@@ -375,7 +375,7 @@ def consultar(url: str, *, where: str | None = None, bbox: list[float] | None = 
     with cliente(capa, timeout=TIMEOUT_CONSULTA_S) as http:
         meta = _json(http, capa)
         if not meta.get("geometryType"):
-            # Terranova F5: las tablas (p. ej. REGISTRO_1/2 de la base catastral) se consultan por
+            # Terrnova F5: las tablas (p. ej. REGISTRO_1/2 de la base catastral) se consultan por
             # atributos, sin geometría ni bbox; un grupo de capas sigue sin ser consultable
             if meta.get("type") != "Table":
                 raise ErrorArcGIS("esa capa no tiene geometría (es un grupo de capas u otra cosa); "

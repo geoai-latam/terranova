@@ -1,6 +1,6 @@
 # Fuentes objetivo (Colombia)
 
-Lista de las fuentes oficiales abiertas que Terranova debe servir para M2. Todos los puntos de acceso
+Lista de las fuentes oficiales abiertas que Terrnova debe servir para M2. Todos los puntos de acceso
 se consultaron el 2026-10-21. «Verificado» quiere decir que se llamó al punto de acceso y devolvió
 datos.
 

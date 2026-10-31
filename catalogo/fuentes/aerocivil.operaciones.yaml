@@ -35,7 +35,7 @@ campos:
   totaloperaciones: {nombre: operaciones, tipo: int, desc: "número de operaciones"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Aerocivil, theme: transporte, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un aeródromo, un mes, un origen y destino, un tipo de vuelo y de operación con su conteo; 1 291 442 filas de 2017 a 2026; El Dorado (SKBO) tiene 18 476 filas en 2025"

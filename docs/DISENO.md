@@ -1,4 +1,4 @@
-# Sistema de diseño de Terranova (v4)
+# Sistema de diseño de Terrnova (v4)
 
 La fuente de verdad es el sitio en producción: los tokens viven en `web/publico/estilo.css` (`:root`)
 y las páginas las genera `web/construir.py` desde el catálogo. Este documento dice las reglas que no
@@ -114,7 +114,7 @@ El 3D solo va con datos reales y cuando ayuda a leerlos.
 ## Logo y aliados
 
 Tres curvas de nivel forman un arco (puerta y colina en planta); el punto ámbar es el lugar
-consultado. «Terranova» en Geist 700, interletrado −4 %. No se gira ni cambia el color del punto.
+consultado. «Terrnova» en Geist 700, interletrado −4 %. No se gira ni cambia el color del punto.
 
 GeoAI LATAM y Atalaya Mapas son proyectos hermanos, nunca clientes, siempre con su logo oficial. El
 de Atalaya Mapas está pendiente: hasta tenerlo se escribe su nombre.

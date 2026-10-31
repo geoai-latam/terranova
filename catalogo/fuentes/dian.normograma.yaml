@@ -30,7 +30,7 @@ campos:
   texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
 comportamiento: {max_por_pagina: 20}
 dcat: {publisher: "Dirección de Impuestos y Aduanas Nacionales (DIAN)", theme: normativa, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un fragmento de una norma; el Decreto 1165 de 2019 tiene 1,3 M caracteres y 3 apariciones de «ARTÍCULO 1o»"

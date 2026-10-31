@@ -39,7 +39,7 @@ campos:
   valor: {nombre: valor, tipo: float, desc: "valor del acto, en pesos; solo promediado"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Geográfico Agustín Codazzi, theme: catastro, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una transacción registrada; 17 069 compraventas en Chía

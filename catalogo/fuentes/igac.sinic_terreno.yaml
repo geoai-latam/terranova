@@ -88,7 +88,7 @@ campos:
 capas_servicio: [3]
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "el terreno de un predio de un gestor catastral; 11 M en el país, 6,13 M en los 333 municipios que la base del IGAC no cubre"

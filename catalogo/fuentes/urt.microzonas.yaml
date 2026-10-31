@@ -37,7 +37,7 @@ campos:
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [3]
 dcat: {publisher: URT, theme: tierras}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una zona microfocalizada para la restitución de tierras; 1 314 en el país, 8 en El Carmen de Bolívar"

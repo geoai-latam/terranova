@@ -15,7 +15,7 @@ from typing import Any
 
 logger = logging.getLogger("geo_mcp_kit")
 
-#: Códigos estables de error (contrato `rt/1` de Terranova, spec 01 §6.3): quien consume el
+#: Códigos estables de error (contrato `rt/1` de Terrnova, spec 01 §6.3): quien consume el
 #: servidor decide por el código, no leyendo el mensaje.
 CODIGOS = frozenset({
     "parametro_invalido", "zona_demasiado_grande", "no_autenticado", "sin_permiso",
@@ -123,7 +123,7 @@ def herramientas_en_hilo(mcp: Any) -> Any:
 
     FastMCP llama una tool `def` dentro del bucle: mientras espera a la fuente (`runner.run`
     bloquea hasta el resultado), el servidor no atiende nada más, ni otras llamadas ni el
-    arranque de sesiones. Una fuente lenta tumbaba el servicio entero (Terranova F4.2: la ficha
+    arranque de sesiones. Una fuente lenta tumbaba el servicio entero (Terrnova F4.2: la ficha
     de un lugar pide 8 capas a la vez a arcgis-mcp). Se llama una vez, después de registrar las
     tools; las funciones del módulo siguen siendo síncronas (las pruebas las llaman directo).
     """

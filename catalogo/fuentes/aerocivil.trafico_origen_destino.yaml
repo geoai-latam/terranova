@@ -42,7 +42,7 @@ campos:
   carga_correo_kg: {nombre: carga_correo_kg, tipo: float, desc: "carga de pago más correo, en kilogramos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Aerocivil, theme: transporte, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una aerolínea, un mes y un par origen-destino del viaje con sus pasajeros y kilos; 478 010 filas de 2020 a 2026; El Dorado (BOG) suma 31 637 filas en 2025"

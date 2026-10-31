@@ -39,7 +39,7 @@ campos:
   consecutiv: {nombre: consecutivo, tipo: int, desc: "identificador único del polígono en la fuente"}
 comportamiento: {p95_ms_medido: 1000, max_por_pagina: 50000}
 dcat: {publisher: UPRA, theme: agricultura, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una zona de precio homogéneo de la tierra rural; 116 en Cota (25214)

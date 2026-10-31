@@ -46,7 +46,7 @@ campos:
   ACTO_ADMIN: {nombre: tipo_acto, tipo: str, desc: "tipo de acto (DEC)"}
   NUMERO_ACT: {nombre: numero_acto, tipo: str, desc: "número del acto"}
 dcat: {publisher: SDP Bogotá, theme: riesgo}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un polígono de amenaza por movimiento en masa; 5 658 (3 459 urbanos y de expansión, 2 199 rurales)"

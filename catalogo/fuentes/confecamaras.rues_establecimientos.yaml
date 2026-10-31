@@ -35,7 +35,7 @@ campos:
   numero_identificacion: {nombre: nit_propietario, tipo: str, desc: "NIT de la sociedad propietaria"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: "Confecámaras", accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un establecimiento, agencia o sucursal; 6,3 M en total; Ecopetrol: 3"

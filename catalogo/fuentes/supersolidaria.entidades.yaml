@@ -32,7 +32,7 @@ campos:
   a_o: {nombre: anio, tipo: str, desc: "año del reporte"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de la Economía Solidaria, theme: economia, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "una entidad en un periodo de reporte; 126 837 filas para 5 639 entidades (2017 a 2026)"

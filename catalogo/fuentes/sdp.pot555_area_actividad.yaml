@@ -41,7 +41,7 @@ campos:
 capas_servicio: [9]
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
 dcat: {publisher: SDP Bogotá, theme: ordenamiento}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "un polígono de área de actividad; 1 168 en Bogotá"

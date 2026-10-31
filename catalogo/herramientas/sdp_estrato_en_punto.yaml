@@ -7,7 +7,7 @@ descripcion: >
   Estrato socioeconómico (1 a 6) de la manzana de Bogotá que contiene un punto, según la
   estratificación urbana de la Secretaría Distrital de Planeación, con el acto que lo fija. Es el
   estrato de la manzana: un predio puede tener otro por reclamación, y las manzanas no residenciales
-  salen sin estrato. Solo suelo urbano de Bogotá. Sale de la copia de Terranova.
+  salen sin estrato. Solo suelo urbano de Bogotá. Sale de la copia de Terrnova.
   (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

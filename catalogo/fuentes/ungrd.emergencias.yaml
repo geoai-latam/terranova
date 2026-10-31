@@ -39,7 +39,7 @@ campos:
   vias: {nombre: vias_afectadas, tipo: int, desc: "vías afectadas"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: UNGRD, theme: riesgo, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una emergencia en un municipio con sus afectaciones; 13 012 filas para 6 505 emergencias de 2025"

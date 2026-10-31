@@ -29,7 +29,7 @@ campos:
   recaudosobrante: {nombre: recaudo_sobrante, tipo: int, desc: "recaudo sobrante como lo reporta la ANI, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: ANI, theme: transporte, accrualPeriodicity: semiannual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "el recaudo de un peaje de la ANI en un periodo (casi siempre un mes); 17 134 filas de 162 peajes, de enero de 2014 a mayo de 2026"

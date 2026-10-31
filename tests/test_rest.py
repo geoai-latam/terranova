@@ -210,7 +210,7 @@ async def test_salud_para_la_sonda_sin_llave(rest: httpx.AsyncClient) -> None:
 @pytest.mark.anyio
 async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     llms = await rest.get("/llms.txt")
-    assert llms.status_code == 200 and llms.text.startswith("# Terranova")
+    assert llms.status_code == 200 and llms.text.startswith("# Terrnova")
     for h in CATALOGO.herramientas.values():
         assert f"/v1/co/{h.familia}/{h.id}" in llms.text
     tarjeta = (await rest.get("/.well-known/mcp/server-card.json")).json()

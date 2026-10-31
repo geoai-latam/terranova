@@ -34,7 +34,7 @@ campos:
   url: {nombre: url, tipo: str, desc: "enlace a la norma (norma.php?i=…): el número es su id"}
 comportamiento: {max_por_pagina: 20}
 dcat: {publisher: Función Pública, theme: normativa, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un fragmento de una norma o un resultado de búsqueda; la Ley 1712 de 2014 (i=56882) tiene 39 656 caracteres"

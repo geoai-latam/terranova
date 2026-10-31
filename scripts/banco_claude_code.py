@@ -6,7 +6,7 @@ usa la gente: su búsqueda de herramientas diferidas (ToolSearch) y su forma de 
 resultado (`structuredContent`, con tope de tamaño). Así salió que la geometría completa no le
 llegaba al modelo. Se mide igual que el banco (`_evaluar`).
 
-- **Aislado:** cada sesión carga solo el MCP de Terranova (`--mcp-config` temporal,
+- **Aislado:** cada sesión carga solo el MCP de Terrnova (`--mcp-config` temporal,
   `--strict-mcp-config`). No usa herramientas integradas salvo ToolSearch y corre en una carpeta
   vacía, sin la configuración, el CLAUDE.md, la memoria ni los hooks del usuario.
 - **Limpieza:** al terminar se borran los JSON con la llave y la carpeta de sesiones que Claude

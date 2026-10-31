@@ -7,7 +7,7 @@ descripcion: >
   Valor de referencia del suelo en Bogotá que calcula el catastro distrital (UAECD): la mediana del
   valor comercial por m² de terreno de la manzana que contiene un punto, en pesos, año por año desde
   2017. Es un valor de referencia por manzana, no el avalúo de un predio. Solo zonas urbanas y de
-  expansión de Bogotá. Sale de la copia de Terranova.
+  expansión de Bogotá. Sale de la copia de Terrnova.
   (Fuente: UAECD; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

@@ -1,4 +1,4 @@
-"""Estadísticas por grupo de una capa o tabla ArcGIS, calculadas en el servicio (Terranova: UPRA, IGAC)."""
+"""Estadísticas por grupo de una capa o tabla ArcGIS, calculadas en el servicio (Terrnova: UPRA, IGAC)."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ def estadisticas(url: str, *, agrupar: list[str], medidas: list[dict[str, str]],
                  orden: list[str] | None = None, max_grupos: int = MAX_GRUPOS) -> tuple[list[dict], dict]:
     """(filas, hechos): conteos, sumas, promedios… por grupo, calculados EN el servicio.
 
-    Terranova (UPRA, IGAC): hectáreas por rango de precio y vigencia en un municipio sin traer cientos
+    Terrnova (UPRA, IGAC): hectáreas por rango de precio y vigencia en un municipio sin traer cientos
     de polígonos. `medidas` = [{"tipo": "sum", "campo": "area_ha", "nombre": "hectareas"}, …].
     """
     if not agrupar or not medidas:

@@ -39,7 +39,7 @@ campos:
   NUMERO_MEZANINES: {nombre: numero_mezanines, tipo: int, desc: "número de mezanines"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'una construcción de un terreno; Chía: 28 392 rurales y 52 182 urbanas'

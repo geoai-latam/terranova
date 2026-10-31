@@ -51,7 +51,7 @@ campos:
   OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador del municipio en la capa 800"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un municipio del censo 2018 con personas, viviendas y hogares; 1 122 municipios

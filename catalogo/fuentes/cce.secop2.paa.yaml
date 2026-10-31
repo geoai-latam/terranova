@@ -40,7 +40,7 @@ campos:
   version_del_paa: {nombre: version, tipo: int, desc: "versión del plan publicada (la fuente guarda solo la última)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un ítem del plan por cada categoría UNSPSC; Pitalito 2025: 754 filas para 582 ítems del municipio"

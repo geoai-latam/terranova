@@ -67,7 +67,7 @@ packages = ["src/terranova"]
 target-version = "py313"
 line-length = 100
 # `conectores/` es código vendorizado de los microservicios MCP (geo_mcp_kit + los 6 conectores):
-# tiene su propio estilo/tooling, no se lintea con las reglas del núcleo de Terranova.
+# tiene su propio estilo/tooling, no se lintea con las reglas del núcleo de Terrnova.
 extend-exclude = ["conectores"]
 
 [tool.ruff.lint]

@@ -1,7 +1,7 @@
 # ADR-0001 · Repo público `terranova`
 
 - **Estado:** aceptada (2026-10-21); **enmendada (2026-10-28): el repo pasa a privado**.
-- **Contexto:** GEO_COPILOT es público (Apache 2.0) y personal. Se decide que Terranova arranque
+- **Contexto:** GEO_COPILOT es público (Apache 2.0) y personal. Se decide que Terrnova arranque
   todo abierto y gratuito.
 - **Decisión:**
   - Se crea el repo público `terranova` (cuenta propuesta: `geoai-latam`, donde vive GEO_COPILOT).
@@ -22,7 +22,7 @@
 
 ## Enmienda (2026-10-28): repo privado
 
-- **Contexto:** Terranova se va a vender (es el producto central; ADR-0020 la deja gratuita solo al
+- **Contexto:** Terrnova se va a vender (es el producto central; ADR-0020 la deja gratuita solo al
   inicio). Un repo público regala el código y el catálogo que la hacen funcionar.
 - **Decisión:**
   - El repo `geoai-latam/terranova` pasa a **privado**.

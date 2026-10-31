@@ -3,7 +3,7 @@
 - **Estado:** aceptada (2026-10-27). Validación: decisión del dueño tras comparar costos; el
   `docker compose` de despliegue ya existe (F3.7) y no requiere re-arquitectura.
 - **Contexto:**
-  - Terranova es un servicio **stateful y always-on** (puerta con sesiones MCP persistentes, Postgres
+  - Terrnova es un servicio **stateful y always-on** (puerta con sesiones MCP persistentes, Postgres
     con las copias y pgvector, Redis, conectores, jobs de copia/descubrimiento por lotes que bajan
     ~1,5 GB), de **carga baja y predecible** mientras no haya clientes.
   - La puerta **no usa LLM** ([ADR-0012](0012-la-puerta-no-usa-llm.md)) y los embeddings corren en **CPU
@@ -55,4 +55,4 @@
 - **Pendiente del dueño (para el cobro, [borrador ADR-0029 freemium]):** los microdatos del DANE se
   declaran **CC BY-SA 4.0** en datos.gov.co (permite uso comercial), pero los términos generales del
   portal DANE mencionan no-comercialización; si esa cláusula alcanza a terceros reutilizadores es
-  ambiguo. Irrelevante mientras Terranova sea gratis; **verificar antes de activar cobro**.
+  ambiguo. Irrelevante mientras Terrnova sea gratis; **verificar antes de activar cobro**.

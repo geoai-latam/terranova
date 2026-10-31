@@ -29,7 +29,7 @@ campos:
   validacion_bpin: {nombre: validacion, tipo: str, desc: "validación del BPIN"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un proyecto BPIN ligado a un proceso y su contrato; 41 filas, un solo BPIN, en la muestra

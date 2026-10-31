@@ -33,7 +33,7 @@ campos:
   CODIGO_ANTERIOR: {nombre: codigo_predial_anterior, tipo: str, desc: "número predial anterior de 20 dígitos"}
 comportamiento: {p95_ms_medido: 1500, max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un polígono de terreno; Chía: 16 832 rurales para 16 618 números y 15 448 urbanos para 15 371'

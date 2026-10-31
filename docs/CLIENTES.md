@@ -1,6 +1,6 @@
 # Guía para clientes
 
-Terranova es una sola puerta, por REST y por MCP, a fuentes oficiales colombianas y globales. Hoy son
+Terrnova es una sola puerta, por REST y por MCP, a fuentes oficiales colombianas y globales. Hoy son
 207 herramientas sobre 180 fuentes. Cada respuesta llega en el mismo sobre `rt/1`, que dice:
 
 - de qué fuente sale el dato;
@@ -18,9 +18,9 @@ Puerta: `https://terrnova.com`. Los precios y el alta están en el portal de pla
    (1 crédito):
 
    ```bash
-   export TERRANOVA_LLAVE=rt_live_...
+   export TERRNOVA_LLAVE=rt_live_...
    curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
-     -H "Authorization: Bearer $TERRANOVA_LLAVE" \
+     -H "Authorization: Bearer $TERRNOVA_LLAVE" \
      -H "Content-Type: application/json" \
      -d '{"nombre":"Cali"}'
    ```
@@ -34,7 +34,7 @@ Puerta: `https://terrnova.com`. Los precios y el alta están en el portal de pla
 3. **Mire su saldo:**
 
    ```bash
-   curl -s https://terrnova.com/v1/uso -H "Authorization: Bearer $TERRANOVA_LLAVE"
+   curl -s https://terrnova.com/v1/uso -H "Authorization: Bearer $TERRNOVA_LLAVE"
    ```
 
 ### Qué herramienta usar
@@ -69,9 +69,13 @@ Hay tres entradas, con las mismas herramientas por debajo:
 
 | Cliente | Use | Por qué |
 |---|---|---|
-| Claude (Code, Desktop, claude.ai), Cursor, VS Code ≥ 1.118 | `/mcp` o un perfil | buscan herramientas por su cuenta: con `/mcp` aciertan igual que con un perfil y gastan ~35 000 tokens por pregunta |
-| ChatGPT, Windsurf, n8n, Zapier, LangChain, Copilot Studio | `/mcp/catalogo` | no buscan herramientas o tienen tope (Windsurf 100, modelos de OpenAI 128); el catálogo cuesta lo mismo aunque el catálogo crezca (~10 000 tokens) |
+| Claude Code, Claude Desktop (con `mcp-remote`), Cursor, VS Code ≥ 1.118 | `/mcp` o un perfil | buscan herramientas por su cuenta: con `/mcp` aciertan igual que con un perfil y gastan ~35 000 tokens por pregunta |
+| La API de OpenAI y su Agents SDK, Windsurf, n8n, Zapier, LangChain, Copilot Studio | `/mcp/catalogo` | no buscan herramientas o tienen tope (Windsurf 100, modelos de OpenAI 128); el catálogo cuesta lo mismo aunque el catálogo crezca (~10 000 tokens) |
 | Un caso de uso de un solo dominio (catastro, contratación…) | `/mcp/<familia>` | lo más preciso y lo más rápido: el modelo ve solo las herramientas de su tema |
+
+**claude.ai y la interfaz web de ChatGPT todavía no conectan:** sus conectores remotos piden
+OAuth, y Terrnova usa una llave en la cabecera `Authorization`. OAuth está en el plan. Mientras
+tanto, use Claude Desktop con `mcp-remote` o la API.
 
 Opus 5.5 y gpt-5.4-mini acertaron lo mismo en los tres modos: lo que cambia entre ellos es el costo
 en contexto, no la precisión.
@@ -93,7 +97,7 @@ Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
 ```json
 {
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "url": "https://terrnova.com/mcp/territorio",
       "headers": { "Authorization": "Bearer rt_live_..." }
     }
@@ -104,20 +108,22 @@ Cursor y otros clientes que aceptan `url` y `headers` (`mcp.json`):
 Claude Code:
 
 ```bash
-claude mcp add --transport http terranova https://terrnova.com/mcp \
-  --header "Authorization: Bearer $TERRANOVA_LLAVE"
+claude mcp add --transport http terrnova https://terrnova.com/mcp \
+  --header "Authorization: Bearer $TERRNOVA_LLAVE"
 ```
 
-Claude Desktop y otros clientes que solo hablan por stdio, con el puente `mcp-remote`:
+Claude Desktop y otros clientes que solo hablan por stdio, con el puente `mcp-remote`. La
+cabecera va sin espacios dentro de `args` (con espacios falla en Windows); el `Bearer` va en la
+variable:
 
 ```json
 {
   "mcpServers": {
-    "terranova": {
+    "terrnova": {
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${TERRANOVA_LLAVE}"],
-      "env": { "TERRANOVA_LLAVE": "rt_live_..." }
+               "--header", "Authorization:${TERRNOVA_AUTH}"],
+      "env": { "TERRNOVA_AUTH": "Bearer rt_live_..." }
     }
   }
 }
@@ -185,7 +191,7 @@ Toda consulta que llega a la fuente devuelve un sobre con `estado`:
 | `parcial` | una consulta compuesta (la ficha de un lugar) con partes que fallaron; cada falla está en `errores` | solo lo que respondió |
 
 **«No encontrado» no es «no se pudo».** Cuando la fuente no responde, no llega un sobre vacío sino
-un error (ver abajo). Terranova nunca inventa un dato ni hace pasar uno viejo por actual.
+un error (ver abajo). Terrnova nunca inventa un dato ni hace pasar uno viejo por actual.
 
 Campos del sobre:
 

@@ -6,7 +6,7 @@ pregunta: "¿Cuál es la capacidad de uso de la tierra en este punto?"
 descripcion: >
   Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un punto: clase y subclase de
   capacidad y su descripción. Cobertura nacional; a esa escala no sirve para un predio.
-  Sale de la copia de Terranova de la capa del IGAC.
+  Sale de la copia de Terrnova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

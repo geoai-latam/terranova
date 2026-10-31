@@ -7,7 +7,7 @@ descripcion: >
   Crecimiento anual del Producto Interno Bruto (PIB) de Colombia en los últimos trimestres, según las
   cuentas nacionales trimestrales del DANE: % frente al mismo trimestre del año anterior, series
   encadenadas de volumen (base 2015), datos originales. Primero el más reciente. Los años rotulados
-  «pr» son preliminares y «p», provisionales. Sale de la copia de Terranova del anexo del último
+  «pr» son preliminares y «p», provisionales. Sale de la copia de Terrnova del anexo del último
   trimestre publicado.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {trimestres: int}

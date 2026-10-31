@@ -8,7 +8,7 @@ descripcion: >
   nombre, categoría de manejo, autoridad ambiental, área según el acto y fecha de inscripción. Cubre
   todo el país y todas las categorías del SINAP; un área declarada que aún no esté inscrita no
   aparece. Se cruza con el rectángulo, no con un polígono, y el total dice cuántas hay.
-  Sale de la copia de Terranova (se rehace cada dos semanas): la procedencia dice de cuándo es.
+  Sale de la copia de Terrnova (se rehace cada dos semanas): la procedencia dice de cuándo es.
   (Fuente: PNN; licencia: CC BY-SA 4.0.)
 entrada: {bbox: bbox}
 consulta:

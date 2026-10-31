@@ -40,7 +40,7 @@ campos:
   atc: {nombre: atc, tipo: str, desc: "código ATC"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: "Instituto Nacional de Vigilancia de Medicamentos y Alimentos", accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una presentación por cada principio activo y cada rol (fabricante, importador); 1 352 filas"

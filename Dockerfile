@@ -1,4 +1,4 @@
-# La puerta de Terranova: REST /v1 y MCP en una imagen (F3.7, ADR-0015).
+# La puerta de Terrnova: REST /v1 y MCP en una imagen (F3.7, ADR-0015).
 FROM python:3.13-slim
 
 RUN apt-get update && apt-get upgrade -y --no-install-recommends \

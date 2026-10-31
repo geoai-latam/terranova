@@ -44,7 +44,7 @@ campos:
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: DANE, theme: estadisticas, accrualPeriodicity: irregular}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "un municipio (y los departamentos) con su IPM por zona; otra hoja con 15 privaciones por municipio"

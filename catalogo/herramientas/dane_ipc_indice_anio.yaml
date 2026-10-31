@@ -7,7 +7,7 @@ descripcion: >
   Índice de Precios al Consumidor (IPC) total nacional del DANE, mes a mes en un año (desde 2003;
   diciembre de 2018 = 100). La inflación anual de un mes es el índice de ese mes dividido por el del
   mismo mes del año anterior, menos 1 (pida los dos años); la mensual, el índice del mes sobre el del
-  mes anterior, menos 1. Los meses que aún no salen no vienen. Sale de la copia de Terranova del
+  mes anterior, menos 1. Los meses que aún no salen no vienen. Sale de la copia de Terrnova del
   anexo del último mes publicado.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {anio: int}

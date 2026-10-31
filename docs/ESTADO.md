@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-29.*
+*Actualizado: 2026-10-31.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -46,6 +46,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## La portada vende soluciones y la marca es Terrnova (2026-10-31)
+
+- **Marca:** se escribe **Terrnova**, como el dominio. Cambió en todo el texto versionado (sitio,
+  `llms.txt`, OpenAPI, avisos de las respuestas, catálogo, documentos). Los identificadores internos
+  (`terranova` del paquete, la CLI, los contenedores, el repo, las variables `TERRANOVA_*` y la clave
+  `_meta.terranova` del MCP) no cambian.
+- **Portada:** «Del dato oficial a la solución». La capa de datos es el producto; encima se
+  construyen analítica, automatizaciones y agentes, por el cliente con su agente o por nosotros.
+  Seis sectores con soluciones selladas como ilustrativas y las herramientas reales que usan. La
+  consola muestra un predio, una empresa (RUES) y una norma (SUIN), capturados el 2026-10-30. Los
+  servicios van sobre fondo claro. El mapa de predios SINIC pasó a `/fuentes`.
+- **Checklist de salida de la auditoría integral (interno, 2026-10-31):** el sitio solo anuncia
+  fuentes publicadas y con uso comercial (sale la DIAN de usuarios aduaneros; un assert y una prueba
+  lo cuidan), sin «cumple la ley» ni «nuestro equipo», sin promesas sobre las alertas del IDEAM, con
+  la instrucción copiable hacia `/mcp/catalogo`, cifras con fecha y lo que cuentan, atribución de
+  OpenStreetMap y una guía de clientes que ya no recomienda claude.ai ni la interfaz de ChatGPT
+  (piden OAuth). Falta lo del dueño: el correo `soporte@` no recibe (el dominio no tiene MX).
 
 ## Sitio público (2026-10-29, #190)
 
@@ -241,7 +259,7 @@ verde (WS1–WS7):
 
 ## Despliegue en producción (2026-10-27)
 
-**Terranova está desplegada, pública y autocontenida**, sirviendo datos reales. Decisión de infra en
+**Terrnova está desplegada, pública y autocontenida**, sirviendo datos reales. Decisión de infra en
 [ADR-0030](decisions/0030-despliegue-vps-unica-compose.md): una sola VPS con todo el `docker compose`,
 sin servicios gestionados (~10–30× más barata que la nube grande).
 
@@ -250,7 +268,7 @@ sin servicios gestionados (~10–30× más barata que la nube grande).
 - **Stack:** Postgres (PostGIS + pgvector) + Redis + puerta (1 réplica) + Caddy + los 6 conectores +
   el microservicio de embeddings. Ajustado a 12 GB (1 réplica, Redis con tope, `mem_limit`).
 - **Autocontenida (#134):** los 6 conectores (datos-abiertos, arcgis, dane, web, imagery, amenazas) y
-  `geo_mcp_kit` se vendorizaron a `conectores/`. **Terranova ya no depende de geo-copilot**: todas las
+  `geo_mcp_kit` se vendorizaron a `conectores/`. **Terrnova ya no depende de geo-copilot**: todas las
   herramientas viven y corren aquí; geo-copilot será solo un cliente más por el MCP.
 - **Datos:** comex (importaciones + exportaciones) servido por copia (ingesta por túnel desde una IP
   colombiana); el resto de las fuentes en vivo por sus conectores.
@@ -474,7 +492,7 @@ se pidió mes a mes.
 
 ## Repo privado y licencia propietaria (2026-10-28, #147)
 
-- **El repo `geoai-latam/terranova` pasa a privado** (enmienda de la ADR-0001), porque Terranova es un
+- **El repo `geoai-latam/terranova` pasa a privado** (enmienda de la ADR-0001), porque Terrnova es un
   producto comercial. Se mantiene la higiene de un repo público (gitleaks sigue en el CI).
   **Por ahora sigue público, a propósito y solo mientras se consolida el MVP.** Los 2.000 min/mes de
   Actions privados de la cuenta ya los gastó `GEO_COPILOT` en octubre, y con el tope de gasto en 0
@@ -489,7 +507,7 @@ se pidió mes a mes.
 - **Pendiente del dueño:**
   - Términos de servicio (necesarios antes de vender; el `LICENSE` remite a ellos).
   - Qué hacer con GEO Copilot. Hoy llama a sus propias copias de los 6 conectores en vez del MCP de
-    Terranova, y su repo `geo-copilot` es público.
+    Terrnova, y su repo `geo-copilot` es público.
 
 ## Operación del MVP encendida (2026-10-28, #143–#145)
 
@@ -541,7 +559,7 @@ se pidió mes a mes.
   (`geoai`, la única).
 - **Pendiente:** excedentes y paquetes adicionales; licencias DANE y DIAN (términos «sin fines de
   lucro») para los planes de pago; términos de servicio.
-- **Open-Meteo retirado (2026-10-28):** su API gratis es solo no comercial y Terranova ya cobra.
+- **Open-Meteo retirado (2026-10-28):** su API gratis es solo no comercial y Terrnova ya cobra.
   Salen `open_meteo_clima_serie`, su fuente y su dorada; ADR-0021 queda superada. El reemplazo es
   ERA5-Land del CDS de Copernicus (CC BY 4.0), que espera la llave del CDS.
 - **SLA:** soporte en soporte@terrnova.com (lunes a viernes, 8:00 a 18:00, hora de Colombia) y sonda
@@ -716,7 +734,7 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **81 herramientas** de ~
 
 ## Decisiones tomadas
 
-- Nombre **Terranova**; repo público `geoai-latam/terranova`.
+- Nombre **Terrnova**; repo público `geoai-latam/terranova`.
 - **Todo open source y gratuito** al inicio: código Apache 2.0, datos CC BY-SA 4.0. Los créditos son
   cuota (protegen las fuentes y el gasto), no cobro.
 - Hitos: **M1** (puerta, contrato, catálogo, ficha, GEO Copilot como cliente, sobre las fuentes que
@@ -725,7 +743,7 @@ Plan: [`PLAN_EXPANSION.md`](PLAN_EXPANSION.md). Avance: **81 herramientas** de ~
 - Sin `TERRANOVA_PIMIENTA` la puerta no arranca. El plan sale de la llave; `TERRANOVA_PLAN` solo rige en pruebas sin identidad.
 - Personas por cédula o nombre: fuera. Captchas y backends sin permiso: nunca, en ningún plan (ADR-0018).
 - Cuota agotada: 429 `saldo_agotado`, sin 402 (ADR-0010). Licencia `por_verificar`: solo llaves de evaluación (ADR-0007).
-- Open-Meteo: API gratis mientras Terranova sea gratuito, con caché y tope propio; salida a Copernicus directo (ADR-0021).
+- Open-Meteo: API gratis mientras Terrnova sea gratuito, con caché y tope propio; salida a Copernicus directo (ADR-0021).
 - Escaneo de secretos (gitleaks) en CI, sobre toda la historia (ADR-0001).
 - Boletines de Contraloría y BDME: se evalúan con asesoría legal antes de incluirlos.
 

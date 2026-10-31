@@ -36,7 +36,7 @@ campos:
   ruta_de_proceso: {nombre: url_proceso, tipo: str, desc: "enlace al proceso en SECOP I"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-22
   fila: "una multa o sanción; 1 716 en total (2010 a 2026), 85 en Villavicencio"

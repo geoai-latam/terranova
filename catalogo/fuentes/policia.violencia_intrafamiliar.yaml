@@ -30,7 +30,7 @@ campos:
   cantidad: {nombre: cantidad, tipo: str, desc: "casos de la fila (texto en algunos reportes)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Policía Nacional, theme: seguridad, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un hecho reportado con su cantidad de casos; 704 551 filas en el país"

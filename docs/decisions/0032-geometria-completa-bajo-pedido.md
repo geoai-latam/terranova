@@ -46,7 +46,7 @@
 - **Consecuencias:**
   - **Cambio visible para los clientes REST** que dibujaban polígonos: deben pedir
     `geometria: true`. Hoy no hay clientes de pago (ADR-0020), y GEO Copilot todavía no consume
-    Terranova. Queda en la guía para clientes.
+    Terrnova. Queda en la guía para clientes.
   - Las respuestas espaciales bajan de decenas o cientos de KB a unos pocos KB, también en la red y
     en la caché del cliente.
   - El banco con cliente real queda como prueba de regresión junto al del mini. Se vuelve a correr

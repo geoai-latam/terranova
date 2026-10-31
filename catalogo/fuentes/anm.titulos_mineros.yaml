@@ -31,7 +31,7 @@ campos:
   codigo_dane: {nombre: codigo_dane, tipo: str, desc: "código DANE del municipio (DIVIPOLA, 5 dígitos)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Agencia Nacional de Minería, theme: mineria, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-26'
   fila: "un mineral autorizado de un expediente; el dataset repite filas por mineral (ABQ-101 en Yumbo aparece con DIABASA y ROCA MUERTA); 121 filas para Yumbo (76892)"

@@ -32,7 +32,7 @@ campos:
   CODIGO: {nombre: codigo_sector, tipo: str, desc: "código del sector catastral, 9 dígitos (municipio + zona + sector)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un sector catastral; Chía: 1 rural y 3 urbanos'

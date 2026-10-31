@@ -27,7 +27,7 @@ campos:
   origen: {nombre: origen, tipo: str, desc: "SECOPI o SECOPII"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un contrato en cada estado que tuvo; Pitalito: 6 074 filas para 3 794 contratos (uno sale 9 veces)'

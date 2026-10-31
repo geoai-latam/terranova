@@ -8,7 +8,7 @@ descripcion: >
   Bogotá (Decreto 555 de 2021) en un punto del suelo urbano, de expansión o rural (incluido Sumapaz).
   Solo cruza las áreas que el POT zonifica: «no encontrado» quiere decir que el punto no cae en
   ninguna, por estar fuera de Bogotá o en un área que el POT no zonifica para esta amenaza. Es la
-  zonificación general, no un estudio del predio. Sale de la copia de Terranova.
+  zonificación general, no un estudio del predio. Sale de la copia de Terrnova.
   (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

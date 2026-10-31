@@ -35,7 +35,7 @@ def _familias(c: Catalogo) -> dict[str, list[Herramienta]]:
 
 def llms_txt(c: Catalogo) -> str:
     lineas = [
-        "# Terranova",
+        "# Terrnova",
         "",
         "> Puerta única sobre fuentes oficiales colombianas y globales, con un plan gratis y "
         "planes de pago por créditos (ADR-0029). Cada respuesta es un sobre rt/1 con "
@@ -84,7 +84,7 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
     familias = _familias(c)
     return {
         "name": "terranova",
-        "title": "Terranova",
+        "title": "Terrnova",
         "version": __version__,
         "description": (
             "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "

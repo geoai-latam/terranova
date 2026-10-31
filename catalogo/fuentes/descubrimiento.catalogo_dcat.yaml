@@ -1,6 +1,6 @@
 id: descubrimiento.catalogo_dcat
 titulo: "Catálogo de descubrimiento (DCAT de datos.gov.co + Hub de la ICDE)"
-entidad: Terranova (índice de metadatos sobre fuentes oficiales)
+entidad: Terrnova (índice de metadatos sobre fuentes oficiales)
 competencia: "índice propio de metadatos; la competencia y la licencia son de cada fuente indexada"
 acto: null
 # El catálogo es METADATOS sobre fuentes (ADR-0026), no datos: por dataset/capa guarda título,
@@ -33,7 +33,7 @@ campos:
   protocolo: {nombre: protocolo, tipo: str, desc: "socrata (tabla) o arcgis_rest (capa)"}
   url: {nombre: url, tipo: str, desc: "endpoint para consultar con el conector genérico"}
   parecido: {nombre: parecido, tipo: float, desc: "parecido semántico 0–1; el cliente juzga la confianza"}
-dcat: {publisher: Terranova, theme: meta, accrualPeriodicity: daily}
+dcat: {publisher: Terrnova, theme: meta, accrualPeriodicity: daily}
 # Spec 07: medido al ingerir los dos catálogos el 2026-10-25.
 perfil:
   medido: '2026-10-25'

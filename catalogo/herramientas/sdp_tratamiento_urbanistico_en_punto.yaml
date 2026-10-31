@@ -8,7 +8,7 @@ descripcion: >
   renovación urbana, desarrollo, conservación o mejoramiento integral, con la altura máxima permitida
   en pisos, la tipología y el subtratamiento cuando aplican. Es la norma general: un predio puede
   tener normas específicas (planes parciales, bienes de interés cultural). Solo Bogotá. Sale de la
-  copia de Terranova. Para los usos, sdp_area_actividad_en_punto.
+  copia de Terrnova. Para los usos, sdp_area_actividad_en_punto.
   (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

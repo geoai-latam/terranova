@@ -41,7 +41,7 @@ campos:
   VIGENCIA_DE_ACTUALIZACIÓN_URBANA: {nombre: vigencia_actualizacion_urbana, tipo: int, desc: "año de la última actualización urbana"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: 'un indicador catastral de un municipio por zona y año de reporte; Chía: 120'

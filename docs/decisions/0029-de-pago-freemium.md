@@ -3,7 +3,7 @@
 - **Estado:** aceptada (2026-10-27). **Reemplaza:** ADR-0020 (gratuito al inicio). **Enmienda:**
   ADR-0010 (el saldo agotado pasa de 429 a 402).
 - **Contexto:**
-  - Terranova es un producto comercial (ADR-0001 enmendada) y tiene que sostenerse con ingresos.
+  - Terrnova es un producto comercial (ADR-0001 enmendada) y tiene que sostenerse con ingresos.
   - El servicio comparable más cercano ya cobra por lo mismo (API y MCP sobre datos oficiales) con
     créditos mensuales: gratis para empezar, planes por volumen y un plan gratuito para gobierno.
   - El medidor, la identidad por llave y el saldo mensual ya existen (ADR-0009, ADR-0010). Falta el

@@ -34,7 +34,7 @@ campos:
   ejecucionfinanciera: {nombre: ejecucion_financiera, tipo: float, desc: "avance financiero (%)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: DNP, theme: hacienda, accrualPeriodicity: monthly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-23
   fila: "un proyecto en un departamento beneficiario; 35010 filas para 33256 proyectos"

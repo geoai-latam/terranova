@@ -8,7 +8,7 @@ descripcion: >
   monitoreo del SINCHI a escala 1:100.000: Perdida (deforestado en el periodo), Conservado,
   Recuperado u Otras coberturas (no era bosque). Sirve para la debida diligencia de deforestación
   (EUDR) en la Amazonia. Fuera de la región amazónica no hay respuesta. Sale de la copia de
-  Terranova (simplificada a ~55 m).
+  Terrnova (simplificada a ~55 m).
   (Fuente: SINCHI; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

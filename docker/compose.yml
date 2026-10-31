@@ -1,4 +1,4 @@
-# Despliegue de Terranova (ADR-0015, F3.7): Caddy es lo único expuesto; dos réplicas de la puerta;
+# Despliegue de Terrnova (ADR-0015, F3.7): Caddy es lo único expuesto; dos réplicas de la puerta;
 # Postgres (llaves, uso) y Redis (caché, cuota) compartidos; los conectores de GEO Copilot en la red
 # interna, sin puerto publicado (ADR-0002).
 #

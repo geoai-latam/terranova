@@ -34,7 +34,7 @@ campos:
   produccionkpc: {nombre: produccion_kpc_texto, tipo: str, desc: "producción del mes en miles de pies cúbicos (kpc), como texto con separador de miles («224,353.07»)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Agencia Nacional de Hidrocarburos, theme: minas y energía, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "la producción de gas de un campo (con su contrato y operadora) en un municipio y un mes, en kpc; 71 311 filas de enero de 2014 a marzo de 2026"

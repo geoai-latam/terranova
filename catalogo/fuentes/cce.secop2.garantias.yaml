@@ -33,7 +33,7 @@ campos:
   fechafinpoliza: {nombre: fecha_fin, tipo: date, desc: "fecha de fin de la vigencia"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: un amparo de una póliza; 3 pólizas × 3 amparos = 9 filas en CO1.PCCNTR.3712964

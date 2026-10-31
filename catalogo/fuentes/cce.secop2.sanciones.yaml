@@ -33,7 +33,7 @@ campos:
   numero_de_acto: {nombre: numero_acto, tipo: str, desc: "número del acto administrativo"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: '2026-10-22'
   fila: una multa o sanción a un contrato; 2 para CO1.PCCNTR.292923

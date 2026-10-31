@@ -10,7 +10,7 @@ titulo: Estadísticas de Exportaciones - EXPO
 descripcion: >
   Microdato de las exportaciones de mercancías de Colombia, elaborado por el DANE a partir de las
   declaraciones de exportación (DEX) presentadas ante la DIAN. Cada línea es una declaración;
-  Terranova la copia y la pre-agrega a (año, mes, subpartida NANDINA, país de destino) con los
+  Terrnova la copia y la pre-agrega a (año, mes, subpartida NANDINA, país de destino) con los
   valores sumados. No contiene NIT, cédula ni nombre de exportador.
 publicado: '2025-03-26'
 datos_actualizados: '2026-10-22'

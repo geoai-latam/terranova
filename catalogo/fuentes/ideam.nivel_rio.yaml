@@ -35,7 +35,7 @@ campos:
   valorobservado: {nombre: nivel_m, tipo: float, desc: "nivel del río sobre el cero de la mira de la estación, en metros"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: IDEAM, theme: agua, accrualPeriodicity: continuous}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una lectura instantánea del nivel en una estación; Bolombolo (río Cauca) da 24 por día y La Virginia ~480"

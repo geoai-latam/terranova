@@ -7,7 +7,7 @@ descripcion: >
   Incidencia de la pobreza multidimensional de un municipio (DIVIPOLA) según la medida censal 2018
   del DANE: total, cabeceras y centros poblados y rural disperso, en %. Es una aproximación con el
   censo: el DANE advierte que no es comparable con el IPM oficial (dane_ipm_departamento).
-  Sale de la copia de Terranova del anexo censal del DANE.
+  Sale de la copia de Terrnova del anexo censal del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola}
 consulta:

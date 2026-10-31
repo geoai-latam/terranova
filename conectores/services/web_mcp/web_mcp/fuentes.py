@@ -1,4 +1,4 @@
-"""Acceso a APIs web públicas con buenas maneras (Terranova F5, G4).
+"""Acceso a APIs web públicas con buenas maneras (Terrnova F5, G4).
 
 - Solo dominios de la lista permitida (`WEB_MCP_DOMINIOS`), con el cliente SSRF del kit.
 - `robots.txt` de cada sitio se lee una vez por hora y se respeta.

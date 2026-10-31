@@ -36,7 +36,7 @@ campos:
   vigencia_mes: {nombre: mes, tipo: int, desc: "mes (1 a 12)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Supertransporte, theme: transporte, accrualPeriodicity: quarterly}
-# Spec 07: medido en la fuente, no en Terranova.
+# Spec 07: medido en la fuente, no en Terrnova.
 perfil:
   medido: 2026-10-28
   fila: "una sociedad portuaria, un embalaje (TEU llenos o vacíos) y un mes con sus TEU por tipo de tráfico; 2 815 filas de 2018 a 2026; la zona de Cartagena da 11 grupos en 2025"

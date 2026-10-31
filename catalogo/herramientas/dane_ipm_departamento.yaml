@@ -6,7 +6,7 @@ pregunta: "¿Qué porcentaje de la población de este departamento está en pobr
 descripcion: >
   Incidencia de la pobreza multidimensional (IPM) de un departamento según el DANE, por año (desde
   2018) y zona: total, cabeceras y centros poblados y rural disperso, en porcentaje. Sale de la
-  copia de Terranova del anexo vigente del DANE. El nombre va como lo escribe el DANE
+  copia de Terrnova del anexo vigente del DANE. El nombre va como lo escribe el DANE
   (Antioquia, Bogotá D.C., …).
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {departamento: nombre}

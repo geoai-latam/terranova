@@ -1,4 +1,4 @@
-"""web-mcp — APIs web públicas de entidades del Estado, con buenas maneras (Terranova F5, pieza G4).
+"""web-mcp — APIs web públicas de entidades del Estado, con buenas maneras (Terrnova F5, pieza G4).
 
 Para las fuentes que no están en datos.gov.co ni en ArcGIS: la relatoría de Colombia Compra (API REST de
 WordPress) y las series del Banco de la República (SDMX). Dos herramientas:
