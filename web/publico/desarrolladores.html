@@ -40,7 +40,7 @@
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
 <p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
-<p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
+<p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
 <ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
@@ -73,15 +73,15 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
     "terrnova": {
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${TERRNOVA_LLAVE}"],
-      "env": { "TERRNOVA_LLAVE": "rt_live_..." }
+               "--header", "Authorization:${TERRNOVA_AUTH}"],
+      "env": { "TERRNOVA_AUTH": "Bearer rt_live_..." }
     }
   }
 }</code></pre>
 
 <h2 id="perfiles">Perfiles</h2>
 <table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las 207 herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
+<tr><td><code>/mcp</code></td><td>Las 205 herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
 <tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una sola familia</td><td>Un caso de uso de un solo tema: lo más preciso y lo más rápido</td></tr>
 <tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas genéricas que buscan en el catálogo</td><td>Clientes con tope de herramientas, como los modelos de OpenAI (128)</td></tr>
 </tbody></table>
@@ -105,7 +105,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
 <tr><td><code>procedencia</code></td><td>Por fuente: entidad, URL, norma (si la hay), licencia, atribución, <code>servido_desde</code>, <code>consultado_en</code> y <code>completitud</code></td></tr>
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
-<tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 salvo que pidas <code>crs_salida: EPSG:9377</code></td></tr>
+<tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 (lon, lat)</td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
 </tbody></table>
 <p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>

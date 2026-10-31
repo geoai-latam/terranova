@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-29.*
+*Actualizado: 2026-10-31.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -46,6 +46,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## La portada vende soluciones y la marca es Terrnova (2026-10-31)
+
+- **Marca:** se escribe **Terrnova**, como el dominio. Cambió en todo el texto versionado (sitio,
+  `llms.txt`, OpenAPI, avisos de las respuestas, catálogo, documentos). Los identificadores internos
+  (`terranova` del paquete, la CLI, los contenedores, el repo, las variables `TERRANOVA_*` y la clave
+  `_meta.terranova` del MCP) no cambian.
+- **Portada:** «Del dato oficial a la solución». La capa de datos es el producto; encima se
+  construyen analítica, automatizaciones y agentes, por el cliente con su agente o por nosotros.
+  Seis sectores con soluciones selladas como ilustrativas y las herramientas reales que usan. La
+  consola muestra un predio, una empresa (RUES) y una norma (SUIN), capturados el 2026-10-30. Los
+  servicios van sobre fondo claro. El mapa de predios SINIC pasó a `/fuentes`.
+- **Checklist de salida de la auditoría integral (interno, 2026-10-31):** el sitio solo anuncia
+  fuentes publicadas y con uso comercial (sale la DIAN de usuarios aduaneros; un assert y una prueba
+  lo cuidan), sin «cumple la ley» ni «nuestro equipo», sin promesas sobre las alertas del IDEAM, con
+  la instrucción copiable hacia `/mcp/catalogo`, cifras con fecha y lo que cuentan, atribución de
+  OpenStreetMap y una guía de clientes que ya no recomienda claude.ai ni la interfaz de ChatGPT
+  (piden OAuth). Falta lo del dueño: el correo `soporte@` no recibe (el dominio no tiene MX).
 
 ## Sitio público (2026-10-29, #190)
 

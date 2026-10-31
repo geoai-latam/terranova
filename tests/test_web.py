@@ -85,3 +85,13 @@ def test_preguntas_por_sector_son_herramientas_reales() -> None:
     citadas = re.findall(r'<span class="id"><code>([a-z0-9_]+)</code>', sector)
     assert len(citadas) == 30
     assert set(citadas) <= ids
+
+
+def test_el_sitio_no_anuncia_fuentes_sin_uso_comercial() -> None:
+    # DISENO.md: una fuente «sin fines de lucro» no se anuncia en el sitio (auditoría 2026-10-31).
+    import json
+
+    datos = json.loads((PUBLICO / "datos" / "catalogo.json").read_text(encoding="utf-8"))
+    assert all(f["uso_comercial"] == "si" for f in datos["fuentes"].values())
+    ids = set(datos["fuentes"])
+    assert all(h["fuente"] in ids for h in datos["herramientas"])

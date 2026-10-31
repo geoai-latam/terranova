@@ -108,10 +108,20 @@ def nombre_entidad(entidad: str) -> str:
 
 # ---------------------------------------------------------------- catálogo real
 CAT = cargar(RAIZ.parent / "catalogo")
-HERR = sorted(CAT.herramientas.values(), key=lambda h: (h.familia, h.id))
+_IDS_PUBLICADAS = {
+    f.id for f in CAT.fuentes.values() if f.estado == "publicada" and f.uso_comercial == "si"
+}
+HERR = sorted(
+    (h for h in CAT.herramientas.values() if h.fuente in _IDS_PUBLICADAS),
+    key=lambda h: (h.familia, h.id),
+)
 N_HERR = len(HERR)
-# Solo cuentan las fuentes publicadas: un borrador no se sirve y no se anuncia.
-PUBLICADAS = [f for f in CAT.fuentes.values() if f.estado == "publicada"]
+# Solo se anuncia lo que se puede vender: fuentes publicadas y con uso comercial. Un borrador no se
+# sirve, y una fuente «sin fines de lucro» (la DIAN, usuarios aduaneros) no se anuncia (DISENO.md).
+PUBLICADAS = [
+    f for f in CAT.fuentes.values() if f.estado == "publicada" and f.uso_comercial == "si"
+]
+assert all(f.uso_comercial == "si" for f in PUBLICADAS)
 N_FUENTES = len(PUBLICADAS)
 # Fuentes por entidad, sin el índice propio de Terrnova, que no es una fuente oficial.
 ENTIDADES = Counter(
@@ -121,6 +131,7 @@ N_ENTIDADES = len(ENTIDADES)
 POR_FAMILIA = Counter(h.familia for h in HERR)
 MODOS = Counter(f.modo for f in PUBLICADAS)
 LICENCIAS = Counter(f.licencia.spdx or "dato público, sin SPDX" for f in PUBLICADAS)
+N_VERIFICADAS = sum(f.licencia.verificada is not None for f in PUBLICADAS)
 
 
 def catalogo_json() -> str:
@@ -133,7 +144,7 @@ def catalogo_json() -> str:
             "uso_comercial": f.uso_comercial,
             "modo": f.modo,
         }
-        for fid, f in sorted(CAT.fuentes.items())
+        for fid, f in sorted((f.id, f) for f in PUBLICADAS)
     }
     herramientas = [
         {
@@ -317,7 +328,7 @@ SISTEMAS = {
     "Aerocivil": ["Pasajeros y carga", "Operaciones aéreas"],
     "Confecámaras": ["RUES"],
     "Corte Constitucional": ["Relatoría", "Sentencias"],
-    "DIAN": ["Normograma", "Usuarios aduaneros"],
+    "DIAN": ["Normograma"],
     "Supertransporte": ["Tráfico portuario", "Contenedores"],
     "ANM": ["RUCOM"],
     "CREG": ["Alejandría"],
@@ -375,7 +386,7 @@ def indice_fuentes() -> str:
 
 # Lo que copia el botón «Copiar instrucción para tu agente».
 INSTRUCCION = (
-    "Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp (transporte HTTP) con la "
+    "Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la "
     "cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo "
     "para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, "
     "ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en "
@@ -585,7 +596,7 @@ SOLUCIONES = {
         ),
         (
             "Automatización",
-            "Las alertas de incendio del IDEAM en los municipios de tus proveedores, cada día.",
+            "Una revisión periódica de pérdida de bosque y áreas protegidas en las fincas de tus proveedores.",
         ),
         (
             "Analítica",
@@ -614,7 +625,7 @@ SOLUCIONES = {
         ("Automatización", "Un informe periódico que se arma solo con las cifras de cada fuente."),
         (
             "Automatización",
-            "Alertas de deslizamiento e incendio del IDEAM para los municipios que atiendes.",
+            "Un aviso cuando cambia un contrato o un proyecto de regalías de los municipios que atiendes.",
         ),
     ],
 }
@@ -729,13 +740,13 @@ SERVICIOS = [
         "id": "vigilancia",
         "para": "Para veedurías y áreas legales, de compras y de cumplimiento",
         "titulo": "Automatización: vigilancia, alertas y procesos",
-        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, una alerta del IDEAM o una nueva sanción, con el registro de cada cambio. Y automatizamos los cruces y reportes que tu equipo hoy hace a mano.",
+        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, un proyecto de regalías o una nueva sanción, con el registro de cada cambio. Y automatizamos los cruces y reportes que tu equipo hoy hace a mano.",
         "recibes": [
             "Alertas por correo o en tu sistema",
             "Un resumen semanal de lo que cambió",
             "El registro de cada cambio, con su fecha y su fuente",
         ],
-        "con": "SECOP, SUIN-Juriscol, IDEAM y la SIC",
+        "con": "SECOP, SUIN-Juriscol, el DNP y la SIC",
         "asunto": "vigilancia",
         "boton": "Pide tus alertas",
     },
@@ -766,8 +777,8 @@ METODO = [
     ("Nos cuentas", "qué necesitas decidir y con qué información cuentas."),
     ("Te damos un precio fijo", "antes de empezar, nunca por hora."),
     (
-        "Nuestro equipo hace el trabajo",
-        "y una segunda revisión lo verifica contra las fuentes antes de entregarlo.",
+        "Hacemos el trabajo",
+        "y contrastamos cada cifra con su fuente antes de entregarla.",
     ),
     ("Recibes el resultado", "con la prueba de cada dato."),
 ]
@@ -823,7 +834,7 @@ OTRAS_ASISTENTE = [
 CARRILES_VIGILANCIA = [
     ("SECOP II", "Colombia Compra Eficiente", "Nuevo contrato de una entidad que vigilas"),
     ("SUIN-Juriscol", "MinJusticia", "Cambió una norma que sigues"),
-    ("IDEAM", "IDEAM", "Alerta de incendio en un municipio que vigilas"),
+    ("SECOP I", "Colombia Compra Eficiente", "Nueva multa a un contratista que sigues"),
     ("SIC", "SIC", "Nueva sanción en el sector que sigues"),
 ]
 INDICADORES_TABLERO = [
@@ -924,7 +935,10 @@ NOTAS_PRUEBA = [
         "Procedencia",
         "La entidad que publica el dato, la URL de la consulta y la norma que le da la competencia.",
     ),
-    ("Licencia", "Si permite uso comercial, verificada fuente por fuente."),
+    (
+        "Licencia",
+        f"Si permite uso comercial. {N_VERIFICADAS} fuentes con licencia verificada y {N_FUENTES - N_VERIFICADAS} de dato público reutilizable, que llegan con aviso.",
+    ),
     (
         "De dónde se sirvió",
         "En vivo, desde una copia del archivo oficial o desde caché. Un dato viejo siempre llega con aviso.",
@@ -1007,7 +1021,7 @@ def inicio() -> str:
 <img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
 <div class="rotulos" aria-hidden="true"></div>
-<p class="lectura"><b>11,2211 N, 74,1572 W</b> Santa Marta. Predios IGAC SINIC, calles © OpenStreetMap</p>
+<p class="lectura"><b>11,2211 N, 74,1572 W</b> Santa Marta. Predios IGAC SINIC (CC BY-SA 4.0), calles © <a href="https://www.openstreetmap.org/copyright">colaboradores de OpenStreetMap</a></p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
@@ -1031,7 +1045,7 @@ def inicio() -> str:
 </div>
 <div class="dos-formas">
 <p><b>Tú, con tu agente.</b> Conecta la puerta y construye encima. El plan gratis trae {miles(PLANES[0][1])} créditos al mes. <a class="enlace" href="/precios#empezar">Conecta tu agente gratis</a></p>
-<p><b>Nosotros, contigo.</b> Nuestro equipo construye la solución a precio fijo, acordado antes de empezar. <a class="enlace" href="#servicios">Ver cómo trabajamos</a></p>
+<p><b>Nosotros, contigo.</b> Construimos la solución a precio fijo, acordado antes de empezar. <a class="enlace" href="#servicios">Ver cómo trabajamos</a></p>
 </div>
 </div></section>
 
@@ -1049,7 +1063,7 @@ def inicio() -> str:
 <section class="seccion sup servicios-l" id="servicios"><div class="envoltura">
 <div class="cab ancha">
 <h2 class="t1">O lo construimos contigo</h2>
-<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué quieres resolver y nuestro equipo construye la solución sobre la capa de datos, con la fuente oficial y la licencia de cada dato.</p>
+<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué quieres resolver y construimos la solución sobre la capa de datos, con la fuente oficial y la licencia de cada dato.</p>
 </div>
 {servicios_landing()}
 {metodo_html()}
@@ -1064,9 +1078,9 @@ def inicio() -> str:
 </div>
 <div class="columnas c4">
 <div><h3>Cada entidad publica a su manera</h3><p>{N_ENTIDADES} entidades y {N_FUENTES} fuentes, entre portales de datos abiertos, servicios de mapas, archivos y páginas. Aquí todas responden con el mismo contrato.</p></div>
-<div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M. Las herramientas ya cuentan bien.</p></div>
+<div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M (medido el 22-10-2026). Las herramientas ya cuentan bien.</p></div>
 <div><h3>Probado cada madrugada</h3><p>Cada herramienta se prueba a diario contra un dato medido en la fuente, y el resultado es público. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div><h3>Empresas y lugares, no personas</h3><p>La puerta no usa un modelo de lenguaje: la misma pregunta da la misma consulta. Y no busca personas por cédula ni por nombre: cumple la ley de datos personales por diseño.</p></div>
+<div><h3>Empresas y lugares, no personas</h3><p>La puerta no usa un modelo de lenguaje: la misma pregunta da la misma consulta. Y no busca personas por cédula ni por nombre: cada fuente sale con una lista blanca de campos.</p></div>
 </div>
 </div></section>
 
@@ -1106,7 +1120,7 @@ def inicio() -> str:
     return pagina(
         "/",
         "Terrnova · Del dato oficial a la solución",
-        f"Una capa de datos con {N_FUENTES} fuentes oficiales de Colombia y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
+        f"Una capa de datos con {N_FUENTES} fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
         ("escena-predios.js", "escena-vinetas.js"),
     )
@@ -1150,7 +1164,7 @@ def entregable(sid: str) -> str:
         items = [
             ("SECOP II", "Nuevo contrato de una entidad que vigilas", "hoy"),
             ("SUIN-Juriscol", "Cambió una norma que sigues", "ayer"),
-            ("IDEAM", "Alerta de incendio en un municipio que vigilas", "ayer"),
+            ("SECOP I", "Nueva multa a un contratista que sigues", "ayer"),
             ("SIC", "Nueva sanción en el sector que sigues", "lunes"),
         ]
         cuerpo = "".join(
@@ -1163,7 +1177,7 @@ def entregable(sid: str) -> str:
 <p class="yo">¿A cuánto está la TRM hoy?</p>
 <div class="el"><p>La TRM del 29 de octubre de 2026 es de <b>3.162,35 pesos por dólar</b>.</p>
 <p class="cita">Banco de la República · uso comercial permitido · consultado en vivo</p></div>
-<div class="m-pie"><span>Respuesta real</span><span class="sello">capturado el 2026-10-29</span></div></div>"""
+<div class="m-pie"><span>Dato real de banrep_trm_recientes del 29-10-2026</span>{SELLO_I}</div></div>"""
 
 
 def servicios() -> str:
@@ -1199,7 +1213,7 @@ def servicios() -> str:
 {"".join(bloques)}
 <section class="seccion inv"><div class="envoltura">
 <div class="cab"><h2 class="t2">Cómo trabajamos</h2>
-<p class="entrada">Cada entrega pasa por una segunda revisión contra las fuentes antes de llegar a ti. Lo que no cuadra vuelve.</p></div>
+<p class="entrada">Cada cifra de una entrega se contrasta con su fuente antes de llegar a ti. Lo que no cuadra vuelve.</p></div>
 <ol class="pasos-sv">{pasos}</ol>
 </div></section>
 
@@ -1268,7 +1282,7 @@ def fuentes() -> str:
 <div class="texto-cob">
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
 <p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
-<div class="filas"><div><b>6,1 M</b><span>predios en el SINIC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
+<div class="filas"><div><b>6,1 M</b><span>terrenos en la copia SINIC, de los gestores que no publica la base del IGAC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
 <div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
 <p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
 </div>
@@ -1313,7 +1327,7 @@ def precios() -> str:
         portada(
             "Precios",
             "Pagas por consulta, no por el dato",
-            "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato.",
+            "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato; la ficha de un lugar, hasta 50.",
             lado=lado_tarifa(),
         )
         + f"""
@@ -1348,7 +1362,7 @@ def precios() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><span class="rotulo">Preguntas frecuentes</span><h2 class="t2">Lo que suelen preguntar</h2></div>
 <div class="prosa" style="max-width:860px">
-<h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Puedes subir de plan en cualquier momento.</p>
+<h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Para subir de plan, escríbenos.</p>
 <h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta dice su licencia y, si es un dato público con condiciones propias de la entidad, trae un aviso. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
 <h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
 <h3>¿Hay límite de tasa?</h3><p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
@@ -1360,7 +1374,7 @@ def precios() -> str:
     return pagina(
         "/precios",
         "Precios",
-        "Planes por créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta; los errores y la caché no descuentan.",
+        "Planes por créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta (la ficha de un lugar, hasta 50); los errores y la caché no descuentan.",
         c,
     )
 
@@ -1414,8 +1428,8 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
     "terrnova": {{
       "command": "npx",
       "args": ["mcp-remote", "https://terrnova.com/mcp/ambiente",
-               "--header", "Authorization: Bearer ${{TERRNOVA_LLAVE}}"],
-      "env": {{ "TERRNOVA_LLAVE": "rt_live_..." }}
+               "--header", "Authorization:${{TERRNOVA_AUTH}}"],
+      "env": {{ "TERRNOVA_AUTH": "Bearer rt_live_..." }}
     }}
   }}
 }}</code></pre>
@@ -1446,7 +1460,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
 <tr><td><code>procedencia</code></td><td>Por fuente: entidad, URL, norma (si la hay), licencia, atribución, <code>servido_desde</code>, <code>consultado_en</code> y <code>completitud</code></td></tr>
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
-<tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 salvo que pidas <code>crs_salida: EPSG:9377</code></td></tr>
+<tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 (lon, lat)</td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
 </tbody></table>
 <p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
@@ -1495,8 +1509,8 @@ def aliados() -> str:
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
 <div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
 <p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
-<div class="aliado"><div class="pendiente">Atalaya Mapas<small>Logo oficial pendiente</small></div>
-<div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía. Mientras llega su logo oficial, aquí va solo su nombre.</p></div></div>
+<div class="aliado"><div class="pendiente">Atalaya Mapas</div>
+<div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía.</p></div></div>
 </div></section>
 """
     )
