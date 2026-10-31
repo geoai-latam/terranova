@@ -47,6 +47,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Las alertas le llegan a una persona (2026-10-31, auditoría integral C7)
+
+- Alertmanager (perfil `observabilidad`) recibe lo que dispara Prometheus y lo manda por Telegram
+  con `ALERTAS_TELEGRAM_TOKEN` y `ALERTAS_TELEGRAM_CHAT` del `.env` del servidor. Sin destino, avisa
+  en su log. Antes no había receptor: ninguna alerta llegaba a nadie.
+- Reglas nuevas: `ErroresInternos` (la puerta respondió `error_interno` fuera de una herramienta) y
+  `CacheFallando`. Prometheus guarda 400 días (antes, 15).
+- El CI valida la configuración de Alertmanager con `amtool`, con y sin destino. Simulacro en el
+  RUNBOOK (§6). **Pendiente del dueño:** crear el bot, poner el destino y hacer el simulacro.
+
 ## La puerta resiste sus propias fallas (2026-10-31, auditoría integral C3, C4, C6, C14)
 
 - **Nada sale como un 500 en texto plano:** lo que falle fuera de FastAPI (llave, tasa o créditos

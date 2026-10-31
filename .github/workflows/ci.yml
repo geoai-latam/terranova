@@ -260,6 +260,12 @@ jobs:
           docker run --rm --entrypoint promtool -w /o -v "$PWD/docker/observabilidad:/o:ro"             prom/prometheus:v3.5.0 test rules reglas_test.yml
           python3 -c "import json; json.load(open('docker/observabilidad/grafana/tableros/terranova.json'))"
 
+      - name: amtool check-config (sin destino y con Telegram)
+        run: |
+          a="$PWD/docker/observabilidad/alertmanager/arrancar.sh:/a.sh:ro"
+          docker run --rm --entrypoint /bin/sh -v "$a" prom/alertmanager:v0.28.1 /a.sh revisar
+          docker run --rm -e ALERTAS_TELEGRAM_TOKEN=123:abc -e ALERTAS_TELEGRAM_CHAT=-100123             --entrypoint /bin/sh -v "$a" prom/alertmanager:v0.28.1 /a.sh revisar
+
   datasets:
     name: datasets (restricciones, sin red)
     needs: cambios

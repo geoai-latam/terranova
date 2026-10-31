@@ -63,6 +63,19 @@ groups:
         labels: {severidad: baja}
         annotations:
           resumen: "Más de 1000 eventos de uso sin enviar"
+      - alert: ErroresInternos
+        # lo que falla fuera de una herramienta (llave, tasa, créditos, base o Redis caídos)
+        expr: increase(rt_errores_internos_total[10m]) > 0
+        for: 0m
+        labels: {severidad: alta}
+        annotations:
+          resumen: "La puerta respondió error_interno fuera de una herramienta (¿base o Redis caídos?)"
+      - alert: CacheFallando
+        expr: increase(rt_cache_fallos_total[15m]) > 10
+        for: 15m
+        labels: {severidad: media}
+        annotations:
+          resumen: "La caché (Redis) falla: las consultas van sin caché"
       - alert: PuertaSinMetricas
         expr: up{job="terranova"} == 0
         for: 5m

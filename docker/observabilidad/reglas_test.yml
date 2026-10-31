@@ -40,3 +40,17 @@ tests:
         exp_alerts:
           - exp_labels: {severidad: alta}
             exp_annotations: {resumen: "Disponibilidad de la puerta bajo 99,5 % (errores propios)"}
+  - interval: 1m
+    input_series:
+      # dos errores fuera de una herramienta en el minuto 5 (p. ej., Redis caído al verificar la llave)
+      - series: 'rt_errores_internos_total'
+        values: '0x4 2x20'
+    alert_rule_test:
+      - eval_time: 8m
+        alertname: ErroresInternos
+        exp_alerts:
+          - exp_labels: {severidad: alta}
+            exp_annotations: {resumen: "La puerta respondió error_interno fuera de una herramienta (¿base o Redis caídos?)"}
+      - eval_time: 30m
+        alertname: ErroresInternos
+        exp_alerts: []
