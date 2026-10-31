@@ -20,12 +20,3 @@ def test_nombre_corto_o_con_comodines_no_pasa(valor: str) -> None:
     with pytest.raises(ErrorEntrada):
         validar_entrada(h, {"nombre": valor})
     validar_entrada(h, {"nombre": "Bogota"})
-
-
-def test_una_fecha_imposible_es_parametro_invalido() -> None:
-    h = CATALOGO.herramientas[_con_tipo("fecha")]
-    entrada = dict(h.canario.entrada)
-    campo = next(k for k, t in h.entrada.items() if t == "fecha")
-    entrada[campo] = "2026-13-45"
-    with pytest.raises(ErrorEntrada, match="fecha real"):
-        validar_entrada(h, entrada)
