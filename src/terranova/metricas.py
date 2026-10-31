@@ -45,6 +45,16 @@ CACHE_ACIERTOS = Contador(
     "Respuestas servidas desde la caché sin consultar la fuente",
     registry=REGISTRO,
 )
+ERRORES_INTERNOS = Contador(
+    "rt_errores_internos",
+    "Peticiones que fallaron fuera de una herramienta (llave, tasa, créditos, base caída)",
+    registry=REGISTRO,
+)
+CACHE_FALLOS = Contador(
+    "rt_cache_fallos",
+    "Lecturas o escrituras de la caché que fallaron: la consulta siguió hacia la fuente",
+    registry=REGISTRO,
+)
 CREDITOS = Contador(
     "rt_creditos",
     "Créditos descontados, por nivel de la organización",

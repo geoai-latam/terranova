@@ -15,10 +15,13 @@ import pytest
 from terranova import cuota as modulo_cuota
 from terranova import puerta
 from terranova.app import crear_aplicacion
+from terranova.bd import Conexion
 from terranova.conector import ErrorConector
 from terranova.cuota import (
+    CuotaConSaldo,
     CuotaMemoria,
     CuotaRedis,
+    SaldoSql,
     mes,
     reinicio,
     segundos_hasta_el_mes_siguiente,
@@ -43,11 +46,15 @@ def _cuotas(reloj: Reloj) -> list[Any]:
     return [
         CuotaMemoria(capacidad=3, por_minuto=60, reloj=reloj),
         CuotaRedis(fakeredis.FakeAsyncRedis(), capacidad=3, por_minuto=60, reloj=reloj),
+        CuotaConSaldo(
+            CuotaMemoria(capacidad=3, por_minuto=60, reloj=reloj),
+            SaldoSql(Conexion(":memory:"), reloj=reloj),
+        ),
     ]
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+@pytest.mark.parametrize("cual", [0, 1, 2], ids=["memoria", "redis", "sql"])
 async def test_token_bucket(cual: int) -> None:
     reloj = Reloj()
     c = _cuotas(reloj)[cual]
@@ -60,7 +67,7 @@ async def test_token_bucket(cual: int) -> None:
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+@pytest.mark.parametrize("cual", [0, 1, 2], ids=["memoria", "redis", "sql"])
 async def test_saldo_sin_sobreconsumo_con_50_llamadas_simultaneas(
     cual: int, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -75,7 +82,7 @@ async def test_saldo_sin_sobreconsumo_con_50_llamadas_simultaneas(
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+@pytest.mark.parametrize("cual", [0, 1, 2], ids=["memoria", "redis", "sql"])
 async def test_el_saldo_vuelve_con_el_mes(cual: int, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setitem(modulo_cuota.NIVELES, "con_llave", 10)
     reloj = Reloj(datetime(2026, 10, 31, 23, 59, tzinfo=UTC).timestamp())
@@ -88,7 +95,7 @@ async def test_el_saldo_vuelve_con_el_mes(cual: int, monkeypatch: pytest.MonkeyP
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+@pytest.mark.parametrize("cual", [0, 1, 2], ids=["memoria", "redis", "sql"])
 async def test_usados_de_un_mes_anterior(cual: int) -> None:
     """`terranova orgs uso --mes` lee el saldo de otro mes sin tocar el del mes en curso."""
     reloj = Reloj(datetime(2026, 10, 31, 23, 0, tzinfo=UTC).timestamp())
@@ -115,7 +122,7 @@ def test_los_planes_de_pago_crecen_y_el_gratis_es_el_menor() -> None:
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("cual", [0, 1], ids=["memoria", "redis"])
+@pytest.mark.parametrize("cual", [0, 1, 2], ids=["memoria", "redis", "sql"])
 async def test_un_nivel_desconocido_cae_en_el_gratis(cual: int) -> None:
     """Un nivel que no existe nunca da más saldo que el gratis (la CLI además lo rechaza)."""
     c = _cuotas(Reloj())[cual]
@@ -290,3 +297,17 @@ async def test_abrir_y_listar_por_mcp_no_gasta_la_tasa(
             ]
     assert listas == [200] * 6  # la cubeta es de 3: listar no la gasta
     assert llamadas[-1] == 429  # consultar sí
+
+
+@pytest.mark.anyio
+async def test_el_saldo_sobrevive_a_un_reinicio(tmp_path: Path) -> None:
+    """El saldo vive en la base: otra instancia (un reinicio, otra réplica) ve lo mismo, y devolver
+    nunca lo deja negativo (auditoría integral, 2026-10-31: antes vivía en un Redis sin disco)."""
+    reloj = Reloj()
+    bd = tmp_path / "saldos.db"
+    antes = SaldoSql(bd, reloj=reloj)
+    assert (await antes.reservar("geoai", "con_llave", 40))[0]
+    despues = SaldoSql(bd, reloj=reloj)
+    assert await despues.usados("geoai") == 40
+    await despues.devolver("geoai", 100)
+    assert await despues.usados("geoai") == 0

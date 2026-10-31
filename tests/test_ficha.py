@@ -66,7 +66,9 @@ class EjecutorFalso(Ejecutor):
     ) -> None:
         super().__init__(CATALOGO, {})
         self.sobres, self.caidas, self.lentas = sobres, caidas or {}, lentas
-        self.cambios = cambios or {}
+        # el punto de Chía no está en la copia del SINIC (su gestor es el IGAC)
+        sin_sinic = {"sinic_predio_en_punto": {"estado": "no_encontrado", "datos": {}}}
+        self.cambios = {**sin_sinic, **(cambios or {})}
         self.llamadas: dict[str, dict[str, Any]] = {}
         self.terminadas: set[str] = set()
         self.espera_s = espera_s
@@ -351,3 +353,26 @@ async def test_sin_dataset_cargado_las_restricciones_van_en_vivo(sobres: dict[st
     assert {"areas_protegidas", "resguardos", "reservas_campesinas"} <= set(s.datos)
     assert "pnn_areas_protegidas_en_punto" in ej.llamadas
     assert any("no hay dataset curado" in a for a in s.avisos)
+
+
+@pytest.mark.anyio
+async def test_el_predio_sale_del_sinic_si_lo_tiene(sobres: dict[str, Sobre]) -> None:
+    """En un municipio con gestor propio, el predio sale de la copia del SINIC y la ficha no espera
+    al IGAC en vivo; las construcciones del IGAC no cubren a ese gestor y se dice."""
+    ej = EjecutorFalso(sobres, cambios={"sinic_predio_en_punto": {}})
+    s = _ida_y_vuelta(await f.ficha(ej, PUNTO, plan="evaluacion", hoy=HOY))
+    assert "igac_predio_en_punto" not in ej.llamadas
+    assert s.datos["predio"]["numero_predial"] == "110010182020400210003900000000"
+    assert "igac.sinic_terreno" in {p.fuente_id for p in s.procedencia}
+    assert "igac_construcciones_en_predio" not in ej.llamadas
+    assert any("construcciones" in a and "SINIC" in a for a in s.avisos)
+    assert ej.llamadas["dane_poblacion_municipio"] == {"municipio_divipola": "11001"}
+
+
+@pytest.mark.anyio
+async def test_si_el_sinic_falla_el_predio_sale_del_igac(sobres: dict[str, Sobre]) -> None:
+    caida = ErrorEjecucion("fuente_no_disponible", "copia caída")
+    ej = EjecutorFalso(sobres, caidas={"sinic_predio_en_punto": caida})
+    s = _ida_y_vuelta(await f.ficha(ej, PUNTO, plan="evaluacion", hoy=HOY))
+    assert s.datos["predio"]["codigo_predial"] == "251750000000000050067000000000"
+    assert "igac.sinic_terreno" in {p.fuente_id for p in s.procedencia}  # regla 3

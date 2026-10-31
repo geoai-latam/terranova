@@ -8,6 +8,10 @@
   siguiente (ADR-0029).
 
 El saldo se entrega el día 1 de cada mes (UTC) y no se acumula: lo no gastado se pierde.
+
+En producción la tasa vive en Redis (efímera por diseño) y el **saldo en la base** (`SaldoSql`,
+como dice la ADR-0010): un reinicio de Redis o su política de expulsión ya no pone a todos en cero
+ni borra saldos (auditoría integral, 2026-10-31).
 """
 
 from __future__ import annotations
@@ -17,7 +21,10 @@ import math
 import time
 from collections.abc import Callable
 from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any, Protocol
+
+from terranova.bd import Conexion
 
 # Créditos al mes por nivel (ADR-0029). `con_llave` es el gratis; `ampliado`, el de entidades
 # públicas, academia y uso interno; los demás, los planes de pago.
@@ -164,14 +171,98 @@ class CuotaRedis:
         return int(await self._r.get(f"terranova:saldo:{org}:{en_mes or mes(self.reloj())}") or 0)
 
 
+class SaldoSql:
+    """El saldo mensual por organización en la base (SQLite o Postgres, `bd.Conexion`).
+
+    Atómico sin candados propios: `UPDATE … SET usados = usados + c WHERE usados + c <= límite
+    RETURNING usados` descuenta solo si cabe, también con muchas réplicas a la vez. Devolver nunca
+    baja de cero."""
+
+    def __init__(self, bd: Conexion | str | Path, reloj: Callable[[], float] = time.time) -> None:
+        self._bd = bd if isinstance(bd, Conexion) else Conexion(bd)
+        self.reloj = reloj
+        self._bd.ejecutar(
+            """CREATE TABLE IF NOT EXISTS saldos (
+                org TEXT NOT NULL, mes TEXT NOT NULL, usados BIGINT NOT NULL DEFAULT 0,
+                PRIMARY KEY (org, mes))"""
+        )
+
+    def _reservar(self, org: str, m: str, limite: int, creditos: int) -> tuple[bool, int]:
+        self._bd.ejecutar(
+            "INSERT INTO saldos (org, mes, usados) VALUES (?, ?, 0) "
+            "ON CONFLICT (org, mes) DO NOTHING",
+            (org, m),
+        )
+        filas, _ = self._bd.ejecutar(
+            "UPDATE saldos SET usados = usados + ? WHERE org = ? AND mes = ? AND usados + ? <= ? "
+            "RETURNING usados",
+            (creditos, org, m, creditos, limite),
+        )
+        if filas:
+            return True, limite - int(filas[0][0])
+        return False, limite - self._usados(org, m)
+
+    def _devolver(self, org: str, m: str, creditos: int) -> None:
+        self._bd.ejecutar(
+            "UPDATE saldos SET usados = CASE WHEN usados > ? THEN usados - ? ELSE 0 END "
+            "WHERE org = ? AND mes = ?",
+            (creditos, creditos, org, m),
+        )
+
+    def _usados(self, org: str, m: str) -> int:
+        filas, _ = self._bd.ejecutar(
+            "SELECT usados FROM saldos WHERE org = ? AND mes = ?", (org, m)
+        )
+        return int(filas[0][0]) if filas else 0
+
+    async def reservar(self, org: str, nivel: str, creditos: int) -> tuple[bool, int]:
+        limite = NIVELES.get(nivel, NIVELES["con_llave"])
+        return await asyncio.to_thread(self._reservar, org, mes(self.reloj()), limite, creditos)
+
+    async def devolver(self, org: str, creditos: int) -> None:
+        if creditos > 0:
+            await asyncio.to_thread(self._devolver, org, mes(self.reloj()), creditos)
+
+    async def usados(self, org: str, en_mes: str | None = None) -> int:
+        return await asyncio.to_thread(self._usados, org, en_mes or mes(self.reloj()))
+
+
+class CuotaConSaldo:
+    """La tasa de una cuota (Redis o memoria) y el saldo en la base."""
+
+    def __init__(self, tasa: Cuota, saldo: SaldoSql) -> None:
+        self.tasa = tasa
+        self.saldo = saldo
+        # las cabeceras de tasa leen `capacidad` y `ritmo` de la cuota
+        self.capacidad = getattr(tasa, "capacidad", 0)
+        self.ritmo = getattr(tasa, "ritmo", 1.0)
+
+    async def tomar_ficha(self, llave_id: str) -> tuple[bool, int, float]:
+        return await self.tasa.tomar_ficha(llave_id)
+
+    async def reservar(self, org: str, nivel: str, creditos: int) -> tuple[bool, int]:
+        return await self.saldo.reservar(org, nivel, creditos)
+
+    async def devolver(self, org: str, creditos: int) -> None:
+        await self.saldo.devolver(org, creditos)
+
+    async def usados(self, org: str, en_mes: str | None = None) -> int:
+        return await self.saldo.usados(org, en_mes)
+
+
 def cuota_desde_entorno(redis_url: str | None) -> Cuota:
-    """Redis si hay `TERRANOVA_REDIS_URL` (compartida entre réplicas); si no, en memoria."""
+    """La tasa en Redis si hay `TERRANOVA_REDIS_URL` (compartida entre réplicas; si no, en
+    memoria) y el saldo en la base de `TERRANOVA_BD` (la misma de las llaves)."""
     import importlib
     import os
 
     capacidad = int(os.environ.get("TERRANOVA_RAFAGA", "20"))
     por_minuto = int(os.environ.get("TERRANOVA_POR_MINUTO", "60"))
+    tasa: Cuota
     if redis_url:
         redis: Any = importlib.import_module("redis.asyncio")  # extra opcional, sin tipos
-        return CuotaRedis(redis.from_url(redis_url), capacidad=capacidad, por_minuto=por_minuto)
-    return CuotaMemoria(capacidad=capacidad, por_minuto=por_minuto)
+        tasa = CuotaRedis(redis.from_url(redis_url), capacidad=capacidad, por_minuto=por_minuto)
+    else:
+        tasa = CuotaMemoria(capacidad=capacidad, por_minuto=por_minuto)
+    saldo = SaldoSql(os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db"))
+    return CuotaConSaldo(tasa, saldo)

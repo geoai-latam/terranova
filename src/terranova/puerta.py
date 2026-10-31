@@ -26,7 +26,7 @@ from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas, perfil_catalogo
-from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis
+from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis, AlmacenTolerante
 from terranova.catalogo import (
     FORMAS_ENTRADA,
     PATRONES_ENTRADA,
@@ -46,6 +46,7 @@ from terranova.contrato import (
     huella,
     nueva_solicitud_id,
     paginar,
+    problema_de,
     resumir_geometria,
 )
 from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
@@ -234,17 +235,53 @@ class HerramientaDelCatalogo(Tool):
         return await _correr(self._ficha, arguments)
 
 
+# Tope del texto para el modelo: los clientes que no leen `structuredContent` reciben el sobre
+# entero en `content` (spec 01), pero no tanto como para pasar el tope de salida de una herramienta.
+TOPE_TEXTO = 24_000
+
+
+def texto_del_sobre(sobre: Sobre) -> str:
+    """El sobre como texto JSON para `content`: estado, datos, avisos, procedencia (entidad,
+    licencia, de dónde se sirvió y cuándo), completitud y huella. La geometría solo va en
+    `structuredContent`. Si no cabe, se recortan los datos y se dice."""
+    base = sobre.model_dump(mode="json", exclude={"geo_result"})
+    texto = json.dumps(base, ensure_ascii=False, separators=(",", ":"))
+    if len(texto) <= TOPE_TEXTO:
+        return texto
+    datos = json.dumps(base["datos"], ensure_ascii=False, separators=(",", ":"))
+    sobra = len(texto) - TOPE_TEXTO + 200
+    base["datos"] = {
+        "recortado": datos[: max(0, len(datos) - sobra)],
+        "aviso": "Los datos no caben en el texto: el sobre completo va en structuredContent.",
+    }
+    return json.dumps(base, ensure_ascii=False, separators=(",", ":"))
+
+
+def resultado_de_error(
+    codigo: str, detalle: str, *, param: str | None = None, reintentar: int | None = None
+) -> ToolResult:
+    """Un error de `rt/1` por MCP: `isError` con el objeto de problema en `structuredContent` y el
+    mismo objeto en el texto (ADR-0011, spec 01 §6.3)."""
+    problema = problema_de(codigo, detalle, param=param, reintentar=reintentar)
+    cuerpo = problema.model_dump(mode="json", exclude_none=True)
+    return ToolResult(
+        content=[TextContent(type="text", text=json.dumps(cuerpo, ensure_ascii=False))],
+        structured_content=cuerpo,
+        is_error=True,
+    )
+
+
 async def _correr(ficha: str, arguments: dict[str, Any]) -> ToolResult:
-    """Una herramienta del catálogo como resultado MCP: el sobre en `structured_content`."""
+    """Una herramienta del catálogo como resultado MCP: el sobre en `structured_content` y en el
+    texto; un error, con su objeto de problema."""
     try:
         sobre = await ejecutar(ficha, arguments, principal_de_la_peticion())
     except ErrorEntrada as exc:
-        raise ToolError(f"parametro_invalido: {exc}") from exc
+        return resultado_de_error("parametro_invalido", str(exc), param=exc.param)
     except ErrorEjecucion as exc:
-        raise ToolError(f"{exc.codigo}: {exc}") from exc
-    pares = ", ".join(f"{k}={v}" for k, v in list(sobre.datos.items())[:6])
+        return resultado_de_error(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
     return ToolResult(
-        content=[TextContent(type="text", text=f"{sobre.estado}: {pares}"[:1000])],
+        content=[TextContent(type="text", text=texto_del_sobre(sobre))],
         structured_content=sobre.model_dump(mode="json"),
     )
 
@@ -423,7 +460,7 @@ async def iniciar() -> None:
         return
     ESTADO.registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
-    ESTADO.almacen = AlmacenRedis(redis_url) if redis_url else AlmacenMemoria()
+    ESTADO.almacen = AlmacenTolerante(AlmacenRedis(redis_url)) if redis_url else AlmacenMemoria()
     ESTADO.cuota = cuota_desde_entorno(redis_url)
     bd = os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
     ESTADO.outbox = OutboxSql(bd)

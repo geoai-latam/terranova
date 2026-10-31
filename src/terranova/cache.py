@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import importlib
 import json
+import logging
 import time
 from typing import Any, Protocol
 
@@ -53,6 +54,42 @@ class AlmacenRedis:
 
     async def guardar(self, clave: str, valor: dict[str, Any], vida_s: int) -> None:
         await self._r.set(clave, json.dumps(valor, ensure_ascii=False), ex=vida_s)
+
+    async def ping(self) -> None:
+        await self._r.ping()
+
+
+class AlmacenTolerante:
+    """La caché ayuda, pero no es requisito: si Redis falla, se lee como «no hay» y no se guarda,
+    y la consulta sigue hacia la fuente (antes, un Redis caído tumbaba todas las herramientas)."""
+
+    def __init__(self, almacen: Almacen) -> None:
+        self._almacen = almacen
+
+    async def leer(self, clave: str) -> dict[str, Any] | None:
+        try:
+            return await self._almacen.leer(clave)
+        except Exception:  # noqa: BLE001 — cualquier falla de la caché se trata como un fallo de caché
+            _fallo("leer")
+            return None
+
+    async def guardar(self, clave: str, valor: dict[str, Any], vida_s: int) -> None:
+        try:
+            await self._almacen.guardar(clave, valor, vida_s)
+        except Exception:  # noqa: BLE001
+            _fallo("guardar")
+
+    async def ping(self) -> None:
+        probar = getattr(self._almacen, "ping", None)
+        if probar is not None:
+            await probar()
+
+
+def _fallo(operacion: str) -> None:
+    from terranova import metricas
+
+    metricas.CACHE_FALLOS.inc()
+    logging.getLogger("terranova.cache").warning("la caché falló al %s; sigue sin caché", operacion)
 
 
 def clave(herramienta: str, version: int, entrada: dict[str, Any]) -> str:

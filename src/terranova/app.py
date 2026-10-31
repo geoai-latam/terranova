@@ -33,12 +33,12 @@ from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
     GEOMETRIA,
-    HTTP_DE,
     PAGINA,
     PATRON_TEXTO_LIMPIO,
     Problema,
     Sobre,
     nueva_solicitud_id,
+    problema_de,
 )
 from terranova.cuota import NIVELES, mes, reinicio
 from terranova.descripcion import llms_txt, tarjeta_mcp
@@ -49,20 +49,7 @@ from terranova.pagina_estado import pagina_estado
 from terranova.vigilancia import estado_por_fuente
 
 Scope = MutableMapping[str, Any]
-
-TITULOS = {
-    "limite_tasa": "Demasiadas consultas seguidas",
-    "saldo_agotado": "Créditos del mes agotados",
-    "no_autenticado": "Falta una llave válida",
-    "sin_permiso": "La llave no tiene permiso para esta familia",
-    "parametro_invalido": "Parámetro inválido",
-    "licencia_no_habilitada": "Licencia no habilitada para esta llave",
-    "no_existe": "No existe",
-    "fuente_no_disponible": "La fuente no está disponible",
-    "fuente_lenta": "La fuente no respondió a tiempo",
-    "fuente_respuesta_invalida": "La fuente respondió algo inválido",
-    "error_interno": "Error interno",
-}
+logger = logging.getLogger("terranova.app")
 
 
 def _tipo(nombre: str, tipo: str) -> Any:
@@ -132,15 +119,7 @@ def modelo_entrada(h: Herramienta) -> type[BaseModel]:
 def problema(
     codigo: str, detalle: str, *, param: str | None = None, reintentar: int | None = None
 ) -> JSONResponse:
-    p = Problema(
-        title=TITULOS.get(codigo, codigo),
-        status=HTTP_DE[codigo],
-        code=codigo,  # type: ignore[arg-type]
-        detail=detalle[:500],
-        param=param,
-        reintentar_en_s=reintentar,
-        solicitud_id=nueva_solicitud_id(),
-    )
+    p = problema_de(codigo, detalle, param=param, reintentar=reintentar)
     cabeceras = {"Retry-After": str(reintentar)} if reintentar else None
     return JSONResponse(
         p.model_dump(mode="json", exclude_none=True),
@@ -308,6 +287,32 @@ def crear_api() -> FastAPI:
         fuente ni a la base (nunca carga contra servidores del Estado)."""
         return {"estado": "ok"}
 
+    @api.get("/listo", include_in_schema=False)
+    async def listo() -> JSONResponse:
+        """Para el balanceador y la sonda: la puerta está lista si responden la base (llaves y
+        uso) y Redis (caché y créditos). `/salud` solo dice que el proceso vive. No llama a
+        ninguna fuente."""
+        partes = {
+            "base": puerta.ESTADO.registro,
+            "redis": puerta.ESTADO.almacen,
+        }
+        estado: dict[str, str] = {}
+        for nombre, objeto in partes.items():
+            probar = getattr(objeto, "ping", None)
+            if probar is None:
+                estado[nombre] = "sin_configurar"
+                continue
+            try:
+                await asyncio.wait_for(probar(), timeout=2)
+                estado[nombre] = "ok"
+            except Exception:  # noqa: BLE001 — cualquier falla es «no listo», con su nombre
+                estado[nombre] = "falla"
+        listo = all(v != "falla" for v in estado.values())
+        return JSONResponse(
+            {"estado": "listo" if listo else "no_listo", **estado},
+            status_code=200 if listo else 503,
+        )
+
     @api.get("/llms.txt", include_in_schema=False)
     async def llms() -> PlainTextResponse:
         return PlainTextResponse(
@@ -471,6 +476,29 @@ class Aplicacion:
         if scope["type"] == "lifespan":
             await self._ciclo(receive, send)
             return
+        if scope["type"] != "http":
+            await self._atender(scope, receive, send)
+            return
+        # Lo que falle fuera de FastAPI (llave, tasa o créditos con Redis o Postgres caídos) sale
+        # como problem+json `error_interno`, nunca como un 500 en texto plano (ADR-0011).
+        iniciada = False
+
+        async def enviar(mensaje: dict[str, Any]) -> None:
+            nonlocal iniciada
+            if mensaje["type"] == "http.response.start":
+                iniciada = True
+            await send(mensaje)
+
+        try:
+            await self._atender(scope, receive, enviar)
+        except Exception:
+            logger.exception("error interno en %s", scope.get("path"))
+            metricas.ERRORES_INTERNOS.inc()
+            if iniciada:
+                raise
+            await problema("error_interno", "error interno")(scope, receive, send)
+
+    async def _atender(self, scope: Scope, receive: Any, send: Any) -> None:
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
         protegida = ruta.startswith("/v1/co/") or ruta in ("/v1/uso", "/v1/fichas")

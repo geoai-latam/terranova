@@ -6,8 +6,9 @@ de `/estilo.css` del sitio cuando Caddy lo sirve y, sin él, sigue legible en m�
 
 Estado por fuente (a partir de sus herramientas):
 - `verde`: todas pasaron en su último canario, verificado hace menos de `VIGENCIA`;
-- `ambar`: unas pasan y otras no, o el último canario es más viejo que `VIGENCIA`;
-- `rojo`: ninguna pasó;
+- `ambar`: unas pasan y otras no, lo único que falla es lentitud o una copia vencida, o el último
+  canario es más viejo que `VIGENCIA`;
+- `rojo`: ninguna pasó y alguna falló de verdad (no solo lenta o vencida);
 - `sin_datos`: aún no tiene canario.
 """
 
@@ -17,7 +18,7 @@ from datetime import UTC, datetime, timedelta, timezone
 from html import escape
 
 from terranova.catalogo import Catalogo
-from terranova.vigilancia import Resultado
+from terranova.vigilancia import DEGRADADOS, Resultado
 
 # los canarios corren a diario: con más de dos días sin resultado, la fuente no está verificada
 VIGENCIA = timedelta(hours=48)
@@ -55,7 +56,7 @@ def estado_fuentes(
         pasan = sum(r.ok for r in rs)
         if not rs or ultimo is None:
             estado = "sin_datos"
-        elif pasan == 0:
+        elif pasan == 0 and any(r.codigo not in DEGRADADOS for r in rs):
             estado = "rojo"
         elif pasan < len(rs) or ahora - ultimo > VIGENCIA:
             estado = "ambar"

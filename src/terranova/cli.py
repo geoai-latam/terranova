@@ -224,7 +224,9 @@ def canarios(argumentos: list[str]) -> int:
                     await c.cerrar()
         for r in resultados:
             registro.registrar(r)
-            marca = "verde" if r.ok else "ROJO "
+            marca = (
+                "verde" if r.ok else {"lento": "LENTO", "vencido": "VENC."}.get(r.codigo, "ROJO ")
+            )
             print(f"{marca} {r.herramienta:42} {r.latencia_ms:>6} ms  {r.codigo}  {r.detalle[:80]}")
         alertar(resultados, os.environ.get("TERRANOVA_ALERTA_URL"))
         return all(r.ok for r in resultados)

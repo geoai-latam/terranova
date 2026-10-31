@@ -105,3 +105,25 @@ def test_el_pool_se_cierra_al_salir_del_proceso(monkeypatch: pytest.MonkeyPatch)
     assert c.ejecutar("SELECT 1")[0] == [(1,)]
     assert al_salir == [c._pool.close]
     c._pool.close()
+
+
+def test_saldo_en_postgres_sin_sobreconsumo_entre_replicas() -> None:
+    """Dos réplicas con su propia conexión reservan a la vez: el UPDATE condicional no deja pasar ni
+    un crédito de más (auditoría integral, 2026-10-31: el saldo pasó de Redis a la base)."""
+    assert URL
+    from terranova.cuota import NIVELES, SaldoSql
+
+    a, b = SaldoSql(URL), SaldoSql(URL)
+    org = "org-" + uuid.uuid4().hex[:8]
+    limite = NIVELES["con_llave"]
+
+    async def todas() -> list[tuple[bool, int]]:
+        return await asyncio.gather(
+            *(r.reservar(org, "con_llave", 50) for r in [a, b] * (limite // 50))
+        )
+
+    resultados = asyncio.run(todas())
+    assert sum(ok for ok, _ in resultados) == limite // 50
+    assert asyncio.run(b.usados(org)) == limite
+    asyncio.run(a.devolver(org, limite + 10))
+    assert asyncio.run(b.usados(org)) == 0
