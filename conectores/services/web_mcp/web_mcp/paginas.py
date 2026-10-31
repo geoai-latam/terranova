@@ -115,6 +115,8 @@ def decodificar(contenido: bytes, tipo: str) -> str:
 
 def fragmentos(texto: str, buscar: str, contexto: int = CONTEXTO) -> tuple[list[dict], int]:
     """Los pasajes alrededor de cada aparición de `buscar` (sin distinguir mayúsculas), y cuántas hay."""
+    if not buscar.strip():  # un patrón vacío casa en cada posición del texto
+        return [], 0
     patron = re.compile(re.escape(buscar.strip()), re.IGNORECASE)
     apariciones = list(patron.finditer(texto))
     salida = []

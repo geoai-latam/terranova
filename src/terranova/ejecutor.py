@@ -16,7 +16,7 @@ import time
 import unicodedata
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any, Literal
 
 from terranova import metricas
@@ -103,7 +103,16 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
         if tipo == "divipola" and not v.isdigit():
-            return municipio_por_nombre(nombre, v, _municipios())
+            codigo = municipio_por_nombre(nombre, v, _municipios())
+            # defensa en profundidad: lo que va sin comillas a la plantilla es siempre un código
+            if not re.fullmatch(r"[0-9]{5}", str(codigo)):
+                raise ErrorEntrada(nombre, "no se pudo convertir a código DIVIPOLA")
+            return codigo
+        if tipo == "fecha":
+            try:
+                date.fromisoformat(v)
+            except ValueError as exc:  # el patrón deja pasar 2026-13-45
+                raise ErrorEntrada(nombre, "no es una fecha real (AAAA-MM-DD)") from exc
         return v
     if len(v) > MAX_TEXTO_LIBRE or not texto_es_limpio(v):
         raise ErrorEntrada(nombre, f"texto de hasta {MAX_TEXTO_LIBRE} caracteres, sin control")

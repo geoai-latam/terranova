@@ -60,7 +60,8 @@ PATRONES_ENTRADA: dict[str, str] = {
     "codigo_dane_sede": r"^[0-9]{12}$",  # sede educativa (DANE): 125175000493
     "matricula_inmobiliaria": r"^[0-9A-Z]{2,4}-[0-9]{1,10}$",  # folio de matrícula: 50N-20849403
     "bpin": r"^[0-9]{13,14}$",  # proyecto del Banco de Proyectos (DNP): 2013157610001
-    "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{0,79}$",
+    # 3 caracteres o más: «A» sería un `like '%A%'` (y su count) sobre millones de filas del Estado
+    "nombre": r"^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ][A-Za-zÁÉÍÓÚÜÑáéíóúüñ .-]{2,79}$",
     # expediente de título minero (ANM): mayúsculas, dígitos y guion; sin comillas ni espacios
     "expediente_minero": r"^[A-Z0-9][A-Z0-9-]{3,19}$",
     # código SIGEP de la entidad (Función Pública): dígitos, con posible cero inicial (0870)
@@ -855,6 +856,13 @@ def validar(catalogo: Catalogo) -> list[str]:
             continue
         if sueltos := h.consulta.marcadores - set(h.entrada) - MARCADORES_DE_LA_PUERTA:
             errores.append(f"{donde}: la consulta usa marcadores sin entrada: {sorted(sueltos)}")
+        for marcador in sorted(_enteros_en_codigo(h.consulta.argumentos) & set(h.entrada)):
+            if h.entrada[marcador] not in ("int", "float", "anio", "bool"):
+                errores.append(
+                    f"{donde}: «{marcador}» ({h.entrada[marcador]}) es el valor entero de una "
+                    "clave con código (where, select, url…): inyección. Ponlo entre comillas "
+                    "dentro del texto, con un tipo con patrón"
+                )
         for marcador in sorted(_interpolados(h.consulta.argumentos) & set(h.entrada)):
             if h.entrada[marcador] not in SEGUROS_EN_TEXTO:
                 errores.append(
@@ -892,6 +900,40 @@ def validar(catalogo: Catalogo) -> list[str]:
                     f"fuente es «{esperada}»"
                 )
     return errores
+
+
+# Claves cuyo valor es código para la fuente (SoQL, una URL, una expresión regular): un marcador
+# que es su valor entero entra tal cual, sin comillas (revisión de seguridad C27, 2026-10-31).
+CLAVES_CON_CODIGO = frozenset(
+    {
+        "where",
+        "select",
+        "order",
+        "group",
+        "having",
+        "previo_select",
+        "previo_group",
+        "previo_where",
+        "url",
+        "enlaces_con",
+        "enlace_con",
+        "pagina",
+        "filtro",
+        "q",
+    }
+)
+
+
+def _enteros_en_codigo(valor: Any, clave: str = "") -> set[str]:
+    """Marcadores que son el valor entero de una clave con código (`where: "{x}"`)."""
+    if isinstance(valor, str):
+        m = MARCADOR.fullmatch(valor)
+        return {m.group(1)} if m and clave in CLAVES_CON_CODIGO else set()
+    if isinstance(valor, dict):
+        return set().union(*(_enteros_en_codigo(v, str(k)) for k, v in valor.items()))
+    if isinstance(valor, list):
+        return set().union(*(_enteros_en_codigo(v, clave) for v in valor)) if valor else set()
+    return set()
 
 
 def _interpolados(valor: Any) -> set[str]:
