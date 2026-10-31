@@ -11,7 +11,7 @@ descripcion: >
   de 2018; antes, fechas o años (y en algunos reportes de 2016, el NIT). Las sociedades vigiladas por
   otra superintendencia no salen.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
-entrada: {nit: int}
+entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo
   resultado: lista
@@ -31,7 +31,7 @@ cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en pfdp-zks5 (nit = 830010665): 175
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
-  entrada: {nit: 830010665}
+  entrada: {nit: "830010665"}
   verdad: {nit: "830010665", concepto: "Activos corrientes totales", periodo: "2015-dic-31"}
   minimos: {numero_registros: 175}
   campos: [concepto, fecha_corte, nit, numero_registros, periodo, punto_entrada, radicado, taxonomia, valor]

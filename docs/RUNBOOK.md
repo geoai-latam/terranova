@@ -132,3 +132,28 @@ historial de canarios. Lo que pasó entre el último respaldo y el incidente se 
 - Una imagen vieja de un conector convirtió un tiempo agotado (`fuente_lenta`) en `error_interno`:
   le faltaba el código de error del kit. **Al desplegar, las imágenes de los conectores se
   construyen desde `main` de geo-copilot**, no se reutilizan las que haya en la máquina.
+
+## 6. Alertas: cómo llegan y cómo probarlas
+
+Prometheus evalúa las reglas de `docker/observabilidad/reglas.yml` y manda lo que dispara a
+Alertmanager, que lo envía por Telegram al dueño. El destino va en el `.env` del servidor:
+
+- `ALERTAS_TELEGRAM_TOKEN`: el token del bot (de @BotFather);
+- `ALERTAS_TELEGRAM_CHAT`: el chat que recibe (el id del dueño o de un grupo).
+
+Sin las dos, Alertmanager arranca igual y avisa en su log que las alertas no llegan a nadie.
+
+**Simulacro** (después de cada cambio de destino, y anotarlo en la sección 5):
+
+```bash
+cd /opt/terranova/docker
+docker compose --profile observabilidad up -d alertmanager prometheus
+docker compose exec alertmanager amtool alert add Simulacro severidad=baja \
+  --annotation=resumen="Simulacro: si esto llega, las alertas llegan" \
+  --alertmanager.url=http://localhost:9093
+```
+
+El mensaje llega en menos de un minuto. Si no llega: `docker compose logs alertmanager` (token o
+chat mal puestos, o el bot no tiene permiso de escribir en el grupo).
+
+Prometheus guarda 400 días de historia: alcanza para medir el SLA de cualquier mes del año.

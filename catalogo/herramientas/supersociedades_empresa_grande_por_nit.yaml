@@ -8,7 +8,7 @@ descripcion: >
   (Supersociedades), año por año: ingresos operacionales, ganancia o pérdida, activos, pasivos y
   patrimonio, en billones de pesos como los publica la fuente. Si no sale, no está en el reporte.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
-entrada: {nit: int}
+entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo
   resultado: lista
@@ -25,7 +25,7 @@ salida: EmpresaGrandePorNit
 cobro: registro
 canario:
   # Medido el 2026-10-22 en 6cat-2gcs: Ecopetrol, corte 2021 → ingresos $84.95 (billones).
-  entrada: {nit: 899999068}
+  entrada: {nit: "899999068"}
   verdad: {anio_corte: 2021, razon_social: "ECOPETROL S.A.", ingresos_operacionales: "$84.95"}
   campos: [anio_corte, ciiu, ciudad, departamento, ganancia_perdida, ingresos_operacionales, macrosector, nit, razon_social, supervisor, total_activos, total_pasivos, total_patrimonio]
   latencia_max_ms: 10000

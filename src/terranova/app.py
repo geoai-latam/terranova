@@ -15,7 +15,9 @@ import time
 from collections.abc import Awaitable, Callable, MutableMapping
 from contextlib import AsyncExitStack
 from datetime import UTC, datetime
+from html import escape
 from typing import Annotated, Any
+from urllib.parse import parse_qs
 
 from fastapi import FastAPI, Request, Response
 from fastapi.exceptions import RequestValidationError
@@ -28,6 +30,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
 from terranova import metricas, puerta
+from terranova.alta import ErrorAlta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
@@ -45,7 +48,7 @@ from terranova.descripcion import llms_txt, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
-from terranova.pagina_estado import pagina_estado
+from terranova.pagina_estado import pagina_estado, pagina_simple
 from terranova.vigilancia import estado_por_fuente
 
 Scope = MutableMapping[str, Any]
@@ -349,6 +352,85 @@ def crear_api() -> FastAPI:
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return estado_por_fuente(ultimos, puerta.CATALOGO)
 
+    # --- alta de la llave de prueba y contacto (ADR-0034): formularios del sitio, sin JS ------
+
+    @api.post("/v1/alta", include_in_schema=False)
+    async def alta(request: Request) -> HTMLResponse:
+        f = await _formulario(request)
+        if f.get("web"):  # campo trampa: lo llenan los robots, no las personas
+            return _pagina_enviada()
+        if puerta.ESTADO.altas is None:
+            return _pagina_error("Alta", "El alta automática no está disponible.", 503)
+        try:
+            await puerta.ESTADO.altas.solicitar(
+                f.get("correo", ""),
+                f.get("nombre", ""),
+                f.get("organizacion", ""),
+                f.get("uso", ""),
+                f.get("acepto") in ("si", "on"),
+                _ip(request),
+            )
+        except ErrorAlta as exc:
+            return _pagina_error("Alta", str(exc), 400)
+        return _pagina_enviada()
+
+    @api.get("/v1/alta/confirmar", include_in_schema=False)
+    async def alta_confirmar_pagina(t: str = "") -> HTMLResponse:
+        """Solo muestra un botón: abrir el enlace no crea la llave (los filtros de correo abren
+        los enlaces para revisarlos)."""
+        cuerpo = (
+            "<p>Confirma para ver tu llave. Se muestra una sola vez: cópiala y guárdala en un "
+            "lugar seguro.</p>"
+            '<form method="post" action="/v1/alta/confirmar">'
+            f'<input type="hidden" name="t" value="{escape(t)}">'
+            '<button class="s-boton" type="submit">Ver mi llave</button></form>'
+        )
+        return HTMLResponse(pagina_simple("Tu llave de prueba", "Alta", cuerpo))
+
+    @api.post("/v1/alta/confirmar", include_in_schema=False)
+    async def alta_confirmar(request: Request) -> HTMLResponse:
+        if puerta.ESTADO.altas is None:
+            return _pagina_error("Alta", "El alta automática no está disponible.", 503)
+        f = await _formulario(request)
+        try:
+            correo, llave = await puerta.ESTADO.altas.confirmar(f.get("t", ""))
+        except ErrorAlta as exc:
+            return _pagina_error("Alta", str(exc), 400)
+        cuerpo = (
+            f"<p>Esta es la llave de <b>{escape(correo)}</b>. No la volverás a ver aquí ni te "
+            "llegará por correo.</p>"
+            f'<code class="s-llave">{escape(llave)}</code>'
+            "<p>Trae pocos créditos y vence en 30 días: sirve para probar. Para más, escríbenos y "
+            "te pasamos a un plan.</p>"
+            '<p><a class="enlace" href="/desarrolladores">Cómo conectarla a tu agente o tu '
+            "sistema</a></p>"
+        )
+        return HTMLResponse(
+            pagina_simple("Tu llave de prueba", "Alta", cuerpo),
+            headers={"Cache-Control": "no-store"},
+        )
+
+    @api.post("/v1/contacto", include_in_schema=False)
+    async def contacto(request: Request) -> HTMLResponse:
+        f = await _formulario(request)
+        if f.get("web"):
+            return _pagina_recibido()
+        if puerta.ESTADO.altas is None:
+            return _pagina_error("Contacto", "El formulario no está disponible.", 503)
+        try:
+            await puerta.ESTADO.altas.contactar(
+                f.get("nombre", ""),
+                f.get("correo", ""),
+                f.get("organizacion", ""),
+                f.get("asunto", "otro"),
+                f.get("mensaje", ""),
+                f.get("acepto") in ("si", "on"),
+                _ip(request),
+            )
+        except ErrorAlta as exc:
+            return _pagina_error("Contacto", str(exc), 400)
+        return _pagina_recibido()
+
     @api.get("/estado", include_in_schema=False)
     async def pagina_de_estado() -> HTMLResponse:
         """Página pública de estado: la puerta y cada fuente según su último canario."""
@@ -393,6 +475,45 @@ def crear_api() -> FastAPI:
 
     api.openapi = openapi  # type: ignore[method-assign]
     return api
+
+
+async def _formulario(request: Request) -> dict[str, str]:
+    """Un formulario `application/x-www-form-urlencoded` (sin depender de python-multipart), con
+    tope de tamaño: nunca pasa de unos KB."""
+    cuerpo = await request.body()
+    if len(cuerpo) > 20_000:
+        return {}
+    pares = parse_qs(cuerpo.decode("utf-8", errors="replace"), keep_blank_values=True)
+    return {k: v[0] for k, v in pares.items() if v}
+
+
+def _ip(request: Request) -> str:
+    """La IP de quien llama: Caddy la pone primera en X-Forwarded-For. Solo se usa su HMAC."""
+    reenviada = request.headers.get("x-forwarded-for", "")
+    if reenviada:
+        return reenviada.split(",")[0].strip()
+    return request.client.host if request.client else "desconocida"
+
+
+def _pagina_error(rotulo: str, mensaje: str, estado: int) -> HTMLResponse:
+    cuerpo = (
+        f'<p class="s-error">{escape(mensaje)}</p>'
+        '<p><a class="enlace" href="javascript:history.back()">Volver</a></p>'
+    )
+    return HTMLResponse(pagina_simple("No se pudo", rotulo, cuerpo), status_code=estado)
+
+
+def _pagina_enviada() -> HTMLResponse:
+    cuerpo = (
+        "<p>Si el correo es válido, te llegará en unos minutos un enlace para recibir tu llave. "
+        "Vence en 24 horas. Revisa también el correo no deseado.</p>"
+    )
+    return HTMLResponse(pagina_simple("Revisa tu correo", "Alta", cuerpo))
+
+
+def _pagina_recibido() -> HTMLResponse:
+    cuerpo = "<p>Recibimos tu mensaje. Te respondemos al correo que dejaste.</p>"
+    return HTMLResponse(pagina_simple("Mensaje recibido", "Contacto", cuerpo))
 
 
 def _cabeceras_tasa(cuota: Any, quedan: int, espera: float) -> list[tuple[bytes, bytes]]:

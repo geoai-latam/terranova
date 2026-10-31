@@ -8,7 +8,7 @@ descripcion: >
   matrícula, nombre, cámara, estado, último año renovado, fechas, actividad (CIIU) y categoría. Solo
   propietarios identificados con NIT.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
-entrada: {nit: int}
+entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo
   resultado: lista
@@ -28,7 +28,7 @@ cobro: registro
 canario:
   # Medido el 2026-10-22 en nb3d-v3n7: Ecopetrol (899999068) tiene 3; la primera matrícula es 2167505,
   # «LA TIENDA ECOPETROL», en Bogotá.
-  entrada: {nit: 899999068}
+  entrada: {nit: "899999068"}
   verdad: {matricula: "2167505", nombre_establecimiento: LA TIENDA ECOPETROL, camara: BOGOTA}
   minimos: {numero_registros: 3}
   campos: [camara, categoria, ciiu, estado, fecha_cancelacion, fecha_matricula, fecha_renovacion, matricula, nit_propietario, nombre_establecimiento, numero_registros, ultimo_ano_renovado]

@@ -115,10 +115,13 @@ def test_segundos_hasta_enero() -> None:
 
 
 def test_los_planes_de_pago_crecen_y_el_gratis_es_el_menor() -> None:
-    """ADR-0029: cada plan de pago da más que el anterior; ninguno da menos que el gratis."""
+    """ADR-0029: cada plan de pago da más que el anterior; ninguno da menos que el gratis. La
+    llave de prueba del alta automática (ADR-0034) da menos que el gratis."""
     pago = [modulo_cuota.NIVELES[n] for n in ("basico", "pro", "empresa", "escala")]
     assert pago == sorted(pago) and len(set(pago)) == len(pago)
-    assert min(modulo_cuota.NIVELES.values()) == modulo_cuota.NIVELES["con_llave"]
+    sin_prueba = {k: v for k, v in modulo_cuota.NIVELES.items() if k != "prueba"}
+    assert min(sin_prueba.values()) == modulo_cuota.NIVELES["con_llave"]
+    assert modulo_cuota.NIVELES["prueba"] < modulo_cuota.NIVELES["con_llave"]
 
 
 @pytest.mark.anyio

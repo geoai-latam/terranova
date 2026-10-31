@@ -227,3 +227,50 @@ href="/terminos">Términos</a></span>
 </body>
 </html>
 """
+
+
+_ESTILO_SIMPLE = """
+.s-cuerpo{max-width:640px;padding-bottom:72px}
+.s-cuerpo p{margin:0 0 14px;color:var(--suave)}
+.s-llave{display:block;font:500 15px/1.5 var(--mono);background:var(--bosque);color:#F3EFE4;
+padding:16px 18px;border-radius:4px;overflow-wrap:anywhere;margin:6px 0 18px;user-select:all}
+.s-boton{display:inline-flex;align-items:center;height:46px;padding:0 22px;border:0;
+border-radius:3px;background:#E0A13A;color:#0B231C;font:600 16px/1 var(--sans);cursor:pointer;
+text-decoration:none}
+.s-error{border-left:3px solid var(--rojo);padding:4px 0 4px 14px}
+"""
+
+
+def pagina_simple(titulo: str, rotulo: str, cuerpo_html: str) -> str:
+    """Una página corta de la puerta (alta, contacto) con el mismo estilo de `/estado`. El cuerpo
+    ya viene escapado por quien llama."""
+    return f"""<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>{escape(titulo)} · Terrnova</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/estilo.css">
+<style>{_ESTILO}{_ESTILO_SIMPLE}</style>
+</head>
+<body>
+<header class="e-cab"><div class="env">
+<a class="e-marca" href="/" aria-label="Terrnova, inicio">{_SIMBOLO}Terrnova</a>
+<nav aria-label="Principal"><a class="op" href="/desarrolladores">Desarrolladores</a>
+<a href="/contacto">Contacto</a></nav>
+</div></header>
+<main class="env">
+<section class="e-portada"><span class="rotulo">{escape(rotulo)}</span>
+<h1>{escape(titulo)}</h1></section>
+<div class="s-cuerpo">{cuerpo_html}</div>
+</main>
+<footer class="e-pie"><div class="env">
+<span><a href="/">Inicio</a><a href="/privacidad">Privacidad</a>
+<a href="/terminos">Términos</a></span>
+<span>© 2026 Terrnova · terrnova.com</span>
+</div></footer>
+</body>
+</html>
+"""

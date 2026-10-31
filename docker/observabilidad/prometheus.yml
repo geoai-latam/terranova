@@ -7,6 +7,12 @@ global:
 rule_files:
   - /etc/prometheus/reglas.yml
 
+# las alertas salen hacia Alertmanager, que las manda al dueño (docker/observabilidad/alertmanager)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["alertmanager:9093"]
+
 scrape_configs:
   - job_name: terranova
     metrics_path: /metrics

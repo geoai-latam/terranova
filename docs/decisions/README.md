@@ -61,3 +61,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0031 · MCP a escala: herramientas tipadas, perfiles por familia y perfil «catálogo» (enmienda la ADR-0006)](0031-mcp-a-escala-perfiles-y-catalogo.md)
 - [ADR-0032 · La geometría completa, bajo pedido: por defecto cada polígono va como su envolvente](0032-geometria-completa-bajo-pedido.md)
 - [ADR-0033 · Las listas largas salen por páginas de 50; los totales cuentan la lista completa](0033-listas-largas-por-paginas.md)
+- [ADR-0034 · Llave de prueba con correo verificado y formulario de contacto propio](0034-alta-con-correo-verificado.md)

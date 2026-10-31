@@ -43,6 +43,9 @@ x-puerta: &puerta
       "imagery-mcp": "http://imagery-mcp:9100/mcp", "web-mcp": "http://web-mcp:9940/mcp"}
     # G6 (ADR-0028): el buscador del catálogo embebe la consulta con el microservicio de embeddings
     TERRANOVA_EMBEDDINGS_URL: http://embeddings:9950
+    # ADR-0034: correo saliente del alta y del contacto (sin él, el alta remite a soporte)
+    TERRANOVA_SMTP_URL: ${TERRANOVA_SMTP_URL:-}
+    TERRANOVA_CORREO_DE: ${TERRANOVA_CORREO_DE:-Terrnova <no-responder@terrnova.com>}
     PYTHONUNBUFFERED: "1"  # los logs de los jobs salen en vivo en `docker logs`
   depends_on:
     postgres: {condition: service_healthy}
@@ -327,6 +330,11 @@ services:
     image: prom/prometheus:v3.5.0
     profiles: [observabilidad]
     restart: unless-stopped
+    # 400 días de historia: el SLA se mide por mes y hay que poder mirar el año (antes, 15 días)
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=400d
     volumes:
       - ./observabilidad/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - ./observabilidad/reglas.yml:/etc/prometheus/reglas.yml:ro
@@ -334,6 +342,23 @@ services:
     networks: [interna]
     mem_limit: 512m
     pids_limit: 128
+
+  # Las alertas de Prometheus le llegan a una persona (auditoría integral, 2026-10-31): por Telegram
+  # con ALERTAS_TELEGRAM_TOKEN y ALERTAS_TELEGRAM_CHAT en el .env del servidor.
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    profiles: [observabilidad]
+    restart: unless-stopped
+    entrypoint: ["/bin/sh", "/etc/alertmanager/arrancar.sh"]
+    environment:
+      ALERTAS_TELEGRAM_TOKEN: ${ALERTAS_TELEGRAM_TOKEN:-}
+      ALERTAS_TELEGRAM_CHAT: ${ALERTAS_TELEGRAM_CHAT:-}
+    volumes:
+      - ./observabilidad/alertmanager/arrancar.sh:/etc/alertmanager/arrancar.sh:ro
+      - alertmanager_datos:/alertmanager
+    networks: [interna]
+    mem_limit: 128m
+    pids_limit: 64
 
   grafana:
     image: grafana/grafana:12.0.2
@@ -361,4 +386,5 @@ networks:
 volumes:
   postgres_datos: {}
   prometheus_datos: {}
+  alertmanager_datos: {}
   caddy_datos: {}

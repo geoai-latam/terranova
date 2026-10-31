@@ -47,6 +47,39 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Alta de la llave de prueba con correo verificado (2026-10-31, ADR-0034, auditoría C11 y C12)
+
+- `/precios#empezar` tiene un formulario: llega un enlace al correo (vence en 24 h), se confirma
+  con un botón y la llave se ve una sola vez. Nivel `prueba`: 300 créditos al mes, todas las
+  familias, vence a los 30 días. Una llave por correo, cinco altas por hora por IP, sin correos
+  desechables y con un campo trampa contra robots.
+- `/contacto` tiene un formulario propio: guarda el mensaje y lo reenvía a soporte. Los botones del
+  sitio que eran `mailto:` llevan al formulario con el asunto puesto.
+- **Pendiente del dueño:** un proveedor de correo saliente (SMTP con TLS) con SPF y DKIM para
+  `terrnova.com`, y sus datos en `TERRANOVA_SMTP_URL` y `TERRANOVA_CORREO_DE`. Sin eso, el alta
+  dice que no está disponible y remite a soporte. También confirmar los números de la llave de
+  prueba (300 créditos y 30 días).
+
+## Reglas nuevas del catálogo (2026-10-31, auditoría integral C2 y C17)
+
+- **Sin uso comercial no se publica** salvo una `excepcion_uso_comercial` escrita con su decisión.
+  La única hoy es la DIAN de usuarios aduaneros («sin fines de lucro»), por decisión del dueño del
+  2026-10-28; se decide antes del primer cobro. El sitio no la anuncia.
+- **El `nit` de una empresa va con el tipo `nit_empresa`** (empieza por 8 o 9, nueve dígitos): un
+  `int` dejaba pasar la cédula de una persona natural (ADR-0014). Cambiaron las ocho herramientas
+  del RUES y de Supersociedades que pedían `nit: int`: ahora el NIT va como texto
+  (`"899999068"`). Las de entidades públicas (`nit_entidad`) siguen como entero.
+
+## Las alertas le llegan a una persona (2026-10-31, auditoría integral C7)
+
+- Alertmanager (perfil `observabilidad`) recibe lo que dispara Prometheus y lo manda por Telegram
+  con `ALERTAS_TELEGRAM_TOKEN` y `ALERTAS_TELEGRAM_CHAT` del `.env` del servidor. Sin destino, avisa
+  en su log. Antes no había receptor: ninguna alerta llegaba a nadie.
+- Reglas nuevas: `ErroresInternos` (la puerta respondió `error_interno` fuera de una herramienta) y
+  `CacheFallando`. Prometheus guarda 400 días (antes, 15).
+- El CI valida la configuración de Alertmanager con `amtool`, con y sin destino. Simulacro en el
+  RUNBOOK (§6). **Pendiente del dueño:** crear el bot, poner el destino y hacer el simulacro.
+
 ## La puerta resiste sus propias fallas (2026-10-31, auditoría integral C3, C4, C6, C14)
 
 - **Nada sale como un 500 en texto plano:** lo que falle fuera de FastAPI (llave, tasa o créditos
