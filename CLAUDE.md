@@ -13,7 +13,8 @@
 
 Puerta única (MCP + REST `/v1`) sobre fuentes oficiales colombianas y globales, con el contrato
 `rt/1`. Cada respuesta lleva procedencia, licencia, completitud y `servido_desde`. Es un producto
-comercial: hoy gratuito (ADR-0020) y con el repo privado (ADR-0001 enmendada). **Terrnova es
+comercial: freemium de pago (ADR-0029, llave de prueba con correo verificado en la ADR-0034). La
+ADR-0001 enmendada pide el repo privado; hoy está público de forma temporal hasta cerrar el MVP. **Terrnova es
 autocontenida:** todas las herramientas viven y funcionan aquí. Los conectores (microservicios MCP
 que van a la fuente) están vendorizados en `conectores/` (services +
 `packages/geo_mcp_kit`); el `copia` y el descubrimiento son internos. GEO Copilot no es una

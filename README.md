@@ -17,7 +17,7 @@ datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus,
   (`vistos/total`) y desde dónde se sirvió** (fuente, copia, curado, caché u obsoleto).
 - **Territorio de primera clase:** predio en un punto, cruces espaciales, ficha de un lugar,
   restricciones, amenazas e imágenes.
-- **Gratuito por ahora** (ADR-0020). El repo es privado: Terrnova es un producto comercial (enmienda de la ADR-0001).
+- **Freemium de pago** (ADR-0029): una llave de prueba con correo verificado (ADR-0034), un plan Gratis y planes de pago por créditos. Terrnova es un producto comercial (enmienda de la ADR-0001); el repo está público de forma temporal mientras se cierra el MVP.
 
 ## Principios
 

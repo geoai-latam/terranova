@@ -1,8 +1,15 @@
 # Plan de expansión (F5): todas las fuentes objetivo
 
-*2026-10-22.* Cómo pasar de las 20 herramientas de M1 a las ~139 de
+*2026-10-22, actualizado el 2026-10-31.* Cómo pasar de las 20 herramientas de M1 a las ~139 de
 [FUENTES_OBJETIVO.md](FUENTES_OBJETIVO.md), que es el gate F5 y la meta de M2. Este plan detalla la
 sección F5 del [ROADMAP](ROADMAP.md) y no cambia sus reglas.
+
+> **Al 2026-10-31:** 207 herramientas sobre 180 fuentes (178 publicadas, de 46 entidades), cada una
+> con perfil, ficha técnica, canario con verdad medida y dorada. La meta de ~139 se pasó. Desde la
+> auditoría integral de ese día, **las olas nuevas se congelan** durante la fase comercial (F8,
+> [spec 11](specs/11-fase-comercial.md)) y la expansión sigue el
+> [modelo operativo](#modelo-operativo-de-la-expansión) de abajo. Los números de la sección
+> siguiente son el registro del 2026-10-22.
 
 ## Punto de partida
 
@@ -189,3 +196,62 @@ Cada conjunto tiene su herramienta o la razón por la que todavía no.
 | Convenios histórico `ityv-bxct` | — | no hace falta: la vigente se recargó entera en 2023 y trae firmas desde 2000 |
 | SECOP I archivos histórico `8kpz-m6cc`, modificaciones a procesos SECOP II `e2u2-swiw` (sin actualizar desde 2021) | — | después: mismos esquemas que los vigentes |
 | Contactos de entidades y proveedores `4ex9-j3n8`, ubicaciones adicionales `wwhe-4sq8` | — | fuera: son contactos y direcciones (ADR-0014) |
+
+## Modelo operativo de la expansión
+
+*2026-10-31, de la auditoría integral.* Lo que se aprendió de cómo otros agregadores suman y
+mantienen fuentes (niveles publicados y retiro de conectores, conectores hechos a pedido de un
+cliente, frescura por jurisdicción a la vista, degradación automática por prueba diaria). Los pesos
+y los umbrales son una propuesta a calibrar con lo medido, no un dato.
+
+**Condición previa.** Mientras no haya demanda documentada, la expansión queda subordinada a la fase
+comercial: una fuente entra si la pide un prospecto con su caso de uso, o si cierra un hueco de
+confianza (latencia, copia, licencia).
+
+**Embudo.** Pedida → explorada (perfil) → candidata → experimental → publicada → verificada → en
+mantenimiento → retirada. «En espera» es un estado aparte, con su motivo (permiso, licencia, acceso).
+
+**Puntaje de 0 a 100:**
+
+| Factor | Peso | Señales |
+|---|---|---|
+| Demanda | 35 | Pedidos con caso de uso, consultas sin resultado en `buscar_herramienta` y `catalogo_buscar`, uso por familia, banco de verdades |
+| Valor comercial | 25 | Sirve a una solución que se vende o cierra una brecha frente a la competencia |
+| Factibilidad | 20 | API o bulk antes que HTML; identificador persistente; metadatos DCAT; se puede copiar sin cargar la fuente |
+| Costo de mantener (inverso) | 20 | Cambios de esquema conocidos, latencia, formularios con estado |
+
+Lo que no se puntúa porque deja la fuente fuera: licencia roja, búsqueda por persona y captchas
+(ADR-0014, ADR-0018). El puntaje se compara a los 90 días con el uso real.
+
+**Niveles de calidad**, para publicar en `/fuentes`, en `fuente_describir` y en el sobre:
+
+| Nivel | Criterio |
+|---|---|
+| Verificada | Licencia verificada, perfil y ficha técnica, canario verde 3 días, éxito en producción ≥ 99 % en 14 días, p95 bajo su tope |
+| Estándar | Lo mismo con éxito ≥ 95 % |
+| Experimental | Solo con llave de evaluación (ADR-0007), sin promesa |
+| En retiro | Con fecha de salida |
+
+**Degradación automática.** Más del 50 % de rojos por dato en 3 días pasa la fuente a «en
+mantenimiento», visible en `/estado` y en `completitud`. A los 14 días, tarea en los pendientes. A
+los 28, sale de los perfiles MCP. El rojo por latencia (`lento`) y la copia vencida (`vencido`) se
+cuentan aparte y no degradan igual.
+
+**Presupuesto de mantenimiento.** Se miden las horas de alta y de mantenimiento por fuente (G5). El
+mantenimiento no pasa del 30 % de la capacidad. Una fuente que cuesta más de lo que rinde dos
+trimestres seguidos entra a revisión de retiro.
+
+**Rol de la IA.** Solo en la fábrica, nunca en la puerta (ADR-0012). Un agente de código hace el
+borrador de ficha, perfil, ficha técnica y mapeo desde la documentación y el DCAT. Todo pasa por
+`validar_catalogo.py`, la dorada y un canario con verdad medida por una persona. También vigila
+cambios en las páginas de términos y licencias. Su exactitud se mide campo por campo contra las
+fichas existentes.
+
+**Otros países.** No antes de tener un cliente que pague por eso y el mantenimiento de Colombia
+dentro del presupuesto. Antes, una ADR de multipaís: espacio de nombres por país, tipos de entrada
+en el catálogo y no en Python, geografía administrativa por país y cosechador CKAN. Se entra con
+nivel experimental y unas 10 fuentes con identificador persistente.
+
+**Métricas.** Horas por fuente (alta y mes). Fuentes por nivel. Días en mantenimiento. Tasa de éxito
+de producción por fuente (14 días). Edad de cada copia frente a su SLA. Pedidos de fuentes recibidos
+y atendidos. Uso por fuente a 90 días de publicada.
