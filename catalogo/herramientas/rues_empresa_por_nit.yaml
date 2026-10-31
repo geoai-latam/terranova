@@ -8,7 +8,7 @@ descripcion: >
   (sin dígito de verificación): razón social, cámara, matrícula, organización jurídica, estado,
   fechas, último año renovado y CIIU. Las personas naturales no se consultan.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
-entrada: {nit: int}
+entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo
   resultado: lista
@@ -25,7 +25,7 @@ salida: EmpresaPorNit
 cobro: registro
 canario:
   # Medido el 2026-10-22 en c82u-588k: Ecopetrol, matrícula 1291197 de Bogotá.
-  entrada: {nit: 899999068}
+  entrada: {nit: "899999068"}
   verdad: {razon_social: "ECOPETROL S A", matricula: "1291197", organizacion_juridica: SOCIEDAD ANONIMA, estado_matricula: ACTIVA}
   campos: [camara_comercio, categoria_matricula, ciiu_principal, ciiu_secundaria, digito_verificacion, estado_matricula, fecha_matricula, matricula, nit, organizacion_juridica, razon_social, tipo_sociedad, ultimo_ano_renovado]
   latencia_max_ms: 15000

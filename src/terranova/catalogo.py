@@ -546,10 +546,21 @@ class Fuente(_Ficha):
         "saben): la ficha técnica las cosecha (spec 08)",
     )
     dcat: dict[str, str] = Field(default_factory=dict)
+    excepcion_uso_comercial: str | None = Field(
+        default=None,
+        description="por qué se publica una fuente con uso_comercial «no» (decisión con fecha); "
+        "sin ella, no se publica",
+    )
 
     @model_validator(mode="after")
     def _reglas(self) -> Self:
         clf = self.clasificacion_licencia
+        if self.estado == "publicada" and self.uso_comercial == "no":
+            if not self.excepcion_uso_comercial:
+                raise ValueError(
+                    "ADR-0019: una fuente sin uso comercial no se publica (se sirve a llaves de "
+                    "pago) salvo una excepcion_uso_comercial escrita con su decisión"
+                )
         if clf == "rojo" and self.estado != "borrador":
             raise ValueError(
                 "ADR-0019 (enmienda): una fuente roja (persona, reserva legal o prohibición "
@@ -744,6 +755,10 @@ class Herramienta(_Ficha):
     def _propias(self) -> Self:
         if set(self.canario.entrada) != set(self.entrada):
             raise ValueError("la entrada del canario no coincide con la de la herramienta")
+        if self.entrada.get("nit", "nit_empresa") != "nit_empresa":
+            # ADR-0014: un NIT que empieza por 1-7 es la cédula de una persona natural; el patrón
+            # `nit_empresa` (8 o 9 y 9 dígitos) deja fuera la búsqueda por cédula
+            raise ValueError("ADR-0014: el parámetro `nit` va con el tipo `nit_empresa`")
         # lo espacial se cobra como espacial y nada más (un ráster en un punto cuenta como zona)
         espacial = {"en_punto": {"punto", "zona"}, "en_zona": {"zona"}}
         permitidos = espacial.get(self.consulta.operacion, {"codigo", "registro", "agregado"})

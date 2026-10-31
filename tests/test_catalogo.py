@@ -128,6 +128,14 @@ CASOS = [
         "la norma que los define",
     ),
     (FUENTE, _set(cobertura__columna_tiempo="NO_ESTA"), "columna_tiempo"),
+    # auditoría integral (2026-10-31): sin uso comercial no se publica salvo excepción escrita
+    (FUENTE, _set(uso_comercial="no"), "excepcion_uso_comercial"),
+    # ADR-0014: el NIT de una empresa va con su patrón; un `int` deja pasar cédulas
+    (
+        "herramientas/rues_empresa_por_nit.yaml",
+        _set(entrada={"nit": "int"}, canario__entrada={"nit": 899999068}),
+        "nit_empresa",
+    ),
     (
         FUENTE,
         _set(

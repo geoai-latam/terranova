@@ -221,7 +221,7 @@ verdades:
     familia: empresas
     pregunta: "¿Ecopetrol (NIT 899999068) tiene la matrícula mercantil activa y en qué cámara?"
     herramienta: rues_empresa_por_nit
-    entrada: {nit: 899999068}
+    entrada: {nit: "899999068"}
     verdad: {razon_social: "ECOPETROL S A", camara_comercio: BOGOTA, matricula: "1291197", estado_matricula: ACTIVA}
     medicion: "c82u-588k, where nit = '899999068'"
   - id: e02
@@ -229,21 +229,21 @@ verdades:
     pregunta: "¿Cuál es la actividad económica principal de Ecopetrol y hasta qué año renovó?"
     herramienta: rues_empresa_por_nit
     alternativas: [rues_empresas_buscar]
-    entrada: {nit: 899999068}
+    entrada: {nit: "899999068"}
     verdad: {cod_ciiu_act_econ_pri: "0610", ultimo_ano_renovado: "2026"}
     medicion: "c82u-588k, where nit = '899999068'"
   - id: e03
     familia: empresas
     pregunta: "¿Desde cuándo está matriculada ISA (NIT 860016610) y en qué cámara?"
     herramienta: rues_empresa_por_nit
-    entrada: {nit: 860016610}
+    entrada: {nit: "860016610"}
     verdad: {razon_social: "INTERCONEXION ELECTRICA S.A. E.S.P.", camara_comercio: "MEDELLIN PARA ANTIOQUIA", fecha_matricula: "1967-09-01"}
     medicion: "c82u-588k, where nit = '860016610'"
   - id: e04
     familia: empresas
     pregunta: "¿EPM (NIT 890904996) aparece en el registro mercantil?"
     herramienta: rues_empresa_por_nit
-    entrada: {nit: 890904996}
+    entrada: {nit: "890904996"}
     estado: no_encontrado
     medicion: "c82u-588k, where nit = '890904996': 0 filas (empresa industrial y comercial del Estado)"
   - id: e05

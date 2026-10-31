@@ -47,6 +47,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Reglas nuevas del catálogo (2026-10-31, auditoría integral C2 y C17)
+
+- **Sin uso comercial no se publica** salvo una `excepcion_uso_comercial` escrita con su decisión.
+  La única hoy es la DIAN de usuarios aduaneros («sin fines de lucro»), por decisión del dueño del
+  2026-10-28; se decide antes del primer cobro. El sitio no la anuncia.
+- **El `nit` de una empresa va con el tipo `nit_empresa`** (empieza por 8 o 9, nueve dígitos): un
+  `int` dejaba pasar la cédula de una persona natural (ADR-0014). Cambiaron las ocho herramientas
+  del RUES y de Supersociedades que pedían `nit: int`: ahora el NIT va como texto
+  (`"899999068"`). Las de entidades públicas (`nit_entidad`) siguen como entero.
+
 ## Las alertas le llegan a una persona (2026-10-31, auditoría integral C7)
 
 - Alertmanager (perfil `observabilidad`) recibe lo que dispara Prometheus y lo manda por Telegram
