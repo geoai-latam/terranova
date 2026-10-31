@@ -52,7 +52,8 @@ TOPE_S = 12.0  # ADR-0023: p95 en vivo < 15 s sin depender de la agrología del 
 TOPE_CREDITOS = 50
 PREGUNTA = "¿Qué hay en este lugar: predio, restricciones, suelo, cobertura y sismos?"
 DESCRIPCION = (
-    "Ficha de un lugar de Colombia por punto (lon, lat) o por número predial: predio y "
+    "Ficha de un lugar de Colombia por punto (lon, lat) o por número predial: predio (de la "
+    "copia del SINIC en los municipios con gestor catastral propio; del IGAC en los demás) y "
     "construcciones (IGAC), vereda, áreas protegidas (RUNAP), resguardos y zonas de reserva "
     "campesina (ANT), vocación, capacidad y conflictos de uso del suelo (IGAC), cobertura (ESA "
     "WorldCover), sismos M≥3 del último año a ~55 km (USGS), población (DANE) y precio de la "
@@ -114,6 +115,11 @@ def _municipio(predio: dict[str, Any]) -> dict[str, Any] | None:
 
 
 PREDIO_EN_PUNTO = Parte("predio", "igac_predio_en_punto", _punto)
+# La copia del SINIC (milisegundos) cubre los 333 municipios con gestor catastral propio; si el
+# punto cae en ella, la ficha no espera al IGAC en vivo (que llegó a tardar 38 s, auditoría del
+# 2026-10-31). Si no, el predio sale del IGAC como siempre.
+PREDIO_SINIC = Parte("predio", "sinic_predio_en_punto", _punto)
+FUENTE_SINIC = "igac.sinic_terreno"
 PARTES_PUNTO = (
     Parte("vereda", "igac_vereda_en_punto", _punto),
     Parte("areas_protegidas", "pnn_areas_protegidas_en_punto", _punto),
@@ -139,7 +145,7 @@ PARTES_RESTRICCIONES = {
 ORIGENES_CURADO = ("pnn.runap", "ant.resguardos_indigenas", "ant.zonas_reserva_campesina")
 CREDITOS_CURADO = 5
 HERRAMIENTAS = frozenset(
-    p.herramienta for p in (PREDIO_EN_PUNTO, *PARTES_PUNTO, *PARTES_PREDIO)
+    p.herramienta for p in (PREDIO_EN_PUNTO, PREDIO_SINIC, *PARTES_PUNTO, *PARTES_PREDIO)
 ) | {"igac_predio_por_codigo"}
 
 # Punto o código, no los dos. Va en OpenAPI; en MCP no: OpenAI rechaza la lista ENTERA de
@@ -434,7 +440,21 @@ async def ficha(
             raise ErrorEntrada("lon", "fuera de rango (EPSG:4326)")
         zona = ZonaUsada(tipo="punto", valor=list(punto), crs="EPSG:4326")
         predio = None
-        tarea_predio = asyncio.ensure_future(una(PREDIO_EN_PUNTO, _punto(punto, hoy)))
+
+        async def predio_en_punto() -> tuple[Parte, Sobre | ErrorEjecucion]:
+            if omitir(PREDIO_SINIC) is None:
+                parte, sinic = await una(PREDIO_SINIC, _punto(punto, hoy))
+                if isinstance(sinic, Sobre) and sinic.estado == "encontrado":
+                    return parte, sinic
+                # consultada sin resultado o caída: queda en la procedencia (regla 3), sin cobrarla
+                # ni volver parcial la ficha, porque el predio sigue con el IGAC
+                if isinstance(sinic, Sobre):
+                    acc.procedencia += sinic.procedencia
+                else:
+                    acc.procedencia.append(_procedencia_fallida(ej, parte, consultado_en))
+            return await una(PREDIO_EN_PUNTO, _punto(punto, hoy))
+
+        tarea_predio = asyncio.ensure_future(predio_en_punto())
     else:
         # el banco de escala vio al agente rellenar `codigo` con ceros junto al punto, seis veces
         # seguidas: el error dice qué quitar
@@ -452,8 +472,16 @@ async def ficha(
             acc.avisos += [f"«{p.nombre}» no se consultó: {por_que}." for p in PARTES_PREDIO]
             return []
         tareas = []
+        del_sinic = any(pr.fuente_id == FUENTE_SINIC for pr in predio.procedencia)
         for p in PARTES_PREDIO:
             e = p.entrada(predio.datos)
+            if del_sinic and p.herramienta == "igac_construcciones_en_predio":
+                # el SINIC no trae construcciones y la base del IGAC no cubre a su gestor
+                acc.avisos.append(
+                    f"«{p.nombre}» no se consultó: el predio sale del SINIC y la base del IGAC "
+                    "no cubre a su gestor."
+                )
+                continue
             motivo = omitir(p) or (None if e else "falta el dato")
             if motivo or e is None:
                 acc.avisos.append(f"«{p.nombre}» no se consultó: {motivo}.")

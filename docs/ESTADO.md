@@ -62,6 +62,10 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **MCP:** el texto (`content`) lleva el sobre en JSON, con estado, datos, avisos, procedencia,
   licencia, completitud y huella (sin la geometría; tope de 24.000 caracteres). Los errores salen
   con `isError` y el objeto de problema en `structuredContent`, como pide la spec 01 §6.3.
+- **`ficha_lugar` toma el predio de la copia del SINIC** cuando el punto cae en un municipio con
+  gestor propio (milisegundos) y solo si no, del IGAC en vivo, que llegó a tardar 38 s. Si la
+  copia falla, sigue con el IGAC y la deja en la procedencia (regla 3). Las construcciones del
+  IGAC no cubren a esos gestores: la ficha lo dice en un aviso.
 - **Canarios:** una copia vencida sale `vencido`, no verde. En `/estado` y `/v1/estado`, lo que
   solo está lento o vencido se ve degradado (ámbar o `degradada`), no rojo.
 
