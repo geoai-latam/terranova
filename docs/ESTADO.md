@@ -66,6 +66,11 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   gestor propio (milisegundos) y solo si no, del IGAC en vivo, que llegó a tardar 38 s. Si la
   copia falla, sigue con el IGAC y la deja en la procedencia (regla 3). Las construcciones del
   IGAC no cubren a esos gestores: la ficha lo dice en un aviso.
+- **El saldo de créditos vive en la base** (`saldos`, en la misma base de las llaves), como dice la
+  ADR-0010: un reinicio de Redis o su política de expulsión ya no pone a todos en cero. Se
+  descuenta con un `UPDATE` condicional (sin sobreconsumo entre réplicas) y devolver nunca baja
+  de cero. La tasa por llave sigue en Redis. Al desplegar, el saldo del mes empieza en cero en la
+  base: hoy no hay planes de pago, así que no se pierde nada que se cobre.
 - **Canarios:** una copia vencida sale `vencido`, no verde. En `/estado` y `/v1/estado`, lo que
   solo está lento o vencido se ve degradado (ámbar o `degradada`), no rojo.
 
