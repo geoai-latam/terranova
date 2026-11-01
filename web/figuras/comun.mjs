@@ -4,11 +4,16 @@
 import * as k from "./kit/iso-kit.mjs";
 
 export { k };
-// La base y los pies (tono lo) van en superficie-2, la estructura (mid) en un blanco verdoso y el
-// sujeto (hi) en blanco: así el dibujo tiene tres planos de tono antes del único ámbar.
-const CLASE = { lo: "pieza-l", mid: "pieza-m" };
-export const S = (paths, style = {}) =>
-  k.solidSvg(paths, style.className || !CLASE[style.tone ?? "hi"] ? style : { ...style, className: CLASE[style.tone] });
+// Cada pieza lleva un material de la paleta (m: "bosque", "teal", "ocre", "ambar", "metal",
+// "pantalla", "papel"…; ver estilo.css). Sin material explícito: la base (lo) en superficie de
+// trabajo, la estructura (mid) en metal y el sujeto (hi) en papel.
+const POR_TONO = { lo: "trabajo", mid: "metal", hi: "papel" };
+export const S = (paths, style = {}) => {
+  const { m, className, ...resto } = style;
+  const mat = m ?? (className === "oscuro" ? "pantalla" : className === "teal" ? "teal" : POR_TONO[style.tone ?? "hi"]);
+  const otras = className && className !== "oscuro" && className !== "teal" ? ` ${className}` : "";
+  return k.solidSvg(paths, { ...resto, className: `m-${mat}${otras}` });
+};
 export const L = (d, style) => k.lineSvg(d, style);
 export const D = (points, style) => k.dotsSvg(points, style);
 export const r1 = (v) => Math.round(v * 10) / 10;
@@ -64,7 +69,7 @@ export function base(PLACA, z, grueso, P, { patas = 12, alto = 6 } = {}) {
 // Regla en el borde delantero (+y) de una placa: tira, marcas cada 4 y mayores cada 5.
 export function regla(x0, x1, yBorde, z, P) {
   const tira = { x: x0, y: yBorde - 3, w: x1 - x0, d: 2.6, r: 0.6 };
-  const out = [S(k.slabOf(tira, z, 0.5, P, 2), { tone: "lo", crease: "none" })];
+  const out = [S(k.slabOf(tira, z, 0.5, P, 2), { tone: "lo", crease: "none", m: "ocre" })];
   const m = k.topTicks(x0 + 2, x1 - 2, 4, 5, yBorde - 0.4, z + 0.5, [-1, -1.8], P);
   out.push(L(m.minor, { tone: "lo" }), L(m.major, { tone: "mid" }));
   return out.join("");

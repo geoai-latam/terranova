@@ -9,6 +9,35 @@ function enVista(el, cambio) {
   new IntersectionObserver(es => cambio(es[es.length - 1].isIntersecting), { rootMargin: '80px 0px' }).observe(el);
 }
 
+// ---------------------------------------------------------------- vida ambiente
+// Un bucle por figura que corre mientras está en vista (y nunca con movimiento reducido): mueve
+// paquetes por cables y rieles, balancea agujas, hace latir lo que late. tick(t) recibe segundos.
+function ambiente(fig, tick) {
+  if (quieto.matches) return;
+  const lienzo = fig.querySelector('.lienzo');
+  let raf = 0, vis = false;
+  const bucle = ahora => { tick(ahora / 1000); raf = vis ? requestAnimationFrame(bucle) : 0; };
+  enVista(lienzo, v => { vis = v; if (v && !raf) raf = requestAnimationFrame(bucle); });
+}
+// Paquetes de datos: bloques de color que recorren un trazo (un <path>) a su ritmo.
+function paquetes(svg, trazo, { n = 2, color = 'var(--teal-400)', r = 1.6, periodo = 2.4, desde = 0, al = 1, desfase = 0 } = {}) {
+  const ns = 'http://www.w3.org/2000/svg', largo = trazo.getTotalLength();
+  const ps = Array.from({ length: n }, () => {
+    const c = document.createElementNS(ns, 'circle');
+    c.setAttribute('class', 'paquete'); c.setAttribute('r', r); c.style.fill = color;
+    trazo.parentNode.insertBefore(c, trazo.nextSibling);
+    return c;
+  });
+  return t => ps.forEach((c, i) => {
+    const u = ((t / periodo + i / n + desfase) % 1 + 1) % 1;
+    const f = desde + (al - desde) * u;
+    const p = trazo.getPointAtLength(largo * f);
+    c.setAttribute('cx', p.x.toFixed(1)); c.setAttribute('cy', p.y.toFixed(1));
+    c.style.opacity = String(Math.min(1, Math.min(u, 1 - u) * 8));
+  });
+}
+const escribir = svg => svg.querySelectorAll('.escribe path').forEach(p => p.setAttribute('pathLength', '1'));
+
 // ---------------------------------------------------------------- Fig. 1: el bastidor
 function capas(fig) {
   const placa = fig.querySelector('.lienzo');
@@ -77,6 +106,11 @@ function capas(fig) {
     tomar((Math.max(actual, 0) + d + modulos.length) % modulos.length);
   });
   enVista(placa, v => { visible = v; if (v) { armar(); correr(); } });
+  // vida: el dato sube por los tres cables en el color de su módulo; la pantalla de agentes escribe
+  escribir(svg);
+  const COLORES = ['var(--ocre-400)', 'var(--fondo)', 'var(--ambar-500)'];
+  const vidas = cables.map((c, j) => paquetes(svg, c.querySelector('.cable-alma'), { n: 2, color: COLORES[j], r: 2, periodo: 2.2 + j * 0.5, desde: 1, al: 0, desfase: j * 0.3 }));
+  ambiente(fig, t => vidas.forEach(v => v(t)));
 }
 
 // ---------------------------------------------------------------- Fig. 2: la ruta de una pregunta
@@ -282,8 +316,45 @@ function prueba(fig) {
   svg.querySelectorAll('[data-ficha]').forEach(g => { fichas[+g.dataset.ficha] = g; });
   const notas = [...document.querySelectorAll('.notas-p [data-capa]')];
   const sello = svg.querySelector('[data-sello]');
-  const alto = fichas.map(() => 0);
-  let meta = 0, s = 0;
+  escribir(svg);
+  // resortes: cada ficha entra cayendo desde arriba, escalonada, y rebota en el piso del fichero
+  const alto = fichas.map((_, j) => ({ x: 2.4 + j * 0.35, v: 0 }));
+  const st = { x: 0, v: 0 };
+  let meta = 0, llega = -1, ultimo = 0;
+  const [dx, dy] = vivo.sube;
+  const { cruza, arriba, fieltro, salto } = vivo.sello;
+  function aplicar(t) {
+    fichas.forEach((g, j) => {
+      // la ficha que se lee se mece un poco, como sostenida en la mano
+      const a = alto[j].x + (j === meta && !quieto.matches ? Math.sin(t * 1.7) * 0.025 * Math.min(1, alto[j].x) : 0);
+      if (Math.abs(a) > 0.001) g.setAttribute('transform', `translate(${(dx * a).toFixed(2)} ${(dy * a).toFixed(2)})`); else g.removeAttribute('transform');
+      g.querySelector('[data-pestana] > .iso-solid').toggleAttribute('data-lit', j === meta && alto[j].x > 0.5);
+      g.classList.toggle('activa', j === meta);
+    });
+    // el sello cruza, sube y cae al tampón con un rebote; en la huella marca cada tanto
+    const s = Math.max(0, Math.min(1, st.x));
+    let z = fieltro * s + salto * Math.sin(Math.PI * s);
+    if (llega >= 0) {
+      const u = t - llega;
+      z += Math.exp(-4 * u) * Math.abs(Math.sin(10 * u)) * 2.2;
+      if (u > 1.4) z += Math.max(0, Math.sin(((u - 1.4) / 2.2) * Math.PI * 2)) ** 6 * 3.5;
+    }
+    if (s > 0.001) sello.setAttribute('transform', `translate(${(cruza[0] * s + arriba[0] * z).toFixed(2)} ${(cruza[1] * s + arriba[1] * z).toFixed(2)})`);
+    else sello.removeAttribute('transform');
+  }
+  function paso(dt, t) {
+    const K = 70, C = 2 * Math.sqrt(K) * 0.5;
+    alto.forEach((a, j) => {
+      const m = j === meta ? 1 : 0;
+      a.v += (K * (m - a.x) - C * a.v) * dt; a.x += a.v * dt;
+      if (a.x < 0) { a.x = 0; a.v = -a.v * 0.3; }
+    });
+    const ms = meta === fichas.length - 1 ? 1 : 0;
+    st.v += (40 * (ms - st.x) - 2 * Math.sqrt(40) * st.v) * dt; st.x += st.v * dt;
+    if (ms && st.x > 0.995 && llega < 0) llega = t;
+    if (!ms) llega = -1;
+    aplicar(t);
+  }
   selector(fig, {
     n: fichas.length,
     elegir: i => {
@@ -291,28 +362,16 @@ function prueba(fig) {
       lectura.textContent = vivo.lecturas[i];
       notas.forEach(nt => nt.classList.toggle('vivo', +nt.dataset.capa === i));
     },
-    pintar: dt => {
-      let mueve = false;
-      fichas.forEach((g, j) => {
-        const m = j === meta ? 1 : 0;
-        alto[j] = sigue(alto[j], m, dt, 0.3);
-        if (Math.abs(alto[j] - m) < 0.002) alto[j] = m; else mueve = true;
-        const [dx, dy] = vivo.sube;
-        if (alto[j]) g.setAttribute('transform', `translate(${(dx * alto[j]).toFixed(2)} ${(dy * alto[j]).toFixed(2)})`); else g.removeAttribute('transform');
-        g.querySelector('[data-pestana] > .iso-solid').toggleAttribute('data-lit', j === meta && alto[j] > 0.5);
-      });
-      // con la huella (la última capa), el sello cruza, sube y baja al tampón
-      const ms = meta === fichas.length - 1 ? 1 : 0;
-      s = sigue(s, ms, dt, 0.45);
-      if (Math.abs(s - ms) < 0.002) s = ms; else mueve = true;
-      const { cruza, arriba, fieltro, salto } = vivo.sello;
-      const z = fieltro * s + salto * Math.sin(Math.PI * s);
-      if (s) sello.setAttribute('transform', `translate(${(cruza[0] * s + arriba[0] * z).toFixed(2)} ${(cruza[1] * s + arriba[1] * z).toFixed(2)})`);
-      else sello.removeAttribute('transform');
-      return mueve;
+    pintar: () => {
+      if (!quieto.matches) return false;
+      alto.forEach((a, j) => { a.x = j === meta ? 1 : 0; a.v = 0; });
+      st.x = meta === fichas.length - 1 ? 1 : 0;
+      aplicar(0);
+      return false;
     },
     desde: (x, y) => cerca2(vivo.pestanas, x, y),
   });
+  ambiente(fig, t => { const dt = ultimo ? Math.min(t - ultimo, 1 / 20) : 1 / 60; ultimo = t; paso(dt, t); });
 }
 
 // ---------------------------------------------------------------- un guion que se repite
@@ -615,6 +674,7 @@ const cargar = async fig => {
   svg.setAttribute('aria-hidden', 'true');
   svg.removeAttribute('role');
   fig.classList.add('lista');
+  enVista(lienzo, v => fig.classList.toggle('en-vista', v));
   const vida = VIDAS[fig.dataset.figura];
   if (vida) vida(fig);
 };

@@ -598,7 +598,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   --anatomy-lit-top: color-mix(in srgb, var(--acento-relleno) 30%, #fff); --anatomy-lit-shade: color-mix(in srgb, var(--acento-relleno) 34%, var(--fondo));
   --anatomy-hi: var(--tinta); --anatomy-mid: var(--linea-fuerte); --anatomy-lo: color-mix(in srgb, var(--linea-fuerte) 55%, var(--linea));
   --anatomy-faint: var(--linea); --anatomy-lit: var(--acento); --anatomy-dot: var(--tinta);
-  --anatomy-halo: var(--tinta); --anatomy-halo-opacity: .16; --anatomy-weight: .6px; --anatomy-mono: var(--font-mono);
+  --anatomy-halo: var(--bosque-800); --anatomy-halo-opacity: .24; --anatomy-weight: .6px; --anatomy-mono: var(--font-mono);
   margin: 0; display: grid; gap: 6px; min-width: 0; width: 100%; justify-self: center; align-content: start;
 }
 .fig-iso[data-figura="capas"] { width: 80%; }
@@ -652,6 +652,38 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
 .iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }
 .iso-solid[data-lit] > .iso-edge { stroke: var(--anatomy-lit); }
+/* materiales de las figuras: cada pieza lleva m-<material>. La cara de arriba aclara, los costados
+   se oscurecen hacia bosque-900 (sombra con tono, no gris) y el filo es el mismo color más hondo.
+   Encendida (data-lit), la pieza aclara y su filo pasa a ámbar. */
+.m-bosque { --c: var(--bosque-700); } .m-chasis { --c: var(--bosque-800); } .m-pantalla { --c: var(--bosque-900); }
+.m-teal { --c: var(--teal-700); } .m-agua { --c: var(--teal-400); }
+.m-ocre { --c: var(--ocre-400); } .m-ambar { --c: var(--ambar-500); }
+.m-metal { --c: color-mix(in srgb, var(--linea-fuerte) 55%, #fff); } .m-acero { --c: var(--linea-fuerte); }
+.m-trabajo { --c: var(--superficie-2); } .m-papel { --c: #FBFAF5; }
+.m-azul { --c: var(--estado-fuera-de-cobertura); } .m-error { --c: var(--error); }
+.iso-solid[class*=" m-"] { --luz: 0%; }
+.iso-solid[class*=" m-"] > .iso-fill { fill: color-mix(in srgb, var(--c), #fff var(--luz)); }
+.iso-solid[class*=" m-"] > .iso-top { fill: color-mix(in srgb, var(--c), #fff calc(16% + var(--luz))); }
+.iso-solid[class*=" m-"] > .iso-shade[data-shade="3"] { fill: color-mix(in srgb, var(--c), var(--bosque-900) calc(4% - var(--luz) / 5)); }
+.iso-solid[class*=" m-"] > .iso-shade[data-shade="2"] { fill: color-mix(in srgb, var(--c), var(--bosque-900) calc(11% - var(--luz) / 5)); }
+.iso-solid[class*=" m-"] > .iso-shade[data-shade="1"] { fill: color-mix(in srgb, var(--c), var(--bosque-900) calc(19% - var(--luz) / 5)); }
+.iso-solid[class*=" m-"] > .iso-shade[data-shade="0"] { fill: color-mix(in srgb, var(--c), var(--bosque-900) calc(28% - var(--luz) / 5)); }
+.iso-solid[class*=" m-"] > .iso-edge { stroke: color-mix(in srgb, var(--c), var(--bosque-900) 62%); }
+.iso-solid[class*=" m-"] > .iso-crease, .iso-solid[class*=" m-"] > .iso-bevel { stroke: color-mix(in srgb, var(--c), var(--bosque-900) 32%); }
+.iso-solid[class*=" m-"][data-lit] { --luz: 30%; }
+.iso-solid[class*=" m-"][data-lit] > .iso-edge { stroke: var(--ambar-700); }
+.texto-claro .iso-face-text { fill: var(--tinta-invertida); }
+/* vida: parpadeos y escritura; se pausan fuera de la vista y no corren con movimiento reducido */
+@keyframes parpadeo { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes latido { 0%, 70%, 100% { opacity: .3; } 80% { opacity: 1; } }
+.parpadea circle { animation: parpadeo var(--p, 2.4s) ease-in-out infinite; animation-delay: var(--d, 0s); }
+.late circle { animation: latido var(--p, 3s) ease-in-out infinite; animation-delay: var(--d, 0s); }
+.fig-iso:not(.en-vista) * { animation-play-state: paused !important; }
+@keyframes escribir { 0% { stroke-dashoffset: 1; opacity: 1; } 45%, 88% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+.fig-prueba [data-ficha]:not(.activa) .escribe path { animation: none; stroke-dasharray: none; }
+.escribe path { stroke-dasharray: 1 1; animation: escribir var(--p, 5.2s) steps(22, end) infinite; animation-delay: var(--d, 0s); }
+.piloto-teal circle { fill: var(--teal-400); opacity: 1; } .piloto-ambar circle { fill: var(--ambar-500); opacity: 1; }
+.paquete { stroke: var(--bosque-900); stroke-width: .5; vector-effect: non-scaling-stroke; }
 .iso-solid > * { transition: fill .5s var(--anatomy-ease, ease), stroke .5s ease; }
 .iso-halo { fill: var(--anatomy-halo); stroke: none; filter: blur(8px); opacity: var(--anatomy-halo-opacity); transform: translateY(3px); }
 .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }
@@ -691,17 +723,17 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .aguja[data-on] { stroke: var(--acento-relleno); stroke-width: 1.8; }
 .serie { fill: none; stroke: var(--tinta); stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: 100 100; stroke-dashoffset: 100; transition: opacity .5s ease; }
-.medidor .luz-on circle { fill: var(--teal-400); opacity: 1; }
+.medidor .luz-on circle { fill: var(--teal-400); }
 .medidor .luz-off circle { fill: var(--tinta-invertida); opacity: .22; }
 
 /* Fig. 1: los cables y el dato que sube */
 .cable-forro, .cable-alma, .cable-pulso { fill: none; vector-effect: none !important; stroke-linecap: round; }
-.cable-forro { stroke: var(--linea-fuerte); stroke-width: 2.6; }
-.cable-alma { stroke: var(--superficie-2); stroke-width: 1.4; }
+.cable-forro { stroke: var(--bosque-800); stroke-width: 2.6; }
+.cable-alma { stroke: var(--bosque-700); stroke-width: 1.4; }
 .cable-pulso { stroke: var(--acento-relleno); stroke-width: 1.6; stroke-dasharray: 14 200; stroke-dashoffset: 14; opacity: 0; }
 .fig-capas .cable[data-on] .cable-pulso { opacity: 1; animation: sube 1.7s cubic-bezier(.45,0,.3,1) infinite; }
 @keyframes sube { from { stroke-dashoffset: 14; } to { stroke-dashoffset: -100; } }
-.fig-capas [data-modulo] { transition: transform .9s cubic-bezier(.32,.72,0,1); }
+.fig-capas [data-modulo] { transition: transform 1s cubic-bezier(.34,1.45,.64,1); }
 .fig-capas .cables { transition: opacity .6s ease; }
 
 /* Fig. 2: la pregunta, su traza y la barrera */
@@ -718,6 +750,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 [data-piloto] circle { transition: fill .3s ease; }
 [data-piloto][data-on] circle { fill: var(--verificado); opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
+  .parpadea circle, .late circle { animation: none; opacity: 1; }
+  .escribe path { animation: none; stroke-dasharray: none; }
   .fig-capas .cable[data-on] .cable-pulso { animation: none; stroke-dasharray: none; opacity: 1; }
   .fig-capas [data-modulo], .fig-capas .cables, .iso-solid > *, .fig-ruta [data-respuesta] { transition: none; }
 }
