@@ -68,21 +68,21 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   CI (C26), el peso de `/mcp` (C9), rangos de los `int` y `format: date` en el OpenAPI (C27).
 - **Pendiente del dueño:** desplegar; Email Routing para `soporte@`; un SMTP con SPF y DKIM
   (`TERRANOVA_SMTP_URL`); el bot de Telegram para las alertas; confirmar la llave de prueba (300
-  créditos y 30 días); publicar en el registro MCP (TXT en el DNS); la analítica web de Cloudflare;
+  créditos y 15 días, confirmado); publicar en el registro MCP (TXT en el DNS); la analítica web de Cloudflare;
   registrar `programar_refresco.ps1`; y lo legal (Esri, entidad que factura, términos, DANE, DIAN).
 
 ## Alta de la llave de prueba con correo verificado (2026-10-31, ADR-0034, auditoría C11 y C12)
 
 - `/precios#empezar` tiene un formulario: llega un enlace al correo (vence en 24 h), se confirma
   con un botón y la llave se ve una sola vez. Nivel `prueba`: 300 créditos al mes, todas las
-  familias, vence a los 30 días. Una llave por correo, cinco altas por hora por IP, sin correos
+  familias, vence a los 15 días. Una llave por correo, cinco altas por hora por IP, sin correos
   desechables y con un campo trampa contra robots.
 - `/contacto` tiene un formulario propio: guarda el mensaje y lo reenvía a soporte. Los botones del
   sitio que eran `mailto:` llevan al formulario con el asunto puesto.
 - **Pendiente del dueño:** un proveedor de correo saliente (SMTP con TLS) con SPF y DKIM para
   `terrnova.com`, y sus datos en `TERRANOVA_SMTP_URL` y `TERRANOVA_CORREO_DE`. Sin eso, el alta
   dice que no está disponible y remite a soporte. También confirmar los números de la llave de
-  prueba (300 créditos y 30 días).
+  prueba: 300 créditos y 15 días (confirmado el 2026-11-01).
 
 ## Reglas nuevas del catálogo (2026-10-31, auditoría integral C2 y C17)
 

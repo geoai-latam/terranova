@@ -19,7 +19,7 @@
   3. **Una llave por correo.** Si ya tiene una, el correo lo dice y remite a soporte. Dos enlaces
      del mismo correo dan una sola llave.
   4. **Llave de prueba:** nivel `prueba`, con pocos créditos al mes (`NIVELES["prueba"]`, hoy 300),
-     todas las familias y vencimiento a 30 días. El plan Gratis y los de pago se piden a soporte.
+     todas las familias y vencimiento a 15 días (decisión del dueño del 2026-11-01). El plan Gratis y los de pago se piden a soporte.
   5. **Topes:** cinco altas y diez mensajes de contacto por hora por IP. De la IP solo se guarda su
      HMAC. Los correos desechables más usados no reciben llave. Un campo trampa oculto descarta los
      robots sin captcha.
