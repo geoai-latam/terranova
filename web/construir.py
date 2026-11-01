@@ -292,8 +292,9 @@ def pagina(
 
 def portada(rotulo: str, titulo: str, entrada: str, extra: str = "", lado: str = "") -> str:
     clase = "envoltura con-lado" if lado else "envoltura"
+    rot = f'<span class="rotulo">{rotulo}</span>' if rotulo else ""
     return f"""<section class="portada"><div class="{clase}"><div class="cab">
-<span class="rotulo">{rotulo}</span><h1 class="t1">{titulo}</h1><p class="entrada">{entrada}</p>{extra}
+{rot}<h1 class="t1">{titulo}</h1><p class="entrada">{entrada}</p>{extra}
 </div>{lado}</div></section>"""
 
 
@@ -710,7 +711,7 @@ SERVICIOS = [
             "Cada hallazgo con su entidad y su fecha",
             "Los casos dudosos, aparte",
         ],
-        "con": "IGAC, Parques Nacionales, SINCHI, RUES, Supersociedades, SECOP y la SIC",
+        "con": "revision",
         "asunto": "debida-diligencia",
         "boton": "Pide una revisión",
     },
@@ -723,7 +724,7 @@ SERVICIOS = [
             "Un informe periódico",
             "Cada cifra enlazada a su entidad",
         ],
-        "con": "DANE, MinEducación, ADRES, Policía Nacional y SECOP",
+        "con": "tablero",
         "asunto": "tablero",
         "boton": "Pide tu tablero",
     },
@@ -736,7 +737,7 @@ SERVICIOS = [
             "Un resumen semanal",
             "El registro de cada cambio, con fecha y fuente",
         ],
-        "con": "SECOP, SUIN-Juriscol, el DNP y la SIC",
+        "con": "vigilancia",
         "asunto": "vigilancia",
         "boton": "Pide tus alertas",
     },
@@ -749,7 +750,7 @@ SERVICIOS = [
             "Conectado a las fuentes de tu equipo",
             "Cada respuesta con su fuente y su licencia",
         ],
-        "con": f"las {N_HERR} herramientas del catálogo",
+        "con": "asistente",
         "asunto": "asistente",
         "boton": "Cuéntanos tu idea",
     },
@@ -878,6 +879,66 @@ RUTA = ["igac_predio_en_punto", "secop_contratos_entidad", "pnn_areas_protegidas
 SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
 
 
+# Cobertura SINIC: la muestra del 3 % (datos/co.json, hexágonos de 0,07°) se suma en hexágonos tres
+# veces más grandes para que el dibujo quepa; las ciudades son para la lectura, no se rotulan.
+CO_JSON = PUBLICO / "datos" / "co.json"
+FACTOR_COBERTURA = 3
+CIUDADES = [
+    ("Bogotá", -74.08, 4.61),
+    ("Medellín", -75.57, 6.25),
+    ("Cali", -76.53, 3.45),
+    ("Barranquilla", -74.80, 10.96),
+    ("Cartagena", -75.51, 10.39),
+    ("Santa Marta", -74.20, 11.24),
+    ("Bucaramanga", -73.12, 7.12),
+    ("Cúcuta", -72.50, 7.89),
+    ("Pereira", -75.69, 4.81),
+    ("Ibagué", -75.23, 4.44),
+    ("Villavicencio", -73.63, 4.14),
+    ("Montería", -75.88, 8.75),
+]
+
+
+def datos_cobertura() -> dict:
+    import math
+
+    co = json.loads(CO_JSON.read_text(encoding="utf-8"))
+    r = round(co["R"] * FACTOR_COBERTURA, 4)
+    lon0, lat0 = -74.6, 6.4
+
+    def axial(lon: float, lat: float) -> tuple[int, int]:
+        x = (lon - lon0) / (r * math.sqrt(3))
+        fr = (lat - lat0) / (1.5 * r)
+        fq = x - fr / 2
+        cx, cz = fq, fr
+        cy = -cx - cz
+        rx, ry, rz = round(cx), round(cy), round(cz)
+        dx, dy, dz = abs(rx - cx), abs(ry - cy), abs(rz - cz)
+        if dx > dy and dx > dz:
+            rx = -ry - rz
+        elif dy > dz:
+            ry = -rx - rz
+        else:
+            rz = -rx - ry
+        return rx, rz
+
+    def centro(q: int, s: int) -> list[float]:
+        return [round(lon0 + r * math.sqrt(3) * (q + s / 2), 4), round(lat0 + 1.5 * r * s, 4)]
+
+    celdas: dict[tuple[int, int], int] = {}
+    for lon, lat, n in co["bins"]:
+        k = axial(lon, lat)
+        celdas[k] = celdas.get(k, 0) + n
+    tierra = {axial(lon, lat) for lon, lat in co["land"]} | set(celdas)
+    return {
+        "R": r,
+        "celdas": [[*centro(*k), n] for k, n in sorted(celdas.items())],
+        "tierra": [centro(*k) for k in sorted(tierra)],
+        "ciudades": [list(c) for c in CIUDADES],
+        "total": sum(n for *_, n in co["bins"]),
+    }
+
+
 def datos_figuras() -> dict:
     por_id = {h.id: h for h in HERR}
     turnos = []
@@ -913,6 +974,7 @@ def datos_figuras() -> dict:
         # Los sistemas vigilados salen del catálogo (validados en datos_servicio); lo que cambia, no.
         "vigilancia": {"carriles": datos_servicio("vigilancia")},
         "asistente": datos_servicio("asistente"),
+        "cobertura": datos_cobertura(),
         "tablero": {
             "indicadores": [
                 {
@@ -952,6 +1014,7 @@ NOMBRES_FIGURAS = (
     "tablero",
     "vigilancia",
     "asistente",
+    "cobertura",
 )
 
 
@@ -978,7 +1041,7 @@ def figura(
     if ilustrativo:
         pista_html = f"<span>{pista_html}{SELLO_I}</span>"
     return (
-        f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}" style="max-width:{w}px">'
+        f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}">'
         f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
         f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
         f'<figcaption class="lectura-l"><span data-lectura aria-live="off">{lectura}</span>{pista_html}</figcaption>'
@@ -1029,11 +1092,25 @@ def figura_servicio(sid: str) -> str:
     return figura(sid, lectura, pista, ilustrativo=True)
 
 
+def con_datos(sid: str) -> str:
+    """Las entidades que usa la figura de un servicio, del catálogo (todas publicadas)."""
+    d = datos_figuras()
+    if sid == "revision":
+        ents = [f["e"] for t in d["revision"]["tipos"] for f in t["fuentes"]]
+    elif sid == "tablero":
+        ents = [x["e"] for x in d["tablero"]["indicadores"]]
+    elif sid == "vigilancia":
+        ents = [c["e"] for c in d["vigilancia"]["carriles"]]
+    else:
+        return f"las {N_HERR} herramientas del catálogo"
+    return y_lista(list(dict.fromkeys(ents)))
+
+
 def servicio_fila(s: dict, i: int) -> str:
     """Un servicio en /servicios: título, frase, lo que recibes y su figura, alternando el lado."""
     recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
     pie = (
-        f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {s["con"]}</p>'
+        f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {con_datos(s["con"])}</p>'
         f'<a class="boton s" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>'
     )
     tit = f'<h2 class="t2">{s["titulo"]}</h2>'
@@ -1279,13 +1356,6 @@ def servicios() -> str:
 </div>
 </div></section>
 
-<section class="seccion sup"><div class="envoltura">
-<div class="cab"><h2 class="t2">Lo que ya existe</h2></div>
-<div class="columnas c2">
-<div><h3>GEO Copilot</h3><p>Asistente territorial del fundador. Hoy es un cliente más: se conecta por el MCP de Terrnova.</p></div>
-<div><h3>Vectorización de ortofotos del IGAC</h3><p>Tesis de maestría del fundador (mIoU 0,694). Investigación, no producción.</p></div>
-</div>
-</div></section>
 """
     return pagina(
         "/servicios",
@@ -1301,11 +1371,18 @@ def fuentes() -> str:
         f'<tr><td><code>{escape(k)}</code></td><td class="n">{v}</td></tr>'
         for k, v in LICENCIAS.most_common()
     )
+    cob = datos_figuras()["cobertura"]
+    km = round(cob["R"] * 111.32)
+    figura_cob = figura(
+        "cobertura",
+        f"{miles(cob['total'])} predios en {len(cob['celdas'])} celdas · muestra del 3 %",
+        "pasa el puntero por las columnas",
+    )
     c = (
         portada(
-            "Fuentes y herramientas",
+            "",
             f"{N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales",
-            f"Cada herramienta responde una pregunta concreta con una fuente de una de las {N_ENTIDADES} entidades del catálogo. Busca por tema, entidad o nombre.",
+            "Cada herramienta responde una pregunta concreta. Busca por tema, entidad o nombre.",
             lado=lado_familias(),
         )
         + f"""
@@ -1319,45 +1396,41 @@ def fuentes() -> str:
 </div></section>
 
 <section class="seccion sup" id="entidades"><div class="envoltura">
-<div class="cab ancha"><h2 class="t2">Quién publica los datos</h2>
-<p class="entrada">{N_ENTIDADES} entidades y los sistemas que publican. {MODOS["en_vivo"]} fuentes se consultan en vivo y {MODOS["copia"]} desde una copia del archivo oficial, con su fecha de corte en cada respuesta.</p></div>
+<div class="cab"><h2 class="t2">Quién publica los datos</h2>
+<p class="entrada">{N_ENTIDADES} entidades. {MODOS["en_vivo"]} fuentes en vivo y {MODOS["copia"]} desde una copia oficial, con su fecha de corte.</p></div>
 {indice_fuentes()}
-<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las fuentes globales.</p>
+<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las globales.</p>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cobertura">
-<div class="texto-cob">
+<div class="con-fig">
+<div class="cab">
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
-<p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
-<div class="filas"><div><b>6,1 M</b><span>terrenos en la copia SINIC, de los gestores que no publica la base del IGAC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
-<div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
+<p class="entrada">Cada columna suma los predios de la muestra en una celda de unos {km} km de radio.</p>
+<ul class="lista-l">
+<li><b>6,1 M</b><span>terrenos en la copia SINIC</span></li>
+<li><b>{miles(cob["total"])}</b><span>en la muestra (3 %)</span></li>
+<li><b>{len(cob["celdas"])}</b><span>celdas con predios</span></li>
+</ul>
 <p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
 </div>
-<div class="escena" data-escena="cobertura" role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra. Arrastra para girar.">
-<img class="respaldo" src="/img/mapa-colombia.webp" alt="" loading="lazy">
-<div class="rotulos" aria-hidden="true"></div>
-<p class="gira">Arrastra para girar</p>
-<p class="lectura">Pasa sobre una columna</p>
-</div>
+{figura_cob}
 </div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="rejilla r2" style="gap:48px">
-<div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">La licencia de cada fuente</h2>
-<div class="desliza"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
-<p class="suave" style="margin-top:12px">Cada respuesta trae la licencia y la atribución que debes citar. CC BY-SA exige compartir igual.</p></div>
-</div>
+<div class="cab"><h2 class="t2">La licencia de cada fuente</h2>
+<p class="entrada">Cada respuesta trae su licencia y la atribución que debes citar.</p></div>
+<div class="desliza lic"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
 </div></section>
 
-<section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">Para máquinas</span><h2 class="t2">El catálogo, también en formato abierto</h2></div>
-<div class="rejilla r3">
-<div class="bloque"><h3 class="t3"><code>GET /v1/herramientas</code></h3><p>Pregunta, familia, fuente, créditos y ruta de cada herramienta. Público y sin costo.</p><a class="enlace" href="/v1/herramientas">Abrir</a></div>
-<div class="bloque"><h3 class="t3"><code>GET /v1/fuentes/&#123;id&#125;</code></h3><p>La ficha técnica de una fuente: cobertura, campos, actualización y alertas.</p><a class="enlace" href="/v1/fuentes">Abrir</a></div>
-<div class="bloque"><h3 class="t3"><code>/llms.txt</code></h3><p>El catálogo en texto, para que un agente lo lea de una vez.</p><a class="enlace" href="/llms.txt">Abrir</a></div>
-</div>
+<section class="seccion sup"><div class="envoltura">
+<div class="cab"><h2 class="t2">El catálogo, en formato abierto</h2></div>
+<ul class="lista-l abierto">
+<li><b><a class="enlace" href="/v1/herramientas"><code>GET /v1/herramientas</code></a></b><span>Pregunta, fuente, créditos y ruta de cada herramienta</span></li>
+<li><b><a class="enlace" href="/v1/fuentes"><code>GET /v1/fuentes/&#123;id&#125;</code></a></b><span>La ficha técnica de una fuente</span></li>
+<li><b><a class="enlace" href="/llms.txt"><code>/llms.txt</code></a></b><span>El catálogo en texto, para agentes</span></li>
+</ul>
 </div></section>
 """
     )
@@ -1366,7 +1439,7 @@ def fuentes() -> str:
         "Fuentes y herramientas",
         f"Busca entre {N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales: territorio, contratación, estadísticas, justicia, ambiente, empresas y normativa.",
         c,
-        ("escena-cobertura.js",),
+        ("figuras.js",),
     )
 
 

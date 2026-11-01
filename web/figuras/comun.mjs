@@ -4,7 +4,11 @@
 import * as k from "./kit/iso-kit.mjs";
 
 export { k };
-export const S = (paths, style) => k.solidSvg(paths, style);
+// La base y los pies (tono lo) van en superficie-2, la estructura (mid) en un blanco verdoso y el
+// sujeto (hi) en blanco: así el dibujo tiene tres planos de tono antes del único ámbar.
+const CLASE = { lo: "pieza-l", mid: "pieza-m" };
+export const S = (paths, style = {}) =>
+  k.solidSvg(paths, style.className || !CLASE[style.tone ?? "hi"] ? style : { ...style, className: CLASE[style.tone] });
 export const L = (d, style) => k.lineSvg(d, style);
 export const D = (points, style) => k.dotsSvg(points, style);
 export const r1 = (v) => Math.round(v * 10) / 10;
@@ -16,7 +20,7 @@ export const esc = (t) =>
 export const ESCALA = 2.1;
 
 // Cámara a escala fija: proyecta las esquinas, mide la caja y pone el origen con un margen.
-export function encuadre(puntos, { azimuth = 45, pad = 18, escala = ESCALA } = {}) {
+export function encuadre(puntos, { azimuth = 45, pad = 10, escala = ESCALA } = {}) {
   const unidad = { origin: [0, 0], scale: escala, azimuth, elevation: 30 };
   const plano = puntos.map((p) => k.iso(p, unidad));
   const xs = plano.map(([x]) => x), ys = plano.map(([, y]) => y);

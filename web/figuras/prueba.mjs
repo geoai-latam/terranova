@@ -107,7 +107,7 @@ export function prueba(DATOS, huella) {
   sello.push(S(k.cylinder(sx, sy, 2.6, 8, 9, P, 20), { tone: "mid", crease: "none" }));
   sello.push(L(k.sideArc(sx, sy, 2.6, 12, P, 16), { tone: "faint" }));
   sello.push(S(k.cylinder(sx, sy, 5.2, 17, 7, P, 28, 0.8), { tone: "mid" }));
-  sello.push(L(k.knurl(sx, sy, 5.2, 17, 24, 28, P), { tone: "lo" }));
+  sello.push(L(k.sideArc(sx, sy, 5.2, 19.4, P, 28) + k.sideArc(sx, sy, 5.2, 21.6, P, 28), { tone: "faint" }));
   out.push(`<g data-sello>${sello.join("")}</g>`);
 
   // pestañas en pantalla, para elegir con el puntero

@@ -380,7 +380,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 
 /* ---------- portada con figura lateral (datos reales del catálogo) ---------- */
 .portada .con-lado { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(32px, 5vw, 72px); align-items: end; }
-.lado-fig { margin: 0; background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--radio-lg); padding: 22px 24px 18px; box-shadow: var(--sombra-tarjeta); }
+.lado-fig { margin: 0; border-top: 1px solid var(--tinta); padding: 16px 0 0; }
 .lado-fig figcaption { font: 500 13px/18px var(--font-mono); color: var(--tinta-tenue); margin-bottom: 14px; }
 .lado-fig .fuente-dato { margin: 14px 0 0; }
 .barras .fila { display: grid; grid-template-columns: 104px minmax(0, 1fr) 32px; gap: 12px; align-items: center; padding: 5px 0; text-decoration: none; color: var(--tinta); font-size: 14px; }
@@ -649,12 +649,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 }
 .fig-iso .lienzo { width: 100%; touch-action: pan-y; border-radius: var(--radio-lg); }
 .fig-iso .lienzo:focus-visible { outline: 1px solid var(--linea-fuerte); outline-offset: 6px; }
-.fig-iso .lectura-l { width: 100%; display: flex; justify-content: space-between; align-items: baseline; gap: 4px 20px; flex-wrap: wrap;
+.fig-iso .lectura-l { width: 100%; display: grid; justify-items: start; gap: 2px;
   font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); font-variant-numeric: tabular-nums; }
 .fig-iso .lectura-l [data-lectura] { color: var(--tinta); }
 .fig-iso .lectura-l code { font: inherit; color: var(--verificado); }
 .fig-iso .lectura-l .pista { color: var(--tinta-tenue); }
-.fig-iso .lectura-l .sello-i { margin-left: 10px; }
+.fig-iso .lectura-l .sello-i { margin-left: 10px; color: var(--tinta-suave); box-shadow: inset 0 0 0 1px var(--linea-fuerte); border-radius: var(--radio-sm); padding: 0 5px; }
 @media (hover: none) { .fig-iso .lectura-l .pista { display: none; } }
 /* sección con figura: el texto a un lado, la figura al otro, en la retícula */
 .con-fig { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
@@ -669,6 +669,14 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l li:last-child { border-bottom: 1px solid var(--linea); }
 .lista-l li b { color: var(--tinta); font-weight: 600; }
 .lista-l li.vivo { border-top: 2px solid var(--tinta); }
+.lista-l.abierto li { grid-template-columns: minmax(0, 15em) minmax(0, 1fr); }
+.lista-l.abierto code { font-size: 13.5px; }
+.desliza.lic { max-width: 640px; }
+.tierra { fill: color-mix(in srgb, var(--superficie) 35%, #fff); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
+[data-celda] { transition: opacity .7s ease; }
+.fig-cobertura [data-celda] > .iso-solid > .iso-top { fill: color-mix(in srgb, var(--teal-700) var(--t), #fff); }
+.fig-cobertura [data-celda] > .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
+.fig-cobertura:not(.armada) [data-celda] { opacity: 0; }
 @media (max-width: 480px) { .lista-l li { grid-template-columns: minmax(0, 1fr); } }
 
 /* lo que el kit pinta */
@@ -681,6 +689,9 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-shade[data-shade="2"] { fill: var(--anatomy-shade-2); }
 .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-3); }
 .iso-top { fill: var(--anatomy-top); }
+.iso-solid.pieza-l > .iso-fill, .iso-solid.pieza-l > .iso-top { fill: var(--superficie-2); }
+.iso-solid.pieza-l > .iso-shade[data-shade="2"], .iso-solid.pieza-l > .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-1); }
+.iso-solid.pieza-m > .iso-top { fill: color-mix(in srgb, var(--superficie) 55%, #fff); }
 .iso-solid[data-lit] > .iso-fill { fill: var(--anatomy-face); }
 .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
 .iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }

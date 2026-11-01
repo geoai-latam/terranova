@@ -551,8 +551,61 @@ function asistente(fig) {
   });
 }
 
+// ---------------------------------------------------------------- cobertura: la maqueta de Colombia
+function cobertura(fig) {
+  const svg = fig.querySelector('svg');
+  const V = JSON.parse(svg.dataset.vivo);
+  const lectura = fig.querySelector('[data-lectura]');
+  const base = lectura.textContent;
+  const celdas = [];
+  svg.querySelectorAll('[data-celda]').forEach(g => { celdas[+g.dataset.celda] = g; });
+  const f2 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), fn = new Intl.NumberFormat('es-CO');
+  const coord = (v, p, q) => f2.format(Math.abs(v)) + ' ' + (v >= 0 ? p : q);
+  const cerca = (lon, lat) => {
+    let mejor = null, d = 0.6;
+    V.ciudades.forEach(([n, x, y]) => { const q = Math.hypot(x - lon, y - lat); if (q < d) { d = q; mejor = n; } });
+    return mejor;
+  };
+  // entrada: las columnas aparecen desde Bogotá hacia afuera (una vez), quietas con movimiento reducido
+  const [bx, by] = [-74.08, 4.61];
+  if (!quieto.matches) celdas.forEach((g, i) => { g.style.transitionDelay = `${(Math.hypot(V.celdas[i][0] - bx, V.celdas[i][1] - by) * 0.09).toFixed(2)}s`; });
+  let sel = -1;
+  const elegir = i => {
+    if (i === sel) return;
+    if (sel >= 0) celdas[sel].querySelector('.iso-solid').removeAttribute('data-lit');
+    sel = i;
+    if (i < 0) { lectura.textContent = base; return; }
+    celdas[i].querySelector('.iso-solid').setAttribute('data-lit', '');
+    const [lon, lat, n] = V.celdas[i], c = cerca(lon, lat);
+    lectura.textContent = `${fn.format(n)} predios · ${coord(lat, 'N', 'S')}, ${coord(lon, 'E', 'W')}${c ? ' · ' + c : ''}`;
+  };
+  const lienzo = fig.querySelector('.lienzo');
+  let tour = !quieto.matches, k = 0, reloj = 0, espera = 0;
+  const pasar = () => { if (tour) { elegir(V.orden[k % V.orden.length]); k++; } };
+  enVista(lienzo, v => {
+    if (!v) { clearInterval(reloj); reloj = 0; return; }
+    svg.classList.add('armada');
+    if (!reloj && tour) reloj = setInterval(pasar, 2600);
+  });
+  lienzo.addEventListener('pointermove', e => {
+    const caja = lienzo.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+    const x = vb.x + (e.clientX - caja.left) / caja.width * vb.width, y = vb.y + (e.clientY - caja.top) / caja.height * vb.height;
+    let mejor = -1, d = 14;
+    V.puntas.forEach(([px, py], i) => { const q = Math.hypot(px - x, py - y); if (q < d) { d = q; mejor = i; } });
+    tour = false; clearInterval(reloj); reloj = 0; clearTimeout(espera);
+    elegir(mejor);
+    espera = setTimeout(() => { tour = !quieto.matches; if (!reloj && tour) reloj = setInterval(pasar, 2600); }, 3600);
+  });
+  lienzo.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault(); tour = false; clearInterval(reloj); reloj = 0;
+    k = (k + d + V.orden.length) % V.orden.length; elegir(V.orden[k]);
+  });
+}
+
 // ---------------------------------------------------------------- carga perezosa
-const VIDAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente };
+const VIDAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente, cobertura };
 const cargar = async fig => {
   const lienzo = fig.querySelector('.lienzo');
   const r = await fetch(lienzo.dataset.src);
