@@ -47,6 +47,30 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Lo que dejó la auditoría integral (2026-10-31, #203–#207)
+
+- **En `main`, sin desplegar todavía:** la portada nueva y la marca Terrnova (#203); la puerta que
+  resiste sus fallas, la ficha con el predio del SINIC y el saldo en la base (#204); alertas,
+  reglas del catálogo y la llave de prueba con correo verificado (#205); la fase comercial F8 y el
+  modelo operativo de la expansión (#206); y el #207:
+  - **`terranova embudo`:** las métricas del viernes desde la base (altas, primera llamada,
+    activación, llaves activas), con índices en `eventos`. Sale la alerta `OutboxAtascado`.
+  - **Registro MCP:** `server.json` (`com.terrnova/terrnova`), la tarjeta SEP-2127 en
+    `/mcp/server-card` y `/.well-known/ai-catalog.json`. Publicar: RUNBOOK §7.
+  - **`ficha_empresa`:** RUES, establecimientos, Supersociedades, Superfinanciera y SECOP II por NIT
+    de persona jurídica, en `/mcp/empresas` y `POST /v1/fichas/empresa`. Las fichas compuestas
+    viven en un registro (`compuestas.py`).
+  - **Seguridad de las plantillas (C27):** sin inyección explotable; se cerraron huecos latentes.
+- **Estudio de región (interno):** la distancia no explica la lentitud; lo único que resuelve estar
+  en Colombia es el bloqueo por IP del DANE y del IDEAM. No mover la puerta; ingesta desde Colombia.
+- **Pendiente de Claude:** OAuth (C20), vigencia de planes (C21), monitores (C23), respaldo externo
+  (C24, con credenciales del dueño), niveles de calidad y `nueva_fuente.py` (C25), conectores en el
+  CI (C26), el peso de `/mcp` (C9), rangos de los `int` y `format: date` en el OpenAPI (C27).
+- **Pendiente del dueño:** desplegar; Email Routing para `soporte@`; un SMTP con SPF y DKIM
+  (`TERRANOVA_SMTP_URL`); el bot de Telegram para las alertas; confirmar la llave de prueba (300
+  créditos y 30 días); publicar en el registro MCP (TXT en el DNS); la analítica web de Cloudflare;
+  registrar `programar_refresco.ps1`; y lo legal (Esri, entidad que factura, términos, DANE, DIAN).
+
 ## Alta de la llave de prueba con correo verificado (2026-10-31, ADR-0034, auditoría C11 y C12)
 
 - `/precios#empezar` tiene un formulario: llega un enlace al correo (vence en 24 h), se confirma
