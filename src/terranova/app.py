@@ -32,7 +32,13 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from terranova import ficha as ficha_lugar
 from terranova import ficha_empresa, metricas, puerta
 from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
-from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
+from terranova.catalogo import (
+    FORMAS_ENTRADA,
+    PATRONES_ENTRADA,
+    Herramienta,
+    ids_parecidos,
+    vendible,
+)
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
@@ -231,6 +237,7 @@ def crear_api() -> FastAPI:
         return problema("error_interno", "error interno")
 
     for h in puerta.CATALOGO.herramientas.values():
+        # lo que no es vendible responde solo a llaves de evaluación: existe, pero no se anuncia
         api.add_api_route(
             f"/v1/co/{h.familia}/{h.id}",
             _ruta(h.id, modelo_entrada(h)),
@@ -245,6 +252,7 @@ def crear_api() -> FastAPI:
                 for c in (400, 401, 402, 403, 404, 429, 500, 502, 504)
             },
             openapi_extra={"security": [{"llave": []}]},
+            include_in_schema=vendible(puerta.CATALOGO.fuentes[h.fuente]),
         )
 
     api.add_api_route(
@@ -342,12 +350,12 @@ def crear_api() -> FastAPI:
     @api.get("/llms.txt", include_in_schema=False)
     async def llms() -> PlainTextResponse:
         return PlainTextResponse(
-            llms_txt(puerta.CATALOGO), media_type="text/markdown; charset=utf-8"
+            llms_txt(puerta.VENDIBLE), media_type="text/markdown; charset=utf-8"
         )
 
     @api.get("/.well-known/mcp/server-card.json", include_in_schema=False)
     async def tarjeta() -> dict[str, Any]:
-        return tarjeta_mcp(puerta.CATALOGO)
+        return tarjeta_mcp(puerta.VENDIBLE)
 
     @api.get("/mcp/server-card", include_in_schema=False)
     async def tarjeta_sep(request: Request) -> Response:
@@ -360,6 +368,7 @@ def crear_api() -> FastAPI:
 
     @api.get("/v1/herramientas", tags=["catálogo"], operation_id="listar_herramientas")
     async def herramientas() -> list[dict[str, Any]]:
+        """Las herramientas que puede usar una llave de producción (lo que se anuncia)."""
         return [
             {
                 "id": h.id,
@@ -369,7 +378,7 @@ def crear_api() -> FastAPI:
                 "creditos": h.creditos,
                 "ruta": f"/v1/co/{h.familia}/{h.id}",
             }
-            for h in puerta.CATALOGO.herramientas.values()
+            for h in puerta.VENDIBLE.herramientas.values()
         ]
 
     @api.get("/metrics", include_in_schema=False)
@@ -382,7 +391,7 @@ def crear_api() -> FastAPI:
         """Estado por fuente según el último canario de cada herramienta (F7.1): `verde`, `rojo`
         o `sin_datos`. Público, como el catálogo."""
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
-        return estado_por_fuente(ultimos, puerta.CATALOGO)
+        return estado_por_fuente(ultimos, puerta.VENDIBLE)
 
     # --- alta de la llave de prueba y contacto (ADR-0034): formularios del sitio, sin JS ------
 
@@ -469,13 +478,13 @@ def crear_api() -> FastAPI:
         """Página pública de estado: la puerta y cada fuente según su último canario."""
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return HTMLResponse(
-            pagina_estado(ultimos, puerta.CATALOGO, datetime.now(UTC)),
+            pagina_estado(ultimos, puerta.VENDIBLE, datetime.now(UTC)),
             headers={"Cache-Control": "public, max-age=60"},
         )
 
     @api.get("/v1/fuentes", tags=["catálogo"], operation_id="listar_fuentes")
     async def fuentes() -> list[dict[str, Any]]:
-        return [resumen(puerta.CATALOGO, fid) for fid in sorted(puerta.CATALOGO.fuentes)]
+        return [resumen(puerta.VENDIBLE, fid) for fid in sorted(puerta.VENDIBLE.fuentes)]
 
     @api.get(
         "/v1/fuentes/{fuente_id}",

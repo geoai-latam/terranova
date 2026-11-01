@@ -59,13 +59,19 @@ async def test_licencia_por_verificar_no_responde_a_una_llave_normal() -> None:
 
 
 @pytest.mark.anyio
-async def test_licencia_no_comercial_responde_con_aviso() -> None:
-    """Una fuente con `uso_comercial: no` (DIAN) responde con el aviso en `procedencia`."""
+async def test_licencia_no_comercial_solo_responde_a_evaluacion_y_con_aviso() -> None:
+    """Una fuente con `uso_comercial: no` (DIAN, ADR-0007 enmendada el 2026-11-01): a una llave de
+    producción, `licencia_no_habilitada` sin llamar; a una de evaluación, con el aviso."""
     h = CATALOGO.herramientas["dian_usuario_aduanero_por_nit"]
     conector = CATALOGO.fuentes[h.fuente].conector
     grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
-    ej = Ejecutor(CATALOGO, {conector: Conector(grabado["llamadas"][0]["respuesta"])})
-    sobre = await ej.ejecutar(h.id, h.canario.entrada)
+    falso = Conector(grabado["llamadas"][0]["respuesta"])
+    ej = Ejecutor(CATALOGO, {conector: falso})
+    with pytest.raises(ErrorEjecucion) as exc:
+        await ej.ejecutar(h.id, h.canario.entrada)
+    assert exc.value.codigo == "licencia_no_habilitada" and "uso comercial" in str(exc.value)
+    assert falso.llamadas == 0
+    sobre = await ej.ejecutar(h.id, h.canario.entrada, plan="evaluacion")
     assert sobre.procedencia[0].licencia.uso_comercial == "no"
     assert any("no comercial" in a for a in sobre.avisos)
 

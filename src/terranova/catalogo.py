@@ -559,8 +559,9 @@ class Fuente(_Ficha):
         if self.estado == "publicada" and self.uso_comercial == "no":
             if not self.excepcion_uso_comercial:
                 raise ValueError(
-                    "ADR-0019: una fuente sin uso comercial no se publica (se sirve a llaves de "
-                    "pago) salvo una excepcion_uso_comercial escrita con su decisión"
+                    "ADR-0019: una fuente sin uso comercial no se publica salvo una "
+                    "excepcion_uso_comercial escrita con su decisión (y aun así solo responde a "
+                    "llaves de evaluación, ADR-0007)"
                 )
         if clf == "rojo" and self.estado != "borrador":
             raise ValueError(
@@ -780,6 +781,35 @@ class Catalogo(BaseModel):
     coberturas: set[str] = Field(default_factory=set, description="índices en catalogo/cobertura/")
     metadatos: dict[str, Metadatos] = Field(
         default_factory=dict, description="ficha técnica por fuente (spec 08), catalogo/metadatos/"
+    )
+
+
+def vendible(f: Fuente) -> bool:
+    """Lo que ve y usa una llave de producción (`rt_live_`) y lo que se anuncia: una fuente
+    publicada y con uso comercial (ADR-0007, enmienda del 2026-11-01). Lo demás (licencia por
+    verificar, sin uso comercial, borrador) solo responde a llaves de evaluación (`rt_test_`)."""
+    return f.estado == "publicada" and f.uso_comercial == "si"
+
+
+def motivo_no_vendible(f: Fuente) -> str:
+    """Por qué una fuente no responde a una llave de producción (para el error y los avisos)."""
+    if f.uso_comercial == "por_verificar":
+        return "licencia de la fuente por verificar"
+    if f.uso_comercial == "no":
+        return "la fuente no permite uso comercial"
+    return "fuente en borrador"
+
+
+def catalogo_vendible(c: Catalogo) -> Catalogo:
+    """El catálogo que se anuncia (`/v1/herramientas`, `/llms.txt`, la tarjeta MCP, el sitio) y el
+    que lista `/mcp` a una llave de producción: solo las fuentes vendibles y sus herramientas."""
+    fuentes = {k: f for k, f in c.fuentes.items() if vendible(f)}
+    return c.model_copy(
+        update={
+            "fuentes": fuentes,
+            "herramientas": {k: h for k, h in c.herramientas.items() if h.fuente in fuentes},
+            "metadatos": {k: m for k, m in c.metadatos.items() if k in fuentes},
+        }
     )
 
 

@@ -106,8 +106,9 @@ async def test_cada_perfil_cabe_en_un_cliente_openai() -> None:
 @_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
-    # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08)
-    assert set(herramientas) == set(puerta.CATALOGO.herramientas) | {
+    # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08). Sin
+    # llave el plan es `normal`: solo lo vendible (las de evaluación, en test_vendible.py)
+    assert set(herramientas) == set(puerta.VENDIBLE.herramientas) | {
         "ficha_lugar",
         "ficha_empresa",
         "fuente_describir",

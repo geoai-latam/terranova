@@ -88,7 +88,9 @@ async def test_openapi_una_operacion_por_herramienta_con_su_esquema(
         for ruta, metodos in doc["paths"].items()
         for op in metodos.values()
     }
-    assert set(CATALOGO.herramientas) <= set(operaciones)
+    # se anuncia lo vendible; lo de evaluación existe pero no sale en el OpenAPI (ADR-0007)
+    assert set(puerta.VENDIBLE.herramientas) <= set(operaciones)
+    assert not (set(CATALOGO.herramientas) - set(puerta.VENDIBLE.herramientas)) & set(operaciones)
     ruta, op = operaciones["igac_predio_por_codigo"]
     assert ruta == "/v1/co/territorio/igac_predio_por_codigo"
     esquema = op["requestBody"]["content"]["application/json"]["schema"]["$ref"].rsplit("/", 1)[1]
@@ -156,12 +158,12 @@ async def test_fuente_caida_es_502_con_retry_after(rest: httpx.AsyncClient) -> N
 @pytest.mark.anyio
 async def test_catalogo_publico(rest: httpx.AsyncClient) -> None:
     fuentes = (await rest.get("/v1/fuentes")).json()
-    assert {f["id"] for f in fuentes} == set(CATALOGO.fuentes)
+    assert {f["id"] for f in fuentes} == set(puerta.VENDIBLE.fuentes)
     runap = (await rest.get("/v1/fuentes/pnn.runap")).json()
     assert runap["licencia"]["spdx"] == "CC-BY-SA-4.0" and runap["uso_comercial"] == "si"
     assert (await rest.get("/v1/fuentes/no.existe")).status_code == 404
     herramientas = (await rest.get("/v1/herramientas")).json()
-    assert {h["id"] for h in herramientas} == set(CATALOGO.herramientas)
+    assert {h["id"] for h in herramientas} == set(puerta.VENDIBLE.herramientas)
 
 
 @pytest.mark.anyio
@@ -212,16 +214,18 @@ async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     llms = await rest.get("/llms.txt")
     assert llms.status_code == 200 and llms.text.startswith("# Terrnova")
     for h in CATALOGO.herramientas.values():
-        assert f"/v1/co/{h.familia}/{h.id}" in llms.text
+        anunciada = h.id in puerta.VENDIBLE.herramientas
+        assert (f"/v1/co/{h.familia}/{h.id}" in llms.text) is anunciada, h.id
     tarjeta = (await rest.get("/.well-known/mcp/server-card.json")).json()
     assert (
         tarjeta["transport"]["endpoint"] == "/mcp" and "2026-07-28" in tarjeta["protocolVersions"]
     )
-    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas) | {
+    assert {t["name"] for t in tarjeta["tools"]} == set(puerta.VENDIBLE.herramientas) | {
         "ficha_lugar",
         "ficha_empresa",
     }
-    assert {p["endpoint"] for p in tarjeta["profiles"]} == {f"/mcp/{f}" for f in puerta.FAMILIAS}
+    familias = {h.familia for h in puerta.VENDIBLE.herramientas.values()}
+    assert {p["endpoint"] for p in tarjeta["profiles"]} == {f"/mcp/{f}" for f in familias}
 
 
 class ArcgisVacio:

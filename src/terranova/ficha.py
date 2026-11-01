@@ -24,6 +24,7 @@ from datetime import date, datetime, timedelta
 from itertools import pairwise
 from typing import Any, cast
 
+from terranova.catalogo import motivo_no_vendible, vendible
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     GEOMETRIA,
@@ -389,8 +390,9 @@ async def ficha(
         h = ej.catalogo.herramientas[parte.herramienta]
         if not puede(h.familia):
             return f"la llave no tiene el scope «{h.familia}»"
-        if ej.catalogo.fuentes[h.fuente].uso_comercial == "por_verificar" and plan != "evaluacion":
-            return "licencia de la fuente por verificar"
+        fuente = ej.catalogo.fuentes[h.fuente]
+        if plan != "evaluacion" and not vendible(fuente):
+            return motivo_no_vendible(fuente)
         return None
 
     async def una(parte: Parte, e: dict[str, Any]) -> tuple[Parte, Sobre | ErrorEjecucion]:

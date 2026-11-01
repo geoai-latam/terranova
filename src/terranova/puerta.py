@@ -12,7 +12,7 @@ import json
 import logging
 import os
 import time
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Sequence
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any
@@ -20,8 +20,9 @@ from typing import TYPE_CHECKING, Any
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
 from fastmcp.server.dependencies import get_http_request
+from fastmcp.server.middleware import CallNext, Middleware, MiddlewareContext
 from fastmcp.tools import Tool, ToolResult
-from mcp.types import TextContent, ToolAnnotations
+from mcp.types import ListToolsRequest, TextContent, ToolAnnotations
 from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
@@ -34,7 +35,9 @@ from terranova.catalogo import (
     Catalogo,
     Herramienta,
     cargar,
+    catalogo_vendible,
     ids_parecidos,
+    vendible,
 )
 from terranova.compuestas import COMPUESTAS, Compuesta
 from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
@@ -67,6 +70,9 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger("terranova.puerta")
 CATALOGO: Catalogo = cargar()
+# Lo que se anuncia y lo que ve una llave de producción: fuentes publicadas con uso comercial
+# (ADR-0007, enmienda del 2026-11-01). Una llave de evaluación ve todo `CATALOGO`.
+VENDIBLE: Catalogo = catalogo_vendible(CATALOGO)
 ESQUEMA_SOBRE = Sobre.model_json_schema(mode="serialization")
 
 _TIPOS_JSON: dict[str, dict[str, Any]] = {
@@ -300,6 +306,34 @@ def principal_de_la_peticion() -> Principal | None:
     except (RuntimeError, AttributeError, LookupError):
         return None
     return principal if isinstance(principal, Principal) else None
+
+
+def plan_de_la_peticion() -> Plan:
+    """El plan de la llave de la petición; sin llave (en memoria), `TERRANOVA_PLAN`."""
+    principal = principal_de_la_peticion()
+    return principal.plan if principal is not None else plan_actual()
+
+
+def visible(herramienta: str, plan: Plan) -> bool:
+    """¿La lista esta llave? Una llave de producción solo ve las herramientas de fuentes vendibles
+    (las otras le responderían `licencia_no_habilitada`); una de evaluación, todas. Las fichas,
+    `fuente_describir` y las del perfil catálogo no son de una fuente: se ven siempre."""
+    h = CATALOGO.herramientas.get(herramienta)
+    return h is None or plan == "evaluacion" or vendible(CATALOGO.fuentes[h.fuente])
+
+
+class SoloLoHabilitado(Middleware):
+    """`tools/list` según la llave (ADR-0007, enmienda del 2026-11-01): lo que una llave de
+    producción no puede usar no se le ofrece. Llamarla igual da `licencia_no_habilitada`."""
+
+    async def on_list_tools(
+        self,
+        context: MiddlewareContext[ListToolsRequest],
+        call_next: CallNext[ListToolsRequest, Sequence[Tool]],
+    ) -> Sequence[Tool]:
+        herramientas = await call_next(context)
+        plan = plan_de_la_peticion()
+        return [t for t in herramientas if visible(t.name, plan)]
 
 
 async def ejecutar(
@@ -564,6 +598,7 @@ def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> Fas
     """`/mcp` con todo o un perfil por familia (`/mcp/territorio`…, ADR-0006)."""
     nombre = "terranova" if familia is None else f"terranova-{familia}"
     servidor = FastMCP(nombre, instructions=INSTRUCCIONES, lifespan=_ciclo if con_ciclo else None)
+    servidor.add_middleware(SoloLoHabilitado())
     for h in CATALOGO.herramientas.values():
         if familia is None or h.familia == familia or h.id in HERRAMIENTAS_COMUNES:
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
@@ -642,7 +677,8 @@ def buscar_herramienta(pregunta: str, familia: str | None = None) -> dict[str, A
             f"parametro_invalido: familia «{familia}»; use una de {', '.join(FAMILIAS)}"
         )
     indice = indice_herramientas()
-    hallados = indice.buscar(pregunta, familia)
+    plan = plan_de_la_peticion()
+    hallados = [d for d in indice.buscar(pregunta, familia) if visible(d.herramienta, plan)]
     return {
         "modo": indice.modo,
         "herramientas": [_resumen_herramienta(d.herramienta) for d in hallados],
