@@ -8,7 +8,7 @@
 // puede pedir cualquier instante y con movimiento reducido basta pose(turno, dura) (el resultado).
 //
 // Rendimiento: el SVG llega en dos capas (capa-fija y capa-viva); la viva va en su propio <svg>
-// encima y solo se mueve con transform y opacity. Un planificador único deja viva una sola figura
+// encima y solo se mueve con transform y opacity (a lo sumo 60 cuadros por segundo). Un planificador único deja viva una sola figura
 // (la más visible); corre dos ciclos al entrar en vista y vuelve con el puntero, el toque, el foco o
 // las flechas. Fuera de eso no hay ningún cuadro: cero repintado en reposo. Con puntero grueso o
 // pocos núcleos, 30 cuadros por segundo.
@@ -112,13 +112,16 @@ function motorDe(F) {
 
 // ---------------------------------------------------------------- el planificador
 const FIGS = [];
+// el turno que sigue (o el anterior): una figura puede tener un turno de entrada que no se repite
+const paso = (F, d = 1) => (F.m.paso ? F.m.paso(F.turno, d) : (F.turno + d + F.m.n) % F.m.n);
 let viva = null, cuadro = 0, ultimo = 0;
 
 function bucle(ahora) {
   cuadro = 0;
   const F = viva;
   if (!F || !F.corre) return;
-  if (lento && ultimo && ahora - ultimo < 30) { cuadro = requestAnimationFrame(bucle); return; }
+  // a lo sumo 60 cuadros por segundo (en pantallas de 120 o 165 Hz no hace falta más), 30 en equipos lentos
+  if (ultimo && ahora - ultimo < (lento ? 30 : 15.5)) { cuadro = requestAnimationFrame(bucle); return; }
   ultimo = ahora;
   const t = ahora - F.inicio;
   const dura = F.m.dura(F.turno);
@@ -130,10 +133,9 @@ function despertar() { if (!cuadro) { ultimo = 0; cuadro = requestAnimationFrame
 
 function terminar(F) {
   F.corre = false;
-  F.vivo.classList.remove('animando');
   clearTimeout(F.espera);
   if (F === viva && F.autos < AUTOS && !quieto.matches) {
-    F.espera = setTimeout(() => { if (viva === F && !F.corre && F.autos < AUTOS) { F.autos++; jugar(F, (F.turno + 1) % F.m.n); } }, REPOSO);
+    F.espera = setTimeout(() => { if (viva === F && !F.corre && F.autos < AUTOS) { F.autos++; jugar(F, paso(F)); } }, REPOSO);
   }
 }
 // cierra el ciclo en curso de una figura que deja de estar viva: salta a su resultado
@@ -142,7 +144,6 @@ function cerrar(F) {
   if (!F.corre) return;
   F.motor.poner(F.turno, F.m.dura(F.turno), Infinity);
   F.corre = false;
-  F.vivo.classList.remove('animando');
 }
 function jugar(F, i) {
   if (quieto.matches) { fijo(F, i); return; }
@@ -152,7 +153,6 @@ function jugar(F, i) {
   const ahora = performance.now();
   F.motor.mezclar(ahora);
   F.turno = i; F.inicio = ahora; F.corre = true;
-  F.vivo.classList.add('animando');
   despertar();
 }
 function fijo(F, i) {
@@ -167,7 +167,7 @@ function elegirViva() {
   if (mejor === viva) return;
   if (viva) cerrar(viva);
   viva = mejor;
-  if (mejor && mejor.autos < AUTOS && !quieto.matches) { mejor.autos++; jugar(mejor, mejor.autos === 1 ? 0 : (mejor.turno + 1) % mejor.m.n); }
+  if (mejor && mejor.autos < AUTOS && !quieto.matches) { mejor.autos++; jugar(mejor, mejor.autos === 1 ? 0 : paso(mejor)); }
 }
 const umbrales = Array.from({ length: 21 }, (_, i) => i / 20);
 const vista = new IntersectionObserver(es => {
@@ -185,11 +185,16 @@ function montar(fig, nombre, crear) {
   vivo.classList.add('capa-viva-svg');
   const capa = fija.querySelector(':scope > .capa-viva');
   if (capa) vivo.append(capa);
-  lienzo.append(vivo);
+  // la capa viva va en su propio <svg> encima: un cambio en ella solo vuelve a pintar sus piezas.
+  // Sin will-change: promoverla a una capa al empezar cada ciclo costaba 50 ms a CPU 4× (medido).
+  const caja = document.createElement('div');
+  caja.className = 'capa-viva';
+  caja.append(vivo);
+  lienzo.append(caja);
   const V = JSON.parse(fija.dataset.vivo);
   const lectura = fig.querySelector('[data-lectura]');
   const pieza = n => vivo.querySelector(`[data-v="${n}"]`);
-  const F = { fig, nombre, lienzo, vivo, V, razon: 0, autos: 0, turno: 0, corre: false, inicio: 0, espera: 0 };
+  const F = { fig, nombre, lienzo, vivo: caja, V, razon: 0, autos: 0, turno: 0, corre: false, inicio: 0, espera: 0 };
   let dicho = '', dichoD = null;
   const pista = fig.querySelector('.pista'), pistaBase = pista ? pista.textContent : '';
   F.decir = txt => {
@@ -217,18 +222,18 @@ function montar(fig, nombre, crear) {
     const i = F.m.desde(...enCaja(e));
     if (i >= 0 && (i !== F.turno || viva !== F)) tomar(i);
   });
-  lienzo.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && !F.m.desde && !F.corre) tomar((F.turno + 1) % F.m.n); });
+  lienzo.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && !F.m.desde && !F.corre) tomar(paso(F)); });
   lienzo.addEventListener('pointerdown', e => {
     if (e.pointerType === 'mouse') return;
     const i = F.m.desde ? F.m.desde(...enCaja(e)) : -1;
-    tomar(i >= 0 ? i : (F.turno + 1) % F.m.n);
+    tomar(i >= 0 ? i : paso(F));
   });
   lienzo.addEventListener('focus', () => { if (!F.corre) tomar(F.turno); });
   lienzo.addEventListener('keydown', e => {
     const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
     if (!d) return;
     e.preventDefault();
-    tomar((F.turno + d + F.m.n) % F.m.n);
+    tomar(paso(F, d));
   });
   // estado inicial: el reposo antes del primer ciclo; con movimiento reducido, el resultado
   if (quieto.matches) fijo(F, 0); else F.motor.poner(0, 0, Infinity);
@@ -331,6 +336,94 @@ FIG.ruta = ({ V, pieza }) => {
   };
 };
 
+// Fig. prueba: la ficha que se lee sube y su pestaña se enciende; con la huella, el sello se
+// entinta en el tampón y la ficha queda sellada.
+FIG.prueba = ({ V, pieza }) => {
+  const n = V.lecturas.length;
+  const fichas = Array.from({ length: n }, (_, i) => pieza('ficha' + i));
+  const tabs = Array.from({ length: n }, (_, i) => pieza('pestana' + i));
+  const sello = pieza('sello'), sellador = pieza('sellador');
+  const SUBE0 = 120, SUBE = 560, LEE = 400, ALZA = 760, BAJA = 1020, SELLA = 1220;
+  const huella = n - 1;
+  // la lista de al lado marca la misma capa que la ficha que se lee
+  const notas = [...document.querySelectorAll('.notas-p [data-capa]')];
+  let marcada = -2;
+  const marcar = i => { if (i !== marcada) { marcada = i; notas.forEach(nt => nt.classList.toggle('vivo', +nt.dataset.capa === i)); } };
+  return {
+    n,
+    dura: i => (i === huella ? SELLA + 420 : SUBE0 + SUBE + 260),
+    cuadros: [[0, 0], [0, 260], [0, 520], [0, 940], [2, 940], [huella, 600], [huella, 1100], [huella, SELLA + 420]],
+    pose(i, t, pon) {
+      fichas.forEach((el, j) => {
+        const f = j === i ? resorte(t, SUBE0, SUBE) : 0;
+        pon(el, { x: V.sube[0] * f, y: V.sube[1] * f });
+      });
+      tabs.forEach((el, j) => pon(el, { o: j === i && t >= LEE ? 1 : 0 }));
+      // el sello: sube, baja al tampón (se entinta) y la huella queda sellada
+      const z = i === huella ? tramo(t, ALZA, 260, entra) - tramo(t, BAJA, 200, sale) : 0;
+      pon(sellador, { x: V.alza[0] * z, y: V.alza[1] * z });
+      pon(sello, { s: i === huella ? tramo(t, SELLA, 200, entra) : 0 });
+      marcar(t < LEE ? -1 : i);
+      if (t < LEE) return i === 0 && t < 120 ? V.lecturas[0] : `${V.lecturas[i].split(' · ')[0]} · …`;
+      return i === huella && t >= SELLA ? `${V.lecturas[i]} · sellada` : V.lecturas[i];
+    },
+    desde: (x, y) => {
+      let mejor = -1, d = 70;
+      V.pestanas.forEach(([px, py], i) => { const q = Math.hypot(px - x, (py - y) * 0.6); if (q < d) { d = q; mejor = i; } });
+      return mejor;
+    },
+  };
+};
+
+// Fig. cobertura: al entrar, las columnas crecen desde el piso (de Bogotá hacia afuera) y caen los
+// alfileres; después, la columna que se mira se enciende y la lectura da su conteo y su lugar.
+FIG.cobertura = ({ V, pieza }) => {
+  const cols = V.celdas.map((_, i) => pieza('c' + i));
+  const luces = V.candidatas.map(i => pieza('luz' + i));
+  const pines = V.ciudades.map((_, j) => pieza('pin' + j));
+  const n = 1 + V.candidatas.length;
+  const ESPERA = 160, RETRASO = 130, CRECE = 420;
+  const fin = ESPERA + Math.max(...V.celdas.map(c => c[3])) * RETRASO + CRECE * 0.8;
+  const PINES = fin, LUZ0 = PINES + V.ciudades.length * 60 + 300;
+  const f2 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), fn = new Intl.NumberFormat('es-CO');
+  const coord = (v, p, q) => f2.format(Math.abs(v)) + ' ' + (v >= 0 ? p : q);
+  const lugar = i => {
+    const [lon, lat, c] = V.celdas[i];
+    let ciudad = null, d = 0.6;
+    V.ciudades.forEach(([nom, x, y]) => { const q = Math.hypot(x - lon, y - lat); if (q < d) { d = q; ciudad = nom; } });
+    return `${fn.format(c)} predios de la muestra · ${coord(lat, 'N', 'S')}, ${coord(lon, 'E', 'W')}${ciudad ? ' · ' + ciudad : ''}`;
+  };
+  const base = `${fn.format(V.total)} predios de la muestra (3 %) en ${fn.format(V.celdas.length)} celdas`;
+  return {
+    n,
+    dura: i => (i === 0 ? LUZ0 + 400 : 520),
+    paso: (i, d) => { const j = i + d; return j < 1 ? n - 1 : j > n - 1 ? 1 : j; },
+    cuadros: [[0, 0], [0, 300], [0, 600], [0, 900], [0, PINES + 200], [0, LUZ0 + 400], [2, 520], [4, 520]],
+    pose(i, t, pon) {
+      const entrando = i === 0;
+      cols.forEach((el, c) => {
+        // las columnas bajas (la mayoría) aparecen de una vez con su anillo; las altas crecen, en
+        // escalones de 1/24: así cada cuadro cambia pocas piezas y repinta poco
+        const t0 = ESPERA + V.celdas[c][3] * RETRASO;
+        const k = !entrando ? 1 : V.celdas[c][4] ? Math.round(resorte(t, t0, CRECE) * 24) / 24 : t >= t0 + CRECE * 0.3 ? 1 : 0;
+        pon(el, { k, o: k > 0.02 ? 1 : 0 }); // aplastada no se dibuja (el filo no escala)
+      });
+      pines.forEach((el, j) => {
+        const u = entrando ? tramo(t, PINES + j * 60, 280, entra) : 1;
+        pon(el, { y: V.sube * (1 - u), o: u });
+      });
+      const cual = V.candidatas[entrando ? 0 : i - 1], desde = entrando ? LUZ0 : 120;
+      luces.forEach((el, q) => pon(el, { o: V.candidatas[q] === cual && t >= desde ? 1 : 0 }));
+      return t >= desde ? lugar(cual) : base;
+    },
+    desde: (x, y) => {
+      let mejor = -1, d = 30;
+      V.puntas.forEach(([px, py], q) => { const e = Math.hypot(px - x, py - y); if (e < d) { d = e; mejor = q; } });
+      return mejor < 0 ? -1 : mejor + 1;
+    },
+  };
+};
+
 // ================================================================ legado (se migra por tandas)
 const sigue = (actual, meta, dt, s) => actual + (meta - actual) * (1 - Math.exp(-dt / s));
 
@@ -408,73 +501,6 @@ const cerca2 = (pts, x, y) => {
   pts.forEach(([px, py], i) => { const q = Math.hypot(px - x, (py - y) * 0.6); if (q < d) { d = q; mejor = i; } });
   return d < 70 ? mejor : -1;
 };
-
-// ---------------------------------------------------------------- la prueba: el fichero
-function prueba(fig) {
-  const svg = fig.querySelector('svg');
-  const vivo = JSON.parse(svg.dataset.vivo);
-  const lectura = fig.querySelector('[data-lectura]');
-  const fichas = [];
-  svg.querySelectorAll('[data-ficha]').forEach(g => { fichas[+g.dataset.ficha] = g; });
-  const notas = [...document.querySelectorAll('.notas-p [data-capa]')];
-  const sello = svg.querySelector('[data-sello]');
-  escribir(svg);
-  // resortes: cada ficha entra cayendo desde arriba, escalonada, y rebota en el piso del fichero
-  const alto = fichas.map((_, j) => ({ x: 2.4 + j * 0.35, v: 0 }));
-  const st = { x: 0, v: 0 };
-  let meta = 0, llega = -1, ultimo = 0;
-  const [dx, dy] = vivo.sube;
-  const { cruza, arriba, fieltro, salto } = vivo.sello;
-  function aplicar(t) {
-    fichas.forEach((g, j) => {
-      // la ficha que se lee se mece un poco, como sostenida en la mano
-      const a = alto[j].x + (j === meta && !quieto.matches ? Math.sin(t * 1.7) * 0.025 * Math.min(1, alto[j].x) : 0);
-      if (Math.abs(a) > 0.001) g.setAttribute('transform', `translate(${(dx * a).toFixed(2)} ${(dy * a).toFixed(2)})`); else g.removeAttribute('transform');
-      g.querySelector('[data-pestana] > .iso-solid').toggleAttribute('data-lit', j === meta && alto[j].x > 0.5);
-      g.classList.toggle('activa', j === meta);
-    });
-    // el sello cruza, sube y cae al tampón con un rebote; en la huella marca cada tanto
-    const s = Math.max(0, Math.min(1, st.x));
-    let z = fieltro * s + salto * Math.sin(Math.PI * s);
-    if (llega >= 0) {
-      const u = t - llega;
-      z += Math.exp(-4 * u) * Math.abs(Math.sin(10 * u)) * 2.2;
-      if (u > 1.4) z += Math.max(0, Math.sin(((u - 1.4) / 2.2) * Math.PI * 2)) ** 6 * 3.5;
-    }
-    if (s > 0.001) sello.setAttribute('transform', `translate(${(cruza[0] * s + arriba[0] * z).toFixed(2)} ${(cruza[1] * s + arriba[1] * z).toFixed(2)})`);
-    else sello.removeAttribute('transform');
-  }
-  function paso(dt, t) {
-    const K = 70, C = 2 * Math.sqrt(K) * 0.5;
-    alto.forEach((a, j) => {
-      const m = j === meta ? 1 : 0;
-      a.v += (K * (m - a.x) - C * a.v) * dt; a.x += a.v * dt;
-      if (a.x < 0) { a.x = 0; a.v = -a.v * 0.3; }
-    });
-    const ms = meta === fichas.length - 1 ? 1 : 0;
-    st.v += (40 * (ms - st.x) - 2 * Math.sqrt(40) * st.v) * dt; st.x += st.v * dt;
-    if (ms && st.x > 0.995 && llega < 0) llega = t;
-    if (!ms) llega = -1;
-    aplicar(t);
-  }
-  selector(fig, {
-    n: fichas.length,
-    elegir: i => {
-      meta = i;
-      lectura.textContent = vivo.lecturas[i];
-      notas.forEach(nt => nt.classList.toggle('vivo', +nt.dataset.capa === i));
-    },
-    pintar: () => {
-      if (!quieto.matches) return false;
-      alto.forEach((a, j) => { a.x = j === meta ? 1 : 0; a.v = 0; });
-      st.x = meta === fichas.length - 1 ? 1 : 0;
-      aplicar(0);
-      return false;
-    },
-    desde: (x, y) => cerca2(vivo.pestanas, x, y),
-  });
-  ambiente(fig, t => { const dt = ultimo ? Math.min(t - ultimo, 1 / 20) : 1 / 60; ultimo = t; paso(dt, t); });
-}
 
 // ---------------------------------------------------------------- un guion que se repite
 // Corre guion(t, i) con t en segundos dentro del turno i; dura(i) es lo que dura el turno. Las
@@ -727,62 +753,8 @@ function asistente(fig) {
   ambiente(fig, t => { vaiven = Math.sin(t * 1.3) * 0.8 + Math.sin(t * 0.47) * 0.5; cordon(f >= 1 ? hacia : enCamino(f)); });
 }
 
-// ---------------------------------------------------------------- cobertura: la maqueta de Colombia
-function cobertura(fig) {
-  const svg = fig.querySelector('svg');
-  const V = JSON.parse(svg.dataset.vivo);
-  const lectura = fig.querySelector('[data-lectura]');
-  const base = lectura.textContent;
-  const celdas = [];
-  svg.querySelectorAll('[data-celda]').forEach(g => { celdas[+g.dataset.celda] = g; });
-  const f2 = new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }), fn = new Intl.NumberFormat('es-CO');
-  const coord = (v, p, q) => f2.format(Math.abs(v)) + ' ' + (v >= 0 ? p : q);
-  const cerca = (lon, lat) => {
-    let mejor = null, d = 0.6;
-    V.ciudades.forEach(([n, x, y]) => { const q = Math.hypot(x - lon, y - lat); if (q < d) { d = q; mejor = n; } });
-    return mejor;
-  };
-  // entrada: las columnas aparecen desde Bogotá hacia afuera (una vez), quietas con movimiento reducido
-  const [bx, by] = [-74.08, 4.61];
-  if (!quieto.matches) celdas.forEach((g, i) => { g.style.transitionDelay = `${(Math.hypot(V.celdas[i][0] - bx, V.celdas[i][1] - by) * 0.09).toFixed(2)}s`; });
-  let sel = -1;
-  const elegir = i => {
-    if (i === sel) return;
-    if (sel >= 0) celdas[sel].querySelector('.iso-solid').removeAttribute('data-lit');
-    sel = i;
-    if (i < 0) { lectura.textContent = base; return; }
-    celdas[i].querySelector('.iso-solid').setAttribute('data-lit', '');
-    const [lon, lat, n] = V.celdas[i], c = cerca(lon, lat);
-    lectura.textContent = `${fn.format(n)} predios de la muestra · ${coord(lat, 'N', 'S')}, ${coord(lon, 'E', 'W')}${c ? ' · ' + c : ''}`;
-  };
-  const lienzo = fig.querySelector('.lienzo');
-  let tour = !quieto.matches, k = 0, reloj = 0, espera = 0;
-  const pasar = () => { if (tour) { elegir(V.orden[k % V.orden.length]); k++; } };
-  enVista(lienzo, v => {
-    if (!v) { clearInterval(reloj); reloj = 0; return; }
-    svg.classList.add('armada');
-    if (!reloj && tour) reloj = setInterval(pasar, 2600);
-  });
-  lienzo.addEventListener('pointermove', e => {
-    const caja = lienzo.getBoundingClientRect(), vb = svg.viewBox.baseVal;
-    const x = vb.x + (e.clientX - caja.left) / caja.width * vb.width, y = vb.y + (e.clientY - caja.top) / caja.height * vb.height;
-    let mejor = -1, d = 14;
-    V.puntas.forEach(([px, py], i) => { const q = Math.hypot(px - x, py - y); if (q < d) { d = q; mejor = i; } });
-    tour = false; clearInterval(reloj); reloj = 0; clearTimeout(espera);
-    elegir(mejor);
-    espera = setTimeout(() => { tour = !quieto.matches; if (!reloj && tour) reloj = setInterval(pasar, 2600); }, 3600);
-  });
-  lienzo.addEventListener('keydown', e => {
-    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
-    if (!d) return;
-    e.preventDefault(); tour = false; clearInterval(reloj); reloj = 0;
-    k = (k + d + V.orden.length) % V.orden.length; elegir(V.orden[k]);
-  });
-}
-
-
 // ---------------------------------------------------------------- carga perezosa
-const LEGADO = { prueba, revision, tablero, vigilancia, asistente, cobertura };
+const LEGADO = { revision, tablero, vigilancia, asistente };
 async function cargar(fig) {
   const lienzo = fig.querySelector('.lienzo');
   const r = await fetch(lienzo.dataset.src);

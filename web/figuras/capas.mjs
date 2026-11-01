@@ -133,8 +133,8 @@ export function capas(DATOS, huella) {
         // Analítica: un gráfico de barras; cuando llega el dato, las barras crecen
         const x0 = 40, x1 = 78, z0 = z + 4, z1 = tope - 4;
         pantalla(x0, x1, z0, z1);
-        g.push(L(tramo([x0 + 2, yF + 0.5, z0 + 2], [x1 - 2, yF + 0.5, z0 + 2], P), { tone: "lo", className: "en-oscuro" }));
-        g.push(L([z0 + 6, z0 + 10].map((zz) => tramo([x0 + 2, yF + 0.5, zz], [x1 - 2, yF + 0.5, zz], P)).join(""), { tone: "faint", className: "en-oscuro" }));
+        g.push(L(tramo([x0, yF + 0.5, z0 + 2], [x1, yF + 0.5, z0 + 2], P), { tone: "lo", className: "en-oscuro" }));
+        g.push(L([z0 + 6, z0 + 10].map((zz) => tramo([x0, yF + 0.5, zz], [x1, yF + 0.5, zz], P)).join(""), { tone: "faint", className: "en-oscuro" }));
         const alturas = [4.2, 6.8, 5.4, 8.6, 7.2, 10.4];
         const barras = alturas.map((ha, q) => {
           const u = x0 + 4 + q * 5.6, v = z0 + 2.2;
