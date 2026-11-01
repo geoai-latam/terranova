@@ -47,7 +47,7 @@ Tokens en `estilo.css` (`:root`). Solo hay tema claro en la web.
 | Rol | Tokens | Uso |
 |---|---|---|
 | Fondo | `fondo`, `superficie`, `superficie-2` | Blanco roto y dos grises verdosos |
-| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras, el sobre rt/1 del héroe, pantallas de las figuras |
+| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras, la consola del héroe, pantallas de las figuras |
 | Texto | `tinta`, `tinta-suave`, `tinta-tenue` | Todos ≥ 4,5:1 sobre fondo y superficie |
 | Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | **Uno por pantalla: el botón principal.** El botón del menú es secundario; las pestañas elegidas se marcan en tinta, no en ámbar |
 | Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Enlaces y, en el sobre, lo que prueba la respuesta |
@@ -125,16 +125,17 @@ sitio y no se rediseña con las figuras: el dueño la quiere como está.
 - **La escena:** los predios reales del SINIC (`datos/sm.json`) alrededor del punto consultado en
   Santa Marta, a todo lo ancho detrás del texto, con las calles de OpenStreetMap
   (`datos/calles.json`) rotuladas, escala y norte. Al entrar, la cámara baja y los predios crecen
-  desde el punto; luego gira despacio. El predio consultado sube cuando el sobre rt/1 muestra su
-  respuesta y sale una onda del punto. `js/escena-predios.js` y `js/comun3d.js`; mientras carga,
+  desde el punto; luego gira despacio. El predio consultado sube cuando la consola muestra su
+  respuesta en la consola y sale una onda del punto. `js/escena-predios.js` y `js/comun3d.js`; mientras carga,
   la imagen de respaldo (`img/predio-santamarta.webp`).
 - **Dos arreglos que no cambian cómo se ve:** con movimiento reducido dibuja un solo cuadro (y otro
   solo si el lector arrastra o cambia el tamaño), y el giro y la subida van por tiempo (dt), no
   por cuadros.
 - **Accesibilidad:** la imagen accesible es el lienzo (`role="img"`); la lectura con el enlace de
   OpenStreetMap queda fuera y se puede tocar.
-- **El sobre rt/1** va debajo del héroe: una respuesta real de producción al mismo predio, con
-  procedencia, licencia, completitud y `servido_desde` resaltados.
+- **La consola rt/1** va encima de la escena, a la derecha: tres respuestas reales de producción
+  (predio, empresa y norma) en pestañas, que se reproducen por turnos con su fecha de captura
+  (DD-MM-AAAA). Una guía une la respuesta con el predio consultado, que sube cuando llega.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
 ## Figuras isométricas (Anatomy)

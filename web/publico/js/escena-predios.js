@@ -5,7 +5,7 @@
 import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js';
 
 const esc = document.querySelector('[data-escena="predios"]');
-const con = document.querySelector('[data-consola], [data-sobre]');
+const con = document.querySelector('[data-consola]');
 if (esc) iniciar(esc).catch(err => console.warn('escena de predios:', err));
 
 async function iniciar(esc) {

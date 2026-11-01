@@ -163,6 +163,42 @@ code, pre, kbd { font-family: var(--font-mono); }
 .t0 { font: 650 clamp(40px, 5vw, 72px)/1.02 var(--font-sans); letter-spacing: -0.045em; }
 .heroe .entrada { font-size: clamp(17px, 1.45vw, 20px); max-width: 520px; color: var(--tinta-suave); }
 .heroe .nota { font-size: 14px; color: var(--tinta-tenue); margin-top: -10px; }
+.h-consola { position: absolute; left: 0; right: 0; bottom: 64px; z-index: 3; display: flex; justify-content: flex-end; pointer-events: none; }
+
+.consola { pointer-events: auto; width: 440px; background: var(--bosque-900); color: #E6EAE2; border-radius: var(--radio-xl);
+  box-shadow: 0 30px 60px -20px rgba(11,35,28,.45), 0 0 0 1px rgba(11,35,28,.9); overflow: hidden; }
+.consola .pest { display: flex; border-bottom: 1px solid #22473C; }
+.consola .pest button { all: unset; box-sizing: border-box; flex: 1; position: relative; cursor: pointer; padding: 12px 18px;
+  font: 500 13.5px/18px var(--font-sans); color: #8FA39A; }
+.consola .pest button + button { border-left: 1px solid #22473C; }
+.consola .pest button:hover { color: #F3EFE4; }
+.consola .pest button[aria-selected="true"] { color: #F3EFE4; }
+.consola .pest button:focus-visible { outline: 2px solid var(--teal-400); outline-offset: -2px; }
+.consola .pest i { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background: var(--ambar-500); }
+.consola .pest [aria-selected="true"] i { width: 100%; }
+.consola.corre .pest [aria-selected="true"] i { width: var(--avance, 0%); }
+.consola .turno { padding: 18px 20px 16px; display: grid; gap: 14px; align-content: start; min-height: 318px; }
+.consola .turno[hidden] { display: none; }
+.consola .preg { display: grid; gap: 4px; }
+.consola .preg .tu { font: 400 12.5px/16px var(--font-sans); color: #8FA39A; }
+.consola .preg .txt { font: 500 18px/1.35 var(--font-sans); letter-spacing: -0.01em; color: #F3EFE4; min-height: 1.35em; }
+.consola .llama { display: flex; justify-content: space-between; gap: 12px; font: 400 12.5px/18px var(--font-mono); color: #8FA39A; }
+.consola .llama code { color: var(--teal-400); }
+.consola dl { display: grid; grid-template-columns: 100px minmax(0, 1fr); font: 400 13px/20px var(--font-mono); font-variant-numeric: tabular-nums; margin: 0; }
+.consola dt, .consola dd { margin: 0; padding: 5px 0; border-top: 1px solid rgba(243,239,228,.1); }
+.consola dt { color: #8FA39A; }
+.consola .ok { color: var(--teal-400); font-weight: 500; }
+.consola .pie { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 400 12px/16px var(--font-mono); color: #8FA39A; }
+.consola .pie b { font-weight: 500; color: var(--teal-400); }
+.consola .sello { color: var(--ambar-500); }
+/* reproducción: lo que todavía no llega ocupa su lugar pero no se ve */
+.consola .espera { visibility: hidden; }
+.consola .aparece { animation: aparece .3s ease-out both; }
+.consola .escribe::after { content: ""; display: inline-block; width: .45em; height: 1.05em; margin-left: 2px; vertical-align: -.16em;
+  background: var(--ambar-500); animation: cursor 1s steps(1) infinite; }
+@keyframes aparece { from { opacity: 0; transform: translateY(4px); } }
+@keyframes cursor { 50% { opacity: 0; } }
+
 
 @media (max-width: 1100px) {
   .heroe { min-height: 0; }
@@ -174,63 +210,18 @@ code, pre, kbd { font-family: var(--font-mono); }
   .heroe .lectura { top: 16px; bottom: auto; max-width: 70%; }
   .heroe .mueble { top: 16px; bottom: auto; }
   .heroe .rotulos .barrio { left: var(--borde); right: auto; top: 58px; }
+  .h-consola { order: 3; position: relative; bottom: auto; justify-content: flex-start; margin-top: -150px; padding-bottom: 48px; }
+  .consola { width: 100%; max-width: 560px; }
 }
 @media (max-width: 520px) {
   .heroe .escena { height: 420px; }
+  .consola .turno { padding: 16px 16px 14px; min-height: 0; }
+  .consola dl { grid-template-columns: 88px minmax(0, 1fr); font-size: 12.5px; }
+  .consola .pest button { padding: 12px 14px; }
 }
+@media (prefers-reduced-motion: reduce) { .consola .escribe::after, .consola .aparece { animation: none; } }
 /* la atribución de OpenStreetMap se puede tocar: la lectura no va dentro de role=img y su enlace recibe el puntero */
 .escena .lectura a { pointer-events: auto; display: inline-block; padding: 10px 0; margin: -10px 0; }
-/* el sobre rt/1, debajo del héroe */
-.h-sobre { padding-top: clamp(32px, 4vw, 48px); }
-
-/* el sobre rt/1: la respuesta real, con lo que nos diferencia resaltado */
-.sobre { background: var(--bosque-900); color: #E6EAE2; border-radius: var(--radio-xl); padding: 18px 22px 16px;
-  display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1fr) minmax(0, 1.05fr); grid-template-rows: auto auto 1fr;
-  grid-template-areas: "preg datos prueba" "llama datos prueba" "pie datos prueba"; gap: 10px 32px; align-items: start; }
-.sobre .preg { grid-area: preg; } .sobre .llama { grid-area: llama; } .sobre .pie { grid-area: pie; align-self: end; }
-.sobre .datos { grid-area: datos; } .sobre .prueba { grid-area: prueba; }
-.sobre .preg { display: grid; gap: 4px; }
-.sobre .tu { font: 400 13px/18px var(--font-sans); color: #9FB2A9; }
-.sobre .txt { font: 500 17px/1.35 var(--font-sans); letter-spacing: -0.01em; color: #F3EFE4; min-height: 1.35em; }
-.sobre .llama { display: flex; gap: 8px; align-items: baseline; font: 400 13px/18px var(--font-sans); color: #9FB2A9; }
-.sobre .llama code { font: 400 12.5px/18px var(--font-mono); color: #E6EAE2; }
-.sobre .contrato { margin-left: auto; font: 500 12px/18px var(--font-mono); color: #9FB2A9; }
-.sobre dl { display: grid; margin: 0; font: 400 13px/19px var(--font-mono); font-variant-numeric: tabular-nums; }
-.sobre .fila { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 0 12px; padding: 5px 0; border-top: 1px solid rgba(243,239,228,.1); }
-.sobre .fila:first-child { border-top: 0; }
-.sobre dt { color: #9FB2A9; }
-.sobre dd { margin: 0; overflow-wrap: anywhere; }
-.sobre .datos dd { color: #E6EAE2; }
-/* procedencia, licencia, completitud y servido_desde: un filete teal y la clave en teal */
-.sobre .prueba { position: relative; padding-left: 12px; }
-.sobre .prueba::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--teal-400); border-radius: 1px; }
-.sobre .prueba dt { color: var(--teal-400); }
-.sobre .prueba dd { color: #F3EFE4; }
-.sobre .marca { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 8px; vertical-align: 1px; }
-.sobre .marca.vivo { background: var(--teal-400); }
-.sobre .pie { display: grid; gap: 2px; font: 400 12px/17px var(--font-mono); color: #9FB2A9; }
-.sobre .pie b { font-weight: 400; color: #C9D4CE; }
-/* reproducción: lo que todavía no llega ocupa su lugar pero no se ve */
-.sobre .espera { visibility: hidden; }
-.sobre .aparece { animation: aparece .4s cubic-bezier(0, 0, .3, 1) both; }
-.sobre .escribe::after { content: ""; display: inline-block; width: .45em; height: 1.05em; margin-left: 2px; vertical-align: -.16em;
-  background: #F3EFE4; animation: cursor 1s steps(1) infinite; }
-@keyframes aparece { from { opacity: 0; transform: translateY(3px); } }
-@keyframes cursor { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .sobre .escribe::after, .sobre .aparece { animation: none; } }
-
-@media (max-width: 1100px) {
-  .sobre { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "preg preg" "llama llama" "datos prueba" "pie pie"; }
-}
-@media (max-width: 680px) {
-  .sobre { grid-template-columns: minmax(0, 1fr); grid-template-areas: "preg" "llama" "datos" "prueba" "pie"; }
-}
-@media (max-width: 520px) {
-  .sobre { padding: 16px 14px 14px; }
-  .sobre .fila { grid-template-columns: 100px minmax(0, 1fr); }
-  .sobre dl { font-size: 12.5px; }
-}
-
 /* ---------- rótulos del mapa de predios ---------- */
 .rotulos { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
 .rotulos span { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
@@ -248,6 +239,9 @@ code, pre, kbd { font-family: var(--font-mono); }
   .heroe .mueble { display: none; }
   .heroe .lectura { max-width: none; right: var(--borde); }
 }
+
+/* ---------- consola: «llama a» y la herramienta ---------- */
+.consola .llama { justify-content: flex-start; gap: 8px; }
 
 /* ---------- tarjetas y bloques ---------- */
 /* bloque = columna con filete superior, no tarjeta */

@@ -56,7 +56,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - Se quedan tres arreglos que no cambian cómo se ve: con movimiento reducido un solo render; el giro
   y la subida por tiempo (dt), no por cuadros; y la atribución de OpenStreetMap tocable y fuera de
   `role="img"` (la imagen accesible es el lienzo).
-- El sobre rt/1 queda igual, debajo del héroe.
+- La consola rt/1 vuelve encima de la escena como estaba (pestañas Predio, Empresa y Norma, su
+  reproducción y la guía al predio), con las fechas en DD-MM-AAAA. Sale el sobre de una sola respuesta.
 
 ## Sitio v2, fases 2 y 3: base visual y héroe como figura cero, revertido (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
 

@@ -22,7 +22,6 @@ PUBLICO = RAIZ / "publico"
 sys.path.insert(0, str(RAIZ.parent / "src"))
 
 from terranova.catalogo import cargar  # noqa: E402
-from terranova.correos import EJEMPLO, PRIMERA_PREGUNTA  # noqa: E402
 
 DOMINIO = "https://terrnova.com"
 CORREO = "soporte@terrnova.com"
@@ -441,41 +440,84 @@ INSTRUCCION = (
     "https://terrnova.com/llms.txt"
 )
 
-# El sobre rt/1 del héroe: una respuesta real de producción a la pregunta del predio que dibuja la
-# maqueta (terranova.correos.EJEMPLO, solicitud req_01M6AEQ1Q10XH5SZP1ZYRMS212, consultada el
-# 01-11-2026). Lo que nos diferencia va resaltado: procedencia, licencia, completitud y
-# servido_desde. Los nombres de la izquierda son los campos del contrato.
-CONSULTADO_EJEMPLO = "01-11-2026"
+# Tres respuestas reales de producción, recortadas, de familias distintas. La consola del héroe las reproduce por turnos.
+TURNOS = [
+    {
+        "k": "predio",
+        "boton": "Predio",
+        "pregunta": "¿Qué predio hay en 11,2211 N, 74,1572 W?",
+        "herr": "sinic_predio_en_punto",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("predial", "4700101090000025808…"),
+            ("destinación", "Habitacional, urbano"),
+            ("entidad", "IGAC, SINIC"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "copia del 28-10-2026 en 0,56 s"),
+        ],
+        "huella": "sha256:7a2cc965…",
+        "fecha": "29-10-2026",
+    },
+    {
+        "k": "empresa",
+        "boton": "Empresa",
+        "pregunta": "¿La empresa con NIT 899999068 tiene la matrícula al día?",
+        "herr": "rues_empresa_por_nit",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("empresa", "ECOPETROL S A"),
+            ("matrícula", "1291197, cámara de Bogotá"),
+            ("situación", "ACTIVA, renovada en 2026"),
+            ("entidad", "Confecámaras, RUES"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "fuente en vivo en 2,4 s"),
+        ],
+        "huella": "sha256:2acc04ec…",
+        "fecha": "30-10-2026",
+    },
+    {
+        "k": "norma",
+        "boton": "Norma",
+        "pregunta": "¿La Ley 1581 de 2012 sigue vigente?",
+        "herr": "suin_norma",
+        "filas": [
+            ("estado", '<span class="ok">encontrado</span>'),
+            ("norma", "Ley estatutaria 1581 de 2012"),
+            ("vigencia", "Vigente"),
+            ("expedida", "Congreso de Colombia, 30 artículos"),
+            ("entidad", "MinJusticia, SUIN-Juriscol"),
+            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
+            ("servido", "fuente en vivo en 2,9 s"),
+        ],
+        "huella": "sha256:6fcc3fe7…",
+        "fecha": "30-10-2026",
+    },
+]
 
 
-def sobre() -> str:
-    e = EJEMPLO
-    h = next(h for h in HERR if h.id == e["herramienta"])
-    f = CAT.fuentes[h.fuente]
-    assert f.licencia.spdx == e["licencia"], "la licencia del ejemplo no es la del catálogo"
-    comercial = "sí" if f.uso_comercial == "si" else "no"
-    datos = [
-        ("estado", f'<i class="marca vivo" aria-hidden="true"></i>{e["estado"]}'),
-        ("predio", e["predio"]),
-        ("lugar", e["lugar"]),
-        ("destinación", e["destinacion"]),
-    ]
-    prueba = [
-        ("procedencia", f"{nombre_entidad(f.entidad)}, SINIC"),
-        ("licencia", f"{e['licencia']} · uso comercial: {comercial}"),
-        ("completitud", e["completitud"]),
-        ("servido_desde", e["servido"]),
-    ]
-    fila = lambda a, b: f'<div class="fila"><dt>{a}</dt><dd>{b}</dd></div>'  # noqa: E731
+def consola() -> str:
+    ids = {h.id for h in HERR}
+    pest, turnos = [], []
+    for i, t in enumerate(TURNOS):
+        assert t["herr"] in ids, t["herr"]
+        sel = "true" if i == 0 else "false"
+        pest.append(
+            f'<button type="button" role="tab" id="c-p{i}" aria-controls="c-t{i}" aria-selected="{sel}"'
+            f"{'' if i == 0 else ' tabindex="-1"'}><i></i>{t['boton']}</button>"
+        )
+        filas = "".join(f"<dt>{a}</dt><dd>{b}</dd>" for a, b in t["filas"])
+        turnos.append(
+            f'<div class="turno" role="tabpanel" id="c-t{i}" aria-labelledby="c-p{i}" data-k="{t["k"]}"{"" if i == 0 else " hidden"}>'
+            f'<p class="preg"><span class="tu">Tu agente</span><span class="txt">{t["pregunta"]}</span></p>'
+            f'<p class="llama"><span>llama a</span><code>{t["herr"]}</code></p>'
+            f"<dl>{filas}</dl>"
+            f'<p class="pie"><span>huella <b>{t["huella"]}</b></span><span class="sello">capturado el {t["fecha"]}</span></p></div>'
+        )
     return (
-        '<div class="sobre" data-sobre>'
-        f'<p class="preg"><span class="tu">Tu agente pregunta</span><span class="txt">{PRIMERA_PREGUNTA}</span></p>'
-        f'<p class="llama"><span>llama a</span><code>{e["herramienta"]}</code><span class="contrato">rt/1</span></p>'
-        f'<dl class="datos">{"".join(fila(a, b) for a, b in datos)}</dl>'
-        f'<dl class="prueba">{"".join(fila(a, b) for a, b in prueba)}</dl>'
-        f'<p class="pie"><span>huella <b>{e["huella"]}</b></span>'
-        f"<span>{e['creditos']} créditos · consultado el {CONSULTADO_EJEMPLO}</span></p>"
-        "</div>"
+        '<div class="consola" data-consola>'
+        f'<div class="pest" role="tablist" aria-label="Respuestas capturadas">{"".join(pest)}</div>'
+        + "".join(turnos)
+        + "</div>"
     )
 
 
@@ -1125,7 +1167,7 @@ def prueba_html() -> str:
 <div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
 <p class="entrada">Quién publica el dato, con qué licencia, de dónde salió y su huella. En la respuesta, no en un anexo.</p>
 <ul class="lista-l notas-p">{notas}</ul>
-<p class="fuente-dato">banrep_trm_recientes · <span class="sello">capturado el 2026-10-29</span> · <a class="enlace" href="/desarrolladores#contrato">ver el contrato rt/1</a></p></div>
+<p class="fuente-dato">banrep_trm_recientes · <span class="sello">capturado el 29-10-2026</span> · <a class="enlace" href="/desarrolladores#contrato">ver el contrato rt/1</a></p></div>
 </div>"""
 
 
@@ -1191,8 +1233,8 @@ def inicio() -> str:
 <p class="entrada">{N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades, cada dato con su fuente y su licencia. Encima, la analítica, la automatización y los agentes de tu equipo.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 </div></div>
+<div class="envoltura h-consola">{consola()}</div>
 </section>
-<div class="envoltura h-sobre">{sobre()}</div>
 
 <section class="seccion capas-l" id="capas"><div class="envoltura">
 <div class="con-fig">
