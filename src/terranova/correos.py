@@ -1,8 +1,10 @@
-"""Los correos que envía Terrnova, con el sistema de diseño del sitio (docs/DISENO.md).
+"""Los correos que envía Terrnova.
 
-Cada correo sale en HTML y en texto plano, con una sola acción, el trato de «tú» y la firma «El
-equipo de Terrnova». Las respuestas van a soporte (o, en el aviso interno de contacto, a quien
-escribió). Ningún correo lleva una llave ni un dato sensible, y cada uno dice por qué te llegó.
+Siguen el patrón de los correos transaccionales de Linear, Notion, Vercel o Stripe: fondo blanco
+sin tarjeta, el logo arriba, un título corto, una sola acción, el enlace de respaldo en texto y
+un pie gris que dice por qué te llegó. Trato de «tú» y firma «El equipo de Terrnova». Las
+respuestas van a soporte (o, en el aviso interno de contacto, a quien escribió). Ningún correo
+lleva una llave ni un dato sensible.
 
 El HTML es de correo: tablas y estilos en línea, porque Gmail y Outlook ignoran casi todo lo demás;
 fuentes del sistema como respaldo de Geist (los clientes de correo no la cargan); el logo en PNG
@@ -19,19 +21,19 @@ URL = "https://terrnova.com"
 LOGO = f"{URL}/img/terrnova-correo.png"
 FIRMA = "El equipo de Terrnova"
 
-# Colores y fuentes del sistema de diseño v4 (web/publico/estilo.css).
-FONDO = "#F6F7F4"
-PANEL = "#FFFFFF"
-SUPERFICIE = "#ECEEE9"
+# Tinta y grises del sistema de diseño v4 (web/publico/estilo.css), sobre blanco.
 TINTA = "#12261F"
 SUAVE = "#4E5E57"
-TENUE = "#56645E"
-LINEA = "#D9DED6"
-AMBAR = "#E0A13A"
+TENUE = "#7A8781"
+LINEA = "#E3E7E1"
+CAJA = "#F3F5F1"
 BOSQUE = "#0B231C"
 VERDE = "#236E62"
 SANS = "Geist, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "'Geist Mono', Consolas, Menlo, monospace"
+MESES = (
+    "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre"
+).split()
 
 
 @dataclass(frozen=True)
@@ -48,59 +50,73 @@ def nombre_visible(nombre: str) -> str:
     return n.title() if n == n.lower() else n
 
 
+def fecha_larga(d: date) -> str:
+    """16 de noviembre de 2026."""
+    return f"{d.day} de {MESES[d.month - 1]} de {d.year}"
+
+
 # --- piezas ------------------------------------------------------------------------------------
 
 
-def _p(html: str, *, color: str = SUAVE, tam: int = 16) -> str:
+def _p(html: str, *, color: str = TINTA, tam: int = 15, abajo: int = 16) -> str:
     return (
-        f'<p style="margin:0 0 16px;font-family:{SANS};font-size:{tam}px;line-height:1.6;'
+        f'<p style="margin:0 0 {abajo}px;font-family:{SANS};font-size:{tam}px;line-height:1.6;'
         f'color:{color};">{html}</p>'
     )
 
 
 def _titulo(texto: str) -> str:
     return (
-        f'<h1 style="margin:0 0 16px;font-family:{SANS};font-size:24px;line-height:1.25;'
-        f'font-weight:700;letter-spacing:-0.02em;color:{TINTA};">{escape(texto)}</h1>'
+        f'<h1 style="margin:28px 0 24px;font-family:{SANS};font-size:24px;line-height:1.3;'
+        f'font-weight:500;letter-spacing:-0.4px;color:{TINTA};">{escape(texto)}</h1>'
     )
 
 
 def _boton(texto: str, href: str) -> str:
     return (
-        '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 24px;">'
-        f'<tr><td style="background:{AMBAR};border-radius:3px;">'
-        f'<a href="{escape(href)}" style="display:inline-block;padding:14px 24px;'
-        f"font-family:{SANS};font-size:16px;font-weight:600;color:{BOSQUE};"
+        '<table role="presentation" cellpadding="0" cellspacing="0" style="margin:8px 0 28px;">'
+        f'<tr><td style="background:{BOSQUE};border-radius:4px;">'
+        f'<a href="{escape(href)}" style="display:inline-block;padding:11px 22px;'
+        f"font-family:{SANS};font-size:15px;font-weight:600;color:#FFFFFF;"
         f'text-decoration:none;">{escape(texto)}</a></td></tr></table>'
     )
 
 
-def _bloque(html: str, *, mono: bool = False) -> str:
-    fuente = MONO if mono else SANS
-    tam = 13 if mono else 15
+def _enlace(texto: str, href: str) -> str:
+    return f'<a href="{escape(href)}" style="color:{VERDE};">{escape(texto)}</a>'
+
+
+def _varias_lineas(texto: str) -> str:
+    return escape(texto).replace("\n", "<br>")
+
+
+def _codigo(texto: str) -> str:
+    """Un bloque de código como el de Notion: gris claro, borde fino, monoespaciado."""
     return (
         '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" '
         'style="margin:0 0 20px;">'
-        f'<tr><td style="background:{SUPERFICIE};border-radius:4px;padding:14px 16px;'
-        f"font-family:{fuente};font-size:{tam}px;line-height:1.55;color:{TINTA};"
-        f'word-break:break-word;">{html}</td></tr></table>'
+        f'<tr><td style="background:{CAJA};border:1px solid {LINEA};border-radius:6px;'
+        f"padding:14px 16px;font-family:{MONO};font-size:13px;line-height:1.6;color:{TINTA};"
+        f'white-space:pre-wrap;overflow-wrap:anywhere;">{escape(texto)}</td></tr></table>'
+    )
+
+
+def _cita(texto: str) -> str:
+    """Lo que escribió la persona, citado como en cualquier respuesta de correo."""
+    return (
+        f'<p style="margin:0 0 20px;padding:2px 0 2px 14px;border-left:2px solid {LINEA};'
+        f'font-family:{SANS};font-size:14px;line-height:1.6;color:{SUAVE};">'
+        f"{_varias_lineas(texto)}</p>"
     )
 
 
 def _firma() -> str:
-    return _p(f"Un saludo,<br>{FIRMA}", color=TINTA)
+    return _p(FIRMA, abajo=0)
 
 
 _OCULTO = "display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;"
-_LOGO = "display:block;border:0;border-radius:6px;"
-_MARCA = (
-    f"vertical-align:middle;padding-left:10px;font-family:{SANS};font-size:20px;"
-    f"font-weight:700;letter-spacing:-0.03em;color:{TINTA};"
-)
-_PANEL = (
-    f"background:{PANEL};border-top:3px solid {AMBAR};border-radius:6px;padding:32px 32px 16px;"
-)
-_PIE = f"padding:20px 4px 0;font-family:{SANS};font-size:13px;line-height:1.55;color:{TENUE};"
+_RAYA = f"border:0;border-top:1px solid {LINEA};margin:40px 0 20px;"
+_PIE = f"margin:0;font-family:{SANS};font-size:12px;line-height:1.6;color:{TENUE};"
 
 
 def _pagina(asunto: str, previa: str, cuerpo: str, pie: str) -> str:
@@ -109,29 +125,21 @@ def _pagina(asunto: str, previa: str, cuerpo: str, pie: str) -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
+<meta name="color-scheme" content="light">
 <title>{escape(asunto)}</title>
 </head>
-<body style="margin:0;padding:0;background:{FONDO};">
+<body style="margin:0;padding:0;background:#FFFFFF;">
 <span style="{_OCULTO}">{escape(previa)}</span>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{FONDO};">
-<tr><td align="center" style="padding:32px 16px;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;">
-<tr><td style="padding:0 4px 20px;">
-<table role="presentation" cellpadding="0" cellspacing="0"><tr>
-<td style="vertical-align:middle;"><img src="{LOGO}" width="32" height="32" alt=""
- style="{_LOGO}"></td>
-<td style="{_MARCA}">Terrnova</td>
-</tr></table>
-</td></tr>
-<tr><td style="{_PANEL}">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFF;">
+<tr><td style="padding:40px 20px 48px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
+<tr><td>
+<img src="{LOGO}" width="36" height="36" alt="Terrnova" style="display:block;border:0;">
 {cuerpo}
-</td></tr>
-<tr><td style="{_PIE}">
-{pie}<br><br>
-Terrnova · datos oficiales de Colombia con su fuente y su prueba ·
-<a href="{URL}" style="color:{VERDE};text-decoration:none;">terrnova.com</a>
+<hr style="{_RAYA}">
+<p style="{_PIE}">{pie}</p>
+<p style="{_PIE}margin-top:8px;"><a href="{URL}" style="color:{TENUE};">Terrnova</a>
+· datos oficiales de Colombia, con su fuente</p>
 </td></tr>
 </table>
 </td></tr>
@@ -141,7 +149,7 @@ Terrnova · datos oficiales de Colombia con su fuente y su prueba ·
 
 
 def _texto(lineas: list[str], pie: str) -> str:
-    return "\n\n".join([*lineas, f"Un saludo,\n{FIRMA}", "—", pie, f"Terrnova · {URL}"]) + "\n"
+    return "\n\n".join([*lineas, FIRMA, "--", pie, f"Terrnova · {URL}"]) + "\n"
 
 
 # --- los correos -------------------------------------------------------------------------------
@@ -150,36 +158,35 @@ def _texto(lineas: list[str], pie: str) -> str:
 def enlace_llave(nombre: str, enlace: str, *, creditos: int, dias: int, soporte: str) -> Mensaje:
     n = nombre_visible(nombre)
     asunto = "Confirma tu correo para recibir tu llave de Terrnova"
-    previa = "El enlace vence en 24 horas y sirve una sola vez."
-    pie = (
-        "Te escribimos porque alguien pidió una llave de prueba con este correo en terrnova.com. "
-        "Si no fuiste tú, ignora este mensaje: sin confirmar no se crea ninguna llave."
-    )
+    previa = "El enlace sirve una vez y vence en 24 horas."
+    pie = "Recibes este correo porque se pidió una llave de prueba con él en terrnova.com."
     cuerpo = (
         _titulo("Confirma tu correo")
-        + _p(f"Hola, {escape(n)}.")
+        + _p(f"Hola, {escape(n)}:")
+        + _p("Para recibir tu llave de prueba de Terrnova, confirma que este correo es tuyo.")
+        + _boton("Confirmar correo", enlace)
         + _p(
-            "Recibimos tu solicitud de una llave de prueba de Terrnova. Para recibirla, confirma "
-            "que este correo es tuyo."
+            f"La llave trae {creditos} créditos para {dias} días y se muestra una sola vez, en la "
+            "página que abre el botón. El enlace sirve una vez y vence en 24 horas."
         )
-        + _boton("Confirmar y ver mi llave", enlace)
         + _p(
-            f"La llave trae {creditos} créditos y vence en {dias} días. Se muestra una sola vez "
-            "en la página: cópiala y guárdala en un lugar seguro. Nunca te la enviaremos por "
-            "correo."
+            f"Si el botón no funciona, copia este enlace en tu navegador:<br>"
+            f"{_enlace(enlace, enlace)}",
+            color=SUAVE,
+            tam=13,
         )
-        + _p("Si el botón no funciona, copia este enlace en tu navegador:", tam=14)
-        + _bloque(escape(enlace), mono=True)
+        + _p("Si no pediste una llave, ignora este correo.", color=SUAVE, tam=13, abajo=24)
         + _firma()
     )
     texto = _texto(
         [
-            f"Hola, {n}.",
-            "Recibimos tu solicitud de una llave de prueba de Terrnova. Para recibirla, confirma "
-            "que este correo es tuyo en este enlace (vence en 24 horas y sirve una sola vez):",
+            f"Hola, {n}:",
+            "Para recibir tu llave de prueba de Terrnova, confirma que este correo es tuyo en este "
+            "enlace:",
             enlace,
-            f"La llave trae {creditos} créditos y vence en {dias} días. Se muestra una sola vez "
-            "en la página: cópiala y guárdala en un lugar seguro.",
+            f"La llave trae {creditos} créditos para {dias} días y se muestra una sola vez. El "
+            "enlace sirve una vez y vence en 24 horas.",
+            "Si no pediste una llave, ignora este correo.",
         ],
         pie,
     )
@@ -190,26 +197,24 @@ def ya_tiene_llave(nombre: str, *, soporte: str) -> Mensaje:
     n = nombre_visible(nombre)
     asunto = "Ya tienes una llave de Terrnova"
     previa = "No creamos otra. Si la perdiste, responde este correo."
-    pie = (
-        "Te escribimos porque alguien pidió una llave con este correo en terrnova.com. Si no "
-        "fuiste tú, ignora este mensaje."
-    )
+    pie = "Recibes este correo porque se pidió una llave con él en terrnova.com."
+    guia = f"{URL}/desarrolladores"
     cuerpo = (
         _titulo("Ya tienes una llave")
-        + _p(f"Hola, {escape(n)}.")
+        + _p(f"Hola, {escape(n)}:")
         + _p("Este correo ya tiene una llave de prueba de Terrnova, así que no creamos otra.")
+        + _p("Si la perdiste o necesitas más créditos, responde este correo y lo resolvemos.")
         + _p(
-            "Si la perdiste o necesitas más créditos, responde este correo y te ayudamos a seguir."
+            f"Para conectarla a tu agente, sigue la {_enlace('guía de conexión', guia)}.", abajo=28
         )
-        + _boton("Ver cómo conectarla", f"{URL}/desarrolladores")
         + _firma()
     )
     texto = _texto(
         [
-            f"Hola, {n}.",
+            f"Hola, {n}:",
             "Este correo ya tiene una llave de prueba de Terrnova, así que no creamos otra.",
-            "Si la perdiste o necesitas más créditos, responde este correo y te ayudamos.",
-            f"Cómo conectarla: {URL}/desarrolladores",
+            "Si la perdiste o necesitas más créditos, responde este correo y lo resolvemos.",
+            f"Guía de conexión: {guia}",
         ],
         pie,
     )
@@ -217,7 +222,8 @@ def ya_tiene_llave(nombre: str, *, soporte: str) -> Mensaje:
 
 
 COMANDO_CLAUDE = (
-    "claude mcp add --transport http terrnova https://terrnova.com/mcp/catalogo \\\n"
+    "claude mcp add --transport http terrnova \\\n"
+    "  https://terrnova.com/mcp/catalogo \\\n"
     '  --header "Authorization: Bearer TU_LLAVE"'
 )
 PRIMERAS_PREGUNTAS = (
@@ -229,44 +235,42 @@ PRIMERAS_PREGUNTAS = (
 
 def bienvenida(nombre: str, *, creditos: int, vence: date, soporte: str) -> Mensaje:
     n = nombre_visible(nombre)
-    fecha = vence.strftime("%d-%m-%Y")
-    asunto = "Tu llave de Terrnova está lista: así la conectas"
-    previa = f"{creditos} créditos hasta el {fecha}. Conéctala a tu agente en un minuto."
-    pie = "Te escribimos porque confirmaste una llave de prueba en terrnova.com."
-    preguntas = "".join(f"«{escape(p)}»<br>" for p in PRIMERAS_PREGUNTAS)
+    fecha = fecha_larga(vence)
+    asunto = "Tu llave de Terrnova está activa"
+    previa = f"{creditos} créditos hasta el {fecha}. Así la conectas a tu agente."
+    pie = "Recibes este correo porque confirmaste una llave de prueba en terrnova.com."
+    guia = f"{URL}/desarrolladores"
+    preguntas = "<br>".join(escape(p) for p in PRIMERAS_PREGUNTAS)
     cuerpo = (
-        _titulo("Tu llave está lista")
-        + _p(f"Hola, {escape(n)}.")
+        _titulo("Tu llave está activa")
+        + _p(f"Hola, {escape(n)}:")
         + _p(
-            f"Tu llave ya funciona. Trae {creditos} créditos y vence el {fecha}. Guárdala bien: "
-            "no te la volveremos a mostrar."
+            f"Tienes {creditos} créditos hasta el {fecha}. Guarda la llave en un lugar seguro: "
+            "no la volveremos a mostrar."
         )
-        + _p("Con Claude Code, conéctala así (cambia <b>TU_LLAVE</b> por la tuya):", color=TINTA)
-        + _bloque(escape(COMANDO_CLAUDE).replace("\n", "<br>"), mono=True)
+        + _p("Para conectarla a Claude Code, cambia TU_LLAVE por tu llave:")
+        + _codigo(COMANDO_CLAUDE)
+        + _p("Para Cursor, Copilot, Gemini CLI, Claude Desktop o la API REST, sigue la guía:")
+        + _boton("Ver la guía de conexión", guia)
+        + _p("Para empezar, pregúntale a tu agente:")
+        + _p(preguntas, color=SUAVE)
         + _p(
-            "Para Cursor, Copilot en VS Code, Gemini CLI o Claude Desktop, y para usarla por API "
-            "REST, sigue la guía:"
-        )
-        + _boton("Ver la guía de conexión", f"{URL}/desarrolladores")
-        + _p("Para empezar, pregúntale a tu agente:", color=TINTA)
-        + _bloque(preguntas)
-        + _p(
-            "Cada respuesta trae la entidad que publica el dato, su licencia y su fecha. Cuando "
-            "quieras más créditos o un plan, responde este correo."
+            "Cada respuesta trae la entidad que publica el dato, su licencia y su fecha. Si "
+            "necesitas más créditos o un plan, responde este correo.",
+            abajo=24,
         )
         + _firma()
     )
     texto = _texto(
         [
-            f"Hola, {n}.",
-            f"Tu llave ya funciona. Trae {creditos} créditos y vence el {fecha}. Guárdala bien: "
-            "no te la volveremos a mostrar.",
-            f"Con Claude Code, conéctala así (cambia TU_LLAVE por la tuya):\n\n{COMANDO_CLAUDE}",
-            "Para Cursor, Copilot, Gemini CLI, Claude Desktop o la API REST: "
-            f"{URL}/desarrolladores",
+            f"Hola, {n}:",
+            f"Tienes {creditos} créditos hasta el {fecha}. Guarda la llave en un lugar seguro: "
+            "no la volveremos a mostrar.",
+            f"Para conectarla a Claude Code, cambia TU_LLAVE por tu llave:\n\n{COMANDO_CLAUDE}",
+            f"Para Cursor, Copilot, Gemini CLI, Claude Desktop o la API REST: {guia}",
             "Para empezar, pregúntale a tu agente:\n"
             + "\n".join(f"- {p}" for p in PRIMERAS_PREGUNTAS),
-            "Cuando quieras más créditos o un plan, responde este correo.",
+            "Si necesitas más créditos o un plan, responde este correo.",
         ],
         pie,
     )
@@ -276,29 +280,26 @@ def bienvenida(nombre: str, *, creditos: int, vence: date, soporte: str) -> Mens
 def acuse_contacto(nombre: str, asunto: str, mensaje: str, *, soporte: str) -> Mensaje:
     n = nombre_visible(nombre)
     titulo = "Recibimos tu mensaje"
-    previa = "Te respondemos en horario hábil, a este mismo correo."
-    pie = (
-        "Te escribimos porque alguien usó el formulario de terrnova.com con este correo. Si no "
-        "fuiste tú, ignora este mensaje."
-    )
+    previa = "Te respondemos a este correo en horario hábil."
+    pie = "Recibes este correo porque se usó el formulario de terrnova.com/contacto con él."
     resumen = mensaje if len(mensaje) <= 600 else mensaje[:600].rstrip() + "…"
     cuerpo = (
         _titulo(titulo)
-        + _p(f"Hola, {escape(n)}.")
+        + _p(f"Hola, {escape(n)}:")
         + _p(
-            f"Recibimos tu mensaje sobre <b>{escape(asunto)}</b>. Te respondemos a este correo en "
-            "horario hábil: de lunes a viernes, de 8:00 a 18:00, hora de Colombia."
+            f"Gracias por escribirnos sobre {escape(asunto.lower())}. Te respondemos a este "
+            "correo de lunes a viernes, de 8:00 a 18:00, hora de Colombia."
         )
-        + _bloque(escape(resumen).replace("\n", "<br>"))
-        + _p("Si quieres agregar algo, responde este correo.")
+        + _cita(resumen)
+        + _p("Si quieres agregar algo, responde este correo.", abajo=24)
         + _firma()
     )
     texto = _texto(
         [
-            f"Hola, {n}.",
-            f"Recibimos tu mensaje sobre «{asunto}». Te respondemos a este correo en horario "
-            "hábil: de lunes a viernes, de 8:00 a 18:00, hora de Colombia.",
-            f"Tu mensaje:\n{resumen}",
+            f"Hola, {n}:",
+            f"Gracias por escribirnos sobre {asunto.lower()}. Te respondemos a este correo de "
+            "lunes a viernes, de 8:00 a 18:00, hora de Colombia.",
+            "\n".join(f"> {linea}" for linea in resumen.splitlines()),
             "Si quieres agregar algo, responde este correo.",
         ],
         pie,
@@ -314,22 +315,22 @@ def aviso_contacto(
     org = organizacion or "sin organización"
     titulo = f"Contacto: {asunto}"
     previa = f"{n} ({org}) escribió desde el formulario."
-    pie = "Llegó por el formulario de terrnova.com/contacto. Responde este correo para escribirle."
+    pie = "Llegó por terrnova.com/contacto. Responde este correo para escribirle."
     filas = "".join(
-        f'<tr><td style="padding:6px 16px 6px 0;font-family:{SANS};font-size:14px;'
+        f'<tr><td style="padding:4px 16px 4px 0;font-family:{SANS};font-size:13px;'
         f'color:{TENUE};vertical-align:top;white-space:nowrap;">{k}</td>'
-        f'<td style="padding:6px 0;font-family:{SANS};font-size:15px;color:{TINTA};'
+        f'<td style="padding:4px 0;font-family:{SANS};font-size:14px;color:{TINTA};'
         f'word-break:break-word;">{escape(v)}</td></tr>'
         for k, v in (("Nombre", n), ("Correo", correo), ("Organización", org), ("Asunto", asunto))
     )
     cuerpo = (
-        _titulo(titulo) + '<table role="presentation" cellpadding="0" cellspacing="0" '
-        f'style="margin:0 0 20px;border-top:1px solid {LINEA};">{filas}</table>'
-        + _bloque(escape(mensaje).replace("\n", "<br>"))
+        _titulo(titulo)
+        + f'<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px;">'
+        f"{filas}</table>" + _cita(mensaje)
     )
     texto = (
         f"Nombre: {n}\nCorreo: {correo}\nOrganización: {org}\nAsunto: {asunto}\n\n{mensaje}\n\n"
-        f"— {pie}\n"
+        f"-- {pie}\n"
     )
     return Mensaje(
         f"[Contacto] {asunto}: {n} ({org})", texto, _pagina(titulo, previa, cuerpo, pie), correo
