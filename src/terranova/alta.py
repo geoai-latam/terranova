@@ -205,13 +205,14 @@ class Altas:
 
     # --- alta -------------------------------------------------------------------------------
 
-    def _solicitar(self, s: Solicitud, ip: str) -> tuple[str, str | None]:
-        """(correo, enlace o None si ese correo ya tiene llave). Lanza ErrorAlta."""
+    def _solicitar(self, s: Solicitud, ip: str) -> tuple[str, str | None, str | None]:
+        """(correo, enlace o None si ese correo ya tiene llave, cuándo la confirmó). Lanza
+        ErrorAlta."""
         if self._recientes("altas", "creada", ip) >= ALTAS_POR_IP_HORA:
             raise ErrorAlta("Demasiadas altas desde tu red en la última hora. Intenta más tarde.")
         filas, _ = self._bd.ejecutar("SELECT confirmada FROM altas WHERE correo = ?", (s.correo,))
         if filas and filas[0][0]:
-            return s.correo, None
+            return s.correo, None, str(filas[0][0])
         org = "alta-" + self._hmac(s.correo)[:12]
         if not filas:
             self._bd.ejecutar(
@@ -223,7 +224,7 @@ class Altas:
             "INSERT INTO altas_enlaces VALUES (?, ?, ?, NULL)",
             (self._hmac(token), s.correo, (_ahora() + VIGENCIA_ENLACE).isoformat()),
         )
-        return s.correo, f"{self.url_publica}/v1/alta/confirmar?t={token}"
+        return s.correo, f"{self.url_publica}/v1/alta/confirmar?t={token}", None
 
     async def solicitar(
         self, correo: str, nombre: str, organizacion: str, uso: str, acepto: bool, ip: str
@@ -244,15 +245,25 @@ class Altas:
             _texto("la organización", organizacion, 120, obligatorio=False),
             _texto("el uso", uso, 500, obligatorio=False),
         )
-        destino, enlace = await asyncio.to_thread(self._solicitar, s, self._hmac(ip))
+        pedida = _ahora()
+        destino, enlace, confirmada = await asyncio.to_thread(self._solicitar, s, self._hmac(ip))
         if enlace is None:
-            mensaje = correos.ya_tiene_llave(s.nombre, soporte=self.soporte)
+            desde = datetime.fromisoformat(confirmada) if confirmada else None
+            mensaje = correos.ya_tiene_llave(
+                s.nombre,
+                desde=desde.date() if desde else None,
+                vence=(desde + VIGENCIA_LLAVE).date() if desde else None,
+                pedida=pedida,
+                soporte=self.soporte,
+            )
         else:
             mensaje = correos.enlace_llave(
                 s.nombre,
                 enlace,
                 creditos=NIVELES[NIVEL_ALTA],
                 dias=VIGENCIA_LLAVE.days,
+                pedida=pedida,
+                vence=pedida + VIGENCIA_ENLACE,
                 soporte=self.soporte,
             )
         await self.correo.enviar(destino, mensaje)
@@ -302,15 +313,17 @@ class Altas:
 
     # --- contacto ---------------------------------------------------------------------------
 
-    def _guardar_contacto(self, campos: tuple[str, str, str, str, str], ip: str) -> None:
+    def _guardar_contacto(self, campos: tuple[str, str, str, str, str], ip: str) -> datetime:
         if self._recientes("contactos", "creado", ip) >= CONTACTOS_POR_IP_HORA:
             raise ErrorAlta(
                 "Demasiados mensajes desde tu red en la última hora. Intenta más tarde."
             )
+        creado = _ahora()
         self._bd.ejecutar(
             "INSERT INTO contactos VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (_ahora().isoformat(), *campos, ip),
+            (creado.isoformat(), *campos, ip),
         )
+        return creado
 
     async def contactar(
         self,
@@ -331,11 +344,20 @@ class Altas:
         m = mensaje.strip()
         if not m.strip() or len(m) > 4000 or not texto_es_limpio(m.replace("\n", " ")):
             raise ErrorAlta("El mensaje va de 1 a 4.000 caracteres, sin caracteres de control.")
-        await asyncio.to_thread(self._guardar_contacto, (n, c, o, a, m), self._hmac(ip))
+        creado = await asyncio.to_thread(self._guardar_contacto, (n, c, o, a, m), self._hmac(ip))
         if self.correo is not None:
             legible = ASUNTOS[a]
-            await self.correo.enviar(self.soporte, correos.aviso_contacto(n, c, o, legible, m))
-            await self.correo.enviar(c, correos.acuse_contacto(n, legible, m, soporte=self.soporte))
+            ref = correos.referencia(self._hmac(f"{c}|{creado.isoformat()}"))
+            await self.correo.enviar(
+                self.soporte,
+                correos.aviso_contacto(n, c, o, legible, m, ref=ref, recibido=creado),
+            )
+            await self.correo.enviar(
+                c,
+                correos.acuse_contacto(
+                    n, a, legible, m, ref=ref, recibido=creado, soporte=self.soporte
+                ),
+            )
 
 
 def altas_desde_entorno(registro: Registro) -> Altas:
