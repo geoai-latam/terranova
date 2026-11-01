@@ -101,7 +101,7 @@ def test_figuras_isometricas_al_dia_y_verdaderas() -> None:
     # Las dos figuras de la portada (web/figuras, kit de Anatomy) llevan la huella de sus datos, su
     # script y el kit; los datos salen del catálogo y no nombran entidades fuera de los turnos.
     sys.path.insert(0, str(RAIZ / "web"))
-    import construir
+    import construir  # type: ignore[import-not-found]  # web/ no es un paquete
 
     datos = construir.datos_figuras()
     huella = construir.huella_figuras()
