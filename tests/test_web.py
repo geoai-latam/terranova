@@ -67,10 +67,16 @@ def test_reglas_de_marca_y_secretos() -> None:
 
 
 def test_ejemplos_van_sellados() -> None:
-    # La landing muestra respuestas reales capturadas (consola y respuesta anotada), cada una con su
-    # sello; si vuelve un caso ilustrativo, también va sellado.
+    # La landing muestra respuestas reales capturadas, cada una con su fecha: el sobre rt/1 del
+    # héroe (la respuesta de producción de terranova.correos.EJEMPLO) y la prueba de la TRM; si
+    # vuelve un caso ilustrativo, también va sellado.
+    sys.path.insert(0, str(RAIZ / "src"))
+    from terranova.correos import EJEMPLO
+
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
-    assert html.count("capturado el ") >= 3
+    sobre = html[html.index("data-sobre") :]
+    assert EJEMPLO["predio"] in sobre and EJEMPLO["huella"] in sobre and "consultado el " in sobre
+    assert html.count("capturado el ") >= 1
     assert "ejemplo" not in html.lower()
     # (las figuras lo dicen además en su aria-label, en plural: «… son ilustrativos»)
     sellos = html.count('class="sello-i">ilustrativo<')

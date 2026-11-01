@@ -698,4 +698,4 @@ const cerca = new IntersectionObserver(es => es.forEach(e => {
   cerca.unobserve(e.target);
   cargar(e.target);
 }), { rootMargin: '600px 0px' });
-document.querySelectorAll('[data-figura]').forEach(f => cerca.observe(f));
+document.querySelectorAll('.fig-iso[data-figura]').forEach(f => cerca.observe(f));

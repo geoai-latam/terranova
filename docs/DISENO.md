@@ -16,7 +16,8 @@ degradados decorativos ni fotos de stock; las figuras isométricas explican, no 
 - Fondo blanco roto con sesgo verde (`--fondo`), tinta verde muy oscura y **un solo acento ámbar
   por vista**: el botón principal o lo que hay que mirar.
 - Una familia, Geist, para todo el texto. Geist Mono solo para datos: campos rt/1, rutas de API,
-  huellas, cifras en tablas y pies de fuente.
+  huellas, cifras en tablas, lecturas de figuras y pies de fuente. Pistas, migas, rótulos y sellos
+  van en Geist; nada en mayúscula espaciada.
 - **Radios pequeños** en todo (2 a 6 px): se lee editorial y técnico, no como un kit de tarjetas.
   Los botones también (`--radio-pill` vale 3 px; el nombre es histórico).
 - **Filetes, no tarjetas:** los bloques se separan con un filete superior de 1 px (`.bloque`); el que
@@ -39,20 +40,45 @@ Las cejillas de las portadas interiores y las etiquetas en mayúsculas (`.bloque
 
 ## Color
 
-Tokens en `estilo.css`. Solo hay tema claro en la web.
+Tokens en `estilo.css` (`:root`). Solo hay tema claro en la web.
+
+### La página
 
 | Rol | Tokens | Uso |
 |---|---|---|
 | Fondo | `fondo`, `superficie`, `superficie-2` | Blanco roto y dos grises verdosos |
-| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras (servicios), consola, pantallas de las figuras |
+| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras, el sobre rt/1 del héroe, pantallas de las figuras |
 | Texto | `tinta`, `tinta-suave`, `tinta-tenue` | Todos ≥ 4,5:1 sobre fondo y superficie |
-| Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | Uno por vista. Ámbar sobre claro solo como relleno con tinta encima |
-| Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Huella, procedencia, enlaces |
+| Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | **Uno por pantalla: el botón principal.** El botón del menú es secundario; las pestañas elegidas se marcan en tinta, no en ámbar |
+| Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Enlaces y, en el sobre, lo que prueba la respuesta |
 | Estados rt/1 | `estado-encontrado`, `estado-no-encontrado`, `estado-parcial`, `estado-fuera-de-cobertura`, `error` | `no_encontrado` es neutro, no rojo: es una respuesta válida |
 | Líneas | `linea`, `linea-fuerte` | Filetes; bordes de campos y botón secundario (≥ 3:1) |
 
-El verde bosque es la marca. El ocre (`ocre-400`) es solo para mapas y gráficos. En gráficos, las
-series van tinta, teal, ámbar, ocre; la rejilla en `linea` y la serie que importa en ámbar.
+El verde bosque es la marca. En gráficos, las series van tinta, teal, ámbar, ocre; la rejilla en
+`linea` y la serie que importa en ámbar.
+
+### Las figuras y el héroe: color por papeles
+
+Cada color tiene un papel, no un adorno. Las rampas están en OKLab, derivadas de los tokens de la
+marca, y van del techo (`-0`) a la cara más oscura (`-4`); una cara toma su tono por orientación,
+con la luz fija a la cámara (la regla del kit de Anatomy), así que la misma rampa sirve en el SVG y
+en three.js.
+
+| Papel | Tokens | Cuánto | Uso |
+|---|---|---|---|
+| Estructura | `estructura-0…6` (#F4F8F1 → #B9BDB6) | 70–80 % del área | Bancos, bases, armazones, predios vecinos. Las bases van dos escalones más hondo (`2…6`) |
+| Líneas | `linea-tenue`, `linea-baja`, `linea-media`, `linea-alta`, a 0,6 px | — | Ranuras y costuras (tenue), marcas menores (baja), filos (media), lo que se lee (alta) |
+| Sujeto | `sujeto-teal-*`, `sujeto-agua-*`, `sujeto-ocre-*`, cada uno con su `-filo` | 15–25 % | **Un** material de color por figura, distinto entre figuras para que la página tenga color |
+| Material oscuro | `oscuro-0…4` con `oscuro-filo` claro | — | Pantallas y chasis; el filo es claro para que lo oscuro no se funda |
+| Acento | `acento-0…4` con `acento-filo` (#8F570B) | ≤ 3–5 % | Ámbar en **una** pieza: la que está pasando. Ninguna cara ámbar mayor de ~40 × 40 px |
+| Estado | `estado-vivo`, `estado-copia`, `estado-no-se-pudo`, `estado-vacio` | marca de 3–6 px | Vivo = punto teal; copia = anillo ocre; no se pudo = aspa en tinta; no encontrado = anillo vacío. Nunca superficie |
+| Sombra | `halo` | — | Sombra de contacto horneada (escalones translúcidos), sin desenfoque |
+
+Reglas: neutros + un material + un acento por figura; el ocre nunca junto al ámbar; el azul de
+estado («fuera de cobertura») no es material. En `estilo.css` cada pieza lleva `m-<material>` y el
+material es una rampa (`--c0…--c4`, `--filo`, `--pliegue`); encendida (`data-lit`), sube un
+escalón y su filo pasa a ámbar. El póster del héroe va como `<img>` y no ve el CSS de la página:
+`construir.py` le pasa estos mismos tokens en `web/figuras/datos.json`.
 
 ## Tipografía
 
@@ -82,7 +108,8 @@ fuente, licencia, expediente.
 - Lo que existe, en presente; lo que viene, marcado como visión.
 - Nada de «potenciado por IA», «revolucionario» ni «mágico».
 - Ningún ejemplo busca personas por nombre o cédula (ADR-0014). Los ejemplos son lugares y predios.
-- Lo inventado lleva el sello `ilustrativo` (`.sello-i`). Lo real lleva fecha y fuente.
+- Lo inventado lleva el sello `ilustrativo` (`.sello-i`, un solo estilo: Geist 12 px, neutro, con
+  filete). Lo real lleva fecha y fuente.
 - No se muestran clientes, logos ni testimonios que no existen. No se nombra ArcGIS: «el sistema
   del cliente» o «su SIG».
 - Números en formato colombiano (0,56 s; 1.510; 6,1 M); fechas DD-MM-AAAA en texto e ISO en la API.
@@ -92,16 +119,33 @@ fuente, licencia, expediente.
 | Consulta un punto y recibe el predio, su fuente y su huella. | Desbloquea el poder de los datos geoespaciales con IA. |
 | La fuente no respondió (IGAC, 12 s). Reintenta en 5 min. | Error. Inténtalo más tarde. |
 
-## 3D (three.js)
+## El héroe: la figura cero (three.js)
 
-El 3D solo va con datos reales y cuando ayuda a leerlos.
+El 3D solo va con datos reales y cuando ayuda a leerlos. Es la primera figura del sitio y habla su
+mismo idioma.
 
-- **Escena:** solo el héroe, `escena-predios.js` (predios SINIC de Santa Marta con calles, barrio y
-  el predio consultado; `comun3d.js` tiene lo común). Lo demás son figuras isométricas en SVG (abajo).
-- **Cámara ortográfica** siempre, para que las medidas no se deformen. Se gira arrastrando, sin zoom
-  con la rueda (secuestraría el scroll). Sin interacción, gira despacio.
-- `prefers-reduced-motion`: la escena queda quieta. Sin WebGL: queda la imagen equivalente.
-- Colores desde los tokens; sombreado plano, sin luces que cambien los colores de marca.
+- **Una maqueta:** los predios reales del SINIC (`datos/sm.json`) en 200 × 200 m alrededor del
+  punto consultado en Santa Marta, cortados en el borde, sobre una base con patas, ranura,
+  tornillos, regla en metros de verdad y la flecha del norte grabada. Las calles de OpenStreetMap
+  (`datos/calles.json`, ejes corridos 4 m para casar con los linderos) se rotulan sobre su eje.
+- **Una sola geometría, dos dibujos:** `js/maqueta.js` la calcula; `web/figuras/heroe.mjs` la dibuja
+  con el kit de Anatomy como póster SVG (`img/figuras/heroe.svg`, ≤ 60 KB) y `js/escena-predios.js`
+  la levanta en three.js con la **misma cámara** (ortográfica, 45°/30°, el encuadre sale del póster
+  en `data-camara`) y el **mismo sombreado** (cuatro tonos por orientación de cara con la luz fija a
+  la cámara, `EdgesGeometry` en `linea-media`, sin luces ni sombras de three.js). Son la misma
+  imagen: el cambio del póster a la escena no se nota.
+- **Papeles:** predios y base en estructura, el consultado en `sujeto-teal`, la respuesta como único
+  destello ámbar (el punto de la marca en su techo y un anillo que sale una vez).
+- **Cuándo se carga:** `js/heroe.js` importa three.js y los linderos solo si el héroe está en vista,
+  el navegador está ocioso y no hay ahorro de datos, movimiento reducido, `deviceMemory < 4` ni
+  puntero grueso. Si no, queda el póster (con `fetchpriority=high`). `?heroe=3d` y `?heroe=poster`
+  fuerzan uno u otro para medir.
+- **Bajo demanda:** dibuja solo cuando algo cambia (la respuesta, el arrastre, el tamaño) y se
+  duerme; el giro va por tiempo, no por cuadros. DPR ≤ 1,5. Con movimiento reducido, un solo cuadro.
+  Se gira arrastrando con el ratón, sin zoom con la rueda (secuestraría el scroll).
+- **El sobre rt/1 al lado:** una respuesta real de producción al mismo predio, con procedencia,
+  licencia, completitud y `servido_desde` resaltados en teal. Cuando aparece su estado, el predio
+  sube: la lectura cambia en el instante en que llega el dato.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
 ## Figuras isométricas (Anatomy)
@@ -115,35 +159,33 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
 
 - **Integradas, nunca tarjetas:** sin borde, sin fondo propio y sin cabecera «Fig. n · título». La
   figura vive sobre el fondo de su sección (`--papel`), alineada a la retícula, con el texto al lado
-  (`.con-fig`) o encima. Debajo, una línea mono: la lectura en vivo arriba y la pista (y el sello
-  `ilustrativo`, neutro) abajo, alineadas al borde izquierdo del dibujo.
+  (`.con-fig`) o encima. Debajo, la lectura en vivo en mono (es dato) y la pista en Geist 13 px,
+  que aparece al pasar o enfocar, con el sello `ilustrativo` si toca.
 - **El objeto es la explicación:** piezas reales con volumen (patas, rieles, tornillos, placas,
   clavijas), no cajas con flechas. Cada línea termina en algo; se comprueba con el `lines.mjs` de
   Anatomy (0 extremos sueltos).
-- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta y 72° en la maqueta
-  para que el país se reconozca), la misma escala de construcción (`comun.mjs`, `encuadre`), el mismo
+- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta y en el héroe, 72°
+  en la maqueta de cobertura para que el país se reconozca), la misma escala de construcción (`comun.mjs`, `encuadre`), el mismo
   grosor de línea (0,6 px) y las mismas piezas de banco (`base`, `regla`). Cada figura llena su
   columna.
 - **Verdad:** todo lo que muestran sale de `construir.py` (catálogo y `datos/co.json`) vía
   `web/figuras/datos.json`; lo inventado lleva el sello `ilustrativo` y la etiqueta accesible lo dice.
-- **Color (las figuras sí lo llevan; la página sigue con un solo acento):** cada pieza tiene un
-  material de la paleta (`m-bosque`, `m-verde`, `m-teal`, `m-agua`, `m-ocre`, `m-ambar`, `m-metal`,
-  `m-acero`, `m-pantalla`, `m-trabajo`, `m-papel`; ver `estilo.css`). La cara de arriba aclara un 16 %,
-  los costados se oscurecen hacia `bosque-900` (sombra con tono, nunca gris) y el filo es el mismo
-  color más hondo; el halo es verde translúcido. Encendida, la pieza aclara y su filo pasa a ámbar.
-  Cada figura tiene 3–4 colores y uno protagonista distinto: bastidor y fichero teal, ruta teal,
-  revisión ocre, tablero agua, vigilancia azul (`estado-fuera-de-cobertura`), asistente ámbar y
-  cobertura de teal a ámbar según el conteo. Los estados usan su color del sistema solo donde hay un
-  estado (la bandera «revisar» en `estado-parcial`). Sin degradados, brillos ni neón.
-- **Vida:** además del ciclo principal (6–10 s), un movimiento ambiente calmado mientras la figura
-  está en vista: pilotos que titilan a ritmos distintos, pantallas que escriben, paquetes de datos que
-  recorren cables y vigas, una cinta que avanza, agujas que tiemblan, un cordón que se mece, un sello
-  que cae con rebote. Las piezas entran con un leve resorte. Fuera de la vista se pausa; con
-  `prefers-reduced-motion` quedan quietas, completas y a color.
+- **Color:** por papeles (ver «Color»): neutros de estructura, un material de color propio por
+  figura y un solo acento ámbar en la pieza que está pasando. Sin degradados, brillos ni neón.
+- **Movimiento con significado:** cada figura cuenta un ciclo: reposo → disparo → tránsito
+  (400–700 ms) → resultado → reposo de 2–3 s con todo quieto. Solo se mueve el acento; la
+  estructura nunca. Ambiente solo si representa un estado real (un punto vivo que late cada 2–4 s).
+  Corre al entrar en vista (dos ciclos como mucho), vuelve con el puntero, el toque o el foco y se
+  puede interrumpir. Curvas: entrada `cubic-bezier(0, 0, .3, 1)`, salida `cubic-bezier(.4, .14, 1, 1)`,
+  resorte críticamente amortiguado (rebote solo si el objeto es elástico). La lectura cambia en el
+  instante en que llega el dato. Con `prefers-reduced-motion`, un cuadro del estado resultado.
+- **Rendimiento:** dos capas por figura (SVG estático y piezas vivas encima, animadas con
+  `transform` y `opacity`); trayectorias precalculadas; sin `filter: blur` (sombras horneadas);
+  `will-change` solo mientras anima; una sola figura viva a la vez (la más visible); 30 fps con
+  puntero grueso o `hardwareConcurrency ≤ 4`. Presupuesto: ≤ 33 ms por cuadro a 390 px con CPU 4× y
+  cero repintado en reposo. (Las ocho figuras se rehacen con estas reglas en la fase 4 del plan.)
 - **Texto:** como mucho un rótulo grabado por figura («Datos», «Terrnova», «rt/1»); lo demás va en la
   lectura y en el texto de la sección, en minúscula.
-- **Movimiento:** calmado, con tiempo; recorre solo cuando nadie toca, el puntero y las flechas
-  eligen, y fuera de la vista no corre. Con `prefers-reduced-motion` queda quieto y completo.
 - **Peso:** los SVG van aparte (`web/publico/img/figuras/`) y `figuras.js` los trae al acercarse a la
   vista; el hueco tiene su proporción para que la página no salte.
 - **Construir:** `uv run python web/construir.py` escribe los datos y, si hay Node, dibuja
@@ -153,7 +195,9 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
 ## Logo y aliados
 
 Tres curvas de nivel forman un arco (puerta y colina en planta); el punto ámbar es el lugar
-consultado. «Terrnova» en Geist 700, interletrado −4 %. No se gira ni cambia el color del punto.
+consultado. «Terrnova» en Geist 650 a 20 px con interletrado +2 %: con −4 % la «rn» se pegaba y a
+1x se leía «Termova». Se comprueba con una captura a 1x. En el pie, sobre bosque, la puerta va clara
+(#F3EFE4) y el punto sigue ámbar. No se gira ni cambia el color del punto.
 
 GeoAI LATAM y Atalaya Mapas son proyectos hermanos, nunca clientes, siempre con su logo oficial. El
 de Atalaya Mapas está pendiente: hasta tenerlo se escribe su nombre.

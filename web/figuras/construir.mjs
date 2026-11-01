@@ -13,6 +13,7 @@ import { fileURLToPath } from "node:url";
 import { asistente } from "./asistente.mjs";
 import { capas } from "./capas.mjs";
 import { cobertura } from "./cobertura.mjs";
+import { heroe } from "./heroe.mjs";
 import { prueba } from "./prueba.mjs";
 import { revision } from "./revision.mjs";
 import { ruta } from "./ruta.mjs";
@@ -29,7 +30,7 @@ for (const f of readdirSync(AQUI).filter((n) => n.endsWith(".mjs")).sort()) h.up
 const HUELLA = h.update(lf("kit/iso-kit.mjs"), "latin1").digest("hex").slice(0, 12);
 const DATOS = JSON.parse(crudo);
 
-const FIGURAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente, cobertura };
+const FIGURAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente, cobertura, heroe };
 
 mkdirSync(SALIDA, { recursive: true });
 const solo = process.argv.slice(2);

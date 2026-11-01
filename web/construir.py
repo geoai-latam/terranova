@@ -14,7 +14,7 @@ import json
 import re
 import sys
 from collections import Counter
-from html import escape
+from html import escape, unescape
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent
@@ -22,11 +22,10 @@ PUBLICO = RAIZ / "publico"
 sys.path.insert(0, str(RAIZ.parent / "src"))
 
 from terranova.catalogo import cargar  # noqa: E402
+from terranova.correos import EJEMPLO, PRIMERA_PREGUNTA  # noqa: E402
 
 DOMINIO = "https://terrnova.com"
 CORREO = "soporte@terrnova.com"
-# La misma versión que importa web/publico/js/comun3d.js.
-THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
 
 # Créditos al mes por plan (cuota.py, ADR-0029) y tarifa por tipo de pregunta (enmienda de la ADR-0010).
 PLANES = [
@@ -231,14 +230,14 @@ def encabezado(ruta: str) -> str:
     return f"""<header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio">{simbolo()}Terrnova</a>
 <nav class="menu" aria-label="Principal">{menu}</nav>
-<div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Empieza gratis</a></div>
+<div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Empieza gratis</a></div>
 <button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>"""
 
 
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
-<div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terrnova</a>
+<div><a class="marca" href="/">{simbolo("#F3EFE4", "#F3EFE4", "#E0A13A")}Terrnova</a>
 <p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
@@ -254,9 +253,6 @@ def pagina(
     canon = DOMINIO + (ruta if ruta != "/" else "/")
     tit = titulo if ruta == "/" else f"{titulo} · Terrnova"
     mods = "".join(f'\n<script type="module" src="/js/{s}"></script>' for s in scripts)
-    if any(s.startswith("escena-") for s in scripts):
-        # three.js empieza a bajar con la página, no cuando el módulo de la escena lo pide.
-        mods = f'\n<link rel="modulepreload" href="{THREE_URL}" crossorigin>' + mods
     return f"""<!doctype html>
 <html lang="es">
 <head>
@@ -440,85 +436,75 @@ INSTRUCCION = (
     "https://terrnova.com/llms.txt"
 )
 
-# Tres respuestas reales de producción, recortadas, de familias distintas. La consola del héroe las reproduce por turnos.
-TURNOS = [
-    {
-        "k": "predio",
-        "boton": "Predio",
-        "pregunta": "¿Qué predio hay en 11,2211 N, 74,1572 W?",
-        "herr": "sinic_predio_en_punto",
-        "filas": [
-            ("estado", '<span class="ok">encontrado</span>'),
-            ("predial", "4700101090000025808…"),
-            ("destinación", "Habitacional, urbano"),
-            ("entidad", "IGAC, SINIC"),
-            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
-            ("servido", "copia del 2026-10-28 en 0,56 s"),
-        ],
-        "huella": "sha256:7a2cc965…",
-        "fecha": "2026-10-29",
-    },
-    {
-        "k": "empresa",
-        "boton": "Empresa",
-        "pregunta": "¿La empresa con NIT 899999068 tiene la matrícula al día?",
-        "herr": "rues_empresa_por_nit",
-        "filas": [
-            ("estado", '<span class="ok">encontrado</span>'),
-            ("empresa", "ECOPETROL S A"),
-            ("matrícula", "1291197, cámara de Bogotá"),
-            ("situación", "ACTIVA, renovada en 2026"),
-            ("entidad", "Confecámaras, RUES"),
-            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
-            ("servido", "fuente en vivo en 2,4 s"),
-        ],
-        "huella": "sha256:2acc04ec…",
-        "fecha": "2026-10-30",
-    },
-    {
-        "k": "norma",
-        "boton": "Norma",
-        "pregunta": "¿La Ley 1581 de 2012 sigue vigente?",
-        "herr": "suin_norma",
-        "filas": [
-            ("estado", '<span class="ok">encontrado</span>'),
-            ("norma", "Ley estatutaria 1581 de 2012"),
-            ("vigencia", "Vigente"),
-            ("expedida", "Congreso de Colombia, 30 artículos"),
-            ("entidad", "MinJusticia, SUIN-Juriscol"),
-            ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
-            ("servido", "fuente en vivo en 2,9 s"),
-        ],
-        "huella": "sha256:6fcc3fe7…",
-        "fecha": "2026-10-30",
-    },
-]
+# El sobre rt/1 del héroe: una respuesta real de producción a la pregunta del predio que dibuja la
+# maqueta (terranova.correos.EJEMPLO, solicitud req_01M6AEQ1Q10XH5SZP1ZYRMS212, consultada el
+# 01-11-2026). Lo que nos diferencia va resaltado: procedencia, licencia, completitud y
+# servido_desde. Los nombres de la izquierda son los campos del contrato.
+CONSULTADO_EJEMPLO = "01-11-2026"
 
 
-def consola() -> str:
-    ids = {h.id for h in HERR}
-    pest, turnos = [], []
-    for i, t in enumerate(TURNOS):
-        assert t["herr"] in ids, t["herr"]
-        sel = "true" if i == 0 else "false"
-        pest.append(
-            f'<button type="button" role="tab" id="c-p{i}" aria-controls="c-t{i}" aria-selected="{sel}"'
-            f"{'' if i == 0 else ' tabindex="-1"'}><i></i>{t['boton']}</button>"
-        )
-        filas = "".join(f"<dt>{a}</dt><dd>{b}</dd>" for a, b in t["filas"])
-        turnos.append(
-            f'<div class="turno" role="tabpanel" id="c-t{i}" aria-labelledby="c-p{i}" data-k="{t["k"]}"{"" if i == 0 else " hidden"}>'
-            f'<p class="preg"><span class="tu">Tu agente</span><span class="txt">{t["pregunta"]}</span></p>'
-            f'<p class="llama"><span>llama a</span><code>{t["herr"]}</code></p>'
-            f"<dl>{filas}</dl>"
-            f'<p class="pie"><span>huella <b>{t["huella"]}</b></span><span class="sello">capturado el {t["fecha"]}</span></p></div>'
-        )
+def sobre() -> str:
+    e = EJEMPLO
+    h = next(h for h in HERR if h.id == e["herramienta"])
+    f = CAT.fuentes[h.fuente]
+    assert f.licencia.spdx == e["licencia"], "la licencia del ejemplo no es la del catálogo"
+    comercial = "sí" if f.uso_comercial == "si" else "no"
+    datos = [
+        ("estado", f'<i class="marca vivo" aria-hidden="true"></i>{e["estado"]}'),
+        ("predio", e["predio"]),
+        ("lugar", e["lugar"]),
+        ("destinación", e["destinacion"]),
+    ]
+    prueba = [
+        ("procedencia", f"{nombre_entidad(f.entidad)}, SINIC"),
+        ("licencia", f"{e['licencia']} · uso comercial: {comercial}"),
+        ("completitud", e["completitud"]),
+        ("servido_desde", e["servido"]),
+    ]
+    fila = lambda a, b: f'<div class="fila"><dt>{a}</dt><dd>{b}</dd></div>'  # noqa: E731
     return (
-        '<div class="consola" data-consola>'
-        f'<div class="pest" role="tablist" aria-label="Respuestas capturadas">{"".join(pest)}</div>'
-        + "".join(turnos)
-        + "</div>"
+        '<div class="sobre" data-sobre>'
+        f'<p class="preg"><span class="tu">Tu agente pregunta</span><span class="txt">{PRIMERA_PREGUNTA}</span></p>'
+        f'<p class="llama"><span>llama a</span><code>{e["herramienta"]}</code><span class="contrato">rt/1</span></p>'
+        f'<dl class="datos">{"".join(fila(a, b) for a, b in datos)}</dl>'
+        f'<dl class="prueba">{"".join(fila(a, b) for a, b in prueba)}</dl>'
+        f'<p class="pie"><span>huella <b>{e["huella"]}</b></span>'
+        f"<span>{e['creditos']} créditos · consultado el {CONSULTADO_EJEMPLO}</span></p>"
+        "</div>"
     )
+
+
+def figura_heroe() -> str:
+    """La maqueta del héroe: el póster SVG (img) con los rótulos de calle encima; heroe.js decide si
+    pasa a 3D. La cámara de three.js sale del mismo SVG (data-camara), así las dos son una imagen."""
+    svg = (SVG_FIGURAS / "heroe.svg").read_text(encoding="utf-8")
+    huella = re.search(r'data-datos="([0-9a-f]{12})"', svg)
+    if not huella or huella.group(1) != huella_figuras():
+        raise SystemExit(
+            "El póster del héroe no está al día: corre uv run python web/construir.py con Node."
+        )
+    w, h = (int(v) for v in re.search(r'viewBox="0 0 (\d+) (\d+)"', svg).groups())  # type: ignore[union-attr]
+    vivo = json.loads(unescape(re.search(r'data-vivo="([^"]*)"', svg).group(1)))  # type: ignore[union-attr]
+    c = vivo["camara"]
+    calles = "".join(
+        f'<span class="calle" style="left:{x}%;top:{y}%;--a:{a}deg">{escape(r["t"])}</span>'
+        for r in vivo["rotulos"]
+        for (x, y), a in [(r["p"], r["a"])]
+    )
+    etiqueta = (
+        f"Maqueta de los predios reales del barrio {vivo['barrio']}, en Santa Marta (IGAC, SINIC), "
+        "sobre una base con una regla en metros. El predio consultado sube en teal cuando llega su "
+        "respuesta y un punto ámbar la marca; su altura es simbólica. Con el ratón, arrastra para girar."
+    )
+    return f"""<figure class="h-figura" data-figura="heroe">
+<p class="barrio" aria-hidden="true">Barrio {escape(vivo["barrio"])}, Santa Marta</p>
+<div class="escena" data-escena="predios" data-camara="{c["q"][0]} {c["q"][1]} {w} {h} {c["k"]}" role="img" aria-label="{escape(etiqueta)}">
+<div class="lamina" style="aspect-ratio:{w}/{h}">
+<img class="poster" src="/img/figuras/heroe.svg?v={huella.group(1)}" alt="" width="{w // 2}" height="{h // 2}" fetchpriority="high">
+<div class="rotulos" aria-hidden="true">{calles}</div>
+</div></div>
+<figcaption class="lectura-l"><span class="atribucion">Predios: IGAC, SINIC (CC BY-SA 4.0). Calles: <a href="https://www.openstreetmap.org/copyright">© colaboradores de OpenStreetMap</a>. Alturas simbólicas.</span></figcaption>
+</figure>"""
 
 
 # Preguntas por sector: herramientas reales del catálogo (la construcción falla si alguna no existe).
@@ -654,7 +640,7 @@ def sectores() -> str:
                 f'<li><p>{escape(h.pregunta)}</p><span class="id"><code>{h.id}</code> {escape(ent)}</span></li>'
             )
         sols = "".join(
-            f'<li><span class="capa">{c}</span><p>{escape(s)}</p></li>'
+            f'<li><span class="rotulo">{c}</span><p>{escape(s)}</p></li>'
             for c, s in SOLUCIONES[nombre]
         )
         paneles.append(
@@ -939,6 +925,48 @@ def datos_cobertura() -> dict:
     }
 
 
+ESTILO = PUBLICO / "estilo.css"
+
+
+def token(nombre: str) -> str:
+    """Un token de color de estilo.css (:root), para lo que no ve el CSS de la página."""
+    m = re.search(rf"--{nombre}:\s*(#[0-9A-Fa-f]{{6}})", ESTILO.read_text(encoding="utf-8"))
+    assert m, f"falta --{nombre} en estilo.css"
+    return m.group(1).upper()
+
+
+def datos_heroe() -> dict:
+    """El póster del héroe va como <img>: lleva sus colores escritos. Salen de los tokens de
+    estilo.css; la huella de sus fuentes (linderos, calles y la geometría compartida) va con
+    ellos, así un cambio en cualquiera deja el póster viejo y la construcción lo dice."""
+    import hashlib
+
+    h = hashlib.sha256()
+    for f in (
+        PUBLICO / "datos" / "sm.json",
+        PUBLICO / "datos" / "calles.json",
+        PUBLICO / "js" / "maqueta.js",
+    ):
+        h.update(f.read_bytes().replace(b"\r\n", b"\n"))
+    return {
+        "paleta": {
+            "fondo": token("fondo"),
+            "e": [token(f"estructura-{i}") for i in range(5)],
+            "b": [token(f"estructura-{i}") for i in range(2, 7)],
+            "s": [token(f"sujeto-teal-{i}") for i in range(5)],
+            "sFilo": token("sujeto-teal-filo"),
+            "a": [token(f"acento-{i}") for i in range(5)],
+            "aFilo": token("acento-filo"),
+            "tenue": token("linea-tenue"),
+            "lo": token("linea-baja"),
+            "linea": token("linea-media"),
+            "alta": token("linea-alta"),
+            "halo": token("halo"),
+        },
+        "fuentes": h.hexdigest()[:12],
+    }
+
+
 def datos_figuras() -> dict:
     por_id = {h.id: h for h in HERR}
     turnos = []
@@ -975,6 +1003,7 @@ def datos_figuras() -> dict:
         "vigilancia": {"carriles": datos_servicio("vigilancia")},
         "asistente": datos_servicio("asistente"),
         "cobertura": datos_cobertura(),
+        "heroe": datos_heroe(),
         "tablero": {
             "indicadores": [
                 {
@@ -1015,6 +1044,7 @@ NOMBRES_FIGURAS = (
     "vigilancia",
     "asistente",
     "cobertura",
+    "heroe",
 )
 
 
@@ -1220,21 +1250,15 @@ def chips_familias(como_boton=False) -> str:
 # ---------------------------------------------------------------- páginas
 def inicio() -> str:
     c = f"""
-<section class="heroe">
-<div class="escena" data-escena="predios" role="img" aria-label="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D. El predio consultado sube cuando llega su respuesta. Arrastra para girar.">
-<img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
-<svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
-<div class="rotulos" aria-hidden="true"></div>
-<p class="lectura"><b>11,2211 N, 74,1572 W</b> Santa Marta. Predios IGAC SINIC (CC BY-SA 4.0), calles © <a href="https://www.openstreetmap.org/copyright">colaboradores de OpenStreetMap</a></p>
-<div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
-</div>
-<div class="envoltura h-texto"><div class="izq">
+<section class="heroe"><div class="envoltura h-rejilla">
+<div class="h-texto">
 <h1 class="t0">Del dato oficial a la solución</h1>
 <p class="entrada">{N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades, cada dato con su fuente y su licencia. Encima, la analítica, la automatización y los agentes de tu equipo.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
-</div></div>
-<div class="envoltura h-consola">{consola()}</div>
-</section>
+</div>
+{figura_heroe()}
+<div class="h-sobre">{sobre()}</div>
+</div></section>
 
 <section class="seccion capas-l" id="capas"><div class="envoltura">
 <div class="con-fig">
@@ -1306,7 +1330,7 @@ def inicio() -> str:
 <div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div>
 <div class="envoltura aliados-fila">
-<span>Aliados</span>
+<span class="rotulo">Aliados</span>
 <a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy"></a>
 <a href="/aliados" class="t3">Atalaya Mapas</a>
 </div></section>
@@ -1316,7 +1340,7 @@ def inicio() -> str:
         "Terrnova · Del dato oficial a la solución",
         f"Una capa de datos con {N_FUENTES} fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
-        ("escena-predios.js", "figuras.js"),
+        ("heroe.js", "figuras.js"),
     )
 
 

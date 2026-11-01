@@ -1,4 +1,4 @@
-// Comportamiento común del sitio: menú móvil, pestañas, copiar, la consola del héroe y el buscador del catálogo.
+// Comportamiento común del sitio: menú móvil, pestañas, copiar, el sobre del héroe y el buscador del catálogo.
 const barra = document.querySelector('.barra');
 const abrir = document.querySelector('.abrir');
 if (barra && abrir) {
@@ -8,7 +8,7 @@ if (barra && abrir) {
   });
 }
 
-// Pestañas: un solo patrón para el código, los sectores y la consola. El panel de cada pestaña sale
+// Pestañas: un solo patrón para el código y los sectores. El panel de cada pestaña sale
 // de aria-controls o, en los bloques de código, del <pre> con el mismo data-t.
 function pestanas(lista, alElegir) {
   const botones = [...lista.querySelectorAll('[role="tab"]')];
@@ -50,79 +50,47 @@ document.querySelectorAll('[data-copiar-pre]').forEach(b => b.addEventListener('
   copiar(b, pre.textContent.trim());
 }));
 
-// Consola del héroe: reproduce por turnos dos respuestas reales. Escribe la pregunta, muestra la
-// herramienta que llama y luego la respuesta; avisa a la escena 3D (terranova:turno, y el último
-// turno en <html data-turno>) para que el predio suba cuando llega su respuesta. Se pausa con el
-// puntero o el foco encima y fuera de la vista, y se detiene cuando alguien elige una pestaña.
-// Con movimiento reducido, todo queda quieto.
-const con = document.querySelector('[data-consola]');
-if (con) {
-  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const turnos = [...con.querySelectorAll('.turno')];
+// El sobre del héroe: reproduce una vez la respuesta real del predio. Escribe la pregunta, muestra
+// la herramienta y, cuando llega la respuesta, la avisa a la maqueta (terranova:turno y el último
+// turno en <html data-turno>) en el mismo instante en que aparece el estado: el predio sube y sale
+// el destello. Corre al entrar en vista; si la escena 3D viene en camino, la espera hasta 2 s. Con
+// movimiento reducido no se reproduce: queda completo, que es el estado de la respuesta.
+const sobre = document.querySelector('[data-sobre]');
+if (sobre && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const raiz = document.documentElement;
   const avisar = k => {
-    document.documentElement.dataset.turno = k;
+    raiz.dataset.turno = k;
     document.dispatchEvent(new CustomEvent('terranova:turno', { detail: k }));
   };
-  let auto = !quieto, gen = 0, pausa = false, enVista = true, actual = 0;
   const dormir = ms => new Promise(r => setTimeout(r, ms));
-  const sigue = async (g, ms) => {
-    await dormir(ms);
-    while (g === gen && (pausa || !enVista)) await dormir(150);
-    return g === gen;
-  };
-  const piezas = t => [t.querySelector('.llama'), ...t.querySelectorAll('dt, dd'), t.querySelector('.pie')];
-  const completo = t => {
-    const x = t.querySelector('.txt');
-    x.textContent = x.dataset.texto || x.textContent; x.classList.remove('escribe');
-    piezas(t).forEach(e => e.classList.remove('espera'));
-  };
-  async function reproducir(i) {
-    const g = ++gen, t = turnos[i], x = t.querySelector('.txt');
-    x.dataset.texto = x.dataset.texto || x.textContent;
-    const texto = x.dataset.texto;
-    piezas(t).forEach(e => { e.classList.add('espera'); e.classList.remove('aparece'); });
-    x.textContent = ''; x.classList.add('escribe');
-    con.style.setProperty('--avance', '0%');
-    avisar('espera');
-    if (!await sigue(g, 450)) return;
-    for (let c = 1; c <= texto.length; c++) { x.textContent = texto.slice(0, c); if (!await sigue(g, 24)) return; }
+  const x = sobre.querySelector('.txt'), texto = x.textContent;
+  const llama = sobre.querySelector('.llama'), filas = [...sobre.querySelectorAll('.fila')], pie = sobre.querySelector('.pie');
+  const piezas = [llama, ...filas, pie];
+  piezas.forEach(e => e.classList.add('espera'));
+  x.textContent = ''; x.classList.add('escribe');
+  avisar('espera');
+  async function reproducir() {
+    await dormir(400);
+    for (let c = 1; c <= texto.length; c++) { x.textContent = texto.slice(0, c); await dormir(22); }
     x.classList.remove('escribe');
-    const [llama, ...resto] = piezas(t);
-    if (!await sigue(g, 250)) return;
+    await dormir(240);
     llama.classList.replace('espera', 'aparece');
-    if (!await sigue(g, 700)) return;
-    avisar(t.dataset.k);
-    for (const e of resto) { e.classList.replace('espera', 'aparece'); if (!await sigue(g, e.tagName === 'DD' ? 70 : 0)) return; }
-    const dura = 7000;
-    for (let s = 0; s <= dura; s += 100) { con.style.setProperty('--avance', (s / dura * 100) + '%'); if (!await sigue(g, 100)) return; }
-    if (auto) elegir((actual + 1) % turnos.length);
+    await dormir(620);
+    filas[0].classList.replace('espera', 'aparece');
+    avisar('predio');
+    for (const e of [...filas.slice(1), pie]) { await dormir(70); e.classList.replace('espera', 'aparece'); }
   }
-  const elegir = pestanas(con.querySelector('[role="tablist"]'), (i, porUsuario) => {
-    actual = i;
-    if (porUsuario) { auto = false; con.classList.remove('corre'); }
-    if (auto) { reproducir(i); return; }
-    gen++; completo(turnos[i]); avisar(turnos[i].dataset.k);
-    if (porUsuario) turnos[i].querySelector('dl').classList.add('aparece');
+  let ya = false;
+  const empezar = () => { if (!ya) { ya = true; reproducir(); } };
+  const io = new IntersectionObserver(es => {
+    if (!es[es.length - 1].isIntersecting) return;
+    io.disconnect();
+    const viene = ['espera', 'cargando'].includes(raiz.dataset.heroe);
+    if (!viene) { empezar(); return; }
+    document.addEventListener('terranova:escena', () => setTimeout(empezar, 250), { once: true });
+    setTimeout(empezar, 2000);
   });
-  con.addEventListener('pointerenter', () => { pausa = true; });
-  con.addEventListener('pointerleave', () => { pausa = false; });
-  con.addEventListener('focusin', () => { pausa = true; });
-  con.addEventListener('focusout', () => { pausa = false; });
-  new IntersectionObserver(es => es.forEach(e => { enVista = e.isIntersecting; })).observe(con.closest('.heroe') || con);
-  if (auto) con.classList.add('corre');
-  // Espera a que la escena 3D esté lista (hasta 3 s) para que la onda llegue con la respuesta;
-  // mientras tanto, el cursor parpadea en la pregunta vacía.
-  const escena = document.querySelector('[data-escena="predios"]');
-  if (!auto || !escena || document.documentElement.dataset.escena === 'lista') elegir(0);
-  else {
-    const t = turnos[0], x = t.querySelector('.txt');
-    x.dataset.texto = x.textContent; x.textContent = ''; x.classList.add('escribe');
-    piezas(t).forEach(e => e.classList.add('espera'));
-    let ya = false;
-    const arrancar = () => { if (!ya) { ya = true; elegir(0); } };
-    document.addEventListener('terranova:escena', arrancar, { once: true });
-    setTimeout(arrancar, 3000);
-  }
+  io.observe(sobre);
 }
 
 // Catálogo: filtra las herramientas por texto y familia sobre /datos/catalogo.json (generado del catálogo real).

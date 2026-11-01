@@ -47,6 +47,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Sitio v2, fases 2 y 3: base visual y héroe como figura cero (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- **Base visual:** tokens de color por papel en `estilo.css` (estructura, líneas, sujeto por
+  material, oscuro, acento, estado) y los materiales de las figuras pasados a esas rampas; un solo
+  ámbar por pantalla (el botón del menú es secundario, pestañas en tinta); sello «ilustrativo» con
+  un estilo; mono solo para datos; el logo ya no se lee «Termova» a 1x (650, 20 px, +0,02 em) y el
+  del pie lleva la puerta clara y el punto ámbar. `docs/DISENO.md` al día (color por papeles,
+  movimiento, héroe).
+- **Héroe = figura cero:** maqueta de los predios SINIC alrededor del punto consultado
+  (`js/maqueta.js`), póster SVG con el kit de Anatomy (`img/figuras/heroe.svg`, 58 KB) y la misma
+  escena en three.js con la misma cámara 45°/30° y sombreado de cuatro tonos; three.js solo se
+  carga en vista, ocioso y sin ahorro de datos, movimiento reducido, poca memoria ni táctil
+  (`js/heroe.js`). Render bajo demanda. Al lado, el sobre rt/1 real del predio con procedencia,
+  licencia, completitud y `servido_desde` resaltados. Calles de OSM con sus ejes en `datos/calles.json`.
+- **Medido:** móvil antes de desplazarse 235 KB sin three.js (antes 743 KB); con movimiento
+  reducido 0 cuadros WebGL (antes ~130 por segundo). Siguen las fases 4 (figuras), 5 (texto), 6 y 7
+  del plan.
+
 ## Sitio con figuras Anatomy integradas y texto recortado (2026-10-31, rama `feat/sitio-anatomy`, PR sin fusionar)
 
 - **Ocho figuras isométricas** dibujadas con el kit de Anatomy (`web/figuras`, un módulo por figura y
