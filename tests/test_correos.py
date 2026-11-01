@@ -61,7 +61,7 @@ def _todos() -> list[Mensaje]:
 def test_cada_correo_tiene_html_texto_y_marca(m: Mensaje) -> None:
     assert m.asunto and m.texto.strip() and m.html.startswith("<!doctype html>")
     assert "terrnova-correo.png" in m.html and 'lang="es"' in m.html
-    assert "prefers-color-scheme: dark" in m.html  # modo oscuro decidido, no a la suerte
+    assert 'content="light"' in m.html  # solo tema claro, como la web: decidido
     assert "rt_live_" not in m.texto + m.html and "rt_test_" not in m.texto + m.html
     assert m.responder_a  # siempre hay a quién responder
     for href in re.findall(r'<a [^>]*href="([^"]+)"', m.html):

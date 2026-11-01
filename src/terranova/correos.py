@@ -10,7 +10,8 @@ interno de contacto, a quien escribió). Ningún correo lleva una llave ni un da
 uno dice por qué te llegó. Fechas DD-MM-AAAA y horas en hora de Colombia (docs/DISENO.md).
 
 El HTML es de correo: tablas y estilos en línea, porque Gmail y Outlook ignoran casi todo lo demás;
-el `<style>` solo agrega el modo oscuro (Apple Mail, iOS, Outlook) por clases. Geist donde el
+el `<style>` solo ajusta el móvil. Como la web, solo hay tema claro: se declara
+`color-scheme: light` para que los clientes no lo inviertan a su manera. Geist donde el
 cliente carga fuentes web y la pila del sistema en el resto. Imágenes en PNG a 2x (Gmail no
 muestra SVG). Todo lo que escribe la persona se escapa.
 """
@@ -27,7 +28,7 @@ HEROE_PREDIO = f"{URL}/img/correo-predio.png"
 FIRMA = "El equipo de Terrnova"
 COLOMBIA = timezone(timedelta(hours=-5), "COT")
 
-# Tokens del sistema de diseño v4 (web/publico/estilo.css). Claro en línea; oscuro en <style>.
+# Tokens del sistema de diseño v4 (web/publico/estilo.css).
 FONDO = "#F6F7F4"
 PANEL = "#FFFFFF"
 TINTA = "#12261F"
@@ -40,23 +41,8 @@ BOSQUE = "#0B231C"
 SANS = "Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 MONO = "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
 
-_OSCURO = """
-:root { color-scheme: light dark; supported-color-schemes: light dark; }
-@media (prefers-color-scheme: dark) {
-  .c-fondo { background:#0B231C !important; }
-  .c-panel { background:#0E2A22 !important; border-color:#24443A !important; }
-  .c-tinta { color:#E8EDE9 !important; }
-  .c-suave { color:#B4C2BB !important; }
-  .c-tenue { color:#93A69D !important; }
-  .c-linea { border-color:#24443A !important; }
-  .c-enlace { color:#6CC3B1 !important; }
-}
-[data-ogsc] .c-tinta { color:#E8EDE9 !important; }
-[data-ogsc] .c-suave { color:#B4C2BB !important; }
-[data-ogsc] .c-tenue { color:#93A69D !important; }
-[data-ogsc] .c-enlace { color:#6CC3B1 !important; }
-[data-ogsb] .c-fondo { background:#0B231C !important; }
-[data-ogsb] .c-panel { background:#0E2A22 !important; }
+_MOVIL = """
+:root { color-scheme: light; supported-color-schemes: light; }
 @media (max-width: 480px) {
   .c-titulo { font-size:24px !important; }
   .c-clave { width:auto !important; display:block !important; padding:10px 16px 0 !important; }
@@ -270,11 +256,11 @@ def _pagina(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-<meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
 <title>{escape(asunto)}</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700&amp;family=Geist+Mono:wght@400;600&amp;display=swap">
-<style>{_OSCURO}</style>
+<style>{_MOVIL}</style>
 </head>
 <body class="c-fondo" style="margin:0;padding:0;background:{FONDO};">
 <div style="display:none;max-height:0;overflow:hidden;">{escape(previa)}{_RELLENO}</div>
