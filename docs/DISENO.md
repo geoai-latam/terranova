@@ -126,10 +126,20 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
   columna.
 - **Verdad:** todo lo que muestran sale de `construir.py` (catálogo y `datos/co.json`) vía
   `web/figuras/datos.json`; lo inventado lleva el sello `ilustrativo` y la etiqueta accesible lo dice.
-- **Tonos:** tres planos antes del acento: base y pies (tono `lo`) en `superficie-2`, estructura
-  (`mid`) en un blanco verdoso y el sujeto (`hi`) en blanco; caras laterales hacia `linea-fuerte`.
-  Pantallas en `bosque-800` con lo escrito en `teal-400`; lo verificado (pilotos «sin hallazgo», el
-  sello y su tampón) en `teal-700`. **Un solo ámbar:** la pieza activa.
+- **Color (las figuras sí lo llevan; la página sigue con un solo acento):** cada pieza tiene un
+  material de la paleta (`m-bosque`, `m-verde`, `m-teal`, `m-agua`, `m-ocre`, `m-ambar`, `m-metal`,
+  `m-acero`, `m-pantalla`, `m-trabajo`, `m-papel`; ver `estilo.css`). La cara de arriba aclara un 16 %,
+  los costados se oscurecen hacia `bosque-900` (sombra con tono, nunca gris) y el filo es el mismo
+  color más hondo; el halo es verde translúcido. Encendida, la pieza aclara y su filo pasa a ámbar.
+  Cada figura tiene 3–4 colores y uno protagonista distinto: bastidor y fichero teal, ruta teal,
+  revisión ocre, tablero agua, vigilancia azul (`estado-fuera-de-cobertura`), asistente ámbar y
+  cobertura de teal a ámbar según el conteo. Los estados usan su color del sistema solo donde hay un
+  estado (la bandera «revisar» en `estado-parcial`). Sin degradados, brillos ni neón.
+- **Vida:** además del ciclo principal (6–10 s), un movimiento ambiente calmado mientras la figura
+  está en vista: pilotos que titilan a ritmos distintos, pantallas que escriben, paquetes de datos que
+  recorren cables y vigas, una cinta que avanza, agujas que tiemblan, un cordón que se mece, un sello
+  que cae con rebote. Las piezas entran con un leve resorte. Fuera de la vista se pausa; con
+  `prefers-reduced-motion` quedan quietas, completas y a color.
 - **Texto:** como mucho un rótulo grabado por figura («Datos», «Terrnova», «rt/1»); lo demás va en la
   lectura y en el texto de la sección, en minúscula.
 - **Movimiento:** calmado, con tiempo; recorre solo cuando nadie toca, el puntero y las flechas

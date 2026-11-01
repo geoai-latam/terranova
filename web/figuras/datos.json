@@ -135,11 +135,11 @@
    },
    {
     "campo": "licencia",
-    "valor": "Aviso legal del Banco, uso comercial sí"
+    "valor": "aviso legal del Banco, uso comercial sí"
    },
    {
     "campo": "servido_desde",
-    "valor": "La fuente, en vivo"
+    "valor": "la fuente, en vivo"
    },
    {
     "campo": "huella",

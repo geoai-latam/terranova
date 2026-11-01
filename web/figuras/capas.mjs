@@ -20,9 +20,9 @@ export function capas(DATOS, huella) {
   const TOMAS = [88, 94, 100]; // x de la toma de cada módulo en el de datos (Analítica, Automatización, Agentes)
   const ENTRA = 30; // cuánto asoma un módulo antes de entrar
   // el frente de cada módulo en un color de la paleta: datos (el producto) en teal, analítica en
-  // ocre, automatización en papel y agentes en ámbar; el bastidor en bosque
-  const FRENTES = ["teal", "ocre", "papel", "ambar"];
-  const MAT_CABLE = ["ocre", "papel", "ambar"];
+  // agua, automatización en papel y agentes en ámbar; el bastidor en verde con la tapa teal
+  const FRENTES = ["teal", "agua", "papel", "ambar"];
+  const MAT_CABLE = ["agua", "papel", "ambar"];
 
   const { P, ancho, alto } = encuadre(
     [...k.boxCorners(ZOCALO, -14, 0), ...k.boxCorners({ x: -4, y: -1, w: W + 8, d: FD + 3 }, TECHO, TECHO + 6)],
@@ -38,7 +38,7 @@ export function capas(DATOS, huella) {
     out.push(S(k.cylinder(x, y, 5.6, -7, 1.4, P, 24), { tone: "lo", m: "chasis" }));
     out.push(S(k.cylinder(x, y, 4.2, -5.6, 5.6, P, 24), { tone: "mid", m: "acero" }));
   }
-  out.push(S(k.slabOf(ZOCALO, 0, 8, P, 6, 1.2), { tone: "mid", m: "bosque" }));
+  out.push(S(k.slabOf(ZOCALO, 0, 8, P, 6, 1.2), { tone: "mid", m: "trabajo" }));
   out.push(L(k.planOutline(k.insetPlan(ZOCALO, 3.5), 8, P, 4), { tone: "faint" }));
   const tornZ = k.corners(ZOCALO, 6);
   out.push(L(tornZ.map(([x, y]) => k.ring(x, y, 1.6, 8, P, 14)).join(""), { tone: "lo" }));
@@ -49,7 +49,7 @@ export function capas(DATOS, huella) {
   out.push(L(marcas.minor, { tone: "lo" }), L(marcas.major, { tone: "mid" }));
 
   // estructura de atrás: panel izquierdo y los dos rieles delanteros
-  out.push(S(k.slabOf({ x: -3, y: 0, w: 3, d: yF, r: 0.5 }, 8, TECHO - 8, P, 2), { tone: "mid", m: "bosque" }));
+  out.push(S(k.slabOf({ x: -3, y: 0, w: 3, d: yF, r: 0.5 }, 8, TECHO - 8, P, 2), { tone: "mid", m: "verde" }));
   for (const x of [0, W - 7]) {
     const riel = { x, y: FD - 7, w: 7, d: 6, r: 0.4 };
     const agujeros = [];
@@ -82,10 +82,12 @@ export function capas(DATOS, huella) {
       g.push(S(k.slabOf({ x, y: yF + 1.6, w: 2.5, d: 2.2, r: 0.6 }, z + 4, h - 8, P, 2), { tone: "mid" }));
     }
     // placa de rótulo: solo el módulo de datos lleva texto grabado; los demás, tres renglones
-    g.push(S(k.slabOf({ x: 14, y: yF, w: 20, d: 0.6, r: 0.3 }, tope - 10, 6.4, P, 1), { tone: "lo", crease: "none", m: "papel" }));
+    // placa de rótulo; la del módulo de datos es más alta para que quepan sus dos renglones grabados
+    const placaZ = i === 0 ? tope - 15 : tope - 10;
+    g.push(S(k.slabOf({ x: 14, y: yF, w: 20, d: 0.6, r: 0.3 }, placaZ, tope - 3.6 - placaZ, P, 1), { tone: "lo", crease: "none", m: "papel" }));
     if (i === 0) {
-      g.push(k.faceTextSvg(k.sideMatrix([15.4, yF + 0.6], tope - 5.2, P, "left"), "Datos", { size: 3.6, tone: "hi" }));
-      g.push(`<g class="texto-claro">${k.faceTextSvg(k.sideMatrix([15.4, yF + 0.6], tope - 15.2, P, "left"), `${fuentes} fuentes`, { size: 2.4, tone: "mid" })}</g>`);
+      g.push(k.faceTextSvg(k.sideMatrix([16, yF + 0.6], tope - 8.2, P, "left"), "Datos", { size: 3.4, tone: "hi" }));
+      g.push(k.faceTextSvg(k.sideMatrix([16, yF + 0.6], tope - 12.6, P, "left"), `${fuentes} fuentes`, { size: 2.3, tone: "mid" }));
     } else {
       const reng = [17, 12, 14].map((largo, j) => tramo([15.6, yF + 0.6, tope - 5.4 - j * 1.6], [15.6 + largo, yF + 0.6, tope - 5.4 - j * 1.6], P));
       g.push(L(reng.join(""), { tone: "lo", free: true }));
@@ -151,9 +153,9 @@ export function capas(DATOS, huella) {
       rejillas.push(k.pathOf([[W + 3, y0, zz], [W + 3, y1, zz], [W + 3, y1, zz + 2.2], [W + 3, y0, zz + 2.2]].map(at), true));
     }
   }
-  out.push(S(k.slabOf(panel, 8, TECHO - 8, P, 2), { tone: "mid", m: "bosque", inner: L(rejillas.join(""), { tone: "faint" }) }));
+  out.push(S(k.slabOf(panel, 8, TECHO - 8, P, 2), { tone: "mid", m: "verde", inner: L(rejillas.join(""), { tone: "faint" }) }));
   const techo = { x: -4, y: -1, w: W + 8, d: FD + 3, r: 1.5 };
-  out.push(S(k.slabOf(techo, TECHO, 6, P, 3, 0.8), { tone: "mid", m: "bosque" }));
+  out.push(S(k.slabOf(techo, TECHO, 6, P, 3, 0.8), { tone: "mid", m: "teal" }));
   out.push(L(k.planOutline(k.insetPlan(techo, 3), TECHO + 6, P, 2), { tone: "faint" }));
   const tornT = k.corners(techo, 5.5);
   out.push(D(tornT.map(([x, y]) => at([x, y, TECHO + 6])), { size: 0.45 }));

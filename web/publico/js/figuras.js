@@ -108,7 +108,7 @@ function capas(fig) {
   enVista(placa, v => { visible = v; if (v) { armar(); correr(); } });
   // vida: el dato sube por los tres cables en el color de su módulo; la pantalla de agentes escribe
   escribir(svg);
-  const COLORES = ['var(--ocre-400)', 'var(--fondo)', 'var(--ambar-500)'];
+  const COLORES = ['var(--teal-400)', 'var(--fondo)', 'var(--ambar-500)'];
   const vidas = cables.map((c, j) => paquetes(svg, c.querySelector('.cable-alma'), { n: 2, color: COLORES[j], r: 2, periodo: 2.2 + j * 0.5, desde: 1, al: 0, desfase: j * 0.3 }));
   ambiente(fig, t => vidas.forEach(v => v(t)));
 }
@@ -453,6 +453,10 @@ function revision(fig) {
   // quieto: la ficha en la última estación con los cuatro pilotos dichos
   const fijo = i => guion(tFin, i);
   guionado(fig, { n: V.tipos.length, dura, guion, quieto: fijo });
+  // vida: la cinta avanza sin parar y el motor late
+  const cinta = svg.querySelector('[data-cinta]');
+  svg.querySelector('[data-motor]').classList.add('late');
+  ambiente(fig, t => { const u = (t * 7) % V.paso; mover(cinta, [V.ex, V.ez], u, 0); });
 }
 
 // La cámara del kit (iso-kit.mjs, iso), para lo que se rehace en cada cuadro.
@@ -513,6 +517,8 @@ function tablero(fig) {
     },
     desde: (x, y) => cerca2(centros, x, y),
   });
+  // vida: las agujas tiemblan alrededor de su lectura, cada una a su ritmo
+  ambiente(fig, t => ang.forEach((v, i) => aguja(i, v + Math.sin(t * (1.1 + i * 0.37) + i) * 0.012 + Math.sin(t * 3.3 + i * 2) * 0.004)));
 }
 
 // ---------------------------------------------------------------- vigilancia: el puesto de guardia
@@ -552,6 +558,9 @@ function vigilancia(fig) {
   }
   const fijo = i => guion(DURA - 0.01, i);
   guionado(fig, { n, dura: () => DURA, guion, quieto: fijo });
+  // vida: los registros viajan por el canto de la viga hasta la impresora
+  const viaje = paquetes(svg, svg.querySelector('.ruta-dato'), { n: 4, color: 'var(--ambar-500)', r: 2, periodo: 4.8 });
+  ambiente(fig, viaje);
 }
 
 // ---------------------------------------------------------------- asistentes: el tablero de conmutación
@@ -567,12 +576,15 @@ function asistente(fig) {
   const qs = V.preguntas;
   let desde = V.tomas[qs[0].j], hacia = desde, f = 1, meta = 0;
   // la clavija sale 9 hacia adelante, viaja y entra; el cordón cuelga entre el puerto y ella
+  // la clavija sale, viaja con inercia (se pasa un poco y vuelve) y entra
+  const conInercia = u => { const c = 1.7; return u >= 1 ? 1 : 1 + (c + 1) * Math.pow(u - 1, 3) + c * Math.pow(u - 1, 2); };
   const enCamino = u => {
-    const s = suave(u), salir = Math.sin(Math.PI * s) * 9;
+    const s = conInercia(Math.min(1, u)), salir = Math.sin(Math.PI * Math.min(1, u)) * 9;
     return [desde[0] + (hacia[0] - desde[0]) * s, desde[1] + (hacia[1] - desde[1]) * s + 0.8 + salir, desde[2] + (hacia[2] - desde[2]) * s];
   };
+  let vaiven = 0;
   function cordon(q) {
-    const a = V.puerto, m = [(a[0] + q[0]) / 2, (a[1] + q[1]) / 2 + 16, Math.max(a[2] + 6, (a[2] + q[2]) / 2 - 12)];
+    const a = V.puerto, m = [(a[0] + q[0]) / 2 + vaiven * 3, (a[1] + q[1]) / 2 + 16 + vaiven * 2, Math.max(a[2] + 6, (a[2] + q[2]) / 2 - 12)];
     const pts = [];
     for (let i = 0; i <= 20; i++) {
       const t = i / 20, u = 1 - t;
@@ -597,7 +609,7 @@ function asistente(fig) {
       f = Math.min(1, f + dt / 1.3);
       cordon(f >= 1 ? hacia : enCamino(f));
       pilotos.forEach((p, j) => {
-        const e = f >= 1 && j === qs[meta].j ? 'rev' : '';
+        const e = f >= 1 && j === qs[meta].j ? 'ok' : '';
         if ((p.dataset.estado || '') !== e) { if (e) p.dataset.estado = e; else delete p.dataset.estado; }
       });
       if (f >= 1) renglones.style.opacity = '';
@@ -608,6 +620,9 @@ function asistente(fig) {
       return j < 0 ? -1 : qs.findIndex(q => q.j === j);
     },
   });
+  // vida: el cordón se mece y la pantalla escribe
+  escribir(svg);
+  ambiente(fig, t => { vaiven = Math.sin(t * 1.3) * 0.8 + Math.sin(t * 0.47) * 0.5; cordon(f >= 1 ? hacia : enCamino(f)); });
 }
 
 // ---------------------------------------------------------------- cobertura: la maqueta de Colombia

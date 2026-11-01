@@ -1139,8 +1139,8 @@ def servicios_landing() -> str:
 CAPAS_PRUEBA = [
     ("dato", "3.162,35 pesos por dólar", "TRM del 29-10-2026 · encontrado"),
     ("procedencia", "Banco de la República", "la entidad que publica el dato"),
-    ("licencia", "Aviso legal del Banco, uso comercial sí", "verificada para esta fuente"),
-    ("servido_desde", "La fuente, en vivo", "consultado el 29-10-2026, 07:14 UTC"),
+    ("licencia", "aviso legal del Banco, uso comercial sí", "verificada para esta fuente"),
+    ("servido_desde", "la fuente, en vivo", "consultado el 29-10-2026, 07:14 UTC"),
     ("huella", "sha256:ac30c9f5…", "para comprobar que no cambió"),
 ]
 NOTAS_PRUEBA = [
@@ -1406,7 +1406,7 @@ def fuentes() -> str:
 <div class="con-fig">
 <div class="cab">
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
-<p class="entrada">Cada columna suma los predios de la muestra en una celda de unos {km} km de radio.</p>
+<p class="entrada">Cada columna suma los predios de la muestra en una celda de unos {km} km de radio; la altura y el color, de teal a ámbar, crecen con el conteo.</p>
 <ul class="lista-l">
 <li><b>6,1 M</b><span>terrenos en la copia SINIC (333 municipios)</span></li>
 <li><b>{miles(cob["total"])}</b><span>en la muestra (3 %)</span></li>

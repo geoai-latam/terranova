@@ -1,6 +1,6 @@
 // Fig. cobertura: una maqueta de Colombia sobre un zócalo. La tierra es un mosaico de hexágonos y
 // sobre él se levanta una columna por celda con predios en la muestra SINIC (3 %), más alta cuantos
-// más predios cuenta (raíz cuadrada). Alfileres en las ciudades. Todo sale
+// más predios cuenta (raíz cuadrada) y de color teal → agua → ocre → ámbar. Alfileres en las ciudades. Todo sale
 // de datos/co.json, sumado en hexágonos de 0,21° por construir.py. Lo que se mueve: la columna que
 // se mira se enciende y la lectura da su conteo, su coordenada y la ciudad más cercana.
 import { D, L, S, casco, encuadre, k, porProf, svgDe } from "./comun.mjs";
@@ -26,10 +26,10 @@ export function cobertura(DATOS, huella) {
   const cx0 = zocalo.reduce((a, [x]) => a + x, 0) / zocalo.length, cy0 = zocalo.reduce((a, [, y]) => a + y, 0) / zocalo.length;
   const patas = [0, 1, 2, 3, 4, 5].map((i) => zocalo[Math.floor((i / 6) * zocalo.length)]).map(([x, y]) => [x + (cx0 - x) * 0.1, y + (cy0 - y) * 0.1]);
   for (const [x, y] of porProf(patas, P)) {
-    out.push(S(k.cylinder(x, y, 5.2, -12, 1.4, P, 24), { tone: "lo" }));
+    out.push(S(k.cylinder(x, y, 5.2, -12, 1.4, P, 24), { m: "chasis", tone: "lo" }));
     out.push(S(k.cylinder(x, y, 3.8, -10.6, 4.6, P, 24), { tone: "mid" }));
   }
-  out.push(S(k.extrude(zocalo, -6, 6, P, { convex: true, bevel: 1.2 }), { tone: "lo" }));
+  out.push(S(k.extrude(zocalo, -6, 6, P, { convex: true, bevel: 1.2 }), { m: "bosque", tone: "lo" }));
   const adentro = zocalo.map(([x, y]) => [x + (cx0 - x) * 0.025, y + (cy0 - y) * 0.025]);
   out.push(L(k.pathOf(adentro.map(([x, y]) => at([x, y, 0])), true), { tone: "faint" }));
 
@@ -37,18 +37,22 @@ export function cobertura(DATOS, huella) {
   const mosaico = tierra.map(([lon, lat]) => k.pathOf(hex(X(lon), Y(lat), RR * 0.98).map(([x, y]) => at([x, y, 0])), true)).join("");
   out.push(`<path class="tierra" d="${mosaico}"/>`);
 
+  // una de cada cinco columnas lleva un piloto en la tapa que titila: la fuente responde
+  const chispa = (cx, cy, h, i) => `<g class="parpadea piloto-claro" style="--p:${(1.8 + (i % 7) * 0.31).toFixed(2)}s;--d:-${((i * 13) % 17 * 0.21).toFixed(2)}s">${D([at([cx, cy, h])], { size: 1, tone: "hi" })}</g>`;
   // columnas y alfileres, de atrás hacia adelante
   const items = [];
   celdas.forEach(([lon, lat, n], i) => {
     const cx = X(lon), cy = Y(lat), h = alto(n);
     const sol = k.extrude(hex(cx, cy, RR * 0.82), 0, h, P, { convex: true });
-    // la tapa se tiñe de teal según el conteo (el mismo dato que la altura)
-    const t = Math.round(8 + 62 * Math.sqrt(n / max));
-    items.push({ d: k.depthOf([cx, cy, 0], P), svg: `<g data-celda="${i}" style="--t:${t}%">${S(sol, { tone: "hi", crease: "lo" })}</g>` });
+    // el color sigue al conteo (el mismo dato que la altura), en cuatro tramos de la paleta:
+    // teal, agua, ocre y ámbar, de menos a más predios
+    const f = Math.sqrt(n / max);
+    const mat = f < 0.25 ? "teal" : f < 0.5 ? "agua" : f < 0.75 ? "ocre" : "ambar";
+    items.push({ d: k.depthOf([cx, cy, 0], P), svg: `<g data-celda="${i}">${S(sol, { m: mat, tone: "hi", crease: "lo" })}${i % 5 === 2 ? chispa(cx, cy, h, i) : ""}</g>` });
   });
   ciudades.forEach(([, lon, lat]) => {
     const cx = X(lon), cy = Y(lat);
-    const svg = S(k.cylinder(cx, cy, 0.45, 0, 9, P, 10), { tone: "mid", crease: "none" }) + D([at([cx, cy, 9.6])], { size: 1.5, tone: "hi" });
+    const svg = S(k.cylinder(cx, cy, 0.45, 0, 9, P, 10), { m: "acero", tone: "mid", crease: "none" }) + `<g class="piloto-ambar">${D([at([cx, cy, 9.6])], { size: 1.6, tone: "hi" })}</g>`;
     items.push({ d: k.depthOf([cx, cy, 0], P) + 0.01, svg });
   });
   items.sort((a, b) => a.d - b.d);

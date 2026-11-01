@@ -628,10 +628,9 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l.abierto li { grid-template-columns: minmax(0, 15em) minmax(0, 1fr); }
 .lista-l.abierto code { font-size: 13.5px; }
 .desliza.lic { max-width: 640px; }
-.tierra { fill: color-mix(in srgb, var(--superficie) 35%, #fff); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
+.tierra { fill: color-mix(in srgb, var(--superficie) 30%, #fff); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
 [data-celda] { transition: opacity .7s ease; }
-.fig-cobertura [data-celda] > .iso-solid > .iso-top { fill: color-mix(in srgb, var(--teal-700) var(--t), #fff); }
-.fig-cobertura [data-celda] > .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
+.fig-cobertura [data-celda] .iso-solid[data-lit] { --c: #FBFAF5; --luz: 0%; }
 .fig-cobertura:not(.armada) [data-celda] { opacity: 0; }
 @media (max-width: 480px) { .lista-l li { grid-template-columns: minmax(0, 1fr); } }
 
@@ -645,9 +644,6 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-shade[data-shade="2"] { fill: var(--anatomy-shade-2); }
 .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-3); }
 .iso-top { fill: var(--anatomy-top); }
-.iso-solid.pieza-l > .iso-fill, .iso-solid.pieza-l > .iso-top { fill: var(--superficie-2); }
-.iso-solid.pieza-l > .iso-shade[data-shade="2"], .iso-solid.pieza-l > .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-1); }
-.iso-solid.pieza-m > .iso-top { fill: color-mix(in srgb, var(--superficie) 55%, #fff); }
 .iso-solid[data-lit] > .iso-fill { fill: var(--anatomy-face); }
 .iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
 .iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }
@@ -656,11 +652,11 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
    se oscurecen hacia bosque-900 (sombra con tono, no gris) y el filo es el mismo color más hondo.
    Encendida (data-lit), la pieza aclara y su filo pasa a ámbar. */
 .m-bosque { --c: var(--bosque-700); } .m-chasis { --c: var(--bosque-800); } .m-pantalla { --c: var(--bosque-900); }
-.m-teal { --c: var(--teal-700); } .m-agua { --c: var(--teal-400); }
+.m-teal { --c: var(--teal-700); } .m-verde { --c: color-mix(in srgb, var(--bosque-700) 55%, var(--teal-700)); } .m-agua { --c: var(--teal-400); }
 .m-ocre { --c: var(--ocre-400); } .m-ambar { --c: var(--ambar-500); }
 .m-metal { --c: color-mix(in srgb, var(--linea-fuerte) 55%, #fff); } .m-acero { --c: var(--linea-fuerte); }
 .m-trabajo { --c: var(--superficie-2); } .m-papel { --c: #FBFAF5; }
-.m-azul { --c: var(--estado-fuera-de-cobertura); } .m-error { --c: var(--error); }
+.m-azul { --c: var(--estado-fuera-de-cobertura); } .m-parcial { --c: var(--estado-parcial); } .m-error { --c: var(--error); }
 .iso-solid[class*=" m-"] { --luz: 0%; }
 .iso-solid[class*=" m-"] > .iso-fill { fill: color-mix(in srgb, var(--c), #fff var(--luz)); }
 .iso-solid[class*=" m-"] > .iso-top { fill: color-mix(in srgb, var(--c), #fff calc(16% + var(--luz))); }
@@ -682,7 +678,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 @keyframes escribir { 0% { stroke-dashoffset: 1; opacity: 1; } 45%, 88% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 .fig-prueba [data-ficha]:not(.activa) .escribe path { animation: none; stroke-dasharray: none; }
 .escribe path { stroke-dasharray: 1 1; animation: escribir var(--p, 5.2s) steps(22, end) infinite; animation-delay: var(--d, 0s); }
-.piloto-teal circle { fill: var(--teal-400); opacity: 1; } .piloto-ambar circle { fill: var(--ambar-500); opacity: 1; }
+.piloto-teal circle { fill: var(--teal-400); opacity: 1; } .piloto-claro circle { fill: var(--tinta-invertida); opacity: 1; } .piloto-ambar circle { fill: var(--ambar-500); opacity: 1; }
+.ruta-dato { fill: none; stroke: none; }
 .paquete { stroke: var(--bosque-900); stroke-width: .5; vector-effect: non-scaling-stroke; }
 .iso-solid > * { transition: fill .5s var(--anatomy-ease, ease), stroke .5s ease; }
 .iso-halo { fill: var(--anatomy-halo); stroke: none; filter: blur(8px); opacity: var(--anatomy-halo-opacity); transform: translateY(3px); }
@@ -708,8 +705,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-solid.teal > .iso-edge { stroke: var(--bosque-900); }
 .iso-dots.teal circle { fill: var(--teal-700); opacity: 1; }
 /* pilotos de las figuras: verde verificado o ámbar «revisar» */
-[data-piloto][data-estado="ok"] circle, .encendido circle { fill: var(--teal-700); opacity: 1; }
-[data-piloto][data-estado="rev"] circle { fill: var(--acento-relleno); opacity: 1; }
+[data-piloto][data-estado="ok"] circle, .encendido circle { fill: var(--teal-700); opacity: 1; animation: none; }
+[data-piloto][data-estado="rev"] circle { fill: var(--acento-relleno); opacity: 1; animation: none; }
 [data-bandera] { transition: opacity .3s ease; }
 /* asistente: bocas de las tomas, cordón y clavija */
 .boca { fill: var(--bosque-800); stroke: none; }
@@ -721,7 +718,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .franja { fill: var(--teal-700); opacity: .32; stroke: none; }
 .aguja { fill: none; stroke: var(--tinta); stroke-width: 1.3; vector-effect: non-scaling-stroke; stroke-linecap: round; }
 .aguja[data-on] { stroke: var(--acento-relleno); stroke-width: 1.8; }
-.serie { fill: none; stroke: var(--tinta); stroke-width: 1.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round;
+.serie { fill: none; stroke: var(--teal-700); stroke-width: 1.8; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: 100 100; stroke-dashoffset: 100; transition: opacity .5s ease; }
 .medidor .luz-on circle { fill: var(--teal-400); }
 .medidor .luz-off circle { fill: var(--tinta-invertida); opacity: .22; }
@@ -742,13 +739,14 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .traza[data-on] { stroke-dashoffset: 0; }
 .pregunta { fill: var(--acento-relleno); stroke: var(--tinta); stroke-width: .8; vector-effect: non-scaling-stroke; opacity: 0; }
 .pregunta[data-on] { opacity: 1; }
-.brazo { fill: #fff; stroke: var(--tinta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.banda { fill: var(--tinta); stroke: none; opacity: .78; }
+.fig-ruta [data-columna] .iso-solid[data-lit] { --c: var(--ambar-500); }
+.brazo { fill: #FBFAF5; stroke: var(--tinta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.banda { fill: var(--teal-700); stroke: none; }
 .brazo-arista { fill: none; stroke: var(--linea-fuerte); stroke-width: .5; vector-effect: non-scaling-stroke; }
 .fig-ruta [data-respuesta] { opacity: 0; transition: opacity .4s ease; }
 .fig-ruta [data-respuesta][data-on] { opacity: 1; }
 [data-piloto] circle { transition: fill .3s ease; }
-[data-piloto][data-on] circle { fill: var(--verificado); opacity: 1; }
+[data-piloto][data-on] circle { fill: var(--teal-400); opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .parpadea circle, .late circle { animation: none; opacity: 1; }
   .escribe path { animation: none; stroke-dasharray: none; }
