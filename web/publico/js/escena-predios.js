@@ -2,7 +2,7 @@
 // El grosor de los predios (5 m) y la subida del consultado (44 m) son simbólicos: no son dato.
 // Al entrar, la cámara baja desde arriba y los predios crecen desde el punto consultado hacia
 // afuera. Cuando la consola muestra la respuesta del predio, sale una onda del punto y el predio sube.
-import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js';
+import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js?v=4f51e3ba7b';
 
 const esc = document.querySelector('[data-escena="predios"]');
 const con = document.querySelector('[data-consola]');
@@ -16,10 +16,19 @@ async function iniciar(esc) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(2, devicePixelRatio));
   esc.prepend(renderer.domElement);
+  // La imagen accesible es el lienzo (y la de respaldo mientras carga): la lectura, con el enlace
+  // de OpenStreetMap, queda fuera de role=img.
+  renderer.domElement.setAttribute('role', 'img');
+  renderer.domElement.setAttribute('aria-label', esc.dataset.etiqueta || '');
   const scene = new THREE.Scene();
   const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 4000);
   const st = { az: -0.55, pol: 0.98, polMin: 0.35, polMax: 1.22, toque: -1e9, mpp: 1 };
   orbita(esc, st);
+  // Con movimiento reducido no hay bucle: un solo render, y otro solo si el lector arrastra,
+  // pasa el puntero o cambia el tamaño.
+  const pedir = () => { if (quieto && !pendiente) { pendiente = true; requestAnimationFrame(cuadro); } };
+  let pendiente = false;
+  if (quieto) for (const ev of ['pointermove', 'pointerdown']) esc.addEventListener(ev, pedir);
   luces(THREE, renderer, scene, { sombras: esc.clientWidth >= 700, lado: 560 });
 
   // Geometría: cada lindero recortado medio metro, así los huecos dibujan la trama de calles.
@@ -102,7 +111,7 @@ async function iniciar(esc) {
     cam.left = -fx * Wm; cam.right = (1 - fx) * Wm; cam.top = fy * Hm; cam.bottom = -(1 - fy) * Hm; cam.updateProjectionMatrix();
     st.mpp = Hm / h;
   }
-  new ResizeObserver(tam).observe(esc); tam();
+  new ResizeObserver(() => { tam(); pedir(); }).observe(esc); tam();
 
   const ray = new THREE.Raycaster(), m = new THREE.Vector2();
   const lectura = esc.querySelector('.lectura'), base = lectura.innerHTML;
@@ -155,8 +164,10 @@ async function iniciar(esc) {
       }
       e.style.transform = `translate(${p[0].toFixed(1)}px, ${p[1].toFixed(1)}px) translate(-50%, -50%) rotate(${ang.toFixed(1)}deg)`;
     }
-    if (con && conGuia && obj.scale.y > ALTO * 0.6) {
-      const top = pantalla(oc.x, obj.scale.y, -oc.y), tr = con.getBoundingClientRect();
+    const tr = con && con.getBoundingClientRect();
+    // la guía solo baja hasta la respuesta cuando esta queda dentro de la escena
+    if (con && conGuia && obj.scale.y > ALTO * 0.6 && tr.top - er.top < esc.clientHeight) {
+      const top = pantalla(oc.x, obj.scale.y, -oc.y);
       const x2 = Math.min(tr.right - er.left - 32, Math.max(tr.left - er.left + 32, top[0]));
       gl.setAttribute('x1', top[0]); gl.setAttribute('y1', top[1]);
       gl.setAttribute('x2', x2); gl.setAttribute('y2', tr.top - er.top);
@@ -170,20 +181,25 @@ async function iniciar(esc) {
   document.addEventListener('terranova:turno', e => {
     objetivo = e.detail === 'predio' ? ALTO : BASE_H; conGuia = e.detail === 'predio';
     if (e.detail === 'predio' && !quieto) ondaT = performance.now();
+    pedir();
   });
 
   // Entrada: la cámara baja desde casi cenital mientras los predios crecen desde el punto.
   const ENTRA = 2800, POL0 = 0.4, AZ0 = -1.3;
-  let corre = true, t0 = null;
-  visible(esc, si => { const antes = corre; corre = si; if (si && !antes) requestAnimationFrame(cuadro); });
+  // El giro y la subida van por tiempo (dt), no por cuadros: la misma velocidad a 60 o a 144 Hz.
+  let corre = true, t0 = null, tAnt = null;
+  visible(esc, si => { const antes = corre; corre = si; if (si && !antes && !quieto) { tAnt = null; requestAnimationFrame(cuadro); } });
   function cuadro(t) {
+    pendiente = false;
     if (t0 === null) t0 = t;
+    const dt = tAnt === null ? 1 / 60 : Math.min(0.1, (t - tAnt) / 1000);
+    tAnt = t;
     const k = quieto ? 1 : suave((t - t0) / ENTRA);
     if (k < 1 && st.toque < t0) { st.pol = POL0 + (0.98 - POL0) * k; st.az = AZ0 + (-0.55 - AZ0) * k; }
-    else if (!quieto && t - st.toque > 3500) st.az += 0.0011;
+    else if (!quieto && t - st.toque > 3500) st.az += 0.066 * dt;
     if (!quieto) U.uCrece.value = (t - t0) / 1000;
     capa.style.opacity = k;
-    obj.scale.y = quieto ? objetivo : Math.max(0.01, obj.scale.y + (objetivo - obj.scale.y) * 0.07);
+    obj.scale.y = quieto ? objetivo : Math.max(0.01, obj.scale.y + (objetivo - obj.scale.y) * (1 - Math.exp(-dt / 0.23)));
     if (ondaT !== null) {
       const r = Math.max(0, t - ondaT) / 1000 * 320;
       if (r > 900) { ondaT = null; U.uOnda.value = -1; onda.visible = false; }
@@ -199,7 +215,7 @@ async function iniciar(esc) {
       document.documentElement.dataset.escena = 'lista';
       document.dispatchEvent(new Event('terranova:escena'));
     }
-    if (corre) requestAnimationFrame(cuadro);
+    if (corre && !quieto) requestAnimationFrame(cuadro);
   }
   requestAnimationFrame(cuadro);
 }

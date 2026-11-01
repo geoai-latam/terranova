@@ -16,7 +16,8 @@ degradados decorativos ni fotos de stock; las figuras isométricas explican, no 
 - Fondo blanco roto con sesgo verde (`--fondo`), tinta verde muy oscura y **un solo acento ámbar
   por vista**: el botón principal o lo que hay que mirar.
 - Una familia, Geist, para todo el texto. Geist Mono solo para datos: campos rt/1, rutas de API,
-  huellas, cifras en tablas y pies de fuente.
+  huellas, cifras en tablas, lecturas de figuras y pies de fuente. Pistas, migas, rótulos y sellos
+  van en Geist; nada en mayúscula espaciada.
 - **Radios pequeños** en todo (2 a 6 px): se lee editorial y técnico, no como un kit de tarjetas.
   Los botones también (`--radio-pill` vale 3 px; el nombre es histórico).
 - **Filetes, no tarjetas:** los bloques se separan con un filete superior de 1 px (`.bloque`); el que
@@ -35,29 +36,54 @@ El dueño rechazó explícitamente:
 - conmutadores que nadie usa (el «Geo / No geo» del héroe salió: las dos respuestas se muestran a
   la vez).
 
-Deuda conocida: algunas páginas interiores todavía tienen rótulos de cejilla y etiquetas en
-mayúsculas (`.bloque .num`); se van quitando.
+Las cejillas de las portadas interiores y las etiquetas en mayúsculas (`.bloque .num`) ya salieron.
 
 ## Color
 
-Tokens en `estilo.css`. Solo hay tema claro en la web.
+Tokens en `estilo.css` (`:root`). Solo hay tema claro en la web.
+
+### La página
 
 | Rol | Tokens | Uso |
 |---|---|---|
 | Fondo | `fondo`, `superficie`, `superficie-2` | Blanco roto y dos grises verdosos |
-| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras (servicios), consola, viñetas |
+| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras, la consola del héroe, pantallas de las figuras |
 | Texto | `tinta`, `tinta-suave`, `tinta-tenue` | Todos ≥ 4,5:1 sobre fondo y superficie |
-| Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | Uno por vista. Ámbar sobre claro solo como relleno con tinta encima |
-| Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Huella, procedencia, enlaces |
+| Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | **Uno por pantalla: el botón principal.** El botón del menú es secundario; las pestañas elegidas se marcan en tinta, no en ámbar |
+| Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Enlaces y, en el sobre, lo que prueba la respuesta |
 | Estados rt/1 | `estado-encontrado`, `estado-no-encontrado`, `estado-parcial`, `estado-fuera-de-cobertura`, `error` | `no_encontrado` es neutro, no rojo: es una respuesta válida |
 | Líneas | `linea`, `linea-fuerte` | Filetes; bordes de campos y botón secundario (≥ 3:1) |
 
-El verde bosque es la marca. El ocre (`ocre-400`) es solo para mapas y gráficos. En gráficos, las
-series van tinta, teal, ámbar, ocre; la rejilla en `linea` y la serie que importa en ámbar.
+El verde bosque es la marca. En gráficos, las series van tinta, teal, ámbar, ocre; la rejilla en
+`linea` y la serie que importa en ámbar.
+
+### Las figuras: color por papeles
+
+Cada color tiene un papel, no un adorno. Las rampas están en OKLab, derivadas de los tokens de la
+marca, y van del techo (`-0`) a la cara más oscura (`-4`); una cara toma su tono por orientación,
+con la luz fija a la cámara (la regla del kit de Anatomy).
+
+| Papel | Tokens | Cuánto | Uso |
+|---|---|---|---|
+| Estructura | `estructura-0…6` (#F4F8F1 → #B9BDB6) | 70–80 % del área | Bancos, bases, armazones, predios vecinos. Las bases van dos escalones más hondo (`2…6`) |
+| Líneas | `linea-tenue`, `linea-baja`, `linea-media`, `linea-alta`, a 0,6 px | — | Ranuras y costuras (tenue), marcas menores (baja), filos (media), lo que se lee (alta) |
+| Sujeto | `sujeto-teal-*`, `sujeto-agua-*`, `sujeto-ocre-*`, cada uno con su `-filo` | 15–25 % | **Un** material de color por figura. Rampas en OKLCH: el material por defecto usa los pasos 1–5 y el «fuerte» los 2–6, así sus caras quedan con croma ≥ 0,08 (con menos, la figura se lee pálida). El agua es la de la marca (h 184, entre teal-400 y la superficie, con el croma del teal), no un celeste; `agua-honda` para lo que más pesa |
+| Bosque claro | `bosque-claro-0…4` con filo claro | — | Techos y costados de un bastidor, un panel grande: color sin el peso del bosque hondo |
+| Material oscuro | `oscuro-0…4` con `oscuro-filo` claro | — | Pantallas y chasis; el filo es claro para que lo oscuro no se funda |
+| Acento | `acento-0…4` con `acento-filo` (#8F570B) | ≤ 3–5 % | Ámbar en **una** pieza: la que está pasando. Ninguna cara ámbar mayor de ~40 × 40 px |
+| Estado | `estado-vivo`, `estado-copia`, `estado-no-se-pudo`, `estado-vacio` | marca de 3–6 px | Vivo = punto teal; copia = anillo ocre; no se pudo = aspa en tinta; no encontrado = anillo vacío. Nunca superficie |
+| Sombra | `halo` | — | Sombra de contacto horneada (escalones translúcidos), sin desenfoque |
+
+Reglas: neutros + un material + un acento por figura; el ocre nunca junto al ámbar; el azul de
+estado («fuera de cobertura») no es material. En `estilo.css` cada pieza lleva `m-<material>` y el
+material es una rampa (`--c0…--c4`, `--filo`, `--pliegue`); encendida (`data-lit`), sube un
+escalón y su filo pasa a ámbar.
 
 ## Tipografía
 
-Geist 700 para titulares con interletrado negativo (`.t1` −0,04 em, `.t2` −0,032 em), 400 para el
+Geist y Geist Mono (SIL OFL) se sirven desde el sitio (`img/tipos/`, latín y latín extendido) y
+las de latín se precargan en el `<head>`: sin `@import` ni Google Fonts, el texto no salta al
+cambiar de fuente (CLS 0). Geist 700 para titulares con interletrado negativo (`.t1` −0,04 em, `.t2` −0,032 em), 400 para el
 texto, 600 para la interfaz. Titulares con `text-wrap: balance`, párrafos con `pretty`, cifras con
 `tabular-nums`. Rótulos en minúscula normal (`.rotulo`, 14 px, `tinta-tenue`). Texto corrido de
 hasta ~68 caracteres por línea (`.entrada` max 640 px).
@@ -76,66 +102,153 @@ fuente, licencia, expediente.
 - **Solo lo que es verdad.** Toda cifra sale del catálogo o de los datos (`construir.py`), nunca a
   mano, y lleva su fuente y su fecha. Antes de publicar texto nuevo se contrasta con el código.
 - Los conteos solo cuentan fuentes **publicadas** (un borrador no se anuncia). No se nombran
-  herramientas con el canario en rojo ni fuentes con licencia dudosa (la DIAN, sin fines de lucro).
+  herramientas con el canario en rojo ni fuentes sin uso comercial (los usuarios aduaneros de la DIAN,
+  sin fines de lucro). El normograma de la DIAN sí se nombra: texto oficial libre (Ley 23 de 1982, art. 41).
 - **No se dice que un agente hace el trabajo:** lo hace el equipo, con herramientas.
 - «No encontrado» es una respuesta; «no se pudo» es un error con su código.
 - Lo que existe, en presente; lo que viene, marcado como visión.
 - Nada de «potenciado por IA», «revolucionario» ni «mágico».
 - Ningún ejemplo busca personas por nombre o cédula (ADR-0014). Los ejemplos son lugares y predios.
-- Lo inventado lleva el sello `ilustrativo` (`.sello-i`). Lo real lleva fecha y fuente.
+- Lo inventado lleva el sello `ilustrativo` al final del título o de la lectura, pegado a la última
+  palabra para que no quede solo en un renglón (`.sello-i`, un solo estilo: Geist 12 px, neutro, con
+  filete). Lo real lleva fecha y fuente.
 - No se muestran clientes, logos ni testimonios que no existen. No se nombra ArcGIS: «el sistema
   del cliente» o «su SIG».
 - Números en formato colombiano (0,56 s; 1.510; 6,1 M); fechas DD-MM-AAAA en texto e ISO en la API.
+- **Para quien decide en una organización**, no para un desarrollador: en la portada, /servicios y
+  /precios no van «MCP», «REST», «rt/1», nombres de herramientas ni JSON en titulares ni entradas
+  (sí en /desarrolladores, en la muestra técnica o en la pista de una figura). El resultado primero;
+  las herramientas, en segundo plano.
+- Precios: los de lanzamiento en pesos más IVA (`PLANES` en `construir.py`, decisión del dueño); los
+  créditos salen de `NIVELES` y su traducción a consultas, de `catalogo.TARIFA`. El sitio ofrece solo
+  la llave de prueba; el plan Gratis no se anuncia.
 
 | Así sí | Así no |
 |---|---|
 | Consulta un punto y recibe el predio, su fuente y su huella. | Desbloquea el poder de los datos geoespaciales con IA. |
 | La fuente no respondió (IGAC, 12 s). Reintenta en 5 min. | Error. Inténtalo más tarde. |
 
-## 3D (three.js)
+## El héroe: la escena de predios (three.js)
 
-El 3D solo va con datos reales y cuando ayuda a leerlos.
+El 3D solo va con datos reales y cuando ayuda a leerlos. El héroe es la animación principal del
+sitio y no se rediseña con las figuras: el dueño la quiere como está.
 
-- **Escenas:** `escena-predios.js` (héroe: predios SINIC de Santa Marta con calles, barrio y el
-  predio consultado), `escena-cobertura.js` (columnas hexagonales con la muestra SINIC, ciudades y
-  mares rotulados) y `escena-vinetas.js` (una viñeta por servicio; `comun3d.js` tiene lo común).
-- **Cámara ortográfica** siempre, para que las medidas no se deformen. Se gira arrastrando, sin zoom
-  con la rueda (secuestraría el scroll). Sin interacción, gira despacio.
-- `prefers-reduced-motion`: la escena queda quieta. Sin WebGL: queda la imagen equivalente.
-- **Rótulos en HTML** sobre la escena, anclados a su coordenada proyectada y siempre derechos
-  (`.rv`, `.rotulos`); en móvil (`.vineta.angosta`) se ocultan los secundarios.
-- **Viñetas:** cada una devuelve `{alto, altoAngosto, az, pol, mira, miraAngosta, sombras, vaiven,
-  quieto, paso(s), rotular(poner)}`. Los nombres que muestran (herramientas, fuentes, indicadores)
-  los pone `construir.py` en `data-datos` desde el catálogo; la escena no inventa nombres. Las
-  formas pueden ser esquemáticas, pero lo que se rotula existe.
-- Colores desde los tokens; sombreado plano, sin luces que cambien los colores de marca.
+- **La escena:** los predios reales del SINIC (`datos/sm.json`) alrededor del punto consultado en
+  Santa Marta, a todo lo ancho detrás del texto, con las calles de OpenStreetMap
+  (`datos/calles.json`) rotuladas, escala y norte. Al entrar, la cámara baja y los predios crecen
+  desde el punto; luego gira despacio. El predio consultado sube cuando la consola muestra su
+  respuesta en la consola y sale una onda del punto. `js/escena-predios.js` y `js/comun3d.js`; mientras carga,
+  la imagen de respaldo (`img/predio-santamarta.webp`).
+- **Dos arreglos que no cambian cómo se ve:** con movimiento reducido dibuja un solo cuadro (y otro
+  solo si el lector arrastra o cambia el tamaño), y el giro y la subida van por tiempo (dt), no
+  por cuadros.
+- **Accesibilidad:** la imagen accesible es el lienzo (`role="img"`); la lectura con el enlace de
+  OpenStreetMap queda fuera y se puede tocar.
+- **La consola rt/1** va encima de la escena, a la derecha: tres respuestas reales de producción
+  (predio, empresa y norma) en pestañas, que se reproducen por turnos con su fecha de captura
+  (DD-MM-AAAA). Una guía une la respuesta con el predio consultado, que sube cuando llega.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
 ## Figuras isométricas (Anatomy)
 
-Además del 3D con datos, la portada tiene dos figuras isométricas en SVG que explican el producto con
-un objeto que se reconoce (un bastidor de equipos, un banco con barrera). Siguen el método de
+Todas las ilustraciones del sitio, menos el héroe 3D, son figuras isométricas en SVG que explican una
+idea con un objeto que se reconoce: un bastidor (capas), un banco con barrera (la ruta de una
+pregunta), un fichero (la prueba de una respuesta), una banda de inspección (debida diligencia), una
+mesa de relojes con trazador (tableros), un puesto de guardia con buzones (vigilancia), un tablero de
+conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el método de
 [Anatomy](https://github.com/wheresryan22/anatomy) (MIT), cuyo kit está en `web/figuras/kit`.
 
+- **Integradas, nunca tarjetas:** sin borde, sin fondo propio y sin cabecera «Fig. n · título». La
+  figura vive sobre el fondo de su sección (`--papel`), alineada a la retícula, con el texto al lado
+  (`.con-fig`) o encima. Debajo, la lectura en vivo en mono (es dato) y la pista en Geist 13 px,
+  que aparece al pasar o enfocar, con el sello `ilustrativo` si toca.
 - **El objeto es la explicación:** piezas reales con volumen (patas, rieles, tornillos, placas,
   clavijas), no cajas con flechas. Cada línea termina en algo; se comprueba con el `lines.mjs` de
   Anatomy (0 extremos sueltos).
-- **Verdad:** todo lo que muestran sale de `construir.py` (familias, entidades, herramientas,
-  licencias). Las entidades que no son de un turno van sin nombre, solo con su número de fuentes.
-- **Tonos:** papel y sombras desde `fondo`, `superficie` y `superficie-2`; líneas en la escala de
-  tinta; ventanas en `bosque-800` con lo escrito en `teal-400`. **Un solo ámbar:** lo encendido.
-- **Texto:** como mucho un rótulo grabado por figura; lo demás va en las esquinas de la tarjeta
-  (Fig., título, pista y lectura en vivo, en minúscula) y en el pie.
-- **Movimiento:** calmado, con tiempo; recorre solo cuando nadie toca, el puntero y las flechas
-  eligen, y fuera de la vista no corre. Con `prefers-reduced-motion` queda quieto y completo.
+- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta, 72°
+  en la maqueta de cobertura para que el país se reconozca), la misma escala de construcción (`comun.mjs`, `encuadre`), el mismo
+  grosor de línea (0,6 px) y las mismas piezas de banco (`base`, `regla`). Cada figura llena su
+  columna.
+- **Verdad:** todo lo que muestran sale de `construir.py` (catálogo y `datos/co.json`) vía
+  `web/figuras/datos.json`; lo inventado lleva el sello `ilustrativo` y la etiqueta accesible lo dice.
+  Ninguna nombra el DANE ni una herramienta que no se vende (`datos.json` lleva `usadas` y
+  `tests/test_web.py` lo comprueba), y cada «como» de la revisión casa con la entrada real de sus
+  herramientas (lo comprueba el build).
+- **Color:** por papeles (ver «Color»): neutros de estructura, un material de color propio por
+  figura y un solo acento ámbar en la pieza que está pasando. Sin degradados, brillos ni neón.
+
+  | Figura | Material | El ámbar |
+  |---|---|---|
+  | capas | teal (Datos, `teal-fuerte`); bastidor en bosque claro | el dato que sube por el cable |
+  | ruta | agua (columnas de entidades) | la ficha de la pregunta y la tapa de la columna que responde |
+  | prueba | bosque (el fichero, filo claro) | la pestaña de la ficha que se lee |
+  | revisión | ocre (fichas, pila, motor, bandeja); banda de caucho en bosque | la banderita de la estación que encuentra algo |
+  | tablero | agua (cajas de los relojes en `agua-honda`) | la pala y el cubo de la aguja del reloj elegido |
+  | vigilancia | teal (buzones, `teal-fuerte`); impresora en `ocre-fuerte` | la banderita levantada |
+  | asistente | bosque claro (el panel) | el piloto de la boca conectada |
+  | cobertura | una rampa agua → teal hondo (`m-cob0…4`) | la columna encendida |
+
+  Lo que aparece o se va de color lo hace con la escala, no con la opacidad (un ámbar a medio
+  fundir sobre gris se ve oliva); las luces cambian de golpe, como una luz. A 1x, el acento ámbar
+  mide ~10 × 10 px o más y los pilotos 8 px o más: son lámparas (`lampara()` en `comun.mjs`: aro de
+  metal en el plano de la cara, lente y, encendida, la luz con su brillo).
+- **Movimiento con significado:** cada figura cuenta un ciclo: reposo → disparo → tránsito
+  (400–700 ms) → resultado → reposo de 2,6 s con todo quieto. Solo se mueve lo que actúa; la
+  estructura nunca. Corre al entrar en vista (dos ciclos) y, mientras sigue en vista, un ciclo cada
+  ~15 s (vida, también en móvil, donde no hay puntero); entre ciclos no se pinta nada. Vuelve con
+  el puntero (elige por posición), el toque, el foco o las flechas y se puede interrumpir (mezcla de
+  280 ms desde lo que se veía). Curvas: entrada `cubic-bezier(0, 0, .3, 1)`, salida
+  `cubic-bezier(.4, .14, 1, 1)`, resorte críticamente amortiguado; subamortiguado solo en las agujas
+  del tablero (oscilan al asentarse). La lectura cambia en el instante en que llega el dato. Con
+  `prefers-reduced-motion`, un cuadro del estado resultado.
+- **Cómo está hecho (`js/figuras.js`):** cada figura es una función pura del tiempo,
+  `pose(turno, t)`, que pone las piezas vivas (canales x, y, opacidad, escala y uno propio: un
+  ángulo, un avance) y devuelve la lectura de ese instante. Un planificador único deja viva solo la
+  figura más visible y la mueve con `requestAnimationFrame`; `window.__figuras.ver(nombre, turno, ms)`
+  pide cualquier instante (hojas de contacto y pruebas). Lo que gira en un plano (el brazo de la
+  barrera, la banderita, las agujas) se dibuja en coordenadas del plano con su matriz y gira con
+  `rotate`; lo que crece (barras) escala en un eje desde su base (`data-eje`). Las columnas altas
+  de cobertura crecen de verdad: cada cara de lado vive en su marco (u por la arista del piso, v
+  vertical) y solo se le escala la v; la tapa sube (nada se aplasta).
+- **Rendimiento:** dos capas por figura. La **fija** va como `<img>` (sin DOM: no cuesta estilo ni
+  diseño al desplazarse), partida en trozos de a lo sumo 170 piezas (`nombre.svg`, `nombre-2.svg`…:
+  el navegador lee cada imagen en su propia tarea; una sola de 900 trazos pasaba de 40 ms a CPU 4×)
+  y con las reglas de `estilo.css` que pinta dentro. La **viva** (lo que se mueve, lo que lo tapa y
+  los rótulos grabados, que necesitan la fuente del sitio) va en línea, en su propio `<svg>` encima,
+  y entra por partes de ~200 piezas, un cuadro de por medio; se mueve solo con `transform` y
+  `opacity`, y el primer cuadro solo toca lo que cambia. Trayectorias y series precalculadas en el
+  build (nada de `getPointAtLength` ni de animar `d`); sin `filter: blur` (sombras horneadas); a lo
+  sumo 60 cuadros por segundo y 30 con puntero grueso o `hardwareConcurrency ≤ 4`; cero cuadros entre
+  ciclos. Sin `will-change` (promover la capa viva costaba ~50 ms a CPU 4×). Dos trampas medidas:
+  un selector de atributo como `[class*=" m-"]` hacía recalcular la figura entera cuando cambiaba la
+  clase de un ancestro, y marcar la figura lista con la clase `lista` (la de las listas del sitio) le
+  cambiaba el color heredado; por eso las reglas de material son `.iso-solid > …` y la marca es
+  `data-lista`. Medido a 390 px con CPU 4×: ninguna tarea por encima de 50 ms al desplazarse por
+  la portada, /servicios y /fuentes, y ninguna por encima de 26 ms animando una figura.
+- **Texto:** pocos rótulos grabados («Datos», «Terrnova», «rt/1»; las siglas de las entidades en el
+  tablero del asistente, que es lo que la clavija elige; el cordón elige una caída que no tape
+  ninguna); lo demás va en la lectura (una línea) y en la pista (el detalle: licencia, entidad), en
+  minúscula. La lectura arranca en el borde de la columna de la retícula (el dibujo puede ser más
+  angosto y va centrado) y, si la figura es ilustrativa, el sello va al final de la lectura.
+- **Peso:** los SVG van aparte (`web/publico/img/figuras/`) y `figuras.js` los trae al acercarse a la
+  vista; el hueco tiene su proporción para que la página no salte. Pasan por svgo 4
+  (`web/figuras/package.json`): un decimal en los trazos, estilos sin repetir, matrices con tres
+  decimales, sin tocar ids ni piezas ocultas.
+- **Construir:** `uv run python web/construir.py` escribe los datos y, si hay Node, dibuja
+  (`node web/figuras/construir.mjs`; la primera vez instala svgo con `npm ci`); la huella de datos +
+  scripts + kit + `estilo.css` va en cada SVG y `--revisar` falla si alguno quedó viejo (el CI no
+  tiene Node). También escribe el `?v=` del import de `comun3d.js` en `escena-predios.js`.
 
 ## Logo y aliados
 
 Tres curvas de nivel forman un arco (puerta y colina en planta); el punto ámbar es el lugar
-consultado. «Terrnova» en Geist 700, interletrado −4 %. No se gira ni cambia el color del punto.
+consultado. «Terrnova» en Geist 650 a 20 px con interletrado +2 %: con −4 % la «rn» se pegaba y a
+1x se leía «Termova». Se comprueba con una captura a 1x. En el pie, sobre bosque, la puerta va clara
+(#F3EFE4) y el punto sigue ámbar. No se gira ni cambia el color del punto.
 
-GeoAI LATAM y Atalaya Mapas son proyectos hermanos, nunca clientes, siempre con su logo oficial. El
-de Atalaya Mapas está pendiente: hasta tenerlo se escribe su nombre.
+GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial; Atalaya
+Mapas es un proyecto aliado. Ninguno es cliente; van siempre con su logo oficial. El de Atalaya
+Mapas está pendiente: hasta tenerlo se escribe su nombre.
 
 ## Ver el sitio en local
 
@@ -144,6 +257,7 @@ uv run python web/construir.py                 # regenera web/publico desde el c
 uv run python web/servir.py                    # http://localhost:8080, como lo sirve Caddy
 uv run --with playwright python web/capturar.py 1440 / "#servicios"   # captura de una sección
 uv run pytest tests/test_web.py -q             # las páginas no quedaron viejas
+uv run --with playwright python web/og.py      # las imágenes para compartir (1200 x 630), si cambia un titular
 ```
 
 `capturar.py` usa Edge con GPU (las escenas WebGL no pintan sin ella) y deja las capturas en

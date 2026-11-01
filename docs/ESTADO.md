@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-31.*
+*Actualizado: 2026-11-01.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -34,7 +34,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Pendiente del dueño (no hay trabajo técnico abierto):**
   1. Registrar el refresco diario desde Colombia: `programar_refresco.ps1`. Sin él, las alertas del
      IDEAM (SLA de un día) se quedan viejas.
-  2. El correo soporte@terrnova.com y la sonda externa (UptimeRobot).
+  2. La sonda externa (UptimeRobot). El correo soporte@terrnova.com ya recibe (Cloudflare Email
+     Routing).
   3. La revisión legal de los términos y la privacidad, para publicarlos con el SLA.
   4. El token de Copernicus para ERA5-Land, que reemplaza a Open-Meteo.
   5. Decisiones abiertas: la base legal de las licencias DANE para los planes de pago, la DIAN
@@ -47,18 +48,119 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
-## Figuras isométricas en la portada (2026-10-31, rama `feat/landing-animaciones`, sin fusionar)
+## Sitio v2, ronda de cierre del PR #212 (2026-11-01, sin fusionar)
 
-- Dos figuras SVG animadas, dibujadas con el kit de Anatomy (`web/figuras/kit`, MIT): **Fig. 1**, un
-  bastidor con el módulo de datos abajo (un medidor por familia) y Analítica, Automatización y
-  Agentes encima, cada uno con su cable (en la sección de las capas); **Fig. 2**, la ruta de una
-  pregunta: terminal, lector de llave, barrera de Terrnova y un tablero con una columna por entidad
-  (en «Por qué no basta…»).
-- `construir.py` escribe `web/figuras/datos.json` desde el catálogo y, si cambió, corre
-  `node web/figuras/construir.mjs`; la huella de datos + script + kit va en cada SVG y `--revisar`
-  falla si el dibujo quedó viejo. El movimiento está en `web/publico/js/figuras.js`.
-- **Siguiente paso:** que el dueño lo vea en local (`uv run python web/servir.py`) y decida si se abre
-  el PR.
+- **Verdad:** Saber 11 y BanRep (canario en rojo) fuera de sectores, tablero, asistente y de todo
+  ejemplo; `SIN_CANARIO_VERDE` en `construir.py` y una prueba lo cuidan. La figura «prueba» usa la
+  respuesta real del predio de Santa Marta (`correos.EJEMPLO`), la del héroe. El asistente abre con
+  la vigencia de una ley (SUIN). Meta «de Colombia y globales»; OAuth como visión; `/mcp` con
+  `ficha_empresa`; el JSON-RPC con `Accept: application/json, text/event-stream`; 404 sin canónica
+  y con `noindex`.
+- **Comercial y marca:** GeoAI LATAM hace Terrnova (/aliados); Inspow, nuestro aliado de facturación;
+  «20 % menos pagando el año»; tres formas de usarlo solo con texto; la figura capas en /servicios
+  («Una capa de datos y, encima, tu solución»), que funde «Cómo trabajamos» en el piloto; titular
+  del héroe en tres renglones a 1440 (mismas palabras; escena y consola sin tocar).
+- **Figuras:** rampas OKLCH con croma ≥ 0,08, agua de la marca, bosque claro, lámparas piloto de
+  8 px o más y acentos ámbar de ~10 px o más a 1x; columnas de cobertura que crecen de verdad; un
+  ciclo cada ~15 s mientras una figura está en vista (0 pintados entre ciclos).
+- **Rendimiento:** la capa fija como imágenes en trozos y la viva por partes; svgo. Tarea más larga
+  al desplazarse a 390 px con CPU 4×: portada 75,9 → 40,9 ms, /fuentes 55,6 → 45,1 ms (peor de tres
+  corridas: ≤ 45,1 ms en las tres páginas); animando, ≤ 25,4 ms. SVG 1.144 → 933 KB (gzip 221 →
+  171 KB).
+
+## Sitio v2, fases 5 y 6: el texto que vende y móvil, accesibilidad y peso (2026-11-01, PR #212 sin fusionar)
+
+- **Para quien decide:** la portada va en ocho secciones (héroe «Datos oficiales de Colombia para tu
+  organización y tus agentes», soluciones por sector con lo que decide cada área, la prueba, lo que
+  te ahorras, tres formas de usarlo, qué no hacemos, precios y preguntas frecuentes con quién está
+  detrás), 736 palabras visibles en `main`. Sin MCP, REST ni nombres de herramientas en titulares ni
+  entradas: eso va en /desarrolladores («La misma consulta, tres caminos», con la respuesta real del
+  predio de Santa Marta).
+- **Decisiones del dueño aplicadas:** precios de lanzamiento en pesos más IVA (mes y año, de
+  `PLANES` en `construir.py`; créditos de `NIVELES`), solo la llave de prueba (el plan Gratis no se
+  anuncia en ninguna página ni en el formulario de contacto), «Terrnova es un producto de GeoAI
+  LATAM…», sin DANE en servicios ni soluciones, Estado y academia a pedido. Piloto de dos semanas a
+  precio fijo, sin cifra, con lo que se entrega de verdad.
+- **Verdad:** «revisión ambiental por finca» (no EUDR), «10.000», los 6,13 M terrenos del SINIC
+  citados de la ficha de la fuente, la llave llega por un enlace de correo.
+- **Front:** menú móvil con Escape y cierre al elegir, `aria-controls`; objetivos de 44 px; encabezados
+  sin saltos; contraste AA en /fuentes; Geist servida desde el sitio con precarga (sin `@import`);
+  `?v=` en CSS y JS; og:image 1200 × 630 por página (`web/og.py`). axe: 0 graves en las diez páginas;
+  CLS 0 a 390 px; sin desborde a 360/390/414.
+- **Pendiente fuera del PR:** el Caddyfile en `main` (caché larga para `?v=`), los textos de `src/`
+  que aún dicen «plan gratis» (`llms.txt` en `descripcion.py`, el asunto `plan-gratis` en `alta.py`).
+
+## Sitio v2, fase 4: las ocho figuras rehechas (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- **Motor nuevo (`js/figuras.js`):** cada figura es `pose(turno, t)`, una función pura del tiempo que
+  pone las piezas vivas y da la lectura de ese instante; dos capas por SVG (fija y viva, solo
+  `transform` y `opacity`); un planificador único (la figura más visible, dos ciclos al entrar,
+  puntero, toque, foco y flechas, 60/30 fps, cero cuadros en reposo). Fuera los bucles de ambiente,
+  `getPointAtLength`, los halos con `blur` y las transiciones de `fill`.
+- **Las ocho**, con un material por figura y un solo ámbar en la pieza que actúa: capas (teal: el
+  dato sube y la pantalla del módulo responde), ruta (agua: ficha, barrera con canto, tapa de la
+  columna), prueba (bosque: la ficha sube; la huella se sella), revisión (ocre: estaciones colgadas,
+  banda que va con la ficha), tablero (agua: aguja que se asienta, pórtico que vuelve, serie que se
+  dibuja), vigilancia (teal: banderita, registro, tique), asistente (bosque: clavija que cambia de
+  boca, siglas grabadas, respuesta legible) y cobertura (rampa agua → teal hondo: maqueta con la
+  forma del país, columnas que crecen, alfileres).
+- **Verdad:** sin DANE en tablero ni asistente, sin alertas del IDEAM; revisión por contrato con
+  herramientas que reciben id de SECOP II (lo comprueba el build); `test_figuras_solo_nombran_
+  herramientas_vendibles_y_sin_dane`.
+- **Medido** (390 px, CPU 4×): ninguna tarea > 33 ms; pintados en 3 s de reposo de 96–870 a 0 (4 en la
+  vigilancia, su latido). `lines.mjs` 0 extremos sueltos en las ocho.
+
+## Sitio v2: el héroe vuelve a como estaba (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- El dueño no quería tocar la animación principal del héroe (el giro de los predios). La escena
+  vuelve a la de antes de las fases 2 y 3 (`js/escena-predios.js`, `js/comun3d.js`, three.js
+  también en móvil, imagen de respaldo y `datos/calles.json` de antes). Salen `js/maqueta.js`,
+  `js/heroe.js`, `web/figuras/heroe.mjs` y el póster SVG.
+- Se quedan tres arreglos que no cambian cómo se ve: con movimiento reducido un solo render; el giro
+  y la subida por tiempo (dt), no por cuadros; y la atribución de OpenStreetMap tocable y fuera de
+  `role="img"` (la imagen accesible es el lienzo).
+- La consola rt/1 vuelve encima de la escena como estaba (pestañas Predio, Empresa y Norma, su
+  reproducción y la guía al predio), con las fechas en DD-MM-AAAA. Sale el sobre de una sola respuesta.
+
+## Sitio v2, fases 2 y 3: base visual y héroe como figura cero, revertido (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- **Base visual:** tokens de color por papel en `estilo.css` (estructura, líneas, sujeto por
+  material, oscuro, acento, estado) y los materiales de las figuras pasados a esas rampas; un solo
+  ámbar por pantalla (el botón del menú es secundario, pestañas en tinta); sello «ilustrativo» con
+  un estilo; mono solo para datos; el logo ya no se lee «Termova» a 1x (650, 20 px, +0,02 em) y el
+  del pie lleva la puerta clara y el punto ámbar. `docs/DISENO.md` al día (color por papeles,
+  movimiento, héroe).
+- **Héroe = figura cero:** maqueta de los predios SINIC alrededor del punto consultado
+  (`js/maqueta.js`), póster SVG con el kit de Anatomy (`img/figuras/heroe.svg`, 58 KB) y la misma
+  escena en three.js con la misma cámara 45°/30° y sombreado de cuatro tonos; three.js solo se
+  carga en vista, ocioso y sin ahorro de datos, movimiento reducido, poca memoria ni táctil
+  (`js/heroe.js`). Render bajo demanda. Al lado, el sobre rt/1 real del predio con procedencia,
+  licencia, completitud y `servido_desde` resaltados. Calles de OSM con sus ejes en `datos/calles.json`.
+- **Medido:** móvil antes de desplazarse 235 KB sin three.js (antes 743 KB); con movimiento
+  reducido 0 cuadros WebGL (antes ~130 por segundo). Siguen las fases 4 (figuras), 5 (texto), 6 y 7
+  del plan.
+
+## Sitio con figuras Anatomy integradas y texto recortado (2026-10-31, rama `feat/sitio-anatomy`, PR sin fusionar)
+
+- **Ocho figuras isométricas** dibujadas con el kit de Anatomy (`web/figuras`, un módulo por figura y
+  `comun.mjs` con la cámara y la escala comunes): capas (bastidor), ruta (banco con barrera), prueba
+  (fichero con las cinco capas de una respuesta real de la TRM), revisión (banda de inspección),
+  tablero (relojes y trazador), vigilancia (buzones, lector e impresora), asistente (tablero de
+  conmutación) y cobertura (maqueta de Colombia con la muestra SINIC). Sustituyen las viñetas 3D
+  (`escena-vinetas.js`), las maquetas HTML de /servicios y la escena 3D de cobertura; el héroe 3D de
+  predios de Santa Marta no cambió.
+- **Integradas, sin tarjeta:** sin borde ni fondo propio; la lectura en vivo es una línea mono debajo.
+  Los SVG viven en `web/publico/img/figuras/` y `figuras.js` los trae al acercarse a la vista
+  (index.html bajó de 243 KB a 29 KB). Con movimiento reducido quedan quietas y completas.
+- **Verdad:** todo lo que muestran sale de `web/figuras/datos.json`, que escribe `construir.py` desde el
+  catálogo (y `datos/co.json` para la cobertura); lo inventado (hallazgos, cifras del tablero,
+  cambios vigilados) lleva el sello «ilustrativo». `lines.mjs` de Anatomy: 0 extremos sueltos en las ocho.
+- **Texto recortado** (palabras visibles): portada 1.546 → 707, servicios 959 → 374, fuentes 1.335 →
+  771, precios 600 → 471, desarrolladores 776 → 659, contacto 178 → 94. Fuera «Lo que ya existe» de
+  /servicios (GEO Copilot todavía no consume el MCP en producción y la cifra de la tesis no está en
+  el repo).
+- **Siguiente paso:** que el dueño revise el PR en local (`uv run python web/servir.py`) y decida si se
+  fusiona y despliega.
 
 ## Lo que dejó la auditoría integral (2026-10-31, #203–#207)
 

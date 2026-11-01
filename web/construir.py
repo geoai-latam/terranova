@@ -21,28 +21,52 @@ RAIZ = Path(__file__).resolve().parent
 PUBLICO = RAIZ / "publico"
 sys.path.insert(0, str(RAIZ.parent / "src"))
 
+from terranova.alta import ASUNTOS, VIGENCIA_LLAVE  # noqa: E402
+from terranova.cache import RETENCION_S  # noqa: E402
+from terranova.catalogo import TARIFA as TARIFA_CATALOGO  # noqa: E402
 from terranova.catalogo import cargar  # noqa: E402
+from terranova.compuestas import COMPUESTAS  # noqa: E402
+from terranova.correos import COMANDO_CLAUDE, EJEMPLO, PRIMERA_PREGUNTA  # noqa: E402
+from terranova.cuota import NIVELES  # noqa: E402
 
 DOMINIO = "https://terrnova.com"
 CORREO = "soporte@terrnova.com"
 # La misma versión que importa web/publico/js/comun3d.js.
 THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
 
-# Créditos al mes por plan (cuota.py, ADR-0029) y tarifa por tipo de pregunta (enmienda de la ADR-0010).
+# Precios de lanzamiento (decisión del dueño, 01-11-2026): pesos al mes, más IVA; el anual, 20 %
+# menos. Los créditos de cada plan salen de NIVELES (cuota.py, ADR-0029). El plan Gratis de
+# NIVELES["con_llave"] no se anuncia: el sitio ofrece solo la llave de prueba (decisión 2).
 PLANES = [
-    ("Gratis", 1_500),
-    ("Básico", 25_000),
-    ("Pro", 110_000),
-    ("Empresa", 375_000),
-    ("Escala", 1_100_000),
+    ("basico", "Básico", 79_000, 758_400),
+    ("pro", "Pro", 299_000, 2_870_400),
+    ("empresa", "Empresa", 899_000, 8_630_400),
+    ("escala", "Escala", 2_390_000, 22_944_000),
 ]
+assert all(anual == mes * 12 * 8 // 10 for _, _, mes, anual in PLANES), (
+    "anual = 12 meses menos el 20 %"
+)
+CREDITOS_AMPLIADO = NIVELES["ampliado"]  # entidades públicas, academia y veedurías, a pedido
+# La llave del alta automática (ADR-0034): pocos créditos y vencimiento. Salen del código.
+CREDITOS_PRUEBA = NIVELES["prueba"]
+TOPE_FICHA = COMPUESTAS["ficha_lugar"].tope_creditos
+DIAS_PRUEBA = VIGENCIA_LLAVE.days
+
+# Créditos por tipo de pregunta (catalogo.TARIFA, enmienda de la ADR-0010), dichos en palabras de
+# quien pregunta, con una herramienta real de ese tipo (la construcción comprueba el tipo).
 TARIFA = [
-    ("código", 1, "de nombre a código", "dane_divipola_buscar"),
-    ("registro", 2, "un registro o una serie simple", "banrep_trm_recientes"),
-    ("agregado", 5, "agregados o búsqueda de texto", "contratos de una entidad"),
-    ("punto", 10, "espacial en un punto", "sinic_predio_en_punto"),
-    ("zona", 20, "espacial en una zona o un ráster", "áreas protegidas en una zona"),
+    ("codigo", "de nombre a código", "el código de un municipio", "dane_divipola_buscar"),
+    ("registro", "un registro", "una empresa por NIT, una norma", "rues_empresa_por_nit"),
+    (
+        "agregado",
+        "un conteo o una búsqueda",
+        "los contratos de una entidad",
+        "secop_contratos_entidad",
+    ),
+    ("punto", "un punto del mapa", "el predio en una coordenada", "sinic_predio_en_punto"),
+    ("zona", "una zona", "las áreas protegidas de una zona", "pnn_areas_protegidas_en_zona"),
 ]
+assert [t[0] for t in TARIFA] == list(TARIFA_CATALOGO)
 FAMILIAS = {
     "estadisticas": "Estadísticas",
     "territorio": "Territorio",
@@ -57,7 +81,7 @@ NAV = [
     ("/", "Producto"),
     ("/servicios", "Servicios"),
     ("/fuentes", "Fuentes"),
-    ("/#precios", "Precios"),
+    ("/precios", "Precios"),
     ("/desarrolladores", "Desarrolladores"),
 ]
 
@@ -128,6 +152,10 @@ ENTIDADES = Counter(
     nombre_entidad(f.entidad) for f in PUBLICADAS if not f.entidad.startswith("Terrnova")
 )
 N_ENTIDADES = len(ENTIDADES)
+# Las fuentes globales (USGS, ESA, NASA) también cuentan: «de Colombia» a secas no sería verdad.
+N_GLOBALES = sum(1 for f in PUBLICADAS if nombre_entidad(f.entidad) in GLOBALES)
+assert 0 < N_GLOBALES < N_FUENTES
+FUENTES_DE = f"{N_FUENTES} fuentes oficiales, de Colombia y globales"
 POR_FAMILIA = Counter(h.familia for h in HERR)
 MODOS = Counter(f.modo for f in PUBLICADAS)
 LICENCIAS = Counter(f.licencia.spdx or "dato público, sin SPDX" for f in PUBLICADAS)
@@ -164,21 +192,16 @@ def catalogo_json() -> str:
     )
 
 
-# La llave del alta automática (ADR-0034): pocos créditos y vencimiento. Salen del código.
-sys.path.insert(0, str(RAIZ.parent / "src"))
-from terranova.alta import ASUNTOS, VIGENCIA_LLAVE  # noqa: E402
-from terranova.cuota import NIVELES  # noqa: E402
-
-CREDITOS_PRUEBA = NIVELES["prueba"]
-DIAS_PRUEBA = VIGENCIA_LLAVE.days
+for _cobro, _, _, _hid in TARIFA:
+    assert CAT.herramientas[_hid].cobro == _cobro, f"{_hid} no se cobra como {_cobro}"
 
 TRAMPA = (
     '<label class="trampa" aria-hidden="true">No llenes este campo'
     '<input name="web" tabindex="-1" autocomplete="off"></label>'
 )
 ACEPTO = (
-    '<label class="casilla"><input type="checkbox" name="acepto" value="si" required> Acepto la '
-    '<a class="enlace" href="/privacidad">política de privacidad</a>.</label>'
+    '<label class="casilla"><input type="checkbox" name="acepto" value="si" required><span>Acepto la '
+    '<a class="enlace" href="/privacidad">política de privacidad</a>.</span></label>'
 )
 
 
@@ -193,7 +216,9 @@ def formulario_alta() -> str:
 </form>"""
 
 
-ASUNTOS_CONTACTO = list(ASUNTOS.items())  # los mismos que acepta la puerta
+# Los mismos que acepta la puerta, menos el plan Gratis, que el sitio no anuncia (decisión 2).
+ASUNTOS_CONTACTO = [(v, t) for v, t in ASUNTOS.items() if v != "plan-gratis"]
+assert all(f"plan-{c}" in ASUNTOS for c, *_ in PLANES) and "gobierno-academia" in ASUNTOS
 
 
 def formulario_contacto() -> str:
@@ -230,16 +255,16 @@ def encabezado(ruta: str) -> str:
     )
     return f"""<header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio">{simbolo()}Terrnova</a>
-<nav class="menu" aria-label="Principal">{menu}</nav>
-<div class="der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton p chico" href="/precios#empezar">Empieza gratis</a></div>
-<button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="menu" id="menu-principal" aria-label="Principal">{menu}</nav>
+<div class="der" id="menu-der"><a href="/estado">{PULSO}Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Prueba gratis</a></div>
+<button class="abrir" type="button" aria-expanded="false" aria-controls="menu-principal menu-der" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>"""
 
 
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
-<div><a class="marca" href="/">{simbolo("#F3EFE4", "#E0A13A", "#0B231C")}Terrnova</a>
-<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<div><a class="marca" href="/">{simbolo("#F3EFE4", "#F3EFE4", "#E0A13A")}Terrnova</a>
+<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:{CORREO}">{CORREO}</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
@@ -248,15 +273,48 @@ PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 </div></footer>"""
 
 
+def version(ruta: str) -> str:
+    """Huella corta del archivo, para `?v=`: lo versionado se puede guardar en caché mucho tiempo."""
+    import hashlib
+
+    datos = (PUBLICO / ruta.lstrip("/")).read_bytes().replace(b"\r\n", b"\n")
+    return f"{ruta}?v={hashlib.sha256(datos).hexdigest()[:10]}"
+
+
+# Imagen para compartir (1200 x 630) por página: una figura del sitio con el titular de la página.
+# Las dibuja `web/og.py` (Playwright) en img/og/; las páginas sin la suya usan la de la portada.
+OG = {
+    "/": "portada",
+    "/servicios": "servicios",
+    "/fuentes": "fuentes",
+    "/precios": "precios",
+    "/desarrolladores": "desarrolladores",
+}
+
+
 def pagina(
-    ruta: str, titulo: str, descripcion: str, cuerpo: str, scripts: tuple[str, ...] = ()
+    ruta: str,
+    titulo: str,
+    descripcion: str,
+    cuerpo: str,
+    scripts: tuple[str, ...] = (),
+    indexar: bool = True,
 ) -> str:
     canon = DOMINIO + (ruta if ruta != "/" else "/")
     tit = titulo if ruta == "/" else f"{titulo} · Terrnova"
-    mods = "".join(f'\n<script type="module" src="/js/{s}"></script>' for s in scripts)
+    mods = "".join(
+        f'\n<script type="module" src="{version("/js/" + s)}"></script>' for s in scripts
+    )
     if any(s.startswith("escena-") for s in scripts):
         # three.js empieza a bajar con la página, no cuando el módulo de la escena lo pide.
         mods = f'\n<link rel="modulepreload" href="{THREE_URL}" crossorigin>' + mods
+    og = f"{DOMINIO}/img/og/{OG.get(ruta, 'portada')}.png"
+    # La 404 no se indexa ni tiene canónica: es la respuesta a una página que no existe.
+    if indexar:
+        indice = f'<link rel="canonical" href="{canon}">'
+        og_url = f'<meta property="og:url" content="{canon}">\n'
+    else:
+        indice, og_url = '<meta name="robots" content="noindex">', ""
     return f"""<!doctype html>
 <html lang="es">
 <head>
@@ -264,19 +322,24 @@ def pagina(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(tit)}</title>
 <meta name="description" content="{escape(descripcion)}">
-<link rel="canonical" href="{canon}">
+{indice}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Terrnova">
 <meta property="og:title" content="{escape(tit)}">
 <meta property="og:description" content="{escape(descripcion)}">
-<meta property="og:url" content="{canon}">
-<meta property="og:locale" content="es_CO">
+{og_url}<meta property="og:locale" content="es_CO">
+<meta property="og:image" content="{og}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{escape(tit)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{og}">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/estilo.css">
-<script src="/js/sitio.js" defer></script>{mods}
+<link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{version("/estilo.css")}">
+<script src="{version("/js/sitio.js")}" defer></script>{mods}
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -292,8 +355,9 @@ def pagina(
 
 def portada(rotulo: str, titulo: str, entrada: str, extra: str = "", lado: str = "") -> str:
     clase = "envoltura con-lado" if lado else "envoltura"
+    rot = f'<span class="rotulo">{rotulo}</span>' if rotulo else ""
     return f"""<section class="portada"><div class="{clase}"><div class="cab">
-<span class="rotulo">{rotulo}</span><h1 class="t1">{titulo}</h1><p class="entrada">{entrada}</p>{extra}
+{rot}<h1 class="t1">{titulo}</h1><p class="entrada">{entrada}</p>{extra}
 </div>{lado}</div></section>"""
 
 
@@ -311,13 +375,14 @@ def lado_familias() -> str:
 
 
 def lado_tarifa() -> str:
-    tope = max(c for _, c, _, _ in TARIFA)
+    tope = max(TARIFA_CATALOGO.values())
     cols = "".join(
-        f'<div class="col"><b>{c}</b><i style="--v:{c / tope:.3f}"></i><span>{t}</span></div>'
-        for t, c, _, _ in TARIFA
+        f'<div class="col"><b>{TARIFA_CATALOGO[k]}</b><i style="--v:{TARIFA_CATALOGO[k] / tope:.3f}"></i>'
+        f"<span>{t}</span></div>"
+        for k, t, _, _ in TARIFA
     )
     return f"""<figure class="lado-fig escalera"><figcaption>Créditos por consulta</figcaption><div class="cols">{cols}</div>
-<p class="fuente-dato">caché, errores y «fuera de cobertura» no descuentan</p></figure>"""
+<p class="fuente-dato">errores, caché y fuera de cobertura no descuentan</p></figure>"""
 
 
 def lado_puertas() -> str:
@@ -410,6 +475,11 @@ def sistemas_validados() -> dict[str, list[str]]:
     return SISTEMAS
 
 
+def miles_en_texto(s: str) -> str:
+    """«10 000» (como lo escriben algunos títulos del catálogo) → «10.000», en formato colombiano."""
+    return re.sub(r"(?<!\d)(\d{1,3}) (\d{3})(?!\d)", r"\1.\2", s)
+
+
 def y_lista(xs: list[str]) -> str:
     return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " y " + xs[-1]
 
@@ -424,7 +494,7 @@ def indice_fuentes() -> str:
         out.append(
             f'<li{clase} style="--t:{17 + 4.2 * n**0.5:.1f}px"><h3>{escape(nom)}'
             f'<span class="sr">, </span><sup>{n}<span class="sr"> {fuentes}</span></sup></h3>'
-            f"<p>{escape(y_lista(sis[nom]))}</p></li>"
+            f"<p>{escape(miles_en_texto(y_lista(sis[nom])))}</p></li>"
         )
     return '<ul class="indice">' + "".join(out) + "</ul>"
 
@@ -452,10 +522,10 @@ TURNOS = [
             ("destinación", "Habitacional, urbano"),
             ("entidad", "IGAC, SINIC"),
             ("licencia", "CC-BY-SA-4.0, uso comercial sí"),
-            ("servido", "copia del 2026-10-28 en 0,56 s"),
+            ("servido", "copia del 28-10-2026 en 0,56 s"),
         ],
         "huella": "sha256:7a2cc965…",
-        "fecha": "2026-10-29",
+        "fecha": "29-10-2026",
     },
     {
         "k": "empresa",
@@ -472,7 +542,7 @@ TURNOS = [
             ("servido", "fuente en vivo en 2,4 s"),
         ],
         "huella": "sha256:2acc04ec…",
-        "fecha": "2026-10-30",
+        "fecha": "30-10-2026",
     },
     {
         "k": "norma",
@@ -489,7 +559,7 @@ TURNOS = [
             ("servido", "fuente en vivo en 2,9 s"),
         ],
         "huella": "sha256:6fcc3fe7…",
-        "fecha": "2026-10-30",
+        "fecha": "30-10-2026",
     },
 ]
 
@@ -520,198 +590,128 @@ def consola() -> str:
     )
 
 
-# Preguntas por sector: herramientas reales del catálogo (la construcción falla si alguna no existe).
+# Soluciones por sector, para quien decide: qué decide el área, lo que se construye encima (ilustrativo:
+# lo posible, no clientes) y con qué entidades, sacadas de herramientas reales del catálogo (la
+# construcción falla si alguna no existe o no se vende). Sin el DANE (decisión 4) ni las alertas del
+# IDEAM (su copia se refresca a mano).
+CAPAS = ("Datos", "Analítica", "Automatización", "Agentes")
 SECTORES = [
     (
+        "Banca y crédito",
+        "Aprobar un crédito con la empresa y la garantía revisadas en la fuente.",
+        [
+            ("Analítica", "La empresa y el predio en garantía, revisados antes del crédito."),
+            ("Automatización", "Aviso si un cliente cambia su matrícula mercantil."),
+        ],
+        [
+            "rues_empresa_por_nit",
+            "supersociedades_situacion_financiera",
+            "igac_predio_en_punto",
+            "upra_precio_tierra_en_punto",
+        ],
+    ),
+    (
+        "Contratación pública",
+        "Adjudicar sabiendo qué contrató antes el proveedor y si tiene multas.",
+        [
+            ("Analítica", "Contratos, multas y sanciones de un contratista antes de adjudicar."),
+            ("Agentes", "Un asistente que dice cuánto contrató el municipio y con quién."),
+        ],
+        [
+            "secop_contratos_proveedor",
+            "secop_sanciones_contrato",
+            "secop_contratos_municipio",
+            "dnp_proyectos_sgr_municipio",
+        ],
+    ),
+    (
         "Legal y cumplimiento",
-        "Normas vigentes, jurisprudencia y sanciones, para conceptos, auditorías y debida diligencia.",
+        "Firmar un concepto con la norma vigente y la sentencia que la interpreta.",
+        [
+            ("Agentes", "Conceptos que citan la norma vigente y la sentencia."),
+            ("Automatización", "Aviso cuando cambia una norma que sigues."),
+        ],
         [
             "suin_norma",
             "corte_constitucional_sentencia",
             "funcionpublica_normas_buscar",
-            "creg_resolucion_buscar",
             "sic_sanciones_por_sector",
         ],
     ),
     (
         "Agro y exportación",
-        "Debida diligencia de un lote antes de exportar: áreas protegidas, pérdida de bosque, cobertura del suelo y territorios étnicos.",
+        "Comprar a una finca sabiendo si toca un área protegida o un territorio étnico.",
+        [
+            (
+                "Analítica",
+                "Revisión ambiental por finca: áreas protegidas, territorios étnicos y, en la "
+                "Amazonia, pérdida de bosque.",
+            ),
+            ("Automatización", "Revisión periódica de las fincas de tus proveedores."),
+        ],
         [
             "pnn_areas_protegidas_en_punto",
+            "ant_resguardos_en_punto",
             "sinchi_perdida_bosque_en_punto",
             "esa_cobertura_suelo_en_punto",
-            "ant_resguardos_en_punto",
-            "upra_eva_cultivos_municipio",
         ],
     ),
     (
         "Inmobiliario y construcción",
-        "El predio, lo que dice el POT, las amenazas y el valor del suelo, antes de comprar o de diseñar.",
+        "Ofertar por un lote sabiendo qué permite el POT y qué amenazas tiene.",
+        [
+            ("Analítica", "La ficha de un predio: catastro, POT, amenazas y valor del suelo."),
+            ("Agentes", "Qué se puede construir en un lote de Bogotá, para el equipo comercial."),
+        ],
         [
             "igac_predio_en_punto",
             "sdp_tratamiento_urbanistico_en_punto",
             "sdp_amenaza_movimiento_masa_en_punto",
             "igac_zona_geoeconomica_en_punto",
-            "igac_compraventas_municipio",
-        ],
-    ),
-    (
-        "Banca y crédito",
-        "Contexto de una empresa o de un crédito rural: registro mercantil, estados financieros, precio de la tierra e indicadores.",
-        [
-            "rues_empresa_por_nit",
-            "supersociedades_situacion_financiera",
-            "upra_precio_tierra_en_punto",
-            "banrep_trm_recientes",
-            "dane_ipm_municipio",
-        ],
-    ),
-    (
-        "Contratación pública",
-        "Seguimiento de contratos, entidades y proyectos de regalías en SECOP y en el DNP.",
-        [
-            "secop_contratos_entidad",
-            "secop_ejecucion_contrato",
-            "secop_contratos_proveedor",
-            "secop_sanciones_contrato",
-            "dnp_proyectos_sgr_municipio",
         ],
     ),
     (
         "Gobierno y territorio",
-        "Los indicadores de un municipio para planear, priorizar o reportar.",
+        "Priorizar la inversión de un municipio comparado con sus pares.",
         [
-            "dane_poblacion_proyectada_municipio",
+            ("Analítica", "Un tablero municipal comparado con sus pares."),
+            ("Automatización", "Aviso cuando cambia un contrato o un proyecto de regalías."),
+        ],
+        [
             "men_educacion_municipio",
             "ins_calidad_agua_municipio",
-            "ideam_alertas_deslizamiento_municipio",
-            "uariv_victimas_municipio",
+            "policia_hurto_comercio_residencias_municipio",
+            "dnp_proyectos_sgr_municipio",
         ],
     ),
 ]
-
-
-# Soluciones de ejemplo por sector: lo que se construye encima de la puerta con las herramientas del
-# panel. Son ilustrativas (lo posible, no clientes) y van selladas.
-CAPAS = ("Datos", "Analítica", "Automatización", "Agentes")
-SOLUCIONES = {
-    "Banca y crédito": [
-        (
-            "Analítica",
-            "Antes de aprobar un crédito: la empresa en el RUES y en Supersociedades, y el predio en garantía en el catastro.",
-        ),
-        (
-            "Automatización",
-            "Un aviso cuando un cliente cambia el estado de su matrícula mercantil.",
-        ),
-        (
-            "Analítica",
-            "Precio de la tierra, vocación del suelo e indicadores del municipio para originar crédito agropecuario.",
-        ),
-    ],
-    "Contratación pública": [
-        (
-            "Analítica",
-            "Revisar a un contratista antes de adjudicar: sus contratos, multas y sanciones en SECOP.",
-        ),
-        (
-            "Automatización",
-            "Vigilar los contratos de una entidad y avisar cuando hay adiciones o modificaciones.",
-        ),
-        (
-            "Agentes",
-            "Un asistente que responde cuánto contrató el municipio, con quién y cómo va cada contrato.",
-        ),
-    ],
-    "Legal y cumplimiento": [
-        (
-            "Agentes",
-            "Un asistente de conceptos que cita la norma vigente y la sentencia de la Corte.",
-        ),
-        ("Automatización", "Alertas cuando sale o cambia una norma del tema que sigues."),
-        (
-            "Analítica",
-            "La vigencia de cada norma citada en un informe, revisada antes de entregarlo.",
-        ),
-    ],
-    "Agro y exportación": [
-        (
-            "Analítica",
-            "Debida diligencia por finca para la EUDR: áreas protegidas, pérdida de bosque y territorios étnicos.",
-        ),
-        (
-            "Automatización",
-            "Una revisión periódica de pérdida de bosque y áreas protegidas en las fincas de tus proveedores.",
-        ),
-        (
-            "Analítica",
-            "Qué se cultiva, cuánto y dónde, por municipio, para planear compras o expansión.",
-        ),
-    ],
-    "Inmobiliario y construcción": [
-        (
-            "Analítica",
-            "La ficha de un predio antes de comprar: catastro, POT, amenazas y valor del suelo.",
-        ),
-        (
-            "Analítica",
-            "Compraventas por municipio para valorar un portafolio o elegir dónde construir.",
-        ),
-        (
-            "Agentes",
-            "Un asistente para el equipo comercial que responde qué se puede construir en un lote de Bogotá.",
-        ),
-    ],
-    "Gobierno y territorio": [
-        (
-            "Analítica",
-            "Un tablero municipal comparado: población, pobreza, educación, salud y seguridad.",
-        ),
-        ("Automatización", "Un informe periódico que se arma solo con las cifras de cada fuente."),
-        (
-            "Automatización",
-            "Un aviso cuando cambia un contrato o un proyecto de regalías de los municipios que atiendes.",
-        ),
-    ],
-}
-ORDEN_SECTORES = [
-    "Banca y crédito",
-    "Contratación pública",
-    "Legal y cumplimiento",
-    "Agro y exportación",
-    "Inmobiliario y construcción",
-    "Gobierno y territorio",
-]
+SECTORES_USADAS = [i for *_, ids in SECTORES for i in ids]
 
 
 def sectores() -> str:
     por_id = {h.id: h for h in HERR}
-    assert sorted(ORDEN_SECTORES) == sorted(s[0] for s in SECTORES) == sorted(SOLUCIONES)
-    assert all(c in CAPAS for v in SOLUCIONES.values() for c, _ in v)
-    orden = sorted(SECTORES, key=lambda s: ORDEN_SECTORES.index(s[0]))
+    assert all(c in CAPAS for _, _, sols, _ in SECTORES for c, _ in sols)
     pest, paneles = [], []
-    for i, (nombre, para, ids) in enumerate(orden):
+    for i, (nombre, decide, sols, ids) in enumerate(SECTORES):
+        assert all(h in por_id for h in ids), f"{nombre}: herramienta que no se vende"
+        ents = list(
+            dict.fromkeys(nombre_entidad(CAT.fuentes[por_id[h].fuente].entidad) for h in ids)
+        )
+        assert not any("DANE" in e for e in ents), nombre
         sel = "true" if i == 0 else "false"
         pest.append(
             f'<button type="button" role="tab" id="s-p{i}" aria-controls="s-t{i}" aria-selected="{sel}"'
             f"{'' if i == 0 else ' tabindex="-1"'}>{nombre}</button>"
         )
-        filas = []
-        for hid in ids:
-            h = por_id[hid]
-            ent = nombre_entidad(CAT.fuentes[h.fuente].entidad)
-            filas.append(
-                f'<li><p>{escape(h.pregunta)}</p><span class="id"><code>{h.id}</code> {escape(ent)}</span></li>'
-            )
-        sols = "".join(
-            f'<li><span class="capa">{c}</span><p>{escape(s)}</p></li>'
-            for c, s in SOLUCIONES[nombre]
+        filas = "".join(
+            f'<li><span class="rotulo">{c}</span><p>{escape(s)}</p></li>' for c, s in sols
         )
         paneles.append(
-            f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}"{"" if i == 0 else " hidden"}>'
-            f'<p class="para">{para}</p>'
-            f'<h4 class="sub-s">Soluciones que se construyen {SELLO_I}</h4><ul class="soluciones">{sols}</ul>'
-            f'<h4 class="sub-s">Con herramientas como</h4><ol>{"".join(filas)}</ol></div>'
+            f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}" '
+            f'data-herramientas="{" ".join(ids)}"{"" if i == 0 else " hidden"}>'
+            f'<h3 class="decide">{con_sello(escape(decide))}</h3>'
+            f'<ul class="soluciones">{filas}</ul>'
+            f'<p class="con-s">Con datos de {escape(y_lista(ents))}</p></div>'
         )
     return f"""<div class="sectores">
 <div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical">{"".join(pest)}</div>
@@ -740,105 +740,72 @@ CRUCES = [
         ],
     ),
     (
-        "Contratos y sanciones",
+        "Contratos de SECOP II",
         [
-            ("secop_contratos_proveedor", "Contratos públicos (SECOP II)"),
-            ("secop_sanciones_contrato", "Sanciones en contratos"),
-            ("secop1_multas_municipio", "Multas (SECOP I)"),
-            ("sic_sanciones_por_sector", "Sanciones de la SIC"),
+            ("secop_contrato_por_id", "Contrato (SECOP II)"),
+            ("secop_sanciones_contrato", "Multas y sanciones"),
+            ("secop_modificaciones_contrato", "Modificaciones"),
+            ("secop_pagos_contrato", "Pagos"),
         ],
     ),
 ]
 
-# Los servicios: para quién, qué hace, qué recibe y con qué fuentes. La landing muestra el resumen
-# y /servicios el detalle con el entregable.
+# Los servicios: qué hace, qué recibes y con qué fuentes. La portada muestra el título y la frase;
+# /servicios, además, lo que recibes.
 SERVICIOS = [
     {
         "id": "revision",
-        "para": "Para bancos, aseguradoras, exportadores, compradores de tierra y áreas de cumplimiento",
-        "titulo": "Debida diligencia: revisamos tu lista contra las fuentes oficiales",
-        "texto": "Nos das una lista de predios, empresas o contratos. Revisamos cada uno contra las fuentes oficiales y te entregamos un expediente por ítem, con la fuente de cada hallazgo y los casos dudosos señalados. Sirve para aprobar un crédito, vincular un proveedor, comprar tierra o cumplir la regulación europea contra la deforestación (EUDR).",
+        "titulo": "Debida diligencia",
+        "texto": "Revisamos tu lista de predios, empresas o contratos contra las fuentes oficiales. Recibes un expediente por ítem.",
         "recibes": [
-            "Un expediente por ítem, en PDF y en datos",
-            "Cada hallazgo con su entidad, su consulta y su fecha",
-            "Los casos dudosos aparte, para que decidas tú",
+            "Un expediente por ítem: cada hallazgo con su entidad, su fecha y la huella de la respuesta",
+            "Los casos dudosos, aparte, para que los revise una persona",
+            "El formato se acuerda por proyecto: hoja de cálculo, GeoJSON o el de tu sistema",
         ],
-        "con": "IGAC, Parques Nacionales, SINCHI, RUES, Supersociedades, SECOP y la SIC",
+        "con": "revision",
         "asunto": "debida-diligencia",
         "boton": "Pide una revisión",
     },
     {
         "id": "tablero",
-        "para": "Para empresas, gremios, alcaldías, gobernaciones y ONG",
-        "titulo": "Analítica: tableros e informes",
-        "texto": "Los indicadores que sigues en un solo lugar: población, pobreza, educación, salud, seguridad, contratación, empresas y ambiente, actualizados desde la fuente y comparables entre municipios, sectores y años.",
+        "titulo": "Tableros e informes",
+        "texto": "Los indicadores que sigues, actualizados desde la fuente y comparables entre municipios.",
         "recibes": [
-            "Un tablero en la web, con tu marca",
-            "Un informe periódico listo para presentar",
-            "Cada cifra enlazada a la entidad que la publica",
+            "Los indicadores que eliges, comparados con municipios pares",
+            "Cada cifra con su entidad y su fecha de corte",
+            "Dónde se publica y cada cuánto se actualiza, se acuerda por proyecto",
         ],
-        "con": "DANE, MinEducación, ADRES, Policía Nacional y SECOP",
+        "con": "tablero",
         "asunto": "tablero",
         "boton": "Pide tu tablero",
     },
     {
         "id": "vigilancia",
-        "para": "Para veedurías y áreas legales, de compras y de cumplimiento",
-        "titulo": "Automatización: vigilancia, alertas y procesos",
-        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, un proyecto de regalías o una nueva sanción, con el registro de cada cambio. Y automatizamos los cruces y reportes que tu equipo hoy hace a mano.",
+        "titulo": "Vigilancia y alertas",
+        "texto": "Te avisamos cuando cambia un contrato, una norma o una sanción que sigues.",
         "recibes": [
-            "Alertas por correo o en tu sistema",
-            "Un resumen semanal de lo que cambió",
-            "El registro de cada cambio, con su fecha y su fuente",
+            "Un aviso por correo o en tu sistema cuando cambia lo que sigues",
+            "El registro de cada cambio, con fecha y fuente",
+            "Qué se vigila y cada cuánto, se acuerda por proyecto",
         ],
-        "con": "SECOP, SUIN-Juriscol, el DNP y la SIC",
+        "con": "vigilancia",
         "asunto": "vigilancia",
         "boton": "Pide tus alertas",
     },
     {
         "id": "asistente",
-        "para": "Para equipos que quieren su propio asistente",
-        "titulo": "Agentes: asistentes y aplicaciones a la medida",
-        "texto": "Un asistente que responde con los datos oficiales de tu sector, dentro de tu sistema, tu SIG o tu ERP, y con la fuente de cada respuesta.",
+        "titulo": "Asistentes a la medida",
+        "texto": "Un asistente que responde con datos oficiales dentro de tu sistema y cita la fuente.",
         "recibes": [
-            "El asistente funcionando en tu entorno",
-            "Conectado a las fuentes que tu equipo usa",
+            "El asistente en tu entorno",
+            "Conectado a las fuentes de tu equipo",
             "Cada respuesta con su fuente y su licencia",
         ],
-        "con": f"las {N_HERR} herramientas del catálogo",
+        "con": "asistente",
         "asunto": "asistente",
         "boton": "Cuéntanos tu idea",
     },
 ]
-
-ETIQUETAS = {
-    "revision": "Esquema animado: predios, empresas y contratos pasan por una compuerta; salen en verde si no hay hallazgos y en ámbar si hay algo que revisar.",
-    "tablero": "Esquema animado: un tablero despiezado en capas, con el mapa de Colombia por zonas, tu municipio frente a los comparables y la tendencia de cada indicador; con cada indicador cambian las tres capas.",
-    "vigilancia": "Esquema animado: un barrido recorre lo que vigilas y una señal sube donde algo cambió.",
-    "asistente": "Esquema animado: la pregunta viaja a las fuentes que hacen falta y vuelve con la respuesta.",
-}
-
-METODO = [
-    ("Nos cuentas", "qué necesitas decidir y con qué información cuentas."),
-    ("Te damos un precio fijo", "antes de empezar, nunca por hora."),
-    (
-        "Hacemos el trabajo",
-        "y contrastamos cada cifra con su fuente antes de entregarla.",
-    ),
-    ("Recibes el resultado", "con la prueba de cada dato."),
-]
-
-
-def cruces_html() -> str:
-    por_id = {h.id: h for h in HERR}
-    grupos = []
-    for g, items in CRUCES:
-        filas = "".join(
-            f"<li>{t}<span>{escape(nombre_entidad(CAT.fuentes[por_id[i].fuente].entidad))}</span></li>"
-            for i, t in items
-        )
-        grupos.append(f'<div class="grupo"><h4>{g}</h4><ul>{filas}</ul></div>')
-    return '<div class="cruces">' + "".join(grupos) + "</div>"
 
 
 def licencia_corta(spdx: str | None) -> str:
@@ -854,24 +821,62 @@ def licencia_corta(spdx: str | None) -> str:
     }.get(spdx, "licencia propia de la entidad")
 
 
-# Lo que muestran las viñetas sale del catálogo: herramientas, entidades y licencias reales.
+# Ilustrativo: valor de tu municipio, franja de los comparables y serie, por indicador (0 a 1 en la
+# escala del reloj). Los indicadores y sus entidades son del catálogo, y cada fuente publica una
+# serie (año por año o por periodo): sin serie no hay tendencia que dibujar.
+CIFRAS_TABLERO = [
+    (0.72, (0.55, 0.85), (0.58, 0.61, 0.63, 0.62, 0.66, 0.68, 0.70, 0.72)),
+    (0.30, (0.18, 0.48), (0.52, 0.47, 0.44, 0.40, 0.38, 0.35, 0.31, 0.30)),
+    (0.56, (0.42, 0.66), (0.48, 0.50, 0.49, 0.52, 0.51, 0.54, 0.55, 0.56)),
+    (0.64, (0.35, 0.70), (0.38, 0.42, 0.40, 0.47, 0.52, 0.55, 0.60, 0.64)),
+]
+
+# Ilustrativo: en qué fuente aparece algo que revisar, por tipo (predio, empresa, contrato).
+HALLAZGO_REVISION = [1, None, 1]
+
+# Lo que muestran las figuras de los servicios sale del catálogo: herramientas, entidades y licencias reales.
 TIPOS_REVISION = {
     "Predios y parcelas": ("Predio", "por coordenada"),
     "Empresas y proveedores": ("Empresa", "por NIT"),
-    "Contratos y sanciones": ("Contratista", "por NIT"),
+    "Contratos de SECOP II": ("Contrato", "por id de SECOP II"),
 }
+# Cada «como» exige el tipo de entrada que de verdad recibe la herramienta (datos_servicio lo comprueba).
+ENTRADA_REVISION = {
+    "por coordenada": {"lon", "lat"},
+    "por NIT": "nit_empresa",
+    "por id de SECOP II": "id_secop",
+}
+# Sin el DANE (sin base legal para venderlo en servicios) ni las alertas del IDEAM (su copia se
+# refresca a mano): preguntas de fuentes en vivo o con su fecha de corte.
 PREGUNTAS_ASISTENTE = [
-    "banrep_trm_recientes",
-    "dane_poblacion_proyectada_municipio",
+    "suin_norma",
+    "ins_calidad_agua_municipio",
     "pnn_areas_protegidas_en_punto",
     "secop_contratos_municipio",
     "rues_empresa_por_nit",
     "igac_predio_en_punto",
     "upra_precio_tierra_rural_municipio",
-    "ideam_alertas_incendios_municipio",
+    "men_educacion_municipio",
 ]
+# La pregunta de cada una, corta, para que la lectura quepa en una línea (la entera va en la etiqueta).
+PREGUNTA_CORTA = {
+    "suin_norma": "¿Sigue vigente esta ley?",
+    "ins_calidad_agua_municipio": "¿Es potable el agua aquí?",
+    "pnn_areas_protegidas_en_punto": "¿Hay un área protegida aquí?",
+    "secop_contratos_municipio": "¿Cuánto contrata este municipio?",
+    "rues_empresa_por_nit": "¿Qué dice el RUES de esta empresa?",
+    "igac_predio_en_punto": "¿Qué predio hay aquí?",
+    "upra_precio_tierra_rural_municipio": "¿Cuánto vale la tierra aquí?",
+    "men_educacion_municipio": "¿Cómo va la educación aquí?",
+}
+# Sigla grabada en la placa de cada boca del tablero del asistente (las que no están, van con su nombre).
+SIGLA_ENTIDAD = {
+    "Parques Nacionales": "PNN",
+    "Colombia Compra Eficiente": "CCE",
+    "Policía Nacional": "Policía",
+}
 OTRAS_ASISTENTE = [
-    "ins_calidad_agua_municipio",
+    "reps_sedes_municipio",
     "invima_registro_sanitario_por_expediente",
     "anh_crudo_municipio",
     "policia_hurto_vehiculos_municipio",
@@ -882,21 +887,37 @@ CARRILES_VIGILANCIA = [
     ("SECOP I", "Colombia Compra Eficiente", "Nueva multa a un contratista que sigues"),
     ("SIC", "SIC", "Nueva sanción en el sector que sigues"),
 ]
+# Indicadores con serie publicada por su entidad (sin el DANE): herramienta, nombre y qué serie es.
 INDICADORES_TABLERO = [
-    ("dane_poblacion_proyectada_municipio", "Población"),
-    ("dane_ipm_municipio", "Pobreza"),
-    ("men_educacion_municipio", "Educación"),
-    ("adres_afiliados_subsidiado_municipio", "Salud"),
+    ("men_educacion_municipio", "Educación", "cobertura neta, año por año"),
+    ("ins_calidad_agua_municipio", "Agua potable", "riesgo del agua (IRCA), año por año"),
+    (
+        "policia_hurto_comercio_residencias_municipio",
+        "Seguridad",
+        "hurtos a comercio y residencias, año por año",
+    ),
+    ("igac_compraventas_municipio", "Compraventas", "compraventas de inmuebles, año por año"),
 ]
 
 
-def datos_vineta(tipo: str) -> object:
+def datos_servicio(tipo: str) -> object:
     por_id = {h.id: h for h in HERR}
 
     def entidad(hid: str) -> str:
         return nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad)
 
     if tipo == "revision":
+        for g, items in CRUCES:
+            pide = ENTRADA_REVISION[TIPOS_REVISION[g][1]]
+            for i, _ in items:
+                tipos = (
+                    set(por_id[i].entrada)
+                    if isinstance(pide, set)
+                    else set(por_id[i].entrada.values())
+                )
+                assert (pide <= tipos) if isinstance(pide, set) else (pide in tipos), (
+                    f"{i} no va {TIPOS_REVISION[g][1]}"
+                )
         return [
             {
                 "tipo": TIPOS_REVISION[g][0],
@@ -910,30 +931,27 @@ def datos_vineta(tipo: str) -> object:
         for i in PREGUNTAS_ASISTENTE:
             f = CAT.fuentes[por_id[i].fuente]
             preguntas.append(
-                {"p": por_id[i].pregunta, "e": entidad(i), "l": licencia_corta(f.licencia.spdx)}
+                {
+                    "p": por_id[i].pregunta,
+                    "corta": PREGUNTA_CORTA[i],
+                    "e": entidad(i),
+                    "l": licencia_corta(f.licencia.spdx),
+                }
             )
         nodos = list(
             dict.fromkeys([p["e"] for p in preguntas] + [entidad(i) for i in OTRAS_ASISTENTE])
         )
-        return {"preguntas": preguntas, "nodos": nodos}
+        siglas = [SIGLA_ENTIDAD.get(e, e) for e in nodos]
+        assert all(len(x) <= 12 for x in siglas), siglas
+        return {"preguntas": preguntas, "nodos": nodos, "siglas": siglas}
     if tipo == "vigilancia":
         sistemas = sistemas_validados()
         for s, e, _ in CARRILES_VIGILANCIA:
             assert s == e or s in sistemas[e], f"{s} no es un sistema de {e}"
         return [{"s": s, "e": e, "ev": ev} for s, e, ev in CARRILES_VIGILANCIA]
     if tipo == "tablero":
-        return [{"t": t, "e": entidad(i)} for i, t in INDICADORES_TABLERO]
+        return [{"t": t, "e": entidad(i), "m": m} for i, t, m in INDICADORES_TABLERO]
     return None
-
-
-def vineta(tipo: str) -> str:
-    datos = datos_vineta(tipo)
-    attr = (
-        f' data-datos="{escape(json.dumps(datos, ensure_ascii=False))}"'
-        if datos is not None
-        else ""
-    )
-    return f'<div class="vineta" data-vineta="{tipo}"{attr} role="img" aria-label="{ETIQUETAS[tipo]}"><div class="rotulos-v" aria-hidden="true"></div></div>'
 
 
 # ---------------------------------------------------------------- figuras isométricas (Anatomy)
@@ -951,7 +969,91 @@ MODULOS = [
 ]
 # La ruta de una pregunta: tres herramientas reales de familias distintas.
 RUTA = ["igac_predio_en_punto", "secop_contratos_entidad", "pnn_areas_protegidas_en_punto"]
+# La pregunta de cada turno, corta, para que la lectura quepa en una línea (la entera va en la etiqueta).
+RUTA_CORTA = {
+    "igac_predio_en_punto": "¿Qué predio hay aquí?",
+    "secop_contratos_entidad": "¿Cuánto contrata?",
+    "pnn_areas_protegidas_en_punto": "¿Área protegida aquí?",
+}
 SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
+# Herramientas cuyo canario no está en verde en producción (01-11-2026): siguen en el catálogo, pero
+# ninguna página ni figura las usa de ejemplo. Si una vuelve a verde, se puede sacar de aquí.
+SIN_CANARIO_VERDE = {
+    "banrep_dtf_recientes",
+    "banrep_ibr_recientes",
+    "banrep_tasa_politica_recientes",
+    "banrep_trm_recientes",
+    "banrep_uvr_recientes",
+    "secop1_modificaciones_adjudicacion",
+    "dian_normograma_buscar",
+    "icfes_saber11_municipio",
+    "icfes_saber11_estrato_municipio",
+    "ideam_alertas_deslizamiento_municipio",
+    "ideam_alertas_incendios_municipio",
+    "ideam_calidad_aire_municipio",
+    "invias_puentes_en_zona",
+    "urt_microzona_en_punto",
+}
+
+
+# Cobertura SINIC: la muestra del 3 % (datos/co.json, hexágonos de 0,07°) se suma en hexágonos tres
+# veces más grandes para que el dibujo quepa; las ciudades son para la lectura, no se rotulan.
+CO_JSON = PUBLICO / "datos" / "co.json"
+FACTOR_COBERTURA = 3
+CIUDADES = [
+    ("Bogotá", -74.08, 4.61),
+    ("Medellín", -75.57, 6.25),
+    ("Cali", -76.53, 3.45),
+    ("Barranquilla", -74.80, 10.96),
+    ("Cartagena", -75.51, 10.39),
+    ("Santa Marta", -74.20, 11.24),
+    ("Bucaramanga", -73.12, 7.12),
+    ("Cúcuta", -72.50, 7.89),
+    ("Pereira", -75.69, 4.81),
+    ("Ibagué", -75.23, 4.44),
+    ("Villavicencio", -73.63, 4.14),
+    ("Montería", -75.88, 8.75),
+]
+
+
+def datos_cobertura() -> dict:
+    import math
+
+    co = json.loads(CO_JSON.read_text(encoding="utf-8"))
+    r = round(co["R"] * FACTOR_COBERTURA, 4)
+    lon0, lat0 = -74.6, 6.4
+
+    def axial(lon: float, lat: float) -> tuple[int, int]:
+        x = (lon - lon0) / (r * math.sqrt(3))
+        fr = (lat - lat0) / (1.5 * r)
+        fq = x - fr / 2
+        cx, cz = fq, fr
+        cy = -cx - cz
+        rx, ry, rz = round(cx), round(cy), round(cz)
+        dx, dy, dz = abs(rx - cx), abs(ry - cy), abs(rz - cz)
+        if dx > dy and dx > dz:
+            rx = -ry - rz
+        elif dy > dz:
+            ry = -rx - rz
+        else:
+            rz = -rx - ry
+        return rx, rz
+
+    def centro(q: int, s: int) -> list[float]:
+        return [round(lon0 + r * math.sqrt(3) * (q + s / 2), 4), round(lat0 + 1.5 * r * s, 4)]
+
+    celdas: dict[tuple[int, int], int] = {}
+    for lon, lat, n in co["bins"]:
+        k = axial(lon, lat)
+        celdas[k] = celdas.get(k, 0) + n
+    tierra = {axial(lon, lat) for lon, lat in co["land"]} | set(celdas)
+    return {
+        "R": r,
+        "celdas": [[*centro(*k), n] for k, n in sorted(celdas.items())],
+        "tierra": [centro(*k) for k in sorted(tierra)],
+        "ciudades": [list(c) for c in CIUDADES],
+        "total": sum(n for *_, n in co["bins"]),
+    }
 
 
 def datos_figuras() -> dict:
@@ -967,10 +1069,16 @@ def datos_figuras() -> dict:
                 "entidad": nombre_entidad(f.entidad),
                 "licencia": licencia_corta(f.licencia.spdx),
                 "servido": SERVIDO[f.modo],
+                "corta": RUTA_CORTA[hid],
             }
         )
     nombradas = {t["entidad"] for t in turnos}
     assert len(nombradas) == len(turnos), "cada turno va a una entidad distinta"
+    ejemplos = set(RUTA + SECTORES_USADAS + PREGUNTAS_ASISTENTE + OTRAS_ASISTENTE)
+    ejemplos |= {i for i, _, _ in INDICADORES_TABLERO} | {t["herr"] for t in TURNOS}
+    ejemplos |= {i for _, items in CRUCES for i, _ in items} | {t[3] for t in TARIFA}
+    ejemplos.add(EJEMPLO["herramienta"])
+    assert not ejemplos & SIN_CANARIO_VERDE, ejemplos & SIN_CANARIO_VERDE
     return {
         "capas": {
             "fuentes": N_FUENTES,
@@ -983,6 +1091,35 @@ def datos_figuras() -> dict:
             # Las demás entidades van sin nombre: solo cuántas fuentes publica cada una.
             "otras": sorted((n for e, n in ENTIDADES.items() if e not in nombradas), reverse=True),
         },
+        "prueba": {"capas": [{"campo": c, "valor": v} for c, v, _ in CAPAS_PRUEBA]},
+        # Los tipos y sus fuentes son los del catálogo; qué estación encuentra algo es ilustrativo.
+        "revision": {"tipos": datos_servicio("revision"), "hallazgo": HALLAZGO_REVISION},
+        # Los sistemas vigilados salen del catálogo (validados en datos_servicio); lo que cambia, no.
+        "vigilancia": {"carriles": datos_servicio("vigilancia")},
+        "asistente": datos_servicio("asistente"),
+        "cobertura": datos_cobertura(),
+        "usadas": {
+            "ruta": RUTA,
+            "prueba": [EJEMPLO["herramienta"]],
+            "revision": [i for _, items in CRUCES for i, _ in items],
+            "tablero": [i for i, _, _ in INDICADORES_TABLERO],
+            "asistente": PREGUNTAS_ASISTENTE + OTRAS_ASISTENTE,
+        },
+        "tablero": {
+            "indicadores": [
+                {
+                    "t": t,
+                    "e": nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad),
+                    "m": medida,
+                    "valor": v,
+                    "comparables": list(c),
+                    "serie": list(serie),
+                }
+                for (hid, t, medida), (v, c, serie) in zip(
+                    INDICADORES_TABLERO, CIFRAS_TABLERO, strict=True
+                )
+            ]
+        },
     }
 
 
@@ -991,17 +1128,39 @@ def datos_figuras_json() -> str:
 
 
 def huella_figuras() -> str:
-    """Huella de lo que decide el dibujo: los datos, el script que dibuja y el kit."""
+    """Huella de lo que decide el dibujo: los datos, los scripts que dibujan, el kit y la hoja
+    del sitio (la capa fija lleva dentro sus reglas)."""
     import hashlib
 
     h = hashlib.sha256(datos_figuras_json().encode("utf-8"))
-    for f in ("construir.mjs", "kit/iso-kit.mjs"):
+    scripts = sorted(f.name for f in FIGURAS.glob("*.mjs"))
+    for f in [*scripts, "kit/iso-kit.mjs", "../publico/estilo.css"]:
         h.update((FIGURAS / f).read_bytes().replace(b"\r\n", b"\n"))
     return h.hexdigest()[:12]
 
 
-def figura(nombre: str) -> str:
-    svg = (FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8").strip()
+SVG_FIGURAS = PUBLICO / "img" / "figuras"
+NOMBRES_FIGURAS = (
+    "capas",
+    "ruta",
+    "prueba",
+    "revision",
+    "tablero",
+    "vigilancia",
+    "asistente",
+    "cobertura",
+)
+
+
+def figura(
+    nombre: str, lectura: str, pista: str = "", clase: str = "", ilustrativo: bool = False
+) -> str:
+    """Una figura integrada en la sección: sin marco, con su lectura en una línea debajo.
+
+    El SVG vive aparte (web/publico/img/figuras) en dos archivos: la capa fija, que va como <img>,
+    y la viva, que figuras.js pone encima en línea cuando la figura se acerca a la vista; el hueco ya
+    tiene su proporción, así la página no salta."""
+    svg = (SVG_FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8")
     huella = re.search(r'data-datos="([0-9a-f]{12})"', svg)
     if not huella or huella.group(1) != huella_figuras():
         raise SystemExit(
@@ -1009,145 +1168,218 @@ def figura(nombre: str) -> str:
             "uv run python web/construir.py (escribe web/figuras/datos.json) y luego "
             "node web/figuras/construir.mjs"
         )
-    return svg
+    caja = re.search(r'viewBox="0 0 (\d+) (\d+)"', svg)
+    etiqueta = re.search(r'aria-label="([^"]*)"', svg)
+    assert caja and etiqueta, nombre
+    w, h = caja.groups()
+    # la capa fija va en trozos (cada uno una imagen): nombre.svg, nombre-2.svg…
+    trozos = re.search(r'data-trozos="(\d+)"', svg)
+    assert trozos, nombre
+    v = huella.group(1)
+    fijas = ",".join(
+        f"/img/figuras/{nombre}{f'-{i}' if i > 1 else ''}.svg?v={v}"
+        for i in range(1, int(trozos.group(1)) + 1)
+    )
+    pista_html = f'<span class="pista">{pista}</span>' if pista else ""
+    # el sello va al final de la lectura (la lectura cambia; el sello se queda en su sitio)
+    sello = SELLO_I if ilustrativo else ""
+    return (
+        f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}">'
+        f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
+        f'data-src="{fijas}" '
+        f'data-viva="/img/figuras/{nombre}-viva.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
+        f'<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lectura}</span>{sello}</span>{pista_html}</figcaption>'
+        "</figure>"
+    )
 
 
 def figura_capas() -> str:
     d = datos_figuras()["capas"]
-    claves = "".join(
-        f"<li><b>{m['nombre']}</b> {m['que']}, conectado a la puerta por {m['puerta']}</li>"
-        for m in reversed(d["modulos"])
+    return figura(
+        "capas",
+        f"datos · {d['fuentes']} fuentes · {d['herramientas']} herramientas",
+        "pasa el puntero por los módulos",
     )
-    return f"""<figure class="fig-iso" data-figura="capas">
-<div class="placa" tabindex="0" aria-describedby="capas-pie">
-<span class="esq fig">Fig. 1</span><span class="esq tit">La capa de datos y lo que se monta encima</span>
-{figura("capas")}
-<span class="esq pista">Pasa el puntero por los módulos</span><span class="esq lectura" data-lectura aria-live="off">Datos · {d["fuentes"]} fuentes · {d["herramientas"]} herramientas</span>
-</div>
-<figcaption id="capas-pie"><ul class="claves">{claves}<li><b>Datos</b> la base: {d["fuentes"]} fuentes y {d["herramientas"]} herramientas; cada medidor es una familia y se llena según sus herramientas</li></ul></figcaption>
-</figure>"""
 
 
 def figura_ruta() -> str:
-    d = datos_figuras()["ruta"]
-    t0 = d["turnos"][0]
-    return f"""<figure class="fig-iso ancha" data-figura="ruta">
-<div class="placa" tabindex="0" aria-describedby="ruta-pie">
-<span class="esq fig">Fig. 2</span><span class="esq tit">La ruta de una pregunta</span>
-{figura("ruta")}
-<span class="esq pista">Flechas o puntero para cambiar de pregunta</span><span class="esq lectura" data-lectura aria-live="off"><code>{t0["herramienta"]}</code> → {t0["entidad"]}</span>
-</div>
-<figcaption id="ruta-pie"><p class="preg-r" data-pregunta>{escape(t0["pregunta"])}</p>
-<p>La pregunta sale de la terminal de tu agente, pasa la barrera de Terrnova con tu llave (por MCP o REST), llega a la columna de la entidad que publica el dato y vuelve con la respuesta rt/1: estado, datos, procedencia, licencia, completitud, servido_desde y huella. Hay una columna por cada una de las {N_ENTIDADES} entidades, más alta cuantas más fuentes publica.</p></figcaption>
-</figure>"""
+    t0 = datos_figuras()["ruta"]["turnos"][0]
+    return figura(
+        "ruta",
+        f"{escape(t0['corta'])} → {t0['entidad']}",
+        "flechas o puntero: otra pregunta",
+    )
 
 
-def metodo_html() -> str:
-    pasos = "".join(f"<li><b>{a}</b> {b}</li>" for a, b in METODO)
-    return f'<div class="metodo"><h3>Cómo trabajamos</h3><ol>{pasos}</ol></div>'
+LECTURA_SERVICIO = {
+    "revision": ("predio · por coordenada · 4 fuentes", "flechas: otro tipo"),
+    "tablero": (
+        "{t} · {e} · {m} · tu municipio frente a sus comparables",
+        "pasa el puntero por los relojes",
+    ),
+    "vigilancia": (
+        "SECOP II · Colombia Compra Eficiente · nuevo contrato de una entidad que vigilas",
+        "flechas: otro cambio",
+    ),
+}
+
+
+def con_sello(texto: str) -> str:
+    """El sello «ilustrativo» al final de un título, pegado a su última palabra (no queda solo en
+    un renglón)."""
+    cabeza, _, ultima = texto.rpartition(" ")
+    return f'{cabeza} <span class="pegado">{ultima} {SELLO_I}</span>'.lstrip()
+
+
+def figura_servicio(sid: str, sello: bool = True) -> str:
+    """La figura de un servicio; vacía si todavía no tiene (la fila queda a una columna). Sin
+    sello cuando el título que la acompaña ya lo lleva (la franja de la portada)."""
+    if sid not in NOMBRES_FIGURAS:
+        return ""
+    if sid == "asistente":  # preguntas, entidades y licencias reales: sin sello
+        q = datos_figuras()["asistente"]["preguntas"][0]
+        lectura = f"{escape(q['corta'])} → {q['e']}"
+        return figura(sid, lectura, "pasa el puntero por las tomas")
+    lectura, pista = LECTURA_SERVICIO[sid]
+    if sid == "tablero":
+        i0 = datos_figuras()["tablero"]["indicadores"][0]
+        lectura = lectura.format(t=i0["t"].lower(), e=i0["e"], m=i0["m"])
+    return figura(sid, lectura, pista, ilustrativo=sello)
+
+
+def con_datos(sid: str) -> str:
+    """Las entidades que usa la figura de un servicio, del catálogo (todas publicadas)."""
+    d = datos_figuras()
+    if sid == "revision":
+        ents = [f["e"] for t in d["revision"]["tipos"] for f in t["fuentes"]]
+    elif sid == "tablero":
+        ents = [x["e"] for x in d["tablero"]["indicadores"]]
+    elif sid == "vigilancia":
+        ents = [c["e"] for c in d["vigilancia"]["carriles"]]
+    else:  # el asistente: las entidades de su tablero (sin el DANE, decisión 4)
+        ents = d["asistente"]["nodos"]
+    return y_lista(list(dict.fromkeys(ents)))
+
+
+def servicio_fila(s: dict, i: int) -> str:
+    """Un servicio en /servicios: título, frase, lo que recibes y su figura, alternando el lado."""
+    recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
+    pie = (
+        f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {con_datos(s["con"])}</p>'
+        f'<a class="boton s" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>'
+    )
+    tit = f'<h2 class="t2">{s["titulo"]}</h2>'
+    fig = figura_servicio(str(s["id"]))
+    clase = (" con-fig" + (" inv-l" if i % 2 else "")) if fig else ""
+    return (
+        f'<article class="serv{clase}" id="{s["id"]}">'
+        f'<div class="cab">{tit}<p class="entrada">{s["texto"]}</p>{pie}</div>'
+        f"{fig}</article>"
+    )
 
 
 def servicios_landing() -> str:
-    p, *otros = SERVICIOS
-    filas = "".join(
-        f'<article class="serv">{vineta(str(s["id"]))}<div class="txt"><p class="para">{s["para"]}</p><h3>{s["titulo"]}</h3>'
-        f'<p>{s["texto"]}</p><p class="con">Con datos de {s["con"]}</p>'
+    """En la portada, los cuatro servicios en una franja: la figura pequeña, el título y el enlace."""
+    celdas = "".join(
+        f'<article class="serv-c">{figura_servicio(str(s["id"]), sello=False)}'
+        f"<div><h4>{con_sello(s['titulo']) if s['id'] != 'asistente' else s['titulo']}</h4>"
         f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></div></article>'
-        for s in otros
+        for s in SERVICIOS
     )
-    return f"""<article class="serv-grande">
-<div class="txt">
-<p class="para">{p["para"]}</p>
-<h3>{p["titulo"]}</h3>
-<p>{p["texto"]}</p>
-<a class="boton p" href="/contacto?asunto={p["asunto"]}">{p["boton"]}</a>
-</div>
-{vineta("revision")}
-{cruces_html()}
-</article>
-<div class="servs">{filas}</div>"""
+    return f'<div class="servs-c">{celdas}</div>'
 
 
-# Las capas de la prueba: valores de la respuesta real de banrep_trm_recientes, capturada el
-# 2026-10-29.
+# Las capas de la prueba: la respuesta real del predio de Santa Marta (correos.EJEMPLO, la misma
+# del héroe y de /desarrolladores), comprobada contra EJEMPLO.
 CAPAS_PRUEBA = [
-    ("dato", "3.162,35 pesos por dólar", "TRM del 29-10-2026 · encontrado"),
-    ("procedencia", "Banco de la República", "la entidad que publica el dato"),
-    ("licencia", "Aviso legal del Banco, uso comercial sí", "verificada para esta fuente"),
-    ("servido_desde", "La fuente, en vivo", "consultado el 29-10-2026, 07:14 UTC"),
-    ("huella", "sha256:ac30c9f5…", "para comprobar que no cambió"),
+    ("dato", "predio 47001…0308, habitacional", "Santa Marta, zona urbana · encontrado"),
+    ("procedencia", "IGAC, SINIC", "la entidad que publica el dato"),
+    ("licencia", "CC BY-SA 4.0, uso comercial sí", "verificada para esta fuente"),
+    ("servido_desde", "copia del 28-10-2026", "la copia oficial, con su fecha"),
+    ("huella", "sha256:7a2cc965…", "para comprobar que no cambió"),
 ]
+assert EJEMPLO["herramienta"] == "sinic_predio_en_punto" and EJEMPLO["estado"] == "encontrado"
+assert EJEMPLO["predio"].startswith("47001") and EJEMPLO["predio"].endswith("0308")
+assert EJEMPLO["destinacion"].casefold().startswith("habitacional")
+assert EJEMPLO["entidad"].startswith("Instituto Geográfico Agustín Codazzi (IGAC), SINIC")
+assert EJEMPLO["licencia"] == "CC-BY-SA-4.0" and EJEMPLO["servido"] == CAPAS_PRUEBA[3][1]
+assert EJEMPLO["huella"].startswith(CAPAS_PRUEBA[4][1].rstrip("…"))
 NOTAS_PRUEBA = [
-    (
-        "El dato y su estado",
-        "Encontrado, no encontrado, fuera de cobertura o parcial. «No se pudo» nunca es un estado: es un error con su código.",
-    ),
-    (
-        "Procedencia",
-        "La entidad que publica el dato, la URL de la consulta y la norma que le da la competencia.",
-    ),
+    ("El dato", "Encontrado, no encontrado o fuera de cobertura."),
+    ("Quién lo publica", "La entidad, la consulta y la norma."),
     (
         "Licencia",
-        f"Si permite uso comercial. {N_VERIFICADAS} fuentes con licencia verificada y {N_FUENTES - N_VERIFICADAS} de dato público reutilizable, que llegan con aviso.",
+        f"Revisada por fuente: {N_VERIFICADAS} verificadas, {N_FUENTES - N_VERIFICADAS} con aviso.",
     ),
-    (
-        "De dónde se sirvió",
-        "En vivo, desde una copia del archivo oficial o desde caché. Un dato viejo siempre llega con aviso.",
-    ),
-    ("Huella", "Una firma de los datos, para comprobar después que no cambiaron."),
+    ("De dónde salió", "En vivo o de una copia oficial, con su fecha."),
+    ("Huella", "Para comprobar en una auditoría que no cambió."),
 ]
 
 
 def prueba_html() -> str:
-    capas = json.dumps(
-        [{"campo": c, "valor": v, "nota": n} for c, v, n in CAPAS_PRUEBA], ensure_ascii=False
-    )
-    respaldo = "".join(f"<li><code>{c}</code> {v}</li>" for c, v, _ in CAPAS_PRUEBA)
     notas = "".join(
-        f'<div data-capa="{i}"><h3>{t}</h3><p>{d}</p></div>'
+        f'<li data-capa="{i}"><b>{t}</b><span>{d}</span></li>'
         for i, (t, d) in enumerate(NOTAS_PRUEBA)
     )
-    return f"""<div class="prueba">
-<figure class="pila">
-<div class="vineta" data-vineta="prueba" data-fondo="claro" data-capas="{escape(capas)}" role="img" aria-label="Una respuesta real de la TRM y sus capas de prueba, que se separan para leerse y se vuelven a juntar.">
-<ul class="respaldo-capas">{respaldo}</ul>
-</div>
-<figcaption><span>banrep_trm_recientes, respuesta real</span><span class="sello">capturado el 2026-10-29</span></figcaption>
-</figure>
-<div class="notas">{notas}<p class="mas"><a class="enlace" href="/desarrolladores#contrato">Ver la respuesta completa en JSON</a></p></div>
+    d0 = CAPAS_PRUEBA[0]
+    fig = figura("prueba", f"{d0[0]} · {d0[1]}", "pasa el puntero por las pestañas")
+    return f"""<div class="con-fig inv-l prueba">
+{fig}
+<div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
+<p class="entrada">Lo que necesitas para defender una decisión va dentro de la respuesta, no en un anexo.</p>
+<ul class="lista-l notas-p">{notas}</ul>
+<p class="fuente-dato">El predio del mapa de arriba, IGAC SINIC · <span class="sello">respuesta capturada el 01-11-2026</span></p></div>
 </div>"""
 
 
-def planes_html(detalle: bool = True) -> str:
-    # Un solo botón primario (Gratis): ningún plan de pago se destaca sin un dato que lo respalde.
-    filas = []
-    for n, c in PLANES:
-        boton = (
-            '<a class="boton p" href="/precios#empezar">Empieza gratis</a>'
-            if n == "Gratis"
-            else f'<a class="boton s" href="/contacto?asunto=plan-{n.lower().replace("á", "a")}">Pedir este plan</a>'
-        )
-        filas.append(
-            f'<div class="plan"><h3>{n}</h3><b>{miles(c)}</b><span>créditos al mes</span>'
-            + (
-                f'<span class="eq">≈ {miles(c // 10)} consultas de predio por punto</span>'
-                if detalle
-                else ""
-            )
-            + f"{boton}</div>"
-        )
-    return '<div class="planes">' + "".join(filas) + "</div>"
+def pesos(n: int) -> str:
+    return f"${miles(n)}"
+
+
+def plan_boton(clave: str) -> str:
+    return f'<a class="boton s" href="/contacto?asunto=plan-{clave}">Pedir este plan</a>'
+
+
+def planes_html() -> str:
+    """Los cuatro planes de la portada: precio al mes, créditos y el botón para pedirlo."""
+    filas = "".join(
+        f'<div class="plan"><h3>{n}</h3><b>{pesos(mes)}</b><span>al mes + IVA</span>'
+        f'<span class="cr">{miles(NIVELES[k])} créditos<small>≈ {miles(NIVELES[k] // TARIFA_CATALOGO["punto"])} consultas de predio</small></span>'
+        f"{plan_boton(k)}</div>"
+        for k, n, mes, _ in PLANES
+    )
+    return f'<div class="planes">{filas}</div>'
+
+
+def tabla_planes() -> str:
+    """/precios: precio al mes y al año, créditos y cuánto alcanza en las consultas más comunes."""
+    punto, registro = TARIFA_CATALOGO["punto"], TARIFA_CATALOGO["registro"]
+    filas = "".join(
+        f'<tr><th scope="row">{n}</th><td class="n" data-et="Al mes">{pesos(mes)}</td>'
+        f'<td class="n" data-et="Al año">{pesos(anual)}</td>'
+        f'<td class="n" data-et="Créditos al mes">{miles(NIVELES[k])}</td>'
+        f'<td class="alc" data-et="Alcanza para">{miles(NIVELES[k] // punto)} predios o {miles(NIVELES[k] // registro)} empresas por NIT</td>'
+        f'<td class="ped">{plan_boton(k)}</td></tr>'
+        for k, n, mes, anual in PLANES
+    )
+    return f"""<div class="desliza"><table class="tabla t-planes"><caption class="sr">Planes de Terrnova, en pesos colombianos más IVA</caption>
+<thead><tr><th scope="col">Plan</th><th scope="col">Al mes</th><th scope="col">Al año (20 % menos)</th><th scope="col">Créditos al mes</th><th scope="col">Alcanza para</th><th scope="col"><span class="sr">Pedir</span></th></tr></thead>
+<tbody>{filas}</tbody></table></div>"""
 
 
 def tarifa_html() -> str:
-    filas = "".join(
-        f'<tr><td>{t}</td><td class="n">{c}</td><td>{d}</td><td><code>{e}</code></td></tr>'
-        if "_" in e
-        else f'<tr><td>{t}</td><td class="n">{c}</td><td>{d}</td><td>{e}</td></tr>'
-        for t, c, d, e in TARIFA
-    )
-    return f"""<div class="desliza"><table class="tabla"><thead><tr><th>Tipo de pregunta</th><th>Créditos</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
-<tbody>{filas}<tr><td>ficha de un lugar</td><td class="n">≤ 50</td><td>la suma de sus partes</td><td><code>POST /v1/fichas</code></td></tr></tbody></table></div>"""
+    """Créditos por tipo de pregunta y cuántas consultas de cada tipo trae cada plan."""
+    cab = "".join(f'<th scope="col">{n}</th>' for _, n, _, _ in PLANES)
+    filas = []
+    for k, t, ej, _ in TARIFA:
+        c = TARIFA_CATALOGO[k]
+        celdas = "".join(f'<td class="n">{miles(NIVELES[p] // c)}</td>' for p, *_ in PLANES)
+        filas.append(
+            f'<tr><th scope="row">{t}<small>{ej}</small></th><td class="n">{c}</td>{celdas}</tr>'
+        )
+    return f"""<div class="desliza"><table class="tabla t-tarifa"><caption class="sr">Créditos por tipo de consulta y consultas al mes por plan</caption>
+<thead><tr><th scope="col">Consulta</th><th scope="col">Créditos</th>{cab}</tr></thead>
+<tbody>{"".join(filas)}<tr><th scope="row">la ficha de un lugar<small>varias fuentes en una respuesta</small></th><td class="n">≤ {TOPE_FICHA}</td><td colspan="4">la suma de sus partes</td></tr></tbody></table></div>"""
 
 
 def chips_familias(como_boton=False) -> str:
@@ -1165,242 +1397,272 @@ def chips_familias(como_boton=False) -> str:
 
 
 # ---------------------------------------------------------------- páginas
+INSPOW = "Inspow, nuestro aliado de facturación,"
+# Clientes con guía probada en /desarrolladores (docs/CLIENTES.md); los que piden OAuth, dichos aparte.
+FUNCIONA_CON = ["Claude Code", "Cursor", "Claude Desktop"]
+PIDEN_OAUTH = ["claude.ai", "ChatGPT en la web"]
+
+# Las preguntas de quien decide. Las respuestas salen del código: el contrato rt/1 (estado,
+# procedencia, huella), la caché (ADR-0008, hasta RETENCION_S como respaldo «obsoleto»), la medición
+# (medicion.py guarda herramienta, créditos, resultado y hora; no la entrada) y la ADR-0014.
+RETENCION_DIAS = RETENCION_S // 86_400
+
+
+def preguntas_frecuentes() -> list[tuple[str, str]]:
+    return [
+        (
+            "¿Necesito un equipo técnico?",
+            'Para probar basta alguien que siga la <a class="enlace" href="/desarrolladores">guía</a> '
+            "en unos minutos. Para llevarlo a tus sistemas, tu equipo técnico usa la API.",
+        ),
+        (
+            "¿Sirve para cumplimiento y auditoría?",
+            "Cada respuesta dice qué entidad publica el dato, con qué licencia, de qué fecha y "
+            "trae una huella para comprobar después que no cambió. No reemplaza un certificado "
+            "que expide la entidad.",
+        ),
+        (
+            "¿Qué tan actualizado está?",
+            f"{MODOS['en_vivo']} fuentes se consultan en vivo y {MODOS['copia']} desde una copia "
+            "oficial con su fecha de corte. Cada respuesta dice de dónde salió y un dato viejo "
+            'llega con aviso. Cada fuente se prueba a diario: <a class="enlace" href="/estado">'
+            "estado</a>.",
+        ),
+        (
+            "¿Y si la fuente oficial se cae?",
+            "Te decimos «no se pudo», con el motivo; nunca lo disfrazamos de «no encontrado». Si "
+            f"hay una respuesta de los últimos {RETENCION_DIAS} días, llega marcada como vieja y "
+            "con su fecha.",
+        ),
+        (
+            "¿Qué licencia tiene cada dato?",
+            f"La de su entidad, revisada fuente por fuente: {N_VERIFICADAS} verificadas y "
+            f"{N_FUENTES - N_VERIFICADAS} como dato público, con aviso. Cada respuesta trae la "
+            'atribución que debes citar. <a class="enlace" href="/fuentes#licencias">Ver las '
+            "licencias</a>.",
+        ),
+        (
+            "¿Guardan lo que pregunto?",
+            "Para tu saldo guardamos qué herramienta usó tu llave, lo que costó, su resultado y la "
+            "hora; lo que preguntaste no queda ligado a tu llave. Nada se busca por cédula ni por "
+            "nombre. "
+            '<a class="enlace" href="/privacidad">Privacidad</a>.',
+        ),
+        (
+            "¿Cómo se paga?",
+            f"Pides el plan e {INSPOW} te factura por mes o por año, con factura electrónica. No "
+            "hay cobro automático.",
+        ),
+        (
+            "¿Con qué asistentes funciona?",
+            f"Con {y_lista(FUNCIONA_CON)}, con su guía. {y_lista(PIDEN_OAUTH)} todavía no: "
+            "piden un inicio de sesión (OAuth), que llegará.",
+        ),
+    ]
+
+
+def faq_html() -> str:
+    return "".join(
+        f"<details><summary>{p}</summary><p>{r}</p></details>" for p, r in preguntas_frecuentes()
+    )
+
+
 def inicio() -> str:
     c = f"""
 <section class="heroe">
-<div class="escena" data-escena="predios" role="img" aria-label="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D. El predio consultado sube cuando llega su respuesta. Arrastra para girar.">
-<img class="respaldo" src="/img/predio-santamarta.webp" alt="" width="900" height="900">
+<div class="escena" data-escena="predios" data-etiqueta="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D. El predio consultado sube cuando llega su respuesta. Arrastra para girar.">
+<img class="respaldo" src="/img/predio-santamarta.webp" alt="Predios reales del barrio 11 de Noviembre, en Santa Marta, en 3D." width="900" height="900">
 <svg class="guia" aria-hidden="true"><line/><circle r="4"/></svg>
 <div class="rotulos" aria-hidden="true"></div>
 <p class="lectura"><b>11,2211 N, 74,1572 W</b> Santa Marta. Predios IGAC SINIC (CC BY-SA 4.0), calles © <a href="https://www.openstreetmap.org/copyright">colaboradores de OpenStreetMap</a></p>
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0">Del dato oficial a la solución</h1>
-<p class="entrada">Una capa de datos con {N_FUENTES} fuentes de {N_ENTIDADES} entidades (empresas, contratos, normas, estadísticas, territorio y ambiente) y, encima, la analítica, las automatizaciones y los agentes que tu equipo necesita. Lo construyes tú con tu agente o lo construimos contigo.</p>
-<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<h1 class="t0"><span class="l">Datos oficiales de Colombia</span> <span class="l">para tu organización</span> <span class="l">y tus agentes</span></h1>
+<p class="entrada">Predios, empresas, contratos y normas de {N_FUENTES} fuentes oficiales, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución que construimos contigo.</p>
+<div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis {DIAS_PRUEBA} días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
 </div></div>
 <div class="envoltura h-consola">{consola()}</div>
 </section>
 
-<section class="seccion capas-l" id="capas"><div class="envoltura">
-<div class="con-fig">
-<div class="cab ancha">
-<h2 class="t2">Una puerta a los datos y tres capas encima</h2>
-<p class="entrada">La capa de datos es el producto: se paga con un plan mensual y empieza gratis. Las otras tres son soluciones que se construyen sobre ella, con la fuente oficial de cada dato.</p>
-</div>
-{figura_capas()}
-</div>
-<div class="columnas c4">
-<div class="capa-d"><span class="et">el producto</span><h3>Datos</h3><p>{N_FUENTES} fuentes oficiales por MCP o API REST, con la entidad, la licencia y la fecha en cada respuesta. Tu agente las consulta solo.</p><a class="enlace" href="/desarrolladores">Cómo se conecta</a></div>
-<div><span class="et">encima</span><h3>Analítica</h3><p>Cruces, revisiones y tableros: una empresa, un predio o un contrato revisados contra varias fuentes, o los indicadores que sigues, actualizados desde la fuente.</p></div>
-<div><span class="et">encima</span><h3>Automatización</h3><p>Vigilancias, alertas y reportes que corren solos y dejan registro de cada cambio, con su fecha y su fuente.</p></div>
-<div><span class="et">encima</span><h3>Agentes</h3><p>Asistentes que responden con el dato oficial dentro de tu sistema, tu SIG o tu ERP, y citan la fuente de cada respuesta.</p></div>
-</div>
-<div class="dos-formas">
-<p><b>Tú, con tu agente.</b> Conecta la puerta y construye encima. El plan gratis trae {miles(PLANES[0][1])} créditos al mes. <a class="enlace" href="/precios#empezar">Conecta tu agente gratis</a></p>
-<p><b>Nosotros, contigo.</b> Construimos la solución a precio fijo, acordado antes de empezar. <a class="enlace" href="#servicios">Ver cómo trabajamos</a></p>
-</div>
-</div></section>
-
-
-<section class="seccion" id="fuentes"><div class="envoltura">
-<div class="cab ancha">
-<h2 class="t2">Soluciones para cada sector</h2>
-<p class="entrada">Lo que se construye sobre la puerta en cada sector y las herramientas que usa. Son {N_HERR} herramientas en siete familias; cada una responde una pregunta concreta.</p>
-</div>
-{chips_familias()}
-{sectores()}
-<p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
-</div></section>
-
-<section class="seccion sup servicios-l" id="servicios"><div class="envoltura">
-<div class="cab ancha">
-<h2 class="t1">O lo construimos contigo</h2>
-<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué quieres resolver y construimos la solución sobre la capa de datos, con la fuente oficial y la licencia de cada dato.</p>
-</div>
-{servicios_landing()}
-{metodo_html()}
-<div class="botones fin-serv"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios en detalle</a></div>
-</div></section>
-
-
-<section class="seccion" id="por-que"><div class="envoltura">
-<div class="cab ancha">
-<h2 class="t2">Por qué no basta con buscar en la web</h2>
-<p class="entrada">Un agente con buscador encuentra páginas. Una decisión necesita el dato oficial, saber de dónde salió y si se puede usar.</p>
-</div>
-{figura_ruta()}
-<div class="columnas c4">
-<div><h3>Cada entidad publica a su manera</h3><p>{N_ENTIDADES} entidades y {N_FUENTES} fuentes, entre portales de datos abiertos, servicios de mapas, archivos y páginas. Aquí todas responden con el mismo contrato.</p></div>
-<div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M (medido el 22-10-2026). Las herramientas ya cuentan bien.</p></div>
-<div><h3>Probado cada madrugada</h3><p>Cada herramienta se prueba a diario contra un dato medido en la fuente, y el resultado es público. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div><h3>Empresas y lugares, no personas</h3><p>La puerta no usa un modelo de lenguaje: la misma pregunta da la misma consulta. Y no busca personas por cédula ni por nombre: cada fuente sale con una lista blanca de campos.</p></div>
-</div>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
+<section class="seccion" id="soluciones"><div class="envoltura">
 <div class="cab">
-<h2 class="t2">Cada respuesta trae su prueba</h2>
-<p class="entrada">Todas las respuestas, de las {N_HERR} herramientas, llegan con lo que necesitas para confiar en el dato: quién lo publica, con qué licencia, de dónde salió y una huella para comprobarlo. Viene en la respuesta, no en un documento aparte.</p>
+<h2 class="t2">Soluciones por sector</h2>
+<p class="entrada">Lo que decide cada área y de qué entidades sale cada dato.</p>
 </div>
+{sectores()}
+<div class="franja-serv">
+<h3 class="t3">Lo que construimos contigo</h3>
+{servicios_landing()}
+</div>
+</div></section>
+
+<section class="seccion sup" id="prueba"><div class="envoltura">
 {prueba_html()}
 </div></section>
 
-
-<section class="seccion" id="precios"><div class="envoltura">
+<section class="seccion" id="ahorro"><div class="envoltura">
+<div class="con-fig inv-l">
+{figura_ruta()}
 <div class="cab">
-<h2 class="t2">Precios</h2>
-<p class="entrada">La capa de datos se paga con un plan mensual y empieza gratis. Los servicios tienen un precio fijo por proyecto, acordado antes de empezar.</p>
+<h2 class="t2">Lo que te ahorras</h2>
+<p class="entrada">Hacerlo a mano es pelear con cada portal.</p>
+<ul class="lista-l">
+<li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
+<li><b>Catastro vigente</b><span>El corte vigente, revisado aunque la fuente cambie de nombre cada mes.</span></li>
+<li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
+</ul>
+<p class="fuente-dato">Pitalito, 2025: $174.000 M sumando SECOP tal cual; $63.157 M contado bien · 22-10-2026</p>
 </div>
-<h3 class="sub-p">Capa de datos</h3>
-{planes_html(detalle=False)}
-<p class="pie-p"><a class="enlace" href="/precios">Ver cuántos créditos usa cada tipo de consulta</a></p>
-<div class="banda-serv">
-<div><h3>Servicios</h3><p>Precio fijo por entrega, acordado antes de empezar y nunca por hora. Las automatizaciones se cobran por proceso o por licencia.</p></div>
-<a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a>
 </div>
 </div></section>
 
-<section class="seccion sup"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">Empieza por lo que quieres resolver</h2><p class="entrada">Conecta tu agente gratis o cuéntanos el problema y te proponemos la solución con un precio fijo.</p></div>
-<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<section class="seccion sup" id="como"><div class="envoltura">
+<div class="cab"><h2 class="t2">Tres formas de usarlo</h2></div>
+<div class="columnas c3 caminos">
+<div><h3><a href="/desarrolladores#mcp">En el chat</a></h3><p>Tus agentes preguntan en español y responden con la fuente.</p></div>
+<div><h3><a href="/desarrolladores#rest">En tus sistemas</a></h3><p>Tu equipo técnico lo conecta por API, con la misma respuesta.</p></div>
+<div><h3><a href="/servicios">Contigo</a></h3><p>Construimos la revisión, el tablero o el asistente.</p></div>
 </div>
-<div class="envoltura aliados-fila">
-<span>Aliados</span>
-<a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy"></a>
-<a href="/aliados" class="t3">Atalaya Mapas</a>
+<p class="funciona">Funciona con {y_lista(FUNCIONA_CON)}.</p>
+</div></section>
+
+<section class="seccion" id="no-hacemos"><div class="envoltura">
+<div class="cab"><h2 class="t2">Qué no hacemos</h2></div>
+<div class="columnas c3 no-h">
+<div><h3>Buscar personas</h3><p>Nada por cédula ni por nombre, ni perfiles de nadie.</p></div>
+<div><h3>Saltar barreras</h3><p>Ni captchas ni cuentas ajenas: solo lo que la entidad publica.</p></div>
+<div><h3>Rellenar</h3><p>Si la fuente no responde, lo decimos. «No encontrado» no es «no se pudo».</p></div>
+</div>
+</div></section>
+
+<section class="seccion sup" id="precios"><div class="envoltura">
+<div class="cab">
+<h2 class="t2">Precios de lanzamiento</h2>
+<p class="entrada">Planes mensuales en pesos, más IVA. Pagas solo lo que responde: errores, caché y fuera de cobertura no descuentan.</p>
+</div>
+{planes_html()}
+<div class="columnas c3 mas-p">
+<div><h3>Prueba gratis</h3><p>{miles(CREDITOS_PRUEBA)} créditos por {DIAS_PRUEBA} días, con tu correo.</p><a class="boton p" href="/precios#empezar">Pedir la llave de prueba</a></div>
+<div><h3>Estado y academia</h3><p>Entidades públicas, academia y veedurías: {miles(CREDITOS_AMPLIADO)} créditos al mes, a pedido.</p><a class="enlace" href="/contacto?asunto=gobierno-academia">Pedirlo</a></div>
+<div><h3>Piloto de dos semanas</h3><p>Sobre tu caso, a precio fijo antes de empezar.</p><a class="enlace" href="/servicios#piloto">Ver el piloto</a></div>
+</div>
+<p class="pie-p"><span class="anual">20 % menos pagando el año.</span> <a class="enlace" href="/precios">Precio anual y créditos por consulta</a></p>
+</div></section>
+
+<section class="seccion" id="preguntas"><div class="envoltura">
+<div class="faq-l">
+<div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
+<div class="faq">{faq_html()}</div>
+<aside class="quien" aria-labelledby="quien-t">
+<h2 class="t3" id="quien-t">Quién está detrás</h2>
+<p>{QUIEN}</p>
+<ul class="lista">
+<li><a class="enlace" href="/estado">Estado del servicio</a></li>
+<li><a class="enlace" href="/llms.txt">llms.txt</a>, el catálogo para agentes</li>
+<li><a class="enlace" href="/contacto">Escríbenos</a></li>
+</ul>
+</aside>
+</div>
 </div></section>
 """
     return pagina(
         "/",
-        "Terrnova · Del dato oficial a la solución",
-        f"Una capa de datos con {N_FUENTES} fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
+        "Terrnova · Datos oficiales de Colombia para tu organización y tus agentes",
+        f"Predios, empresas, contratos y normas de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.",
         c,
-        ("escena-predios.js", "escena-vinetas.js", "figuras.js"),
+        ("escena-predios.js", "figuras.js"),
     )
 
 
-# Cómo se ve lo que recibe el cliente. Las maquetas sin datos reales van selladas como ilustrativas;
-# la del asistente usa la respuesta real de la TRM.
+# Decisión 3 del dueño (01-11-2026): sin nombre de persona.
+QUIEN = f"Terrnova es un producto de GeoAI LATAM, en Colombia. Factura {INSPOW} con factura electrónica."
+
+
+# Lo inventado lleva el sello.
 SELLO_I = '<span class="sello-i">ilustrativo</span>'
 
 
-def entregable(sid: str) -> str:
-    if sid == "revision":
-        filas = [
-            ("Áreas protegidas (RUNAP)", "Parques Nacionales", "ok", "Sin hallazgos"),
-            ("Pérdida de bosque", "SINCHI", "rev", "Revisar"),
-            ("Resguardos indígenas", "Agencia Nacional de Tierras", "ok", "Sin hallazgos"),
-            ("Predio en el catastro", "IGAC", "ok", "Encontrado"),
-        ]
-        cuerpo = "".join(
-            f'<li><span class="q">{q}<small>{e}</small></span><span class="chip-e {c}">{t}</span></li>'
-            for q, e, c, t in filas
-        )
-        return f"""<div class="maqueta exp"><div class="m-cab"><b>Expediente del predio</b><span>4 de 4 fuentes consultadas</span></div>
-<ul>{cuerpo}</ul><div class="m-pie"><span>Un caso para revisión humana</span>{SELLO_I}</div></div>"""
-    if sid == "tablero":
-        tiles = [
-            ("Población", "DANE", [3, 4, 4, 5, 6, 6, 7]),
-            ("Pobreza multidimensional", "DANE", [7, 6, 6, 5, 5, 4, 4]),
-            ("Matrícula escolar", "MinEducación", [4, 5, 5, 5, 6, 7, 7]),
-            ("Afiliados a salud", "ADRES", [5, 5, 6, 6, 6, 7, 8]),
-        ]
-        cuerpo = "".join(
-            f'<div class="tile"><span>{t}</span><small>{e}</small><div class="barras">'
-            + "".join(f'<i style="--h:{h * 12}%"></i>' for h in bs)
-            + "</div></div>"
-            for t, e, bs in tiles
-        )
-        return f"""<div class="maqueta tab"><div class="m-cab"><b>Tu municipio</b><span>actualizado desde la fuente</span></div>
-<div class="tiles">{cuerpo}</div><div class="m-pie"><span>Cada cifra enlaza a su entidad</span>{SELLO_I}</div></div>"""
-    if sid == "vigilancia":
-        items = [
-            ("SECOP II", "Nuevo contrato de una entidad que vigilas", "hoy"),
-            ("SUIN-Juriscol", "Cambió una norma que sigues", "ayer"),
-            ("SECOP I", "Nueva multa a un contratista que sigues", "ayer"),
-            ("SIC", "Nueva sanción en el sector que sigues", "lunes"),
-        ]
-        cuerpo = "".join(
-            f'<li><i></i><span class="q"><small>{f}</small>{t}</span><span class="cuando">{c}</span></li>'
-            for f, t, c in items
-        )
-        return f"""<div class="maqueta alr"><div class="m-cab"><b>Tus alertas</b><span>con el registro de cada cambio</span></div>
-<ul>{cuerpo}</ul><div class="m-pie"><span>Por correo o en tu sistema</span>{SELLO_I}</div></div>"""
-    return """<div class="maqueta chat"><div class="m-cab"><b>Asistente de tu equipo</b><span>dentro de tu sistema</span></div>
-<p class="yo">¿A cuánto está la TRM hoy?</p>
-<div class="el"><p>La TRM del 29 de octubre de 2026 es de <b>3.162,35 pesos por dólar</b>.</p>
-<p class="cita">Banco de la República · uso comercial permitido · consultado en vivo</p></div>
-<div class="m-pie"><span>Dato real de banrep_trm_recientes del 29-10-2026</span>{SELLO_I}</div></div>"""
+# El piloto, de punta a punta: cómo trabajamos y las dos semanas, en una sola secuencia.
+PILOTO = [
+    ("Nos cuentas", "Qué quieres decidir, dónde y para cuándo."),
+    (
+        "Precio fijo",
+        "Acordamos la pregunta, las fuentes y el entregable, con su precio, antes de empezar.",
+    ),
+    ("Semana 1", "Corremos una primera muestra y la revisamos contigo."),
+    ("Semana 2", "Lo corremos sobre tu caso completo, revisamos los dudosos y te lo entregamos."),
+]
 
 
 def servicios() -> str:
     indice = "".join(f'<a href="#{s["id"]}">{s["titulo"]}</a>' for s in SERVICIOS)
-    bloques = []
-    for i, s in enumerate(SERVICIOS):
-        recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
-        extra = cruces_html() if s["id"] == "revision" else ""
-        bloques.append(f"""<section class="sv-det{" par" if i % 2 else ""}" id="{s["id"]}"><div class="envoltura">
-<div class="txt">
-<p class="para">{s["para"]}</p>
-<h2 class="t2">{s["titulo"]}</h2>
-<p class="entrada">{s["texto"]}</p>
-<h3>Qué recibes</h3><ul class="lista">{recibes}</ul>
-<p class="con">Con datos de {s["con"]}</p>
-<a class="boton p" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>
-</div>
-<div class="fig">{vineta(str(s["id"]))}{entregable(str(s["id"]))}</div>
-{extra}
-</div></section>""")
-    pasos = "".join(f"<li><b>{a}</b><span>{b[0].upper() + b[1:]}</span></li>" for a, b in METODO)
+    bloques = "".join(
+        f'<section class="sv-det{" par" if i % 2 else ""}"><div class="envoltura">'
+        f"{servicio_fila(s, i)}</div></section>"
+        for i, s in enumerate(SERVICIOS)
+    )
+    semanas = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in PILOTO)
     c = f"""
 <section class="sv-heroe"><div class="envoltura">
 <div class="txt">
 <h1 class="t1">Te entregamos el trabajo hecho</h1>
-<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades. Con la fuente y la licencia de cada dato, y un precio fijo antes de empezar.</p>
-<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="#revision">Ver los servicios</a></div>
+<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales, con la fuente de cada dato. Empieza con un piloto de dos semanas a precio fijo.</p>
+<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s inv-b" href="#piloto">Ver el piloto</a></div>
 </div>
-{vineta("asistente")}
-</div>
-<nav class="sv-indice envoltura" aria-label="Servicios">{indice}</nav>
-</section>
-{"".join(bloques)}
-<section class="seccion inv"><div class="envoltura">
-<div class="cab"><h2 class="t2">Cómo trabajamos</h2>
-<p class="entrada">Cada cifra de una entrega se contrasta con su fuente antes de llegar a ti. Lo que no cuadra vuelve.</p></div>
-<ol class="pasos-sv">{pasos}</ol>
+<nav class="sv-indice" aria-label="Servicios">{indice}<a href="#piloto">Piloto</a></nav>
 </div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="cab"><h2 class="t2">Cómo se cobra</h2><p class="entrada">Sabes el precio antes de empezar. Nunca cobramos por hora.</p></div>
-<div class="columnas c3">
-<div><h3>Por entrega</h3><p>Revisiones, tableros, informes y asistentes: un precio fijo por proyecto, acordado antes de empezar.</p></div>
-<div><h3>Por proceso o licencia</h3><p>Las alertas y los procesos que corren solos se cobran por proceso en marcha o por licencia.</p></div>
-<div><h3>La capa de datos, por plan</h3><p>Si tu equipo consulta las fuentes por su cuenta, hay planes mensuales que empiezan gratis. <a class="enlace" href="/precios">Ver los planes</a></p></div>
+<section class="seccion" id="capa"><div class="envoltura">
+<div class="con-fig">
+<div class="cab"><h2 class="t2">Una capa de datos y, encima, tu solución</h2>
+<p class="entrada">Terrnova es la capa: {N_FUENTES} fuentes oficiales con una sola forma de preguntar. Encima montamos la analítica, la automatización o el agente que necesitas, y cada dato llega con su fuente.</p></div>
+{figura_capas()}
+</div>
+</div></section>
+{bloques}
+<section class="seccion inv" id="piloto"><div class="envoltura">
+<div class="con-lado-p">
+<div class="cab"><h2 class="t2">Piloto de dos semanas</h2>
+<p class="entrada">Una solución sobre tu caso, con un entregable que se nombra antes de empezar y un precio fijo que no cambia.</p>
+<a class="boton s" href="/contacto?asunto=proyecto">Proponer un piloto</a></div>
+<div>
+<ol class="pasos-sv dos">{semanas}</ol>
+<h3 class="t3 entrega-t">Lo que recibes</h3>
+<ul class="lista">
+<li>El entregable acordado, cada cifra contrastada con su fuente: por ejemplo, una hoja con cada ítem, su resultado, la entidad, la fecha y la huella de cada respuesta.</li>
+<li>Los casos dudosos, aparte, con el motivo.</li>
+<li>Para repetirlo: la misma consulta, lista para correrla otra vez con tu plan.</li>
+</ul>
+</div>
 </div>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><h2 class="t2">Lo que ya existe, con su alcance</h2></div>
-<div class="columnas c2">
-<div><h3>GEO Copilot</h3><p>Un asistente territorial, proyecto del fundador. Hoy es un cliente más de la capa de datos: se conecta por el MCP de Terrnova, como cualquier otro sistema.</p></div>
-<div><h3>Vectorización de ortofotos del IGAC</h3><p>Un modelo de segmentación sobre ortofotos del IGAC, desarrollado como tesis de maestría del fundador (mIoU 0,694). Es investigación, no un modelo de producción.</p></div>
+<div class="cab"><h2 class="t2">Cómo se cobra</h2><p class="entrada">Precio antes de empezar. Nunca por hora.</p></div>
+<div class="columnas c3">
+<div><h3>Por entrega</h3><p>Revisiones, tableros, informes y asistentes.</p></div>
+<div><h3>Por proceso</h3><p>Las alertas y los procesos que corren solos, por mes.</p></div>
+<div><h3>Los datos, por plan</h3><p>Si tu equipo consulta por su cuenta. <a class="enlace" href="/precios">Ver los planes</a></p></div>
 </div>
-</div></section>
-
-<section class="seccion"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">¿Tienes un proyecto?</h2><p class="entrada">Escríbenos con la decisión que quieres tomar. Respondemos con lo que se puede probar y un precio fijo.</p></div>
-<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div></section>
 """
     return pagina(
         "/servicios",
         "Servicios",
-        "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales, con la fuente de cada dato y precio fijo antes de empezar.",
+        "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales de Colombia, con la fuente de cada dato. Piloto de dos semanas a precio fijo.",
         c,
-        ("escena-vinetas.js",),
+        ("figuras.js",),
     )
+
+
+# Terrenos de la copia SINIC: los cita la ficha de la fuente (perfil medido en la fuente, spec 07).
+_SINIC = CAT.fuentes["igac.sinic_terreno"].perfil
+assert _SINIC is not None
+_m = re.search(r"([\d,]+ M) en los (\d+) municipios", _SINIC.fila)
+assert _m, "la ficha de igac.sinic_terreno ya no dice cuántos terrenos tiene"
+SINIC_TERRENOS, SINIC_MUNICIPIOS = _m.groups()
+SINIC_MEDIDO = _SINIC.medido.strftime("%d-%m-%Y")
 
 
 def fuentes() -> str:
@@ -1408,16 +1670,24 @@ def fuentes() -> str:
         f'<tr><td><code>{escape(k)}</code></td><td class="n">{v}</td></tr>'
         for k, v in LICENCIAS.most_common()
     )
+    cob = datos_figuras()["cobertura"]
+    km = round(cob["R"] * 111.32)
+    figura_cob = figura(
+        "cobertura",
+        f"{miles(cob['total'])} predios de la muestra (3 %) en {len(cob['celdas'])} celdas",
+        "pasa el puntero por las columnas",
+    )
     c = (
         portada(
-            "Fuentes y herramientas",
+            "",
             f"{N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales",
-            f"Cada herramienta responde una pregunta concreta con una fuente de una de las {N_ENTIDADES} entidades del catálogo. Busca por tema, entidad o nombre.",
+            "Cada herramienta responde una pregunta concreta. Busca por tema, entidad o nombre.",
             lado=lado_familias(),
         )
         + f"""
 <section class="seccion"><div class="envoltura" data-catalogo>
-<div class="buscador"><label class="sr" for="q">Buscar en el catálogo</label><input id="q" type="search" placeholder="Busca: predio, contratos, TRM, áreas protegidas…" autocomplete="off"></div>
+<h2 class="sr">Buscar una herramienta</h2>
+<div class="buscador"><label class="sr" for="q">Buscar en el catálogo</label><input id="q" type="search" placeholder="Busca: predio, contratos, normas, áreas protegidas…" autocomplete="off"></div>
 {chips_familias(como_boton=True)}
 <p class="conteo" aria-live="polite">Cargando el catálogo…</p>
 <div class="herramientas"></div>
@@ -1426,45 +1696,41 @@ def fuentes() -> str:
 </div></section>
 
 <section class="seccion sup" id="entidades"><div class="envoltura">
-<div class="cab ancha"><h2 class="t2">Quién publica los datos</h2>
-<p class="entrada">{N_ENTIDADES} entidades y los sistemas que publican. {MODOS["en_vivo"]} fuentes se consultan en vivo y {MODOS["copia"]} desde una copia del archivo oficial, con su fecha de corte en cada respuesta.</p></div>
+<div class="cab"><h2 class="t2">Quién publica los datos</h2>
+<p class="entrada">{N_ENTIDADES} entidades. {MODOS["en_vivo"]} fuentes en vivo y {MODOS["copia"]} desde una copia oficial, con su fecha de corte.</p></div>
 {indice_fuentes()}
-<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las fuentes globales.</p>
+<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las globales.</p>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cobertura">
-<div class="texto-cob">
+<div class="con-fig">
+<div class="cab">
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
-<p class="suave">Cada columna es una celda de unos 8 km. Su altura cuenta los predios de la muestra que caen en ella; las celdas planas son territorio sin predios en la muestra.</p>
-<div class="filas"><div><b>6,1 M</b><span>terrenos en la copia SINIC, de los gestores que no publica la base del IGAC</span></div><div><b>186.988</b><span>en esta muestra (3 %)</span></div><div><b>949</b><span>celdas con predios</span></div></div>
-<div class="leyenda"><span>menos</span><i></i><span>más predios por celda</span></div>
-<p class="fuente-dato">IGAC SINIC, muestra del 3 %, 28-10-2026</p>
+<p class="entrada">Cada columna suma los predios de la muestra en una celda de unos {km} km de radio; la altura y el color, de teal a ámbar, crecen con el conteo.</p>
+<ul class="lista-l">
+<li><b>{SINIC_TERRENOS}</b><span>terrenos en la copia SINIC ({SINIC_MUNICIPIOS} municipios)</span></li>
+<li><b>{miles(cob["total"])}</b><span>en la muestra (3 %)</span></li>
+<li><b>{len(cob["celdas"])}</b><span>celdas con predios</span></li>
+</ul>
+<p class="fuente-dato">IGAC SINIC · conteo de la ficha de la fuente, medido el {SINIC_MEDIDO} · muestra del 3 %</p>
 </div>
-<div class="escena" data-escena="cobertura" role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra. Arrastra para girar.">
-<img class="respaldo" src="/img/mapa-colombia.webp" alt="" loading="lazy">
-<div class="rotulos" aria-hidden="true"></div>
-<p class="gira">Arrastra para girar</p>
-<p class="lectura">Pasa sobre una columna</p>
-</div>
+{figura_cob}
 </div>
 </div></section>
 
-<section class="seccion"><div class="envoltura">
-<div class="rejilla r2" style="gap:48px">
-<div><span class="rotulo">Licencias</span><h2 class="t2" style="margin:12px 0 20px">La licencia de cada fuente</h2>
-<div class="desliza"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
-<p class="suave" style="margin-top:12px">Cada respuesta trae la licencia y la atribución que debes citar. CC BY-SA exige compartir igual.</p></div>
-</div>
+<section class="seccion" id="licencias"><div class="envoltura">
+<div class="cab"><h2 class="t2">La licencia de cada fuente</h2>
+<p class="entrada">Cada respuesta trae su licencia y la atribución que debes citar.</p></div>
+<div class="desliza lic"><table class="tabla"><thead><tr><th>Licencia (SPDX)</th><th>Fuentes</th></tr></thead><tbody>{lic}</tbody></table></div>
 </div></section>
 
-<section class="seccion"><div class="envoltura">
-<div class="cab"><span class="rotulo">Para máquinas</span><h2 class="t2">El catálogo, también en formato abierto</h2></div>
-<div class="rejilla r3">
-<div class="bloque"><h3 class="t3"><code>GET /v1/herramientas</code></h3><p>Pregunta, familia, fuente, créditos y ruta de cada herramienta. Público y sin costo.</p><a class="enlace" href="/v1/herramientas">Abrir</a></div>
-<div class="bloque"><h3 class="t3"><code>GET /v1/fuentes/&#123;id&#125;</code></h3><p>La ficha técnica de una fuente: cobertura, campos, actualización y alertas.</p><a class="enlace" href="/v1/fuentes">Abrir</a></div>
-<div class="bloque"><h3 class="t3"><code>/llms.txt</code></h3><p>El catálogo en texto, para que un agente lo lea de una vez.</p><a class="enlace" href="/llms.txt">Abrir</a></div>
-</div>
+<section class="seccion sup"><div class="envoltura">
+<div class="cab"><h2 class="t2">El catálogo, en formato abierto</h2></div>
+<ul class="lista-l abierto">
+<li><b><a class="enlace" href="/v1/herramientas"><code>GET /v1/herramientas</code></a></b><span>Pregunta, fuente, créditos y ruta de cada herramienta</span></li>
+<li><b><a class="enlace" href="/v1/fuentes"><code>GET /v1/fuentes/&#123;id&#125;</code></a></b><span>La ficha técnica de una fuente</span></li>
+<li><b><a class="enlace" href="/llms.txt"><code>/llms.txt</code></a></b><span>El catálogo en texto, para agentes</span></li>
+</ul>
 </div></section>
 """
     )
@@ -1473,55 +1739,56 @@ def fuentes() -> str:
         "Fuentes y herramientas",
         f"Busca entre {N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales: territorio, contratación, estadísticas, justicia, ambiente, empresas y normativa.",
         c,
-        ("escena-cobertura.js",),
+        ("figuras.js",),
     )
 
 
 def precios() -> str:
     c = (
         portada(
-            "Precios",
-            "Pagas por consulta, no por el dato",
-            "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato; la ficha de un lugar, hasta 50.",
+            "",
+            "Precios de lanzamiento",
+            "Planes mensuales en pesos, más IVA. Pagas solo lo que responde: errores, caché y fuera de cobertura no descuentan.",
             lado=lado_tarifa(),
         )
         + f"""
 <section class="seccion"><div class="envoltura">
-{planes_html()}
-<p class="fuente-dato" style="margin-top:14px">Los precios en pesos de cada plan se confirman al pedirlo. Los servicios se cotizan aparte.</p>
+<div class="cab"><h2 class="t2">Los planes</h2>
+<p class="entrada">Pides el plan, te enviamos la factura y activamos tus créditos. Sin cobro automático.</p></div>
+{tabla_planes()}
+<p class="fuente-dato" style="margin-top:14px">Precios de lanzamiento en pesos colombianos, más IVA. Factura {INSPOW} con factura electrónica.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Tarifa</span><h2 class="t2">Créditos por tipo de pregunta</h2>
-<p class="entrada">Que una fuente pase a servirse desde una copia no cambia su precio. Cada herramienta dice su costo en el catálogo, y cada respuesta dice cuánto costó.</p></div>
+<div class="cab"><h2 class="t2">Cuánto alcanza cada plan</h2>
+<p class="entrada">Cada consulta cuesta según lo que preguntas, no según cómo se trae el dato. Cada respuesta dice cuánto costó.</p></div>
 {tarifa_html()}
 <div class="rejilla r2" style="margin-top:32px">
-<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>Las respuestas desde la caché</li><li><code>fuera_de_cobertura</code></li><li>Los errores, incluido «no se pudo»</li><li>Las rutas del catálogo</li></ul></div>
-<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 de cada mes a las 00:00 UTC y no se acumula. Si subes de plan, el límite nuevo aplica desde la siguiente consulta. <code>GET /v1/uso</code> te dice cuánto te queda.</p></div>
+<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>Lo que ya estaba en caché</li><li>Lo que está fuera de la cobertura de la fuente</li><li>Los errores, incluido «no se pudo»</li><li>Consultar el catálogo</li></ul></div>
+<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 a las 00:00 UTC y no se acumula. Si se acaba, las consultas se detienen hasta el día 1 o hasta que subas de plan: nunca se cobra de más.</p></div>
 </div>
 </div></section>
 
 <section class="seccion" id="empezar"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px;align-items:start">
-<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave de prueba</h2>
-<p class="entrada">Te llega un enlace al correo; al abrirlo ves tu llave una sola vez. Trae {miles(CREDITOS_PRUEBA)} créditos y vence en {DIAS_PRUEBA} días: sirve para probar. Para el plan Gratis de {miles(PLANES[0][1])} créditos al mes o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
+<div class="cab" style="margin:0"><h2 class="t2">Prueba gratis {DIAS_PRUEBA} días</h2>
+<p class="entrada">{miles(CREDITOS_PRUEBA)} créditos para probar con tus propias preguntas. Te llega un enlace a tu correo: lo confirmas y ves tu llave una sola vez.</p>
 {formulario_alta()}</div>
-<div class="bloque"><h3 class="t3">Llaves</h3>
-<div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
-<tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>
-<tr><td><code>rt_test_</code></td><td>Evaluación, que puede tener vencimiento: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
-<p>Cada llave tiene sus familias. Si una llave se filtra, avísanos: la revocamos y te enviamos otra, con el mismo saldo y el mismo plan.</p></div>
+<div class="otras">
+<div class="bloque"><h3 class="t3">Estado y academia</h3><p>Entidades públicas, academia y veedurías: {miles(CREDITOS_AMPLIADO)} créditos al mes, a pedido.</p><a class="enlace" href="/contacto?asunto=gobierno-academia">Pedirlo</a></div>
+<div class="bloque"><h3 class="t3">Servicios</h3><p>Revisiones, tableros, alertas y asistentes, a precio fijo antes de empezar. Empiezan con un piloto de dos semanas.</p><a class="enlace" href="/servicios#piloto">Ver el piloto</a></div>
+</div>
 </div>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Preguntas frecuentes</span><h2 class="t2">Lo que suelen preguntar</h2></div>
-<div class="prosa" style="max-width:860px">
-<h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Para subir de plan, escríbenos.</p>
-<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta dice su licencia y, si es un dato público con condiciones propias de la entidad, trae un aviso. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
-<h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
-<h3>¿Hay límite de tasa?</h3><p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
-<h3>¿Y los servicios?</h3><p>No van en estos planes. Se evalúan, el precio se fija antes de empezar y nunca se cobra por hora. <a href="/servicios">Ver servicios</a>.</p>
+<div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
+<div class="faq" style="max-width:860px">
+<details><summary>¿Puedo cambiar de plan?</summary><p>Sí: nos escribes y activamos el plan nuevo al emitir la factura.</p></details>
+<details><summary>¿Puedo usar los datos en mi negocio?</summary><p>Sí, con su licencia: cada respuesta trae la de su entidad y la atribución que debes citar; CC BY-SA exige compartir igual. Las fuentes con licencia por verificar no salen en producción.</p></details>
+<details><summary>¿Y los datos personales?</summary><p>Nada de búsquedas por cédula ni por nombre, ni perfiles de personas. Cada fuente sale con una lista cerrada de campos.</p></details>
+<details><summary>¿Hay un límite de velocidad?</summary><p>Hasta 20 consultas seguidas y 60 por minuto por llave.</p></details>
+<details><summary>¿Cómo se paga?</summary><p>Pides el plan e {INSPOW} te factura por mes o por año, con factura electrónica. No hay cobro automático.</p></details>
 </div>
 </div></section>
 """
@@ -1529,46 +1796,138 @@ def precios() -> str:
     return pagina(
         "/precios",
         "Precios",
-        "Planes por créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta (la ficha de un lugar, hasta 50); los errores y la caché no descuentan.",
+        f"Precios de lanzamiento en pesos, más IVA: Básico, Pro, Empresa y Escala. Prueba gratis de {DIAS_PRUEBA} días con {miles(CREDITOS_PRUEBA)} créditos. Errores, caché y fuera de cobertura no descuentan.",
         c,
     )
+
+
+# La respuesta real de producción a PRIMERA_PREGUNTA (correos.EJEMPLO, solicitud
+# req_01M6AEQ1Q10XH5SZP1ZYRMS212, 01-11-2026), recortada: sin la consulta interna ni la geometría.
+SOBRE_PREDIO = {
+    "contrato": "rt/1",
+    "herramienta": "sinic_predio_en_punto@1",
+    "estado": "encontrado",
+    "datos": {
+        "municipio": "SANTA MARTA",
+        "numero_predial": "470010109000002580801800000308",
+        "zona": "Urbana",
+        "destinacion_economica": "Habitacional",
+        "tipo_predio": "Predio.Privado",
+    },
+    "huella": "sha256:7a2cc96586df0f0f88c8a7231ba60a8888ae13e2741df86b5e1f1466baef1a0f",
+    "procedencia": [
+        {
+            "entidad": "Instituto Geográfico Agustín Codazzi (IGAC)",
+            "licencia": {"spdx": "CC-BY-SA-4.0", "uso_comercial": "si"},
+            "servido_desde": "copia",
+            "consultado_en": "2026-10-28T18:53:19Z",
+            "completitud": {"vistos": 1, "total": 1, "truncado": False},
+        }
+    ],
+    "avisos": ["Sale de la copia de Terrnova del 2026-10-28, no de la fuente en vivo."],
+    "creditos": 10,
+}
+assert SOBRE_PREDIO["datos"]["numero_predial"] == EJEMPLO["predio"]
+assert SOBRE_PREDIO["huella"].startswith(EJEMPLO["huella"].split("…")[0])
+assert SOBRE_PREDIO["huella"].endswith(EJEMPLO["huella"].split("…")[1])
+assert SOBRE_PREDIO["procedencia"][0]["licencia"]["spdx"] == EJEMPLO["licencia"]
+assert str(SOBRE_PREDIO["creditos"]) == EJEMPLO["creditos"]
+assert SOBRE_PREDIO["herramienta"].split("@")[0] == EJEMPLO["herramienta"]
+
+
+def misma_consulta() -> str:
+    """Pestañas: pegar en Claude Code, MCP y REST; al lado, la respuesta real (la misma por las tres)."""
+    lon, lat = -74.1572, 11.2211
+    hid = EJEMPLO["herramienta"]
+    fam = CAT.herramientas[hid].familia
+    pasos = {
+        "claude": (
+            "Pega en Claude Code",
+            escape(COMANDO_CLAUDE.replace("TU_LLAVE", "$TERRNOVA_LLAVE"))
+            + f'\n\n<span class="c"># y pregúntale:</span>\n{escape(PRIMERA_PREGUNTA)}',
+        ),
+        "mcp": (
+            "MCP",
+            f"POST https://terrnova.com/mcp/{fam}\nAuthorization: Bearer $TERRNOVA_LLAVE\n"
+            "Content-Type: application/json\nAccept: application/json, text/event-stream\n\n"
+            + escape(
+                json.dumps(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": 1,
+                        "method": "tools/call",
+                        "params": {"name": hid, "arguments": {"lon": lon, "lat": lat}},
+                    },
+                    ensure_ascii=False,
+                    indent=1,
+                )
+            ),
+        ),
+        "rest": (
+            "REST",
+            f"curl -s -X POST https://terrnova.com/v1/co/{fam}/{hid} \\\n"
+            '  -H "Authorization: Bearer $TERRNOVA_LLAVE" \\\n'
+            '  -H "Content-Type: application/json" \\\n'
+            + escape(f"  -d '{json.dumps({'lon': lon, 'lat': lat})}'"),
+        ),
+    }
+    pest = "".join(
+        f'<button type="button" role="tab" data-t="{k}" aria-selected="{"true" if i == 0 else "false"}"'
+        f"{'' if i == 0 else ' tabindex="-1"'}>{t}</button>"
+        for i, (k, (t, _)) in enumerate(pasos.items())
+    )
+    pres = "".join(
+        f'<pre data-t="{k}" tabindex="0"{"" if i == 0 else " hidden"}><code>{cod}</code></pre>'
+        for i, (k, (_, cod)) in enumerate(pasos.items())
+    )
+    resp = escape(json.dumps(SOBRE_PREDIO, ensure_ascii=False, indent=1))
+    return f"""<div class="codigo apilado">
+<div class="panel"><div class="pest" role="tablist" aria-label="Cómo hacer la consulta">{pest}</div>{pres}
+<button class="copiar" type="button" data-copiar-pre>Copiar</button></div>
+<div class="panel"><div class="pest"><span class="meta">respuesta real, recortada · 01-11-2026</span></div><pre tabindex="0" aria-label="Respuesta"><code>{resp}</code></pre></div>
+</div>"""
 
 
 def desarrolladores() -> str:
     perfiles = ", ".join(f"<code>{f}</code>" for f in POR_FAMILIA if f != "meta")
     c = (
         portada(
-            "Desarrolladores",
+            "",
             "Conecta tu agente o tu sistema",
-            "MCP por streamable HTTP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1 en las dos.",
+            "MCP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1.",
             lado=lado_puertas(),
         )
         + f"""
 <section class="seccion"><div class="envoltura doc">
-<nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
+<nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#consulta">Una consulta</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#llaves">Llaves</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
-<p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
+<p class="et">Dale esta instrucción a tu agente y se configura solo.</p>
 <p id="instruccion">{INSTRUCCION}</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
-<ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
-<li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
+<ol><li><b>Pide tu llave de prueba</b> (<a href="/precios#empezar">{miles(CREDITOS_PRUEBA)} créditos por {DIAS_PRUEBA} días</a>). Guárdala como secreto, nunca en el código.</li>
+<li><b>Haz la primera consulta</b> (1 crédito):</li></ol>
 <pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
   -H "Authorization: Bearer $TERRNOVA_LLAVE" \\
   -H "Content-Type: application/json" \\
   -d '{{"nombre":"Cali"}}'</code></pre>
-<p>La respuesta trae <code>"estado":"encontrado"</code>, los municipios que coinciden en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. La búsqueda respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
+<p>Trae <code>"estado":"encontrado"</code>, los municipios en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. Respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
 <ol start="3"><li><b>Mira tu saldo</b> con <code>GET /v1/uso</code>.</li></ol>
 
+<h2 id="consulta">La misma consulta, tres caminos</h2>
+<p>El predio en un punto de Santa Marta, pegado en Claude Code, por MCP o por la API REST. Por los tres llega el mismo sobre rt/1.</p>
+{misma_consulta()}
+<p>Funciona con {y_lista(FUNCIONA_CON)}, con las configuraciones de abajo. {y_lista(PIDEN_OAUTH)} todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. El inicio de sesión con OAuth llegará; mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
+
 <h2 id="mcp">MCP</h2>
-<p>La puerta habla MCP por <i>streamable HTTP</i>, con la llave en la cabecera <code>Authorization</code>.</p>
+<p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
 <p>Claude Code:</p>
 <pre class="suelto"><code>claude mcp add --transport http terrnova https://terrnova.com/mcp \\
   --header "Authorization: Bearer $TERRNOVA_LLAVE"</code></pre>
-<p>Cursor y otros clientes que aceptan <code>url</code> y <code>headers</code>:</p>
+<p>Cursor y clientes con <code>url</code> y <code>headers</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
     "terrnova": {{
@@ -1577,7 +1936,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
     }}
   }}
 }}</code></pre>
-<p>Claude Desktop y otros clientes que solo hablan por stdio, con el puente <code>mcp-remote</code>:</p>
+<p>Clientes solo stdio (Claude Desktop), con <code>mcp-remote</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
     "terrnova": {{
@@ -1590,26 +1949,26 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 }}</code></pre>
 
 <h2 id="perfiles">Perfiles</h2>
-<table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
-<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una sola familia</td><td>Un caso de uso de un solo tema: lo más preciso y lo más rápido</td></tr>
-<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas genéricas que buscan en el catálogo</td><td>Clientes con tope de herramientas, como los modelos de OpenAI (128)</td></tr>
-</tbody></table>
-<p>Familias: {perfiles}. Todos los perfiles traen las herramientas de nombre a código (1 crédito) y <code>fuente_describir</code>, que no gasta créditos.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
+<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, <code>ficha_lugar</code>, <code>ficha_empresa</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
+<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una familia</td><td>Un solo tema: lo más preciso y rápido</td></tr>
+<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas que buscan en el catálogo</td><td>Clientes con tope de herramientas (OpenAI: 128)</td></tr>
+</tbody></table></div>
+<p>Familias: {perfiles}. Todos traen las de nombre a código (1 crédito) y <code>fuente_describir</code> (gratis).</p>
 
 <h2 id="rest">API REST</h2>
-<p>Las herramientas siguen el patrón <code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code>, con la entrada en JSON. La ficha de un lugar está en <code>POST /v1/fichas</code>. El esquema completo, con la entrada de cada herramienta, está en <a href="/openapi.json"><code>/openapi.json</code></a> y se navega en <a href="/docs"><code>/docs</code></a>.</p>
-<table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
+<p><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code> con la entrada en JSON; la ficha de un lugar, <code>POST /v1/fichas</code>. Esquema en <a href="/openapi.json"><code>/openapi.json</code></a> y <a href="/docs"><code>/docs</code></a>.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
 <tr><td>Lista de herramientas con su costo</td><td><code>GET /v1/herramientas</code></td></tr>
 <tr><td>Ficha técnica de una fuente</td><td><code>GET /v1/fuentes/&#123;fuente_id&#125;</code></td></tr>
 <tr><td>Saldo del mes</td><td><code>GET /v1/uso</code></td></tr>
 <tr><td>Estado por fuente</td><td><code>GET /v1/estado</code></td></tr>
-</tbody></table>
-<p>Las rutas de catálogo son públicas y no gastan créditos.</p>
+</tbody></table></div>
+<p>Las rutas de catálogo son públicas y gratis.</p>
 
 <h2 id="contrato">Contrato rt/1</h2>
-<p>Toda consulta que llega a la fuente devuelve el mismo sobre:</p>
-<table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
+<p>Toda consulta devuelve el mismo sobre:</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
 <tr><td><code>estado</code></td><td><code>encontrado</code>, <code>no_encontrado</code>, <code>fuera_de_cobertura</code> o <code>parcial</code></td></tr>
 <tr><td><code>datos</code></td><td>El resultado</td></tr>
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
@@ -1617,11 +1976,17 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 (lon, lat)</td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
-</tbody></table>
-<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
+</tbody></table></div>
+<p><b>«No encontrado» no es «no se pudo».</b> Si la fuente no responde llega un error, nunca un sobre vacío; un dato viejo (<code>servido_desde: obsoleto</code>) siempre llega con aviso.</p>
+
+<h2 id="llaves">Llaves</h2>
+<div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
+<tr><td><code>rt_live_</code></td><td>Producción: licencia abierta verificada y dato público reutilizable, con aviso.</td></tr>
+<tr><td><code>rt_test_</code></td><td>Evaluación: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
+<p>Si una llave se filtra, la revocamos y te damos otra con el mismo saldo.</p>
 
 <h2 id="errores">Errores</h2>
-<p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
+<p>En <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> para soporte.</p>
 <div class="desliza"><table class="tabla"><thead><tr><th>HTTP</th><th><code>code</code></th><th>Qué hacer</th></tr></thead><tbody>
 <tr><td class="n">400</td><td><code>parametro_invalido</code></td><td>Corregir la entrada; <code>param</code> dice cuál</td></tr>
 <tr><td class="n">401</td><td><code>no_autenticado</code></td><td>Falta la llave o no es válida</td></tr>
@@ -1633,7 +1998,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
-<p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Reintenta con espera creciente, nunca en bucle cerrado.</p>
+<p>Ráfaga de 20 consultas y 60 por minuto por llave. Reintenta con espera creciente.</p>
 
 <h2 id="recursos">Recursos</h2>
 <ul><li><a href="/llms.txt"><code>/llms.txt</code></a>: el catálogo en texto para agentes.</li>
@@ -1655,42 +2020,44 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 def aliados() -> str:
     c = (
         portada(
-            "Aliados",
-            "Proyectos hermanos",
-            "Terrnova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
+            "",
+            "Quién hace Terrnova",
+            "GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial. Atalaya Mapas es un proyecto aliado de cartografía.",
         )
         + """
 <section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
-<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
-<p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
+<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial para Latinoamérica: proyectos abiertos y tutoriales.</p>
+<p style="margin-top:12px"><a class="enlace dominio" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
 <div class="aliado"><div class="pendiente">Atalaya Mapas</div>
 <div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía.</p></div></div>
 </div></section>
 """
     )
     return pagina(
-        "/aliados", "Aliados", "GeoAI LATAM y Atalaya Mapas, proyectos hermanos de Terrnova.", c
+        "/aliados",
+        "Aliados",
+        "GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial. Atalaya Mapas, proyecto aliado de cartografía.",
+        c,
     )
 
 
 def contacto() -> str:
     c = (
         portada(
-            "Contacto",
+            "",
             "Escríbenos",
-            "Respondemos de lunes a viernes, de 8:00 a 18:00, hora de Colombia, sin festivos.",
+            "Respondemos de lunes a viernes, de 8:00 a 18:00 (hora de Colombia), sin festivos.",
         )
         + f"""
 <section class="seccion"><div class="envoltura">
-<div class="rejilla r2" style="gap:48px;align-items:start;margin-bottom:56px">
+<div class="rejilla r2" style="gap:48px;align-items:start">
 <div>{formulario_contacto()}</div>
-<div class="bloque"><h3 class="t3">Qué pasa después</h3><p>Guardamos tu mensaje y te respondemos al correo que dejaste, en horario hábil. Para una llave de prueba no hace falta escribir: <a class="enlace" href="/precios#empezar">pídela aquí</a>.</p></div>
-</div>
-<div class="rejilla r3">
-<div class="bloque"><span class="num">servicios</span><h3 class="t3">Cuéntanos tu proyecto</h3><p>Qué decisión quieres tomar, sobre qué lugares y con qué plazo. Respondemos con lo que se puede probar y un precio fijo.</p><a class="boton s" href="/contacto?asunto=proyecto" style="margin-top:auto">Escribir</a></div>
-<div class="bloque"><span class="num">datos</span><h3 class="t3">Pide tu llave</h3><p>La de prueba llega al instante a tu correo. Para el plan Gratis o uno de pago, escríbenos con tu organización y qué quieres consultar.</p><a class="boton s" href="/precios#empezar" style="margin-top:auto">Pedir llave de prueba</a></div>
-<div class="bloque"><span class="num">soporte</span><h3 class="t3">Algo no funciona</h3><p>Incluye el <code>solicitud_id</code> de la respuesta. Si una fuente está caída, míralo primero en <a class="enlace" href="/estado">el estado</a>.</p><a class="boton s" href="/contacto?asunto=soporte" style="margin-top:auto">Escribir a soporte</a></div>
+<div class="bloque"><h2 class="t3">Atajos</h2><ul class="lista">
+<li>Llave de prueba: <a class="enlace" href="/precios#empezar">pídela aquí</a>. Te llega un enlace al correo; al confirmarlo ves tu llave.</li>
+<li>Un proyecto: qué quieres decidir, dónde y para cuándo.</li>
+<li>Soporte: incluye el <code>solicitud_id</code> y mira antes <a class="enlace" href="/estado">el estado</a>.</li>
+</ul></div>
 </div>
 <p class="fuente-dato" style="margin-top:24px">{CORREO}</p>
 </div></section>
@@ -1706,7 +2073,7 @@ def contacto() -> str:
 
 def legal(ruta: str, titulo: str, entrada: str, puntos: list[str]) -> str:
     c = (
-        portada("Legal", titulo, entrada)
+        portada("", titulo, entrada)
         + f"""
 <section class="seccion"><div class="envoltura"><div class="prosa">
 <p>El texto completo está en revisión legal y se publicará en esta página. Mientras tanto, estas reglas ya se cumplen en el producto:</p>
@@ -1720,12 +2087,12 @@ def legal(ruta: str, titulo: str, entrada: str, puntos: list[str]) -> str:
 
 def no_encontrada() -> str:
     c = portada(
-        "404",
+        "",
         "Aquí no hay nada",
-        "La página no existe o cambió de lugar. «No encontrado» es una respuesta honesta.",
+        "La página no existe o cambió de lugar.",
         '<div class="botones" style="margin-top:8px"><a class="boton p" href="/">Ir al inicio</a><a class="boton s" href="/fuentes">Buscar una herramienta</a></div>',
     )
-    return pagina("/404", "Página no encontrada", "La página no existe.", c)
+    return pagina("/404", "Página no encontrada", "La página no existe.", c, indexar=False)
 
 
 FAVICON = (
@@ -1764,6 +2131,7 @@ def paginas() -> dict[str, str]:
                 "Los campos que salen de cada fuente están en una lista blanca.",
                 "Guardamos de tu llave solo su huella (HMAC), nunca la llave.",
                 "Medimos el uso de cada llave; los créditos se descuentan del saldo de tu organización.",
+                f"Por cada consulta guardamos, ligados a tu llave, la herramienta, los créditos, el resultado y la hora; lo que preguntaste, no. Las respuestas quedan en caché hasta {RETENCION_DIAS} días, sin saber quién las pidió.",
                 "Si pides una llave o nos escribes, guardamos tu nombre, tu correo, tu organización y lo que nos cuentes, para darte la llave y responderte. De tu conexión solo guardamos una huella (HMAC) de la IP, para limitar abusos; nunca la IP.",
                 "No vendemos ni compartimos esos datos. Para verlos, corregirlos o borrarlos, escríbenos.",
             ],
@@ -1794,9 +2162,29 @@ def paginas() -> dict[str, str]:
     return p
 
 
+# La escena del héroe importa comun3d.js: el import lleva la huella del archivo (?v=), así se puede
+# guardar en caché mucho tiempo como lo demás. Es lo único que se toca de escena-predios.js.
+ESCENA = PUBLICO / "js" / "escena-predios.js"
+
+
+def escena_versionada() -> str:
+    texto = ESCENA.read_text(encoding="utf-8")
+    v = version("/js/comun3d.js").split("?v=")[1]
+    nuevo, n = re.subn(
+        r"from '\./comun3d\.js(?:\?v=[0-9a-f]+)?'", f"from './comun3d.js?v={v}'", texto
+    )
+    assert n == 1, "escena-predios.js ya no importa comun3d.js"
+    return nuevo
+
+
 def main() -> int:
     revisar = "--revisar" in sys.argv
     viejas = []
+    if revisar:
+        if ESCENA.read_text(encoding="utf-8") != escena_versionada():
+            viejas.append("js/escena-predios.js")
+    else:
+        ESCENA.write_text(escena_versionada(), encoding="utf-8", newline="\n")
     datos_fig = FIGURAS / "datos.json"
     if revisar:
         if datos_fig.read_text(encoding="utf-8") != datos_figuras_json():
@@ -1804,12 +2192,17 @@ def main() -> int:
     else:
         datos_fig.write_text(datos_figuras_json(), encoding="utf-8", newline="\n")
         sello = f'data-datos="{huella_figuras()}"'
-        svgs = [FIGURAS / f"{n}.svg" for n in ("capas", "ruta")]
+        svgs = [SVG_FIGURAS / f"{n}{c}.svg" for n in NOMBRES_FIGURAS for c in ("", "-viva", "-2")]
+        svgs = [s for s in svgs if not s.name.endswith("-2.svg") or s.exists()]
         if not all(s.exists() and sello in s.read_text(encoding="utf-8") for s in svgs):
             import shutil
             import subprocess
 
             if shutil.which("node"):
+                # svgo (web/figuras/package.json) optimiza los SVG; se instala la primera vez
+                if not (FIGURAS / "node_modules" / "svgo").exists():
+                    npm = shutil.which("npm") or "npm"
+                    subprocess.run([npm, "ci", "--no-audit", "--no-fund"], cwd=FIGURAS, check=True)
                 subprocess.run(["node", str(FIGURAS / "construir.mjs")], check=True)
     for nombre, texto in paginas().items():
         f = PUBLICO / nombre

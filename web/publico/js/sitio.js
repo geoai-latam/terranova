@@ -2,10 +2,17 @@
 const barra = document.querySelector('.barra');
 const abrir = document.querySelector('.abrir');
 if (barra && abrir) {
-  abrir.addEventListener('click', () => {
-    const si = barra.classList.toggle('abierta');
+  // Se abre con el botón; se cierra con el botón, con Escape (el foco vuelve al botón) y al elegir un enlace.
+  const poner = si => {
+    barra.classList.toggle('abierta', si);
     abrir.setAttribute('aria-expanded', String(si));
+    abrir.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
+  };
+  abrir.addEventListener('click', () => poner(!barra.classList.contains('abierta')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && barra.classList.contains('abierta')) { poner(false); abrir.focus(); }
   });
+  barra.querySelectorAll('.menu a, .der a').forEach(a => a.addEventListener('click', () => poner(false)));
 }
 
 // Pestañas: un solo patrón para el código, los sectores y la consola. El panel de cada pestaña sale
@@ -134,7 +141,7 @@ if (cat) {
   const mas = cat.querySelector('.mas');
   const fichas = cat.querySelectorAll('[data-familia]');
   let familia = new URLSearchParams(location.search).get('familia') || '';
-  let datos = null, limite = 40;
+  let datos = null, limite = 12;
   const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
   const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const COBRO = { codigo: 'código', registro: 'registro', agregado: 'agregado', punto: 'punto', zona: 'zona' };
@@ -155,10 +162,10 @@ if (cat) {
     b.addEventListener('click', () => {
       familia = b.dataset.familia === familia ? '' : b.dataset.familia;
       fichas.forEach(x => x.setAttribute('aria-pressed', String(x.dataset.familia === familia)));
-      limite = 40; if (datos) pintar();
+      limite = 12; if (datos) pintar();
     });
   });
-  entrada.addEventListener('input', () => { limite = 40; if (datos) pintar(); });
+  entrada.addEventListener('input', () => { limite = 12; if (datos) pintar(); });
   mas.addEventListener('click', () => { limite += 60; pintar(); });
   fetch('/datos/catalogo.json').then(r => r.json()).then(d => {
     d.herramientas.forEach(h => { const f = d.fuentes[h.fuente] || {}; h.texto = norm([h.pregunta, h.id, h.familia, f.entidad, f.titulo].join(' ')); });
