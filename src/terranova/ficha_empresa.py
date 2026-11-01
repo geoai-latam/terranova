@@ -17,7 +17,7 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from terranova.catalogo import PATRONES_ENTRADA
+from terranova.catalogo import PATRONES_ENTRADA, motivo_no_vendible, vendible
 from terranova.contrato import Sobre, ZonaUsada, ahora, huella, nueva_solicitud_id
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -107,8 +107,8 @@ async def ficha(
         fuente = ej.catalogo.fuentes[h.fuente]
         if not puede(h.familia):
             acc.avisos.append(f"«{p.nombre}» no se consultó: la llave no tiene «{h.familia}».")
-        elif fuente.uso_comercial == "por_verificar" and plan != "evaluacion":
-            acc.avisos.append(f"«{p.nombre}» no se consultó: licencia de la fuente por verificar.")
+        elif plan != "evaluacion" and not vendible(fuente):
+            acc.avisos.append(f"«{p.nombre}» no se consultó: {motivo_no_vendible(fuente)}.")
         else:
             tareas.append(una(p))
     for parte, r in await asyncio.gather(*tareas):

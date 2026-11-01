@@ -6,6 +6,9 @@
 - `tarjeta_estandar()`: `/mcp/server-card` (SEP-2127, sin herramientas) y `ai_catalogo()`:
   `/.well-known/ai-catalog.json`. Los mismos datos que `server.json` del registro oficial de MCP.
 - `herramientas_md()`: `docs/HERRAMIENTAS.md`, versionado y comprobado en CI.
+
+Las tres listas reciben el catálogo que se anuncia (`catalogo_vendible`, ADR-0007): solo fuentes
+publicadas con uso comercial, lo que ve una llave de producción en `/mcp` y lo que cuenta el sitio.
 """
 
 from __future__ import annotations
@@ -40,8 +43,8 @@ def llms_txt(c: Catalogo) -> str:
     lineas = [
         "# Terrnova",
         "",
-        "> Puerta única sobre fuentes oficiales colombianas y globales, con un plan gratis y "
-        "planes de pago por créditos (ADR-0029). Cada respuesta es un sobre rt/1 con "
+        "> Puerta única sobre fuentes oficiales colombianas y globales, con una llave de prueba "
+        "y planes de pago por créditos (ADR-0029). Cada respuesta es un sobre rt/1 con "
         "procedencia, licencia, completitud y `servido_desde`.",
         "",
         "Acceso: `Authorization: Bearer <llave>` (rt_live_… o rt_test_…).",

@@ -188,6 +188,10 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Sin uso comercial no se publica** salvo una `excepcion_uso_comercial` escrita con su decisión.
   La única hoy es la DIAN de usuarios aduaneros («sin fines de lucro»), por decisión del dueño del
   2026-10-28; se decide antes del primer cobro. El sitio no la anuncia.
+- **Producción solo ve lo vendible (2026-11-01, ADR-0007 enmendada):** una llave `rt_live_` lista y
+  usa solo las 205 herramientas de fuentes publicadas con uso comercial (antes `/mcp`,
+  `/v1/herramientas` y `/llms.txt` daban 207). La DIAN de usuarios aduaneros y `catalogo_buscar`
+  quedan para llaves `rt_test_`. Caddy sirve la 404 del sitio y ya no deja salir `/metrics`.
 - **El `nit` de una empresa va con el tipo `nit_empresa`** (empieza por 8 o 9, nueve dígitos): un
   `int` dejaba pasar la cédula de una persona natural (ADR-0014). Cambiaron las ocho herramientas
   del RUES y de Supersociedades que pedían `nit: int`: ahora el NIT va como texto

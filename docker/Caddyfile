@@ -3,11 +3,14 @@
 
 encode zstd gzip
 
-# /metrics es de la red interna (Prometheus lee cada réplica directo): no sale por el borde
-respond /metrics 404
+# /metrics es de la red interna (Prometheus lee cada réplica directo): no sale por el borde.
+# Va en su propio handle: un `respond` suelto se ordena después de `handle` y nunca corría.
+handle /metrics {
+	respond 404
+}
 
 # El sitio público (web/publico, generado por web/construir.py) se sirve como archivos estáticos.
-# Todo lo demás (/v1, /mcp, /estado, /docs, /llms.txt…) sigue yendo a la puerta.
+# Las rutas de la puerta (/v1, /mcp, /estado, /docs, /llms.txt…) van a la puerta (@puerta).
 @sitio path / /index.html /servicios /fuentes /precios /desarrolladores /aliados /contacto /terminos /privacidad /estilo.css /favicon.svg /robots.txt /sitemap.xml /js/* /datos/* /img/*
 handle @sitio {
 	root * /srv/web
@@ -18,8 +21,14 @@ handle @sitio {
 	file_server
 }
 
-# las réplicas de la puerta (TERRANOVA_REPLICAS; en la VPS única de ADR-0030, solo puerta-a)
-handle {
+# Las rutas de la puerta (tests/test_vendible.py comprueba que cubren todas las de la aplicación)
+# van a sus réplicas (TERRANOVA_REPLICAS; en la VPS única de ADR-0030, solo puerta-a). Su 404 es
+# problem+json de la puerta y no pasa por handle_errors (un proxy que responde no es un error).
+# /metrics no está: es de la red interna (Prometheus lee cada réplica directo) y por el borde da la
+# 404 del sitio. Antes, `respond /metrics 404` nunca corría (handle va antes que respond) y el
+# proxy de todo lo demás la dejaba salir.
+@puerta path /v1/* /mcp /mcp/* /docs /docs/* /redoc /openapi.json /llms.txt /.well-known/* /estado /salud /listo
+handle @puerta {
 	reverse_proxy {$TERRANOVA_REPLICAS} {
 		lb_policy least_conn
 		health_uri /v1/fuentes
@@ -29,6 +38,21 @@ handle {
 		transport http {
 			read_timeout 5m
 		}
+	}
+}
+
+# Lo demás es del sitio: una ruta que no existe (o un archivo que falta en /js, /img…) es la 404
+# del sitio, en HTML y con estado 404.
+handle {
+	root * /srv/web
+	file_server
+}
+
+handle_errors 404 {
+	root * /srv/web
+	rewrite * /404.html
+	file_server {
+		status 404
 	}
 }
 

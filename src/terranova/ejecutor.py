@@ -31,6 +31,8 @@ from terranova.catalogo import (
     Fuente,
     Herramienta,
     cargar_cobertura,
+    motivo_no_vendible,
+    vendible,
 )
 from terranova.conector import Conector, ErrorConector
 from terranova.contrato import (
@@ -478,11 +480,12 @@ class Ejecutor:
         if h is None:
             raise ErrorEjecucion("no_existe", f"no hay herramienta {herramienta}")
         fuente = self.catalogo.fuentes[h.fuente]
-        # ADR-0007: sin licencia verificada, la fuente solo responde a llaves de evaluación
-        if fuente.uso_comercial == "por_verificar" and plan != "evaluacion":
+        # ADR-0007 (enmienda del 2026-11-01): una llave de producción solo usa lo vendible
+        # (publicada y con uso comercial); lo demás responde solo a llaves de evaluación
+        if plan != "evaluacion" and not vendible(fuente):
             raise ErrorEjecucion(
                 "licencia_no_habilitada",
-                f"{fuente.id}: licencia por verificar; solo responde a llaves de evaluación",
+                f"{fuente.id}: {motivo_no_vendible(fuente)}; solo responde a llaves de evaluación",
             )
         valores = validar_entrada(h, entrada)
 
