@@ -191,22 +191,13 @@ const vista = new IntersectionObserver(es => {
 }, { threshold: umbrales });
 
 // ---------------------------------------------------------------- montar una figura
-function montar(fig, nombre, crear) {
+function montar(fig, nombre, crear, caja) {
   const lienzo = fig.querySelector('.lienzo');
-  const fija = lienzo.querySelector('svg');
-  const vivo = fija.cloneNode(false);
-  vivo.removeAttribute('role'); vivo.removeAttribute('aria-label'); vivo.removeAttribute('data-vivo');
-  vivo.setAttribute('aria-hidden', 'true');
-  vivo.classList.add('capa-viva-svg');
-  const capa = fija.querySelector(':scope > .capa-viva');
-  if (capa) vivo.append(capa);
-  // la capa viva va en su propio <svg> encima: un cambio en ella solo vuelve a pintar sus piezas.
-  // Sin will-change: promoverla a una capa al empezar cada ciclo costaba 50 ms a CPU 4× (medido).
-  const caja = document.createElement('div');
-  caja.className = 'capa-viva';
-  caja.append(vivo);
-  lienzo.append(caja);
-  const V = JSON.parse(fija.dataset.vivo);
+  // la capa viva va en su propio <svg> encima de la imagen fija: un cambio en ella solo vuelve a
+  // pintar sus piezas. Sin will-change: promoverla al empezar cada ciclo costaba 50 ms a CPU 4×.
+  const vivo = caja.querySelector('svg');
+  const fija = vivo;
+  const V = JSON.parse(vivo.dataset.vivo);
   const lectura = fig.querySelector('[data-lectura]');
   const pieza = n => vivo.querySelector(`[data-v="${n}"]`);
   const F = { fig, nombre, lienzo, vivo: caja, V, razon: 0, autos: 0, turno: 0, corre: false, inicio: 0, espera: 0 };
@@ -624,17 +615,27 @@ FIG.asistente = ({ V, pieza }) => {
 };
 
 // ---------------------------------------------------------------- carga perezosa
+// La capa fija llega como <img> (sin DOM: no cuesta estilo ni diseño) y la viva, en línea. Para que
+// ninguna tarea se alargue al desplazarse, las figuras entran de a una por cuadro, cuando el hilo
+// está libre (requestIdleCallback; si no lo hay, el cuadro siguiente).
+const ocioso = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 400 }) : f => requestAnimationFrame(() => setTimeout(f, 0));
+let fila = Promise.resolve();
+const turno = () => (fila = fila.then(() => new Promise(r => ocioso(r))));
 async function cargar(fig) {
   const lienzo = fig.querySelector('.lienzo');
-  const r = await fetch(lienzo.dataset.src);
+  const img = new Image();
+  img.alt = ''; img.decoding = 'async'; img.className = 'capa-fija'; img.src = lienzo.dataset.src;
+  const [r] = await Promise.all([fetch(lienzo.dataset.viva), img.decode().catch(() => {})]);
   if (!r.ok) return;
-  lienzo.innerHTML = await r.text();
-  const svg = lienzo.querySelector('svg');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.removeAttribute('role');
-  fig.classList.add('lista');
+  const texto = await r.text();
+  await turno();
+  const caja = document.createElement('div');
+  caja.className = 'capa-viva';
+  caja.innerHTML = texto;
+  lienzo.append(img, caja);
   const nombre = fig.dataset.figura;
-  if (FIG[nombre]) montar(fig, nombre, FIG[nombre]);
+  if (FIG[nombre]) await new Promise(r => ocioso(() => { montar(fig, nombre, FIG[nombre], caja); r(); }));
+  fig.classList.add('lista');
 }
 const cerca = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;

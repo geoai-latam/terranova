@@ -34,14 +34,22 @@ export function encuadre(puntos, { azimuth = 45, pad = 10, escala = ESCALA } = {
   return { P: { origin: [pad - x0, pad - y0], scale: escala, azimuth, elevation: 30 }, ancho, alto };
 }
 
-// El SVG de una figura en dos capas: la fija (todo lo que no se mueve) y la viva (las piezas que
-// se mueven y lo que las tapa). figuras.js pone la viva encima, en su propio <svg>, así un cuadro
-// solo repinta lo que cambia. data-vivo lleva lo que el movimiento necesita (precalculado aquí).
+// El SVG de una figura en dos capas, en dos archivos: la fija (todo lo que no se mueve), que la
+// página muestra como <img> (sin DOM: no cuesta estilo ni diseño al desplazarse), y la viva (las
+// piezas que se mueven, lo que las tapa y los rótulos grabados, que necesitan la fuente del sitio),
+// que figuras.js pone encima, en línea. data-vivo lleva lo que el movimiento necesita.
 export function svgDe({ huella, ancho, alto, etiqueta, fija, cuerpo: viejo, viva = [], vivo, clase }) {
   if (fija === undefined) fija = viejo;
-  const cuerpo = `<g class="capa-fija">${[].concat(fija).join("")}</g><g class="capa-viva">${[].concat(viva).join("")}</g>`;
-  const svg = k.figureSvg({ width: ancho, height: alto, label: etiqueta, body: cuerpo, className: clase });
-  return svg.replace("<svg ", `<svg data-datos="${huella}" data-vivo="${esc(JSON.stringify(vivo))}" `);
+  // los rótulos grabados (texto) van en la viva: un SVG en <img> no ve las fuentes de la página
+  const textos = [];
+  const fijaSin = [].concat(fija).join("").replace(/<text class="iso-face-text"[^>]*>[^<]*<\/text>/g, (t) => (textos.push(t), ""));
+  const capaFija = k.figureSvg({ width: ancho, height: alto, label: etiqueta, body: `<g class="capa-fija">${fijaSin}</g>`, className: clase });
+  const capaViva = k.figureSvg({ width: ancho, height: alto, label: "", body: `<g class="capa-viva">${textos.join("")}${[].concat(viva).join("")}</g>`, className: `${clase} capa-viva-svg` })
+    .replace(' role="img" aria-label=""', ' aria-hidden="true"');
+  return {
+    fija: capaFija.replace("<svg ", `<svg data-datos="${huella}" `),
+    viva: capaViva.replace("<svg ", `<svg data-datos="${huella}" data-vivo="${esc(JSON.stringify(vivo))}" `),
+  };
 }
 
 // Sombra de contacto horneada: la huella de la pieza en el piso y dos escalones translúcidos que

@@ -41,7 +41,13 @@ def titular(nombre: str) -> str:
 
 
 def lamina(nombre: str) -> str:
-    svg = (PUBLICO / "img" / "figuras" / f"{FIGURA[nombre]}.svg").read_text(encoding="utf-8")
+    fig = PUBLICO / "img" / "figuras"
+    # las dos capas de la figura: la fija y, encima, la viva (rótulos y piezas en reposo)
+    svg = (fig / f"{FIGURA[nombre]}.svg").read_text(encoding="utf-8") + (
+        '<div class="capa-viva">'
+        + (fig / f"{FIGURA[nombre]}-viva.svg").read_text(encoding="utf-8")
+        + "</div>"
+    )
     css = (PUBLICO / "estilo.css").as_uri()
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
 <link rel="stylesheet" href="{css}">

@@ -665,6 +665,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 /* la capa viva: las piezas que se mueven, en su propio svg encima (sin will-change: promoverla al
    empezar cada ciclo costaba más de lo que ahorraba, medido a CPU 4×) */
 .fig-iso .capa-viva { position: absolute; inset: 0; pointer-events: none; }
+/* la capa fija es una imagen: sin DOM, no cuesta estilo ni diseño al desplazarse */
+.fig-iso .lienzo > img.capa-fija { display: block; width: 100%; height: auto; }
 .fig-iso .lienzo:focus-visible { outline: 2px solid var(--foco); outline-offset: 6px; }
 .fig-iso .lectura-l { width: 100%; display: grid; justify-items: start; gap: 2px;
   font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); font-variant-numeric: tabular-nums; }

@@ -54,6 +54,10 @@ function columnaQueCrece(ring, z, h, P, m) {
   return `<g class="iso-solid m-${m}" data-crece="${H}">${partes.join("")}</g>`;
 }
 
+// En un prisma convexo, la tapa y las caras de lado cubren la silueta: el relleno de abajo sobra
+// (son 200 columnas: así pesa menos).
+const sinRelleno = (svg) => svg.replace(/<path class="iso-fill" d="[^"]*"\/>/, "");
+
 export function cobertura(DATOS, huella) {
   const { R, celdas, tierra, ciudades, total } = DATOS.cobertura;
   const K = 14, LON0 = -73.35, LAT0 = 3.57;
@@ -152,8 +156,8 @@ export function cobertura(DATOS, huella) {
     const alta = h >= 12;
     let svg = alta
       ? `<g data-v="c${i}">${columnaQueCrece(hex(cx, cy, RR * 0.8), ZL, h, P, `cob${nivel(n)}`)}</g>`
-      : `<g data-v="c${i}">${S(sol, { m: `cob${nivel(n)}`, tone: "hi", crease: "lo" })}</g>`;
-    if (candidatas.includes(i)) svg += `<g data-v="luz${i}" style="opacity:0">${S(sol, { m: "ambar", tone: "hi", crease: "lo" })}</g>`;
+      : `<g data-v="c${i}">${sinRelleno(S(sol, { m: `cob${nivel(n)}`, tone: "hi", crease: "lo" }))}</g>`;
+    if (candidatas.includes(i)) svg += `<g data-v="luz${i}" style="opacity:0">${sinRelleno(S(sol, { m: "ambar", tone: "hi", crease: "lo" }))}</g>`;
     items.push({ d: k.depthOf([cx, cy, 0], P), svg });
   });
   // alfileres: aguja de metal y cabeza oscura con su remate, siempre más altos que la columna de

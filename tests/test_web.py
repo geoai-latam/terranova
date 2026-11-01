@@ -166,8 +166,9 @@ def test_figuras_isometricas_al_dia_y_verdaderas() -> None:
     huella = construir.huella_figuras()
     html = "".join(p.read_text(encoding="utf-8") for p in PAGINAS)
     for nombre in construir.NOMBRES_FIGURAS:
-        svg = (PUBLICO / "img" / "figuras" / f"{nombre}.svg").read_text(encoding="utf-8")
-        assert f'data-datos="{huella}"' in svg, f"{nombre}.svg no está al día"
+        for capa in ("", "-viva"):  # la capa fija (<img>) y la viva (en línea)
+            svg = (PUBLICO / "img" / "figuras" / f"{nombre}{capa}.svg").read_text(encoding="utf-8")
+            assert f'data-datos="{huella}"' in svg, f"{nombre}{capa}.svg no está al día"
         assert f'data-figura="{nombre}"' in html, f"ninguna página usa la figura {nombre}"
     ids = {h.id for h in construir.HERR}
     turnos = datos["ruta"]["turnos"]
@@ -190,7 +191,7 @@ def test_figuras_respetan_movimiento_reducido_y_marca() -> None:
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
     texto = re.sub(r"<[^>]+>", " ", html)
     assert "Terranova" not in texto, "la marca se escribe Terrnova"
-    assert "Terrnova" in (PUBLICO / "img" / "figuras" / "ruta.svg").read_text(encoding="utf-8")
+    assert "Terrnova" in (PUBLICO / "img" / "figuras" / "ruta-viva.svg").read_text(encoding="utf-8")
 
 
 def test_figuras_solo_nombran_herramientas_vendibles_y_sin_dane() -> None:
@@ -217,8 +218,13 @@ def test_figuras_solo_nombran_herramientas_vendibles_y_sin_dane() -> None:
     assert not re.search(r"\bDANE\b", json.dumps(sin_mapa, ensure_ascii=False))
     for nombre in construir.NOMBRES_FIGURAS:
         svg = html.unescape(
-            (PUBLICO / "img" / "figuras" / f"{nombre}.svg").read_text(encoding="utf-8")
+            "".join(
+                (PUBLICO / "img" / "figuras" / f"{nombre}{capa}.svg").read_text(encoding="utf-8")
+                for capa in ("", "-viva")
+            )
         )
+        for hid in construir.SIN_CANARIO_VERDE:
+            assert hid not in svg, f"{nombre} usa de ejemplo {hid}, sin canario en verde"
         assert not re.search(r"\bDANE\b", svg), f"{nombre}.svg nombra el DANE"
         for hid in re.findall(r"\b[a-z0-9]+(?:_[a-z0-9]+){2,}\b", svg):
             assert hid in vendibles, f"{nombre}.svg nombra {hid}, que no se vende"
@@ -230,3 +236,18 @@ def test_figuras_solo_nombran_herramientas_vendibles_y_sin_dane() -> None:
             assert "DANE" not in lectura, f"{p.name}: una figura lee {lectura}"
             for hid in re.findall(r"<code>([a-z0-9_]+)</code>", lectura):
                 assert hid in vendibles
+
+
+def test_ninguna_pagina_usa_de_ejemplo_una_herramienta_sin_canario_verde() -> None:
+    # Las herramientas cuyo canario no está en verde siguen en el catálogo (/fuentes las lista desde
+    # datos/catalogo.json), pero ninguna página ni figura las usa de ejemplo.
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # web/ no es un paquete
+
+    html = "".join(p.read_text(encoding="utf-8") for p in PAGINAS)
+    for hid in construir.SIN_CANARIO_VERDE:
+        assert hid not in html, f"una página usa de ejemplo {hid}"
+    for pagina in ("index.html", "servicios.html", "precios.html", "desarrolladores.html"):
+        texto = re.sub(r"<[^>]+>", " ", (PUBLICO / pagina).read_text(encoding="utf-8"))
+        for ejemplo in ("TRM", "Saber 11", "dólar", "BanRep"):
+            assert ejemplo not in texto, f"{pagina} usa de ejemplo {ejemplo}"

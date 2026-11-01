@@ -1,0 +1,9 @@
+{
+  "name": "terrnova-figuras",
+  "private": true,
+  "description": "Optimiza los SVG de las figuras del sitio (construir.mjs).",
+  "type": "module",
+  "devDependencies": {
+    "svgo": "4.0.0"
+  }
+}

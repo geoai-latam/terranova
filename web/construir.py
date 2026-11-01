@@ -1128,12 +1128,13 @@ def datos_figuras_json() -> str:
 
 
 def huella_figuras() -> str:
-    """Huella de lo que decide el dibujo: los datos, los scripts que dibujan y el kit."""
+    """Huella de lo que decide el dibujo: los datos, los scripts que dibujan, el kit y la hoja
+    del sitio (la capa fija lleva dentro sus reglas)."""
     import hashlib
 
     h = hashlib.sha256(datos_figuras_json().encode("utf-8"))
     scripts = sorted(f.name for f in FIGURAS.glob("*.mjs"))
-    for f in [*scripts, "kit/iso-kit.mjs"]:
+    for f in [*scripts, "kit/iso-kit.mjs", "../publico/estilo.css"]:
         h.update((FIGURAS / f).read_bytes().replace(b"\r\n", b"\n"))
     return h.hexdigest()[:12]
 
@@ -1156,8 +1157,9 @@ def figura(
 ) -> str:
     """Una figura integrada en la sección: sin marco, con su lectura en una línea debajo.
 
-    El SVG vive aparte (web/publico/img/figuras) y figuras.js lo trae cuando se acerca a la vista;
-    el hueco ya tiene su proporción, así la página no salta."""
+    El SVG vive aparte (web/publico/img/figuras) en dos archivos: la capa fija, que va como <img>,
+    y la viva, que figuras.js pone encima en línea cuando la figura se acerca a la vista; el hueco ya
+    tiene su proporción, así la página no salta."""
     svg = (SVG_FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8")
     huella = re.search(r'data-datos="([0-9a-f]{12})"', svg)
     if not huella or huella.group(1) != huella_figuras():
@@ -1176,7 +1178,8 @@ def figura(
     return (
         f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}">'
         f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
-        f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
+        f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" '
+        f'data-viva="/img/figuras/{nombre}-viva.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
         f'<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lectura}</span>{sello}</span>{pista_html}</figcaption>'
         "</figure>"
     )
@@ -2151,9 +2154,29 @@ def paginas() -> dict[str, str]:
     return p
 
 
+# La escena del héroe importa comun3d.js: el import lleva la huella del archivo (?v=), así se puede
+# guardar en caché mucho tiempo como lo demás. Es lo único que se toca de escena-predios.js.
+ESCENA = PUBLICO / "js" / "escena-predios.js"
+
+
+def escena_versionada() -> str:
+    texto = ESCENA.read_text(encoding="utf-8")
+    v = version("/js/comun3d.js").split("?v=")[1]
+    nuevo, n = re.subn(
+        r"from '\./comun3d\.js(?:\?v=[0-9a-f]+)?'", f"from './comun3d.js?v={v}'", texto
+    )
+    assert n == 1, "escena-predios.js ya no importa comun3d.js"
+    return nuevo
+
+
 def main() -> int:
     revisar = "--revisar" in sys.argv
     viejas = []
+    if revisar:
+        if ESCENA.read_text(encoding="utf-8") != escena_versionada():
+            viejas.append("js/escena-predios.js")
+    else:
+        ESCENA.write_text(escena_versionada(), encoding="utf-8", newline="\n")
     datos_fig = FIGURAS / "datos.json"
     if revisar:
         if datos_fig.read_text(encoding="utf-8") != datos_figuras_json():
@@ -2161,12 +2184,16 @@ def main() -> int:
     else:
         datos_fig.write_text(datos_figuras_json(), encoding="utf-8", newline="\n")
         sello = f'data-datos="{huella_figuras()}"'
-        svgs = [SVG_FIGURAS / f"{n}.svg" for n in NOMBRES_FIGURAS]
+        svgs = [SVG_FIGURAS / f"{n}{c}.svg" for n in NOMBRES_FIGURAS for c in ("", "-viva")]
         if not all(s.exists() and sello in s.read_text(encoding="utf-8") for s in svgs):
             import shutil
             import subprocess
 
             if shutil.which("node"):
+                # svgo (web/figuras/package.json) optimiza los SVG; se instala la primera vez
+                if not (FIGURAS / "node_modules" / "svgo").exists():
+                    npm = shutil.which("npm") or "npm"
+                    subprocess.run([npm, "ci", "--no-audit", "--no-fund"], cwd=FIGURAS, check=True)
                 subprocess.run(["node", str(FIGURAS / "construir.mjs")], check=True)
     for nombre, texto in paginas().items():
         f = PUBLICO / nombre

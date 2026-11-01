@@ -2,7 +2,7 @@
 // El grosor de los predios (5 m) y la subida del consultado (44 m) son simbólicos: no son dato.
 // Al entrar, la cámara baja desde arriba y los predios crecen desde el punto consultado hacia
 // afuera. Cuando la consola muestra la respuesta del predio, sale una onda del punto y el predio sube.
-import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js';
+import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js?v=4f51e3ba7b';
 
 const esc = document.querySelector('[data-escena="predios"]');
 const con = document.querySelector('[data-consola]');
