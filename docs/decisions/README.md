@@ -10,7 +10,7 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 | 0004 | Un núcleo, dos adaptadores (REST y MCP) desde los mismos modelos | **aceptada** |
 | 0005 | Contrato `rt/1` con procedencia por fuente, compatible con GeoResult | **aceptada** |
 | 0006 | Una herramienta por pregunta, generada del catálogo; perfiles MCP por familia | **aceptada** |
-| 0007 | Catálogo como código con compuerta de licencia y lista blanca de campos | **aceptada** |
+| 0007 | Catálogo como código con compuerta de licencia y lista blanca de campos | **aceptada** (enmendada 2026-11-01: producción solo ve lo vendible) |
 | 0008 | En vivo por defecto; copia y curado solo cuando agregan valor; caché con frescura declarada | **aceptada** |
 | 0009 | Llaves API por organización ahora; OAuth 2.1 después | **aceptada** |
 | 0010 | Créditos como unidad de cuota por llave (Redis) y medición por evento; fallas y caché no descuentan; crédito por tipo de pregunta; 402 al agotar | **aceptada** (enmendada) |

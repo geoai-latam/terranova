@@ -79,7 +79,6 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
-| `dian_usuario_aduanero_por_nit` | ¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN? | Dirección de Impuestos y Aduanas Nacionales (DIAN) | LicenseRef-dian-terminos | 2 |
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
@@ -178,12 +177,6 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `uariv_desplazamiento_municipio` | ¿Cuántas personas fueron desplazadas de este municipio cada año? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 | `uariv_victimas_hecho_municipio` | ¿Cuántas víctimas registradas hay en este municipio por cada hecho victimizante (desplazamiento, homicidio, amenaza…)? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 | `uariv_victimas_municipio` | ¿Cuántas víctimas del conflicto armado registradas hay en este municipio? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
-
-## meta
-
-| Herramienta | Pregunta | Fuente | Licencia | Créditos |
-|---|---|---|---|---|
-| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terrnova (índice de metadatos sobre fuentes oficiales) | por verificar | 1 |
 
 ## normativa
 

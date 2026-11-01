@@ -78,7 +78,7 @@
 | `zona_demasiado_grande` | 400 | polígono o bbox sobre el tope de la herramienta | no |
 | `no_autenticado` | 401 | falta llave o es inválida | no |
 | `sin_permiso` | 403 | la llave no tiene el scope | no |
-| `licencia_no_habilitada` | 403 | fuente con licencia `por_verificar` y llave que no es de evaluación (ADR-0007) | no |
+| `licencia_no_habilitada` | 403 | fuente no vendible (licencia `por_verificar`, sin uso comercial o en borrador) y llave que no es de evaluación (ADR-0007) | no |
 | `no_existe` | 404 | herramienta o recurso inexistente | no |
 | `saldo_agotado` | 402 | créditos del mes agotados (con `Retry-After` hasta el reinicio del mes; el mensaje dice la fecha y dónde subir de plan, ADR-0029) | no |
 | `limite_tasa` | 429 | exceso de tasa (con `Retry-After`). Por MCP solo gasta `tools/call`: abrir la sesión o listar herramientas no toca fuentes | no |
