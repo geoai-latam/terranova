@@ -53,7 +53,7 @@ document.querySelectorAll('[data-copiar-pre]').forEach(b => b.addEventListener('
 // El sobre del héroe: reproduce una vez la respuesta real del predio. Escribe la pregunta, muestra
 // la herramienta y, cuando llega la respuesta, la avisa a la maqueta (terranova:turno y el último
 // turno en <html data-turno>) en el mismo instante en que aparece el estado: el predio sube y sale
-// el destello. Corre al entrar en vista; si la escena 3D viene en camino, la espera hasta 2 s. Con
+// la onda. Corre al entrar en vista; si la escena 3D viene en camino, la espera hasta 2 s. Con
 // movimiento reducido no se reproduce: queda completo, que es el estado de la respuesta.
 const sobre = document.querySelector('[data-sobre]');
 if (sobre && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -68,8 +68,8 @@ if (sobre && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const piezas = [llama, ...filas, pie];
   piezas.forEach(e => e.classList.add('espera'));
   x.textContent = ''; x.classList.add('escribe');
-  avisar('espera');
   async function reproducir() {
+    avisar('espera');
     await dormir(400);
     for (let c = 1; c <= texto.length; c++) { x.textContent = texto.slice(0, c); await dormir(22); }
     x.classList.remove('escribe');
@@ -85,7 +85,7 @@ if (sobre && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const io = new IntersectionObserver(es => {
     if (!es[es.length - 1].isIntersecting) return;
     io.disconnect();
-    const viene = ['espera', 'cargando'].includes(raiz.dataset.heroe);
+    const viene = !!document.querySelector('[data-escena="predios"]') && raiz.dataset.escena !== 'lista';
     if (!viene) { empezar(); return; }
     document.addEventListener('terranova:escena', () => setTimeout(empezar, 250), { once: true });
     setTimeout(empezar, 2000);

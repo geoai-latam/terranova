@@ -131,38 +131,57 @@ code, pre, kbd { font-family: var(--font-mono); }
   .barra.abierta .der { order: 4; width: 100%; margin: 0; flex-wrap: wrap; }
 }
 
-/* ---------- héroe: el texto y el sobre rt/1 a un lado, la maqueta (figura cero) al otro ----------
-   La maqueta es un póster SVG (img/figuras/heroe.svg) que heroe.js cambia por la escena 3D cuando
-   el equipo la aguanta; son la misma imagen, así el cambio no se nota. */
-.heroe { border-bottom: 1px solid var(--linea); padding: clamp(40px, 5vw, 64px) 0 clamp(40px, 5vw, 64px); }
-.h-rejilla { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "texto figura" "sobre sobre";
-  gap: 28px clamp(24px, 4vw, 56px); align-items: center; }
-.h-texto { grid-area: texto; display: flex; flex-direction: column; gap: 24px; }
-.t0 { font: 650 clamp(40px, 4.4vw, 62px)/1.03 var(--font-sans); letter-spacing: -0.04em; }
-.heroe .entrada { font-size: clamp(17px, 1.35vw, 19px); max-width: 520px; color: var(--tinta-suave); }
-.h-figura { grid-area: figura; margin: 0; align-self: center; display: grid; gap: 12px; min-width: 0; }
-.h-sobre { grid-area: sobre; min-width: 0; }
+/* ---------- escenas 3D (héroe y cobertura) ---------- */
+.escena { position: relative; min-height: 560px; cursor: grab; touch-action: pan-y; user-select: none; }
+.escena canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.escena .respaldo { position: absolute; border-radius: var(--radio-lg); }
+.escena.viva .respaldo { display: none; }
+.escena .guia { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.escena .guia line { stroke: var(--tinta); stroke-width: 1; }
+.escena .guia circle { fill: var(--fondo); stroke: var(--tinta); stroke-width: 1.5; }
 
-.escena { position: relative; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
-.escena.arrastra { cursor: grabbing; }
-.escena .lamina { position: relative; width: 100%; }
-.escena .poster, .escena canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.escena canvas { opacity: 0; transition: opacity .3s cubic-bezier(0, 0, .3, 1); }
-.escena.viva canvas { opacity: 1; }
-.escena.viva .poster { visibility: hidden; transition: visibility 0s .3s; }
-/* rótulos de calle (OpenStreetMap) y del barrio, encima de la maqueta, en minúscula normal */
-.rotulos { position: absolute; inset: 0; pointer-events: none; }
-.rotulos .calle { position: absolute; transform: translate(-50%, -50%) rotate(var(--a, 0deg)); white-space: nowrap;
-  font: 500 11px/1 var(--font-sans); color: var(--tinta-suave);
-  text-shadow: 0 0 2px var(--estructura-0), 0 0 3px var(--estructura-0), 0 0 6px var(--estructura-0); }
-.h-figura .barrio { font: 600 14px/1.3 var(--font-sans); color: var(--tinta); }
-/* la lectura bajo la maqueta: el dato en mono; la atribución fuera de la imagen, legible y tocable */
-.h-figura .lectura-l { display: grid; gap: 2px; justify-items: start; }
-.h-figura [data-lectura] { font: 400 12.5px/20px var(--font-mono); color: var(--tinta-tenue); font-variant-numeric: tabular-nums; }
-.h-figura [data-lectura] b { font-weight: 500; color: var(--tinta); }
-.atribucion { font: 400 13px/20px var(--font-sans); color: var(--tinta-tenue); background: var(--fondo); }
-.atribucion a { color: var(--tinta-suave); text-underline-offset: 3px; display: inline-block; padding: 10px 0; margin: -10px 0; }
-.atribucion a:hover { color: var(--tinta); }
+.escena .lectura { position: absolute; left: 0; bottom: 24px; font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); pointer-events: none; max-width: 60%; z-index: 2; }
+.escena .lectura b { font-weight: 500; color: var(--tinta); }
+.escena .mueble { position: absolute; right: var(--margen); bottom: 24px; display: flex; align-items: flex-end; gap: 18px; z-index: 2;
+  font: 400 11.5px/14px var(--font-mono); color: var(--tinta-suave); pointer-events: none; }
+.escena .escala i { display: block; height: 6px; border: 1px solid var(--tinta-suave); border-top: 0; margin-bottom: 4px; }
+.escena .norte { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+
+/* ---------- héroe: el mapa a todo lo ancho, el texto encima y el sobre rt/1 debajo ---------- */
+.heroe { --borde: max(var(--margen), calc((100% - var(--ancho)) / 2));
+  position: relative; overflow: hidden; border-bottom: 1px solid var(--linea);
+  min-height: clamp(720px, calc(100vh - 68px), 880px); display: flex; flex-direction: column; }
+.heroe .escena { position: absolute; inset: 0; min-height: 0; }
+.heroe .escena canvas { -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent 38%, #000 60%);
+  mask-image: linear-gradient(90deg, transparent 0, transparent 38%, #000 60%); }
+.heroe .escena .respaldo { right: 4%; top: 6%; width: min(52%, 640px); opacity: .9; }
+.heroe .lectura { left: var(--borde); bottom: 24px; max-width: 40%; }
+.heroe .mueble { right: var(--borde); }
+.heroe .rotulos .barrio { left: auto; right: var(--borde); top: 28px; }
+.h-texto { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; pointer-events: none; padding-top: 64px; padding-bottom: 96px; }
+.h-texto .izq { max-width: 660px; display: flex; flex-direction: column; gap: 28px; pointer-events: auto; }
+.t0 { font: 650 clamp(40px, 5vw, 72px)/1.02 var(--font-sans); letter-spacing: -0.045em; }
+.heroe .entrada { font-size: clamp(17px, 1.45vw, 20px); max-width: 520px; color: var(--tinta-suave); }
+.heroe .nota { font-size: 14px; color: var(--tinta-tenue); margin-top: -10px; }
+
+@media (max-width: 1100px) {
+  .heroe { min-height: 0; }
+  .h-texto { order: 1; padding-top: 48px; padding-bottom: 8px; }
+  .heroe .escena { order: 2; position: relative; inset: auto; height: 480px; }
+  .heroe .escena canvas { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 64px, #000 75%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 64px, #000 75%, transparent 100%); }
+  .heroe .escena .respaldo { left: 0; right: 0; margin: auto; top: 40px; width: min(80%, 460px); }
+  .heroe .lectura { top: 16px; bottom: auto; max-width: 70%; }
+  .heroe .mueble { top: 16px; bottom: auto; }
+  .heroe .rotulos .barrio { left: var(--borde); right: auto; top: 58px; }
+}
+@media (max-width: 520px) {
+  .heroe .escena { height: 420px; }
+}
+/* la atribución de OpenStreetMap se puede tocar: la lectura no va dentro de role=img y su enlace recibe el puntero */
+.escena .lectura a { pointer-events: auto; display: inline-block; padding: 10px 0; margin: -10px 0; }
+/* el sobre rt/1, debajo del héroe */
+.h-sobre { padding-top: clamp(32px, 4vw, 48px); }
 
 /* el sobre rt/1: la respuesta real, con lo que nos diferencia resaltado */
 .sobre { background: var(--bosque-900); color: #E6EAE2; border-radius: var(--radio-xl); padding: 18px 22px 16px;
@@ -203,10 +222,6 @@ code, pre, kbd { font-family: var(--font-mono); }
 @media (max-width: 1100px) {
   .sobre { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: auto; grid-template-areas: "preg preg" "llama llama" "datos prueba" "pie pie"; }
 }
-@media (max-width: 960px) {
-  .h-rejilla { grid-template-columns: minmax(0, 1fr); grid-template-areas: "texto" "figura" "sobre"; gap: 28px; }
-  .h-figura { max-width: 640px; }
-}
 @media (max-width: 680px) {
   .sobre { grid-template-columns: minmax(0, 1fr); grid-template-areas: "preg" "llama" "datos" "prueba" "pie"; }
 }
@@ -214,10 +229,24 @@ code, pre, kbd { font-family: var(--font-mono); }
   .sobre { padding: 16px 14px 14px; }
   .sobre .fila { grid-template-columns: 100px minmax(0, 1fr); }
   .sobre dl { font-size: 12.5px; }
-  .rotulos .calle { font-size: 10px; }
-  /* en el teléfono, un acercamiento de la maqueta a todo el ancho, centrado en el consultado */
-  .escena { overflow: hidden; margin: 0 calc(-1 * var(--margen)); }
-  .escena .lamina { width: 126%; margin-left: -13%; }
+}
+
+/* ---------- rótulos del mapa de predios ---------- */
+.rotulos { position: absolute; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+.rotulos span { position: absolute; left: 0; top: 0; white-space: nowrap; will-change: transform; }
+.rotulos .calle { font: 500 10.5px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--tinta-suave);
+  text-shadow: 0 0 3px var(--fondo), 0 0 3px var(--fondo), 0 0 6px var(--fondo); }
+.rotulos .barrio { left: 30%; top: 30px; font: 600 12px/1 var(--font-sans); letter-spacing: .28em; text-transform: uppercase; color: var(--tinta);
+  text-shadow: 0 0 4px var(--fondo), 0 0 8px var(--fondo); }
+.escena:not(.viva) .rotulos { display: none; }
+
+
+@media (max-width: 1100px) {
+  .heroe .rotulos .barrio { display: none; }
+}
+@media (max-width: 520px) {
+  .heroe .mueble { display: none; }
+  .heroe .lectura { max-width: none; right: var(--borde); }
 }
 
 /* ---------- tarjetas y bloques ---------- */

@@ -1,353 +1,221 @@
-// Héroe, figura cero: la maqueta de predios reales del SINIC alrededor del punto consultado en
-// Santa Marta, en 3D. Es el póster (img/figuras/heroe.svg, dibujado con el kit de Anatomy) hecho
-// volumen: la misma geometría (maqueta.js), la misma cámara ortográfica a 45°/30° y el mismo
-// sombreado plano de cuatro tonos por orientación de cara, con la luz fija a la cámara. Predios y
-// base neutros (estructura), el consultado en teal (el sujeto) y la respuesta como único destello
-// ámbar. Solo dibuja cuando algo cambia (la respuesta, el arrastre, el tamaño) y se duerme; el
-// giro va por tiempo, no por cuadros. Con movimiento reducido dibuja una vez. heroe.js decide si se
-// carga: si no, queda el póster, que es la misma imagen.
-import * as M from './maqueta.js';
-import { cargarThree } from './comun3d.js';
+// Héroe: los predios reales del SINIC alrededor del punto consultado en Santa Marta, en 3D.
+// El grosor de los predios (5 m) y la subida del consultado (44 m) son simbólicos: no son dato.
+// Al entrar, la cámara baja desde arriba y los predios crecen desde el punto consultado hacia
+// afuera. Cuando la consola muestra la respuesta del predio, sale una onda del punto y el predio sube.
+import { cargarThree, luces, orbita, parchar, quieto, suave, visible } from './comun3d.js';
 
 const esc = document.querySelector('[data-escena="predios"]');
-const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const estado = { renders: 0 };
-window.__heroe = estado;
-if (esc) iniciar(esc).catch((err) => {
-  console.warn('escena de predios:', err);
-  document.documentElement.dataset.heroe = 'poster';
-});
-
-const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
-
-// Cuatro tonos por orientación de cara, como el extrude del kit: el techo aparte y los lados según
-// cuánto miran a la luz, que va a la izquierda de la cámara. Sin luces ni sombras de three.js.
-const VERT = `
-attribute float aMat;
-varying vec3 vN;
-varying float vMat;
-void main() {
-  vN = normal; vMat = aMat;
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-}`;
-const FRAG = `
-uniform vec3 uRampa[25];
-uniform vec2 uLuz;
-varying vec3 vN;
-varying float vMat;
-void main() {
-  int m = int(vMat + 0.5);
-  vec3 n = normalize(vN);
-  int i;
-  if (n.y > 0.5) i = 0;
-  else {
-    float luz = (dot(n.xz, uLuz) + 1.0) * 0.5;
-    i = 4 - int(clamp(floor(luz * 4.0), 0.0, 3.0));
-  }
-  gl_FragColor = vec4(uRampa[m * 5 + i], 1.0);
-}`;
-
-// Un prisma desde un anillo del plano (ejes del kit: x este, y sur), de z0 a z1, en coordenadas de
-// three (X = x, Y = z, Z = y). Normales planas; los triángulos miran hacia afuera.
-function prisma(THREE, anillo, z0, z1, mat, acc) {
-  const area = anillo.reduce((s, [ax, ay], i) => {
-    const [bx, by] = anillo[(i + 1) % anillo.length];
-    return s + ax * by - bx * ay;
-  }, 0);
-  const ring = area < 0 ? [...anillo].reverse() : anillo;
-  const tri = (a, b, c, n) => {
-    // orienta el triángulo según la normal
-    const u = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], v = [c[0] - a[0], c[1] - a[1], c[2] - a[2]];
-    const cx = u[1] * v[2] - u[2] * v[1], cy = u[2] * v[0] - u[0] * v[2], cz = u[0] * v[1] - u[1] * v[0];
-    const ok = cx * n[0] + cy * n[1] + cz * n[2] >= 0;
-    for (const p of ok ? [a, b, c] : [a, c, b]) {
-      acc.pos.push(p[0], p[1], p[2]); acc.nor.push(n[0], n[1], n[2]); acc.mat.push(mat);
-    }
-  };
-  const V = (x, y, z) => [x, z, y];
-  const pts = ring.map(([x, y]) => new THREE.Vector2(x, y));
-  for (const t of THREE.ShapeUtils.triangulateShape(pts, [])) {
-    tri(...t.map((j) => V(ring[j][0], ring[j][1], z1)), [0, 1, 0]);
-  }
-  const n = ring.length;
-  for (let i = 0; i < n; i++) {
-    const [ax, ay] = ring[i], [bx, by] = ring[(i + 1) % n];
-    const L = Math.hypot(bx - ax, by - ay) || 1;
-    const nn = [(by - ay) / L, 0, -(bx - ax) / L]; // hacia afuera de un anillo antihorario (kit)
-    const a0 = V(ax, ay, z0), b0 = V(bx, by, z0), a1 = V(ax, ay, z1), b1 = V(bx, by, z1);
-    tri(a0, b0, b1, nn); tri(a0, b1, a1, nn);
-  }
-}
-
-function malla(THREE, acc, material) {
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.Float32BufferAttribute(acc.pos, 3));
-  g.setAttribute('normal', new THREE.Float32BufferAttribute(acc.nor, 3));
-  g.setAttribute('aMat', new THREE.Float32BufferAttribute(acc.mat, 1));
-  return new THREE.Mesh(g, material);
-}
-const nuevo = () => ({ pos: [], nor: [], mat: [] });
-const circulo = (cx, cy, r, n) => Array.from({ length: n }, (_, i) => [cx + r * Math.cos((i / n) * 2 * Math.PI), cy + r * Math.sin((i / n) * 2 * Math.PI)]);
-function redondo({ x, y, w, d, r }, pasos = 6) {
-  const out = [];
-  for (const [cx, cy, a0] of [[x + w - r, y + r, -90], [x + w - r, y + d - r, 0], [x + r, y + d - r, 90], [x + r, y + r, 180]]) {
-    for (let s = 0; s <= pasos; s++) {
-      const a = ((a0 + (90 * s) / pasos) * Math.PI) / 180;
-      out.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
-    }
-  }
-  return out;
-}
+const con = document.querySelector('[data-consola], [data-sobre]');
+if (esc) iniciar(esc).catch(err => console.warn('escena de predios:', err));
 
 async function iniciar(esc) {
-  document.documentElement.dataset.heroe = 'cargando';
-  const [THREE, sm, calles] = await Promise.all([
-    cargarThree(),
-    fetch('/datos/sm.json').then((r) => r.json()),
-    fetch('/datos/calles.json').then((r) => r.json()).catch(() => ({ calles: [] })),
+  const [THREE, D, C] = await Promise.all([
+    cargarThree(), fetch('/datos/sm.json').then(r => r.json()),
+    fetch('/datos/calles.json').then(r => r.json()).catch(() => ({ calles: [] })),
   ]);
-  const Q = M.maqueta(sm, calles);
-  const lamina = esc.querySelector('.lamina');
-  const [qx, qy, VW, VH, KV] = esc.dataset.camara.split(' ').map(Number);
-  const css = getComputedStyle(document.documentElement);
-  const tok = (n) => hex(css.getPropertyValue('--' + n).trim());
-  const rampa = (nombre, desde = 0) => Array.from({ length: 5 }, (_, i) => tok(`${nombre}-${i + desde}`));
-  // 0 predios, 1 base, 2 sujeto, 3 acento, 4 patas
-  const RAMPAS = [rampa('estructura'), rampa('estructura', 2), rampa('sujeto-teal'), rampa('acento'), rampa('estructura', 2)];
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
-  renderer.setPixelRatio(Math.min(1.5, devicePixelRatio || 1));
-  const lienzo = renderer.domElement;
-  lienzo.setAttribute('aria-hidden', 'true');
-  lamina.insertBefore(lienzo, lamina.querySelector('.rotulos'));
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+  esc.prepend(renderer.domElement);
+  // La imagen accesible es el lienzo (y la de respaldo mientras carga): la lectura, con el enlace
+  // de OpenStreetMap, queda fuera de role=img.
+  renderer.domElement.setAttribute('role', 'img');
+  renderer.domElement.setAttribute('aria-label', esc.dataset.etiqueta || '');
   const scene = new THREE.Scene();
-  const U = {
-    uRampa: { value: RAMPAS.flat().map((c) => new THREE.Vector3(...c)) },
-    uLuz: { value: new THREE.Vector2() },
-  };
-  const material = new THREE.ShaderMaterial({
-    uniforms: U, vertexShader: VERT, fragmentShader: FRAG,
-    polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
-  });
-  const linea = (n) => new THREE.LineBasicMaterial({ color: css.getPropertyValue('--' + n).trim() });
-  const filos = (mesh, mat, umbral = 20) => {
-    const l = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, umbral), mat);
-    mesh.add(l);
-    return l;
-  };
-  const piso = -M.GRUESO - M.PATA.alto;
+  const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 4000);
+  const st = { az: -0.55, pol: 0.98, polMin: 0.35, polMax: 1.22, toque: -1e9, mpp: 1 };
+  orbita(esc, st);
+  // Con movimiento reducido no hay bucle: un solo render, y otro solo si el lector arrastra,
+  // pasa el puntero o cambia el tamaño.
+  const pedir = () => { if (quieto && !pendiente) { pendiente = true; requestAnimationFrame(cuadro); } };
+  let pendiente = false;
+  if (quieto) for (const ev of ['pointermove', 'pointerdown']) esc.addEventListener(ev, pedir);
+  luces(THREE, renderer, scene, { sombras: esc.clientWidth >= 700, lado: 560 });
 
-  // Base: patas con brida, losa, ranura, costura, tornillos, regla en metros y la flecha del norte.
-  const base = nuevo();
-  for (const [x, y] of [[M.PLACA.x, M.PLACA.y], [M.PLACA.x + M.PLACA.w, M.PLACA.y], [M.PLACA.x, M.PLACA.y + M.PLACA.d], [M.PLACA.x + M.PLACA.w, M.PLACA.y + M.PLACA.d]]) {
-    const cx = x + Math.sign(-x) * M.PATA.dentro, cy = y + Math.sign(-y) * M.PATA.dentro;
-    prisma(THREE, circulo(cx, cy, M.PATA.r + 2.5, 28), piso, piso + 1.6, 4, base);
-    prisma(THREE, circulo(cx, cy, M.PATA.r, 28), piso + 1.6, -M.GRUESO, 4, base);
-  }
-  prisma(THREE, redondo(M.PLACA), -M.GRUESO, 0, 1, base);
-  const G = M.REGLA;
-  prisma(THREE, redondo({ x: G.x0 - 4, y: G.y, w: G.x1 - G.x0 + 8, d: G.ancho, r: 1 }, 2), 0, 0.8, 1, base);
-  const mBase = malla(THREE, base, material);
-  filos(mBase, linea('linea-media'));
-  scene.add(mBase);
-  const trazos = (pts, cerrado) => {
-    const out = [];
-    for (let i = 0; i < pts.length - (cerrado ? 0 : 1); i++) {
-      const a = pts[i], b = pts[(i + 1) % pts.length];
-      out.push(a[0], a[2], a[1], b[0], b[2], b[1]);
+  // Geometría: cada lindero recortado medio metro, así los huecos dibujan la trama de calles.
+  const BASE_H = 5, ALTO = 44;
+  const anillos = D.polys.map(flat => {
+    let pts = [];
+    for (let k = 0; k < flat.length; k += 2) pts.push(new THREE.Vector2(flat[k], flat[k + 1]));
+    if (THREE.ShapeUtils.isClockWise(pts)) pts.reverse();
+    const c = pts.reduce((a, p) => a.add(p), new THREE.Vector2()).divideScalar(pts.length);
+    pts = pts.map(p => { const d = p.clone().sub(c), L = d.length(); return L > 1.2 ? c.clone().add(d.multiplyScalar((L - 0.55) / L)) : p; });
+    return { pts, c };
+  });
+  const objPoly = anillos[D.obj].pts, oc = anillos[D.obj].c;
+  const pos = [], dist = [], tri = [], seg = [], segd = [], rango = [];
+  anillos.forEach(({ pts, c }, i) => {
+    if (i === D.obj) return;
+    const d = c.distanceTo(oc), v0 = pos.length / 3;
+    const P = (x, y, h) => { pos.push(x, h, -y); dist.push(d); };
+    THREE.ShapeUtils.triangulateShape(pts, []).forEach(t => { t.forEach(j => P(pts[j].x, pts[j].y, BASE_H)); tri.push(i); });
+    const nTop = pos.length / 3 - v0;
+    for (let k = 0; k < pts.length; k++) {
+      const a = pts[k], b = pts[(k + 1) % pts.length];
+      P(a.x, a.y, 0); P(b.x, b.y, 0); P(b.x, b.y, BASE_H); P(a.x, a.y, 0); P(b.x, b.y, BASE_H); P(a.x, a.y, BASE_H);
+      tri.push(i, i);
+      seg.push(a.x, BASE_H + 0.05, -a.y, b.x, BASE_H + 0.05, -b.y); segd.push(d, d);
     }
-    return out;
-  };
-  const segmentos = (lista, n) => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute('position', new THREE.Float32BufferAttribute(lista, 3));
-    scene.add(new THREE.LineSegments(g, linea(n)));
-  };
-  const ranura = redondo({ x: M.PLACA.x + 6, y: M.PLACA.y + 6, w: M.PLACA.w - 12, d: M.PLACA.d - 12, r: 0 }, 1);
-  segmentos([
-    ...trazos(ranura.map(([x, y]) => [x, y, 0.02]), true),
-    ...trazos(redondo(M.PLACA).map(([x, y]) => [x, y, -M.GRUESO / 2]), true),
-  ], 'linea-tenue');
-  const torn = [];
-  for (const sx of [-1, 1]) for (const sy of [-1, 1]) torn.push(...trazos(circulo(sx * (M.LADO - 11), sy * (M.LADO - 11), 2.6, 16).map(([x, y]) => [x, y, 0.02]), true));
-  const menores = [], mayores = [];
-  for (let at = Math.ceil(G.x0 / G.paso) * G.paso, i = Math.round(at / G.paso); at <= G.x1 + 1e-9; at += G.paso, i++) {
-    const largo = i % G.cada === 0 ? 5.5 : 3;
-    (i % G.cada === 0 ? mayores : menores).push(at, 0.82, G.y + 0.4, at, 0.82, G.y + 0.4 + largo);
-  }
-  segmentos([...torn, ...menores], 'linea-baja');
-  segmentos(mayores, 'linea-media');
-  const N = M.NORTE;
-  const flecha = [[N.x, N.y - N.largo], [N.x + N.ancho / 2, N.y], [N.x, N.y - N.largo * 0.3], [N.x - N.ancho / 2, N.y]];
-  const fl = nuevo();
-  prisma(THREE, flecha, 0, 0.05, 1, fl);
-  const mFl = malla(THREE, fl, material);
-  scene.add(mFl);
-  segmentos(trazos(flecha.map(([x, y]) => [x, y, 0.06]), true), 'linea-baja');
-
-  // Sombra de contacto: las mismas tres capas del póster, planas sobre el piso, sin desenfoque.
-  const matSombra = new THREE.MeshBasicMaterial({ color: css.getPropertyValue('--halo').trim(), transparent: true, opacity: M.SOMBRA.opacidad, depthWrite: false, side: THREE.DoubleSide });
-  M.SOMBRA.pasos.forEach((by, i) => {
-    const pl = { x: M.PLACA.x - by, y: M.PLACA.y - by, w: M.PLACA.w + 2 * by, d: M.PLACA.d + 2 * by, r: M.PLACA.r + by };
-    const g = new THREE.ShapeGeometry(new THREE.Shape(redondo(pl).map(([x, y]) => new THREE.Vector2(x, y))));
-    const m = new THREE.Mesh(g, matSombra);
-    m.rotation.x = Math.PI / 2; // (x, y) del plano → (X, Z) de three
-    m.position.y = piso - 0.05 + i * 0.01; m.renderOrder = -1;
-    scene.add(m);
+    rango[i] = [v0, nTop];
   });
+  const U = { uCrece: { value: quieto ? 99 : 0 }, uOnda: { value: -1 }, uTinte: { value: new THREE.Color('#8FD3C4') } };
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setAttribute('aDist', new THREE.Float32BufferAttribute(dist, 1));
+  g.setAttribute('color', new THREE.Float32BufferAttribute(new Float32Array(pos.length), 3));
+  g.computeVertexNormals();
+  const malla = new THREE.Mesh(g, parchar(new THREE.MeshLambertMaterial({ vertexColors: true }), U, true));
+  malla.customDepthMaterial = parchar(new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking }), U, false);
+  malla.castShadow = malla.receiveShadow = true;
+  scene.add(malla);
+  const lg = new THREE.BufferGeometry();
+  lg.setAttribute('position', new THREE.Float32BufferAttribute(seg, 3));
+  lg.setAttribute('aDist', new THREE.Float32BufferAttribute(segd, 1));
+  scene.add(new THREE.LineSegments(lg, parchar(new THREE.LineBasicMaterial({ transparent: true, color: '#12261F', opacity: 0.22 }), U, false)));
 
-  // Predios neutros.
-  const pr = nuevo();
-  Q.predios.forEach((q) => prisma(THREE, q.anillo, 0, M.H, 0, pr));
-  const mPredios = malla(THREE, pr, material);
-  filos(mPredios, linea('linea-media'), 30);
-  scene.add(mPredios);
-
-  // El consultado: un prisma de altura 1 que se estira, en teal, con su filo; y el punto ámbar.
-  const ob = nuevo();
-  prisma(THREE, Q.consultado.anillo, 0, 1, 2, ob);
-  const mObj = malla(THREE, ob, material);
-  filos(mObj, linea('sujeto-teal-filo'), 30);
-  scene.add(mObj);
-  const [cx, cy] = Q.consultado.centro;
-  const pu = nuevo();
-  prisma(THREE, circulo(cx, cy, 2.4, 20), 0, 1.2, 3, pu);
-  const mPunto = malla(THREE, pu, material);
-  filos(mPunto, linea('acento-filo'), 30);
-  scene.add(mPunto);
-  // El destello: un anillo ámbar que sale una vez del pie del consultado, sobre los techos.
-  const mOnda = new THREE.Mesh(new THREE.RingGeometry(0.94, 1, 72), new THREE.MeshBasicMaterial({ color: css.getPropertyValue('--acento-1').trim(), transparent: true, opacity: 0, depthWrite: false }));
-  mOnda.rotation.x = -Math.PI / 2; mOnda.position.set(cx, M.H + 0.3, cy); mOnda.visible = false;
-  scene.add(mOnda);
-
-  // Cámara: el encuadre exacto del póster (data-camara: dónde cae el centro de la base en el
-  // viewBox, su tamaño y las unidades por metro), girando alrededor del centro de la base.
-  const cam = new THREE.OrthographicCamera(-qx / KV, (VW - qx) / KV, qy / KV, -(VH - qy) / KV, 1, 4000);
-  const E = (M.ELEVACION * Math.PI) / 180;
-  const st = { az: M.AZIMUT, azMeta: M.AZIMUT, alto: M.ALTO, v: 0, altoMeta: M.ALTO, punto: 1, puntoMeta: 1, onda: null, enVista: true, pedido: 0, ultimo: 0, sucio: true, w: 0, h: 0 };
-  const colocar = () => {
-    const A = (st.az * Math.PI) / 180;
-    cam.position.set(1500 * Math.cos(A) * Math.cos(E), 1500 * Math.sin(E), 1500 * Math.sin(A) * Math.cos(E));
-    cam.up.set(0, 1, 0);
-    cam.lookAt(0, 0, 0);
-    U.uLuz.value.set(-Math.sin(A), Math.cos(A));
+  // El predio consultado, el anillo que lo marca y la onda que sale de él.
+  const og = new THREE.ExtrudeGeometry(new THREE.Shape(objPoly), { depth: 1, bevelEnabled: false });
+  og.rotateX(-Math.PI / 2);
+  const obj = new THREE.Mesh(og, [new THREE.MeshLambertMaterial({ color: '#EBAE45' }), new THREE.MeshLambertMaterial({ color: '#D99A2E' })]);
+  obj.castShadow = true; obj.scale.y = 0.01; scene.add(obj);
+  const plano = (r0, r1, color, op) => {
+    const m = new THREE.Mesh(new THREE.RingGeometry(r0, r1, 128), new THREE.MeshBasicMaterial({ color, transparent: true, opacity: op, depthWrite: false }));
+    m.rotation.x = -Math.PI / 2; m.position.set(oc.x, 0.3, -oc.y); scene.add(m); return m;
   };
+  const anillo = plano(27, 29.5, '#236E62', 1);
+  const onda = plano(0.985, 1, '#236E62', 0); onda.visible = false;
+
+  // Suelo: recibe las sombras, con una retícula tenue y niebla del color del fondo en los bordes.
+  const suelo = new THREE.Mesh(new THREE.PlaneGeometry(2600, 2600), new THREE.ShadowMaterial({ opacity: 0.09 }));
+  suelo.rotation.x = -Math.PI / 2; suelo.position.y = -0.05; suelo.receiveShadow = true; scene.add(suelo);
+  const grid = new THREE.GridHelper(1000, 20, '#D9DED6', '#D9DED6');
+  grid.material.transparent = true; grid.material.opacity = 0.55; grid.position.y = -0.1; scene.add(grid);
+  scene.fog = new THREE.Fog('#F6F7F4', 1040, 1420);
+
+  // Techos blancos y muros un poco más oscuros; la luz hace el resto.
+  const TOP = new THREE.Color('#FFFFFF'), LADO = new THREE.Color('#E4E9E2'), HOVER = '#CDE6DF';
+  { const n = g.attributes.normal, c = g.attributes.color;
+    for (let v = 0; v < c.count; v++) { const t = n.getY(v) > 0.5 ? TOP : LADO; c.setXYZ(v, t.r, t.g, t.b); } }
+  const pintar = (i, hex) => {
+    if (i < 0 || !rango[i]) return;
+    const [v0, n] = rango[i], c = g.attributes.color, t = new THREE.Color(hex);
+    for (let v = v0; v < v0 + n; v++) c.setXYZ(v, t.r, t.g, t.b);
+    c.needsUpdate = true;
+  };
+
+  // Cámara ortográfica con encuadre asimétrico: a todo lo ancho, el predio queda a la derecha del
+  // texto y sobre la consola; apilado, al centro.
+  const apilado = () => getComputedStyle(esc).position !== 'absolute';
   function tam() {
-    const r = lamina.getBoundingClientRect();
-    const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
-    if (w === st.w && h === st.h) return;
-    st.w = w; st.h = h;
-    renderer.setSize(w, h, false);
-    pedir();
+    const w = esc.clientWidth, h = esc.clientHeight; renderer.setSize(w, h, false);
+    const ap = apilado(), Hm = ap ? 330 : 400, Wm = Hm * w / h, fx = ap ? 0.5 : 0.67, fy = ap ? 0.4 : 0.3;
+    cam.left = -fx * Wm; cam.right = (1 - fx) * Wm; cam.top = fy * Hm; cam.bottom = -(1 - fy) * Hm; cam.updateProjectionMatrix();
+    st.mpp = Hm / h;
   }
+  new ResizeObserver(() => { tam(); pedir(); }).observe(esc); tam();
 
-  // Rótulos: siguen a la cámara solo si alguien la giró; si no, quedan donde los puso el póster.
+  const ray = new THREE.Raycaster(), m = new THREE.Vector2();
+  const lectura = esc.querySelector('.lectura'), base = lectura.innerHTML;
+  let hover = -1;
+  esc.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    const r = esc.getBoundingClientRect();
+    m.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
+    ray.setFromCamera(m, cam);
+    const h = ray.intersectObject(malla)[0], enObj = ray.intersectObject(obj)[0];
+    const i = h ? tri[h.faceIndex] : -1;
+    if (i !== hover) { pintar(hover, '#FFFFFF'); hover = i; pintar(i, HOVER); }
+    lectura.innerHTML = enObj ? '<b>predio consultado</b> ' + D.codes[D.obj] : i >= 0 ? '<b>predio</b> ' + D.codes[i] : base;
+  });
+  esc.addEventListener('pointerleave', () => { pintar(hover, '#FFFFFF'); hover = -1; lectura.innerHTML = base; });
+
+  // Rótulos: nombres de calle (OpenStreetMap) alineados con la calle y siempre derechos; el barrio va
+  // fijo arriba. Se esconden los que caerían debajo del texto del héroe o de la consola.
   const capa = esc.querySelector('.rotulos');
-  const spans = [...capa.querySelectorAll('.calle')];
-  const v3 = new THREE.Vector3();
-  const pct = (x, y, z) => { v3.set(x, z, y).project(cam); return [(v3.x + 1) * 50, (1 - v3.y) * 50]; };
-  function rotulos() {
-    Q.rotulos.forEach((r, i) => {
-      const e = spans[i];
-      if (!e) return;
-      const a = pct(r.x, r.y, M.H), b = pct(r.x + r.dx, r.y + r.dy, M.H);
-      let ang = (Math.atan2((b[1] - a[1]) * lamina.clientHeight, (b[0] - a[0]) * lamina.clientWidth) * 180) / Math.PI;
-      if (ang > 90) ang -= 180; else if (ang < -90) ang += 180;
-      e.style.left = a[0].toFixed(2) + '%'; e.style.top = a[1].toFixed(2) + '%';
-      e.style.setProperty('--a', ang.toFixed(1) + 'deg');
-    });
+  const rotulos = C.calles.map(c => {
+    const e = document.createElement('span'); e.className = 'calle'; e.textContent = c.n; capa.append(e);
+    return { e, c };
+  });
+  if (C.barrio) {
+    const e = document.createElement('span'); e.className = 'barrio'; e.textContent = 'Barrio ' + C.barrio + ', Santa Marta'; capa.append(e);
   }
 
-  // Bucle bajo demanda: corre mientras algo se mueve y se duerme.
-  // Pedir un cuadro marca la escena como sucia; fuera de la vista se queda sucia y se dibuja al
-  // volver. Un cuadro sin nada que mover no pide el siguiente: la escena se duerme.
-  function pedir() {
-    st.sucio = true;
-    if (!st.pedido && st.enVista) st.pedido = requestAnimationFrame(cuadro);
+  // Escala, norte y línea guía siguen a la cámara.
+  const esb = esc.querySelector('.escala i'), est = esc.querySelector('.escala span'), nor = esc.querySelector('.norte svg');
+  const gl = esc.querySelector('.guia line'), gc = esc.querySelector('.guia circle'), guia = esc.querySelector('.guia');
+  const v = new THREE.Vector3();
+  const pantalla = (x, y, z) => { v.set(x, y, z).project(cam); return [(v.x + 1) / 2 * esc.clientWidth, (1 - v.y) / 2 * esc.clientHeight]; };
+  function muebles() {
+    const pxm = 1 / st.mpp, L = [25, 50, 100, 200].find(o => o * pxm >= 60) || 200;
+    esb.style.width = (L * pxm).toFixed(1) + 'px'; est.textContent = L + ' m';
+    const a = pantalla(0, 0, 0), b = pantalla(0, 0, -100);
+    nor.style.transform = 'rotate(' + (Math.atan2(b[0] - a[0], -(b[1] - a[1])) * 180 / Math.PI).toFixed(1) + 'deg)';
+    const er = esc.getBoundingClientRect();
+    const tapas = [document.querySelector('.h-texto .izq'), con, capa.querySelector('.barrio'), lectura].filter(x => x && x.offsetParent).map(x => {
+      const r = x.getBoundingClientRect(); return [r.left - er.left - 24, r.top - er.top - 16, r.right - er.left + 24, r.bottom - er.top + 16];
+    });
+    for (const { e, c } of rotulos) {
+      const p = pantalla(c.x, 0.5, -c.y);
+      e.style.opacity = tapas.some(([a, b, c2, d]) => p[0] > a && p[0] < c2 && p[1] > b && p[1] < d) ? 0 : 1;
+      let ang = 0;
+      if (c.dx || c.dy) {
+        const q = pantalla(c.x + c.dx, 0.5, -(c.y + c.dy));
+        ang = Math.atan2(q[1] - p[1], q[0] - p[0]) * 180 / Math.PI;
+        if (ang > 90) ang -= 180; else if (ang < -90) ang += 180;
+      }
+      e.style.transform = `translate(${p[0].toFixed(1)}px, ${p[1].toFixed(1)}px) translate(-50%, -50%) rotate(${ang.toFixed(1)}deg)`;
+    }
+    const tr = con && con.getBoundingClientRect();
+    // la guía solo baja hasta la respuesta cuando esta queda dentro de la escena
+    if (con && conGuia && obj.scale.y > ALTO * 0.6 && tr.top - er.top < esc.clientHeight) {
+      const top = pantalla(oc.x, obj.scale.y, -oc.y);
+      const x2 = Math.min(tr.right - er.left - 32, Math.max(tr.left - er.left + 32, top[0]));
+      gl.setAttribute('x1', top[0]); gl.setAttribute('y1', top[1]);
+      gl.setAttribute('x2', x2); gl.setAttribute('y2', tr.top - er.top);
+      gc.setAttribute('cx', top[0]); gc.setAttribute('cy', top[1]); guia.style.display = '';
+    } else guia.style.display = 'none';
   }
-  const resorte = (x, v, meta, dt, tau) => {
-    // críticamente amortiguado (sin rebote), en cuatro subpasos
-    const w = 1 / tau;
-    for (let i = 0; i < 4; i++) { const h = dt / 4; v += (w * w * (meta - x) - 2 * w * v) * h; x += v * h; }
-    if (Math.abs(meta - x) < 1e-3 && Math.abs(v) < 1e-3) return [meta, 0];
-    return [x, v];
-  };
-  let vP = 0;
+
+  // La consola manda el turno: el predio sube con su respuesta y la onda sale del punto consultado.
+  const turno = document.documentElement.dataset.turno;
+  let objetivo = !turno || turno === 'predio' ? ALTO : BASE_H, conGuia = objetivo === ALTO, ondaT = null;
+  document.addEventListener('terranova:turno', e => {
+    objetivo = e.detail === 'predio' ? ALTO : BASE_H; conGuia = e.detail === 'predio';
+    if (e.detail === 'predio' && !quieto) ondaT = performance.now();
+    pedir();
+  });
+
+  // Entrada: la cámara baja desde casi cenital mientras los predios crecen desde el punto.
+  const ENTRA = 2800, POL0 = 0.4, AZ0 = -1.3;
+  // El giro y la subida van por tiempo (dt), no por cuadros: la misma velocidad a 60 o a 144 Hz.
+  let corre = true, t0 = null, tAnt = null;
+  visible(esc, si => { const antes = corre; corre = si; if (si && !antes && !quieto) { tAnt = null; requestAnimationFrame(cuadro); } });
   function cuadro(t) {
-    st.pedido = 0;
-    st.sucio = false;
-    const dt = st.ultimo ? Math.min((t - st.ultimo) / 1000, 1 / 30) : 1 / 60;
-    st.ultimo = t;
-    let sigue = false;
-    if (quieto) { st.az = st.azMeta; st.alto = st.altoMeta; st.punto = st.puntoMeta; st.onda = null; }
-    else {
-      const az0 = st.az;
-      st.az += (st.azMeta - st.az) * (1 - Math.exp(-dt / 0.12));
-      if (Math.abs(st.azMeta - st.az) < 0.01) st.az = st.azMeta;
-      if (st.az !== az0) sigue = true;
-      [st.alto, st.v] = resorte(st.alto, st.v, st.altoMeta, dt, 0.11);
-      [st.punto, vP] = resorte(st.punto, vP, st.puntoMeta, dt, 0.06);
-      if (st.alto !== st.altoMeta || st.punto !== st.puntoMeta) sigue = true;
+    pendiente = false;
+    if (t0 === null) t0 = t;
+    const dt = tAnt === null ? 1 / 60 : Math.min(0.1, (t - tAnt) / 1000);
+    tAnt = t;
+    const k = quieto ? 1 : suave((t - t0) / ENTRA);
+    if (k < 1 && st.toque < t0) { st.pol = POL0 + (0.98 - POL0) * k; st.az = AZ0 + (-0.55 - AZ0) * k; }
+    else if (!quieto && t - st.toque > 3500) st.az += 0.066 * dt;
+    if (!quieto) U.uCrece.value = (t - t0) / 1000;
+    capa.style.opacity = k;
+    obj.scale.y = quieto ? objetivo : Math.max(0.01, obj.scale.y + (objetivo - obj.scale.y) * (1 - Math.exp(-dt / 0.23)));
+    if (ondaT !== null) {
+      const r = Math.max(0, t - ondaT) / 1000 * 320;
+      if (r > 900) { ondaT = null; U.uOnda.value = -1; onda.visible = false; }
+      else { U.uOnda.value = r; onda.visible = true; onda.scale.setScalar(Math.max(1, r)); onda.material.opacity = 0.7 * (1 - r / 900); }
     }
-    colocar();
-    mObj.scale.y = Math.max(0.01, st.alto);
-    mPunto.position.y = st.alto;
-    mPunto.scale.set(Math.max(0.001, st.punto), Math.max(0.001, st.punto), Math.max(0.001, st.punto));
-    mPunto.visible = st.punto > 0.01;
-    if (st.onda !== null) {
-      const k = Math.min(1, (t - st.onda) / M.ONDA.ms);
-      const e = 1 - Math.pow(1 - k, 3); // salida suave
-      mOnda.visible = k < 1;
-      mOnda.scale.setScalar(M.ONDA.r0 + (M.ONDA.r1 - M.ONDA.r0) * e);
-      mOnda.material.opacity = 0.9 * (1 - k);
-      if (k < 1) sigue = true; else st.onda = null;
-    }
-    if (st.az !== M.AZIMUT || esc.dataset.girada) { esc.dataset.girada = '1'; rotulos(); }
-    renderer.render(scene, cam);
-    estado.renders++;
+    anillo.material.opacity = k;
+    const R = 1000;
+    cam.position.set(R * Math.sin(st.pol) * Math.sin(st.az), R * Math.cos(st.pol), R * Math.sin(st.pol) * Math.cos(st.az));
+    cam.lookAt(0, 0, 0);
+    renderer.render(scene, cam); muebles();
     if (!esc.classList.contains('viva')) {
       esc.classList.add('viva');
-      document.documentElement.dataset.heroe = '3d';
+      document.documentElement.dataset.escena = 'lista';
       document.dispatchEvent(new Event('terranova:escena'));
     }
-    if (sigue) pedir(); else st.ultimo = 0;
+    if (corre && !quieto) requestAnimationFrame(cuadro);
   }
-
-  // La respuesta manda: mientras se escribe la pregunta, el consultado baja con los demás; cuando
-  // llega su respuesta, sube y sale el destello.
-  const turno = (k) => {
-    if (k === 'predio') {
-      st.altoMeta = M.ALTO; st.puntoMeta = 1;
-      if (!quieto) st.onda = performance.now();
-    } else { st.altoMeta = M.H; st.puntoMeta = 0; }
-    pedir();
-  };
-  document.addEventListener('terranova:turno', (e) => turno(e.detail));
-  const previo = document.documentElement.dataset.turno;
-  if (previo) {
-    // la consola ya empezó: va a su estado (sin repetir el destello si la respuesta ya llegó)
-    turno(previo);
-    st.onda = null;
-  }
-
-  // Arrastre: gira en azimut (sigue al dedo con un poco de inercia); sin zoom.
-  let x0 = null;
-  esc.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    x0 = e.clientX; esc.setPointerCapture(e.pointerId); esc.classList.add('arrastra');
-  });
-  esc.addEventListener('pointermove', (e) => {
-    if (x0 === null) return;
-    st.azMeta -= (e.clientX - x0) * 0.35; x0 = e.clientX; pedir();
-  });
-  const suelta = () => { x0 = null; esc.classList.remove('arrastra'); };
-  esc.addEventListener('pointerup', suelta);
-  esc.addEventListener('pointercancel', suelta);
-
-  new IntersectionObserver((es) => {
-    st.enVista = es[es.length - 1].isIntersecting;
-    if (st.enVista && st.sucio) pedir();
-  }, { rootMargin: '120px 0px' }).observe(esc);
-  new ResizeObserver(tam).observe(lamina);
-  tam();
+  requestAnimationFrame(cuadro);
 }

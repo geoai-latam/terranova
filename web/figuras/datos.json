@@ -4692,47 +4692,6 @@
   ],
   "total": 186988
  },
- "heroe": {
-  "paleta": {
-   "fondo": "#F6F7F4",
-   "e": [
-    "#F4F8F1",
-    "#ECEEE9",
-    "#E2E6DF",
-    "#D7DBD4",
-    "#CDD1CA"
-   ],
-   "b": [
-    "#E2E6DF",
-    "#D7DBD4",
-    "#CDD1CA",
-    "#C3C7C0",
-    "#B9BDB6"
-   ],
-   "s": [
-    "#DCF7F1",
-    "#D2EDE7",
-    "#C7E2DC",
-    "#BDD8D2",
-    "#B3CEC8"
-   ],
-   "sFilo": "#236E62",
-   "a": [
-    "#F7B753",
-    "#E3A43D",
-    "#D99A31",
-    "#CF9124",
-    "#C58712"
-   ],
-   "aFilo": "#8F570B",
-   "tenue": "#D7DBD4",
-   "lo": "#A2AAA3",
-   "linea": "#6F7C75",
-   "alta": "#12261F",
-   "halo": "#0E2A22"
-  },
-  "fuentes": "67014dabc066"
- },
  "tablero": {
   "indicadores": [
    {

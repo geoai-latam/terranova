@@ -57,12 +57,11 @@ Tokens en `estilo.css` (`:root`). Solo hay tema claro en la web.
 El verde bosque es la marca. En gráficos, las series van tinta, teal, ámbar, ocre; la rejilla en
 `linea` y la serie que importa en ámbar.
 
-### Las figuras y el héroe: color por papeles
+### Las figuras: color por papeles
 
 Cada color tiene un papel, no un adorno. Las rampas están en OKLab, derivadas de los tokens de la
 marca, y van del techo (`-0`) a la cara más oscura (`-4`); una cara toma su tono por orientación,
-con la luz fija a la cámara (la regla del kit de Anatomy), así que la misma rampa sirve en el SVG y
-en three.js.
+con la luz fija a la cámara (la regla del kit de Anatomy).
 
 | Papel | Tokens | Cuánto | Uso |
 |---|---|---|---|
@@ -77,8 +76,7 @@ en three.js.
 Reglas: neutros + un material + un acento por figura; el ocre nunca junto al ámbar; el azul de
 estado («fuera de cobertura») no es material. En `estilo.css` cada pieza lleva `m-<material>` y el
 material es una rampa (`--c0…--c4`, `--filo`, `--pliegue`); encendida (`data-lit`), sube un
-escalón y su filo pasa a ámbar. El póster del héroe va como `<img>` y no ve el CSS de la página:
-`construir.py` le pasa estos mismos tokens en `web/figuras/datos.json`.
+escalón y su filo pasa a ámbar.
 
 ## Tipografía
 
@@ -119,33 +117,24 @@ fuente, licencia, expediente.
 | Consulta un punto y recibe el predio, su fuente y su huella. | Desbloquea el poder de los datos geoespaciales con IA. |
 | La fuente no respondió (IGAC, 12 s). Reintenta en 5 min. | Error. Inténtalo más tarde. |
 
-## El héroe: la figura cero (three.js)
+## El héroe: la escena de predios (three.js)
 
-El 3D solo va con datos reales y cuando ayuda a leerlos. Es la primera figura del sitio y habla su
-mismo idioma.
+El 3D solo va con datos reales y cuando ayuda a leerlos. El héroe es la animación principal del
+sitio y no se rediseña con las figuras: el dueño la quiere como está.
 
-- **Una maqueta:** los predios reales del SINIC (`datos/sm.json`) en 200 × 200 m alrededor del
-  punto consultado en Santa Marta, cortados en el borde, sobre una base con patas, ranura,
-  tornillos, regla en metros de verdad y la flecha del norte grabada. Las calles de OpenStreetMap
-  (`datos/calles.json`, ejes corridos 4 m para casar con los linderos) se rotulan sobre su eje.
-- **Una sola geometría, dos dibujos:** `js/maqueta.js` la calcula; `web/figuras/heroe.mjs` la dibuja
-  con el kit de Anatomy como póster SVG (`img/figuras/heroe.svg`, ≤ 60 KB) y `js/escena-predios.js`
-  la levanta en three.js con la **misma cámara** (ortográfica, 45°/30°, el encuadre sale del póster
-  en `data-camara`) y el **mismo sombreado** (cuatro tonos por orientación de cara con la luz fija a
-  la cámara, `EdgesGeometry` en `linea-media`, sin luces ni sombras de three.js). Son la misma
-  imagen: el cambio del póster a la escena no se nota.
-- **Papeles:** predios y base en estructura, el consultado en `sujeto-teal`, la respuesta como único
-  destello ámbar (el punto de la marca en su techo y un anillo que sale una vez).
-- **Cuándo se carga:** `js/heroe.js` importa three.js y los linderos solo si el héroe está en vista,
-  el navegador está ocioso y no hay ahorro de datos, movimiento reducido, `deviceMemory < 4` ni
-  puntero grueso. Si no, queda el póster (con `fetchpriority=high`). `?heroe=3d` y `?heroe=poster`
-  fuerzan uno u otro para medir.
-- **Bajo demanda:** dibuja solo cuando algo cambia (la respuesta, el arrastre, el tamaño) y se
-  duerme; el giro va por tiempo, no por cuadros. DPR ≤ 1,5. Con movimiento reducido, un solo cuadro.
-  Se gira arrastrando con el ratón, sin zoom con la rueda (secuestraría el scroll).
-- **El sobre rt/1 al lado:** una respuesta real de producción al mismo predio, con procedencia,
-  licencia, completitud y `servido_desde` resaltados en teal. Cuando aparece su estado, el predio
-  sube: la lectura cambia en el instante en que llega el dato.
+- **La escena:** los predios reales del SINIC (`datos/sm.json`) alrededor del punto consultado en
+  Santa Marta, a todo lo ancho detrás del texto, con las calles de OpenStreetMap
+  (`datos/calles.json`) rotuladas, escala y norte. Al entrar, la cámara baja y los predios crecen
+  desde el punto; luego gira despacio. El predio consultado sube cuando el sobre rt/1 muestra su
+  respuesta y sale una onda del punto. `js/escena-predios.js` y `js/comun3d.js`; mientras carga,
+  la imagen de respaldo (`img/predio-santamarta.webp`).
+- **Dos arreglos que no cambian cómo se ve:** con movimiento reducido dibuja un solo cuadro (y otro
+  solo si el lector arrastra o cambia el tamaño), y el giro y la subida van por tiempo (dt), no
+  por cuadros.
+- **Accesibilidad:** la imagen accesible es el lienzo (`role="img"`); la lectura con el enlace de
+  OpenStreetMap queda fuera y se puede tocar.
+- **El sobre rt/1** va debajo del héroe: una respuesta real de producción al mismo predio, con
+  procedencia, licencia, completitud y `servido_desde` resaltados.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
 ## Figuras isométricas (Anatomy)
@@ -164,7 +153,7 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
 - **El objeto es la explicación:** piezas reales con volumen (patas, rieles, tornillos, placas,
   clavijas), no cajas con flechas. Cada línea termina en algo; se comprueba con el `lines.mjs` de
   Anatomy (0 extremos sueltos).
-- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta y en el héroe, 72°
+- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta, 72°
   en la maqueta de cobertura para que el país se reconozca), la misma escala de construcción (`comun.mjs`, `encuadre`), el mismo
   grosor de línea (0,6 px) y las mismas piezas de banco (`base`, `regla`). Cada figura llena su
   columna.

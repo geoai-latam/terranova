@@ -47,7 +47,18 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
-## Sitio v2, fases 2 y 3: base visual y héroe como figura cero (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+## Sitio v2: el héroe vuelve a como estaba (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- El dueño no quería tocar la animación principal del héroe (el giro de los predios). La escena
+  vuelve a la de antes de las fases 2 y 3 (`js/escena-predios.js`, `js/comun3d.js`, three.js
+  también en móvil, imagen de respaldo y `datos/calles.json` de antes). Salen `js/maqueta.js`,
+  `js/heroe.js`, `web/figuras/heroe.mjs` y el póster SVG.
+- Se quedan tres arreglos que no cambian cómo se ve: con movimiento reducido un solo render; el giro
+  y la subida por tiempo (dt), no por cuadros; y la atribución de OpenStreetMap tocable y fuera de
+  `role="img"` (la imagen accesible es el lienzo).
+- El sobre rt/1 queda igual, debajo del héroe.
+
+## Sitio v2, fases 2 y 3: base visual y héroe como figura cero, revertido (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
 
 - **Base visual:** tokens de color por papel en `estilo.css` (estructura, líneas, sujeto por
   material, oscuro, acento, estado) y los materiales de las figuras pasados a esas rampas; un solo
