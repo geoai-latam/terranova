@@ -42,11 +42,13 @@ def titular(nombre: str) -> str:
 
 def lamina(nombre: str) -> str:
     fig = PUBLICO / "img" / "figuras"
-    # las dos capas de la figura: la fija y, encima, la viva (rótulos y piezas en reposo)
-    svg = (fig / f"{FIGURA[nombre]}.svg").read_text(encoding="utf-8") + (
-        '<div class="capa-viva">'
-        + (fig / f"{FIGURA[nombre]}-viva.svg").read_text(encoding="utf-8")
-        + "</div>"
+    n = FIGURA[nombre]
+    # las dos capas de la figura: la fija (en trozos, uno encima de otro) y, encima, la viva
+    # (rótulos y piezas en reposo)
+    trozos = sorted(fig.glob(f"{n}-[0-9]*.svg"), key=lambda q: int(q.stem.rsplit("-", 1)[1]))
+    encima = [*trozos, fig / f"{n}-viva.svg"]
+    svg = (fig / f"{n}.svg").read_text(encoding="utf-8") + "".join(
+        f'<div class="capa-viva">{q.read_text(encoding="utf-8")}</div>' for q in encima
     )
     css = (PUBLICO / "estilo.css").as_uri()
     return f"""<!doctype html><html lang="es"><head><meta charset="utf-8">
