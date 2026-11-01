@@ -601,6 +601,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   --anatomy-halo: var(--tinta); --anatomy-halo-opacity: .16; --anatomy-weight: .6px; --anatomy-mono: var(--font-mono);
   margin: 0; display: grid; gap: 6px; min-width: 0; width: 100%; justify-self: center; align-content: start;
 }
+.fig-iso[data-figura="capas"] { width: 80%; }
+@media (max-width: 960px) { .fig-iso[data-figura="capas"] { width: 100%; max-width: 480px; } }
 .fig-iso .lienzo { width: 100%; touch-action: pan-y; border-radius: var(--radio-lg); }
 .fig-iso .lienzo:focus-visible { outline: 1px solid var(--linea-fuerte); outline-offset: 6px; }
 .fig-iso .lectura-l { width: 100%; display: grid; justify-items: start; gap: 2px;

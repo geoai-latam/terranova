@@ -75,7 +75,8 @@ fuente, licencia, expediente.
 - **Solo lo que es verdad.** Toda cifra sale del catálogo o de los datos (`construir.py`), nunca a
   mano, y lleva su fuente y su fecha. Antes de publicar texto nuevo se contrasta con el código.
 - Los conteos solo cuentan fuentes **publicadas** (un borrador no se anuncia). No se nombran
-  herramientas con el canario en rojo ni fuentes con licencia dudosa (la DIAN, sin fines de lucro).
+  herramientas con el canario en rojo ni fuentes sin uso comercial (los usuarios aduaneros de la DIAN,
+  sin fines de lucro). El normograma de la DIAN sí se nombra: texto oficial libre (Ley 23 de 1982, art. 41).
 - **No se dice que un agente hace el trabajo:** lo hace el equipo, con herramientas.
 - «No encontrado» es una respuesta; «no se pudo» es un error con su código.
 - Lo que existe, en presente; lo que viene, marcado como visión.

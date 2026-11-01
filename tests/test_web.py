@@ -99,11 +99,33 @@ def test_el_sitio_no_anuncia_fuentes_sin_uso_comercial() -> None:
     assert all(h["fuente"] in ids for h in datos["herramientas"])
 
 
+def test_indice_de_entidades_solo_con_fuentes_vendibles() -> None:
+    # El índice de /fuentes nombra solo entidades con al menos una fuente publicada y con uso
+    # comercial «si»; la fuente «sin fines de lucro» de la DIAN (usuarios aduaneros) no aparece.
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # type: ignore[import-not-found]  # web/ no es un paquete
+
+    html = (PUBLICO / "fuentes.html").read_text(encoding="utf-8")
+    indice = html[html.index('class="indice"') :]
+    nombradas = set(re.findall(r"<h3>([^<]+)<span", indice))
+    vendibles = {
+        construir.nombre_entidad(f.entidad)
+        for f in construir.CAT.fuentes.values()
+        if f.estado == "publicada" and f.uso_comercial == "si"
+    }
+    assert nombradas and nombradas <= vendibles
+    sin_lucro = [f for f in construir.CAT.fuentes.values() if f.uso_comercial != "si"]
+    textos = "".join(p.read_text(encoding="utf-8") for p in PAGINAS).casefold()
+    for f in sin_lucro:
+        assert f.titulo.casefold() not in textos, f"{f.id} no tiene uso comercial y aparece"
+    assert "usuarios aduaneros" not in textos
+
+
 def test_figuras_isometricas_al_dia_y_verdaderas() -> None:
     # Las figuras del sitio (web/figuras, kit de Anatomy) llevan la huella de sus datos, sus
     # scripts y el kit; los datos salen del catálogo y no nombran entidades fuera de los turnos.
     sys.path.insert(0, str(RAIZ / "web"))
-    import construir  # type: ignore[import-not-found]  # web/ no es un paquete
+    import construir  # web/ no es un paquete
 
     datos = construir.datos_figuras()
     huella = construir.huella_figuras()
