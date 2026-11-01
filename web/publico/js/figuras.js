@@ -577,7 +577,7 @@ function cobertura(fig) {
     if (i < 0) { lectura.textContent = base; return; }
     celdas[i].querySelector('.iso-solid').setAttribute('data-lit', '');
     const [lon, lat, n] = V.celdas[i], c = cerca(lon, lat);
-    lectura.textContent = `${fn.format(n)} predios · ${coord(lat, 'N', 'S')}, ${coord(lon, 'E', 'W')}${c ? ' · ' + c : ''}`;
+    lectura.textContent = `${fn.format(n)} predios de la muestra · ${coord(lat, 'N', 'S')}, ${coord(lon, 'E', 'W')}${c ? ' · ' + c : ''}`;
   };
   const lienzo = fig.querySelector('.lienzo');
   let tour = !quieto.matches, k = 0, reloj = 0, espera = 0;

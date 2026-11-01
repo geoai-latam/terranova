@@ -29,10 +29,10 @@
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura"><div class="cab">
-<span class="rotulo">Contacto</span><h1 class="t1">Escríbenos</h1><p class="entrada">Respondemos de lunes a viernes, de 8:00 a 18:00, hora de Colombia, sin festivos.</p>
+<h1 class="t1">Escríbenos</h1><p class="entrada">Respondemos de lunes a viernes, de 8:00 a 18:00 (hora de Colombia), sin festivos.</p>
 </div></div></section>
 <section class="seccion"><div class="envoltura">
-<div class="rejilla r2" style="gap:48px;align-items:start;margin-bottom:56px">
+<div class="rejilla r2" style="gap:48px;align-items:start">
 <div><form class="formulario" method="post" action="/v1/contacto" data-asunto>
 <label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
 <label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
@@ -42,12 +42,11 @@
 <label class="casilla"><input type="checkbox" name="acepto" value="si" required> Acepto la <a class="enlace" href="/privacidad">política de privacidad</a>.</label><label class="trampa" aria-hidden="true">No llenes este campo<input name="web" tabindex="-1" autocomplete="off"></label>
 <button class="boton p" type="submit">Enviar</button>
 </form></div>
-<div class="bloque"><h3 class="t3">Qué pasa después</h3><p>Guardamos tu mensaje y te respondemos al correo que dejaste, en horario hábil. Para una llave de prueba no hace falta escribir: <a class="enlace" href="/precios#empezar">pídela aquí</a>.</p></div>
-</div>
-<div class="rejilla r3">
-<div class="bloque"><span class="num">servicios</span><h3 class="t3">Cuéntanos tu proyecto</h3><p>Qué decisión quieres tomar, sobre qué lugares y con qué plazo. Respondemos con lo que se puede probar y un precio fijo.</p><a class="boton s" href="/contacto?asunto=proyecto" style="margin-top:auto">Escribir</a></div>
-<div class="bloque"><span class="num">datos</span><h3 class="t3">Pide tu llave</h3><p>La de prueba llega al instante a tu correo. Para el plan Gratis o uno de pago, escríbenos con tu organización y qué quieres consultar.</p><a class="boton s" href="/precios#empezar" style="margin-top:auto">Pedir llave de prueba</a></div>
-<div class="bloque"><span class="num">soporte</span><h3 class="t3">Algo no funciona</h3><p>Incluye el <code>solicitud_id</code> de la respuesta. Si una fuente está caída, míralo primero en <a class="enlace" href="/estado">el estado</a>.</p><a class="boton s" href="/contacto?asunto=soporte" style="margin-top:auto">Escribir a soporte</a></div>
+<div class="bloque"><h3 class="t3">Atajos</h3><ul class="lista">
+<li>Llave de prueba: <a class="enlace" href="/precios#empezar">pídela aquí</a>, llega al instante.</li>
+<li>Un proyecto: qué quieres decidir, dónde y para cuándo.</li>
+<li>Soporte: incluye el <code>solicitud_id</code> y mira antes <a class="enlace" href="/estado">el estado</a>.</li>
+</ul></div>
 </div>
 <p class="fuente-dato" style="margin-top:24px">soporte@terrnova.com</p>
 </div></section>

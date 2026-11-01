@@ -29,7 +29,7 @@
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura con-lado"><div class="cab">
-<span class="rotulo">Desarrolladores</span><h1 class="t1">Conecta tu agente o tu sistema</h1><p class="entrada">MCP por streamable HTTP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1 en las dos.</p>
+<h1 class="t1">Conecta tu agente o tu sistema</h1><p class="entrada">MCP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1.</p>
 </div><figure class="lado-fig puertas"><figcaption>Dos puertas, un contrato</figcaption>
 <div class="p"><span class="et">agentes</span><code>POST /mcp</code><small>MCP · streamable HTTP · perfiles por familia</small></div>
 <div class="p"><span class="et">sistemas</span><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code><small>REST · OpenAPI en /docs</small></div>
@@ -39,26 +39,26 @@
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
-<p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
+<p class="et">Dale esta instrucción a tu agente y se configura solo.</p>
 <p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
-<ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
-<li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
+<ol><li><b>Pide tu llave</b> (<a href="/precios#empezar">plan Gratis</a>: 1.500 créditos al mes). Guárdala como secreto, nunca en el código.</li>
+<li><b>Haz la primera consulta</b> (1 crédito):</li></ol>
 <pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
   -H "Authorization: Bearer $TERRNOVA_LLAVE" \
   -H "Content-Type: application/json" \
   -d '{"nombre":"Cali"}'</code></pre>
-<p>La respuesta trae <code>"estado":"encontrado"</code>, los municipios que coinciden en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. La búsqueda respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
+<p>Trae <code>"estado":"encontrado"</code>, los municipios en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. Respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
 <ol start="3"><li><b>Mira tu saldo</b> con <code>GET /v1/uso</code>.</li></ol>
 
 <h2 id="mcp">MCP</h2>
-<p>La puerta habla MCP por <i>streamable HTTP</i>, con la llave en la cabecera <code>Authorization</code>.</p>
+<p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
 <p>Claude Code:</p>
 <pre class="suelto"><code>claude mcp add --transport http terrnova https://terrnova.com/mcp \
   --header "Authorization: Bearer $TERRNOVA_LLAVE"</code></pre>
-<p>Cursor y otros clientes que aceptan <code>url</code> y <code>headers</code>:</p>
+<p>Cursor y clientes con <code>url</code> y <code>headers</code>:</p>
 <pre class="suelto"><code>{
   "mcpServers": {
     "terrnova": {
@@ -67,7 +67,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
     }
   }
 }</code></pre>
-<p>Claude Desktop y otros clientes que solo hablan por stdio, con el puente <code>mcp-remote</code>:</p>
+<p>Clientes solo stdio (Claude Desktop), con <code>mcp-remote</code>:</p>
 <pre class="suelto"><code>{
   "mcpServers": {
     "terrnova": {
@@ -80,26 +80,26 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 }</code></pre>
 
 <h2 id="perfiles">Perfiles</h2>
-<table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las 205 herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
-<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una sola familia</td><td>Un caso de uso de un solo tema: lo más preciso y lo más rápido</td></tr>
-<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas genéricas que buscan en el catálogo</td><td>Clientes con tope de herramientas, como los modelos de OpenAI (128)</td></tr>
-</tbody></table>
-<p>Familias: <code>ambiente</code>, <code>contratacion</code>, <code>empresas</code>, <code>estadisticas</code>, <code>justicia</code>, <code>normativa</code>, <code>territorio</code>. Todos los perfiles traen las herramientas de nombre a código (1 crédito) y <code>fuente_describir</code>, que no gasta créditos.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
+<tr><td><code>/mcp</code></td><td>Las 205 herramientas, <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
+<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una familia</td><td>Un solo tema: lo más preciso y rápido</td></tr>
+<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas que buscan en el catálogo</td><td>Clientes con tope de herramientas (OpenAI: 128)</td></tr>
+</tbody></table></div>
+<p>Familias: <code>ambiente</code>, <code>contratacion</code>, <code>empresas</code>, <code>estadisticas</code>, <code>justicia</code>, <code>normativa</code>, <code>territorio</code>. Todos traen las de nombre a código (1 crédito) y <code>fuente_describir</code> (gratis).</p>
 
 <h2 id="rest">API REST</h2>
-<p>Las herramientas siguen el patrón <code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code>, con la entrada en JSON. La ficha de un lugar está en <code>POST /v1/fichas</code>. El esquema completo, con la entrada de cada herramienta, está en <a href="/openapi.json"><code>/openapi.json</code></a> y se navega en <a href="/docs"><code>/docs</code></a>.</p>
-<table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
+<p><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code> con la entrada en JSON; la ficha de un lugar, <code>POST /v1/fichas</code>. Esquema en <a href="/openapi.json"><code>/openapi.json</code></a> y <a href="/docs"><code>/docs</code></a>.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
 <tr><td>Lista de herramientas con su costo</td><td><code>GET /v1/herramientas</code></td></tr>
 <tr><td>Ficha técnica de una fuente</td><td><code>GET /v1/fuentes/&#123;fuente_id&#125;</code></td></tr>
 <tr><td>Saldo del mes</td><td><code>GET /v1/uso</code></td></tr>
 <tr><td>Estado por fuente</td><td><code>GET /v1/estado</code></td></tr>
-</tbody></table>
-<p>Las rutas de catálogo son públicas y no gastan créditos.</p>
+</tbody></table></div>
+<p>Las rutas de catálogo son públicas y gratis.</p>
 
 <h2 id="contrato">Contrato rt/1</h2>
-<p>Toda consulta que llega a la fuente devuelve el mismo sobre:</p>
-<table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
+<p>Toda consulta devuelve el mismo sobre:</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
 <tr><td><code>estado</code></td><td><code>encontrado</code>, <code>no_encontrado</code>, <code>fuera_de_cobertura</code> o <code>parcial</code></td></tr>
 <tr><td><code>datos</code></td><td>El resultado</td></tr>
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
@@ -107,11 +107,11 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 (lon, lat)</td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
-</tbody></table>
-<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
+</tbody></table></div>
+<p><b>«No encontrado» no es «no se pudo».</b> Si la fuente no responde llega un error, nunca un sobre vacío; un dato viejo (<code>servido_desde: obsoleto</code>) siempre llega con aviso.</p>
 
 <h2 id="errores">Errores</h2>
-<p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
+<p>En <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> para soporte.</p>
 <div class="desliza"><table class="tabla"><thead><tr><th>HTTP</th><th><code>code</code></th><th>Qué hacer</th></tr></thead><tbody>
 <tr><td class="n">400</td><td><code>parametro_invalido</code></td><td>Corregir la entrada; <code>param</code> dice cuál</td></tr>
 <tr><td class="n">401</td><td><code>no_autenticado</code></td><td>Falta la llave o no es válida</td></tr>
@@ -123,7 +123,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
-<p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Reintenta con espera creciente, nunca en bucle cerrado.</p>
+<p>Ráfaga de 20 consultas y 60 por minuto por llave. Reintenta con espera creciente.</p>
 
 <h2 id="recursos">Recursos</h2>
 <ul><li><a href="/llms.txt"><code>/llms.txt</code></a>: el catálogo en texto para agentes.</li>

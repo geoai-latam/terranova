@@ -29,29 +29,29 @@
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura con-lado"><div class="cab">
-<span class="rotulo">Precios</span><h1 class="t1">Pagas por consulta, no por el dato</h1><p class="entrada">Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato; la ficha de un lugar, hasta 50.</p>
+<h1 class="t1">Pagas por consulta, no por el dato</h1><p class="entrada">Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 según el tipo de pregunta; la ficha de un lugar, hasta 50.</p>
 </div><figure class="lado-fig escalera"><figcaption>Créditos por consulta</figcaption><div class="cols"><div class="col"><b>1</b><i style="--v:0.050"></i><span>código</span></div><div class="col"><b>2</b><i style="--v:0.100"></i><span>registro</span></div><div class="col"><b>5</b><i style="--v:0.250"></i><span>agregado</span></div><div class="col"><b>10</b><i style="--v:0.500"></i><span>punto</span></div><div class="col"><b>20</b><i style="--v:1.000"></i><span>zona</span></div></div>
 <p class="fuente-dato">caché, errores y «fuera de cobertura» no descuentan</p></figure></div></section>
 <section class="seccion"><div class="envoltura">
 <div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><span class="eq">≈ 150 consultas de predio por punto</span><a class="boton p" href="/precios#empezar">Empieza gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><span class="eq">≈ 2.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-basico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><span class="eq">≈ 11.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><span class="eq">≈ 37.500 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><span class="eq">≈ 110.000 consultas de predio por punto</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
-<p class="fuente-dato" style="margin-top:14px">Los precios en pesos de cada plan se confirman al pedirlo. Los servicios se cotizan aparte.</p>
+<p class="fuente-dato" style="margin-top:14px">El precio en pesos se confirma al pedir el plan. Los servicios se cotizan aparte.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Tarifa</span><h2 class="t2">Créditos por tipo de pregunta</h2>
-<p class="entrada">Que una fuente pase a servirse desde una copia no cambia su precio. Cada herramienta dice su costo en el catálogo, y cada respuesta dice cuánto costó.</p></div>
+<div class="cab"><h2 class="t2">Créditos por tipo de pregunta</h2>
+<p class="entrada">Cada respuesta dice cuánto costó. Servirse desde una copia no cambia el precio.</p></div>
 <div class="desliza"><table class="tabla"><thead><tr><th>Tipo de pregunta</th><th>Créditos</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
 <tbody><tr><td>código</td><td class="n">1</td><td>de nombre a código</td><td><code>dane_divipola_buscar</code></td></tr><tr><td>registro</td><td class="n">2</td><td>un registro o una serie simple</td><td><code>banrep_trm_recientes</code></td></tr><tr><td>agregado</td><td class="n">5</td><td>agregados o búsqueda de texto</td><td>contratos de una entidad</td></tr><tr><td>punto</td><td class="n">10</td><td>espacial en un punto</td><td><code>sinic_predio_en_punto</code></td></tr><tr><td>zona</td><td class="n">20</td><td>espacial en una zona o un ráster</td><td>áreas protegidas en una zona</td></tr><tr><td>ficha de un lugar</td><td class="n">≤ 50</td><td>la suma de sus partes</td><td><code>POST /v1/fichas</code></td></tr></tbody></table></div>
 <div class="rejilla r2" style="margin-top:32px">
-<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>Las respuestas desde la caché</li><li><code>fuera_de_cobertura</code></li><li>Los errores, incluido «no se pudo»</li><li>Las rutas del catálogo</li></ul></div>
-<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 de cada mes a las 00:00 UTC y no se acumula. Si subes de plan, el límite nuevo aplica desde la siguiente consulta. <code>GET /v1/uso</code> te dice cuánto te queda.</p></div>
+<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>La caché</li><li><code>fuera_de_cobertura</code></li><li>Los errores, incluido «no se pudo»</li><li>Las rutas del catálogo</li></ul></div>
+<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 a las 00:00 UTC y no se acumula. <code>GET /v1/uso</code> dice cuánto queda.</p></div>
 </div>
 </div></section>
 
 <section class="seccion" id="empezar"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px;align-items:start">
-<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave de prueba</h2>
-<p class="entrada">Te llega un enlace al correo; al abrirlo ves tu llave una sola vez. Trae 300 créditos y vence en 15 días: sirve para probar. Para el plan Gratis de 1.500 créditos al mes o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
+<div class="cab" style="margin:0"><h2 class="t2">Pide tu llave de prueba</h2>
+<p class="entrada">Te llega un enlace al correo y ves la llave una sola vez. Trae 300 créditos y vence en 15 días. Para el plan Gratis o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
 <form class="formulario" method="post" action="/v1/alta">
 <label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
 <label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
@@ -62,20 +62,20 @@
 </form></div>
 <div class="bloque"><h3 class="t3">Llaves</h3>
 <div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
-<tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>
-<tr><td><code>rt_test_</code></td><td>Evaluación, que puede tener vencimiento: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
-<p>Cada llave tiene sus familias. Si una llave se filtra, avísanos: la revocamos y te enviamos otra, con el mismo saldo y el mismo plan.</p></div>
+<tr><td><code>rt_live_</code></td><td>Producción: licencia abierta verificada y dato público reutilizable, con aviso.</td></tr>
+<tr><td><code>rt_test_</code></td><td>Evaluación: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
+<p>Si una llave se filtra, la revocamos y te damos otra con el mismo saldo.</p></div>
 </div>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Preguntas frecuentes</span><h2 class="t2">Lo que suelen preguntar</h2></div>
+<div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
 <div class="prosa" style="max-width:860px">
-<h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Para subir de plan, escríbenos.</p>
-<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta dice su licencia y, si es un dato público con condiciones propias de la entidad, trae un aviso. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
-<h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
-<h3>¿Hay límite de tasa?</h3><p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
-<h3>¿Y los servicios?</h3><p>No van en estos planes. Se evalúan, el precio se fija antes de empezar y nunca se cobra por hora. <a href="/servicios">Ver servicios</a>.</p>
+<h3>¿Y si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha de renovación. Para subir de plan, escríbenos.</p>
+<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta trae su licencia y la atribución que debes citar; CC BY-SA exige compartir igual.</p>
+<h3>¿Y los datos personales?</h3><p>Nada de búsquedas por cédula o nombre ni perfiles de personas. Cada fuente sale con una lista blanca de campos.</p>
+<h3>¿Hay límite de tasa?</h3><p>Ráfaga de 20 consultas y 60 por minuto por llave. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
+<h3>¿Y los servicios?</h3><p>Van aparte, a precio fijo y nunca por hora. <a href="/servicios">Ver servicios</a>.</p>
 </div>
 </div></section>
 </main>

@@ -1,9 +1,9 @@
 // Fig. cobertura: una maqueta de Colombia sobre un zócalo. La tierra es un mosaico de hexágonos y
 // sobre él se levanta una columna por celda con predios en la muestra SINIC (3 %), más alta cuantos
-// más predios cuenta (raíz cuadrada). Alfileres en las ciudades y una regla en kilómetros. Todo sale
+// más predios cuenta (raíz cuadrada). Alfileres en las ciudades. Todo sale
 // de datos/co.json, sumado en hexágonos de 0,21° por construir.py. Lo que se mueve: la columna que
 // se mira se enciende y la lectura da su conteo, su coordenada y la ciudad más cercana.
-import { D, L, S, base, encuadre, k, svgDe } from "./comun.mjs";
+import { D, L, S, casco, encuadre, k, porProf, svgDe } from "./comun.mjs";
 
 export function cobertura(DATOS, huella) {
   const { R, celdas, tierra, ciudades, total } = DATOS.cobertura;
@@ -11,22 +11,27 @@ export function cobertura(DATOS, huella) {
   const X = (lon) => (lon - LON0) * K, Y = (lat) => -(lat - LAT0) * K;
   const RR = R * K; // radio del hexágono en unidades
   const max = Math.max(...celdas.map((c) => c[2]));
-  const alto = (n) => 0.8 + Math.sqrt(n / max) * 52;
-  const xs = tierra.map(([lon]) => X(lon)), ys = tierra.map(([, lat]) => Y(lat));
-  const PLACA = { x: Math.min(...xs) - 10, y: Math.min(...ys) - 10, w: Math.max(...xs) - Math.min(...xs) + 20, d: Math.max(...ys) - Math.min(...ys) + 26, r: 5 };
-  const { P, ancho, alto: altoV } = encuadre([...k.boxCorners(PLACA, -14, 0), ...celdas.map(([lon, lat, n]) => [X(lon), Y(lat), alto(n) + 1])], { azimuth: 72 }); // el norte hacia atrás y un poco a la derecha: el mapa se reconoce
+  const alto = (n) => 0.8 + Math.sqrt(n / max) * 38;
+  // el zócalo, cortado a la forma del país: envolvente convexa de la tierra con un margen corto
+  const borde = [];
+  for (const [lon, lat] of tierra) for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2; borde.push([X(lon) + (RR + 7) * Math.cos(a), Y(lat) + (RR + 7) * Math.sin(a)]); }
+  const zocalo = casco(borde);
+  const { P, ancho, alto: altoV } = encuadre([...zocalo.map(([x, y]) => [x, y, -12]), ...zocalo.map(([x, y]) => [x, y, 0]), ...celdas.map(([lon, lat, n]) => [X(lon), Y(lat), alto(n) + 1])], { azimuth: 72 }); // el norte hacia atrás y un poco a la derecha: el mapa se reconoce
   const at = (p) => k.iso(p, P);
   const hex = (cx, cy, rr) => Array.from({ length: 6 }, (_, i) => { const a = Math.PI / 2 + (i * Math.PI) / 3; return [cx + rr * Math.cos(a), cy + rr * Math.sin(a)]; });
   const out = [];
 
-  out.push(base(PLACA, 0, 6, P, { patas: 16 }));
-  // regla en kilómetros en el borde de adelante: marca cada 50 km, mayor cada 100 km
-  const km = (K / 111.32) * 50;
-  const tira = { x: PLACA.x + 12, y: PLACA.y + PLACA.d - 9, w: km * 8 + 4, d: 4, r: 0.8 };
-  out.push(S(k.slabOf(tira, 0, 0.6, P, 3), { tone: "lo", crease: "none" }));
-  const tk = k.topTicks(tira.x + 2, tira.x + 2 + km * 8 + 0.01, km, 2, tira.y + tira.d, 0.6, [-1.6, -2.8], P);
-  out.push(L(tk.minor, { tone: "lo" }), L(tk.major, { tone: "mid" }));
-  out.push(D([at([tira.x + 1, tira.y + 1, 0.6]), at([tira.x + tira.w - 1, tira.y + 1, 0.6])], { size: 0.38 }));
+  // halo, patas en seis puntos del borde, la losa biselada y su ranura
+  out.push(`<path class="iso-halo" d="${k.extrude(zocalo, -12, 12, P).fill}"/>`);
+  const cx0 = zocalo.reduce((a, [x]) => a + x, 0) / zocalo.length, cy0 = zocalo.reduce((a, [, y]) => a + y, 0) / zocalo.length;
+  const patas = [0, 1, 2, 3, 4, 5].map((i) => zocalo[Math.floor((i / 6) * zocalo.length)]).map(([x, y]) => [x + (cx0 - x) * 0.1, y + (cy0 - y) * 0.1]);
+  for (const [x, y] of porProf(patas, P)) {
+    out.push(S(k.cylinder(x, y, 5.2, -12, 1.4, P, 24), { tone: "lo" }));
+    out.push(S(k.cylinder(x, y, 3.8, -10.6, 4.6, P, 24), { tone: "mid" }));
+  }
+  out.push(S(k.extrude(zocalo, -6, 6, P, { convex: true, bevel: 1.2 }), { tone: "lo" }));
+  const adentro = zocalo.map(([x, y]) => [x + (cx0 - x) * 0.025, y + (cy0 - y) * 0.025]);
+  out.push(L(k.pathOf(adentro.map(([x, y]) => at([x, y, 0])), true), { tone: "faint" }));
 
   // la tierra: un mosaico plano de hexágonos
   const mosaico = tierra.map(([lon, lat]) => k.pathOf(hex(X(lon), Y(lat), RR * 0.98).map(([x, y]) => at([x, y, 0])), true)).join("");

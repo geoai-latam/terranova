@@ -1375,7 +1375,7 @@ def fuentes() -> str:
     km = round(cob["R"] * 111.32)
     figura_cob = figura(
         "cobertura",
-        f"{miles(cob['total'])} predios en {len(cob['celdas'])} celdas · muestra del 3 %",
+        f"{miles(cob['total'])} predios de la muestra (3 %) en {len(cob['celdas'])} celdas",
         "pasa el puntero por las columnas",
     )
     c = (
@@ -1408,7 +1408,7 @@ def fuentes() -> str:
 <h2 class="t2">Dónde hay predio SINIC hoy</h2>
 <p class="entrada">Cada columna suma los predios de la muestra en una celda de unos {km} km de radio.</p>
 <ul class="lista-l">
-<li><b>6,1 M</b><span>terrenos en la copia SINIC</span></li>
+<li><b>6,1 M</b><span>terrenos en la copia SINIC (333 municipios)</span></li>
 <li><b>{miles(cob["total"])}</b><span>en la muestra (3 %)</span></li>
 <li><b>{len(cob["celdas"])}</b><span>celdas con predios</span></li>
 </ul>
@@ -1446,48 +1446,48 @@ def fuentes() -> str:
 def precios() -> str:
     c = (
         portada(
-            "Precios",
+            "",
             "Pagas por consulta, no por el dato",
-            "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 créditos según el tipo de pregunta, no según cómo se trae el dato; la ficha de un lugar, hasta 50.",
+            "Cada plan trae créditos al mes. Una consulta cuesta de 1 a 20 según el tipo de pregunta; la ficha de un lugar, hasta 50.",
             lado=lado_tarifa(),
         )
         + f"""
 <section class="seccion"><div class="envoltura">
 {planes_html()}
-<p class="fuente-dato" style="margin-top:14px">Los precios en pesos de cada plan se confirman al pedirlo. Los servicios se cotizan aparte.</p>
+<p class="fuente-dato" style="margin-top:14px">El precio en pesos se confirma al pedir el plan. Los servicios se cotizan aparte.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Tarifa</span><h2 class="t2">Créditos por tipo de pregunta</h2>
-<p class="entrada">Que una fuente pase a servirse desde una copia no cambia su precio. Cada herramienta dice su costo en el catálogo, y cada respuesta dice cuánto costó.</p></div>
+<div class="cab"><h2 class="t2">Créditos por tipo de pregunta</h2>
+<p class="entrada">Cada respuesta dice cuánto costó. Servirse desde una copia no cambia el precio.</p></div>
 {tarifa_html()}
 <div class="rejilla r2" style="margin-top:32px">
-<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>Las respuestas desde la caché</li><li><code>fuera_de_cobertura</code></li><li>Los errores, incluido «no se pudo»</li><li>Las rutas del catálogo</li></ul></div>
-<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 de cada mes a las 00:00 UTC y no se acumula. Si subes de plan, el límite nuevo aplica desde la siguiente consulta. <code>GET /v1/uso</code> te dice cuánto te queda.</p></div>
+<div class="bloque"><h3 class="t3">No descuentan</h3><ul class="lista"><li>La caché</li><li><code>fuera_de_cobertura</code></li><li>Los errores, incluido «no se pudo»</li><li>Las rutas del catálogo</li></ul></div>
+<div class="bloque"><h3 class="t3">El saldo del mes</h3><p>Se renueva el día 1 a las 00:00 UTC y no se acumula. <code>GET /v1/uso</code> dice cuánto queda.</p></div>
 </div>
 </div></section>
 
 <section class="seccion" id="empezar"><div class="envoltura">
 <div class="rejilla r2" style="gap:48px;align-items:start">
-<div class="cab" style="margin:0"><span class="rotulo">Empezar</span><h2 class="t2">Pide tu llave de prueba</h2>
-<p class="entrada">Te llega un enlace al correo; al abrirlo ves tu llave una sola vez. Trae {miles(CREDITOS_PRUEBA)} créditos y vence en {DIAS_PRUEBA} días: sirve para probar. Para el plan Gratis de {miles(PLANES[0][1])} créditos al mes o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
+<div class="cab" style="margin:0"><h2 class="t2">Pide tu llave de prueba</h2>
+<p class="entrada">Te llega un enlace al correo y ves la llave una sola vez. Trae {miles(CREDITOS_PRUEBA)} créditos y vence en {DIAS_PRUEBA} días. Para el plan Gratis o uno de pago, <a class="enlace" href="/contacto?asunto=plan-gratis">escríbenos</a>.</p>
 {formulario_alta()}</div>
 <div class="bloque"><h3 class="t3">Llaves</h3>
 <div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
-<tr><td><code>rt_live_</code></td><td>Producción: las fuentes con licencia abierta verificada y las de dato público reutilizable, con aviso.</td></tr>
-<tr><td><code>rt_test_</code></td><td>Evaluación, que puede tener vencimiento: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
-<p>Cada llave tiene sus familias. Si una llave se filtra, avísanos: la revocamos y te enviamos otra, con el mismo saldo y el mismo plan.</p></div>
+<tr><td><code>rt_live_</code></td><td>Producción: licencia abierta verificada y dato público reutilizable, con aviso.</td></tr>
+<tr><td><code>rt_test_</code></td><td>Evaluación: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
+<p>Si una llave se filtra, la revocamos y te damos otra con el mismo saldo.</p></div>
 </div>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><span class="rotulo">Preguntas frecuentes</span><h2 class="t2">Lo que suelen preguntar</h2></div>
+<div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
 <div class="prosa" style="max-width:860px">
-<h3>¿Qué pasa si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha en que se renueva tu saldo. Para subir de plan, escríbenos.</p>
-<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta dice su licencia y, si es un dato público con condiciones propias de la entidad, trae un aviso. Al publicar un dato, cita la atribución que trae la respuesta y respeta su licencia: CC BY-SA exige compartir igual.</p>
-<h3>¿Qué hay de los datos personales?</h3><p>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas. Los campos que salen de cada fuente están en una lista blanca.</p>
-<h3>¿Hay límite de tasa?</h3><p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
-<h3>¿Y los servicios?</h3><p>No van en estos planes. Se evalúan, el precio se fija antes de empezar y nunca se cobra por hora. <a href="/servicios">Ver servicios</a>.</p>
+<h3>¿Y si se me acaban los créditos?</h3><p>La puerta responde <code>402 saldo_agotado</code> con la fecha de renovación. Para subir de plan, escríbenos.</p>
+<h3>¿Puedo usar los datos comercialmente?</h3><p>Las llaves de producción no ven fuentes con licencia por verificar. Cada respuesta trae su licencia y la atribución que debes citar; CC BY-SA exige compartir igual.</p>
+<h3>¿Y los datos personales?</h3><p>Nada de búsquedas por cédula o nombre ni perfiles de personas. Cada fuente sale con una lista blanca de campos.</p>
+<h3>¿Hay límite de tasa?</h3><p>Ráfaga de 20 consultas y 60 por minuto por llave. Las cabeceras <code>RateLimit</code> dicen cuánto queda.</p>
+<h3>¿Y los servicios?</h3><p>Van aparte, a precio fijo y nunca por hora. <a href="/servicios">Ver servicios</a>.</p>
 </div>
 </div></section>
 """
@@ -1504,9 +1504,9 @@ def desarrolladores() -> str:
     perfiles = ", ".join(f"<code>{f}</code>" for f in POR_FAMILIA if f != "meta")
     c = (
         portada(
-            "Desarrolladores",
+            "",
             "Conecta tu agente o tu sistema",
-            "MCP por streamable HTTP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1 en las dos.",
+            "MCP para agentes, API REST para sistemas. La misma llave y el mismo contrato rt/1.",
             lado=lado_puertas(),
         )
         + f"""
@@ -1515,26 +1515,26 @@ def desarrolladores() -> str:
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
-<p class="et">La forma más corta: dale esta instrucción a tu agente y se configura solo.</p>
+<p class="et">Dale esta instrucción a tu agente y se configura solo.</p>
 <p id="instruccion">{INSTRUCCION}</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
-<ol><li><b>Pide tu llave.</b> <a href="/precios#empezar">El plan Gratis</a> trae 1.500 créditos al mes. Guárdala como un secreto, nunca en el código.</li>
-<li><b>Haz la primera consulta.</b> El código DIVIPOLA de un municipio por su nombre cuesta 1 crédito:</li></ol>
+<ol><li><b>Pide tu llave</b> (<a href="/precios#empezar">plan Gratis</a>: 1.500 créditos al mes). Guárdala como secreto, nunca en el código.</li>
+<li><b>Haz la primera consulta</b> (1 crédito):</li></ol>
 <pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
   -H "Authorization: Bearer $TERRNOVA_LLAVE" \\
   -H "Content-Type: application/json" \\
   -d '{{"nombre":"Cali"}}'</code></pre>
-<p>La respuesta trae <code>"estado":"encontrado"</code>, los municipios que coinciden en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. La búsqueda respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
+<p>Trae <code>"estado":"encontrado"</code>, los municipios en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. Respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
 <ol start="3"><li><b>Mira tu saldo</b> con <code>GET /v1/uso</code>.</li></ol>
 
 <h2 id="mcp">MCP</h2>
-<p>La puerta habla MCP por <i>streamable HTTP</i>, con la llave en la cabecera <code>Authorization</code>.</p>
+<p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
 <p>Claude Code:</p>
 <pre class="suelto"><code>claude mcp add --transport http terrnova https://terrnova.com/mcp \\
   --header "Authorization: Bearer $TERRNOVA_LLAVE"</code></pre>
-<p>Cursor y otros clientes que aceptan <code>url</code> y <code>headers</code>:</p>
+<p>Cursor y clientes con <code>url</code> y <code>headers</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
     "terrnova": {{
@@ -1543,7 +1543,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
     }}
   }}
 }}</code></pre>
-<p>Claude Desktop y otros clientes que solo hablan por stdio, con el puente <code>mcp-remote</code>:</p>
+<p>Clientes solo stdio (Claude Desktop), con <code>mcp-remote</code>:</p>
 <pre class="suelto"><code>{{
   "mcpServers": {{
     "terrnova": {{
@@ -1556,26 +1556,26 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 }}</code></pre>
 
 <h2 id="perfiles">Perfiles</h2>
-<table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, más <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas por su cuenta, como Claude</td></tr>
-<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una sola familia</td><td>Un caso de uso de un solo tema: lo más preciso y lo más rápido</td></tr>
-<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas genéricas que buscan en el catálogo</td><td>Clientes con tope de herramientas, como los modelos de OpenAI (128)</td></tr>
-</tbody></table>
-<p>Familias: {perfiles}. Todos los perfiles traen las herramientas de nombre a código (1 crédito) y <code>fuente_describir</code>, que no gasta créditos.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
+<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
+<tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una familia</td><td>Un solo tema: lo más preciso y rápido</td></tr>
+<tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas que buscan en el catálogo</td><td>Clientes con tope de herramientas (OpenAI: 128)</td></tr>
+</tbody></table></div>
+<p>Familias: {perfiles}. Todos traen las de nombre a código (1 crédito) y <code>fuente_describir</code> (gratis).</p>
 
 <h2 id="rest">API REST</h2>
-<p>Las herramientas siguen el patrón <code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code>, con la entrada en JSON. La ficha de un lugar está en <code>POST /v1/fichas</code>. El esquema completo, con la entrada de cada herramienta, está en <a href="/openapi.json"><code>/openapi.json</code></a> y se navega en <a href="/docs"><code>/docs</code></a>.</p>
-<table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
+<p><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code> con la entrada en JSON; la ficha de un lugar, <code>POST /v1/fichas</code>. Esquema en <a href="/openapi.json"><code>/openapi.json</code></a> y <a href="/docs"><code>/docs</code></a>.</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Para</th><th>Dónde</th></tr></thead><tbody>
 <tr><td>Lista de herramientas con su costo</td><td><code>GET /v1/herramientas</code></td></tr>
 <tr><td>Ficha técnica de una fuente</td><td><code>GET /v1/fuentes/&#123;fuente_id&#125;</code></td></tr>
 <tr><td>Saldo del mes</td><td><code>GET /v1/uso</code></td></tr>
 <tr><td>Estado por fuente</td><td><code>GET /v1/estado</code></td></tr>
-</tbody></table>
-<p>Las rutas de catálogo son públicas y no gastan créditos.</p>
+</tbody></table></div>
+<p>Las rutas de catálogo son públicas y gratis.</p>
 
 <h2 id="contrato">Contrato rt/1</h2>
-<p>Toda consulta que llega a la fuente devuelve el mismo sobre:</p>
-<table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
+<p>Toda consulta devuelve el mismo sobre:</p>
+<div class="desliza"><table class="tabla"><thead><tr><th>Campo</th><th>Contenido</th></tr></thead><tbody>
 <tr><td><code>estado</code></td><td><code>encontrado</code>, <code>no_encontrado</code>, <code>fuera_de_cobertura</code> o <code>parcial</code></td></tr>
 <tr><td><code>datos</code></td><td>El resultado</td></tr>
 <tr><td><code>huella</code></td><td><code>sha256</code> de <code>datos</code>, para verificar que no cambió</td></tr>
@@ -1583,11 +1583,11 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td><code>avisos</code></td><td>Lo que debes saber: total desconocido, datos no recientes, copia vencida…</td></tr>
 <tr><td><code>geo_result</code></td><td>Las geometrías, en EPSG:4326 (lon, lat)</td></tr>
 <tr><td><code>creditos</code></td><td>Lo que costó esa consulta</td></tr>
-</tbody></table>
-<p><b>«No encontrado» no es «no se pudo».</b> Cuando la fuente no responde llega un error, nunca un sobre vacío. Terrnova nunca inventa un dato ni hace pasar uno viejo por actual: <code>servido_desde: obsoleto</code> siempre llega con aviso.</p>
+</tbody></table></div>
+<p><b>«No encontrado» no es «no se pudo».</b> Si la fuente no responde llega un error, nunca un sobre vacío; un dato viejo (<code>servido_desde: obsoleto</code>) siempre llega con aviso.</p>
 
 <h2 id="errores">Errores</h2>
-<p>Por REST, en <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> que debes darnos si escribes a soporte.</p>
+<p>En <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> para soporte.</p>
 <div class="desliza"><table class="tabla"><thead><tr><th>HTTP</th><th><code>code</code></th><th>Qué hacer</th></tr></thead><tbody>
 <tr><td class="n">400</td><td><code>parametro_invalido</code></td><td>Corregir la entrada; <code>param</code> dice cuál</td></tr>
 <tr><td class="n">401</td><td><code>no_autenticado</code></td><td>Falta la llave o no es válida</td></tr>
@@ -1599,7 +1599,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
-<p>Cada llave tiene una ráfaga de 20 consultas y repone 60 por minuto. Reintenta con espera creciente, nunca en bucle cerrado.</p>
+<p>Ráfaga de 20 consultas y 60 por minuto por llave. Reintenta con espera creciente.</p>
 
 <h2 id="recursos">Recursos</h2>
 <ul><li><a href="/llms.txt"><code>/llms.txt</code></a>: el catálogo en texto para agentes.</li>
@@ -1621,14 +1621,14 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 def aliados() -> str:
     c = (
         portada(
-            "Aliados",
+            "",
             "Proyectos hermanos",
-            "Terrnova trabaja junto a dos proyectos de la comunidad geoespacial latinoamericana. Son aliados, no clientes.",
+            "Dos proyectos de la comunidad geoespacial latinoamericana. Aliados, no clientes.",
         )
         + """
 <section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
-<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Una comunidad que comparte conocimiento y desarrolla soluciones de inteligencia geoespacial para Latinoamérica: proyectos abiertos, tutoriales y notas de campo.</p>
+<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Comunidad de inteligencia geoespacial para Latinoamérica: proyectos abiertos y tutoriales.</p>
 <p style="margin-top:12px"><a class="enlace" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
 <div class="aliado"><div class="pendiente">Atalaya Mapas</div>
 <div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía.</p></div></div>
@@ -1643,20 +1643,19 @@ def aliados() -> str:
 def contacto() -> str:
     c = (
         portada(
-            "Contacto",
+            "",
             "Escríbenos",
-            "Respondemos de lunes a viernes, de 8:00 a 18:00, hora de Colombia, sin festivos.",
+            "Respondemos de lunes a viernes, de 8:00 a 18:00 (hora de Colombia), sin festivos.",
         )
         + f"""
 <section class="seccion"><div class="envoltura">
-<div class="rejilla r2" style="gap:48px;align-items:start;margin-bottom:56px">
+<div class="rejilla r2" style="gap:48px;align-items:start">
 <div>{formulario_contacto()}</div>
-<div class="bloque"><h3 class="t3">Qué pasa después</h3><p>Guardamos tu mensaje y te respondemos al correo que dejaste, en horario hábil. Para una llave de prueba no hace falta escribir: <a class="enlace" href="/precios#empezar">pídela aquí</a>.</p></div>
-</div>
-<div class="rejilla r3">
-<div class="bloque"><span class="num">servicios</span><h3 class="t3">Cuéntanos tu proyecto</h3><p>Qué decisión quieres tomar, sobre qué lugares y con qué plazo. Respondemos con lo que se puede probar y un precio fijo.</p><a class="boton s" href="/contacto?asunto=proyecto" style="margin-top:auto">Escribir</a></div>
-<div class="bloque"><span class="num">datos</span><h3 class="t3">Pide tu llave</h3><p>La de prueba llega al instante a tu correo. Para el plan Gratis o uno de pago, escríbenos con tu organización y qué quieres consultar.</p><a class="boton s" href="/precios#empezar" style="margin-top:auto">Pedir llave de prueba</a></div>
-<div class="bloque"><span class="num">soporte</span><h3 class="t3">Algo no funciona</h3><p>Incluye el <code>solicitud_id</code> de la respuesta. Si una fuente está caída, míralo primero en <a class="enlace" href="/estado">el estado</a>.</p><a class="boton s" href="/contacto?asunto=soporte" style="margin-top:auto">Escribir a soporte</a></div>
+<div class="bloque"><h3 class="t3">Atajos</h3><ul class="lista">
+<li>Llave de prueba: <a class="enlace" href="/precios#empezar">pídela aquí</a>, llega al instante.</li>
+<li>Un proyecto: qué quieres decidir, dónde y para cuándo.</li>
+<li>Soporte: incluye el <code>solicitud_id</code> y mira antes <a class="enlace" href="/estado">el estado</a>.</li>
+</ul></div>
 </div>
 <p class="fuente-dato" style="margin-top:24px">{CORREO}</p>
 </div></section>
@@ -1672,7 +1671,7 @@ def contacto() -> str:
 
 def legal(ruta: str, titulo: str, entrada: str, puntos: list[str]) -> str:
     c = (
-        portada("Legal", titulo, entrada)
+        portada("", titulo, entrada)
         + f"""
 <section class="seccion"><div class="envoltura"><div class="prosa">
 <p>El texto completo está en revisión legal y se publicará en esta página. Mientras tanto, estas reglas ya se cumplen en el producto:</p>
@@ -1686,9 +1685,9 @@ def legal(ruta: str, titulo: str, entrada: str, puntos: list[str]) -> str:
 
 def no_encontrada() -> str:
     c = portada(
-        "404",
+        "",
         "Aquí no hay nada",
-        "La página no existe o cambió de lugar. «No encontrado» es una respuesta honesta.",
+        "La página no existe o cambió de lugar.",
         '<div class="botones" style="margin-top:8px"><a class="boton p" href="/">Ir al inicio</a><a class="boton s" href="/fuentes">Buscar una herramienta</a></div>',
     )
     return pagina("/404", "Página no encontrada", "La página no existe.", c)
