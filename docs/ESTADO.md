@@ -47,18 +47,27 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
-## Figuras isométricas en la portada (2026-10-31, rama `feat/landing-animaciones`, sin fusionar)
+## Sitio con figuras Anatomy integradas y texto recortado (2026-10-31, rama `feat/sitio-anatomy`, PR sin fusionar)
 
-- Dos figuras SVG animadas, dibujadas con el kit de Anatomy (`web/figuras/kit`, MIT): **Fig. 1**, un
-  bastidor con el módulo de datos abajo (un medidor por familia) y Analítica, Automatización y
-  Agentes encima, cada uno con su cable (en la sección de las capas); **Fig. 2**, la ruta de una
-  pregunta: terminal, lector de llave, barrera de Terrnova y un tablero con una columna por entidad
-  (en «Por qué no basta…»).
-- `construir.py` escribe `web/figuras/datos.json` desde el catálogo y, si cambió, corre
-  `node web/figuras/construir.mjs`; la huella de datos + script + kit va en cada SVG y `--revisar`
-  falla si el dibujo quedó viejo. El movimiento está en `web/publico/js/figuras.js`.
-- **Siguiente paso:** que el dueño lo vea en local (`uv run python web/servir.py`) y decida si se abre
-  el PR.
+- **Ocho figuras isométricas** dibujadas con el kit de Anatomy (`web/figuras`, un módulo por figura y
+  `comun.mjs` con la cámara y la escala comunes): capas (bastidor), ruta (banco con barrera), prueba
+  (fichero con las cinco capas de una respuesta real de la TRM), revisión (banda de inspección),
+  tablero (relojes y trazador), vigilancia (buzones, lector e impresora), asistente (tablero de
+  conmutación) y cobertura (maqueta de Colombia con la muestra SINIC). Sustituyen las viñetas 3D
+  (`escena-vinetas.js`), las maquetas HTML de /servicios y la escena 3D de cobertura; el héroe 3D de
+  predios de Santa Marta no cambió.
+- **Integradas, sin tarjeta:** sin borde ni fondo propio; la lectura en vivo es una línea mono debajo.
+  Los SVG viven en `web/publico/img/figuras/` y `figuras.js` los trae al acercarse a la vista
+  (index.html bajó de 243 KB a 29 KB). Con movimiento reducido quedan quietas y completas.
+- **Verdad:** todo lo que muestran sale de `web/figuras/datos.json`, que escribe `construir.py` desde el
+  catálogo (y `datos/co.json` para la cobertura); lo inventado (hallazgos, cifras del tablero,
+  cambios vigilados) lleva el sello «ilustrativo». `lines.mjs` de Anatomy: 0 extremos sueltos en las ocho.
+- **Texto recortado** (palabras visibles): portada 1.546 → 707, servicios 959 → 374, fuentes 1.335 →
+  771, precios 600 → 471, desarrolladores 776 → 659, contacto 178 → 94. Fuera «Lo que ya existe» de
+  /servicios (GEO Copilot todavía no consume el MCP en producción y la cifra de la tesis no está en
+  el repo).
+- **Siguiente paso:** que el dueño revise el PR en local (`uv run python web/servir.py`) y decida si se
+  fusiona y despliega.
 
 ## Lo que dejó la auditoría integral (2026-10-31, #203–#207)
 

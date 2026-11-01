@@ -35,8 +35,7 @@ El dueño rechazó explícitamente:
 - conmutadores que nadie usa (el «Geo / No geo» del héroe salió: las dos respuestas se muestran a
   la vez).
 
-Deuda conocida: algunas páginas interiores todavía tienen rótulos de cejilla y etiquetas en
-mayúsculas (`.bloque .num`); se van quitando.
+Las cejillas de las portadas interiores y las etiquetas en mayúsculas (`.bloque .num`) ya salieron.
 
 ## Color
 
@@ -45,7 +44,7 @@ Tokens en `estilo.css`. Solo hay tema claro en la web.
 | Rol | Tokens | Uso |
 |---|---|---|
 | Fondo | `fondo`, `superficie`, `superficie-2` | Blanco roto y dos grises verdosos |
-| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras (servicios), consola, viñetas |
+| Bloque oscuro | `superficie-invertida`, `bosque-900/800/700` | Bandas oscuras (servicios), consola, pantallas de las figuras |
 | Texto | `tinta`, `tinta-suave`, `tinta-tenue` | Todos ≥ 4,5:1 sobre fondo y superficie |
 | Acento | `acento` (texto, `ambar-700`), `acento-relleno` (`ambar-500`) | Uno por vista. Ámbar sobre claro solo como relleno con tinta encima |
 | Verificado | `verificado` (`teal-700`; `teal-400` sobre oscuro) | Huella, procedencia, enlaces |
@@ -96,38 +95,49 @@ fuente, licencia, expediente.
 
 El 3D solo va con datos reales y cuando ayuda a leerlos.
 
-- **Escenas:** `escena-predios.js` (héroe: predios SINIC de Santa Marta con calles, barrio y el
-  predio consultado), `escena-cobertura.js` (columnas hexagonales con la muestra SINIC, ciudades y
-  mares rotulados) y `escena-vinetas.js` (una viñeta por servicio; `comun3d.js` tiene lo común).
+- **Escena:** solo el héroe, `escena-predios.js` (predios SINIC de Santa Marta con calles, barrio y
+  el predio consultado; `comun3d.js` tiene lo común). Lo demás son figuras isométricas en SVG (abajo).
 - **Cámara ortográfica** siempre, para que las medidas no se deformen. Se gira arrastrando, sin zoom
   con la rueda (secuestraría el scroll). Sin interacción, gira despacio.
 - `prefers-reduced-motion`: la escena queda quieta. Sin WebGL: queda la imagen equivalente.
-- **Rótulos en HTML** sobre la escena, anclados a su coordenada proyectada y siempre derechos
-  (`.rv`, `.rotulos`); en móvil (`.vineta.angosta`) se ocultan los secundarios.
-- **Viñetas:** cada una devuelve `{alto, altoAngosto, az, pol, mira, miraAngosta, sombras, vaiven,
-  quieto, paso(s), rotular(poner)}`. Los nombres que muestran (herramientas, fuentes, indicadores)
-  los pone `construir.py` en `data-datos` desde el catálogo; la escena no inventa nombres. Las
-  formas pueden ser esquemáticas, pero lo que se rotula existe.
 - Colores desde los tokens; sombreado plano, sin luces que cambien los colores de marca.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
 ## Figuras isométricas (Anatomy)
 
-Además del 3D con datos, la portada tiene dos figuras isométricas en SVG que explican el producto con
-un objeto que se reconoce (un bastidor de equipos, un banco con barrera). Siguen el método de
+Todas las ilustraciones del sitio, menos el héroe 3D, son figuras isométricas en SVG que explican una
+idea con un objeto que se reconoce: un bastidor (capas), un banco con barrera (la ruta de una
+pregunta), un fichero (la prueba de una respuesta), una banda de inspección (debida diligencia), una
+mesa de relojes con trazador (tableros), un puesto de guardia con buzones (vigilancia), un tablero de
+conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el método de
 [Anatomy](https://github.com/wheresryan22/anatomy) (MIT), cuyo kit está en `web/figuras/kit`.
 
+- **Integradas, nunca tarjetas:** sin borde, sin fondo propio y sin cabecera «Fig. n · título». La
+  figura vive sobre el fondo de su sección (`--papel`), alineada a la retícula, con el texto al lado
+  (`.con-fig`) o encima. Debajo, una línea mono: la lectura en vivo arriba y la pista (y el sello
+  `ilustrativo`, neutro) abajo, alineadas al borde izquierdo del dibujo.
 - **El objeto es la explicación:** piezas reales con volumen (patas, rieles, tornillos, placas,
   clavijas), no cajas con flechas. Cada línea termina en algo; se comprueba con el `lines.mjs` de
   Anatomy (0 extremos sueltos).
-- **Verdad:** todo lo que muestran sale de `construir.py` (familias, entidades, herramientas,
-  licencias). Las entidades que no son de un turno van sin nombre, solo con su número de fuentes.
-- **Tonos:** papel y sombras desde `fondo`, `superficie` y `superficie-2`; líneas en la escala de
-  tinta; ventanas en `bosque-800` con lo escrito en `teal-400`. **Un solo ámbar:** lo encendido.
-- **Texto:** como mucho un rótulo grabado por figura; lo demás va en las esquinas de la tarjeta
-  (Fig., título, pista y lectura en vivo, en minúscula) y en el pie.
+- **Coherencia:** la misma cámara (elevación 30°; acimut 57–58°, 45° en la ruta y 72° en la maqueta
+  para que el país se reconozca), la misma escala de construcción (`comun.mjs`, `encuadre`), el mismo
+  grosor de línea (0,6 px) y las mismas piezas de banco (`base`, `regla`). Cada figura llena su
+  columna.
+- **Verdad:** todo lo que muestran sale de `construir.py` (catálogo y `datos/co.json`) vía
+  `web/figuras/datos.json`; lo inventado lleva el sello `ilustrativo` y la etiqueta accesible lo dice.
+- **Tonos:** tres planos antes del acento: base y pies (tono `lo`) en `superficie-2`, estructura
+  (`mid`) en un blanco verdoso y el sujeto (`hi`) en blanco; caras laterales hacia `linea-fuerte`.
+  Pantallas en `bosque-800` con lo escrito en `teal-400`; lo verificado (pilotos «sin hallazgo», el
+  sello y su tampón) en `teal-700`. **Un solo ámbar:** la pieza activa.
+- **Texto:** como mucho un rótulo grabado por figura («Datos», «Terrnova», «rt/1»); lo demás va en la
+  lectura y en el texto de la sección, en minúscula.
 - **Movimiento:** calmado, con tiempo; recorre solo cuando nadie toca, el puntero y las flechas
   eligen, y fuera de la vista no corre. Con `prefers-reduced-motion` queda quieto y completo.
+- **Peso:** los SVG van aparte (`web/publico/img/figuras/`) y `figuras.js` los trae al acercarse a la
+  vista; el hueco tiene su proporción para que la página no salte.
+- **Construir:** `uv run python web/construir.py` escribe los datos y, si hay Node, dibuja
+  (`node web/figuras/construir.mjs`); la huella de datos + scripts + kit va en cada SVG y `--revisar`
+  falla si alguno quedó viejo (el CI no tiene Node).
 
 ## Logo y aliados
 

@@ -392,7 +392,7 @@ function revision(fig) {
     decir(texto);
   }
   // quieto: la ficha en la última estación con los cuatro pilotos dichos
-  const fijo = i => guion(tFin - 0.01, i);
+  const fijo = i => guion(tFin, i);
   guionado(fig, { n: V.tipos.length, dura, guion, quieto: fijo });
 }
 
