@@ -3,32 +3,38 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Terrnova · Del dato oficial a la solución</title>
-<meta name="description" content="Una capa de datos con 177 fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.">
+<title>Terrnova · Datos oficiales de Colombia para tu organización y tus agentes</title>
+<meta name="description" content="Predios, empresas, contratos y normas de 177 fuentes oficiales de Colombia, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.">
 <link rel="canonical" href="https://terrnova.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Terrnova">
-<meta property="og:title" content="Terrnova · Del dato oficial a la solución">
-<meta property="og:description" content="Una capa de datos con 177 fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.">
+<meta property="og:title" content="Terrnova · Datos oficiales de Colombia para tu organización y tus agentes">
+<meta property="og:description" content="Predios, empresas, contratos y normas de 177 fuentes oficiales de Colombia, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.">
 <meta property="og:url" content="https://terrnova.com/">
 <meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://terrnova.com/img/og/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Terrnova · Datos oficiales de Colombia para tu organización y tus agentes">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://terrnova.com/img/og/portada.png">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/estilo.css">
-<script src="/js/sitio.js" defer></script>
+<link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/estilo.css?v=a6bfc6413f">
+<script src="/js/sitio.js?v=09c661c1b5" defer></script>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" crossorigin>
-<script type="module" src="/js/escena-predios.js"></script>
-<script type="module" src="/js/figuras.js"></script>
+<script type="module" src="/js/escena-predios.js?v=4c322f637a"></script>
+<script type="module" src="/js/figuras.js?v=f6304c548c"></script>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<nav class="menu" aria-label="Principal"><a href="/" aria-current="page">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/#precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
-<div class="der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Empieza gratis</a></div>
-<button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="menu" id="menu-principal" aria-label="Principal"><a href="/" aria-current="page">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
+<div class="der" id="menu-der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Prueba gratis</a></div>
+<button class="abrir" type="button" aria-expanded="false" aria-controls="menu-principal menu-der" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>
 <main id="contenido">
 <section class="heroe">
@@ -40,101 +46,113 @@
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0">Del dato oficial a la solución</h1>
-<p class="entrada">177 fuentes oficiales de 46 entidades, cada dato con su fuente y su licencia. Encima, la analítica, la automatización y los agentes de tu equipo.</p>
-<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<h1 class="t0">Datos oficiales de Colombia para tu organización y tus agentes</h1>
+<p class="entrada">Predios, empresas, contratos y normas de 177 fuentes oficiales, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución que construimos contigo.</p>
+<div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis 15 días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
 </div></div>
 <div class="envoltura h-consola"><div class="consola" data-consola><div class="pest" role="tablist" aria-label="Respuestas capturadas"><button type="button" role="tab" id="c-p0" aria-controls="c-t0" aria-selected="true"><i></i>Predio</button><button type="button" role="tab" id="c-p1" aria-controls="c-t1" aria-selected="false" tabindex="-1"><i></i>Empresa</button><button type="button" role="tab" id="c-p2" aria-controls="c-t2" aria-selected="false" tabindex="-1"><i></i>Norma</button></div><div class="turno" role="tabpanel" id="c-t0" aria-labelledby="c-p0" data-k="predio"><p class="preg"><span class="tu">Tu agente</span><span class="txt">¿Qué predio hay en 11,2211 N, 74,1572 W?</span></p><p class="llama"><span>llama a</span><code>sinic_predio_en_punto</code></p><dl><dt>estado</dt><dd><span class="ok">encontrado</span></dd><dt>predial</dt><dd>4700101090000025808…</dd><dt>destinación</dt><dd>Habitacional, urbano</dd><dt>entidad</dt><dd>IGAC, SINIC</dd><dt>licencia</dt><dd>CC-BY-SA-4.0, uso comercial sí</dd><dt>servido</dt><dd>copia del 28-10-2026 en 0,56 s</dd></dl><p class="pie"><span>huella <b>sha256:7a2cc965…</b></span><span class="sello">capturado el 29-10-2026</span></p></div><div class="turno" role="tabpanel" id="c-t1" aria-labelledby="c-p1" data-k="empresa" hidden><p class="preg"><span class="tu">Tu agente</span><span class="txt">¿La empresa con NIT 899999068 tiene la matrícula al día?</span></p><p class="llama"><span>llama a</span><code>rues_empresa_por_nit</code></p><dl><dt>estado</dt><dd><span class="ok">encontrado</span></dd><dt>empresa</dt><dd>ECOPETROL S A</dd><dt>matrícula</dt><dd>1291197, cámara de Bogotá</dd><dt>situación</dt><dd>ACTIVA, renovada en 2026</dd><dt>entidad</dt><dd>Confecámaras, RUES</dd><dt>licencia</dt><dd>CC-BY-SA-4.0, uso comercial sí</dd><dt>servido</dt><dd>fuente en vivo en 2,4 s</dd></dl><p class="pie"><span>huella <b>sha256:2acc04ec…</b></span><span class="sello">capturado el 30-10-2026</span></p></div><div class="turno" role="tabpanel" id="c-t2" aria-labelledby="c-p2" data-k="norma" hidden><p class="preg"><span class="tu">Tu agente</span><span class="txt">¿La Ley 1581 de 2012 sigue vigente?</span></p><p class="llama"><span>llama a</span><code>suin_norma</code></p><dl><dt>estado</dt><dd><span class="ok">encontrado</span></dd><dt>norma</dt><dd>Ley estatutaria 1581 de 2012</dd><dt>vigencia</dt><dd>Vigente</dd><dt>expedida</dt><dd>Congreso de Colombia, 30 artículos</dd><dt>entidad</dt><dd>MinJusticia, SUIN-Juriscol</dd><dt>licencia</dt><dd>CC-BY-SA-4.0, uso comercial sí</dd><dt>servido</dt><dd>fuente en vivo en 2,9 s</dd></dl><p class="pie"><span>huella <b>sha256:6fcc3fe7…</b></span><span class="sello">capturado el 30-10-2026</span></p></div></div></div>
 </section>
 
-<section class="seccion capas-l" id="capas"><div class="envoltura">
+<section class="seccion" id="soluciones"><div class="envoltura">
+<div class="cab">
+<h2 class="t2">Soluciones por sector</h2>
+<p class="entrada">Lo que decide cada área y de qué entidades sale cada dato.</p>
+</div>
+<div class="sectores">
+<div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical"><button type="button" role="tab" id="s-p0" aria-controls="s-t0" aria-selected="true">Banca y crédito</button><button type="button" role="tab" id="s-p1" aria-controls="s-t1" aria-selected="false" tabindex="-1">Contratación pública</button><button type="button" role="tab" id="s-p2" aria-controls="s-t2" aria-selected="false" tabindex="-1">Legal y cumplimiento</button><button type="button" role="tab" id="s-p3" aria-controls="s-t3" aria-selected="false" tabindex="-1">Agro y exportación</button><button type="button" role="tab" id="s-p4" aria-controls="s-t4" aria-selected="false" tabindex="-1">Inmobiliario y construcción</button><button type="button" role="tab" id="s-p5" aria-controls="s-t5" aria-selected="false" tabindex="-1">Gobierno y territorio</button></div>
+<div><div class="panel-s" role="tabpanel" id="s-t0" aria-labelledby="s-p0" data-herramientas="rues_empresa_por_nit supersociedades_situacion_financiera igac_predio_en_punto upra_precio_tierra_en_punto"><h3 class="decide">Aprobar un crédito con la empresa y la garantía revisadas en la fuente.</h3><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>La empresa y el predio en garantía, revisados antes del crédito.</p></li><li><span class="rotulo">Automatización</span><p>Aviso si un cliente cambia su matrícula mercantil.</p></li></ul><p class="con-s">Con datos de Confecámaras, Supersociedades, IGAC y UPRA <span class="sello-i">ilustrativo</span></p></div><div class="panel-s" role="tabpanel" id="s-t1" aria-labelledby="s-p1" data-herramientas="secop_contratos_proveedor secop_sanciones_contrato secop_contratos_municipio dnp_proyectos_sgr_municipio" hidden><h3 class="decide">Adjudicar sabiendo qué contrató antes el proveedor y si tiene multas.</h3><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Contratos, multas y sanciones de un contratista antes de adjudicar.</p></li><li><span class="rotulo">Agentes</span><p>Un asistente que dice cuánto contrató el municipio y con quién.</p></li></ul><p class="con-s">Con datos de Colombia Compra Eficiente y DNP <span class="sello-i">ilustrativo</span></p></div><div class="panel-s" role="tabpanel" id="s-t2" aria-labelledby="s-p2" data-herramientas="suin_norma corte_constitucional_sentencia funcionpublica_normas_buscar sic_sanciones_por_sector" hidden><h3 class="decide">Firmar un concepto con la norma vigente y la sentencia que la interpreta.</h3><ul class="soluciones"><li><span class="rotulo">Agentes</span><p>Conceptos que citan la norma vigente y la sentencia.</p></li><li><span class="rotulo">Automatización</span><p>Aviso cuando cambia una norma que sigues.</p></li></ul><p class="con-s">Con datos de MinJusticia, Corte Constitucional, Función Pública y SIC <span class="sello-i">ilustrativo</span></p></div><div class="panel-s" role="tabpanel" id="s-t3" aria-labelledby="s-p3" data-herramientas="pnn_areas_protegidas_en_punto ant_resguardos_en_punto sinchi_perdida_bosque_en_punto esa_cobertura_suelo_en_punto" hidden><h3 class="decide">Comprar a una finca sabiendo si toca un área protegida o un territorio étnico.</h3><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Revisión ambiental por finca: áreas protegidas, territorios étnicos y, en la Amazonia, pérdida de bosque.</p></li><li><span class="rotulo">Automatización</span><p>Revisión periódica de las fincas de tus proveedores.</p></li></ul><p class="con-s">Con datos de Parques Nacionales, Agencia Nacional de Tierras, SINCHI y ESA WorldCover <span class="sello-i">ilustrativo</span></p></div><div class="panel-s" role="tabpanel" id="s-t4" aria-labelledby="s-p4" data-herramientas="igac_predio_en_punto sdp_tratamiento_urbanistico_en_punto sdp_amenaza_movimiento_masa_en_punto igac_zona_geoeconomica_en_punto" hidden><h3 class="decide">Ofertar por un lote sabiendo qué permite el POT y qué amenazas tiene.</h3><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>La ficha de un predio: catastro, POT, amenazas y valor del suelo.</p></li><li><span class="rotulo">Agentes</span><p>Qué se puede construir en un lote de Bogotá, para el equipo comercial.</p></li></ul><p class="con-s">Con datos de IGAC y Planeación de Bogotá <span class="sello-i">ilustrativo</span></p></div><div class="panel-s" role="tabpanel" id="s-t5" aria-labelledby="s-p5" data-herramientas="men_educacion_municipio ins_calidad_agua_municipio icfes_saber11_municipio dnp_proyectos_sgr_municipio" hidden><h3 class="decide">Priorizar la inversión de un municipio comparado con sus pares.</h3><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Un tablero municipal comparado con sus pares.</p></li><li><span class="rotulo">Automatización</span><p>Aviso cuando cambia un contrato o un proyecto de regalías.</p></li></ul><p class="con-s">Con datos de MinEducación, INS, ICFES y DNP <span class="sello-i">ilustrativo</span></p></div></div>
+</div>
+<div class="franja-serv">
+<h3 class="t3">Lo que construimos contigo</h3>
+<div class="servs-c"><article class="serv-c"><figure class="fig-iso" data-figura="revision"><div class="lienzo" tabindex="0" role="group" aria-label="Una banda de inspección. De la pila de tu lista sale una ficha (predio, empresa, contrato) y para bajo cuatro estaciones, una por fuente oficial; cada una marca su piloto, teal sin hallazgo y ámbar con una banderita si hay algo que revisar. Al final cae a la bandeja del expediente. Los hallazgos son ilustrativos." data-src="/img/figuras/revision.svg?v=7742fbbe1d63" style="aspect-ratio:722/386"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">predio · por coordenada · 4 fuentes</span><span class="pie-l"><span class="sello-i">ilustrativo</span><span class="pista">flechas: otro tipo</span></span></figcaption></figure><div><h4>Debida diligencia</h4><a class="enlace" href="/servicios#revision">Ver el servicio</a></div></article><article class="serv-c"><figure class="fig-iso" data-figura="tablero"><div class="lienzo" tabindex="0" role="group" aria-label="Una mesa de instrumentos: 4 relojes, uno por indicador (educación, MinEducación; agua potable, INS; saber 11, ICFES; compraventas, IGAC), con la franja de los municipios comparables y la aguja de tu municipio, y detrás un trazador que dibuja la serie del indicador elegido. Las cifras son ilustrativas." data-src="/img/figuras/tablero.svg?v=7742fbbe1d63" style="aspect-ratio:541/328"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">educación · MinEducación · cobertura neta, año por año · tu municipio frente a sus comparables</span><span class="pie-l"><span class="sello-i">ilustrativo</span><span class="pista">pasa el puntero por los relojes</span></span></figcaption></figure><div><h4>Tableros e informes</h4><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div></article><article class="serv-c"><figure class="fig-iso" data-figura="vigilancia"><div class="lienzo" tabindex="0" role="group" aria-label="Un puesto de guardia: 4 buzones, uno por sistema vigilado (SECOP II, SUIN-Juriscol, SECOP I, SIC), y un carro con su lector que los recorre por una viga. Donde algo cambió, el buzón levanta su banderita y el registro corre hasta la impresora, que saca su tique. Los cambios que muestra son ilustrativos." data-src="/img/figuras/vigilancia.svg?v=7742fbbe1d63" style="aspect-ratio:642/386"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">SECOP II · Colombia Compra Eficiente · nuevo contrato de una entidad que vigilas</span><span class="pie-l"><span class="sello-i">ilustrativo</span><span class="pista">flechas: otro cambio</span></span></figcaption></figure><div><h4>Vigilancia y alertas</h4><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div></article><article class="serv-c"><figure class="fig-iso" data-figura="asistente"><div class="lienzo" tabindex="0" role="group" aria-label="Un tablero de conmutación: un panel con 12 bocas, una por entidad (Banco de la República, INS, Parques Nacionales, Colombia Compra Eficiente, Confecámaras, IGAC, UPRA, MinEducación, ICFES, INVIMA, ANH, Policía Nacional), y la mesa del asistente con su pantalla. Con cada pregunta, la clavija del cordón entra en la boca de la entidad que publica el dato y su piloto se enciende." data-src="/img/figuras/asistente.svg?v=7742fbbe1d63" style="aspect-ratio:478/424"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">¿A cuánto está el dólar? → Banco de la República</span><span class="pista">pasa el puntero por las tomas</span></figcaption></figure><div><h4>Asistentes a la medida</h4><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div></article></div>
+</div>
+</div></section>
+
+<section class="seccion sup" id="prueba"><div class="envoltura">
+<div class="con-fig inv-l prueba">
+<figure class="fig-iso" data-figura="prueba"><div class="lienzo" tabindex="0" role="group" aria-label="Un fichero con 5 fichas, una por cada capa de la prueba de una respuesta: dato, procedencia, licencia, servido_desde, huella. La ficha que se lee sube; con la huella, el sello se entinta en el tampón y la ficha queda sellada." data-src="/img/figuras/prueba.svg?v=7742fbbe1d63" style="aspect-ratio:540/434"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">dato · 3.162,35 pesos por dólar</span><span class="pista">pasa el puntero por las pestañas</span></figcaption></figure>
+<div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
+<p class="entrada">Lo que necesitas para defender una decisión va dentro de la respuesta, no en un anexo.</p>
+<ul class="lista-l notas-p"><li data-capa="0"><b>El dato</b><span>Encontrado, no existe o fuera de cobertura.</span></li><li data-capa="1"><b>Quién lo publica</b><span>La entidad, la consulta y la norma.</span></li><li data-capa="2"><b>Licencia</b><span>Revisada por fuente: 165 verificadas, 12 con aviso.</span></li><li data-capa="3"><b>De dónde salió</b><span>En vivo o de una copia oficial, con su fecha.</span></li><li data-capa="4"><b>Huella</b><span>Para comprobar en una auditoría que no cambió.</span></li></ul>
+<p class="fuente-dato">TRM del Banco de la República · <span class="sello">capturada el 29-10-2026</span></p></div>
+</div>
+</div></section>
+
+<section class="seccion" id="ahorro"><div class="envoltura">
+<div class="con-fig inv-l">
+<figure class="fig-iso" data-figura="ruta"><div class="lienzo" tabindex="0" role="group" aria-label="Un banco. A la izquierda, la terminal de tu agente; en el medio, el lector de llave y la barrera de Terrnova; a la derecha, un tablero con una columna por cada una de las 46 entidades, más alta cuantas más fuentes publica. La pregunta corre por la regla, la barrera se levanta, llega a la columna de su entidad (IGAC, Colombia Compra Eficiente, Parques Nacionales) y la respuesta vuelve a la terminal." data-src="/img/figuras/ruta.svg?v=7742fbbe1d63" style="aspect-ratio:888/521"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">¿Qué predio hay aquí? → IGAC</span><span class="pista">flechas o puntero: otra pregunta</span></figcaption></figure>
+<div class="cab">
+<h2 class="t2">Lo que te ahorras</h2>
+<p class="entrada">Hacerlo a mano es pelear con cada portal.</p>
+<ul class="lista-l">
+<li><b>Un solo formato</b><span>46 entidades, una sola forma de preguntar y de recibir.</span></li>
+<li><b>Catastro vigente</b><span>Siempre el corte vigente, aunque la fuente cambie de nombre cada mes.</span></li>
+<li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
+</ul>
+<p class="fuente-dato">Pitalito, 2025: $174.000 M sumando SECOP tal cual; $63.157 M contado bien · 22-10-2026</p>
+</div>
+</div>
+</div></section>
+
+<section class="seccion sup" id="como"><div class="envoltura">
 <div class="con-fig">
 <div class="cab">
-<h2 class="t2">Una capa de datos y tres encima</h2>
-<p class="entrada">La capa de datos es el producto y empieza gratis. Lo demás se construye sobre ella.</p>
-<ul class="lista-l">
-<li class="vivo"><b>Datos</b><span>177 fuentes por MCP o API REST</span></li>
-<li><b>Analítica</b><span>Cruces, revisiones y tableros</span></li>
-<li><b>Automatización</b><span>Vigilancias y alertas con registro</span></li>
-<li><b>Agentes</b><span>Asistentes que citan la fuente</span></li>
+<h2 class="t2">Tres formas de usarlo</h2>
+<ul class="lista-l caminos">
+<li><b><a class="enlace" href="/desarrolladores#mcp">En el chat</a></b><span>Tus agentes preguntan en español y responden con la fuente.</span></li>
+<li><b><a class="enlace" href="/desarrolladores#rest">En tus sistemas</a></b><span>Tu equipo técnico lo conecta por API, con la misma respuesta.</span></li>
+<li><b><a class="enlace" href="/servicios">Contigo</a></b><span>Construimos la revisión, el tablero o el asistente.</span></li>
 </ul>
-<p class="enlaces"><a class="enlace" href="/desarrolladores">Cómo se conecta</a><a class="enlace" href="#servicios">O lo construimos contigo</a></p>
+<p class="funciona">Funciona con Claude Code, Cursor y Claude Desktop.</p>
 </div>
 <figure class="fig-iso" data-figura="capas"><div class="lienzo" tabindex="0" role="group" aria-label="Un bastidor de equipos. Abajo, el módulo de datos con 177 fuentes y 205 herramientas: un medidor por cada una de las 7 familias, encendido según cuántas tiene, y tres tomas. Encima, Analítica (REST), Automatización (REST), Agentes (MCP), cada uno con un cable a su toma. El dato sube por el cable del módulo que pregunta." data-src="/img/figuras/capas.svg?v=7742fbbe1d63" style="aspect-ratio:437/495"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">datos · 177 fuentes · 205 herramientas</span><span class="pista">pasa el puntero por los módulos</span></figcaption></figure>
 </div>
 </div></section>
 
-<section class="seccion" id="fuentes"><div class="envoltura">
-<div class="cab">
-<h2 class="t2">Soluciones por sector</h2>
-<p class="entrada">Lo que se construye en cada sector y con qué herramientas.</p>
+<section class="seccion" id="no-hacemos"><div class="envoltura">
+<div class="cab"><h2 class="t2">Qué no hacemos</h2></div>
+<div class="columnas c3 no-h">
+<div><h3>Buscar personas</h3><p>Nada por cédula ni por nombre, ni perfiles de nadie.</p></div>
+<div><h3>Saltar barreras</h3><p>Ni captchas ni cuentas ajenas: solo lo que la entidad publica.</p></div>
+<div><h3>Rellenar</h3><p>Si la fuente no responde, lo decimos. «No encontrado» no es «no se pudo».</p></div>
 </div>
-<div class="sectores">
-<div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical"><button type="button" role="tab" id="s-p0" aria-controls="s-t0" aria-selected="true">Banca y crédito</button><button type="button" role="tab" id="s-p1" aria-controls="s-t1" aria-selected="false" tabindex="-1">Contratación pública</button><button type="button" role="tab" id="s-p2" aria-controls="s-t2" aria-selected="false" tabindex="-1">Legal y cumplimiento</button><button type="button" role="tab" id="s-p3" aria-controls="s-t3" aria-selected="false" tabindex="-1">Agro y exportación</button><button type="button" role="tab" id="s-p4" aria-controls="s-t4" aria-selected="false" tabindex="-1">Inmobiliario y construcción</button><button type="button" role="tab" id="s-p5" aria-controls="s-t5" aria-selected="false" tabindex="-1">Gobierno y territorio</button></div>
-<div><div class="panel-s" role="tabpanel" id="s-t0" aria-labelledby="s-p0"><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>La empresa y el predio en garantía, revisados antes del crédito.</p></li><li><span class="rotulo">Automatización</span><p>Aviso si un cliente cambia su matrícula mercantil.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Qué dice el RUES de la empresa con este NIT?</p><span class="id"><code>rues_empresa_por_nit</code> Confecámaras</span></li><li><p>¿Cómo está el balance (activos, pasivos, patrimonio) de esta sociedad?</p><span class="id"><code>supersociedades_situacion_financiera</code> Supersociedades</span></li><li><p>¿Cuánto vale la tierra rural en este punto según la UPRA?</p><span class="id"><code>upra_precio_tierra_en_punto</code> UPRA</span></li></ol></div><div class="panel-s" role="tabpanel" id="s-t1" aria-labelledby="s-p1" hidden><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Contratos, multas y sanciones de un contratista antes de adjudicar.</p></li><li><span class="rotulo">Agentes</span><p>Un asistente que dice cuánto contrató el municipio y con quién.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto?</p><span class="id"><code>secop_contratos_entidad</code> Colombia Compra Eficiente</span></li><li><p>¿Cómo va la ejecución de este contrato de SECOP II?</p><span class="id"><code>secop_ejecucion_contrato</code> Colombia Compra Eficiente</span></li><li><p>¿Cuántos contratos públicos ha firmado esta empresa cada año y por cuánto (SECOP II)?</p><span class="id"><code>secop_contratos_proveedor</code> Colombia Compra Eficiente</span></li></ol></div><div class="panel-s" role="tabpanel" id="s-t2" aria-labelledby="s-p2" hidden><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Agentes</span><p>Conceptos que citan la norma vigente y la sentencia.</p></li><li><span class="rotulo">Automatización</span><p>Alertas cuando cambia una norma que sigues.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene?</p><span class="id"><code>suin_norma</code> MinJusticia</span></li><li><p>¿Qué dice el índice de la Corte Constitucional sobre esta sentencia?</p><span class="id"><code>corte_constitucional_sentencia</code> Corte Constitucional</span></li><li><p>¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)?</p><span class="id"><code>funcionpublica_normas_buscar</code> Función Pública</span></li></ol></div><div class="panel-s" role="tabpanel" id="s-t3" aria-labelledby="s-p3" hidden><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Debida diligencia EUDR por finca: áreas protegidas, bosque y territorios étnicos.</p></li><li><span class="rotulo">Automatización</span><p>Revisión periódica de las fincas de tus proveedores.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Qué áreas protegidas del RUNAP contienen este punto?</p><span class="id"><code>pnn_areas_protegidas_en_punto</code> Parques Nacionales</span></li><li><p>¿Este punto de la Amazonia perdió bosque entre 2022 y 2024?</p><span class="id"><code>sinchi_perdida_bosque_en_punto</code> SINCHI</span></li><li><p>¿Qué cobertura del suelo hay alrededor de este punto?</p><span class="id"><code>esa_cobertura_suelo_en_punto</code> ESA WorldCover</span></li></ol></div><div class="panel-s" role="tabpanel" id="s-t4" aria-labelledby="s-p4" hidden><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>La ficha de un predio: catastro, POT, amenazas y valor del suelo.</p></li><li><span class="rotulo">Agentes</span><p>Qué se puede construir en un lote de Bogotá, para el equipo comercial.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Qué predio del catastro IGAC hay en este punto?</p><span class="id"><code>igac_predio_en_punto</code> IGAC</span></li><li><p>¿Qué tratamiento urbanístico y qué altura máxima tiene este punto de Bogotá según el POT?</p><span class="id"><code>sdp_tratamiento_urbanistico_en_punto</code> Planeación de Bogotá</span></li><li><p>¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT?</p><span class="id"><code>sdp_amenaza_movimiento_masa_en_punto</code> Planeación de Bogotá</span></li></ol></div><div class="panel-s" role="tabpanel" id="s-t5" aria-labelledby="s-p5" hidden><h4 class="sub-s">Lo que se construye <span class="sello-i">ilustrativo</span></h4><ul class="soluciones"><li><span class="rotulo">Analítica</span><p>Un tablero municipal comparado con sus pares.</p></li><li><span class="rotulo">Automatización</span><p>Aviso cuando cambia un contrato o un proyecto de regalías.</p></li></ul><h4 class="sub-s">Con herramientas como</h4><ol><li><p>¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE?</p><span class="id"><code>dane_poblacion_proyectada_municipio</code> DANE</span></li><li><p>¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación?</p><span class="id"><code>men_educacion_municipio</code> MinEducación</span></li><li><p>¿Es potable el agua en este municipio? (IRCA del INS, año por año)</p><span class="id"><code>ins_calidad_agua_municipio</code> INS</span></li></ol></div></div>
-</div>
-<p class="mas-s"><a class="enlace" href="/fuentes">Ver las 205 herramientas</a></p>
 </div></section>
 
-<section class="seccion sup servicios-l" id="servicios"><div class="envoltura">
+<section class="seccion sup" id="precios"><div class="envoltura">
 <div class="cab">
-<h2 class="t1">O lo construimos contigo</h2>
-<p class="entrada">Nos cuentas qué quieres resolver y lo construimos sobre la capa de datos, a precio fijo.</p>
+<h2 class="t2">Precios de lanzamiento</h2>
+<p class="entrada">Planes mensuales en pesos, más IVA. Pagas solo lo que responde: errores, caché y fuera de cobertura no descuentan.</p>
 </div>
-<div class="servs-c"><article class="serv-c" id="revision"><figure class="fig-iso" data-figura="revision"><div class="lienzo" tabindex="0" role="group" aria-label="Una banda de inspección. De la pila de tu lista sale una ficha (predio, empresa, contrato) y para bajo cuatro estaciones, una por fuente oficial; cada una marca su piloto, teal sin hallazgo y ámbar con una banderita si hay algo que revisar. Al final cae a la bandeja del expediente. Los hallazgos son ilustrativos." data-src="/img/figuras/revision.svg?v=7742fbbe1d63" style="aspect-ratio:722/386"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">predio · por coordenada · 4 fuentes</span><span><span class="pista">flechas: otro tipo</span><span class="sello-i">ilustrativo</span></span></figcaption></figure><h3 class="t3">Debida diligencia</h3><p>Revisamos tu lista de predios, empresas o contratos contra las fuentes oficiales. Recibes un expediente por ítem.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></article><article class="serv-c" id="tablero"><figure class="fig-iso" data-figura="tablero"><div class="lienzo" tabindex="0" role="group" aria-label="Una mesa de instrumentos: 4 relojes, uno por indicador (educación, MinEducación; agua potable, INS; saber 11, ICFES; compraventas, IGAC), con la franja de los municipios comparables y la aguja de tu municipio, y detrás un trazador que dibuja la serie del indicador elegido. Las cifras son ilustrativas." data-src="/img/figuras/tablero.svg?v=7742fbbe1d63" style="aspect-ratio:541/328"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">educación · MinEducación · cobertura neta, año por año · tu municipio frente a sus comparables</span><span><span class="pista">pasa el puntero por los relojes</span><span class="sello-i">ilustrativo</span></span></figcaption></figure><h3 class="t3">Tableros e informes</h3><p>Los indicadores que sigues, actualizados desde la fuente y comparables entre municipios.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></article><article class="serv-c" id="vigilancia"><figure class="fig-iso" data-figura="vigilancia"><div class="lienzo" tabindex="0" role="group" aria-label="Un puesto de guardia: 4 buzones, uno por sistema vigilado (SECOP II, SUIN-Juriscol, SECOP I, SIC), y un carro con su lector que los recorre por una viga. Donde algo cambió, el buzón levanta su banderita y el registro corre hasta la impresora, que saca su tique. Los cambios que muestra son ilustrativos." data-src="/img/figuras/vigilancia.svg?v=7742fbbe1d63" style="aspect-ratio:642/386"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">SECOP II · Colombia Compra Eficiente · nuevo contrato de una entidad que vigilas</span><span><span class="pista">flechas: otro cambio</span><span class="sello-i">ilustrativo</span></span></figcaption></figure><h3 class="t3">Vigilancia y alertas</h3><p>Te avisamos cuando cambia un contrato, una norma o una sanción que sigues.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></article><article class="serv-c" id="asistente"><figure class="fig-iso" data-figura="asistente"><div class="lienzo" tabindex="0" role="group" aria-label="Un tablero de conmutación: un panel con 12 bocas, una por entidad (Banco de la República, INS, Parques Nacionales, Colombia Compra Eficiente, Confecámaras, IGAC, UPRA, MinEducación, ICFES, INVIMA, ANH, Policía Nacional), y la mesa del asistente con su pantalla. Con cada pregunta, la clavija del cordón entra en la boca de la entidad que publica el dato y su piloto se enciende." data-src="/img/figuras/asistente.svg?v=7742fbbe1d63" style="aspect-ratio:478/424"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">¿A cuánto está el dólar? → Banco de la República</span><span class="pista">pasa el puntero por las tomas</span></figcaption></figure><h3 class="t3">Asistentes a la medida</h3><p>Un asistente que responde con datos oficiales dentro de tu sistema y cita la fuente.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></article></div>
-<div class="botones fin-serv"><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios</a></div>
+<div class="planes"><div class="plan"><h3>Básico</h3><b>$79.000</b><span>al mes + IVA</span><span class="cr">25.000 créditos<small>≈ 2.500 consultas de predio</small></span><a class="boton s" href="/contacto?asunto=plan-basico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>$299.000</b><span>al mes + IVA</span><span class="cr">110.000 créditos<small>≈ 11.000 consultas de predio</small></span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>$899.000</b><span>al mes + IVA</span><span class="cr">375.000 créditos<small>≈ 37.500 consultas de predio</small></span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>$2.390.000</b><span>al mes + IVA</span><span class="cr">1.100.000 créditos<small>≈ 110.000 consultas de predio</small></span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
+<div class="columnas c3 mas-p">
+<div><h3>Prueba gratis</h3><p>300 créditos por 15 días, con tu correo.</p><a class="boton p" href="/precios#empezar">Pedir la llave de prueba</a></div>
+<div><h3>Estado y academia</h3><p>Entidades públicas, academia y veedurías: 200.000 créditos al mes, a pedido.</p><a class="enlace" href="/contacto?asunto=gobierno-academia">Pedirlo</a></div>
+<div><h3>Piloto de dos semanas</h3><p>Sobre tu caso, a precio fijo antes de empezar.</p><a class="enlace" href="/servicios#piloto">Ver el piloto</a></div>
+</div>
+<p class="pie-p"><a class="enlace" href="/precios">Precio anual y créditos por consulta</a></p>
 </div></section>
 
-<section class="seccion" id="por-que"><div class="envoltura">
-<div class="con-fig inv-l">
-<figure class="fig-iso" data-figura="ruta"><div class="lienzo" tabindex="0" role="group" aria-label="Un banco. A la izquierda, la terminal de tu agente; en el medio, el lector de llave y la barrera de Terrnova; a la derecha, un tablero con una columna por cada una de las 46 entidades, más alta cuantas más fuentes publica. La pregunta corre por la regla, la barrera se levanta, llega a la columna de su entidad (IGAC, Colombia Compra Eficiente, Parques Nacionales) y la respuesta vuelve a la terminal." data-src="/img/figuras/ruta.svg?v=7742fbbe1d63" style="aspect-ratio:888/521"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">¿Qué predio hay aquí? → <code>igac_predio_en_punto</code> → IGAC</span><span class="pista">flechas o puntero: otra pregunta</span></figcaption></figure>
-<div class="cab">
-<h2 class="t2">Por qué no basta con buscar en la web</h2>
-<p class="entrada">Una decisión necesita el dato oficial, de dónde salió y si se puede usar.</p>
-<ul class="lista-l">
-<li><b>Un contrato</b><span>46 entidades que publican a su manera responden igual.</span></li>
-<li><b>Bien contado</b><span>SECOP repite un contrato por cada estado; lo contamos una vez.</span></li>
-<li><b>Probado a diario</b><span>Contra un dato medido en la fuente. <a class="enlace" href="/estado">Ver el estado</a></span></li>
-<li><b>Sin LLM ni personas</b><span>Misma pregunta, misma consulta. Nada por cédula o nombre.</span></li>
+<section class="seccion" id="preguntas"><div class="envoltura">
+<div class="faq-l">
+<div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
+<div class="faq"><details><summary>¿Necesito un equipo técnico?</summary><p>No para empezar: conectas el asistente de tu equipo con la <a class="enlace" href="/desarrolladores">guía</a> y le preguntas en español. Para llevarlo a tus sistemas, tu equipo técnico usa la API; o lo construimos contigo.</p></details><details><summary>¿Sirve para cumplimiento y auditoría?</summary><p>Cada respuesta dice qué entidad publica el dato, con qué licencia, de qué fecha y trae una huella para comprobar después que no cambió. No reemplaza un certificado que expide la entidad.</p></details><details><summary>¿Qué tan actualizado está?</summary><p>151 fuentes se consultan en vivo y 26 desde una copia oficial con su fecha de corte. Cada respuesta dice de dónde salió y un dato viejo llega con aviso. Cada fuente se prueba a diario: <a class="enlace" href="/estado">estado</a>.</p></details><details><summary>¿Y si la fuente oficial se cae?</summary><p>Te decimos «no se pudo», con el motivo; nunca lo disfrazamos de «no encontrado». Si hay una respuesta de los últimos 30 días, llega marcada como vieja y con su fecha.</p></details><details><summary>¿Qué licencia tiene cada dato?</summary><p>La de su entidad, revisada fuente por fuente: 165 verificadas y 12 como dato público, con aviso. Cada respuesta trae la atribución que debes citar. <a class="enlace" href="/fuentes#licencias">Ver las licencias</a>.</p></details><details><summary>¿Guardan lo que pregunto?</summary><p>Para tu saldo guardamos qué herramienta usó tu llave, lo que costó, su resultado y la hora; lo que preguntaste no queda ligado a tu llave. Nada se busca por cédula ni por nombre. <a class="enlace" href="/privacidad">Privacidad</a>.</p></details><details><summary>¿Cómo se paga?</summary><p>Pides el plan y Inspow te factura por mes o por año, con factura electrónica. No hay cobro automático.</p></details><details><summary>¿Con qué asistentes funciona?</summary><p>Con Claude Code, Cursor y Claude Desktop, con su guía. claude.ai y ChatGPT en la web todavía no: piden un inicio de sesión (OAuth) que estamos construyendo.</p></details></div>
+<aside class="quien" aria-labelledby="quien-t">
+<h2 class="t3" id="quien-t">Quién está detrás</h2>
+<p>Terrnova es un producto de GeoAI LATAM, en Colombia. Factura Inspow, con factura electrónica.</p>
+<ul class="lista">
+<li><a class="enlace" href="/estado">Estado del servicio</a></li>
+<li><a class="enlace" href="/llms.txt">llms.txt</a>, el catálogo para agentes</li>
+<li><a class="enlace" href="/contacto">Escríbenos</a></li>
 </ul>
-<p class="fuente-dato">Pitalito 2025 en SECOP: $174.000 M sumado tal cual, $63.157 M contado bien · medido el 22-10-2026</p>
+</aside>
 </div>
-</div>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="con-fig inv-l prueba">
-<figure class="fig-iso" data-figura="prueba"><div class="lienzo" tabindex="0" role="group" aria-label="Un fichero con 5 fichas, una por cada capa de la prueba de una respuesta: dato, procedencia, licencia, servido_desde, huella. La ficha que se lee sube; con la huella, el sello se entinta en el tampón y la ficha queda sellada." data-src="/img/figuras/prueba.svg?v=7742fbbe1d63" style="aspect-ratio:540/434"></div><figcaption class="lectura-l"><span data-lectura aria-live="off">dato · 3.162,35 pesos por dólar</span><span class="pista">pasa el puntero por las pestañas</span></figcaption></figure>
-<div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
-<p class="entrada">Quién publica el dato, con qué licencia, de dónde salió y su huella. En la respuesta, no en un anexo.</p>
-<ul class="lista-l notas-p"><li data-capa="0"><b>El dato y su estado</b><span>Encontrado, no encontrado, parcial o fuera de cobertura.</span></li><li data-capa="1"><b>Procedencia</b><span>La entidad, la URL de la consulta y la norma.</span></li><li data-capa="2"><b>Licencia</b><span>165 fuentes verificadas; 12 de dato público, con aviso.</span></li><li data-capa="3"><b>De dónde se sirvió</b><span>En vivo, copia oficial o caché. Lo viejo llega con aviso.</span></li><li data-capa="4"><b>Huella</b><span>Para comprobar después que no cambió.</span></li></ul>
-<p class="fuente-dato">banrep_trm_recientes · <span class="sello">capturado el 29-10-2026</span> · <a class="enlace" href="/desarrolladores#contrato">ver el contrato rt/1</a></p></div>
-</div>
-</div></section>
-
-<section class="seccion" id="precios"><div class="envoltura">
-<div class="cab">
-<h2 class="t2">Precios</h2>
-<p class="entrada">La capa de datos, por plan mensual y desde gratis. Los servicios, a precio fijo.</p>
-</div>
-<div class="planes"><div class="plan"><h3>Gratis</h3><b>1.500</b><span>créditos al mes</span><a class="boton p" href="/precios#empezar">Empieza gratis</a></div><div class="plan"><h3>Básico</h3><b>25.000</b><span>créditos al mes</span><a class="boton s" href="/contacto?asunto=plan-basico">Pedir este plan</a></div><div class="plan"><h3>Pro</h3><b>110.000</b><span>créditos al mes</span><a class="boton s" href="/contacto?asunto=plan-pro">Pedir este plan</a></div><div class="plan"><h3>Empresa</h3><b>375.000</b><span>créditos al mes</span><a class="boton s" href="/contacto?asunto=plan-empresa">Pedir este plan</a></div><div class="plan"><h3>Escala</h3><b>1.100.000</b><span>créditos al mes</span><a class="boton s" href="/contacto?asunto=plan-escala">Pedir este plan</a></div></div>
-<p class="pie-p"><a class="enlace" href="/precios">Créditos por tipo de consulta</a></p>
-</div></section>
-
-<section class="seccion sup"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">Empieza por lo que quieres resolver</h2></div>
-<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
-</div>
-<div class="envoltura aliados-fila">
-<span class="rotulo">Aliados</span>
-<a href="/aliados"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="200" height="45" loading="lazy"></a>
-<a href="/aliados" class="t3">Atalaya Mapas</a>
 </div></section>
 </main>
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#F3EFE4"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>

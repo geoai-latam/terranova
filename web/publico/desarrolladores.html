@@ -12,20 +12,26 @@
 <meta property="og:description" content="Conecta tu agente por MCP o tu sistema por API REST. Inicio rápido, perfiles por familia, contrato rt/1 y errores.">
 <meta property="og:url" content="https://terrnova.com/desarrolladores">
 <meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://terrnova.com/img/og/desarrolladores.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Desarrolladores · Terrnova">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://terrnova.com/img/og/desarrolladores.png">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/estilo.css">
-<script src="/js/sitio.js" defer></script>
+<link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/estilo.css?v=a6bfc6413f">
+<script src="/js/sitio.js?v=09c661c1b5" defer></script>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<nav class="menu" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/#precios">Precios</a><a href="/desarrolladores" aria-current="page">Desarrolladores</a></nav>
-<div class="der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Empieza gratis</a></div>
-<button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="menu" id="menu-principal" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/precios">Precios</a><a href="/desarrolladores" aria-current="page">Desarrolladores</a></nav>
+<div class="der" id="menu-der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Prueba gratis</a></div>
+<button class="abrir" type="button" aria-expanded="false" aria-controls="menu-principal menu-der" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura con-lado"><div class="cab">
@@ -35,7 +41,7 @@
 <div class="p"><span class="et">sistemas</span><code>POST /v1/co/&lt;familia&gt;/&lt;herramienta&gt;</code><small>REST · OpenAPI en /docs</small></div>
 <div class="p uno"><span class="et">las dos</span><code>Authorization: Bearer rt_live_…</code><small>misma llave · respuesta rt/1</small></div></figure></div></section>
 <section class="seccion"><div class="envoltura doc">
-<nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
+<nav aria-label="En esta página"><a href="#inicio">Inicio rápido</a><a href="#consulta">Una consulta</a><a href="#mcp">MCP</a><a href="#perfiles">Perfiles</a><a href="#rest">API REST</a><a href="#contrato">Contrato rt/1</a><a href="#llaves">Llaves</a><a href="#errores">Errores</a><a href="#recursos">Recursos</a></nav>
 <div class="prosa">
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
@@ -43,7 +49,7 @@
 <p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
-<ol><li><b>Pide tu llave</b> (<a href="/precios#empezar">plan Gratis</a>: 1.500 créditos al mes). Guárdala como secreto, nunca en el código.</li>
+<ol><li><b>Pide tu llave de prueba</b> (<a href="/precios#empezar">300 créditos por 15 días</a>). Guárdala como secreto, nunca en el código.</li>
 <li><b>Haz la primera consulta</b> (1 crédito):</li></ol>
 <pre class="suelto"><code>export TERRNOVA_LLAVE=rt_live_...
 curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
@@ -52,6 +58,69 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
   -d '{"nombre":"Cali"}'</code></pre>
 <p>Trae <code>"estado":"encontrado"</code>, los municipios en <code>datos.elementos</code> y la fuente (DANE) con su licencia en <code>procedencia</code>. Respeta las tildes: «Bogota» no encuentra «Bogotá».</p>
 <ol start="3"><li><b>Mira tu saldo</b> con <code>GET /v1/uso</code>.</li></ol>
+
+<h2 id="consulta">La misma consulta, tres caminos</h2>
+<p>El predio en un punto de Santa Marta, pegado en Claude Code, por MCP o por la API REST. Por los tres llega el mismo sobre rt/1.</p>
+<div class="codigo apilado">
+<div class="panel"><div class="pest" role="tablist" aria-label="Cómo hacer la consulta"><button type="button" role="tab" data-t="claude" aria-selected="true">Pega en Claude Code</button><button type="button" role="tab" data-t="mcp" aria-selected="false" tabindex="-1">MCP</button><button type="button" role="tab" data-t="rest" aria-selected="false" tabindex="-1">REST</button></div><pre data-t="claude" tabindex="0"><code>claude mcp add --transport http terrnova \
+  https://terrnova.com/mcp/catalogo \
+  --header &quot;Authorization: Bearer $TERRNOVA_LLAVE&quot;
+
+<span class="c"># y pregúntale:</span>
+¿Qué predio hay en 11,2211 N, 74,1572 W?</code></pre><pre data-t="mcp" tabindex="0" hidden><code>POST https://terrnova.com/mcp/territorio
+Authorization: Bearer $TERRNOVA_LLAVE
+
+{
+ &quot;jsonrpc&quot;: &quot;2.0&quot;,
+ &quot;id&quot;: 1,
+ &quot;method&quot;: &quot;tools/call&quot;,
+ &quot;params&quot;: {
+  &quot;name&quot;: &quot;sinic_predio_en_punto&quot;,
+  &quot;arguments&quot;: {
+   &quot;lon&quot;: -74.1572,
+   &quot;lat&quot;: 11.2211
+  }
+ }
+}</code></pre><pre data-t="rest" tabindex="0" hidden><code>curl -s -X POST https://terrnova.com/v1/co/territorio/sinic_predio_en_punto \
+  -H "Authorization: Bearer $TERRNOVA_LLAVE" \
+  -H "Content-Type: application/json" \
+  -d &#x27;{&quot;lon&quot;: -74.1572, &quot;lat&quot;: 11.2211}&#x27;</code></pre>
+<button class="copiar" type="button" data-copiar-pre>Copiar</button></div>
+<div class="panel"><div class="pest"><span class="meta">respuesta real, recortada · 01-11-2026</span></div><pre tabindex="0" aria-label="Respuesta"><code>{
+ &quot;contrato&quot;: &quot;rt/1&quot;,
+ &quot;herramienta&quot;: &quot;sinic_predio_en_punto@1&quot;,
+ &quot;estado&quot;: &quot;encontrado&quot;,
+ &quot;datos&quot;: {
+  &quot;municipio&quot;: &quot;SANTA MARTA&quot;,
+  &quot;numero_predial&quot;: &quot;470010109000002580801800000308&quot;,
+  &quot;zona&quot;: &quot;Urbana&quot;,
+  &quot;destinacion_economica&quot;: &quot;Habitacional&quot;,
+  &quot;tipo_predio&quot;: &quot;Predio.Privado&quot;
+ },
+ &quot;huella&quot;: &quot;sha256:7a2cc96586df0f0f88c8a7231ba60a8888ae13e2741df86b5e1f1466baef1a0f&quot;,
+ &quot;procedencia&quot;: [
+  {
+   &quot;entidad&quot;: &quot;Instituto Geográfico Agustín Codazzi (IGAC)&quot;,
+   &quot;licencia&quot;: {
+    &quot;spdx&quot;: &quot;CC-BY-SA-4.0&quot;,
+    &quot;uso_comercial&quot;: &quot;si&quot;
+   },
+   &quot;servido_desde&quot;: &quot;copia&quot;,
+   &quot;consultado_en&quot;: &quot;2026-10-28T18:53:19Z&quot;,
+   &quot;completitud&quot;: {
+    &quot;vistos&quot;: 1,
+    &quot;total&quot;: 1,
+    &quot;truncado&quot;: false
+   }
+  }
+ ],
+ &quot;avisos&quot;: [
+  &quot;Sale de la copia de Terrnova del 2026-10-28, no de la fuente en vivo.&quot;
+ ],
+ &quot;creditos&quot;: 10
+}</code></pre></div>
+</div>
+<p>Funciona con Claude Code, Cursor y Claude Desktop, con las configuraciones de abajo. claude.ai y ChatGPT en la web todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. Mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
 
 <h2 id="mcp">MCP</h2>
 <p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
@@ -110,6 +179,12 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 </tbody></table></div>
 <p><b>«No encontrado» no es «no se pudo».</b> Si la fuente no responde llega un error, nunca un sobre vacío; un dato viejo (<code>servido_desde: obsoleto</code>) siempre llega con aviso.</p>
 
+<h2 id="llaves">Llaves</h2>
+<div class="desliza"><table class="tabla"><thead><tr><th>Prefijo</th><th>Para qué</th></tr></thead><tbody>
+<tr><td><code>rt_live_</code></td><td>Producción: licencia abierta verificada y dato público reutilizable, con aviso.</td></tr>
+<tr><td><code>rt_test_</code></td><td>Evaluación: además, las fuentes con licencia por verificar, con aviso.</td></tr></tbody></table></div>
+<p>Si una llave se filtra, la revocamos y te damos otra con el mismo saldo.</p>
+
 <h2 id="errores">Errores</h2>
 <p>En <code>application/problem+json</code> (RFC 9457), con un <code>code</code> estable y el <code>solicitud_id</code> para soporte.</p>
 <div class="desliza"><table class="tabla"><thead><tr><th>HTTP</th><th><code>code</code></th><th>Qué hacer</th></tr></thead><tbody>
@@ -136,7 +211,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#F3EFE4"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>

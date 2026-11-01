@@ -47,6 +47,28 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Sitio v2, fases 5 y 6: el texto que vende y móvil, accesibilidad y peso (2026-11-01, PR #212 sin fusionar)
+
+- **Para quien decide:** la portada va en ocho secciones (héroe «Datos oficiales de Colombia para tu
+  organización y tus agentes», soluciones por sector con lo que decide cada área, la prueba, lo que
+  te ahorras, tres formas de usarlo, qué no hacemos, precios y preguntas frecuentes con quién está
+  detrás), 736 palabras visibles en `main`. Sin MCP, REST ni nombres de herramientas en titulares ni
+  entradas: eso va en /desarrolladores («La misma consulta, tres caminos», con la respuesta real del
+  predio de Santa Marta).
+- **Decisiones del dueño aplicadas:** precios de lanzamiento en pesos más IVA (mes y año, de
+  `PLANES` en `construir.py`; créditos de `NIVELES`), solo la llave de prueba (el plan Gratis no se
+  anuncia en ninguna página ni en el formulario de contacto), «Terrnova es un producto de GeoAI
+  LATAM…», sin DANE en servicios ni soluciones, Estado y academia a pedido. Piloto de dos semanas a
+  precio fijo, sin cifra, con lo que se entrega de verdad.
+- **Verdad:** «revisión ambiental por finca» (no EUDR), «10.000», los 6,13 M terrenos del SINIC
+  citados de la ficha de la fuente, la llave llega por un enlace de correo.
+- **Front:** menú móvil con Escape y cierre al elegir, `aria-controls`; objetivos de 44 px; encabezados
+  sin saltos; contraste AA en /fuentes; Geist servida desde el sitio con precarga (sin `@import`);
+  `?v=` en CSS y JS; og:image 1200 × 630 por página (`web/og.py`). axe: 0 graves en las diez páginas;
+  CLS 0 a 390 px; sin desborde a 360/390/414.
+- **Pendiente fuera del PR:** el Caddyfile en `main` (caché larga para `?v=`), los textos de `src/`
+  que aún dicen «plan gratis» (`llms.txt` en `descripcion.py`, el asunto `plan-gratis` en `alta.py`).
+
 ## Sitio v2, fase 4: las ocho figuras rehechas (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
 
 - **Motor nuevo (`js/figuras.js`):** cada figura es `pose(turno, t)`, una función pura del tiempo que

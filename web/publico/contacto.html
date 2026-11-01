@@ -12,20 +12,26 @@
 <meta property="og:description" content="Escríbenos para un proyecto, para pedir tu llave o para soporte.">
 <meta property="og:url" content="https://terrnova.com/contacto">
 <meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://terrnova.com/img/og/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Contacto · Terrnova">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://terrnova.com/img/og/portada.png">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/estilo.css">
-<script src="/js/sitio.js" defer></script>
+<link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/estilo.css?v=a6bfc6413f">
+<script src="/js/sitio.js?v=09c661c1b5" defer></script>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<nav class="menu" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/#precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
-<div class="der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Empieza gratis</a></div>
-<button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="menu" id="menu-principal" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
+<div class="der" id="menu-der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Prueba gratis</a></div>
+<button class="abrir" type="button" aria-expanded="false" aria-controls="menu-principal menu-der" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura"><div class="cab">
@@ -37,13 +43,13 @@
 <label>Tu nombre<input name="nombre" required maxlength="120" autocomplete="name"></label>
 <label>Tu correo<input name="correo" type="email" required maxlength="254" autocomplete="email"></label>
 <label>Organización <small>(opcional)</small><input name="organizacion" maxlength="120" autocomplete="organization"></label>
-<label>Asunto<select name="asunto"><option value="proyecto">Un proyecto o una solución</option><option value="debida-diligencia">Debida diligencia</option><option value="tablero">Tablero o informe</option><option value="vigilancia">Alertas y automatización</option><option value="asistente">Asistente o agente</option><option value="plan-gratis">El plan Gratis</option><option value="plan-basico">Plan Básico</option><option value="plan-pro">Plan Pro</option><option value="plan-empresa">Plan Empresa</option><option value="plan-escala">Plan Escala</option><option value="gobierno-academia">Gobierno, academia o veeduría</option><option value="soporte">Soporte</option><option value="otro">Otro</option></select></label>
+<label>Asunto<select name="asunto"><option value="proyecto">Un proyecto o una solución</option><option value="debida-diligencia">Debida diligencia</option><option value="tablero">Tablero o informe</option><option value="vigilancia">Alertas y automatización</option><option value="asistente">Asistente o agente</option><option value="plan-basico">Plan Básico</option><option value="plan-pro">Plan Pro</option><option value="plan-empresa">Plan Empresa</option><option value="plan-escala">Plan Escala</option><option value="gobierno-academia">Gobierno, academia o veeduría</option><option value="soporte">Soporte</option><option value="otro">Otro</option></select></label>
 <label>Mensaje<textarea name="mensaje" rows="6" required maxlength="4000"></textarea></label>
-<label class="casilla"><input type="checkbox" name="acepto" value="si" required> Acepto la <a class="enlace" href="/privacidad">política de privacidad</a>.</label><label class="trampa" aria-hidden="true">No llenes este campo<input name="web" tabindex="-1" autocomplete="off"></label>
+<label class="casilla"><input type="checkbox" name="acepto" value="si" required><span>Acepto la <a class="enlace" href="/privacidad">política de privacidad</a>.</span></label><label class="trampa" aria-hidden="true">No llenes este campo<input name="web" tabindex="-1" autocomplete="off"></label>
 <button class="boton p" type="submit">Enviar</button>
 </form></div>
-<div class="bloque"><h3 class="t3">Atajos</h3><ul class="lista">
-<li>Llave de prueba: <a class="enlace" href="/precios#empezar">pídela aquí</a>, llega al instante.</li>
+<div class="bloque"><h2 class="t3">Atajos</h2><ul class="lista">
+<li>Llave de prueba: <a class="enlace" href="/precios#empezar">pídela aquí</a>. Te llega un enlace al correo; al confirmarlo ves tu llave.</li>
 <li>Un proyecto: qué quieres decidir, dónde y para cuándo.</li>
 <li>Soporte: incluye el <code>solicitud_id</code> y mira antes <a class="enlace" href="/estado">el estado</a>.</li>
 </ul></div>
@@ -54,7 +60,7 @@
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#F3EFE4"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>

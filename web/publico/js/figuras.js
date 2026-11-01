@@ -297,7 +297,8 @@ FIG.capas = ({ V, pieza }) => {
       pon(chat, { k: Math.floor(llego(2, 0, 680, lineal) * 18) / 18 });
       const m = V.modulos[i];
       if (t < 120) return V.reposo;
-      return t < LLEGA ? `datos → ${m.n} · por ${m.p}` : `${m.n} · ${m.q} · entra por ${m.p}`;
+      // la lectura en palabras de quien decide; la puerta (REST o MCP) va en la pista, al pasar o enfocar
+      return t < LLEGA ? { l: `datos → ${m.n}`, d: '' } : { l: `${m.n} · ${m.q}`, d: `entra por ${m.p}` };
     },
     desde: (x, y) => V.franjas.findIndex(([a, b]) => y >= a - 3 && y <= b + 3),
   };
@@ -342,8 +343,9 @@ FIG.ruta = ({ V, pieza }) => {
       pon(lineas, { o: tramo(t, T3, 220, entra) });
       const d = V.turnos[k];
       if (t < 120) return { l: [d.p], d: '' };
-      if (t < T2) return { l: [`${d.p} → `, { c: d.h }], d: '' };
-      return { l: [`${d.p} → `, { c: d.h }, ` → ${d.e}`], d: t < T3 ? '' : `${d.l} · ${d.s}` };
+      // la pregunta y la entidad que responde; el nombre de la herramienta, en la pista
+      if (t < T2) return { l: `${d.p} → …`, d: '' };
+      return { l: `${d.p} → ${d.e}`, d: t < T3 ? d.h : `${d.h} · ${d.l} · ${d.s}` };
     },
     desde: x => { let mejor = 0; V.franjas.forEach((fx, i) => { if (Math.abs(fx - x) < Math.abs(V.franjas[mejor] - x)) mejor = i; }); return mejor; },
   };

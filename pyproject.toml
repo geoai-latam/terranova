@@ -76,6 +76,7 @@ select = ["E", "W", "F", "I", "B", "C4", "UP", "BLE", "RUF"]
 [tool.ruff.lint.per-file-ignores]
 # el generador del sitio arma HTML en cadenas largas: partirlas lo haría ilegible
 "web/construir.py" = ["E501"]
+"web/og.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.13"

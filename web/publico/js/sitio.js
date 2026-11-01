@@ -2,10 +2,17 @@
 const barra = document.querySelector('.barra');
 const abrir = document.querySelector('.abrir');
 if (barra && abrir) {
-  abrir.addEventListener('click', () => {
-    const si = barra.classList.toggle('abierta');
+  // Se abre con el botón; se cierra con el botón, con Escape (el foco vuelve al botón) y al elegir un enlace.
+  const poner = si => {
+    barra.classList.toggle('abierta', si);
     abrir.setAttribute('aria-expanded', String(si));
+    abrir.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
+  };
+  abrir.addEventListener('click', () => poner(!barra.classList.contains('abierta')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && barra.classList.contains('abierta')) { poner(false); abrir.focus(); }
   });
+  barra.querySelectorAll('.menu a, .der a').forEach(a => a.addEventListener('click', () => poner(false)));
 }
 
 // Pestañas: un solo patrón para el código, los sectores y la consola. El panel de cada pestaña sale

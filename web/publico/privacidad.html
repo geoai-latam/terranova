@@ -12,20 +12,26 @@
 <meta property="og:description" content="Qué datos tratamos y cómo.">
 <meta property="og:url" content="https://terrnova.com/privacidad">
 <meta property="og:locale" content="es_CO">
+<meta property="og:image" content="https://terrnova.com/img/og/portada.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Privacidad · Terrnova">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://terrnova.com/img/og/portada.png">
 <meta name="theme-color" content="#F6F7F4">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/estilo.css">
-<script src="/js/sitio.js" defer></script>
+<link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/estilo.css?v=a6bfc6413f">
+<script src="/js/sitio.js?v=09c661c1b5" defer></script>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra"><div class="envoltura">
 <a class="marca" href="/" aria-label="Terrnova, inicio"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#0E2A22" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#0E2A22"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<nav class="menu" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/#precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
-<div class="der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Empieza gratis</a></div>
-<button class="abrir" type="button" aria-expanded="false" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+<nav class="menu" id="menu-principal" aria-label="Principal"><a href="/">Producto</a><a href="/servicios">Servicios</a><a href="/fuentes">Fuentes</a><a href="/precios">Precios</a><a href="/desarrolladores">Desarrolladores</a></nav>
+<div class="der" id="menu-der"><a href="/estado"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Estado</a><a href="/contacto">Contacto</a><a class="boton s chico" href="/precios#empezar">Prueba gratis</a></div>
+<button class="abrir" type="button" aria-expanded="false" aria-controls="menu-principal menu-der" aria-label="Abrir el menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
 </div></header>
 <main id="contenido">
 <section class="portada"><div class="envoltura"><div class="cab">
@@ -33,14 +39,14 @@
 </div></div></section>
 <section class="seccion"><div class="envoltura"><div class="prosa">
 <p>El texto completo está en revisión legal y se publicará en esta página. Mientras tanto, estas reglas ya se cumplen en el producto:</p>
-<ul><li>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas.</li><li>Los campos que salen de cada fuente están en una lista blanca.</li><li>Guardamos de tu llave solo su huella (HMAC), nunca la llave.</li><li>Medimos el uso de cada llave; los créditos se descuentan del saldo de tu organización.</li><li>Si pides una llave o nos escribes, guardamos tu nombre, tu correo, tu organización y lo que nos cuentes, para darte la llave y responderte. De tu conexión solo guardamos una huella (HMAC) de la IP, para limitar abusos; nunca la IP.</li><li>No vendemos ni compartimos esos datos. Para verlos, corregirlos o borrarlos, escríbenos.</li></ul>
+<ul><li>No hay búsquedas de personas por cédula ni por nombre, ni perfiles de personas.</li><li>Los campos que salen de cada fuente están en una lista blanca.</li><li>Guardamos de tu llave solo su huella (HMAC), nunca la llave.</li><li>Medimos el uso de cada llave; los créditos se descuentan del saldo de tu organización.</li><li>Por cada consulta guardamos, ligados a tu llave, la herramienta, los créditos, el resultado y la hora; lo que preguntaste, no. Las respuestas quedan en caché hasta 30 días, sin saber quién las pidió.</li><li>Si pides una llave o nos escribes, guardamos tu nombre, tu correo, tu organización y lo que nos cuentes, para darte la llave y responderte. De tu conexión solo guardamos una huella (HMAC) de la IP, para limitar abusos; nunca la IP.</li><li>No vendemos ni compartimos esos datos. Para verlos, corregirlos o borrarlos, escríbenos.</li></ul>
 <p>Preguntas: <a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a>.</p>
 </div></div></section>
 </main>
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#F3EFE4"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<p class="desc">Datos oficiales de Colombia con su fuente y su prueba, y la analítica, la automatización y los agentes encima. Licencia revisada por fuente y nunca perfiles de personas.</p></div>
+<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>

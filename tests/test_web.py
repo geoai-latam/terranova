@@ -78,16 +78,50 @@ def test_ejemplos_van_sellados() -> None:
     assert len(re.findall(r"(?<![a-z])ilustrativo(?![a-z])", html)) == sellos
 
 
-def test_preguntas_por_sector_son_herramientas_reales() -> None:
-    sys.path.insert(0, str(RAIZ / "src"))
-    from terranova.catalogo import cargar
+def test_soluciones_por_sector_salen_de_herramientas_reales() -> None:
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # type: ignore[import-not-found]  # web/ no es un paquete
 
-    ids = set(cargar(RAIZ / "catalogo").herramientas)
+    vendibles = {h.id for h in construir.HERR}
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
     sector = html[html.index('class="sectores"') :]
-    citadas = re.findall(r'<span class="id"><code>([a-z0-9_]+)</code>', sector)
-    assert len(citadas) == 18  # tres por sector
-    assert set(citadas) <= ids
+    paneles = re.findall(r'data-herramientas="([a-z0-9_ ]+)"', sector)
+    assert len(paneles) == 6
+    citadas = {h for p in paneles for h in p.split()}
+    assert citadas <= vendibles
+    for h in citadas:  # sin el DANE en lo que se vende como servicio (decisión del 01-11-2026)
+        fuente = construir.CAT.fuentes[construir.CAT.herramientas[h].fuente]
+        assert "DANE" not in construir.nombre_entidad(fuente.entidad), h
+
+
+def test_el_sitio_ofrece_solo_la_prueba_y_los_precios_decididos() -> None:
+    # Decisiones del dueño (01-11-2026): solo la llave de prueba (el plan Gratis no se anuncia),
+    # precios de lanzamiento en pesos y quién está detrás, sin nombre de persona.
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # web/ no es un paquete
+
+    for p in PAGINAS:
+        texto = re.sub(r"<[^>]+>", " ", p.read_text(encoding="utf-8"))
+        assert not re.search(r"plan gratis|empieza gratis|1\.500 créditos", texto, re.I), p.name
+        assert "plan-gratis" not in p.read_text(encoding="utf-8"), p.name
+    precios = (PUBLICO / "precios.html").read_text(encoding="utf-8")
+    for _, nombre, mes, anual in construir.PLANES:
+        assert nombre in precios and construir.miles(mes) in precios
+        assert construir.miles(anual) in precios
+    prueba = f"{construir.miles(construir.CREDITOS_PRUEBA)} créditos"
+    assert prueba in precios and f"{construir.DIAS_PRUEBA} días" in precios
+    assert construir.QUIEN in (PUBLICO / "index.html").read_text(encoding="utf-8")
+
+
+def test_cada_pagina_tiene_imagen_para_compartir() -> None:
+    for p in PAGINAS:
+        html = p.read_text(encoding="utf-8")
+        m = re.search(
+            r'property="og:image" content="https://terrnova\.com(/img/og/[a-z]+\.png)"', html
+        )
+        assert m, f"{p.name} sin og:image"
+        assert (PUBLICO / m.group(1).lstrip("/")).is_file(), m.group(1)
+        assert '<meta name="twitter:card" content="summary_large_image">' in html
 
 
 def test_el_sitio_no_anuncia_fuentes_sin_uso_comercial() -> None:
@@ -104,7 +138,7 @@ def test_indice_de_entidades_solo_con_fuentes_vendibles() -> None:
     # El índice de /fuentes nombra solo entidades con al menos una fuente publicada y con uso
     # comercial «si»; la fuente «sin fines de lucro» de la DIAN (usuarios aduaneros) no aparece.
     sys.path.insert(0, str(RAIZ / "web"))
-    import construir  # type: ignore[import-not-found]  # web/ no es un paquete
+    import construir  # web/ no es un paquete
 
     html = (PUBLICO / "fuentes.html").read_text(encoding="utf-8")
     indice = html[html.index('class="indice"') :]

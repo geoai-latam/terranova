@@ -80,7 +80,9 @@ escalón y su filo pasa a ámbar.
 
 ## Tipografía
 
-Geist 700 para titulares con interletrado negativo (`.t1` −0,04 em, `.t2` −0,032 em), 400 para el
+Geist y Geist Mono (SIL OFL) se sirven desde el sitio (`img/tipos/`, latín y latín extendido) y
+las de latín se precargan en el `<head>`: sin `@import` ni Google Fonts, el texto no salta al
+cambiar de fuente (CLS 0). Geist 700 para titulares con interletrado negativo (`.t1` −0,04 em, `.t2` −0,032 em), 400 para el
 texto, 600 para la interfaz. Titulares con `text-wrap: balance`, párrafos con `pretty`, cifras con
 `tabular-nums`. Rótulos en minúscula normal (`.rotulo`, 14 px, `tinta-tenue`). Texto corrido de
 hasta ~68 caracteres por línea (`.entrada` max 640 px).
@@ -111,6 +113,13 @@ fuente, licencia, expediente.
 - No se muestran clientes, logos ni testimonios que no existen. No se nombra ArcGIS: «el sistema
   del cliente» o «su SIG».
 - Números en formato colombiano (0,56 s; 1.510; 6,1 M); fechas DD-MM-AAAA en texto e ISO en la API.
+- **Para quien decide en una organización**, no para un desarrollador: en la portada, /servicios y
+  /precios no van «MCP», «REST», «rt/1», nombres de herramientas ni JSON en titulares ni entradas
+  (sí en /desarrolladores, en la muestra técnica o en la pista de una figura). El resultado primero;
+  las herramientas, en segundo plano.
+- Precios: los de lanzamiento en pesos más IVA (`PLANES` en `construir.py`, decisión del dueño); los
+  créditos salen de `NIVELES` y su traducción a consultas, de `catalogo.TARIFA`. El sitio ofrece solo
+  la llave de prueba; el plan Gratis no se anuncia.
 
 | Así sí | Así no |
 |---|---|
@@ -228,6 +237,7 @@ uv run python web/construir.py                 # regenera web/publico desde el c
 uv run python web/servir.py                    # http://localhost:8080, como lo sirve Caddy
 uv run --with playwright python web/capturar.py 1440 / "#servicios"   # captura de una sección
 uv run pytest tests/test_web.py -q             # las páginas no quedaron viejas
+uv run --with playwright python web/og.py      # las imágenes para compartir (1200 x 630), si cambia un titular
 ```
 
 `capturar.py` usa Edge con GPU (las escenas WebGL no pintan sin ella) y deja las capturas en
