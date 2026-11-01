@@ -755,31 +755,12 @@ SERVICIOS = [
     },
 ]
 
-ETIQUETAS = {
-    "revision": "Esquema animado: predios, empresas y contratos pasan por una compuerta; salen en verde si no hay hallazgos y en ámbar si hay algo que revisar.",
-    "tablero": "Esquema animado: un tablero despiezado en capas, con el mapa de Colombia por zonas, tu municipio frente a los comparables y la tendencia de cada indicador; con cada indicador cambian las tres capas.",
-    "vigilancia": "Esquema animado: un barrido recorre lo que vigilas y una señal sube donde algo cambió.",
-    "asistente": "Esquema animado: la pregunta viaja a las fuentes que hacen falta y vuelve con la respuesta.",
-}
-
 METODO = [
     ("Nos cuentas", "Qué quieres decidir."),
     ("Precio fijo", "Antes de empezar."),
     ("Hacemos el trabajo", "Cada cifra contrastada con su fuente."),
     ("Recibes el resultado", "Con la prueba de cada dato."),
 ]
-
-
-def cruces_html() -> str:
-    por_id = {h.id: h for h in HERR}
-    grupos = []
-    for g, items in CRUCES:
-        filas = "".join(
-            f"<li>{t}<span>{escape(nombre_entidad(CAT.fuentes[por_id[i].fuente].entidad))}</span></li>"
-            for i, t in items
-        )
-        grupos.append(f'<div class="grupo"><h4>{g}</h4><ul>{filas}</ul></div>')
-    return '<div class="cruces">' + "".join(grupos) + "</div>"
 
 
 def licencia_corta(spdx: str | None) -> str:
@@ -795,7 +776,19 @@ def licencia_corta(spdx: str | None) -> str:
     }.get(spdx, "licencia propia de la entidad")
 
 
-# Lo que muestran las viñetas sale del catálogo: herramientas, entidades y licencias reales.
+# Ilustrativo: valor de tu municipio, franja de los comparables y serie, por indicador (0 a 1 en la
+# escala del reloj). Los indicadores y sus entidades son del catálogo.
+CIFRAS_TABLERO = [
+    (0.62, (0.40, 0.70), (0.30, 0.34, 0.38, 0.41, 0.46, 0.50, 0.55, 0.58)),
+    (0.38, (0.45, 0.75), (0.72, 0.68, 0.66, 0.60, 0.55, 0.50, 0.46, 0.42)),
+    (0.70, (0.50, 0.80), (0.50, 0.52, 0.55, 0.54, 0.60, 0.63, 0.66, 0.70)),
+    (0.80, (0.55, 0.85), (0.55, 0.58, 0.62, 0.64, 0.70, 0.72, 0.76, 0.80)),
+]
+
+# Ilustrativo: en qué fuente aparece algo que revisar, por tipo (predio, empresa, contratista).
+HALLAZGO_REVISION = [1, None, 2]
+
+# Lo que muestran las figuras de los servicios sale del catálogo: herramientas, entidades y licencias reales.
 TIPOS_REVISION = {
     "Predios y parcelas": ("Predio", "por coordenada"),
     "Empresas y proveedores": ("Empresa", "por NIT"),
@@ -831,7 +824,7 @@ INDICADORES_TABLERO = [
 ]
 
 
-def datos_vineta(tipo: str) -> object:
+def datos_servicio(tipo: str) -> object:
     por_id = {h.id: h for h in HERR}
 
     def entidad(hid: str) -> str:
@@ -865,16 +858,6 @@ def datos_vineta(tipo: str) -> object:
     if tipo == "tablero":
         return [{"t": t, "e": entidad(i)} for i, t in INDICADORES_TABLERO]
     return None
-
-
-def vineta(tipo: str) -> str:
-    datos = datos_vineta(tipo)
-    attr = (
-        f' data-datos="{escape(json.dumps(datos, ensure_ascii=False))}"'
-        if datos is not None
-        else ""
-    )
-    return f'<div class="vineta" data-vineta="{tipo}"{attr} role="img" aria-label="{ETIQUETAS[tipo]}"><div class="rotulos-v" aria-hidden="true"></div></div>'
 
 
 # ---------------------------------------------------------------- figuras isométricas (Anatomy)
@@ -925,6 +908,23 @@ def datos_figuras() -> dict:
             "otras": sorted((n for e, n in ENTIDADES.items() if e not in nombradas), reverse=True),
         },
         "prueba": {"capas": [{"campo": c, "valor": v} for c, v, _ in CAPAS_PRUEBA]},
+        # Los tipos y sus fuentes son los del catálogo; qué estación encuentra algo es ilustrativo.
+        "revision": {"tipos": datos_servicio("revision"), "hallazgo": HALLAZGO_REVISION},
+        # Los sistemas vigilados salen del catálogo (validados en datos_servicio); lo que cambia, no.
+        "vigilancia": {"carriles": datos_servicio("vigilancia")},
+        "asistente": datos_servicio("asistente"),
+        "tablero": {
+            "indicadores": [
+                {
+                    "t": t,
+                    "e": nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad),
+                    "valor": v,
+                    "comparables": list(c),
+                    "serie": list(serie),
+                }
+                for (hid, t), (v, c, serie) in zip(INDICADORES_TABLERO, CIFRAS_TABLERO, strict=True)
+            ]
+        },
     }
 
 
@@ -944,10 +944,20 @@ def huella_figuras() -> str:
 
 
 SVG_FIGURAS = PUBLICO / "img" / "figuras"
-NOMBRES_FIGURAS = ("capas", "ruta", "prueba")
+NOMBRES_FIGURAS = (
+    "capas",
+    "ruta",
+    "prueba",
+    "revision",
+    "tablero",
+    "vigilancia",
+    "asistente",
+)
 
 
-def figura(nombre: str, lectura: str, pista: str = "", clase: str = "") -> str:
+def figura(
+    nombre: str, lectura: str, pista: str = "", clase: str = "", ilustrativo: bool = False
+) -> str:
     """Una figura integrada en la sección: sin marco, con su lectura en una línea debajo.
 
     El SVG vive aparte (web/publico/img/figuras) y figuras.js lo trae cuando se acerca a la vista;
@@ -965,6 +975,8 @@ def figura(nombre: str, lectura: str, pista: str = "", clase: str = "") -> str:
     assert caja and etiqueta, nombre
     w, h = caja.groups()
     pista_html = f'<span class="pista">{pista}</span>' if pista else ""
+    if ilustrativo:
+        pista_html = f"<span>{pista_html}{SELLO_I}</span>"
     return (
         f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}" style="max-width:{w}px">'
         f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
@@ -987,39 +999,62 @@ def figura_ruta() -> str:
     t0 = datos_figuras()["ruta"]["turnos"][0]
     return figura(
         "ruta",
-        f"<code>{t0['herramienta']}</code> → {t0['entidad']}",
+        f"{escape(t0['pregunta'])} → <code>{t0['herramienta']}</code> → {t0['entidad']}",
         "flechas o puntero: otra pregunta",
-        "ancha",
     )
 
 
+LECTURA_SERVICIO = {
+    "revision": ("predio · por coordenada · 4 fuentes", "flechas: otro tipo"),
+    "tablero": (
+        "población · DANE · tu municipio frente a sus comparables",
+        "pasa el puntero por los relojes",
+    ),
+    "vigilancia": (
+        "SECOP II · Colombia Compra Eficiente · nuevo contrato de una entidad que vigilas",
+        "flechas: otro cambio",
+    ),
+}
+
+
 def figura_servicio(sid: str) -> str:
-    """La figura de un servicio. Mientras no tenga su figura isométrica, su viñeta."""
-    return vineta(sid)
+    """La figura de un servicio; vacía si todavía no tiene (la fila queda a una columna)."""
+    if sid not in NOMBRES_FIGURAS:
+        return ""
+    if sid == "asistente":  # preguntas, entidades y licencias reales: sin sello
+        q = datos_figuras()["asistente"]["preguntas"][0]
+        lectura = f"{escape(q['p'])} → {q['e']} · {q['l']}"
+        return figura(sid, lectura, "pasa el puntero por las tomas")
+    lectura, pista = LECTURA_SERVICIO[sid]
+    return figura(sid, lectura, pista, ilustrativo=True)
 
 
-def servicio_fila(s: dict, i: int, detalle: bool) -> str:
-    """Un servicio: título, una frase y su figura, alternando el lado de la figura."""
-    if detalle:
-        recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
-        pie = (
-            f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {s["con"]}</p>'
-            f'<a class="boton s" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>'
-        )
-        tit = f'<h2 class="t2">{s["titulo"]}</h2>'
-    else:
-        pie = f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a>'
-        tit = f'<h3 class="t2">{s["titulo"]}</h3>'
+def servicio_fila(s: dict, i: int) -> str:
+    """Un servicio en /servicios: título, frase, lo que recibes y su figura, alternando el lado."""
+    recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
+    pie = (
+        f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {s["con"]}</p>'
+        f'<a class="boton s" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>'
+    )
+    tit = f'<h2 class="t2">{s["titulo"]}</h2>'
+    fig = figura_servicio(str(s["id"]))
+    clase = (" con-fig" + (" inv-l" if i % 2 else "")) if fig else ""
     return (
-        f'<article class="serv con-fig{" inv-l" if i % 2 else ""}" id="{s["id"]}">'
+        f'<article class="serv{clase}" id="{s["id"]}">'
         f'<div class="cab">{tit}<p class="entrada">{s["texto"]}</p>{pie}</div>'
-        f"{figura_servicio(str(s['id']))}</article>"
+        f"{fig}</article>"
     )
 
 
 def servicios_landing() -> str:
-    filas = "".join(servicio_fila(s, i, False) for i, s in enumerate(SERVICIOS))
-    return f'<div class="servs">{filas}</div>'
+    """En la portada, los cuatro servicios en una rejilla de dos por dos: figura, título y una frase."""
+    celdas = "".join(
+        f'<article class="serv-c" id="{s["id"]}">{figura_servicio(str(s["id"]))}'
+        f'<h3 class="t3">{s["titulo"]}</h3><p>{s["texto"]}</p>'
+        f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></article>'
+        for s in SERVICIOS
+    )
+    return f'<div class="servs-c">{celdas}</div>'
 
 
 # Las capas de la prueba: valores de la respuesta real de banrep_trm_recientes, capturada el
@@ -1160,16 +1195,19 @@ def inicio() -> str:
 </div></section>
 
 <section class="seccion" id="por-que"><div class="envoltura">
+<div class="con-fig inv-l">
+{figura_ruta()}
 <div class="cab">
 <h2 class="t2">Por qué no basta con buscar en la web</h2>
 <p class="entrada">Una decisión necesita el dato oficial, de dónde salió y si se puede usar.</p>
+<ul class="lista-l">
+<li><b>Un contrato</b><span>{N_ENTIDADES} entidades que publican a su manera responden igual.</span></li>
+<li><b>Bien contado</b><span>SECOP repite un contrato por cada estado; lo contamos una vez.</span></li>
+<li><b>Probado a diario</b><span>Contra un dato medido en la fuente. <a class="enlace" href="/estado">Ver el estado</a></span></li>
+<li><b>Sin LLM ni personas</b><span>Misma pregunta, misma consulta. Nada por cédula o nombre.</span></li>
+</ul>
+<p class="fuente-dato">Pitalito 2025 en SECOP: $174.000 M sumado tal cual, $63.157 M contado bien · medido el 22-10-2026</p>
 </div>
-{figura_ruta()}
-<div class="columnas c4">
-<div><h3>Un contrato para todas</h3><p>{N_ENTIDADES} entidades que publican a su manera responden igual.</p></div>
-<div><h3>Bien contado</h3><p>SECOP repite cada contrato por estado: Pitalito 2025 suma $174.000 M tal cual y $63.157 M bien contado (22-10-2026).</p></div>
-<div><h3>Probado cada madrugada</h3><p>Contra un dato medido en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div><h3>Sin LLM, sin personas</h3><p>La misma pregunta da la misma consulta. Nunca búsquedas por cédula o nombre.</p></div>
 </div>
 </div></section>
 
@@ -1201,69 +1239,19 @@ def inicio() -> str:
         "Terrnova · Del dato oficial a la solución",
         f"Una capa de datos con {N_FUENTES} fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
-        ("escena-predios.js", "escena-vinetas.js", "figuras.js"),
+        ("escena-predios.js", "figuras.js"),
     )
 
 
-# Cómo se ve lo que recibe el cliente. Las maquetas sin datos reales van selladas como ilustrativas;
-# la del asistente usa la respuesta real de la TRM.
+# Lo inventado lleva el sello.
 SELLO_I = '<span class="sello-i">ilustrativo</span>'
-
-
-def entregable(sid: str) -> str:
-    if sid == "revision":
-        filas = [
-            ("Áreas protegidas (RUNAP)", "Parques Nacionales", "ok", "Sin hallazgos"),
-            ("Pérdida de bosque", "SINCHI", "rev", "Revisar"),
-            ("Resguardos indígenas", "Agencia Nacional de Tierras", "ok", "Sin hallazgos"),
-            ("Predio en el catastro", "IGAC", "ok", "Encontrado"),
-        ]
-        cuerpo = "".join(
-            f'<li><span class="q">{q}<small>{e}</small></span><span class="chip-e {c}">{t}</span></li>'
-            for q, e, c, t in filas
-        )
-        return f"""<div class="maqueta exp"><div class="m-cab"><b>Expediente del predio</b><span>4 de 4 fuentes consultadas</span></div>
-<ul>{cuerpo}</ul><div class="m-pie"><span>Un caso para revisión humana</span>{SELLO_I}</div></div>"""
-    if sid == "tablero":
-        tiles = [
-            ("Población", "DANE", [3, 4, 4, 5, 6, 6, 7]),
-            ("Pobreza multidimensional", "DANE", [7, 6, 6, 5, 5, 4, 4]),
-            ("Matrícula escolar", "MinEducación", [4, 5, 5, 5, 6, 7, 7]),
-            ("Afiliados a salud", "ADRES", [5, 5, 6, 6, 6, 7, 8]),
-        ]
-        cuerpo = "".join(
-            f'<div class="tile"><span>{t}</span><small>{e}</small><div class="barras">'
-            + "".join(f'<i style="--h:{h * 12}%"></i>' for h in bs)
-            + "</div></div>"
-            for t, e, bs in tiles
-        )
-        return f"""<div class="maqueta tab"><div class="m-cab"><b>Tu municipio</b><span>actualizado desde la fuente</span></div>
-<div class="tiles">{cuerpo}</div><div class="m-pie"><span>Cada cifra enlaza a su entidad</span>{SELLO_I}</div></div>"""
-    if sid == "vigilancia":
-        items = [
-            ("SECOP II", "Nuevo contrato de una entidad que vigilas", "hoy"),
-            ("SUIN-Juriscol", "Cambió una norma que sigues", "ayer"),
-            ("SECOP I", "Nueva multa a un contratista que sigues", "ayer"),
-            ("SIC", "Nueva sanción en el sector que sigues", "lunes"),
-        ]
-        cuerpo = "".join(
-            f'<li><i></i><span class="q"><small>{f}</small>{t}</span><span class="cuando">{c}</span></li>'
-            for f, t, c in items
-        )
-        return f"""<div class="maqueta alr"><div class="m-cab"><b>Tus alertas</b><span>con el registro de cada cambio</span></div>
-<ul>{cuerpo}</ul><div class="m-pie"><span>Por correo o en tu sistema</span>{SELLO_I}</div></div>"""
-    return """<div class="maqueta chat"><div class="m-cab"><b>Asistente de tu equipo</b><span>dentro de tu sistema</span></div>
-<p class="yo">¿A cuánto está la TRM hoy?</p>
-<div class="el"><p>La TRM del 29 de octubre de 2026 es de <b>3.162,35 pesos por dólar</b>.</p>
-<p class="cita">Banco de la República · uso comercial permitido · consultado en vivo</p></div>
-<div class="m-pie"><span>Dato real de banrep_trm_recientes del 29-10-2026</span>{SELLO_I}</div></div>"""
 
 
 def servicios() -> str:
     indice = "".join(f'<a href="#{s["id"]}">{s["titulo"]}</a>' for s in SERVICIOS)
     bloques = "".join(
         f'<section class="sv-det{" par" if i % 2 else ""}"><div class="envoltura">'
-        f"{servicio_fila(s, i, True)}</div></section>"
+        f"{servicio_fila(s, i)}</div></section>"
         for i, s in enumerate(SERVICIOS)
     )
     pasos = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in METODO)
@@ -1304,7 +1292,7 @@ def servicios() -> str:
         "Servicios",
         "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales, con la fuente de cada dato y precio fijo antes de empezar.",
         c,
-        ("escena-vinetas.js", "figuras.js"),
+        ("figuras.js",),
     )
 
 

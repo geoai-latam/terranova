@@ -94,7 +94,7 @@ export function prueba(DATOS, huella) {
   // el tampón: caja con la tapa abierta detrás y el fieltro entintado
   out.push(S(k.slabOf({ x: PAD.x - 1, y: PAD.y - 7.5, w: PAD.w + 2, d: 6.5, r: 1 }, 0, 2.2, P, 2), { tone: "lo" }));
   out.push(S(k.slabOf(PAD, 0, 6, P, 3, 0.5), { tone: "mid", inner: L(k.sideSeam(PAD, 2, P, 3), { tone: "faint" }) }));
-  out.push(S(k.slabOf(k.insetPlan(PAD, 3), 6, 0.4, P, 3), { tone: "lo", className: "oscuro", crease: "none" }));
+  out.push(S(k.slabOf(k.insetPlan(PAD, 3), 6, 0.4, P, 3), { tone: "lo", className: "teal", crease: "none" }));
   out.push(D(k.corners(PAD, 1.6).map(([x, y]) => at([x, y, 6])), { size: 0.38 }));
 
   // el sello: base de goma, cuerpo, cuello y pomo moleteado; baja al tampón con la huella
@@ -102,7 +102,7 @@ export function prueba(DATOS, huella) {
   const sello = [];
   const cuerpo = { x: sx - 9, y: sy - 6, w: 18, d: 12, r: 1.2 };
   sello.push(`<path class="iso-halo" d="${k.haloOf(cuerpo, 0, 2, P)}"/>`);
-  sello.push(S(k.slabOf(k.insetPlan(cuerpo, 0.8), 0, 2, P, 2), { tone: "lo", className: "oscuro" }));
+  sello.push(S(k.slabOf(k.insetPlan(cuerpo, 0.8), 0, 2, P, 2), { tone: "lo", className: "teal" }));
   sello.push(S(k.slabOf(cuerpo, 2, 6, P, 3, 0.6), { tone: "hi", inner: L(k.sideSeam(cuerpo, 4.5, P, 3), { tone: "faint" }) }));
   sello.push(S(k.cylinder(sx, sy, 2.6, 8, 9, P, 20), { tone: "mid", crease: "none" }));
   sello.push(L(k.sideArc(sx, sy, 2.6, 12, P, 16), { tone: "faint" }));

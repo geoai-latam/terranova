@@ -160,7 +160,7 @@ function ruta(fig) {
     const d = vivo.turnos[k];
     lectura.innerHTML = '';
     const c = document.createElement('code'); c.textContent = d.h;
-    lectura.append(`${d.p} `, c, ` → ${d.e}`);
+    lectura.append(`${d.p} → `, c, ` → ${d.e}`);
     columnas.forEach(col => col.querySelector('.iso-solid').toggleAttribute('data-lit', +col.dataset.columna === k && t >= T.llega));
   }
   function pintar() {
@@ -315,8 +315,244 @@ function prueba(fig) {
   });
 }
 
+// ---------------------------------------------------------------- un guion que se repite
+// Corre guion(t, i) con t en segundos dentro del turno i; dura(i) es lo que dura el turno. Las
+// flechas pasan de turno; fuera de la vista no corre; con movimiento reducido, quieto(i) deja el
+// turno completo.
+function guionado(fig, { n, dura, guion, quieto: fijo }) {
+  const lienzo = fig.querySelector('.lienzo');
+  let i = 0, t = 0, ultimo = 0, cuadro = 0, visible = false;
+  function paso(ahora) {
+    const dt = ultimo ? Math.min((ahora - ultimo) / 1000, 1 / 20) : 1 / 60;
+    ultimo = ahora; t += dt;
+    if (t >= dura(i)) { t = 0; i = (i + 1) % n; }
+    guion(t, i);
+    cuadro = visible ? requestAnimationFrame(paso) : 0;
+  }
+  const correr = () => { if (!cuadro && visible && !quieto.matches) { ultimo = 0; cuadro = requestAnimationFrame(paso); } };
+  lienzo.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    i = (i + d + n) % n; t = 0;
+    if (quieto.matches) fijo(i); else guion(0, i);
+  });
+  if (quieto.matches) fijo(0); else guion(0, 0);
+  enVista(lienzo, v => { visible = v; if (v) correr(); });
+}
+const suave = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const mover = (g, v, a, b) => {
+  const dx = v[0][0] * a + v[1][0] * b, dy = v[0][1] * a + v[1][1] * b;
+  if (Math.abs(dx) + Math.abs(dy) < 0.01) g.removeAttribute('transform');
+  else g.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
+};
+
+// ---------------------------------------------------------------- debida diligencia: la banda
+function revision(fig) {
+  const svg = fig.querySelector('svg');
+  const V = JSON.parse(svg.dataset.vivo);
+  const lectura = fig.querySelector('[data-lectura]');
+  const ficha = svg.querySelector('[data-ficha]');
+  const bandera = svg.querySelector('[data-bandera]');
+  const palp = [...svg.querySelectorAll('[data-palpador]')];
+  const pilotos = [...svg.querySelectorAll('[data-piloto]')];
+  svg.querySelector('[data-motor]').classList.add('encendido');
+  const ejes = [V.ex, V.ez];
+  // tiempos del turno: sale, cuatro paradas (baja, sube, sigue), llega al final, cae, reposa
+  const SALE = 1.1, PARA = 1.25, VIAJA = 0.6, FIN = 0.8, CAE = 0.7, REPOSA = 1.4;
+  const llega = k => SALE + k * (PARA + VIAJA);
+  const tFin = llega(V.est.length - 1) + PARA;
+  const dura = () => tFin + FIN + CAE + REPOSA;
+  let dicho = '';
+  function decir(txt) { if (txt !== dicho) { dicho = txt; lectura.textContent = txt; } }
+  function guion(t, i) {
+    const tipo = V.tipos[i];
+    let x = V.x0, z = 0;
+    if (t < SALE) x = V.x0 + (V.est[0] - V.x0) * suave(t / SALE);
+    else if (t < tFin) {
+      const k = Math.min(V.est.length - 1, Math.floor((t - SALE) / (PARA + VIAJA)));
+      const u = t - llega(k);
+      x = u < PARA ? V.est[k] : V.est[k] + (V.est[k + 1] - V.est[k]) * suave((u - PARA) / VIAJA);
+    } else if (t < tFin + FIN) x = V.est[3] + (V.fin - V.est[3]) * suave((t - tFin) / FIN);
+    else { const u = suave((t - tFin - FIN) / CAE); x = V.fin + (V.bandeja - V.fin) * u; z = -V.cae * u * u; }
+    mover(ficha, ejes, x - V.x0, z);
+    ficha.style.opacity = t > dura() - 0.45 ? String(Math.max(0, (dura() - t) / 0.45)) : '';
+    let texto = `${tipo.t} · ${tipo.c} · ${tipo.f.length} fuentes`;
+    palp.forEach((g, k) => {
+      const u = t - llega(k);
+      const b = u < 0 || u > PARA ? 0 : u < 0.4 ? suave(u / 0.4) : u < 0.75 ? 1 : 1 - suave((u - 0.75) / 0.4);
+      mover(g, ejes, 0, -V.baja * b);
+      const visto = u >= 0.4;
+      const estado = !visto ? '' : tipo.h === k ? 'rev' : 'ok';
+      if (pilotos[k].dataset.estado !== estado) { if (estado) pilotos[k].dataset.estado = estado; else delete pilotos[k].dataset.estado; }
+      if (u >= 0 && u < PARA + VIAJA) texto = `${tipo.t} · ${tipo.f[k]} · ${!visto ? 'consultando' : tipo.h === k ? 'revisar' : 'sin hallazgos'}`;
+    });
+    if (t >= tFin) texto = `${tipo.t} · expediente: ${tipo.h == null ? 'sin hallazgos' : '1 caso para revisar'}`;
+    bandera.style.opacity = tipo.h != null && t - llega(tipo.h) >= 0.45 ? '1' : '0';
+    decir(texto);
+  }
+  // quieto: la ficha en la última estación con los cuatro pilotos dichos
+  const fijo = i => guion(tFin - 0.01, i);
+  guionado(fig, { n: V.tipos.length, dura, guion, quieto: fijo });
+}
+
+// La cámara del kit (iso-kit.mjs, iso), para lo que se rehace en cada cuadro.
+const camara = P => {
+  const R = Math.PI / 180, K = P.scale * Math.sqrt(1.6);
+  const sA = Math.sin(P.azimuth * R), cA = Math.cos(P.azimuth * R), sE = Math.sin(P.elevation * R), cE = Math.cos(P.elevation * R);
+  return ([x, y, z]) => [P.origin[0] + (x * sA - y * cA) * K, P.origin[1] + ((x * cA + y * sA) * sE - z * cE) * K];
+};
+
+// ---------------------------------------------------------------- tableros: relojes y trazador
+function tablero(fig) {
+  const svg = fig.querySelector('svg');
+  const V = JSON.parse(svg.dataset.vivo);
+  const iso = camara(V.P);
+  const lectura = fig.querySelector('[data-lectura]');
+  const agujas = [...svg.querySelectorAll('[data-aguja]')];
+  const series = [...svg.querySelectorAll('[data-serie]')];
+  const portico = svg.querySelector('[data-portico]');
+  const carro = svg.querySelector('[data-carro]');
+  const ang = V.valores.slice();
+  let meta = 0, p = 1;
+  const DIBUJA = 2.8;
+  const aguja = (i, v) => {
+    const [cx, cy] = V.centros[i], t = V.desde + V.arco * v;
+    const a = iso([cx - Math.sin(t) * 2.2, cy + Math.cos(t) * 2.2, V.zd + 0.2]), b = iso([cx + Math.sin(t) * V.R, cy - Math.cos(t) * V.R, V.zd + 0.2]);
+    agujas[i].setAttribute('d', `M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}`);
+  };
+  // la pluma sobre la serie, a la fracción f de su largo
+  const sobre = (pts, f) => {
+    const u = Math.max(0, Math.min(1, f)) * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(u)), r = u - j;
+    return [pts[j][0] + (pts[j + 1][0] - pts[j][0]) * r, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * r];
+  };
+  const centros = V.centros.map(([x, y]) => iso([x, y, V.zd]));
+  selector(fig, {
+    n: agujas.length,
+    cada: 4.2,
+    elegir: i => {
+      meta = i; p = quieto.matches ? 1 : 0; ang[i] = quieto.matches ? V.valores[i] : 0;
+      lectura.textContent = V.lecturas[i];
+      agujas.forEach((a, j) => a.toggleAttribute('data-on', j === i));
+      series.forEach((sv, j) => { sv.style.opacity = j === i ? '1' : '0'; });
+    },
+    pintar: dt => {
+      let mueve = false;
+      ang.forEach((v, i) => {
+        const m = V.valores[i];
+        ang[i] = sigue(v, m, dt, 0.5);
+        if (Math.abs(ang[i] - m) < 0.001) ang[i] = m; else mueve = true;
+        aguja(i, ang[i]);
+      });
+      if (p < 1) { p = Math.min(1, p + dt / DIBUJA); mueve = true; }
+      const sp = suave(p);
+      series[meta].style.strokeDashoffset = String(100 - 100 * sp);
+      const [dx, dy] = sobre(V.series[meta], sp);
+      portico.setAttribute('transform', `translate(${(V.ex[0] * dx).toFixed(2)} ${(V.ex[1] * dx).toFixed(2)})`);
+      carro.setAttribute('transform', `translate(${(V.ey[0] * dy).toFixed(2)} ${(V.ey[1] * dy).toFixed(2)})`);
+      return mueve;
+    },
+    desde: (x, y) => cerca2(centros, x, y),
+  });
+}
+
+// ---------------------------------------------------------------- vigilancia: el puesto de guardia
+function vigilancia(fig) {
+  const svg = fig.querySelector('svg');
+  const V = JSON.parse(svg.dataset.vivo);
+  const lectura = fig.querySelector('[data-lectura]');
+  const carro = svg.querySelector('[data-carro]');
+  const lector = svg.querySelector('[data-lector]');
+  const ticket = svg.querySelector('[data-ticket]');
+  const banderas = [...svg.querySelectorAll('[data-bandera]')];
+  const pilotos = [...svg.querySelectorAll('[data-buzon] [data-piloto]')];
+  const pImp = svg.querySelector('[data-piloto="imp"]');
+  const ejes = [V.ex, V.ez];
+  const n = V.carriles.length;
+  const VA = 1.6, LEE = 0.5, SUBE = 0.5, SACA = 1.2, DURA = 6.4;
+  let dicho = '';
+  const estado = (el, e) => { if ((el.dataset.estado || '') !== e) { if (e) el.dataset.estado = e; else delete el.dataset.estado; } };
+  function guion(t, i) {
+    const prev = (i - 1 + n) % n, c = V.carriles[i];
+    const x = V.x[prev] + (V.x[i] - V.x[prev]) * suave(t / VA);
+    mover(carro, ejes, x, 0);
+    const t1 = VA + LEE, t2 = t1 + SUBE, t3 = t2 + SACA;
+    estado(lector, t >= VA && t < t1 + 0.3 ? 'ok' : '');
+    banderas.forEach((b, j) => {
+      const u = j === i ? suave((t - t1) / SUBE) : j === prev ? 1 - suave(t / 0.5) : 0;
+      mover(b, ejes, 0, V.sube * u);
+      b.querySelector('.iso-solid:last-child').toggleAttribute('data-lit', j === i && t >= t1);
+    });
+    pilotos.forEach((p, j) => estado(p, j === i && t >= t1 ? 'rev' : ''));
+    const sale = t < 0.4 ? 1 - t / 0.4 : t < t2 ? 0 : suave((t - t2) / SACA);
+    ticket.style.opacity = t < 0.4 ? String(1 - t / 0.4) : '';
+    mover(ticket, ejes, 0, V.saca * (t < 0.4 ? 1 : sale));
+    estado(pImp, t >= t2 && t < t3 ? 'ok' : '');
+    const txt = t < t1 ? `leyendo ${c.s}…` : `${c.s} · ${c.e} · ${c.ev}`;
+    if (txt !== dicho) { dicho = txt; lectura.textContent = txt; }
+  }
+  const fijo = i => guion(DURA - 0.01, i);
+  guionado(fig, { n, dura: () => DURA, guion, quieto: fijo });
+}
+
+// ---------------------------------------------------------------- asistentes: el tablero de conmutación
+function asistente(fig) {
+  const svg = fig.querySelector('svg');
+  const V = JSON.parse(svg.dataset.vivo);
+  const iso = camara(V.P);
+  const lectura = fig.querySelector('[data-lectura]');
+  const [forro, alma] = svg.querySelectorAll('.cordon path');
+  const clavija = svg.querySelector('.clavija');
+  const renglones = svg.querySelector('[data-renglones]');
+  const pilotos = [...svg.querySelectorAll('[data-piloto]')];
+  const qs = V.preguntas;
+  let desde = V.tomas[qs[0].j], hacia = desde, f = 1, meta = 0;
+  // la clavija sale 9 hacia adelante, viaja y entra; el cordón cuelga entre el puerto y ella
+  const enCamino = u => {
+    const s = suave(u), salir = Math.sin(Math.PI * s) * 9;
+    return [desde[0] + (hacia[0] - desde[0]) * s, desde[1] + (hacia[1] - desde[1]) * s + 0.8 + salir, desde[2] + (hacia[2] - desde[2]) * s];
+  };
+  function cordon(q) {
+    const a = V.puerto, m = [(a[0] + q[0]) / 2, (a[1] + q[1]) / 2 + 16, Math.max(a[2] + 6, (a[2] + q[2]) / 2 - 12)];
+    const pts = [];
+    for (let i = 0; i <= 20; i++) {
+      const t = i / 20, u = 1 - t;
+      pts.push(iso([0, 1, 2].map(c => u * u * a[c] + 2 * u * t * m[c] + t * t * q[c])));
+    }
+    const d = 'M' + pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join('L');
+    forro.setAttribute('d', d); alma.setAttribute('d', d);
+    const [cx, cy] = iso(q);
+    clavija.setAttribute('cx', cx.toFixed(1)); clavija.setAttribute('cy', cy.toFixed(1));
+  }
+  const ojos = V.tomas.map(t => iso(t));
+  selector(fig, {
+    n: qs.length,
+    cada: 3.6,
+    elegir: i => {
+      const q = qs[i];
+      desde = f >= 1 ? hacia : enCamino(f); hacia = V.tomas[q.j]; f = quieto.matches ? 1 : 0; meta = i;
+      lectura.textContent = `${q.p} → ${q.e} · ${q.l}`;
+      renglones.style.opacity = '0';
+    },
+    pintar: dt => {
+      f = Math.min(1, f + dt / 1.3);
+      cordon(f >= 1 ? hacia : enCamino(f));
+      pilotos.forEach((p, j) => {
+        const e = f >= 1 && j === qs[meta].j ? 'rev' : '';
+        if ((p.dataset.estado || '') !== e) { if (e) p.dataset.estado = e; else delete p.dataset.estado; }
+      });
+      if (f >= 1) renglones.style.opacity = '';
+      return f < 1;
+    },
+    desde: (x, y) => {
+      const j = cerca2(ojos, x, y);
+      return j < 0 ? -1 : qs.findIndex(q => q.j === j);
+    },
+  });
+}
+
 // ---------------------------------------------------------------- carga perezosa
-const VIDAS = { capas, ruta, prueba };
+const VIDAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente };
 const cargar = async fig => {
   const lienzo = fig.querySelector('.lienzo');
   const r = await fetch(lienzo.dataset.src);

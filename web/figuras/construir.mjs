@@ -10,9 +10,13 @@ import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { asistente } from "./asistente.mjs";
 import { capas } from "./capas.mjs";
 import { prueba } from "./prueba.mjs";
+import { revision } from "./revision.mjs";
 import { ruta } from "./ruta.mjs";
+import { tablero } from "./tablero.mjs";
+import { vigilancia } from "./vigilancia.mjs";
 
 const AQUI = dirname(fileURLToPath(import.meta.url));
 const SALIDA = join(AQUI, "..", "publico", "img", "figuras");
@@ -24,7 +28,7 @@ for (const f of readdirSync(AQUI).filter((n) => n.endsWith(".mjs")).sort()) h.up
 const HUELLA = h.update(lf("kit/iso-kit.mjs"), "latin1").digest("hex").slice(0, 12);
 const DATOS = JSON.parse(crudo);
 
-const FIGURAS = { capas, ruta, prueba };
+const FIGURAS = { capas, ruta, prueba, revision, tablero, vigilancia, asistente };
 
 mkdirSync(SALIDA, { recursive: true });
 const solo = process.argv.slice(2);

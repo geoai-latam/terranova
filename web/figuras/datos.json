@@ -146,5 +146,242 @@
     "valor": "sha256:ac30c9f5…"
    }
   ]
+ },
+ "revision": {
+  "tipos": [
+   {
+    "tipo": "Predio",
+    "como": "por coordenada",
+    "fuentes": [
+     {
+      "t": "Áreas protegidas (RUNAP)",
+      "e": "Parques Nacionales"
+     },
+     {
+      "t": "Pérdida de bosque",
+      "e": "SINCHI"
+     },
+     {
+      "t": "Resguardos indígenas",
+      "e": "Agencia Nacional de Tierras"
+     },
+     {
+      "t": "Predio en el catastro",
+      "e": "IGAC"
+     }
+    ]
+   },
+   {
+    "tipo": "Empresa",
+    "como": "por NIT",
+    "fuentes": [
+     {
+      "t": "Registro mercantil (RUES)",
+      "e": "Confecámaras"
+     },
+     {
+      "t": "Estados financieros",
+      "e": "Supersociedades"
+     },
+     {
+      "t": "Vigilancia de la Superfinanciera",
+      "e": "Superfinanciera"
+     },
+     {
+      "t": "Establecimientos de comercio (RUES)",
+      "e": "Confecámaras"
+     }
+    ]
+   },
+   {
+    "tipo": "Contratista",
+    "como": "por NIT",
+    "fuentes": [
+     {
+      "t": "Contratos públicos (SECOP II)",
+      "e": "Colombia Compra Eficiente"
+     },
+     {
+      "t": "Sanciones en contratos",
+      "e": "Colombia Compra Eficiente"
+     },
+     {
+      "t": "Multas (SECOP I)",
+      "e": "Colombia Compra Eficiente"
+     },
+     {
+      "t": "Sanciones de la SIC",
+      "e": "SIC"
+     }
+    ]
+   }
+  ],
+  "hallazgo": [
+   1,
+   null,
+   2
+  ]
+ },
+ "vigilancia": {
+  "carriles": [
+   {
+    "s": "SECOP II",
+    "e": "Colombia Compra Eficiente",
+    "ev": "Nuevo contrato de una entidad que vigilas"
+   },
+   {
+    "s": "SUIN-Juriscol",
+    "e": "MinJusticia",
+    "ev": "Cambió una norma que sigues"
+   },
+   {
+    "s": "SECOP I",
+    "e": "Colombia Compra Eficiente",
+    "ev": "Nueva multa a un contratista que sigues"
+   },
+   {
+    "s": "SIC",
+    "e": "SIC",
+    "ev": "Nueva sanción en el sector que sigues"
+   }
+  ]
+ },
+ "asistente": {
+  "preguntas": [
+   {
+    "p": "¿Cuál ha sido la TRM (dólar en pesos) de los últimos días?",
+    "e": "Banco de la República",
+    "l": "aviso legal del Banco"
+   },
+   {
+    "p": "¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE?",
+    "e": "DANE",
+    "l": "términos del DANE"
+   },
+   {
+    "p": "¿Qué áreas protegidas del RUNAP contienen este punto?",
+    "e": "Parques Nacionales",
+    "l": "CC BY-SA 4.0"
+   },
+   {
+    "p": "¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto?",
+    "e": "Colombia Compra Eficiente",
+    "l": "CC BY-SA 4.0"
+   },
+   {
+    "p": "¿Qué dice el RUES de la empresa con este NIT?",
+    "e": "Confecámaras",
+    "l": "CC BY-SA 4.0"
+   },
+   {
+    "p": "¿Qué predio del catastro IGAC hay en este punto?",
+    "e": "IGAC",
+    "l": "CC BY-SA 4.0"
+   },
+   {
+    "p": "¿Cuánto vale la tierra rural en este municipio, según UPRA?",
+    "e": "UPRA",
+    "l": "CC BY-SA 4.0"
+   },
+   {
+    "p": "¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes?",
+    "e": "IDEAM",
+    "l": "CC BY-SA 4.0"
+   }
+  ],
+  "nodos": [
+   "Banco de la República",
+   "DANE",
+   "Parques Nacionales",
+   "Colombia Compra Eficiente",
+   "Confecámaras",
+   "IGAC",
+   "UPRA",
+   "IDEAM",
+   "INS",
+   "INVIMA",
+   "ANH",
+   "Policía Nacional"
+  ]
+ },
+ "tablero": {
+  "indicadores": [
+   {
+    "t": "Población",
+    "e": "DANE",
+    "valor": 0.62,
+    "comparables": [
+     0.4,
+     0.7
+    ],
+    "serie": [
+     0.3,
+     0.34,
+     0.38,
+     0.41,
+     0.46,
+     0.5,
+     0.55,
+     0.58
+    ]
+   },
+   {
+    "t": "Pobreza",
+    "e": "DANE",
+    "valor": 0.38,
+    "comparables": [
+     0.45,
+     0.75
+    ],
+    "serie": [
+     0.72,
+     0.68,
+     0.66,
+     0.6,
+     0.55,
+     0.5,
+     0.46,
+     0.42
+    ]
+   },
+   {
+    "t": "Educación",
+    "e": "MinEducación",
+    "valor": 0.7,
+    "comparables": [
+     0.5,
+     0.8
+    ],
+    "serie": [
+     0.5,
+     0.52,
+     0.55,
+     0.54,
+     0.6,
+     0.63,
+     0.66,
+     0.7
+    ]
+   },
+   {
+    "t": "Salud",
+    "e": "ADRES",
+    "valor": 0.8,
+    "comparables": [
+     0.55,
+     0.85
+    ],
+    "serie": [
+     0.55,
+     0.58,
+     0.62,
+     0.64,
+     0.7,
+     0.72,
+     0.76,
+     0.8
+    ]
+   }
+  ]
  }
 }

@@ -72,7 +72,9 @@ def test_ejemplos_van_sellados() -> None:
     html = (PUBLICO / "index.html").read_text(encoding="utf-8")
     assert html.count("capturado el ") >= 3
     assert "ejemplo" not in html.lower()
-    assert html.count("ilustrativo") == html.count('class="sello-i">ilustrativo<')
+    # (las figuras lo dicen además en su aria-label, en plural: «… son ilustrativos»)
+    sellos = html.count('class="sello-i">ilustrativo<')
+    assert len(re.findall(r"(?<![a-z])ilustrativo(?![a-z])", html)) == sellos
 
 
 def test_preguntas_por_sector_son_herramientas_reales() -> None:
