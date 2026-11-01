@@ -67,7 +67,8 @@ con la luz fija a la cámara (la regla del kit de Anatomy).
 |---|---|---|---|
 | Estructura | `estructura-0…6` (#F4F8F1 → #B9BDB6) | 70–80 % del área | Bancos, bases, armazones, predios vecinos. Las bases van dos escalones más hondo (`2…6`) |
 | Líneas | `linea-tenue`, `linea-baja`, `linea-media`, `linea-alta`, a 0,6 px | — | Ranuras y costuras (tenue), marcas menores (baja), filos (media), lo que se lee (alta) |
-| Sujeto | `sujeto-teal-*`, `sujeto-agua-*`, `sujeto-ocre-*`, cada uno con su `-filo` | 15–25 % | **Un** material de color por figura, distinto entre figuras para que la página tenga color |
+| Sujeto | `sujeto-teal-*`, `sujeto-agua-*`, `sujeto-ocre-*`, cada uno con su `-filo` | 15–25 % | **Un** material de color por figura. Rampas en OKLCH: el material por defecto usa los pasos 1–5 y el «fuerte» los 2–6, así sus caras quedan con croma ≥ 0,08 (con menos, la figura se lee pálida). El agua es la de la marca (h 184, entre teal-400 y la superficie, con el croma del teal), no un celeste; `agua-honda` para lo que más pesa |
+| Bosque claro | `bosque-claro-0…4` con filo claro | — | Techos y costados de un bastidor, un panel grande: color sin el peso del bosque hondo |
 | Material oscuro | `oscuro-0…4` con `oscuro-filo` claro | — | Pantallas y chasis; el filo es claro para que lo oscuro no se funda |
 | Acento | `acento-0…4` con `acento-filo` (#8F570B) | ≤ 3–5 % | Ámbar en **una** pieza: la que está pasando. Ninguna cara ámbar mayor de ~40 × 40 px |
 | Estado | `estado-vivo`, `estado-copia`, `estado-no-se-pudo`, `estado-vacio` | marca de 3–6 px | Vivo = punto teal; copia = anillo ocre; no se pudo = aspa en tinta; no encontrado = anillo vacío. Nunca superficie |
@@ -108,7 +109,8 @@ fuente, licencia, expediente.
 - Lo que existe, en presente; lo que viene, marcado como visión.
 - Nada de «potenciado por IA», «revolucionario» ni «mágico».
 - Ningún ejemplo busca personas por nombre o cédula (ADR-0014). Los ejemplos son lugares y predios.
-- Lo inventado lleva el sello `ilustrativo` (`.sello-i`, un solo estilo: Geist 12 px, neutro, con
+- Lo inventado lleva el sello `ilustrativo` al final del título o de la lectura, pegado a la última
+  palabra para que no quede solo en un renglón (`.sello-i`, un solo estilo: Geist 12 px, neutro, con
   filete). Lo real lleva fecha y fuente.
 - No se muestran clientes, logos ni testimonios que no existen. No se nombra ArcGIS: «el sistema
   del cliente» o «su SIG».
@@ -177,21 +179,23 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
 
   | Figura | Material | El ámbar |
   |---|---|---|
-  | capas | teal (Datos, `teal-fuerte`) | el dato que sube por el cable |
+  | capas | teal (Datos, `teal-fuerte`); bastidor en bosque claro | el dato que sube por el cable |
   | ruta | agua (columnas de entidades) | la ficha de la pregunta y la tapa de la columna que responde |
   | prueba | bosque (el fichero, filo claro) | la pestaña de la ficha que se lee |
-  | revisión | ocre (fichas, pila, motor, bandeja) | la banderita de la estación que encuentra algo |
-  | tablero | agua (relojes, `agua-fuerte`) | la aguja del reloj elegido |
-  | vigilancia | teal (buzones, `teal-fuerte`) | la banderita levantada |
-  | asistente | bosque (el panel, filo claro) | el piloto de la boca conectada |
+  | revisión | ocre (fichas, pila, motor, bandeja); banda de caucho en bosque | la banderita de la estación que encuentra algo |
+  | tablero | agua (cajas de los relojes en `agua-honda`) | la pala y el cubo de la aguja del reloj elegido |
+  | vigilancia | teal (buzones, `teal-fuerte`); impresora en `ocre-fuerte` | la banderita levantada |
+  | asistente | bosque claro (el panel) | el piloto de la boca conectada |
   | cobertura | una rampa agua → teal hondo (`m-cob0…4`) | la columna encendida |
 
   Lo que aparece o se va de color lo hace con la escala, no con la opacidad (un ámbar a medio
-  fundir sobre gris se ve oliva); las luces cambian de golpe, como una luz.
+  fundir sobre gris se ve oliva); las luces cambian de golpe, como una luz. A 1x, el acento ámbar
+  mide ~10 × 10 px o más y los pilotos 8 px o más: son lámparas (`lampara()` en `comun.mjs`: aro de
+  metal en el plano de la cara, lente y, encendida, la luz con su brillo).
 - **Movimiento con significado:** cada figura cuenta un ciclo: reposo → disparo → tránsito
   (400–700 ms) → resultado → reposo de 2,6 s con todo quieto. Solo se mueve lo que actúa; la
-  estructura nunca. Ambiente solo si es un estado real: el lector de la vigilancia late cada 3 s
-  mientras la figura está viva y quieta. Corre al entrar en vista (dos ciclos como mucho), vuelve con
+  estructura nunca. Corre al entrar en vista (dos ciclos) y, mientras sigue en vista, un ciclo cada
+  ~15 s (vida, también en móvil, donde no hay puntero); entre ciclos no se pinta nada. Vuelve con
   el puntero (elige por posición), el toque, el foco o las flechas y se puede interrumpir (mezcla de
   280 ms desde lo que se veía). Curvas: entrada `cubic-bezier(0, 0, .3, 1)`, salida
   `cubic-bezier(.4, .14, 1, 1)`, resorte críticamente amortiguado; subamortiguado solo en las agujas
@@ -203,22 +207,37 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
   figura más visible y la mueve con `requestAnimationFrame`; `window.__figuras.ver(nombre, turno, ms)`
   pide cualquier instante (hojas de contacto y pruebas). Lo que gira en un plano (el brazo de la
   barrera, la banderita, las agujas) se dibuja en coordenadas del plano con su matriz y gira con
-  `rotate`; lo que crece (barras, columnas) escala en un eje desde su base (`data-eje`).
-- **Rendimiento:** dos capas por figura: la fija y la viva (las piezas que se mueven y lo que las
-  tapa), en su propio `<svg>` encima, movida solo con `transform` y `opacity`; trayectorias y series
-  precalculadas en el build (nada de `getPointAtLength` ni de animar `d`); sin `filter: blur` (sombras
-  horneadas en escalones); a lo sumo 60 cuadros por segundo y 30 con puntero grueso o
-  `hardwareConcurrency ≤ 4`; cero cuadros en reposo. Sin `will-change`: promover la capa viva al
-  empezar cada ciclo costaba ~50 ms a CPU 4× (medido) y no ahorraba. Presupuesto medido a 390 px con
-  CPU 4×: ninguna tarea del hilo principal por encima de 33 ms en ninguna figura.
+  `rotate`; lo que crece (barras) escala en un eje desde su base (`data-eje`). Las columnas altas
+  de cobertura crecen de verdad: cada cara de lado vive en su marco (u por la arista del piso, v
+  vertical) y solo se le escala la v; la tapa sube (nada se aplasta).
+- **Rendimiento:** dos capas por figura. La **fija** va como `<img>` (sin DOM: no cuesta estilo ni
+  diseño al desplazarse), partida en trozos de a lo sumo 170 piezas (`nombre.svg`, `nombre-2.svg`…:
+  el navegador lee cada imagen en su propia tarea; una sola de 900 trazos pasaba de 40 ms a CPU 4×)
+  y con las reglas de `estilo.css` que pinta dentro. La **viva** (lo que se mueve, lo que lo tapa y
+  los rótulos grabados, que necesitan la fuente del sitio) va en línea, en su propio `<svg>` encima,
+  y entra por partes de ~200 piezas, un cuadro de por medio; se mueve solo con `transform` y
+  `opacity`, y el primer cuadro solo toca lo que cambia. Trayectorias y series precalculadas en el
+  build (nada de `getPointAtLength` ni de animar `d`); sin `filter: blur` (sombras horneadas); a lo
+  sumo 60 cuadros por segundo y 30 con puntero grueso o `hardwareConcurrency ≤ 4`; cero cuadros entre
+  ciclos. Sin `will-change` (promover la capa viva costaba ~50 ms a CPU 4×). Dos trampas medidas:
+  un selector de atributo como `[class*=" m-"]` hacía recalcular la figura entera cuando cambiaba la
+  clase de un ancestro, y marcar la figura lista con la clase `lista` (la de las listas del sitio) le
+  cambiaba el color heredado; por eso las reglas de material son `.iso-solid > …` y la marca es
+  `data-lista`. Medido a 390 px con CPU 4×: ninguna tarea por encima de 50 ms al desplazarse por
+  la portada, /servicios y /fuentes, y ninguna por encima de 26 ms animando una figura.
 - **Texto:** pocos rótulos grabados («Datos», «Terrnova», «rt/1»; las siglas de las entidades en el
-  tablero del asistente, que es lo que la clavija elige); lo demás va en la lectura (una línea) y en la
-  pista (el detalle: licencia, entidad), en minúscula.
+  tablero del asistente, que es lo que la clavija elige; el cordón elige una caída que no tape
+  ninguna); lo demás va en la lectura (una línea) y en la pista (el detalle: licencia, entidad), en
+  minúscula. La lectura arranca en el borde de la columna de la retícula (el dibujo puede ser más
+  angosto y va centrado) y, si la figura es ilustrativa, el sello va al final de la lectura.
 - **Peso:** los SVG van aparte (`web/publico/img/figuras/`) y `figuras.js` los trae al acercarse a la
-  vista; el hueco tiene su proporción para que la página no salte.
+  vista; el hueco tiene su proporción para que la página no salte. Pasan por svgo 4
+  (`web/figuras/package.json`): un decimal en los trazos, estilos sin repetir, matrices con tres
+  decimales, sin tocar ids ni piezas ocultas.
 - **Construir:** `uv run python web/construir.py` escribe los datos y, si hay Node, dibuja
-  (`node web/figuras/construir.mjs`); la huella de datos + scripts + kit va en cada SVG y `--revisar`
-  falla si alguno quedó viejo (el CI no tiene Node).
+  (`node web/figuras/construir.mjs`; la primera vez instala svgo con `npm ci`); la huella de datos +
+  scripts + kit + `estilo.css` va en cada SVG y `--revisar` falla si alguno quedó viejo (el CI no
+  tiene Node). También escribe el `?v=` del import de `comun3d.js` en `escena-predios.js`.
 
 ## Logo y aliados
 
@@ -227,8 +246,9 @@ consultado. «Terrnova» en Geist 650 a 20 px con interletrado +2 %: con −4 % 
 1x se leía «Termova». Se comprueba con una captura a 1x. En el pie, sobre bosque, la puerta va clara
 (#F3EFE4) y el punto sigue ámbar. No se gira ni cambia el color del punto.
 
-GeoAI LATAM y Atalaya Mapas son proyectos hermanos, nunca clientes, siempre con su logo oficial. El
-de Atalaya Mapas está pendiente: hasta tenerlo se escribe su nombre.
+GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial; Atalaya
+Mapas es un proyecto aliado. Ninguno es cliente; van siempre con su logo oficial. El de Atalaya
+Mapas está pendiente: hasta tenerlo se escribe su nombre.
 
 ## Ver el sitio en local
 

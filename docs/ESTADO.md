@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-10-31.*
+*Actualizado: 2026-11-01.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -47,6 +47,26 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Sitio v2, ronda de cierre del PR #212 (2026-11-01, sin fusionar)
+
+- **Verdad:** Saber 11 y BanRep (canario en rojo) fuera de sectores, tablero, asistente y de todo
+  ejemplo; `SIN_CANARIO_VERDE` en `construir.py` y una prueba lo cuidan. La figura «prueba» usa la
+  respuesta real del predio de Santa Marta (`correos.EJEMPLO`), la del héroe. El asistente abre con
+  la vigencia de una ley (SUIN). Meta «de Colombia y globales»; OAuth como visión; `/mcp` con
+  `ficha_empresa`; el JSON-RPC con `Accept: application/json, text/event-stream`; 404 sin canónica
+  y con `noindex`.
+- **Comercial y marca:** GeoAI LATAM hace Terrnova (/aliados); Inspow, nuestro aliado de facturación;
+  «20 % menos pagando el año»; tres formas de usarlo solo con texto; la figura capas en /servicios
+  («Una capa de datos y, encima, tu solución»), que funde «Cómo trabajamos» en el piloto; titular
+  del héroe en tres renglones a 1440 (mismas palabras; escena y consola sin tocar).
+- **Figuras:** rampas OKLCH con croma ≥ 0,08, agua de la marca, bosque claro, lámparas piloto de
+  8 px o más y acentos ámbar de ~10 px o más a 1x; columnas de cobertura que crecen de verdad; un
+  ciclo cada ~15 s mientras una figura está en vista (0 pintados entre ciclos).
+- **Rendimiento:** la capa fija como imágenes en trozos y la viva por partes; svgo. Tarea más larga
+  al desplazarse a 390 px con CPU 4×: portada 75,9 → 40,9 ms, /fuentes 55,6 → 45,1 ms (peor de tres
+  corridas: ≤ 45,1 ms en las tres páginas); animando, ≤ 25,4 ms. SVG 1.144 → 933 KB (gzip 221 →
+  171 KB).
 
 ## Sitio v2, fases 5 y 6: el texto que vende y móvil, accesibilidad y peso (2026-11-01, PR #212 sin fusionar)
 

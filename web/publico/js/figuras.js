@@ -85,7 +85,15 @@ function pintaBase(el, c, antes) {
 function motorDe(F) {
   const hechos = new Map(); // el -> canales pintados
   let desde = null, t0Mezcla = 0;
+  // lo que ya dice el SVG (scale(0), opacity:0) cuenta como pintado: el primer cuadro solo toca lo
+  // que cambia (si no, recalcula el estilo de toda la capa viva de una vez)
+  const inicial = el => {
+    if (el.__pinta || el.dataset.eje) return undefined;
+    const st = el.getAttribute('style') || '';
+    return { x: 0, y: 0, k: 0, s: /scale\(0\)/.test(st) ? 0 : 1, o: /opacity:\s*0(?![.\d])/.test(st) ? 0 : 1 };
+  };
   const pinta = (el, c) => {
+    if (!hechos.has(el)) { const i = inicial(el); if (i) hechos.set(el, i); }
     const antes = hechos.get(el);
     if (antes && antes.x === c.x && antes.y === c.y && antes.o === c.o && antes.s === c.s && antes.k === c.k) return;
     (el.__pinta || pintaBase)(el, c, antes);
@@ -421,10 +429,10 @@ FIG.cobertura = ({ V, pieza }) => {
     pose(i, t, pon) {
       const entrando = i === 0;
       cols.forEach((el, c) => {
-        // las columnas bajas (la mayoría) aparecen de una vez con su anillo; las altas crecen, en
-        // escalones de 1/24: así cada cuadro cambia pocas piezas y repinta poco
+        // las altas crecen, en escalones de 1/24: así cada cuadro cambia pocas piezas y repinta poco
         const t0 = ESPERA + V.celdas[c][3] * RETRASO;
-        const k = !entrando ? 1 : V.celdas[c][4] ? Math.round(resorte(t, t0, CRECE) * 24) / 24 : t >= t0 + CRECE * 0.3 ? 1 : 0;
+        // las bajas están quietas desde el principio (casi todas van en la capa fija)
+        const k = !entrando || !V.celdas[c][4] ? 1 : Math.round(resorte(t, t0, CRECE) * 24) / 24;
         pon(el, { k, o: k > 0.02 ? 1 : 0 }); // a altura cero no se dibuja
       });
       pines.forEach((el, j) => {
@@ -620,22 +628,47 @@ FIG.asistente = ({ V, pieza }) => {
 // está libre (requestIdleCallback; si no lo hay, el cuadro siguiente).
 const ocioso = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 400 }) : f => requestAnimationFrame(() => setTimeout(f, 0));
 let fila = Promise.resolve();
-const turno = () => (fila = fila.then(() => new Promise(r => ocioso(r))));
+// un cuadro de por medio (requestAnimationFrame) y luego el hueco libre: entre dos entradas siempre
+// hay un cálculo de estilo, así ninguno junta más de una parte
+const turno = () => (fila = fila.then(() => new Promise(r => requestAnimationFrame(() => ocioso(r)))));
 async function cargar(fig) {
   const lienzo = fig.querySelector('.lienzo');
-  const img = new Image();
-  img.alt = ''; img.decoding = 'async'; img.className = 'capa-fija'; img.src = lienzo.dataset.src;
-  const [r] = await Promise.all([fetch(lienzo.dataset.viva), img.decode().catch(() => {})]);
+  // la capa fija viene en trozos (una imagen cada uno: el navegador lee cada una en su tarea)
+  const imgs = lienzo.dataset.src.split(',').map((src, i) => {
+    const img = new Image();
+    img.alt = ''; img.decoding = 'async'; img.className = i ? 'capa-fija encima' : 'capa-fija'; img.src = src;
+    return img;
+  });
+  const [r] = await Promise.all([fetch(lienzo.dataset.viva), ...imgs.map(img => img.decode().catch(() => {}))]);
   if (!r.ok) return;
-  const texto = await r.text();
+  // la capa viva se lee fuera del documento y entra por partes, de a unas 250 piezas por cuadro
+  // libre: así ningún cálculo de estilo se alarga (la de cobertura tiene unas 2.000)
+  const doc = new DOMParser().parseFromString(await r.text(), 'image/svg+xml');
+  const fuente = doc.documentElement, grupo = fuente.querySelector('.capa-viva');
   await turno();
   const caja = document.createElement('div');
   caja.className = 'capa-viva';
-  caja.innerHTML = texto;
-  lienzo.append(img, caja);
+  const svg = document.importNode(fuente, false);
+  const destino = document.importNode(grupo, false);
+  svg.append(destino);
+  caja.append(svg);
+  // las imágenes entran de a una por cuadro (pintar una figura en imagen también cuesta), y la viva
+  // encima de todas
+  lienzo.append(imgs[0], caja);
+  for (const img of imgs.slice(1)) { await turno(); caja.before(img); }
+  let lote = [], peso = 0;
+  const pasar = async () => { if (!lote.length) return; const l = lote; lote = []; peso = 0; await turno(); destino.append(...l.map(n => document.importNode(n, true))); };
+  for (const hijo of [...grupo.childNodes]) {
+    lote.push(hijo);
+    peso += 1 + (hijo.getElementsByTagName ? hijo.getElementsByTagName('*').length : 0);
+    if (peso >= 200) await pasar();
+  }
+  await pasar();
   const nombre = fig.dataset.figura;
   if (FIG[nombre]) await new Promise(r => ocioso(() => { montar(fig, nombre, FIG[nombre], caja); r(); }));
-  fig.classList.add('lista');
+  // montada: un atributo y no una clase («.lista» es la de las listas del sitio: la figura heredaba su
+  // color y se recalculaba entera)
+  fig.dataset.lista = '';
 }
 const cerca = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;

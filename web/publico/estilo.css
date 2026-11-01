@@ -667,6 +667,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .fig-iso .capa-viva { position: absolute; inset: 0; pointer-events: none; }
 /* la capa fija es una imagen: sin DOM, no cuesta estilo ni diseño al desplazarse */
 .fig-iso .lienzo > img.capa-fija { display: block; width: 100%; height: auto; }
+.fig-iso .lienzo > img.capa-fija.encima { position: absolute; inset: 0; }
 .fig-iso .lienzo:focus-visible { outline: 2px solid var(--foco); outline-offset: 6px; }
 .fig-iso .lectura-l { width: 100%; display: grid; justify-items: start; gap: 2px;
   font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); font-variant-numeric: tabular-nums; }
@@ -739,14 +740,16 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .m-ocre-fuerte { --c0: var(--sujeto-ocre-2); --c1: var(--sujeto-ocre-3); --c2: var(--sujeto-ocre-4); --c3: var(--sujeto-ocre-5); --c4: var(--sujeto-ocre-6); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-5); }
 .m-bosque { --c0: var(--oscuro-0); --c1: var(--oscuro-1); --c2: var(--oscuro-2); --c3: var(--oscuro-3); --c4: var(--oscuro-4); --filo: var(--oscuro-filo); --pliegue: var(--oscuro-filo); }
 .m-ambar { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); --pliegue: var(--acento-4); }
-.iso-solid[class*=" m-"] > .iso-fill { fill: var(--c1); }
-.iso-solid[class*=" m-"] > .iso-top { fill: var(--c0); }
-.iso-solid[class*=" m-"] > .iso-shade[data-shade="3"] { fill: var(--c1); }
-.iso-solid[class*=" m-"] > .iso-shade[data-shade="2"] { fill: var(--c2); }
-.iso-solid[class*=" m-"] > .iso-shade[data-shade="1"] { fill: var(--c3); }
-.iso-solid[class*=" m-"] > .iso-shade[data-shade="0"] { fill: var(--c4); }
-.iso-solid[class*=" m-"] > .iso-edge { stroke: var(--filo); }
-.iso-solid[class*=" m-"] > .iso-crease, .iso-solid[class*=" m-"] > .iso-bevel { stroke: var(--pliegue); }
+.iso-solid > .iso-fill { fill: var(--c1); }
+.iso-solid > .iso-top { fill: var(--c0); }
+.iso-solid > .iso-shade[data-shade="3"] { fill: var(--c1); }
+.iso-solid > .iso-shade[data-shade="2"] { fill: var(--c2); }
+.iso-solid > .iso-shade[data-shade="1"] { fill: var(--c3); }
+.iso-solid > .iso-shade[data-shade="0"] { fill: var(--c4); }
+.iso-solid > .iso-line.iso-edge { stroke: var(--filo); }
+.iso-solid > .iso-line.iso-crease, .iso-solid > .iso-line.iso-bevel { stroke: var(--pliegue); }
+/* (sin selectores de atributo como [class*=" m-"]: con ellos, cambiar la clase de un ancestro volvía a
+   calcular el estilo de toda la figura) */
 /* sombra de contacto horneada: escalones translúcidos, sin desenfoque (comun.mjs, sombra) */
 .sombra { fill: var(--halo); stroke: none; opacity: .045; }
 .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }

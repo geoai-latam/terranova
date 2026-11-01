@@ -38,16 +38,33 @@ export function encuadre(puntos, { azimuth = 45, pad = 10, escala = ESCALA } = {
 // página muestra como <img> (sin DOM: no cuesta estilo ni diseño al desplazarse), y la viva (las
 // piezas que se mueven, lo que las tapa y los rótulos grabados, que necesitan la fuente del sitio),
 // que figuras.js pone encima, en línea. data-vivo lleva lo que el movimiento necesita.
+// La capa fija se parte en trozos de a lo sumo PIEZAS_POR_TROZO elementos (un trazo largo cuenta
+// por su largo), en orden de pintura:
+// cada trozo es una imagen y el navegador lee cada una en su propia tarea (una sola de 900 trazos
+// pasaba de 40 ms a CPU 4×). Las imágenes van una sobre otra, en el mismo orden.
+const PIEZAS_POR_TROZO = 170;
+const piezas = (t) => (t.match(/<(path|circle|text|line|ellipse|rect|polygon)\b/g) || []).length;
 export function svgDe({ huella, ancho, alto, etiqueta, fija, cuerpo: viejo, viva = [], vivo, clase }) {
   if (fija === undefined) fija = viejo;
   // los rótulos grabados (texto) van en la viva: un SVG en <img> no ve las fuentes de la página
   const textos = [];
-  const fijaSin = [].concat(fija).join("").replace(/<text class="iso-face-text"[^>]*>[^<]*<\/text>/g, (t) => (textos.push(t), ""));
-  const capaFija = k.figureSvg({ width: ancho, height: alto, label: etiqueta, body: `<g class="capa-fija">${fijaSin}</g>`, className: clase });
+  const sinTexto = [].concat(fija).map((t) => t.replace(/<text class="iso-face-text"[^>]*>[^<]*<\/text>/g, (x) => (textos.push(x), "")));
+  const trozos = [[]];
+  let n = 0;
+  for (const t of sinTexto) {
+    const m = piezas(t) + Math.floor(t.length / 500); // un trazo muy largo también pesa
+    if (n && n + m > PIEZAS_POR_TROZO) { trozos.push([]); n = 0; }
+    trozos[trozos.length - 1].push(t);
+    n += m;
+  }
+  const fijas = trozos.map((tr, i) =>
+    k.figureSvg({ width: ancho, height: alto, label: i === 0 ? etiqueta : "", body: `<g class="capa-fija">${tr.join("")}</g>`, className: clase })
+      .replace("<svg ", `<svg data-datos="${huella}"${i === 0 ? ` data-trozos="${trozos.length}"` : ""} `),
+  );
   const capaViva = k.figureSvg({ width: ancho, height: alto, label: "", body: `<g class="capa-viva">${textos.join("")}${[].concat(viva).join("")}</g>`, className: `${clase} capa-viva-svg` })
     .replace(' role="img" aria-label=""', ' aria-hidden="true"');
   return {
-    fija: capaFija.replace("<svg ", `<svg data-datos="${huella}" `),
+    fijas,
     viva: capaViva.replace("<svg ", `<svg data-datos="${huella}" data-vivo="${esc(JSON.stringify(vivo))}" `),
   };
 }

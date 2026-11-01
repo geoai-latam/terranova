@@ -121,9 +121,15 @@ export function cobertura(DATOS, huella) {
 
   // la tierra: losetas de hexágono con grueso (el canto, más oscuro, asoma bajo la cara) y la costa:
   // los lados de hexágono que no comparte ninguna loseta vecina, en linea-media
-  const losetas = (z) => pts.map(([x, y]) => k.pathOf(hex(x, y, RR * 0.97).map(([a, b]) => at([a, b, z])), true)).join("");
-  fija.push(`<path class="tierra-canto" d="${losetas(ZT)}"/>`);
-  fija.push(`<path class="tierra" d="${losetas(ZL)}"/>`);
+  // en cuatro franjas de atrás hacia adelante (canto y cara de cada una): trazos más cortos, que el
+  // navegador lee en trozos de imagen distintos
+  const losetas = (lista, z) => lista.map(([x, y]) => k.pathOf(hex(x, y, RR * 0.97).map(([a, b]) => at([a, b, z])), true)).join("");
+  const enOrden = [...pts].sort((a, b) => k.depthOf([a[0], a[1], 0], P) - k.depthOf([b[0], b[1], 0], P));
+  const FRANJAS = 4, porFranja = Math.ceil(enOrden.length / FRANJAS);
+  for (let f = 0; f < FRANJAS; f++) {
+    const lista = enOrden.slice(f * porFranja, (f + 1) * porFranja);
+    fija.push(`<path class="tierra-canto" d="${losetas(lista, ZT)}"/><path class="tierra" d="${losetas(lista, ZL)}"/>`);
+  }
   const lados = new Map();
   const llave = ([x, y]) => `${Math.round(x * 2)},${Math.round(y * 2)}`;
   for (const [x, y] of pts) {
@@ -146,19 +152,27 @@ export function cobertura(DATOS, huella) {
   const mayores = celdas.map((c, i) => [c[2], i]).sort((a, b) => b[0] - a[0]).slice(0, 6).map(([, i]) => i);
   const candidatas = [...new Set([...mayores, ...ciudades.map(([, lon, lat]) => cerca(lon, lat)).filter((i) => i >= 0)])];
 
-  // columnas, encendidas y alfileres, de atrás hacia adelante (todo en la capa viva: crecen)
+  // columnas, encendidas y alfileres, de atrás hacia adelante. Las altas crecen y los alfileres caen
+  // (capa viva); las bajas están quietas desde el principio y van en la capa fija, salvo las que
+  // tapan a una pieza viva (delante de ella en el mundo y encima en pantalla): esas van en la viva,
+  // después de lo que tapan, para que el orden de pintura siga siendo el del mundo.
   const [bx, by] = [-74.08, 4.61]; // Bogotá: de aquí sale el crecimiento
+  const caja = (pts) => { const xs = pts.map(([x]) => x), ys = pts.map(([, y]) => y); return [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; };
+  const choca = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
   const items = [];
   celdas.forEach(([lon, lat, n], i) => {
     const cx = X(lon), cy = Y(lat), h = alto(n);
-    const sol = k.extrude(hex(cx, cy, RR * 0.8), ZL, h, P, { convex: true });
-    // las altas crecen de verdad (sus caras se alargan); las bajas aparecen de una vez
+    const anillo = hex(cx, cy, RR * 0.8);
+    const sol = k.extrude(anillo, ZL, h, P, { convex: true });
+    // las altas crecen de verdad (sus caras se alargan); las bajas están desde el principio
     const alta = h >= 12;
     let svg = alta
-      ? `<g data-v="c${i}">${columnaQueCrece(hex(cx, cy, RR * 0.8), ZL, h, P, `cob${nivel(n)}`)}</g>`
+      ? `<g data-v="c${i}">${columnaQueCrece(anillo, ZL, h, P, `cob${nivel(n)}`)}</g>`
       : `<g data-v="c${i}">${sinRelleno(S(sol, { m: `cob${nivel(n)}`, tone: "hi", crease: "lo" }))}</g>`;
-    if (candidatas.includes(i)) svg += `<g data-v="luz${i}" style="opacity:0">${sinRelleno(S(sol, { m: "ambar", tone: "hi", crease: "lo" }))}</g>`;
-    items.push({ d: k.depthOf([cx, cy, 0], P), svg });
+    const luz = candidatas.includes(i);
+    if (luz) svg += `<g data-v="luz${i}" style="opacity:0">${sinRelleno(S(sol, { m: "ambar", tone: "hi", crease: "lo" }))}</g>`;
+    const bb = caja(anillo.flatMap(([x, y]) => [k.iso([x, y, ZL], P), k.iso([x, y, ZL + h], P)]));
+    items.push({ d: k.depthOf([cx, cy, 0], P), svg, vivo: alta || luz, bb });
   });
   // alfileres: aguja de metal y cabeza oscura con su remate, siempre más altos que la columna de
   // su celda (si no, quedarían dentro de ella)
@@ -170,10 +184,15 @@ export function cobertura(DATOS, huella) {
       `<g data-v="pin${j}" style="opacity:0">${S(k.cylinder(cx, cy, 0.4, ZL, largo, P, 10), { m: "metal", tone: "mid", crease: "none" })}` +
       `${S(k.cylinder(cx, cy, 1.9, ZL + largo, 1.4, P, 18), { m: "bosque", tone: "mid", crease: "none" })}` +
       `${S(k.cylinder(cx, cy, 1.1, ZL + largo + 1.4, 1, P, 14), { m: "bosque", tone: "mid", crease: "none" })}</g>`;
-    items.push({ d: k.depthOf([cx, cy, 0], P) + 0.01, svg });
+    // la caja incluye la caída del alfiler (entra desde arriba)
+    const bb = caja([k.iso([cx - 2, cy - 2, ZL], P), k.iso([cx + 2, cy + 2, ZL + largo + 2.4 + 14], P), k.iso([cx + 2, cy - 2, ZL], P), k.iso([cx - 2, cy + 2, ZL + largo + 16], P)]);
+    items.push({ d: k.depthOf([cx, cy, 0], P) + 0.01, svg, vivo: true, bb });
   });
   items.sort((a, b) => a.d - b.d);
-  viva.push(items.map((x) => x.svg).join(""));
+  const vivos = items.filter((x) => x.vivo);
+  for (const x of items) if (!x.vivo && vivos.some((v) => v.d < x.d && choca(v.bb, x.bb))) x.tapa = true;
+  fija.push(...items.filter((x) => !x.vivo && !x.tapa).map((x) => x.svg));
+  viva.push(items.filter((x) => x.vivo || x.tapa).map((x) => x.svg).join(""));
 
   const puntas = candidatas.map((i) => { const [lon, lat, n] = celdas[i]; return at([X(lon), Y(lat), ZL + alto(n)]).map((v) => Math.round(v)); });
   return svgDe({

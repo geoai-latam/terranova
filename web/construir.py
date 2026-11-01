@@ -1172,13 +1172,21 @@ def figura(
     etiqueta = re.search(r'aria-label="([^"]*)"', svg)
     assert caja and etiqueta, nombre
     w, h = caja.groups()
+    # la capa fija va en trozos (cada uno una imagen): nombre.svg, nombre-2.svg…
+    trozos = re.search(r'data-trozos="(\d+)"', svg)
+    assert trozos, nombre
+    v = huella.group(1)
+    fijas = ",".join(
+        f"/img/figuras/{nombre}{f'-{i}' if i > 1 else ''}.svg?v={v}"
+        for i in range(1, int(trozos.group(1)) + 1)
+    )
     pista_html = f'<span class="pista">{pista}</span>' if pista else ""
     # el sello va al final de la lectura (la lectura cambia; el sello se queda en su sitio)
     sello = SELLO_I if ilustrativo else ""
     return (
         f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}">'
         f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
-        f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" '
+        f'data-src="{fijas}" '
         f'data-viva="/img/figuras/{nombre}-viva.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
         f'<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lectura}</span>{sello}</span>{pista_html}</figcaption>'
         "</figure>"
@@ -2184,7 +2192,8 @@ def main() -> int:
     else:
         datos_fig.write_text(datos_figuras_json(), encoding="utf-8", newline="\n")
         sello = f'data-datos="{huella_figuras()}"'
-        svgs = [SVG_FIGURAS / f"{n}{c}.svg" for n in NOMBRES_FIGURAS for c in ("", "-viva")]
+        svgs = [SVG_FIGURAS / f"{n}{c}.svg" for n in NOMBRES_FIGURAS for c in ("", "-viva", "-2")]
+        svgs = [s for s in svgs if not s.name.endswith("-2.svg") or s.exists()]
         if not all(s.exists() and sello in s.read_text(encoding="utf-8") for s in svgs):
             import shutil
             import subprocess

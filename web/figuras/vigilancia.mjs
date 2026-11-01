@@ -74,7 +74,7 @@ export function vigilancia(DATOS, huella) {
     const [u0, v0] = [eje[1], eje[2]];
     const brazo = `<path class="ban-brazo" d="M${r1(u0 - 12)} ${r1(v0 - 0.55)}H${r1(u0 + 0.6)}V${r1(v0 + 0.55)}H${r1(u0 - 12)}Z"/>`;
     // la placa es de metal mientras está abajo; levantada, se enciende (la única ámbar)
-    const placaD = `M${r1(u0 - 12)} ${r1(v0 + 0.55)}H${r1(u0 - 1.8)}V${r1(v0 + 6.6)}H${r1(u0 - 12)}Z`;
+    const placaD = `M${r1(u0 - 12)} ${r1(v0 + 0.55)}H${r1(u0 - 1.8)}V${r1(v0 + 8)}H${r1(u0 - 12)}Z`;
     const placa = `<path class="ban-placa-metal" d="${placaD}"/><path class="ban-placa" data-v="banderaA${i}" style="opacity:0" d="${placaD}"/>`;
     banderas.push(`<g transform="matrix(${M.join(" ")})"><g data-v="bandera${i}" data-pivote="${u0} ${v0}">${brazo}${placa}</g><circle class="ban-eje" cx="${u0}" cy="${v0}" r="0.8"/></g>`);
   });

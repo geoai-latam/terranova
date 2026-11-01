@@ -105,7 +105,7 @@ export function tablero(DATOS, huella) {
     const aguja = `M${r1(cx - 0.55)} ${r1(cy + 2.4)}L${r1(cx + 0.55)} ${r1(cy + 2.4)}L${r1(cx + 0.14)} ${r1(cy - (R - 3.2))}L${r1(cx - 0.14)} ${r1(cy - (R - 3.2))}Z`;
     // la del reloj elegido, en ámbar, es una pala con su cubo: se lee a 1x (~10 px o más)
     const pala = `M${r1(cx - 1.3)} ${r1(cy + 3)}L${r1(cx + 1.3)} ${r1(cy + 3)}L${r1(cx + 0.3)} ${r1(cy - (R - 3))}L${r1(cx - 0.3)} ${r1(cy - (R - 3))}Z`;
-    const cubo = `<circle class="aguja-ambar" cx="${cx}" cy="${cy}" r="2.6"/>`;
+    const cubo = `<circle class="aguja-ambar" cx="${cx}" cy="${cy}" r="3.1"/>`;
     r.push(
       `<g transform="matrix(${MZ.join(" ")})"><g data-v="aguja${i}" data-centro="${cx} ${cy}"><path class="aguja" d="${aguja}"/></g>` +
         `<g data-v="ambar${i}" data-centro="${cx} ${cy}" style="opacity:0"><path class="aguja-ambar" d="${pala}"/>${cubo}</g></g>`,
