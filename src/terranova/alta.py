@@ -37,7 +37,7 @@ from terranova.identidad import Registro
 # La llave del alta automática: pocos créditos y con vencimiento. Para más, el plan Gratis o uno
 # de pago se piden a soporte (decisión del dueño, 2026-10-31).
 NIVEL_ALTA = "prueba"
-VIGENCIA_LLAVE = timedelta(days=30)
+VIGENCIA_LLAVE = timedelta(days=15)  # decisión del dueño, 2026-11-01
 VIGENCIA_ENLACE = timedelta(hours=24)
 ALTAS_POR_IP_HORA = 5
 CONTACTOS_POR_IP_HORA = 10

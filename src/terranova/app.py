@@ -31,7 +31,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
 from terranova import ficha_empresa, metricas, puerta
-from terranova.alta import ErrorAlta
+from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
@@ -432,7 +432,8 @@ def crear_api() -> FastAPI:
             f"<p>Esta es la llave de <b>{escape(correo)}</b>. No la volverás a ver aquí ni te "
             "llegará por correo.</p>"
             f'<code class="s-llave">{escape(llave)}</code>'
-            "<p>Trae pocos créditos y vence en 30 días: sirve para probar. Para más, escríbenos y "
+            f"<p>Trae {NIVELES[NIVEL_ALTA]} créditos y vence en {VIGENCIA_LLAVE.days} días: sirve "
+            "para probar. Para más, escríbenos y "
             "te pasamos a un plan.</p>"
             '<p><a class="enlace" href="/desarrolladores">Cómo conectarla a tu agente o tu '
             "sistema</a></p>"
