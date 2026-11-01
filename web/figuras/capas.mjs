@@ -3,7 +3,7 @@
 // Agentes, en neutro, cada uno con un cable a su toma. Lo que se mueve: el dato (la única pieza
 // ámbar) sube por el cable del módulo que pregunta y, cuando llega, el piloto del módulo se
 // enciende. Nada más se mueve.
-import { D, L, S, encuadre, esc, k, r1, sombra, svgDe } from "./comun.mjs";
+import { D, L, S, encuadre, esc, k, matrizPlano, r1, sombra, svgDe } from "./comun.mjs";
 
 const tramo = (a, b, P) => k.segment(a, b, P);
 
@@ -58,6 +58,9 @@ export function capas(DATOS, huella) {
   // los módulos, de abajo arriba
   const zToma = [];
   const pilotos = [];
+  const pantallas = []; // lo que muestra cada pantalla cuando le llega el dato (capa viva)
+  const PF = yF + 0.62; // plano de lo que se dibuja en las pantallas
+  const MF = matrizPlano(P, "y", PF);
   UNID.forEach(({ z, h }, i) => {
     const g = [];
     const tope = z + h;
@@ -65,7 +68,7 @@ export function capas(DATOS, huella) {
     g.push(S(k.slabOf({ x: 7, y: 2, w: W - 14, d: FD - 3, r: 0.6 }, z + 0.5, h - 1, P, 2, 0.4), { tone: "lo", m: "acero" }));
     const frente = { x: 0.5, y: FD - 1, w: W - 1, d: 2.5, r: 0.5 };
     const costura = k.sideSeam(frente, z + 1.6, P, 2);
-    g.push(S(k.slabOf(frente, z, h, P, 2, 0.5), { tone: datos ? "hi" : "mid", m: datos ? "teal" : "papel", inner: L(costura, { tone: "faint" }) }));
+    g.push(S(k.slabOf(frente, z, h, P, 2, 0.5), { tone: datos ? "hi" : "mid", m: datos ? "teal-fuerte" : "papel", inner: L(costura, { tone: "faint" }) }));
     // orejas con dos tornillos por lado
     const torn = [];
     for (const x of [3.6, W - 3.6]) for (const zz of [z + 4.5, tope - 4.5]) torn.push([x, yF, zz]);
@@ -115,23 +118,54 @@ export function capas(DATOS, huella) {
       zToma.push(z + 18);
     } else {
       const cx = TOMAS[i - 1];
+      // marco de la pantalla (bisel de metal con cuatro tornillos) y la pantalla oscura
+      const pantalla = (x0, x1, z0, z1) => {
+        g.push(S(k.slabOf({ x: x0 - 1.6, y: yF, w: x1 - x0 + 3.2, d: 0.35, r: 0.5 }, z0 - 1.6, z1 - z0 + 3.2, P, 1), { tone: "lo", crease: "none", m: "metal" }));
+        g.push(ventana(x0, x1, z0, z1));
+        g.push(D([[x0 - 0.8, z0 - 0.8], [x1 + 0.8, z0 - 0.8], [x0 - 0.8, z1 + 0.8], [x1 + 0.8, z1 + 0.8]].map(([x, zz]) => at([x, yF + 0.35, zz])), { size: 0.32 }));
+      };
+      // rejilla de ventilación (ranuras cerradas) y ranura de tarjeta, bajo la placa
+      const ranura = (x0, x1, z0, z1) => k.pathOf([[x0, yF, z0], [x1, yF, z0], [x1, yF, z1], [x0, yF, z1]].map(at), true);
+      g.push(L([0, 1, 2, 3, 4].map((q) => ranura(14.6 + q * 4, 17.4 + q * 4, z + 3, z + 4.4)).join(""), { tone: "lo" }));
+      g.push(L(ranura(14.6, 33.4, z + 6.6, z + 7.6), { tone: "mid" }));
+      const loc = (u, v) => `${r1(u)} ${r1(v)}`;
       if (i === 1) {
-        // Analítica: una ventana con la rejilla de una tabla
-        g.push(ventana(40, 78, z + 4, tope - 4));
-        const filas = [z + 8.5, z + 12.5, tope - 8.5].map((zz) => tramo([40, yF + 0.5, zz], [78, yF + 0.5, zz], P));
-        const cols = [52, 64].map((xx) => tramo([xx, yF + 0.5, z + 4], [xx, yF + 0.5, tope - 4], P));
-        g.push(L(filas.join("") + cols.join(""), { tone: "lo", className: "en-oscuro" }));
+        // Analítica: un gráfico de barras; cuando llega el dato, las barras crecen
+        const x0 = 40, x1 = 78, z0 = z + 4, z1 = tope - 4;
+        pantalla(x0, x1, z0, z1);
+        g.push(L(tramo([x0 + 2, yF + 0.5, z0 + 2], [x1 - 2, yF + 0.5, z0 + 2], P), { tone: "lo", className: "en-oscuro" }));
+        g.push(L([z0 + 6, z0 + 10].map((zz) => tramo([x0 + 2, yF + 0.5, zz], [x1 - 2, yF + 0.5, zz], P)).join(""), { tone: "faint", className: "en-oscuro" }));
+        const alturas = [4.2, 6.8, 5.4, 8.6, 7.2, 10.4];
+        const barras = alturas.map((ha, q) => {
+          const u = x0 + 4 + q * 5.6, v = z0 + 2.2;
+          return `<g data-v="barra${q}" data-eje="y ${r1(v)}"><path class="en-pantalla" d="M${loc(u, v)}H${r1(u + 3)}V${r1(v + ha)}H${r1(u)}Z"/></g>`;
+        });
+        pantallas.push(`<g transform="matrix(${MF.join(" ")})">${barras.join("")}</g>`);
       } else if (i === 2) {
-        // Automatización: seis pilotos de tareas con su bisel y una ranura de lectura
-        const pil = Array.from({ length: 6 }, (_, q) => [42 + q * 6, yF, z + 14]);
-        g.push(L(pil.map((p) => k.sideRing(p, 1.5, "y", P, 14)).join(""), { tone: "lo" }));
-        g.push(D(pil.map(at), { size: 0.55, tone: "lo" }));
-        g.push(ventana(42, 72, z + 5, z + 9));
+        // Automatización: una lista de tareas; cuando llega el dato, se marca la que faltaba
+        const x0 = 40, x1 = 78, z0 = z + 4, z1 = tope - 4;
+        pantalla(x0, x1, z0, z1);
+        const filas = [z1 - 3.6, z1 - 7.8, z1 - 12];
+        const caja = (v) => `M${loc(x0 + 3, v - 1.3)}H${r1(x0 + 5.6)}V${r1(v + 1.3)}H${r1(x0 + 3)}Z`;
+        const cajas = filas.map((v) => caja(v)).join("");
+        const renglones = filas.map((v, q) => `M${loc(x0 + 8, v)}H${r1(x0 + 8 + [22, 17, 25][q])}`).join("");
+        const marca = (v) => `M${loc(x0 + 3.5, v)}L${loc(x0 + 4.2, v - 0.9)}L${loc(x0 + 5.3, v + 1)}`;
+        const fijo = `<path class="en-pantalla-trazo" d="${cajas}"/><path class="en-pantalla-trazo tenue" d="${renglones}"/><path class="en-pantalla-trazo" d="${marca(filas[0]) + marca(filas[1])}"/>`;
+        g.push(`<g transform="matrix(${MF.join(" ")})">${fijo}</g>`);
+        pantallas.push(
+          `<g transform="matrix(${MF.join(" ")})"><g data-v="marca" data-c="${loc(x0 + 4.3, filas[2])}"><path class="en-pantalla-trazo" d="${marca(filas[2])}"/></g></g>`,
+        );
       } else {
-        // Agentes: una pantalla con tres renglones de texto
-        g.push(ventana(40, 80, z + 4, tope - 4));
-        const reng = [30, 22, 26].map((largo, j) => tramo([42.5, yF + 0.5, tope - 7.5 - j * 3.6], [42.5 + largo, yF + 0.5, tope - 7.5 - j * 3.6], P));
+        // Agentes: una conversación; cuando llega el dato, el agente escribe su respuesta
+        const x0 = 40, x1 = 80, z0 = z + 4, z1 = tope - 4;
+        pantalla(x0, x1, z0, z1);
+        const reng = [30, 22].map((largo, j) => tramo([42.5, yF + 0.5, z1 - 3.5 - j * 3.4], [42.5 + largo, yF + 0.5, z1 - 3.5 - j * 3.4], P));
         g.push(L(reng.join(""), { tone: "lo", free: true, className: "en-oscuro" }));
+        const v = z0 + 3.4;
+        pantallas.push(
+          `<g transform="matrix(${MF.join(" ")})"><g data-v="chat" data-eje="x ${r1(x0 + 6)}"><path class="en-pantalla-trazo" d="M${loc(x0 + 6, v)}H${r1(x0 + 33)}M${loc(x0 + 6, v - 2.6)}H${r1(x0 + 24)}"/></g>` +
+            `<circle class="en-pantalla" cx="${r1(x0 + 3.6)}" cy="${r1(v)}" r="0.9"/></g>`,
+        );
       }
       tomaEn(cx, z + h / 2);
       zToma.push(z + h / 2);
@@ -178,9 +212,11 @@ export function capas(DATOS, huella) {
     // el dato: una pieza ámbar que sube por el cable, armada justo encima de la clavija de datos
     const z0 = abajo + 0.6, z1 = arriba - PAQ - 0.6;
     const paquete = { x: cx - 1.8, y: yC - 1.8, w: 3.6, d: 3.6, r: 1.2 };
-    viva.push(`<g data-v="dato${j}" style="opacity:0">${S(k.slabOf(paquete, z0, PAQ, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
+    const [qx, qy] = at([cx, yC, z0 + PAQ / 2]);
+    viva.push(`<g data-v="dato${j}" data-c="${r1(qx)} ${r1(qy)}" style="transform:scale(0)">${S(k.slabOf(paquete, z0, PAQ, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
     viajes.push(k.axisVector(P, [0, 0, z1 - z0]).map(r1));
   });
+  viva.push(...pantallas);
   // los pilotos de los módulos, encendidos (teal), aparecen cuando llega el dato
   pilotos.forEach((pp, j) => viva.push(`<g data-v="piloto${j}" class="marca-vivo" style="opacity:0">${D([at(pp)], { size: 0.85, tone: "hi" })}</g>`));
 

@@ -30,11 +30,11 @@
   --linea-tenue: #D7DBD4; --linea-baja: #A2AAA3; --linea-media: #6F7C75; --linea-alta: #12261F;
   /* sujeto: un material de color por figura, 15–25 % del área, con su filo */
   --sujeto-teal-0: #D4F3EA; --sujeto-teal-1: #BEE7DC; --sujeto-teal-2: #A9D9CC; --sujeto-teal-3: #94CABC;
-  --sujeto-teal-4: #80BAAC; --sujeto-teal-filo: #236E62;
+  --sujeto-teal-4: #80BAAC; --sujeto-teal-5: #6CA99B; --sujeto-teal-6: #5A988A; --sujeto-teal-filo: #236E62;
   --sujeto-agua-0: #D6EFF6; --sujeto-agua-1: #C0E3EE; --sujeto-agua-2: #AAD4E2; --sujeto-agua-3: #95C4D4;
-  --sujeto-agua-4: #81B3C5; --sujeto-agua-filo: #2B6A78;
+  --sujeto-agua-4: #81B3C5; --sujeto-agua-5: #6EA2B5; --sujeto-agua-6: #5D91A5; --sujeto-agua-filo: #2B6A78;
   --sujeto-ocre-0: #F6E8CC; --sujeto-ocre-1: #ECDBB8; --sujeto-ocre-2: #E1CDA5; --sujeto-ocre-3: #D4BE92;
-  --sujeto-ocre-4: #C7AF81; --sujeto-ocre-filo: #7A5B1E;
+  --sujeto-ocre-4: #C7AF81; --sujeto-ocre-5: #B9A070; --sujeto-ocre-6: #AB9161; --sujeto-ocre-filo: #7A5B1E;
   /* material oscuro (bosque), con filo claro */
   --oscuro-0: #203F35; --oscuro-1: #18382E; --oscuro-2: #113027; --oscuro-3: #082920; --oscuro-4: #022219;
   --oscuro-filo: #649087;
@@ -689,6 +689,10 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 /* el azul de estado («fuera de cobertura») no es material: la vigilancia pasa a agua */
 .m-agua, .m-azul { --c0: var(--sujeto-agua-0); --c1: var(--sujeto-agua-1); --c2: var(--sujeto-agua-2); --c3: var(--sujeto-agua-3); --c4: var(--sujeto-agua-4); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-4); }
 .m-ocre, .m-parcial { --c0: var(--sujeto-ocre-0); --c1: var(--sujeto-ocre-1); --c2: var(--sujeto-ocre-2); --c3: var(--sujeto-ocre-3); --c4: var(--sujeto-ocre-4); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-4); }
+/* el sujeto con cuerpo: la misma rampa, dos escalones más hondo, con el filo marcado */
+.m-teal-fuerte { --c0: var(--sujeto-teal-2); --c1: var(--sujeto-teal-3); --c2: var(--sujeto-teal-4); --c3: var(--sujeto-teal-5); --c4: var(--sujeto-teal-6); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
+.m-agua-fuerte { --c0: var(--sujeto-agua-2); --c1: var(--sujeto-agua-3); --c2: var(--sujeto-agua-4); --c3: var(--sujeto-agua-5); --c4: var(--sujeto-agua-6); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-5); }
+.m-ocre-fuerte { --c0: var(--sujeto-ocre-2); --c1: var(--sujeto-ocre-3); --c2: var(--sujeto-ocre-4); --c3: var(--sujeto-ocre-5); --c4: var(--sujeto-ocre-6); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-5); }
 .m-bosque, .m-chasis, .m-pantalla, .m-error { --c0: var(--oscuro-0); --c1: var(--oscuro-1); --c2: var(--oscuro-2); --c3: var(--oscuro-3); --c4: var(--oscuro-4); --filo: var(--oscuro-filo); --pliegue: var(--oscuro-filo); }
 .m-ambar { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); --pliegue: var(--acento-4); }
 .iso-solid[class*=" m-"] > .iso-fill { fill: var(--c1); }
@@ -772,10 +776,16 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 
 /* estado como marca: vivo = punto teal */
 .marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
+/* lo que una pantalla oscura muestra: en teal claro */
+.en-pantalla { fill: var(--teal-400); stroke: none; }
+.en-pantalla-trazo.tenue { opacity: .5; }
+.en-pantalla-trazo { fill: none; stroke: var(--teal-400); stroke-width: .7; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
 .medidor .luz-on circle { opacity: 1; }
 /* Fig. ruta: el brazo de la barrera, dibujado en su plano */
 .fig-ruta .brazo { fill: var(--estructura-0); stroke: none; }
 .fig-ruta .banda { fill: var(--sujeto-agua-filo); stroke: none; }
+.fig-ruta .brazo-canto { fill: var(--estructura-4); stroke: none; }
+.fig-ruta .brazo-canto.filo { stroke: var(--linea-alta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
 .fig-ruta .brazo-filo { fill: none; stroke: var(--linea-alta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
 .fig-ruta .cubo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; }
 .fig-ruta .cubo-eje { fill: var(--linea-alta); }

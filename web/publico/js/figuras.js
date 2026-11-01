@@ -57,12 +57,26 @@ function sobre(pts, f) {
 }
 
 // ---------------------------------------------------------------- canales y pintura
-// Cada pieza viva tiene canales numéricos: x, y (traslado en unidades del viewBox), o (opacidad) y
-// k (un parámetro propio: un ángulo, una escala). pinta(el, c) los escribe; por omisión, traslado y
-// opacidad. Solo se toca el DOM si el valor cambió.
-const CERO = { x: 0, y: 0, o: 1, k: 0 };
+// Cada pieza viva tiene canales numéricos: x, y (traslado en unidades del viewBox), o (opacidad),
+// s (escala alrededor de su centro, data-c) y k (un parámetro propio: un ángulo, un avance).
+// pinta(el, c) los escribe; por omisión, traslado, escala y opacidad. Solo se toca el DOM si el
+// valor cambió. Una pieza de color que aparece o se va lo hace con la escala, no con la opacidad:
+// un ámbar a medio fundir sobre gris se ve oliva.
+const CERO = { x: 0, y: 0, o: 1, s: 1, k: 0 };
 function pintaBase(el, c, antes) {
-  if (!antes || antes.x !== c.x || antes.y !== c.y) el.style.transform = c.x || c.y ? `translate(${c.x.toFixed(2)}px,${c.y.toFixed(2)}px)` : '';
+  if (!antes || antes.x !== c.x || antes.y !== c.y || antes.s !== c.s || antes.k !== c.k) {
+    let t = c.x || c.y ? `translate(${c.x.toFixed(2)}px,${c.y.toFixed(2)}px)` : '';
+    if (c.s !== 1) {
+      const [cx, cy] = (el.__c ||= (el.dataset.c || '0 0').split(' ').map(Number));
+      t += ` translate(${cx}px,${cy}px) scale(${Math.max(0.001, c.s).toFixed(3)}) translate(${-cx}px,${-cy}px)`;
+    }
+    // data-eje="y b": crece en v desde la base b (barras); "x a": en u desde a (un renglón que se escribe)
+    if (el.dataset.eje) {
+      const [eje, b] = el.dataset.eje.split(' '), q = Math.max(0.001, c.k).toFixed(3);
+      t += eje === 'y' ? ` translate(0px,${b}px) scale(1,${q}) translate(0px,${-b}px)` : ` translate(${b}px,0px) scale(${q},1) translate(${-b}px,0px)`;
+    }
+    el.style.transform = t;
+  }
   if (!antes || antes.o !== c.o) el.style.opacity = c.o >= 0.999 ? '' : c.o <= 0.001 ? '0' : c.o.toFixed(3);
 }
 
@@ -71,7 +85,7 @@ function motorDe(F) {
   let desde = null, t0Mezcla = 0;
   const pinta = (el, c) => {
     const antes = hechos.get(el);
-    if (antes && antes.x === c.x && antes.y === c.y && antes.o === c.o && antes.k === c.k) return;
+    if (antes && antes.x === c.x && antes.y === c.y && antes.o === c.o && antes.s === c.s && antes.k === c.k) return;
     (el.__pinta || pintaBase)(el, c, antes);
     hechos.set(el, c);
   };
@@ -84,7 +98,7 @@ function motorDe(F) {
     const e = entra(m);
     for (const [el, c] of nuevos) {
       const a = desde && desde.get(el);
-      pinta(el, a && m < 1 ? { x: a.x + (c.x - a.x) * e, y: a.y + (c.y - a.y) * e, o: a.o + (c.o - a.o) * e, k: a.k + (c.k - a.k) * e } : c);
+      pinta(el, a && m < 1 ? { x: a.x + (c.x - a.x) * e, y: a.y + (c.y - a.y) * e, o: a.o + (c.o - a.o) * e, s: a.s + (c.s - a.s) * e, k: a.k + (c.k - a.k) * e } : c);
     }
     if (m >= 1) desde = null;
     if (lectura !== undefined && lectura !== null) F.decir(lectura);
@@ -176,8 +190,14 @@ function montar(fig, nombre, crear) {
   const lectura = fig.querySelector('[data-lectura]');
   const pieza = n => vivo.querySelector(`[data-v="${n}"]`);
   const F = { fig, nombre, lienzo, vivo, V, razon: 0, autos: 0, turno: 0, corre: false, inicio: 0, espera: 0 };
-  let dicho = '';
+  let dicho = '', dichoD = null;
+  const pista = fig.querySelector('.pista'), pistaBase = pista ? pista.textContent : '';
   F.decir = txt => {
+    // {l, d}: la lectura en una línea y el detalle, que va en la pista (al pasar o enfocar)
+    if (txt && !Array.isArray(txt) && typeof txt === 'object') {
+      if (pista && txt.d !== dichoD) { dichoD = txt.d; pista.textContent = txt.d ? `${txt.d} · ${pistaBase}` : pistaBase; }
+      txt = txt.l;
+    }
     const clave = Array.isArray(txt) ? txt.map(p => typeof p === 'string' ? p : '`' + p.c).join('') : txt;
     if (clave === dicho) return;
     dicho = clave;
@@ -237,19 +257,26 @@ const FIG = {};
 FIG.capas = ({ V, pieza }) => {
   const datos = V.viajes.map((_, j) => pieza('dato' + j));
   const pilotos = V.viajes.map((_, j) => pieza('piloto' + j));
-  const APARECE = 220, VIAJA = 640, LLEGA = APARECE + VIAJA, DURA = LLEGA + 380;
+  const barras = [0, 1, 2, 3, 4, 5].map(q => pieza('barra' + q)), marca = pieza('marca'), chat = pieza('chat');
+  const APARECE = 220, VIAJA = 640, LLEGA = APARECE + VIAJA, DURA = LLEGA + 760;
+  const lineal = x => x;
   return {
     n: V.modulos.length,
     dura: () => DURA,
-    cuadros: [[0, 0], [0, 180], [0, 420], [0, 640], [0, LLEGA + 40], [0, DURA], [1, DURA], [2, DURA]],
+    cuadros: [[0, 0], [0, 240], [0, 520], [0, LLEGA + 40], [0, LLEGA + 260], [0, DURA], [1, LLEGA + 120], [2, LLEGA + 380]],
     pose(i, t, pon) {
       datos.forEach((el, j) => {
         const [vx, vy] = V.viajes[j];
-        if (j !== i) { pon(el, { x: vx, y: vy, o: 0 }); return; }
+        if (j !== i) { pon(el, { x: vx, y: vy, s: 0 }); return; }
         const f = tramo(t, APARECE, VIAJA, mueve);
-        pon(el, { x: vx * f, y: vy * f, o: tramo(t, 0, APARECE, entra) });
+        pon(el, { x: vx * f, y: vy * f, s: tramo(t, 0, APARECE, entra) });
       });
       pilotos.forEach((el, j) => pon(el, { o: j === i ? tramo(t, LLEGA, 140, entra) : 0 }));
+      // lo que muestra la pantalla del módulo al que llega el dato; las demás quedan como estaban
+      const llego = (j, t0, dur, curva = entra) => (j !== i ? 1 : tramo(t, LLEGA + t0, dur, curva));
+      barras.forEach((el, q) => pon(el, { k: llego(0, q * 60, 320) }));
+      pon(marca, { s: llego(1, 0, 260) });
+      pon(chat, { k: Math.floor(llego(2, 0, 680, lineal) * 18) / 18 });
       const m = V.modulos[i];
       if (t < 120) return V.reposo;
       return t < LLEGA ? `datos → ${m.n} · por ${m.p}` : `${m.n} · ${m.q} · entra por ${m.p}`;
@@ -262,10 +289,11 @@ FIG.capas = ({ V, pieza }) => {
 // tapa de la columna de su entidad se enciende y la respuesta vuelve a la terminal.
 FIG.ruta = ({ V, pieza }) => {
   const preg = pieza('pregunta'), resp = pieza('respuesta-ficha'), lineas = pieza('respuesta');
-  const lector = pieza('lector'), brazo = pieza('brazo');
+  const lector = pieza('lector'), brazos = ['brazo', 'brazo1', 'brazo2', 'brazo3', 'brazo4'].map(pieza);
   const tapas = V.turnos.map((_, i) => pieza('tapa' + i));
   const [u0, v0] = V.eje;
-  brazo.__pinta = (el, c, antes) => { if (!antes || antes.k !== c.k) el.style.transform = c.k ? `translate(${u0}px,${v0}px) rotate(${c.k.toFixed(2)}deg) translate(${-u0}px,${-v0}px)` : ''; };
+  const gira = (el, c, antes) => { if (!antes || antes.k !== c.k) el.style.transform = c.k ? `translate(${u0}px,${v0}px) rotate(${c.k.toFixed(2)}deg) translate(${-u0}px,${-v0}px)` : ''; };
+  brazos.forEach(el => { el.__pinta = gira; });
   const ALZA = 84;
   const tiempos = k => {
     const [l1, l2, l3] = V.largos[k], total = l1 + l2 + l3;
@@ -278,26 +306,26 @@ FIG.ruta = ({ V, pieza }) => {
   return {
     n: V.turnos.length,
     dura: k => T[k].dura,
-    cuadros: [[0, 0], [0, 520], [0, T[0].T1 + 200], [0, T[0].T1 + 600], [0, T[0].T2 + 80], [0, T[0].T2 + 560], [0, T[0].dura], [2, T[2].dura]],
+    cuadros: [[0, 0], [0, 520], [0, T[0].T1 + 260], [0, T[0].T1 + 640], [0, T[0].T2 + 80], [0, T[0].T2 + 560], [2, T[2].T1 + 900], [2, T[2].dura]],
     pose(k, t, pon) {
       const { s1, T1, T2, T3, VUELTA, baja } = T[k];
       const pts = V.recorridos[k];
       // la pregunta: aparece en la terminal, va al lector, espera la barrera, sigue a la columna
       const f = t < T1 ? s1 * tramo(t, 200, T1 - 200, mueve) : s1 + (1 - s1) * tramo(t, T1 + 320, T2 - T1 - 320, mueve);
       const [px, py] = sobre(pts, f);
-      pon(preg, { x: px, y: py, o: tramo(t, 0, 200, entra) * (1 - tramo(t, T2, 160, sale)) });
+      pon(preg, { x: px, y: py, s: tramo(t, 0, 200, entra) * (1 - tramo(t, T2, 180, sale)) });
       pon(lector, { o: tramo(t, T1, 120, entra) * (1 - tramo(t, T3, 200, sale)) });
-      pon(brazo, { k: ALZA * (tramo(t, T1 + 100, 360, entra) - tramo(t, baja, 380, mueve)) });
+      const alza = ALZA * (tramo(t, T1 + 100, 360, entra) - tramo(t, baja, 380, mueve));
+      brazos.forEach(el => pon(el, { k: alza }));
       tapas.forEach((el, i) => pon(el, { o: i === k ? tramo(t, T2, 140, entra) : 0 }));
       // la respuesta: de la columna a la terminal
       const [rx, ry] = sobre(pts, 1 - tramo(t, T2 + 200, VUELTA, mueve));
-      pon(resp, { x: rx, y: ry, o: tramo(t, T2 + 80, 160, entra) * (1 - tramo(t, T3, 160, sale)) });
+      pon(resp, { x: rx, y: ry, s: tramo(t, T2 + 80, 180, entra) * (1 - tramo(t, T3, 180, sale)) });
       pon(lineas, { o: tramo(t, T3, 220, entra) });
       const d = V.turnos[k];
-      if (t < 120) return [d.p];
-      if (t < T2) return [`${d.p} → `, { c: d.h }];
-      if (t < T3) return [`${d.p} → `, { c: d.h }, ` → ${d.e}`];
-      return [`${d.p} → `, { c: d.h }, ` → ${d.e} · ${d.l} · ${d.s}`];
+      if (t < 120) return { l: [d.p], d: '' };
+      if (t < T2) return { l: [`${d.p} → `, { c: d.h }], d: '' };
+      return { l: [`${d.p} → `, { c: d.h }, ` → ${d.e}`], d: t < T3 ? '' : `${d.l} · ${d.s}` };
     },
     desde: x => { let mejor = 0; V.franjas.forEach((fx, i) => { if (Math.abs(fx - x) < Math.abs(V.franjas[mejor] - x)) mejor = i; }); return mejor; },
   };

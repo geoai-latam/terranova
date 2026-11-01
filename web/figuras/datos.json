@@ -58,6 +58,7 @@
     "entidad": "IGAC",
     "licencia": "CC BY-SA 4.0",
     "servido": "la fuente, en vivo",
+    "corta": "¿Qué predio hay aquí?",
     "fuentes": 19
    },
    {
@@ -66,6 +67,7 @@
     "entidad": "Colombia Compra Eficiente",
     "licencia": "CC BY-SA 4.0",
     "servido": "la fuente, en vivo",
+    "corta": "¿Cuánto contrata?",
     "fuentes": 34
    },
    {
@@ -74,6 +76,7 @@
     "entidad": "Parques Nacionales",
     "licencia": "CC BY-SA 4.0",
     "servido": "una copia del archivo oficial",
+    "corta": "¿Área protegida aquí?",
     "fuentes": 1
    }
   ],

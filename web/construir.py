@@ -897,6 +897,12 @@ MODULOS = [
 ]
 # La ruta de una pregunta: tres herramientas reales de familias distintas.
 RUTA = ["igac_predio_en_punto", "secop_contratos_entidad", "pnn_areas_protegidas_en_punto"]
+# La pregunta de cada turno, corta, para que la lectura quepa en una línea (la entera va en la etiqueta).
+RUTA_CORTA = {
+    "igac_predio_en_punto": "¿Qué predio hay aquí?",
+    "secop_contratos_entidad": "¿Cuánto contrata?",
+    "pnn_areas_protegidas_en_punto": "¿Área protegida aquí?",
+}
 SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
 
 
@@ -973,6 +979,7 @@ def datos_figuras() -> dict:
                 "entidad": nombre_entidad(f.entidad),
                 "licencia": licencia_corta(f.licencia.spdx),
                 "servido": SERVIDO[f.modo],
+                "corta": RUTA_CORTA[hid],
             }
         )
     nombradas = {t["entidad"] for t in turnos}
@@ -1093,7 +1100,7 @@ def figura_ruta() -> str:
     t0 = datos_figuras()["ruta"]["turnos"][0]
     return figura(
         "ruta",
-        f"{escape(t0['pregunta'])} → <code>{t0['herramienta']}</code> → {t0['entidad']}",
+        f"{escape(t0['corta'])} → <code>{t0['herramienta']}</code> → {t0['entidad']}",
         "flechas o puntero: otra pregunta",
     )
 

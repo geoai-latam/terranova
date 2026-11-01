@@ -124,7 +124,10 @@ export function ruta(DATOS, huella) {
   fija.push(S(k.slabOf({ x: 86.4, y: 14, w: 5.2, d: 5.2, r: 0.6 }, 22.6, 2.2, P, 2), { tone: "mid", m: "acero" }));
 
   // el brazo, en el plano x = 89 (coordenadas locales u = y, v = z): gira sobre el eje
-  const M = matrizPlano(P, "x", EJE[0]);
+  // el brazo tiene canto: cuatro láminas detrás de la cara, corridas en x, forman su grueso
+  const CANTO = 1.8;
+  const haciaMi = k.towardViewer(P)[0] > 0 ? 1 : -1; // la cara x que mira al lector
+  const M = matrizPlano(P, "x", EJE[0] + (haciaMi * CANTO) / 2);
   const [u0, v0] = [EJE[1], EJE[2]];
   const G = 1.3; // medio grueso
   const brazoLocal = [];
@@ -133,6 +136,10 @@ export function ruta(DATOS, huella) {
   for (const [a, b] of [[7, 10.5], [15, 18.5], [23, 26.5]]) brazoLocal.push(rect(a, b, "banda"));
   brazoLocal.push(`<path class="brazo-filo" d="M${r1(u0 - 1.6)} ${r1(v0 - G)}H${r1(u0 + LARGO)}V${r1(v0 + G)}H${r1(u0 - 1.6)}Z"/>`);
   const cubo = `<circle class="cubo" cx="${u0}" cy="${v0}" r="2.4"/><circle class="cubo-eje" cx="${u0}" cy="${v0}" r="0.8"/>`;
+  for (let c = 4; c >= 1; c--) {
+    const Mc = matrizPlano(P, "x", EJE[0] + (haciaMi * CANTO) / 2 - (haciaMi * CANTO * c) / 4);
+    viva.push(`<g transform="matrix(${Mc.join(" ")})"><g data-v="brazo${c}">${rect(-1.6, LARGO, c === 4 ? "brazo-canto filo" : "brazo-canto")}</g></g>`);
+  }
   viva.push(`<g transform="matrix(${M.join(" ")})"><g data-v="brazo">${brazoLocal.join("")}</g>${cubo}</g>`);
 
   // el recorrido de la pregunta: por la regla desde la terminal, el lector, la barrera y la columna
@@ -148,8 +155,11 @@ export function ruta(DATOS, huella) {
   const recorridos = tramos.map((pts) => pts.map((p) => { const [x, y] = at(p); return [r1(x - a0[0]), r1(y - a0[1])]; }));
   const largos = tramos.map((pts) => pts.slice(1).map((p, j) => Math.hypot(p[0] - pts[j][0], p[1] - pts[j][1])).map(r1));
   const ficha = { x: A[0] - 3, y: A[1] - 3, w: 6, d: 6, r: 1.8 };
-  viva.push(`<g data-v="respuesta-ficha" style="opacity:0">${S(k.slabOf(ficha, ZR, 2.4, P, 3, 0.4), { tone: "mid", m: "bosque" })}</g>`);
-  viva.push(`<g data-v="pregunta" style="opacity:0">${S(k.slabOf(ficha, ZR, 2.6, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
+  // las fichas aparecen y se van con la escala (un ámbar a medio fundir se ve oliva)
+  const [fx, fy] = at([A[0], A[1], ZR + 1.3]);
+  const centro = `data-c="${r1(fx)} ${r1(fy)}" style="transform:scale(0)"`;
+  viva.push(`<g data-v="respuesta-ficha" ${centro}>${S(k.slabOf(ficha, ZR, 2.4, P, 3, 0.4), { tone: "mid", m: "bosque" })}</g>`);
+  viva.push(`<g data-v="pregunta" ${centro}>${S(k.slabOf(ficha, ZR, 2.6, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
   tapas.forEach((t, i) => viva.push(`<g data-v="tapa${i}" style="opacity:0">${t}</g>`));
 
   return svgDe({
@@ -165,7 +175,7 @@ export function ruta(DATOS, huella) {
       largos,
       eje: [u0, v0],
       franjas: turnos.map((_, i) => r1(at([pie(0, colTurno[i])[0] + LADO / 2, Y0, ZT])[0])),
-      turnos: turnos.map((t) => ({ h: t.herramienta, e: t.entidad, p: t.pregunta, l: t.licencia, s: t.servido })),
+      turnos: turnos.map((t) => ({ h: t.herramienta, e: t.entidad, p: t.corta, l: t.licencia, s: t.servido })),
     },
   });
 }
