@@ -814,6 +814,17 @@ PREGUNTAS_ASISTENTE = [
     "upra_precio_tierra_rural_municipio",
     "men_educacion_municipio",
 ]
+# La pregunta de cada una, corta, para que la lectura quepa en una línea (la entera va en la etiqueta).
+PREGUNTA_CORTA = {
+    "banrep_trm_recientes": "¿A cuánto está el dólar?",
+    "ins_calidad_agua_municipio": "¿Es potable el agua aquí?",
+    "pnn_areas_protegidas_en_punto": "¿Hay un área protegida aquí?",
+    "secop_contratos_municipio": "¿Cuánto contrata este municipio?",
+    "rues_empresa_por_nit": "¿Qué dice el RUES de esta empresa?",
+    "igac_predio_en_punto": "¿Qué predio hay aquí?",
+    "upra_precio_tierra_rural_municipio": "¿Cuánto vale la tierra aquí?",
+    "men_educacion_municipio": "¿Cómo va la educación aquí?",
+}
 OTRAS_ASISTENTE = [
     "icfes_saber11_municipio",
     "invima_registro_sanitario_por_expediente",
@@ -866,7 +877,12 @@ def datos_servicio(tipo: str) -> object:
         for i in PREGUNTAS_ASISTENTE:
             f = CAT.fuentes[por_id[i].fuente]
             preguntas.append(
-                {"p": por_id[i].pregunta, "e": entidad(i), "l": licencia_corta(f.licencia.spdx)}
+                {
+                    "p": por_id[i].pregunta,
+                    "corta": PREGUNTA_CORTA[i],
+                    "e": entidad(i),
+                    "l": licencia_corta(f.licencia.spdx),
+                }
             )
         nodos = list(
             dict.fromkeys([p["e"] for p in preguntas] + [entidad(i) for i in OTRAS_ASISTENTE])
@@ -1124,7 +1140,7 @@ def figura_servicio(sid: str) -> str:
         return ""
     if sid == "asistente":  # preguntas, entidades y licencias reales: sin sello
         q = datos_figuras()["asistente"]["preguntas"][0]
-        lectura = f"{escape(q['p'])} → {q['e']} · {q['l']}"
+        lectura = f"{escape(q['corta'])} → {q['e']}"
         return figura(sid, lectura, "pasa el puntero por las tomas")
     lectura, pista = LECTURA_SERVICIO[sid]
     if sid == "tablero":

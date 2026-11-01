@@ -133,8 +133,19 @@ function bucle(ahora) {
 }
 function despertar() { if (!cuadro) { ultimo = 0; cuadro = requestAnimationFrame(bucle); } }
 
+// Un punto vivo que late (un estado real: el lector que vigila): un pulso corto cada 3 s mientras la
+// figura está viva y quieta; nada entre pulsos.
+function latir(F) {
+  clearInterval(F.pulso);
+  if (!F.m.latido || quieto.matches) return;
+  F.pulso = setInterval(() => {
+    if (viva !== F || document.hidden) { clearInterval(F.pulso); return; }
+    if (!F.corre) F.m.latido.animate([{ opacity: 1 }, { opacity: 0.25 }, { opacity: 1 }], { duration: 700, easing: 'ease-in-out' });
+  }, 3000);
+}
 function terminar(F) {
   F.corre = false;
+  latir(F);
   clearTimeout(F.espera);
   if (F === viva && F.autos < AUTOS && !quieto.matches) {
     F.espera = setTimeout(() => { if (viva === F && !F.corre && F.autos < AUTOS) { F.autos++; jugar(F, paso(F)); } }, REPOSO);
@@ -521,229 +532,79 @@ FIG.tablero = ({ V, pieza }) => {
   };
 };
 
-// ================================================================ legado (se migra por tandas)
-const sigue = (actual, meta, dt, s) => actual + (meta - actual) * (1 - Math.exp(-dt / s));
-
-function enVista(el, cambio) {
-  new IntersectionObserver(es => cambio(es[es.length - 1].isIntersecting), { rootMargin: '80px 0px' }).observe(el);
-}
-
-// ---------------------------------------------------------------- vida ambiente
-// Un bucle por figura que corre mientras está en vista (y nunca con movimiento reducido): mueve
-// paquetes por cables y rieles, balancea agujas, hace latir lo que late. tick(t) recibe segundos.
-function ambiente(fig, tick) {
-  if (quieto.matches) return;
-  const lienzo = fig.querySelector('.lienzo');
-  let raf = 0, vis = false;
-  const bucle = ahora => { tick(ahora / 1000); raf = vis ? requestAnimationFrame(bucle) : 0; };
-  enVista(lienzo, v => { vis = v; if (v && !raf) raf = requestAnimationFrame(bucle); });
-}
-// Paquetes de datos: bloques de color que recorren un trazo (un <path>) a su ritmo.
-function paquetes(svg, trazo, { n = 2, color = 'var(--teal-400)', r = 1.6, periodo = 2.4, desde = 0, al = 1, desfase = 0 } = {}) {
-  const ns = 'http://www.w3.org/2000/svg', largo = trazo.getTotalLength();
-  const ps = Array.from({ length: n }, () => {
-    const c = document.createElementNS(ns, 'circle');
-    c.setAttribute('class', 'paquete'); c.setAttribute('r', r); c.style.fill = color;
-    trazo.parentNode.insertBefore(c, trazo.nextSibling);
-    return c;
-  });
-  return t => ps.forEach((c, i) => {
-    const u = ((t / periodo + i / n + desfase) % 1 + 1) % 1;
-    const f = desde + (al - desde) * u;
-    const p = trazo.getPointAtLength(largo * f);
-    c.setAttribute('cx', p.x.toFixed(1)); c.setAttribute('cy', p.y.toFixed(1));
-    c.style.opacity = String(Math.min(1, Math.min(u, 1 - u) * 8));
-  });
-}
-const escribir = svg => svg.querySelectorAll('.escribe path').forEach(p => p.setAttribute('pathLength', '1'));
-
-// ---------------------------------------------------------------- herramientas comunes
-// Elegir uno de n: recorrido en reposo, el puntero y las flechas eligen, y vuelve el recorrido
-// 3,6 s después del último toque. pintar(dt) mueve las piezas y devuelve true mientras algo se mueva.
-function selector(fig, { n, cada = 2.8, elegir, pintar, desde }) {
-  const lienzo = fig.querySelector('.lienzo');
-  let actual = 0, tour = !quieto.matches, reloj = 0, ultimo = 0, cuadro = 0, visible = false, espera = 0;
-  const poner = i => { actual = i; elegir(i); };
-  function paso(ahora) {
-    const dt = ultimo ? Math.min((ahora - ultimo) / 1000, 1 / 20) : 1 / 60;
-    ultimo = ahora;
-    if (tour) { reloj += dt; const i = Math.floor(reloj / cada) % n; if (i !== actual) poner(i); }
-    const mueve = pintar(quieto.matches ? 1e3 : dt);
-    cuadro = visible && (tour || mueve) ? requestAnimationFrame(paso) : 0;
-  }
-  const correr = () => { if (!cuadro && visible) { ultimo = 0; cuadro = requestAnimationFrame(paso); } };
-  const tomar = i => {
-    tour = false; if (i !== actual) poner(i); correr();
-    clearTimeout(espera);
-    espera = setTimeout(() => { tour = !quieto.matches; reloj = actual * cada; correr(); }, 3600);
-  };
-  if (desde) lienzo.addEventListener('pointermove', e => {
-    const caja = lienzo.getBoundingClientRect(), vb = lienzo.querySelector('svg').viewBox.baseVal;
-    const i = desde(vb.x + (e.clientX - caja.left) / caja.width * vb.width, vb.y + (e.clientY - caja.top) / caja.height * vb.height);
-    if (i >= 0) tomar(i);
-  });
-  lienzo.addEventListener('keydown', e => {
-    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
-    if (!d) return;
-    e.preventDefault();
-    tomar((actual + d + n) % n);
-  });
-  poner(0);
-  pintar(1e3);
-  enVista(lienzo, v => { visible = v; if (v) correr(); });
-  return { tomar };
-}
-const cerca2 = (pts, x, y) => {
-  let mejor = -1, d = Infinity;
-  pts.forEach(([px, py], i) => { const q = Math.hypot(px - x, (py - y) * 0.6); if (q < d) { d = q; mejor = i; } });
-  return d < 70 ? mejor : -1;
-};
-
-// ---------------------------------------------------------------- un guion que se repite
-// Corre guion(t, i) con t en segundos dentro del turno i; dura(i) es lo que dura el turno. Las
-// flechas pasan de turno; fuera de la vista no corre; con movimiento reducido, quieto(i) deja el
-// turno completo.
-function guionado(fig, { n, dura, guion, quieto: fijo }) {
-  const lienzo = fig.querySelector('.lienzo');
-  let i = 0, t = 0, ultimo = 0, cuadro = 0, visible = false;
-  function paso(ahora) {
-    const dt = ultimo ? Math.min((ahora - ultimo) / 1000, 1 / 20) : 1 / 60;
-    ultimo = ahora; t += dt;
-    if (t >= dura(i)) { t = 0; i = (i + 1) % n; }
-    guion(t, i);
-    cuadro = visible ? requestAnimationFrame(paso) : 0;
-  }
-  const correr = () => { if (!cuadro && visible && !quieto.matches) { ultimo = 0; cuadro = requestAnimationFrame(paso); } };
-  lienzo.addEventListener('keydown', e => {
-    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
-    if (!d) return;
-    e.preventDefault();
-    i = (i + d + n) % n; t = 0;
-    if (quieto.matches) fijo(i); else guion(0, i);
-  });
-  if (quieto.matches) fijo(0); else guion(0, 0);
-  enVista(lienzo, v => { visible = v; if (v) correr(); });
-}
-const suave = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
-const mover = (g, v, a, b) => {
-  const dx = v[0][0] * a + v[1][0] * b, dy = v[0][1] * a + v[1][1] * b;
-  if (Math.abs(dx) + Math.abs(dy) < 0.01) g.removeAttribute('transform');
-  else g.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
-};
-
-// La cámara del kit (iso-kit.mjs, iso), para lo que se rehace en cada cuadro.
-const camara = P => {
-  const R = Math.PI / 180, K = P.scale * Math.sqrt(1.6);
-  const sA = Math.sin(P.azimuth * R), cA = Math.cos(P.azimuth * R), sE = Math.sin(P.elevation * R), cE = Math.cos(P.elevation * R);
-  return ([x, y, z]) => [P.origin[0] + (x * sA - y * cA) * K, P.origin[1] + ((x * cA + y * sA) * sE - z * cE) * K];
-};
-
-// ---------------------------------------------------------------- vigilancia: el puesto de guardia
-function vigilancia(fig) {
-  const svg = fig.querySelector('svg');
-  const V = JSON.parse(svg.dataset.vivo);
-  const lectura = fig.querySelector('[data-lectura]');
-  const carro = svg.querySelector('[data-carro]');
-  const lector = svg.querySelector('[data-lector]');
-  const ticket = svg.querySelector('[data-ticket]');
-  const banderas = [...svg.querySelectorAll('[data-bandera]')];
-  const pilotos = [...svg.querySelectorAll('[data-buzon] [data-piloto]')];
-  const pImp = svg.querySelector('[data-piloto="imp"]');
-  const ejes = [V.ex, V.ez];
+// Fig. vigilancia: el carro va al buzón y lo lee; si algo cambió, la banderita se levanta y solo
+// entonces el registro corre por la canaleta hasta la impresora, que saca su tique.
+FIG.vigilancia = ({ V, pieza }) => {
   const n = V.carriles.length;
-  const VA = 1.6, LEE = 0.5, SUBE = 0.5, SACA = 1.2, DURA = 6.4;
-  let dicho = '';
-  const estado = (el, e) => { if ((el.dataset.estado || '') !== e) { if (e) el.dataset.estado = e; else delete el.dataset.estado; } };
-  function guion(t, i) {
-    const prev = (i - 1 + n) % n, c = V.carriles[i];
-    const x = V.x[prev] + (V.x[i] - V.x[prev]) * suave(t / VA);
-    mover(carro, ejes, x, 0);
-    const t1 = VA + LEE, t2 = t1 + SUBE, t3 = t2 + SACA;
-    estado(lector, t >= VA && t < t1 + 0.3 ? 'ok' : '');
-    banderas.forEach((b, j) => {
-      const u = j === i ? suave((t - t1) / SUBE) : j === prev ? 1 - suave(t / 0.5) : 0;
-      mover(b, ejes, 0, V.sube * u);
-      b.querySelector('.iso-solid:last-child').toggleAttribute('data-lit', j === i && t >= t1);
-    });
-    pilotos.forEach((p, j) => estado(p, j === i && t >= t1 ? 'rev' : ''));
-    const sale = t < 0.4 ? 1 - t / 0.4 : t < t2 ? 0 : suave((t - t2) / SACA);
-    ticket.style.opacity = t < 0.4 ? String(1 - t / 0.4) : '';
-    mover(ticket, ejes, 0, V.saca * (t < 0.4 ? 1 : sale));
-    estado(pImp, t >= t2 && t < t3 ? 'ok' : '');
-    const txt = t < t1 ? `leyendo ${c.s}…` : `${c.s} · ${c.e} · ${c.ev}`;
-    if (txt !== dicho) { dicho = txt; lectura.textContent = txt; }
-  }
-  const fijo = i => guion(DURA - 0.01, i);
-  guionado(fig, { n, dura: () => DURA, guion, quieto: fijo });
-  // vida: los registros viajan por el canto de la viga hasta la impresora
-  const viaje = paquetes(svg, svg.querySelector('.ruta-dato'), { n: 4, color: 'var(--ambar-500)', r: 2, periodo: 4.8 });
-  ambiente(fig, viaje);
-}
-
-// ---------------------------------------------------------------- asistentes: el tablero de conmutación
-function asistente(fig) {
-  const svg = fig.querySelector('svg');
-  const V = JSON.parse(svg.dataset.vivo);
-  const iso = camara(V.P);
-  const lectura = fig.querySelector('[data-lectura]');
-  const [forro, alma] = svg.querySelectorAll('.cordon path');
-  const clavija = svg.querySelector('.clavija');
-  const renglones = svg.querySelector('[data-renglones]');
-  const pilotos = [...svg.querySelectorAll('[data-piloto]')];
-  const qs = V.preguntas;
-  let desde = V.tomas[qs[0].j], hacia = desde, f = 1, meta = 0;
-  // la clavija sale 9 hacia adelante, viaja y entra; el cordón cuelga entre el puerto y ella
-  // la clavija sale, viaja con inercia (se pasa un poco y vuelve) y entra
-  const conInercia = u => { const c = 1.7; return u >= 1 ? 1 : 1 + (c + 1) * Math.pow(u - 1, 3) + c * Math.pow(u - 1, 2); };
-  const enCamino = u => {
-    const s = conInercia(Math.min(1, u)), salir = Math.sin(Math.PI * Math.min(1, u)) * 9;
-    return [desde[0] + (hacia[0] - desde[0]) * s, desde[1] + (hacia[1] - desde[1]) * s + 0.8 + salir, desde[2] + (hacia[2] - desde[2]) * s];
+  const carro = pieza('carro'), registro = pieza('registro'), tique = pieza('tique'), impreso = pieza('impreso');
+  const banderas = V.carriles.map((_, i) => pieza('bandera' + i)), encendidas = V.carriles.map((_, i) => pieza('banderaA' + i));
+  const gira = (el, c, antes) => {
+    if (antes && antes.k === c.k) return;
+    const [u, v] = (el.__p ||= el.dataset.pivote.split(' ').map(Number));
+    el.style.transform = c.k ? `translate(${u}px,${v}px) rotate(${c.k.toFixed(2)}deg) translate(${-u}px,${-v}px)` : '';
   };
-  let vaiven = 0;
-  function cordon(q) {
-    const a = V.puerto, m = [(a[0] + q[0]) / 2 + vaiven * 3, (a[1] + q[1]) / 2 + 16 + vaiven * 2, Math.max(a[2] + 6, (a[2] + q[2]) / 2 - 12)];
-    const pts = [];
-    for (let i = 0; i <= 20; i++) {
-      const t = i / 20, u = 1 - t;
-      pts.push(iso([0, 1, 2].map(c => u * u * a[c] + 2 * u * t * m[c] + t * t * q[c])));
-    }
-    const d = 'M' + pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join('L');
-    forro.setAttribute('d', d); alma.setAttribute('d', d);
-    const [cx, cy] = iso(q);
-    clavija.setAttribute('cx', cx.toFixed(1)); clavija.setAttribute('cy', cy.toFixed(1));
-  }
-  const ojos = V.tomas.map(t => iso(t));
-  selector(fig, {
-    n: qs.length,
-    cada: 3.6,
-    elegir: i => {
-      const q = qs[i];
-      desde = f >= 1 ? hacia : enCamino(f); hacia = V.tomas[q.j]; f = quieto.matches ? 1 : 0; meta = i;
-      lectura.textContent = `${q.p} → ${q.e} · ${q.l}`;
-      renglones.style.opacity = '0';
+  banderas.forEach(el => { el.__pinta = gira; });
+  const VA = 650, LEE = 900, SUBE = 420, CORRE = 1380, VIAJA = 620, IMPRIME = CORRE + VIAJA, DURA = IMPRIME + 700;
+  return {
+    n,
+    dura: () => DURA,
+    latido: pieza('lector'),
+    cuadros: [[1, 0], [1, 400], [1, LEE], [1, LEE + 260], [1, CORRE + 300], [1, IMPRIME + 300], [1, DURA], [3, DURA]],
+    pose(i, t, pon) {
+      const prev = (i - 1 + n) % n, c = V.carriles[i];
+      const x = V.x[prev] + (V.x[i] - V.x[prev]) * tramo(t, 0, VA, mueve);
+      pon(carro, { x: V.ex[0] * x, y: V.ex[1] * x });
+      banderas.forEach((el, j) => pon(el, { k: j === i ? -90 * resorte(t, LEE, SUBE) : 0 }));
+      encendidas.forEach((el, j) => pon(el, { o: j === i && t >= LEE + SUBE * 0.5 ? 1 : 0 }));
+      const f = tramo(t, CORRE, VIAJA, mueve), xr = V.x[i] + (V.imp - V.x[i]) * f;
+      pon(registro, { x: V.ex[0] * xr, y: V.ex[1] * xr, s: tramo(t, CORRE - 120, 160, entra) * (1 - tramo(t, IMPRIME - 40, 160, sale)) });
+      const sale_ = V.saca * resorte(t, IMPRIME, 520);
+      pon(tique, { x: V.ez[0] * sale_, y: V.ez[1] * sale_ });
+      pon(impreso, { s: tramo(t, IMPRIME, 160, entra) });
+      if (t < VA) return { l: `${c.s} · ${c.e}`, d: '' };
+      if (t < LEE + SUBE * 0.6) return { l: `leyendo ${c.s}…`, d: c.e };
+      return { l: `${c.s} · ${c.ev}`, d: t < IMPRIME ? c.e : `${c.e} · registrado` };
     },
-    pintar: dt => {
-      f = Math.min(1, f + dt / 1.3);
-      cordon(f >= 1 ? hacia : enCamino(f));
-      pilotos.forEach((p, j) => {
-        const e = f >= 1 && j === qs[meta].j ? 'ok' : '';
-        if ((p.dataset.estado || '') !== e) { if (e) p.dataset.estado = e; else delete p.dataset.estado; }
+    desde: x => { let mejor = 0; V.cajas.forEach((cx, q) => { if (Math.abs(cx - x) < Math.abs(V.cajas[mejor] - x)) mejor = q; }); return mejor; },
+  };
+};
+
+// Fig. asistente: la clavija sale de la boca anterior y entra en la de la entidad que publica el
+// dato; su piloto se enciende y la pantalla escribe la respuesta.
+FIG.asistente = ({ V, pieza }) => {
+  const nb = V.bocas.length;
+  const cordones = Array.from({ length: nb }, (_, j) => pieza('cordon' + j));
+  const clavijas = Array.from({ length: nb }, (_, j) => pieza('clavija' + j));
+  const pilotos = Array.from({ length: nb }, (_, j) => pieza('piloto' + j));
+  const respuesta = pieza('respuesta');
+  const [sx, sy] = V.sale;
+  const APARECE = 260, ENTRA = 460, CONECTA = 820, DURA = 1450;
+  return {
+    n: V.preguntas.length,
+    dura: () => DURA,
+    cuadros: [[0, 0], [0, 400], [0, 600], [0, CONECTA + 40], [0, DURA], [3, 150], [3, 600], [3, DURA]],
+    pose(i, t, pon) {
+      const q = V.preguntas[i];
+      clavijas.forEach((el, j) => {
+        if (j !== q.j) { pon(el, { x: sx, y: sy, o: 0 }); pon(cordones[j], { o: 0 }); return; }
+        const o = tramo(t, APARECE, 180, entra);
+        const fuera = 1 - resorte(t, ENTRA, CONECTA - ENTRA);
+        pon(el, { x: sx * fuera, y: sy * fuera, o });
+        pon(cordones[j], { o });
       });
-      if (f >= 1) renglones.style.opacity = '';
-      return f < 1;
+      pilotos.forEach((el, j) => pon(el, { o: j === q.j && t >= CONECTA ? 1 : 0 }));
+      pon(respuesta, { o: tramo(t, CONECTA + 120, 260, entra) });
+      return t < CONECTA ? { l: `${q.p} …`, d: '' } : { l: `${q.p} → ${q.e}`, d: q.l };
     },
     desde: (x, y) => {
-      const j = cerca2(ojos, x, y);
-      return j < 0 ? -1 : qs.findIndex(q => q.j === j);
+      let mejor = -1, d = 40;
+      V.bocas.forEach(([bx, by], j) => { const e = Math.hypot(bx - x, by - y); if (e < d) { d = e; mejor = j; } });
+      return mejor < 0 ? -1 : V.preguntas.findIndex(q => q.j === mejor);
     },
-  });
-  // vida: el cordón se mece y la pantalla escribe
-  escribir(svg);
-  ambiente(fig, t => { vaiven = Math.sin(t * 1.3) * 0.8 + Math.sin(t * 0.47) * 0.5; cordon(f >= 1 ? hacia : enCamino(f)); });
-}
+  };
+};
 
 // ---------------------------------------------------------------- carga perezosa
-const LEGADO = { vigilancia, asistente };
 async function cargar(fig) {
   const lienzo = fig.querySelector('.lienzo');
   const r = await fetch(lienzo.dataset.src);
@@ -754,9 +615,7 @@ async function cargar(fig) {
   svg.removeAttribute('role');
   fig.classList.add('lista');
   const nombre = fig.dataset.figura;
-  if (FIG[nombre]) { montar(fig, nombre, FIG[nombre]); return; }
-  enVista(lienzo, v => fig.classList.toggle('en-vista', v));
-  if (LEGADO[nombre]) LEGADO[nombre](fig);
+  if (FIG[nombre]) montar(fig, nombre, FIG[nombre]);
 }
 const cerca = new IntersectionObserver(es => es.forEach(e => {
   if (!e.isIntersecting) return;

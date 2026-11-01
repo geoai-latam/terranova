@@ -782,6 +782,15 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 
 /* estado como marca: vivo = punto teal */
 .marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
+.ban-brazo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.ban-placa-metal { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.ban-placa { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.ban-eje { fill: var(--estructura-1); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.marca-ambar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
+.boca-aro { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
+.cordon-forro, .cordon-alma { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cordon-forro { stroke: var(--linea-alta); stroke-width: 2.2; }
+.cordon-alma { stroke: var(--linea-media); stroke-width: .8; }
 .marca-revisar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
 /* lo que una pantalla oscura muestra: en teal claro */
 .en-pantalla { fill: var(--teal-400); stroke: none; }
