@@ -18,6 +18,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import hmac
+import logging
 import os
 import re
 import secrets
@@ -30,8 +31,11 @@ from pathlib import Path
 from typing import Protocol
 from urllib.parse import unquote, urlparse
 
+from terranova import correos
 from terranova.bd import Conexion
 from terranova.contrato import texto_es_limpio
+from terranova.correos import Mensaje
+from terranova.cuota import NIVELES
 from terranova.identidad import Registro
 
 # La llave del alta automática: pocos créditos y con vencimiento. Para más, el plan Gratis o uno
@@ -59,23 +63,22 @@ DESECHABLES = frozenset(
         "maildrop.cc",
     }
 )
-ASUNTOS = frozenset(
-    {
-        "proyecto",
-        "debida-diligencia",
-        "tablero",
-        "vigilancia",
-        "asistente",
-        "plan-gratis",
-        "plan-basico",
-        "plan-pro",
-        "plan-empresa",
-        "plan-escala",
-        "gobierno-academia",
-        "soporte",
-        "otro",
-    }
-)
+# Asuntos del formulario de contacto: el valor que viaja y cómo se le dice a la persona.
+ASUNTOS: dict[str, str] = {
+    "proyecto": "Un proyecto o una solución",
+    "debida-diligencia": "Debida diligencia",
+    "tablero": "Tablero o informe",
+    "vigilancia": "Alertas y automatización",
+    "asistente": "Asistente o agente",
+    "plan-gratis": "El plan Gratis",
+    "plan-basico": "Plan Básico",
+    "plan-pro": "Plan Pro",
+    "plan-empresa": "Plan Empresa",
+    "plan-escala": "Plan Escala",
+    "gobierno-academia": "Gobierno, academia o veeduría",
+    "soporte": "Soporte",
+    "otro": "Otro",
+}
 
 
 class ErrorAlta(Exception):
@@ -83,7 +86,7 @@ class ErrorAlta(Exception):
 
 
 class Correo(Protocol):
-    async def enviar(self, destino: str, asunto: str, texto: str) -> None: ...
+    async def enviar(self, destino: str, mensaje: Mensaje) -> None: ...
 
 
 class CorreoSmtp:
@@ -100,10 +103,13 @@ class CorreoSmtp:
         self._clave = unquote(u.password or "")
         self.remitente = remitente
 
-    def _enviar(self, destino: str, asunto: str, texto: str) -> None:
+    def _enviar(self, destino: str, mensaje: Mensaje) -> None:
         m = EmailMessage()
-        m["From"], m["To"], m["Subject"] = self.remitente, destino, asunto
-        m.set_content(texto)
+        m["From"], m["To"], m["Subject"] = self.remitente, destino, mensaje.asunto
+        if mensaje.responder_a:
+            m["Reply-To"] = mensaje.responder_a
+        m.set_content(mensaje.texto)  # texto plano primero; el HTML como alternativa
+        m.add_alternative(mensaje.html, subtype="html")
         contexto = ssl.create_default_context()
         if self._seguro:
             with smtplib.SMTP_SSL(self._servidor, self._puerto, context=contexto, timeout=20) as s:
@@ -117,8 +123,8 @@ class CorreoSmtp:
                     s.login(self._usuario, self._clave)
                 s.send_message(m)
 
-    async def enviar(self, destino: str, asunto: str, texto: str) -> None:
-        await asyncio.to_thread(self._enviar, destino, asunto, texto)
+    async def enviar(self, destino: str, mensaje: Mensaje) -> None:
+        await asyncio.to_thread(self._enviar, destino, mensaje)
 
 
 @dataclass
@@ -240,20 +246,19 @@ class Altas:
         )
         destino, enlace = await asyncio.to_thread(self._solicitar, s, self._hmac(ip))
         if enlace is None:
-            texto = (
-                f"Hola, {s.nombre}.\n\nEste correo ya tiene una llave de Terrnova. Si la perdiste "
-                f"o quieres más créditos, escríbenos a {self.soporte}.\n\nTerrnova"
-            )
+            mensaje = correos.ya_tiene_llave(s.nombre, soporte=self.soporte)
         else:
-            texto = (
-                f"Hola, {s.nombre}.\n\nPara recibir tu llave de prueba de Terrnova abre este "
-                f"enlace y confirma (vence en 24 horas):\n\n{enlace}\n\nLa llave se muestra una "
-                "sola vez. Si no pediste una llave, ignora este correo.\n\nTerrnova"
+            mensaje = correos.enlace_llave(
+                s.nombre,
+                enlace,
+                creditos=NIVELES[NIVEL_ALTA],
+                dias=VIGENCIA_LLAVE.days,
+                soporte=self.soporte,
             )
-        await self.correo.enviar(destino, "Tu llave de Terrnova", texto)
+        await self.correo.enviar(destino, mensaje)
 
-    def _confirmar(self, token: str) -> tuple[str, str]:
-        """(correo, llave). Lanza ErrorAlta si el enlace no sirve."""
+    def _confirmar(self, token: str) -> tuple[str, str, str, date]:
+        """(correo, llave, nombre, vence). Lanza ErrorAlta si el enlace no sirve."""
         huella = self._hmac(token)
         _, usados = self._bd.ejecutar(
             "UPDATE altas_enlaces SET usado = ? WHERE huella = ? AND usado IS NULL AND vence > ?",
@@ -262,11 +267,11 @@ class Altas:
         if usados != 1:
             raise ErrorAlta("El enlace venció o ya se usó. Pide uno nuevo desde el sitio.")
         filas, _ = self._bd.ejecutar(
-            "SELECT a.correo, a.org, a.confirmada FROM altas_enlaces e "
+            "SELECT a.correo, a.org, a.confirmada, a.nombre FROM altas_enlaces e "
             "JOIN altas a ON a.correo = e.correo WHERE e.huella = ?",
             (huella,),
         )
-        correo, org, confirmada = filas[0]
+        correo, org, confirmada, nombre = filas[0]
         if confirmada:
             raise ErrorAlta(f"Este correo ya tiene una llave. Escríbenos a {self.soporte}.")
         _, marcadas = self._bd.ejecutar(
@@ -278,12 +283,22 @@ class Altas:
         self._registro.fijar_nivel(org, NIVEL_ALTA)
         vence: date = (_ahora() + VIGENCIA_LLAVE).date()
         llave = self._registro.crear(org, {"*"}, prueba=False, expira=vence)
-        return correo, llave
+        return correo, llave, nombre, vence
 
     async def confirmar(self, token: str) -> tuple[str, str]:
+        """(correo, llave). Después manda la bienvenida con cómo conectarla (sin la llave)."""
         if not re.fullmatch(r"[A-Za-z0-9_-]{20,100}", token or ""):
             raise ErrorAlta("El enlace no es válido.")
-        return await asyncio.to_thread(self._confirmar, token)
+        correo, llave, nombre, vence = await asyncio.to_thread(self._confirmar, token)
+        if self.correo is not None:
+            mensaje = correos.bienvenida(
+                nombre, creditos=NIVELES[NIVEL_ALTA], vence=vence, soporte=self.soporte
+            )
+            try:  # la llave ya existe: un correo que no sale no debe esconderla
+                await self.correo.enviar(correo, mensaje)
+            except Exception:
+                logging.getLogger("terranova.alta").exception("no salió la bienvenida")
+        return correo, llave
 
     # --- contacto ---------------------------------------------------------------------------
 
@@ -318,8 +333,9 @@ class Altas:
             raise ErrorAlta("El mensaje va de 1 a 4.000 caracteres, sin caracteres de control.")
         await asyncio.to_thread(self._guardar_contacto, (n, c, o, a, m), self._hmac(ip))
         if self.correo is not None:
-            texto = f"De: {n} <{c}>\nOrganización: {o or '—'}\nAsunto: {a}\n\n{m}\n"
-            await self.correo.enviar(self.soporte, f"[Terrnova] {a}: {n}", texto)
+            legible = ASUNTOS[a]
+            await self.correo.enviar(self.soporte, correos.aviso_contacto(n, c, o, legible, m))
+            await self.correo.enviar(c, correos.acuse_contacto(n, legible, m, soporte=self.soporte))
 
 
 def altas_desde_entorno(registro: Registro) -> Altas:
