@@ -34,9 +34,45 @@ export function encuadre(puntos, { azimuth = 45, pad = 10, escala = ESCALA } = {
   return { P: { origin: [pad - x0, pad - y0], scale: escala, azimuth, elevation: 30 }, ancho, alto };
 }
 
-export function svgDe({ huella, ancho, alto, etiqueta, cuerpo, vivo, clase }) {
+// El SVG de una figura en dos capas: la fija (todo lo que no se mueve) y la viva (las piezas que
+// se mueven y lo que las tapa). figuras.js pone la viva encima, en su propio <svg>, así un cuadro
+// solo repinta lo que cambia. data-vivo lleva lo que el movimiento necesita (precalculado aquí).
+export function svgDe({ huella, ancho, alto, etiqueta, fija, cuerpo: viejo, viva = [], vivo, clase }) {
+  if (fija === undefined) fija = viejo;
+  const cuerpo = `<g class="capa-fija">${[].concat(fija).join("")}</g><g class="capa-viva">${[].concat(viva).join("")}</g>`;
   const svg = k.figureSvg({ width: ancho, height: alto, label: etiqueta, body: cuerpo, className: clase });
   return svg.replace("<svg ", `<svg data-datos="${huella}" data-vivo="${esc(JSON.stringify(vivo))}" `);
+}
+
+// Sombra de contacto horneada: la huella de la pieza en el piso y dos escalones translúcidos que
+// se abren, sin desenfoque (el filtro blur repinta caro). pad = cuánto se abre.
+export function sombra(plan, z, P, { pad = 4, pasos = 3 } = {}) {
+  const out = [];
+  for (let j = pasos; j >= 1; j--) {
+    const g = (pad * j) / pasos;
+    const pl = { x: plan.x - g, y: plan.y - g, w: plan.w + 2 * g, d: plan.d + 2 * g, r: (plan.r ?? 0) + g };
+    out.push(`<path class="sombra" d="${k.planOutline(pl, z, P, 6)}"/>`);
+  }
+  return out.join("");
+}
+// La misma sombra bajo una pieza redonda.
+export function sombraRedonda(cx, cy, r, z, P, { pad = 3, pasos = 3 } = {}) {
+  const out = [];
+  for (let j = pasos; j >= 1; j--) out.push(`<path class="sombra" d="${k.ring(cx, cy, r + (pad * j) / pasos, z, P, 40)}"/>`);
+  return out.join("");
+}
+
+// Matriz de pantalla de un plano: lo que se dibuja en (u, v) locales cae en el plano del mundo.
+// plano "z": horizontal a la altura z (u = x, v = y); "x": vertical en x = c (u = y, v = z);
+// "y": vertical en y = c (u = x, v = z). Devuelve [a, b, c, d, e, f] para matrix().
+export function matrizPlano(P, plano, c = 0) {
+  const o = plano === "z" ? [0, 0, c] : plano === "x" ? [c, 0, 0] : [0, c, 0];
+  const u = plano === "y" ? [1, 0, 0] : plano === "x" ? [0, 1, 0] : [1, 0, 0];
+  const v = plano === "z" ? [0, 1, 0] : [0, 0, 1];
+  const O = k.iso(o, P);
+  const U = k.iso(o.map((q, i) => q + u[i]), P), V = k.iso(o.map((q, i) => q + v[i]), P);
+  const r3 = (x) => Math.round(x * 1000) / 1000;
+  return [U[0] - O[0], U[1] - O[1], V[0] - O[0], V[1] - O[1], O[0], O[1]].map(r3);
 }
 
 export const porProf = (pts, P) =>
@@ -49,11 +85,11 @@ export const enFrente = (x0, x1, z0, z1, y, P) =>
 export const enCostado = (y0, y1, z0, z1, x, P) =>
   k.pathOf([[x, y0, z0], [x, y1, z0], [x, y1, z1], [x, y0, z1]].map((p) => k.iso(p, P)), true);
 
-// Base de banco: halo, patas con brida, losa biselada, ranura, tornillos en las esquinas.
+// Base de banco: sombra horneada, patas con brida, losa biselada, ranura, tornillos en las esquinas.
 export function base(PLACA, z, grueso, P, { patas = 12, alto = 6 } = {}) {
   const out = [];
   const piso = z - grueso - alto;
-  out.push(`<path class="iso-halo" d="${k.haloOf(PLACA, piso, alto + grueso, P)}"/>`);
+  out.push(sombra(PLACA, piso, P, { pad: 7 }));
   for (const [x, y] of porProf(k.corners(PLACA, patas), P)) {
     out.push(S(k.cylinder(x, y, 5.2, piso, 1.4, P, 24), { tone: "lo" }));
     out.push(S(k.cylinder(x, y, 3.8, piso + 1.4, alto - 1.4, P, 24), { tone: "mid" }));
@@ -66,10 +102,10 @@ export function base(PLACA, z, grueso, P, { patas = 12, alto = 6 } = {}) {
   return out.join("");
 }
 
-// Regla en el borde delantero (+y) de una placa: tira, marcas cada 4 y mayores cada 5.
+// Regla en el borde delantero (+y) de una placa: tira de metal, marcas cada 4 y mayores cada 5.
 export function regla(x0, x1, yBorde, z, P) {
   const tira = { x: x0, y: yBorde - 3, w: x1 - x0, d: 2.6, r: 0.6 };
-  const out = [S(k.slabOf(tira, z, 0.5, P, 2), { tone: "lo", crease: "none", m: "ocre" })];
+  const out = [S(k.slabOf(tira, z, 0.5, P, 2), { tone: "lo", crease: "none", m: "metal" })];
   const m = k.topTicks(x0 + 2, x1 - 2, 4, 5, yBorde - 0.4, z + 0.5, [-1, -1.8], P);
   out.push(L(m.minor, { tone: "lo" }), L(m.major, { tone: "mid" }));
   return out.join("");

@@ -194,24 +194,24 @@
     ]
    },
    {
-    "tipo": "Contratista",
-    "como": "por NIT",
+    "tipo": "Contrato",
+    "como": "por id de SECOP II",
     "fuentes": [
      {
-      "t": "Contratos públicos (SECOP II)",
+      "t": "Contrato (SECOP II)",
       "e": "Colombia Compra Eficiente"
      },
      {
-      "t": "Sanciones en contratos",
+      "t": "Multas y sanciones",
       "e": "Colombia Compra Eficiente"
      },
      {
-      "t": "Multas (SECOP I)",
+      "t": "Modificaciones",
       "e": "Colombia Compra Eficiente"
      },
      {
-      "t": "Sanciones de la SIC",
-      "e": "SIC"
+      "t": "Pagos",
+      "e": "Colombia Compra Eficiente"
      }
     ]
    }
@@ -254,9 +254,9 @@
     "l": "aviso legal del Banco"
    },
    {
-    "p": "¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE?",
-    "e": "DANE",
-    "l": "términos del DANE"
+    "p": "¿Es potable el agua en este municipio? (IRCA del INS, año por año)",
+    "e": "INS",
+    "l": "CC BY-SA 4.0"
    },
    {
     "p": "¿Qué áreas protegidas del RUNAP contienen este punto?",
@@ -284,21 +284,21 @@
     "l": "CC BY-SA 4.0"
    },
    {
-    "p": "¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes?",
-    "e": "IDEAM",
+    "p": "¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación?",
+    "e": "MinEducación",
     "l": "CC BY-SA 4.0"
    }
   ],
   "nodos": [
    "Banco de la República",
-   "DANE",
+   "INS",
    "Parques Nacionales",
    "Colombia Compra Eficiente",
    "Confecámaras",
    "IGAC",
    "UPRA",
-   "IDEAM",
-   "INS",
+   "MinEducación",
+   "ICFES",
    "INVIMA",
    "ANH",
    "Policía Nacional"
@@ -4692,82 +4692,130 @@
   ],
   "total": 186988
  },
+ "usadas": {
+  "ruta": [
+   "igac_predio_en_punto",
+   "secop_contratos_entidad",
+   "pnn_areas_protegidas_en_punto"
+  ],
+  "prueba": [
+   "banrep_trm_recientes"
+  ],
+  "revision": [
+   "pnn_areas_protegidas_en_punto",
+   "sinchi_perdida_bosque_en_punto",
+   "ant_resguardos_en_punto",
+   "igac_predio_en_punto",
+   "rues_empresa_por_nit",
+   "supersociedades_situacion_financiera",
+   "superfinanciera_vigilada_por_nit",
+   "rues_establecimientos_por_nit",
+   "secop_contrato_por_id",
+   "secop_sanciones_contrato",
+   "secop_modificaciones_contrato",
+   "secop_pagos_contrato"
+  ],
+  "tablero": [
+   "men_educacion_municipio",
+   "ins_calidad_agua_municipio",
+   "icfes_saber11_municipio",
+   "igac_compraventas_municipio"
+  ],
+  "asistente": [
+   "banrep_trm_recientes",
+   "ins_calidad_agua_municipio",
+   "pnn_areas_protegidas_en_punto",
+   "secop_contratos_municipio",
+   "rues_empresa_por_nit",
+   "igac_predio_en_punto",
+   "upra_precio_tierra_rural_municipio",
+   "men_educacion_municipio",
+   "icfes_saber11_municipio",
+   "invima_registro_sanitario_por_expediente",
+   "anh_crudo_municipio",
+   "policia_hurto_vehiculos_municipio"
+  ]
+ },
  "tablero": {
   "indicadores": [
    {
-    "t": "Población",
-    "e": "DANE",
-    "valor": 0.62,
-    "comparables": [
-     0.4,
-     0.7
-    ],
-    "serie": [
-     0.3,
-     0.34,
-     0.38,
-     0.41,
-     0.46,
-     0.5,
-     0.55,
-     0.58
-    ]
-   },
-   {
-    "t": "Pobreza",
-    "e": "DANE",
-    "valor": 0.38,
-    "comparables": [
-     0.45,
-     0.75
-    ],
-    "serie": [
-     0.72,
-     0.68,
-     0.66,
-     0.6,
-     0.55,
-     0.5,
-     0.46,
-     0.42
-    ]
-   },
-   {
     "t": "Educación",
     "e": "MinEducación",
-    "valor": 0.7,
-    "comparables": [
-     0.5,
-     0.8
-    ],
-    "serie": [
-     0.5,
-     0.52,
-     0.55,
-     0.54,
-     0.6,
-     0.63,
-     0.66,
-     0.7
-    ]
-   },
-   {
-    "t": "Salud",
-    "e": "ADRES",
-    "valor": 0.8,
+    "m": "cobertura neta, año por año",
+    "valor": 0.72,
     "comparables": [
      0.55,
      0.85
     ],
     "serie": [
-     0.55,
      0.58,
+     0.61,
+     0.63,
      0.62,
-     0.64,
+     0.66,
+     0.68,
      0.7,
-     0.72,
-     0.76,
-     0.8
+     0.72
+    ]
+   },
+   {
+    "t": "Agua potable",
+    "e": "INS",
+    "m": "riesgo del agua (IRCA), año por año",
+    "valor": 0.3,
+    "comparables": [
+     0.18,
+     0.48
+    ],
+    "serie": [
+     0.52,
+     0.47,
+     0.44,
+     0.4,
+     0.38,
+     0.35,
+     0.31,
+     0.3
+    ]
+   },
+   {
+    "t": "Saber 11",
+    "e": "ICFES",
+    "m": "puntaje promedio, por periodo",
+    "valor": 0.56,
+    "comparables": [
+     0.42,
+     0.66
+    ],
+    "serie": [
+     0.48,
+     0.5,
+     0.49,
+     0.52,
+     0.51,
+     0.54,
+     0.55,
+     0.56
+    ]
+   },
+   {
+    "t": "Compraventas",
+    "e": "IGAC",
+    "m": "compraventas de inmuebles, año por año",
+    "valor": 0.64,
+    "comparables": [
+     0.35,
+     0.7
+    ],
+    "serie": [
+     0.38,
+     0.42,
+     0.4,
+     0.47,
+     0.52,
+     0.55,
+     0.6,
+     0.64
     ]
    }
   ]

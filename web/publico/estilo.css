@@ -29,12 +29,12 @@
   /* líneas a 0,6 px: tenue, media y alta */
   --linea-tenue: #D7DBD4; --linea-baja: #A2AAA3; --linea-media: #6F7C75; --linea-alta: #12261F;
   /* sujeto: un material de color por figura, 15–25 % del área, con su filo */
-  --sujeto-teal-0: #DCF7F1; --sujeto-teal-1: #D2EDE7; --sujeto-teal-2: #C7E2DC; --sujeto-teal-3: #BDD8D2;
-  --sujeto-teal-4: #B3CEC8; --sujeto-teal-filo: #236E62;
-  --sujeto-agua-0: #DAF4FA; --sujeto-agua-1: #D0EAF0; --sujeto-agua-2: #C5DFE5; --sujeto-agua-3: #BBD5DB;
-  --sujeto-agua-4: #B1CBD1; --sujeto-agua-filo: #2B6A78;
-  --sujeto-ocre-0: #F9E8C5; --sujeto-ocre-1: #EFDEBB; --sujeto-ocre-2: #E4D3AF; --sujeto-ocre-3: #DAC9A6;
-  --sujeto-ocre-4: #D0BF9C; --sujeto-ocre-filo: #7A5B1E;
+  --sujeto-teal-0: #D4F3EA; --sujeto-teal-1: #BEE7DC; --sujeto-teal-2: #A9D9CC; --sujeto-teal-3: #94CABC;
+  --sujeto-teal-4: #80BAAC; --sujeto-teal-filo: #236E62;
+  --sujeto-agua-0: #D6EFF6; --sujeto-agua-1: #C0E3EE; --sujeto-agua-2: #AAD4E2; --sujeto-agua-3: #95C4D4;
+  --sujeto-agua-4: #81B3C5; --sujeto-agua-filo: #2B6A78;
+  --sujeto-ocre-0: #F6E8CC; --sujeto-ocre-1: #ECDBB8; --sujeto-ocre-2: #E1CDA5; --sujeto-ocre-3: #D4BE92;
+  --sujeto-ocre-4: #C7AF81; --sujeto-ocre-filo: #7A5B1E;
   /* material oscuro (bosque), con filo claro */
   --oscuro-0: #203F35; --oscuro-1: #18382E; --oscuro-2: #113027; --oscuro-3: #082920; --oscuro-4: #022219;
   --oscuro-filo: #649087;
@@ -628,8 +628,11 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 }
 .fig-iso[data-figura="capas"] { width: 80%; }
 @media (max-width: 960px) { .fig-iso[data-figura="capas"] { width: 100%; max-width: 480px; } }
-.fig-iso .lienzo { width: 100%; touch-action: pan-y; border-radius: var(--radio-lg); }
-.fig-iso .lienzo:focus-visible { outline: 1px solid var(--linea-fuerte); outline-offset: 6px; }
+.fig-iso .lienzo { position: relative; width: 100%; touch-action: pan-y; border-radius: var(--radio-lg); }
+/* la capa viva: las piezas que se mueven, en su propio svg encima; capa propia solo mientras anima */
+.fig-iso .capa-viva-svg { position: absolute; inset: 0; pointer-events: none; }
+.fig-iso .capa-viva-svg.animando { will-change: transform; }
+.fig-iso .lienzo:focus-visible { outline: 2px solid var(--foco); outline-offset: 6px; }
 .fig-iso .lectura-l { width: 100%; display: grid; justify-items: start; gap: 2px;
   font: 400 12.5px/18px var(--font-mono); color: var(--tinta-tenue); font-variant-numeric: tabular-nums; }
 .fig-iso .lectura-l [data-lectura] { color: var(--tinta); }
@@ -654,7 +657,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l.abierto li { grid-template-columns: minmax(0, 15em) minmax(0, 1fr); }
 .lista-l.abierto code { font-size: 13.5px; }
 .desliza.lic { max-width: 640px; }
-.sombra-pais { filter: blur(14px); opacity: .18; transform: translateY(6px); }
+.sombra-pais { opacity: .06; }
 .tierra { fill: var(--superficie-2); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
 [data-celda] { transition: opacity .7s ease; }
 .fig-cobertura [data-celda] .iso-solid[data-lit] { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); }
@@ -714,8 +717,9 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .piloto-teal circle { fill: var(--teal-400); opacity: 1; } .piloto-claro circle { fill: var(--tinta-invertida); opacity: 1; } .piloto-ambar circle { fill: var(--ambar-500); opacity: 1; }
 .ruta-dato { fill: none; stroke: none; }
 .paquete { stroke: var(--bosque-900); stroke-width: .5; vector-effect: non-scaling-stroke; }
-.iso-solid > * { transition: fill .5s var(--anatomy-ease, ease), stroke .5s ease; }
-.iso-halo { fill: var(--anatomy-halo); stroke: none; filter: blur(8px); opacity: var(--anatomy-halo-opacity); transform: translateY(3px); }
+.iso-halo { fill: var(--anatomy-halo); stroke: none; opacity: .08; }
+/* sombra de contacto horneada: escalones translúcidos, sin desenfoque (comun.mjs, sombra) */
+.sombra { fill: var(--halo); stroke: none; opacity: .045; }
 .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }
 .iso-line[data-tone="hi"] { stroke: var(--anatomy-hi); }
 .iso-line[data-tone="mid"] { stroke: var(--anatomy-mid); }
@@ -766,6 +770,15 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .fig-capas [data-modulo] { transition: transform 1s cubic-bezier(.34,1.45,.64,1); }
 .fig-capas .cables { transition: opacity .6s ease; }
 
+/* estado como marca: vivo = punto teal */
+.marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
+.medidor .luz-on circle { opacity: 1; }
+/* Fig. ruta: el brazo de la barrera, dibujado en su plano */
+.fig-ruta .brazo { fill: var(--estructura-0); stroke: none; }
+.fig-ruta .banda { fill: var(--sujeto-agua-filo); stroke: none; }
+.fig-ruta .brazo-filo { fill: none; stroke: var(--linea-alta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.fig-ruta .cubo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.fig-ruta .cubo-eje { fill: var(--linea-alta); }
 /* Fig. 2: la pregunta, su traza y la barrera */
 .traza { fill: none; stroke: var(--acento-relleno); stroke-width: 1.1; vector-effect: none !important; stroke-linecap: round; stroke-linejoin: round;
   stroke-dasharray: 100 100; stroke-dashoffset: 100; }

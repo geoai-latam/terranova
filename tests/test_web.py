@@ -157,3 +157,42 @@ def test_figuras_respetan_movimiento_reducido_y_marca() -> None:
     texto = re.sub(r"<[^>]+>", " ", html)
     assert "Terranova" not in texto, "la marca se escribe Terrnova"
     assert "Terrnova" in (PUBLICO / "img" / "figuras" / "ruta.svg").read_text(encoding="utf-8")
+
+
+def test_figuras_solo_nombran_herramientas_vendibles_y_sin_dane() -> None:
+    # Las figuras solo nombran herramientas publicadas y con uso comercial, y ninguna nombra el DANE
+    # (sin base legal para venderlo en servicios, decisión del dueño del 01-11-2026).
+    import html
+    import json
+
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # web/ no es un paquete
+
+    datos = construir.datos_figuras()
+    vendibles = {h.id for h in construir.HERR}
+    for fig, ids in datos["usadas"].items():
+        assert ids and set(ids) <= vendibles, (
+            f"{fig} nombra herramientas no vendibles: {set(ids) - vendibles}"
+        )
+        for i in ids:
+            fuente = construir.CAT.fuentes[construir.CAT.herramientas[i].fuente]
+            assert "DANE" not in construir.nombre_entidad(fuente.entidad), (
+                f"{fig} usa {i}, del DANE"
+            )
+    sin_mapa = {k: v for k, v in datos.items() if k != "cobertura"}
+    assert not re.search(r"\bDANE\b", json.dumps(sin_mapa, ensure_ascii=False))
+    for nombre in construir.NOMBRES_FIGURAS:
+        svg = html.unescape(
+            (PUBLICO / "img" / "figuras" / f"{nombre}.svg").read_text(encoding="utf-8")
+        )
+        assert not re.search(r"\bDANE\b", svg), f"{nombre}.svg nombra el DANE"
+        for hid in re.findall(r"\b[a-z0-9]+(?:_[a-z0-9]+){2,}\b", svg):
+            assert hid in vendibles, f"{nombre}.svg nombra {hid}, que no se vende"
+    # y la lectura bajo cada figura en las páginas
+    for p in PAGINAS:
+        for lectura in re.findall(
+            r"<span data-lectura[^>]*>(.*?)</span>", p.read_text(encoding="utf-8")
+        ):
+            assert "DANE" not in lectura, f"{p.name}: una figura lee {lectura}"
+            for hid in re.findall(r"<code>([a-z0-9_]+)</code>", lectura):
+                assert hid in vendibles

@@ -689,12 +689,12 @@ CRUCES = [
         ],
     ),
     (
-        "Contratos y sanciones",
+        "Contratos de SECOP II",
         [
-            ("secop_contratos_proveedor", "Contratos públicos (SECOP II)"),
-            ("secop_sanciones_contrato", "Sanciones en contratos"),
-            ("secop1_multas_municipio", "Multas (SECOP I)"),
-            ("sic_sanciones_por_sector", "Sanciones de la SIC"),
+            ("secop_contrato_por_id", "Contrato (SECOP II)"),
+            ("secop_sanciones_contrato", "Multas y sanciones"),
+            ("secop_modificaciones_contrato", "Modificaciones"),
+            ("secop_pagos_contrato", "Pagos"),
         ],
     ),
 ]
@@ -778,35 +778,44 @@ def licencia_corta(spdx: str | None) -> str:
 
 
 # Ilustrativo: valor de tu municipio, franja de los comparables y serie, por indicador (0 a 1 en la
-# escala del reloj). Los indicadores y sus entidades son del catálogo.
+# escala del reloj). Los indicadores y sus entidades son del catálogo, y cada fuente publica una
+# serie (año por año o por periodo): sin serie no hay tendencia que dibujar.
 CIFRAS_TABLERO = [
-    (0.62, (0.40, 0.70), (0.30, 0.34, 0.38, 0.41, 0.46, 0.50, 0.55, 0.58)),
-    (0.38, (0.45, 0.75), (0.72, 0.68, 0.66, 0.60, 0.55, 0.50, 0.46, 0.42)),
-    (0.70, (0.50, 0.80), (0.50, 0.52, 0.55, 0.54, 0.60, 0.63, 0.66, 0.70)),
-    (0.80, (0.55, 0.85), (0.55, 0.58, 0.62, 0.64, 0.70, 0.72, 0.76, 0.80)),
+    (0.72, (0.55, 0.85), (0.58, 0.61, 0.63, 0.62, 0.66, 0.68, 0.70, 0.72)),
+    (0.30, (0.18, 0.48), (0.52, 0.47, 0.44, 0.40, 0.38, 0.35, 0.31, 0.30)),
+    (0.56, (0.42, 0.66), (0.48, 0.50, 0.49, 0.52, 0.51, 0.54, 0.55, 0.56)),
+    (0.64, (0.35, 0.70), (0.38, 0.42, 0.40, 0.47, 0.52, 0.55, 0.60, 0.64)),
 ]
 
-# Ilustrativo: en qué fuente aparece algo que revisar, por tipo (predio, empresa, contratista).
+# Ilustrativo: en qué fuente aparece algo que revisar, por tipo (predio, empresa, contrato).
 HALLAZGO_REVISION = [1, None, 2]
 
 # Lo que muestran las figuras de los servicios sale del catálogo: herramientas, entidades y licencias reales.
 TIPOS_REVISION = {
     "Predios y parcelas": ("Predio", "por coordenada"),
     "Empresas y proveedores": ("Empresa", "por NIT"),
-    "Contratos y sanciones": ("Contratista", "por NIT"),
+    "Contratos de SECOP II": ("Contrato", "por id de SECOP II"),
 }
+# Cada «como» exige el tipo de entrada que de verdad recibe la herramienta (datos_servicio lo comprueba).
+ENTRADA_REVISION = {
+    "por coordenada": {"lon", "lat"},
+    "por NIT": "nit_empresa",
+    "por id de SECOP II": "id_secop",
+}
+# Sin el DANE (sin base legal para venderlo en servicios) ni las alertas del IDEAM (su copia se
+# refresca a mano): preguntas de fuentes en vivo o con su fecha de corte.
 PREGUNTAS_ASISTENTE = [
     "banrep_trm_recientes",
-    "dane_poblacion_proyectada_municipio",
+    "ins_calidad_agua_municipio",
     "pnn_areas_protegidas_en_punto",
     "secop_contratos_municipio",
     "rues_empresa_por_nit",
     "igac_predio_en_punto",
     "upra_precio_tierra_rural_municipio",
-    "ideam_alertas_incendios_municipio",
+    "men_educacion_municipio",
 ]
 OTRAS_ASISTENTE = [
-    "ins_calidad_agua_municipio",
+    "icfes_saber11_municipio",
     "invima_registro_sanitario_por_expediente",
     "anh_crudo_municipio",
     "policia_hurto_vehiculos_municipio",
@@ -817,11 +826,12 @@ CARRILES_VIGILANCIA = [
     ("SECOP I", "Colombia Compra Eficiente", "Nueva multa a un contratista que sigues"),
     ("SIC", "SIC", "Nueva sanción en el sector que sigues"),
 ]
+# Indicadores con serie publicada por su entidad (sin el DANE): herramienta, nombre y qué serie es.
 INDICADORES_TABLERO = [
-    ("dane_poblacion_proyectada_municipio", "Población"),
-    ("dane_ipm_municipio", "Pobreza"),
-    ("men_educacion_municipio", "Educación"),
-    ("adres_afiliados_subsidiado_municipio", "Salud"),
+    ("men_educacion_municipio", "Educación", "cobertura neta, año por año"),
+    ("ins_calidad_agua_municipio", "Agua potable", "riesgo del agua (IRCA), año por año"),
+    ("icfes_saber11_municipio", "Saber 11", "puntaje promedio, por periodo"),
+    ("igac_compraventas_municipio", "Compraventas", "compraventas de inmuebles, año por año"),
 ]
 
 
@@ -832,6 +842,17 @@ def datos_servicio(tipo: str) -> object:
         return nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad)
 
     if tipo == "revision":
+        for g, items in CRUCES:
+            pide = ENTRADA_REVISION[TIPOS_REVISION[g][1]]
+            for i, _ in items:
+                tipos = (
+                    set(por_id[i].entrada)
+                    if isinstance(pide, set)
+                    else set(por_id[i].entrada.values())
+                )
+                assert (pide <= tipos) if isinstance(pide, set) else (pide in tipos), (
+                    f"{i} no va {TIPOS_REVISION[g][1]}"
+                )
         return [
             {
                 "tipo": TIPOS_REVISION[g][0],
@@ -857,7 +878,7 @@ def datos_servicio(tipo: str) -> object:
             assert s == e or s in sistemas[e], f"{s} no es un sistema de {e}"
         return [{"s": s, "e": e, "ev": ev} for s, e, ev in CARRILES_VIGILANCIA]
     if tipo == "tablero":
-        return [{"t": t, "e": entidad(i)} for i, t in INDICADORES_TABLERO]
+        return [{"t": t, "e": entidad(i), "m": m} for i, t, m in INDICADORES_TABLERO]
     return None
 
 
@@ -975,16 +996,26 @@ def datos_figuras() -> dict:
         "vigilancia": {"carriles": datos_servicio("vigilancia")},
         "asistente": datos_servicio("asistente"),
         "cobertura": datos_cobertura(),
+        "usadas": {
+            "ruta": RUTA,
+            "prueba": ["banrep_trm_recientes"],
+            "revision": [i for _, items in CRUCES for i, _ in items],
+            "tablero": [i for i, _, _ in INDICADORES_TABLERO],
+            "asistente": PREGUNTAS_ASISTENTE + OTRAS_ASISTENTE,
+        },
         "tablero": {
             "indicadores": [
                 {
                     "t": t,
                     "e": nombre_entidad(CAT.fuentes[por_id[hid].fuente].entidad),
+                    "m": medida,
                     "valor": v,
                     "comparables": list(c),
                     "serie": list(serie),
                 }
-                for (hid, t), (v, c, serie) in zip(INDICADORES_TABLERO, CIFRAS_TABLERO, strict=True)
+                for (hid, t, medida), (v, c, serie) in zip(
+                    INDICADORES_TABLERO, CIFRAS_TABLERO, strict=True
+                )
             ]
         },
     }
@@ -1070,7 +1101,7 @@ def figura_ruta() -> str:
 LECTURA_SERVICIO = {
     "revision": ("predio · por coordenada · 4 fuentes", "flechas: otro tipo"),
     "tablero": (
-        "población · DANE · tu municipio frente a sus comparables",
+        "{t} · {e} · {m} · tu municipio frente a sus comparables",
         "pasa el puntero por los relojes",
     ),
     "vigilancia": (
@@ -1089,6 +1120,9 @@ def figura_servicio(sid: str) -> str:
         lectura = f"{escape(q['p'])} → {q['e']} · {q['l']}"
         return figura(sid, lectura, "pasa el puntero por las tomas")
     lectura, pista = LECTURA_SERVICIO[sid]
+    if sid == "tablero":
+        i0 = datos_figuras()["tablero"]["indicadores"][0]
+        lectura = lectura.format(t=i0["t"].lower(), e=i0["e"], m=i0["m"])
     return figura(sid, lectura, pista, ilustrativo=True)
 
 
