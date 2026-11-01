@@ -38,8 +38,8 @@ from terranova.correos import Mensaje
 from terranova.cuota import NIVELES
 from terranova.identidad import Registro
 
-# La llave del alta automática: pocos créditos y con vencimiento. Para más, el plan Gratis o uno
-# de pago se piden a soporte (decisión del dueño, 2026-10-31).
+# La llave del alta automática: pocos créditos y con vencimiento. Para más, un plan de pago se pide
+# a soporte (decisión del dueño, 2026-10-31). El sitio solo ofrece esta prueba (2026-11-01).
 NIVEL_ALTA = "prueba"
 VIGENCIA_LLAVE = timedelta(days=15)  # decisión del dueño, 2026-11-01
 VIGENCIA_ENLACE = timedelta(hours=24)
