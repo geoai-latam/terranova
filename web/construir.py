@@ -166,7 +166,7 @@ def catalogo_json() -> str:
 
 # La llave del alta automática (ADR-0034): pocos créditos y vencimiento. Salen del código.
 sys.path.insert(0, str(RAIZ.parent / "src"))
-from terranova.alta import VIGENCIA_LLAVE  # noqa: E402
+from terranova.alta import ASUNTOS, VIGENCIA_LLAVE  # noqa: E402
 from terranova.cuota import NIVELES  # noqa: E402
 
 CREDITOS_PRUEBA = NIVELES["prueba"]
@@ -193,21 +193,7 @@ def formulario_alta() -> str:
 </form>"""
 
 
-ASUNTOS_CONTACTO = [
-    ("proyecto", "Un proyecto o una solución"),
-    ("debida-diligencia", "Debida diligencia"),
-    ("tablero", "Tablero o informe"),
-    ("vigilancia", "Alertas y automatización"),
-    ("asistente", "Asistente o agente"),
-    ("plan-gratis", "El plan Gratis"),
-    ("plan-basico", "Plan Básico"),
-    ("plan-pro", "Plan Pro"),
-    ("plan-empresa", "Plan Empresa"),
-    ("plan-escala", "Plan Escala"),
-    ("gobierno-academia", "Gobierno, academia o veeduría"),
-    ("soporte", "Soporte"),
-    ("otro", "Otro"),
-]
+ASUNTOS_CONTACTO = list(ASUNTOS.items())  # los mismos que acepta la puerta
 
 
 def formulario_contacto() -> str:

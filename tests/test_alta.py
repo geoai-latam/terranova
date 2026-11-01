@@ -20,12 +20,15 @@ PIMIENTA = "p" * 40
 class CorreoFalso:
     def __init__(self) -> None:
         self.enviados: list[tuple[str, str, str]] = []
+        self.mensajes: list[Any] = []
 
-    async def enviar(self, destino: str, asunto: str, texto: str) -> None:
-        self.enviados.append((destino, asunto, texto))
+    async def enviar(self, destino: str, mensaje: Any) -> None:
+        self.enviados.append((destino, mensaje.asunto, mensaje.texto))
+        self.mensajes.append(mensaje)
 
     def enlace(self) -> str:
-        m = re.search(r"\?t=([A-Za-z0-9_-]+)", self.enviados[-1][2])
+        con_enlace = [e for e in self.enviados if "?t=" in e[2]]
+        m = re.search(r"\?t=([A-Za-z0-9_-]+)", con_enlace[-1][2])
         assert m, self.enviados[-1][2]
         return m.group(1)
 
@@ -51,7 +54,7 @@ async def test_el_enlace_da_una_llave_de_prueba_una_sola_vez(entorno: Any) -> No
     altas, registro, correo = entorno
     await _pedir(altas)
     destino, _, texto = correo.enviados[-1]
-    assert destino == "ana@ejemplo.co" and "24 horas" in texto
+    assert destino == "ana@ejemplo.co" and "Enlace válido hasta" in texto
     assert "rt_live_" not in texto  # la llave nunca va por correo
     token = correo.enlace()
     dueno, llave = await altas.confirmar(token)
@@ -71,7 +74,7 @@ async def test_un_correo_con_llave_no_recibe_otra(entorno: Any) -> None:
     await _pedir(altas)
     await altas.confirmar(correo.enlace())
     await _pedir(altas)
-    assert "ya tiene una llave" in correo.enviados[-1][2] and "?t=" not in correo.enviados[-1][2]
+    assert "ya tiene una" in correo.enviados[-1][2] and "?t=" not in correo.enviados[-1][2]
     assert len(registro.listar()) == 1
 
 
@@ -138,8 +141,13 @@ async def test_contacto_se_guarda_y_llega_a_soporte(entorno: Any) -> None:
     await altas.contactar(
         "Ana", "ana@ejemplo.co", "Ejemplo SAS", "tablero", "Hola,\nquiero un tablero.", True, "ip"
     )
-    destino, asunto, texto = correo.enviados[-1]
-    assert destino == "soporte@terrnova.com" and "tablero" in asunto and "ana@ejemplo.co" in texto
+    (aviso_d, aviso_a, aviso_t), (acuse_d, acuse_a, acuse_t) = correo.enviados[-2:]
+    assert (
+        aviso_d == "soporte@terrnova.com" and "Tablero" in aviso_a and "ana@ejemplo.co" in aviso_t
+    )
+    assert correo.mensajes[-2].responder_a == "ana@ejemplo.co"  # responder le escribe a Ana
+    assert acuse_d == "ana@ejemplo.co" and "Recibimos tu mensaje" in acuse_a
+    assert "quiero un tablero" in acuse_t
     with pytest.raises(ErrorAlta, match="mensaje"):
         await altas.contactar("Ana", "ana@ejemplo.co", "", "otro", "", True, "ip")
 

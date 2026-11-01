@@ -79,10 +79,15 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   desechables y con un campo trampa contra robots.
 - `/contacto` tiene un formulario propio: guarda el mensaje y lo reenvía a soporte. Los botones del
   sitio que eran `mailto:` llevan al formulario con el asunto puesto.
-- **Pendiente del dueño:** un proveedor de correo saliente (SMTP con TLS) con SPF y DKIM para
-  `terrnova.com`, y sus datos en `TERRANOVA_SMTP_URL` y `TERRANOVA_CORREO_DE`. Sin eso, el alta
-  dice que no está disponible y remite a soporte. También confirmar los números de la llave de
-  prueba: 300 créditos y 15 días (confirmado el 2026-11-01).
+- Correo saliente: Resend (SMTP con TLS, región sa-east-1) con SPF, DKIM y DMARC (`p=none`) en
+  `terrnova.com`, desde `no-responder@terrnova.com`; `soporte@` llega por Cloudflare Email Routing.
+  300 créditos y 15 días confirmados por el dueño el 2026-11-01.
+- **Plantillas de correo (#210, aprobadas por el dueño):** `src/terranova/correos.py`. HTML y texto,
+  solo tema claro, una columna de 600 px y una ficha clave-valor con el dato real: la solicitud
+  (hora y vigencia del enlace), la llave, el contacto (referencia `TN-XXXXXX` en el acuse y en el
+  aviso interno) o, en la bienvenida, la respuesta real de `sinic_predio_en_punto` para el predio
+  que dibuja la cabecera (`img/correo-predio.png`, desde `datos/sm.json`). Si esa respuesta cambia
+  en la fuente, se vuelve a medir y se actualizan `EJEMPLO` y la imagen juntos.
 
 ## Reglas nuevas del catálogo (2026-10-31, auditoría integral C2 y C17)
 
