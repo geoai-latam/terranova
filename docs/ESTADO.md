@@ -47,6 +47,26 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Sitio v2, fase 4: las ocho figuras rehechas (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
+
+- **Motor nuevo (`js/figuras.js`):** cada figura es `pose(turno, t)`, una función pura del tiempo que
+  pone las piezas vivas y da la lectura de ese instante; dos capas por SVG (fija y viva, solo
+  `transform` y `opacity`); un planificador único (la figura más visible, dos ciclos al entrar,
+  puntero, toque, foco y flechas, 60/30 fps, cero cuadros en reposo). Fuera los bucles de ambiente,
+  `getPointAtLength`, los halos con `blur` y las transiciones de `fill`.
+- **Las ocho**, con un material por figura y un solo ámbar en la pieza que actúa: capas (teal: el
+  dato sube y la pantalla del módulo responde), ruta (agua: ficha, barrera con canto, tapa de la
+  columna), prueba (bosque: la ficha sube; la huella se sella), revisión (ocre: estaciones colgadas,
+  banda que va con la ficha), tablero (agua: aguja que se asienta, pórtico que vuelve, serie que se
+  dibuja), vigilancia (teal: banderita, registro, tique), asistente (bosque: clavija que cambia de
+  boca, siglas grabadas, respuesta legible) y cobertura (rampa agua → teal hondo: maqueta con la
+  forma del país, columnas que crecen, alfileres).
+- **Verdad:** sin DANE en tablero ni asistente, sin alertas del IDEAM; revisión por contrato con
+  herramientas que reciben id de SECOP II (lo comprueba el build); `test_figuras_solo_nombran_
+  herramientas_vendibles_y_sin_dane`.
+- **Medido** (390 px, CPU 4×): ninguna tarea > 33 ms; pintados en 3 s de reposo de 96–870 a 0 (4 en la
+  vigilancia, su latido). `lines.mjs` 0 extremos sueltos en las ocho.
+
 ## Sitio v2: el héroe vuelve a como estaba (2026-11-01, rama `feat/sitio-anatomy`, PR #212 sin fusionar)
 
 - El dueño no quería tocar la animación principal del héroe (el giro de los predios). La escena

@@ -613,7 +613,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
    Integradas en la sección, sin marco: el papel de la figura es el fondo de la sección (--papel),
    las cuatro sombras son la rampa de estructura y las líneas las de 0,6 px (tenue, baja, media,
    alta). El único acento es lo que está pasando (ámbar). La lectura es una línea mono bajo la
-   figura; la pista, en Geist, aparece al pasar o enfocar. */
+   figura; la pista, en Geist, aparece al pasar o enfocar y lleva el detalle (licencia, entidad). */
 .seccion, .sv-det, .sv-heroe, .heroe { --papel: var(--fondo); }
 .seccion.sup, .sv-det.par { --papel: var(--superficie); }
 .fig-iso {
@@ -657,7 +657,6 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l.abierto li { grid-template-columns: minmax(0, 15em) minmax(0, 1fr); }
 .lista-l.abierto code { font-size: 13.5px; }
 .desliza.lic { max-width: 640px; }
-.sombra-pais { opacity: .06; }
 .tierra { fill: var(--estructura-3); stroke: var(--estructura-4); stroke-width: .5; vector-effect: non-scaling-stroke; }
 .fig-cobertura .costa { fill: none; stroke: var(--linea-media); stroke-width: .9; vector-effect: non-scaling-stroke; stroke-linecap: round; }
 /* cobertura: una sola rampa, del agua (pocos predios) al teal hondo (muchos); cada nivel toma sus
@@ -681,26 +680,21 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-shade[data-shade="2"] { fill: var(--anatomy-shade-2); }
 .iso-shade[data-shade="3"] { fill: var(--anatomy-shade-3); }
 .iso-top { fill: var(--anatomy-top); }
-.iso-solid[data-lit] > .iso-fill { fill: var(--anatomy-face); }
-.iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
-.iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }
-.iso-solid[data-lit] > .iso-edge { stroke: var(--anatomy-lit); }
 /* Papeles de las figuras: cada pieza lleva m-<material> y el material es una rampa de :root
-   (techo --c0, lados --c1 a --c4 por orientación, filo y pliegue). Estructura en neutros; un
-   material de color por figura (sujeto teal, agua u ocre, o el oscuro); ámbar solo en la pieza que
-   está pasando. Encendida (data-lit), la pieza sube un escalón de la rampa y su filo pasa a ámbar. */
+   (techo --c0, lados --c1 a --c4 por orientación, filo y pliegue). Estructura en neutros (papel,
+   metal, trabajo, acero); un material de color por figura (teal, agua, ocre, sus versiones fuertes,
+   o bosque con el filo claro); ámbar solo en la pieza que está pasando, como copia que aparece. */
 .m-papel { --c0: var(--estructura-0); --c1: var(--estructura-1); --c2: var(--estructura-2); --c3: var(--estructura-3); --c4: var(--estructura-4); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
 .m-metal { --c0: var(--estructura-1); --c1: var(--estructura-2); --c2: var(--estructura-3); --c3: var(--estructura-4); --c4: var(--estructura-5); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
 .m-trabajo, .m-acero { --c0: var(--estructura-2); --c1: var(--estructura-3); --c2: var(--estructura-4); --c3: var(--estructura-5); --c4: var(--estructura-6); --filo: var(--linea-media); --pliegue: var(--linea-baja); }
-.m-teal, .m-verde { --c0: var(--sujeto-teal-0); --c1: var(--sujeto-teal-1); --c2: var(--sujeto-teal-2); --c3: var(--sujeto-teal-3); --c4: var(--sujeto-teal-4); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-4); }
-/* el azul de estado («fuera de cobertura») no es material: la vigilancia pasa a agua */
-.m-agua, .m-azul { --c0: var(--sujeto-agua-0); --c1: var(--sujeto-agua-1); --c2: var(--sujeto-agua-2); --c3: var(--sujeto-agua-3); --c4: var(--sujeto-agua-4); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-4); }
-.m-ocre, .m-parcial { --c0: var(--sujeto-ocre-0); --c1: var(--sujeto-ocre-1); --c2: var(--sujeto-ocre-2); --c3: var(--sujeto-ocre-3); --c4: var(--sujeto-ocre-4); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-4); }
+.m-teal { --c0: var(--sujeto-teal-0); --c1: var(--sujeto-teal-1); --c2: var(--sujeto-teal-2); --c3: var(--sujeto-teal-3); --c4: var(--sujeto-teal-4); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-4); }
+.m-agua { --c0: var(--sujeto-agua-0); --c1: var(--sujeto-agua-1); --c2: var(--sujeto-agua-2); --c3: var(--sujeto-agua-3); --c4: var(--sujeto-agua-4); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-4); }
+.m-ocre { --c0: var(--sujeto-ocre-0); --c1: var(--sujeto-ocre-1); --c2: var(--sujeto-ocre-2); --c3: var(--sujeto-ocre-3); --c4: var(--sujeto-ocre-4); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-4); }
 /* el sujeto con cuerpo: la misma rampa, dos escalones más hondo, con el filo marcado */
 .m-teal-fuerte { --c0: var(--sujeto-teal-2); --c1: var(--sujeto-teal-3); --c2: var(--sujeto-teal-4); --c3: var(--sujeto-teal-5); --c4: var(--sujeto-teal-6); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
 .m-agua-fuerte { --c0: var(--sujeto-agua-2); --c1: var(--sujeto-agua-3); --c2: var(--sujeto-agua-4); --c3: var(--sujeto-agua-5); --c4: var(--sujeto-agua-6); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-5); }
 .m-ocre-fuerte { --c0: var(--sujeto-ocre-2); --c1: var(--sujeto-ocre-3); --c2: var(--sujeto-ocre-4); --c3: var(--sujeto-ocre-5); --c4: var(--sujeto-ocre-6); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-5); }
-.m-bosque, .m-chasis, .m-pantalla, .m-error { --c0: var(--oscuro-0); --c1: var(--oscuro-1); --c2: var(--oscuro-2); --c3: var(--oscuro-3); --c4: var(--oscuro-4); --filo: var(--oscuro-filo); --pliegue: var(--oscuro-filo); }
+.m-bosque { --c0: var(--oscuro-0); --c1: var(--oscuro-1); --c2: var(--oscuro-2); --c3: var(--oscuro-3); --c4: var(--oscuro-4); --filo: var(--oscuro-filo); --pliegue: var(--oscuro-filo); }
 .m-ambar { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); --pliegue: var(--acento-4); }
 .iso-solid[class*=" m-"] > .iso-fill { fill: var(--c1); }
 .iso-solid[class*=" m-"] > .iso-top { fill: var(--c0); }
@@ -710,25 +704,6 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-solid[class*=" m-"] > .iso-shade[data-shade="0"] { fill: var(--c4); }
 .iso-solid[class*=" m-"] > .iso-edge { stroke: var(--filo); }
 .iso-solid[class*=" m-"] > .iso-crease, .iso-solid[class*=" m-"] > .iso-bevel { stroke: var(--pliegue); }
-.iso-solid[class*=" m-"][data-lit] > .iso-shade[data-shade="3"] { fill: var(--c0); }
-.iso-solid[class*=" m-"][data-lit] > .iso-shade[data-shade="2"] { fill: var(--c1); }
-.iso-solid[class*=" m-"][data-lit] > .iso-shade[data-shade="1"] { fill: var(--c2); }
-.iso-solid[class*=" m-"][data-lit] > .iso-shade[data-shade="0"] { fill: var(--c3); }
-.iso-solid[class*=" m-"][data-lit] > .iso-edge { stroke: var(--acento-filo); }
-.texto-claro .iso-face-text { fill: var(--tinta-invertida); }
-/* vida: parpadeos y escritura; se pausan fuera de la vista y no corren con movimiento reducido */
-@keyframes parpadeo { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
-@keyframes latido { 0%, 70%, 100% { opacity: .3; } 80% { opacity: 1; } }
-.parpadea circle { animation: parpadeo var(--p, 2.4s) ease-in-out infinite; animation-delay: var(--d, 0s); }
-.late circle { animation: latido var(--p, 3s) ease-in-out infinite; animation-delay: var(--d, 0s); }
-.fig-iso:not(.en-vista) * { animation-play-state: paused !important; }
-@keyframes escribir { 0% { stroke-dashoffset: 1; opacity: 1; } 45%, 88% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
-.fig-prueba [data-ficha]:not(.activa) .escribe path { animation: none; stroke-dasharray: none; }
-.escribe path { stroke-dasharray: 1 1; animation: escribir var(--p, 5.2s) steps(22, end) infinite; animation-delay: var(--d, 0s); }
-.piloto-teal circle { fill: var(--teal-400); opacity: 1; } .piloto-claro circle { fill: var(--tinta-invertida); opacity: 1; } .piloto-ambar circle { fill: var(--ambar-500); opacity: 1; }
-.ruta-dato { fill: none; stroke: none; }
-.paquete { stroke: var(--bosque-900); stroke-width: .5; vector-effect: non-scaling-stroke; }
-.iso-halo { fill: var(--anatomy-halo); stroke: none; opacity: .08; }
 /* sombra de contacto horneada: escalones translúcidos, sin desenfoque (comun.mjs, sombra) */
 .sombra { fill: var(--halo); stroke: none; opacity: .045; }
 .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }
@@ -744,61 +719,25 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .iso-dots[data-tone="faint"] circle { opacity: .14; }
 .iso-face-text { fill: var(--anatomy-mid); font-family: var(--anatomy-mono); letter-spacing: .04em; }
 .iso-face-text[data-tone="hi"] { fill: var(--anatomy-hi); }
-/* ventanas y pantallas: bosque, con lo escrito en tinta clara */
-.iso-solid.oscuro > .iso-fill, .iso-solid.oscuro > .iso-shade, .iso-solid.oscuro > .iso-top { fill: var(--bosque-800); }
-.iso-solid.oscuro > .iso-edge { stroke: var(--bosque-900); }
+
+/* estado como marca de 3–6 px, nunca superficie: vivo = punto teal; revisar = punto ámbar */
+.marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
+.marca-ambar circle, .marca-revisar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
+.sello-marca { fill: none; stroke: var(--teal-700); stroke-width: 1.1; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+/* lo que muestra una pantalla oscura: en teal claro */
 .iso-line.en-oscuro { stroke: var(--teal-400); opacity: .75; }
-/* lo verificado (sello, huella, piloto en verde): teal */
-.iso-solid.teal > .iso-fill, .iso-solid.teal > .iso-shade, .iso-solid.teal > .iso-top { fill: var(--teal-700); }
-.iso-solid.teal > .iso-edge { stroke: var(--bosque-900); }
-.iso-dots.teal circle { fill: var(--teal-700); opacity: 1; }
-/* pilotos de las figuras: verde verificado o ámbar «revisar» */
-[data-piloto][data-estado="ok"] circle, .encendido circle { fill: var(--teal-700); opacity: 1; animation: none; }
-[data-piloto][data-estado="rev"] circle { fill: var(--acento-relleno); opacity: 1; animation: none; }
-[data-bandera] { transition: opacity .3s ease; }
-/* asistente: bocas de las tomas, cordón y clavija */
-.boca { fill: var(--bosque-800); stroke: none; }
-.cordon .cable-forro { stroke: var(--tinta); stroke-width: 2.4; }
-.cordon .cable-alma { stroke: var(--linea-fuerte); stroke-width: 1; }
-.clavija { fill: var(--tinta); stroke: var(--fondo); stroke-width: .8; vector-effect: non-scaling-stroke; }
-[data-renglones] { transition: opacity .4s ease; }
-/* tablero: franja de los comparables, agujas y la serie que dibuja el trazador */
-.franja { fill: var(--sujeto-agua-filo); opacity: .3; stroke: none; }
-.aguja { fill: var(--linea-alta); stroke: none; }
-.aguja-ambar { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.serie { fill: none; stroke: var(--sujeto-agua-filo); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
-.medidor .luz-on circle { fill: var(--teal-400); }
+.en-pantalla { fill: var(--teal-400); stroke: none; }
+.en-pantalla-trazo { fill: none; stroke: var(--teal-400); stroke-width: .7; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.en-pantalla-trazo.tenue { opacity: .5; }
+.en-pantalla-texto .iso-face-text { fill: var(--teal-400); }
+.medidor .luz-on circle { fill: var(--teal-400); opacity: 1; }
 .medidor .luz-off circle { fill: var(--tinta-invertida); opacity: .22; }
 
-/* Fig. 1: los cables y el dato que sube */
-.cable-forro, .cable-alma, .cable-pulso { fill: none; vector-effect: none !important; stroke-linecap: round; }
+/* capas: los cables */
+.cable-forro, .cable-alma { fill: none; vector-effect: none !important; stroke-linecap: round; }
 .cable-forro { stroke: var(--bosque-800); stroke-width: 2.6; }
 .cable-alma { stroke: var(--bosque-700); stroke-width: 1.4; }
-.cable-pulso { stroke: var(--acento-relleno); stroke-width: 1.6; stroke-dasharray: 14 200; stroke-dashoffset: 14; opacity: 0; }
-.fig-capas .cable[data-on] .cable-pulso { opacity: 1; animation: sube 1.7s cubic-bezier(.45,0,.3,1) infinite; }
-@keyframes sube { from { stroke-dashoffset: 14; } to { stroke-dashoffset: -100; } }
-.fig-capas [data-modulo] { transition: transform 1s cubic-bezier(.34,1.45,.64,1); }
-.fig-capas .cables { transition: opacity .6s ease; }
-
-/* estado como marca: vivo = punto teal */
-.marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
-.ban-brazo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
-.ban-placa-metal { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.ban-placa { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.ban-eje { fill: var(--estructura-1); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
-.marca-ambar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
-.boca-aro { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
-.cordon-forro, .cordon-alma { fill: none; stroke-linecap: round; stroke-linejoin: round; }
-.cordon-forro { stroke: var(--linea-alta); stroke-width: 2.2; }
-.cordon-alma { stroke: var(--linea-media); stroke-width: .8; }
-.marca-revisar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
-/* lo que una pantalla oscura muestra: en teal claro */
-.en-pantalla { fill: var(--teal-400); stroke: none; }
-.sello-marca { fill: none; stroke: var(--teal-700); stroke-width: 1.1; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
-.en-pantalla-trazo.tenue { opacity: .5; }
-.en-pantalla-trazo { fill: none; stroke: var(--teal-400); stroke-width: .7; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
-.medidor .luz-on circle { opacity: 1; }
-/* Fig. ruta: el brazo de la barrera, dibujado en su plano */
+/* ruta: el brazo de la barrera, dibujado en su plano, con su canto */
 .fig-ruta .brazo { fill: var(--estructura-0); stroke: none; }
 .fig-ruta .banda { fill: var(--sujeto-agua-filo); stroke: none; }
 .fig-ruta .brazo-canto { fill: var(--estructura-4); stroke: none; }
@@ -806,23 +745,23 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .fig-ruta .brazo-filo { fill: none; stroke: var(--linea-alta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
 .fig-ruta .cubo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; }
 .fig-ruta .cubo-eje { fill: var(--linea-alta); }
-/* Fig. 2: la pregunta, su traza y la barrera */
-.traza { fill: none; stroke: var(--acento-relleno); stroke-width: 1.1; vector-effect: none !important; stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: 100 100; stroke-dashoffset: 100; }
-.traza[data-on] { stroke-dashoffset: 0; }
-.pregunta { fill: var(--acento-relleno); stroke: var(--tinta); stroke-width: .8; vector-effect: non-scaling-stroke; opacity: 0; }
-.pregunta[data-on] { opacity: 1; }
-.fig-ruta [data-columna] .iso-solid[data-lit] { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); }
-.brazo { fill: #FBFAF5; stroke: var(--tinta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.banda { fill: var(--teal-700); stroke: none; }
-.brazo-arista { fill: none; stroke: var(--linea-fuerte); stroke-width: .5; vector-effect: non-scaling-stroke; }
-.fig-ruta [data-respuesta] { opacity: 0; transition: opacity .4s ease; }
-.fig-ruta [data-respuesta][data-on] { opacity: 1; }
-[data-piloto] circle { transition: fill .3s ease; }
-[data-piloto][data-on] circle { fill: var(--teal-400); opacity: 1; }
+/* tablero: franja de los comparables, agujas y la serie que dibuja el trazador */
+.franja { fill: var(--sujeto-agua-filo); opacity: .3; stroke: none; }
+.aguja { fill: var(--linea-alta); stroke: none; }
+.aguja-ambar { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.serie { fill: none; stroke: var(--sujeto-agua-filo); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+/* vigilancia: la banderita (metal abajo, ámbar arriba) */
+.ban-brazo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.ban-placa-metal { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.ban-placa { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.ban-eje { fill: var(--estructura-1); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
+/* asistente: bocas con aro y el cordón */
+.boca { fill: var(--bosque-900); stroke: none; }
+.boca-aro { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; fill-rule: evenodd; }
+.cordon-forro, .cordon-alma { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cordon-forro { stroke: var(--linea-alta); stroke-width: 4.2; }
+.cordon-alma { stroke: var(--linea-media); stroke-width: 1.4; }
+/* con movimiento reducido figuras.js deja cada figura en su resultado, sin bucle; nada más se anima */
 @media (prefers-reduced-motion: reduce) {
-  .parpadea circle, .late circle { animation: none; opacity: 1; }
-  .escribe path { animation: none; stroke-dasharray: none; }
-  .fig-capas .cable[data-on] .cable-pulso { animation: none; stroke-dasharray: none; opacity: 1; }
-  .fig-capas [data-modulo], .fig-capas .cables, .iso-solid > *, .fig-ruta [data-respuesta] { transition: none; }
+  .fig-iso .capa-viva * { transition: none; animation: none; }
 }

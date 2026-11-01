@@ -160,22 +160,51 @@ conmutación (asistentes) y una maqueta de Colombia (cobertura SINIC). Siguen el
   columna.
 - **Verdad:** todo lo que muestran sale de `construir.py` (catálogo y `datos/co.json`) vía
   `web/figuras/datos.json`; lo inventado lleva el sello `ilustrativo` y la etiqueta accesible lo dice.
+  Ninguna nombra el DANE ni una herramienta que no se vende (`datos.json` lleva `usadas` y
+  `tests/test_web.py` lo comprueba), y cada «como» de la revisión casa con la entrada real de sus
+  herramientas (lo comprueba el build).
 - **Color:** por papeles (ver «Color»): neutros de estructura, un material de color propio por
   figura y un solo acento ámbar en la pieza que está pasando. Sin degradados, brillos ni neón.
+
+  | Figura | Material | El ámbar |
+  |---|---|---|
+  | capas | teal (Datos, `teal-fuerte`) | el dato que sube por el cable |
+  | ruta | agua (columnas de entidades) | la ficha de la pregunta y la tapa de la columna que responde |
+  | prueba | bosque (el fichero, filo claro) | la pestaña de la ficha que se lee |
+  | revisión | ocre (fichas, pila, motor, bandeja) | la banderita de la estación que encuentra algo |
+  | tablero | agua (relojes, `agua-fuerte`) | la aguja del reloj elegido |
+  | vigilancia | teal (buzones, `teal-fuerte`) | la banderita levantada |
+  | asistente | bosque (el panel, filo claro) | el piloto de la boca conectada |
+  | cobertura | una rampa agua → teal hondo (`m-cob0…4`) | la columna encendida |
+
+  Lo que aparece o se va de color lo hace con la escala, no con la opacidad (un ámbar a medio
+  fundir sobre gris se ve oliva); las luces cambian de golpe, como una luz.
 - **Movimiento con significado:** cada figura cuenta un ciclo: reposo → disparo → tránsito
-  (400–700 ms) → resultado → reposo de 2–3 s con todo quieto. Solo se mueve el acento; la
-  estructura nunca. Ambiente solo si representa un estado real (un punto vivo que late cada 2–4 s).
-  Corre al entrar en vista (dos ciclos como mucho), vuelve con el puntero, el toque o el foco y se
-  puede interrumpir. Curvas: entrada `cubic-bezier(0, 0, .3, 1)`, salida `cubic-bezier(.4, .14, 1, 1)`,
-  resorte críticamente amortiguado (rebote solo si el objeto es elástico). La lectura cambia en el
-  instante en que llega el dato. Con `prefers-reduced-motion`, un cuadro del estado resultado.
-- **Rendimiento:** dos capas por figura (SVG estático y piezas vivas encima, animadas con
-  `transform` y `opacity`); trayectorias precalculadas; sin `filter: blur` (sombras horneadas);
-  `will-change` solo mientras anima; una sola figura viva a la vez (la más visible); 30 fps con
-  puntero grueso o `hardwareConcurrency ≤ 4`. Presupuesto: ≤ 33 ms por cuadro a 390 px con CPU 4× y
-  cero repintado en reposo. (Las ocho figuras se rehacen con estas reglas en la fase 4 del plan.)
-- **Texto:** como mucho un rótulo grabado por figura («Datos», «Terrnova», «rt/1»); lo demás va en la
-  lectura y en el texto de la sección, en minúscula.
+  (400–700 ms) → resultado → reposo de 2,6 s con todo quieto. Solo se mueve lo que actúa; la
+  estructura nunca. Ambiente solo si es un estado real: el lector de la vigilancia late cada 3 s
+  mientras la figura está viva y quieta. Corre al entrar en vista (dos ciclos como mucho), vuelve con
+  el puntero (elige por posición), el toque, el foco o las flechas y se puede interrumpir (mezcla de
+  280 ms desde lo que se veía). Curvas: entrada `cubic-bezier(0, 0, .3, 1)`, salida
+  `cubic-bezier(.4, .14, 1, 1)`, resorte críticamente amortiguado; subamortiguado solo en las agujas
+  del tablero (oscilan al asentarse). La lectura cambia en el instante en que llega el dato. Con
+  `prefers-reduced-motion`, un cuadro del estado resultado.
+- **Cómo está hecho (`js/figuras.js`):** cada figura es una función pura del tiempo,
+  `pose(turno, t)`, que pone las piezas vivas (canales x, y, opacidad, escala y uno propio: un
+  ángulo, un avance) y devuelve la lectura de ese instante. Un planificador único deja viva solo la
+  figura más visible y la mueve con `requestAnimationFrame`; `window.__figuras.ver(nombre, turno, ms)`
+  pide cualquier instante (hojas de contacto y pruebas). Lo que gira en un plano (el brazo de la
+  barrera, la banderita, las agujas) se dibuja en coordenadas del plano con su matriz y gira con
+  `rotate`; lo que crece (barras, columnas) escala en un eje desde su base (`data-eje`).
+- **Rendimiento:** dos capas por figura: la fija y la viva (las piezas que se mueven y lo que las
+  tapa), en su propio `<svg>` encima, movida solo con `transform` y `opacity`; trayectorias y series
+  precalculadas en el build (nada de `getPointAtLength` ni de animar `d`); sin `filter: blur` (sombras
+  horneadas en escalones); a lo sumo 60 cuadros por segundo y 30 con puntero grueso o
+  `hardwareConcurrency ≤ 4`; cero cuadros en reposo. Sin `will-change`: promover la capa viva al
+  empezar cada ciclo costaba ~50 ms a CPU 4× (medido) y no ahorraba. Presupuesto medido a 390 px con
+  CPU 4×: ninguna tarea del hilo principal por encima de 33 ms en ninguna figura.
+- **Texto:** pocos rótulos grabados («Datos», «Terrnova», «rt/1»; las siglas de las entidades en el
+  tablero del asistente, que es lo que la clavija elige); lo demás va en la lectura (una línea) y en la
+  pista (el detalle: licencia, entidad), en minúscula.
 - **Peso:** los SVG van aparte (`web/publico/img/figuras/`) y `figuras.js` los trae al acercarse a la
   vista; el hueco tiene su proporción para que la página no salte.
 - **Construir:** `uv run python web/construir.py` escribe los datos y, si hay Node, dibuja

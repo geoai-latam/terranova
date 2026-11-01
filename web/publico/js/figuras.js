@@ -576,7 +576,7 @@ FIG.asistente = ({ V, pieza }) => {
   const cordones = Array.from({ length: nb }, (_, j) => pieza('cordon' + j));
   const clavijas = Array.from({ length: nb }, (_, j) => pieza('clavija' + j));
   const pilotos = Array.from({ length: nb }, (_, j) => pieza('piloto' + j));
-  const respuesta = pieza('respuesta');
+  const respuestas = V.preguntas.map((_, i) => pieza('respuesta' + i));
   const [sx, sy] = V.sale;
   const APARECE = 260, ENTRA = 460, CONECTA = 820, DURA = 1450;
   return {
@@ -593,7 +593,7 @@ FIG.asistente = ({ V, pieza }) => {
         pon(cordones[j], { o });
       });
       pilotos.forEach((el, j) => pon(el, { o: j === q.j && t >= CONECTA ? 1 : 0 }));
-      pon(respuesta, { o: tramo(t, CONECTA + 120, 260, entra) });
+      respuestas.forEach((el, q) => pon(el, { o: q === i ? tramo(t, CONECTA + 120, 260, entra) : 0 }));
       return t < CONECTA ? { l: `${q.p} …`, d: '' } : { l: `${q.p} → ${q.e}`, d: q.l };
     },
     desde: (x, y) => {

@@ -7,16 +7,16 @@
 import { D, L, S, encuadre, k, porProf, r1, sombra, svgDe } from "./comun.mjs";
 
 export function asistente(DATOS, huella) {
-  const { preguntas, nodos } = DATOS.asistente;
+  const { preguntas, nodos, siglas } = DATOS.asistente;
   const COLS = 4, FILAS = Math.ceil(nodos.length / COLS);
   const PAN = { x: 0, y: -26, w: 132, d: 6 }; // panel: cara en y = -20
   const YC = PAN.y + PAN.d; // cara del panel
   const ZT = 80; // tope del panel
-  const toma = (j) => [17 + (j % COLS) * 32.6, YC, ZT - 16 - Math.floor(j / COLS) * 19];
-  const MESA = { x: 20, y: 2, w: 92, d: 30, r: 2 };
+  const toma = (j) => [11 + (j % COLS) * 30, YC, ZT - 16 - Math.floor(j / COLS) * 19];
+  const MESA = { x: 20, y: 14, w: 92, d: 30, r: 2 };
   const ZM = 22; // cara de la mesa
-  const PUERTO = [MESA.x + 66, MESA.y + 7, ZM];
-  const PLACA = { x: -10, y: -32, w: 152, d: 70, r: 4 }; // el banco, recortado al panel y la mesa
+  const PUERTO = [MESA.x + 70, MESA.y + 3.4, ZM]; // la toma, junto al borde de atrás de la mesa
+  const PLACA = { x: -10, y: -32, w: 152, d: 82, r: 4 }; // el banco, recortado al panel y la mesa
   const { P, ancho, alto } = encuadre([...k.boxCorners(PLACA, -10, 0), [PAN.x, PAN.y, ZT + 4], [PAN.x + PAN.w, PAN.y, ZT + 4]], { azimuth: 57 });
   const at = (p) => k.iso(p, P);
   const fija = [];
@@ -49,13 +49,15 @@ export function asistente(DATOS, huella) {
     cara.push(L(k.sideRing([x, YC, z + 6.8], 1.3, "y", P, 14), { tone: "mid" }));
     cara.push(D([at([x, YC, z + 6.8])], { size: 0.5, tone: "faint" }));
   });
-  // regletas: bajo cada boca, su placa de rótulo (papel, dos renglones impresos y dos tornillos)
+  // regletas: a la derecha de cada boca, su placa de rótulo con la sigla grabada y dos tornillos
+  // (a la derecha: la clavija cuelga hacia abajo y a la izquierda en pantalla, no la tapa)
   nodos.forEach((_, j) => {
-    const [x, , z] = toma(j);
-    const zz = z - 7.6;
-    cara.push(S(k.slabOf({ x: x - 8, y: YC, w: 16, d: 0.5, r: 0.3 }, zz - 2, 4, P, 1), { m: "papel", tone: "lo", crease: "none" }));
-    cara.push(L(k.segment([x - 6, YC + 0.5, zz + 0.7], [x + [5, 3, 6, 4][j % 4], YC + 0.5, zz + 0.7], P) + k.segment([x - 6, YC + 0.5, zz - 0.8], [x + [1, 3, 0, 2][j % 4], YC + 0.5, zz - 0.8], P), { tone: "lo", free: true }));
-    cara.push(D([at([x - 7.2, YC + 0.5, zz]), at([x + 7.2, YC + 0.5, zz])], { size: 0.28 }));
+    const [x0, , z] = toma(j);
+    const x = x0 + 14.4, zz = z;
+    cara.push(S(k.slabOf({ x: x - 9.6, y: YC, w: 19.2, d: 0.5, r: 0.3 }, zz - 2, 4, P, 1), { m: "papel", tone: "lo", crease: "none" }));
+    // la sigla de la entidad, grabada en la placa
+    cara.push(k.faceTextSvg(k.sideMatrix([x - 7.8, YC + 0.5], zz - 0.9, P, "left"), siglas[j], { size: 2.05, tone: "hi" }));
+    cara.push(D([at([x - 8.7, YC + 0.5, zz]), at([x + 8.7, YC + 0.5, zz])], { size: 0.28 }));
   });
   // la cara del panel con su marco interior: una ranura cerrada a todo lo ancho
   cara.push(L(k.pathOf([[5, YC, 10], [PAN.w - 5, YC, 10], [PAN.w - 5, YC, ZT - 5], [5, YC, ZT - 5]].map(at), true), { tone: "lo" }));
@@ -82,37 +84,48 @@ export function asistente(DATOS, huella) {
   const base = [px, py, pz + 1.4];
   nodos.forEach((_, j) => {
     const [x, y, z] = toma(j);
-    const cola = [x, y + 9.4, z]; // donde termina el manguito
-    // el cordón sube de la toma de la mesa a la clavija con un vientre hacia el frente, sin bajar de la mesa
-    const m = [(base[0] + cola[0]) / 2, (base[1] + cola[1]) / 2 + 7, Math.max((base[2] + cola[2]) / 2 - 3, base[2] + 3)];
+    const cola = [x, y + 13.6, z]; // donde termina el manguito
+    // el cordón: sale de la toma hacia atrás y abajo, cuelga entre la mesa y el panel y sube a la
+    // clavija desde abajo (una cúbica: la caída de un cordón de verdad)
+    const c1 = [base[0], base[1] - 7, base[2] - 9];
+    const c2 = [cola[0], cola[1] + 6, cola[2] - 14];
     const pts = [];
-    for (let q = 0; q <= 24; q++) {
-      const t = q / 24, u = 1 - t;
-      pts.push(at([0, 1, 2].map((c) => u * u * base[c] + 2 * u * t * m[c] + t * t * cola[c])));
+    for (let q = 0; q <= 30; q++) {
+      const t = q / 30, u = 1 - t;
+      pts.push(at([0, 1, 2].map((c) => u * u * u * base[c] + 3 * u * u * t * c1[c] + 3 * u * t * t * c2[c] + t * t * t * cola[c])));
     }
     const d = k.pathOf(pts);
     cordones.push(`<g data-v="cordon${j}" style="opacity:0"><path class="cordon-forro" d="${d}"/><path class="cordon-alma" d="${d}"/></g>`);
     // la clavija: punta de metal (entra en la boca), cuerpo con dos estrías y el manguito oscuro
     const cl = [];
-    cl.push(S(k.slabOf({ x: x - 0.8, y: y, w: 1.6, d: 1.6, r: 0.7 }, z - 0.8, 1.6, P, 2), { m: "acero", tone: "mid", crease: "none" }));
-    const cuerpo = { x: x - 1.8, y: y + 1.6, w: 3.6, d: 5.4, r: 1.4 };
-    cl.push(S(k.slabOf(cuerpo, z - 1.8, 3.6, P, 3, 0.4), { m: "metal", tone: "hi", inner: L(k.sideSeam({ ...cuerpo, y: cuerpo.y + 1.6, d: 1 }, z, P, 3), { tone: "faint" }) }));
-    cl.push(S(k.slabOf({ x: x - 1.2, y: y + 7, w: 2.4, d: 2.4, r: 1 }, z - 1.2, 2.4, P, 2), { m: "bosque", tone: "mid", crease: "none" }));
+    cl.push(S(k.slabOf({ x: x - 1.2, y: y, w: 2.4, d: 2.4, r: 1 }, z - 1.2, 2.4, P, 2), { m: "acero", tone: "mid", crease: "none" }));
+    const cuerpo = { x: x - 2.7, y: y + 2.4, w: 5.4, d: 8, r: 2 };
+    cl.push(S(k.slabOf(cuerpo, z - 2.7, 5.4, P, 3, 0.5), { m: "metal", tone: "hi", inner: L(k.sideSeam(cuerpo, z + 1.2, P, 3), { tone: "faint" }) }));
+    cl.push(S(k.slabOf({ x: x - 1.8, y: y + 10.4, w: 3.6, d: 3.6, r: 1.5 }, z - 1.8, 3.6, P, 2), { m: "bosque", tone: "mid", crease: "none" }));
     clavijas.push(`<g data-v="clavija${j}" style="opacity:0">${cl.join("")}</g>`);
-    ambar.push(`<g data-v="piloto${j}" class="marca-ambar" style="opacity:0">${D([at([x, YC, z + 6.8])], { size: 1.1, tone: "hi" })}</g>`);
+    ambar.push(`<g data-v="piloto${j}" class="marca-ambar" style="opacity:0">${D([at([x, YC, z + 6.8])], { size: 1.7, tone: "hi" })}</g>`);
   });
   viva.push(cordones.join(""), clavijas.join(""), ambar.join(""));
 
   // pantalla: pie, cuerpo, la ventana con dos renglones y la respuesta que se escribe; teclado
-  const pant = { x: MESA.x + 6, y: MESA.y + 4, w: 30, d: 10, r: 1.5 };
-  viva.push(S(k.slabOf({ x: pant.x + 10, y: pant.y + 2, w: 10, d: 6, r: 1 }, ZM, 2, P, 2), { m: "metal", tone: "mid" }));
-  viva.push(S(k.slabOf(pant, ZM + 2, 22, P, 3, 0.6), { m: "papel", tone: "hi", inner: L(k.sideSeam(pant, ZM + 6, P, 3), { tone: "faint" }) }));
+  // la pantalla, más ancha: la respuesta se lee (la fuente y su licencia, en teal claro)
+  const pant = { x: MESA.x + 4, y: MESA.y + 5, w: 44, d: 10, r: 1.5 };
+  viva.push(S(k.slabOf({ x: pant.x + 16, y: pant.y + 2, w: 12, d: 6, r: 1 }, ZM, 2, P, 2), { m: "metal", tone: "mid" }));
+  viva.push(S(k.slabOf(pant, ZM + 2, 26, P, 3, 0.6), { m: "papel", tone: "hi", inner: L(k.sideSeam(pant, ZM + 6, P, 3), { tone: "faint" }) }));
   const yv = pant.y + pant.d;
-  viva.push(S(k.slabOf({ x: pant.x + 3, y: yv, w: pant.w - 6, d: 0.5, r: 0.3 }, ZM + 8, 14, P, 1), { tone: "lo", m: "bosque", crease: "none" }));
+  viva.push(S(k.slabOf({ x: pant.x + 3, y: yv, w: pant.w - 6, d: 0.5, r: 0.3 }, ZM + 8, 18, P, 1), { tone: "lo", m: "bosque", crease: "none" }));
   const reng = (zz, l) => k.segment([pant.x + 5, yv + 0.5, zz], [pant.x + 5 + l, yv + 0.5, zz], P);
-  viva.push(L(reng(ZM + 19, 16), { tone: "lo", free: true, className: "en-oscuro" }));
-  viva.push(`<g data-v="respuesta" style="opacity:0">${L(reng(ZM + 15.6, 18) + reng(ZM + 12.2, 12), { tone: "lo", free: true, className: "en-oscuro" })}</g>`);
-  const tec = { x: MESA.x + 6, y: MESA.y + 18, w: 36, d: 10, r: 1 };
+  viva.push(`<g class="en-pantalla-texto">${k.faceTextSvg(k.sideMatrix([pant.x + 5, yv + 0.55], ZM + 22, P, "left"), "fuente", { size: 2.2, tone: "hi" })}</g>`);
+  preguntas.forEach((q, i) => {
+    const sig = siglas[nodos.indexOf(q.e)];
+    viva.push(
+      `<g data-v="respuesta${i}" class="en-pantalla-texto" style="opacity:0">` +
+        k.faceTextSvg(k.sideMatrix([pant.x + 5, yv + 0.55], ZM + 17.2, P, "left"), sig, { size: 3.6, tone: "hi" }) +
+        k.faceTextSvg(k.sideMatrix([pant.x + 5, yv + 0.55], ZM + 12.2, P, "left"), q.l.replace("aviso legal del Banco", "aviso legal"), { size: 2.9, tone: "hi" }) +
+        `</g>`,
+    );
+  });
+  const tec = { x: MESA.x + 6, y: MESA.y + 19, w: 36, d: 10, r: 1 };
   viva.push(S(k.slabOf(tec, ZM, 1.6, P, 2, 0.4), { m: "metal", tone: "hi" }));
   const teclas = [];
   for (let f = 0; f < 3; f++) for (let c = 0; c < 10; c++) teclas.push(at([tec.x + 3 + c * 3.3, tec.y + 2.4 + f * 2.7, ZM + 1.6]));

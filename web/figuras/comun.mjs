@@ -4,15 +4,15 @@
 import * as k from "./kit/iso-kit.mjs";
 
 export { k };
-// Cada pieza lleva un material de la paleta (m: "bosque", "teal", "ocre", "ambar", "metal",
-// "pantalla", "papel"…; ver estilo.css). Sin material explícito: la base (lo) en superficie de
-// trabajo, la estructura (mid) en metal y el sujeto (hi) en papel.
+// Cada pieza lleva un material de la paleta (m: "papel", "metal", "trabajo", "acero" para la
+// estructura; "teal", "agua", "ocre", sus "-fuerte" o "bosque" para el sujeto; "ambar" para la pieza
+// que está pasando; ver estilo.css). Sin material explícito: la base (lo) en superficie de trabajo,
+// la estructura (mid) en metal y el resto (hi) en papel.
 const POR_TONO = { lo: "trabajo", mid: "metal", hi: "papel" };
 export const S = (paths, style = {}) => {
   const { m, className, ...resto } = style;
-  const mat = m ?? (className === "oscuro" ? "pantalla" : className === "teal" ? "teal" : POR_TONO[style.tone ?? "hi"]);
-  const otras = className && className !== "oscuro" && className !== "teal" ? ` ${className}` : "";
-  return k.solidSvg(paths, { ...resto, className: `m-${mat}${otras}` });
+  const mat = m ?? POR_TONO[style.tone ?? "hi"];
+  return k.solidSvg(paths, { ...resto, className: `m-${mat}${className ? ` ${className}` : ""}` });
 };
 export const L = (d, style) => k.lineSvg(d, style);
 export const D = (points, style) => k.dotsSvg(points, style);

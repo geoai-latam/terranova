@@ -313,6 +313,20 @@
    "INVIMA",
    "ANH",
    "Policía Nacional"
+  ],
+  "siglas": [
+   "BanRep",
+   "INS",
+   "PNN",
+   "CCE",
+   "Confecámaras",
+   "IGAC",
+   "UPRA",
+   "MinEducación",
+   "ICFES",
+   "INVIMA",
+   "ANH",
+   "Policía"
   ]
  },
  "cobertura": {

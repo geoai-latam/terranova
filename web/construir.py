@@ -825,6 +825,13 @@ PREGUNTA_CORTA = {
     "upra_precio_tierra_rural_municipio": "¿Cuánto vale la tierra aquí?",
     "men_educacion_municipio": "¿Cómo va la educación aquí?",
 }
+# Sigla grabada en la placa de cada boca del tablero del asistente (las que no están, van con su nombre).
+SIGLA_ENTIDAD = {
+    "Banco de la República": "BanRep",
+    "Parques Nacionales": "PNN",
+    "Colombia Compra Eficiente": "CCE",
+    "Policía Nacional": "Policía",
+}
 OTRAS_ASISTENTE = [
     "icfes_saber11_municipio",
     "invima_registro_sanitario_por_expediente",
@@ -887,7 +894,9 @@ def datos_servicio(tipo: str) -> object:
         nodos = list(
             dict.fromkeys([p["e"] for p in preguntas] + [entidad(i) for i in OTRAS_ASISTENTE])
         )
-        return {"preguntas": preguntas, "nodos": nodos}
+        siglas = [SIGLA_ENTIDAD.get(e, e) for e in nodos]
+        assert all(len(x) <= 12 for x in siglas), siglas
+        return {"preguntas": preguntas, "nodos": nodos, "siglas": siglas}
     if tipo == "vigilancia":
         sistemas = sistemas_validados()
         for s, e, _ in CARRILES_VIGILANCIA:
