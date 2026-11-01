@@ -13,12 +13,20 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Unidad de Restitución de Tierras (URT)"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Ítem `Open_Data_Microzonas` del dueño `Open_Data_uaegrtd` (ArcGIS Online de la URT). Capa 3: los
 # polígonos de las microzonas con su resolución y estado. Solo la zona, nunca las solicitudes ni las
 # sentencias por predio (llevan a víctimas con nombre: ADR-0014).
 url: https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS. La capa alojada arranca en frío: la primera consulta tarda de 17 a 31 s
+# y las siguientes 0,5 s (medido el 2026-11-01), y la fuente cambia al mes, no al día.
+copia:
+  origen: arcgis
+  capa: 3
+  tabla: urt_microzonas
+  clave: id_microzona
+  por_pagina: 200
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura:
   pais: CO
@@ -32,7 +40,7 @@ campos:
   mpio: {nombre: municipio, tipo: str, desc: "municipio"}
   n_res_m: {nombre: resolucion, tipo: str, desc: "resolución de microfocalización vigente"}
   fecha_res_vigente: {nombre: fecha_resolucion, tipo: date, desc: "fecha de la resolución vigente"}
-  estado_micro: {nombre: estado, tipo: str, desc: "estado de la microzona (abierta, cerrada…)"}
+  estado_micro: {nombre: estado, tipo: str, desc: "estado de la microzona (En firme o Cerrada)"}
   territorial: {nombre: territorial, tipo: str, desc: "dirección territorial de la URT que la atiende"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [3]
@@ -46,4 +54,5 @@ perfil:
   hallazgos:
   - "el punto de prueba (El Carmen de Bolívar) toca una sola microzona"
   - "estar en una microzona no dice que un predio tenga solicitud: dice que la URT puede tramitarlas ahí"
-  decision: "en vivo por punto; solo la zona, sin solicitudes ni sentencias por predio (ADR-0014)"
+  - "arranque en frío de la capa alojada: 17,6 s la primera consulta, 0,3 a 0,5 s las siguientes (2026-11-01); el canario diario siempre paga el frío"
+  decision: "por copia, consulta por punto; solo la zona, sin solicitudes ni sentencias por predio (ADR-0014)"

@@ -21,9 +21,12 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
 cobro: agregado
 canario:
-  # Medido el 2026-10-22: el Decreto 1165 de 2019 tiene 3 apariciones de «ARTÍCULO 1o».
-  entrada: {documento: decreto_1165_2019, buscar: ARTÍCULO 1o}
-  verdad: {apariciones: 3, titulo: "Compilación Jurídica de la DIAN - Decreto 1165 de 2019"}
-  minimos: {numero_registros: 3}
+  # Medido el 2026-11-01 con el extractor del conector: «ARTÍCULO 1o. ALCANCE» aparece 1 vez, el
+  # título del primer artículo. No se cuenta «ARTÍCULO 1o» a secas: la DIAN compila las normas que
+  # modifican el decreto y citan su artículo 1o (3 apariciones en octubre, 6 tras la actualización
+  # del 2026-10-28), así que ese conteo cambia sin que nada esté mal.
+  entrada: {documento: decreto_1165_2019, buscar: ARTÍCULO 1o. ALCANCE}
+  verdad: {apariciones: 1, titulo: "Compilación Jurídica de la DIAN - Decreto 1165 de 2019"}
+  minimos: {numero_registros: 1}
   campos: [apariciones, caracteres, n, numero_registros, posicion, texto, titulo]
   latencia_max_ms: 30000

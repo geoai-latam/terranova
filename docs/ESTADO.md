@@ -48,6 +48,30 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Fuentes que no estaban en verde (2026-11-01)
+
+Canario de las 09:00 UTC: 164 verdes, 7 rojas y 6 degradadas. Se midió cada una en la fuente, desde
+Colombia, con una petición por caso.
+
+- **Normograma DIAN (arreglado):** la herramienta estaba bien. La norma se actualizó el 2026-10-28 y
+  «ARTÍCULO 1o» pasó de 3 a 6 apariciones. El canario ahora busca «ARTÍCULO 1o. ALCANCE» (1), que no
+  depende de las normas que la DIAN compila.
+- **URT (arreglado, falta desplegar):** la capa alojada arranca en frío: 17,6 s la primera consulta y
+  0,3 a 0,5 s las siguientes. Pasa a copia ArcGIS (1.314 microzonas, 44 s, 143 ms por punto). El
+  tope de 5 s no cambia. El estado que publica la fuente es «En firme» o «Cerrada», no «abierta».
+- **BanRep (sin causa cerrada):** las 5 series dieron HTTP 500 al servidor a las 09:01 UTC. Desde
+  Colombia, con el código del conector, responden 200 en 8 a 10 s. Falta probar desde el servidor si
+  es un bloqueo al datacenter o una caída nocturna.
+- **Alertas del IDEAM:** la copia venció porque el refresco desde Colombia nunca se programó (no hay
+  `refresco.log`). Depende de `programar_refresco.ps1`.
+- **Saber 11 por municipio:** 90 s en el canario, 0,6 a 0,8 s desde Colombia, también en un municipio
+  sin caché. No se reprodujo.
+- **Calidad del aire:** lenta de verdad en la fuente con Medellín (19,6 a 32,8 s contra 20 s). Cambiar
+  el filtro a texto y rango no ayudó (20,6 s contra 7,8 s; 21,1 s contra 2,8 s).
+- **Puentes INVÍAS y SECOP I:** 9,8 s y 12 s en el canario, 0,5 s y 0,3 s desde Colombia. La mediana
+  de Socrata en el canario es 2,2 s, así que no hay un sobrecosto general. Quedan en lento, sin tocar
+  sus topes.
+
 ## Sitio v2, ronda de cierre del PR #212 (2026-11-01, sin fusionar)
 
 - **Verdad:** Saber 11 y BanRep (canario en rojo) fuera de sectores, tablero, asistente y de todo
