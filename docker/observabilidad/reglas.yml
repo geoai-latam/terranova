@@ -57,12 +57,6 @@ groups:
         labels: {severidad: media}
         annotations:
           resumen: "Cortacircuitos abierto para {{ $labels.fuente }} hace más de 10 min"
-      - alert: OutboxAtascado
-        expr: rt_outbox_pendientes > 1000
-        for: 15m
-        labels: {severidad: baja}
-        annotations:
-          resumen: "Más de 1000 eventos de uso sin enviar"
       - alert: ErroresInternos
         # lo que falla fuera de una herramienta (llave, tasa, créditos, base o Redis caídos)
         expr: increase(rt_errores_internos_total[10m]) > 0

@@ -217,7 +217,10 @@ async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     assert (
         tarjeta["transport"]["endpoint"] == "/mcp" and "2026-07-28" in tarjeta["protocolVersions"]
     )
-    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas) | {"ficha_lugar"}
+    assert {t["name"] for t in tarjeta["tools"]} == set(CATALOGO.herramientas) | {
+        "ficha_lugar",
+        "ficha_empresa",
+    }
     assert {p["endpoint"] for p in tarjeta["profiles"]} == {f"/mcp/{f}" for f in puerta.FAMILIAS}
 
 

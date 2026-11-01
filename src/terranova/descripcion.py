@@ -1,7 +1,10 @@
 """Descripción de la puerta para personas y agentes (F3.6), generada del catálogo.
 
 - `llms_txt()`: `/llms.txt` (formato llmstxt.org).
-- `tarjeta_mcp()`: `/.well-known/mcp/server-card.json`.
+- `tarjeta_mcp()`: `/.well-known/mcp/server-card.json` (formato propio, con perfiles y
+  herramientas).
+- `tarjeta_estandar()`: `/mcp/server-card` (SEP-2127, sin herramientas) y `ai_catalogo()`:
+  `/.well-known/ai-catalog.json`. Los mismos datos que `server.json` del registro oficial de MCP.
 - `herramientas_md()`: `docs/HERRAMIENTAS.md`, versionado y comprobado en CI.
 """
 
@@ -10,8 +13,8 @@ from __future__ import annotations
 from typing import Any
 
 from terranova import __version__
-from terranova import ficha as ficha_lugar
 from terranova.catalogo import Catalogo, Fuente, Herramienta
+from terranova.compuestas import COMPUESTAS
 
 FUENTE_DESCRIBIR = "fuente_describir"
 DESCRIBIR = (
@@ -53,10 +56,13 @@ def llms_txt(c: Catalogo) -> str:
         "",
         f"- [{FUENTE_DESCRIBIR}](/v1/fuentes): {DESCRIBIR}",
         "",
-        "## Ficha de un lugar",
+        "## Fichas: varias fuentes en una respuesta",
         "",
-        f"- [{ficha_lugar.HERRAMIENTA}](/v1/fichas): {ficha_lugar.DESCRIPCION} "
-        f"Hasta {ficha_lugar.TOPE_CREDITOS} créditos (la suma de las partes).",
+        *(
+            f"- [{c.herramienta}]({c.ruta_rest}): {c.descripcion} "
+            f"Hasta {c.tope_creditos} créditos (la suma de las partes)."
+            for c in COMPUESTAS.values()
+        ),
         "",
     ]
     for familia, hs in _familias(c).items():
@@ -80,6 +86,68 @@ def llms_txt(c: Catalogo) -> str:
     return "\n".join(lineas)
 
 
+# Identidad del servidor en el registro oficial de MCP (espacio de nombres verificado por DNS en
+# terrnova.com) y en su tarjeta estándar (SEP-2127). `server.json`, en la raíz del repo, dice lo
+# mismo; una prueba los compara.
+NOMBRE_REGISTRO = "com.terrnova/terrnova"
+DESCRIPCION_CORTA = (
+    "Datos oficiales de Colombia: predios, empresas, contratos y normas, con fuente y licencia"
+)
+URL_MCP = "https://terrnova.com/mcp"
+CABECERA_LLAVE = {
+    "name": "Authorization",
+    "description": "La llave de Terrnova como Bearer (rt_live_… o rt_test_…)",
+    "isRequired": True,
+    "isSecret": True,
+    "value": "Bearer {llave}",
+    "variables": {
+        "llave": {"description": "Tu llave de Terrnova", "isRequired": True, "isSecret": True}
+    },
+}
+
+
+def tarjeta_estandar() -> dict[str, Any]:
+    """La tarjeta del servidor según la SEP-2127: identidad y cómo conectarse, sin herramientas
+    (esas se listan por `tools/list`)."""
+    return {
+        "$schema": "https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json",
+        "name": NOMBRE_REGISTRO,
+        "title": "Terrnova",
+        "version": __version__,
+        "description": DESCRIPCION_CORTA,
+        "websiteUrl": "https://terrnova.com",
+        "icons": [
+            {
+                "src": "https://terrnova.com/favicon.svg",
+                "mimeType": "image/svg+xml",
+                "sizes": ["any"],
+            }
+        ],
+        "remotes": [
+            {
+                "type": "streamable-http",
+                "url": URL_MCP,
+                "headers": [CABECERA_LLAVE],
+                "supportedProtocolVersions": PROTOCOLOS,
+            }
+        ],
+    }
+
+
+def ai_catalogo() -> dict[str, Any]:
+    """`/.well-known/ai-catalog.json` (AI Catalog 1.0): apunta a la tarjeta estándar."""
+    return {
+        "specVersion": "1.0",
+        "entries": [
+            {
+                "identifier": "urn:air:terrnova.com:mcp:terrnova",
+                "type": "application/mcp-server-card+json",
+                "url": f"{URL_MCP}/server-card",
+            }
+        ],
+    }
+
+
 def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
     familias = _familias(c)
     return {
@@ -95,7 +163,7 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
             {
                 "name": familia,
                 "endpoint": f"/mcp/{familia}",
-                "tools": len(hs) + (familia == ficha_lugar.FAMILIA),
+                "tools": len(hs) + sum(c.familia == familia for c in COMPUESTAS.values()),
             }
             for familia, hs in familias.items()
         ],
@@ -109,11 +177,12 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
         ]
         + [
             {
-                "name": ficha_lugar.HERRAMIENTA,
-                "title": ficha_lugar.PREGUNTA,
-                "family": ficha_lugar.FAMILIA,
-                "credits": ficha_lugar.TOPE_CREDITOS,
+                "name": c.herramienta,
+                "title": c.pregunta,
+                "family": c.familia,
+                "credits": c.tope_creditos,
             }
+            for c in COMPUESTAS.values()
         ],
     }
 
@@ -139,11 +208,14 @@ def herramientas_md(c: Catalogo) -> str:
         "",
         f"`{FUENTE_DESCRIBIR}` (MCP en `/mcp`; REST en `GET /v1/fuentes/{{id}}`): {DESCRIBIR}",
         "",
-        "## Ficha de un lugar",
-        "",
-        f"`{ficha_lugar.HERRAMIENTA}` (MCP en `/mcp` y `/mcp/{ficha_lugar.FAMILIA}`; REST en "
-        f"`POST /v1/fichas`): {ficha_lugar.DESCRIPCION} Cuesta la suma de las partes que "
-        f"respondieron, hasta {ficha_lugar.TOPE_CREDITOS} créditos.",
+        "## Fichas: varias fuentes en una respuesta",
         "",
     ]
+    for comp in COMPUESTAS.values():
+        lineas += [
+            f"`{comp.herramienta}` (MCP en `/mcp` y `/mcp/{comp.familia}`; REST en "
+            f"`POST {comp.ruta_rest}`): {comp.descripcion} Cuesta la suma de las partes que "
+            f"respondieron, hasta {comp.tope_creditos} créditos.",
+            "",
+        ]
     return "\n".join(lineas)

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.terrnova/terrnova",
+  "title": "Terrnova",
+  "description": "Datos oficiales de Colombia: predios, empresas, contratos y normas, con fuente y licencia",
+  "version": "0.0.1",
+  "websiteUrl": "https://terrnova.com",
+  "icons": [
+    {
+      "src": "https://terrnova.com/favicon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://terrnova.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "La llave de Terrnova como Bearer (rt_live_… o rt_test_…)",
+          "isRequired": true,
+          "isSecret": true,
+          "value": "Bearer {llave}",
+          "variables": {
+            "llave": {
+              "description": "Tu llave de Terrnova",
+              "isRequired": true,
+              "isSecret": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

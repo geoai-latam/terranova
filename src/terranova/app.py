@@ -7,6 +7,7 @@ mismo sobre `rt/1`, mismos errores (RFC 9457 en REST, `isError` en MCP, ADR-0011
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import logging
 import math
@@ -29,7 +30,7 @@ from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
-from terranova import metricas, puerta
+from terranova import ficha_empresa, metricas, puerta
 from terranova.alta import ErrorAlta
 from terranova.catalogo import FORMAS_ENTRADA, PATRONES_ENTRADA, Herramienta, ids_parecidos
 from terranova.contrato import (
@@ -44,7 +45,7 @@ from terranova.contrato import (
     problema_de,
 )
 from terranova.cuota import NIVELES, mes, reinicio
-from terranova.descripcion import llms_txt, tarjeta_mcp
+from terranova.descripcion import ai_catalogo, llms_txt, tarjeta_estandar, tarjeta_mcp
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
@@ -130,6 +131,12 @@ def problema(
         media_type="application/problem+json",
         headers=cabeceras,
     )
+
+
+class FichaEmpresaEntrada(_EntradaRest):
+    """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, sin dígito de verificación."""
+
+    nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
 
 
 class FichaEntrada(_EntradaRest):
@@ -256,6 +263,22 @@ def crear_api() -> FastAPI:
         openapi_extra={"security": [{"llave": []}]},
     )
 
+    api.add_api_route(
+        "/v1/fichas/empresa",
+        _ruta(ficha_empresa.HERRAMIENTA, FichaEmpresaEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=ficha_empresa.HERRAMIENTA,
+        summary=ficha_empresa.PREGUNTA,
+        description=ficha_empresa.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
+
     @api.get(
         "/v1/uso",
         tags=["cuenta"],
@@ -325,6 +348,15 @@ def crear_api() -> FastAPI:
     @api.get("/.well-known/mcp/server-card.json", include_in_schema=False)
     async def tarjeta() -> dict[str, Any]:
         return tarjeta_mcp(puerta.CATALOGO)
+
+    @api.get("/mcp/server-card", include_in_schema=False)
+    async def tarjeta_sep(request: Request) -> Response:
+        """La tarjeta estándar (SEP-2127): identidad y cómo conectarse, sin herramientas."""
+        return _descubrible(request, tarjeta_estandar(), "application/mcp-server-card+json")
+
+    @api.get("/.well-known/ai-catalog.json", include_in_schema=False)
+    async def catalogo_ia(request: Request) -> Response:
+        return _descubrible(request, ai_catalogo(), "application/ai-catalog+json")
 
     @api.get("/v1/herramientas", tags=["catálogo"], operation_id="listar_herramientas")
     async def herramientas() -> list[dict[str, Any]]:
@@ -477,6 +509,24 @@ def crear_api() -> FastAPI:
     return api
 
 
+def _descubrible(request: Request, cuerpo: dict[str, Any], tipo: str) -> Response:
+    """Un documento de descubrimiento con lo que pide la SEP-2127: su tipo, CORS abierto para GET,
+    caché de una hora y ETag (304 si no cambió)."""
+    texto = json.dumps(cuerpo, ensure_ascii=False, separators=(",", ":"))
+    etiqueta = '"' + hashlib.sha256(texto.encode()).hexdigest()[:32] + '"'
+    cabeceras = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type, If-None-Match",
+        "Access-Control-Expose-Headers": "ETag",
+        "Cache-Control": "public, max-age=3600",
+        "ETag": etiqueta,
+    }
+    if request.headers.get("if-none-match") == etiqueta:
+        return Response(status_code=304, headers=cabeceras)
+    return Response(texto, media_type=tipo, headers=cabeceras)
+
+
 async def _formulario(request: Request) -> dict[str, str]:
     """Un formulario `application/x-www-form-urlencoded` (sin depender de python-multipart), con
     tope de tamaño: nunca pasa de unos KB."""
@@ -622,7 +672,7 @@ class Aplicacion:
     async def _atender(self, scope: Scope, receive: Any, send: Any) -> None:
         ruta = scope.get("path", "").rstrip("/") or "/"
         app = self.mcp.get(ruta, self.api)
-        protegida = ruta.startswith("/v1/co/") or ruta in ("/v1/uso", "/v1/fichas")
+        protegida = ruta.startswith(("/v1/co/", "/v1/fichas")) or ruta == "/v1/uso"
         if scope["type"] == "http" and (app is not self.api or protegida):
             # REST de herramientas y MCP piden llave; el catálogo público, no (ADR-0009)
             if puerta.ESTADO.registro is not None:
