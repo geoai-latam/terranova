@@ -658,7 +658,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l.abierto code { font-size: 13.5px; }
 .desliza.lic { max-width: 640px; }
 .sombra-pais { opacity: .06; }
-.tierra { fill: var(--estructura-1); stroke: var(--linea-tenue); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.tierra { fill: var(--estructura-3); stroke: var(--estructura-4); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.fig-cobertura .costa { fill: none; stroke: var(--linea-media); stroke-width: .9; vector-effect: non-scaling-stroke; stroke-linecap: round; }
 /* cobertura: una sola rampa, del agua (pocos predios) al teal hondo (muchos); cada nivel toma sus
    caras de su color base, más claro arriba y más hondo en los lados que no ven la luz */
 .m-cob0 { --b: #C3E3EB; } .m-cob1 { --b: #A5D5D9; } .m-cob2 { --b: #84C4BC; } .m-cob3 { --b: #5FAB9C; } .m-cob4 { --b: #3D8E7F; }
@@ -666,7 +667,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   --c0: color-mix(in oklab, var(--b), #fff 32%); --c1: var(--b); --c2: color-mix(in oklab, var(--b), #0B231C 7%);
   --c3: color-mix(in oklab, var(--b), #0B231C 14%); --c4: color-mix(in oklab, var(--b), #0B231C 21%);
   --filo: color-mix(in oklab, var(--b), #0B231C 55%); --pliegue: color-mix(in oklab, var(--b), #0B231C 22%); }
-.tierra-canto { fill: var(--estructura-4); stroke: none; }
+.tierra-canto { fill: var(--estructura-6); stroke: none; }
 .fig-cobertura .norte { fill: var(--linea-media); stroke: none; }
 @media (max-width: 480px) { .lista-l li { grid-template-columns: minmax(0, 1fr); } }
 
@@ -762,11 +763,10 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .clavija { fill: var(--tinta); stroke: var(--fondo); stroke-width: .8; vector-effect: non-scaling-stroke; }
 [data-renglones] { transition: opacity .4s ease; }
 /* tablero: franja de los comparables, agujas y la serie que dibuja el trazador */
-.franja { fill: var(--teal-700); opacity: .32; stroke: none; }
-.aguja { fill: none; stroke: var(--tinta); stroke-width: 1.3; vector-effect: non-scaling-stroke; stroke-linecap: round; }
-.aguja[data-on] { stroke: var(--acento-relleno); stroke-width: 1.8; }
-.serie { fill: none; stroke: var(--teal-700); stroke-width: 1.8; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round;
-  stroke-dasharray: 100 100; stroke-dashoffset: 100; transition: opacity .5s ease; }
+.franja { fill: var(--sujeto-agua-filo); opacity: .3; stroke: none; }
+.aguja { fill: var(--linea-alta); stroke: none; }
+.aguja-ambar { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.serie { fill: none; stroke: var(--sujeto-agua-filo); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
 .medidor .luz-on circle { fill: var(--teal-400); }
 .medidor .luz-off circle { fill: var(--tinta-invertida); opacity: .22; }
 
@@ -782,6 +782,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 
 /* estado como marca: vivo = punto teal */
 .marca-vivo circle { fill: var(--estado-vivo); opacity: 1; }
+.marca-revisar circle { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; opacity: 1; }
 /* lo que una pantalla oscura muestra: en teal claro */
 .en-pantalla { fill: var(--teal-400); stroke: none; }
 .sello-marca { fill: none; stroke: var(--teal-700); stroke-width: 1.1; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }

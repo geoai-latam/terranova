@@ -77,7 +77,9 @@ function pintaBase(el, c, antes) {
     }
     el.style.transform = t;
   }
-  if (!antes || antes.o !== c.o) el.style.opacity = c.o >= 0.999 ? '' : c.o <= 0.001 ? '0' : c.o.toFixed(3);
+  // a escala cero no se dibuja nada (el filo no escala y dejaría un punto)
+  const o = c.s <= 0.002 ? 0 : c.o, oa = antes ? (antes.s <= 0.002 ? 0 : antes.o) : -1;
+  if (o !== oa) el.style.opacity = o >= 0.999 ? '' : o <= 0.001 ? '0' : o.toFixed(3);
 }
 
 function motorDe(F) {
@@ -424,6 +426,101 @@ FIG.cobertura = ({ V, pieza }) => {
   };
 };
 
+// Fig. revision: la ficha sale de la pila, para bajo cada estación (la cinta avanza solo con ella),
+// cada palpador baja y su piloto marca teal o ámbar (con su banderita); al final cae al expediente.
+FIG.revision = ({ V, pieza }) => {
+  const ficha = pieza('ficha'), cinta = pieza('cinta');
+  const palp = V.est.map((_, j) => pieza('palpador' + j));
+  const ok = V.est.map((_, j) => pieza('ok' + j)), rev = V.est.map((_, j) => pieza('rev' + j)), ban = V.est.map((_, j) => pieza('bandera' + j));
+  const [ex, ez] = [V.ex, V.ez];
+  const APARECE = 300, PRIMERO = 520, ENTRE = 420, PARA = 340, BAJA = 130, ALFINAL = 420, CAE = 360;
+  // tiempos de llegada a cada estación y del final
+  const llega = V.est.map((_, k) => APARECE + PRIMERO + k * (PARA + ENTRE));
+  const sale3 = llega[3] + PARA, fin = sale3 + ALFINAL, cayo = fin + CAE, DURA = cayo + 380;
+  const xEn = t => {
+    if (t < APARECE) return 0;
+    if (t < llega[0]) return V.est[0] * tramo(t, APARECE, PRIMERO, mueve);
+    for (let k = 0; k < 4; k++) {
+      if (t < llega[k] + PARA) return V.est[k];
+      if (k < 3 && t < llega[k + 1]) return V.est[k] + (V.est[k + 1] - V.est[k]) * tramo(t, llega[k] + PARA, ENTRE, mueve);
+    }
+    if (t < fin) return V.est[3] + (V.fin - V.est[3]) * tramo(t, sale3, ALFINAL, mueve);
+    return V.fin + (V.bandeja - V.fin) * tramo(t, fin, CAE, entra);
+  };
+  return {
+    n: V.tipos.length,
+    dura: () => DURA,
+    cuadros: [[0, 0], [0, 700], [0, llega[0] + 140], [0, llega[1] + 160], [0, llega[2] + 300], [0, fin + 200], [0, DURA], [2, DURA]],
+    pose(i, t, pon) {
+      const tipo = V.tipos[i];
+      const x = xEn(t);
+      const z = t < fin ? 0 : -V.cae * tramo(t, fin, CAE, sale) ** 1;
+      pon(ficha, { x: ex[0] * x + ez[0] * z, y: ex[1] * x + ez[1] * z, s: t < APARECE ? 0 : 1 - tramo(t, cayo + 120, 200, sale) });
+      // la cinta lleva a la ficha: sus travesaños avanzan lo mismo (y se quedan quietos en las paradas)
+      const xc = Math.min(x, V.fin) % V.paso;
+      pon(cinta, { x: ex[0] * xc, y: ex[1] * xc });
+      let lectura = { l: `${tipo.t} · ${tipo.c} · ${tipo.f.length} fuentes`, d: '' };
+      V.est.forEach((_, k) => {
+        const u = t - llega[k];
+        const b = u < 0 || u > PARA ? 0 : u < BAJA ? tramo(u, 0, BAJA, entra) : 1 - tramo(u, PARA - BAJA, BAJA, sale);
+        pon(palp[k], { x: -ez[0] * V.baja * b, y: -ez[1] * V.baja * b });
+        const visto = u >= BAJA, malo = tipo.h === k;
+        pon(ok[k], { s: visto && !malo ? 1 : 0 });
+        pon(rev[k], { s: visto && malo ? 1 : 0 });
+        pon(ban[k], { s: malo ? tramo(u, BAJA, 240, entra) : 0 });
+        if (visto) lectura = { l: `${tipo.t} · ${tipo.f[k][0]}: ${malo ? 'revisar' : 'sin hallazgos'}`, d: tipo.f[k][1] };
+      });
+      if (t >= cayo) lectura = { l: `${tipo.t} · expediente: ${tipo.h == null ? 'sin hallazgos' : '1 caso para revisar'}`, d: `${tipo.c} · ${tipo.f.length} fuentes` };
+      return lectura;
+    },
+  };
+};
+
+// Fig. tablero: el pórtico vuelve al principio con seguimiento, la aguja del reloj elegido barre
+// hasta su lectura y oscila solo al asentarse, y la pluma dibuja la serie de ese indicador.
+FIG.tablero = ({ V, pieza }) => {
+  const n = V.ind.length;
+  const agujas = V.ind.map((_, i) => pieza('aguja' + i)), ambar = V.ind.map((_, i) => pieza('ambar' + i));
+  const tramos = V.ind.map((_, i) => Array.from({ length: V.tramos }, (_, j) => pieza(`s${i}_${j}`)));
+  const portico = pieza('portico'), carro = pieza('carro');
+  const gira = (el, c, antes) => {
+    if (antes && antes.k === c.k && antes.o === c.o) return;
+    const [cx, cy] = (el.__cc ||= el.dataset.centro.split(' ').map(Number));
+    el.style.transform = `translate(${cx}px,${cy}px) rotate(${c.k.toFixed(2)}deg) translate(${-cx}px,${-cy}px)`;
+    el.style.opacity = c.o >= 0.999 ? '' : '0';
+  };
+  [...agujas, ...ambar].forEach(el => { el.__pinta = gira; });
+  const angulo = v => V.desde + V.arco * v;
+  const VUELVE = 650, DIBUJA0 = 720, DIBUJA = 1600, LEE = 950, DURA = DIBUJA0 + DIBUJA + 250;
+  const plotter = bezier(0.3, 0, 0.7, 1);
+  const enSerie = (i, f) => { const s = V.series[i], u = Math.max(0, Math.min(1, f)) * (s.length - 1), j = Math.min(s.length - 2, Math.floor(u)); return s[j] + (s[j + 1] - s[j]) * (u - j); };
+  return {
+    n,
+    dura: () => DURA,
+    cuadros: [[0, 0], [0, 300], [0, 650], [0, 900], [0, 1300], [0, 1900], [0, DURA], [3, DURA]],
+    pose(i, t, pon) {
+      const f = tramo(t, DIBUJA0, DIBUJA, plotter);
+      const dx = t < DIBUJA0 ? V.largo * (1 - resorte(t, 0, VUELVE)) : V.largo * f;
+      pon(portico, { x: V.ex[0] * dx, y: V.ex[1] * dx });
+      const dy = enSerie(i, t < DIBUJA0 ? 0 : f);
+      pon(carro, { x: V.ey[0] * dy, y: V.ey[1] * dy });
+      tramos.forEach((ts, q) => ts.forEach((el, j) => pon(el, { o: q === i && t >= DIBUJA0 && f >= (j + 1) / V.tramos - 1e-6 ? 1 : 0 })));
+      agujas.forEach((el, q) => {
+        const k = q === i ? angulo(V.valores[q] * asienta(t, 150, 1100)) : angulo(V.valores[q]);
+        pon(el, { k, o: q === i ? 0 : 1 });
+        pon(ambar[q], { k, o: q === i ? 1 : 0 });
+      });
+      const d = V.ind[i];
+      return t < LEE ? { l: `${d.t} · ${d.e}`, d: d.m } : { l: `${d.t} · ${d.e} · tu municipio frente a sus comparables`, d: d.m };
+    },
+    desde: (x, y) => {
+      let mejor = -1, d = 60;
+      V.centros.forEach(([px, py], q) => { const e = Math.hypot(px - x, (py - y) * 0.7); if (e < d) { d = e; mejor = q; } });
+      return mejor;
+    },
+  };
+};
+
 // ================================================================ legado (se migra por tandas)
 const sigue = (actual, meta, dt, s) => actual + (meta - actual) * (1 - Math.exp(-dt / s));
 
@@ -534,120 +631,12 @@ const mover = (g, v, a, b) => {
   else g.setAttribute('transform', `translate(${dx.toFixed(2)} ${dy.toFixed(2)})`);
 };
 
-// ---------------------------------------------------------------- debida diligencia: la banda
-function revision(fig) {
-  const svg = fig.querySelector('svg');
-  const V = JSON.parse(svg.dataset.vivo);
-  const lectura = fig.querySelector('[data-lectura]');
-  const ficha = svg.querySelector('[data-ficha]');
-  const bandera = svg.querySelector('[data-bandera]');
-  const palp = [...svg.querySelectorAll('[data-palpador]')];
-  const pilotos = [...svg.querySelectorAll('[data-piloto]')];
-  svg.querySelector('[data-motor]').classList.add('encendido');
-  const ejes = [V.ex, V.ez];
-  // tiempos del turno: sale, cuatro paradas (baja, sube, sigue), llega al final, cae, reposa
-  const SALE = 1.1, PARA = 1.25, VIAJA = 0.6, FIN = 0.8, CAE = 0.7, REPOSA = 1.4;
-  const llega = k => SALE + k * (PARA + VIAJA);
-  const tFin = llega(V.est.length - 1) + PARA;
-  const dura = () => tFin + FIN + CAE + REPOSA;
-  let dicho = '';
-  function decir(txt) { if (txt !== dicho) { dicho = txt; lectura.textContent = txt; } }
-  function guion(t, i) {
-    const tipo = V.tipos[i];
-    let x = V.x0, z = 0;
-    if (t < SALE) x = V.x0 + (V.est[0] - V.x0) * suave(t / SALE);
-    else if (t < tFin) {
-      const k = Math.min(V.est.length - 1, Math.floor((t - SALE) / (PARA + VIAJA)));
-      const u = t - llega(k);
-      x = u < PARA ? V.est[k] : V.est[k] + (V.est[k + 1] - V.est[k]) * suave((u - PARA) / VIAJA);
-    } else if (t < tFin + FIN) x = V.est[3] + (V.fin - V.est[3]) * suave((t - tFin) / FIN);
-    else { const u = suave((t - tFin - FIN) / CAE); x = V.fin + (V.bandeja - V.fin) * u; z = -V.cae * u * u; }
-    mover(ficha, ejes, x - V.x0, z);
-    ficha.style.opacity = t > dura() - 0.45 ? String(Math.max(0, (dura() - t) / 0.45)) : '';
-    let texto = `${tipo.t} · ${tipo.c} · ${tipo.f.length} fuentes`;
-    palp.forEach((g, k) => {
-      const u = t - llega(k);
-      const b = u < 0 || u > PARA ? 0 : u < 0.4 ? suave(u / 0.4) : u < 0.75 ? 1 : 1 - suave((u - 0.75) / 0.4);
-      mover(g, ejes, 0, -V.baja * b);
-      const visto = u >= 0.4;
-      const estado = !visto ? '' : tipo.h === k ? 'rev' : 'ok';
-      if (pilotos[k].dataset.estado !== estado) { if (estado) pilotos[k].dataset.estado = estado; else delete pilotos[k].dataset.estado; }
-      if (u >= 0 && u < PARA + VIAJA) texto = `${tipo.t} · ${tipo.f[k]} · ${!visto ? 'consultando' : tipo.h === k ? 'revisar' : 'sin hallazgos'}`;
-    });
-    if (t >= tFin) texto = `${tipo.t} · expediente: ${tipo.h == null ? 'sin hallazgos' : '1 caso para revisar'}`;
-    bandera.style.opacity = tipo.h != null && t - llega(tipo.h) >= 0.45 ? '1' : '0';
-    decir(texto);
-  }
-  // quieto: la ficha en la última estación con los cuatro pilotos dichos
-  const fijo = i => guion(tFin, i);
-  guionado(fig, { n: V.tipos.length, dura, guion, quieto: fijo });
-  // vida: la cinta avanza sin parar y el motor late
-  const cinta = svg.querySelector('[data-cinta]');
-  svg.querySelector('[data-motor]').classList.add('late');
-  ambiente(fig, t => { const u = (t * 7) % V.paso; mover(cinta, [V.ex, V.ez], u, 0); });
-}
-
 // La cámara del kit (iso-kit.mjs, iso), para lo que se rehace en cada cuadro.
 const camara = P => {
   const R = Math.PI / 180, K = P.scale * Math.sqrt(1.6);
   const sA = Math.sin(P.azimuth * R), cA = Math.cos(P.azimuth * R), sE = Math.sin(P.elevation * R), cE = Math.cos(P.elevation * R);
   return ([x, y, z]) => [P.origin[0] + (x * sA - y * cA) * K, P.origin[1] + ((x * cA + y * sA) * sE - z * cE) * K];
 };
-
-// ---------------------------------------------------------------- tableros: relojes y trazador
-function tablero(fig) {
-  const svg = fig.querySelector('svg');
-  const V = JSON.parse(svg.dataset.vivo);
-  const iso = camara(V.P);
-  const lectura = fig.querySelector('[data-lectura]');
-  const agujas = [...svg.querySelectorAll('[data-aguja]')];
-  const series = [...svg.querySelectorAll('[data-serie]')];
-  const portico = svg.querySelector('[data-portico]');
-  const carro = svg.querySelector('[data-carro]');
-  const ang = V.valores.slice();
-  let meta = 0, p = 1;
-  const DIBUJA = 2.8;
-  const aguja = (i, v) => {
-    const [cx, cy] = V.centros[i], t = V.desde + V.arco * v;
-    const a = iso([cx - Math.sin(t) * 2.2, cy + Math.cos(t) * 2.2, V.zd + 0.2]), b = iso([cx + Math.sin(t) * V.R, cy - Math.cos(t) * V.R, V.zd + 0.2]);
-    agujas[i].setAttribute('d', `M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}`);
-  };
-  // la pluma sobre la serie, a la fracción f de su largo
-  const sobre = (pts, f) => {
-    const u = Math.max(0, Math.min(1, f)) * (pts.length - 1), j = Math.min(pts.length - 2, Math.floor(u)), r = u - j;
-    return [pts[j][0] + (pts[j + 1][0] - pts[j][0]) * r, pts[j][1] + (pts[j + 1][1] - pts[j][1]) * r];
-  };
-  const centros = V.centros.map(([x, y]) => iso([x, y, V.zd]));
-  selector(fig, {
-    n: agujas.length,
-    cada: 4.2,
-    elegir: i => {
-      meta = i; p = quieto.matches ? 1 : 0; ang[i] = quieto.matches ? V.valores[i] : 0;
-      lectura.textContent = V.lecturas[i];
-      agujas.forEach((a, j) => a.toggleAttribute('data-on', j === i));
-      series.forEach((sv, j) => { sv.style.opacity = j === i ? '1' : '0'; });
-    },
-    pintar: dt => {
-      let mueve = false;
-      ang.forEach((v, i) => {
-        const m = V.valores[i];
-        ang[i] = sigue(v, m, dt, 0.5);
-        if (Math.abs(ang[i] - m) < 0.001) ang[i] = m; else mueve = true;
-        aguja(i, ang[i]);
-      });
-      if (p < 1) { p = Math.min(1, p + dt / DIBUJA); mueve = true; }
-      const sp = suave(p);
-      series[meta].style.strokeDashoffset = String(100 - 100 * sp);
-      const [dx, dy] = sobre(V.series[meta], sp);
-      portico.setAttribute('transform', `translate(${(V.ex[0] * dx).toFixed(2)} ${(V.ex[1] * dx).toFixed(2)})`);
-      carro.setAttribute('transform', `translate(${(V.ey[0] * dy).toFixed(2)} ${(V.ey[1] * dy).toFixed(2)})`);
-      return mueve;
-    },
-    desde: (x, y) => cerca2(centros, x, y),
-  });
-  // vida: las agujas tiemblan alrededor de su lectura, cada una a su ritmo
-  ambiente(fig, t => ang.forEach((v, i) => aguja(i, v + Math.sin(t * (1.1 + i * 0.37) + i) * 0.012 + Math.sin(t * 3.3 + i * 2) * 0.004)));
-}
 
 // ---------------------------------------------------------------- vigilancia: el puesto de guardia
 function vigilancia(fig) {
@@ -754,7 +743,7 @@ function asistente(fig) {
 }
 
 // ---------------------------------------------------------------- carga perezosa
-const LEGADO = { revision, tablero, vigilancia, asistente };
+const LEGADO = { vigilancia, asistente };
 async function cargar(fig) {
   const lienzo = fig.querySelector('.lienzo');
   const r = await fetch(lienzo.dataset.src);

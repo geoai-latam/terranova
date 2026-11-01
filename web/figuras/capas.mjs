@@ -213,7 +213,7 @@ export function capas(DATOS, huella) {
     const z0 = abajo + 0.6, z1 = arriba - PAQ - 0.6;
     const paquete = { x: cx - 1.8, y: yC - 1.8, w: 3.6, d: 3.6, r: 1.2 };
     const [qx, qy] = at([cx, yC, z0 + PAQ / 2]);
-    viva.push(`<g data-v="dato${j}" data-c="${r1(qx)} ${r1(qy)}" style="transform:scale(0)">${S(k.slabOf(paquete, z0, PAQ, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
+    viva.push(`<g data-v="dato${j}" data-c="${r1(qx)} ${r1(qy)}" style="transform:scale(0);opacity:0">${S(k.slabOf(paquete, z0, PAQ, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
     viajes.push(k.axisVector(P, [0, 0, z1 - z0]).map(r1));
   });
   viva.push(...pantallas);

@@ -788,7 +788,7 @@ CIFRAS_TABLERO = [
 ]
 
 # Ilustrativo: en qué fuente aparece algo que revisar, por tipo (predio, empresa, contrato).
-HALLAZGO_REVISION = [1, None, 2]
+HALLAZGO_REVISION = [1, None, 1]
 
 # Lo que muestran las figuras de los servicios sale del catálogo: herramientas, entidades y licencias reales.
 TIPOS_REVISION = {

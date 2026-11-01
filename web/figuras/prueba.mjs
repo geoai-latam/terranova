@@ -83,7 +83,7 @@ export function prueba(DATOS, huella) {
     if (i === n - 1) {
       const c = [W - 20, yf + 0.05, z1 - 9];
       const [cx, cy] = at(c);
-      g.push(`<g data-v="sello" data-c="${r1(cx)} ${r1(cy)}" style="transform:scale(0)">` +
+      g.push(`<g data-v="sello" data-c="${r1(cx)} ${r1(cy)}" style="transform:scale(0);opacity:0">` +
         `<path class="sello-marca" d="${k.sideRing(c, 4.2, "y", P, 28) + k.sideRing(c, 3.2, "y", P, 24)}"/>` +
         `<path class="sello-marca" d="${k.pathOf([[c[0] - 1.6, yf, c[2]], [c[0] - 0.3, yf, c[2] - 1.3], [c[0] + 1.8, yf, c[2] + 1.4]].map(at))}"/></g>`);
     }

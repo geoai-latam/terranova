@@ -1,11 +1,12 @@
 // Fig. revision: una banda de inspección. De la pila de tu lista sale una ficha (un predio, una
-// empresa o un contratista), pasa bajo cuatro estaciones, una por fuente oficial (las del catálogo
-// para ese tipo), cada una baja su palpador y enciende su piloto: verde si no hay hallazgo, ámbar
-// si hay algo que revisar (y la ficha levanta una bandera). Al final cae a la bandeja del
-// expediente. Los hallazgos son ilustrativos; los tipos y las fuentes, reales.
-import { D, L, S, base, encuadre, k, porProf, regla, svgDe } from "./comun.mjs";
+// empresa o un contrato; en ocre, el sujeto), avanza con la banda y para bajo cuatro estaciones, una
+// por fuente oficial (las del catálogo para ese tipo). Cada estación cuelga de su poste de atrás,
+// baja su palpador y marca su piloto: teal si no hay hallazgo; si hay algo que revisar, el piloto en
+// ámbar y una banderita ámbar que se levanta (lo único ámbar). Al final la ficha cae a la bandeja
+// del expediente. Los hallazgos son ilustrativos; los tipos, las herramientas y las fuentes, reales.
+import { D, L, S, base, encuadre, k, porProf, r1, regla, sombra, svgDe } from "./comun.mjs";
 
-// minúscula después del punto medio, salvo siglas («áreas protegidas (RUNAP)», «SECOP II»)
+// minúscula al empezar, salvo siglas («áreas protegidas (RUNAP)», «SECOP II»)
 const minuscula = (t) => (/^\p{Lu}\p{Ll}/u.test(t) ? t[0].toLowerCase() + t.slice(1) : t);
 
 export function revision(DATOS, huella) {
@@ -13,101 +14,117 @@ export function revision(DATOS, huella) {
   const ZB = 14; // cara de la banda
   const BANDA = { x: 8, y: -13, w: 180, d: 26, r: 1 };
   const EST = [56, 88, 120, 152]; // x de cada estación
-  const YP = 21; // postes a ±YP
-  const ZT = 46; // travesaño
-  const BAND = { x: 196, y: -17, w: 30, d: 34, r: 1.5 }; // bandeja
+  const YP = -24; // los postes, atrás de la banda
+  const ZT = 44; // brazo de la estación
+  const BAND = { x: 197, y: -17, w: 30, d: 34, r: 1.5 }; // bandeja del expediente
   const FICHA = { w: 18, d: 14 };
-  const X0 = 20; // la ficha sale de la pila aquí
-  const PLACA = { x: -32, y: -34, w: 270, d: 68, r: 4 };
-  const P0 = encuadre([...k.boxCorners(PLACA, -14, 0), [EST[0], -YP, ZT + 8], [EST[3], YP, ZT + 8]], { azimuth: 57 });
-  const { P, ancho, alto } = P0;
+  const X0 = 22; // la ficha sale de la pila aquí
+  const SALE = 34; // primera posición de la ficha fuera de la pila
+  const PLACA = { x: -32, y: -34, w: 272, d: 66, r: 4 };
+  const { P, ancho, alto } = encuadre([...k.boxCorners(PLACA, -14, 0), [EST[0], YP, ZT + 16], [EST[3], YP, ZT + 16]], { azimuth: 57 });
   const at = (p) => k.iso(p, P);
-  const out = [];
+  const fija = [];
+  const viva = [];
 
-  out.push(base(PLACA, 0, 5, P));
-  out.push(regla(PLACA.x + 14, PLACA.x + PLACA.w - 14, PLACA.y + PLACA.d, 0, P));
+  fija.push(base(PLACA, 0, 5, P));
+  fija.push(regla(PLACA.x + 14, PLACA.x + PLACA.w - 14, PLACA.y + PLACA.d, 0, P));
 
-  // motor al principio de la banda: caja con ranuras, piloto y perilla moleteada
+  // motor al principio de la banda: caja con rejilla, perilla moleteada y su piloto (vivo)
   const motor = { x: -24, y: -20, w: 26, d: 26, r: 2 };
-  out.push(S(k.slabOf(motor, 0, 22, P, 3, 0.6), { m: "ocre", tone: "mid", inner: L(k.sideSeam(motor, 5, P, 3), { tone: "faint" }) }));
+  fija.push(sombra(motor, 0, P, { pad: 2 }));
+  fija.push(S(k.slabOf(motor, 0, 22, P, 3, 0.6), { m: "ocre-fuerte", tone: "mid", inner: L(k.sideSeam(motor, 5, P, 3), { tone: "faint" }) }));
   const rejas = [];
   for (let q = 0; q < 4; q++) rejas.push(k.planOutline({ x: -20 + q * 5, y: -15, w: 2, d: 14, r: 1 }, 22, P, 3));
-  out.push(L(rejas.join(""), { tone: "lo" }));
-  out.push(D(k.corners(motor, 2.4).map(([x, y]) => at([x, y, 22])), { size: 0.4 }));
-  out.push(S(k.cylinder(-6, 2, 3.4, 22, 3, P, 24), { m: "bosque", tone: "mid" }));
-  out.push(L(k.knurl(-6, 2, 3.4, 22, 25, 22, P), { tone: "lo" }));
-  out.push(`<g data-motor>${D([at([-17, 3.5, 22])], { size: 0.9, tone: "mid" })}</g>`);
+  fija.push(L(rejas.join(""), { tone: "lo" }));
+  fija.push(D(k.corners(motor, 2.4).map(([x, y]) => at([x, y, 22])), { size: 0.4 }));
+  fija.push(S(k.cylinder(-6, 2, 3.4, 22, 3, P, 24), { m: "acero", tone: "mid" }));
+  fija.push(L(k.knurl(-6, 2, 3.4, 22, 25, 22, P), { tone: "lo" }));
+  fija.push(L(k.ring(-17, 2, 1.4, 22, P, 14), { tone: "mid" }));
+  fija.push(`<g class="marca-vivo">${D([at([-17, 2, 22])], { size: 0.8, tone: "hi" })}</g>`);
 
-  // postes de atrás (detrás del riel trasero)
-  const poste = (x, y) => S(k.cylinder(x, y, 2.4, 0, ZT, P, 20), { m: "acero", tone: "mid", crease: "none" }) + L(k.sideArc(x, y, 2.4, 6, P, 14), { tone: "faint" });
-  const zapata = (x, y) => S(k.slabOf({ x: x - 4, y: y - 4, w: 8, d: 8, r: 1.2 }, 0, 1.6, P, 2), { tone: "lo" }) + D([[x - 2.6, y - 2.6], [x + 2.6, y + 2.6]].map(([a, b]) => at([a, b, 1.6])), { size: 0.36 });
-  for (const x of EST) out.push(zapata(x, -YP) + poste(x, -YP));
+  // postes de las estaciones (atrás de todo), con su zapata y dos tornillos
+  for (const x of EST) {
+    fija.push(S(k.slabOf({ x: x - 4.5, y: YP - 4.5, w: 9, d: 9, r: 1.2 }, 0, 1.6, P, 2), { m: "acero", tone: "lo" }));
+    fija.push(D([[x - 3, YP - 3], [x + 3, YP + 3]].map(([a, b]) => at([a, b, 1.6])), { size: 0.36 }));
+    fija.push(S(k.cylinder(x, YP, 2.6, 1.6, ZT + 3.4, P, 20), { m: "metal", tone: "mid", crease: "none" }));
+    fija.push(L(k.sideArc(x, YP, 2.6, 8, P, 14) + k.sideArc(x, YP, 2.6, ZT - 6, P, 14), { tone: "faint" }));
+  }
 
-  // riel trasero
+  // la banda: rieles más bajos que su cara (no tapan la ficha), lecho, tambores y costuras
   const rielT = { x: 4, y: -16.5, w: 188, d: 3.5, r: 0.6 };
-  out.push(S(k.slabOf(rielT, 0, 17, P, 2, 0.4), { m: "ocre", tone: "mid", inner: L(k.sideSeam(rielT, 4, P, 2), { tone: "faint" }) }));
-
-  // bandeja del expediente: piso, paredes de atrás y la pila que ya hay
-  out.push(S(k.slabOf(BAND, 0, 2.4, P, 3, 0.4), { m: "bosque", tone: "mid" }));
-  out.push(S(k.slabOf({ x: BAND.x, y: BAND.y, w: BAND.w, d: 2, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre", tone: "mid" }));
-  out.push(S(k.slabOf({ x: BAND.x, y: BAND.y, w: 2, d: BAND.d, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre", tone: "mid" }));
-  const enBandeja = { x: BAND.x + BAND.w / 2 - FICHA.w / 2, y: -FICHA.d / 2 };
-  for (let q = 0; q < 2; q++) out.push(S(k.slabOf({ ...enBandeja, w: FICHA.w, d: FICHA.d, r: 0.8 }, 2.4 + q * 1.4, 1.4, P, 2), { tone: "hi" }));
-
-  // la banda: lecho, costuras de los bordes y travesaños entre ellas
-  out.push(S(k.slabOf(BANDA, 10, ZB - 10, P, 4), { m: "pantalla", tone: "lo" }));
+  const rielD = { x: 4, y: 13, w: 188, d: 3.5, r: 0.6 };
+  fija.push(S(k.slabOf(rielT, 0, 12.6, P, 2, 0.4), { m: "metal", tone: "mid", inner: L(k.sideSeam(rielT, 4, P, 2), { tone: "faint" }) }));
+  fija.push(S(k.slabOf(BANDA, 10, ZB - 10, P, 4), { m: "acero", tone: "lo" }));
   const borde = (y) => k.lineOnTop([BANDA.x, y], [BANDA.x + BANDA.w, y], ZB, P);
-  out.push(L(borde(-11) + borde(11), { tone: "lo" }));
+  fija.push(L(borde(-11) + borde(11), { tone: "mid" }));
+  fija.push(S(k.slabOf(rielD, 0, 12.6, P, 2, 0.4), { m: "metal", tone: "mid", inner: L(k.sideSeam(rielD, 4, P, 2), { tone: "faint" }) }));
+  // tambores: un cubo en cada punta del riel delantero, con su eje
+  for (const x of [10, 186]) {
+    fija.push(L(k.sideRing([x, 16.5, 9], 2.6, "y", P, 20), { tone: "mid" }));
+    fija.push(D([at([x, 16.5, 9])], { size: 0.55 }));
+  }
+  fija.push(D([40, 72, 104, 136, 168].map((x) => at([x, 16.5, 5])), { size: 0.4 }));
+
+  // bandeja del expediente: piso, paredes de atrás y la carpeta con las fichas que ya pasaron
+  fija.push(sombra(BAND, 0, P, { pad: 2 }));
+  fija.push(S(k.slabOf(BAND, 0, 2.4, P, 3, 0.4), { m: "ocre-fuerte", tone: "mid" }));
+  fija.push(S(k.slabOf({ x: BAND.x, y: BAND.y, w: BAND.w, d: 2, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre-fuerte", tone: "mid" }));
+  fija.push(S(k.slabOf({ x: BAND.x, y: BAND.y, w: 2, d: BAND.d, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre-fuerte", tone: "mid" }));
+  const carpeta = { x: BAND.x + 3, y: BAND.y + 3, w: BAND.w - 6, d: BAND.d - 6, r: 0.8 };
+  fija.push(S(k.slabOf(carpeta, 2.4, 0.8, P, 2), { m: "papel", tone: "mid" }));
+  const enBandeja = { x: BAND.x + BAND.w / 2 - FICHA.w / 2, y: -FICHA.d / 2, w: FICHA.w, d: FICHA.d, r: 0.8 };
+  for (let q = 0; q < 2; q++) fija.push(S(k.slabOf(enBandeja, 3.2 + q * 1.4, 1.4, P, 2), { m: "ocre", tone: "hi", crease: "lo" }));
+
+  // ----- capa viva: la cinta (con la ficha), la ficha, la pila, las estaciones y el frente de la bandeja
+  // la cinta: travesaños que avanzan solo con la ficha, recortados a la cara de la banda
   const ribs = [];
   for (let x = BANDA.x - 6; x < BANDA.x + BANDA.w + 6; x += 6) ribs.push(k.lineOnTop([x, -11], [x, 11], ZB, P));
-  const caraBanda = k.planOutline(BANDA, ZB, P, 4);
-  out.push(`<clipPath id="rv-banda"><path d="${caraBanda}"/></clipPath>`);
-  out.push(`<g clip-path="url(#rv-banda)"><g data-cinta>${L(ribs.join(""), { tone: "lo", className: "en-oscuro" })}</g></g>`);
-
-  // la ficha que corre (con su bandera, oculta hasta que haya hallazgo)
+  viva.push(`<clipPath id="rv-banda"><path d="${k.planOutline({ ...BANDA, y: -11, d: 22 }, ZB, P, 4)}"/></clipPath>`);
+  viva.push(`<g clip-path="url(#rv-banda)"><g data-v="cinta">${L(ribs.join(""), { tone: "lo" })}</g></g>`);
+  // la ficha que corre (armada en X0, bajo la pila)
   const ficha = { x: X0 - FICHA.w / 2, y: -FICHA.d / 2, w: FICHA.w, d: FICHA.d, r: 0.8 };
   const renglones = [0.7, 0.5, 0.62].map((f, j) => k.lineOnTop([ficha.x + 3, ficha.y + 3.5 + j * 3], [ficha.x + 3 + (FICHA.w - 6) * f, ficha.y + 3.5 + j * 3], ZB + 1.4, P));
-  const bandera =
-    S(k.slabOf({ x: ficha.x + FICHA.w - 4, y: ficha.y + 2, w: 0.9, d: 0.9, r: 0.2 }, ZB + 1.4, 9, P, 1), { m: "acero", tone: "mid", crease: "none" }) +
-    S(k.slabOf({ x: ficha.x + FICHA.w - 9.1, y: ficha.y + 2, w: 5, d: 0.7, r: 0.2 }, ZB + 6.4, 4, P, 1), { m: "parcial", tone: "hi", lit: true });
-  out.push(
-    `<g data-ficha>${S(k.slabOf(ficha, ZB, 1.4, P, 2), { tone: "hi", inner: L(renglones.join(""), { tone: "lo", free: true }) })}` +
-      `<g data-bandera>${bandera}</g></g>`,
-  );
-
+  const [fcx, fcy] = at([X0, 0, ZB + 0.7]);
+  viva.push(`<g data-v="ficha" data-c="${r1(fcx)} ${r1(fcy)}">${S(k.slabOf(ficha, ZB, 1.4, P, 2), { m: "ocre-fuerte", tone: "hi", crease: "lo", inner: L(renglones.join(""), { tone: "lo", free: true }) })}</g>`);
   // la pila de tu lista: placa trasera, dos guías y seis fichas
-  out.push(S(k.slabOf({ x: X0 - FICHA.w / 2 - 3, y: -9, w: 2, d: 18, r: 0.4 }, ZB + 1.8, 14, P, 2), { m: "acero", tone: "mid" }));
-  for (let q = 0; q < 6; q++) out.push(S(k.slabOf({ ...ficha, x: ficha.x }, ZB + 1.8 + q * 1.5, 1.4, P, 2), { tone: q === 5 ? "hi" : "mid", crease: "lo" }));
-  for (const y of [-9.4, 8]) out.push(S(k.slabOf({ x: X0 + FICHA.w / 2 + 0.2, y, w: 1.6, d: 1.4, r: 0.4 }, ZB + 1.8, 14, P, 1), { m: "acero", tone: "mid", crease: "none" }));
+  viva.push(S(k.slabOf({ x: X0 - FICHA.w / 2 - 3, y: -9, w: 2, d: 18, r: 0.4 }, ZB + 1.8, 14, P, 2), { m: "ocre-fuerte", tone: "mid" }));
+  for (let q = 0; q < 6; q++) viva.push(S(k.slabOf(ficha, ZB + 1.8 + q * 1.5, 1.4, P, 2), { m: "ocre", tone: q === 5 ? "hi" : "mid", crease: "lo" }));
+  for (const y of [-9.4, 8]) viva.push(S(k.slabOf({ x: X0 + FICHA.w / 2 + 0.2, y, w: 1.6, d: 1.4, r: 0.4 }, ZB + 1.8, 14, P, 1), { m: "acero", tone: "mid", crease: "none" }));
 
-  // riel delantero, paredes delanteras de la bandeja y postes de adelante (antes de los travesaños,
-  // que tapan la cabeza de los postes)
-  const rielD = { x: 4, y: 13, w: 188, d: 3.5, r: 0.6 };
-  out.push(S(k.slabOf(rielD, 0, 17, P, 2, 0.4), { m: "ocre", tone: "mid", inner: L(k.sideSeam(rielD, 4, P, 2), { tone: "faint" }) }));
-  out.push(D([12, 60, 108, 156, 184].map((x) => at([x, 16.5, 12])), { size: 0.4 }));
-  out.push(S(k.slabOf({ x: BAND.x + BAND.w - 2, y: BAND.y, w: 2, d: BAND.d, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre", tone: "mid" }));
-  out.push(S(k.slabOf({ x: BAND.x, y: BAND.y + BAND.d - 2, w: BAND.w, d: 2, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre", tone: "mid" }));
-
-  for (const x of porProf(EST.map((x) => [x, YP]), P).map(([x]) => x)) out.push(zapata(x, YP) + poste(x, YP));
-
-  // estaciones: travesaño, cabezal, palpador y piloto, de atrás hacia adelante
-  const palp = [];
+  // las estaciones, de atrás hacia adelante: brazo desde el poste, cabezal colgado, palpador, piloto y bandera
   for (const [j, x] of EST.entries()) {
     const g = [];
-    g.push(S(k.slabOf({ x: x - 4, y: -YP - 3, w: 8, d: 2 * YP + 6, r: 1 }, ZT, 5, P, 2, 0.4), { m: "ambar", tone: "mid", inner: L(k.sideSeam({ x: x - 4, y: -YP - 3, w: 8, d: 2 * YP + 6, r: 1 }, ZT + 2.5, P, 2), { tone: "faint" }) }));
-    g.push(D([[x, -YP], [x, YP]].map(([a, b]) => at([a, b, ZT + 5])), { size: 0.45 }));
+    const brazo = { x: x - 3.2, y: YP - 3, w: 6.4, d: -YP + 7, r: 1 };
+    g.push(S(k.slabOf(brazo, ZT, 5, P, 2, 0.4), { m: "metal", tone: "mid", inner: L(k.sideSeam(brazo, ZT + 2.5, P, 2), { tone: "faint" }) }));
+    g.push(D([[x, YP], [x, 0]].map(([a, b]) => at([a, b, ZT + 5])), { size: 0.45 }));
     const cab = { x: x - 6, y: -6, w: 12, d: 12, r: 1.5 };
-    g.push(S(k.slabOf(cab, ZT - 9, 9, P, 3, 0.5), { m: "papel", tone: "hi", inner: L(k.sideSeam(cab, ZT - 3, P, 3), { tone: "faint" }) }));
-    // palpador: varilla y zapata, bajan juntos
+    // el palpador (varilla y zapata) baja: va antes del cabezal, que lo tapa arriba
     g.push(
-      `<g data-palpador="${j}">${S(k.cylinder(x, 0, 1.3, ZB + 8.4, ZT - 9 - ZB - 8.4, P, 16), { m: "acero", tone: "mid", crease: "none" })}` +
-        `${S(k.cylinder(x, 0, 3.4, ZB + 6.4, 2, P, 24), { m: "bosque", tone: "mid" })}</g>`,
+      `<g data-v="palpador${j}">${S(k.cylinder(x, 0, 1.3, ZB + 8.4, ZT - 9 - ZB - 8.4 + 2, P, 16), { m: "acero", tone: "mid", crease: "none" })}` +
+        `${S(k.cylinder(x, 0, 3.4, ZB + 6.4, 2, P, 24), { m: "metal", tone: "mid" })}</g>`,
     );
-    g.push(S(k.cylinder(x, 0, 2.4, ZT + 5, 1.6, P, 20), { m: "bosque", tone: "mid" }));
-    g.push(`<g data-piloto="${j}">${D([at([x, 0, ZT + 6.6])], { size: 2, tone: "mid" })}</g>`);
-    palp.push(g.join(""));
+    g.push(S(k.slabOf(cab, ZT - 9, 9, P, 3, 0.5), { m: "papel", tone: "hi", inner: L(k.sideSeam(cab, ZT - 3, P, 3), { tone: "faint" }) }));
+    // el piloto en la cara del cabezal: un aro; dentro, teal (sin hallazgo) o ámbar (revisar)
+    const pp = [x + 2.6, 6, ZT - 5];
+    g.push(L(k.sideRing(pp, 2, "y", P, 16), { tone: "mid" }));
+    const [px, py] = at(pp);
+    g.push(`<g data-v="ok${j}" class="marca-vivo" data-c="${r1(px)} ${r1(py)}" style="transform:scale(0);opacity:0">${D([[px, py]], { size: 1.6, tone: "hi" })}</g>`);
+    g.push(`<g data-v="rev${j}" class="marca-revisar" data-c="${r1(px)} ${r1(py)}" style="transform:scale(0);opacity:0">${D([[px, py]], { size: 1.6, tone: "hi" })}</g>`);
+    // la banderita: un pasador y una placa ámbar que se levantan del cabezal si hay algo que revisar
+    const bx = x + 4.4;
+    const [qx, qy] = at([bx, 3, ZT]);
+    g.push(
+      `<g data-v="bandera${j}" data-c="${r1(qx)} ${r1(qy)}" style="transform:scale(0);opacity:0">` +
+        S(k.slabOf({ x: bx - 0.4, y: 2.6, w: 0.8, d: 0.8, r: 0.2 }, ZT, 9, P, 1), { m: "acero", tone: "mid", crease: "none" }) +
+        S(k.slabOf({ x: bx - 0.4, y: 3.4, w: 0.6, d: 4.6, r: 0.15 }, ZT + 5, 3.6, P, 1), { m: "ambar", tone: "mid" }) +
+        `</g>`,
+    );
+    viva.push(g.join(""));
   }
-  out.push(palp.join(""));
+  // paredes delanteras de la bandeja (la ficha cae detrás de ellas)
+  viva.push(S(k.slabOf({ x: BAND.x + BAND.w - 2, y: BAND.y, w: 2, d: BAND.d, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre-fuerte", tone: "mid" }));
+  viva.push(S(k.slabOf({ x: BAND.x, y: BAND.y + BAND.d - 2, w: BAND.w, d: 2, r: 0.4 }, 2.4, 10, P, 2), { m: "ocre-fuerte", tone: "mid" }));
+  viva.push(D([at([BAND.x + 3, BAND.y + BAND.d, 8]), at([BAND.x + BAND.w - 3, BAND.y + BAND.d, 8])], { size: 0.38 }));
 
   const ex = k.axisVector(P, [1, 0, 0]), ez = k.axisVector(P, [0, 0, 1]);
   const r3 = (v) => Math.round(v * 1000) / 1000;
@@ -116,19 +133,20 @@ export function revision(DATOS, huella) {
     ancho,
     alto,
     clase: "fig-revision",
-    etiqueta: `Una banda de inspección. De la pila de tu lista sale una ficha (${tipos.map((t) => t.tipo.toLowerCase()).join(", ")}) y pasa bajo cuatro estaciones, una por fuente oficial; cada una enciende su piloto, verde sin hallazgo y ámbar si hay algo que revisar. Al final cae a la bandeja del expediente. Los hallazgos son ilustrativos.`,
-    cuerpo: out,
+    etiqueta: `Una banda de inspección. De la pila de tu lista sale una ficha (${tipos.map((t) => t.tipo.toLowerCase()).join(", ")}) y para bajo cuatro estaciones, una por fuente oficial; cada una marca su piloto, teal sin hallazgo y ámbar con una banderita si hay algo que revisar. Al final cae a la bandeja del expediente. Los hallazgos son ilustrativos.`,
+    fija,
+    viva,
     vivo: {
       ex: ex.map(r3),
       ez: ez.map(r3),
-      x0: X0,
-      est: EST,
-      fin: BANDA.x + BANDA.w,
-      bandeja: BAND.x + BAND.w / 2,
-      cae: ZB - (2.4 + 2 * 1.4),
-      baja: ZB + 6.4 - (ZB + 1.4),
+      sale: SALE - X0,
+      est: EST.map((x) => x - X0),
+      fin: BANDA.x + BANDA.w + 4 - X0,
+      bandeja: BAND.x + BAND.w / 2 - X0,
+      cae: ZB - (3.2 + 2 * 1.4),
+      baja: 6,
       paso: 6,
-      tipos: tipos.map((t, i) => ({ t: t.tipo.toLowerCase(), c: t.como, f: t.fuentes.map((f) => `${minuscula(f.t)} · ${f.e}`), h: hallazgo[i] })),
+      tipos: tipos.map((t, i) => ({ t: t.tipo.toLowerCase(), c: t.como, f: t.fuentes.map((f) => [minuscula(f.t), f.e]), h: hallazgo[i] })),
     },
   });
 }

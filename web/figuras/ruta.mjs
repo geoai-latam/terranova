@@ -157,7 +157,7 @@ export function ruta(DATOS, huella) {
   const ficha = { x: A[0] - 3, y: A[1] - 3, w: 6, d: 6, r: 1.8 };
   // las fichas aparecen y se van con la escala (un ámbar a medio fundir se ve oliva)
   const [fx, fy] = at([A[0], A[1], ZR + 1.3]);
-  const centro = `data-c="${r1(fx)} ${r1(fy)}" style="transform:scale(0)"`;
+  const centro = `data-c="${r1(fx)} ${r1(fy)}" style="transform:scale(0);opacity:0"`;
   viva.push(`<g data-v="respuesta-ficha" ${centro}>${S(k.slabOf(ficha, ZR, 2.4, P, 3, 0.4), { tone: "mid", m: "bosque" })}</g>`);
   viva.push(`<g data-v="pregunta" ${centro}>${S(k.slabOf(ficha, ZR, 2.6, P, 3, 0.4), { tone: "mid", m: "ambar" })}</g>`);
   tapas.forEach((t, i) => viva.push(`<g data-v="tapa${i}" style="opacity:0">${t}</g>`));
