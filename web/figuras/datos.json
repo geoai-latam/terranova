@@ -122,5 +122,29 @@
    1,
    1
   ]
+ },
+ "prueba": {
+  "capas": [
+   {
+    "campo": "dato",
+    "valor": "3.162,35 pesos por dólar"
+   },
+   {
+    "campo": "procedencia",
+    "valor": "Banco de la República"
+   },
+   {
+    "campo": "licencia",
+    "valor": "Aviso legal del Banco, uso comercial sí"
+   },
+   {
+    "campo": "servido_desde",
+    "valor": "La fuente, en vivo"
+   },
+   {
+    "campo": "huella",
+    "valor": "sha256:ac30c9f5…"
+   }
+  ]
  }
 }

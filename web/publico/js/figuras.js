@@ -1,5 +1,5 @@
-// Movimiento de las dos figuras isométricas de la portada (dibujadas con el kit de Anatomy en
-// web/figuras). Sin este archivo, o con movimiento reducido, cada figura queda armada y quieta.
+// Las figuras isométricas del sitio (dibujadas con el kit de Anatomy en web/figuras): las trae
+// cuando se acercan a la vista y les da movimiento. Con movimiento reducido quedan armadas y quietas.
 // Movimiento con tiempo y seguimiento exponencial; un recorrido en reposo cuando nadie toca; el
 // puntero y las flechas eligen; fuera de la vista no corre nada.
 const quieto = matchMedia('(prefers-reduced-motion: reduce)');
@@ -11,7 +11,7 @@ function enVista(el, cambio) {
 
 // ---------------------------------------------------------------- Fig. 1: el bastidor
 function capas(fig) {
-  const placa = fig.querySelector('.placa');
+  const placa = fig.querySelector('.lienzo');
   const svg = fig.querySelector('svg');
   const vivo = JSON.parse(svg.dataset.vivo);
   const lectura = fig.querySelector('[data-lectura]');
@@ -81,12 +81,11 @@ function capas(fig) {
 
 // ---------------------------------------------------------------- Fig. 2: la ruta de una pregunta
 function ruta(fig) {
-  const placa = fig.querySelector('.placa');
+  const placa = fig.querySelector('.lienzo');
   const svg = fig.querySelector('svg');
   const vivo = JSON.parse(svg.dataset.vivo);
   const P = vivo.P;
   const lectura = fig.querySelector('[data-lectura]');
-  const pregunta = fig.querySelector('[data-pregunta]');
   const punto = svg.querySelector('[data-pregunta-punto]');
   const trazas = [...svg.querySelectorAll('[data-traza]')];
   const columnas = [...svg.querySelectorAll('[data-columna]')];
@@ -161,8 +160,7 @@ function ruta(fig) {
     const d = vivo.turnos[k];
     lectura.innerHTML = '';
     const c = document.createElement('code'); c.textContent = d.h;
-    lectura.append(c, ` → ${d.e}`);
-    pregunta.textContent = d.p;
+    lectura.append(`${d.p} `, c, ` → ${d.e}`);
     columnas.forEach(col => col.querySelector('.iso-solid').toggleAttribute('data-lit', +col.dataset.columna === k && t >= T.llega));
   }
   function pintar() {
@@ -233,5 +231,107 @@ function ruta(fig) {
   enVista(placa, v => { visible = v; if (v && !quieto.matches) correr(); });
 }
 
-document.querySelectorAll('[data-figura="capas"]').forEach(capas);
-document.querySelectorAll('[data-figura="ruta"]').forEach(ruta);
+// ---------------------------------------------------------------- herramientas comunes
+// Elegir uno de n: recorrido en reposo, el puntero y las flechas eligen, y vuelve el recorrido
+// 3,6 s después del último toque. pintar(dt) mueve las piezas y devuelve true mientras algo se mueva.
+function selector(fig, { n, cada = 2.8, elegir, pintar, desde }) {
+  const lienzo = fig.querySelector('.lienzo');
+  let actual = 0, tour = !quieto.matches, reloj = 0, ultimo = 0, cuadro = 0, visible = false, espera = 0;
+  const poner = i => { actual = i; elegir(i); };
+  function paso(ahora) {
+    const dt = ultimo ? Math.min((ahora - ultimo) / 1000, 1 / 20) : 1 / 60;
+    ultimo = ahora;
+    if (tour) { reloj += dt; const i = Math.floor(reloj / cada) % n; if (i !== actual) poner(i); }
+    const mueve = pintar(quieto.matches ? 1e3 : dt);
+    cuadro = visible && (tour || mueve) ? requestAnimationFrame(paso) : 0;
+  }
+  const correr = () => { if (!cuadro && visible) { ultimo = 0; cuadro = requestAnimationFrame(paso); } };
+  const tomar = i => {
+    tour = false; if (i !== actual) poner(i); correr();
+    clearTimeout(espera);
+    espera = setTimeout(() => { tour = !quieto.matches; reloj = actual * cada; correr(); }, 3600);
+  };
+  if (desde) lienzo.addEventListener('pointermove', e => {
+    const caja = lienzo.getBoundingClientRect(), vb = lienzo.querySelector('svg').viewBox.baseVal;
+    const i = desde(vb.x + (e.clientX - caja.left) / caja.width * vb.width, vb.y + (e.clientY - caja.top) / caja.height * vb.height);
+    if (i >= 0) tomar(i);
+  });
+  lienzo.addEventListener('keydown', e => {
+    const d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    tomar((actual + d + n) % n);
+  });
+  poner(0);
+  pintar(1e3);
+  enVista(lienzo, v => { visible = v; if (v) correr(); });
+  return { tomar };
+}
+const cerca2 = (pts, x, y) => {
+  let mejor = -1, d = Infinity;
+  pts.forEach(([px, py], i) => { const q = Math.hypot(px - x, (py - y) * 0.6); if (q < d) { d = q; mejor = i; } });
+  return d < 70 ? mejor : -1;
+};
+
+// ---------------------------------------------------------------- la prueba: el fichero
+function prueba(fig) {
+  const svg = fig.querySelector('svg');
+  const vivo = JSON.parse(svg.dataset.vivo);
+  const lectura = fig.querySelector('[data-lectura]');
+  const fichas = [];
+  svg.querySelectorAll('[data-ficha]').forEach(g => { fichas[+g.dataset.ficha] = g; });
+  const notas = [...document.querySelectorAll('.notas-p [data-capa]')];
+  const sello = svg.querySelector('[data-sello]');
+  const alto = fichas.map(() => 0);
+  let meta = 0, s = 0;
+  selector(fig, {
+    n: fichas.length,
+    elegir: i => {
+      meta = i;
+      lectura.textContent = vivo.lecturas[i];
+      notas.forEach(nt => nt.classList.toggle('vivo', +nt.dataset.capa === i));
+    },
+    pintar: dt => {
+      let mueve = false;
+      fichas.forEach((g, j) => {
+        const m = j === meta ? 1 : 0;
+        alto[j] = sigue(alto[j], m, dt, 0.3);
+        if (Math.abs(alto[j] - m) < 0.002) alto[j] = m; else mueve = true;
+        const [dx, dy] = vivo.sube;
+        if (alto[j]) g.setAttribute('transform', `translate(${(dx * alto[j]).toFixed(2)} ${(dy * alto[j]).toFixed(2)})`); else g.removeAttribute('transform');
+        g.querySelector('[data-pestana] > .iso-solid').toggleAttribute('data-lit', j === meta && alto[j] > 0.5);
+      });
+      // con la huella (la última capa), el sello cruza, sube y baja al tampón
+      const ms = meta === fichas.length - 1 ? 1 : 0;
+      s = sigue(s, ms, dt, 0.45);
+      if (Math.abs(s - ms) < 0.002) s = ms; else mueve = true;
+      const { cruza, arriba, fieltro, salto } = vivo.sello;
+      const z = fieltro * s + salto * Math.sin(Math.PI * s);
+      if (s) sello.setAttribute('transform', `translate(${(cruza[0] * s + arriba[0] * z).toFixed(2)} ${(cruza[1] * s + arriba[1] * z).toFixed(2)})`);
+      else sello.removeAttribute('transform');
+      return mueve;
+    },
+    desde: (x, y) => cerca2(vivo.pestanas, x, y),
+  });
+}
+
+// ---------------------------------------------------------------- carga perezosa
+const VIDAS = { capas, ruta, prueba };
+const cargar = async fig => {
+  const lienzo = fig.querySelector('.lienzo');
+  const r = await fetch(lienzo.dataset.src);
+  if (!r.ok) return;
+  lienzo.innerHTML = await r.text();
+  const svg = lienzo.querySelector('svg');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.removeAttribute('role');
+  fig.classList.add('lista');
+  const vida = VIDAS[fig.dataset.figura];
+  if (vida) vida(fig);
+};
+const cerca = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  cerca.unobserve(e.target);
+  cargar(e.target);
+}), { rootMargin: '600px 0px' });
+document.querySelectorAll('[data-figura]').forEach(f => cerca.observe(f));

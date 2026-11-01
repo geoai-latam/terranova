@@ -596,82 +596,31 @@ SECTORES = [
 CAPAS = ("Datos", "Analítica", "Automatización", "Agentes")
 SOLUCIONES = {
     "Banca y crédito": [
-        (
-            "Analítica",
-            "Antes de aprobar un crédito: la empresa en el RUES y en Supersociedades, y el predio en garantía en el catastro.",
-        ),
-        (
-            "Automatización",
-            "Un aviso cuando un cliente cambia el estado de su matrícula mercantil.",
-        ),
-        (
-            "Analítica",
-            "Precio de la tierra, vocación del suelo e indicadores del municipio para originar crédito agropecuario.",
-        ),
+        ("Analítica", "La empresa y el predio en garantía, revisados antes del crédito."),
+        ("Automatización", "Aviso si un cliente cambia su matrícula mercantil."),
     ],
     "Contratación pública": [
-        (
-            "Analítica",
-            "Revisar a un contratista antes de adjudicar: sus contratos, multas y sanciones en SECOP.",
-        ),
-        (
-            "Automatización",
-            "Vigilar los contratos de una entidad y avisar cuando hay adiciones o modificaciones.",
-        ),
-        (
-            "Agentes",
-            "Un asistente que responde cuánto contrató el municipio, con quién y cómo va cada contrato.",
-        ),
+        ("Analítica", "Contratos, multas y sanciones de un contratista antes de adjudicar."),
+        ("Agentes", "Un asistente que dice cuánto contrató el municipio y con quién."),
     ],
     "Legal y cumplimiento": [
-        (
-            "Agentes",
-            "Un asistente de conceptos que cita la norma vigente y la sentencia de la Corte.",
-        ),
-        ("Automatización", "Alertas cuando sale o cambia una norma del tema que sigues."),
-        (
-            "Analítica",
-            "La vigencia de cada norma citada en un informe, revisada antes de entregarlo.",
-        ),
+        ("Agentes", "Conceptos que citan la norma vigente y la sentencia."),
+        ("Automatización", "Alertas cuando cambia una norma que sigues."),
     ],
     "Agro y exportación": [
         (
             "Analítica",
-            "Debida diligencia por finca para la EUDR: áreas protegidas, pérdida de bosque y territorios étnicos.",
+            "Debida diligencia EUDR por finca: áreas protegidas, bosque y territorios étnicos.",
         ),
-        (
-            "Automatización",
-            "Una revisión periódica de pérdida de bosque y áreas protegidas en las fincas de tus proveedores.",
-        ),
-        (
-            "Analítica",
-            "Qué se cultiva, cuánto y dónde, por municipio, para planear compras o expansión.",
-        ),
+        ("Automatización", "Revisión periódica de las fincas de tus proveedores."),
     ],
     "Inmobiliario y construcción": [
-        (
-            "Analítica",
-            "La ficha de un predio antes de comprar: catastro, POT, amenazas y valor del suelo.",
-        ),
-        (
-            "Analítica",
-            "Compraventas por municipio para valorar un portafolio o elegir dónde construir.",
-        ),
-        (
-            "Agentes",
-            "Un asistente para el equipo comercial que responde qué se puede construir en un lote de Bogotá.",
-        ),
+        ("Analítica", "La ficha de un predio: catastro, POT, amenazas y valor del suelo."),
+        ("Agentes", "Qué se puede construir en un lote de Bogotá, para el equipo comercial."),
     ],
     "Gobierno y territorio": [
-        (
-            "Analítica",
-            "Un tablero municipal comparado: población, pobreza, educación, salud y seguridad.",
-        ),
-        ("Automatización", "Un informe periódico que se arma solo con las cifras de cada fuente."),
-        (
-            "Automatización",
-            "Un aviso cuando cambia un contrato o un proyecto de regalías de los municipios que atiendes.",
-        ),
+        ("Analítica", "Un tablero municipal comparado con sus pares."),
+        ("Automatización", "Aviso cuando cambia un contrato o un proyecto de regalías."),
     ],
 }
 ORDEN_SECTORES = [
@@ -690,14 +639,14 @@ def sectores() -> str:
     assert all(c in CAPAS for v in SOLUCIONES.values() for c, _ in v)
     orden = sorted(SECTORES, key=lambda s: ORDEN_SECTORES.index(s[0]))
     pest, paneles = [], []
-    for i, (nombre, para, ids) in enumerate(orden):
+    for i, (nombre, _, ids) in enumerate(orden):
         sel = "true" if i == 0 else "false"
         pest.append(
             f'<button type="button" role="tab" id="s-p{i}" aria-controls="s-t{i}" aria-selected="{sel}"'
             f"{'' if i == 0 else ' tabindex="-1"'}>{nombre}</button>"
         )
         filas = []
-        for hid in ids:
+        for hid in ids[:3]:
             h = por_id[hid]
             ent = nombre_entidad(CAT.fuentes[h.fuente].entidad)
             filas.append(
@@ -709,8 +658,7 @@ def sectores() -> str:
         )
         paneles.append(
             f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}"{"" if i == 0 else " hidden"}>'
-            f'<p class="para">{para}</p>'
-            f'<h4 class="sub-s">Soluciones que se construyen {SELLO_I}</h4><ul class="soluciones">{sols}</ul>'
+            f'<h4 class="sub-s">Lo que se construye {SELLO_I}</h4><ul class="soluciones">{sols}</ul>'
             f'<h4 class="sub-s">Con herramientas como</h4><ol>{"".join(filas)}</ol></div>'
         )
     return f"""<div class="sectores">
@@ -750,18 +698,17 @@ CRUCES = [
     ),
 ]
 
-# Los servicios: para quién, qué hace, qué recibe y con qué fuentes. La landing muestra el resumen
-# y /servicios el detalle con el entregable.
+# Los servicios: qué hace, qué recibes y con qué fuentes. La portada muestra el título y la frase;
+# /servicios, además, lo que recibes.
 SERVICIOS = [
     {
         "id": "revision",
-        "para": "Para bancos, aseguradoras, exportadores, compradores de tierra y áreas de cumplimiento",
-        "titulo": "Debida diligencia: revisamos tu lista contra las fuentes oficiales",
-        "texto": "Nos das una lista de predios, empresas o contratos. Revisamos cada uno contra las fuentes oficiales y te entregamos un expediente por ítem, con la fuente de cada hallazgo y los casos dudosos señalados. Sirve para aprobar un crédito, vincular un proveedor, comprar tierra o cumplir la regulación europea contra la deforestación (EUDR).",
+        "titulo": "Debida diligencia",
+        "texto": "Revisamos tu lista de predios, empresas o contratos contra las fuentes oficiales. Recibes un expediente por ítem.",
         "recibes": [
             "Un expediente por ítem, en PDF y en datos",
-            "Cada hallazgo con su entidad, su consulta y su fecha",
-            "Los casos dudosos aparte, para que decidas tú",
+            "Cada hallazgo con su entidad y su fecha",
+            "Los casos dudosos, aparte",
         ],
         "con": "IGAC, Parques Nacionales, SINCHI, RUES, Supersociedades, SECOP y la SIC",
         "asunto": "debida-diligencia",
@@ -769,13 +716,12 @@ SERVICIOS = [
     },
     {
         "id": "tablero",
-        "para": "Para empresas, gremios, alcaldías, gobernaciones y ONG",
-        "titulo": "Analítica: tableros e informes",
-        "texto": "Los indicadores que sigues en un solo lugar: población, pobreza, educación, salud, seguridad, contratación, empresas y ambiente, actualizados desde la fuente y comparables entre municipios, sectores y años.",
+        "titulo": "Tableros e informes",
+        "texto": "Los indicadores que sigues, actualizados desde la fuente y comparables entre municipios.",
         "recibes": [
-            "Un tablero en la web, con tu marca",
-            "Un informe periódico listo para presentar",
-            "Cada cifra enlazada a la entidad que la publica",
+            "Un tablero web con tu marca",
+            "Un informe periódico",
+            "Cada cifra enlazada a su entidad",
         ],
         "con": "DANE, MinEducación, ADRES, Policía Nacional y SECOP",
         "asunto": "tablero",
@@ -783,13 +729,12 @@ SERVICIOS = [
     },
     {
         "id": "vigilancia",
-        "para": "Para veedurías y áreas legales, de compras y de cumplimiento",
-        "titulo": "Automatización: vigilancia, alertas y procesos",
-        "texto": "Te avisamos cuando cambia algo que te importa: un contrato en SECOP, una norma, un proyecto de regalías o una nueva sanción, con el registro de cada cambio. Y automatizamos los cruces y reportes que tu equipo hoy hace a mano.",
+        "titulo": "Vigilancia y alertas",
+        "texto": "Te avisamos cuando cambia un contrato, una norma o una sanción que sigues.",
         "recibes": [
             "Alertas por correo o en tu sistema",
-            "Un resumen semanal de lo que cambió",
-            "El registro de cada cambio, con su fecha y su fuente",
+            "Un resumen semanal",
+            "El registro de cada cambio, con fecha y fuente",
         ],
         "con": "SECOP, SUIN-Juriscol, el DNP y la SIC",
         "asunto": "vigilancia",
@@ -797,12 +742,11 @@ SERVICIOS = [
     },
     {
         "id": "asistente",
-        "para": "Para equipos que quieren su propio asistente",
-        "titulo": "Agentes: asistentes y aplicaciones a la medida",
-        "texto": "Un asistente que responde con los datos oficiales de tu sector, dentro de tu sistema, tu SIG o tu ERP, y con la fuente de cada respuesta.",
+        "titulo": "Asistentes a la medida",
+        "texto": "Un asistente que responde con datos oficiales dentro de tu sistema y cita la fuente.",
         "recibes": [
-            "El asistente funcionando en tu entorno",
-            "Conectado a las fuentes que tu equipo usa",
+            "El asistente en tu entorno",
+            "Conectado a las fuentes de tu equipo",
             "Cada respuesta con su fuente y su licencia",
         ],
         "con": f"las {N_HERR} herramientas del catálogo",
@@ -819,13 +763,10 @@ ETIQUETAS = {
 }
 
 METODO = [
-    ("Nos cuentas", "qué necesitas decidir y con qué información cuentas."),
-    ("Te damos un precio fijo", "antes de empezar, nunca por hora."),
-    (
-        "Hacemos el trabajo",
-        "y contrastamos cada cifra con su fuente antes de entregarla.",
-    ),
-    ("Recibes el resultado", "con la prueba de cada dato."),
+    ("Nos cuentas", "Qué quieres decidir."),
+    ("Precio fijo", "Antes de empezar."),
+    ("Hacemos el trabajo", "Cada cifra contrastada con su fuente."),
+    ("Recibes el resultado", "Con la prueba de cada dato."),
 ]
 
 
@@ -983,6 +924,7 @@ def datos_figuras() -> dict:
             # Las demás entidades van sin nombre: solo cuántas fuentes publica cada una.
             "otras": sorted((n for e, n in ENTIDADES.items() if e not in nombradas), reverse=True),
         },
+        "prueba": {"capas": [{"campo": c, "valor": v} for c, v, _ in CAPAS_PRUEBA]},
     }
 
 
@@ -991,17 +933,26 @@ def datos_figuras_json() -> str:
 
 
 def huella_figuras() -> str:
-    """Huella de lo que decide el dibujo: los datos, el script que dibuja y el kit."""
+    """Huella de lo que decide el dibujo: los datos, los scripts que dibujan y el kit."""
     import hashlib
 
     h = hashlib.sha256(datos_figuras_json().encode("utf-8"))
-    for f in ("construir.mjs", "kit/iso-kit.mjs"):
+    scripts = sorted(f.name for f in FIGURAS.glob("*.mjs"))
+    for f in [*scripts, "kit/iso-kit.mjs"]:
         h.update((FIGURAS / f).read_bytes().replace(b"\r\n", b"\n"))
     return h.hexdigest()[:12]
 
 
-def figura(nombre: str) -> str:
-    svg = (FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8").strip()
+SVG_FIGURAS = PUBLICO / "img" / "figuras"
+NOMBRES_FIGURAS = ("capas", "ruta", "prueba")
+
+
+def figura(nombre: str, lectura: str, pista: str = "", clase: str = "") -> str:
+    """Una figura integrada en la sección: sin marco, con su lectura en una línea debajo.
+
+    El SVG vive aparte (web/publico/img/figuras) y figuras.js lo trae cuando se acerca a la vista;
+    el hueco ya tiene su proporción, así la página no salta."""
+    svg = (SVG_FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8")
     huella = re.search(r'data-datos="([0-9a-f]{12})"', svg)
     if not huella or huella.group(1) != huella_figuras():
         raise SystemExit(
@@ -1009,63 +960,66 @@ def figura(nombre: str) -> str:
             "uv run python web/construir.py (escribe web/figuras/datos.json) y luego "
             "node web/figuras/construir.mjs"
         )
-    return svg
+    caja = re.search(r'viewBox="0 0 (\d+) (\d+)"', svg)
+    etiqueta = re.search(r'aria-label="([^"]*)"', svg)
+    assert caja and etiqueta, nombre
+    w, h = caja.groups()
+    pista_html = f'<span class="pista">{pista}</span>' if pista else ""
+    return (
+        f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}" style="max-width:{w}px">'
+        f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
+        f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
+        f'<figcaption class="lectura-l"><span data-lectura aria-live="off">{lectura}</span>{pista_html}</figcaption>'
+        "</figure>"
+    )
 
 
 def figura_capas() -> str:
     d = datos_figuras()["capas"]
-    claves = "".join(
-        f"<li><b>{m['nombre']}</b> {m['que']}, conectado a la puerta por {m['puerta']}</li>"
-        for m in reversed(d["modulos"])
+    return figura(
+        "capas",
+        f"datos · {d['fuentes']} fuentes · {d['herramientas']} herramientas",
+        "pasa el puntero por los módulos",
     )
-    return f"""<figure class="fig-iso" data-figura="capas">
-<div class="placa" tabindex="0" aria-describedby="capas-pie">
-<span class="esq fig">Fig. 1</span><span class="esq tit">La capa de datos y lo que se monta encima</span>
-{figura("capas")}
-<span class="esq pista">Pasa el puntero por los módulos</span><span class="esq lectura" data-lectura aria-live="off">Datos · {d["fuentes"]} fuentes · {d["herramientas"]} herramientas</span>
-</div>
-<figcaption id="capas-pie"><ul class="claves">{claves}<li><b>Datos</b> la base: {d["fuentes"]} fuentes y {d["herramientas"]} herramientas; cada medidor es una familia y se llena según sus herramientas</li></ul></figcaption>
-</figure>"""
 
 
 def figura_ruta() -> str:
-    d = datos_figuras()["ruta"]
-    t0 = d["turnos"][0]
-    return f"""<figure class="fig-iso ancha" data-figura="ruta">
-<div class="placa" tabindex="0" aria-describedby="ruta-pie">
-<span class="esq fig">Fig. 2</span><span class="esq tit">La ruta de una pregunta</span>
-{figura("ruta")}
-<span class="esq pista">Flechas o puntero para cambiar de pregunta</span><span class="esq lectura" data-lectura aria-live="off"><code>{t0["herramienta"]}</code> → {t0["entidad"]}</span>
-</div>
-<figcaption id="ruta-pie"><p class="preg-r" data-pregunta>{escape(t0["pregunta"])}</p>
-<p>La pregunta sale de la terminal de tu agente, pasa la barrera de Terrnova con tu llave (por MCP o REST), llega a la columna de la entidad que publica el dato y vuelve con la respuesta rt/1: estado, datos, procedencia, licencia, completitud, servido_desde y huella. Hay una columna por cada una de las {N_ENTIDADES} entidades, más alta cuantas más fuentes publica.</p></figcaption>
-</figure>"""
+    t0 = datos_figuras()["ruta"]["turnos"][0]
+    return figura(
+        "ruta",
+        f"<code>{t0['herramienta']}</code> → {t0['entidad']}",
+        "flechas o puntero: otra pregunta",
+        "ancha",
+    )
 
 
-def metodo_html() -> str:
-    pasos = "".join(f"<li><b>{a}</b> {b}</li>" for a, b in METODO)
-    return f'<div class="metodo"><h3>Cómo trabajamos</h3><ol>{pasos}</ol></div>'
+def figura_servicio(sid: str) -> str:
+    """La figura de un servicio. Mientras no tenga su figura isométrica, su viñeta."""
+    return vineta(sid)
+
+
+def servicio_fila(s: dict, i: int, detalle: bool) -> str:
+    """Un servicio: título, una frase y su figura, alternando el lado de la figura."""
+    if detalle:
+        recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
+        pie = (
+            f'<ul class="lista">{recibes}</ul><p class="con">Con datos de {s["con"]}</p>'
+            f'<a class="boton s" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>'
+        )
+        tit = f'<h2 class="t2">{s["titulo"]}</h2>'
+    else:
+        pie = f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a>'
+        tit = f'<h3 class="t2">{s["titulo"]}</h3>'
+    return (
+        f'<article class="serv con-fig{" inv-l" if i % 2 else ""}" id="{s["id"]}">'
+        f'<div class="cab">{tit}<p class="entrada">{s["texto"]}</p>{pie}</div>'
+        f"{figura_servicio(str(s['id']))}</article>"
+    )
 
 
 def servicios_landing() -> str:
-    p, *otros = SERVICIOS
-    filas = "".join(
-        f'<article class="serv">{vineta(str(s["id"]))}<div class="txt"><p class="para">{s["para"]}</p><h3>{s["titulo"]}</h3>'
-        f'<p>{s["texto"]}</p><p class="con">Con datos de {s["con"]}</p>'
-        f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></div></article>'
-        for s in otros
-    )
-    return f"""<article class="serv-grande">
-<div class="txt">
-<p class="para">{p["para"]}</p>
-<h3>{p["titulo"]}</h3>
-<p>{p["texto"]}</p>
-<a class="boton p" href="/contacto?asunto={p["asunto"]}">{p["boton"]}</a>
-</div>
-{vineta("revision")}
-{cruces_html()}
-</article>
-<div class="servs">{filas}</div>"""
+    filas = "".join(servicio_fila(s, i, False) for i, s in enumerate(SERVICIOS))
+    return f'<div class="servs">{filas}</div>'
 
 
 # Las capas de la prueba: valores de la respuesta real de banrep_trm_recientes, capturada el
@@ -1078,43 +1032,30 @@ CAPAS_PRUEBA = [
     ("huella", "sha256:ac30c9f5…", "para comprobar que no cambió"),
 ]
 NOTAS_PRUEBA = [
-    (
-        "El dato y su estado",
-        "Encontrado, no encontrado, fuera de cobertura o parcial. «No se pudo» nunca es un estado: es un error con su código.",
-    ),
-    (
-        "Procedencia",
-        "La entidad que publica el dato, la URL de la consulta y la norma que le da la competencia.",
-    ),
+    ("El dato y su estado", "Encontrado, no encontrado, parcial o fuera de cobertura."),
+    ("Procedencia", "La entidad, la URL de la consulta y la norma."),
     (
         "Licencia",
-        f"Si permite uso comercial. {N_VERIFICADAS} fuentes con licencia verificada y {N_FUENTES - N_VERIFICADAS} de dato público reutilizable, que llegan con aviso.",
+        f"{N_VERIFICADAS} fuentes verificadas; {N_FUENTES - N_VERIFICADAS} de dato público, con aviso.",
     ),
-    (
-        "De dónde se sirvió",
-        "En vivo, desde una copia del archivo oficial o desde caché. Un dato viejo siempre llega con aviso.",
-    ),
-    ("Huella", "Una firma de los datos, para comprobar después que no cambiaron."),
+    ("De dónde se sirvió", "En vivo, copia oficial o caché. Lo viejo llega con aviso."),
+    ("Huella", "Para comprobar después que no cambió."),
 ]
 
 
 def prueba_html() -> str:
-    capas = json.dumps(
-        [{"campo": c, "valor": v, "nota": n} for c, v, n in CAPAS_PRUEBA], ensure_ascii=False
-    )
-    respaldo = "".join(f"<li><code>{c}</code> {v}</li>" for c, v, _ in CAPAS_PRUEBA)
     notas = "".join(
-        f'<div data-capa="{i}"><h3>{t}</h3><p>{d}</p></div>'
+        f'<li data-capa="{i}"><b>{t}</b><span>{d}</span></li>'
         for i, (t, d) in enumerate(NOTAS_PRUEBA)
     )
-    return f"""<div class="prueba">
-<figure class="pila">
-<div class="vineta" data-vineta="prueba" data-fondo="claro" data-capas="{escape(capas)}" role="img" aria-label="Una respuesta real de la TRM y sus capas de prueba, que se separan para leerse y se vuelven a juntar.">
-<ul class="respaldo-capas">{respaldo}</ul>
-</div>
-<figcaption><span>banrep_trm_recientes, respuesta real</span><span class="sello">capturado el 2026-10-29</span></figcaption>
-</figure>
-<div class="notas">{notas}<p class="mas"><a class="enlace" href="/desarrolladores#contrato">Ver la respuesta completa en JSON</a></p></div>
+    d0 = CAPAS_PRUEBA[0]
+    fig = figura("prueba", f"{d0[0]} · {d0[1]}", "pasa el puntero por las pestañas")
+    return f"""<div class="con-fig inv-l prueba">
+{fig}
+<div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
+<p class="entrada">Quién publica el dato, con qué licencia, de dónde salió y su huella. En la respuesta, no en un anexo.</p>
+<ul class="lista-l notas-p">{notas}</ul>
+<p class="fuente-dato">banrep_trm_recientes · <span class="sello">capturado el 2026-10-29</span> · <a class="enlace" href="/desarrolladores#contrato">ver el contrato rt/1</a></p></div>
 </div>"""
 
 
@@ -1177,7 +1118,7 @@ def inicio() -> str:
 </div>
 <div class="envoltura h-texto"><div class="izq">
 <h1 class="t0">Del dato oficial a la solución</h1>
-<p class="entrada">Una capa de datos con {N_FUENTES} fuentes de {N_ENTIDADES} entidades (empresas, contratos, normas, estadísticas, territorio y ambiente) y, encima, la analítica, las automatizaciones y los agentes que tu equipo necesita. Lo construyes tú con tu agente o lo construimos contigo.</p>
+<p class="entrada">{N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades, cada dato con su fuente y su licencia. Encima, la analítica, la automatización y los agentes de tu equipo.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 </div></div>
 <div class="envoltura h-consola">{consola()}</div>
@@ -1185,86 +1126,69 @@ def inicio() -> str:
 
 <section class="seccion capas-l" id="capas"><div class="envoltura">
 <div class="con-fig">
-<div class="cab ancha">
-<h2 class="t2">Una puerta a los datos y tres capas encima</h2>
-<p class="entrada">La capa de datos es el producto: se paga con un plan mensual y empieza gratis. Las otras tres son soluciones que se construyen sobre ella, con la fuente oficial de cada dato.</p>
+<div class="cab">
+<h2 class="t2">Una capa de datos y tres encima</h2>
+<p class="entrada">La capa de datos es el producto y empieza gratis. Lo demás se construye sobre ella.</p>
+<ul class="lista-l">
+<li class="vivo"><b>Datos</b><span>{N_FUENTES} fuentes por MCP o API REST</span></li>
+<li><b>Analítica</b><span>Cruces, revisiones y tableros</span></li>
+<li><b>Automatización</b><span>Vigilancias y alertas con registro</span></li>
+<li><b>Agentes</b><span>Asistentes que citan la fuente</span></li>
+</ul>
+<p class="enlaces"><a class="enlace" href="/desarrolladores">Cómo se conecta</a><a class="enlace" href="#servicios">O lo construimos contigo</a></p>
 </div>
 {figura_capas()}
 </div>
-<div class="columnas c4">
-<div class="capa-d"><span class="et">el producto</span><h3>Datos</h3><p>{N_FUENTES} fuentes oficiales por MCP o API REST, con la entidad, la licencia y la fecha en cada respuesta. Tu agente las consulta solo.</p><a class="enlace" href="/desarrolladores">Cómo se conecta</a></div>
-<div><span class="et">encima</span><h3>Analítica</h3><p>Cruces, revisiones y tableros: una empresa, un predio o un contrato revisados contra varias fuentes, o los indicadores que sigues, actualizados desde la fuente.</p></div>
-<div><span class="et">encima</span><h3>Automatización</h3><p>Vigilancias, alertas y reportes que corren solos y dejan registro de cada cambio, con su fecha y su fuente.</p></div>
-<div><span class="et">encima</span><h3>Agentes</h3><p>Asistentes que responden con el dato oficial dentro de tu sistema, tu SIG o tu ERP, y citan la fuente de cada respuesta.</p></div>
-</div>
-<div class="dos-formas">
-<p><b>Tú, con tu agente.</b> Conecta la puerta y construye encima. El plan gratis trae {miles(PLANES[0][1])} créditos al mes. <a class="enlace" href="/precios#empezar">Conecta tu agente gratis</a></p>
-<p><b>Nosotros, contigo.</b> Construimos la solución a precio fijo, acordado antes de empezar. <a class="enlace" href="#servicios">Ver cómo trabajamos</a></p>
-</div>
 </div></section>
 
-
 <section class="seccion" id="fuentes"><div class="envoltura">
-<div class="cab ancha">
-<h2 class="t2">Soluciones para cada sector</h2>
-<p class="entrada">Lo que se construye sobre la puerta en cada sector y las herramientas que usa. Son {N_HERR} herramientas en siete familias; cada una responde una pregunta concreta.</p>
+<div class="cab">
+<h2 class="t2">Soluciones por sector</h2>
+<p class="entrada">Lo que se construye en cada sector y con qué herramientas.</p>
 </div>
-{chips_familias()}
 {sectores()}
-<p class="mas-s"><a class="enlace" href="/fuentes#entidades">Ver las {N_ENTIDADES} entidades y sus fuentes</a><a class="enlace" href="/fuentes">Buscar entre las {N_HERR} herramientas</a></p>
+<p class="mas-s"><a class="enlace" href="/fuentes">Ver las {N_HERR} herramientas</a></p>
 </div></section>
 
 <section class="seccion sup servicios-l" id="servicios"><div class="envoltura">
-<div class="cab ancha">
+<div class="cab">
 <h2 class="t1">O lo construimos contigo</h2>
-<p class="entrada">No necesitas programar ni conocer las fuentes. Nos cuentas qué quieres resolver y construimos la solución sobre la capa de datos, con la fuente oficial y la licencia de cada dato.</p>
+<p class="entrada">Nos cuentas qué quieres resolver y lo construimos sobre la capa de datos, a precio fijo.</p>
 </div>
 {servicios_landing()}
-{metodo_html()}
-<div class="botones fin-serv"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios en detalle</a></div>
+<div class="botones fin-serv"><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="/servicios">Ver los servicios</a></div>
 </div></section>
 
-
 <section class="seccion" id="por-que"><div class="envoltura">
-<div class="cab ancha">
+<div class="cab">
 <h2 class="t2">Por qué no basta con buscar en la web</h2>
-<p class="entrada">Un agente con buscador encuentra páginas. Una decisión necesita el dato oficial, saber de dónde salió y si se puede usar.</p>
+<p class="entrada">Una decisión necesita el dato oficial, de dónde salió y si se puede usar.</p>
 </div>
 {figura_ruta()}
 <div class="columnas c4">
-<div><h3>Cada entidad publica a su manera</h3><p>{N_ENTIDADES} entidades y {N_FUENTES} fuentes, entre portales de datos abiertos, servicios de mapas, archivos y páginas. Aquí todas responden con el mismo contrato.</p></div>
-<div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M (medido el 22-10-2026). Las herramientas ya cuentan bien.</p></div>
-<div><h3>Probado cada madrugada</h3><p>Cada herramienta se prueba a diario contra un dato medido en la fuente, y el resultado es público. <a class="enlace" href="/estado">Ver el estado</a></p></div>
-<div><h3>Empresas y lugares, no personas</h3><p>La puerta no usa un modelo de lenguaje: la misma pregunta da la misma consulta. Y no busca personas por cédula ni por nombre: cada fuente sale con una lista blanca de campos.</p></div>
+<div><h3>Un contrato para todas</h3><p>{N_ENTIDADES} entidades que publican a su manera responden igual.</p></div>
+<div><h3>Bien contado</h3><p>SECOP repite cada contrato por estado: Pitalito 2025 suma $174.000 M tal cual y $63.157 M bien contado (22-10-2026).</p></div>
+<div><h3>Probado cada madrugada</h3><p>Contra un dato medido en la fuente. <a class="enlace" href="/estado">Ver el estado</a></p></div>
+<div><h3>Sin LLM, sin personas</h3><p>La misma pregunta da la misma consulta. Nunca búsquedas por cédula o nombre.</p></div>
 </div>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cab">
-<h2 class="t2">Cada respuesta trae su prueba</h2>
-<p class="entrada">Todas las respuestas, de las {N_HERR} herramientas, llegan con lo que necesitas para confiar en el dato: quién lo publica, con qué licencia, de dónde salió y una huella para comprobarlo. Viene en la respuesta, no en un documento aparte.</p>
-</div>
 {prueba_html()}
 </div></section>
-
 
 <section class="seccion" id="precios"><div class="envoltura">
 <div class="cab">
 <h2 class="t2">Precios</h2>
-<p class="entrada">La capa de datos se paga con un plan mensual y empieza gratis. Los servicios tienen un precio fijo por proyecto, acordado antes de empezar.</p>
+<p class="entrada">La capa de datos, por plan mensual y desde gratis. Los servicios, a precio fijo.</p>
 </div>
-<h3 class="sub-p">Capa de datos</h3>
 {planes_html(detalle=False)}
-<p class="pie-p"><a class="enlace" href="/precios">Ver cuántos créditos usa cada tipo de consulta</a></p>
-<div class="banda-serv">
-<div><h3>Servicios</h3><p>Precio fijo por entrega, acordado antes de empezar y nunca por hora. Las automatizaciones se cobran por proceso o por licencia.</p></div>
-<a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a>
-</div>
+<p class="pie-p"><a class="enlace" href="/precios">Créditos por tipo de consulta</a></p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">Empieza por lo que quieres resolver</h2><p class="entrada">Conecta tu agente gratis o cuéntanos el problema y te proponemos la solución con un precio fijo.</p></div>
-<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
+<div class="cab" style="margin:0"><h2 class="t2">Empieza por lo que quieres resolver</h2></div>
+<div class="botones"><a class="boton p" href="/precios#empezar">Conecta tu agente gratis</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div>
 <div class="envoltura aliados-fila">
 <span>Aliados</span>
@@ -1337,61 +1261,42 @@ def entregable(sid: str) -> str:
 
 def servicios() -> str:
     indice = "".join(f'<a href="#{s["id"]}">{s["titulo"]}</a>' for s in SERVICIOS)
-    bloques = []
-    for i, s in enumerate(SERVICIOS):
-        recibes = "".join(f"<li>{x}</li>" for x in s["recibes"])
-        extra = cruces_html() if s["id"] == "revision" else ""
-        bloques.append(f"""<section class="sv-det{" par" if i % 2 else ""}" id="{s["id"]}"><div class="envoltura">
-<div class="txt">
-<p class="para">{s["para"]}</p>
-<h2 class="t2">{s["titulo"]}</h2>
-<p class="entrada">{s["texto"]}</p>
-<h3>Qué recibes</h3><ul class="lista">{recibes}</ul>
-<p class="con">Con datos de {s["con"]}</p>
-<a class="boton p" href="/contacto?asunto={s["asunto"]}">{s["boton"]}</a>
-</div>
-<div class="fig">{vineta(str(s["id"]))}{entregable(str(s["id"]))}</div>
-{extra}
-</div></section>""")
-    pasos = "".join(f"<li><b>{a}</b><span>{b[0].upper() + b[1:]}</span></li>" for a, b in METODO)
+    bloques = "".join(
+        f'<section class="sv-det{" par" if i % 2 else ""}"><div class="envoltura">'
+        f"{servicio_fila(s, i, True)}</div></section>"
+        for i, s in enumerate(SERVICIOS)
+    )
+    pasos = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in METODO)
     c = f"""
 <section class="sv-heroe"><div class="envoltura">
 <div class="txt">
 <h1 class="t1">Te entregamos el trabajo hecho</h1>
-<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales de {N_ENTIDADES} entidades. Con la fuente y la licencia de cada dato, y un precio fijo antes de empezar.</p>
-<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s" href="#revision">Ver los servicios</a></div>
+<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales. Precio fijo antes de empezar.</p>
+<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div>
-{vineta("asistente")}
-</div>
-<nav class="sv-indice envoltura" aria-label="Servicios">{indice}</nav>
-</section>
-{"".join(bloques)}
+<nav class="sv-indice" aria-label="Servicios">{indice}</nav>
+</div></section>
+{bloques}
 <section class="seccion inv"><div class="envoltura">
-<div class="cab"><h2 class="t2">Cómo trabajamos</h2>
-<p class="entrada">Cada cifra de una entrega se contrasta con su fuente antes de llegar a ti. Lo que no cuadra vuelve.</p></div>
+<div class="cab"><h2 class="t2">Cómo trabajamos</h2></div>
 <ol class="pasos-sv">{pasos}</ol>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
-<div class="cab"><h2 class="t2">Cómo se cobra</h2><p class="entrada">Sabes el precio antes de empezar. Nunca cobramos por hora.</p></div>
+<div class="cab"><h2 class="t2">Cómo se cobra</h2><p class="entrada">Precio antes de empezar. Nunca por hora.</p></div>
 <div class="columnas c3">
-<div><h3>Por entrega</h3><p>Revisiones, tableros, informes y asistentes: un precio fijo por proyecto, acordado antes de empezar.</p></div>
-<div><h3>Por proceso o licencia</h3><p>Las alertas y los procesos que corren solos se cobran por proceso en marcha o por licencia.</p></div>
-<div><h3>La capa de datos, por plan</h3><p>Si tu equipo consulta las fuentes por su cuenta, hay planes mensuales que empiezan gratis. <a class="enlace" href="/precios">Ver los planes</a></p></div>
+<div><h3>Por entrega</h3><p>Revisiones, tableros, informes y asistentes.</p></div>
+<div><h3>Por proceso o licencia</h3><p>Las alertas y los procesos que corren solos.</p></div>
+<div><h3>La capa de datos, por plan</h3><p>Si tu equipo consulta por su cuenta. <a class="enlace" href="/precios">Ver los planes</a></p></div>
 </div>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
-<div class="cab"><h2 class="t2">Lo que ya existe, con su alcance</h2></div>
+<div class="cab"><h2 class="t2">Lo que ya existe</h2></div>
 <div class="columnas c2">
-<div><h3>GEO Copilot</h3><p>Un asistente territorial, proyecto del fundador. Hoy es un cliente más de la capa de datos: se conecta por el MCP de Terrnova, como cualquier otro sistema.</p></div>
-<div><h3>Vectorización de ortofotos del IGAC</h3><p>Un modelo de segmentación sobre ortofotos del IGAC, desarrollado como tesis de maestría del fundador (mIoU 0,694). Es investigación, no un modelo de producción.</p></div>
+<div><h3>GEO Copilot</h3><p>Asistente territorial del fundador. Hoy es un cliente más: se conecta por el MCP de Terrnova.</p></div>
+<div><h3>Vectorización de ortofotos del IGAC</h3><p>Tesis de maestría del fundador (mIoU 0,694). Investigación, no producción.</p></div>
 </div>
-</div></section>
-
-<section class="seccion"><div class="envoltura cierre">
-<div class="cab" style="margin:0"><h2 class="t2">¿Tienes un proyecto?</h2><p class="entrada">Escríbenos con la decisión que quieres tomar. Respondemos con lo que se puede probar y un precio fijo.</p></div>
-<div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a></div>
 </div></section>
 """
     return pagina(
@@ -1399,7 +1304,7 @@ def servicios() -> str:
         "Servicios",
         "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales, con la fuente de cada dato y precio fijo antes de empezar.",
         c,
-        ("escena-vinetas.js",),
+        ("escena-vinetas.js", "figuras.js"),
     )
 
 
@@ -1804,7 +1709,7 @@ def main() -> int:
     else:
         datos_fig.write_text(datos_figuras_json(), encoding="utf-8", newline="\n")
         sello = f'data-datos="{huella_figuras()}"'
-        svgs = [FIGURAS / f"{n}.svg" for n in ("capas", "ruta")]
+        svgs = [SVG_FIGURAS / f"{n}.svg" for n in NOMBRES_FIGURAS]
         if not all(s.exists() and sello in s.read_text(encoding="utf-8") for s in svgs):
             import shutil
             import subprocess

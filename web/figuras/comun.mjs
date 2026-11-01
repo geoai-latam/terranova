@@ -1,0 +1,100 @@
+// Lo común a todas las figuras: la misma cámara (elevación 30°), la misma escala de pantalla, el
+// mismo grosor de línea (lo pone el CSS) y las mismas piezas de banco (base sobre patas, regla,
+// tornillos y placa). Cada figura vive en su módulo y construir.mjs las escribe todas.
+import * as k from "./kit/iso-kit.mjs";
+
+export { k };
+export const S = (paths, style) => k.solidSvg(paths, style);
+export const L = (d, style) => k.lineSvg(d, style);
+export const D = (points, style) => k.dotsSvg(points, style);
+export const r1 = (v) => Math.round(v * 10) / 10;
+export const esc = (t) =>
+  String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+// Escala común: píxeles del viewBox por unidad de mundo. Todas las figuras se dibujan con ella,
+// así una tuerca mide lo mismo en todas; el ancho del viewBox sale de lo que ocupa cada objeto.
+export const ESCALA = 2.1;
+
+// Cámara a escala fija: proyecta las esquinas, mide la caja y pone el origen con un margen.
+export function encuadre(puntos, { azimuth = 45, pad = 18, escala = ESCALA } = {}) {
+  const unidad = { origin: [0, 0], scale: escala, azimuth, elevation: 30 };
+  const plano = puntos.map((p) => k.iso(p, unidad));
+  const xs = plano.map(([x]) => x), ys = plano.map(([, y]) => y);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const ancho = Math.ceil(x1 - x0 + pad * 2), alto = Math.ceil(y1 - y0 + pad * 2);
+  return { P: { origin: [pad - x0, pad - y0], scale: escala, azimuth, elevation: 30 }, ancho, alto };
+}
+
+export function svgDe({ huella, ancho, alto, etiqueta, cuerpo, vivo, clase }) {
+  const svg = k.figureSvg({ width: ancho, height: alto, label: etiqueta, body: cuerpo, className: clase });
+  return svg.replace("<svg ", `<svg data-datos="${huella}" data-vivo="${esc(JSON.stringify(vivo))}" `);
+}
+
+export const porProf = (pts, P) =>
+  [...pts].sort((a, b) => k.depthOf([a[0], a[1], 0], P) - k.depthOf([b[0], b[1], 0], P));
+
+// Un rectángulo en el plano de una cara +y (frente), de x0 a x1 y de z0 a z1, a la profundidad y.
+export const enFrente = (x0, x1, z0, z1, y, P) =>
+  k.pathOf([[x0, y, z0], [x1, y, z0], [x1, y, z1], [x0, y, z1]].map((p) => k.iso(p, P)), true);
+// Lo mismo en una cara +x (costado derecho), de y0 a y1.
+export const enCostado = (y0, y1, z0, z1, x, P) =>
+  k.pathOf([[x, y0, z0], [x, y1, z0], [x, y1, z1], [x, y0, z1]].map((p) => k.iso(p, P)), true);
+
+// Base de banco: halo, patas con brida, losa biselada, ranura, tornillos en las esquinas.
+export function base(PLACA, z, grueso, P, { patas = 12, alto = 6 } = {}) {
+  const out = [];
+  const piso = z - grueso - alto;
+  out.push(`<path class="iso-halo" d="${k.haloOf(PLACA, piso, alto + grueso, P)}"/>`);
+  for (const [x, y] of porProf(k.corners(PLACA, patas), P)) {
+    out.push(S(k.cylinder(x, y, 5.2, piso, 1.4, P, 24), { tone: "lo" }));
+    out.push(S(k.cylinder(x, y, 3.8, piso + 1.4, alto - 1.4, P, 24), { tone: "mid" }));
+  }
+  out.push(S(k.slabOf(PLACA, z - grueso, grueso, P, 6, 1.2), { tone: "lo" }));
+  out.push(L(k.planOutline(k.insetPlan(PLACA, 4), z, P, 4), { tone: "faint" }));
+  const torn = k.corners(PLACA, 7.5);
+  out.push(L(torn.map(([x, y]) => k.ring(x, y, 1.7, z, P, 14)).join(""), { tone: "lo" }));
+  out.push(D(torn.map(([x, y]) => k.iso([x, y, z], P)), { size: 0.45 }));
+  return out.join("");
+}
+
+// Regla en el borde delantero (+y) de una placa: tira, marcas cada 4 y mayores cada 5.
+export function regla(x0, x1, yBorde, z, P) {
+  const tira = { x: x0, y: yBorde - 3, w: x1 - x0, d: 2.6, r: 0.6 };
+  const out = [S(k.slabOf(tira, z, 0.5, P, 2), { tone: "lo", crease: "none" })];
+  const m = k.topTicks(x0 + 2, x1 - 2, 4, 5, yBorde - 0.4, z + 0.5, [-1, -1.8], P);
+  out.push(L(m.minor, { tone: "lo" }), L(m.major, { tone: "mid" }));
+  return out.join("");
+}
+
+// Placa de rótulo plana sobre una cara superior: tres renglones de texto impreso y dos tornillos.
+export function placaRotulo(plan, z, P, renglones = [0.8, 0.55, 0.68]) {
+  const out = [S(k.slabOf(plan, z, 0.6, P, 3), { tone: "lo" })];
+  out.push(L(k.planOutline(k.insetPlan(plan, 1.2), z + 0.6, P, 2), { tone: "faint" }));
+  const paso = (plan.d - 4) / (renglones.length + 1);
+  out.push(
+    L(
+      renglones
+        .map((f, j) => k.lineOnTop([plan.x + 3.2, plan.y + 2 + paso * (j + 1)], [plan.x + 3.2 + (plan.w - 8) * f, plan.y + 2 + paso * (j + 1)], z + 0.6, P))
+        .join(""),
+      { tone: "lo", free: true },
+    ),
+  );
+  out.push(D([k.iso([plan.x + plan.w - 2, plan.y + 2, z + 0.6], P), k.iso([plan.x + plan.w - 2, plan.y + plan.d - 2, z + 0.6], P)], { size: 0.4 }));
+  return out.join("");
+}
+
+// Envolvente convexa (para prismas que giran).
+export function casco(pts) {
+  const p = [...pts].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  const cruz = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const bajo = [], alto = [];
+  for (const q of p) {
+    while (bajo.length >= 2 && cruz(bajo[bajo.length - 2], bajo[bajo.length - 1], q) <= 0) bajo.pop();
+    bajo.push(q);
+  }
+  for (const q of p.reverse()) {
+    while (alto.length >= 2 && cruz(alto[alto.length - 2], alto[alto.length - 1], q) <= 0) alto.pop();
+    alto.push(q);
+  }
+  return bajo.slice(0, -1).concat(alto.slice(0, -1));
+}
