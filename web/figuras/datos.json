@@ -130,23 +130,23 @@
   "capas": [
    {
     "campo": "dato",
-    "valor": "3.162,35 pesos por dólar"
+    "valor": "predio 47001…0308, habitacional"
    },
    {
     "campo": "procedencia",
-    "valor": "Banco de la República"
+    "valor": "IGAC, SINIC"
    },
    {
     "campo": "licencia",
-    "valor": "aviso legal del Banco, uso comercial sí"
+    "valor": "CC BY-SA 4.0, uso comercial sí"
    },
    {
     "campo": "servido_desde",
-    "valor": "la fuente, en vivo"
+    "valor": "copia del 28-10-2026"
    },
    {
     "campo": "huella",
-    "valor": "sha256:ac30c9f5…"
+    "valor": "sha256:7a2cc965…"
    }
   ]
  },
@@ -252,10 +252,10 @@
  "asistente": {
   "preguntas": [
    {
-    "p": "¿Cuál ha sido la TRM (dólar en pesos) de los últimos días?",
-    "corta": "¿A cuánto está el dólar?",
-    "e": "Banco de la República",
-    "l": "aviso legal del Banco"
+    "p": "¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene?",
+    "corta": "¿Sigue vigente esta ley?",
+    "e": "MinJusticia",
+    "l": "CC BY-SA 4.0"
    },
    {
     "p": "¿Es potable el agua en este municipio? (IRCA del INS, año por año)",
@@ -301,7 +301,7 @@
    }
   ],
   "nodos": [
-   "Banco de la República",
+   "MinJusticia",
    "INS",
    "Parques Nacionales",
    "Colombia Compra Eficiente",
@@ -309,13 +309,13 @@
    "IGAC",
    "UPRA",
    "MinEducación",
-   "ICFES",
+   "MinSalud",
    "INVIMA",
    "ANH",
    "Policía Nacional"
   ],
   "siglas": [
-   "BanRep",
+   "MinJusticia",
    "INS",
    "PNN",
    "CCE",
@@ -323,7 +323,7 @@
    "IGAC",
    "UPRA",
    "MinEducación",
-   "ICFES",
+   "MinSalud",
    "INVIMA",
    "ANH",
    "Policía"
@@ -4724,7 +4724,7 @@
    "pnn_areas_protegidas_en_punto"
   ],
   "prueba": [
-   "banrep_trm_recientes"
+   "sinic_predio_en_punto"
   ],
   "revision": [
    "pnn_areas_protegidas_en_punto",
@@ -4743,11 +4743,11 @@
   "tablero": [
    "men_educacion_municipio",
    "ins_calidad_agua_municipio",
-   "icfes_saber11_municipio",
+   "policia_hurto_comercio_residencias_municipio",
    "igac_compraventas_municipio"
   ],
   "asistente": [
-   "banrep_trm_recientes",
+   "suin_norma",
    "ins_calidad_agua_municipio",
    "pnn_areas_protegidas_en_punto",
    "secop_contratos_municipio",
@@ -4755,7 +4755,7 @@
    "igac_predio_en_punto",
    "upra_precio_tierra_rural_municipio",
    "men_educacion_municipio",
-   "icfes_saber11_municipio",
+   "reps_sedes_municipio",
    "invima_registro_sanitario_por_expediente",
    "anh_crudo_municipio",
    "policia_hurto_vehiculos_municipio"
@@ -4804,9 +4804,9 @@
     ]
    },
    {
-    "t": "Saber 11",
-    "e": "ICFES",
-    "m": "puntaje promedio, por periodo",
+    "t": "Seguridad",
+    "e": "Policía Nacional",
+    "m": "hurtos a comercio y residencias, año por año",
     "valor": 0.56,
     "comparables": [
      0.42,

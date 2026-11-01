@@ -34,7 +34,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Pendiente del dueño (no hay trabajo técnico abierto):**
   1. Registrar el refresco diario desde Colombia: `programar_refresco.ps1`. Sin él, las alertas del
      IDEAM (SLA de un día) se quedan viejas.
-  2. El correo soporte@terrnova.com y la sonda externa (UptimeRobot).
+  2. La sonda externa (UptimeRobot). El correo soporte@terrnova.com ya recibe (Cloudflare Email
+     Routing).
   3. La revisión legal de los términos y la privacidad, para publicarlos con el SLA.
   4. El token de Copernicus para ERA5-Land, que reemplaza a Open-Meteo.
   5. Decisiones abiertas: la base legal de las licencias DANE para los planes de pago, la DIAN

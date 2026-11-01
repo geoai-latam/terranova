@@ -42,13 +42,19 @@
   --estructura-4: #CDD1CA; --estructura-5: #C3C7C0; --estructura-6: #B9BDB6;
   /* líneas a 0,6 px: tenue, media y alta */
   --linea-tenue: #D7DBD4; --linea-baja: #A2AAA3; --linea-media: #6F7C75; --linea-alta: #12261F;
-  /* sujeto: un material de color por figura, 15–25 % del área, con su filo */
-  --sujeto-teal-0: #D4F3EA; --sujeto-teal-1: #BEE7DC; --sujeto-teal-2: #A9D9CC; --sujeto-teal-3: #94CABC;
-  --sujeto-teal-4: #80BAAC; --sujeto-teal-5: #6CA99B; --sujeto-teal-6: #5A988A; --sujeto-teal-filo: #236E62;
-  --sujeto-agua-0: #D6EFF6; --sujeto-agua-1: #C0E3EE; --sujeto-agua-2: #AAD4E2; --sujeto-agua-3: #95C4D4;
-  --sujeto-agua-4: #81B3C5; --sujeto-agua-5: #6EA2B5; --sujeto-agua-6: #5D91A5; --sujeto-agua-filo: #2B6A78;
-  --sujeto-ocre-0: #F6E8CC; --sujeto-ocre-1: #ECDBB8; --sujeto-ocre-2: #E1CDA5; --sujeto-ocre-3: #D4BE92;
-  --sujeto-ocre-4: #C7AF81; --sujeto-ocre-5: #B9A070; --sujeto-ocre-6: #AB9161; --sujeto-ocre-filo: #7A5B1E;
+  /* sujeto: un material de color por figura, 15–25 % del área, con su filo. Rampas en OKLCH: el
+     material por defecto usa los pasos 1 a 5 y el «fuerte» los 2 a 6, así sus caras quedan con
+     croma ≥ 0,08 (con menos, la figura se lee pálida). El agua es la de la marca: entre teal-400 y
+     la superficie, con el croma del teal (h 184), no un celeste. */
+  --sujeto-teal-0: #D2F2E9; --sujeto-teal-1: #AFE7D9; --sujeto-teal-2: #8EDAC9; --sujeto-teal-3: #76CCB9;
+  --sujeto-teal-4: #5FB9A6; --sujeto-teal-5: #4BA694; --sujeto-teal-6: #399382; --sujeto-teal-filo: #1D5E53;
+  --sujeto-agua-0: #D4F3ED; --sujeto-agua-1: #B7E8E0; --sujeto-agua-2: #97DED3; --sujeto-agua-3: #7ECFC4;
+  --sujeto-agua-4: #6AC0B4; --sujeto-agua-5: #56ADA1; --sujeto-agua-6: #469A8F; --sujeto-agua-filo: #226763;
+  --sujeto-ocre-0: #F5E8D0; --sujeto-ocre-1: #EED8B0; --sujeto-ocre-2: #E6C890; --sujeto-ocre-3: #DAB97B;
+  --sujeto-ocre-4: #C9A769; --sujeto-ocre-5: #B7965A; --sujeto-ocre-6: #A3844A; --sujeto-ocre-filo: #765723;
+  /* bosque claro: techos y costados de un bastidor, sin llegar al bosque de las pantallas */
+  --bosque-claro-0: #80A99A; --bosque-claro-1: #6A9787; --bosque-claro-2: #588776; --bosque-claro-3: #497868;
+  --bosque-claro-4: #3E6B5B; --bosque-claro-filo: #C0D8CC;
   /* material oscuro (bosque), con filo claro */
   --oscuro-0: #203F35; --oscuro-1: #18382E; --oscuro-2: #113027; --oscuro-3: #082920; --oscuro-4: #022219;
   --oscuro-filo: #649087;
@@ -649,11 +655,12 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   --anatomy-hi: var(--linea-alta); --anatomy-mid: var(--linea-media); --anatomy-lo: var(--linea-baja);
   --anatomy-faint: var(--linea-tenue); --anatomy-lit: var(--acento-filo); --anatomy-dot: var(--tinta);
   --anatomy-halo: var(--bosque-800); --anatomy-halo-opacity: .24; --anatomy-weight: .6px; --anatomy-mono: var(--font-mono);
-  margin: 0; display: grid; gap: 6px; min-width: 0; width: 100%; justify-self: center; align-content: start;
+  margin: 0; display: grid; gap: 6px; min-width: 0; width: 100%; justify-self: stretch; align-content: start;
 }
-.fig-iso[data-figura="capas"] { width: 80%; }
-@media (max-width: 960px) { .fig-iso[data-figura="capas"] { width: 100%; max-width: 480px; } }
-.fig-iso .lienzo { position: relative; width: 100%; touch-action: pan-y; border-radius: var(--radio-lg); }
+/* la figura ocupa su columna: el dibujo puede ser más angosto (centrado), pero la lectura arranca en
+   el borde de la columna de la retícula, como el texto */
+.fig-iso .lienzo { position: relative; width: 100%; justify-self: center; touch-action: pan-y; border-radius: var(--radio-lg); }
+.fig-iso[data-figura="capas"] .lienzo { max-width: 460px; }
 /* la capa viva: las piezas que se mueven, en su propio svg encima (sin will-change: promoverla al
    empezar cada ciclo costaba más de lo que ahorraba, medido a CPU 4×) */
 .fig-iso .capa-viva { position: absolute; inset: 0; pointer-events: none; }
@@ -664,7 +671,10 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .fig-iso .lectura-l code { font: inherit; color: var(--verificado); }
 .fig-iso .lectura-l .pista { font: 400 13px/18px var(--font-sans); color: var(--tinta-tenue); opacity: 0; transition: opacity .2s cubic-bezier(0, 0, .3, 1); }
 .fig-iso:hover .lectura-l .pista, .fig-iso:focus-within .lectura-l .pista { opacity: 1; }
-.fig-iso .lectura-l .sello-i { margin-right: 10px; }
+.fig-iso .lectura-l .sello-i { margin-left: 10px; vertical-align: 0; }
+.fig-iso .lectura-l .lin { display: block; }
+.pegado { white-space: nowrap; }
+.pegado .sello-i { vertical-align: .2em; margin-left: 2px; }
 @media (hover: none) { .fig-iso .lectura-l .pista { display: none; } }
 /* sección con figura: el texto a un lado, la figura al otro, en la retícula */
 .con-fig { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(24px, 4vw, 64px); align-items: center; }
@@ -686,7 +696,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .fig-cobertura .costa { fill: none; stroke: var(--linea-media); stroke-width: .9; vector-effect: non-scaling-stroke; stroke-linecap: round; }
 /* cobertura: una sola rampa, del agua (pocos predios) al teal hondo (muchos); cada nivel toma sus
    caras de su color base, más claro arriba y más hondo en los lados que no ven la luz */
-.m-cob0 { --b: #C3E3EB; } .m-cob1 { --b: #A5D5D9; } .m-cob2 { --b: #84C4BC; } .m-cob3 { --b: #5FAB9C; } .m-cob4 { --b: #3D8E7F; }
+.m-cob0 { --b: var(--sujeto-agua-2); } .m-cob1 { --b: var(--sujeto-teal-3); } .m-cob2 { --b: var(--sujeto-teal-4); } .m-cob3 { --b: var(--sujeto-teal-5); } .m-cob4 { --b: #2C7F70; }
 .m-cob0, .m-cob1, .m-cob2, .m-cob3, .m-cob4 {
   --c0: color-mix(in oklab, var(--b), #fff 32%); --c1: var(--b); --c2: color-mix(in oklab, var(--b), #0B231C 7%);
   --c3: color-mix(in oklab, var(--b), #0B231C 14%); --c4: color-mix(in oklab, var(--b), #0B231C 21%);
@@ -712,9 +722,10 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .m-papel { --c0: var(--estructura-0); --c1: var(--estructura-1); --c2: var(--estructura-2); --c3: var(--estructura-3); --c4: var(--estructura-4); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
 .m-metal { --c0: var(--estructura-1); --c1: var(--estructura-2); --c2: var(--estructura-3); --c3: var(--estructura-4); --c4: var(--estructura-5); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
 .m-trabajo, .m-acero { --c0: var(--estructura-2); --c1: var(--estructura-3); --c2: var(--estructura-4); --c3: var(--estructura-5); --c4: var(--estructura-6); --filo: var(--linea-media); --pliegue: var(--linea-baja); }
-.m-teal { --c0: var(--sujeto-teal-0); --c1: var(--sujeto-teal-1); --c2: var(--sujeto-teal-2); --c3: var(--sujeto-teal-3); --c4: var(--sujeto-teal-4); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-4); }
-.m-agua { --c0: var(--sujeto-agua-0); --c1: var(--sujeto-agua-1); --c2: var(--sujeto-agua-2); --c3: var(--sujeto-agua-3); --c4: var(--sujeto-agua-4); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-4); }
-.m-ocre { --c0: var(--sujeto-ocre-0); --c1: var(--sujeto-ocre-1); --c2: var(--sujeto-ocre-2); --c3: var(--sujeto-ocre-3); --c4: var(--sujeto-ocre-4); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-4); }
+.m-teal { --c0: var(--sujeto-teal-1); --c1: var(--sujeto-teal-2); --c2: var(--sujeto-teal-3); --c3: var(--sujeto-teal-4); --c4: var(--sujeto-teal-5); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
+.m-agua { --c0: var(--sujeto-agua-1); --c1: var(--sujeto-agua-2); --c2: var(--sujeto-agua-3); --c3: var(--sujeto-agua-4); --c4: var(--sujeto-agua-5); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-5); }
+.m-ocre { --c0: var(--sujeto-ocre-1); --c1: var(--sujeto-ocre-2); --c2: var(--sujeto-ocre-3); --c3: var(--sujeto-ocre-4); --c4: var(--sujeto-ocre-5); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-5); }
+.m-bosque-claro { --c0: var(--bosque-claro-0); --c1: var(--bosque-claro-1); --c2: var(--bosque-claro-2); --c3: var(--bosque-claro-3); --c4: var(--bosque-claro-4); --filo: var(--bosque-claro-filo); --pliegue: var(--bosque-claro-filo); }
 /* el sujeto con cuerpo: la misma rampa, dos escalones más hondo, con el filo marcado */
 .m-teal-fuerte { --c0: var(--sujeto-teal-2); --c1: var(--sujeto-teal-3); --c2: var(--sujeto-teal-4); --c3: var(--sujeto-teal-5); --c4: var(--sujeto-teal-6); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
 .m-agua-fuerte { --c0: var(--sujeto-agua-2); --c1: var(--sujeto-agua-3); --c2: var(--sujeto-agua-4); --c3: var(--sujeto-agua-5); --c4: var(--sujeto-agua-6); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-5); }
@@ -792,8 +803,17 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 }
 
 /* ---------- fase 5: la portada para quien decide ---------- */
-.h-api { font-size: 14.5px; color: var(--tinta-tenue); margin-top: -12px; }
-.h-api .enlace { display: inline-flex; align-items: center; min-height: 44px; }
+.heroe .t0 { font-size: clamp(40px, 4.7vw, 64px); }
+/* «¿Programas?» discreto y más abajo: no compite con los dos botones */
+.h-api { font-size: 13.5px; color: var(--tinta-tenue); margin-top: 6px; }
+.h-api .enlace { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; color: var(--tinta-suave); text-decoration: underline; text-decoration-color: var(--linea-fuerte); text-underline-offset: 4px; }
+/* el titular en tres renglones en pantalla ancha: «Datos oficiales de Colombia / para tu
+   organización / y tus agentes» (mismas palabras; en móvil se reparte solo) */
+@media (min-width: 1101px) {
+  .heroe .t0 { font-size: clamp(48px, 3.9vw, 58px); }
+  .heroe .t0 .l { display: block; }
+  .h-texto .izq { max-width: 780px; }
+}
 /* enlaces sueltos (no dentro de una frase): objetivo de 44 px */
 .enlaces .enlace, .serv-c .enlace, .pie-p .enlace, .mas-s .enlace, .columnas > div > .enlace, .bloque > .enlace, .quien .enlace { display: inline-flex; align-items: center; min-height: 44px; }
 .columnas > div > .enlace, .bloque > .enlace { align-self: flex-start; }
@@ -811,9 +831,10 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .franja-serv .fig-iso .lectura-l [data-lectura] { display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .franja-serv .fig-iso .lectura-l .pista { display: none; }
 @media (max-width: 960px) { .franja-serv .servs-c { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-/* tres formas de usarlo */
-.caminos li { grid-template-columns: 8em minmax(0, 1fr); }
-.funciona { font-size: 14.5px; color: var(--tinta-tenue); }
+/* tres formas de usarlo: solo texto, en tres columnas; cada título lleva a su guía, en tinta */
+.caminos h3 a { color: var(--tinta); text-decoration: underline; text-decoration-color: var(--linea-fuerte); text-decoration-thickness: 1px; text-underline-offset: 5px; display: inline-flex; align-items: center; min-height: 44px; margin: -10px 0; }
+.caminos h3 a:hover { text-decoration-color: var(--tinta); }
+.funciona { font-size: 14.5px; color: var(--tinta-tenue); margin-top: 20px; }
 /* qué no hacemos */
 .no-h h3 { font-size: 19px; }
 /* precios en la portada: prueba, Estado y academia, piloto */
@@ -830,7 +851,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .faq summary::after { content: ""; flex: none; width: 9px; height: 9px; border-right: 1.5px solid var(--tinta-suave); border-bottom: 1.5px solid var(--tinta-suave); transform: translateY(-3px) rotate(45deg); transition: transform .2s; }
 .faq details[open] summary::after { transform: translateY(2px) rotate(-135deg); }
 .faq details p { padding: 0 0 18px; color: var(--tinta-suave); max-width: 640px; }
-.quien { border-top: 3px solid var(--acento-relleno); padding-top: 16px; display: grid; gap: 12px; }
+.quien { border-top: 1px solid var(--tinta); padding-top: 18px; display: grid; gap: 12px; }
 .quien p { color: var(--tinta-suave); }
 .quien .lista { gap: 0; }
 @media (max-width: 1000px) { .faq-l { grid-template-columns: minmax(0, 1fr); } }
@@ -858,9 +879,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .franja-serv .serv-c .fig-iso { align-self: end; }
 .franja-serv .serv-c > div { display: grid; align-content: start; }
 /* figuras de la portada: no más altas que el argumento que acompañan */
-#prueba .fig-iso, #ahorro .fig-iso { max-width: 600px; }
-#como .fig-iso[data-figura="capas"] { width: 100%; max-width: 400px; }
-.heroe .t0 { font-size: clamp(40px, 4.7vw, 64px); }
+#prueba .fig-iso .lienzo, #ahorro .fig-iso .lienzo { max-width: 600px; }
 .quien .lista li { padding-left: 0; }
 .quien .lista li::before { display: none; }
 .desliza { position: relative; }
@@ -869,7 +888,6 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 /* la lectura cambia con cada turno: en móvil se le guardan dos renglones para que nada salte */
 @media (max-width: 760px) { .fig-iso .lectura-l [data-lectura] { min-height: 36px; } }
 .plan .cr small { display: block; font: 400 13px/18px var(--font-sans); color: var(--tinta-tenue); margin-top: 2px; }
-.caminos b a { display: inline-flex; align-items: center; min-height: 44px; margin: -12px 0; }
 /* «terrnova» en texto chico: el mismo interletrado del logo, para que la «rn» no se lea «m» */
 .pie-sitio a[href^="mailto"], .pie-sitio .ab span:first-child, .dominio { letter-spacing: .02em; }
 /* /precios en móvil: cada plan, una ficha (sin desplazar la tabla de lado) */
@@ -888,3 +906,4 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   .tabla.t-tarifa { min-width: 620px; }
   .tabla.t-tarifa th[scope="row"] { position: sticky; left: 0; z-index: 1; background: var(--superficie); min-width: 10.5em; padding-right: 12px; }
 }
+.pie-p .anual { color: var(--tinta); font-weight: 600; margin-right: 14px; }

@@ -22,7 +22,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/img/tipos/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/img/tipos/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/estilo.css?v=41069ee7d4">
+<link rel="stylesheet" href="/estilo.css?v=371132d1b8">
 <script src="/js/sitio.js?v=09c661c1b5" defer></script>
 </head>
 <body>
@@ -69,6 +69,8 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \
 <span class="c"># y pregúntale:</span>
 ¿Qué predio hay en 11,2211 N, 74,1572 W?</code></pre><pre data-t="mcp" tabindex="0" hidden><code>POST https://terrnova.com/mcp/territorio
 Authorization: Bearer $TERRNOVA_LLAVE
+Content-Type: application/json
+Accept: application/json, text/event-stream
 
 {
  &quot;jsonrpc&quot;: &quot;2.0&quot;,
@@ -120,7 +122,7 @@ Authorization: Bearer $TERRNOVA_LLAVE
  &quot;creditos&quot;: 10
 }</code></pre></div>
 </div>
-<p>Funciona con Claude Code, Cursor y Claude Desktop, con las configuraciones de abajo. claude.ai y ChatGPT en la web todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. Mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
+<p>Funciona con Claude Code, Cursor y Claude Desktop, con las configuraciones de abajo. claude.ai y ChatGPT en la web todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. El inicio de sesión con OAuth llegará; mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
 
 <h2 id="mcp">MCP</h2>
 <p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
@@ -150,7 +152,7 @@ Authorization: Bearer $TERRNOVA_LLAVE
 
 <h2 id="perfiles">Perfiles</h2>
 <div class="desliza"><table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las 205 herramientas, <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
+<tr><td><code>/mcp</code></td><td>Las 205 herramientas, <code>ficha_lugar</code>, <code>ficha_empresa</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
 <tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una familia</td><td>Un solo tema: lo más preciso y rápido</td></tr>
 <tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas que buscan en el catálogo</td><td>Clientes con tope de herramientas (OpenAI: 128)</td></tr>
 </tbody></table></div>

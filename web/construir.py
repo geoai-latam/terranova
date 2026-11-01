@@ -152,6 +152,10 @@ ENTIDADES = Counter(
     nombre_entidad(f.entidad) for f in PUBLICADAS if not f.entidad.startswith("Terrnova")
 )
 N_ENTIDADES = len(ENTIDADES)
+# Las fuentes globales (USGS, ESA, NASA) también cuentan: «de Colombia» a secas no sería verdad.
+N_GLOBALES = sum(1 for f in PUBLICADAS if nombre_entidad(f.entidad) in GLOBALES)
+assert 0 < N_GLOBALES < N_FUENTES
+FUENTES_DE = f"{N_FUENTES} fuentes oficiales, de Colombia y globales"
 POR_FAMILIA = Counter(h.familia for h in HERR)
 MODOS = Counter(f.modo for f in PUBLICADAS)
 LICENCIAS = Counter(f.licencia.spdx or "dato público, sin SPDX" for f in PUBLICADAS)
@@ -289,7 +293,12 @@ OG = {
 
 
 def pagina(
-    ruta: str, titulo: str, descripcion: str, cuerpo: str, scripts: tuple[str, ...] = ()
+    ruta: str,
+    titulo: str,
+    descripcion: str,
+    cuerpo: str,
+    scripts: tuple[str, ...] = (),
+    indexar: bool = True,
 ) -> str:
     canon = DOMINIO + (ruta if ruta != "/" else "/")
     tit = titulo if ruta == "/" else f"{titulo} · Terrnova"
@@ -300,6 +309,12 @@ def pagina(
         # three.js empieza a bajar con la página, no cuando el módulo de la escena lo pide.
         mods = f'\n<link rel="modulepreload" href="{THREE_URL}" crossorigin>' + mods
     og = f"{DOMINIO}/img/og/{OG.get(ruta, 'portada')}.png"
+    # La 404 no se indexa ni tiene canónica: es la respuesta a una página que no existe.
+    if indexar:
+        indice = f'<link rel="canonical" href="{canon}">'
+        og_url = f'<meta property="og:url" content="{canon}">\n'
+    else:
+        indice, og_url = '<meta name="robots" content="noindex">', ""
     return f"""<!doctype html>
 <html lang="es">
 <head>
@@ -307,13 +322,12 @@ def pagina(
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{escape(tit)}</title>
 <meta name="description" content="{escape(descripcion)}">
-<link rel="canonical" href="{canon}">
+{indice}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Terrnova">
 <meta property="og:title" content="{escape(tit)}">
 <meta property="og:description" content="{escape(descripcion)}">
-<meta property="og:url" content="{canon}">
-<meta property="og:locale" content="es_CO">
+{og_url}<meta property="og:locale" content="es_CO">
 <meta property="og:image" content="{og}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -666,7 +680,7 @@ SECTORES = [
         [
             "men_educacion_municipio",
             "ins_calidad_agua_municipio",
-            "icfes_saber11_municipio",
+            "policia_hurto_comercio_residencias_municipio",
             "dnp_proyectos_sgr_municipio",
         ],
     ),
@@ -695,9 +709,9 @@ def sectores() -> str:
         paneles.append(
             f'<div class="panel-s" role="tabpanel" id="s-t{i}" aria-labelledby="s-p{i}" '
             f'data-herramientas="{" ".join(ids)}"{"" if i == 0 else " hidden"}>'
-            f'<h3 class="decide">{escape(decide)}</h3>'
+            f'<h3 class="decide">{con_sello(escape(decide))}</h3>'
             f'<ul class="soluciones">{filas}</ul>'
-            f'<p class="con-s">Con datos de {escape(y_lista(ents))} {SELLO_I}</p></div>'
+            f'<p class="con-s">Con datos de {escape(y_lista(ents))}</p></div>'
         )
     return f"""<div class="sectores">
 <div class="lista-s" role="tablist" aria-label="Sectores" aria-orientation="vertical">{"".join(pest)}</div>
@@ -793,13 +807,6 @@ SERVICIOS = [
     },
 ]
 
-METODO = [
-    ("Nos cuentas", "Qué quieres decidir."),
-    ("Precio fijo", "Antes de empezar."),
-    ("Hacemos el trabajo", "Cada cifra contrastada con su fuente."),
-    ("Recibes el resultado", "Con la prueba de cada dato."),
-]
-
 
 def licencia_corta(spdx: str | None) -> str:
     if not spdx:
@@ -842,7 +849,7 @@ ENTRADA_REVISION = {
 # Sin el DANE (sin base legal para venderlo en servicios) ni las alertas del IDEAM (su copia se
 # refresca a mano): preguntas de fuentes en vivo o con su fecha de corte.
 PREGUNTAS_ASISTENTE = [
-    "banrep_trm_recientes",
+    "suin_norma",
     "ins_calidad_agua_municipio",
     "pnn_areas_protegidas_en_punto",
     "secop_contratos_municipio",
@@ -853,7 +860,7 @@ PREGUNTAS_ASISTENTE = [
 ]
 # La pregunta de cada una, corta, para que la lectura quepa en una línea (la entera va en la etiqueta).
 PREGUNTA_CORTA = {
-    "banrep_trm_recientes": "¿A cuánto está el dólar?",
+    "suin_norma": "¿Sigue vigente esta ley?",
     "ins_calidad_agua_municipio": "¿Es potable el agua aquí?",
     "pnn_areas_protegidas_en_punto": "¿Hay un área protegida aquí?",
     "secop_contratos_municipio": "¿Cuánto contrata este municipio?",
@@ -864,13 +871,12 @@ PREGUNTA_CORTA = {
 }
 # Sigla grabada en la placa de cada boca del tablero del asistente (las que no están, van con su nombre).
 SIGLA_ENTIDAD = {
-    "Banco de la República": "BanRep",
     "Parques Nacionales": "PNN",
     "Colombia Compra Eficiente": "CCE",
     "Policía Nacional": "Policía",
 }
 OTRAS_ASISTENTE = [
-    "icfes_saber11_municipio",
+    "reps_sedes_municipio",
     "invima_registro_sanitario_por_expediente",
     "anh_crudo_municipio",
     "policia_hurto_vehiculos_municipio",
@@ -885,7 +891,11 @@ CARRILES_VIGILANCIA = [
 INDICADORES_TABLERO = [
     ("men_educacion_municipio", "Educación", "cobertura neta, año por año"),
     ("ins_calidad_agua_municipio", "Agua potable", "riesgo del agua (IRCA), año por año"),
-    ("icfes_saber11_municipio", "Saber 11", "puntaje promedio, por periodo"),
+    (
+        "policia_hurto_comercio_residencias_municipio",
+        "Seguridad",
+        "hurtos a comercio y residencias, año por año",
+    ),
     ("igac_compraventas_municipio", "Compraventas", "compraventas de inmuebles, año por año"),
 ]
 
@@ -966,6 +976,24 @@ RUTA_CORTA = {
     "pnn_areas_protegidas_en_punto": "¿Área protegida aquí?",
 }
 SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
+# Herramientas cuyo canario no está en verde en producción (01-11-2026): siguen en el catálogo, pero
+# ninguna página ni figura las usa de ejemplo. Si una vuelve a verde, se puede sacar de aquí.
+SIN_CANARIO_VERDE = {
+    "banrep_dtf_recientes",
+    "banrep_ibr_recientes",
+    "banrep_tasa_politica_recientes",
+    "banrep_trm_recientes",
+    "banrep_uvr_recientes",
+    "secop1_modificaciones_adjudicacion",
+    "dian_normograma_buscar",
+    "icfes_saber11_municipio",
+    "icfes_saber11_estrato_municipio",
+    "ideam_alertas_deslizamiento_municipio",
+    "ideam_alertas_incendios_municipio",
+    "ideam_calidad_aire_municipio",
+    "invias_puentes_en_zona",
+    "urt_microzona_en_punto",
+}
 
 
 # Cobertura SINIC: la muestra del 3 % (datos/co.json, hexágonos de 0,07°) se suma en hexágonos tres
@@ -1046,6 +1074,11 @@ def datos_figuras() -> dict:
         )
     nombradas = {t["entidad"] for t in turnos}
     assert len(nombradas) == len(turnos), "cada turno va a una entidad distinta"
+    ejemplos = set(RUTA + SECTORES_USADAS + PREGUNTAS_ASISTENTE + OTRAS_ASISTENTE)
+    ejemplos |= {i for i, _, _ in INDICADORES_TABLERO} | {t["herr"] for t in TURNOS}
+    ejemplos |= {i for _, items in CRUCES for i, _ in items} | {t[3] for t in TARIFA}
+    ejemplos.add(EJEMPLO["herramienta"])
+    assert not ejemplos & SIN_CANARIO_VERDE, ejemplos & SIN_CANARIO_VERDE
     return {
         "capas": {
             "fuentes": N_FUENTES,
@@ -1067,7 +1100,7 @@ def datos_figuras() -> dict:
         "cobertura": datos_cobertura(),
         "usadas": {
             "ruta": RUTA,
-            "prueba": ["banrep_trm_recientes"],
+            "prueba": [EJEMPLO["herramienta"]],
             "revision": [i for _, items in CRUCES for i, _ in items],
             "tablero": [i for i, _, _ in INDICADORES_TABLERO],
             "asistente": PREGUNTAS_ASISTENTE + OTRAS_ASISTENTE,
@@ -1138,13 +1171,13 @@ def figura(
     assert caja and etiqueta, nombre
     w, h = caja.groups()
     pista_html = f'<span class="pista">{pista}</span>' if pista else ""
-    if ilustrativo:
-        pista_html = f'<span class="pie-l">{SELLO_I}{pista_html}</span>'  # el sello no se corre
+    # el sello va al final de la lectura (la lectura cambia; el sello se queda en su sitio)
+    sello = SELLO_I if ilustrativo else ""
     return (
         f'<figure class="fig-iso{" " + clase if clase else ""}" data-figura="{nombre}">'
         f'<div class="lienzo" tabindex="0" role="group" aria-label="{etiqueta.group(1)}" '
         f'data-src="/img/figuras/{nombre}.svg?v={huella.group(1)}" style="aspect-ratio:{w}/{h}"></div>'
-        f'<figcaption class="lectura-l"><span data-lectura aria-live="off">{lectura}</span>{pista_html}</figcaption>'
+        f'<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lectura}</span>{sello}</span>{pista_html}</figcaption>'
         "</figure>"
     )
 
@@ -1180,8 +1213,16 @@ LECTURA_SERVICIO = {
 }
 
 
-def figura_servicio(sid: str) -> str:
-    """La figura de un servicio; vacía si todavía no tiene (la fila queda a una columna)."""
+def con_sello(texto: str) -> str:
+    """El sello «ilustrativo» al final de un título, pegado a su última palabra (no queda solo en
+    un renglón)."""
+    cabeza, _, ultima = texto.rpartition(" ")
+    return f'{cabeza} <span class="pegado">{ultima} {SELLO_I}</span>'.lstrip()
+
+
+def figura_servicio(sid: str, sello: bool = True) -> str:
+    """La figura de un servicio; vacía si todavía no tiene (la fila queda a una columna). Sin
+    sello cuando el título que la acompaña ya lo lleva (la franja de la portada)."""
     if sid not in NOMBRES_FIGURAS:
         return ""
     if sid == "asistente":  # preguntas, entidades y licencias reales: sin sello
@@ -1192,7 +1233,7 @@ def figura_servicio(sid: str) -> str:
     if sid == "tablero":
         i0 = datos_figuras()["tablero"]["indicadores"][0]
         lectura = lectura.format(t=i0["t"].lower(), e=i0["e"], m=i0["m"])
-    return figura(sid, lectura, pista, ilustrativo=True)
+    return figura(sid, lectura, pista, ilustrativo=sello)
 
 
 def con_datos(sid: str) -> str:
@@ -1229,25 +1270,31 @@ def servicio_fila(s: dict, i: int) -> str:
 def servicios_landing() -> str:
     """En la portada, los cuatro servicios en una franja: la figura pequeña, el título y el enlace."""
     celdas = "".join(
-        f'<article class="serv-c">{figura_servicio(str(s["id"]))}'
-        f"<div><h4>{s['titulo']}</h4>"
+        f'<article class="serv-c">{figura_servicio(str(s["id"]), sello=False)}'
+        f"<div><h4>{con_sello(s['titulo']) if s['id'] != 'asistente' else s['titulo']}</h4>"
         f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></div></article>'
         for s in SERVICIOS
     )
     return f'<div class="servs-c">{celdas}</div>'
 
 
-# Las capas de la prueba: valores de la respuesta real de banrep_trm_recientes, capturada el
-# 2026-10-29.
+# Las capas de la prueba: la respuesta real del predio de Santa Marta (correos.EJEMPLO, la misma
+# del héroe y de /desarrolladores), comprobada contra EJEMPLO.
 CAPAS_PRUEBA = [
-    ("dato", "3.162,35 pesos por dólar", "TRM del 29-10-2026 · encontrado"),
-    ("procedencia", "Banco de la República", "la entidad que publica el dato"),
-    ("licencia", "aviso legal del Banco, uso comercial sí", "verificada para esta fuente"),
-    ("servido_desde", "la fuente, en vivo", "consultado el 29-10-2026, 07:14 UTC"),
-    ("huella", "sha256:ac30c9f5…", "para comprobar que no cambió"),
+    ("dato", "predio 47001…0308, habitacional", "Santa Marta, zona urbana · encontrado"),
+    ("procedencia", "IGAC, SINIC", "la entidad que publica el dato"),
+    ("licencia", "CC BY-SA 4.0, uso comercial sí", "verificada para esta fuente"),
+    ("servido_desde", "copia del 28-10-2026", "la copia oficial, con su fecha"),
+    ("huella", "sha256:7a2cc965…", "para comprobar que no cambió"),
 ]
+assert EJEMPLO["herramienta"] == "sinic_predio_en_punto" and EJEMPLO["estado"] == "encontrado"
+assert EJEMPLO["predio"].startswith("47001") and EJEMPLO["predio"].endswith("0308")
+assert EJEMPLO["destinacion"].casefold().startswith("habitacional")
+assert EJEMPLO["entidad"].startswith("Instituto Geográfico Agustín Codazzi (IGAC), SINIC")
+assert EJEMPLO["licencia"] == "CC-BY-SA-4.0" and EJEMPLO["servido"] == CAPAS_PRUEBA[3][1]
+assert EJEMPLO["huella"].startswith(CAPAS_PRUEBA[4][1].rstrip("…"))
 NOTAS_PRUEBA = [
-    ("El dato", "Encontrado, no existe o fuera de cobertura."),
+    ("El dato", "Encontrado, no encontrado o fuera de cobertura."),
     ("Quién lo publica", "La entidad, la consulta y la norma."),
     (
         "Licencia",
@@ -1270,7 +1317,7 @@ def prueba_html() -> str:
 <div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
 <p class="entrada">Lo que necesitas para defender una decisión va dentro de la respuesta, no en un anexo.</p>
 <ul class="lista-l notas-p">{notas}</ul>
-<p class="fuente-dato">TRM del Banco de la República · <span class="sello">capturada el 29-10-2026</span></p></div>
+<p class="fuente-dato">El predio del mapa de arriba, IGAC SINIC · <span class="sello">respuesta capturada el 01-11-2026</span></p></div>
 </div>"""
 
 
@@ -1339,6 +1386,7 @@ def chips_familias(como_boton=False) -> str:
 
 
 # ---------------------------------------------------------------- páginas
+INSPOW = "Inspow, nuestro aliado de facturación,"
 # Clientes con guía probada en /desarrolladores (docs/CLIENTES.md); los que piden OAuth, dichos aparte.
 FUNCIONA_CON = ["Claude Code", "Cursor", "Claude Desktop"]
 PIDEN_OAUTH = ["claude.ai", "ChatGPT en la web"]
@@ -1353,9 +1401,8 @@ def preguntas_frecuentes() -> list[tuple[str, str]]:
     return [
         (
             "¿Necesito un equipo técnico?",
-            "No para empezar: conectas el asistente de tu equipo con la "
-            '<a class="enlace" href="/desarrolladores">guía</a> y le preguntas en español. Para '
-            "llevarlo a tus sistemas, tu equipo técnico usa la API; o lo construimos contigo.",
+            'Para probar basta alguien que siga la <a class="enlace" href="/desarrolladores">guía</a> '
+            "en unos minutos. Para llevarlo a tus sistemas, tu equipo técnico usa la API.",
         ),
         (
             "¿Sirve para cumplimiento y auditoría?",
@@ -1392,13 +1439,13 @@ def preguntas_frecuentes() -> list[tuple[str, str]]:
         ),
         (
             "¿Cómo se paga?",
-            "Pides el plan y Inspow te factura por mes o por año, con factura electrónica. No hay "
-            "cobro automático.",
+            f"Pides el plan e {INSPOW} te factura por mes o por año, con factura electrónica. No "
+            "hay cobro automático.",
         ),
         (
             "¿Con qué asistentes funciona?",
             f"Con {y_lista(FUNCIONA_CON)}, con su guía. {y_lista(PIDEN_OAUTH)} todavía no: "
-            "piden un inicio de sesión (OAuth) que estamos construyendo.",
+            "piden un inicio de sesión (OAuth), que llegará.",
         ),
     ]
 
@@ -1420,7 +1467,7 @@ def inicio() -> str:
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0">Datos oficiales de Colombia para tu organización y tus agentes</h1>
+<h1 class="t0"><span class="l">Datos oficiales de Colombia</span> <span class="l">para tu organización</span> <span class="l">y tus agentes</span></h1>
 <p class="entrada">Predios, empresas, contratos y normas de {N_FUENTES} fuentes oficiales, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución que construimos contigo.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis {DIAS_PRUEBA} días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 <p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
@@ -1452,7 +1499,7 @@ def inicio() -> str:
 <p class="entrada">Hacerlo a mano es pelear con cada portal.</p>
 <ul class="lista-l">
 <li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
-<li><b>Catastro vigente</b><span>Siempre el corte vigente, aunque la fuente cambie de nombre cada mes.</span></li>
+<li><b>Catastro vigente</b><span>El corte vigente, revisado aunque la fuente cambie de nombre cada mes.</span></li>
 <li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
 </ul>
 <p class="fuente-dato">Pitalito, 2025: $174.000 M sumando SECOP tal cual; $63.157 M contado bien · 22-10-2026</p>
@@ -1461,18 +1508,13 @@ def inicio() -> str:
 </div></section>
 
 <section class="seccion sup" id="como"><div class="envoltura">
-<div class="con-fig">
-<div class="cab">
-<h2 class="t2">Tres formas de usarlo</h2>
-<ul class="lista-l caminos">
-<li><b><a class="enlace" href="/desarrolladores#mcp">En el chat</a></b><span>Tus agentes preguntan en español y responden con la fuente.</span></li>
-<li><b><a class="enlace" href="/desarrolladores#rest">En tus sistemas</a></b><span>Tu equipo técnico lo conecta por API, con la misma respuesta.</span></li>
-<li><b><a class="enlace" href="/servicios">Contigo</a></b><span>Construimos la revisión, el tablero o el asistente.</span></li>
-</ul>
+<div class="cab"><h2 class="t2">Tres formas de usarlo</h2></div>
+<div class="columnas c3 caminos">
+<div><h3><a href="/desarrolladores#mcp">En el chat</a></h3><p>Tus agentes preguntan en español y responden con la fuente.</p></div>
+<div><h3><a href="/desarrolladores#rest">En tus sistemas</a></h3><p>Tu equipo técnico lo conecta por API, con la misma respuesta.</p></div>
+<div><h3><a href="/servicios">Contigo</a></h3><p>Construimos la revisión, el tablero o el asistente.</p></div>
+</div>
 <p class="funciona">Funciona con {y_lista(FUNCIONA_CON)}.</p>
-</div>
-{figura_capas()}
-</div>
 </div></section>
 
 <section class="seccion" id="no-hacemos"><div class="envoltura">
@@ -1495,7 +1537,7 @@ def inicio() -> str:
 <div><h3>Estado y academia</h3><p>Entidades públicas, academia y veedurías: {miles(CREDITOS_AMPLIADO)} créditos al mes, a pedido.</p><a class="enlace" href="/contacto?asunto=gobierno-academia">Pedirlo</a></div>
 <div><h3>Piloto de dos semanas</h3><p>Sobre tu caso, a precio fijo antes de empezar.</p><a class="enlace" href="/servicios#piloto">Ver el piloto</a></div>
 </div>
-<p class="pie-p"><a class="enlace" href="/precios">Precio anual y créditos por consulta</a></p>
+<p class="pie-p"><span class="anual">20 % menos pagando el año.</span> <a class="enlace" href="/precios">Precio anual y créditos por consulta</a></p>
 </div></section>
 
 <section class="seccion" id="preguntas"><div class="envoltura">
@@ -1517,27 +1559,28 @@ def inicio() -> str:
     return pagina(
         "/",
         "Terrnova · Datos oficiales de Colombia para tu organización y tus agentes",
-        f"Predios, empresas, contratos y normas de {N_FUENTES} fuentes oficiales de Colombia, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.",
+        f"Predios, empresas, contratos y normas de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.",
         c,
         ("escena-predios.js", "figuras.js"),
     )
 
 
 # Decisión 3 del dueño (01-11-2026): sin nombre de persona.
-QUIEN = (
-    "Terrnova es un producto de GeoAI LATAM, en Colombia. Factura Inspow, con factura electrónica."
-)
+QUIEN = f"Terrnova es un producto de GeoAI LATAM, en Colombia. Factura {INSPOW} con factura electrónica."
 
 
 # Lo inventado lleva el sello.
 SELLO_I = '<span class="sello-i">ilustrativo</span>'
 
 
+# El piloto, de punta a punta: cómo trabajamos y las dos semanas, en una sola secuencia.
 PILOTO = [
+    ("Nos cuentas", "Qué quieres decidir, dónde y para cuándo."),
     (
-        "Semana 1",
-        "Acordamos la pregunta, las fuentes y el entregable; corremos una primera muestra.",
+        "Precio fijo",
+        "Acordamos la pregunta, las fuentes y el entregable, con su precio, antes de empezar.",
     ),
+    ("Semana 1", "Corremos una primera muestra y la revisamos contigo."),
     ("Semana 2", "Lo corremos sobre tu caso completo, revisamos los dudosos y te lo entregamos."),
 ]
 
@@ -1549,7 +1592,6 @@ def servicios() -> str:
         f"{servicio_fila(s, i)}</div></section>"
         for i, s in enumerate(SERVICIOS)
     )
-    pasos = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in METODO)
     semanas = "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in PILOTO)
     c = f"""
 <section class="sv-heroe"><div class="envoltura">
@@ -1559,6 +1601,13 @@ def servicios() -> str:
 <div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s inv-b" href="#piloto">Ver el piloto</a></div>
 </div>
 <nav class="sv-indice" aria-label="Servicios">{indice}<a href="#piloto">Piloto</a></nav>
+</div></section>
+<section class="seccion" id="capa"><div class="envoltura">
+<div class="con-fig">
+<div class="cab"><h2 class="t2">Una capa de datos y, encima, tu solución</h2>
+<p class="entrada">Terrnova es la capa: {N_FUENTES} fuentes oficiales con una sola forma de preguntar. Encima montamos la analítica, la automatización o el agente que necesitas, y cada dato llega con su fuente.</p></div>
+{figura_capas()}
+</div>
 </div></section>
 {bloques}
 <section class="seccion inv" id="piloto"><div class="envoltura">
@@ -1570,17 +1619,12 @@ def servicios() -> str:
 <ol class="pasos-sv dos">{semanas}</ol>
 <h3 class="t3 entrega-t">Lo que recibes</h3>
 <ul class="lista">
-<li>El entregable acordado: por ejemplo, una hoja con cada ítem, su resultado, la entidad, la fecha y la huella de cada respuesta.</li>
+<li>El entregable acordado, cada cifra contrastada con su fuente: por ejemplo, una hoja con cada ítem, su resultado, la entidad, la fecha y la huella de cada respuesta.</li>
 <li>Los casos dudosos, aparte, con el motivo.</li>
 <li>Para repetirlo: la misma consulta, lista para correrla otra vez con tu plan.</li>
 </ul>
 </div>
 </div>
-</div></section>
-
-<section class="seccion"><div class="envoltura">
-<div class="cab"><h2 class="t2">Cómo trabajamos</h2></div>
-<ol class="pasos-sv claro">{pasos}</ol>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
@@ -1632,7 +1676,7 @@ def fuentes() -> str:
         + f"""
 <section class="seccion"><div class="envoltura" data-catalogo>
 <h2 class="sr">Buscar una herramienta</h2>
-<div class="buscador"><label class="sr" for="q">Buscar en el catálogo</label><input id="q" type="search" placeholder="Busca: predio, contratos, TRM, áreas protegidas…" autocomplete="off"></div>
+<div class="buscador"><label class="sr" for="q">Buscar en el catálogo</label><input id="q" type="search" placeholder="Busca: predio, contratos, normas, áreas protegidas…" autocomplete="off"></div>
 {chips_familias(como_boton=True)}
 <p class="conteo" aria-live="polite">Cargando el catálogo…</p>
 <div class="herramientas"></div>
@@ -1701,7 +1745,7 @@ def precios() -> str:
 <div class="cab"><h2 class="t2">Los planes</h2>
 <p class="entrada">Pides el plan, te enviamos la factura y activamos tus créditos. Sin cobro automático.</p></div>
 {tabla_planes()}
-<p class="fuente-dato" style="margin-top:14px">Precios de lanzamiento en pesos colombianos, más IVA. Factura Inspow, con factura electrónica.</p>
+<p class="fuente-dato" style="margin-top:14px">Precios de lanzamiento en pesos colombianos, más IVA. Factura {INSPOW} con factura electrónica.</p>
 </div></section>
 
 <section class="seccion sup"><div class="envoltura">
@@ -1729,11 +1773,11 @@ def precios() -> str:
 <section class="seccion sup"><div class="envoltura">
 <div class="cab"><h2 class="t2">Preguntas frecuentes</h2></div>
 <div class="faq" style="max-width:860px">
-<details><summary>¿Puedo cambiar de plan?</summary><p>Sí, cuando quieras: nos escribes y desde ese momento tienes los créditos del plan nuevo.</p></details>
+<details><summary>¿Puedo cambiar de plan?</summary><p>Sí: nos escribes y activamos el plan nuevo al emitir la factura.</p></details>
 <details><summary>¿Puedo usar los datos en mi negocio?</summary><p>Sí, con su licencia: cada respuesta trae la de su entidad y la atribución que debes citar; CC BY-SA exige compartir igual. Las fuentes con licencia por verificar no salen en producción.</p></details>
 <details><summary>¿Y los datos personales?</summary><p>Nada de búsquedas por cédula ni por nombre, ni perfiles de personas. Cada fuente sale con una lista cerrada de campos.</p></details>
 <details><summary>¿Hay un límite de velocidad?</summary><p>Hasta 20 consultas seguidas y 60 por minuto por llave.</p></details>
-<details><summary>¿Cómo se paga?</summary><p>Pides el plan y Inspow te factura por mes o por año, con factura electrónica. No hay cobro automático.</p></details>
+<details><summary>¿Cómo se paga?</summary><p>Pides el plan e {INSPOW} te factura por mes o por año, con factura electrónica. No hay cobro automático.</p></details>
 </div>
 </div></section>
 """
@@ -1793,7 +1837,8 @@ def misma_consulta() -> str:
         ),
         "mcp": (
             "MCP",
-            f"POST https://terrnova.com/mcp/{fam}\nAuthorization: Bearer $TERRNOVA_LLAVE\n\n"
+            f"POST https://terrnova.com/mcp/{fam}\nAuthorization: Bearer $TERRNOVA_LLAVE\n"
+            "Content-Type: application/json\nAccept: application/json, text/event-stream\n\n"
             + escape(
                 json.dumps(
                     {
@@ -1864,7 +1909,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <h2 id="consulta">La misma consulta, tres caminos</h2>
 <p>El predio en un punto de Santa Marta, pegado en Claude Code, por MCP o por la API REST. Por los tres llega el mismo sobre rt/1.</p>
 {misma_consulta()}
-<p>Funciona con {y_lista(FUNCIONA_CON)}, con las configuraciones de abajo. {y_lista(PIDEN_OAUTH)} todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. Mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
+<p>Funciona con {y_lista(FUNCIONA_CON)}, con las configuraciones de abajo. {y_lista(PIDEN_OAUTH)} todavía no conectan: sus conectores piden OAuth y Terrnova usa una llave en la cabecera. El inicio de sesión con OAuth llegará; mientras tanto, usa Claude Desktop con <code>mcp-remote</code> o la API.</p>
 
 <h2 id="mcp">MCP</h2>
 <p><i>Streamable HTTP</i>, con la llave en <code>Authorization</code>.</p>
@@ -1894,7 +1939,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 
 <h2 id="perfiles">Perfiles</h2>
 <div class="desliza"><table class="tabla"><thead><tr><th>Ruta</th><th>Qué expone</th><th>Para</th></tr></thead><tbody>
-<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, <code>ficha_lugar</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
+<tr><td><code>/mcp</code></td><td>Las {N_HERR} herramientas, <code>ficha_lugar</code>, <code>ficha_empresa</code> y <code>fuente_describir</code></td><td>Clientes que buscan herramientas solos, como Claude</td></tr>
 <tr><td><code>/mcp/&lt;familia&gt;</code></td><td>Las de una familia</td><td>Un solo tema: lo más preciso y rápido</td></tr>
 <tr><td><code>/mcp/catalogo</code></td><td>Pocas herramientas que buscan en el catálogo</td><td>Clientes con tope de herramientas (OpenAI: 128)</td></tr>
 </tbody></table></div>
@@ -1965,13 +2010,13 @@ def aliados() -> str:
     c = (
         portada(
             "",
-            "Proyectos hermanos",
-            "Dos proyectos de la comunidad geoespacial latinoamericana. Aliados, no clientes.",
+            "Quién hace Terrnova",
+            "GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial. Atalaya Mapas es un proyecto aliado de cartografía.",
         )
         + """
 <section class="seccion"><div class="envoltura" style="display:grid;gap:0">
 <div class="aliado"><img src="/img/geoai-latam.webp" alt="GeoAI LATAM" width="640" height="144">
-<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">Comunidad de inteligencia geoespacial para Latinoamérica: proyectos abiertos y tutoriales.</p>
+<div><h2 class="t3">GeoAI LATAM</h2><p class="suave" style="margin-top:8px">GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial para Latinoamérica: proyectos abiertos y tutoriales.</p>
 <p style="margin-top:12px"><a class="enlace dominio" href="https://geoailatam.terrnova.com/">geoailatam.terrnova.com</a></p></div></div>
 <div class="aliado"><div class="pendiente">Atalaya Mapas</div>
 <div><h2 class="t3">Atalaya Mapas</h2><p class="suave" style="margin-top:8px">Proyecto aliado de cartografía.</p></div></div>
@@ -1979,7 +2024,10 @@ def aliados() -> str:
 """
     )
     return pagina(
-        "/aliados", "Aliados", "GeoAI LATAM y Atalaya Mapas, proyectos hermanos de Terrnova.", c
+        "/aliados",
+        "Aliados",
+        "GeoAI LATAM hace Terrnova y mantiene una comunidad abierta de inteligencia geoespacial. Atalaya Mapas, proyecto aliado de cartografía.",
+        c,
     )
 
 
@@ -2033,7 +2081,7 @@ def no_encontrada() -> str:
         "La página no existe o cambió de lugar.",
         '<div class="botones" style="margin-top:8px"><a class="boton p" href="/">Ir al inicio</a><a class="boton s" href="/fuentes">Buscar una herramienta</a></div>',
     )
-    return pagina("/404", "Página no encontrada", "La página no existe.", c)
+    return pagina("/404", "Página no encontrada", "La página no existe.", c, indexar=False)
 
 
 FAVICON = (
