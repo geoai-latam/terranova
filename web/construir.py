@@ -1297,10 +1297,11 @@ def tabla_planes() -> str:
     """/precios: precio al mes y al año, créditos y cuánto alcanza en las consultas más comunes."""
     punto, registro = TARIFA_CATALOGO["punto"], TARIFA_CATALOGO["registro"]
     filas = "".join(
-        f'<tr><th scope="row">{n}</th><td class="n">{pesos(mes)}</td><td class="n">{pesos(anual)}</td>'
-        f'<td class="n">{miles(NIVELES[k])}</td>'
-        f"<td>{miles(NIVELES[k] // punto)} predios o {miles(NIVELES[k] // registro)} empresas por NIT</td>"
-        f"<td>{plan_boton(k)}</td></tr>"
+        f'<tr><th scope="row">{n}</th><td class="n" data-et="Al mes">{pesos(mes)}</td>'
+        f'<td class="n" data-et="Al año">{pesos(anual)}</td>'
+        f'<td class="n" data-et="Créditos al mes">{miles(NIVELES[k])}</td>'
+        f'<td class="alc" data-et="Alcanza para">{miles(NIVELES[k] // punto)} predios o {miles(NIVELES[k] // registro)} empresas por NIT</td>'
+        f'<td class="ped">{plan_boton(k)}</td></tr>'
         for k, n, mes, anual in PLANES
     )
     return f"""<div class="desliza"><table class="tabla t-planes"><caption class="sr">Planes de Terrnova, en pesos colombianos más IVA</caption>

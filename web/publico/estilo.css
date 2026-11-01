@@ -872,3 +872,19 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .caminos b a { display: inline-flex; align-items: center; min-height: 44px; margin: -12px 0; }
 /* «terrnova» en texto chico: el mismo interletrado del logo, para que la «rn» no se lea «m» */
 .pie-sitio a[href^="mailto"], .pie-sitio .ab span:first-child, .dominio { letter-spacing: .02em; }
+/* /precios en móvil: cada plan, una ficha (sin desplazar la tabla de lado) */
+@media (max-width: 640px) {
+  .t-planes thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .tabla.t-planes, .t-planes tbody { display: block; }
+  .tabla.t-planes tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; padding: 16px 0; border-bottom: 1px solid var(--linea); }
+  .tabla.t-planes th[scope="row"], .tabla.t-planes td { display: block; padding: 0; border: 0; }
+  .tabla.t-planes th[scope="row"] { grid-column: 1 / -1; font-size: 17px; }
+  .tabla.t-planes td.alc, .tabla.t-planes td.ped { grid-column: 1 / -1; }
+  .tabla.t-planes td[data-et]::before { content: attr(data-et); display: block; font: 400 12.5px/18px var(--font-sans); color: var(--tinta-tenue); }
+}
+/* la tabla de cuánto alcanza se desliza de lado en móvil, con la consulta legible y fija a la izquierda */
+.t-tarifa td.n { white-space: nowrap; }
+@media (max-width: 640px) {
+  .tabla.t-tarifa { min-width: 620px; }
+  .tabla.t-tarifa th[scope="row"] { position: sticky; left: 0; z-index: 1; background: var(--superficie); min-width: 10.5em; padding-right: 12px; }
+}
