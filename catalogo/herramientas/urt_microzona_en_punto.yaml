@@ -5,21 +5,22 @@ fuente: urt.microzonas
 pregunta: "¿Este punto está en una zona microfocalizada para la restitución de tierras?"
 descripcion: >
   Zona microfocalizada por la Unidad de Restitución de Tierras (URT) que contiene un punto: la
-  resolución vigente, su fecha, el estado (abierta o cerrada), municipio (DIVIPOLA) y la territorial
+  resolución vigente, su fecha, el estado (en firme o cerrada), municipio (DIVIPOLA) y la territorial
   que la atiende. Estar en una microzona no significa que un predio tenga una solicitud: significa
   que la URT puede tramitar solicitudes ahí. Solo la zona; nunca solicitudes ni sentencias por predio.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
   (Fuente: URT; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [3]
+  tool: consultar_copia
   argumentos:
+    tabla: urt_microzonas
+    punto: ["{lon}", "{lat}"]
+    select: [id_microzona, cod_dane, depto, mpio, n_res_m, fecha_res_vigente, estado_micro, territorial]
     geometria: ninguna
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [id_microzona, cod_dane, depto, mpio, n_res_m, fecha_res_vigente, estado_micro, territorial]
-    max_features: 5
+    order: [id_microzona]
+    limite: 5
   campos: [id_microzona, cod_dane, depto, mpio, n_res_m, fecha_res_vigente, estado_micro, territorial]
 salida: MicrozonaEnPunto
 cobro: punto

@@ -1,11 +1,11 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T03:30:57+00:00",
+ "grabado": "2026-11-01T22:58:20+00:00",
  "herramienta": "dian_normograma_buscar",
  "llamadas": [
   {
    "argumentos": {
-    "buscar": "ARTÍCULO 1o",
+    "buscar": "ARTÍCULO 1o. ALCANCE",
     "url": "https://normograma.dian.gov.co/dian/compilacion/docs/decreto_1165_2019.htm"
    },
    "conector": "web-mcp",
@@ -21,33 +21,23 @@
       "rows": [
        {
         "n": 1,
-        "posicion": 4827,
+        "posicion": 9904,
         "texto": "ayor claridad y facilitar las operaciones de comercio exterior actuales y futuras.\nDECRETA:\nTÍTULO 1.\nDISPOSICIONES GENERALES.\nCAPÍTULO 1.\nALCANCE, PRINCIPIOS Y DEFINICIONES.\nARTÍCULO 1o. ALCANCE. El presente decreto se aplica en la totalidad del Territorio Aduanero Nacional y regula las relaciones jurídicas que se establecen entre la administración aduanera y quienes intervienen en el ingreso, permanencia, traslado y salida de las mercancías, hacia y desde el Territorio Aduanero Nacional, con sujeción a la Constitución y la ley.\nAsimismo, se aplica sin perjuicio de las disposiciones especiales y las resultantes de acuerdos o tratados internacionales a los que haya adherido o adhiera Colombia. Los acuerdos o tratados mencionados comprenden, entre otros, los acuerdos comerciales y los referidos a la protección de la propiedad intelectual.\nLa potestad aduanera se e"
-       },
-       {
-        "n": 2,
-        "posicion": 464146,
-        "texto": "servicio público y de fumigación por el sistema de leasing, solo se causará impuesto sobre las ventas cuando se ejerza opción de compra de conformidad con lo dispuesto en el artículo 1o del Decreto 2816 de 1991.\nConcordancias\nDoctrina Concordante\nARTÍCULO 212. SUSTITUCIÓN DE MERCANCÍAS IMPORTADAS TEMPORALMENTE BAJO CONTRATO DE ARRENDAMIENTO FINANCIERO - \" LEASING\"-. Cuando se decida la reexportación de una mercancía importada temporalmente bajo contrato de arrendamiento financiero - \"leasing\" - para reemplazarla por otra, la mercancía de reemplazo será objeto de una nueva Declaración de Importación, en la que se deberán liquidar los correspondientes tributos aduaneros, de cuyo monto se descontarán las cuotas ya canceladas por la importación de la mercancía que se haya reexportado. El saldo será dividido en las cuotas señaladas en el nuevo contrato de arrendamien"
-       },
-       {
-        "n": 3,
-        "posicion": 870151,
-        "texto": "os países de los productos extranjeros gravados con el impuesto al consumo, cuando a ello hubiere lugar, de acuerdo con el artículo 18 de la Ley 677 de 2001 modificado por el artículo 1o de la Ley 1087 de 2006.\nPARÁGRAFO 1o. En el original de cada uno de los documentos soporte que deben conservarse de conformidad con el presente artículo, el declarante deberá consignar el número y fecha del levante de la declaración de Importación Simplificada a la cual corresponden.\nPARÁGRAFO 2o. El documento de transporte deberá conservarse en los términos señalados en el presente artículo, luego del arribo de la mercancía al territorio aduanero nacional.\nConcordancias\nDoctrina Concordante\nCAPÍTULO 5.\nCONSUMO DENTRO DE LA ZONA Y DESTINACIÓN A TERCEROS PAÍSES.\nARTÍCULO 557. CONSUMO DENTRO DE LA ZONA. El consumo dentro de la zona causará el impuesto sobre las ventas, el cual se l"
        }
       ]
      }
     ],
     "facts": {
-     "apariciones": 3,
-     "buscar": "ARTÍCULO 1o",
-     "caracteres": 1294909,
+     "apariciones": 1,
+     "buscar": "ARTÍCULO 1o. ALCANCE",
+     "caracteres": 1884967,
      "completitud": {
-      "total": 3,
+      "total": 1,
       "truncado": false,
-      "vistos": 3
+      "vistos": 1
      },
      "titulo": "Compilación Jurídica de la DIAN - Decreto 1165 de 2019",
-     "url": "https://20.230.16.129/dian/compilacion/docs/decreto_1165_2019.htm"
+     "url": "https://normograma.dian.gov.co/dian/compilacion/docs/decreto_1165_2019.htm"
     },
     "geo_result": "1"
    },

@@ -1,19 +1,20 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T06:40:36+00:00",
+ "grabado": "2026-11-01T22:58:20+00:00",
  "herramienta": "urt_microzona_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -75.045,
-     9.67,
+    "geometria": "ninguna",
+    "limite": 5,
+    "order": [
+     "id_microzona"
+    ],
+    "punto": [
      -75.045,
      9.67
     ],
-    "geometria": "ninguna",
-    "max_features": 5,
-    "out_fields": [
+    "select": [
      "id_microzona",
      "cod_dane",
      "depto",
@@ -23,80 +24,55 @@
      "estado_micro",
      "territorial"
     ],
-    "url": "https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer/3"
+    "tabla": "urt_microzonas"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
-      "crs": "EPSG:4326",
-      "data": {
-       "features": [
-        {
-         "geometry": null,
-         "properties": {
-          "cod_dane": "13244",
-          "depto": "Bolívar",
-          "estado_micro": "Cerrada",
-          "fecha_res_vigente": 1344211200000,
-          "id_microzona": 3,
-          "mpio": "El Carmen De Bolívar",
-          "n_res_m": "RDM 0001 DE AGOSTO 6 DE 2012",
-          "territorial": "Carmen de Bolívar"
-         },
-         "type": "Feature"
-        }
-       ],
-       "type": "FeatureCollection"
-      },
-      "kind": "feature_collection",
-      "name": "Open_Data_Microzonas"
+      "columns": [
+       "cod_dane",
+       "depto",
+       "estado_micro",
+       "fecha_res_vigente",
+       "id_microzona",
+       "mpio",
+       "n_res_m",
+       "territorial"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cod_dane": "13244",
+        "depto": "Bolívar",
+        "estado_micro": "Cerrada",
+        "fecha_res_vigente": "2012-08-06",
+        "id_microzona": 3,
+        "mpio": "El Carmen De Bolívar",
+        "n_res_m": "RDM 0001 DE AGOSTO 6 DE 2012",
+        "territorial": "Carmen de Bolívar"
+       }
+      ]
      }
     ],
     "facts": {
-     "bbox": [
-      -75.045,
-      9.67,
-      -75.045,
-      9.67
-     ],
-     "capa": "Open_Data_Microzonas",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -75.045,
-       9.67,
-       -75.045,
-       9.67
-      ],
-      "max_features": 5,
-      "out_fields": [
-       "id_microzona",
-       "cod_dane",
-       "depto",
-       "mpio",
-       "n_res_m",
-       "fecha_res_vigente",
-       "estado_micro",
-       "territorial"
-      ],
-      "url": "https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer/3",
-      "where": "1=1"
+     "consultado_en": "2026-11-01T22:57:09.965721+00:00",
+     "copia": {
+      "filas": 1314,
+      "huella": "sha256:a73d4ed8665ba305b63a182932f26980e686cce541e23e1854fba14730066a28",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261101225709965721"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://services5.arcgis.com/omnq4yUY2D8TpiDa/arcgis/rest/services/Open_Data_Microzonas/FeatureServer/3"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }
