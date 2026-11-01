@@ -628,7 +628,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .lista-l.abierto li { grid-template-columns: minmax(0, 15em) minmax(0, 1fr); }
 .lista-l.abierto code { font-size: 13.5px; }
 .desliza.lic { max-width: 640px; }
-.tierra { fill: color-mix(in srgb, var(--superficie) 30%, #fff); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
+.sombra-pais { filter: blur(14px); opacity: .18; transform: translateY(6px); }
+.tierra { fill: var(--superficie-2); stroke: color-mix(in srgb, var(--linea-fuerte) 45%, var(--superficie-2)); stroke-width: .4; vector-effect: non-scaling-stroke; }
 [data-celda] { transition: opacity .7s ease; }
 .fig-cobertura [data-celda] .iso-solid[data-lit] { --c: #FBFAF5; --luz: 0%; }
 .fig-cobertura:not(.armada) [data-celda] { opacity: 0; }
