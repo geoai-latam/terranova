@@ -787,3 +787,104 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .formulario .casilla input { box-shadow: none; padding: 0; width: auto; }
 .formulario .boton { justify-self: start; border: 0; cursor: pointer; font-family: var(--font-sans); }
 .trampa { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- figuras isométricas de la portada (kit de Anatomy, MIT; web/figuras) ----------
+   Los tonos del kit salen de los tokens: papel = fondo, cuatro sombras entre superficie y
+   superficie-2, líneas en la escala de tinta. El único acento es lo encendido (ámbar). */
+.fig-iso {
+  --anatomy-paper: var(--fondo); --anatomy-face: #fff; --anatomy-top: #fff;
+  --anatomy-shade-0: var(--superficie-2); --anatomy-shade-1: color-mix(in srgb, var(--superficie-2) 50%, var(--superficie));
+  --anatomy-shade-2: var(--superficie); --anatomy-shade-3: color-mix(in srgb, var(--superficie) 50%, var(--fondo));
+  --anatomy-lit-top: color-mix(in srgb, var(--acento-relleno) 30%, #fff); --anatomy-lit-shade: color-mix(in srgb, var(--acento-relleno) 34%, var(--fondo));
+  --anatomy-hi: var(--tinta); --anatomy-mid: var(--linea-fuerte); --anatomy-lo: color-mix(in srgb, var(--linea-fuerte) 55%, var(--linea));
+  --anatomy-faint: var(--linea); --anatomy-lit: var(--acento); --anatomy-dot: var(--tinta);
+  --anatomy-halo: var(--tinta); --anatomy-halo-opacity: .16; --anatomy-weight: .6px; --anatomy-mono: var(--font-mono);
+  margin: 0; display: grid; gap: 14px; min-width: 0;
+}
+.fig-iso .placa { position: relative; border: 1px solid var(--linea); border-radius: var(--radio-lg); background: var(--fondo);
+  padding: 44px clamp(8px, 2vw, 24px) 52px; overflow: hidden; }
+.fig-iso .placa:focus-visible { outline: 2px solid var(--foco); outline-offset: 3px; }
+.fig-iso .esq { position: absolute; font: 400 12px/16px var(--font-mono); color: var(--tinta-tenue); white-space: nowrap; }
+.fig-iso .esq.fig { top: 14px; left: 16px; color: var(--tinta); }
+.fig-iso .esq.tit { top: 14px; right: 16px; }
+.fig-iso .esq.pista { bottom: 16px; left: 16px; }
+.fig-iso .esq.lectura { bottom: 16px; right: 16px; color: var(--tinta); font-variant-numeric: tabular-nums; }
+.fig-iso .esq.lectura code { font: inherit; color: var(--verificado); }
+.fig-iso figcaption { display: grid; gap: 8px; color: var(--tinta-suave); font-size: 14.5px; line-height: 1.55; max-width: 720px; }
+.fig-iso .claves { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.fig-iso .claves b { color: var(--tinta); font-weight: 600; margin-right: 4px; }
+.fig-iso .preg-r { font: 500 16px/1.4 var(--font-sans); color: var(--tinta); }
+@media (max-width: 640px) {
+  .fig-iso .placa { padding: 40px 4px 64px; }
+  .fig-iso .esq.tit { display: none; }
+  .fig-iso .esq.pista { bottom: 38px; }
+}
+.con-fig { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(24px, 4vw, 56px); align-items: start; margin-bottom: clamp(32px, 4vw, 48px); }
+.con-fig .cab { margin-bottom: 0; }
+@media (max-width: 960px) { .con-fig { grid-template-columns: minmax(0, 1fr); } }
+#por-que .fig-iso { margin-bottom: clamp(32px, 4vw, 48px); }
+.fig-ruta { max-width: 860px; margin: 0 auto; }
+
+/* lo que el kit pinta */
+.iso-svg { display: block; width: 100%; height: auto; overflow: visible; }
+.iso-svg path, .iso-svg circle { vector-effect: non-scaling-stroke; }
+.iso-fill { fill: var(--anatomy-paper); stroke: none; }
+.iso-shade, .iso-top { stroke: none; }
+.iso-shade[data-shade="0"] { fill: var(--anatomy-shade-0); }
+.iso-shade[data-shade="1"] { fill: var(--anatomy-shade-1); }
+.iso-shade[data-shade="2"] { fill: var(--anatomy-shade-2); }
+.iso-shade[data-shade="3"] { fill: var(--anatomy-shade-3); }
+.iso-top { fill: var(--anatomy-top); }
+.iso-solid[data-lit] > .iso-fill { fill: var(--anatomy-face); }
+.iso-solid[data-lit] > .iso-top { fill: var(--anatomy-lit-top); }
+.iso-solid[data-lit] > .iso-shade { fill: var(--anatomy-lit-shade); }
+.iso-solid[data-lit] > .iso-edge { stroke: var(--anatomy-lit); }
+.iso-solid > * { transition: fill .5s var(--anatomy-ease, ease), stroke .5s ease; }
+.iso-halo { fill: var(--anatomy-halo); stroke: none; filter: blur(8px); opacity: var(--anatomy-halo-opacity); transform: translateY(3px); }
+.iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }
+.iso-line[data-tone="hi"] { stroke: var(--anatomy-hi); }
+.iso-line[data-tone="mid"] { stroke: var(--anatomy-mid); }
+.iso-line[data-tone="lo"] { stroke: var(--anatomy-lo); }
+.iso-line[data-tone="faint"] { stroke: var(--anatomy-faint); }
+.iso-line[data-tone="lit"] { stroke: var(--anatomy-lit); }
+.iso-dots circle { fill: var(--anatomy-dot); stroke: none; opacity: .32; }
+.iso-dots[data-tone="hi"] circle { opacity: .85; }
+.iso-dots[data-tone="mid"] circle { opacity: .5; }
+.iso-dots[data-tone="lo"] circle { opacity: .25; }
+.iso-dots[data-tone="faint"] circle { opacity: .14; }
+.iso-face-text { fill: var(--anatomy-mid); font-family: var(--anatomy-mono); letter-spacing: .04em; }
+.iso-face-text[data-tone="hi"] { fill: var(--anatomy-hi); }
+/* ventanas y pantallas: bosque, con lo escrito en tinta clara */
+.iso-solid.oscuro > .iso-fill, .iso-solid.oscuro > .iso-shade, .iso-solid.oscuro > .iso-top { fill: var(--bosque-800); }
+.iso-solid.oscuro > .iso-edge { stroke: var(--bosque-900); }
+.iso-line.en-oscuro { stroke: var(--teal-400); opacity: .75; }
+.medidor .luz-on circle { fill: var(--teal-400); opacity: 1; }
+.medidor .luz-off circle { fill: var(--tinta-invertida); opacity: .22; }
+
+/* Fig. 1: los cables y el dato que sube */
+.cable-forro, .cable-alma, .cable-pulso { fill: none; vector-effect: none !important; stroke-linecap: round; }
+.cable-forro { stroke: var(--linea-fuerte); stroke-width: 2.6; }
+.cable-alma { stroke: var(--superficie-2); stroke-width: 1.4; }
+.cable-pulso { stroke: var(--acento-relleno); stroke-width: 1.6; stroke-dasharray: 14 200; stroke-dashoffset: 14; opacity: 0; }
+.fig-capas .cable[data-on] .cable-pulso { opacity: 1; animation: sube 1.7s cubic-bezier(.45,0,.3,1) infinite; }
+@keyframes sube { from { stroke-dashoffset: 14; } to { stroke-dashoffset: -100; } }
+.fig-capas [data-modulo] { transition: transform .9s cubic-bezier(.32,.72,0,1); }
+.fig-capas .cables { transition: opacity .6s ease; }
+
+/* Fig. 2: la pregunta, su traza y la barrera */
+.traza { fill: none; stroke: var(--acento-relleno); stroke-width: 1.1; vector-effect: none !important; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 100 100; stroke-dashoffset: 100; }
+.traza[data-on] { stroke-dashoffset: 0; }
+.pregunta { fill: var(--acento-relleno); stroke: var(--tinta); stroke-width: .8; vector-effect: non-scaling-stroke; opacity: 0; }
+.pregunta[data-on] { opacity: 1; }
+.brazo { fill: #fff; stroke: var(--tinta); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.banda { fill: var(--tinta); stroke: none; opacity: .78; }
+.brazo-arista { fill: none; stroke: var(--linea-fuerte); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.fig-ruta [data-respuesta] { opacity: 0; transition: opacity .4s ease; }
+.fig-ruta [data-respuesta][data-on] { opacity: 1; }
+[data-piloto] circle { transition: fill .3s ease; }
+[data-piloto][data-on] circle { fill: var(--verificado); opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .fig-capas .cable[data-on] .cable-pulso { animation: none; stroke-dasharray: none; opacity: 1; }
+  .fig-capas [data-modulo], .fig-capas .cables, .iso-solid > *, .fig-ruta [data-respuesta] { transition: none; }
+}
