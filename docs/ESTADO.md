@@ -47,6 +47,19 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Figuras isométricas en la portada (2026-10-31, rama `feat/landing-animaciones`, sin fusionar)
+
+- Dos figuras SVG animadas, dibujadas con el kit de Anatomy (`web/figuras/kit`, MIT): **Fig. 1**, un
+  bastidor con el módulo de datos abajo (un medidor por familia) y Analítica, Automatización y
+  Agentes encima, cada uno con su cable (en la sección de las capas); **Fig. 2**, la ruta de una
+  pregunta: terminal, lector de llave, barrera de Terrnova y un tablero con una columna por entidad
+  (en «Por qué no basta…»).
+- `construir.py` escribe `web/figuras/datos.json` desde el catálogo y, si cambió, corre
+  `node web/figuras/construir.mjs`; la huella de datos + script + kit va en cada SVG y `--revisar`
+  falla si el dibujo quedó viejo. El movimiento está en `web/publico/js/figuras.js`.
+- **Siguiente paso:** que el dueño lo vea en local (`uv run python web/servir.py`) y decida si se abre
+  el PR.
+
 ## Lo que dejó la auditoría integral (2026-10-31, #203–#207)
 
 - **En `main`, sin desplegar todavía:** la portada nueva y la marca Terrnova (#203); la puerta que

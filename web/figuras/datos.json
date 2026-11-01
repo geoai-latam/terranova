@@ -1,0 +1,126 @@
+{
+ "capas": {
+  "fuentes": 177,
+  "herramientas": 205,
+  "familias": [
+   [
+    "Estadísticas",
+    44
+   ],
+   [
+    "Territorio",
+    43
+   ],
+   [
+    "Contratación",
+    42
+   ],
+   [
+    "Justicia",
+    27
+   ],
+   [
+    "Ambiente",
+    21
+   ],
+   [
+    "Empresas",
+    17
+   ],
+   [
+    "Normativa",
+    11
+   ]
+  ],
+  "modulos": [
+   {
+    "nombre": "Analítica",
+    "puerta": "REST",
+    "que": "cruces, revisiones y tableros"
+   },
+   {
+    "nombre": "Automatización",
+    "puerta": "REST",
+    "que": "vigilancias, alertas y reportes"
+   },
+   {
+    "nombre": "Agentes",
+    "puerta": "MCP",
+    "que": "asistentes que citan la fuente"
+   }
+  ]
+ },
+ "ruta": {
+  "turnos": [
+   {
+    "herramienta": "igac_predio_en_punto",
+    "pregunta": "¿Qué predio del catastro IGAC hay en este punto?",
+    "entidad": "IGAC",
+    "licencia": "CC BY-SA 4.0",
+    "servido": "la fuente, en vivo",
+    "fuentes": 19
+   },
+   {
+    "herramienta": "secop_contratos_entidad",
+    "pregunta": "¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto?",
+    "entidad": "Colombia Compra Eficiente",
+    "licencia": "CC BY-SA 4.0",
+    "servido": "la fuente, en vivo",
+    "fuentes": 34
+   },
+   {
+    "herramienta": "pnn_areas_protegidas_en_punto",
+    "pregunta": "¿Qué áreas protegidas del RUNAP contienen este punto?",
+    "entidad": "Parques Nacionales",
+    "licencia": "CC BY-SA 4.0",
+    "servido": "una copia del archivo oficial",
+    "fuentes": 1
+   }
+  ],
+  "otras": [
+   12,
+   11,
+   8,
+   7,
+   6,
+   6,
+   5,
+   4,
+   4,
+   4,
+   4,
+   4,
+   3,
+   3,
+   3,
+   3,
+   3,
+   3,
+   2,
+   2,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1,
+   1
+  ]
+ }
+}

@@ -936,6 +936,112 @@ def vineta(tipo: str) -> str:
     return f'<div class="vineta" data-vineta="{tipo}"{attr} role="img" aria-label="{ETIQUETAS[tipo]}"><div class="rotulos-v" aria-hidden="true"></div></div>'
 
 
+# ---------------------------------------------------------------- figuras isométricas (Anatomy)
+# Dos figuras de la portada dibujadas con el kit de Anatomy (web/figuras/kit, MIT). Este archivo
+# escribe lo que muestran (web/figuras/datos.json, todo del catálogo) y `node
+# web/figuras/construir.mjs` dibuja los SVG; aquí se incrustan. La huella de los datos va en cada SVG:
+# si el catálogo cambia y el dibujo no, la construcción falla.
+FIGURAS = RAIZ / "figuras"
+# Lo que se monta sobre la capa de datos y por qué puerta entra (lado_puertas: agentes por MCP,
+# sistemas por REST).
+MODULOS = [
+    ("Analítica", "REST", "cruces, revisiones y tableros"),
+    ("Automatización", "REST", "vigilancias, alertas y reportes"),
+    ("Agentes", "MCP", "asistentes que citan la fuente"),
+]
+# La ruta de una pregunta: tres herramientas reales de familias distintas.
+RUTA = ["igac_predio_en_punto", "secop_contratos_entidad", "pnn_areas_protegidas_en_punto"]
+SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
+
+
+def datos_figuras() -> dict:
+    por_id = {h.id: h for h in HERR}
+    turnos = []
+    for hid in RUTA:
+        h = por_id[hid]
+        f = CAT.fuentes[h.fuente]
+        turnos.append(
+            {
+                "herramienta": h.id,
+                "pregunta": h.pregunta,
+                "entidad": nombre_entidad(f.entidad),
+                "licencia": licencia_corta(f.licencia.spdx),
+                "servido": SERVIDO[f.modo],
+            }
+        )
+    nombradas = {t["entidad"] for t in turnos}
+    assert len(nombradas) == len(turnos), "cada turno va a una entidad distinta"
+    return {
+        "capas": {
+            "fuentes": N_FUENTES,
+            "herramientas": N_HERR,
+            "familias": [[FAMILIAS[f], n] for f, n in POR_FAMILIA.most_common() if f != "meta"],
+            "modulos": [{"nombre": n, "puerta": p, "que": q} for n, p, q in MODULOS],
+        },
+        "ruta": {
+            "turnos": [{**t, "fuentes": ENTIDADES[t["entidad"]]} for t in turnos],
+            # Las demás entidades van sin nombre: solo cuántas fuentes publica cada una.
+            "otras": sorted((n for e, n in ENTIDADES.items() if e not in nombradas), reverse=True),
+        },
+    }
+
+
+def datos_figuras_json() -> str:
+    return json.dumps(datos_figuras(), ensure_ascii=False, indent=1) + "\n"
+
+
+def huella_figuras() -> str:
+    """Huella de lo que decide el dibujo: los datos, el script que dibuja y el kit."""
+    import hashlib
+
+    h = hashlib.sha256(datos_figuras_json().encode("utf-8"))
+    for f in ("construir.mjs", "kit/iso-kit.mjs"):
+        h.update((FIGURAS / f).read_bytes().replace(b"\r\n", b"\n"))
+    return h.hexdigest()[:12]
+
+
+def figura(nombre: str) -> str:
+    svg = (FIGURAS / f"{nombre}.svg").read_text(encoding="utf-8").strip()
+    huella = re.search(r'data-datos="([0-9a-f]{12})"', svg)
+    if not huella or huella.group(1) != huella_figuras():
+        raise SystemExit(
+            f"La figura {nombre}.svg no está al día con el catálogo: corre "
+            "uv run python web/construir.py (escribe web/figuras/datos.json) y luego "
+            "node web/figuras/construir.mjs"
+        )
+    return svg
+
+
+def figura_capas() -> str:
+    d = datos_figuras()["capas"]
+    claves = "".join(
+        f"<li><b>{m['nombre']}</b> {m['que']}, conectado a la puerta por {m['puerta']}</li>"
+        for m in reversed(d["modulos"])
+    )
+    return f"""<figure class="fig-iso" data-figura="capas">
+<div class="placa" tabindex="0" aria-describedby="capas-pie">
+<span class="esq fig">Fig. 1</span><span class="esq tit">La capa de datos y lo que se monta encima</span>
+{figura("capas")}
+<span class="esq pista">Pasa el puntero por los módulos</span><span class="esq lectura" data-lectura aria-live="off">Datos · {d["fuentes"]} fuentes · {d["herramientas"]} herramientas</span>
+</div>
+<figcaption id="capas-pie"><ul class="claves">{claves}<li><b>Datos</b> la base: {d["fuentes"]} fuentes y {d["herramientas"]} herramientas; cada medidor es una familia y se llena según sus herramientas</li></ul></figcaption>
+</figure>"""
+
+
+def figura_ruta() -> str:
+    d = datos_figuras()["ruta"]
+    t0 = d["turnos"][0]
+    return f"""<figure class="fig-iso ancha" data-figura="ruta">
+<div class="placa" tabindex="0" aria-describedby="ruta-pie">
+<span class="esq fig">Fig. 2</span><span class="esq tit">La ruta de una pregunta</span>
+{figura("ruta")}
+<span class="esq pista">Flechas o puntero para cambiar de pregunta</span><span class="esq lectura" data-lectura aria-live="off"><code>{t0["herramienta"]}</code> → {t0["entidad"]}</span>
+</div>
+<figcaption id="ruta-pie"><p class="preg-r" data-pregunta>{escape(t0["pregunta"])}</p>
+<p>La pregunta sale de la terminal de tu agente, pasa la barrera de Terrnova con tu llave (por MCP o REST), llega a la columna de la entidad que publica el dato y vuelve con la respuesta rt/1: estado, datos, procedencia, licencia, completitud, servido_desde y huella. Hay una columna por cada una de las {N_ENTIDADES} entidades, más alta cuantas más fuentes publica.</p></figcaption>
+</figure>"""
+
+
 def metodo_html() -> str:
     pasos = "".join(f"<li><b>{a}</b> {b}</li>" for a, b in METODO)
     return f'<div class="metodo"><h3>Cómo trabajamos</h3><ol>{pasos}</ol></div>'
@@ -1078,9 +1184,12 @@ def inicio() -> str:
 </section>
 
 <section class="seccion capas-l" id="capas"><div class="envoltura">
+<div class="con-fig">
 <div class="cab ancha">
 <h2 class="t2">Una puerta a los datos y tres capas encima</h2>
 <p class="entrada">La capa de datos es el producto: se paga con un plan mensual y empieza gratis. Las otras tres son soluciones que se construyen sobre ella, con la fuente oficial de cada dato.</p>
+</div>
+{figura_capas()}
 </div>
 <div class="columnas c4">
 <div class="capa-d"><span class="et">el producto</span><h3>Datos</h3><p>{N_FUENTES} fuentes oficiales por MCP o API REST, con la entidad, la licencia y la fecha en cada respuesta. Tu agente las consulta solo.</p><a class="enlace" href="/desarrolladores">Cómo se conecta</a></div>
@@ -1121,6 +1230,7 @@ def inicio() -> str:
 <h2 class="t2">Por qué no basta con buscar en la web</h2>
 <p class="entrada">Un agente con buscador encuentra páginas. Una decisión necesita el dato oficial, saber de dónde salió y si se puede usar.</p>
 </div>
+{figura_ruta()}
 <div class="columnas c4">
 <div><h3>Cada entidad publica a su manera</h3><p>{N_ENTIDADES} entidades y {N_FUENTES} fuentes, entre portales de datos abiertos, servicios de mapas, archivos y páginas. Aquí todas responden con el mismo contrato.</p></div>
 <div><h3>Sumar mal es fácil</h3><p>El SECOP Integrado repite un contrato por cada estado. Sumados tal cual, los de Pitalito en 2025 dan $174.000 M; contados bien, $63.157 M (medido el 22-10-2026). Las herramientas ya cuentan bien.</p></div>
@@ -1167,7 +1277,7 @@ def inicio() -> str:
         "Terrnova · Del dato oficial a la solución",
         f"Una capa de datos con {N_FUENTES} fuentes oficiales, de Colombia y algunas globales, y, encima, analítica, automatizaciones y agentes, con la fuente y la licencia de cada dato.",
         c,
-        ("escena-predios.js", "escena-vinetas.js"),
+        ("escena-predios.js", "escena-vinetas.js", "figuras.js"),
     )
 
 
@@ -1687,6 +1797,20 @@ def paginas() -> dict[str, str]:
 def main() -> int:
     revisar = "--revisar" in sys.argv
     viejas = []
+    datos_fig = FIGURAS / "datos.json"
+    if revisar:
+        if datos_fig.read_text(encoding="utf-8") != datos_figuras_json():
+            viejas.append("figuras/datos.json")
+    else:
+        datos_fig.write_text(datos_figuras_json(), encoding="utf-8", newline="\n")
+        sello = f'data-datos="{huella_figuras()}"'
+        svgs = [FIGURAS / f"{n}.svg" for n in ("capas", "ruta")]
+        if not all(s.exists() and sello in s.read_text(encoding="utf-8") for s in svgs):
+            import shutil
+            import subprocess
+
+            if shutil.which("node"):
+                subprocess.run(["node", str(FIGURAS / "construir.mjs")], check=True)
     for nombre, texto in paginas().items():
         f = PUBLICO / nombre
         if revisar:

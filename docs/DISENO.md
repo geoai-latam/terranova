@@ -10,8 +10,8 @@ sombras, cifras y en el discurso de «agentes que hacen el trabajo»; manda este
 ## Cómo se ve
 
 Sobria y técnica, con el oficio de un buen mapa. El carácter lo ponen los datos reales: predios en
-3D, respuestas con su huella y cifras con su fecha. No hay ilustraciones, brillos, degradados
-decorativos ni fotos de stock.
+3D, respuestas con su huella y cifras con su fecha. No hay ilustraciones decorativas, brillos,
+degradados decorativos ni fotos de stock; las figuras isométricas explican, no adornan.
 
 - Fondo blanco roto con sesgo verde (`--fondo`), tinta verde muy oscura y **un solo acento ámbar
   por vista**: el botón principal o lo que hay que mirar.
@@ -110,6 +110,24 @@ El 3D solo va con datos reales y cuando ayuda a leerlos.
   formas pueden ser esquemáticas, pero lo que se rotula existe.
 - Colores desde los tokens; sombreado plano, sin luces que cambien los colores de marca.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
+
+## Figuras isométricas (Anatomy)
+
+Además del 3D con datos, la portada tiene dos figuras isométricas en SVG que explican el producto con
+un objeto que se reconoce (un bastidor de equipos, un banco con barrera). Siguen el método de
+[Anatomy](https://github.com/wheresryan22/anatomy) (MIT), cuyo kit está en `web/figuras/kit`.
+
+- **El objeto es la explicación:** piezas reales con volumen (patas, rieles, tornillos, placas,
+  clavijas), no cajas con flechas. Cada línea termina en algo; se comprueba con el `lines.mjs` de
+  Anatomy (0 extremos sueltos).
+- **Verdad:** todo lo que muestran sale de `construir.py` (familias, entidades, herramientas,
+  licencias). Las entidades que no son de un turno van sin nombre, solo con su número de fuentes.
+- **Tonos:** papel y sombras desde `fondo`, `superficie` y `superficie-2`; líneas en la escala de
+  tinta; ventanas en `bosque-800` con lo escrito en `teal-400`. **Un solo ámbar:** lo encendido.
+- **Texto:** como mucho un rótulo grabado por figura; lo demás va en las esquinas de la tarjeta
+  (Fig., título, pista y lectura en vivo, en minúscula) y en el pie.
+- **Movimiento:** calmado, con tiempo; recorre solo cuando nadie toca, el puntero y las flechas
+  eligen, y fuera de la vista no corre. Con `prefers-reduced-motion` queda quieto y completo.
 
 ## Logo y aliados
 

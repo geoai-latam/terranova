@@ -95,3 +95,40 @@ def test_el_sitio_no_anuncia_fuentes_sin_uso_comercial() -> None:
     assert all(f["uso_comercial"] == "si" for f in datos["fuentes"].values())
     ids = set(datos["fuentes"])
     assert all(h["fuente"] in ids for h in datos["herramientas"])
+
+
+def test_figuras_isometricas_al_dia_y_verdaderas() -> None:
+    # Las dos figuras de la portada (web/figuras, kit de Anatomy) llevan la huella de sus datos, su
+    # script y el kit; los datos salen del catálogo y no nombran entidades fuera de los turnos.
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir
+
+    datos = construir.datos_figuras()
+    huella = construir.huella_figuras()
+    html = (PUBLICO / "index.html").read_text(encoding="utf-8")
+    for nombre in ("capas", "ruta"):
+        svg = (RAIZ / "web" / "figuras" / f"{nombre}.svg").read_text(encoding="utf-8")
+        assert f'data-datos="{huella}"' in svg, f"{nombre}.svg no está al día"
+        assert f'data-figura="{nombre}"' in html
+    ids = {h.id for h in construir.HERR}
+    turnos = datos["ruta"]["turnos"]
+    assert {t["herramienta"] for t in turnos} <= ids
+    assert len(turnos) + len(datos["ruta"]["otras"]) == construir.N_ENTIDADES
+    assert sum(n for _, n in datos["capas"]["familias"]) + construir.POR_FAMILIA["meta"] == (
+        construir.N_HERR
+    )
+    # Las entidades sin nombre en la figura van solo como conteos: nada de nombres sueltos.
+    assert all(isinstance(n, int) for n in datos["ruta"]["otras"])
+    assert "DIAN" not in html
+
+
+def test_figuras_respetan_movimiento_reducido_y_marca() -> None:
+    css = (PUBLICO / "estilo.css").read_text(encoding="utf-8")
+    js = (PUBLICO / "js" / "figuras.js").read_text(encoding="utf-8")
+    bloque = css[css.index("figuras isométricas de la portada") :]
+    assert "prefers-reduced-motion: reduce" in bloque
+    assert "prefers-reduced-motion: reduce" in js
+    html = (PUBLICO / "index.html").read_text(encoding="utf-8")
+    texto = re.sub(r"<[^>]+>", " ", html)
+    assert "Terranova" not in texto, "la marca se escribe Terrnova"
+    assert "Terrnova" in (RAIZ / "web" / "figuras" / "ruta.svg").read_text(encoding="utf-8")
