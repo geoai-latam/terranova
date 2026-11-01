@@ -53,11 +53,12 @@ export function asistente(DATOS, huella) {
   // (a la derecha: la clavija cuelga hacia abajo y a la izquierda en pantalla, no la tapa)
   nodos.forEach((_, j) => {
     const [x0, , z] = toma(j);
-    const x = x0 + 14.4, zz = z;
-    cara.push(S(k.slabOf({ x: x - 9.6, y: YC, w: 19.2, d: 0.5, r: 0.3 }, zz - 2, 4, P, 1), { m: "papel", tone: "lo", crease: "none" }));
+    // la placa mide lo que su sigla (mono: ~0,62 em por letra) más un margen de 1,8 a cada lado
+    const T = 1.9, ancho = siglas[j].length * T * 0.64 + 3.6, x = x0 + 4.6, zz = z;
+    cara.push(S(k.slabOf({ x, y: YC, w: ancho, d: 0.5, r: 0.3 }, zz - 2, 4, P, 1), { m: "papel", tone: "lo", crease: "none" }));
     // la sigla de la entidad, grabada en la placa
-    cara.push(k.faceTextSvg(k.sideMatrix([x - 7.8, YC + 0.5], zz - 0.9, P, "left"), siglas[j], { size: 2.05, tone: "hi" }));
-    cara.push(D([at([x - 8.7, YC + 0.5, zz]), at([x + 8.7, YC + 0.5, zz])], { size: 0.28 }));
+    cara.push(k.faceTextSvg(k.sideMatrix([x + 1.8, YC + 0.5], zz - 0.8, P, "left"), siglas[j], { size: T, tone: "hi" }));
+    cara.push(D([at([x + 0.8, YC + 0.5, zz]), at([x + ancho - 0.8, YC + 0.5, zz])], { size: 0.26 }));
   });
   // la cara del panel con su marco interior: una ranura cerrada a todo lo ancho
   cara.push(L(k.pathOf([[5, YC, 10], [PAN.w - 5, YC, 10], [PAN.w - 5, YC, ZT - 5], [5, YC, ZT - 5]].map(at), true), { tone: "lo" }));
