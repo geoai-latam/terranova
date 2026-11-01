@@ -3,6 +3,12 @@
 
 encode zstd gzip
 
+# /metrics es de la red interna (Prometheus lee cada réplica directo): no sale por el borde.
+# Va en su propio handle: un `respond` suelto se ordena después de `handle` y nunca corría.
+handle /metrics {
+	respond 404
+}
+
 # El sitio público (web/publico, generado por web/construir.py) se sirve como archivos estáticos.
 # Las rutas de la puerta (/v1, /mcp, /estado, /docs, /llms.txt…) van a la puerta (@puerta).
 @sitio path / /index.html /servicios /fuentes /precios /desarrolladores /aliados /contacto /terminos /privacidad /estilo.css /favicon.svg /robots.txt /sitemap.xml /js/* /datos/* /img/*
