@@ -1,7 +1,7 @@
 // Fig. prueba: un fichero oscuro (bosque, con el filo claro) de cinco fichas sobre un banco, con su
 // tampón y su sello al lado de la última ficha, la de la huella. Cada ficha es una capa de la
 // prueba que trae toda respuesta rt/1 (dato y estado, procedencia, licencia, servido_desde y
-// huella), con los valores de una respuesta real de banrep_trm_recientes. Lo que se mueve: la ficha
+// huella), con los valores de la respuesta real del predio de Santa Marta (sinic_predio_en_punto). Lo que se mueve: la ficha
 // que se lee sube y su pestaña se enciende (el único ámbar); con la huella, el sello se entinta en
 // el tampón y la ficha queda sellada.
 import { D, L, S, base, encuadre, k, r1, regla, sombra, svgDe } from "./comun.mjs";
@@ -73,7 +73,7 @@ export function prueba(DATOS, huella) {
     const filete = k.sideSeam(ficha, z1 - 10.5, P, 1);
     // perforación de la varilla, abajo en el centro (una ranura cerrada)
     const ranura = k.pathOf([[W / 2 - 3, yf, z0 + 4], [W / 2 + 3, yf, z0 + 4], [W / 2 + 3, yf, z0 + 6.4], [W / 2 - 3, yf, z0 + 6.4]].map(at), true);
-    g.push(S(k.slabOf(ficha, z0, ALTO_F, P, 1), { m: "papel", tone: "hi", crease: "faint", inner: cara + L(filete, { tone: "faint" }) + L(ranura, { tone: "lo" }) }));
+    g.push(S(k.slabOf(ficha, z0, ALTO_F, P, 1), { m: "ficha", tone: "hi", crease: "lo", inner: cara + L(filete, { tone: "faint" }) + L(ranura, { tone: "lo" }) }));
     // pestaña de celuloide que abraza el canto, con su renglón; encendida, en ámbar
     const tab = { x: xTab(i), y: y - 0.6, w: ANCHO_T, d: 2.1, r: 0.5 };
     const renglon = L(k.segment([tab.x + 2.4, y + 1.5, z1 + 3], [tab.x + ANCHO_T - 3.6, y + 1.5, z1 + 3], P), { tone: "mid", free: true });

@@ -3,7 +3,7 @@
 // Agentes, en neutro, cada uno con un cable a su toma. Lo que se mueve: el dato (la única pieza
 // ámbar) sube por el cable del módulo que pregunta y, cuando llega, el piloto del módulo se
 // enciende. Nada más se mueve.
-import { D, L, S, encuadre, esc, k, matrizPlano, r1, sombra, svgDe } from "./comun.mjs";
+import { D, L, S, encuadre, esc, k, lampara, matrizPlano, r1, sombra, svgDe } from "./comun.mjs";
 
 const tramo = (a, b, P) => k.segment(a, b, P);
 
@@ -45,8 +45,9 @@ export function capas(DATOS, huella) {
   const marcas = k.topTicks(regla.x + 2, regla.x + regla.w - 2, 4, 5, regla.y + 2.6, 8.5, [-1, -1.8], P);
   fija.push(L(marcas.minor, { tone: "lo" }), L(marcas.major, { tone: "mid" }));
 
-  // estructura de atrás: panel izquierdo y los dos rieles delanteros con su fila de agujeros
-  fija.push(S(k.slabOf({ x: -3, y: 0, w: 3, d: yF, r: 0.5 }, 8, TECHO - 8, P, 2), { tone: "mid", m: "metal" }));
+  // estructura de atrás: panel izquierdo (bosque claro, como el techo y el costado) y los dos rieles
+  // delanteros con su fila de agujeros
+  fija.push(S(k.slabOf({ x: -3, y: 0, w: 3, d: yF, r: 0.5 }, 8, TECHO - 8, P, 2), { tone: "mid", m: "bosque-claro" }));
   for (const x of [0, W - 7]) {
     const riel = { x, y: FD - 7, w: 7, d: 6, r: 0.4 };
     const agujeros = [];
@@ -113,8 +114,8 @@ export function capas(DATOS, huella) {
       // (bajo la placa, lejos de las asas)
       g.push(S(k.slabOf({ x: 26, y: yF, w: 6, d: 0.6, r: 0.3 }, z + 5, 9, P, 1), { tone: "lo", crease: "none", m: "acero" }));
       g.push(S(k.slabOf({ x: 27.7, y: yF + 0.6, w: 2.6, d: 1.6, r: 0.5 }, z + 9, 3.4, P, 1), { tone: "mid", m: "metal" }));
-      g.push(L(k.sideRing([19, yF, z + 10.5], 1.3, "y", P, 14), { tone: "mid" }));
-      g.push(`<g class="marca-vivo">${D([at([19, yF, z + 10.5])], { size: 0.85, tone: "hi" })}</g>`);
+      const vivo = lampara([19, yF, z + 10.5], 1.9, "y", P);
+      g.push(vivo.fija, vivo.luz("marca-vivo", null, { visible: true }));
       zToma.push(z + 18);
     } else {
       const cx = TOMAS[i - 1];
@@ -170,10 +171,9 @@ export function capas(DATOS, huella) {
       tomaEn(cx, z + h / 2);
       zToma.push(z + h / 2);
       // piloto del módulo: un aro; se enciende (teal) cuando le llega el dato
-      const pp = [W - 16, yF, tope - 5];
-      g.push(L(k.sideRing(pp, 1.3, "y", P, 14), { tone: "mid" }));
-      g.push(D([at(pp)], { size: 0.5, tone: "faint" }));
-      pilotos.push(pp);
+      const lp = lampara([W - 16, yF, tope - 5.4], 1.9, "y", P);
+      g.push(lp.fija);
+      pilotos.push(lp);
     }
     fija.push(`<g data-modulo="${i}">${g.join("")}</g>`);
   });
@@ -187,12 +187,12 @@ export function capas(DATOS, huella) {
       rejillas.push(k.pathOf([[W + 3, y0, zz], [W + 3, y1, zz], [W + 3, y1, zz + 2.2], [W + 3, y0, zz + 2.2]].map(at), true));
     }
   }
-  fija.push(S(k.slabOf(panel, 8, TECHO - 8, P, 2), { tone: "mid", m: "metal", inner: L(rejillas.join(""), { tone: "lo" }) }));
+  fija.push(S(k.slabOf(panel, 8, TECHO - 8, P, 2), { tone: "mid", m: "bosque-claro", inner: L(rejillas.join(""), { tone: "hi" }) }));
   const techo = { x: -4, y: -1, w: W + 8, d: FD + 3, r: 1.5 };
-  fija.push(S(k.slabOf(techo, TECHO, 6, P, 3, 0.8), { tone: "mid", m: "metal" }));
-  fija.push(L(k.planOutline(k.insetPlan(techo, 3), TECHO + 6, P, 2), { tone: "faint" }));
+  fija.push(S(k.slabOf(techo, TECHO, 6, P, 3, 0.8), { tone: "mid", m: "bosque-claro" }));
+  fija.push(L(k.planOutline(k.insetPlan(techo, 3), TECHO + 6, P, 2), { tone: "mid" }));
   const tornT = k.corners(techo, 5.5);
-  fija.push(L(tornT.map(([x, y]) => k.ring(x, y, 1.4, TECHO + 6, P, 12)).join(""), { tone: "lo" }));
+  fija.push(L(tornT.map(([x, y]) => k.ring(x, y, 1.4, TECHO + 6, P, 12)).join(""), { tone: "mid" }));
   fija.push(D(tornT.map(([x, y]) => at([x, y, TECHO + 6])), { size: 0.45 }));
 
   // cables: de la toma de cada módulo a su toma en el de datos, por delante de los frentes
@@ -218,7 +218,7 @@ export function capas(DATOS, huella) {
   });
   viva.push(...pantallas);
   // los pilotos de los módulos, encendidos (teal), aparecen cuando llega el dato
-  pilotos.forEach((pp, j) => viva.push(`<g data-v="piloto${j}" class="marca-vivo" style="opacity:0">${D([at(pp)], { size: 0.85, tone: "hi" })}</g>`));
+  pilotos.forEach((lp, j) => viva.push(lp.luz("marca-vivo", `piloto${j}`)));
 
   // franjas de pantalla de cada módulo, para elegir con el puntero
   const franjas = UNID.map(({ z, h }) => {

@@ -143,3 +143,23 @@ export function casco(pts) {
   }
   return bajo.slice(0, -1).concat(alto.slice(0, -1));
 }
+
+// Una lámpara piloto en una cara vertical (eje "y": cara que mira a +y; "x": a +x). En la capa fija,
+// el aro de metal en el plano de la cara y la lente apagada (un domo: en pantalla, un círculo);
+// en la viva, la lente encendida con su brillo, que aparece con la escala. r en unidades del mundo:
+// con la escala común, r ≥ 1,9 da un piloto de 8 px o más a 1x en las figuras de la portada.
+export function lampara(c, r, eje, P) {
+  const [cx, cy] = k.iso(c, P);
+  const rp = r1(r * P.scale);
+  const aro = `<path class="lamp-aro" d="${k.sideRing(c, r + 0.8, eje, P, 28)}"/>`;
+  const lente = `<circle class="lamp-lente" cx="${r1(cx)}" cy="${r1(cy)}" r="${rp}"/>`;
+  const brillo = (x, y) => `<circle class="lamp-brillo" cx="${r1(x - rp * 0.32)}" cy="${r1(y - rp * 0.36)}" r="${r1(rp * 0.28)}"/>`;
+  return {
+    fija: aro + lente,
+    // la lente encendida: clase de estado (marca-vivo, marca-ambar, marca-revisar) y su pieza viva
+    luz: (clase, v, { visible = false } = {}) =>
+      `<g${v ? ` data-v="${v}"` : ""} class="${clase}" data-c="${r1(cx)} ${r1(cy)}"${visible ? "" : ' style="transform:scale(0);opacity:0"'}>` +
+      `<circle class="luz" cx="${r1(cx)}" cy="${r1(cy)}" r="${rp}"/>${brillo(cx, cy)}</g>`,
+    centro: [r1(cx), r1(cy)],
+  };
+}

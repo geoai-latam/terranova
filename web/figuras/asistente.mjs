@@ -4,7 +4,18 @@
 // la toma del cordón. Con cada pregunta, la clavija sale de la boca anterior y entra en la de la
 // entidad que publica el dato; su piloto se enciende (lo único ámbar) y la pantalla escribe la
 // respuesta. Preguntas, entidades y licencias: reales.
-import { D, L, S, encuadre, k, porProf, r1, sombra, svgDe } from "./comun.mjs";
+import { D, L, S, encuadre, k, lampara, porProf, r1, sombra, svgDe } from "./comun.mjs";
+
+// ¿El tramo a–b corta el polígono convexo pl (o cae dentro)? En pantalla.
+function cortaPoligono(a, b, pl) {
+  const lado = (p, q, r) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]);
+  const dentro = (p) => { const s = pl.map((q, i) => Math.sign(lado(q, pl[(i + 1) % pl.length], p))); return s.every((v) => v >= 0) || s.every((v) => v <= 0); };
+  if (dentro(a) || dentro(b)) return true;
+  return pl.some((q, i) => {
+    const r = pl[(i + 1) % pl.length];
+    return lado(a, b, q) * lado(a, b, r) < 0 && lado(q, r, a) * lado(q, r, b) < 0;
+  });
+}
 
 export function asistente(DATOS, huella) {
   const { preguntas, nodos, siglas } = DATOS.asistente;
@@ -37,31 +48,34 @@ export function asistente(DATOS, huella) {
   // el panel: zócalo, cuerpo en bosque con su costura, tapa y tornillos
   fija.push(S(k.slabOf({ x: PAN.x - 4, y: PAN.y - 4, w: PAN.w + 8, d: PAN.d + 8, r: 1.5 }, 0, 4, P, 3, 0.5), { m: "metal", tone: "lo" }));
   const marco = { x: PAN.x, y: PAN.y, w: PAN.w, d: PAN.d, r: 1 };
-  fija.push(S(k.slabOf(marco, 4, ZT - 4, P, 2, 0.5), { m: "bosque", tone: "mid", inner: L(k.sideSeam(marco, 10, P, 2), { tone: "lo" }) }));
+  // el panel en bosque claro: con el bosque hondo pesaba demasiado en el área
+  fija.push(S(k.slabOf(marco, 4, ZT - 4, P, 2, 0.5), { m: "bosque-claro", tone: "mid", inner: L(k.sideSeam(marco, 10, P, 2), { tone: "hi" }) }));
   // las bocas: aro de metal (relleno entre dos círculos), boca oscura y el piloto encima
   const enCara = (x, z, r, pasos = 24) => Array.from({ length: pasos }, (_, q) => { const a = (q / pasos) * Math.PI * 2; return at([x + Math.cos(a) * r, YC, z + Math.sin(a) * r]); });
   const anillo = (x, z, r0, r1_) => k.pathOf(enCara(x, z, r0), true) + k.pathOf(enCara(x, z, r1_).reverse(), true);
   const cara = [];
+  const lamparas = nodos.map((_, j) => { const [x, , z] = toma(j); return lampara([x, YC, z + 7], 1.8, "y", P); });
   nodos.forEach((_, j) => {
     const [x, , z] = toma(j);
     cara.push(`<path class="boca-aro" d="${anillo(x, z, 3.4, 2)}"/>`);
     cara.push(`<path class="boca" d="${k.pathOf(enCara(x, z, 2), true)}"/>`);
-    cara.push(L(k.sideRing([x, YC, z + 6.8], 1.3, "y", P, 14), { tone: "mid" }));
-    cara.push(D([at([x, YC, z + 6.8])], { size: 0.5, tone: "faint" }));
+    cara.push(lamparas[j].fija);
   });
   // regletas: a la derecha de cada boca, su placa de rótulo con la sigla grabada y dos tornillos
   // (a la derecha: la clavija cuelga hacia abajo y a la izquierda en pantalla, no la tapa)
+  const placasPantalla = [];
   nodos.forEach((_, j) => {
     const [x0, , z] = toma(j);
     // la placa mide lo que su sigla (mono: ~0,62 em por letra) más un margen de 1,8 a cada lado
     const T = 1.9, ancho = siglas[j].length * T * 0.64 + 3.6, x = x0 + 4.6, zz = z;
+    placasPantalla.push([[x - 0.6, YC, zz - 2.6], [x + ancho + 0.6, YC, zz - 2.6], [x + ancho + 0.6, YC, zz + 2.6], [x - 0.6, YC, zz + 2.6]].map(at));
     cara.push(S(k.slabOf({ x, y: YC, w: ancho, d: 0.5, r: 0.3 }, zz - 2, 4, P, 1), { m: "papel", tone: "lo", crease: "none" }));
     // la sigla de la entidad, grabada en la placa
     cara.push(k.faceTextSvg(k.sideMatrix([x + 1.8, YC + 0.5], zz - 0.8, P, "left"), siglas[j], { size: T, tone: "hi" }));
     cara.push(D([at([x + 0.8, YC + 0.5, zz]), at([x + ancho - 0.8, YC + 0.5, zz])], { size: 0.26 }));
   });
   // la cara del panel con su marco interior: una ranura cerrada a todo lo ancho
-  cara.push(L(k.pathOf([[5, YC, 10], [PAN.w - 5, YC, 10], [PAN.w - 5, YC, ZT - 5], [5, YC, ZT - 5]].map(at), true), { tone: "lo" }));
+  cara.push(L(k.pathOf([[5, YC, 10], [PAN.w - 5, YC, 10], [PAN.w - 5, YC, ZT - 5], [5, YC, ZT - 5]].map(at), true), { tone: "hi" }));
   fija.push(cara.join(""));
   fija.push(D([[4, 8], [PAN.w - 4, 8], [4, ZT - 4], [PAN.w - 4, ZT - 4]].map(([x, z]) => at([x, YC, z])), { size: 0.42 }));
   const tapa = { x: PAN.x - 2, y: PAN.y - 2, w: PAN.w + 4, d: PAN.d + 4, r: 1.2 };
@@ -83,18 +97,32 @@ export function asistente(DATOS, huella) {
   // encima, la pantalla y el teclado (el cordón pasa detrás de la pantalla)
   const cordones = [], clavijas = [], ambar = [];
   const base = [px, py, pz + 1.4];
+  // el cordón no tapa ninguna sigla: de varias caídas posibles se queda con la primera que no cruza
+  // ninguna placa en pantalla (y, si todas cruzan, con la que menos)
+  const cruza = (pts) => placasPantalla.reduce((n, pl) => n + pts.filter((q, i) => i > 0 && cortaPoligono(pts[i - 1], q, pl)).length, 0);
   nodos.forEach((_, j) => {
     const [x, y, z] = toma(j);
     const cola = [x, y + 13.6, z]; // donde termina el manguito
     // el cordón: sale de la toma hacia atrás y abajo, cuelga entre la mesa y el panel y sube a la
     // clavija desde abajo (una cúbica: la caída de un cordón de verdad)
-    const c1 = [base[0], base[1] - 7, base[2] - 9];
-    const c2 = [cola[0], cola[1] + 6, cola[2] - 14];
-    const pts = [];
-    for (let q = 0; q <= 30; q++) {
-      const t = q / 30, u = 1 - t;
-      pts.push(at([0, 1, 2].map((c) => u * u * u * base[c] + 3 * u * u * t * c1[c] + 3 * u * t * t * c2[c] + t * t * t * cola[c])));
-    }
+    const curva = (c1, c2) => {
+      const pts = [];
+      for (let q = 0; q <= 30; q++) {
+        const t = q / 30, u = 1 - t;
+        pts.push(at([0, 1, 2].map((c) => u * u * u * base[c] + 3 * u * u * t * c1[c] + 3 * u * t * t * c2[c] + t * t * t * cola[c])));
+      }
+      return pts;
+    };
+    let mejor = null;
+    for (const dz of [14, 20, 8, 26])
+      for (const dy of [6, 12, 18])
+        for (const dx of [0, -8, 8, -16]) {
+          const pts = curva([base[0], base[1] - 7, base[2] - 9], [cola[0] + dx, cola[1] + dy, cola[2] - dz]);
+          const n = cruza(pts);
+          if (!mejor || n < mejor.n) mejor = { n, pts };
+          if (n === 0) break;
+        }
+    const pts = mejor.pts;
     const d = k.pathOf(pts);
     cordones.push(`<g data-v="cordon${j}" style="opacity:0"><path class="cordon-forro" d="${d}"/><path class="cordon-alma" d="${d}"/></g>`);
     // la clavija: punta de metal (entra en la boca), cuerpo con dos estrías y el manguito oscuro
@@ -103,8 +131,10 @@ export function asistente(DATOS, huella) {
     const cuerpo = { x: x - 2.7, y: y + 2.4, w: 5.4, d: 8, r: 2 };
     cl.push(S(k.slabOf(cuerpo, z - 2.7, 5.4, P, 3, 0.5), { m: "metal", tone: "hi", inner: L(k.sideSeam(cuerpo, z + 1.2, P, 3), { tone: "faint" }) }));
     cl.push(S(k.slabOf({ x: x - 1.8, y: y + 10.4, w: 3.6, d: 3.6, r: 1.5 }, z - 1.8, 3.6, P, 2), { m: "bosque", tone: "mid", crease: "none" }));
-    clavijas.push(`<g data-v="clavija${j}" style="opacity:0">${cl.join("")}</g>`);
-    ambar.push(`<g data-v="piloto${j}" class="marca-ambar" style="opacity:0">${D([at([x, YC, z + 6.8])], { size: 1.7, tone: "hi" })}</g>`);
+    // la clavija aparece y se va con la escala, desde su cuerpo
+    const [qx, qy] = at([x, y + 6.4, z]);
+    clavijas.push(`<g data-v="clavija${j}" data-c="${r1(qx)} ${r1(qy)}" style="transform:scale(0);opacity:0">${cl.join("")}</g>`);
+    ambar.push(lamparas[j].luz("marca-ambar", `piloto${j}`));
   });
   viva.push(cordones.join(""), clavijas.join(""), ambar.join(""));
 

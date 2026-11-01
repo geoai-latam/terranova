@@ -10,11 +10,11 @@
 // Rendimiento: el SVG llega en dos capas (capa-fija y capa-viva); la viva va en su propio <svg>
 // encima y solo se mueve con transform y opacity (a lo sumo 60 cuadros por segundo). Un planificador único deja viva una sola figura
 // (la más visible); corre dos ciclos al entrar en vista y vuelve con el puntero, el toque, el foco o
-// las flechas. Fuera de eso no hay ningún cuadro: cero repintado en reposo. Con puntero grueso o
-// pocos núcleos, 30 cuadros por segundo.
+// las flechas; mientras sigue en vista, un ciclo cada ~15 s (vida). Entre ciclos no hay ningún
+// cuadro: cero repintado en reposo. Con puntero grueso o pocos núcleos, 30 cuadros por segundo.
 const quieto = matchMedia('(prefers-reduced-motion: reduce)');
 const lento = matchMedia('(pointer: coarse)').matches || (navigator.hardwareConcurrency || 8) <= 4;
-const REPOSO = 2600, MEZCLA = 280, AUTOS = 2;
+const REPOSO = 2600, MEZCLA = 280, AUTOS = 2, VIDA = 15000;
 
 // ---------------------------------------------------------------- curvas y tiempos
 function bezier(x1, y1, x2, y2) {
@@ -133,23 +133,24 @@ function bucle(ahora) {
 }
 function despertar() { if (!cuadro) { ultimo = 0; cuadro = requestAnimationFrame(bucle); } }
 
-// Un punto vivo que late (un estado real: el lector que vigila): un pulso corto cada 3 s mientras la
-// figura está viva y quieta; nada entre pulsos.
-function latir(F) {
-  clearInterval(F.pulso);
-  if (!F.m.latido || quieto.matches) return;
-  F.pulso = setInterval(() => {
-    if (viva !== F || document.hidden) { clearInterval(F.pulso); return; }
-    if (!F.corre) F.m.latido.animate([{ opacity: 1 }, { opacity: 0.25 }, { opacity: 1 }], { duration: 700, easing: 'ease-in-out' });
-  }, 3000);
+// Vida: después de los dos ciclos de entrada, mientras la figura sigue en vista (y es la más visible),
+// un ciclo cada ~15 s, contados desde que empezó el anterior. Entre ciclos no se pinta nada.
+function vivir(F) {
+  clearTimeout(F.espera);
+  const dura = F.m.dura(F.turno);
+  F.espera = setTimeout(() => {
+    if (viva !== F || F.corre || quieto.matches) return;
+    if (document.hidden || F.razon < 0.34) { vivir(F); return; }
+    jugar(F, paso(F));
+  }, Math.max(REPOSO, VIDA - dura));
 }
 function terminar(F) {
   F.corre = false;
-  latir(F);
   clearTimeout(F.espera);
-  if (F === viva && F.autos < AUTOS && !quieto.matches) {
+  if (F !== viva || quieto.matches) return;
+  if (F.autos < AUTOS) {
     F.espera = setTimeout(() => { if (viva === F && !F.corre && F.autos < AUTOS) { F.autos++; jugar(F, paso(F)); } }, REPOSO);
-  }
+  } else vivir(F);
 }
 // cierra el ciclo en curso de una figura que deja de estar viva: salta a su resultado
 function cerrar(F) {
@@ -180,7 +181,8 @@ function elegirViva() {
   if (mejor === viva) return;
   if (viva) cerrar(viva);
   viva = mejor;
-  if (mejor && mejor.autos < AUTOS && !quieto.matches) { mejor.autos++; jugar(mejor, mejor.autos === 1 ? 0 : paso(mejor)); }
+  if (!mejor || quieto.matches) return;
+  if (mejor.autos < AUTOS) { mejor.autos++; jugar(mejor, mejor.autos === 1 ? 0 : paso(mejor)); } else vivir(mejor);
 }
 const umbrales = Array.from({ length: 21 }, (_, i) => i / 20);
 const vista = new IntersectionObserver(es => {
@@ -289,7 +291,8 @@ FIG.capas = ({ V, pieza }) => {
         const f = tramo(t, APARECE, VIAJA, mueve);
         pon(el, { x: vx * f, y: vy * f, s: tramo(t, 0, APARECE, entra) });
       });
-      pilotos.forEach((el, j) => pon(el, { o: j === i ? tramo(t, LLEGA, 140, entra) : 0 }));
+      // el piloto se enciende de golpe, como una luz
+      pilotos.forEach((el, j) => pon(el, { s: j === i && t >= LLEGA ? 1 : 0 }));
       // lo que muestra la pantalla del módulo al que llega el dato; las demás quedan como estaban
       const llego = (j, t0, dur, curva = entra) => (j !== i ? 1 : tramo(t, LLEGA + t0, dur, curva));
       barras.forEach((el, q) => pon(el, { k: llego(0, q * 60, 320) }));
@@ -333,7 +336,7 @@ FIG.ruta = ({ V, pieza }) => {
       const f = t < T1 ? s1 * tramo(t, 200, T1 - 200, mueve) : s1 + (1 - s1) * tramo(t, T1 + 320, T2 - T1 - 320, mueve);
       const [px, py] = sobre(pts, f);
       pon(preg, { x: px, y: py, s: tramo(t, 0, 200, entra) * (1 - tramo(t, T2, 180, sale)) });
-      pon(lector, { o: tramo(t, T1, 120, entra) * (1 - tramo(t, T3, 200, sale)) });
+      pon(lector, { s: t >= T1 && t < T3 ? 1 : 0 }); // la luz del lector, de golpe
       const alza = ALZA * (tramo(t, T1 + 100, 360, entra) - tramo(t, baja, 380, mueve));
       brazos.forEach(el => pon(el, { k: alza }));
       tapas.forEach((el, i) => pon(el, { o: i === k ? tramo(t, T2, 140, entra) : 0 }));
@@ -394,6 +397,16 @@ FIG.prueba = ({ V, pieza }) => {
 // alfileres; después, la columna que se mira se enciende y la lectura da su conteo y su lugar.
 FIG.cobertura = ({ V, pieza }) => {
   const cols = V.celdas.map((_, i) => pieza('c' + i));
+  // las columnas altas crecen de verdad: cada cara se alarga en su marco y la tapa sube (sin escala
+  // que las aplaste); a altura cero no se dibujan
+  const crece = (el, c, antes) => {
+    if (antes && antes.k === c.k) return;
+    const q = Math.max(0, Math.min(1, c.k));
+    if (!el.__partes) el.__partes = [...el.querySelectorAll('[data-m], [data-tapa]')].map(p => ({ p, m: p.dataset.m && p.dataset.m.split(' ').map(Number), h: +(p.dataset.tapa || 0) }));
+    for (const { p, m, h } of el.__partes) p.style.transform = m ? `matrix(${m[0]},${m[1]},0,${q.toFixed(3)},${m[2]},${m[3]})` : `translate(0px,${((1 - q) * h).toFixed(2)}px)`;
+    el.style.opacity = q <= 0.02 ? '0' : '';
+  };
+  cols.forEach((el, c) => { if (el && V.celdas[c][4]) el.__pinta = crece; });
   const luces = V.candidatas.map(i => pieza('luz' + i));
   const pines = V.ciudades.map((_, j) => pieza('pin' + j));
   const n = 1 + V.candidatas.length;
@@ -421,7 +434,7 @@ FIG.cobertura = ({ V, pieza }) => {
         // escalones de 1/24: así cada cuadro cambia pocas piezas y repinta poco
         const t0 = ESPERA + V.celdas[c][3] * RETRASO;
         const k = !entrando ? 1 : V.celdas[c][4] ? Math.round(resorte(t, t0, CRECE) * 24) / 24 : t >= t0 + CRECE * 0.3 ? 1 : 0;
-        pon(el, { k, o: k > 0.02 ? 1 : 0 }); // aplastada no se dibuja (el filo no escala)
+        pon(el, { k, o: k > 0.02 ? 1 : 0 }); // a altura cero no se dibuja
       });
       pines.forEach((el, j) => {
         const u = entrando ? tramo(t, PINES + j * 60, 280, entra) : 1;
@@ -451,7 +464,7 @@ FIG.revision = ({ V, pieza }) => {
   const llega = V.est.map((_, k) => APARECE + PRIMERO + k * (PARA + ENTRE));
   const sale3 = llega[3] + PARA, fin = sale3 + ALFINAL, cayo = fin + CAE, DURA = cayo + 380;
   const xEn = t => {
-    if (t < APARECE) return 0;
+    if (t < APARECE) return V.bandeja; // la del ciclo anterior sigue en la bandeja hasta que sale la nueva
     if (t < llega[0]) return V.est[0] * tramo(t, APARECE, PRIMERO, mueve);
     for (let k = 0; k < 4; k++) {
       if (t < llega[k] + PARA) return V.est[k];
@@ -467,8 +480,11 @@ FIG.revision = ({ V, pieza }) => {
     pose(i, t, pon) {
       const tipo = V.tipos[i];
       const x = xEn(t);
-      const z = t < fin ? 0 : -V.cae * tramo(t, fin, CAE, sale) ** 1;
-      pon(ficha, { x: ex[0] * x + ez[0] * z, y: ex[1] * x + ez[1] * z, s: t < APARECE ? 0 : 1 - tramo(t, cayo + 120, 200, sale) });
+      // la ficha queda en la bandeja al final (se ve el expediente); al empezar el ciclo siguiente se
+      // va con la escala y la nueva sale de la pila
+      const z = t < APARECE ? -V.cae : t < fin ? 0 : -V.cae * tramo(t, fin, CAE, sale);
+      const s = t < APARECE ? 1 - tramo(t, 0, 180, sale) : t < APARECE + 120 ? 0 : tramo(t, APARECE + 120, 160, entra);
+      pon(ficha, { x: ex[0] * x + ez[0] * z, y: ex[1] * x + ez[1] * z, s });
       // la cinta lleva a la ficha: sus travesaños avanzan lo mismo (y se quedan quietos en las paradas)
       const xc = Math.min(x, V.fin) % V.paso;
       pon(cinta, { x: ex[0] * xc, y: ex[1] * xc });
@@ -550,7 +566,6 @@ FIG.vigilancia = ({ V, pieza }) => {
   return {
     n,
     dura: () => DURA,
-    latido: pieza('lector'),
     cuadros: [[1, 0], [1, 400], [1, LEE], [1, LEE + 260], [1, CORRE + 300], [1, IMPRIME + 300], [1, DURA], [3, DURA]],
     pose(i, t, pon) {
       const prev = (i - 1 + n) % n, c = V.carriles[i];
@@ -587,14 +602,16 @@ FIG.asistente = ({ V, pieza }) => {
     cuadros: [[0, 0], [0, 400], [0, 600], [0, CONECTA + 40], [0, DURA], [3, 150], [3, 600], [3, DURA]],
     pose(i, t, pon) {
       const q = V.preguntas[i];
+      // la clavija anterior se corre hacia afuera y se va con la escala; la nueva aparece con la
+      // escala y entra con resorte. El piloto se enciende de golpe, como una luz.
       clavijas.forEach((el, j) => {
-        if (j !== q.j) { pon(el, { x: sx, y: sy, o: 0 }); pon(cordones[j], { o: 0 }); return; }
-        const o = tramo(t, APARECE, 180, entra);
+        if (j !== q.j) { pon(el, { x: sx, y: sy, s: 0 }); pon(cordones[j], { o: 0 }); return; }
+        const s = tramo(t, APARECE, 200, entra);
         const fuera = 1 - resorte(t, ENTRA, CONECTA - ENTRA);
-        pon(el, { x: sx * fuera, y: sy * fuera, o });
-        pon(cordones[j], { o });
+        pon(el, { x: sx * fuera, y: sy * fuera, s });
+        pon(cordones[j], { o: s > 0.5 ? 1 : 0 });
       });
-      pilotos.forEach((el, j) => pon(el, { o: j === q.j && t >= CONECTA ? 1 : 0 }));
+      pilotos.forEach((el, j) => pon(el, { s: j === q.j && t >= CONECTA ? 1 : 0 }));
       respuestas.forEach((el, q) => pon(el, { o: q === i ? tramo(t, CONECTA + 120, 260, entra) : 0 }));
       return t < CONECTA ? { l: `${q.p} …`, d: '' } : { l: `${q.p} → ${q.e}`, d: q.l };
     },

@@ -3,7 +3,7 @@
 // color). La pregunta es una ficha ámbar que corre por la regla: el lector valida la llave, la
 // barrera se levanta, la ficha llega a la columna de su entidad (cuya tapa se enciende) y la
 // respuesta vuelve a la terminal. Un solo ciclo de unos 3 s por pregunta.
-import { D, L, S, encuadre, k, matrizPlano, r1, sombra, svgDe } from "./comun.mjs";
+import { D, L, S, encuadre, k, lampara, matrizPlano, r1, sombra, svgDe } from "./comun.mjs";
 
 const tramo = (a, b, P) => k.segment(a, b, P);
 
@@ -103,12 +103,11 @@ export function ruta(DATOS, huella) {
   fija.push(S(k.cylinder(68, -15, 2.4, 1.2, 18.8, P, 18), { tone: "mid", crease: "none", m: "metal" }));
   fija.push(L(k.sideArc(68, -15, 2.4, 6, P, 14), { tone: "faint" }));
   const lector = { x: 63, y: -20, w: 10, d: 10, r: 1.2 };
-  fija.push(S(k.slabOf(lector, 20, 7, P, 2, 0.5), { tone: "mid", m: "papel", inner: L(k.sideSeam(lector, 22, P, 2), { tone: "faint" }) }));
-  fija.push(L(k.planOutline({ x: 65, y: -15.6, w: 6, d: 1.2, r: 0.6 }, 27, P, 2), { tone: "lo" }));
-  const pLector = [71, -10, 24.5];
-  fija.push(L(k.sideRing(pLector, 1.1, "y", P, 12), { tone: "mid" }));
-  fija.push(D([at(pLector)], { size: 0.45, tone: "faint" }));
-  viva.push(`<g data-v="lector" class="marca-vivo" style="opacity:0">${D([at(pLector)], { size: 0.9, tone: "hi" })}</g>`);
+  fija.push(S(k.slabOf(lector, 20, 10, P, 2, 0.5), { tone: "mid", m: "papel", inner: L(k.sideSeam(lector, 22, P, 2), { tone: "faint" }) }));
+  fija.push(L(k.planOutline({ x: 65, y: -15.6, w: 6, d: 1.2, r: 0.6 }, 30, P, 2), { tone: "lo" }));
+  const lLector = lampara([68, -10, 25.4], 2.8, "y", P);
+  fija.push(lLector.fija);
+  viva.push(lLector.luz("marca-vivo", "lector"));
 
   // la barrera: caseta con el nombre grabado, poste de apoyo y (en la capa viva) el brazo
   const caseta = { x: 80, y: -30, w: 18, d: 14, r: 1.5 };
@@ -154,7 +153,7 @@ export function ruta(DATOS, huella) {
   const a0 = at(A);
   const recorridos = tramos.map((pts) => pts.map((p) => { const [x, y] = at(p); return [r1(x - a0[0]), r1(y - a0[1])]; }));
   const largos = tramos.map((pts) => pts.slice(1).map((p, j) => Math.hypot(p[0] - pts[j][0], p[1] - pts[j][1])).map(r1));
-  const ficha = { x: A[0] - 3, y: A[1] - 3, w: 6, d: 6, r: 1.8 };
+  const ficha = { x: A[0] - 4, y: A[1] - 4, w: 8, d: 8, r: 2.2 };
   // las fichas aparecen y se van con la escala (un ámbar a medio fundir se ve oliva)
   const [fx, fy] = at([A[0], A[1], ZR + 1.3]);
   const centro = `data-c="${r1(fx)} ${r1(fy)}" style="transform:scale(0);opacity:0"`;

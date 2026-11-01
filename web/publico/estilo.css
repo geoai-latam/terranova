@@ -48,8 +48,9 @@
      la superficie, con el croma del teal (h 184), no un celeste. */
   --sujeto-teal-0: #D2F2E9; --sujeto-teal-1: #AFE7D9; --sujeto-teal-2: #8EDAC9; --sujeto-teal-3: #76CCB9;
   --sujeto-teal-4: #5FB9A6; --sujeto-teal-5: #4BA694; --sujeto-teal-6: #399382; --sujeto-teal-filo: #1D5E53;
-  --sujeto-agua-0: #D4F3ED; --sujeto-agua-1: #B7E8E0; --sujeto-agua-2: #97DED3; --sujeto-agua-3: #7ECFC4;
+  --sujeto-agua-0: #D4F3ED; --sujeto-agua-1: #B2EAE1; --sujeto-agua-2: #90DFD4; --sujeto-agua-3: #7AD0C4;
   --sujeto-agua-4: #6AC0B4; --sujeto-agua-5: #56ADA1; --sujeto-agua-6: #469A8F; --sujeto-agua-filo: #226763;
+  --sujeto-agua-7: #35877E; --sujeto-agua-8: #26746E;
   --sujeto-ocre-0: #F5E8D0; --sujeto-ocre-1: #EED8B0; --sujeto-ocre-2: #E6C890; --sujeto-ocre-3: #DAB97B;
   --sujeto-ocre-4: #C9A769; --sujeto-ocre-5: #B7965A; --sujeto-ocre-6: #A3844A; --sujeto-ocre-filo: #765723;
   /* bosque claro: techos y costados de un bastidor, sin llegar al bosque de las pantallas */
@@ -720,6 +721,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
    metal, trabajo, acero); un material de color por figura (teal, agua, ocre, sus versiones fuertes,
    o bosque con el filo claro); ámbar solo en la pieza que está pasando, como copia que aparece. */
 .m-papel { --c0: var(--estructura-0); --c1: var(--estructura-1); --c2: var(--estructura-2); --c3: var(--estructura-3); --c4: var(--estructura-4); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
+/* las fichas del fichero (prueba): papel con el canto un paso más hondo, para que la que sube se despegue */
+.m-ficha { --c0: var(--estructura-1); --c1: var(--estructura-1); --c2: var(--estructura-3); --c3: var(--estructura-4); --c4: var(--estructura-5); --filo: var(--linea-media); --pliegue: var(--linea-baja); }
 .m-metal { --c0: var(--estructura-1); --c1: var(--estructura-2); --c2: var(--estructura-3); --c3: var(--estructura-4); --c4: var(--estructura-5); --filo: var(--linea-media); --pliegue: var(--linea-tenue); }
 .m-trabajo, .m-acero { --c0: var(--estructura-2); --c1: var(--estructura-3); --c2: var(--estructura-4); --c3: var(--estructura-5); --c4: var(--estructura-6); --filo: var(--linea-media); --pliegue: var(--linea-baja); }
 .m-teal { --c0: var(--sujeto-teal-1); --c1: var(--sujeto-teal-2); --c2: var(--sujeto-teal-3); --c3: var(--sujeto-teal-4); --c4: var(--sujeto-teal-5); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
@@ -729,6 +732,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 /* el sujeto con cuerpo: la misma rampa, dos escalones más hondo, con el filo marcado */
 .m-teal-fuerte { --c0: var(--sujeto-teal-2); --c1: var(--sujeto-teal-3); --c2: var(--sujeto-teal-4); --c3: var(--sujeto-teal-5); --c4: var(--sujeto-teal-6); --filo: var(--sujeto-teal-filo); --pliegue: var(--sujeto-teal-5); }
 .m-agua-fuerte { --c0: var(--sujeto-agua-2); --c1: var(--sujeto-agua-3); --c2: var(--sujeto-agua-4); --c3: var(--sujeto-agua-5); --c4: var(--sujeto-agua-6); --filo: var(--sujeto-agua-filo); --pliegue: var(--sujeto-agua-5); }
+/* el agua honda: las cajas de los relojes del tablero (el material que más pesa en esa figura) */
+.m-agua-honda { --c0: var(--sujeto-agua-4); --c1: var(--sujeto-agua-5); --c2: var(--sujeto-agua-6); --c3: var(--sujeto-agua-7); --c4: var(--sujeto-agua-8); --filo: #134F4B; --pliegue: var(--sujeto-agua-7); }
 .m-ocre-fuerte { --c0: var(--sujeto-ocre-2); --c1: var(--sujeto-ocre-3); --c2: var(--sujeto-ocre-4); --c3: var(--sujeto-ocre-5); --c4: var(--sujeto-ocre-6); --filo: var(--sujeto-ocre-filo); --pliegue: var(--sujeto-ocre-5); }
 .m-bosque { --c0: var(--oscuro-0); --c1: var(--oscuro-1); --c2: var(--oscuro-2); --c3: var(--oscuro-3); --c4: var(--oscuro-4); --filo: var(--oscuro-filo); --pliegue: var(--oscuro-filo); }
 .m-ambar { --c0: var(--acento-0); --c1: var(--acento-1); --c2: var(--acento-2); --c3: var(--acento-3); --c4: var(--acento-4); --filo: var(--acento-filo); --pliegue: var(--acento-4); }
@@ -785,7 +790,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .franja { fill: var(--sujeto-agua-filo); opacity: .3; stroke: none; }
 .aguja { fill: var(--linea-alta); stroke: none; }
 .aguja-ambar { fill: var(--acento-relleno); stroke: var(--acento-filo); stroke-width: .5; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
-.serie { fill: none; stroke: var(--sujeto-agua-filo); stroke-width: 1.6; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.serie { fill: none; stroke: var(--sujeto-agua-filo); stroke-width: 2.2; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
 /* vigilancia: la banderita (metal abajo, ámbar arriba) */
 .ban-brazo { fill: var(--estructura-3); stroke: var(--linea-media); stroke-width: .5; vector-effect: non-scaling-stroke; }
 .ban-placa-metal { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
@@ -907,3 +912,11 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   .tabla.t-tarifa th[scope="row"] { position: sticky; left: 0; z-index: 1; background: var(--superficie); min-width: 10.5em; padding-right: 12px; }
 }
 .pie-p .anual { color: var(--tinta); font-weight: 600; margin-right: 14px; }
+/* lámparas piloto (comun.mjs, lampara): aro de metal, lente apagada y, encendida, la luz con su brillo */
+.lamp-aro { fill: var(--estructura-2); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.lamp-lente { fill: var(--estructura-5); stroke: var(--linea-media); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.luz { stroke-width: .7; vector-effect: non-scaling-stroke; }
+.marca-vivo .luz { fill: #46B9A2; stroke: var(--teal-700); }
+.marca-ambar .luz, .marca-revisar .luz { fill: var(--acento-relleno); stroke: var(--acento-filo); }
+.marca-vivo .lamp-brillo, .marca-ambar .lamp-brillo, .marca-revisar .lamp-brillo { fill: #fff; opacity: .7; stroke: none; }
+.iso-line.nervio { stroke: #5E8A7D; }

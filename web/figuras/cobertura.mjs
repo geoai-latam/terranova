@@ -8,6 +8,52 @@
 // lectura da su conteo, su coordenada y la ciudad más cercana.
 import { D, L, S, casco, encuadre, k, r1, svgDe } from "./comun.mjs";
 
+// Una columna que crece de verdad (no aplastada por una escala): cada cara de lado se dibuja en su
+// propio marco (u a lo largo de la arista del piso, v vertical en pantalla) y figuras.js le escala
+// solo la v; la tapa (cara de arriba, su arista y su pliegue) sube con la altura. Mismo sombreado
+// por orientación que el kit (extrude). Con transform a escala 1, la columna queda entera.
+function columnaQueCrece(ring, z, h, P, m) {
+  const n = ring.length;
+  const area = ring.reduce((a, [x, y], i) => { const [x2, y2] = ring[(i + 1) % n]; return a + x * y2 - x2 * y; }, 0);
+  const [vx, vy] = k.towardViewer(P);
+  const { sinA, cosA } = k.cameraOf(P);
+  const normals = ring.map(([ax, ay], i) => {
+    const [bx, by] = ring[(i + 1) % n];
+    const l = Math.hypot(bx - ax, by - ay) || 1;
+    return area > 0 ? [(by - ay) / l, -(bx - ax) / l] : [-(by - ay) / l, (bx - ax) / l];
+  });
+  const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+  const top = ring.map(([x, y]) => k.iso([x, y, z + h], P)), bot = ring.map(([x, y]) => k.iso([x, y, z], P));
+  const H = r1(bot[0][1] - top[0][1]);
+  const f = (v) => Math.round(v * 100) / 100;
+  const partes = [];
+  // las caras de lado, en su marco
+  ring.forEach((_, i) => {
+    if (!facing[i]) return;
+    const [nx, ny] = normals[i];
+    const lit = (nx * -sinA + ny * cosA + 1) / 2;
+    const shade = Math.min(k.SHADES - 1, Math.max(0, Math.floor(lit * k.SHADES)));
+    const b1 = bot[i], b2 = bot[(i + 1) % n];
+    const mm = [f(b2[0] - b1[0]), f(b2[1] - b1[1]), f(b1[0]), f(b1[1])];
+    partes.push(`<path class="iso-shade" data-shade="${shade}" data-m="${mm.join(" ")}" style="transform:matrix(${mm[0]},${mm[1]},0,1,${mm[2]},${mm[3]})" d="M0 0H1V-${H}H0Z"/>`);
+  });
+  // las aristas verticales de la silueta, en su marco
+  ring.forEach((_, i) => {
+    if (facing[(i + n - 1) % n] === facing[i]) return;
+    const mm = [1, 0, f(bot[i][0]), f(bot[i][1])];
+    partes.push(`<path class="iso-line iso-edge" data-tone="hi" data-m="${mm.join(" ")}" style="transform:matrix(1,0,0,1,${mm[2]},${mm[3]})" d="M0 0V-${H}"/>`);
+  });
+  // la arista del piso (fija) y la tapa (sube): por cara, la de abajo y el pliegue de arriba si mira
+  // al lector; la arista de arriba si no
+  const seg = (pts, i) => k.pathOf([pts[i], pts[(i + 1) % n]]);
+  const caras = ring.map((_, i) => i);
+  partes.push(`<path class="iso-line iso-edge" data-tone="hi" d="${caras.filter((i) => facing[i]).map((i) => seg(bot, i)).join("")}"/>`);
+  partes.push(`<path class="iso-top" data-tapa="${H}" d="${k.pathOf(top, true)}"/>`);
+  partes.push(`<path class="iso-line iso-crease" data-tone="lo" data-tapa="${H}" d="${caras.filter((i) => facing[i]).map((i) => seg(top, i)).join("")}"/>`);
+  partes.push(`<path class="iso-line iso-edge" data-tone="hi" data-tapa="${H}" d="${caras.filter((i) => !facing[i]).map((i) => seg(top, i)).join("")}"/>`);
+  return `<g class="iso-solid m-${m}" data-crece="${H}">${partes.join("")}</g>`;
+}
+
 export function cobertura(DATOS, huella) {
   const { R, celdas, tierra, ciudades, total } = DATOS.cobertura;
   const K = 14, LON0 = -73.35, LAT0 = 3.57;
@@ -102,8 +148,11 @@ export function cobertura(DATOS, huella) {
   celdas.forEach(([lon, lat, n], i) => {
     const cx = X(lon), cy = Y(lat), h = alto(n);
     const sol = k.extrude(hex(cx, cy, RR * 0.8), ZL, h, P, { convex: true });
-    const [, piso] = at([cx, cy, ZL]);
-    let svg = `<g data-v="c${i}" data-eje="y ${r1(piso)}">${S(sol, { m: `cob${nivel(n)}`, tone: "hi", crease: "lo" })}</g>`;
+    // las altas crecen de verdad (sus caras se alargan); las bajas aparecen de una vez
+    const alta = h >= 12;
+    let svg = alta
+      ? `<g data-v="c${i}">${columnaQueCrece(hex(cx, cy, RR * 0.8), ZL, h, P, `cob${nivel(n)}`)}</g>`
+      : `<g data-v="c${i}">${S(sol, { m: `cob${nivel(n)}`, tone: "hi", crease: "lo" })}</g>`;
     if (candidatas.includes(i)) svg += `<g data-v="luz${i}" style="opacity:0">${S(sol, { m: "ambar", tone: "hi", crease: "lo" })}</g>`;
     items.push({ d: k.depthOf([cx, cy, 0], P), svg });
   });

@@ -82,7 +82,7 @@ export function tablero(DATOS, huella) {
     // corona en el costado de atrás (detrás de la caja, se dibuja antes)
     r.push(S(k.slabOf({ x: cx - 1.8, y: cy - R - 2.4, w: 3.6, d: 3, r: 0.6 }, ZD - 6, 3.4, P, 2), { m: "metal", tone: "mid" }));
     r.push(S(k.cylinder(cx, cy, R + 2, 0, 2, P, 48), { m: "acero", tone: "lo" }));
-    r.push(S(k.cylinder(cx, cy, R, 2, ZD - 2, P, 56, 0.8), { m: "agua-fuerte", tone: "hi", crease: "lo" }));
+    r.push(S(k.cylinder(cx, cy, R, 2, ZD - 2, P, 56, 0.8), { m: "agua-honda", tone: "hi", crease: "lo" }));
     r.push(L(k.knurl(cx, cy, R, ZD - 3, ZD, 64, P, 0.3), { tone: "mid" }));
     r.push(L(k.sideArc(cx, cy, R, ZD - 3, P, 40), { tone: "faint" }));
     // la esfera: un disco de papel con su aro, la franja de los comparables y las marcas
@@ -103,9 +103,12 @@ export function tablero(DATOS, huella) {
     // las agujas: tinta y su copia ámbar (la del reloj elegido); se dibujan en el plano de la esfera
     // apuntando a 0 y giran sobre el centro
     const aguja = `M${r1(cx - 0.55)} ${r1(cy + 2.4)}L${r1(cx + 0.55)} ${r1(cy + 2.4)}L${r1(cx + 0.14)} ${r1(cy - (R - 3.2))}L${r1(cx - 0.14)} ${r1(cy - (R - 3.2))}Z`;
+    // la del reloj elegido, en ámbar, es una pala con su cubo: se lee a 1x (~10 px o más)
+    const pala = `M${r1(cx - 1.3)} ${r1(cy + 3)}L${r1(cx + 1.3)} ${r1(cy + 3)}L${r1(cx + 0.3)} ${r1(cy - (R - 3))}L${r1(cx - 0.3)} ${r1(cy - (R - 3))}Z`;
+    const cubo = `<circle class="aguja-ambar" cx="${cx}" cy="${cy}" r="2.6"/>`;
     r.push(
       `<g transform="matrix(${MZ.join(" ")})"><g data-v="aguja${i}" data-centro="${cx} ${cy}"><path class="aguja" d="${aguja}"/></g>` +
-        `<g data-v="ambar${i}" data-centro="${cx} ${cy}" style="opacity:0"><path class="aguja-ambar" d="${aguja}"/></g></g>`,
+        `<g data-v="ambar${i}" data-centro="${cx} ${cy}" style="opacity:0"><path class="aguja-ambar" d="${pala}"/>${cubo}</g></g>`,
     );
     r.push(L(k.ring(cx, cy, 1.4, ZF + 0.3, P, 14), { tone: "hi" }));
     r.push(D([at([cx, cy, ZF + 0.3])], { size: 0.6, tone: "hi" }));
