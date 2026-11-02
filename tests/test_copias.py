@@ -211,6 +211,21 @@ def test_construir_publicar_buscar_y_podar() -> None:
     filas, total = almacen.consultar(plan)
     assert [f["id_contrato"] for f in filas] == ["CO1.PCCNTR.2"] and total == 1
 
+    # `contiene` sobre nombre_entidad tiene su índice de trigramas, con la misma expresión
+    por_nombre = plan_de_consulta(
+        SECOP, {"contiene": {"nombre_entidad": "é"}, "select": ["id_contrato"]}
+    )
+    assert almacen.consultar(por_nombre)[1] == 3
+    with psycopg.connect(URL_PG) as c:
+        definiciones = [
+            r[0]
+            for r in c.execute(
+                "SELECT indexdef FROM pg_indexes WHERE schemaname = 'copia' AND tablename = %s",
+                (f"secop_contratos_{v1.version}",),
+            )
+        ]
+    assert any("gin_trgm_ops" in d and "translate(lower" in d for d in definiciones)
+
     v2 = almacen.construir(SECOP, iter([[fila(9, "otra")]]), None)
     assert almacen.vigente("secop_contratos") == v2 and v2.huella != v1.huella
     assert almacen.consultar(plan) == ([], 0)  # la vista ya apunta a la versión nueva

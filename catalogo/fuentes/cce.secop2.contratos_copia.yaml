@@ -26,6 +26,7 @@ copia:
   clave: id_contrato
   ventana: {columna: fecha_de_firma, desde: 2023-01-01}
   indices: [nit_entidad, ciudad, fecha_de_firma]
+  indices_contiene: [nombre_entidad]
   texto: [objeto_del_contrato]
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P2D}
 cobertura:

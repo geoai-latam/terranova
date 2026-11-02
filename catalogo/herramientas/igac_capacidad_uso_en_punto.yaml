@@ -1,12 +1,12 @@
 id: igac_capacidad_uso_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: igac.agrologia.capacidad_uso
 pregunta: "¿Cuál es la capacidad de uso de la tierra en este punto?"
 descripcion: >
   Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un punto: clase y subclase de
-  capacidad y su descripción. En suelo urbano la capa no da clase agrológica: trae ZU, y
-  `nota_capacidad` lo explica. Cobertura nacional; a esa escala no sirve para un predio.
+  capacidad y su descripción. En suelo urbano y en el agua la capa no da clase agrológica: trae
+  ZU o CA, y `nota_capacidad` y `unidad_capacidad_significado` lo explican. Cobertura nacional; a esa escala no sirve para un predio.
   Sale de la copia de Terrnova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
@@ -27,7 +27,9 @@ derivados:
   nota_capacidad:
     de: codigo
     campo: unidad_capacidad
-    valores: {ZU: "Zona urbana: esta capa no le da clase agrológica"}
+    valores:
+      ZU: "Zona urbana: esta capa no le da clase agrológica"
+      CA: "Cuerpo de agua: esta capa no le da clase agrológica"
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}

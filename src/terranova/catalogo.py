@@ -438,6 +438,11 @@ class Copia(_Ficha):
     )
     ventana: Ventana | None = None
     indices: list[str] = Field(default_factory=list)
+    indices_contiene: list[str] = Field(
+        default_factory=list,
+        description="columnas que se buscan con `contiene`: llevan un índice de trigramas sobre el "
+        "texto sin mayúsculas ni tildes (sin él, cada búsqueda recorre la tabla entera)",
+    )
     texto: list[str] = Field(
         default_factory=list, description="columnas de la búsqueda de texto completo (español)"
     )
@@ -495,7 +500,7 @@ class Copia(_Ficha):
     def columnas_usadas(self) -> set[str]:
         ventana = {self.ventana.columna} if self.ventana else set()
         extra = set(self.medidas) | ({self.pais_col} if self.pais_col else set())
-        return {self.clave, *ventana, *self.indices, *self.texto, *extra}
+        return {self.clave, *ventana, *self.indices, *self.indices_contiene, *self.texto, *extra}
 
 
 Geometria = Literal["punto", "multipunto", "linea", "poligono", "raster"]
