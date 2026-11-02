@@ -1,0 +1,116 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T03:21:45+00:00",
+ "herramienta": "pnn_areas_protegidas_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "ap_nombre"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -75.5,
+        5.0
+       ],
+       [
+        -75.28,
+        5.2
+       ],
+       [
+        -75.29,
+        5.21
+       ],
+       [
+        -75.51,
+        5.01
+       ],
+       [
+        -75.5,
+        5.0
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "ap_nombre",
+     "ap_categoria",
+     "organizacion",
+     "area_ha_total_resolucion",
+     "fecha_inscrita"
+    ],
+    "tabla": "runap"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -75.40774,
+           5.20317
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Distritos Regionales de Manejo Integrado",
+          "ap_nombre": "Estrella Hídrica de Caldas",
+          "area_ha_total_resolucion": 23972.0,
+          "fecha_inscrita": "2026-05-07",
+          "organizacion": "Corporación Autónoma Regional de Caldas"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.36986,
+           5.06333
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ap_categoria": "Reservas Forestales Protectoras Nacionales",
+          "ap_nombre": "Las Cuencas Hidrográficas del Río Blanco y Quebrada Olivares",
+          "area_ha_total_resolucion": 4945.72,
+          "fecha_inscrita": "2012-01-02",
+          "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "consultado_en": "2026-11-02T03:21:39.033834+00:00",
+     "copia": {
+      "filas": 12,
+      "huella": "sha256:618278b00bb746415ca95a480bdbba78432331cccf56c756cbed46bff4869905",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261102032139033834"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

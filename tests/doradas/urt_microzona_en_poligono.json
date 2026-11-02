@@ -1,0 +1,131 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T03:21:45+00:00",
+ "herramienta": "urt_microzona_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "ninguna",
+    "limite": 200,
+    "order": [
+     "id_microzona"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -76.6,
+        2.4
+       ],
+       [
+        -76.35,
+        2.6
+       ],
+       [
+        -76.36,
+        2.61
+       ],
+       [
+        -76.61,
+        2.41
+       ],
+       [
+        -76.6,
+        2.4
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "id_microzona",
+     "cod_dane",
+     "depto",
+     "mpio",
+     "n_res_m",
+     "fecha_res_vigente",
+     "estado_micro",
+     "territorial"
+    ],
+    "tabla": "urt_microzonas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "cod_dane",
+       "depto",
+       "estado_micro",
+       "fecha_res_vigente",
+       "id_microzona",
+       "mpio",
+       "n_res_m",
+       "territorial"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "cod_dane": "19001",
+        "depto": "Cauca",
+        "estado_micro": "Cerrada",
+        "fecha_res_vigente": "2014-02-19",
+        "id_microzona": 216,
+        "mpio": "Popayán",
+        "n_res_m": "RC 0057",
+        "territorial": "Popayán"
+       },
+       {
+        "cod_dane": "19760",
+        "depto": "Cauca",
+        "estado_micro": "En firme",
+        "fecha_res_vigente": "2017-03-09",
+        "id_microzona": 843,
+        "mpio": "Sotará",
+        "n_res_m": "RC  00145",
+        "territorial": "Popayán"
+       },
+       {
+        "cod_dane": "19824",
+        "depto": "Cauca",
+        "estado_micro": "En firme",
+        "fecha_res_vigente": "2017-06-30",
+        "id_microzona": 911,
+        "mpio": "Totoró",
+        "n_res_m": "RC  00649",
+        "territorial": "Popayán"
+       },
+       {
+        "cod_dane": "19743",
+        "depto": "Cauca",
+        "estado_micro": "En firme",
+        "fecha_res_vigente": "2020-02-28",
+        "id_microzona": 1294,
+        "mpio": "Silvia",
+        "n_res_m": "RC  00211",
+        "territorial": "Popayán"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "consultado_en": "2026-11-02T03:12:48.936058+00:00",
+     "copia": {
+      "filas": 1314,
+      "huella": "sha256:a73d4ed8665ba305b63a182932f26980e686cce541e23e1854fba14730066a28",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261102031248936058"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
