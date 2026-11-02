@@ -25,7 +25,7 @@ datos_personales: ninguno
 estado: publicada
 campos:
   anio: {nombre: anio, tipo: str, desc: "año (texto en la fuente)"}
-  mes: {nombre: mes, tipo: str, desc: "mes con dos dígitos (texto en la fuente: «01»)"}
+  mes: {nombre: mes, tipo: int, desc: "mes (1 a 12; la fuente lo escribe como texto, «01»)"}
   aeropuerto_operacion: {nombre: aeropuerto_oaci, tipo: str, desc: "indicador OACI del aeródromo donde se registró la operación"}
   origen: {nombre: origen_oaci, tipo: str, desc: "aeródromo de salida de la aeronave (OACI)"}
   destino: {nombre: destino_oaci, tipo: str, desc: "aeródromo de llegada de la aeronave (OACI)"}

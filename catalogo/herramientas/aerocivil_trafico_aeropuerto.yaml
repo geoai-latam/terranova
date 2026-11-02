@@ -1,5 +1,5 @@
 id: aerocivil_trafico_aeropuerto
-version: 1
+version: 2
 familia: estadisticas
 fuente: aerocivil.trafico_origen_destino
 pregunta: "¿Cuántos pasajeros y cuánta carga movió este aeropuerto en un año, mes a mes?"
@@ -26,6 +26,8 @@ consulta:
     max_filas: 100
   campos: [a_o, n_mero_de_mes, tr_fico_n_i]
 derivados:
+  meses_con_datos: {de: distintos, campo: mes, tipo: int}
+  hasta_mes: {de: maximo, campo: mes, tipo: int}
   aeropuerto: {de: columna, campo: aeropuerto, tipo: str}
   tipo_trafico: {de: codigo, campo: trafico, valores: {N: nacional, I: internacional, E: especial}}
   pasajeros_salen: {de: columna, campo: pasajeros_salen, tipo: int}
@@ -37,12 +39,19 @@ derivados:
   total_pasajeros_anio: {de: suma, campo: pasajeros_total, tipo: int}
   total_carga_kg_anio: {de: suma, campo: carga_total_kg, tipo: float}
 salida: TraficoAeropuerto
+avisos:
+- cuando: encontrado
+  si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
+    el último). El total del año no es el de un año entero: compare los mismos meses. Medido el
+    2026-11-02: el tráfico llega a junio de 2026.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en gb6w-ynu4: El Dorado (BOG) 2025 da 24 filas (12 meses x nacional e
   # internacional) y 39 048 819 pasajeros origen-destino; la primera, enero internacional, 705 833
   # pasajeros que salen y 689 064 que llegan.
   entrada: {codigo_aeropuerto: "BOG", anio: "2025"}
-  verdad: {mes: 1, tipo_trafico: internacional, pasajeros_salen: 705833, pasajeros_llegan: 689064, total_pasajeros_anio: 39048819}
-  campos: [aeropuerto, anio, carga_llega_kg, carga_sale_kg, carga_total_kg, mes, pasajeros_llegan, pasajeros_salen, pasajeros_total, tipo_trafico, total_carga_kg_anio, total_pasajeros_anio, trafico]
+  verdad: {meses_con_datos: 12, mes: 1, tipo_trafico: internacional, pasajeros_salen: 705833, pasajeros_llegan: 689064, total_pasajeros_anio: 39048819}
+  campos: [aeropuerto, anio, carga_llega_kg, carga_sale_kg, carga_total_kg, hasta_mes, mes, meses_con_datos, pasajeros_llegan, pasajeros_salen, pasajeros_total, tipo_trafico, total_carga_kg_anio, total_pasajeros_anio, trafico]
   latencia_max_ms: 15000

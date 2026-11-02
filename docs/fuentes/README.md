@@ -33,3 +33,4 @@ Reglas:
 | Supersociedades: estados financieros NIIF (cinco conjuntos) y las 10 000 empresas | [supersociedades.md](supersociedades.md) |
 | Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |
 | ANH: producción de crudo y gas, y regalías liquidadas | [anh.md](anh.md) |
+| Aerocivil: tráfico origen-destino y operaciones | [aerocivil.md](aerocivil.md) |
