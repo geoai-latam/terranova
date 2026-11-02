@@ -16,7 +16,7 @@ import time
 import unicodedata
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 from typing import Any, Literal
 
 from terranova import metricas
@@ -31,7 +31,9 @@ from terranova.catalogo import (
     Fuente,
     Herramienta,
     cargar_cobertura,
+    entero_de_json,
     motivo_no_vendible,
+    rango_entero,
     vendible,
 )
 from terranova.conector import Conector, ErrorConector
@@ -76,10 +78,12 @@ def validar_entrada(h: Herramienta, entrada: dict[str, Any]) -> dict[str, Any]:
 
 def _valor(nombre: str, tipo: str, v: Any) -> Any:
     if tipo == "int":
-        # estricto como el modelo REST (ADR-0004): un entero llega como entero, `5.0` no es `5`.
-        # Antes el camino MCP aceptaba `5.0` y el REST lo rechazaba: misma herramienta, dos reglas.
+        v = entero_de_json(v)
         if isinstance(v, bool) or not isinstance(v, int):
             raise ErrorEntrada(nombre, "debe ser un número entero (int)")
+        minimo, maximo = rango_entero(nombre)
+        if not minimo <= v <= maximo:
+            raise ErrorEntrada(nombre, f"fuera de rango ({minimo} a {maximo})")
         return v
     if tipo == "float":
         if isinstance(v, bool) or not isinstance(v, int | float) or not math.isfinite(v):
@@ -109,6 +113,11 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
+        if tipo == "fecha":
+            try:
+                date.fromisoformat(v)
+            except ValueError:
+                raise ErrorEntrada(nombre, "no es una fecha real (AAAA-MM-DD)") from None
         if tipo == "divipola" and not v.isdigit():
             codigo = municipio_por_nombre(nombre, v, _municipios())
             # defensa en profundidad: lo que va sin comillas a la plantilla es siempre un código

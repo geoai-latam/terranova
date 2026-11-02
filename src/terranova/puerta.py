@@ -37,6 +37,7 @@ from terranova.catalogo import (
     cargar,
     catalogo_vendible,
     ids_parecidos,
+    rango_entero,
     vendible,
 )
 from terranova.compuestas import COMPUESTAS, Compuesta
@@ -174,6 +175,10 @@ def esquema_entrada(h: Herramienta) -> dict[str, Any]:
     propiedades = {}
     for nombre, tipo in h.entrada.items():
         esquema = dict(_TIPOS_JSON[tipo])
+        if tipo == "int":
+            esquema["minimum"], esquema["maximum"] = rango_entero(nombre)
+        if tipo == "fecha":
+            esquema["format"] = "date"
         if nombre == "lon":
             esquema |= {"minimum": -180, "maximum": 180, "description": "Longitud EPSG:4326"}
         elif nombre == "lat":

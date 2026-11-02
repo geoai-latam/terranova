@@ -36,7 +36,9 @@ from terranova.catalogo import (
     FORMAS_ENTRADA,
     PATRONES_ENTRADA,
     Herramienta,
+    entero_de_json,
     ids_parecidos,
+    rango_entero,
     vendible,
 )
 from terranova.contrato import (
@@ -72,7 +74,8 @@ def _tipo(nombre: str, tipo: str) -> Any:
         limite = {"lon": 180, "lat": 90}.get(nombre)
         return Annotated[float, Field(ge=-limite, le=limite)] if limite else float
     if tipo == "int":
-        return int
+        minimo, maximo = rango_entero(nombre)
+        return Annotated[int, Field(ge=minimo, le=maximo), BeforeValidator(entero_de_json)]
     if tipo == "bool":
         return bool
     if tipo == "bbox":
@@ -84,7 +87,12 @@ def _tipo(nombre: str, tipo: str) -> Any:
     if tipo in PATRONES_ENTRADA:
         forma, ejemplo = FORMAS_ENTRADA[tipo]
         return Annotated[
-            str, Field(pattern=PATRONES_ENTRADA[tipo], description=f"{forma} (ej. {ejemplo})")
+            str,
+            Field(
+                pattern=PATRONES_ENTRADA[tipo],
+                description=f"{forma} (ej. {ejemplo})",
+                json_schema_extra={"format": "date"} if tipo == "fecha" else None,
+            ),
         ]
     return Annotated[str, Field(max_length=200, pattern=PATRON_TEXTO_LIMPIO)]
 

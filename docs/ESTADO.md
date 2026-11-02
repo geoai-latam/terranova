@@ -81,6 +81,12 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Falta, del dueño y en este orden:** crear el CNAME `www` hacia `terrnova.com`, poner la variable
   en el `.env` de producción y recrear Caddy.
 
+## Rangos en el OpenAPI (2026-11-01, C27)
+
+- **Enteros:** `anio` va de 1900 a 2100 y los demás, de 0 a 10^15. Quedan en el OpenAPI, en el esquema
+  MCP y en la validación de la puerta.
+- **Fechas:** llevan `format: date`, y una fecha imposible (2026-13-45) responde 400 sin ir a la fuente.
+
 ## Una sola herramienta de predio (2026-11-01)
 
 - **`predio_en_punto`:** mira el SINIC y, si no tiene el punto, la base del IGAC. Va en
