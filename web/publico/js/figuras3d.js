@@ -5,7 +5,7 @@ import { three } from './motor3d.js?v=0cb2e43b98';
 const cargas = {
   prueba: el => import('./fig-prueba.js?v=c02fd6c236').then(m => m.montar(el)),
   criba: el => import('./fig-criba.js?v=43bdb20f75').then(m => m.montar(el)),
-  cobertura: el => import('./fig-cobertura.js?v=2757c97101').then(m => m.montar(el)),
+  cobertura: el => import('./fig-cobertura.js?v=d9f43fefb1').then(m => m.montar(el)),
   expediente: el => import('./servicios3.js?v=2b54e07c68').then(m => m.montar(el.closest('[data-f3-sec]'))),
 };
 const hechas = new Set();

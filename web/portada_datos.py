@@ -8,7 +8,7 @@ Todo sale de archivos locales, sin una sola consulta a servidores del Estado:
   22-10-2026, huella 3696177c). Un predio va «a revisión» si su lindero se monta más de 2 m² sobre
   el de otro de la misma copia. La huella del expediente es un sha256 local de sus filas.
 - indicadores de Chía (25175): las respuestas capturadas de tests/doradas (MinEducación, INS,
-  Policía Nacional, IGAC; capturadas del 22 al 28-10-2026).
+  Policía Nacional, IGAC; capturadas del 22 al 28-10-2026). Del INS va la serie entera del IRCA.
 - Pitalito 2025: la respuesta capturada de secop_integrado_contratos_entidad (23-10-2026). La suma
   «tal cual» (174.000 millones) es la medida del perfil de la fuente del 22-10-2026.
 - bitácora: el registro de modificaciones del contrato CO1.PCCNTR.3712964 de SECOP II, capturado
@@ -197,6 +197,9 @@ def indicadores() -> list[dict]:
             "corte": r[-1]["a_o"],
             "corte_antes": r[-2]["a_o"],
             "nota": r[-1]["nivel_de_riesgo"],
+            # la serie entera, para «cómo trabajamos»: el mismo dato en el tablero, el informe,
+            # la capa y el aviso
+            "serie": [[int(x["a_o"]), float(x["irca"])] for x in r],
             "entidad": "INS",
             "tool": t,
             "licencia": lic(t),

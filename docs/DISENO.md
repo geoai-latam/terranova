@@ -163,18 +163,25 @@ rehagan con esta regla.
   y los materiales (`js/comun3d.js`). Todas se pintan con un solo renderer fuera de pantalla
   (`js/motor3d.js`), que copia cada figura a su lienzo 2D: un contexto WebGL para todas.
 - **Lo demás es tipográfico.** El problema, la cifra con su corte, la bitácora, el índice del catálogo
-  y «tres formas» van en HTML o SVG (`js/tipo.js`), con la tipografía del sitio y la consola oscura:
+  y «cómo trabajamos» van en HTML o SVG (`js/tipo.js`), con la tipografía del sitio y la consola oscura:
   Geist para el texto y Geist Mono para el dato. La página alterna escena y documento.
-- **Los mismos objetos de arriba abajo.** El predio 47001…0308 aparece en el héroe, la prueba, la
-  entrada de la cobertura y la hoja de «tres formas». Su vecino dudoso, 47001…0345, sale en la criba y
+- **Para organizaciones, no para predios.** La portada vende soluciones (la capa de datos y, encima,
+  analítica, desarrollo y automatización; el deck de inversión). El predio es un ejemplo entre
+  empresas, contratos, normas e indicadores, no el tema: los títulos hablan de la decisión y de la
+  organización. «Cómo trabajamos» no nombra clientes de IA.
+- **Los mismos objetos de arriba abajo.** El predio 47001…0308 aparece en el héroe, la prueba y la
+  entrada de la cobertura; el IRCA de Chía, en la cifra con su corte y en «cómo trabajamos». Su vecino dudoso, 47001…0345, sale en la criba y
   en el expediente. La consola rt/1 es la misma pieza en todas partes.
 - **Una escalera de escala.** Cada sección se aleja un paso de la anterior: un punto, un predio, una
   lista, un municipio, el país. La cobertura vuelve a empezar en el predio del héroe y sube hasta
   Colombia.
 - **Cuatro tiempos.** Cada figura cuenta pregunta, fuente, prueba y reposo.
   - El reposo es el cuadro que se ve con movimiento reducido.
-  - La cámara entra cerrada y se asienta, y no gira sola.
-  - Entre ciclos no se pinta nada: cero cuadros en reposo.
+  - La cámara entra cerrada y se asienta, y no gira sola. La excepción es la cobertura, que el dueño
+    pidió que gire: despacio (una vuelta en unos 80 s), a 30 cuadros, solo en vista, sin movimiento
+    reducido y en pausa mientras alguien arrastra o señala una columna. Su encuadre es un cilindro
+    alrededor del país, así el giro no acerca ni aleja.
+  - Entre ciclos no se pinta nada: cero cuadros en reposo (salvo el giro de la cobertura).
   - El tope es de 60 fps, o 30 con puntero grueso o con 4 núcleos o menos.
   - Las figuras tipográficas se mueven con transiciones de CSS, sin bucle de cuadros. Sus tiempos son
     las clases `tiempo1` a `tiempo4`: nunca un nombre corto que ya use el sitio (`t1`, `p3`, `cr`…),
@@ -206,7 +213,7 @@ El ámbar es «lo que se está probando»:
 - la cifra del corte nuevo;
 - el día que cambió;
 - la herramienta elegida;
-- la huella en «tres formas».
+- la cita del INS en los cuatro destinos de «cómo trabajamos».
 
 Fuera de las figuras, el ámbar es el botón principal.
 

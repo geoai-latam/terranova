@@ -2,8 +2,9 @@
 // muestra del 3 % de predios del SINIC sobre las celdas de tierra de Colombia (datos/co.json). Altura
 // y color siguen la raíz del conteo; las celdas planas son tierra sin predios en la muestra. Al entrar,
 // las columnas suben desde Bogotá hacia afuera y la cámara baja de un plano cerrado y alto sobre los
-// Andes al plano del país. Al pasar el puntero, la columna se pinta de ámbar y da su conteo. Ya no
-// gira sola: se arrastra (o se usan las flechas) para girar, y entre gestos no se pinta nada.
+// Andes al plano del país. Al pasar el puntero, la columna se pinta de ámbar y da su conteo. Después
+// de la entrada gira sola, despacio (una vuelta en unos 80 s), solo mientras se ve, sin movimiento
+// reducido y sin nadie arrastrando ni señalando una columna; tras un gesto espera unos segundos.
 import {
   getT, C, ambiente, papelDe, encuadrar, aPantalla, registrar, solo, quieto,
   contactoMat, mapaContacto, calco, ajustarSombra, mapaSombra, marco, plano, resorte, pedir, corriendo,
@@ -89,6 +90,16 @@ export async function montar(fig) {
   D.land.forEach((p, i) => { if (i % 40 === 0) caja3.push(new T.Vector3(X(p[0]), 0, Z(p[1]))); });
   D.bins.forEach((b, i) => { if (alto[i] > 24) caja3.push(new T.Vector3(X(b[0]), alto[i], Z(b[1]))); });
   ajustarSombra(luz, caja3.concat([new T.Vector3(0, 62, 0)]), { mapa: mapaSombra(true) });
+  // el encuadre gira con el mapa: un cilindro alrededor del centro del país, así la escala no cambia
+  // con el azimut (el giro solo no acerca ni aleja)
+  const cx0 = (Math.min(...xs) + Math.max(...xs)) / 2, cz0 = (Math.min(...zs) + Math.max(...zs)) / 2;
+  const radio = Math.max(...D.land.map(p => Math.hypot(X(p[0]) - cx0, Z(p[1]) - cz0))) * 0.9;
+  const envol = [];
+  for (let k = 0; k < 32; k++) {
+    const a = k * Math.PI / 16;
+    envol.push(new T.Vector3(cx0 + radio * Math.cos(a), 0, cz0 + radio * Math.sin(a)), new T.Vector3(cx0 + radio * 0.45 * Math.cos(a), 50, cz0 + radio * 0.45 * Math.sin(a)));
+  }
+  const mira0 = new T.Vector3(cx0, 10, cz0);
   const st = { az: 0.2, pol: 0.82 };
   const TE = { quieto: 700, celda: 2400 };
   const lienzo = fig.querySelector('canvas'), control = fig.querySelector('.lienzo');
@@ -98,19 +109,28 @@ export async function montar(fig) {
   // plano con autor: entra alto y cerrado sobre Bogotá (de donde sale la onda) y baja al plano oblicuo
   // del país a medida que la onda llega a las costas; después, el plano es del lector (arrastrar).
   // la escala de la cámara, en logaritmo: del barrio (~0,9 km de ancho) a la celda y de la celda al país
-  let sBarrio = 1, sCelda = 1;
+  let sBarrio = 1, sCelda = 1, pxBarrio = 1e9;
   function toma(t) {
     const k = quieto ? 1 : resorte(t, TE.celda - 400, ENTRA - TE.celda + 400, 0.9);
     const az = st.az + 0.35 * (1 - k), pol = 0.5 + (st.pol - 0.5) * k;
     const clave = `${az.toFixed(4)}|${pol.toFixed(4)}|${t.toFixed(0)}|${W}|${Hh}`;
     if (clave === ultimaToma) return; ultimaToma = clave;
-    encuadrar(cam, { az, pol, mira: new T.Vector3(0, 10, 0), puntos: caja3, w: W, h: Hh, margen: [8, 8, 14, 8] });
+    encuadrar(cam, { az, pol, mira: mira0, puntos: envol, w: W, h: Hh, margen: [4, 4, 8, 4] });
     const ancho = cam.right - cam.left;
     sBarrio = ancho / (950 * ex); sCelda = ancho / (r * 5.2);
     const a = Math.log(sBarrio), b = Math.log(sCelda);
     const u = quieto ? 1 : tramo(t, TE.quieto, TE.celda - TE.quieto);
     const ls = t < TE.celda || quieto ? a + (b - a) * u : b * (1 - k);
-    plano(cam, marco(cam), Math.exp(quieto ? 0 : ls), foco);
+    const s = Math.exp(quieto ? 0 : ls);
+    // el barrio empieza en el centro del cuadro y viaja a su sitio en el país mientras la cámara sube
+    const base = marco(cam), w = quieto ? 0 : 1 - k;
+    if (w > 0) {
+      const v = foco.clone().applyMatrix4(cam.matrixWorldInverse);
+      const dx = (v.x - (base.left + base.right) / 2) * w, dy = (v.y - (base.top + base.bottom) / 2) * w;
+      base.left += dx; base.right += dx; base.top += dy; base.bottom += dy;
+    }
+    plano(cam, base, s, foco);
+    pxBarrio = 950 * ex * s / ancho * W; // ancho del barrio en pantalla: por debajo de ~28 px se va
   }
 
   // rótulos: ciudades y mares (sin versalitas), anclados a su coordenada; y el dato de la columna
@@ -151,7 +171,7 @@ export async function montar(fig) {
     // el barrio viaja sobre su columna; el predio del héroe va en ámbar al entrar
     o.position.set(0, 0, 0);
     const hc = 0.6 + (alto[iSM] - 0.6) * sube(((quieto ? 1e9 : t) - espera[iSM]) / SUBE);
-    barrio.position.y = hc; barrio.visible = !quieto && t < ENTRA * 0.8;
+    barrio.position.y = hc; barrio.visible = !quieto && t < ENTRA * 0.8 && pxBarrio > 28;
     if (t < 50) ambSM = null; else if (ambSM === null) ambSM = ambarLibre();
     mP[0].color.set(ambSM === false ? C.techo : C.ambar); mP[1].color.set(ambSM === false ? C.lado : C.ambarLado);
     lCelda.visible = !quieto && t > TE.quieto && t < espera0 + 400; lCelda.position.y = hc + 0.05;
@@ -207,5 +227,23 @@ export async function montar(fig) {
     pedir(f);
   }, true);
   void movio;
+
+  // giro solo: un cuadro cada ~33 ms con pedir(), nunca mientras corre la entrada
+  const VEL = 0.000078; let girando = false, ultimoG = 0, pausa = 0;
+  const parar = () => { pausa = performance.now() + 4000; };
+  control.addEventListener('pointerdown', parar); control.addEventListener('keydown', parar);
+  function giro(now) {
+    girando = false;
+    if (quieto || !f.vista || document.hidden) { ultimoG = 0; return; }
+    if (!corriendo(f) && !activo && sel < 0 && now > pausa) {
+      if (now - ultimoG >= 32) { st.az -= (ultimoG ? Math.min(80, now - ultimoG) : 0) * VEL; ultimoG = now; pedir(f); }
+    } else ultimoG = 0;
+    girando = true; requestAnimationFrame(giro);
+  }
+  const arrancarGiro = () => { if (!girando && !quieto) { girando = true; requestAnimationFrame(giro); } };
+  const alVer0 = f.alVer;
+  f.alVer = a => { alVer0(a); if (f.vista) arrancarGiro(); };
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && f.vista) arrancarGiro(); });
+  if (f.vista) arrancarGiro();
   return f;
 }

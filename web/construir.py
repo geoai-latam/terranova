@@ -1379,8 +1379,9 @@ def preguntas_frecuentes() -> list[tuple[str, str]]:
     return [
         (
             "¿Necesito un equipo técnico?",
-            'Para probar basta alguien que siga la <a class="enlace" href="/desarrolladores">guía</a> '
-            "en unos minutos. Para llevarlo a tus sistemas, tu equipo técnico usa la API.",
+            "No. Si tu organización no tiene analistas ni desarrolladores, construimos la solución "
+            "y te la entregamos donde ya trabajas. Si tu equipo ya programa, conecta sus sistemas o "
+            'sus agentes siguiendo la <a class="enlace" href="/desarrolladores">guía</a>.',
         ),
         (
             "¿Sirve para cumplimiento y auditoría?",
@@ -1421,9 +1422,10 @@ def preguntas_frecuentes() -> list[tuple[str, str]]:
             "hay cobro automático.",
         ),
         (
-            "¿Con qué asistentes funciona?",
-            f"Con {y_lista(FUNCIONA_CON)}, con su guía. {y_lista(PIDEN_OAUTH)} todavía no: "
-            "piden un inicio de sesión (OAuth), que llegará.",
+            "¿Funciona con los asistentes de mi equipo?",
+            "Con los que se conectan por MCP con una llave; la "
+            '<a class="enlace" href="/desarrolladores">guía para desarrolladores</a> dice cuáles '
+            "están probados. Los que piden un inicio de sesión (OAuth) todavía no: llegará.",
         ),
     ]
 
@@ -1439,7 +1441,7 @@ def faq_html() -> str:
 # el problema (cinco portales para una pregunta), la prueba (las tres capas del predio del héroe),
 # el motor (la criba de los 1.335 linderos del SINIC alrededor de ese predio), los servicios (un
 # expediente, una cifra con su corte, la bitácora de un contrato y el índice del catálogo), la
-# cobertura del SINIC y las tres formas de usarlo. Los números salen del catálogo, de las respuestas
+# cobertura del SINIC y cómo trabajamos (un dato del INS en cuatro destinos). Los números salen del catálogo, de las respuestas
 # capturadas (TURNOS, correos.EJEMPLO) y de datos/portada.json, que prepara web/portada_datos.py con
 # copias locales (sin consultas a la fuente). Las figuras las mueven los módulos de MODULOS_PORTADA.
 PORTADA_JSON = PUBLICO / "datos" / "portada.json"
@@ -1538,7 +1540,7 @@ def seccion_problema() -> str:
     return f"""<section class="seccion" id="problema"><div class="envoltura">
 <div class="con-fig inv-l pr3-sec">
 <figure class="fig-iso pr3" tabindex="0" role="group" aria-label="Cinco portales, una pregunta. Toca o pulsa Enter para repetir.">
-<p class="pr3-preg"><span>la pregunta</span>¿Qué restricciones tiene este predio?</p>
+<p class="pr3-preg"><span>la pregunta</span>¿Qué restricciones tiene este lugar?</p>
 <div class="pr3-esc">
 <div class="pr3-vent" aria-label="Los cinco portales">
 {vent}
@@ -1548,7 +1550,7 @@ def seccion_problema() -> str:
 </ol>
 <p class="pr3-puerta" aria-hidden="true">las cinco fuentes, detrás de una puerta</p>
 <div class="consola pr3-con"><div class="turno">
-<p class="cr-tit">respuesta · predio {PRED}</p>
+<p class="cr-tit">respuesta · Santa Marta, {PUNTO}</p>
 <dl>
 <dt>predio</dt><dd><span class="m m-copia"></span>{escape(EJEMPLO["estado"])} · {fila_turno(TURNO_PREDIO, "entidad")}</dd>
 <dt>protegidas</dt><dd><span class="m m-vacio"></span>ninguna · {nombre_entidad(CAT.fuentes["pnn.runap"].entidad)}</dd>
@@ -1562,11 +1564,11 @@ def seccion_problema() -> str:
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">cinco portales, cinco formas de llamar al mismo dato</span></span><span class="pista">toca la figura para repetir</span></figcaption>
 </figure>
 <div class="cab">
-<h2 class="t2">Cada pregunta sobre un lugar recorre cinco portales</h2>
-<p class="entrada">Hacerlo a mano es pelear con cada portal. Con Terrnova es una llamada, y vuelve con su prueba.</p>
+<h2 class="t2">El dato público existe. Usarlo para decidir sigue costando semanas.</h2>
+<p class="entrada">Una sola pregunta recorre varios portales, cada uno con su formato, su corte y su licencia. Con Terrnova es una llamada, y vuelve con su prueba.</p>
 <ul class="lista-l">
 <li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
-<li><b>Catastro vigente</b><span>El corte vigente, revisado aunque la fuente cambie de nombre cada mes.</span></li>
+<li><b>Sin equipo propio</b><span>Si tu organización no tiene analistas ni desarrolladores, la solución la construimos nosotros.</span></li>
 <li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
 </ul>
 <figure class="bc3" aria-label="Pitalito, 2025: {miles(tal_cual)} millones sumando SECOP tal cual; {miles(bien)} millones contando cada contrato una vez, {miles(pit["contratos"])} contratos.">
@@ -1634,10 +1636,10 @@ def seccion_motor() -> str:
     sinic = next(e for e in K["expediente"] if e["fuente"] == "igac.sinic_terreno")
     assert dma(sinic["copia"]) in COPIA_SINIC
     return f"""<section class="seccion" id="motor"><div class="envoltura" data-f3-sec>
-<div class="p3-cab"><h2 class="t2">Una lista entera, revisada predio por predio</h2>
-<p class="entrada">Lo claro se despeja solo; lo dudoso lo revisa una persona; de cada ítem queda un expediente.</p></div>
+<div class="p3-cab"><h2 class="t2">Tu lista entera, revisada ítem por ítem</h2>
+<p class="entrada">Lotes, empresas o contratos: lo claro se despeja solo, lo dudoso lo revisa una persona y de cada ítem queda un expediente. Aquí, {miles(n)} lotes de Santa Marta contra cuatro entidades.</p></div>
 <figure class="fig-iso cri" data-f3="criba">
-<div class="cr-escena lienzo f3-lienzo" tabindex="0" role="group" aria-label="La criba de una lista de predios. Toca o pulsa Enter para repetir.">
+<div class="cr-escena lienzo f3-lienzo" tabindex="0" role="group" aria-label="La criba de una lista. Toca o pulsa Enter para repetir.">
 <canvas role="img" aria-label="Los {miles(n)} predios del SINIC alrededor del punto del héroe, en Santa Marta, como una lista. Una regla los recorre y los revisa contra cuatro fuentes: áreas protegidas del RUNAP, resguardos de la ANT, pérdida de bosque del SINCHI y el catastro del IGAC. {miles(desp)} se asientan, despejados; {rev} se levantan porque su lindero se monta sobre el de un vecino; ninguno toca un área protegida ni un resguardo. La cámara se acerca al dudoso {K["dudoso_corto"]}, a {K["dudoso_dist_heroe_m"]} m del predio del héroe, y se abre su expediente."></canvas>
 <div class="f3-rot" aria-hidden="true"></div>
 </div>
@@ -1737,12 +1739,12 @@ def seccion_servicios_portada() -> str:
     lista_fam = ", ".join(f"{f} {n}" for f, n in fams)
     lic_norma = fila_turno(TURNO_NORMA, "licencia").split(",")[0]
     return f"""<section class="seccion sup" id="servicios"><div class="envoltura" data-f3-sec>
-<div class="cab"><h2 class="t2">Lo que construimos contigo</h2>
-<p class="entrada">Sobre la misma capa de datos: un ítem revisado, un indicador con su corte, un cambio con su día, una pregunta con su fuente.</p></div>
+<div class="cab"><h2 class="t2">Lo que construimos para tu organización</h2>
+<p class="entrada">Analítica, desarrollo y automatización sobre la misma capa de datos. Un agente hace el trabajo, otro lo evalúa y una persona lo aprueba antes de que te llegue.</p></div>
 <div class="sv3">
 
 <article class="sv3-c" data-sv="expediente">
-<figure class="fig-iso ex3" data-f3="expediente" tabindex="0" role="group" aria-label="El expediente de un predio. Toca o pulsa Enter para repetir.">
+<figure class="fig-iso ex3" data-f3="expediente" tabindex="0" role="group" aria-label="El expediente de un ítem. Toca o pulsa Enter para repetir.">
 <div class="ex3-escena f3-lienzo"><canvas role="img" aria-label="El predio {K["dudoso_corto"]} de Santa Marta, el dudoso de la criba, con sus vecinos. Salen sus cuatro preguntas, una por entidad, y cada una vuelve con su estado: {ents[0]}, ninguna área protegida; {ents[1]}, ningún resguardo; {ents[2]}, fuera de cobertura; IGAC, por revisar. El expediente se cierra con su huella."></canvas><div class="f3-rot" aria-hidden="true"></div></div>
 <ul class="ex3-filas">
 {chr(10).join(filas_ex)}
@@ -1750,7 +1752,7 @@ def seccion_servicios_portada() -> str:
 <svg class="ex3-guias" aria-hidden="true"></svg>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">expediente · {K["dudoso_corto"]} · huella {huella_ex}</span></span></figcaption>
 </figure>
-<div><h4>Debida diligencia</h4><p>Cada ítem de tu lista vuelve con un expediente: qué respondió cada entidad y qué queda por revisar.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></div>
+<div><p class="sv3-capa">Analítica</p><h4>Debida diligencia</h4><p>Cada ítem de tu lista vuelve con un expediente: qué respondió cada entidad y qué queda por revisar.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></div>
 </article>
 
 <article class="sv3-c" data-sv="cifra">
@@ -1763,7 +1765,7 @@ def seccion_servicios_portada() -> str:
 <div class="consola ci3-tip" aria-hidden="true"><dl></dl></div>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lect_cifra}</span></span><span class="pista">pasa el puntero por las cifras</span></figcaption>
 </figure>
-<div><h4>Tableros e informes</h4><p>Cada cifra con la entidad que la publica y el corte al que pertenece; cuando sale un corte nuevo, el anterior queda a la vista.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div>
+<div><p class="sv3-capa">Analítica</p><h4>Tableros e informes</h4><p>Cada cifra con la entidad que la publica y el corte al que pertenece; cuando sale un corte nuevo, el anterior queda a la vista.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div>
 </article>
 
 <article class="sv3-c" data-sv="bitacora">
@@ -1781,7 +1783,7 @@ def seccion_servicios_portada() -> str:
 <p class="pie"><span>{len(B["mods"])} registros, completos</span><span class="sello">capturado el {dma(B["grabado"])}</span></p></div></div>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{dma(clave["f"])}: prórroga de {clave["dias"]} días</span></span><span class="pista">reconstruida del registro de modificaciones del contrato</span></figcaption>
 </figure>
-<div><h4>Vigilancia y alertas</h4><p>Lo que sigues se revisa cada día; casi siempre no pasa nada, y el día que cambia llega el aviso con el antes y el después.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div>
+<div><p class="sv3-capa">Automatización</p><h4>Vigilancia y alertas</h4><p>Lo que sigues se revisa cada día; casi siempre no pasa nada, y el día que cambia llega el aviso con el antes y el después.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div>
 </article>
 
 <article class="sv3-c" data-sv="indice">
@@ -1797,7 +1799,7 @@ def seccion_servicios_portada() -> str:
 <p class="pie"><span>huella <b>{TURNO_NORMA["huella"]}</b></span><span class="sello">capturado el {TURNO_NORMA["fecha"]}</span></p></div>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{N_HERR} herramientas, {n_fam} familias</span></span><span class="pista">pasa el puntero por las rayas</span></figcaption>
 </figure>
-<div><h4>Asistentes a la medida</h4><p>Saben qué entidad responde cada pregunta y la citan en la respuesta.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div>
+<div><p class="sv3-capa">Desarrollo</p><h4>Asistentes y aplicaciones</h4><p>Hechos para tu equipo: saben qué entidad responde cada pregunta y la citan en la respuesta.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div>
 </article>
 
 </div>
@@ -1812,45 +1814,100 @@ def seccion_cobertura() -> str:
     return f"""<section class="seccion" id="cobertura"><div class="envoltura" data-f3-sec>
 <div class="con-fig cob3">
 <div class="cab">
-<h2 class="t2">Dónde hay predio SINIC hoy</h2>
-<p class="entrada">Del punto de arriba al país: el barrio de Santa Marta cabe en una celda de unos {km} km de radio. Cada columna cuenta los predios de la muestra que caen en su celda.</p>
+<p class="sv3-capa">Una fuente, de cerca · IGAC SINIC</p>
+<h2 class="t2">Del barrio al país</h2>
+<p class="entrada">Cada fuente del catálogo tiene su cobertura medida. La del catastro SINIC, desde el punto de arriba: el barrio de Santa Marta está dentro de una celda de unos {km} km de radio, y cada columna cuenta los predios de la muestra que caen en la suya.</p>
 <p class="cob3-plana">Una celda plana no es un cero inventado: es territorio sin predios en la muestra. El SINIC cubre los {SINIC_MUNICIPIOS} municipios con gestor catastral propio; el resto lo responde la base del IGAC.</p>
 <ul class="lista-l"><li><b>{SINIC_TERRENOS}</b><span>terrenos en la copia SINIC ({SINIC_MUNICIPIOS} municipios)</span></li><li><b>{miles(total)}</b><span>en la muestra (3 %)</span></li><li><b>{miles(celdas)}</b><span>celdas con predios</span></li></ul>
 <div class="cob3-ley" aria-hidden="true"><span>menos</span><i><b style="background:#A6D8CC"></b><b style="background:#7DB5A8"></b><b style="background:#559385"></b><b style="background:#2D7062"></b><b style="background:#14564A"></b></i><span>más predios por celda</span></div>
 <p class="fuente-dato">IGAC SINIC · conteo de la ficha de la fuente, medido el {SINIC_MEDIDO} · muestra del 3 %</p>
 </div>
-<figure class="fig-iso f3-cob" data-f3="cobertura"><div class="lienzo f3-lienzo" tabindex="0" role="group" aria-label="Mapa de cobertura del SINIC. Arrastra o usa las flechas para girar."><canvas role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra del 3 %: {miles(total)} predios en {miles(celdas)} celdas. Empieza en el predio del héroe, en Santa Marta: la cámara sube hasta su celda y se abre al país, y las columnas suben desde ahí; las más altas y oscuras cuentan más predios. Las celdas planas son territorio sin predios en la muestra."></canvas><div class="f3-rot" aria-hidden="true"></div></div><figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="polite">{miles(total)} predios de la muestra (3 %) en {miles(celdas)} celdas</span></span><span class="pista">pasa el puntero por las columnas; arrastra para girar</span></figcaption></figure>
+<figure class="fig-iso f3-cob" data-f3="cobertura"><div class="lienzo f3-lienzo" tabindex="0" role="group" aria-label="Mapa de cobertura del SINIC. Arrastra o usa las flechas para girar."><canvas role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra del 3 %: {miles(total)} predios en {miles(celdas)} celdas. Empieza en el predio del héroe, en Santa Marta: la cámara sube hasta su celda y se abre al país, y las columnas suben desde ahí; las más altas y oscuras cuentan más predios. Las celdas planas son territorio sin predios en la muestra."></canvas><div class="f3-rot" aria-hidden="true"></div></div><figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="polite">{miles(total)} predios de la muestra (3 %) en {miles(celdas)} celdas</span></span><span class="pista">gira sola; pasa el puntero por las columnas o arrastra para girarla</span></figcaption></figure>
 </div>
 </div></section>"""
 
 
-def figura_tres() -> str:
-    K = datos_portada()["criba"]
-    h = TURNO_PREDIO["huella"]
-    h_corta = h.removeprefix("sha256:")
-    destino = fila_turno(TURNO_PREDIO, "destinación").replace(",", "")
-    revisar = "".join(
-        f"<tr><td>{c}</td><td>por revisar</td><td>IGAC</td><td>—</td></tr>"
-        for c in (K["dudoso_corto"], K["dudoso_vecino"])
+# Cómo trabajamos (la lámina «soluciones» del deck): el cliente no maneja agentes; dice la pregunta y
+# recibe el resultado donde ya trabaja. La figura es una sola respuesta real del INS (el IRCA de Chía,
+# serie 2007-2024 capturada en tests/doradas) en cuatro destinos: el tablero, el informe, la capa del
+# mapa y el aviso. Los valores son reales; los cuatro formatos, ilustrativos.
+PASOS_COMO = [
+    ("La pregunta", "Nos dices qué decisión tienes que tomar, en tus palabras."),
+    (
+        "Construimos",
+        "Nuestro equipo, con sus agentes, arma el análisis o el sistema sobre la capa de datos.",
+    ),
+    ("Evaluamos", "Otro agente lo revisa contra la fuente y una persona lo aprueba."),
+    ("Entregamos", "En tu tablero, tu informe, tu mapa o tu correo, con la prueba adjunta."),
+]
+IRCA_SIN_RIESGO = 5.0  # Resolución 2115 de 2007: de 0 a 5, «sin riesgo»
+
+
+def _chispa(serie: list, w: int = 260, h: int = 64) -> str:
+    """La serie del IRCA como una línea, con el tope de «sin riesgo» punteado y el último año marcado."""
+    a0, a1 = serie[0][0], serie[-1][0]
+    top = max(max(v for _, v in serie), IRCA_SIN_RIESGO) * 1.1
+    x = lambda a: 4 + (a - a0) * (w - 8) / (a1 - a0)  # noqa: E731
+    y = lambda v: h - 14 - v * (h - 22) / top  # noqa: E731
+    pts = " ".join(f"{x(a):.1f},{y(v):.1f}" for a, v in serie)
+    ax, ay = x(a1), y(serie[-1][1])
+    ty = y(IRCA_SIN_RIESGO)
+    return (
+        f'<svg class="en3-chispa" viewBox="0 0 {w} {h}" aria-hidden="true">'
+        f'<line class="tope" x1="4" x2="{w - 4}" y1="{ty:.1f}" y2="{ty:.1f}"/>'
+        f'<text class="tope-t" x="{w - 4}" y="{ty - 4:.1f}" text-anchor="end">hasta 5: sin riesgo</text>'
+        f'<polyline class="linea" points="{pts}"/>'
+        f'<circle class="ult" cx="{ax:.1f}" cy="{ay:.1f}" r="3.2"/>'
+        f'<text class="eje" x="4" y="{h - 1}">{a0}</text>'
+        f'<text class="eje" x="{w - 4}" y="{h - 1}" text-anchor="end">{a1}</text></svg>'
     )
-    return f"""<div class="tr3" tabindex="0" role="group" aria-label="La misma respuesta en tres lugares: en el chat, en tus sistemas y en la hoja que entregamos. Toca o pulsa Enter para repetir.">
-<div class="tr3-v chat">
-<div class="caja"><p class="preg">{TURNO_PREDIO["pregunta"]}</p>
-<p class="resp">Predio {destino.lower()}, {PRED}. IGAC SINIC, {COPIA_SINIC}.</p>
-<p class="h"><b class="amb">{h}</b></p></div></div>
-<div class="tr3-v api">
-<pre class="caja">{{ "estado": "{EJEMPLO["estado"]}",
-  "predial": "{PRED}",
-  "procedencia": "IGAC, SINIC",
-  "licencia": "{EJEMPLO["licencia"]}",
-  "servido_desde": "copia",
-  "huella": <b class="amb">"{h}"</b> }}</pre></div>
-<div class="tr3-v hoja">
-<table class="caja"><thead><tr><th>predio</th><th>estado</th><th>entidad</th><th>huella</th></tr></thead>
-<tbody><tr class="f1"><td>{PRED}</td><td>{EJEMPLO["estado"]}</td><td>IGAC</td><td><b class="amb">{h_corta}</b></td></tr>
-{revisar}</tbody></table></div>
-<p class="fuente-dato tr3-fd">La misma huella en los tres: es la misma respuesta, capturada el {TURNO_PREDIO["fecha"]}. Las filas 2 y 3 salen de la criba de arriba (cruce local del {dma(K["cruce"])}), sin respuesta capturada.</p>
-</div>"""
+
+
+def seccion_como() -> str:
+    P = datos_portada()
+    mun = P["municipio"]
+    d = next(x for x in P["indicadores"] if x["tool"] == "ins_calidad_agua_municipio")
+    serie = d["serie"]
+    assert serie[-1] == [int(d["corte"]), d["v"]] and serie[-2] == [
+        int(d["corte_antes"]),
+        d["antes"],
+    ]
+    assert d["v"] <= IRCA_SIN_RIESGO and d["nota"] == "Sin riesgo"
+    ent = nombre_entidad(CAT.fuentes[next(h for h in HERR if h.id == d["tool"]).fuente].entidad)
+    lic = licencia_corta(d["licencia"])
+    v, antes = coma(d["v"]), coma(d["antes"])
+    cita = f"{d['entidad']} · corte {d['corte']}"
+    pasos = "".join(
+        f'<li><b><span class="n">{i + 1}</span>{t}</b><span>{x}</span></li>'
+        for i, (t, x) in enumerate(PASOS_COMO)
+    )
+    return f"""<section class="seccion sup" id="como"><div class="envoltura">
+<div class="cab"><h2 class="t2">Cómo trabajamos</h2>
+<p class="entrada">Tu organización no tiene que manejar agentes ni programar. Nos cuentas la decisión y te entregamos el resultado donde ya trabajas, con la prueba adjunta.</p></div>
+<ol class="cm3-pasos">{pasos}</ol>
+<figure class="en3" tabindex="0" role="group" aria-label="Una misma respuesta del {ent} en cuatro destinos: el tablero, el informe, la capa del mapa y el aviso por correo. Toca o pulsa Enter para repetir.">
+<div class="en3-rej">
+<div class="en3-c" style="--k:0"><p class="en3-d">en tu tablero</p>
+<p class="en3-k">Riesgo del agua (IRCA) · {mun["nombre"]}</p>
+<p class="en3-v"><b>{v}</b><span>{d["nota"].lower()}</span></p>
+{_chispa(serie)}
+<p class="en3-cita"><span class="m"></span>{cita}</p></div>
+<div class="en3-c" style="--k:1"><p class="en3-d">en tu informe</p>
+<p class="en3-p">En {d["corte"]}, el índice de riesgo de la calidad del agua (IRCA) de {mun["nombre"]} fue {v}, nivel sin riesgo, frente a {antes} en {d["corte_antes"]}.<sup>1</sup></p>
+<p class="en3-cita"><span class="m"></span>1. {ent}, corte {d["corte"]}. Licencia {lic}. Consultado el {dma(d["grabado"])}.</p></div>
+<div class="en3-c" style="--k:2"><p class="en3-d">en tu mapa</p>
+<p class="en3-k">capa · calidad del agua por municipio</p>
+<dl class="en3-tab"><dt>divipola</dt><dd>{mun["divipola"]}</dd><dt>municipio</dt><dd>{mun["nombre"]}</dd><dt>irca_{d["corte"]}</dt><dd>{v}</dd><dt>nivel</dt><dd>{d["nota"].lower()}</dd></dl>
+<p class="en3-cita"><span class="m"></span>fuente: {cita}</p></div>
+<div class="en3-c" style="--k:3"><p class="en3-d">en tu correo</p>
+<p class="en3-k">Aviso · {mun["nombre"]}: el IRCA pasó de {antes} a {v}</p>
+<p class="en3-p">El {d["entidad"]} publicó el corte {d["corte"]}. El valor sigue en «sin riesgo», que llega hasta 5.</p>
+<p class="en3-cita"><span class="m"></span>{cita}</p></div>
+</div>
+<figcaption class="fuente-dato">Una sola respuesta del {ent} para {mun["nombre"]}, capturada el {dma(d["grabado"])}: los valores son reales y la cita es la misma en los cuatro. Los formatos son {SELLO_I}. El tope de «sin riesgo» es el de la Resolución 2115 de 2007.</figcaption>
+</figure>
+<p class="cm3-capa">¿Tu equipo ya tiene sistemas o agentes? Puede consultar la capa directamente, por API o MCP, y pagar por consulta. <a class="enlace" href="/desarrolladores">Ver la guía</a></p>
+</div></section>"""
 
 
 # Los módulos de la portada, en orden: cada uno después de los que importa. construir.py pone la
@@ -1904,8 +1961,8 @@ def inicio() -> str:
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0"><span class="l">Datos oficiales de Colombia</span> <span class="l">para tu organización</span> <span class="l">y tus agentes</span></h1>
-<p class="entrada">Predios, empresas, contratos y normas de {N_FUENTES} fuentes oficiales, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución que construimos contigo.</p>
+<h1 class="t0"><span class="l">El dato oficial de Colombia,</span> <span class="l">con su prueba,</span> <span class="l">y la solución encima</span></h1>
+<p class="entrada">Una capa de {N_FUENTES} fuentes oficiales, de empresas y contratos a normas, estadísticas y territorio, y un equipo que construye encima la analítica, el desarrollo y la automatización que tu organización necesita. Cada respuesta dice quién publica el dato, su licencia y su fecha.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis {DIAS_PRUEBA} días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 <p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
 </div></div>
@@ -1922,16 +1979,7 @@ def inicio() -> str:
 
 {seccion_cobertura()}
 
-<section class="seccion sup" id="como"><div class="envoltura">
-<div class="cab"><h2 class="t2">Tres formas de usarlo</h2></div>
-<div class="columnas c3 caminos">
-<div><h3><a href="/desarrolladores#mcp">En el chat</a></h3><p>Tus agentes preguntan en español y responden con la fuente.</p></div>
-<div><h3><a href="/desarrolladores#rest">En tus sistemas</a></h3><p>Tu equipo técnico lo conecta por API, con la misma respuesta.</p></div>
-<div><h3><a href="/servicios">Contigo</a></h3><p>Construimos la revisión, el tablero o el asistente.</p></div>
-</div>
-{figura_tres()}
-<p class="funciona">Funciona con {y_lista(FUNCIONA_CON)}.</p>
-</div></section>
+{seccion_como()}
 
 <section class="seccion" id="soluciones"><div class="envoltura">
 <div class="cab">
@@ -1982,8 +2030,8 @@ def inicio() -> str:
 """
     return pagina(
         "/",
-        "Terrnova · Datos oficiales de Colombia para tu organización y tus agentes",
-        f"Predios, empresas, contratos y normas de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.",
+        "Terrnova · El dato oficial de Colombia, con su prueba, y la solución encima",
+        f"Empresas, contratos, normas, estadísticas y territorio de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Encima, la analítica, el desarrollo y la automatización que tu organización necesita.",
         c,
         ("escena-predios.js", "figuras3d.js", "portada-tipo.js"),
     )
