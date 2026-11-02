@@ -121,6 +121,11 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Qué lleva:** cada resultado con geometría dice su `bbox`, `crs`, `tipo` y número de `elementos`,
   para que GEO Copilot encuadre y diga «lo que estoy viendo» sin leer los datos.
 - **Falta:** validarlo en GEO Copilot en el navegador, que es su aceptación.
+## Conectores en el CI (2026-11-01, C26)
+
+- **Qué corre:** ruff sobre `conectores/` y, por cada uno de los 6 servicios, la imagen construida, un
+  humo que importa su servidor y pip-audit. Trivy es informativo mientras se conoce la línea base.
+- **Cuándo:** si cambia `conectores/` o el CI, y en la pasada diaria.
 
 ## Una sola herramienta de predio (2026-11-01)
 
