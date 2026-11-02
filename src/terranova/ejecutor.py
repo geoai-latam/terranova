@@ -301,6 +301,8 @@ def mapear_fila(
                 valor = fecha_en_orden(valor, campo.orden_fecha)
             if campo.moneda and isinstance(valor, str):
                 valor = re.sub(r"[$\s]", "", valor)  # «-$0.00», «$ 2.31»
+            if campo.vacios and valor is not None and str(valor).strip() in campo.vacios:
+                valor = None  # relleno de la fuente («0», «Pendiente»), no un dato
             out[campo.nombre] = _validar(campo, convertir(valor, campo.tipo))
             if campo.codigos is not None or campo.codigos_por_capa is not None:
                 # un código solo no dice nada: el significado va al lado, no en la ficha técnica
