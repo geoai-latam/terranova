@@ -180,6 +180,14 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     financiamiento». Los trece tipos que la SFC no nombra salen sin nombre.
   - El banco Bancolombia sale primero (orden por tipo).
   - NIT «0» y «Pendiente» salen vacíos. El motor suma la opción `vacios`.
+- **RUES, el CIIU con nombre (patrón C):**
+  - El CIIU sale con su nombre oficial del DANE, de la Rev. 4 A.C.: Ecopetrol es «0610 Extracción
+    de petróleo crudo».
+  - Se midió que el RUES sigue en la Rev. 4. La Rev. 5, que rige desde agosto de 2026, le cambia el
+    significado a códigos como 4923, así que mezclarlas habría inventado datos.
+  - El 96 % de las filas con código real tiene nombre.
+  - El catálogo suma listas de códigos compartidas (`catalogo/codigos/`, `codigos_lista`). La de la
+    CIIU la arma `scripts/codigos_ciiu.py`.
 
 ## Ficha de un lote (2026-11-01)
 

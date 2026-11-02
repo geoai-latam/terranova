@@ -1,11 +1,11 @@
 id: rues_establecimientos_por_nit
-version: 2
+version: 3
 familia: empresas
 fuente: confecamaras.rues_establecimientos
 pregunta: "¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa?"
 descripcion: >
   Establecimientos de comercio, agencias y sucursales de una sociedad por su NIT, según el RUES:
-  matrícula, nombre, cámara, estado, último año renovado, fechas, actividad (CIIU) y categoría. Solo
+  matrícula, nombre, cámara, estado, último año renovado, fechas, actividad (CIIU, código y nombre) y categoría. Solo
   propietarios identificados con NIT.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)
 entrada: {nit: nit_empresa}
@@ -31,5 +31,5 @@ canario:
   entrada: {nit: "899999068"}
   verdad: {matricula: "2167505", nombre_establecimiento: LA TIENDA ECOPETROL, camara: BOGOTA}
   minimos: {numero_registros: 3}
-  campos: [camara, categoria, ciiu, estado, fecha_cancelacion, fecha_matricula, fecha_renovacion, matricula, nit_propietario, nombre_establecimiento, numero_registros, ultimo_ano_renovado]
+  campos: [camara, categoria, ciiu, ciiu_significado, estado, fecha_cancelacion, fecha_matricula, fecha_renovacion, matricula, nit_propietario, nombre_establecimiento, numero_registros, ultimo_ano_renovado]
   latencia_max_ms: 10000

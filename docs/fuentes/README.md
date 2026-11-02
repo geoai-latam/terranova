@@ -38,3 +38,4 @@ Reglas:
 | MinDefensa, homicidios en víctimas (`m8fd-ahd9`) | [mindefensa.homicidios.md](mindefensa.homicidios.md) |
 | UPRA, precio comercial de la tierra rural (capa nacional y datos.gov.co) | [upra.precio_tierra.md](upra.precio_tierra.md) |
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
+| RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |

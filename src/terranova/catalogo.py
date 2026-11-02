@@ -1022,6 +1022,30 @@ class CatalogoInvalido(Exception):
         self.errores = errores
 
 
+class ErrorDeLista(ValueError):
+    """Un campo pide una lista de códigos que no está en `catalogo/codigos/`."""
+
+
+def _con_listas_de_codigos(crudo: Any, raiz: Path) -> None:
+    """Cambia `codigos_lista: <nombre>` por los `codigos` y la `codigos_norma` de
+    `catalogo/codigos/<nombre>.yaml`. Es para las tablas largas y oficiales que comparten varias
+    fuentes (la CIIU del DANE, ~500 clases, en las dos del RUES): una sola copia, con su norma."""
+    if not isinstance(crudo, dict) or not isinstance(crudo.get("campos"), dict):
+        return
+    for campo in crudo["campos"].values():
+        if not isinstance(campo, dict) or "codigos_lista" not in campo:
+            continue
+        lista = str(campo.pop("codigos_lista"))
+        if "codigos" in campo:
+            raise ErrorDeLista(f"el campo trae `codigos` y `codigos_lista` ({lista}): una sola")
+        ruta = raiz / "codigos" / f"{lista}.yaml"
+        if not re.fullmatch(r"[a-z0-9_]+", lista) or not ruta.is_file():
+            raise ErrorDeLista(f"no existe la lista de códigos catalogo/codigos/{lista}.yaml")
+        datos = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+        campo["codigos"] = {str(k): str(v) for k, v in datos["codigos"].items()}
+        campo.setdefault("codigos_norma", datos["norma"])
+
+
 def cargar(raiz: Path = RAIZ) -> Catalogo:
     """Lee las fichas y aplica `validar`. Junta todos los errores antes de fallar."""
     errores: list[str] = []
@@ -1034,7 +1058,13 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
         for ruta in sorted((raiz / carpeta).glob("*.yaml")):
             nombre = ruta.relative_to(raiz).as_posix()
             try:
-                ficha = modelo.model_validate(yaml.safe_load(ruta.read_text(encoding="utf-8")))
+                crudo = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+                if modelo is Fuente:
+                    _con_listas_de_codigos(crudo, raiz)
+                ficha = modelo.model_validate(crudo)
+            except ErrorDeLista as exc:
+                errores.append(f"{nombre}: {exc}")
+                continue
             except (ValidationError, yaml.YAMLError) as exc:
                 errores.append(f"{nombre}: {exc}")
                 continue
