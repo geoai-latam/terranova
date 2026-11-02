@@ -101,6 +101,12 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Las 10 000 empresas (v3) dan las cifras como número y avisan el redondeo a ±5 000 millones.
     El motor suma `moneda`.
   - Pendiente: el puesto en el ranking y el filtro por corte.
+- **Policía, el año a medias:**
+  - El motor suma la consulta `complemento`: una segunda consulta, a la vez que la principal, cuya
+    primera fila sale como hechos. No cuenta en el total, y si falla la respuesta lo avisa.
+  - Las siete de Policía dan `fuente_hasta_mes` del año pedido, en todo el país, y avisan si el año
+    está incompleto: 2026 llega a julio. Medellín tiene 2 955 hurtos de vehículos en 2026 frente a
+    5 916 en 2025, y sin el corte parecía que el hurto había bajado a la mitad.
 
 ## Ficha de un lote (2026-11-01)
 

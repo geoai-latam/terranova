@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T06:33:13+00:00",
+ "grabado": "2026-11-02T18:13:34+00:00",
  "herramienta": "policia_hurto_vehiculos_municipio",
  "llamadas": [
   {
@@ -66,6 +66,54 @@
      "filas": 4,
      "filas_que_resume": 95,
      "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "id": "9vha-vh9n",
+    "portal": "datos.gov.co",
+    "select": "max(substring(fecha_hecho, 4, 2)) AS hasta_mes, count(distinct substring(fecha_hecho, 4, 2)) AS meses",
+    "where": "fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_mes",
+       "meses"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_mes": "12",
+        "meses": "12"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "9vha-vh9n",
+     "consulta": {
+      "conjunto": "9vha-vh9n",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(substring(fecha_hecho, 4, 2)) AS hasta_mes, count(distinct substring(fecha_hecho, 4, 2)) AS meses",
+      "where": "(fecha_hecho like '%/2024')"
+     },
+     "filas": 1,
+     "filas_que_resume": 51129,
+     "filtro_soql": "(fecha_hecho like '%/2024')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

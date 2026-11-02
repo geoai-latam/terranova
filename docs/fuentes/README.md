@@ -31,3 +31,4 @@ Reglas:
 | Supersolidaria, entidades del sector solidario (`kg2d-yfyg`) | [supersolidaria.entidades.md](supersolidaria.entidades.md) |
 | INVIMA, Código Único de Medicamentos: cuatro conjuntos, uno por estado | [invima.cum.md](invima.cum.md) |
 | Supersociedades: estados financieros NIIF (cinco conjuntos) y las 10 000 empresas | [supersociedades.md](supersociedades.md) |
+| Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |

@@ -60,6 +60,8 @@ async def test_dorada(herramienta: str) -> None:
     assert comprobar(h, sobre) == [], "la verdad medida del canario no coincide"
     assert sorted(campos_presentes(sobre)) == h.canario.campos, "corre scripts/campos_canario.py"
     permitidos = fuente.nombres_rt | set(h.derivados) | {"elementos"}
+    if h.consulta.complemento:  # sus hechos salen arriba, con su nombre declarado
+        permitidos |= {x.nombre for x in h.consulta.complemento.hechos.values()}
     assert fuera_de_lista_blanca(sobre, permitidos) == set(), "regla 10: campo fuera de la lista"
     for elemento in sobre.datos.get("elementos", []):
         assert set(elemento) <= permitidos
@@ -94,6 +96,8 @@ def test_la_dorada_de_socrata_solo_guarda_la_lista_blanca(herramienta: str) -> N
     }
     if h.consulta.previa:  # la consulta previa va a otra fuente, con su propia lista blanca
         permitidas |= set(CATALOGO.fuentes[h.consulta.previa.fuente].campos)
+    if h.consulta.complemento:  # el complemento solo trae las columnas que declara
+        permitidas |= set(h.consulta.complemento.hechos)
     grabado = json.loads((DORADAS / f"{herramienta}.json").read_text(encoding="utf-8"))
     filas = [fila for ll in grabado["llamadas"] for fila in _filas_crudas(ll["respuesta"])]
     vistas = {k for fila in filas for k in fila}
