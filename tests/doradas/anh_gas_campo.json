@@ -1,11 +1,62 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T18:33:25+00:00",
+ "grabado": "2026-11-02T23:12:31+00:00",
  "herramienta": "anh_gas_campo",
  "llamadas": [
   {
    "argumentos": {
+    "id": "5dux-bfvx",
+    "portal": "datos.gov.co",
+    "select": "count(distinct mes) AS meses, max(mes) AS ultimo, sum(case(replace(produccionkpc, ',', '')::number = 0, 1, true, 0)) AS ceros",
+    "where": "replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ceros",
+       "meses",
+       "ultimo"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ceros": "24",
+        "meses": "12",
+        "ultimo": "12"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "5dux-bfvx",
+     "consulta": {
+      "conjunto": "5dux-bfvx",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "count(distinct mes) AS meses, max(mes) AS ultimo, sum(case(replace(produccionkpc, ',', '')::number = 0, 1, true, 0)) AS ceros",
+      "where": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)"
+     },
+     "filas": 1,
+     "filas_que_resume": 48,
+     "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
     "group": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes",
+    "having": "sum(replace(produccionkpc, ',', '')::number) > 0",
     "id": "5dux-bfvx",
     "max_filas": 500,
     "order": "campo, departamento, municipio, operadora, mes",
@@ -29,126 +80,6 @@
       ],
       "kind": "table",
       "rows": [
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "1",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "2",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "3",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "4",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "5",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "6",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "7",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "8",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "9",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "10",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "11",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
-       {
-        "campo": "CUSIANA",
-        "coddanemunicipio": "85010",
-        "departamento": "CASANARE",
-        "kpc": "0.00",
-        "mes": "12",
-        "municipio": "AGUAZUL",
-        "operadora": "ECOPETROL S.A.",
-        "vigencia": "2024"
-       },
        {
         "campo": "CUSIANA",
         "coddanemunicipio": "85410",
@@ -274,21 +205,22 @@
     ],
     "facts": {
      "completitud": {
-      "total": 24,
+      "total": 12,
       "truncado": false,
-      "vistos": 24
+      "vistos": 12
      },
      "completo": true,
      "conjunto": "5dux-bfvx",
      "consulta": {
       "conjunto": "5dux-bfvx",
       "group": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes",
+      "having": "sum(replace(produccionkpc, ',', '')::number) > 0",
       "max_filas": 500,
       "portal": "datos.gov.co",
       "select": "campo, departamento, municipio, coddanemunicipio, operadora, vigencia, mes, sum(replace(produccionkpc, ',', '')::number) AS kpc",
       "where": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)"
      },
-     "filas": 24,
+     "filas": 12,
      "filas_que_resume": 48,
      "filtro_soql": "(replace(replace(replace(replace(replace(replace(upper(campo), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('Cusiana'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND vigencia = 2024)",
      "portal": "datos.gov.co"

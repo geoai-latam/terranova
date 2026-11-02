@@ -1,5 +1,5 @@
 id: anh_regalias_campo
-version: 2
+version: 3
 familia: estadisticas
 fuente: anh.regalias_liquidadas
 pregunta: "¿Cuántas regalías generó este campo petrolero o de gas en un año, mes a mes?"
@@ -36,6 +36,8 @@ derivados:
   hidrocarburo: {de: codigo, campo: tipo_hidrocarburo_codigo, valores: {O: petróleo, G: gas}}
   regalias_pesos: {de: columna, campo: pesos, tipo: float}
   volumen_regalia: {de: columna, campo: volumen, tipo: float}
+  # La fuente pone las dos unidades en la misma columna («volumenregaliablskpc»).
+  unidad_volumen: {de: codigo, campo: tipo_hidrocarburo_codigo, valores: {O: barriles, G: "kpc (miles de pies cúbicos)"}}
   regalias_total_pesos: {de: suma, campo: regalias_pesos, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 salida: RegaliasCampo
@@ -44,7 +46,7 @@ avisos:
   si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
   texto: >
     Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
-    el último). Puede ser que la fuente aún no los publique o que falten: noviembre de 2025 trae 106
+    el último). Puede ser que la fuente aún no los publique, que falten o que el campo empezara o dejara de producir ese año (el gas de Borbón empieza en julio de 2025): noviembre de 2025 trae 106
     filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
     de 2025 (medido el 2026-11-02). El total no es el de un año entero.
 cobro: agregado
@@ -52,7 +54,7 @@ canario:
   # Medido el 2026-10-28 en j7js-yk74: Rubiales 2024, Puerto Gaitán (Meta), petróleo, 12 meses;
   # enero $84 065 575 789; el año, $1 071 373 844 725.
   entrada: {campo: "Rubiales", anio: 2024}
-  verdad: {meses_con_datos: 12, campo: RUBIALES, municipio: PUERTO GAITAN, hidrocarburo: petróleo, mes: 1, regalias_pesos: 84065575789.0, regalias_total_pesos: 1071373844725.0}
+  verdad: {meses_con_datos: 12, campo: RUBIALES, municipio: PUERTO GAITAN, hidrocarburo: petróleo, unidad_volumen: barriles, mes: 1, regalias_pesos: 84065575789.0, regalias_total_pesos: 1071373844725.0}
   minimos: {numero_registros: 12}
-  campos: [anio, campo, departamento, hasta_mes, hidrocarburo, mes, meses_con_datos, municipio, numero_registros, regalias_pesos, regalias_total_pesos, tipo_hidrocarburo_codigo, volumen_regalia]
+  campos: [anio, campo, departamento, hasta_mes, hidrocarburo, mes, meses_con_datos, municipio, numero_registros, regalias_pesos, regalias_total_pesos, tipo_hidrocarburo_codigo, unidad_volumen, volumen_regalia]
   latencia_max_ms: 20000
