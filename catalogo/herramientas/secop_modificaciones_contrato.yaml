@@ -74,5 +74,5 @@ canario:
   entrada: {id_contrato: CO1.PCCNTR.3712964}
   verdad: {id_contrato: CO1.PCCNTR.3712964, modificaciones_vigentes: 8, valor_actual: 1173577000.0, valor_tras_primera: 1173577000.0, cambio_valor_desde_primera: 0.0, dias_extendidos_total: 364}
   minimos: {numero_registros: 16}
-  campos: [cambio_valor, cambio_valor_desde_primera, dias_extendidos, dias_extendidos_total, estado, fecha_aprobacion, fecha_creacion, id_contrato, id_modificacion, modificaciones_vigentes, numero_registros, valor_actual, valor_contrato_tras_cambio, valor_tras_primera, vigente]
+  campos: [cambio_valor, cambio_valor_desde_primera, dias_extendidos, dias_extendidos_total, estado, fecha_aprobacion, fecha_creacion, id_contrato, id_modificacion, modificaciones_vigentes, numero_registros, proposito, valor_actual, valor_contrato_tras_cambio, valor_tras_primera, vigente]
   latencia_max_ms: 10000
