@@ -1,5 +1,5 @@
 id: aerocivil_operaciones_aeropuerto
-version: 1
+version: 2
 familia: estadisticas
 fuente: aerocivil.operaciones
 pregunta: "¿Cuántas operaciones aéreas (llegadas y salidas) tuvo este aeródromo en un año?"
@@ -25,14 +25,23 @@ consulta:
     max_filas: 200
   campos: [aeropuerto_operacion, anio, mes, tipo_operacion, trafico]
 derivados:
+  meses_con_datos: {de: distintos, campo: mes, tipo: int}
+  hasta_mes: {de: maximo, campo: mes, tipo: int}
   operaciones_mes: {de: columna, campo: operaciones_mes, tipo: int}
   total_operaciones_anio: {de: suma, campo: operaciones_mes, tipo: int}
 salida: OperacionesAeropuerto
+avisos:
+- cuando: encontrado
+  si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
+    el último). El total del año no es el de un año entero: compare los mismos meses. Medido el
+    2026-11-02: las operaciones llegan a julio de 2026.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en jh8x-n6h6: El Dorado (SKBO) 2025 da 48 filas y 390 331 operaciones; la
   # primera, enero, llegadas internacionales: 5 354.
   entrada: {aeropuerto_oaci: "SKBO", anio: "2025"}
-  verdad: {mes: "01", tipo_operacion: LLEGADA, trafico: I, operaciones_mes: 5354, total_operaciones_anio: 390331}
-  campos: [aeropuerto_oaci, anio, mes, operaciones_mes, tipo_operacion, total_operaciones_anio, trafico]
+  verdad: {meses_con_datos: 12, mes: 1, tipo_operacion: LLEGADA, trafico: I, operaciones_mes: 5354, total_operaciones_anio: 390331}
+  campos: [aeropuerto_oaci, anio, hasta_mes, mes, meses_con_datos, operaciones_mes, tipo_operacion, total_operaciones_anio, trafico]
   latencia_max_ms: 15000

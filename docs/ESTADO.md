@@ -110,6 +110,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **ANH, los meses que faltan:** las seis dan `meses_con_datos` y `hasta_mes`, y avisan cuando
   falta alguno. Castilla 2025 no tiene octubre ni noviembre, y 2026 llega a marzo. El motor suma el
   derivado `distintos`.
+- **Aerocivil:** «Medellín» ya da el José María Córdova (MDE, registrado en Rionegro), y «Apartadó»,
+  el de Carepa. Tráfico y operaciones dicen cuántos meses trae el año: en 2026, el tráfico llega a
+  junio y las operaciones a julio.
 
 ## Ficha de un lote (2026-11-01)
 
