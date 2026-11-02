@@ -61,7 +61,9 @@ territorio, cuando el catálogo es 78 % no geográfico). Ahora va por decisiones
   lote (expediente). La criba sale de la portada; «tres formas de usarlo» pasa a «cómo trabajamos»
   (cuatro pasos y el IRCA de Chía en cuatro destinos, sin nombrar clientes).
 - **La cobertura** baja después de los sectores, con el mapa SINIC de su primera versión, sus rótulos
-  y un vaivén con el norte arriba.
+  y un vaivén con el norte arriba. Entra de cerca por la celda de Santa Marta con sus 57.088 terrenos
+  reales del SINIC, un punto cada uno (`datos/ciudad-sm.bin`, sin códigos ni dueños; lo arma
+  `web/ciudad_datos.py` desde una consulta de solo lectura a la copia), y se aleja hasta el país.
 
 ## La portada: el dato es la figura (2026-11-02)
 
