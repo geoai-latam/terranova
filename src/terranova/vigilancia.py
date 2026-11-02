@@ -67,6 +67,18 @@ class RegistroCanarios:
         )
         return [Resultado(f[0], f[1], f[2], bool(f[3]), f[4], f[5], f[6]) for f in filas]
 
+    def historial(self, dias: int = 7) -> list[tuple[str, str, str, str]]:
+        """(herramienta, fuente_id, día, código) de los últimos `dias`, con hoy (UTC); si un día
+        hubo varias corridas, la última."""
+        desde = (date.fromisoformat(ahora()[:10]) - timedelta(days=dias - 1)).isoformat()
+        filas, _ = self._bd.ejecutar(
+            "SELECT herramienta, fuente_id, momento, codigo FROM canarios WHERE momento >= ? "
+            "ORDER BY momento",
+            (desde,),
+        )
+        por_dia = {(f[0], f[2][:10]): (f[1], f[3]) for f in filas}
+        return [(h, f, dia, c) for (h, dia), (f, c) in sorted(por_dia.items())]
+
     def dias_seguidos(self, herramienta: str) -> int:
         """Días (UTC) consecutivos hasta hoy con al menos un resultado registrado."""
         filas, _ = self._bd.ejecutar(
@@ -155,6 +167,34 @@ def estado_por_fuente(ultimos: list[Resultado], catalogo: Catalogo) -> list[dict
             }
         )
     return salida
+
+
+def historial_por_herramienta(
+    filas: list[tuple[str, str, str, str]], catalogo: Catalogo, dias: int
+) -> dict[str, Any]:
+    """`GET /v1/estado/historial`: las herramientas que fallaron en la ventana, día por día, para
+    distinguir un rojo de una noche de uno que se repite. Las verdes solo se cuentan."""
+    por_herramienta: dict[str, list[tuple[str, str, str]]] = {}
+    for h, f, dia, codigo in filas:
+        if f in catalogo.fuentes and h in catalogo.herramientas:
+            por_herramienta.setdefault(h, []).append((f, dia, codigo))
+    con_fallas = [
+        {
+            "herramienta": h,
+            "fuente_id": rs[-1][0],
+            "dias_con_falla": sum(c != "verde" for _, _, c in rs),
+            "dias_medidos": len(rs),
+            "dias": [{"dia": d, "codigo": c} for _, d, c in rs],
+        }
+        for h, rs in sorted(por_herramienta.items())
+        if any(c != "verde" for _, _, c in rs)
+    ]
+    return {
+        "dias": dias,
+        "herramientas_medidas": len(por_herramienta),
+        "herramientas_siempre_verdes": len(por_herramienta) - len(con_fallas),
+        "con_fallas": con_fallas,
+    }
 
 
 def alertar(resultados: list[Resultado], url: str | None) -> bool:

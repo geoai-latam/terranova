@@ -173,6 +173,45 @@ async def test_v1_estado_es_publico(tmp_path: Path) -> None:
     assert estado["igac.catastro.terreno"] == "verde" and estado["pnn.runap"] == "sin_datos"
 
 
+def _dia(hace: int, hora: str = "09:00:00") -> str:
+    return f"{(datetime.now(UTC) - timedelta(days=hace)).date()}T{hora}.000+00:00"
+
+
+def _resultado(herramienta: str, fuente: str, momento: str, codigo: str = "verde") -> Resultado:
+    return Resultado(herramienta, fuente, momento, codigo == "verde", codigo, "x", 1)
+
+
+@pytest.mark.anyio
+async def test_v1_estado_historial(tmp_path: Path) -> None:
+    """Dice si una falla se repite: día por día, con la última corrida de cada día; las verdes
+    solo se cuentan, y lo que no está en la ventana o no se vende no sale."""
+    reg = RegistroCanarios(tmp_path / "c.db")
+    trm, fuente_trm = "banrep_trm_recientes", "banrep.trm"
+    reg.registrar(_resultado(trm, fuente_trm, _dia(0), "fuente_no_disponible"))
+    reg.registrar(_resultado(trm, fuente_trm, _dia(1), "fuente_no_disponible"))
+    # el mismo día, una segunda corrida en verde: vale la última
+    reg.registrar(_resultado(trm, fuente_trm, _dia(1, "21:00:00")))
+    reg.registrar(_resultado(trm, fuente_trm, _dia(2)))
+    reg.registrar(_resultado(trm, fuente_trm, _dia(9), "lento"))  # fuera de la ventana
+    reg.registrar(_resultado("pnn_areas_protegidas_en_punto", "pnn.runap", _dia(0)))
+    reg.registrar(_resultado("herramienta_retirada", "fuente.retirada", _dia(0), "lento"))
+    puerta.ESTADO.canarios = reg
+    try:
+        transporte = httpx.ASGITransport(app=crear_api())
+        async with httpx.AsyncClient(transport=transporte, base_url="http://puerta") as c:
+            r = await c.get("/v1/estado/historial")
+            fuera = await c.get("/v1/estado/historial?dias=31")
+    finally:
+        puerta.ESTADO.canarios = None
+    assert r.status_code == 200 and fuera.status_code == 400
+    h = r.json()
+    assert (h["dias"], h["herramientas_medidas"], h["herramientas_siempre_verdes"]) == (7, 2, 1)
+    assert [f["herramienta"] for f in h["con_fallas"]] == [trm]
+    falla = h["con_fallas"][0]
+    assert (falla["dias_con_falla"], falla["dias_medidos"]) == (1, 3)
+    assert [d["codigo"] for d in falla["dias"]] == ["verde", "verde", "fuente_no_disponible"]
+
+
 @pytest.mark.anyio
 async def test_canario_no_aborta_ante_error_inesperado() -> None:
     """WS2: un error no previsto en UNA herramienta (KeyError/ValueError) no aborta el bucle ni
