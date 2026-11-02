@@ -1,0 +1,63 @@
+id: mindefensa_homicidios_municipio
+version: 1
+familia: justicia
+fuente: mindefensa.homicidios
+pregunta: "¿Cuántos homicidios hubo en este municipio en el año, y de qué tipo?"
+descripcion: >
+  Homicidios de un municipio (DIVIPOLA) en un año, según el Ministerio de Defensa, en víctimas: por
+  modalidad presunta (sicariato, riñas, atraco…), con las víctimas mujeres, los feminicidios y las
+  muertes con arma de fuego, de la modalidad con más víctimas a la de menos. Da el total del año y
+  hasta qué mes publica la fuente (fuente_hasta_mes): el año en curso está incompleto. Cubre desde 2003.
+  (Fuente: Ministerio de Defensa Nacional; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: m8fd-ahd9
+    portal: datos.gov.co
+    select: "_modalidad_presunta, sum(cantidad) AS victimas, sum(case(sexo = 'FEMENINO', cantidad, true, 0)) AS mujeres, sum(case(spoa_caracterizacion = 'FEMINICIDIO', cantidad, true, 0)) AS feminicidios, sum(case(arma_medio = 'ARMA DE FUEGO', cantidad, true, 0)) AS arma_de_fuego"
+    where: "cod_muni = '{municipio_divipola}' AND date_extract_y(fecha_hecho) = {anio}"
+    group: "_modalidad_presunta"
+    order: "victimas DESC, _modalidad_presunta"
+    max_filas: 200
+  campos: [fecha_hecho, cod_muni, sexo, arma_medio, _modalidad_presunta, spoa_caracterizacion, cantidad]
+  # Hasta qué mes del año publica la fuente en todo el país: un municipio sin homicidios en
+  # septiembre no lo dice. Medido el 2026-11-02: 2026 llega a septiembre.
+  complemento:
+    fuente: mindefensa.homicidios
+    tool: datos_consultar
+    argumentos:
+      id: m8fd-ahd9
+      portal: datos.gov.co
+      select: "max(date_extract_m(fecha_hecho)) AS hasta_mes, count(distinct date_extract_m(fecha_hecho)) AS meses"
+      where: "date_extract_y(fecha_hecho) = {anio}"
+    hechos:
+      hasta_mes: {nombre: fuente_hasta_mes, tipo: int, desc: "último mes del año que la fuente publica, en todo el país"}
+      meses: {nombre: fuente_meses_publicados, tipo: int, desc: "meses del año que la fuente publica"}
+    que_dice: "hasta qué mes del año publica la fuente"
+salida: MindefensaHomicidiosMunicipio
+derivados:
+  victimas: {de: columna, campo: victimas, tipo: int}
+  mujeres: {de: columna, campo: mujeres, tipo: int}
+  feminicidios: {de: columna, campo: feminicidios, tipo: int}
+  arma_de_fuego: {de: columna, campo: arma_de_fuego, tipo: int}
+  total_victimas: {de: suma, campo: victimas, tipo: int}
+  total_mujeres: {de: suma, campo: mujeres, tipo: int}
+  total_feminicidios: {de: suma, campo: feminicidios, tipo: int}
+  total_arma_de_fuego: {de: suma, campo: arma_de_fuego, tipo: int}
+avisos:
+- cuando: encontrado
+  si: {campo: fuente_meses_publicados, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año está incompleto: la fuente todavía no lo publica entero, en todo el país (fuente_hasta_mes
+    es el último mes publicado). No lo compare con un año entero: compare los mismos meses.
+cobro: agregado
+canario:
+  # Medido el 2026-11-02 en m8fd-ahd9: Cali (76001) en 2025 suma 1 068 víctimas, 69 de ellas
+  # mujeres; la primera modalidad es el sicariato, con 745. Latencia medida: de 5 a 12 s.
+  entrada: {municipio_divipola: "76001", anio: 2025}
+  verdad: {fuente_hasta_mes: 12, modalidad: SICARIATO, victimas: 745, total_victimas: 1068, total_mujeres: 69}
+  campos: [arma_de_fuego, feminicidios, fuente_hasta_mes, fuente_meses_publicados, modalidad, mujeres, total_arma_de_fuego, total_feminicidios, total_mujeres, total_victimas, victimas]
+  latencia_max_ms: 20000
