@@ -1,5 +1,5 @@
 id: secop_contratos_entidad_anio
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad?"
@@ -7,7 +7,8 @@ descripcion: >
   Contratos de SECOP II firmados por una entidad estatal (NIT) en un año, por tipo de contrato
   (prestación de servicios, obra, suministro…) y modalidad (contratación directa, mínima cuantía,
   licitación…): número y valor en pesos, del grupo más grande al más chico, y los totales del año
-  (total_contratos, valor_total_anio). Si no tiene el NIT de la entidad, búsquelo con
+  (total_contratos, valor_total_anio). Un NIT puede cubrir varias entidades, como una alcaldía y su
+  personería: cada fila dice de cuál es. Si no tiene el NIT de la entidad, búsquelo con
   secop_entidades_municipio; no lo suponga.
   Los contratos de 20 billones o más no suman: son errores de digitación de la fuente (uno de
   Medellín dice 440 000 billones) y `contratos_valor_atipico` dice cuántos hubo.
@@ -20,10 +21,10 @@ consulta:
   argumentos:
     id: jbjy-vk9h
     portal: datos.gov.co
-    # el nombre de la entidad en cada fila: si el agente supuso un NIT, se ve de quién es el dato
-    select: "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico"
+    # un NIT puede cubrir varias entidades (Chía: alcaldía y personería): se agrupa también por nombre
+    select: "nombre_entidad AS entidad, tipo_de_contrato, modalidad_de_contratacion, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico"
     where: "nit_entidad = '{nit_entidad}' AND date_extract_y(fecha_de_firma) = {anio}"
-    group: "tipo_de_contrato, modalidad_de_contratacion"
+    group: "nombre_entidad, tipo_de_contrato, modalidad_de_contratacion"
     order: "contratos DESC"
     max_filas: 200
   campos: [nit_entidad, nombre_entidad, fecha_de_firma, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato]
@@ -37,10 +38,10 @@ derivados:
   contratos_valor_atipico: {de: columna, campo: contratos_valor_atipico, tipo: int}
 cobro: agregado
 canario:
-  # Medido el 2026-10-23 en jbjy-vk9h: la Alcaldía de Chía (899999172) en 2023, 924 contratos en 29
-  # grupos; el más grande, prestación de servicios por contratación directa: 726 (año cerrado).
+  # Medido el 2026-11-02 en jbjy-vk9h: el NIT 899999172 en 2023, 924 contratos en 34 grupos entre la
+  # alcaldía y la personería; el más grande, prestación de servicios directa de la alcaldía: 711.
   entrada: {nit_entidad: 899999172, anio: 2023}
-  verdad: {tipo_contrato: "Prestación de servicios", modalidad: "Contratación directa", contratos: 726}
+  verdad: {entidad: "ALCALDIA MUNICIPAL DE CHIA", tipo_contrato: "Prestación de servicios", modalidad: "Contratación directa", contratos: 711}
   minimos: {total_contratos: 924}
   campos: [contratos, contratos_valor_atipico, entidad, modalidad, tipo_contrato, total_contratos, valor_total, valor_total_anio]
   latencia_max_ms: 10000

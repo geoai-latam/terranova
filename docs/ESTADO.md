@@ -131,6 +131,8 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   contratos mal digitados; uno solo dice 440 000 billones. Sin ellos son 67 billones.
 - **Ahora:** los contratos de 20 billones o más no suman y `contratos_valor_atipico` dice cuántos
   hubo. Afecta a las 6 herramientas que suman valores de SECOP.
+- **La etiqueta de la entidad:** un NIT puede cubrir alcaldía y personería. `secop_contratos_entidad_anio`
+  rotulaba 726 contratos como de la Personería de Chía, por un `max(nombre)`; ahora agrupa por entidad.
 
 ## Auditoría de herramientas: territorio (2026-11-01)
 
