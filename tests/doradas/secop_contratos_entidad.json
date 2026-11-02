@@ -1,15 +1,16 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T09:17:01+00:00",
+ "grabado": "2026-11-02T15:25:00+00:00",
  "herramienta": "secop_contratos_entidad",
  "llamadas": [
   {
    "argumentos": {
-    "group": "anio",
+    "group": "anio, nombre_entidad",
     "id": "jbjy-vk9h",
-    "max_filas": 50,
+    "max_filas": 100,
+    "order": "anio DESC NULL LAST, contratos DESC",
     "portal": "datos.gov.co",
-    "select": "date_extract_y(fecha_de_firma) AS anio, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
+    "select": "date_extract_y(fecha_de_firma) AS anio, nombre_entidad AS entidad, max(fecha_de_firma) AS ultima_firma, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
     "where": "nit_entidad = '891180077'"
    },
    "conector": "datos-abiertos-mcp",
@@ -19,91 +20,184 @@
       "columns": [
        "anio",
        "contratos",
+       "contratos_valor_atipico",
        "entidad",
+       "ultima_firma",
        "valor_total"
       ],
       "kind": "table",
       "rows": [
        {
-        "anio": "2018",
-        "contratos": "14",
+        "anio": "2026",
+        "contratos": "777",
+        "contratos_valor_atipico": "0",
         "entidad": "MUNICIPIO DE PITALITO",
-        "valor_total": "2654592160"
+        "ultima_firma": "2026-10-31T07:33:28.199",
+        "valor_total": "46063562665.96"
        },
        {
-        "anio": "2019",
-        "contratos": "5",
+        "anio": "2026",
+        "contratos": "12",
+        "contratos_valor_atipico": "0",
+        "entidad": "CONCEJO DE PITALITO",
+        "ultima_firma": "2026-10-27T17:56:19.562",
+        "valor_total": "297739667"
+       },
+       {
+        "anio": "2026",
+        "contratos": "7",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2026-09-09T16:28:33.466",
+        "valor_total": "135200000"
+       },
+       {
+        "anio": "2025",
+        "contratos": "644",
+        "contratos_valor_atipico": "0",
         "entidad": "MUNICIPIO DE PITALITO",
-        "valor_total": "1816975735"
+        "ultima_firma": "2025-12-22T08:23:32.926",
+        "valor_total": "63004961685.48"
+       },
+       {
+        "anio": "2025",
+        "contratos": "11",
+        "contratos_valor_atipico": "0",
+        "entidad": "CONCEJO DE PITALITO",
+        "ultima_firma": "2025-12-16T09:48:32.703",
+        "valor_total": "184028665"
+       },
+       {
+        "anio": "2025",
+        "contratos": "4",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2025-01-15T17:00:42.815",
+        "valor_total": "76040000"
+       },
+       {
+        "anio": "2024",
+        "contratos": "571",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2024-12-30T09:29:27.379",
+        "valor_total": "25850689112.74"
+       },
+       {
+        "anio": "2024",
+        "contratos": "10",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2024-12-26T14:18:30.640",
+        "valor_total": "125915000"
+       },
+       {
+        "anio": "2024",
+        "contratos": "9",
+        "contratos_valor_atipico": "0",
+        "entidad": "CONCEJO DE PITALITO",
+        "ultima_firma": "2024-08-08T09:00:35.081",
+        "valor_total": "134997023"
+       },
+       {
+        "anio": "2023",
+        "contratos": "638",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2023-12-21T17:55:29.078",
+        "valor_total": "50089428227.45"
+       },
+       {
+        "anio": "2023",
+        "contratos": "3",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2023-04-21T17:20:55.756",
+        "valor_total": "39000000"
+       },
+       {
+        "anio": "2022",
+        "contratos": "668",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2022-12-30T13:26:41.076",
+        "valor_total": "34290964565.32"
+       },
+       {
+        "anio": "2022",
+        "contratos": "5",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2022-10-24T15:55:34.772",
+        "valor_total": "36650000"
+       },
+       {
+        "anio": "2021",
+        "contratos": "375",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2021-12-29T17:46:22.769",
+        "valor_total": "19269531252.76"
+       },
+       {
+        "anio": "2021",
+        "contratos": "1",
+        "contratos_valor_atipico": "0",
+        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
+        "ultima_firma": "2021-12-20T12:00:30.792",
+        "valor_total": "2700000"
        },
        {
         "anio": "2020",
         "contratos": "2",
+        "contratos_valor_atipico": "0",
         "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2020-06-02T09:04:45.934",
         "valor_total": "200000000"
        },
        {
-        "anio": "2021",
-        "contratos": "376",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "19272231252.76"
-       },
-       {
-        "anio": "2022",
-        "contratos": "673",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "34327614565.32"
-       },
-       {
-        "anio": "2023",
-        "contratos": "641",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "50128428227.45"
-       },
-       {
-        "anio": "2024",
-        "contratos": "590",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "26111601135.74"
-       },
-       {
-        "anio": "2025",
-        "contratos": "659",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "63056958787.20"
-       },
-       {
-        "anio": "2026",
-        "contratos": "780",
-        "entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "44573220272.96"
-       },
-       {
-        "contratos": "8",
+        "anio": "2019",
+        "contratos": "5",
+        "contratos_valor_atipico": "0",
         "entidad": "MUNICIPIO DE PITALITO",
-        "valor_total": "766235857"
+        "ultima_firma": "2019-12-17T10:21:26.927",
+        "valor_total": "1816975735"
+       },
+       {
+        "anio": "2018",
+        "contratos": "14",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "ultima_firma": "2018-11-21T14:15:38.590",
+        "valor_total": "2654592160"
+       },
+       {
+        "contratos": "9",
+        "contratos_valor_atipico": "0",
+        "entidad": "MUNICIPIO DE PITALITO",
+        "valor_total": "2439295171.82"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 10,
+      "total": 19,
       "truncado": false,
-      "vistos": 10
+      "vistos": 19
      },
      "completo": true,
      "conjunto": "jbjy-vk9h",
      "consulta": {
       "conjunto": "jbjy-vk9h",
-      "group": "anio",
-      "max_filas": 50,
+      "group": "anio, nombre_entidad",
+      "max_filas": 100,
       "portal": "datos.gov.co",
-      "select": "date_extract_y(fecha_de_firma) AS anio, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
+      "select": "date_extract_y(fecha_de_firma) AS anio, nombre_entidad AS entidad, max(fecha_de_firma) AS ultima_firma, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(nit_entidad = '891180077')"
      },
-     "filas": 10,
-     "filas_que_resume": 3748,
+     "filas": 19,
+     "filas_que_resume": 3765,
      "filtro_soql": "(nit_entidad = '891180077')",
      "portal": "datos.gov.co"
     },
