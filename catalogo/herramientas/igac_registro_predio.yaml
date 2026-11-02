@@ -1,5 +1,5 @@
 id: igac_registro_predio
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.registro1
 pregunta: "¿Qué dirección, destino económico y áreas tiene este predio en el catastro IGAC?"
@@ -29,8 +29,9 @@ canario:
   verdad:
     codigo_predial: "251750000000000050067000000000"
     destino_economico: G
+    destino_economico_significado: Recreacional
     area_terreno_m2: 56069.0
     area_construida_m2: 6572.0
     municipio_divipola: "25175"
-  campos: [area_construida_m2, area_terreno_m2, codigo_predial, destino_economico, direccion, municipio_divipola]
+  campos: [area_construida_m2, area_terreno_m2, codigo_predial, destino_economico, destino_economico_significado, direccion, municipio_divipola]
   latencia_max_ms: 15000  # REGISTRO_1/2 son tablas de ~7 M filas: 7 s medidos

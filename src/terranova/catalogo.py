@@ -129,6 +129,7 @@ def entero_de_json(valor: Any) -> Any:
     return int(valor) if isinstance(valor, float) and valor.is_integer() else valor
 
 
+SUFIJO_SIGNIFICADO = "_significado"
 TipoEntrada = Literal[
     "float",
     "int",
@@ -631,7 +632,9 @@ class Fuente(_Ficha):
 
     @property
     def nombres_rt(self) -> set[str]:
-        return {c.nombre for c in self.campos.values()}
+        return {c.nombre for c in self.campos.values()} | {
+            f"{c.nombre}{SUFIJO_SIGNIFICADO}" for c in self.campos.values() if c.codigos is not None
+        }
 
 
 MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)\}")

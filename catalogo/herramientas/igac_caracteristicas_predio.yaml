@@ -1,5 +1,5 @@
 id: igac_caracteristicas_predio
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.registro2
 pregunta: "¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC?"
@@ -28,5 +28,5 @@ cobro: registro
 canario:
   entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_2, corte 06_2026
   verdad: {numero_unidades: 2, zona_economica: "006"}
-  campos: [area_construida_m2, area_terreno_m2, banos, codigo_predial, habitaciones, locales, numero_unidades, pisos, puntaje_calificacion, uso_construccion, zona_economica, zona_fisica]
+  campos: [area_construida_m2, area_terreno_m2, banos, codigo_predial, habitaciones, locales, numero_unidades, pisos, puntaje_calificacion, uso_construccion, uso_construccion_significado, zona_economica, zona_fisica]
   latencia_max_ms: 15000  # REGISTRO_1/2 son tablas de ~7 M filas: 7 s medidos

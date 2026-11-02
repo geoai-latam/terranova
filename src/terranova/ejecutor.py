@@ -26,6 +26,7 @@ from terranova.catalogo import (
     AVISO_DATO_PUBLICO,
     MARCADOR,
     PATRONES_ENTRADA,
+    SUFIJO_SIGNIFICADO,
     Catalogo,
     Derivado,
     Fuente,
@@ -288,6 +289,11 @@ def mapear_fila(
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
             out[campo.nombre] = convertir(valor, campo.tipo)
+            if campo.codigos is not None:
+                # un código solo no dice nada: el significado va al lado, no en la ficha técnica
+                out[f"{campo.nombre}{SUFIJO_SIGNIFICADO}"] = campo.codigos.get(
+                    str(out[campo.nombre])
+                )
     for nombre, d in h.derivados.items():
         if not d.por_elemento:
             continue
@@ -379,9 +385,18 @@ async def cobertura_catastral(
             "max_features": 1,
         }
         gestores = ej.catalogo.fuentes["igac.gestores_catastrales"]
-        sc = await ej.llamar(
-            "arcgis-mcp", "arcgis_query_features", argumentos, fuente_id=gestores.id
-        )
+        # solo explica un vacío que la capa ya dio: si tarda o cae, el vacío sigue en pie
+        try:
+            sc = await asyncio.wait_for(
+                ej.llamar("arcgis-mcp", "arcgis_query_features", argumentos, fuente_id=gestores.id),
+                TOPE_COBERTURA_S,
+            )
+        except TimeoutError:
+            if ej.proteccion is not None:
+                ej.proteccion.registrar_caida(gestores.id)
+            return Veredicto(False, AVISO_SIN_VERIFICAR)
+        except ErrorEjecucion:
+            return Veredicto(False, AVISO_SIN_VERIFICAR)
         rasgos = ((sc.get("artifacts") or [{}])[0].get("data") or {}).get("features") or []
         divipola = str(rasgos[0]["properties"].get("divipola") or "") if rasgos else None
         procedencia.append(
@@ -419,6 +434,13 @@ async def cobertura_catastral(
     return Veredicto(True, aviso, procedencia)
 
 
+# de Malpelo y San Andrés a Puerto Carreño e Inírida, y del Amazonas a Serranilla
+RECTANGULO_COLOMBIA = (-82.0, -4.3, -66.8, 16.2)
+TOPE_COBERTURA_S = 5.0
+AVISO_SIN_VERIFICAR = (
+    "La capa no trae nada en este punto, pero no se pudo comprobar si el IGAC cubre el municipio. "
+    "Si lo atiende otro gestor catastral, esta base no lo tiene: pruebe predio_en_punto."
+)
 CAPA_GESTORES = (
     "https://mapas.igac.gov.co/server/rest/services/catastro/Gestores_Catastrales/MapServer/1"
 )
@@ -704,7 +726,11 @@ class Ejecutor:
             avisos.append(
                 f"Hay {len(elementos)} resultados; se muestra el primero (todos van en la capa)."
             )
-        if not hay_algo and fuente.cobertura.indice in COBERTURAS:
+        lejos = not hay_algo and fuente.cobertura.pais == "CO" and fuera_de_colombia(h, valores)
+        if lejos:
+            estado = "fuera_de_cobertura"
+            avisos.append("Ese lugar queda fuera de Colombia y esta fuente solo cubre Colombia.")
+        elif not hay_algo and fuente.cobertura.indice in COBERTURAS:
             veredicto = await COBERTURAS[fuente.cobertura.indice](self, h, valores, consultado_en)
             procedencia += veredicto.procedencia
             if veredicto.aviso:
@@ -971,6 +997,24 @@ def _aviso_de_homonimos(h: Herramienta, v: dict[str, Any]) -> str | None:
                 "otro, no se consultó."
             )
     return None
+
+
+def fuera_de_colombia(h: Herramienta, v: dict[str, Any]) -> bool:
+    """Si la zona pedida queda entera fuera del rectángulo de Colombia. Solo por rectángulo: Quito o
+    Panamá caen dentro y siguen siendo «no encontrado»."""
+    oeste, sur, este, norte = RECTANGULO_COLOMBIA
+    if "lon" in v and "lat" in v:
+        return not (oeste <= v["lon"] <= este and sur <= v["lat"] <= norte)
+    for nombre, tipo in h.entrada.items():
+        if tipo == "bbox":
+            x0, y0, x1, y1 = v[nombre]
+            return x1 < oeste or x0 > este or y1 < sur or y0 > norte
+        if tipo == "poligono":
+            vertices = v[nombre]["coordinates"][0]
+            return all(
+                not (oeste <= lon <= este and sur <= lat <= norte) for lon, lat, *_ in vertices
+            )
+    return False
 
 
 def _zona(

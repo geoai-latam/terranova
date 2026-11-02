@@ -6,7 +6,10 @@ pregunta: "¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto?"
 descripcion: >
   Rango de la Unidad Agrícola Familiar (UAF) que fija la ANT para la zona (unidad física homogénea)
   que contiene un punto: extensión mínima y máxima en hectáreas, municipio (DIVIPOLA) y el acto que
-  la adopta. La UAF cambia dentro de un mismo municipio según la zona.
+  la adopta. La UAF cambia dentro de un mismo municipio según la zona. La ANT solo la publica para
+  286 municipios de 25 departamentos (medido el 2026-11-01): Medellín, Cali, Bucaramanga y
+  todo Chocó no están. Sin resultado significa que la capa no cubre ese punto, no que allí no
+  haya UAF.
   (Fuente: ANT; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
