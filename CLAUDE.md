@@ -6,6 +6,8 @@
 2. `docs/ROADMAP.md`: la fase actual, sus specs, su aceptación y su gate.
 3. Las ADR que toque la tarea (`docs/decisions/`) y la spec correspondiente (`docs/specs/`).
    Si la tarea toca el sitio (`web/`), `docs/DISENO.md`.
+   Si toca una fuente o sus herramientas, `docs/fuentes/<id>.md`: lo medido en ella, sus trampas y
+   las decisiones. Se actualiza en el mismo PR.
 4. Contexto interno, si hace falta (estrategia, comparación con otros servicios, legal):
    `interno/`. No se versiona.
 

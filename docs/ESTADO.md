@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-11-01.*
+*Actualizado: 2026-11-02.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -47,6 +47,18 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Revisión de valor: arreglo uno por uno (desde 2026-11-02)
+
+Las 213 herramientas se revisaron leyendo la respuesta completa en producción: 118 contestan bien,
+66 a medias y 29 no contestan o engañan. Se arreglan en orden, una fuente por PR. Lo que se sabe de
+cada fuente queda en `docs/fuentes/<id>.md`.
+
+- **`secop_contratos_entidad` (v3):** agrupaba por año con `max(nombre_entidad)`, así que desde 2021
+  los contratos de la Alcaldía de Chía (1 143 en 2025) y del Municipio de Pitalito salían a nombre
+  de la Personería. Ahora agrupa por año y entidad, da primero lo más reciente y dice hasta qué
+  fecha va el año en curso (`ultima_firma`). Era el mismo error que se arregló en
+  `secop_contratos_entidad_anio`.
 
 ## Ficha de un lote (2026-11-01)
 
