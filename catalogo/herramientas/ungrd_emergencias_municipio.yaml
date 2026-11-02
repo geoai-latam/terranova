@@ -1,5 +1,5 @@
 id: ungrd_emergencias_municipio
-version: 1
+version: 2
 familia: ambiente
 fuente: ungrd.emergencias
 pregunta: "¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron?"

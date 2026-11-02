@@ -27,6 +27,7 @@ copia:
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P6M}
 cobertura:
   pais: CO
+  rectangulo: [-74.46, 3.72, -73.98, 4.84]
   excluye: []
   periodo: "POT vigente de Bogotá (Decreto 555 de 2021)"
 datos_personales: ninguno

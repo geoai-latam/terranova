@@ -225,6 +225,15 @@ class Campo(_Ficha):
     codigos_norma: str | None = Field(
         default=None, description="la norma que define `codigos` (resolución, artículo, URL)"
     )
+    ancho: int | None = Field(
+        default=None,
+        ge=2,
+        description="rellena con ceros: un código que la fuente guarda como número (5001 → 05001)",
+    )
+    maximo_valido: float | None = Field(
+        default=None,
+        description="por encima de esto la fuente trae un dato dañado: sale vacío, no inventado",
+    )
     coma_decimal: bool = Field(
         default=False,
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
@@ -257,6 +266,14 @@ class Cobertura(_Ficha):
         default=None,
         description="columna de la lista blanca que fecha cada fila: su mínimo y máximo cosechados "
         "son los años que cubre la fuente (spec 08)",
+    )
+    desde_anio: int | None = Field(
+        default=None, description="primer año que cubre, cuando la columna no se cosecha"
+    )
+    rectangulo: tuple[float, float, float, float] | None = Field(
+        default=None,
+        description="[oeste, sur, este, norte] de una fuente regional: fuera de él, un vacío es "
+        "fuera_de_cobertura",
     )
     periodo: str | None = Field(
         default=None, description="años que cubre, escritos a mano cuando no hay columna (spec 08)"

@@ -1,5 +1,5 @@
 id: banrep_ibr_recientes
-version: 1
+version: 2
 familia: estadisticas
 fuente: banrep.ibr
 pregunta: "¿Cómo va el IBR en sus distintos plazos?"

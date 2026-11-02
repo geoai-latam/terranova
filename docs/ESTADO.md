@@ -88,6 +88,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
 - **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
+## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
+
+- **Calidad del aire:** Cali bajó de 54 s a 9 s medidos en la fuente. El filtro ya no castea la columna.
+- **Datos dañados:** la tasa de matriculación por ETC de 2012 viene de la fuente como 109000000000000 y
+  ahora sale vacía. Los enteros con separador de miles («379,616») ya no se pierden.
+- **Formatos:** las fechas del BanRep salen como AAAA-MM-DD, la DIVIPOLA de la UNGRD con sus ceros y el
+  texto en blanco como vacío.
+- **Cobertura:** las fuentes de Bogotá, la CAR y el SINCHI responden `fuera_de_cobertura` fuera de su
+  área, y el comex de la DIAN, antes de 2025. Ninguno descuenta créditos.
+
 ## Auditoría de herramientas: territorio (2026-11-01)
 
 - **Catastro IGAC:** un punto sin predio tardaba de 47 a 91 s y a veces daba 504, porque tras el vacío

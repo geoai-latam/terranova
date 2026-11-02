@@ -1,5 +1,5 @@
 id: banrep_uvr_recientes
-version: 1
+version: 2
 familia: estadisticas
 fuente: banrep.uvr
 pregunta: "¿Cuánto vale y cómo varía la UVR?"

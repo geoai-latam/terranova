@@ -6,7 +6,7 @@ pregunta: "¿Cuántos estudiantes presentaron el Saber 11 en este municipio y qu
 descripcion: >
   Prueba Saber 11 (ICFES) en los colegios de un municipio, por periodo del examen: número de
   estudiantes y promedio del puntaje global, de matemáticas y de lectura crítica. Solo agregados:
-  un periodo con menos de 10 estudiantes no sale. Los periodos de 2010 no traen puntaje global.
+  un periodo con menos de 10 estudiantes no sale. Los periodos anteriores a 2014 no traen puntaje global.
   Cada estudiante cuenta una vez, aunque la fuente lo repita (lo hace en 20181, 20194 y 20224).
   (Fuente: ICFES; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}

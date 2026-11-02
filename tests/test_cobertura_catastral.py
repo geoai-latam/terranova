@@ -13,7 +13,7 @@ import pytest
 from terranova import ejecutor as modulo
 from terranova.catalogo import cargar
 from terranova.contrato import ahora
-from terranova.ejecutor import AVISO_SIN_VERIFICAR, cobertura_catastral, fuera_de_colombia
+from terranova.ejecutor import AVISO_SIN_VERIFICAR, cobertura_catastral, fuera_de
 from terranova.errores import ErrorEjecucion
 from terranova.proteccion import Proteccion
 
@@ -44,7 +44,7 @@ def _ejecutor(llamar: Any, proteccion: Proteccion | None = None) -> Any:
     ],
 )
 def test_fuera_de_colombia(herramienta: str, entrada: dict[str, Any], fuera: bool) -> None:
-    assert fuera_de_colombia(CATALOGO.herramientas[herramienta], entrada) is fuera
+    assert fuera_de(CATALOGO.herramientas[herramienta], entrada) is fuera
 
 
 def test_si_la_fuente_tarda_el_vacio_sigue_en_pie(monkeypatch: pytest.MonkeyPatch) -> None:

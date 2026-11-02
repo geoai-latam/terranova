@@ -28,5 +28,5 @@ canario:
   # Chapinero; medido el 2026-10-28 en la capa 2: Consolidación, altura máxima 4-6, Decreto 555.
   entrada: {lon: -74.0565, lat: 4.6486}
   verdad: {tratamiento: "Consolidación", altura_maxima: "4-6", numero_acto: "555"}
-  campos: [altura_maxima, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tipologia, tratamiento]
+  campos: [altura_maxima, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tratamiento]
   latencia_max_ms: 5000

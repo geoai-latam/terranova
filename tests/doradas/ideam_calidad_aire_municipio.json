@@ -11,7 +11,7 @@
     "order": "msfl_code, nombre_est",
     "portal": "datos.gov.co",
     "select": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas",
-    "where": "codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%'"
+    "where": "codigo_municipio = ('05001')::number::text AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%'"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -406,11 +406,11 @@
       "max_filas": 500,
       "portal": "datos.gov.co",
       "select": "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas",
-      "where": "(codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')"
+      "where": "(codigo_municipio = ('05001')::number::text AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')"
      },
      "filas": 36,
      "filas_que_resume": 246215,
-     "filtro_soql": "(codigo_municipio::number = ('05001')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')",
+     "filtro_soql": "(codigo_municipio = ('05001')::number::text AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '2025-%')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

@@ -1,5 +1,5 @@
 id: banrep_tasa_politica_recientes
-version: 1
+version: 2
 familia: estadisticas
 fuente: banrep.tasa_politica
 pregunta: "¿Cuál es la tasa de política monetaria del Banco de la República?"
