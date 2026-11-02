@@ -153,6 +153,11 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     a medias.
   - Cali 2025: 1 068 víctimas, 745 de ellas por sicariato.
   - md en `docs/fuentes/mindefensa.homicidios.md`.
+- **UPRA, el año del precio (patrón B):**
+  - El aviso «Datos no recientes» dice ahora que es el último año de la fuente, no el de la
+    respuesta. Antes decía «los datos llegan hasta 2023» junto a un precio de Cota de 2016.
+  - Las dos herramientas de la capa nacional avisan que el precio es del año del estudio.
+  - La fuente explica el vacío (Tunja, Chía).
 
 ## Ficha de un lote (2026-11-01)
 

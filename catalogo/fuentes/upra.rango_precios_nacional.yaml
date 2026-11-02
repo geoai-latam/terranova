@@ -35,6 +35,10 @@ cobertura:
   pais: CO
   excluye: ["áreas excluidas del mercado de tierras (Chía, por ejemplo, no está)", "departamentos sin estudio: 14 de 32"]
   columna_tiempo: vigencia
+  aviso_vacio: >
+    La UPRA no tiene zonas de precio aquí. Puede ser que el departamento no tenga estudio (14 de 32
+    no lo tienen) o que el lugar quede fuera de las áreas del mercado de tierras, como Chía. No
+    quiere decir que la tierra no tenga precio.
 datos_personales: ninguno
 estado: publicada
 campos:
