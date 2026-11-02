@@ -1,11 +1,11 @@
 id: policia_abigeato_pirateria_municipio
-version: 1
+version: 2
 familia: justicia
 fuente: policia.abigeato_pirateria
-pregunta: "¿Cuántos robos de ganado o de carga hubo en este municipio en el año?"
+pregunta: "¿Cuántos robos de ganado, de carga o a bancos hubo en este municipio en el año?"
 descripcion: >
-  Casos de abigeato y piratería terrestre reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
-  por tipo y género de la víctima. Son denuncias: no todos los delitos se denuncian, y el año en
+  Casos de abigeato, piratería terrestre y hurto a entidades financieras reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
+  por tipo y género de la víctima. `total_casos` suma los tres tipos: para uno solo, sume sus filas. Son denuncias: no todos los delitos se denuncian, y el año en
   curso está incompleto.
   (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, anio: int}

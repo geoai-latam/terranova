@@ -3,7 +3,7 @@
 from collections.abc import Mapping
 
 from terranova.catalogo import cargar
-from terranova.ejecutor import convertir, mapear_fila
+from terranova.ejecutor import aviso_de_anio_incompleto, convertir, mapear_fila
 
 CATALOGO = cargar()
 
@@ -59,3 +59,15 @@ def test_el_texto_en_blanco_es_vacio() -> None:
 
 def test_la_fecha_del_banrep_sale_con_formato() -> None:
     assert _mapear("banrep_trm_recientes", {"TIME_PERIOD": "20261103"})["fecha"] == "2026-11-03"
+
+
+def test_el_ancho_quita_los_decimales_y_rellena_el_cero() -> None:
+    fila = _mapear("supersociedades_empresa_grande_por_nit", {"nit": "899999068.00", "ciiu": "610"})
+    assert (fila["nit"], fila["ciiu"]) == ("899999068", "0610")
+
+
+def test_los_anios_sin_residencias_lo_dicen() -> None:
+    fuente = CATALOGO.fuentes["policia.hurto_comercio_residencias"]
+    assert "residencias" in (aviso_de_anio_incompleto(fuente, {"anio": 2023}) or "")
+    assert aviso_de_anio_incompleto(fuente, {"anio": 2024}) is None
+    assert aviso_de_anio_incompleto(CATALOGO.fuentes["policia.lesiones"], {"anio": 2023}) is None

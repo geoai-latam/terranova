@@ -270,6 +270,12 @@ class Cobertura(_Ficha):
     desde_anio: int | None = Field(
         default=None, description="primer año que cubre, cuando la columna no se cosecha"
     )
+    incompleta_hasta: int | None = Field(
+        default=None, description="último año en que a la fuente le falta parte de lo que promete"
+    )
+    aviso_incompleta: str | None = Field(
+        default=None, description="qué le falta en esos años: se dice con la respuesta"
+    )
     rectangulo: tuple[float, float, float, float] | None = Field(
         default=None,
         description="[oeste, sur, este, norte] de una fuente regional: fuera de él, un vacío es "

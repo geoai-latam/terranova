@@ -1,5 +1,5 @@
 id: rues_empresas_buscar
-version: 1
+version: 2
 familia: empresas
 fuente: confecamaras.rues
 pregunta: "¿Qué empresas o entidades registradas en el RUES tienen este nombre?"

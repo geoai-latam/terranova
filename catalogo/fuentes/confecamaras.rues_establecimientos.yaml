@@ -27,9 +27,9 @@ campos:
   camara_comercio: {nombre: camara, tipo: str, desc: "cámara de comercio"}
   estado_matricula: {nombre: estado, tipo: str, desc: "estado de la matrícula"}
   ultimo_ano_renovado: {nombre: ultimo_ano_renovado, tipo: int, desc: "último año renovado"}
-  fecha_matricula: {nombre: fecha_matricula, tipo: str, desc: "fecha de matrícula (texto de la fuente)"}
-  fecha_renovacion: {nombre: fecha_renovacion, tipo: str, desc: "fecha de la última renovación (texto de la fuente)"}
-  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: str, desc: "fecha de cancelación (texto de la fuente)"}
+  fecha_matricula: {nombre: fecha_matricula, tipo: date, desc: "fecha de matrícula"}
+  fecha_renovacion: {nombre: fecha_renovacion, tipo: date, desc: "fecha de la última renovación"}
+  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, desc: "fecha de cancelación"}
   cod_ciiu_act_econ_pri: {nombre: ciiu, tipo: str, desc: "actividad económica principal (CIIU)"}
   categoria_matricula: {nombre: categoria, tipo: str, desc: "establecimiento, agencia o sucursal"}
   numero_identificacion: {nombre: nit_propietario, tipo: str, desc: "NIT de la sociedad propietaria"}

@@ -26,7 +26,7 @@ cobertura: {pais: CO, periodo: "corte mensual vigente (la tabla guarda cortes de
 datos_personales: filtrados
 estado: publicada
 campos:
-  cod_ciudad_muni: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio, como número (sin el cero inicial: 5001); 0 es «SIN DEFINIR»"}
+  cod_ciudad_muni: {nombre: municipio_divipola, tipo: str, ancho: 5, desc: "código DIVIPOLA del municipio (la fuente lo guarda como número, sin el cero inicial)"}
   fecha_corte: {nombre: fecha_corte, tipo: date, desc: "corte del registro del que salen las cifras (la fuente lo escribe dd/mm/aaaa)"}
   per_ocu: {nombre: celda_ocurrencia, tipo: int, desc: "personas por ocurrencia en la celda; solo se sirve sumado"}
   per_decla: {nombre: celda_declaracion, tipo: float, desc: "personas por declaración en la celda (texto «1.0»); solo se sirve sumado"}

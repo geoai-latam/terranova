@@ -88,6 +88,17 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
 - **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
+## Auditoría de herramientas: justicia y empresas (2026-11-02)
+
+- **Supersociedades:** los estados financieros salían del corte más viejo al más nuevo y en páginas de
+  50, así que «¿cuánto vendió?» daba el año más antiguo. Ahora sale primero lo más reciente. Además, la
+  carátula perdía sus respuestas de texto (ciudad, dirección) porque `valor` era número.
+- **Policía:** el total de hurtos a comercios y residencias era solo de comercios antes de 2024, porque
+  la fuente no trae residencias hasta ese año, y ahora la respuesta lo avisa (`incompleta_hasta`). El
+  total de abigeato sumaba también los robos a bancos: se declara.
+- **Formatos:** el DIVIPOLA de la UARIV (`05001`), el NIT y el CIIU de las grandes empresas (`899999068`,
+  `0610`) y las fechas del RUES.
+
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 
 - **Calidad del aire:** Cali bajó de 54 s a 9 s medidos en la fuente. El filtro ya no castea la columna.

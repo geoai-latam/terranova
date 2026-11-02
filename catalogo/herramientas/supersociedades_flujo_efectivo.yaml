@@ -1,16 +1,17 @@
 id: supersociedades_flujo_efectivo
-version: 1
+version: 2
 familia: empresas
 fuente: supersociedades.niif_flujo_efectivo
 pregunta: "¿Cómo se movió la caja de esta sociedad?"
 descripcion: >
   Estado de flujo de efectivo de una sociedad vigilada por Supersociedades, por su NIT: concepto, periodo y valor
-  de cada reporte NIIF, del corte más antiguo al más reciente (hasta 1000 filas). La unidad la
+  de cada reporte NIIF, del corte más reciente al más antiguo (hasta 1000 filas). La unidad la
   fija la taxonomía de cada reporte. Cada reporte trae también el año anterior: un año sale en dos
   reportes. `periodo` es el texto de la fuente: «Periodo Actual» o «Periodo Anterior» desde el corte
   de 2018; antes, fechas o años (y en algunos reportes de 2016, el NIT). Las sociedades vigiladas por
   otra superintendencia no salen.
-  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
+  Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. La fuente perdió las tildes de algunos conceptos («Ganancia (p�rdida)»).
+  (Fuente: Supersociedades; licencia: CC BY-SA 4.0.)
 entrada: {nit: nit_empresa}
 consulta:
   operacion: por_codigo
@@ -21,7 +22,7 @@ consulta:
     portal: datos.gov.co
     select: "nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado"
     where: "nit = '{nit}'"
-    order: "fecha_corte, concepto, periodo"
+    order: "fecha_corte DESC, concepto, periodo"
     max_filas: 1000
   campos: [nit, fecha_corte, periodo, concepto, valor, punto_entrada, taxonomia, numero_radicado]
 salida: SupersociedadesFlujoEfectivo
@@ -32,7 +33,7 @@ canario:
   # Medido el 2026-10-22 directamente en ctcp-462n (nit = 830010665): 54
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
   entrada: {nit: "830010665"}
-  verdad: {nit: "830010665", concepto: "(+/-) Ajustes por disminuciones (incrementos) en otras cuentas por cobrar derivadas de las actividades de operaci�n", periodo: "830010665"}
+  verdad: {nit: "830010665", concepto: "(+/-) Ajustes por disminuciones (incrementos) en otras cuentas por cobrar derivadas de las actividades de operaci�n", periodo: "Periodo Actual"}
   minimos: {numero_registros: 54}
   campos: [concepto, fecha_corte, nit, numero_registros, periodo, punto_entrada, radicado, taxonomia, valor]
   latencia_max_ms: 20000

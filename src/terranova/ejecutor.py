@@ -200,6 +200,7 @@ def sanear(texto: str) -> str:
 
 _AÑO = re.compile(r"^(\d{4})")
 _MILES = re.compile(r"\d{1,3}(,\d{3})+")
+_DECIMALES = re.compile(r"\.0+$")
 
 
 def convertir(valor: Any, tipo: str) -> Any:
@@ -316,11 +317,19 @@ def mapear_fila(
     return out
 
 
+def aviso_de_anio_incompleto(fuente: Fuente, valores: dict[str, Any]) -> str | None:
+    """Un año en que a la fuente le falta parte de lo que promete: el total parece completo y no."""
+    hasta, anio = fuente.cobertura.incompleta_hasta, str(valores.get("anio"))
+    if hasta and anio.isdigit() and int(anio) <= hasta:
+        return fuente.cobertura.aviso_incompleta or "Este año está incompleto en la fuente."
+    return None
+
+
 def _validar(campo: Campo, valor: Any) -> Any:
     if valor is None:
         return None
     if campo.ancho:
-        return str(valor).zfill(campo.ancho)
+        return _DECIMALES.sub("", str(valor)).zfill(campo.ancho)
     if campo.maximo_valido is not None and valor > campo.maximo_valido:
         return None
     return valor
@@ -745,6 +754,8 @@ class Ejecutor:
             avisos.append(
                 f"Hay {len(elementos)} resultados; se muestra el primero (todos van en la capa)."
             )
+        if hay_algo and (incompleta := aviso_de_anio_incompleto(fuente, valores)):
+            avisos.append(incompleta)
         lejos = not hay_algo and fuente.cobertura.pais == "CO" and fuera_de(h, valores)
         regional = fuente.cobertura.rectangulo
         if lejos:
