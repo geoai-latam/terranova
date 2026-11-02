@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from terranova import ficha as ficha_lugar
-from terranova import ficha_empresa, predio
+from terranova import ficha_empresa, lote, predio
 from terranova.contrato import Sobre
 
 
@@ -64,6 +64,17 @@ COMPUESTAS: dict[str, Compuesta] = {
             predio.TOPE_CREDITOS,
             "/v1/fichas/predio",
             predio.ficha,
+        ),
+        Compuesta(
+            lote.HERRAMIENTA,
+            lote.VERSION,
+            lote.FAMILIA,
+            lote.PREGUNTA,
+            lote.DESCRIPCION,
+            lote.ESQUEMA_ENTRADA,
+            lote.TOPE_CREDITOS,
+            "/v1/fichas/lote",
+            lote.ficha,
         ),
     )
 }

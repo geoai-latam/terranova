@@ -223,6 +223,7 @@ async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
     assert {t["name"] for t in tarjeta["tools"]} == set(puerta.VENDIBLE.herramientas) | {
         "ficha_lugar",
         "ficha_empresa",
+        "ficha_lote",
         "predio_en_punto",
     }
     familias = {h.familia for h in puerta.VENDIBLE.herramientas.values()}

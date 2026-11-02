@@ -1,0 +1,177 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T03:40:59+00:00",
+ "herramienta": "igac_capacidad_uso_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 200,
+    "order": [
+     "OBJECTID"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.0462,
+        4.8419
+       ],
+       [
+        -74.0062,
+        4.8819
+       ],
+       [
+        -74.0102,
+        4.8859
+       ],
+       [
+        -74.0502,
+        4.8459
+       ],
+       [
+        -74.0462,
+        4.8419
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "UCCapacida",
+     "Descripcio"
+    ],
+    "tabla": "igac_capacidad_uso"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.00903,
+           4.90258
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad alta para agricultura",
+          "UCCapacida": "2c"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.87722,
+           5.11704
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad alta para agricultura",
+          "UCCapacida": "2c"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.98199,
+           4.87514
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad agrícola y pecuaria",
+          "UCCapacida": "4p"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02191,
+           4.85787
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad agrícola, ganadera y agroforestal",
+          "UCCapacida": "6p"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.98907,
+           4.88781
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "Capacidad agrícola, ganadera y agroforestal",
+          "UCCapacida": "6p"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.99685,
+           4.97383
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "CA",
+          "UCCapacida": "CA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04861,
+           4.84508
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "Descripcio": "ZU",
+          "UCCapacida": "ZU"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 7,
+      "truncado": false,
+      "vistos": 7
+     },
+     "consultado_en": "2026-11-02T03:32:46.300705+00:00",
+     "copia": {
+      "filas": 13,
+      "huella": "sha256:499b963d62e5341ccb2e03eb41ac1ef4070f606884ba3b54b15bdd91ffea5191",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261102033246300705"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
