@@ -575,6 +575,8 @@ def test_cifras_con_signo_de_pesos() -> None:
     assert fila["ganancia_perdida"] == 0 and math.copysign(1, fila["ganancia_perdida"]) == -1
     with pytest.raises(ValueError):
         Campo(nombre="n", tipo="str", desc="x", moneda=True)
+
+
 class _PoliciaFalsa:
     """La consulta del municipio y la del corte de la fuente (la que pide `hasta_mes`)."""
 
