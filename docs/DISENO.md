@@ -149,9 +149,115 @@ sitio y no se rediseña con las figuras: el dueño la quiere como está.
   (DD-MM-AAAA). Una guía une la respuesta con el predio consultado, que sube cuando llega.
 - Lo que no es dato se dice: el grosor de los predios y la subida del consultado son simbólicos.
 
+## Figuras de la portada: el dato es la figura
+
+Las figuras de la portada se hacen con datos reales: los linderos del SINIC, las celdas de la
+muestra, los nombres de las entidades, las familias del catálogo con su conteo y respuestas
+capturadas con su fecha. Si un objeto no existe en los datos, no se dibuja. La portada ya no usa la
+metáfora de un objeto físico (fichero, banda, conmutador): con ella salía una maqueta de sólidos
+blancos. Las páginas interiores siguen con sus figuras isométricas (sección siguiente) hasta que se
+rehagan con esta regla.
+
+- **3D solo donde hay geometría.** Hay cuatro escenas three.js: la prueba, la criba, el expediente y
+  la cobertura. Comparten con el héroe la cámara ortográfica, la luz, el contacto (AO de muro y piso)
+  y los materiales (`js/comun3d.js`). Todas se pintan con un solo renderer fuera de pantalla
+  (`js/motor3d.js`), que copia cada figura a su lienzo 2D: un contexto WebGL para todas.
+- **Lo demás es tipográfico.** El problema, la cifra con su corte, la bitácora, el índice del catálogo
+  y «tres formas» van en HTML o SVG (`js/tipo.js`), con la tipografía del sitio y la consola oscura:
+  Geist para el texto y Geist Mono para el dato. La página alterna escena y documento.
+- **Los mismos objetos de arriba abajo.** El predio 47001…0308 aparece en el héroe, la prueba, la
+  entrada de la cobertura y la hoja de «tres formas». Su vecino dudoso, 47001…0345, sale en la criba y
+  en el expediente. La consola rt/1 es la misma pieza en todas partes.
+- **Una escalera de escala.** Cada sección se aleja un paso de la anterior: un punto, un predio, una
+  lista, un municipio, el país. La cobertura vuelve a empezar en el predio del héroe y sube hasta
+  Colombia.
+- **Cuatro tiempos.** Cada figura cuenta pregunta, fuente, prueba y reposo.
+  - El reposo es el cuadro que se ve con movimiento reducido.
+  - La cámara entra cerrada y se asienta, y no gira sola.
+  - Entre ciclos no se pinta nada: cero cuadros en reposo.
+  - El tope es de 60 fps, o 30 con puntero grueso o con 4 núcleos o menos.
+  - Las figuras tipográficas se mueven con transiciones de CSS, sin bucle de cuadros. Sus tiempos son
+    las clases `tiempo1` a `tiempo4`: nunca un nombre corto que ya use el sitio (`t1`, `p3`, `cr`…),
+    porque la figura hereda su fuente y su interletrado.
+- **El texto, quieto mientras carga.** Ninguna figura dibuja ni mide texto antes de
+  `document.fonts.ready`. Los rótulos que se posan sobre una escena nacen ocultos y aparecen cuando
+  ya tienen su sitio (nunca encimados en 0,0). Mientras Geist baja, el respaldo es Arial o Consolas
+  con las métricas de Geist (`size-adjust`, `ascent-override`), así el texto no salta.
+- **Verdad.**
+  - Todo dato real lleva su fuente y su fecha al pie (`fuente-dato`). Lo que no se pudo medir se
+    dice en el pie: «los pasos y las horas no se miden», «reconstruida del registro de
+    modificaciones».
+  - El HTML de la portada sale de `web/construir.py`: cada cifra viene del catálogo, de las
+    respuestas capturadas (`TURNOS`, `correos.EJEMPLO`) o de `datos/portada.json`. Los módulos no
+    escriben cifras: las leen de la página o de los datos.
+  - `datos/portada.json` lo prepara `web/portada_datos.py` sin cargar servidores del Estado, con
+    copias locales, `sm.json` y las respuestas de `tests/doradas`. El índice del catálogo sale de
+    `datos/catalogo.json`.
+  - No se nombra al DANE ni a herramientas que no se venden. Nunca se muestran personas.
+  - Las pruebas de `tests/test_web.py` lo comprueban.
+
+### El ámbar: la cadena de prueba
+
+El ámbar es «lo que se está probando»:
+
+- el hilo que ata el predio a su copia y la copia a su fuente;
+- el dudoso de la criba;
+- la fila «por revisar» del expediente;
+- la cifra del corte nuevo;
+- el día que cambió;
+- la herramienta elegida;
+- la huella en «tres formas».
+
+Fuera de las figuras, el ámbar es el botón principal.
+
+- Hay un ámbar por vista. Si un botón principal (`main .boton.p`) está en vista cuando la figura llega
+  a la prueba, la figura termina su ciclo sin ámbar y la pieza queda en tinta (`js/ambar.js`).
+- En un grupo (los cuatro servicios), solo la figura que corre lleva el ámbar. Las demás reposan en
+  tinta.
+- El ocre (la copia) nunca va junto al ámbar. En la fila que está por revisar, la marca de «por
+  revisar» reemplaza al anillo de copia, y la fecha de la copia va en el texto.
+
+### Las marcas de estado, las mismas en todas
+
+Las marcas miden 8 px y nunca son superficie:
+
+| Estado | Marca |
+|---|---|
+| vivo | punto teal |
+| copia | anillo ocre |
+| no encontrado | anillo vacío |
+| no se pudo | aspa en tinta |
+| fuera de cobertura | raya en `estado-fuera-de-cobertura` |
+| por revisar | cuadro con filo, en ámbar mientras se prueba |
+
+Aparecen en el expediente, en la respuesta del problema y en la leyenda de la bitácora. Así la regla
+«no encontrado no es no se pudo» se enseña con la figura.
+
+### La criba
+
+- **Qué muestra.** Es la sección del motor: los linderos reales alrededor del punto del héroe,
+  tratados como una lista.
+  - Una regla en tinta los recorre y los revisa contra cuatro fuentes: RUNAP, ANT, SINCHI e IGAC.
+  - Lo despejado se asienta: queda bajo y con un tinte claro.
+  - Lo dudoso se levanta, con filo en tinta y sin ámbar.
+  - Lo que no tiene polígono queda vacío, nunca despejado.
+- **El acercamiento.** La cámara se acerca al dudoso más cercano al predio del héroe. El dudoso se
+  pone ámbar y se abre su expediente: una fila por entidad, cada una con su marca.
+- **El texto.** Dice: «Lo claro se despeja solo; lo dudoso lo revisa una persona; de cada ítem queda
+  un expediente». No dice que un agente hace el trabajo.
+- **Debajo.** Las proporciones medidas, con su fuente y su fecha.
+
+### Qué queda fuera
+
+- metáforas de objetos (testigo, ábaco, fichero, banda, conmutador);
+- formas simbólicas que no salen de un dato;
+- órbitas automáticas;
+- degradados, brillos y neón;
+- tarjetas con borde y cabecera «Fig. n».
+
 ## Figuras isométricas (Anatomy)
 
-Todas las ilustraciones del sitio, menos el héroe 3D, son figuras isométricas en SVG que explican una
+Las ilustraciones de las páginas interiores (`/servicios`, `/fuentes`) son figuras isométricas en SVG que explican una
 idea con un objeto que se reconoce: un bastidor (capas), un banco con barrera (la ruta de una
 pregunta), un fichero (la prueba de una respuesta), una banda de inspección (debida diligencia), una
 mesa de relojes con trazador (tableros), un puesto de guardia con buzones (vigilancia), un tablero de

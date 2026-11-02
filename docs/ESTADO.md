@@ -48,6 +48,35 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## La portada: el dato es la figura (2026-11-02)
+
+La portada cambió de figuras y de orden. Las isométricas de objetos (banco con barrera, fichero) se
+leían como maquetas y no enseñaban el dato; ahora cada figura es un dato real con su prueba, y la
+página baja por una escalera de escala: un punto, un predio, una lista, un municipio, el país
+(DISENO.md, «Figuras de la portada»).
+
+- **El orden:** héroe (sin cambios), el problema (cinco portales para una pregunta), la prueba (las
+  tres capas del predio 47001…0308), el motor (la criba de los 1.335 linderos del SINIC alrededor de
+  ese predio: 1.264 despejados, 71 a revisión, ninguno toca un área protegida ni un resguardo), lo que
+  construimos contigo (expediente, cifra con su corte, bitácora de un contrato, índice del catálogo),
+  la cobertura del SINIC, tres formas de usarlo, soluciones por sector, qué no hacemos, precios y
+  preguntas. «Lo que te ahorras» pasó a ser el problema, con la cifra de Pitalito en barras.
+- **Cómo:** cuatro escenas three.js con un solo renderer (`js/motor3d.js`) y las figuras
+  tipográficas en HTML y CSS (`js/tipo.js`); cero cuadros en reposo. El HTML sale de
+  `web/construir.py` con las cifras del catálogo y de `datos/portada.json`, que prepara
+  `web/portada_datos.py` con copias locales (sin consultas a la fuente) y va versionado porque la copia
+  de restricciones no está en el repo. Los imports de los módulos llevan su huella (`?v=`).
+- **Las letras al cargar:** se veían pegadas porque las clases de los tiempos (`t1`…`t4`) eran las de
+  los titulares del sitio y la figura heredaba su interletrado negativo. Ahora son `tiempo1`…`tiempo4`,
+  nada con texto se dibuja antes de `document.fonts.ready`, los rótulos nacen ocultos y en su sitio, y
+  Geist tiene un respaldo con sus métricas (en `estilo.css`, para todo el sitio).
+- **Lo que no se mide se dice:** los pasos y las horas del problema no se miden; la revisión diaria de
+  la bitácora está reconstruida del registro de modificaciones; la huella del expediente es un sha256
+  local de sus filas, no una respuesta capturada.
+- **Otras páginas:** `/servicios` y `/fuentes` siguen con sus figuras isométricas. Las de la ruta y la
+  prueba ya no van en ninguna página, pero se siguen construyendo para las imágenes de compartir
+  (`web/og.py`).
+
 ## Revisión de valor: arreglo uno por uno (desde 2026-11-02)
 
 Las 213 herramientas se revisaron leyendo la respuesta completa en producción: 118 contestan bien,
