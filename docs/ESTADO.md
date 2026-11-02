@@ -88,6 +88,19 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
 - **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
+## Auditoría de herramientas: territorio (2026-11-01)
+
+- **Catastro IGAC:** un punto sin predio tardaba de 47 a 91 s y a veces daba 504, porque tras el vacío
+  se consultaba `mapas.igac.gov.co`, que se cuelga desde la VPS. Ahora esa comprobación tiene un tope
+  de 5 s y, si no llega, el vacío sale con su aviso.
+- **Fuera de Colombia:** un punto o zona fuera del rectángulo del país responde `fuera_de_cobertura`,
+  sin descontar créditos, en las fuentes colombianas.
+- **Códigos:** un campo con tabla de códigos sale con `<campo>_significado`. Por ejemplo, destino
+  económico «G» llega con «Recreacional», y el uso 28 con «Comercio (comercial)».
+- **Suelo urbano:** `igac_capacidad_uso_en_punto` trae `nota_capacidad`, porque la capa solo dice «ZU».
+- **UAF:** la ANT la publica para 286 municipios (medido). La descripción lo dice: sin resultado no es
+  «no hay UAF».
+
 ## Rangos en el OpenAPI (2026-11-01, C27)
 
 - **Enteros:** `anio` va de 1900 a 2100 y los demás, de 0 a 10^15. Quedan en el OpenAPI, en el esquema

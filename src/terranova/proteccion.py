@@ -99,6 +99,10 @@ class Proteccion:
         finally:
             cupo.release()
 
+    def registrar_caida(self, fuente_id: str) -> None:
+        """Para quien corta la espera por su cuenta: `llamar` no ve esa cancelación como fallo."""
+        self._fallo(self.circuitos[fuente_id])
+
     def _fallo(self, c: Circuito) -> None:
         c.fallos += 1
         if c.fallos >= self.umbral:

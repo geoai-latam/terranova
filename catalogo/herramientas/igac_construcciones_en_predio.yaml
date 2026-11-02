@@ -4,7 +4,8 @@ familia: territorio
 fuente: igac.catastro.construccion
 pregunta: "¿Qué construcciones tiene registradas este predio en el catastro IGAC?"
 descripcion: >
-  Construcciones catastrales (IGAC) de un predio, a partir de su número predial nacional de 30
+  Construcciones catastrales (IGAC) de un predio, un elemento por polígono (una misma unidad puede
+  venir en varios: el `identificador` se repite), a partir de su número predial nacional de 30
   dígitos: identificador de cada unidad, tipo (convencional o no) y número de pisos, sótanos,
   semisótanos y mezanines. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente.
