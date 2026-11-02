@@ -243,6 +243,16 @@ class Campo(_Ficha):
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
         "en general «1,234» es ambiguo",
     )
+    orden_fecha: Literal["mda", "dma"] | None = Field(
+        default=None,
+        description="la fuente escribe la fecha en texto, mes/día/año (mda) o día/mes/año (dma): "
+        "sale en ISO. Se declara por campo, porque «05/11/2017» es ambiguo",
+    )
+    anios_validos: tuple[int, int] | None = Field(
+        default=None,
+        description="años posibles para esta fecha: fuera de ellos es relleno de la fuente (el "
+        "INVIMA pone 1000, 1900, 3000 o 9999 en el vencimiento) y sale vacía, no como fecha",
+    )
     alias: list[str] = Field(
         default_factory=list,
         description="otros nombres del mismo campo en capas de servicios distintos (los POMCA de "
@@ -257,6 +267,10 @@ class Campo(_Ficha):
         tiene_codigos = self.codigos is not None or self.codigos_por_capa is not None
         if tiene_codigos != (self.codigos_norma is not None):
             raise ValueError("spec 08: los códigos escritos a mano van con la norma que los define")
+        if (self.orden_fecha or self.anios_validos) and self.tipo not in ("date", "datetime"):
+            raise ValueError("`orden_fecha` y `anios_validos` son de campos de fecha")
+        if self.anios_validos and self.anios_validos[0] > self.anios_validos[1]:
+            raise ValueError("`anios_validos` va de menor a mayor")
         return self
 
     def significado(self, valor: Any, capa: str | None) -> str | None:

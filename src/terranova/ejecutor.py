@@ -297,6 +297,8 @@ def mapear_fila(
             valor = fila[presente]
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
+            if campo.orden_fecha and isinstance(valor, str):
+                valor = fecha_en_orden(valor, campo.orden_fecha)
             out[campo.nombre] = _validar(campo, convertir(valor, campo.tipo))
             if campo.codigos is not None or campo.codigos_por_capa is not None:
                 # un código solo no dice nada: el significado va al lado, no en la ficha técnica
@@ -360,7 +362,22 @@ def _validar(campo: Campo, valor: Any) -> Any:
         return _DECIMALES.sub("", str(valor)).zfill(campo.ancho)
     if campo.maximo_valido is not None and valor > campo.maximo_valido:
         return None
+    if campo.anios_validos and re.match(r"\d{4}-", str(valor)):
+        desde, hasta = campo.anios_validos
+        if not desde <= int(str(valor)[:4]) <= hasta:
+            return None  # relleno de la fuente (3000, 1900), no una fecha
     return valor
+
+
+def fecha_en_orden(texto: str, orden: str) -> str:
+    """«06/15/2016» (mda) o «15/06/2016» (dma) a ISO. Lo que no tiene esa forma pasa igual: el
+    mismo conjunto puede traer fechas ISO en otras filas."""
+    m = re.fullmatch(r"\s*(\d{1,2})/(\d{1,2})/(\d{4})\s*", texto)
+    if not m:
+        return texto
+    a, b, anio = m.groups()
+    mes, dia = (a, b) if orden == "mda" else (b, a)
+    return f"{anio}-{int(mes):02d}-{int(dia):02d}"
 
 
 def derivar_secuencia(h: Herramienta, elementos: list[dict[str, Any]]) -> None:

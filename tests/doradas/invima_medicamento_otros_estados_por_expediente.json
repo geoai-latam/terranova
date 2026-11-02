@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T02:56:35+00:00",
+ "grabado": "2026-11-02T17:25:27+00:00",
  "herramienta": "invima_medicamento_otros_estados_por_expediente",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 500,
     "order": "consecutivocum, estadocum, principioactivo",
     "portal": "datos.gov.co",
-    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, viaadministracion, atc",
     "where": "expediente = '3277'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,9 +18,11 @@
      {
       "columns": [
        "atc",
+       "cantidad",
        "concentracion",
        "consecutivocum",
        "descripcioncomercial",
+       "dosis",
        "estadocum",
        "estadoregistro",
        "expediente",
@@ -32,15 +34,18 @@
        "registrosanitario",
        "titular",
        "unidadmedida",
+       "unidadreferencia",
        "viaadministracion"
       ],
       "kind": "table",
       "rows": [
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "1",
         "descripcioncomercial": "CAJA X 10 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -52,13 +57,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "2",
         "descripcioncomercial": "CAJA X 20 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -70,13 +78,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "3",
         "descripcioncomercial": "CAJA X 30 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -88,13 +99,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "4",
         "descripcioncomercial": "CAJA X 50 TABLETAS EN BLISTER PVC/ALUMINIO",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -106,13 +120,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "5",
         "descripcioncomercial": "CAJA X 10 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS. RECUBIERTAS",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -123,13 +140,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "6",
         "descripcioncomercial": "CAJA X 20 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -140,13 +160,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "7",
         "descripcioncomercial": "CAJA X 30 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -157,13 +180,16 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N05BB01",
+        "cantidad": "50",
         "concentracion": "A",
         "consecutivocum": "8",
         "descripcioncomercial": "CAJA X 50 TABLETAS EN BLISTER PVDC TRANSPARENTE/ALUMINIO X 10 TABLETAS RECUBIERTAS.",
+        "dosis": "50 mg por CADA TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Desistido",
         "expediente": "3277",
@@ -174,6 +200,7 @@
         "registrosanitario": "INVIMA 2016M-001830-R2",
         "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "CADA TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        }
       ]
@@ -191,7 +218,7 @@
       "conjunto": "spzp-dfuc",
       "max_filas": 500,
       "portal": "datos.gov.co",
-      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, viaadministracion, atc",
       "where": "(expediente = '3277')"
      },
      "filas": 8,

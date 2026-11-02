@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T02:56:36+00:00",
+ "grabado": "2026-11-02T17:26:03+00:00",
  "herramienta": "invima_medicamento_vencido_por_expediente",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 500,
     "order": "consecutivocum, estadocum, principioactivo",
     "portal": "datos.gov.co",
-    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, viaadministracion, atc",
     "where": "expediente = '2203'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,9 +18,11 @@
      {
       "columns": [
        "atc",
+       "cantidad",
        "concentracion",
        "consecutivocum",
        "descripcioncomercial",
+       "dosis",
        "estadocum",
        "estadoregistro",
        "expediente",
@@ -32,15 +34,18 @@
        "registrosanitario",
        "titular",
        "unidadmedida",
+       "unidadreferencia",
        "viaadministracion"
       ],
       "kind": "table",
       "rows": [
        {
         "atc": "N02BE01",
+        "cantidad": "3",
         "concentracion": "B",
         "consecutivocum": "1",
         "descripcioncomercial": "FRASCO AMBAR POR 60 ML",
+        "dosis": "3 g por 100ML",
         "estadocum": "Inactivo",
         "estadoregistro": "Vencido",
         "expediente": "2203",
@@ -52,13 +57,16 @@
         "registrosanitario": "INVIMA 2017M-007901-R3",
         "titular": "GENFAR S.A.",
         "unidadmedida": "g",
+        "unidadreferencia": "100ML",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N02BE01",
+        "cantidad": "3",
         "concentracion": "B",
         "consecutivocum": "2",
         "descripcioncomercial": "FRASCO AMBAR POR 120 ML",
+        "dosis": "3 g por 100ML",
         "estadocum": "Inactivo",
         "estadoregistro": "Vencido",
         "expediente": "2203",
@@ -70,13 +78,16 @@
         "registrosanitario": "INVIMA 2017M-007901-R3",
         "titular": "GENFAR S.A.",
         "unidadmedida": "g",
+        "unidadreferencia": "100ML",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "N02BE01",
+        "cantidad": "3",
         "concentracion": "B",
         "consecutivocum": "3",
         "descripcioncomercial": "FRASCO AMBAR POR 90 ML",
+        "dosis": "3 g por 100ML",
         "estadocum": "Inactivo",
         "estadoregistro": "Vencido",
         "expediente": "2203",
@@ -88,6 +99,7 @@
         "registrosanitario": "INVIMA 2017M-007901-R3",
         "titular": "GENFAR S.A.",
         "unidadmedida": "g",
+        "unidadreferencia": "100ML",
         "viaadministracion": "ORAL"
        }
       ]
@@ -105,7 +117,7 @@
       "conjunto": "vwwf-4ftk",
       "max_filas": 500,
       "portal": "datos.gov.co",
-      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, formafarmaceutica, viaadministracion, atc",
+      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, viaadministracion, atc",
       "where": "(expediente = '2203')"
      },
      "filas": 3,
