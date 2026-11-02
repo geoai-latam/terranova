@@ -147,6 +147,12 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     con 73 resoluciones.
   - Va de la mayor suma a la menor y da el valor del año.
   - Avisa si el año no llega a diciembre: 2026 llega a mayo, y de 2013 a 2025 todos llegan.
+- **Homicidios (error 12), herramienta nueva:** `mindefensa_homicidios_municipio`, sobre el conjunto
+  de MinDefensa (`m8fd-ahd9`, CC BY-SA 4.0, de 2003 a septiembre de 2026).
+  - Da las víctimas por modalidad presunta, con mujeres, feminicidios y arma de fuego, y avisa el año
+    a medias.
+  - Cali 2025: 1 068 víctimas, 745 de ellas por sicariato.
+  - md en `docs/fuentes/mindefensa.homicidios.md`.
 
 ## Ficha de un lote (2026-11-01)
 

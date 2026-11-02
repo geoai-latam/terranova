@@ -1,0 +1,134 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: mindefensa.homicidios
+metodo: cosechado
+cosechado: '2026-11-02'
+origen: https://www.datos.gov.co/api/views/m8fd-ahd9.json
+pagina: https://www.datos.gov.co/d/m8fd-ahd9
+titulo: HOMICIDIO
+descripcion: 'Es toda muerte que fuere causada por otra persona por cualquier tipo de elemento. (Se mide
+  en víctimas). Incluye: HOMICIDIO INTENCIONAL'
+publicado: '2026-03-19'
+datos_actualizados: '2026-10-21'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Seguridad y Defensa
+etiquetas:
+- homicidio
+- observatoriomdn
+filas: 345195
+campos:
+  fecha_hecho:
+    tipo_fuente: calendar_date
+    etiqueta: FECHA HECHO
+    nulos: 0
+    minimo: '2003-01-01T00:00:00.000'
+    maximo: '2026-09-30T00:00:00.000'
+    comparacion: fecha
+  cod_muni:
+    tipo_fuente: text
+    etiqueta: COD_MUNI
+    nulos: 0
+    minimo: '05001'
+    maximo: '99773'
+    comparacion: texto
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  sexo:
+    tipo_fuente: text
+    etiqueta: SEXO
+    nulos: 0
+    minimo: FEMENINO
+    comparacion: texto
+    valores:
+      MASCULINO: 317458
+      FEMENINO: 27610
+      NO REPORTA: 125
+      SIN ESTABLECER: 2
+  arma_medio:
+    tipo_fuente: text
+    etiqueta: ARMA MEDIO
+    nulos: 343
+    minimo: ACIDO
+    maximo: VENENO
+    comparacion: texto
+    valores:
+      ARMA DE FUEGO: 267420
+      ARMA BLANCA / CORTOPUNZANTE: 60170
+      CONTUNDENTES: 10727
+      ARTEFACTO EXPLOSIVO/CARGA DINAMITA: 1722
+      NO REPORTADO: 1026
+      CUERDA/SOGA/CADENA: 822
+      MINA ANTIPERSONA: 728
+      PUNZANTES: 324
+      BOLSA PLASTICA: 312
+      GRANADA DE MANO: 264
+      CORTANTES: 253
+      SIN ESTABLECER: 124
+      COMBUSTIBLE: 123
+      CINTAS/CINTURON: 116
+      SIN EMPLEO DE ARMAS: 93
+      CILINDRO BOMBA: 86
+      ALMOHADA: 79
+      VENENO: 76
+      CARRO BOMBA: 63
+      DRON / EXPLOSIVO: 45
+  _modalidad_presunta:
+    tipo_fuente: text
+    etiqueta: ' MODALIDAD PRESUNTA'
+    nulos: 2424
+    minimo: AGRESION
+    comparacion: texto
+    valores:
+      SICARIATO: 150610
+      RIÑAS: 74587
+      AGRESION: 27913
+      NO REPORTADA: 27000
+      ATRACO: 16897
+      RIÑA O CONFLICTO ENTRE PANDILLAS: 6593
+      POR ESTABLECER: 6458
+      ATACADOS POR GAO O GAO-R: 6306
+      ATACADOS POR SUBVERSION: 5863
+      VIOLENCIA INTRAFAMILIAR: 2881
+      RIÑA ENTRE COMPAÑEROS PERMANENTES: 1723
+      TERRORISMO: 1636
+      ENFRENTAMIENTO EJERCOL-SUBVERSION: 1538
+      SIGNOS DE VIOLENCIA FÍSICA (TORTURA): 1242
+      ESTRANGULACION: 1211
+      ATACADOS POR AUTODEFENSAS: 1112
+      DEGOLLAMIENTO: 960
+      SACADO FUERZA DE LA RESIDENCIA: 864
+      FORCEJEO: 676
+      ENFRENTAMIENTO ENTRE DELINCUENCIA COMUN: 614
+  spoa_caracterizacion:
+    tipo_fuente: text
+    etiqueta: SPOA_CARACTERIZACION
+    nulos: 0
+    minimo: FEMINICIDIO
+    comparacion: texto
+    valores:
+      HOMICIDIO INTENCIONAL O CON DOLO: 343276
+      FEMINICIDIO: 1919
+  cantidad:
+    tipo_fuente: number
+    etiqueta: CANTIDAD
+    nulos: 0
+    minimo: '1'
+    maximo: '38'
+    comparacion: numero
+    valores:
+      '1': 344604
+      '2': 549
+      '3': 24
+      '4': 7
+      '5': 4
+      '9': 2
+      '38': 1
+      '7': 1
+      '8': 1
+      '10': 1
+      '14': 1

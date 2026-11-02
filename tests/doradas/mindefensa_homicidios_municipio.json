@@ -1,0 +1,183 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T19:52:59+00:00",
+ "herramienta": "mindefensa_homicidios_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "_modalidad_presunta",
+    "id": "m8fd-ahd9",
+    "max_filas": 200,
+    "order": "victimas DESC, _modalidad_presunta",
+    "portal": "datos.gov.co",
+    "select": "_modalidad_presunta, sum(cantidad) AS victimas, sum(case(sexo = 'FEMENINO', cantidad, true, 0)) AS mujeres, sum(case(spoa_caracterizacion = 'FEMINICIDIO', cantidad, true, 0)) AS feminicidios, sum(case(arma_medio = 'ARMA DE FUEGO', cantidad, true, 0)) AS arma_de_fuego",
+    "where": "cod_muni = '76001' AND date_extract_y(fecha_hecho) = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "_modalidad_presunta",
+       "arma_de_fuego",
+       "feminicidios",
+       "mujeres",
+       "victimas"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "_modalidad_presunta": "SICARIATO",
+        "arma_de_fuego": "738",
+        "feminicidios": "0",
+        "mujeres": "39",
+        "victimas": "745"
+       },
+       {
+        "_modalidad_presunta": "RIÑAS",
+        "arma_de_fuego": "80",
+        "feminicidios": "0",
+        "mujeres": "14",
+        "victimas": "225"
+       },
+       {
+        "_modalidad_presunta": "ATRACO",
+        "arma_de_fuego": "52",
+        "feminicidios": "0",
+        "mujeres": "4",
+        "victimas": "63"
+       },
+       {
+        "_modalidad_presunta": "VIOLENCIA INTRAFAMILIAR",
+        "arma_de_fuego": "2",
+        "feminicidios": "5",
+        "mujeres": "9",
+        "victimas": "10"
+       },
+       {
+        "_modalidad_presunta": "TERRORISMO",
+        "arma_de_fuego": "0",
+        "feminicidios": "0",
+        "mujeres": "1",
+        "victimas": "9"
+       },
+       {
+        "_modalidad_presunta": "RIÑA ENTRE COMPAÑEROS PERMANENTES",
+        "arma_de_fuego": "3",
+        "feminicidios": "0",
+        "mujeres": "0",
+        "victimas": "6"
+       },
+       {
+        "_modalidad_presunta": "POR ESTABLECER",
+        "arma_de_fuego": "0",
+        "feminicidios": "0",
+        "mujeres": "0",
+        "victimas": "3"
+       },
+       {
+        "_modalidad_presunta": "RIÑA O CONFLICTO ENTRE PANDILLAS",
+        "arma_de_fuego": "3",
+        "feminicidios": "0",
+        "mujeres": "0",
+        "victimas": "3"
+       },
+       {
+        "_modalidad_presunta": "SIGNOS DE VIOLENCIA FÍSICA (TORTURA)",
+        "arma_de_fuego": "1",
+        "feminicidios": "0",
+        "mujeres": "1",
+        "victimas": "2"
+       },
+       {
+        "_modalidad_presunta": "LINCHAMIENTO",
+        "arma_de_fuego": "0",
+        "feminicidios": "0",
+        "mujeres": "0",
+        "victimas": "1"
+       },
+       {
+        "_modalidad_presunta": "VIOLENCIA SEXUAL",
+        "arma_de_fuego": "0",
+        "feminicidios": "0",
+        "mujeres": "1",
+        "victimas": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 11,
+      "truncado": false,
+      "vistos": 11
+     },
+     "completo": true,
+     "conjunto": "m8fd-ahd9",
+     "consulta": {
+      "conjunto": "m8fd-ahd9",
+      "group": "_modalidad_presunta",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "_modalidad_presunta, sum(cantidad) AS victimas, sum(case(sexo = 'FEMENINO', cantidad, true, 0)) AS mujeres, sum(case(spoa_caracterizacion = 'FEMINICIDIO', cantidad, true, 0)) AS feminicidios, sum(case(arma_medio = 'ARMA DE FUEGO', cantidad, true, 0)) AS arma_de_fuego",
+      "where": "(cod_muni = '76001' AND date_extract_y(fecha_hecho) = 2025)"
+     },
+     "filas": 11,
+     "filas_que_resume": 1068,
+     "filtro_soql": "(cod_muni = '76001' AND date_extract_y(fecha_hecho) = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "id": "m8fd-ahd9",
+    "portal": "datos.gov.co",
+    "select": "max(date_extract_m(fecha_hecho)) AS hasta_mes, count(distinct date_extract_m(fecha_hecho)) AS meses",
+    "where": "date_extract_y(fecha_hecho) = 2025"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_mes",
+       "meses"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_mes": "12",
+        "meses": "12"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "m8fd-ahd9",
+     "consulta": {
+      "conjunto": "m8fd-ahd9",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(date_extract_m(fecha_hecho)) AS hasta_mes, count(distinct date_extract_m(fecha_hecho)) AS meses",
+      "where": "(date_extract_y(fecha_hecho) = 2025)"
+     },
+     "filas": 1,
+     "filas_que_resume": 13981,
+     "filtro_soql": "(date_extract_y(fecha_hecho) = 2025)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
