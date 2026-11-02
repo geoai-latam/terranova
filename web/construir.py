@@ -1487,7 +1487,11 @@ def fila_turno(t: dict, clave: str) -> str:
 VENTANAS = [
     ("confecamaras.rues", "Confecámaras · RUES", ["nit", "fecha_matricula"]),
     ("confecamaras.rues_establecimientos", "Confecámaras · establecimientos", ["estado_matricula"]),
-    ("supersociedades.empresas_grandes", "Supersociedades · 10.000 empresas", ["nit", "ingresos_operacionales"]),
+    (
+        "supersociedades.empresas_grandes",
+        "Supersociedades · 10.000 empresas",
+        ["nit", "ingresos_operacionales"],
+    ),
 ]
 _PUBLICADAS_IDS = {f.id for f in PUBLICADAS}
 for _fid, _tit, _campos in VENTANAS:
@@ -1519,7 +1523,11 @@ def seccion_problema() -> str:
         f"estado_matricula · {E['establecimientos']} filas, {E['establecimientos_cancelados']} CANCELADA",
         f'nit {E["nit_tal_cual_super"]} · ingresos_operacionales "{E["ingresos_tal_cual"]}"',
     ]
-    notas = ["la fecha, sin guiones", "otra consulta para la misma empresa", "el NIT con decimales; la cifra, texto"]
+    notas = [
+        "la fecha, sin guiones",
+        "otra consulta para la misma empresa",
+        "el NIT con decimales; la cifra, texto",
+    ]
     vent = "".join(
         f'<div class="v" style="--k:{i}"><b>{t}</b><code>{escape(c)}</code><i>{n}</i></div>'
         for i, ((_, t, _c), c, n) in enumerate(zip(VENTANAS, crudos, notas, strict=True))
