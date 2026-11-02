@@ -10,7 +10,7 @@
     "max_filas": 50,
     "order": "anio",
     "portal": "datos.gov.co",
-    "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(valor_del_contrato) AS valor_total, count(distinct nit_entidad) AS entidades",
+    "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico, count(distinct nit_entidad) AS entidades",
     "where": "documento_proveedor = '899999714' AND tipodocproveedor = 'NIT'"
    },
    "conector": "datos-abiertos-mcp",
@@ -77,7 +77,7 @@
       "group": "anio",
       "max_filas": 50,
       "portal": "datos.gov.co",
-      "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(valor_del_contrato) AS valor_total, count(distinct nit_entidad) AS entidades",
+      "select": "date_extract_y(fecha_de_firma) AS anio, count(distinct id_contrato) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico, count(distinct nit_entidad) AS entidades",
       "where": "(documento_proveedor = '899999714' AND tipodocproveedor = 'NIT')"
      },
      "filas": 6,

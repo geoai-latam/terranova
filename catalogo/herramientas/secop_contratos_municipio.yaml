@@ -1,5 +1,5 @@
 id: secop_contratos_municipio
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto?"
@@ -9,6 +9,8 @@ descripcion: >
   como los escribe SECOP, con tildes). Cuenta todos los años y estados; no incluye SECOP I. El
   municipio es el de la entidad contratante, no el de ejecución. Es un conteo por municipio, NO una
   búsqueda de texto; para buscar contratos por palabras de su objeto usa secop_contratos_buscar.
+  Los contratos de 20 billones o más no suman: son errores de digitación de la fuente (uno de
+  Medellín dice 440 000 billones) y `contratos_valor_atipico` dice cuántos hubo.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {municipio: nombre, departamento: nombre}
 consulta:
@@ -19,7 +21,7 @@ consulta:
     id: jbjy-vk9h
     portal: datos.gov.co
     # agregado sin $group (el conector no lo acepta): una sola fila con los dos alias
-    select: "count(*) as contratos, sum(valor_del_contrato) as valor_total"
+    select: "count(*) as contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) as valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) as contratos_valor_atipico"
     # sin distinguir mayúsculas: el agente copia «CHÍA» de DIVIPOLA y SECOP escribe «Chía»
     where: "upper(ciudad) = upper('{municipio}') AND upper(departamento) = upper('{departamento}')"
     max_filas: 1
@@ -29,6 +31,7 @@ salida: ContratosMunicipio
 derivados:
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
+  contratos_valor_atipico: {de: columna, campo: contratos_valor_atipico, tipo: int}
 cobro: agregado
 canario:
   # Medido el 2026-10-21 (22:16 hora de Colombia) en https://www.datos.gov.co/resource/jbjy-vk9h.json
@@ -38,5 +41,5 @@ canario:
   # verdad es un mínimo, no un valor exacto.
   entrada: {municipio: Chía, departamento: Cundinamarca}
   minimos: {contratos: 12149, valor_total: 1289946058879.80}
-  campos: [contratos, valor_total]
+  campos: [contratos, contratos_valor_atipico, valor_total]
   latencia_max_ms: 10000

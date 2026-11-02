@@ -10,7 +10,7 @@
     "max_filas": 200,
     "order": "contratos DESC",
     "portal": "datos.gov.co",
-    "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+    "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
     "where": "nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023"
    },
    "conector": "datos-abiertos-mcp",
@@ -245,7 +245,7 @@
       "group": "tipo_de_contrato, modalidad_de_contratacion",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(valor_del_contrato) AS valor_total",
+      "select": "tipo_de_contrato, modalidad_de_contratacion, max(nombre_entidad) AS entidad, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023)"
      },
      "filas": 29,

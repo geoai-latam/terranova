@@ -1,5 +1,5 @@
 id: secop_entidades_municipio
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Qué entidades estatales contratan en este municipio y cuál es su NIT?"
@@ -9,6 +9,8 @@ descripcion: >
   para conocer el NIT de una alcaldía u otra entidad antes de usar las herramientas que lo piden, en
   vez de suponerlo. Para un año, siga con secop_contratos_entidad o secop_contratos_entidad_anio y
   el NIT. Municipio y departamento como los escribe SECOP, con tildes.
+  Los contratos de 20 billones o más no suman: son errores de digitación de la fuente (uno de
+  Medellín dice 440 000 billones) y `contratos_valor_atipico` dice cuántos hubo.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {municipio: nombre, departamento: nombre}
 consulta:
@@ -18,7 +20,7 @@ consulta:
   argumentos:
     id: jbjy-vk9h
     portal: datos.gov.co
-    select: "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(valor_del_contrato) AS valor_todos_los_anios"
+    select: "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_todos_los_anios, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico"
     # sin distinguir mayúsculas: el agente copia «CHÍA» de DIVIPOLA y SECOP escribe «Chía»
     where: "upper(ciudad) = upper('{municipio}') AND upper(departamento) = upper('{departamento}')"
     group: "nombre_entidad, nit_entidad"
@@ -29,6 +31,7 @@ salida: EntidadesMunicipio
 derivados:
   contratos_todos_los_anios: {de: columna, campo: contratos_todos_los_anios, tipo: int}
   valor_todos_los_anios: {de: columna, campo: valor_todos_los_anios, tipo: float}
+  contratos_valor_atipico: {de: columna, campo: contratos_valor_atipico, tipo: int}
 cobro: codigo
 canario:
   # Medido el 2026-10-23 en jbjy-vk9h: Chía, 8 entidades; la que más contrata es la Alcaldía
@@ -36,5 +39,5 @@ canario:
   entrada: {municipio: Chía, departamento: Cundinamarca}
   verdad: {entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: 899999172}
   minimos: {contratos_todos_los_anios: 5920}
-  campos: [contratos_todos_los_anios, entidad, nit_entidad, valor_todos_los_anios]
+  campos: [contratos_todos_los_anios, contratos_valor_atipico, entidad, nit_entidad, valor_todos_los_anios]
   latencia_max_ms: 15000
