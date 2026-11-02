@@ -1,14 +1,16 @@
 """Un código solo no le dice nada a quien pregunta: su significado va en la misma respuesta."""
 
+from collections.abc import Mapping
+
 from terranova.catalogo import cargar
 from terranova.ejecutor import convertir, mapear_fila
 
 CATALOGO = cargar()
 
 
-def _mapear(herramienta: str, fila: dict[str, object]) -> dict[str, object]:
+def _mapear(herramienta: str, fila: Mapping[str, object]) -> dict[str, object]:
     h = CATALOGO.herramientas[herramienta]
-    return mapear_fila(h, CATALOGO.fuentes[h.fuente], fila, None)
+    return mapear_fila(h, CATALOGO.fuentes[h.fuente], dict(fila), None)
 
 
 def test_el_destino_economico_llega_con_su_significado() -> None:
