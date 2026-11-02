@@ -1,5 +1,5 @@
 id: sinic_predio_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.sinic_terreno
 pregunta: "¿Qué predio hay en este punto de un municipio con gestor catastral propio (Bogotá, Medellín, Cali, Barranquilla…)?"
@@ -11,7 +11,9 @@ descripcion: >
   Catastro Antioquia, Cundinamarca, el Valle del Cauca y otros gestores propios. Para los demás
   municipios (la mayoría, Chía entre ellos), igac_predio_en_punto; si no se sabe quién es el
   gestor, predio_en_punto, que elige la base. Sin propietarios. Sale de la copia de Terrnova (linderos
-  simplificados a ~1 m).
+  simplificados a ~1 m). Las vías, los andenes y las plazas no son terreno de ningún predio: un punto que cae ahí no
+  trae predio aunque haya lotes a pocos metros. Para un lote, un punto dentro de él, o ficha_lote
+  con su polígono.
   (Fuente: IGAC, SINIC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
