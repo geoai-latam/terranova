@@ -111,6 +111,7 @@ async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[An
     assert set(herramientas) == set(puerta.VENDIBLE.herramientas) | {
         "ficha_lugar",
         "ficha_empresa",
+        "predio_en_punto",
         "fuente_describir",
     }
     describir = herramientas["fuente_describir"]

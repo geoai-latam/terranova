@@ -48,6 +48,14 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Una sola herramienta de predio (2026-11-01)
+
+- **`predio_en_punto`:** mira el SINIC y, si no tiene el punto, la base del IGAC. Va en
+  `POST /v1/fichas/predio` y en el perfil de territorio. GEO Copilot confundía las dos herramientas
+  aunque sus descripciones se remiten entre sí. Las dos siguen disponibles y remiten a esta.
+- **Honestidad:** con el SINIC caído, si el IGAC no tiene el predio, responde «no se pudo», no «no hay».
+- **Falta:** medir en el banco si bajó la confusión, tras desplegar.
+
 ## Entidad pública por nombre (2026-11-01)
 
 - **`secop_entidades_buscar`:** del nombre al NIT, en todos los perfiles. Sale de la copia de SECOP,

@@ -26,7 +26,7 @@ from mcp.types import ListToolsRequest, TextContent, ToolAnnotations
 from pydantic import PrivateAttr, ValidationError
 
 from terranova import ficha as ficha_lugar
-from terranova import metricas, perfil_catalogo
+from terranova import metricas, perfil_catalogo, predio
 from terranova.alta import Altas, altas_desde_entorno
 from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis, AlmacenTolerante
 from terranova.catalogo import (
@@ -157,7 +157,9 @@ def trae_geometria(h: Herramienta) -> bool:
 
 def admite_geometria(ficha: str) -> bool:
     h = CATALOGO.herramientas.get(ficha)
-    return ficha == ficha_lugar.HERRAMIENTA or (h is not None and trae_geometria(h))
+    return ficha in (ficha_lugar.HERRAMIENTA, predio.HERRAMIENTA) or (
+        h is not None and trae_geometria(h)
+    )
 
 
 def pagina_lista(ficha: str) -> bool:

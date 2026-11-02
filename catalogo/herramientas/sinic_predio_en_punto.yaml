@@ -10,7 +10,7 @@ descripcion: >
   IGAC no tiene: Bogotá, Medellín y el Valle de Aburrá, Cali, Barranquilla, Bucaramanga, Cartagena,
   Catastro Antioquia, Cundinamarca, el Valle del Cauca y otros gestores propios. Para los demás
   municipios (la mayoría, Chía entre ellos), igac_predio_en_punto; si no se sabe quién es el
-  gestor, igac_gestor_catastral_municipio. Sin propietarios. Sale de la copia de Terrnova (linderos
+  gestor, predio_en_punto, que elige la base. Sin propietarios. Sale de la copia de Terrnova (linderos
   simplificados a ~1 m).
   (Fuente: IGAC, SINIC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
