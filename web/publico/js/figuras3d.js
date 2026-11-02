@@ -6,7 +6,7 @@ const cargas = {
   prueba: el => import('./fig-prueba.js?v=c02fd6c236').then(m => m.montar(el)),
   criba: el => import('./fig-criba.js?v=43bdb20f75').then(m => m.montar(el)),
   cobertura: el => import('./fig-cobertura.js?v=78d2ed465f').then(m => m.montar(el)),
-  expediente: el => import('./servicios3.js?v=2b54e07c68').then(m => m.montar(el.closest('[data-f3-sec]'))),
+  expediente: el => import('./servicios3.js?v=1a11704dbf').then(m => m.montar(el.closest('[data-f3-sec]'))),
 };
 const hechas = new Set();
 function cargar(el) {

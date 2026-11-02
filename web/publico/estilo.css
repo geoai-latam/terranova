@@ -1011,7 +1011,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .consola .cr-tit { margin: 0; font: 500 13px/18px var(--font-mono); color: #F3EFE4; }
 .consola .fuera { color: #9DB7CF; }
 /* en las consolas de las figuras, el sello no va en ámbar: el ámbar es lo que se prueba */
-.cr-exp .sello, .pr3-con .sello, .bi3-aviso .sello, .in3-res .sello, .ci3-tip .sello { color: #8FA39A; }
+.cr-exp .sello, .bi3-aviso .sello, .in3-res .sello, .ci3-tip .sello { color: #8FA39A; }
 .sellito { font-style: normal; box-shadow: inset 0 0 0 1px var(--linea-fuerte); padding: 0 5px; border-radius: 2px; }
 
 /* el problema: cinco portales, una pregunta */
@@ -1019,9 +1019,9 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .pr3 { position: relative; margin: 0; cursor: pointer; }
 .pr3-preg { margin: 0 0 14px; font: 600 clamp(18px, 1.7vw, 22px)/1.3 var(--font-sans); letter-spacing: -.012em; display: grid; gap: 2px; }
 .pr3-preg span { font: 400 12.5px/16px var(--font-mono); color: var(--tinta-tenue); }
-.pr3-esc { position: relative; height: 380px; }
+.pr3-esc { position: relative; height: 400px; }
 .pr3-vent { position: absolute; left: 0; top: 0; width: 58%; height: 100%; }
-.pr3-vent .v { position: absolute; left: calc(var(--k) * 4.2%); top: calc(var(--k) * 64px); width: 84%; display: grid; gap: 2px; padding: 10px 12px 11px; background: var(--fondo); box-shadow: inset 0 0 0 1px var(--linea-fuerte); border-top: 6px solid var(--superficie-2);
+.pr3-vent .v { position: absolute; left: calc(var(--k) * 5%); top: calc(var(--k) * 96px); width: 84%; display: grid; gap: 2px; padding: 10px 12px 11px; background: var(--fondo); box-shadow: inset 0 0 0 1px var(--linea-fuerte); border-top: 6px solid var(--superficie-2);
   opacity: 0; transform: translateY(10px); transition: opacity .35s, transform .5s cubic-bezier(.2,.7,.2,1), top .6s cubic-bezier(.6,0,.2,1), left .6s cubic-bezier(.6,0,.2,1); transition-delay: calc(var(--k) * 90ms); }
 .pr3-vent .v b { font: 600 13.5px/1.3 var(--font-sans); transition: opacity .2s; overflow: hidden; white-space: nowrap; }
 .pr3-vent .v code { font: 400 12px/16px var(--font-mono); color: var(--tinta); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: opacity .2s; }
@@ -1035,16 +1035,34 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 .pr3.tiempo1 .pr3-pasos li { opacity: .35; }
 .pr3.tiempo2 .pr3-pasos li { opacity: 1; color: var(--tinta); }
 .pr3.tiempo3 .pr3-pasos li { opacity: 0; transition-delay: 0s; }
-.pr3.tiempo3 .v { left: 0; top: calc(140px + var(--k) * 9px); width: 44%; height: 14px; padding: 0; border-top-width: 3px; transition-delay: calc(var(--k) * 50ms); }
-.pr3.tiempo3 .v b { opacity: 0; }
-.pr3.tiempo3 .v { overflow: hidden; }
-.pr3.tiempo3 .v code, .pr3.tiempo3 .v i { opacity: 0; }
+.pr3.tiempo3 .pr3-vent .v { left: 0; top: calc(140px + var(--k) * 9px); width: 44%; height: 14px; padding: 0; border-top-width: 3px; transition-delay: calc(var(--k) * 50ms); }
+.pr3.tiempo3 .pr3-vent .v b { opacity: 0; }
+.pr3.tiempo3 .pr3-vent .v { overflow: hidden; }
+.pr3.tiempo3 .pr3-vent .v code, .pr3.tiempo3 .pr3-vent .v i { opacity: 0; }
 .pr3-puerta { position: absolute; left: 0; top: 210px; width: 44%; margin: 0; font: 400 12.5px/16px var(--font-mono); color: var(--tinta-tenue); opacity: 0; transition: opacity .3s .4s; }
 .pr3.tiempo3 .pr3-puerta { opacity: 1; }
-.pr3-con { position: absolute; right: 0; top: 40px; width: 52%; opacity: 0; transform: translateX(12px); transition: opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
-.pr3-con .turno { min-height: 0; gap: 10px; padding: 14px 16px 12px; }
-.pr3-con dl { grid-template-columns: 84px minmax(0, 1fr); font-size: 12.5px; }
-.pr3.tiempo4 .pr3-con { opacity: 1; transform: none; }
+.pr3-res { position: absolute; right: 0; top: 0; width: 54%; display: grid; gap: 12px; padding: 16px 18px 14px; background: var(--fondo); box-shadow: inset 0 0 0 1px var(--linea-fuerte), var(--sombra-flotante);
+  opacity: 0; transform: translateX(12px); transition: opacity .4s, transform .5s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+.pr3-res p { margin: 0; }
+.pr3-et { font: 400 12.5px/16px var(--font-mono); color: var(--tinta-tenue); }
+.pr3-frase { font: 400 16px/1.55 var(--font-sans); color: var(--tinta); text-wrap: pretty; }
+.pr3-frase b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.pr3-frase .cita { display: inline-flex; align-items: center; gap: 5px; margin: 0 6px 0 6px; padding: 0 7px; font: 500 11.5px/20px var(--font-sans); color: var(--tinta-suave); box-shadow: inset 0 0 0 1px var(--linea-fuerte); vertical-align: 1px; white-space: nowrap; }
+.pr3-frase .cita .m { width: 6px; height: 6px; border-radius: 50%; background: var(--linea-media); transition: background .3s; }
+.pr3.tiempo4:not(.sin-ambar) .pr3-frase .cita .m { background: var(--acento-relleno); }
+.pb3 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; height: 104px; align-items: end; }
+.pb3-a { display: grid; grid-template-rows: auto 1fr auto; height: 100%; gap: 3px; text-align: center; }
+.pb3-a .v { font: 400 11px/14px var(--font-mono); color: var(--tinta-suave); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: visible; letter-spacing: -.02em; }
+.pb3-a .a { font: 400 11px/14px var(--font-mono); color: var(--tinta-tenue); }
+.pb3-a > i.ing { align-self: end; position: relative; display: block; height: var(--h); background: var(--sujeto-teal-2, #CDE6DF); box-shadow: inset 0 0 0 1px var(--sujeto-teal-filo, #1D5E53); transform-origin: bottom; transform: scaleY(0); transition: transform .6s cubic-bezier(.2,.7,.2,1); transition-delay: calc(.35s + var(--k) * 90ms); }
+.pb3-a i.gan { position: absolute; left: 0; right: 0; bottom: 0; display: block; height: var(--h); background: var(--tinta); }
+.pr3.tiempo4 .pb3-a > i.ing, .pr3.quieta .pb3-a > i.ing { transform: none; }
+.pb3-ley { display: flex; flex-wrap: wrap; gap: 4px 14px; font: 400 12px/16px var(--font-sans); color: var(--tinta-tenue); }
+.pb3-ley span { display: inline-flex; align-items: center; gap: 6px; }
+.pb3-ley i { width: 10px; height: 10px; display: inline-block; }
+.pb3-ley i.ing { background: var(--sujeto-teal-2, #CDE6DF); box-shadow: inset 0 0 0 1px var(--sujeto-teal-filo, #1D5E53); }
+.pb3-ley i.gan { background: var(--tinta); }
+.pr3.tiempo4 .pr3-res { opacity: 1; transform: none; }
 .pr3.tiempo4 .pr3-vent .v { opacity: .55; }
 .pr3-fd { margin-top: 20px; }
 .bc3 { margin: 20px 0 0; display: grid; gap: 8px; }
@@ -1057,7 +1075,7 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   .pr3-esc { height: auto; display: grid; gap: 16px; }
   .pr3-vent { position: relative; width: 100%; height: 330px; }
   .pr3-pasos { position: relative; width: 100%; }
-  .pr3-con { position: relative; width: 100%; max-width: 520px; top: 0; }
+  .pr3-res { position: relative; width: 100%; max-width: 560px; top: 0; }
   .pr3.tiempo3 .pr3-pasos { display: none; }
   .pr3-puerta { top: 200px; width: 100%; }
 }
@@ -1242,10 +1260,21 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
   .ex3-escena { max-width: 300px; justify-self: center; width: 100%; }
   .ex3-guias { display: none; }
 }
-@media (max-width: 960px) { .pr3.tiempo3 .pr3-vent, .pr3.tiempo4 .pr3-vent { height: 120px; } .pr3.tiempo3 .v { top: calc(16px + var(--k) * 9px); width: 60%; } .pr3-puerta { top: 76px; } }
+@media (max-width: 960px) { .pr3.tiempo3 .pr3-vent, .pr3.tiempo4 .pr3-vent { height: 120px; } .pr3.tiempo3 .pr3-vent .v { top: calc(16px + var(--k) * 9px); width: 60%; } .pr3-puerta { top: 76px; } }
 .bc3-f b { white-space: nowrap; }
 @media (max-width: 600px) { .bc3-f { grid-template-columns: 6.5em minmax(0, 1fr) 6.4em; } }
 
 /* Los rótulos nacen ocultos: aparecen cuando la figura ya les dio su sitio (nunca encimados en 0,0). */
 .p3-capa, .cri .f3-rot > span, .f3-cob .f3-rot > span { opacity: 0; }
 .f3-cob .f3-rot > .f3-dato-col { opacity: 1; }
+/* al juntarse, las tres ventanas quedan legibles: solo el portal, apiladas, detrás de una puerta */
+.pr3.tiempo3 .pr3-vent .v, .pr3.tiempo4 .pr3-vent .v { left: 0; top: calc(150px + var(--k) * 40px); width: 72%; height: auto; padding: 7px 10px 8px; border-top-width: 3px; overflow: hidden; }
+.pr3.tiempo3 .pr3-vent .v b, .pr3.tiempo4 .pr3-vent .v b { opacity: 1; font-size: 13px; }
+.pr3.tiempo3 .pr3-vent .v code, .pr3.tiempo3 .pr3-vent .v i, .pr3.tiempo4 .pr3-vent .v code, .pr3.tiempo4 .pr3-vent .v i { display: none; }
+.pr3-puerta { top: 284px; }
+.pr3.tiempo4 .pr3-puerta { opacity: 1; }
+@media (max-width: 960px) {
+  .pr3.tiempo3 .pr3-vent, .pr3.tiempo4 .pr3-vent { height: 160px; }
+  .pr3.tiempo3 .pr3-vent .v, .pr3.tiempo4 .pr3-vent .v { top: calc(var(--k) * 40px); width: 100%; }
+  .pr3-puerta { top: 132px; }
+}

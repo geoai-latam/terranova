@@ -312,7 +312,12 @@ def test_cifras_de_la_portada_salen_del_catalogo_y_de_los_datos() -> None:
     sm = json.loads((PUBLICO / "datos" / "sm.json").read_text(encoding="utf-8"))
     assert K["n"] == len(sm["polys"]) and K["heroe_codigo"] == sm["codes"][sm["obj"]]
     rev = len(K["revision"])
-    assert f"{construir.miles(K['n'] - rev)} despejados" in texto and f"{rev} a revisión" in texto
+    # la empresa del problema: sus ingresos salen de Supersociedades (portada.json), no a mano
+    E = datos["empresa"]
+    pico = max(E["anios"], key=lambda a: a["ingresos"])
+    plano = re.sub(r"\s+", " ", texto)
+    assert f"{construir._cifra_b(pico['ingresos'])} billones de pesos en {pico['a']}" in plano
+    assert f"NIT {E['nit']}" in texto and E["ingresos_tal_cual"] in html
     co = json.loads(construir.CO_JSON.read_text(encoding="utf-8"))
     assert f"{construir.miles(sum(n for *_, n in co['bins']))} predios de la muestra" in texto
     for cifra in (
@@ -320,6 +325,7 @@ def test_cifras_de_la_portada_salen_del_catalogo_y_de_los_datos() -> None:
         f"{construir.N_ENTIDADES} entidades",
         construir.miles(K["n"]),
         f"{rev} a revisión",
+        construir._cifra_b(pico["ingresos"]),
     ):
         assert cifra not in js, f"un módulo de la portada escribe a mano «{cifra}»"
 

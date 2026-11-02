@@ -15,6 +15,9 @@ Todo sale de archivos locales, sin una sola consulta a servidores del Estado:
   el 02-11-2026 (tests/doradas/secop_modificaciones_contrato.json). Va sin nombres de personas: solo
   fecha, estado, días, propósito e identificador de cada modificación.
 
+- empresa: Ecopetrol (NIT 899999068) en RUES (22 y 23-10-2026) y Supersociedades (02-11-2026),
+  respuestas capturadas de tests/doradas.
+
 El índice del catálogo no va aquí: la figura lo arma con datos/catalogo.json, que escribe
 construir.py.
 
@@ -276,6 +279,46 @@ def bitacora() -> dict:
     }
 
 
+def empresa() -> dict:
+    """La empresa del problema: Ecopetrol (NIT 899999068), una sociedad, no una persona. Lo que
+    responden RUES (empresa y establecimientos) y Supersociedades (las 10 000 empresas, cifras en
+    billones de pesos, redondeadas a dos decimales), y cómo lo publica cada una."""
+    d1, r1 = dorada("rues_empresa_por_nit")
+    d2, r2 = dorada("rues_establecimientos_por_nit")
+    d3, r3 = dorada("supersociedades_empresa_grande_por_nit")
+    e = r1[0]
+
+    def billones(s: str) -> float:
+        return float(s.replace("$", "").strip())
+
+    años = [
+        {
+            "a": int(float(x["a_o_de_corte"])),
+            "ingresos": billones(x["ingresos_operacionales"]),
+            "ganancia": billones(x["ganancia_p_rdida"]),
+        }
+        for x in r3
+    ]
+    ult = r3[-1]
+    return {
+        "nit": e["nit"],
+        "razon_social": "Ecopetrol S.A.",
+        "camara": e["camara_comercio"].title(),
+        "estado": e["estado_matricula"].lower(),
+        "renovado": e["ultimo_ano_renovado"],
+        "fecha_matricula_tal_cual": e["fecha_matricula"],
+        "establecimientos": len(r2),
+        "establecimientos_cancelados": sum(x["estado_matricula"] == "CANCELADA" for x in r2),
+        "supervisor": ult["supervisor"].title(),
+        "nit_tal_cual_super": ult["nit"],
+        "ingresos_tal_cual": ult["ingresos_operacionales"],
+        "anios": años,
+        "grabado_rues": d1["grabado"][:10],
+        "grabado_est": d2["grabado"][:10],
+        "grabado_super": d3["grabado"][:10],
+    }
+
+
 def main() -> int:
     copias = RAIZ / "datos_locales"
     if "--copias" in sys.argv:
@@ -289,6 +332,7 @@ def main() -> int:
         "municipio": {"nombre": "Chía", "divipola": "25175"},
         "pitalito": pitalito(),
         "bitacora": bitacora(),
+        "empresa": empresa(),
     }
     texto = json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n"
     SALIDA.write_text(texto, encoding="utf-8", newline="\n")

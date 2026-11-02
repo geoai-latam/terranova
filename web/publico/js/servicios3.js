@@ -1,4 +1,4 @@
-// Los cuatro servicios: el expediente en three.js en miniatura y tres figuras
+// Las cuatro decisiones: el expediente en three.js en miniatura y tres figuras
 // tipográficas con datos reales (la cifra con su corte, la bitácora, el índice del catálogo). Corren
 // de una en una; solo la que corre lleva el ámbar.
 import { figura, grupo, sola } from './tipo.js?v=6f554fa24c';
@@ -10,16 +10,10 @@ const NOMBRES = { territorio: 'Territorio', estadisticas: 'Estadísticas', contr
 export async function montar(secc) {
   const [P, C] = await Promise.all([fetch('/datos/portada.json').then(r => r.json()), fetch('/datos/catalogo.json').then(r => r.json())]);
   P.indice = familias(C);
-  const figs = [];
-  // 1 · el expediente (3D)
+  // en el orden de la página: el contrato, la ley, el municipio y el lote
   const exEl = secc.querySelector('[data-f3="expediente"]');
-  figs.push(await import('./fig-expediente.js?v=0560e23e74').then(m => m.montar(exEl)));
-  // 2 · la cifra con su corte
-  figs.push(cifra(secc.querySelector('.ci3'), P));
-  // 3 · la bitácora
-  figs.push(bitacora(secc.querySelector('.bi3'), P));
-  // 4 · el índice del catálogo
-  figs.push(indice(secc.querySelector('.in3'), P));
+  const ex = await import('./fig-expediente.js?v=0560e23e74').then(m => m.montar(exEl));
+  const figs = [bitacora(secc.querySelector('.bi3'), P), indice(secc.querySelector('.in3'), P), cifra(secc.querySelector('.ci3'), P), ex];
   if (matchMedia('(max-width: 760px)').matches) {
     // en una columna se ven de a una: cada una corre al entrar en vista
     figs.forEach(f => (f.nombre === 'expediente' ? sola3d(f) : sola(f)));

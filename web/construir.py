@@ -1480,94 +1480,91 @@ def fila_turno(t: dict, clave: str) -> str:
     return dict(t["filas"])[clave]
 
 
-# Los cinco portales del problema: fuente del catálogo, título, campos tal como los publica la
-# fuente (deben existir en su ficha) y una nota. El POT municipal no está en el catálogo.
+# El problema (vuelta 4, el deck): una decisión de organización, no un lote. «¿Le damos crédito a
+# este proveedor?» El mismo NIT en tres portales, cada uno con su forma de escribirlo (campos tal como
+# los publica la fuente, que deben existir en su ficha), y la respuesta en palabras, con quién dice
+# cada cosa. La empresa es Ecopetrol S.A., una sociedad (nunca una persona): datos/portada.json.
 VENTANAS = [
-    (
-        "igac.sinic_terreno",
-        "IGAC · SINIC",
-        ["numero_predial_nacional"],
-        "una base por gestor catastral",
-    ),
-    (
-        "pnn.runap",
-        "Parques Nacionales · RUNAP",
-        ["ap_nombre", "fecha_inscrita"],
-        "categorías del SINAP, inscritas",
-    ),
-    (
-        "ant.resguardos_indigenas",
-        "Agencia Nacional de Tierras",
-        ["NOMBRE", "ULTIMA_FECHA_ACTO_ADMIN"],
-        "servicio de mapas, campos en mayúsculas",
-    ),
-    ("sinchi.perdida_bosque", "SINCHI", ["deforestacion"], "solo la Amazonia"),
+    ("confecamaras.rues", "Confecámaras · RUES", ["nit", "fecha_matricula"]),
+    ("confecamaras.rues_establecimientos", "Confecámaras · establecimientos", ["estado_matricula"]),
+    ("supersociedades.empresas_grandes", "Supersociedades · 10.000 empresas", ["nit", "ingresos_operacionales"]),
 ]
 _PUBLICADAS_IDS = {f.id for f in PUBLICADAS}
-for _fid, _tit, _campos, _ in VENTANAS:
+for _fid, _tit, _campos in VENTANAS:
     assert _fid in _PUBLICADAS_IDS, f"{_fid} no está publicada"
     _f = CAT.fuentes[_fid]
     assert _tit.split(" · ")[0] == nombre_entidad(_f.entidad), (_fid, nombre_entidad(_f.entidad))
-    _todos = set(_f.campos or {}) | set(getattr(_f.copia, "indices", None) or [])
-    assert all(c in _todos or c.upper() in _todos for c in _campos), f"{_fid}: campos {_campos}"
+    assert all(c in set(_f.campos or {}) for c in _campos), f"{_fid}: campos {_campos}"
 PASOS_PROBLEMA = [
     "encontrar quién publica",
     "descubrir el servicio",
-    "pelear con la paginación",
-    "recortar y cruzar a mano",
-    "repetir cada vez",
+    "limpiar cada formato",
+    "cruzar a mano",
+    "repetir con el siguiente",
 ]
+
+
+def _cifra_b(x: float) -> str:
+    """Billones con una cifra decimal y coma: 144.82 → «144,8»."""
+    return f"{x:.1f}".replace(".", ",")
 
 
 def seccion_problema() -> str:
     P = datos_portada()
-    K, pit = P["criba"], P["pitalito"]
+    E, pit = P["empresa"], P["pitalito"]
+    assert E["nit"] == "899999068" and E["estado"] == "activa"
+    camara = {"Bogota": "Bogotá"}.get(E["camara"], E["camara"])
+    crudos = [
+        f"nit {E['nit']} · fecha_matricula {E['fecha_matricula_tal_cual']}",
+        f"estado_matricula · {E['establecimientos']} filas, {E['establecimientos_cancelados']} CANCELADA",
+        f'nit {E["nit_tal_cual_super"]} · ingresos_operacionales "{E["ingresos_tal_cual"]}"',
+    ]
+    notas = ["la fecha, sin guiones", "otra consulta para la misma empresa", "el NIT con decimales; la cifra, texto"]
     vent = "".join(
-        f'<div class="v" style="--k:{i}"><b>{t}</b><code>{" · ".join(c)}</code><i>{n}</i></div>'
-        for i, (_, t, c, n) in enumerate(VENTANAS)
-    )
-    vent += (
-        f'<div class="v" style="--k:{len(VENTANAS)}"><b>Planeación municipal</b>'
-        "<code>el POT, en documento</code><i>sin campos que consultar</i></div>"
+        f'<div class="v" style="--k:{i}"><b>{t}</b><code>{escape(c)}</code><i>{n}</i></div>'
+        for i, ((_, t, _c), c, n) in enumerate(zip(VENTANAS, crudos, notas, strict=True))
     )
     pasos = "".join(f'<li style="--k:{i}">{p}</li>' for i, p in enumerate(PASOS_PROBLEMA))
-    pasos += f'<li class="horas" style="--k:{len(PASOS_PROBLEMA)}">horas o días por consulta</li>'
-    # el predio del héroe en la criba: ninguno de los linderos toca un área protegida ni un resguardo
-    assert K["heroe_codigo"] == EJEMPLO["predio"] and K["con_hallazgo"] == 0
+    pasos += f'<li class="horas" style="--k:{len(PASOS_PROBLEMA)}">horas o días por empresa</li>'
+    A = E["anios"]
+    pico = max(A, key=lambda a: a["ingresos"])
+    ult = A[-1]
+    tope = pico["ingresos"]
+    barras = "".join(
+        f'<div class="pb3-a" style="--k:{k}"><span class="v">{_cifra_b(a["ingresos"])}</span>'
+        f'<i class="ing" style="--h:{100 * a["ingresos"] / tope:.1f}%"><i class="gan" style="--h:{100 * a["ganancia"] / a["ingresos"]:.1f}%"></i></i>'
+        f'<span class="a">{a["a"]}</span></div>'
+        for k, a in enumerate(A)
+    )
     tal_cual = pit["tal_cual_M"]
     bien = round(pit["valor"] / 1_000_000)
     ancho = f"{100 * bien / tal_cual:.1f}%"
     return f"""<section class="seccion" id="problema"><div class="envoltura">
 <div class="con-fig inv-l pr3-sec">
-<figure class="fig-iso pr3" tabindex="0" role="group" aria-label="Cinco portales, una pregunta. Toca o pulsa Enter para repetir.">
-<p class="pr3-preg"><span>la pregunta</span>¿Qué restricciones tiene este lugar?</p>
+<figure class="fig-iso pr3" tabindex="0" role="group" aria-label="Tres portales, una pregunta sobre una empresa. Toca o pulsa Enter para repetir.">
+<p class="pr3-preg"><span>la pregunta · NIT {E["nit"]}</span>¿Le damos crédito a este proveedor?</p>
 <div class="pr3-esc">
-<div class="pr3-vent" aria-label="Los cinco portales">
+<div class="pr3-vent" aria-label="Los tres portales">
 {vent}
 </div>
 <ol class="pr3-pasos">
 {pasos}
 </ol>
-<p class="pr3-puerta" aria-hidden="true">las cinco fuentes, detrás de una puerta</p>
-<div class="consola pr3-con"><div class="turno">
-<p class="cr-tit">respuesta · Santa Marta, {PUNTO}</p>
-<dl>
-<dt>predio</dt><dd><span class="m m-copia"></span>{escape(EJEMPLO["estado"])} · {fila_turno(TURNO_PREDIO, "entidad")}</dd>
-<dt>protegidas</dt><dd><span class="m m-vacio"></span>ninguna · {nombre_entidad(CAT.fuentes["pnn.runap"].entidad)}</dd>
-<dt>resguardos</dt><dd><span class="m m-vacio"></span>ninguno · ANT</dd>
-<dt>bosque</dt><dd class="fuera"><span class="m m-fuera"></span>fuera de cobertura · SINCHI</dd>
-<dt>POT</dt><dd class="fuera"><span class="m m-fuera"></span>aún no está en el catálogo</dd>
-</dl>
-<p class="pie"><span>huella <b class="amb">{TURNO_PREDIO["huella"]}</b></span><span class="sello">una sola forma de respuesta</span></p>
-</div></div>
+<p class="pr3-puerta" aria-hidden="true">las tres, detrás de una puerta</p>
+<div class="pr3-res">
+<p class="pr3-et">la respuesta, en palabras</p>
+<p class="pr3-frase">{E["razon_social"]} tiene la matrícula <b>{E["estado"]}</b> en la Cámara de Comercio de {camara}, renovada en <b>{E["renovado"]}</b>.<span class="cita"><span class="m"></span>Confecámaras</span> La vigila la <b>{E["supervisor"]}</b>, y sus ingresos pasaron de <b>{_cifra_b(pico["ingresos"])}</b> billones de pesos en {pico["a"]} a <b>{_cifra_b(ult["ingresos"])}</b> en {ult["a"]}.<span class="cita"><span class="m"></span>Supersociedades</span></p>
+<div class="pb3" aria-hidden="true">{barras}</div>
+<p class="pb3-ley" aria-hidden="true"><span><i class="ing"></i>ingresos</span><span><i class="gan"></i>ganancia</span><span>billones de pesos, por año</span></p>
 </div>
-<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">cinco portales, cinco formas de llamar al mismo dato</span></span><span class="pista">toca la figura para repetir</span></figcaption>
+</div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">tres portales, tres formas de escribir el mismo NIT</span></span><span class="pista">toca la figura para repetir</span></figcaption>
 </figure>
 <div class="cab">
 <h2 class="t2">El dato público existe. Usarlo para decidir sigue costando semanas.</h2>
-<p class="entrada">Una sola pregunta recorre varios portales, cada uno con su formato, su corte y su licencia. Con Terrnova es una llamada, y vuelve con su prueba.</p>
+<p class="entrada">Una sola decisión recorre varios portales, cada uno con su formato, su corte y su licencia. Con Terrnova es una llamada, y vuelve en palabras, con quién dice cada cosa.</p>
 <ul class="lista-l">
-<li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
+<li><b>Un solo formato</b><span>{N_ENTIDADES} entidades. El NIT con o sin decimales, la fecha con o sin guiones: llega igual.</span></li>
 <li><b>Sin equipo propio</b><span>Si tu organización no tiene analistas ni desarrolladores, la solución la construimos nosotros.</span></li>
 <li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
 </ul>
@@ -1578,7 +1575,7 @@ def seccion_problema() -> str:
 </figure>
 </div>
 </div>
-<p class="fuente-dato pr3-fd">Entidades y nombres de campo: los del catálogo de Terrnova · predio: respuesta capturada el {TURNO_PREDIO["fecha"]} · áreas protegidas y resguardos: cruce con las copias del {dma(K["version"])} · los pasos y las horas no se miden</p>
+<p class="fuente-dato pr3-fd">{E["razon_social"]} (NIT {E["nit"]}), una sociedad · Confecámaras (RUES): respuestas capturadas el {dma(E["grabado_rues"])} y el {dma(E["grabado_est"])} · Supersociedades, las 10.000 empresas: capturada el {dma(E["grabado_super"])}, cifras en billones de pesos redondeadas por la fuente · los pasos y las horas no se miden</p>
 </div></section>"""
 
 
@@ -1739,34 +1736,9 @@ def seccion_servicios_portada() -> str:
     lista_fam = ", ".join(f"{f} {n}" for f, n in fams)
     lic_norma = fila_turno(TURNO_NORMA, "licencia").split(",")[0]
     return f"""<section class="seccion sup" id="servicios"><div class="envoltura" data-f3-sec>
-<div class="cab"><h2 class="t2">Lo que construimos para tu organización</h2>
-<p class="entrada">Analítica, desarrollo y automatización sobre la misma capa de datos. Un agente hace el trabajo, otro lo evalúa y una persona lo aprueba antes de que te llegue.</p></div>
+<div class="cab"><h2 class="t2">Cuatro decisiones, cada una con su prueba</h2>
+<p class="entrada">Lo que una organización decide cada semana, resuelto sobre la misma capa de datos con analítica, desarrollo y automatización. Un agente hace el trabajo, otro lo evalúa y una persona lo aprueba antes de que te llegue.</p></div>
 <div class="sv3">
-
-<article class="sv3-c" data-sv="expediente">
-<figure class="fig-iso ex3" data-f3="expediente" tabindex="0" role="group" aria-label="El expediente de un ítem. Toca o pulsa Enter para repetir.">
-<div class="ex3-escena f3-lienzo"><canvas role="img" aria-label="El predio {K["dudoso_corto"]} de Santa Marta, el dudoso de la criba, con sus vecinos. Salen sus cuatro preguntas, una por entidad, y cada una vuelve con su estado: {ents[0]}, ninguna área protegida; {ents[1]}, ningún resguardo; {ents[2]}, fuera de cobertura; IGAC, por revisar. El expediente se cierra con su huella."></canvas><div class="f3-rot" aria-hidden="true"></div></div>
-<ul class="ex3-filas">
-{chr(10).join(filas_ex)}
-</ul>
-<svg class="ex3-guias" aria-hidden="true"></svg>
-<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">expediente · {K["dudoso_corto"]} · huella {huella_ex}</span></span></figcaption>
-</figure>
-<div><p class="sv3-capa">Analítica</p><h4>Debida diligencia</h4><p>Cada ítem de tu lista vuelve con un expediente: qué respondió cada entidad y qué queda por revisar.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></div>
-</article>
-
-<article class="sv3-c" data-sv="cifra">
-<figure class="fig-iso ci3" tabindex="0" role="group" aria-label="Cuatro indicadores reales de {mun["nombre"]}, cada uno con su entidad y su corte. Toca o pulsa Enter para repetir.">
-<p class="ci3-mun">{mun["nombre"]} <span>{mun["divipola"]}</span></p>
-<div class="ci3-rej">
-{chr(10).join(cifras)}
-</div>
-<p class="ci3-aviso" aria-hidden="true">el {dn["entidad"]} publica el corte {dn["corte"]}</p>
-<div class="consola ci3-tip" aria-hidden="true"><dl></dl></div>
-<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lect_cifra}</span></span><span class="pista">pasa el puntero por las cifras</span></figcaption>
-</figure>
-<div><p class="sv3-capa">Analítica</p><h4>Tableros e informes</h4><p>Cada cifra con la entidad que la publica y el corte al que pertenece; cuando sale un corte nuevo, el anterior queda a la vista.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div>
-</article>
 
 <article class="sv3-c" data-sv="bitacora">
 <figure class="fig-iso bi3" tabindex="0" role="group" aria-label="La bitácora de un contrato de SECOP II, día por día, {lapso}. Toca o pulsa Enter para repetir.">
@@ -1783,7 +1755,7 @@ def seccion_servicios_portada() -> str:
 <p class="pie"><span>{len(B["mods"])} registros, completos</span><span class="sello">capturado el {dma(B["grabado"])}</span></p></div></div>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{dma(clave["f"])}: prórroga de {clave["dias"]} días</span></span><span class="pista">reconstruida del registro de modificaciones del contrato</span></figcaption>
 </figure>
-<div><p class="sv3-capa">Automatización</p><h4>Vigilancia y alertas</h4><p>Lo que sigues se revisa cada día; casi siempre no pasa nada, y el día que cambia llega el aviso con el antes y el después.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div>
+<div><p class="sv3-capa">Contratación · automatización</p><h4>¿Qué cambió en el contrato?</h4><p>Lo que sigues se revisa cada día; casi siempre no pasa nada, y el día que cambia llega el aviso con el antes y el después.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div>
 </article>
 
 <article class="sv3-c" data-sv="indice">
@@ -1799,7 +1771,32 @@ def seccion_servicios_portada() -> str:
 <p class="pie"><span>huella <b>{TURNO_NORMA["huella"]}</b></span><span class="sello">capturado el {TURNO_NORMA["fecha"]}</span></p></div>
 <figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{N_HERR} herramientas, {n_fam} familias</span></span><span class="pista">pasa el puntero por las rayas</span></figcaption>
 </figure>
-<div><p class="sv3-capa">Desarrollo</p><h4>Asistentes y aplicaciones</h4><p>Hechos para tu equipo: saben qué entidad responde cada pregunta y la citan en la respuesta.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div>
+<div><p class="sv3-capa">Legal · desarrollo</p><h4>¿Sigue vigente esta ley?</h4><p>Un asistente hecho para tu equipo: sabe qué entidad responde cada pregunta y la cita en la respuesta.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div>
+</article>
+
+<article class="sv3-c" data-sv="cifra">
+<figure class="fig-iso ci3" tabindex="0" role="group" aria-label="Cuatro indicadores reales de {mun["nombre"]}, cada uno con su entidad y su corte. Toca o pulsa Enter para repetir.">
+<p class="ci3-mun">{mun["nombre"]} <span>{mun["divipola"]}</span></p>
+<div class="ci3-rej">
+{chr(10).join(cifras)}
+</div>
+<p class="ci3-aviso" aria-hidden="true">el {dn["entidad"]} publica el corte {dn["corte"]}</p>
+<div class="consola ci3-tip" aria-hidden="true"><dl></dl></div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lect_cifra}</span></span><span class="pista">pasa el puntero por las cifras</span></figcaption>
+</figure>
+<div><p class="sv3-capa">Gobierno · analítica</p><h4>¿Cómo va el municipio?</h4><p>Un tablero donde cada cifra dice qué entidad la publica y de qué corte es; cuando sale uno nuevo, el anterior queda a la vista.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div>
+</article>
+
+<article class="sv3-c" data-sv="expediente">
+<figure class="fig-iso ex3" data-f3="expediente" tabindex="0" role="group" aria-label="El expediente de un ítem. Toca o pulsa Enter para repetir.">
+<div class="ex3-escena f3-lienzo"><canvas role="img" aria-label="El predio {K["dudoso_corto"]} de Santa Marta, el dudoso de la criba, con sus vecinos. Salen sus cuatro preguntas, una por entidad, y cada una vuelve con su estado: {ents[0]}, ninguna área protegida; {ents[1]}, ningún resguardo; {ents[2]}, fuera de cobertura; IGAC, por revisar. El expediente se cierra con su huella."></canvas><div class="f3-rot" aria-hidden="true"></div></div>
+<ul class="ex3-filas">
+{chr(10).join(filas_ex)}
+</ul>
+<svg class="ex3-guias" aria-hidden="true"></svg>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">expediente · {K["dudoso_corto"]} · huella {huella_ex}</span></span></figcaption>
+</figure>
+<div><p class="sv3-capa">Territorio · analítica</p><h4>¿Puedo comprar este lote?</h4><p>Cada lote de tu lista vuelve con un expediente: qué respondió cada entidad y qué queda por revisar.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></div>
 </article>
 
 </div>
@@ -1973,11 +1970,7 @@ def inicio() -> str:
 
 {seccion_prueba()}
 
-{seccion_motor()}
-
 {seccion_servicios_portada()}
-
-{seccion_cobertura()}
 
 {seccion_como()}
 
@@ -1988,6 +1981,8 @@ def inicio() -> str:
 </div>
 {sectores()}
 </div></section>
+
+{seccion_cobertura()}
 
 <section class="seccion" id="no-hacemos"><div class="envoltura">
 <div class="cab"><h2 class="t2">Qué no hacemos</h2></div>
