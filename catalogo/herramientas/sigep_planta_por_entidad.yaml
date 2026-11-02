@@ -1,11 +1,12 @@
 id: sigep_planta_por_entidad
-version: 1
+version: 2
 familia: estadisticas
 fuente: funcionpublica.sigep_servidores
 pregunta: "¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico?"
 descripcion: >
   Número de servidores públicos activos de una entidad del Estado (por su código SIGEP), desglosado
-  por nivel jerárquico del empleo y ordenado de mayor a menor. Son agregados de planta: no se expone
+  por nivel jerárquico del empleo y ordenado de mayor a menor, con el nombre de la entidad y el total. No cuenta al personal uniformado.
+  El código se busca por nombre con sigep_entidades_buscar. Son agregados de planta: no se expone
   ningún dato de persona (ADR-0014).
   (Fuente: Función Pública (SIGEP); licencia: CC BY-SA 4.0.)
 entrada: {codigo_entidad: codigo_sigep}
@@ -16,7 +17,7 @@ consulta:
   argumentos:
     id: 2jzx-383z
     portal: datos.gov.co
-    select: "niveljerarquicoempleo, count(*) AS servidores"
+    select: "niveljerarquicoempleo, count(*) AS servidores, max(nombreentidad) AS entidad"
     where: "codigosigep = '{codigo_entidad}'"
     group: "niveljerarquicoempleo"
     order: "servidores DESC"
@@ -25,11 +26,15 @@ consulta:
 salida: PlantaEntidadNivel
 derivados:
   servidores: {de: columna, campo: servidores, tipo: int}
+  # La entidad tiene un solo nombre (medido el 2026-11-02: ningún código tiene dos).
+  entidad: {de: columna, campo: entidad}
+  nombre_entidad: {de: primero, campo: entidad}
+  total_servidores: {de: suma, campo: servidores, tipo: int}
 cobro: agregado
 canario:
   # Medido el 2026-10-26 en 2jzx-383z: la Fiscalía (codigosigep 6194) tiene 22 435 servidores;
   # el nivel con más (orden desc) es TÉCNICO con 13 963.
   entrada: {codigo_entidad: "6194"}
-  verdad: {nivel_jerarquico: "TÉCNICO", servidores: 13963}
-  campos: [nivel_jerarquico, servidores]
+  verdad: {nivel_jerarquico: "TÉCNICO", servidores: 13963, nombre_entidad: "FISCALIA GENERAL DE LA NACION", total_servidores: 22435}
+  campos: [entidad, nivel_jerarquico, nombre_entidad, servidores, total_servidores]
   latencia_max_ms: 15000

@@ -1,0 +1,63 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T22:48:40+00:00",
+ "herramienta": "sigep_entidades_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "codigosigep, nombreentidad, orden",
+    "id": "2jzx-383z",
+    "max_filas": 50,
+    "order": "length(nombreentidad), nombreentidad",
+    "portal": "datos.gov.co",
+    "select": "codigosigep, nombreentidad, orden, count(*) AS servidores",
+    "where": "upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "codigosigep",
+       "nombreentidad",
+       "orden",
+       "servidores"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "codigosigep": "6194",
+        "nombreentidad": "FISCALIA GENERAL DE LA NACION",
+        "orden": "NACIONAL",
+        "servidores": "22435"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "2jzx-383z",
+     "consulta": {
+      "conjunto": "2jzx-383z",
+      "group": "codigosigep, nombreentidad, orden",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "codigosigep, nombreentidad, orden, count(*) AS servidores",
+      "where": "(upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'))"
+     },
+     "filas": 1,
+     "filas_que_resume": 22435,
+     "filtro_soql": "(upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}

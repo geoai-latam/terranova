@@ -188,6 +188,11 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - El 96 % de las filas con código real tiene nombre.
   - El catálogo suma listas de códigos compartidas (`catalogo/codigos/`, `codigos_lista`). La de la
     CIIU la arma `scripts/codigos_ciiu.py`.
+- **SIGEP, la entidad con nombre (patrón C):**
+  - Nueva `sigep_entidades_buscar`: de «Fiscalía» al código 6194 y de «Alcaldía de Chía» al 0346,
+    sin importar las tildes. Si no encuentra, avisa que el SIGEP no trae a todo el Estado.
+  - `sigep_planta_por_entidad` (v2) dice el nombre de la entidad y el total de servidores.
+  - Medido: el SIGEP no trae la Rama Judicial ni Ecopetrol, ni al personal uniformado.
 
 ## Ficha de un lote (2026-11-01)
 

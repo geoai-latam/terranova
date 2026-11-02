@@ -1,0 +1,44 @@
+id: sigep_entidades_buscar
+version: 1
+familia: estadisticas
+fuente: funcionpublica.sigep_servidores
+pregunta: "¿Cuál es el código SIGEP de esta entidad pública?"
+descripcion: >
+  Busca entidades del Estado en el SIGEP de Función Pública por una parte de su nombre (p. ej.
+  «Fiscalía», «Alcaldía de Chía»), sin importar mayúsculas ni tildes: código SIGEP, nombre, orden
+  (nacional o territorial) y servidores activos (sin personal uniformado: el Ejército sale con sus civiles). Hasta 50, el nombre más corto primero. El código
+  sirve para sigep_planta_por_entidad. Solo agregados: ningún dato de persona (ADR-0014).
+  (Fuente: Función Pública (SIGEP); licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 2jzx-383z
+    portal: datos.gov.co
+    select: "codigosigep, nombreentidad, orden, count(*) AS servidores"
+    # La fuente escribe los nombres en mayúsculas y sin tildes («FISCALIA GENERAL DE LA NACION»):
+    # se le quitan las tildes a lo que escribe la persona. Medido el 2026-11-02: «Fiscalía» da 6194.
+    where: "upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%{nombre}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U')"
+    group: "codigosigep, nombreentidad, orden"
+    order: "length(nombreentidad), nombreentidad"
+    max_filas: 50
+  campos: [codigosigep, nombreentidad, orden]
+salida: SigepEntidadesBuscar
+derivados:
+  servidores: {de: columna, campo: servidores, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna entidad del SIGEP tiene ese texto en el nombre. El SIGEP no trae a todo el Estado: no
+    están la Rama Judicial ni empresas como Ecopetrol. Los nombres van completos y sin tildes
+    («ALCALDIA DE CHIA»): pruebe con una parte más corta, p. ej. «Chía».
+cobro: agregado
+canario:
+  # Medido el 2026-11-02 en 2jzx-383z: «Fiscalía» da una sola entidad, la 6194, con 22 435 servidores.
+  entrada: {nombre: "Fiscalía"}
+  verdad: {codigo_entidad: "6194", nombre_entidad: "FISCALIA GENERAL DE LA NACION", orden: NACIONAL, numero_registros: 1}
+  campos: [codigo_entidad, nombre_entidad, numero_registros, orden, servidores]
+  latencia_max_ms: 15000

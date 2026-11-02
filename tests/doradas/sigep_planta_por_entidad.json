@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-26T12:32:00+00:00",
+ "grabado": "2026-11-02T22:48:42+00:00",
  "herramienta": "sigep_planta_por_entidad",
  "llamadas": [
   {
@@ -10,7 +10,7 @@
     "max_filas": 200,
     "order": "servidores DESC",
     "portal": "datos.gov.co",
-    "select": "niveljerarquicoempleo, count(*) AS servidores",
+    "select": "niveljerarquicoempleo, count(*) AS servidores, max(nombreentidad) AS entidad",
     "where": "codigosigep = '6194'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,28 +18,34 @@
     "artifacts": [
      {
       "columns": [
+       "entidad",
        "niveljerarquicoempleo",
        "servidores"
       ],
       "kind": "table",
       "rows": [
        {
+        "entidad": "FISCALIA GENERAL DE LA NACION",
         "niveljerarquicoempleo": "TÉCNICO",
         "servidores": "13963"
        },
        {
+        "entidad": "FISCALIA GENERAL DE LA NACION",
         "niveljerarquicoempleo": "PROFESIONAL",
         "servidores": "6377"
        },
        {
+        "entidad": "FISCALIA GENERAL DE LA NACION",
         "niveljerarquicoempleo": "ASISTENCIAL",
         "servidores": "1952"
        },
        {
+        "entidad": "FISCALIA GENERAL DE LA NACION",
         "niveljerarquicoempleo": "ASESOR",
         "servidores": "82"
        },
        {
+        "entidad": "FISCALIA GENERAL DE LA NACION",
         "niveljerarquicoempleo": "DIRECTIVO",
         "servidores": "61"
        }
@@ -59,7 +65,7 @@
       "group": "niveljerarquicoempleo",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "niveljerarquicoempleo, count(*) AS servidores",
+      "select": "niveljerarquicoempleo, count(*) AS servidores, max(nombreentidad) AS entidad",
       "where": "(codigosigep = '6194')"
      },
      "filas": 5,
