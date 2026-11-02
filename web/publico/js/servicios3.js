@@ -69,8 +69,8 @@ function bitacora(el, P) {
   const B = P.bitacora, cal = el.querySelector('.bi3-cal');
   const porDia = {};
   B.mods.forEach(m => { (porDia[m.f] = porDia[m.f] || []).push(m); });
-  // el día clave: la modificación publicada que más alarga el contrato
-  const clave = B.mods.filter(m => m.estado === 'Publicado').reduce((a, m) => (m.dias > a.dias ? m : a));
+  // el día clave: la última prórroga publicada (la del aviso)
+  const clave = B.mods.filter(m => m.estado === 'Publicado' && m.dias > 0).reduce((a, m) => (m.f > a.f ? m : a));
   const CLAVE = clave.f, txtClave = `${fecha(clave.f)}: prórroga de ${clave.dias} días`;
   // del mes del primer registro al del último
   const f0 = B.mods[0].f, f1 = B.mods[B.mods.length - 1].f, a1 = +f1.slice(0, 4), m1 = +f1.slice(5, 7);

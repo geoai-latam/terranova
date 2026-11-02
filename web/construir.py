@@ -1720,9 +1720,9 @@ def seccion_servicios_portada() -> str:
     dn = ind[i_nuevo]
     lect_cifra = f"IRCA de {mun['nombre']}: {_valor(dn, dn['antes'])} en {dn['corte_antes']}, {_valor(dn, dn['v'])} en {dn['corte']} · {dn['entidad']}"
     grabados = sorted(d["grabado"] for d in ind)
-    # la bitácora: la modificación publicada que más alarga el contrato
+    # la bitácora: la última prórroga publicada (el aviso que llegaría hoy, con su antes y después)
     pub = [m for m in B["mods"] if m["estado"] == "Publicado"]
-    clave = max(pub, key=lambda m: m["dias"])
+    clave = max((m for m in pub if m["dias"] > 0), key=lambda m: m["f"])
     antes = sum(m["dias"] for m in pub if m["f"] < clave["f"])
     num = re.search(r"Consultor[ií]a N\S* (\d+-\d{4})", " ".join(m["prop"] for m in B["mods"]))
     assert num, "el registro ya no nombra el número del contrato"
