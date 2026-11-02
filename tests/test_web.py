@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
 RAIZ = Path(__file__).resolve().parent.parent
 PUBLICO = RAIZ / "web" / "publico"
@@ -169,7 +170,11 @@ def test_figuras_isometricas_al_dia_y_verdaderas() -> None:
         for capa in ("", "-viva"):  # la capa fija (<img>) y la viva (en línea)
             svg = (PUBLICO / "img" / "figuras" / f"{nombre}{capa}.svg").read_text(encoding="utf-8")
             assert f'data-datos="{huella}"' in svg, f"{nombre}{capa}.svg no está al día"
-        assert f'data-figura="{nombre}"' in html, f"ninguna página usa la figura {nombre}"
+        if nombre in construir.FIGURAS_SOLO_OG:  # solo la imagen para compartir (web/og.py)
+            og = (RAIZ / "web" / "og.py").read_text(encoding="utf-8")
+            assert f'"{nombre}"' in og, f"{nombre}: ni una página ni una imagen la usan"
+        else:
+            assert f'data-figura="{nombre}"' in html, f"ninguna página usa la figura {nombre}"
     ids = {h.id for h in construir.HERR}
     turnos = datos["ruta"]["turnos"]
     assert {t["herramienta"] for t in turnos} <= ids
@@ -251,3 +256,123 @@ def test_ninguna_pagina_usa_de_ejemplo_una_herramienta_sin_canario_verde() -> No
         texto = re.sub(r"<[^>]+>", " ", (PUBLICO / pagina).read_text(encoding="utf-8"))
         for ejemplo in ("TRM", "Saber 11", "dólar", "BanRep"):
             assert ejemplo not in texto, f"{pagina} usa de ejemplo {ejemplo}"
+
+
+MODULOS_PORTADA = PUBLICO / "js"
+
+
+def _portada() -> tuple[str, str, dict[str, Any]]:
+    import json
+
+    sys.path.insert(0, str(RAIZ / "web"))
+    import construir  # web/ no es un paquete
+
+    html = (PUBLICO / "index.html").read_text(encoding="utf-8")
+    js = "".join(
+        (MODULOS_PORTADA / m).read_text(encoding="utf-8") for m in construir.MODULOS_PORTADA
+    )
+    datos = json.loads((PUBLICO / "datos" / "portada.json").read_text(encoding="utf-8"))
+    return html, js, datos
+
+
+def test_portada_solo_nombra_herramientas_vendibles_y_sin_dane() -> None:
+    # Las figuras de la portada (HTML, módulos y portada.json) no nombran herramientas del catálogo
+    # que no se venden, ni una sin canario en verde, ni el DANE (decisión del dueño del 01-11-2026).
+    import json
+
+    html, js, datos = _portada()
+    import construir  # ya en sys.path (_portada)
+
+    vendibles = {h.id for h in construir.HERR}
+    texto = html + js + json.dumps(datos, ensure_ascii=False)
+    for hid in set(re.findall(r"\b[a-z0-9]+(?:_[a-z0-9]+)+\b", texto)) & set(
+        construir.CAT.herramientas
+    ):
+        assert hid in vendibles, f"la portada nombra {hid}, que no se vende"
+        assert hid not in construir.SIN_CANARIO_VERDE, f"la portada usa {hid}, sin canario verde"
+    assert not re.search(r"\bDANE\b", texto), "la portada nombra el DANE"
+    assert {d["tool"] for d in datos["indicadores"]} <= vendibles
+
+
+def test_cifras_de_la_portada_salen_del_catalogo_y_de_los_datos() -> None:
+    # Cada cifra de la portada sale del catálogo, de las respuestas capturadas o de portada.json;
+    # los módulos no traen cifras escritas a mano (las leen de la página o de los datos).
+    import json
+
+    html, js, datos = _portada()
+    import construir  # ya en sys.path (_portada)
+
+    texto = re.sub(r"<[^>]+>", " ", html)
+    assert f"{construir.N_ENTIDADES} entidades" in texto
+    assert f"{construir.N_VERIFICADAS} verificadas" in texto
+    assert f"{construir.N_HERR} herramientas" in texto
+    for k, n in construir.POR_FAMILIA.items():
+        assert f"{construir.FAMILIAS[k]} {n}" in html, f"la familia {k} no dice {n}"
+    K = datos["criba"]
+    sm = json.loads((PUBLICO / "datos" / "sm.json").read_text(encoding="utf-8"))
+    assert K["n"] == len(sm["polys"]) and K["heroe_codigo"] == sm["codes"][sm["obj"]]
+    rev = len(K["revision"])
+    assert f"{construir.miles(K['n'] - rev)} despejados" in texto and f"{rev} a revisión" in texto
+    co = json.loads(construir.CO_JSON.read_text(encoding="utf-8"))
+    assert f"{construir.miles(sum(n for *_, n in co['bins']))} predios de la muestra" in texto
+    for cifra in (
+        f"{construir.N_HERR} herramientas",
+        f"{construir.N_ENTIDADES} entidades",
+        construir.miles(K["n"]),
+        f"{rev} a revisión",
+    ):
+        assert cifra not in js, f"un módulo de la portada escribe a mano «{cifra}»"
+
+
+def test_portada_json_sin_datos_de_personas() -> None:
+    # portada.json lleva predios (sin dueño), cifras municipales, el registro de un contrato y las
+    # áreas protegidas y resguardos cercanos: ningún campo de persona natural (ADR-0014).
+    _, _, datos = _portada()
+    claves: set[str] = set()
+
+    def recorrer(x: object) -> None:
+        if isinstance(x, dict):
+            claves.update(x)
+            for v in x.values():
+                recorrer(v)
+        elif isinstance(x, list):
+            for v in x:
+                recorrer(v)
+
+    recorrer(datos)
+    personas = {
+        "cedula",
+        "documento",
+        "contratista",
+        "proveedor",
+        "representante",
+        "propietario",
+        "titular",
+        "persona",
+        "correo",
+        "telefono",
+        "direccion",
+    }
+    assert not {c for c in claves if any(p in c.lower() for p in personas)}, claves
+    # el único «nombre» es el de las áreas protegidas y resguardos cercanos
+    for c in datos["criba"]["cercanas"]:
+        assert c["tipo"] in ("area_protegida", "resguardo_indigena")
+    sin_cercanas = dict(datos, criba={k: v for k, v in datos["criba"].items() if k != "cercanas"})
+    recorrer_nombres: list[str] = []
+
+    def nombres(x: object) -> None:
+        if isinstance(x, dict):
+            recorrer_nombres.extend(k for k in x if k == "nombre")
+            for v in x.values():
+                nombres(v)
+        elif isinstance(x, list):
+            for v in x:
+                nombres(v)
+
+    nombres(sin_cercanas["criba"])
+    nombres(sin_cercanas["bitacora"])
+    assert not recorrer_nombres
+    import json
+
+    texto = json.dumps(datos, ensure_ascii=False)
+    assert not re.search(r"\b(?:C\.?C\.?|c[eé]dula)\s*(?:n[o°.]*\s*)?\d", texto, re.IGNORECASE)

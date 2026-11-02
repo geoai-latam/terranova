@@ -1150,6 +1150,9 @@ NOMBRES_FIGURAS = (
     "asistente",
     "cobertura",
 )
+# La ruta y la prueba ya no van en ninguna página (la portada las cuenta en 3D, js/fig-*.js): las
+# siguen usando las imágenes para compartir (web/og.py), por eso se siguen construyendo.
+FIGURAS_SOLO_OG = ("ruta", "prueba")
 
 
 def figura(
@@ -1199,15 +1202,6 @@ def figura_capas() -> str:
         "capas",
         f"datos · {d['fuentes']} fuentes · {d['herramientas']} herramientas",
         "pasa el puntero por los módulos",
-    )
-
-
-def figura_ruta() -> str:
-    t0 = datos_figuras()["ruta"]["turnos"][0]
-    return figura(
-        "ruta",
-        f"{escape(t0['corta'])} → {t0['entidad']}",
-        "flechas o puntero: otra pregunta",
     )
 
 
@@ -1278,17 +1272,6 @@ def servicio_fila(s: dict, i: int) -> str:
     )
 
 
-def servicios_landing() -> str:
-    """En la portada, los cuatro servicios en una franja: la figura pequeña, el título y el enlace."""
-    celdas = "".join(
-        f'<article class="serv-c">{figura_servicio(str(s["id"]), sello=False)}'
-        f"<div><h4>{con_sello(s['titulo']) if s['id'] != 'asistente' else s['titulo']}</h4>"
-        f'<a class="enlace" href="/servicios#{s["id"]}">Ver el servicio</a></div></article>'
-        for s in SERVICIOS
-    )
-    return f'<div class="servs-c">{celdas}</div>'
-
-
 # Las capas de la prueba: la respuesta real del predio de Santa Marta (correos.EJEMPLO, la misma
 # del héroe y de /desarrolladores), comprobada contra EJEMPLO.
 CAPAS_PRUEBA = [
@@ -1314,22 +1297,6 @@ NOTAS_PRUEBA = [
     ("De dónde salió", "En vivo o de una copia oficial, con su fecha."),
     ("Huella", "Para comprobar en una auditoría que no cambió."),
 ]
-
-
-def prueba_html() -> str:
-    notas = "".join(
-        f'<li data-capa="{i}"><b>{t}</b><span>{d}</span></li>'
-        for i, (t, d) in enumerate(NOTAS_PRUEBA)
-    )
-    d0 = CAPAS_PRUEBA[0]
-    fig = figura("prueba", f"{d0[0]} · {d0[1]}", "pasa el puntero por las pestañas")
-    return f"""<div class="con-fig inv-l prueba">
-{fig}
-<div class="cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
-<p class="entrada">Lo que necesitas para defender una decisión va dentro de la respuesta, no en un anexo.</p>
-<ul class="lista-l notas-p">{notas}</ul>
-<p class="fuente-dato">El predio del mapa de arriba, IGAC SINIC · <span class="sello">respuesta capturada el 01-11-2026</span></p></div>
-</div>"""
 
 
 def pesos(n: int) -> str:
@@ -1467,6 +1434,465 @@ def faq_html() -> str:
     )
 
 
+# ---------------------------------------------------------------------------------------------
+# La portada: «el dato es la figura» (DISENO.md). Cada figura muestra un dato real con su prueba:
+# el problema (cinco portales para una pregunta), la prueba (las tres capas del predio del héroe),
+# el motor (la criba de los 1.335 linderos del SINIC alrededor de ese predio), los servicios (un
+# expediente, una cifra con su corte, la bitácora de un contrato y el índice del catálogo), la
+# cobertura del SINIC y las tres formas de usarlo. Los números salen del catálogo, de las respuestas
+# capturadas (TURNOS, correos.EJEMPLO) y de datos/portada.json, que prepara web/portada_datos.py con
+# copias locales (sin consultas a la fuente). Las figuras las mueven los módulos de MODULOS_PORTADA.
+PORTADA_JSON = PUBLICO / "datos" / "portada.json"
+
+
+def datos_portada() -> dict:
+    return json.loads(PORTADA_JSON.read_text(encoding="utf-8"))
+
+
+def coma(x: float) -> str:
+    """Decimal con coma, sin ceros de más: 3.36 → «3,36», 3.6 → «3,6»."""
+    return f"{x:g}".replace(".", ",")
+
+
+def dma(iso: str) -> str:
+    """AAAA-MM-DD → DD-MM-AAAA, como fecha el sitio."""
+    return f"{iso[8:10]}-{iso[5:7]}-{iso[:4]}"
+
+
+def corto_predio(codigo: str) -> str:
+    return f"{codigo[:5]}…{codigo[-4:]}"
+
+
+TURNO_PREDIO = TURNOS[0]
+assert TURNO_PREDIO["herr"] == EJEMPLO["herramienta"] == "sinic_predio_en_punto"
+TURNO_NORMA = TURNOS[2]
+assert TURNO_NORMA["herr"] == "suin_norma"
+PRED = corto_predio(EJEMPLO["predio"])
+COPIA_SINIC = CAPAS_PRUEBA[3][1]  # «copia del 28-10-2026», comprobada contra EJEMPLO
+_m_punto = re.search(r"en ([\d,]+ N, [\d,]+ W)", TURNO_PREDIO["pregunta"])
+assert _m_punto, "la pregunta del predio ya no trae su punto"
+PUNTO = _m_punto.group(1)
+
+
+def fila_turno(t: dict, clave: str) -> str:
+    return dict(t["filas"])[clave]
+
+
+# Los cinco portales del problema: fuente del catálogo, título, campos tal como los publica la
+# fuente (deben existir en su ficha) y una nota. El POT municipal no está en el catálogo.
+VENTANAS = [
+    (
+        "igac.sinic_terreno",
+        "IGAC · SINIC",
+        ["numero_predial_nacional"],
+        "una base por gestor catastral",
+    ),
+    (
+        "pnn.runap",
+        "Parques Nacionales · RUNAP",
+        ["ap_nombre", "fecha_inscrita"],
+        "categorías del SINAP, inscritas",
+    ),
+    (
+        "ant.resguardos_indigenas",
+        "Agencia Nacional de Tierras",
+        ["NOMBRE", "ULTIMA_FECHA_ACTO_ADMIN"],
+        "servicio de mapas, campos en mayúsculas",
+    ),
+    ("sinchi.perdida_bosque", "SINCHI", ["deforestacion"], "solo la Amazonia"),
+]
+_PUBLICADAS_IDS = {f.id for f in PUBLICADAS}
+for _fid, _tit, _campos, _ in VENTANAS:
+    assert _fid in _PUBLICADAS_IDS, f"{_fid} no está publicada"
+    _f = CAT.fuentes[_fid]
+    assert _tit.split(" · ")[0] == nombre_entidad(_f.entidad), (_fid, nombre_entidad(_f.entidad))
+    _todos = set(_f.campos or {}) | set(getattr(_f.copia, "indices", None) or [])
+    assert all(c in _todos or c.upper() in _todos for c in _campos), f"{_fid}: campos {_campos}"
+PASOS_PROBLEMA = [
+    "encontrar quién publica",
+    "descubrir el servicio",
+    "pelear con la paginación",
+    "recortar y cruzar a mano",
+    "repetir cada vez",
+]
+
+
+def seccion_problema() -> str:
+    P = datos_portada()
+    K, pit = P["criba"], P["pitalito"]
+    vent = "".join(
+        f'<div class="v" style="--k:{i}"><b>{t}</b><code>{" · ".join(c)}</code><i>{n}</i></div>'
+        for i, (_, t, c, n) in enumerate(VENTANAS)
+    )
+    vent += (
+        f'<div class="v" style="--k:{len(VENTANAS)}"><b>Planeación municipal</b>'
+        "<code>el POT, en documento</code><i>sin campos que consultar</i></div>"
+    )
+    pasos = "".join(f'<li style="--k:{i}">{p}</li>' for i, p in enumerate(PASOS_PROBLEMA))
+    pasos += f'<li class="horas" style="--k:{len(PASOS_PROBLEMA)}">horas o días por consulta</li>'
+    # el predio del héroe en la criba: ninguno de los linderos toca un área protegida ni un resguardo
+    assert K["heroe_codigo"] == EJEMPLO["predio"] and K["con_hallazgo"] == 0
+    tal_cual = pit["tal_cual_M"]
+    bien = round(pit["valor"] / 1_000_000)
+    ancho = f"{100 * bien / tal_cual:.1f}%"
+    return f"""<section class="seccion" id="problema"><div class="envoltura">
+<div class="con-fig inv-l pr3-sec">
+<figure class="fig-iso pr3" tabindex="0" role="group" aria-label="Cinco portales, una pregunta. Toca o pulsa Enter para repetir.">
+<p class="pr3-preg"><span>la pregunta</span>¿Qué restricciones tiene este predio?</p>
+<div class="pr3-esc">
+<div class="pr3-vent" aria-label="Los cinco portales">
+{vent}
+</div>
+<ol class="pr3-pasos">
+{pasos}
+</ol>
+<p class="pr3-puerta" aria-hidden="true">las cinco fuentes, detrás de una puerta</p>
+<div class="consola pr3-con"><div class="turno">
+<p class="cr-tit">respuesta · predio {PRED}</p>
+<dl>
+<dt>predio</dt><dd><span class="m m-copia"></span>{escape(EJEMPLO["estado"])} · {fila_turno(TURNO_PREDIO, "entidad")}</dd>
+<dt>protegidas</dt><dd><span class="m m-vacio"></span>ninguna · {nombre_entidad(CAT.fuentes["pnn.runap"].entidad)}</dd>
+<dt>resguardos</dt><dd><span class="m m-vacio"></span>ninguno · ANT</dd>
+<dt>bosque</dt><dd class="fuera"><span class="m m-fuera"></span>fuera de cobertura · SINCHI</dd>
+<dt>POT</dt><dd class="fuera"><span class="m m-fuera"></span>aún no está en el catálogo</dd>
+</dl>
+<p class="pie"><span>huella <b class="amb">{TURNO_PREDIO["huella"]}</b></span><span class="sello">una sola forma de respuesta</span></p>
+</div></div>
+</div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">cinco portales, cinco formas de llamar al mismo dato</span></span><span class="pista">toca la figura para repetir</span></figcaption>
+</figure>
+<div class="cab">
+<h2 class="t2">Cada pregunta sobre un lugar recorre cinco portales</h2>
+<p class="entrada">Hacerlo a mano es pelear con cada portal. Con Terrnova es una llamada, y vuelve con su prueba.</p>
+<ul class="lista-l">
+<li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
+<li><b>Catastro vigente</b><span>El corte vigente, revisado aunque la fuente cambie de nombre cada mes.</span></li>
+<li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
+</ul>
+<figure class="bc3" aria-label="Pitalito, 2025: {miles(tal_cual)} millones sumando SECOP tal cual; {miles(bien)} millones contando cada contrato una vez, {miles(pit["contratos"])} contratos.">
+<div class="bc3-f"><span class="k">SECOP tal cual</span><i class="b tal" style="--w:100%"></i><b>${miles(tal_cual)} M</b></div>
+<div class="bc3-f"><span class="k">contado una vez</span><i class="b una" style="--w:{ancho}"></i><b>${miles(bien)} M</b></div>
+<figcaption class="fuente-dato">Pitalito, 2025 · {miles(pit["contratos"])} contratos en SECOP II · perfil de la fuente del {dma(pit["perfil"])}, respuesta capturada el {dma(pit["grabado"])}</figcaption>
+</figure>
+</div>
+</div>
+<p class="fuente-dato pr3-fd">Entidades y nombres de campo: los del catálogo de Terrnova · predio: respuesta capturada el {TURNO_PREDIO["fecha"]} · áreas protegidas y resguardos: cruce con las copias del {dma(K["version"])} · los pasos y las horas no se miden</p>
+</div></section>"""
+
+
+def seccion_prueba() -> str:
+    filas = []
+    grupos = [
+        ("r", "estado", "estado"),
+        ("r", "predial", "predial"),
+        ("r", "destinacion", "destinación"),
+        ("c", "servido", "servido"),
+        ("f", "entidad", "entidad"),
+        ("f", "licencia", "licencia"),
+    ]
+    for g, k, et in grupos:
+        v = PRED if k == "predial" else fila_turno(TURNO_PREDIO, et)
+        filas.append(f'<dt data-g="{g}" data-k="{k}">{et}</dt><dd>{v}</dd>')
+    notas = "".join(
+        f'<li data-p="{i}"><b>{t}</b><span>{d}</span></li>' for i, (t, d) in enumerate(NOTAS_PRUEBA)
+    )
+    lic = licencia_corta(EJEMPLO["licencia"])
+    destino = fila_turno(TURNO_PREDIO, "destinación").split(",")[0].lower()
+    final = f"predio {PRED} · {COPIA_SINIC} · IGAC SINIC · {lic}"
+    return f"""<section class="seccion sup" id="prueba"><div class="envoltura" data-f3-sec>
+<div class="p3-cab"><h2 class="t2">Cada respuesta trae su prueba</h2>
+<p class="entrada">Lo que necesitas para defender una decisión va dentro de la respuesta, no en un anexo.</p></div>
+<figure class="fig-iso p3" data-f3="prueba" data-predio="{PRED}" data-copia="{COPIA_SINIC}" data-punto="{PUNTO}" data-destino="{destino}">
+<div class="p3-escena lienzo" tabindex="0" role="group" aria-label="La prueba de una respuesta, en tres capas. Toca o pulsa Enter para repetir.">
+<canvas role="img" aria-label="Tres capas reales del mismo lote de Santa Marta, apiladas: abajo la fuente, el catastro del IGAC (SINIC) con sus linderos; en medio la {COPIA_SINIC.replace("copia", "copia de consulta")}; arriba el resultado, solo el predio {PRED}. La fuente va en trazo, como se publica; la copia, sólida y con su fecha. Una sonda baja por el punto {PUNTO}, el lindero del predio se enciende en la copia, la copia se ata a su fuente y el predio real sube. Un hilo ámbar baja del predio a la copia y de la copia a la fuente: la cadena de la prueba. Al lado, la respuesta se llena campo por campo, cada uno con una guía a la capa que lo prueba. La separación entre capas y las alturas son simbólicas."></canvas>
+<div class="p3-rot" aria-hidden="true"><span class="p3-capa" data-capa="r"><b><span class="l">Resultado</span></b><i>predio {PRED}</i></span><span class="p3-capa" data-capa="c"><b><span class="l">Copia de consulta</span><span class="c">Copia</span></b><i class="sellito">{COPIA_SINIC}</i></span><span class="p3-capa" data-capa="f"><b><span class="l">Fuente: IGAC SINIC</span><span class="c">Fuente</span></b><i>como se publica: el trazo</i></span></div>
+</div>
+<div class="consola p3-con"><div class="turno">
+<p class="preg"><span class="tu">Tu agente</span><span class="txt">{TURNO_PREDIO["pregunta"]}</span></p>
+<p class="llama"><span>llama a</span><code>{TURNO_PREDIO["herr"]}</code></p>
+<dl>{"".join(filas)}</dl>
+<p class="pie"><span>huella <b>{TURNO_PREDIO["huella"]}</b></span><span class="sello">capturado el {TURNO_PREDIO["fecha"]}</span></p>
+</div></div>
+<svg class="p3-guias" aria-hidden="true"></svg>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{final}</span></span><span class="pista">Linderos reales del SINIC en un cuadro de 60 m de lado alrededor del punto. La separación entre capas y las alturas son simbólicas.</span></figcaption>
+</figure>
+<ul class="lista-l p3-notas">{notas}</ul>
+<p class="fuente-dato">El predio del mapa de arriba, IGAC SINIC · <span class="sello">respuesta capturada el {TURNO_PREDIO["fecha"]}</span></p>
+</div></section>"""
+
+
+def _cercana(K: dict, tipo: str) -> dict:
+    return next(c for c in K["cercanas"] if c["tipo"] == tipo)
+
+
+def seccion_motor() -> str:
+    K = datos_portada()["criba"]
+    n, rev = K["n"], len(K["revision"])
+    desp = n - rev
+    ap, rg = _cercana(K, "area_protegida"), _cercana(K, "resguardo_indigena")
+    umbral = coma(K["umbral_m2"])
+    sinic = next(e for e in K["expediente"] if e["fuente"] == "igac.sinic_terreno")
+    assert dma(sinic["copia"]) in COPIA_SINIC
+    return f"""<section class="seccion" id="motor"><div class="envoltura" data-f3-sec>
+<div class="p3-cab"><h2 class="t2">Una lista entera, revisada predio por predio</h2>
+<p class="entrada">Lo claro se despeja solo; lo dudoso lo revisa una persona; de cada ítem queda un expediente.</p></div>
+<figure class="fig-iso cri" data-f3="criba">
+<div class="cr-escena lienzo f3-lienzo" tabindex="0" role="group" aria-label="La criba de una lista de predios. Toca o pulsa Enter para repetir.">
+<canvas role="img" aria-label="Los {miles(n)} predios del SINIC alrededor del punto del héroe, en Santa Marta, como una lista. Una regla los recorre y los revisa contra cuatro fuentes: áreas protegidas del RUNAP, resguardos de la ANT, pérdida de bosque del SINCHI y el catastro del IGAC. {miles(desp)} se asientan, despejados; {rev} se levantan porque su lindero se monta sobre el de un vecino; ninguno toca un área protegida ni un resguardo. La cámara se acerca al dudoso {K["dudoso_corto"]}, a {K["dudoso_dist_heroe_m"]} m del predio del héroe, y se abre su expediente."></canvas>
+<div class="f3-rot" aria-hidden="true"></div>
+</div>
+<div class="consola cr-exp" aria-live="off">
+<div class="turno">
+<p class="cr-tit">expediente · predio {K["dudoso_corto"]}</p>
+<ul class="exp">
+<li data-fila><span class="m m-vacio" aria-hidden="true"></span><b>Áreas protegidas</b><i>Parques Nacionales, RUNAP</i><em>ninguna · la más cercana, {escape(ap["nombre"])}, a {coma(ap["km_dudoso"])} km</em></li>
+<li data-fila><span class="m m-vacio" aria-hidden="true"></span><b>Resguardos</b><i>Agencia Nacional de Tierras</i><em>ninguno · el más cercano a {coma(rg["km_dudoso"])} km</em></li>
+<li data-fila><span class="m m-fuera" aria-hidden="true"></span><b>Pérdida de bosque</b><i>SINCHI</i><em class="fuera">fuera de cobertura: solo Amazonia</em></li>
+<li data-fila class="dudosa"><span class="m m-revisar" aria-hidden="true"></span><b>Catastro</b><i>IGAC, SINIC · {COPIA_SINIC}</i><em class="revisar">por revisar: su lindero se monta {coma(K["dudoso_m2"])} m² sobre el de {K["dudoso_vecino"]}</em></li>
+</ul>
+<p class="pie"><span>decide una persona</span><span>cruce del {dma(K["cruce"])}</span></p>
+</div></div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">expediente de {K["dudoso_corto"]}</span></span><span class="pista">toca la figura para repetir</span></figcaption>
+</figure>
+<ul class="lista-l cr-cuentas">
+<li><b>{miles(desp)} despejados</b><span>{coma(round(100 * desp / n, 1))} %. Ninguno de los {miles(n)} toca un área protegida ni un resguardo.</span></li>
+<li><b>{rev} a revisión</b><span>{coma(round(100 * rev / n, 1))} %. Su lindero se monta más de {umbral} m² sobre el de un vecino en la copia del SINIC.</span></li>
+<li><b>{K["sin_poligono"]} sin polígono</b><span>Todos tienen lindero en esta lista. Si faltara, quedaría vacío, no despejado.</span></li>
+</ul>
+<p class="fuente-dato">Linderos: IGAC SINIC, {COPIA_SINIC} · RUNAP (Parques Nacionales) y resguardos (ANT), copias del {dma(K["version"])} · SINCHI: fuera de cobertura · cruce local, sin consultas a la fuente</p>
+</div></section>"""
+
+
+def _valor(d: dict, v: float) -> str:
+    s = miles(v) if isinstance(v, int) else coma(v)
+    return f"{s} %" if d.get("u") == "%" else s
+
+
+def seccion_servicios_portada() -> str:
+    P = datos_portada()
+    K, ind, B, mun = P["criba"], P["indicadores"], P["bitacora"], P["municipio"]
+    vendibles = {h.id for h in HERR}
+    assert {d["tool"] for d in ind} <= vendibles
+    # el expediente del dudoso
+    marca = {
+        "no_encontrado": "m-vacio",
+        "fuera_de_cobertura": "m-fuera",
+        "por_revisar": "m-revisar",
+    }
+    texto = {
+        "pnn.runap": ("Áreas protegidas", "ninguna"),
+        "ant.resguardos_indigenas": ("Resguardos", "ninguno"),
+        "sinchi.perdida_bosque": ("Pérdida de bosque", "fuera de cobertura"),
+        "igac.sinic_terreno": ("Catastro", "por revisar"),
+    }
+    clase_em = {"fuera_de_cobertura": ' class="fuera"', "por_revisar": ' class="revisar"'}
+    filas_ex, ents = [], []
+    for e in K["expediente"]:
+        fuente = CAT.fuentes[e["fuente"]]
+        ent = nombre_entidad(fuente.entidad)
+        if e["fuente"] == "igac.sinic_terreno":
+            ent = "IGAC, SINIC"
+        ents.append(ent)
+        tit, est = texto[e["fuente"]]
+        dud = ' class="dudosa"' if e["estado"] == "por_revisar" else ""
+        filas_ex.append(
+            f"<li data-fila{dud}><b>{tit}</b><i>{ent}</i><em{clase_em.get(e['estado'], '')}>"
+            f'<span class="m {marca[e["estado"]]}"></span>{est}</em></li>'
+        )
+    huella_ex = f"sha256:{K['huella'][:8]}…"
+    # la cifra con su corte: el indicador del INS cambia de corte
+    i_nuevo = next(i for i, d in enumerate(ind) if d["tool"] == "ins_calidad_agua_municipio")
+    cifras = []
+    for i, d in enumerate(ind):
+        corte = f"{d['entidad']} · corte {d['corte']}"
+        if i == i_nuevo:
+            nota = f" · {d['nota'].lower()}" if d.get("nota") else ""
+            cifras.append(
+                f'<div class="ci3-i nuevo" data-i="{i}"><span class="k">{d["k"]}</span>'
+                f'<b><span class="v" data-v="{_valor(d, d["v"])}" data-antes="{_valor(d, d["antes"])}">{_valor(d, d["v"])}</span>'
+                f'<span class="antes">antes {_valor(d, d["antes"])}</span></b>'
+                f'<small><span class="c" data-c="corte {d["corte"]}" data-cantes="corte {d["corte_antes"]}">{corte}</span>{nota}</small></div>'
+            )
+        else:
+            cifras.append(
+                f'<div class="ci3-i" data-i="{i}"><span class="k">{d["k"]}</span><b>{_valor(d, d["v"])}</b><small>{corte}</small></div>'
+            )
+    dn = ind[i_nuevo]
+    lect_cifra = f"IRCA de {mun['nombre']}: {_valor(dn, dn['antes'])} en {dn['corte_antes']}, {_valor(dn, dn['v'])} en {dn['corte']} · {dn['entidad']}"
+    grabados = sorted(d["grabado"] for d in ind)
+    # la bitácora: la última prórroga publicada (el aviso que llegaría hoy, con su antes y después)
+    pub = [m for m in B["mods"] if m["estado"] == "Publicado"]
+    clave = max((m for m in pub if m["dias"] > 0), key=lambda m: m["f"])
+    antes = sum(m["dias"] for m in pub if m["f"] < clave["f"])
+    num = re.search(r"Consultor[ií]a N\S* (\d+-\d{4})", " ".join(m["prop"] for m in B["mods"]))
+    assert num, "el registro ya no nombra el número del contrato"
+    meses = "enero febrero marzo abril mayo junio julio agosto septiembre octubre noviembre diciembre".split()
+    f0, f1 = B["mods"][0]["f"], B["mods"][-1]["f"]
+    lapso = f"de {meses[int(f0[5:7]) - 1]} de {f0[:4]} a {meses[int(f1[5:7]) - 1]} de {f1[:4]}"
+    # el índice del catálogo y la pregunta que lo atraviesa
+    fams = sorted(
+        ((FAMILIAS[k], n) for k, n in POR_FAMILIA.items() if k != "meta"), key=lambda x: -x[1]
+    )
+    n_fam = len(fams)
+    lista_fam = ", ".join(f"{f} {n}" for f, n in fams)
+    lic_norma = fila_turno(TURNO_NORMA, "licencia").split(",")[0]
+    return f"""<section class="seccion sup" id="servicios"><div class="envoltura" data-f3-sec>
+<div class="cab"><h2 class="t2">Lo que construimos contigo</h2>
+<p class="entrada">Sobre la misma capa de datos: un ítem revisado, un indicador con su corte, un cambio con su día, una pregunta con su fuente.</p></div>
+<div class="sv3">
+
+<article class="sv3-c" data-sv="expediente">
+<figure class="fig-iso ex3" data-f3="expediente" tabindex="0" role="group" aria-label="El expediente de un predio. Toca o pulsa Enter para repetir.">
+<div class="ex3-escena f3-lienzo"><canvas role="img" aria-label="El predio {K["dudoso_corto"]} de Santa Marta, el dudoso de la criba, con sus vecinos. Salen sus cuatro preguntas, una por entidad, y cada una vuelve con su estado: {ents[0]}, ninguna área protegida; {ents[1]}, ningún resguardo; {ents[2]}, fuera de cobertura; IGAC, por revisar. El expediente se cierra con su huella."></canvas><div class="f3-rot" aria-hidden="true"></div></div>
+<ul class="ex3-filas">
+{chr(10).join(filas_ex)}
+</ul>
+<svg class="ex3-guias" aria-hidden="true"></svg>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">expediente · {K["dudoso_corto"]} · huella {huella_ex}</span></span></figcaption>
+</figure>
+<div><h4>Debida diligencia</h4><p>Cada ítem de tu lista vuelve con un expediente: qué respondió cada entidad y qué queda por revisar.</p><a class="enlace" href="/servicios#revision">Ver el servicio</a></div>
+</article>
+
+<article class="sv3-c" data-sv="cifra">
+<figure class="fig-iso ci3" tabindex="0" role="group" aria-label="Cuatro indicadores reales de {mun["nombre"]}, cada uno con su entidad y su corte. Toca o pulsa Enter para repetir.">
+<p class="ci3-mun">{mun["nombre"]} <span>{mun["divipola"]}</span></p>
+<div class="ci3-rej">
+{chr(10).join(cifras)}
+</div>
+<p class="ci3-aviso" aria-hidden="true">el {dn["entidad"]} publica el corte {dn["corte"]}</p>
+<div class="consola ci3-tip" aria-hidden="true"><dl></dl></div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{lect_cifra}</span></span><span class="pista">pasa el puntero por las cifras</span></figcaption>
+</figure>
+<div><h4>Tableros e informes</h4><p>Cada cifra con la entidad que la publica y el corte al que pertenece; cuando sale un corte nuevo, el anterior queda a la vista.</p><a class="enlace" href="/servicios#tablero">Ver el servicio</a></div>
+</article>
+
+<article class="sv3-c" data-sv="bitacora">
+<figure class="fig-iso bi3" tabindex="0" role="group" aria-label="La bitácora de un contrato de SECOP II, día por día, {lapso}. Toca o pulsa Enter para repetir.">
+<p class="bi3-tit"><b>Contrato de consultoría {num.group(1)}</b><span>SECOP II · {B["contrato"]}</span></p>
+<div class="bi3-cuerpo"><div class="bi3-cal"></div>
+<div class="bi3-ley" aria-hidden="true"><span><i class="d"></i>sin cambios</span><span><i class="d p"></i>modificación publicada</span><span><i class="d c"></i>cancelada o rechazada</span><span><i class="m m-aspa"></i>la fuente no respondió (no pasó aquí)</span></div>
+<div class="consola bi3-aviso" aria-hidden="true"><p class="cr-tit">aviso · el contrato que sigues</p><dl>
+<dt>cambio</dt><dd class="amb">prórroga de {clave["dias"]} días</dd>
+<dt>motivo</dt><dd>«{escape(clave["prop"])}»</dd>
+<dt>fecha</dt><dd>{dma(clave["f"])}, {clave["estado"].lower()}</dd>
+<dt>antes</dt><dd>{antes} días de prórroga</dd>
+<dt>ahora</dt><dd>{antes + clave["dias"]} días de prórroga</dd>
+<dt>entidad</dt><dd>Colombia Compra Eficiente, SECOP II</dd></dl>
+<p class="pie"><span>{len(B["mods"])} registros, completos</span><span class="sello">capturado el {dma(B["grabado"])}</span></p></div></div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{dma(clave["f"])}: prórroga de {clave["dias"]} días</span></span><span class="pista">reconstruida del registro de modificaciones del contrato</span></figcaption>
+</figure>
+<div><h4>Vigilancia y alertas</h4><p>Lo que sigues se revisa cada día; casi siempre no pasa nada, y el día que cambia llega el aviso con el antes y el después.</p><a class="enlace" href="/servicios#vigilancia">Ver el servicio</a></div>
+</article>
+
+<article class="sv3-c" data-sv="indice">
+<figure class="fig-iso in3" tabindex="0" role="group" aria-label="El catálogo de Terrnova: {N_HERR} herramientas en {n_fam} familias, una raya por herramienta. Toca o pulsa Enter para repetir.">
+<p class="in3-preg"><span class="txt">¿Sigue vigente esta ley?</span></p>
+<svg class="in3-svg" role="img" aria-label="{lista_fam}. La pregunta enciende Normativa y la herramienta {TURNO_NORMA["herr"]}."></svg>
+<div class="in3-tip" hidden></div>
+<div class="consola in3-res" aria-hidden="true"><p class="cr-tit">tu asistente responde y cita</p><dl>
+<dt>respuesta</dt><dd><span class="ok">{fila_turno(TURNO_NORMA, "vigencia").lower()}</span></dd>
+<dt>norma</dt><dd>{fila_turno(TURNO_NORMA, "norma")}</dd>
+<dt>entidad</dt><dd>{fila_turno(TURNO_NORMA, "entidad")}</dd>
+<dt>licencia</dt><dd>{lic_norma}</dd></dl>
+<p class="pie"><span>huella <b>{TURNO_NORMA["huella"]}</b></span><span class="sello">capturado el {TURNO_NORMA["fecha"]}</span></p></div>
+<figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="off">{N_HERR} herramientas, {n_fam} familias</span></span><span class="pista">pasa el puntero por las rayas</span></figcaption>
+</figure>
+<div><h4>Asistentes a la medida</h4><p>Saben qué entidad responde cada pregunta y la citan en la respuesta.</p><a class="enlace" href="/servicios#asistente">Ver el servicio</a></div>
+</article>
+
+</div>
+<p class="fuente-dato">Expediente: cruce local del {dma(K["cruce"])} con las copias de RUNAP y ANT ({dma(K["version"])}) y del SINIC ({COPIA_SINIC.removeprefix("copia del ")}) · {mun["nombre"]}: respuestas capturadas del {dma(grabados[0])} al {dma(grabados[-1])} · contrato: registro de SECOP II capturado el {dma(B["grabado"])} · catálogo: {N_HERR} herramientas, hoy</p>
+</div></section>"""
+
+
+def seccion_cobertura() -> str:
+    co = json.loads(CO_JSON.read_text(encoding="utf-8"))
+    km = round(co["R"] * 111.32)
+    total, celdas = sum(n for *_, n in co["bins"]), len(co["bins"])
+    return f"""<section class="seccion" id="cobertura"><div class="envoltura" data-f3-sec>
+<div class="con-fig cob3">
+<div class="cab">
+<h2 class="t2">Dónde hay predio SINIC hoy</h2>
+<p class="entrada">Del punto de arriba al país: el barrio de Santa Marta cabe en una celda de unos {km} km de radio. Cada columna cuenta los predios de la muestra que caen en su celda.</p>
+<p class="cob3-plana">Una celda plana no es un cero inventado: es territorio sin predios en la muestra. El SINIC cubre los {SINIC_MUNICIPIOS} municipios con gestor catastral propio; el resto lo responde la base del IGAC.</p>
+<ul class="lista-l"><li><b>{SINIC_TERRENOS}</b><span>terrenos en la copia SINIC ({SINIC_MUNICIPIOS} municipios)</span></li><li><b>{miles(total)}</b><span>en la muestra (3 %)</span></li><li><b>{miles(celdas)}</b><span>celdas con predios</span></li></ul>
+<div class="cob3-ley" aria-hidden="true"><span>menos</span><i><b style="background:#A6D8CC"></b><b style="background:#7DB5A8"></b><b style="background:#559385"></b><b style="background:#2D7062"></b><b style="background:#14564A"></b></i><span>más predios por celda</span></div>
+<p class="fuente-dato">IGAC SINIC · conteo de la ficha de la fuente, medido el {SINIC_MEDIDO} · muestra del 3 %</p>
+</div>
+<figure class="fig-iso f3-cob" data-f3="cobertura"><div class="lienzo f3-lienzo" tabindex="0" role="group" aria-label="Mapa de cobertura del SINIC. Arrastra o usa las flechas para girar."><canvas role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra del 3 %: {miles(total)} predios en {miles(celdas)} celdas. Empieza en el predio del héroe, en Santa Marta: la cámara sube hasta su celda y se abre al país, y las columnas suben desde ahí; las más altas y oscuras cuentan más predios. Las celdas planas son territorio sin predios en la muestra."></canvas><div class="f3-rot" aria-hidden="true"></div></div><figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="polite">{miles(total)} predios de la muestra (3 %) en {miles(celdas)} celdas</span></span><span class="pista">pasa el puntero por las columnas; arrastra para girar</span></figcaption></figure>
+</div>
+</div></section>"""
+
+
+def figura_tres() -> str:
+    K = datos_portada()["criba"]
+    h = TURNO_PREDIO["huella"]
+    h_corta = h.removeprefix("sha256:")
+    destino = fila_turno(TURNO_PREDIO, "destinación").replace(",", "")
+    revisar = "".join(
+        f"<tr><td>{c}</td><td>por revisar</td><td>IGAC</td><td>—</td></tr>"
+        for c in (K["dudoso_corto"], K["dudoso_vecino"])
+    )
+    return f"""<div class="tr3" tabindex="0" role="group" aria-label="La misma respuesta en tres lugares: en el chat, en tus sistemas y en la hoja que entregamos. Toca o pulsa Enter para repetir.">
+<div class="tr3-v chat">
+<div class="caja"><p class="preg">{TURNO_PREDIO["pregunta"]}</p>
+<p class="resp">Predio {destino.lower()}, {PRED}. IGAC SINIC, {COPIA_SINIC}.</p>
+<p class="h"><b class="amb">{h}</b></p></div></div>
+<div class="tr3-v api">
+<pre class="caja">{{ "estado": "{EJEMPLO["estado"]}",
+  "predial": "{PRED}",
+  "procedencia": "IGAC, SINIC",
+  "licencia": "{EJEMPLO["licencia"]}",
+  "servido_desde": "copia",
+  "huella": <b class="amb">"{h}"</b> }}</pre></div>
+<div class="tr3-v hoja">
+<table class="caja"><thead><tr><th>predio</th><th>estado</th><th>entidad</th><th>huella</th></tr></thead>
+<tbody><tr class="f1"><td>{PRED}</td><td>{EJEMPLO["estado"]}</td><td>IGAC</td><td><b class="amb">{h_corta}</b></td></tr>
+{revisar}</tbody></table></div>
+<p class="fuente-dato tr3-fd">La misma huella en los tres: es la misma respuesta, capturada el {TURNO_PREDIO["fecha"]}. Las filas 2 y 3 salen de la criba de arriba (cruce local del {dma(K["cruce"])}), sin respuesta capturada.</p>
+</div>"""
+
+
+# Los módulos de la portada, en orden: cada uno después de los que importa. construir.py pone la
+# huella (?v=) de cada import, así la caché larga no sirve un módulo viejo con uno nuevo.
+MODULOS_PORTADA = [
+    "ambar.js",
+    "motor3d.js",
+    "tipo.js",
+    "fig-prueba.js",
+    "fig-criba.js",
+    "fig-cobertura.js",
+    "fig-expediente.js",
+    "servicios3.js",
+    "portada-tipo.js",
+    "figuras3d.js",
+]
+
+
+def _huella_texto(texto: str) -> str:
+    import hashlib
+
+    return hashlib.sha256(texto.replace("\r\n", "\n").encode("utf-8")).hexdigest()[:10]
+
+
+def modulos_versionados() -> dict[str, str]:
+    """El texto de cada módulo de la portada con la huella de lo que importa (`'./x.js?v=…'`)."""
+    huellas = {"comun3d.js": version("/js/comun3d.js").split("?v=")[1]}
+    textos: dict[str, str] = {}
+    for nombre in MODULOS_PORTADA:
+        texto = (PUBLICO / "js" / nombre).read_text(encoding="utf-8")
+
+        def poner(m: re.Match[str], nombre: str = nombre) -> str:
+            dep = m.group(1) + ".js"
+            assert dep in huellas, f"{nombre} importa {dep} antes de tener su huella"
+            return f"'./{dep}?v={huellas[dep]}'"
+
+        texto = re.sub(r"'\./([a-z0-9-]+)\.js(?:\?v=[0-9a-f]+)?'", poner, texto)
+        textos[nombre] = texto
+        huellas[nombre] = _huella_texto(texto)
+    return textos
+
+
 def inicio() -> str:
     c = f"""
 <section class="heroe">
@@ -1486,37 +1912,15 @@ def inicio() -> str:
 <div class="envoltura h-consola">{consola()}</div>
 </section>
 
-<section class="seccion" id="soluciones"><div class="envoltura">
-<div class="cab">
-<h2 class="t2">Soluciones por sector</h2>
-<p class="entrada">Lo que decide cada área y de qué entidades sale cada dato.</p>
-</div>
-{sectores()}
-<div class="franja-serv">
-<h3 class="t3">Lo que construimos contigo</h3>
-{servicios_landing()}
-</div>
-</div></section>
+{seccion_problema()}
 
-<section class="seccion sup" id="prueba"><div class="envoltura">
-{prueba_html()}
-</div></section>
+{seccion_prueba()}
 
-<section class="seccion" id="ahorro"><div class="envoltura">
-<div class="con-fig inv-l">
-{figura_ruta()}
-<div class="cab">
-<h2 class="t2">Lo que te ahorras</h2>
-<p class="entrada">Hacerlo a mano es pelear con cada portal.</p>
-<ul class="lista-l">
-<li><b>Un solo formato</b><span>{N_ENTIDADES} entidades, una sola forma de preguntar y de recibir.</span></li>
-<li><b>Catastro vigente</b><span>El corte vigente, revisado aunque la fuente cambie de nombre cada mes.</span></li>
-<li><b>Bien contado</b><span>SECOP lista cada contrato varias veces; lo contamos una vez.</span></li>
-</ul>
-<p class="fuente-dato">Pitalito, 2025: $174.000 M sumando SECOP tal cual; $63.157 M contado bien · 22-10-2026</p>
-</div>
-</div>
-</div></section>
+{seccion_motor()}
+
+{seccion_servicios_portada()}
+
+{seccion_cobertura()}
 
 <section class="seccion sup" id="como"><div class="envoltura">
 <div class="cab"><h2 class="t2">Tres formas de usarlo</h2></div>
@@ -1525,7 +1929,16 @@ def inicio() -> str:
 <div><h3><a href="/desarrolladores#rest">En tus sistemas</a></h3><p>Tu equipo técnico lo conecta por API, con la misma respuesta.</p></div>
 <div><h3><a href="/servicios">Contigo</a></h3><p>Construimos la revisión, el tablero o el asistente.</p></div>
 </div>
+{figura_tres()}
 <p class="funciona">Funciona con {y_lista(FUNCIONA_CON)}.</p>
+</div></section>
+
+<section class="seccion" id="soluciones"><div class="envoltura">
+<div class="cab">
+<h2 class="t2">Soluciones por sector</h2>
+<p class="entrada">Lo que decide cada área y de qué entidades sale cada dato.</p>
+</div>
+{sectores()}
 </div></section>
 
 <section class="seccion" id="no-hacemos"><div class="envoltura">
@@ -1572,7 +1985,7 @@ def inicio() -> str:
         "Terrnova · Datos oficiales de Colombia para tu organización y tus agentes",
         f"Predios, empresas, contratos y normas de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Para los agentes de tu equipo, tus sistemas o una solución a la medida.",
         c,
-        ("escena-predios.js", "figuras.js"),
+        ("escena-predios.js", "figuras3d.js", "portada-tipo.js"),
     )
 
 
@@ -2185,6 +2598,13 @@ def main() -> int:
             viejas.append("js/escena-predios.js")
     else:
         ESCENA.write_text(escena_versionada(), encoding="utf-8", newline="\n")
+    for nombre, texto in modulos_versionados().items():
+        f = PUBLICO / "js" / nombre
+        if revisar:
+            if f.read_text(encoding="utf-8") != texto:
+                viejas.append(f"js/{nombre}")
+        else:
+            f.write_text(texto, encoding="utf-8", newline="\n")
     datos_fig = FIGURAS / "datos.json"
     if revisar:
         if datos_fig.read_text(encoding="utf-8") != datos_figuras_json():
