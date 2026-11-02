@@ -1,0 +1,54 @@
+id: mindefensa.homicidios
+titulo: "Homicidios (Ministerio de Defensa Nacional, víctimas)"
+entidad: Ministerio de Defensa Nacional
+competencia: publica las cifras de seguridad del sector defensa en datos abiertos
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-02
+  evidencia: https://www.datos.gov.co/api/views/m8fd-ahd9.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Ministerio de Defensa Nacional, HOMICIDIO. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# Se mide en víctimas: una fila por hecho, con `cantidad` de víctimas. Sin nombres ni documentos;
+# aun así solo salen agregados por municipio y año.
+url: https://www.datos.gov.co/resource/m8fd-ahd9.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
+cobertura:
+  pais: CO
+  columna_tiempo: fecha_hecho
+  desde_anio: 2003
+  aviso_vacio: >
+    El Ministerio de Defensa no registra homicidios en este municipio en ese año (dentro de su
+    cobertura, desde 2003). Si el año es el actual, la fuente lo publica por meses: puede faltar lo
+    más reciente.
+datos_personales: ninguno
+estado: publicada
+campos:
+  fecha_hecho: {nombre: fecha, tipo: date, desc: "fecha del hecho"}
+  cod_muni: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA de 5 dígitos"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio (en mayúsculas y sin tildes)"}
+  sexo: {nombre: sexo, tipo: str, desc: "sexo de la víctima (MASCULINO, FEMENINO, NO REPORTA)"}
+  arma_medio: {nombre: arma_medio, tipo: str, desc: "arma o medio empleado"}
+  _modalidad_presunta: {nombre: modalidad, tipo: str, desc: "modalidad presunta (sicariato, riñas, atraco…)"}
+  spoa_caracterizacion: {nombre: caracterizacion, tipo: str, desc: "homicidio intencional o feminicidio, según la Fiscalía (SPOA)"}
+  cantidad: {nombre: cantidad, tipo: int, desc: "víctimas de la fila"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: Ministerio de Defensa Nacional, theme: seguridad, accrualPeriodicity: monthly}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-02'
+  fila: "un hecho en un municipio y una fecha, con su cantidad de víctimas; 345 195 filas y 345 917 víctimas"
+  operaciones: {filtrar: 0.5, agrupar: 0.6}
+  hallazgos:
+  - "de 2003-01-01 al 2026-09-30; de 2003 a 2025 cada año trae los doce meses"
+  - "cod_muni siempre tiene 5 dígitos (DIVIPOLA sin los ceros de la Policía)"
+  - "Cali 2025: 1 068 víctimas (999 hombres y 69 mujeres)"
+  - "1 919 filas son feminicidio (caracterización SPOA); el resto, homicidio intencional o con dolo"
+  - "cantidad es 1 en 344 604 filas y llega a 5: se suma, no se cuentan filas"
+  decision: "en vivo por municipio y año, por modalidad presunta, con víctimas, mujeres y feminicidios"
