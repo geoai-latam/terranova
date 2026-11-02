@@ -1,7 +1,7 @@
 {
  "capas": {
-  "fuentes": 177,
-  "herramientas": 211,
+  "fuentes": 176,
+  "herramientas": 210,
   "familias": [
    [
     "Territorio",
@@ -13,7 +13,7 @@
    ],
    [
     "Contratación",
-    43
+    42
    ],
    [
     "Justicia",
@@ -68,7 +68,7 @@
     "licencia": "CC BY-SA 4.0",
     "servido": "la fuente, en vivo",
     "corta": "¿Cuánto contrata?",
-    "fuentes": 34
+    "fuentes": 33
    },
    {
     "herramienta": "pnn_areas_protegidas_en_punto",

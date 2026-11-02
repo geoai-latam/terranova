@@ -1,11 +1,14 @@
 id: secop_proponentes_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.proponentes
 pregunta: "¿Quiénes se presentaron a este proceso de SECOP II?"
 descripcion: >
-  Proponentes de una fase de un proceso de SECOP II (CO1.REQ.…): nombre o razón social de cada
-  proponente, con la entidad y la fecha. Con el documento del proponente, como lo publica la fuente.
+  Proponentes de un proceso de SECOP II: nombre o razón social de cada uno, con la fase, la entidad y
+  la fecha, y el documento del proponente como lo publica la fuente. Recibe el proceso de compra
+  (CO1.BDOS.…, el `id_proceso` que trae cada contrato) o una de sus fases (CO1.REQ.…): con el
+  primero da los proponentes de todas sus fases. `numero_proponentes` cuenta filas; un solo
+  proponente en una licitación quiere decir que no hubo competencia.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_proceso: id_secop}
 consulta:
@@ -16,17 +19,32 @@ consulta:
     portal: datos.gov.co
     id: hgi6-6wh3
     select: "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n"
-    where: "id_procedimiento = '{id_proceso}'"
-    order: "proveedor"
+    # medido el 2026-11-02: hgi6-6wh3 solo trae la fase (CO1.REQ). El contrato da el proceso de
+    # compra (CO1.BDOS) y con él venía «no encontrado»; la previa lo traduce a sus fases.
+    where: "id_procedimiento IN ({previa})"
+    order: "id_procedimiento, proveedor"
     max_filas: 500
   campos: [id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n]
+  previa:
+    fuente: cce.secop2.procesos
+    tool: datos_consultar
+    argumentos:
+      portal: datos.gov.co
+      id: p6dx-8zbt
+      select: "id_del_proceso"
+      where: "id_del_proceso = '{id_proceso}' OR id_del_portafolio = '{id_proceso}'"
+      max_filas: 50
+    columna: id_del_proceso
+    patron: id_secop
 salida: ProponentesProceso
 derivados:
   numero_proponentes: {de: conteo, tipo: int}
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en hgi6-6wh3: la fase de oferta del proceso de Pitalito tiene 1 proponente.
-  entrada: {id_proceso: CO1.REQ.3004001}
+  # Medido el 2026-11-02: el proceso de compra CO1.BDOS.2898382 (el del contrato de Pitalito
+  # CO1.PCCNTR.3712964) tiene dos fases; los proponentes están en la de oferta, CO1.REQ.3004001 (1).
+  # Con el BDOS el canario vigila la traducción, que es lo que fallaba.
+  entrada: {id_proceso: CO1.BDOS.2898382}
   verdad: {id_proceso: CO1.REQ.3004001, nit_entidad: "891180077"}
   minimos: {numero_proponentes: 1}
   campos: [documento_proponente, entidad, fecha_publicacion, id_proceso, nit_entidad, nombre_proceso, numero_proponentes, proponente]

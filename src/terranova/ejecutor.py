@@ -25,6 +25,7 @@ from terranova.cache import clave as clave_cache
 from terranova.catalogo import (
     AVISO_DATO_PUBLICO,
     MARCADOR,
+    MARCADOR_PREVIA,
     PATRONES_ENTRADA,
     SUFIJO_SIGNIFICADO,
     Campo,
@@ -344,7 +345,31 @@ def _validar(campo: Campo, valor: Any) -> Any:
     return valor
 
 
+def derivar_secuencia(h: Herramienta, elementos: list[dict[str, Any]]) -> None:
+    """Los derivados que miran al elemento anterior (en el orden de la consulta), en su lugar.
+    Con `solo_si`, el que no cumple queda vacío y no es «el anterior» de nadie."""
+    for nombre, d in h.derivados.items():
+        if d.de != "diferencia_anterior":
+            continue
+        anterior: float | None = None
+        for e in elementos:
+            if d.solo_si and not d.solo_si.cumple(e):
+                e[nombre] = None
+                continue
+            actual = e.get(d.campo or "")
+            numero = float(actual) if actual is not None and _numero(actual) else None
+            e[nombre] = (
+                convertir(round(numero - anterior, 6), d.tipo)
+                if numero is not None and anterior is not None
+                else None
+            )
+            if numero is not None:
+                anterior = numero
+
+
 def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int | None) -> Any:
+    if d.solo_si:
+        elementos = [e for e in elementos if d.solo_si.cumple(e)]
     valores = [e.get(d.campo or "") for e in elementos]
     numeros = [float(v) for v in valores if v is not None and _numero(v)]
     if d.de == "conteo":
@@ -355,6 +380,8 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
         return convertir(max(numeros), d.tipo) if numeros else None
     if d.de == "primero":
         return convertir(valores[0], d.tipo) if valores else None
+    if d.de == "ultimo":
+        return convertir(valores[-1], d.tipo) if valores else None
     if d.de == "completitud_total":
         return total
     raise ValueError(d.de)
@@ -679,6 +706,10 @@ class Ejecutor:
         self, h: Herramienta, fuente: Fuente, valores: dict[str, Any], fiel: bool = False
     ) -> Sobre:
         consultado_en = ahora()
+        previas: list[Procedencia] = []
+        if h.consulta.previa is not None:
+            valores, procedencia_previa = await self._previa(h, valores, consultado_en)
+            previas.append(procedencia_previa)
 
         capas: list[str | None] = [str(c) for c in h.consulta.capas] or [None]
         llamadas = []
@@ -709,7 +740,7 @@ class Ejecutor:
 
         elementos: list[dict[str, Any]] = []
         rasgos: list[dict[str, Any]] = []
-        procedencia: list[Procedencia] = []
+        procedencia: list[Procedencia] = list(previas)
         hechos: dict[str, Any] = {}
         crs = "EPSG:4326"
         for r in respuestas:
@@ -725,10 +756,11 @@ class Ejecutor:
             procedencia.append(self._procedencia(h, fuente, r, consultado_en, mapeadas))
 
         total = None
-        if len(procedencia) == 1:
-            total = procedencia[0].completitud.total
-        elif all(p.completitud.total is not None for p in procedencia):
-            total = sum(p.completitud.total or 0 for p in procedencia)
+        principales = procedencia[len(previas) :]  # la previa no cuenta en el total
+        if len(principales) == 1:
+            total = principales[0].completitud.total
+        elif all(p.completitud.total is not None for p in principales):
+            total = sum(p.completitud.total or 0 for p in principales)
         # honestidad: la fuente dijo que hay `total` y no entregó ninguno (una página que llegó
         # vacía, un corte): eso es «no se pudo», nunca «no encontrado». Con SINCHI, el conector
         # contó 1 polígono y su página vino vacía; el sobre decía «no encontrado» (2026-10-28).
@@ -738,6 +770,7 @@ class Ejecutor:
                 f"la fuente dice que hay {total} y no entregó ninguno: no se pudo leer la "
                 "respuesta",
             )
+        derivar_secuencia(h, elementos)
         agregados = {
             nombre: derivar_resultado(d, elementos, total)
             for nombre, d in h.derivados.items()
@@ -858,6 +891,30 @@ class Ejecutor:
             errores=errores,
             creditos=0 if estado == "fuera_de_cobertura" else h.creditos,
         )
+
+    async def _previa(
+        self, h: Herramienta, valores: dict[str, Any], consultado_en: datetime
+    ) -> tuple[dict[str, Any], Procedencia]:
+        """La consulta previa: sus valores de `columna` que cumplen el patrón van a `{previa}`.
+        Sin ninguno, `{previa}` es `''`: la consulta principal no encuentra nada, y lo dice."""
+        previa = h.consulta.previa
+        assert previa is not None
+        fuente = self.catalogo.fuentes[previa.fuente]
+        argumentos = renderizar(previa.argumentos, {**valores, "url_fuente": fuente.url})
+        sc = await self.llamar(fuente.conector, previa.tool, argumentos, fuente_id=fuente.id)
+        r = separar(h, None, argumentos, sc)
+        patron = re.compile(PATRONES_ENTRADA[previa.patron])
+        hallados = sorted(
+            {
+                str(f[previa.columna])
+                for f in r.filas
+                if f.get(previa.columna) is not None and patron.fullmatch(str(f[previa.columna]))
+            }
+        )
+        lista = ", ".join(f"'{v}'" for v in hallados) or "''"
+        vistos = [{previa.columna: v} for v in hallados]
+        procedencia = self._procedencia(h, fuente, r, consultado_en, vistos)
+        return {**valores, MARCADOR_PREVIA: lista}, procedencia
 
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]

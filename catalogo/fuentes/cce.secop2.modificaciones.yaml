@@ -27,9 +27,13 @@ campos:
   proposito_modificacion: {nombre: proposito, tipo: str, desc: "propósito de la modificación"}
   descripcion: {nombre: descripcion, tipo: str, desc: "descripción"}
   estado_modificacion: {nombre: estado, tipo: str, desc: "estado"}
-  valor_modificacion: {nombre: valor_modificacion, tipo: float, desc: "valor de la modificación, en pesos"}
+  # medido el 2026-11-02: NO es lo que cambió. Es el valor total del contrato en la versión que deja
+  # esta modificación (CO1.PCCNTR.7143094: 24,5 M → 32,4 M → … → 52 983 280, el valor_del_contrato
+  # final; CO1.PCCNTR.7180851: 64 938 M en las 9, sin adición alguna).
+  valor_modificacion: {nombre: valor_contrato_tras_cambio, tipo: float, desc: "valor total del contrato después de esta modificación, en pesos (no lo que se añadió)"}
   dias_extendidos: {nombre: dias_extendidos, tipo: int, desc: "días de prórroga"}
-  fecha_de_aprobacion: {nombre: fecha_aprobacion, tipo: date, desc: "fecha de aprobación"}
+  fecha_de_aprobacion: {nombre: fecha_aprobacion, tipo: date, desc: "fecha de aprobación (vacía en las que no se aprobaron)"}
+  fecha_creacion: {nombre: fecha_creacion, tipo: date, desc: "fecha en que se registró la modificación"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
 # Spec 07: medido en la fuente, no en Terrnova.
