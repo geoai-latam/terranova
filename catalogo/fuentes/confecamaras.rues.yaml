@@ -33,9 +33,9 @@ campos:
   tipo_sociedad: {nombre: tipo_sociedad, tipo: str, desc: "tipo de sociedad"}
   categoria_matricula: {nombre: categoria_matricula, tipo: str, desc: "categoría de la matrícula"}
   estado_matricula: {nombre: estado_matricula, tipo: str, desc: "estado de la matrícula"}
-  fecha_matricula: {nombre: fecha_matricula, tipo: str, desc: "fecha de matrícula (AAAAMMDD)"}
+  fecha_matricula: {nombre: fecha_matricula, tipo: date, desc: "fecha de matrícula"}
   ultimo_ano_renovado: {nombre: ultimo_ano_renovado, tipo: int, desc: "último año renovado"}
-  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: str, desc: "fecha de cancelación (AAAAMMDD)"}
+  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, desc: "fecha de cancelación"}
   cod_ciiu_act_econ_pri: {nombre: ciiu_principal, tipo: str, desc: "CIIU de la actividad principal"}
   cod_ciiu_act_econ_sec: {nombre: ciiu_secundaria, tipo: str, desc: "CIIU de la actividad secundaria"}
 comportamiento: {max_por_pagina: 50000}

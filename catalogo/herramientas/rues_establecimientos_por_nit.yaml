@@ -1,5 +1,5 @@
 id: rues_establecimientos_por_nit
-version: 1
+version: 2
 familia: empresas
 fuente: confecamaras.rues_establecimientos
 pregunta: "¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa?"

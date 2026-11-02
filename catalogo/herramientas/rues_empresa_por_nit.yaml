@@ -1,5 +1,5 @@
 id: rues_empresa_por_nit
-version: 1
+version: 2
 familia: empresas
 fuente: confecamaras.rues
 pregunta: "¿Qué dice el RUES de la empresa con este NIT?"

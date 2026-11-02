@@ -1,5 +1,5 @@
 id: uariv_victimas_municipio
-version: 1
+version: 2
 familia: justicia
 fuente: uariv.victimas_municipio
 pregunta: "¿Cuántas víctimas del conflicto armado registradas hay en este municipio?"
@@ -43,7 +43,7 @@ canario:
   # 783 837 por declaración, 451 163 por ubicación, 392 116 sujetos de atención, 298 135 eventos. El
   # corte cambia cada mes: la ocurrencia y la declaración solo crecen (pisos), la ubicación no.
   entrada: {municipio_divipola: "05001"}
-  verdad: {municipio_divipola: "5001"}
+  verdad: {municipio_divipola: "05001"}
   minimos: {personas_ocurrencia: 245000, personas_declaracion: 783000}
   campos: [eventos, fecha_corte, municipio_divipola, personas_declaracion, personas_ocurrencia, personas_sujetos_atencion, personas_ubicacion]
   latencia_max_ms: 20000

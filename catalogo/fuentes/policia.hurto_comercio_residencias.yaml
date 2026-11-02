@@ -17,7 +17,10 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/6sqw-8cg5.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO}
+cobertura:
+  pais: CO
+  incompleta_hasta: 2023
+  aviso_incompleta: "Esta fuente solo trae hurtos a residencias desde 2024: el total de este año cuenta solo comercios."
 datos_personales: ninguno
 estado: publicada
 campos:
@@ -37,6 +40,7 @@ perfil:
   fila: "un hecho reportado con su cantidad de casos; 653 384 filas en el país"
   operaciones: {filtrar: 0.3, agrupar: 0.3}
   hallazgos:
+  - "«HURTO RESIDENCIAS» solo aparece desde 2024 en todo el país (medido el 2026-11-02: 29 661 filas en 2024, ninguna antes)"
   - "la fecha viene como texto dd/mm/aaaa: el año se filtra con like '%/aaaa'"
   - "codigo_dane es el DIVIPOLA con tres ceros al final (25175000)"
   - "cantidad es texto en algunos reportes: se suma con cantidad::number"

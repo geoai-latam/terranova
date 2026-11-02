@@ -23,12 +23,12 @@ cobertura: {pais: CO, columna_tiempo: a_o_de_corte}
 datos_personales: ninguno
 estado: publicada
 campos:
-  nit: {nombre: nit, tipo: str, desc: "NIT (la fuente lo publica con .00 al final)"}
+  nit: {nombre: nit, tipo: str, ancho: 9, desc: "NIT (la fuente lo publica con .00 al final: sale sin él)"}
   raz_n_social: {nombre: razon_social, tipo: str, desc: "razón social"}
   supervisor: {nombre: supervisor, tipo: str, desc: "superintendencia que la vigila"}
   departamento_domicilio: {nombre: departamento, tipo: str, desc: "departamento del domicilio"}
   ciudad_domicilio: {nombre: ciudad, tipo: str, desc: "ciudad del domicilio"}
-  ciiu: {nombre: ciiu, tipo: str, desc: "CIIU"}
+  ciiu: {nombre: ciiu, tipo: str, ancho: 4, desc: "CIIU a cuatro dígitos (la fuente pierde el cero inicial)"}
   macrosector: {nombre: macrosector, tipo: str, desc: "macrosector"}
   ingresos_operacionales: {nombre: ingresos_operacionales, tipo: str, desc: "ingresos operacionales, en billones de pesos, como texto de la fuente ($84.95)"}
   ganancia_p_rdida: {nombre: ganancia_perdida, tipo: str, desc: "ganancia o pérdida, en billones de pesos"}

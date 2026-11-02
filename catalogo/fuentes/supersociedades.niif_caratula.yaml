@@ -25,7 +25,7 @@ campos:
   fecha_corte: {nombre: fecha_corte, tipo: date, desc: "fecha de corte del reporte"}
   periodo: {nombre: periodo, tipo: str, desc: "periodo al que corresponde el valor (texto de la fuente)"}
   concepto: {nombre: concepto, tipo: str, desc: "concepto contable (taxonomía XBRL)"}
-  valor: {nombre: valor, tipo: float, desc: "valor tal como lo reporta la sociedad; la unidad la fija la taxonomía del reporte"}
+  valor: {nombre: valor, tipo: str, desc: "lo que reportó la sociedad, como texto: la carátula mezcla ciudades, direcciones, teléfonos y cifras"}
   punto_entrada: {nombre: punto_entrada, tipo: str, desc: "tipo de reporte (NIIF plenas, pymes, individuales…)"}
   taxonomia: {nombre: taxonomia, tipo: str, desc: "taxonomía del reporte"}
   numero_radicado: {nombre: radicado, tipo: str, desc: "número de radicado"}

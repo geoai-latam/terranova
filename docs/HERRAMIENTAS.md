@@ -168,7 +168,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `medicinalegal_homicidios_municipio` | ¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
 | `medicinalegal_muertes_accidentales_municipio` | ¿Cuántas muertes accidentales (ahogamientos, caídas, electrocuciones…) hubo en este municipio en el año? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
 | `medicinalegal_suicidios_municipio` | ¿Cuántos suicidios hubo en este municipio en el año, según Medicina Legal? | Instituto Nacional de Medicina Legal y Ciencias Forenses | CC-BY-SA-4.0 | 5 |
-| `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado o de carga hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
+| `policia_abigeato_pirateria_municipio` | ¿Cuántos robos de ganado, de carga o a bancos hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
 | `policia_delitos_sexuales_municipio` | ¿Cuántos delitos sexuales se denunciaron en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
 | `policia_homicidios_transito_municipio` | ¿Cuántas personas murieron en accidentes de tránsito en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
 | `policia_hurto_comercio_residencias_municipio` | ¿Cuántos robos a comercios y viviendas hubo en este municipio en el año? | Policía Nacional de Colombia | CC-BY-SA-4.0 | 5 |
