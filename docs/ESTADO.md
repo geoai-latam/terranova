@@ -99,6 +99,14 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   se deja como viene.
 - UPRA: la descripción de la capa dice que los rangos están en millones de pesos por hectárea; ahora
   lo dicen la fuente y las dos herramientas (v2).
+## Un punto en la vía no tiene predio (2026-11-02)
+
+- Auditoría de `sinic_predio_en_punto`: los vacíos en Cali no son huecos de la copia. Medido en la
+  capa 3 del SINIC: un punto de San Fernando tiene 21 terrenos a menos de 33 m y no cae en ninguno;
+  el centro de un lote sí lo encuentra. Las vías y el espacio público no son terreno.
+- `predio_en_punto`, `sinic_predio_en_punto` e `igac_predio_en_punto` (v2) lo dicen y remiten a un
+  punto dentro del lote o a `ficha_lote` con el polígono.
+
 ## Exportar capas completas (2026-11-02, ADR-0038 propuesta)
 
 - Diseño escrito para B10: `GET /v1/exportar/{fuente_id}`, solo desde una copia vigente y fuera del

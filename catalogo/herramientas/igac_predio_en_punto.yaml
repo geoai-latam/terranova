@@ -1,5 +1,5 @@
 id: igac_predio_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.terreno
 pregunta: "¿Qué predio del catastro IGAC hay en este punto?"
@@ -8,7 +8,9 @@ descripcion: >
   (rural o urbana) y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente (para esos, sinic_predio_en_punto; si no sabe cuál, predio_en_punto). Los
   polígonos sin predio asignado (número todo en ceros tras el municipio) no salen: ahí no hay predio
-  identificado.
+  identificado. Las vías, los andenes y las plazas no son terreno de ningún predio: un punto que cae ahí no
+  trae predio aunque haya lotes a pocos metros. Para un lote, un punto dentro de él, o ficha_lote
+  con su polígono.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:

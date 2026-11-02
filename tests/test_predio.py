@@ -41,7 +41,7 @@ class Falso:
 async def test_si_el_sinic_lo_tiene_no_se_consulta_el_igac() -> None:
     ej = Falso(**{SINIC: _sobre("encontrado", "sinic")})
     r = await p.ficha(ej, PUNTO)  # type: ignore[arg-type]
-    assert r.herramienta == "predio_en_punto@1" and r.avisos == ["sinic"]
+    assert r.herramienta == "predio_en_punto@2" and r.avisos == ["sinic"]
     assert ej.llamadas == [SINIC]
 
 

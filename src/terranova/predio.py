@@ -15,7 +15,7 @@ from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha import PREDIO_EN_PUNTO, PREDIO_SINIC, _procedencia_fallida
 
 HERRAMIENTA = "predio_en_punto"
-VERSION = 1
+VERSION = 2
 FAMILIA = "territorio"
 TOPE_CREDITOS = 10
 PREGUNTA = "¿Qué predio hay en este punto de Colombia?"
@@ -24,8 +24,10 @@ DESCRIPCION = (
     "hace falta saber qué gestor catastral lo atiende. Mira primero el SINIC del IGAC (los 333 "
     "municipios con gestor propio, como Bogotá, Medellín y Cali) y, si no lo tiene, la base "
     "catastral pública del IGAC. Devuelve la respuesta de la base que lo tiene; la procedencia "
-    "dice cuál fue. Use esta herramienta para el predio de un punto. Para todo lo demás de un "
-    "lugar (restricciones, suelo, sismos), ficha_lugar."
+    "dice cuál fue. Las vías, los andenes y las plazas no son terreno de ningún predio: un punto "
+    "que cae ahí no trae predio aunque haya lotes a pocos metros; para un lote, un punto dentro "
+    "de él, o ficha_lote con su polígono. Use esta herramienta para el predio de un punto. Para "
+    "todo lo demás de un lugar (restricciones, suelo, sismos), ficha_lugar."
 )
 ESQUEMA_ENTRADA: dict[str, Any] = {
     "type": "object",
