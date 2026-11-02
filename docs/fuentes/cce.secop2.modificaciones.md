@@ -96,6 +96,6 @@ dirección y BPIN.
     entre las vigentes.
   - Se retiró `secop_adiciones_contrato` y `cce.secop2.adiciones` pasó a borrador.
 - **Pendiente:**
-  - Un aviso dentro de la respuesta (no solo en la descripción) que diga que la primera
-    modificación no tiene cambio calculable. Va con el patrón A del motor.
+  - ~~El aviso de la primera modificación dentro de la respuesta~~: hecho con el patrón A (cada
+    respuesta con datos lo dice).
   - Revisar si `cb9c-h8sn` publica la fecha del cambio de tipo o algo que no tenga `u8cx-r425`.

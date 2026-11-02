@@ -70,6 +70,12 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   encontrado») y lo traduce a sus fases. Con eso se ve que el PAE de Chía tuvo un solo proponente.
 - **Motor:** derivados `diferencia_anterior` y `ultimo`, el filtro `solo_si` y la consulta
   `previa`, cuyos valores solo entran si cumplen el patrón de la entrada.
+- **Vacíos que dicen por qué (patrón A):**
+  - Una fuente puede declarar `cobertura.aviso_vacio`, y una herramienta, `avisos` para el vacío o
+    para ciertos datos. Salen al servir: no se guardan en caché ni en las doradas.
+  - Garantías, ejecución, compromisos y rubros de SECOP II ya lo usan. Las garantías cubren menos
+    del 0,5 % de los contratos, y el PAE de Chía no está en ninguno de los cuatro conjuntos.
+  - Proponentes avisa cuando hay un solo proponente.
 
 ## Ficha de un lote (2026-11-01)
 

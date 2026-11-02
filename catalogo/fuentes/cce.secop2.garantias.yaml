@@ -18,7 +18,10 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/gjp9-cutm.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO}
+cobertura:
+  pais: CO
+  aviso_vacio: >
+    SECOP II publica las pólizas de muy pocos contratos: 48 949 pólizas de 22 081 contratos desde diciembre de 2020, frente a unos 4,9 millones de contratos firmados desde 2021 (medido el 2026-11-02). Sin resultado aquí no quiere decir que el contrato no tenga garantía: hay que verla en el expediente del proceso en SECOP II.
 datos_personales: filtrados
 estado: publicada
 campos:

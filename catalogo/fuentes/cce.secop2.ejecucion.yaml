@@ -17,7 +17,10 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/mfmm-jqmq.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO}
+cobertura:
+  pais: CO
+  aviso_vacio: >
+    SECOP II solo publica la ejecución de los contratos en los que la entidad registra un plan de entregas o un porcentaje de avance, y no todas lo hacen (el PAE de Chía, de 64 938 millones, no aparece; medido el 2026-11-02). Sin resultado aquí no quiere decir que el contrato no se esté ejecutando: los pagos y facturas están en secop_pagos_contrato.
 datos_personales: ninguno
 estado: publicada
 campos:

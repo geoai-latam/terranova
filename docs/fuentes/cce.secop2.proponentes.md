@@ -58,5 +58,8 @@ Las columnas son 9: `codigo_entidad`, `codigo_proveedor`, `entidad_compradora`,
     crudo a la consulta.
   - Sin fases, la lista es `''` y la respuesta es «no encontrado».
   - La procedencia lista las dos fuentes.
-- **Pendiente:** un aviso cuando hay un solo proponente en una modalidad competitiva (licitación,
-  selección abreviada, concurso de méritos). Va con el patrón A del motor (avisos de la ficha).
+- **2026-11-02, patrón A:**
+  - Con un solo proponente, la respuesta avisa que en una licitación, una selección abreviada o un
+    concurso eso quiere decir que no hubo competencia, y que en contratación directa es lo normal.
+  - El vacío explica las dos causas posibles.
+- **Pendiente:** saber la modalidad sin otra llamada, para avisar solo en las competitivas.

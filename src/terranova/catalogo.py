@@ -298,6 +298,11 @@ class Cobertura(_Ficha):
     periodo: str | None = Field(
         default=None, description="años que cubre, escritos a mano cuando no hay columna (spec 08)"
     )
+    aviso_vacio: str | None = Field(
+        default=None,
+        description="por qué un «no encontrado» de esta fuente no quiere decir «no hay»: lo que la "
+        "fuente no cubre, medido. Sale con cada respuesta vacía",
+    )
 
 
 class Comportamiento(_Ficha):
@@ -686,6 +691,34 @@ MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
 MARCADOR_PREVIA = "previa"
 
 
+class SoloSi(_Ficha):
+    """Qué elementos cuentan para un derivado: los que tienen `campo` (nombre rt/1) en `valores`.
+    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior»."""
+
+    campo: str
+    valores: list[str] = Field(min_length=1)
+
+    def cumple(self, elemento: dict[str, Any]) -> bool:
+        return str(elemento.get(self.campo)) in self.valores
+
+
+class AvisoFicha(_Ficha):
+    """Un aviso que sale del catálogo, no de la fuente. `cuando: vacio` sale con «no encontrado»
+    (y reemplaza el `aviso_vacio` de la fuente: la herramienta sabe a cuál remitir);
+    `cuando: encontrado` sale con datos, y con `si` solo cuando el campo de arriba de `datos`
+    tiene uno de esos valores (un solo proponente: no hubo competencia)."""
+
+    texto: str = Field(min_length=10)
+    cuando: Literal["vacio", "encontrado"] = "vacio"
+    si: SoloSi | None = None
+
+    @model_validator(mode="after")
+    def _si_con_datos(self) -> Self:
+        if self.si is not None and self.cuando != "encontrado":
+            raise ValueError("un aviso con `si` mira los datos: va con `cuando: encontrado`")
+        return self
+
+
 class Previa(_Ficha):
     """Una consulta antes de la principal que traduce la entrada: el contrato de SECOP II trae el
     proceso de compra (CO1.BDOS…), y los proponentes cuelgan de sus fases (CO1.REQ…). Los valores
@@ -757,17 +790,6 @@ DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo"})
 # por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
 DE_SECUENCIA = frozenset({"diferencia_anterior"})
 DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "ultimo", "completitud_total"})
-
-
-class SoloSi(_Ficha):
-    """Qué elementos cuentan para un derivado: los que tienen `campo` (nombre rt/1) en `valores`.
-    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior»."""
-
-    campo: str
-    valores: list[str] = Field(min_length=1)
-
-    def cumple(self, elemento: dict[str, Any]) -> bool:
-        return str(elemento.get(self.campo)) in self.valores
 
 
 class Derivado(_Ficha):
@@ -867,6 +889,10 @@ class Herramienta(_Ficha):
     )
     cobro: Cobro
     canario: Canario
+    avisos: list[AvisoFicha] = Field(
+        default_factory=list,
+        description="lo que una persona debe saber al leer la respuesta y que la fuente no dice",
+    )
 
     @property
     def creditos(self) -> int:

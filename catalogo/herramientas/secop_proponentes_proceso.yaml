@@ -49,3 +49,9 @@ canario:
   minimos: {numero_proponentes: 1}
   campos: [documento_proponente, entidad, fecha_publicacion, id_proceso, nit_entidad, nombre_proceso, numero_proponentes, proponente]
   latencia_max_ms: 10000
+avisos:
+  - cuando: encontrado
+    si: {campo: numero_proponentes, valores: ["1"]}
+    texto: "Un solo proponente. En una licitación, una selección abreviada o un concurso de méritos eso quiere decir que no hubo competencia; en contratación directa es lo normal. La modalidad está en secop_proceso_por_id."
+  - cuando: vacio
+    texto: "Sin proponentes publicados para ese proceso: o el identificador no es de SECOP II, o el proceso no recibió ofertas por la plataforma. El número de respuestas de cada fase está en secop_proceso_por_id."
