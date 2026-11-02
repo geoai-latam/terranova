@@ -107,6 +107,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Ahora:** los tres casos son `no_encontrado`, sin tocar el cortacircuitos. La regla va por herramienta
   en el catálogo (`documento_ausente`, `minimo_caracteres`, `solo_elementos`).
 
+## Niveles de calidad y alta de fuentes (2026-11-02)
+
+- **Niveles:** `GET /v1/estado/niveles` da el de cada fuente con 14 días de canarios. Faltan publicarlos en
+  `/fuentes` y en el sobre, y cambiar el nivel solo: hoy `en_mantenimiento` se informa, no saca a nadie
+  de los perfiles MCP.
+- **`scripts/nueva_fuente.py crear <id> <conjunto>`:** escribe la ficha de un conjunto de datos.gov.co en
+  borrador, con licencia y datos personales sin decidir, y aparta las columnas que parecen de una persona.
+  Solo cubre Socrata.
+- **`scripts/nueva_fuente.py horas <id> <horas> [nota]`:** suma a `interno/horas_fuentes.csv`.
+
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 
 - **Calidad del aire:** Cali bajó de 54 s a 9 s medidos en la fuente. El filtro ya no castea la columna.

@@ -18,9 +18,11 @@ from terranova.ejecutor import Ejecutor
 from terranova.vigilancia import (
     RegistroCanarios,
     Resultado,
+    _nivel,
     alertar,
     correr,
     estado_por_fuente,
+    niveles_por_fuente,
 )
 
 DORADAS = Path(__file__).parent / "doradas"
@@ -263,3 +265,40 @@ async def test_copia_vencida_no_sale_verde() -> None:
 
     (r,) = await correr(catalogo, _Vencida(), reloj=lambda: 0.0)  # type: ignore[arg-type]
     assert not r.ok and r.codigo == "vencido"
+
+
+def _dias(*codigos: str) -> list[tuple[str, str]]:
+    return [(f"2026-10-{i:02}", c) for i, c in enumerate(codigos, 1)]
+
+
+@pytest.mark.parametrize(
+    ("codigos", "nivel"),
+    [
+        (("verde", "verde"), "sin_medir"),
+        (("verde",) * 14, "verificada"),
+        (("fuente_no_disponible",) + ("verde",) * 19, "estandar"),
+        (("fuente_no_disponible",) * 2 + ("verde",) * 4, "en_observacion"),
+        (("verde",) * 10 + ("fuente_no_disponible",) * 3, "en_mantenimiento"),
+        (("verde",) * 11 + ("lento",) * 3, "en_observacion"),
+    ],
+)
+def test_el_nivel_sale_de_los_canarios(codigos: tuple[str, ...], nivel: str) -> None:
+    fuente = cargar().fuentes["policia.lesiones"]
+    assert _nivel(fuente, _dias(*codigos)) == nivel
+
+
+def test_una_fuente_sin_perfil_no_llega_a_verificada() -> None:
+    fuente = cargar().fuentes["policia.lesiones"].model_copy(update={"perfil": None})
+    assert _nivel(fuente, _dias(*("verde",) * 14)) == "estandar"
+
+
+def test_todas_las_fuentes_salen_en_los_niveles() -> None:
+    catalogo = cargar()
+    h = catalogo.herramientas["policia_lesiones_municipio"]
+    filas = [(h.id, h.fuente, f"2026-10-{d:02}", "verde") for d in range(1, 5)]
+    salida = niveles_por_fuente(filas, catalogo)
+    assert salida["medido_con"] == "canarios"
+    por_id = {f["fuente_id"]: f for f in salida["fuentes"]}
+    assert len(por_id) == len(catalogo.fuentes)
+    assert por_id[h.fuente]["dias_medidos"] == 4
+    assert por_id["igac.gestores_catastrales"]["nivel"] == "sin_medir"

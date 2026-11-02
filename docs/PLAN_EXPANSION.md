@@ -232,6 +232,10 @@ Lo que no se puntúa porque deja la fuente fuera: licencia roja, búsqueda por p
 | Experimental | Solo con llave de evaluación (ADR-0007), sin promesa |
 | En retiro | Con fecha de salida |
 
+`GET /v1/estado/niveles` los calcula con 14 días de canarios. Hasta que haya tráfico que medir, el
+éxito sale de ellos y no de producción, y la respuesta lo dice (`medido_con`). Suma dos estados: `sin_medir`,
+con menos de 3 días, y `en_observacion`, por debajo del 95 %. El retiro sigue siendo una decisión manual.
+
 **Degradación automática.** Más del 50 % de rojos por dato en 3 días pasa la fuente a «en
 mantenimiento», visible en `/estado` y en `completitud`. A los 14 días, tarea en los pendientes. A
 los 28, sale de los perfiles MCP. El rojo por latencia (`lento`) y la copia vencida (`vencido`) se

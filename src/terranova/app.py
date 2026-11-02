@@ -59,7 +59,12 @@ from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
 from terranova.pagina_estado import pagina_estado, pagina_simple
-from terranova.vigilancia import estado_por_fuente, historial_por_herramienta
+from terranova.vigilancia import (
+    VENTANA_NIVELES,
+    estado_por_fuente,
+    historial_por_herramienta,
+    niveles_por_fuente,
+)
 
 Scope = MutableMapping[str, Any]
 logger = logging.getLogger("terranova.app")
@@ -465,6 +470,14 @@ def crear_api() -> FastAPI:
         canarios = puerta.ESTADO.canarios
         filas = canarios.historial(dias) if canarios is not None else []
         return historial_por_herramienta(filas, puerta.VENDIBLE, dias)
+
+    @api.get("/v1/estado/niveles", tags=["catálogo"], operation_id="ver_niveles_de_calidad")
+    async def niveles_de_calidad() -> dict[str, Any]:
+        """Nivel de calidad de cada fuente en los últimos 14 días, según sus canarios: `verificada`,
+        `estandar`, `en_observacion`, `en_mantenimiento` o `sin_medir`. Público."""
+        canarios = puerta.ESTADO.canarios
+        filas = canarios.historial(VENTANA_NIVELES) if canarios is not None else []
+        return niveles_por_fuente(filas, puerta.VENDIBLE)
 
     # --- alta de la llave de prueba y contacto (ADR-0034): formularios del sitio, sin JS ------
 
