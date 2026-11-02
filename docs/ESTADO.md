@@ -125,6 +125,11 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   borrador, con licencia y datos personales sin decidir, y aparta las columnas que parecen de una persona.
   Solo cubre Socrata.
 - **`scripts/nueva_fuente.py horas <id> <horas> [nota]`:** suma a `interno/horas_fuentes.csv`.
+## Monitores sobre las copias (2026-11-02)
+
+- **Decidido, sin implementar:** [ADR-0036](decisions/0036-monitores-sobre-copias.md) y
+  [spec 12](specs/12-monitores.md). Se avisa lo que entró tras cada refresco de una copia, comparando
+  versiones ya guardadas, sin tocar la fuente. Se construye cuando un piloto lo pida.
 
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 
