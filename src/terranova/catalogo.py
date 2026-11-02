@@ -258,6 +258,11 @@ class Campo(_Ficha):
         description="la fuente escribe la cifra como texto con signo de pesos ($84.95, «$ 2.31», "
         "-$0.00): sale como número",
     )
+    vacios: tuple[str, ...] = Field(
+        default=(),
+        description="textos que la fuente pone en lugar de un dato que no tiene (la SFC escribe "
+        "NIT «0» y página web «Pendiente»): salen vacíos, no como dato",
+    )
     alias: list[str] = Field(
         default_factory=list,
         description="otros nombres del mismo campo en capas de servicios distintos (los POMCA de "

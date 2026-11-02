@@ -634,3 +634,25 @@ def test_distintos_cuenta_los_meses_con_datos() -> None:
     assert derivar_resultado(Derivado(de="maximo", campo="mes", tipo="int"), elementos, None) == 12
     with pytest.raises(ValueError):
         Derivado(de="distintos", tipo="int")
+
+
+def test_relleno_de_la_fuente_sale_vacio_y_el_tipo_con_su_nombre() -> None:
+    """La SFC escribe NIT «0» y página web «Pendiente» en las filiales del exterior, y el tipo de
+    entidad solo como número (medido el 2026-11-02 en sr9n-792w; los nombres, en el CUIF)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["superfinanciera_vigiladas_buscar"]
+    fuente = CATALOGO.fuentes[h.fuente]
+    exterior = mapear_fila(
+        h,
+        fuente,
+        {"tipo_entidad": "111", "numeroidentificacion": "0", "uripaginaweb": "Pendiente"},
+        None,
+    )
+    assert exterior["nit_con_dv"] is None and exterior["pagina_web"] is None
+    assert exterior["tipo_entidad"] == 111 and exterior["tipo_entidad_significado"] is None
+    nequi = mapear_fila(
+        h, fuente, {"tipo_entidad": "4", "numeroidentificacion": "9016332760"}, None
+    )
+    assert nequi["tipo_entidad_significado"] == "Compañías de financiamiento"
+    assert nequi["nit_con_dv"] == "9016332760"
