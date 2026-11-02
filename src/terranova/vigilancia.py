@@ -21,7 +21,7 @@ from typing import Any
 
 from terranova.bd import Conexion
 from terranova.canario import PREFIJO_ESQUEMA, comprobar
-from terranova.catalogo import Catalogo
+from terranova.catalogo import Catalogo, Fuente
 from terranova.ejecutor import Ejecutor
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.medicion import ahora
@@ -137,6 +137,10 @@ async def correr(
 
 # Fallas que no son caídas: la fuente responde bien pero lenta, o la copia está vencida.
 DEGRADADOS = frozenset({"lento", "vencido"})
+VENTANA_NIVELES = 14
+DIAS_MINIMOS = 3
+VERIFICADA = 0.99
+ESTANDAR = 0.95
 
 
 def _estado(rs: list[Resultado]) -> str:
@@ -195,6 +199,45 @@ def historial_por_herramienta(
         "herramientas_siempre_verdes": len(por_herramienta) - len(con_fallas),
         "con_fallas": con_fallas,
     }
+
+
+def _nivel(fuente: Fuente, rs: list[tuple[str, str]]) -> str:
+    """`rs`: (día, código) de una fuente en la ventana. Sale de sus canarios: mientras no haya
+    tráfico que medir, son la única señal de éxito (PLAN_EXPANSION, niveles de calidad)."""
+    dias = sorted({d for d, _ in rs})
+    if len(dias) < DIAS_MINIMOS:
+        return "sin_medir"
+    recientes = [c for d, c in rs if d in dias[-DIAS_MINIMOS:]]
+    rojos = [c for c in recientes if c != "verde" and c not in DEGRADADOS]
+    if len(rojos) * 2 > len(recientes):
+        return "en_mantenimiento"
+    exito = sum(c == "verde" for _, c in rs) / len(rs)
+    licencia_al_dia = fuente.licencia.verificada is not None and fuente.perfil is not None
+    if exito >= VERIFICADA and licencia_al_dia and set(recientes) == {"verde"}:
+        return "verificada"
+    return "estandar" if exito >= ESTANDAR else "en_observacion"
+
+
+def niveles_por_fuente(
+    filas: list[tuple[str, str, str, str]], catalogo: Catalogo, dias: int = VENTANA_NIVELES
+) -> dict[str, Any]:
+    """`GET /v1/estado/niveles`: el nivel de calidad de cada fuente en la ventana."""
+    por_fuente: dict[str, list[tuple[str, str]]] = {}
+    for h, f, dia, codigo in filas:
+        if h in catalogo.herramientas:
+            por_fuente.setdefault(f, []).append((dia, codigo))
+    fuentes = []
+    for f in sorted(catalogo.fuentes):
+        rs = por_fuente.get(f, [])
+        fuentes.append(
+            {
+                "fuente_id": f,
+                "nivel": _nivel(catalogo.fuentes[f], rs),
+                "dias_medidos": len({d for d, _ in rs}),
+                "exito": round(sum(c == "verde" for _, c in rs) / len(rs), 4) if rs else None,
+            }
+        )
+    return {"dias": dias, "medido_con": "canarios", "fuentes": fuentes}
 
 
 def alertar(resultados: list[Resultado], url: str | None) -> bool:
