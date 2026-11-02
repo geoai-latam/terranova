@@ -48,6 +48,21 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## La portada habla a organizaciones (2026-11-02)
+
+La portada se leía como un producto solo geográfico (5 de 8 figuras y las 4 escenas 3D eran de
+territorio, cuando el catálogo es 78 % no geográfico). Ahora va por decisiones de una organización:
+
+- **El problema** es una empresa: «¿Le damos crédito a este proveedor?» (NIT 899999068). Tres portales
+  con el dato tal cual (RUES, establecimientos, Supersociedades) terminan en una frase con quién dice
+  cada cosa y cinco barras de ingresos y ganancia 2021–2025 (`empresa` en `datos/portada.json`, de los
+  goldens).
+- **Cuatro decisiones, cada una con su prueba:** contrato (bitácora), ley (índice), municipio (cifra) y
+  lote (expediente). La criba sale de la portada; «tres formas de usarlo» pasa a «cómo trabajamos»
+  (cuatro pasos y el IRCA de Chía en cuatro destinos, sin nombrar clientes).
+- **La cobertura** baja después de los sectores, con el mapa SINIC de su primera versión, sus rótulos
+  y un vaivén con el norte arriba.
+
 ## La portada: el dato es la figura (2026-11-02)
 
 La portada cambió de figuras y de orden. Las isométricas de objetos (banco con barrera, fichero) se

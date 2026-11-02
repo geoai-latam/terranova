@@ -8,12 +8,15 @@ Todo sale de archivos locales, sin una sola consulta a servidores del Estado:
   22-10-2026, huella 3696177c). Un predio va «a revisión» si su lindero se monta más de 2 m² sobre
   el de otro de la misma copia. La huella del expediente es un sha256 local de sus filas.
 - indicadores de Chía (25175): las respuestas capturadas de tests/doradas (MinEducación, INS,
-  Policía Nacional, IGAC; capturadas del 22 al 28-10-2026).
+  Policía Nacional, IGAC; capturadas del 22 al 28-10-2026). Del INS va la serie entera del IRCA.
 - Pitalito 2025: la respuesta capturada de secop_integrado_contratos_entidad (23-10-2026). La suma
   «tal cual» (174.000 millones) es la medida del perfil de la fuente del 22-10-2026.
 - bitácora: el registro de modificaciones del contrato CO1.PCCNTR.3712964 de SECOP II, capturado
   el 02-11-2026 (tests/doradas/secop_modificaciones_contrato.json). Va sin nombres de personas: solo
   fecha, estado, días, propósito e identificador de cada modificación.
+
+- empresa: Ecopetrol (NIT 899999068) en RUES (22 y 23-10-2026) y Supersociedades (02-11-2026),
+  respuestas capturadas de tests/doradas.
 
 El índice del catálogo no va aquí: la figura lo arma con datos/catalogo.json, que escribe
 construir.py.
@@ -197,6 +200,9 @@ def indicadores() -> list[dict]:
             "corte": r[-1]["a_o"],
             "corte_antes": r[-2]["a_o"],
             "nota": r[-1]["nivel_de_riesgo"],
+            # la serie entera, para «cómo trabajamos»: el mismo dato en el tablero, el informe,
+            # la capa y el aviso
+            "serie": [[int(x["a_o"]), float(x["irca"])] for x in r],
             "entidad": "INS",
             "tool": t,
             "licencia": lic(t),
@@ -273,6 +279,46 @@ def bitacora() -> dict:
     }
 
 
+def empresa() -> dict:
+    """La empresa del problema: Ecopetrol (NIT 899999068), una sociedad, no una persona. Lo que
+    responden RUES (empresa y establecimientos) y Supersociedades (las 10 000 empresas, cifras en
+    billones de pesos, redondeadas a dos decimales), y cómo lo publica cada una."""
+    d1, r1 = dorada("rues_empresa_por_nit")
+    d2, r2 = dorada("rues_establecimientos_por_nit")
+    d3, r3 = dorada("supersociedades_empresa_grande_por_nit")
+    e = r1[0]
+
+    def billones(s: str) -> float:
+        return float(s.replace("$", "").strip())
+
+    años = [
+        {
+            "a": int(float(x["a_o_de_corte"])),
+            "ingresos": billones(x["ingresos_operacionales"]),
+            "ganancia": billones(x["ganancia_p_rdida"]),
+        }
+        for x in r3
+    ]
+    ult = r3[-1]
+    return {
+        "nit": e["nit"],
+        "razon_social": "Ecopetrol S.A.",
+        "camara": e["camara_comercio"].title(),
+        "estado": e["estado_matricula"].lower(),
+        "renovado": e["ultimo_ano_renovado"],
+        "fecha_matricula_tal_cual": e["fecha_matricula"],
+        "establecimientos": len(r2),
+        "establecimientos_cancelados": sum(x["estado_matricula"] == "CANCELADA" for x in r2),
+        "supervisor": ult["supervisor"].title(),
+        "nit_tal_cual_super": ult["nit"],
+        "ingresos_tal_cual": ult["ingresos_operacionales"],
+        "anios": años,
+        "grabado_rues": d1["grabado"][:10],
+        "grabado_est": d2["grabado"][:10],
+        "grabado_super": d3["grabado"][:10],
+    }
+
+
 def main() -> int:
     copias = RAIZ / "datos_locales"
     if "--copias" in sys.argv:
@@ -286,6 +332,7 @@ def main() -> int:
         "municipio": {"nombre": "Chía", "divipola": "25175"},
         "pitalito": pitalito(),
         "bitacora": bitacora(),
+        "empresa": empresa(),
     }
     texto = json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n"
     SALIDA.write_text(texto, encoding="utf-8", newline="\n")
