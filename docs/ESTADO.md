@@ -99,6 +99,12 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   se deja como viene.
 - UPRA: la descripción de la capa dice que los rangos están en millones de pesos por hectárea; ahora
   lo dicen la fuente y las dos herramientas (v2).
+## Exportar capas completas (2026-11-02, ADR-0038 propuesta)
+
+- Diseño escrito para B10: `GET /v1/exportar/{fuente_id}`, solo desde una copia vigente y fuera del
+  MCP, con la licencia y la atribución dentro del archivo.
+- No se implementa hasta que el dueño decida el cobro (propuesta: 1 crédito por 100 elementos) y el
+  trato de BY-SA al exportar. Las 9 copias del DANE quedan fuera hasta su decisión de licencia.
 
 ## Auditoría de herramientas: justicia y empresas (2026-11-02)
 
