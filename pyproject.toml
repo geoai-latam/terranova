@@ -84,8 +84,8 @@ strict = true
 files = ["src", "tests", "tests_lentos", "scripts"]
 
 [[tool.mypy.overrides]]
-# extra opcional `datasets`: sin tipos publicados
-module = ["geopandas.*", "pandas.*", "pandera.*", "shapely.*", "pyogrio.*", "pyarrow.*"]
+# extra opcional `datasets`, y los lectores de Excel de scripts/codigos_ciiu.py: sin tipos publicados
+module = ["geopandas.*", "pandas.*", "pandera.*", "shapely.*", "pyogrio.*", "pyarrow.*", "xlrd.*", "openpyxl.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

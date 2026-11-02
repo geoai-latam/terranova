@@ -21,7 +21,7 @@ def test_el_catalogo_versionado_es_valido() -> None:
 
 def _catalogo_con(tmp_path: Path, ruta: str, cambio: Callable[[dict[str, Any]], None]) -> Path:
     raiz = tmp_path / "catalogo"
-    for carpeta in ("fuentes", "herramientas", "cobertura"):
+    for carpeta in ("fuentes", "herramientas", "cobertura", "codigos"):
         shutil.copytree(RAIZ / carpeta, raiz / carpeta)
     archivo = raiz / ruta
     ficha = yaml.safe_load(archivo.read_text(encoding="utf-8"))
@@ -372,3 +372,24 @@ def test_un_alias_toma_el_campo_que_cada_capa_nombra_distinto() -> None:
     assert mapear_fila(h, fuente, {"CAT_ORD_A": "Uso Multiple"}, negro)["categoria_ordenacion"] == (
         "Uso Multiple"
     )
+
+
+def test_una_lista_de_codigos_compartida_llena_el_campo(tmp_path: Path) -> None:
+    """La CIIU del DANE (~500 clases) vive una vez en catalogo/codigos/ y la usan las dos fuentes
+    del RUES; si la lista no existe, el catálogo no carga."""
+    catalogo = cargar()
+    for fuente, campo in (
+        ("confecamaras.rues", "cod_ciiu_act_econ_pri"),
+        ("confecamaras.rues_establecimientos", "cod_ciiu_act_econ_pri"),
+    ):
+        c = catalogo.fuentes[fuente].campos[campo]
+        assert c.codigos and c.codigos["0610"] == "Extracción de petróleo crudo"
+        assert c.codigos["4923"] == "Transporte de carga por carretera"  # Rev. 4, no Rev. 5
+        assert c.codigos_norma and "Resolución 2306 de 2022" in c.codigos_norma
+    raiz = _catalogo_con(
+        tmp_path,
+        "fuentes/confecamaras.rues.yaml",
+        _set(campos__cod_ciiu_act_econ_pri__codigos_lista="no_existe"),
+    )
+    with pytest.raises(CatalogoInvalido, match="no existe la lista de códigos"):
+        cargar(raiz)

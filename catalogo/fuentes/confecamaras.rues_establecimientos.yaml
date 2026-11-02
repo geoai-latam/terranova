@@ -30,7 +30,7 @@ campos:
   fecha_matricula: {nombre: fecha_matricula, tipo: date, desc: "fecha de matrícula"}
   fecha_renovacion: {nombre: fecha_renovacion, tipo: date, desc: "fecha de la última renovación"}
   fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, desc: "fecha de cancelación"}
-  cod_ciiu_act_econ_pri: {nombre: ciiu, tipo: str, desc: "actividad económica principal (CIIU)"}
+  cod_ciiu_act_econ_pri: {nombre: ciiu, tipo: str, codigos_lista: ciiu_rev4_ac, vacios: ["9999"], desc: "actividad económica principal (CIIU Rev. 4 A.C.); su nombre sale al lado"}
   categoria_matricula: {nombre: categoria, tipo: str, desc: "establecimiento, agencia o sucursal"}
   numero_identificacion: {nombre: nit_propietario, tipo: str, desc: "NIT de la sociedad propietaria"}
 comportamiento: {max_por_pagina: 50000}

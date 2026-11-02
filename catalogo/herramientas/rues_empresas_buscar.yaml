@@ -1,5 +1,5 @@
 id: rues_empresas_buscar
-version: 2
+version: 3
 familia: empresas
 fuente: confecamaras.rues
 pregunta: "¿Qué empresas o entidades registradas en el RUES tienen este nombre?"
@@ -34,5 +34,5 @@ canario:
   # fondos de empleados, la sociedad misma…). Crece con los registros: mínimo.
   entrada: {nombre: ECOPETROL}
   minimos: {numero_registros: 50}
-  campos: [camara_comercio, categoria_matricula, ciiu_principal, ciiu_secundaria, digito_verificacion, estado_matricula, fecha_cancelacion, fecha_matricula, matricula, nit, numero_registros, organizacion_juridica, razon_social, sigla, tipo_sociedad, ultimo_ano_renovado]
+  campos: [camara_comercio, categoria_matricula, ciiu_principal, ciiu_principal_significado, ciiu_secundaria, ciiu_secundaria_significado, digito_verificacion, estado_matricula, fecha_cancelacion, fecha_matricula, matricula, nit, numero_registros, organizacion_juridica, razon_social, sigla, tipo_sociedad, ultimo_ano_renovado]
   latencia_max_ms: 15000

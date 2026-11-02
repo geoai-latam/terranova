@@ -36,8 +36,11 @@ campos:
   fecha_matricula: {nombre: fecha_matricula, tipo: date, desc: "fecha de matrícula"}
   ultimo_ano_renovado: {nombre: ultimo_ano_renovado, tipo: int, desc: "último año renovado"}
   fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, desc: "fecha de cancelación"}
-  cod_ciiu_act_econ_pri: {nombre: ciiu_principal, tipo: str, desc: "CIIU de la actividad principal"}
-  cod_ciiu_act_econ_sec: {nombre: ciiu_secundaria, tipo: str, desc: "CIIU de la actividad secundaria"}
+  # El RUES usa la CIIU Rev. 4 A.C. (no la Rev. 5, que rige desde la Resolución 992 de 2026):
+  # medido el 2026-11-02, 1 009 683 filas traen códigos que solo existen en la Rev. 4. «9999» es
+  # relleno (1 373 373 filas). Los códigos viejos con letra (G521102) quedan sin nombre.
+  cod_ciiu_act_econ_pri: {nombre: ciiu_principal, tipo: str, codigos_lista: ciiu_rev4_ac, vacios: ["9999"], desc: "CIIU Rev. 4 A.C. de la actividad principal; su nombre sale al lado"}
+  cod_ciiu_act_econ_sec: {nombre: ciiu_secundaria, tipo: str, codigos_lista: ciiu_rev4_ac, vacios: ["9999"], desc: "CIIU Rev. 4 A.C. de la actividad secundaria; su nombre sale al lado"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Confederación Colombiana de Cámaras de Comercio, theme: comercio, accrualPeriodicity: monthly}
 # Spec 07: medido en la fuente, no en Terrnova.
