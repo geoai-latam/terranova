@@ -92,7 +92,7 @@ async def test_una_llave_revocada_no_recibe_avisos(e: Any) -> None:
 @pytest.mark.anyio
 async def test_saldo_bajo_y_luego_agotado_uno_de_cada_uno(e: Any) -> None:
     avisos, registro, cuota, correo = e
-    _llave(registro, 10)
+    _llave(registro, 40)  # sigue vigente el mes siguiente
     cuota.gastado = LIMITE * 79 // 100
     assert await avisos.correr(HOY) == (0, 0)
     cuota.gastado = LIMITE * 8 // 10
