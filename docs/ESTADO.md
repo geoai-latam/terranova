@@ -59,9 +59,10 @@ Colombia, con una petición por caso.
 - **URT (arreglado, falta desplegar):** la capa alojada arranca en frío: 17,6 s la primera consulta y
   0,3 a 0,5 s las siguientes. Pasa a copia ArcGIS (1.314 microzonas, 44 s, 143 ms por punto). El
   tope de 5 s no cambia. El estado que publica la fuente es «En firme» o «Cerrada», no «abierta».
-- **BanRep (sin causa cerrada):** las 5 series dieron HTTP 500 al servidor a las 09:01 UTC. Desde
-  Colombia, con el código del conector, responden 200 en 8 a 10 s. Falta probar desde el servidor si
-  es un bloqueo al datacenter o una caída nocturna.
+- **BanRep (caída de la fuente a esa hora):** las 5 series dieron HTTP 500 a las 09:01 UTC. El mismo
+  día, a las 02:11 UTC del 2 de noviembre, TRM y UVR responden por la puerta en producción con
+  `servido_desde: fuente` en 9 s: no hay bloqueo al datacenter. `GET /v1/estado/historial` dirá si se
+  repite.
 - **Alertas del IDEAM:** la copia venció porque el refresco desde Colombia nunca se programó (no hay
   `refresco.log`). Depende de `programar_refresco.ps1`.
 - **Saber 11 por municipio:** 90 s en el canario, 0,6 a 0,8 s desde Colombia, también en un municipio
@@ -71,6 +72,22 @@ Colombia, con una petición por caso.
 - **Puentes INVÍAS y SECOP I:** 9,8 s y 12 s en el canario, 0,5 s y 0,3 s desde Colombia. La mediana
   de Socrata en el canario es 2,2 s, así que no hay un sobrecosto general. Quedan en lento, sin tocar
   sus topes.
+
+## Velocidad por MCP, medida desde Colombia (2026-11-01, 21:00 hora de Colombia)
+
+Tres corridas por ruta contra producción, con la llave de evaluación:
+
+| Ruta | `tools/list` | Peso | Herramientas |
+|---|---|---|---|
+| `/mcp` | 2,8 a 3,3 s | 1.395 KB | 210 |
+| `/mcp/territorio` | 1,2 a 3,2 s | 305 KB | 46 |
+| `/mcp/catalogo` | 0,4 s | 17 KB | 5 |
+
+- Consulta mínima de código (`dane_divipola_buscar`): 0,2 a 0,3 s. BanRep: 9 a 10 s, lo que tarda la
+  fuente.
+- Los 9 a 12 s al listar y los 3 a 12 s por consulta del informe de GEO Copilot no se reprodujeron
+  aquí. Falta medirlo desde su lado. El cuelgue de 120 s sigue sin causa.
+- El peso de `/mcp` (1,4 MB) es lo que más pesa al listar: GEO Copilot debe usar perfiles.
 
 ## Sitio v2, ronda de cierre del PR #212 (2026-11-01, sin fusionar)
 

@@ -246,6 +246,8 @@ bucle cerrado.
 - **`/estado`:** página pública con el estado de la puerta y el de cada fuente según su último
   canario diario.
 - **`GET /v1/estado`:** lo mismo en JSON.
+- **`GET /v1/estado/historial?dias=7`:** lo que falló en los últimos días (hasta 30), día por día,
+  para saber si un rojo fue de una noche o se repite.
 
 Las fuentes son de entidades públicas: cuando una falla, la verá en rojo y la puerta responderá
 «no se pudo». El compromiso de servicio está en [SLA.md](SLA.md).

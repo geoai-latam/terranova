@@ -20,7 +20,7 @@ from html import escape
 from typing import Annotated, Any
 from urllib.parse import parse_qs
 
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
@@ -56,7 +56,7 @@ from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
 from terranova.pagina_estado import pagina_estado, pagina_simple
-from terranova.vigilancia import estado_por_fuente
+from terranova.vigilancia import estado_por_fuente, historial_por_herramienta
 
 Scope = MutableMapping[str, Any]
 logger = logging.getLogger("terranova.app")
@@ -392,6 +392,19 @@ def crear_api() -> FastAPI:
         o `sin_datos`. Público, como el catálogo."""
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return estado_por_fuente(ultimos, puerta.VENDIBLE)
+
+    @api.get(
+        "/v1/estado/historial",
+        tags=["catálogo"],
+        operation_id="ver_historial_estado",
+        responses={400: {"model": Problema, "content": {"application/problem+json": {}}}},
+    )
+    async def historial_estado(dias: int = Query(default=7, ge=1, le=30)) -> dict[str, Any]:
+        """Lo que falló en los últimos `dias` según los canarios, día por día: dice si un rojo fue
+        de una noche o se repite. Las herramientas siempre en verde solo se cuentan. Público."""
+        canarios = puerta.ESTADO.canarios
+        filas = canarios.historial(dias) if canarios is not None else []
+        return historial_por_herramienta(filas, puerta.VENDIBLE, dias)
 
     # --- alta de la llave de prueba y contacto (ADR-0034): formularios del sitio, sin JS ------
 
