@@ -65,7 +65,9 @@ jobs:
     needs: cambios
     if: needs.cambios.outputs.codigo == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 20  # la suite ya tarda ~9,5 min en CI; con 10 el job moría con todo en verde
+    # La suite tarda de 10 a 20 min según el runner (medido el 2026-11-02: de 630 a 1 167 s), y
+    # con 20 el job se cortó dos veces con todo en verde. Antes pasó lo mismo con 10.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
 
