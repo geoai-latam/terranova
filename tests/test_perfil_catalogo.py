@@ -37,6 +37,7 @@ def test_cada_herramienta_del_catalogo_tiene_su_documento() -> None:
     assert {d.herramienta for d in docs} == set(puerta.CATALOGO.herramientas) | {
         "ficha_lugar",
         "ficha_empresa",
+        "predio_en_punto",
     }
     assert all(d.texto for d in docs)
 

@@ -30,7 +30,7 @@ from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
-from terranova import ficha_empresa, metricas, puerta
+from terranova import ficha_empresa, metricas, predio, puerta
 from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
 from terranova.catalogo import (
     FORMAS_ENTRADA,
@@ -143,6 +143,14 @@ class FichaEmpresaEntrada(_EntradaRest):
     """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, sin dígito de verificación."""
 
     nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
+
+
+class PredioEntrada(_EntradaRest):
+    """Un punto en EPSG:4326 y, si se quiere la forma completa del predio, `geometria`."""
+
+    lon: Annotated[float, Field(ge=-180, le=180)]
+    lat: Annotated[float, Field(ge=-90, le=90)]
+    geometria: bool = False
 
 
 class FichaEntrada(_EntradaRest):
@@ -279,6 +287,22 @@ def crear_api() -> FastAPI:
         operation_id=ficha_empresa.HERRAMIENTA,
         summary=ficha_empresa.PREGUNTA,
         description=ficha_empresa.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
+
+    api.add_api_route(
+        "/v1/fichas/predio",
+        _ruta(predio.HERRAMIENTA, PredioEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=predio.HERRAMIENTA,
+        summary=predio.PREGUNTA,
+        description=predio.DESCRIPCION,
         tags=["fichas"],
         responses={
             c: {"model": Problema, "content": {"application/problem+json": {}}}
