@@ -1,5 +1,5 @@
 id: funcionpublica_normas_buscar
-version: 1
+version: 2
 familia: normativa
 fuente: funcionpublica.gestor_normativo
 pregunta: "¿Qué normas hay sobre este tema o con este nombre (Gestor Normativo de Función Pública)?"
@@ -12,6 +12,7 @@ entrada: {texto: str}
 consulta:
   operacion: buscar
   tool: web_html
+  solo_elementos: true
   argumentos:
     url: "https://www.funcionpublica.gov.co/dafpIndexerBGN/norma/index"
     params: {find: FindNext, query: "{texto}", max: 10, offset: 0}

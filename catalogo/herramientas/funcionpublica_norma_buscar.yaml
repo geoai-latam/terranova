@@ -1,5 +1,5 @@
 id: funcionpublica_norma_buscar
-version: 1
+version: 2
 familia: normativa
 fuente: funcionpublica.gestor_normativo
 pregunta: "¿Qué dice esta norma sobre este tema?"
@@ -13,6 +13,7 @@ entrada: {norma: int, buscar: str}
 consulta:
   operacion: buscar
   tool: web_html
+  documento_ausente: [302]
   argumentos:
     url: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i={norma}"
     buscar: "{buscar}"

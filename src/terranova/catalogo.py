@@ -684,6 +684,18 @@ class Consulta(_Ficha):
         description="ruta (con puntos) de la lista de elementos cuando no vienen como capa ni "
         "tabla, p. ej. `clases` o `facts.municipios`",
     )
+    documento_ausente: list[int] = Field(
+        default_factory=list,
+        description="códigos HTTP con que la fuente dice que ese documento no existe: es «no "
+        "encontrado», no una caída",
+    )
+    minimo_caracteres: int | None = Field(
+        default=None,
+        description="una página más corta que esto es relleno de la fuente, no el documento",
+    )
+    solo_elementos: bool = Field(
+        default=False, description="sin elementos no hay respuesta, aunque venga el título"
+    )
     completo_por_construccion: bool = Field(
         default=False,
         description="resumen completo (ráster, serie): no hay «vistos de un total»",

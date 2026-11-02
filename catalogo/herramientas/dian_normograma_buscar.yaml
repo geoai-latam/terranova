@@ -1,5 +1,5 @@
 id: dian_normograma_buscar
-version: 1
+version: 2
 familia: normativa
 fuente: dian.normograma
 pregunta: "¿Qué dice esta norma tributaria o aduanera sobre este tema?"
@@ -12,6 +12,7 @@ entrada: {documento: documento_normativo, buscar: str}
 consulta:
   operacion: buscar
   tool: web_html
+  documento_ausente: [404]
   argumentos:
     url: "https://normograma.dian.gov.co/dian/compilacion/docs/{documento}.htm"
     buscar: "{buscar}"

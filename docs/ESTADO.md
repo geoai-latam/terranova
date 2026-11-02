@@ -99,6 +99,14 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Formatos:** el DIVIPOLA de la UARIV (`05001`), el NIT y el CIIU de las grandes empresas (`899999068`,
   `0610`) y las fechas del RUES.
 
+## Documento que no existe (2026-11-02)
+
+- **Qué pasaba:** una sentencia con el año equivocado devolvía «encontrado» con la portada de la Corte
+  (32 caracteres), y buscar en ella daba 0 apariciones, como si la sentencia no hablara del tema. Una
+  norma inexistente de CREG, DIAN o Función Pública daba error de la fuente y sumaba para el cortacircuitos.
+- **Ahora:** los tres casos son `no_encontrado`, sin tocar el cortacircuitos. La regla va por herramienta
+  en el catálogo (`documento_ausente`, `minimo_caracteres`, `solo_elementos`).
+
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 
 - **Calidad del aire:** Cali bajó de 54 s a 9 s medidos en la fuente. El filtro ya no castea la columna.

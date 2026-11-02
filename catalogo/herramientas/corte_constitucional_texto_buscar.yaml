@@ -1,5 +1,5 @@
 id: corte_constitucional_texto_buscar
-version: 1
+version: 2
 familia: normativa
 fuente: corteconstitucional.relatoria
 pregunta: "¿Qué dice esta sentencia de la Corte Constitucional sobre este tema?"
@@ -12,6 +12,7 @@ entrada: {anio: int, sentencia: sentencia_relatoria, buscar: str}
 consulta:
   operacion: buscar
   tool: web_html
+  minimo_caracteres: 500
   argumentos:
     url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
     buscar: "{buscar}"
