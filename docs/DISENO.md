@@ -178,9 +178,10 @@ rehagan con esta regla.
 - **Cuatro tiempos.** Cada figura cuenta pregunta, fuente, prueba y reposo.
   - El reposo es el cuadro que se ve con movimiento reducido.
   - La cámara entra cerrada y se asienta, y no gira sola. La excepción es la cobertura, que el dueño
-    pidió que gire: despacio (una vuelta en unos 80 s), a 30 cuadros, solo en vista, sin movimiento
-    reducido y en pausa mientras alguien arrastra o señala una columna. Su encuadre es un cilindro
-    alrededor del país, así el giro no acerca ni aleja.
+    pidió que gire: en vaivén con el norte arriba (±0,45 rad alrededor del plano de partida, ida y
+    regreso en unos 40 s; de este a oeste se ve raro), a 30 cuadros, solo en vista, sin movimiento
+    reducido y en pausa mientras alguien arrastra o señala una columna. El plano es fijo, como el de
+    su primera versión, y lleva los rótulos de las ciudades grandes y los dos mares.
   - Entre ciclos no se pinta nada: cero cuadros en reposo (salvo el giro de la cobertura).
   - El tope es de 60 fps, o 30 con puntero grueso o con 4 núcleos o menos.
   - Las figuras tipográficas se mueven con transiciones de CSS, sin bucle de cuadros. Sus tiempos son

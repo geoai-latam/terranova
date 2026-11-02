@@ -2,11 +2,21 @@
 // que era la buena. Columnas hexagonales con la muestra del 3 % de predios del SINIC sobre las celdas
 // de tierra de Colombia (datos/co.json): altura y color siguen la raíz del conteo; las celdas planas
 // son tierra sin predios en la muestra. Plano cerrado y fijo sobre los Andes (el país se sale del
-// cuadro), sombreado plano horneado en los vértices, sin sombras ni rótulos. Al entrar, las columnas
-// suben desde la celda de Santa Marta (el punto del héroe) hacia afuera; después gira sola, despacio,
+// cuadro), sombreado plano horneado en los vértices, sin sombras; con los rótulos de las ciudades grandes y los mares. Al entrar, las columnas
+// suben desde la celda de Santa Marta (el punto del héroe) hacia afuera; después gira sola en vaivén, con el norte arriba,
 // solo mientras se ve, sin movimiento reducido y en pausa mientras alguien arrastra o señala una
 // columna. Al pasar el puntero, la columna se pinta de ámbar y da su conteo.
-import { getT, registrar, solo, quieto, pedir, corriendo } from './motor3d.js?v=0cb2e43b98';
+import { getT, aPantalla, registrar, solo, quieto, pedir, corriendo } from './motor3d.js?v=0cb2e43b98';
+
+// los rótulos: las ciudades grandes y los dos mares (las menores se callan en móvil)
+const LUGARES = [
+  ['Bogotá', -74.08, 4.61], ['Medellín', -75.57, 6.25], ['Cali', -76.53, 3.45],
+  ['Barranquilla', -74.80, 10.96], ['Cartagena', -75.51, 10.39], ['Santa Marta', -74.20, 11.24],
+  ['Bucaramanga', -73.12, 7.12], ['Cúcuta', -72.50, 7.89], ['Pereira', -75.69, 4.81],
+  ['Villavicencio', -73.63, 4.14], ['Montería', -75.88, 8.75],
+  ['Mar Caribe', -76.9, 12.0, 'm'], ['Océano Pacífico', -79.0, 4.6, 'm'],
+];
+const MENORES = ['Cartagena', 'Pereira', 'Villavicencio', 'Montería', 'Cúcuta', 'Santa Marta'];
 
 export async function montar(fig) {
   const T = getT();
@@ -69,7 +79,23 @@ export async function montar(fig) {
   function pose(t) { colocar(quieto ? 1e9 : t); toma(); }
 
   const lienzo = fig.querySelector('canvas'), control = fig.querySelector('.lienzo');
-  const f = registrar({ nombre: 'cobertura', caja: fig, lienzo, control, escena, cam, dur: ENTRA, n: 1, tInicial: 0, pose, tam });
+  const capa = fig.querySelector('.f3-rot');
+  const rot = LUGARES.map(([nm, lon, lat, k]) => {
+    const e = document.createElement('span'); e.className = k === 'm' ? 'f3-mar' : 'f3-ciudad'; e.textContent = nm; capa.append(e);
+    return { e, x: X(lon), z: Z(lat), menor: k === 'm' || MENORES.includes(nm) };
+  });
+  function despues(w, h) {
+    // aparecen cuando la onda ya pasó por más de la mitad del país
+    const op = quieto ? 1 : Math.min(1, Math.max(0, (f.t - ENTRA * 0.55) / 500));
+    for (const q of rot) {
+      const [x, y] = aPantalla(cam, q.x, 2, q.z, w, h);
+      const fuera = x < 30 || x > w - 30 || y < 14 || y > h - 14 || (w < 520 && q.menor);
+      q.e.style.display = fuera ? 'none' : '';
+      q.e.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      q.e.style.opacity = op;
+    }
+  }
+  const f = registrar({ nombre: 'cobertura', caja: fig, lienzo, control, escena, cam, dur: ENTRA, n: 1, tInicial: 0, pose, tam, despues });
   f.tocar = null; // tocar no repite: el gesto de esta figura es girar y señalar
   solo(f, { entrada: 1, cada: 1e9 });
   f.tocar = null;
@@ -116,13 +142,21 @@ export async function montar(fig) {
     pedir(f);
   }, true);
 
-  // giro solo: un cuadro cada ~33 ms con pedir(), nunca mientras corre la entrada
-  const VEL = 0.00006; let girando = false, ultimoG = 0;
+  // giro solo, en vaivén: el norte siempre arriba (±0,45 rad alrededor del plano de partida, una vuelta
+  // de ida y regreso cada ~40 s); tras un arrastre vuelve suave al vaivén. Un cuadro cada ~33 ms con
+  // pedir(), nunca mientras corre la entrada.
+  const AZ0 = st.az, AMP = 0.45, W_OSC = (2 * Math.PI) / 40000; let fase = 0, girando = false, ultimoG = 0;
   function giro(now) {
     girando = false;
     if (quieto || !f.vista || document.hidden) { ultimoG = 0; return; }
     if (!corriendo(f) && !activo && sel < 0 && now > pausa) {
-      if (now - ultimoG >= 32) { st.az += (ultimoG ? Math.min(80, now - ultimoG) : 0) * VEL; ultimoG = now; pedir(f); }
+      if (now - ultimoG >= 32) {
+        const dt = ultimoG ? Math.min(80, now - ultimoG) : 0;
+        fase += dt * W_OSC;
+        const meta = AZ0 + AMP * Math.sin(fase);
+        st.az += (meta - st.az) * Math.min(1, dt / 900);
+        ultimoG = now; pedir(f);
+      }
     } else ultimoG = 0;
     girando = true; requestAnimationFrame(giro);
   }
