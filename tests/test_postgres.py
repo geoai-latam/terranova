@@ -4,6 +4,7 @@
 import asyncio
 import os
 import uuid
+from datetime import date, timedelta
 from pathlib import Path
 
 import pytest
@@ -23,7 +24,12 @@ def test_registro_en_postgres() -> None:
     p = r.verificar(llave)
     assert p is not None and p.org == org and p.plan == "evaluacion" and p.nivel == "con_llave"
     r.fijar_nivel(org, "ampliado")
-    r.fijar_nivel(org, "ampliado")  # upsert
+    r.fijar_nivel(org, "ampliado", hasta=date.today() + timedelta(days=1), nota="prueba")
+    assert r.vigencias()[org]
+    assert r.historial(org)[-1][3] == "prueba"
+    assert r.historial()
+    r.fijar_nivel(org, "ampliado")  # upsert: quita la fecha
+    assert org not in r.vigencias()
     assert (q := r.verificar(llave)) is not None and q.nivel == "ampliado"
     assert (org, "ampliado", 1) in r.listar_orgs()
     (ll,) = r.listar(org)

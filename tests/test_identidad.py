@@ -4,7 +4,7 @@ import json
 import sqlite3
 import time
 from collections.abc import AsyncIterator, Iterator
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -322,3 +322,53 @@ def test_cli_orgs_uso_con_redis_lee_el_saldo_de_la_cuota(
     _eventos_de_octubre(bd)
     assert cli.orgs(["uso", "--org", "acme", "--mes", "2026-10"]) == 0
     assert "usados 25.000  disponibles 0  peticiones 3" in capsys.readouterr().out
+
+
+def _pasa_la_fecha(registro: RegistroSqlite, org: str) -> None:
+    """La fecha ya no se puede fijar en el pasado: se mueve en la tabla, como el paso del tiempo."""
+    ayer = (date.today() - timedelta(days=2)).isoformat()
+    registro._bd.ejecutar("UPDATE orgs_vigencia SET hasta = ? WHERE org = ?", (ayer, org))
+
+
+def test_un_plan_vencido_baja_solo_al_gratis(registro: RegistroSqlite) -> None:
+    llave = registro.crear("acme", {"*"}, prueba=False, expira=None)
+    registro.fijar_nivel("acme", "pro", hasta=date.today() + timedelta(days=30))
+    principal = registro.verificar(llave)
+    assert principal is not None and principal.nivel == "pro"
+    assert registro.listar_orgs() == [("acme", "pro", 1)]
+
+    _pasa_la_fecha(registro, "acme")
+    principal = registro.verificar(llave)
+    assert principal is not None and principal.nivel == "con_llave"
+    assert registro.listar_orgs() == [("acme", "con_llave", 1)]
+
+
+def test_el_ultimo_dia_del_plan_todavia_cuenta(registro: RegistroSqlite) -> None:
+    llave = registro.crear("acme", {"*"}, prueba=False, expira=None)
+    registro.fijar_nivel("acme", "pro", hasta=datetime.now(UTC).date())
+    principal = registro.verificar(llave)
+    assert principal is not None and principal.nivel == "pro"
+
+
+def test_renovar_sin_fecha_quita_el_vencimiento(registro: RegistroSqlite) -> None:
+    registro.fijar_nivel("acme", "pro", hasta=date.today() + timedelta(days=30))
+    registro.fijar_nivel("acme", "pro")
+    assert registro.vigencias() == {}
+
+
+def test_un_plan_no_se_fija_con_fecha_pasada(registro: RegistroSqlite) -> None:
+    with pytest.raises(ValueError, match="pasó"):
+        registro.fijar_nivel("acme", "pro", hasta=date(2020, 1, 1))
+
+
+def test_el_historial_guarda_cada_cambio(registro: RegistroSqlite) -> None:
+    hasta = date.today() + timedelta(days=30)
+    registro.fijar_nivel("acme", "pro", hasta=hasta, nota="factura 12")
+    registro.fijar_nivel("otra", "basico")
+    registro.fijar_nivel("acme", "empresa")
+    filas = registro.historial("acme")
+    assert {(f[1], f[2], f[3]) for f in filas} == {
+        ("pro", hasta.isoformat(), "factura 12"),
+        ("empresa", None, None),
+    }
+    assert len(registro.historial()) == 3
