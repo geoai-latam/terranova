@@ -24,7 +24,7 @@ def test_el_icfes_dice_sus_anios_y_que_esta_atrasado() -> None:
     assert f["cobertura"]["periodo"].startswith("20101 a 20224")
     assert f["frescura"]["datos_actualizados"] == "2023-08-23"
     assert any("semestral" in a and "2023-08-23" in a for a in f["alertas"])
-    assert any("llegan hasta 2022:" in a for a in f["alertas"])  # «20224»: año y semestre
+    assert any("posterior a 2022;" in a for a in f["alertas"])  # «20224»: año y semestre
     assert any("registro único" in a for a in f["alertas"])  # el perfil: estudiantes repetidos
     assert f["es_geografica"] is False
 

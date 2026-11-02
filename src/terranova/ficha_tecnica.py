@@ -57,7 +57,13 @@ def atraso(fuente: Fuente, metadatos: Metadatos | None, hoy: date) -> list[str]:
             )
     if (rango := _rango(fuente, metadatos)) and (m := _AÑO.match(rango[1])):
         if int(m.group(1)) < hoy.year - _HOLGURA:
-            salida.append(f"los datos llegan hasta {m.group(1)}: no hay años más recientes")
+            # Es el último año de toda la fuente, no el de la respuesta: la UPRA llega a 2023, pero
+            # el precio de Cota es del estudio de 2016, y «los datos llegan hasta 2023» se leía
+            # como si la respuesta fuera de 2023.
+            salida.append(
+                f"la fuente no tiene nada posterior a {m.group(1)}; el año de cada dato es el que "
+                "trae la respuesta"
+            )
     return salida
 
 

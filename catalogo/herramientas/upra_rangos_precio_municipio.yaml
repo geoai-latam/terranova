@@ -1,5 +1,5 @@
 id: upra_rangos_precio_municipio
-version: 2
+version: 3
 familia: territorio
 fuente: upra.rango_precios_nacional
 pregunta: "¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA?"
@@ -29,6 +29,12 @@ salida: RangosPrecioMunicipio
 derivados:
   hectareas: {de: columna, campo: hectareas, tipo: float}
   zonas: {de: columna, campo: zonas, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    El precio es el del año del estudio de la UPRA en ese departamento (vigencia), en millones de
+    pesos por hectárea de ese año: no está actualizado a hoy. Cada departamento tiene su año
+    (Cundinamarca 2016 y 2022, Boyacá 2015 y 2021, Bolívar 2023).
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0 (agrupado por vigencia y rango): Cota,

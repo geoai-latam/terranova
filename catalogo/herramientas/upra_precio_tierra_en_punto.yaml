@@ -1,5 +1,5 @@
 id: upra_precio_tierra_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: upra.rango_precios_nacional
 pregunta: "¿Cuánto vale la tierra rural en este punto según la UPRA?"
@@ -23,6 +23,12 @@ consulta:
     limite: 5
   campos: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
 salida: PrecioTierraEnPunto
+avisos:
+- cuando: encontrado
+  texto: >
+    El precio es el del año del estudio de la UPRA en ese departamento (vigencia), en millones de
+    pesos por hectárea de ese año: no está actualizado a hoy. Cada departamento tiene su año
+    (Cundinamarca 2016 y 2022, Boyacá 2015 y 2021, Bolívar 2023).
 cobro: punto
 canario:
   # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0: el punto (punto representativo de la
