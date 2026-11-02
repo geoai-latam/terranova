@@ -1004,11 +1004,11 @@ def fuera_de_colombia(h: Herramienta, v: dict[str, Any]) -> bool:
     Panamá caen dentro y siguen siendo «no encontrado»."""
     oeste, sur, este, norte = RECTANGULO_COLOMBIA
     if "lon" in v and "lat" in v:
-        return not (oeste <= v["lon"] <= este and sur <= v["lat"] <= norte)
+        return not (oeste <= float(v["lon"]) <= este and sur <= float(v["lat"]) <= norte)
     for nombre, tipo in h.entrada.items():
         if tipo == "bbox":
             x0, y0, x1, y1 = v[nombre]
-            return x1 < oeste or x0 > este or y1 < sur or y0 > norte
+            return bool(x1 < oeste or x0 > este or y1 < sur or y0 > norte)
         if tipo == "poligono":
             vertices = v[nombre]["coordinates"][0]
             return all(
