@@ -27,7 +27,7 @@ cobertura: {pais: CO}
 datos_personales: ninguno
 estado: publicada
 campos:
-  TIME_PERIOD: {nombre: fecha, tipo: str, desc: "fecha de la observación, AAAAMMDD"}
+  TIME_PERIOD: {nombre: fecha, tipo: date, desc: "fecha de la observación"}
   OBS_VALUE: {nombre: valor, tipo: float, desc: "valor (pesos por dólar)"}
   SUBJECT: {nombre: serie, tipo: str, desc: "código de la serie en el BanRep"}
   UNIT_MEASURE: {nombre: unidad, tipo: str, desc: "unidad (COP pesos, PA porcentaje anual, …)"}

@@ -18,7 +18,7 @@ consulta:
     id: g4t8-zkc3
     portal: datos.gov.co
     select: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas"
-    where: "codigo_municipio::number = ('{municipio_divipola}')::number AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '{anio}-%'"
+    where: "codigo_municipio = ('{municipio_divipola}')::number::text AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '{anio}-%'"
     group: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad"
     order: "msfl_code, nombre_est"
     max_filas: 500

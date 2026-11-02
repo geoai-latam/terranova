@@ -25,7 +25,7 @@ campos:
   cod_etc: {nombre: codigo_etc, tipo: str, desc: "código de la entidad territorial certificada en educación"}
   nombre_etc: {nombre: etc, tipo: str, desc: "entidad territorial certificada; los nombres con tilde vienen dañados en la fuente (Medell�n)"}
   poblacion_5_16: {nombre: poblacion_5_16, tipo: int, desc: "población de 5 a 16 años"}
-  tasa_matriculacion_5_16: {nombre: tasa_matriculacion_5_16, tipo: float, desc: "tasa de matriculación de 5 a 16 años, %"}
+  tasa_matriculacion_5_16: {nombre: tasa_matriculacion_5_16, tipo: float, maximo_valido: 1000, desc: "tasa de matriculación de 5 a 16 años, %; en 2012 la fuente la trae dañada (p. ej. 109000000000000) y sale vacía"}
   cobertura_neta: {nombre: cobertura_neta, tipo: float, desc: "cobertura neta, %"}
   cobertura_bruta: {nombre: cobertura_bruta, tipo: float, desc: "cobertura bruta, %"}
   desercion: {nombre: desercion, tipo: float, desc: "deserción, %"}

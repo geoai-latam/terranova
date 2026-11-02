@@ -23,6 +23,7 @@ modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
 cobertura:
   pais: CO
+  rectangulo: [-74.95, 3.6, -72.9, 6.1]
   excluye: []  # solo la cuenca del río Sumapaz (lo dice la descripción)
   periodo: "POMCA vigente del río Sumapaz (2023)"
 datos_personales: ninguno

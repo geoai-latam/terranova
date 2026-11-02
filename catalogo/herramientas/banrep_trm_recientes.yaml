@@ -1,5 +1,5 @@
 id: banrep_trm_recientes
-version: 1
+version: 2
 familia: estadisticas
 fuente: banrep.trm
 pregunta: "¿Cuál ha sido la TRM (dólar en pesos) de los últimos días?"

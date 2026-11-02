@@ -25,6 +25,7 @@ modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
 cobertura:
   pais: CO
+  rectangulo: [-74.95, 3.6, -72.9, 6.1]
   excluye: []  # solo las nueve cuencas (lo dice la descripción de la herramienta)
   periodo: "POMCA vigentes de la jurisdicción de la CAR (2019-2023)"
 datos_personales: ninguno

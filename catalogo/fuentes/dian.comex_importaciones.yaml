@@ -38,6 +38,7 @@ copia:
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
 cobertura:
   pais: CO
+  desde_anio: 2025
   excluye: ["el detalle por empresa/NIT (no está en el microdato abierto del DANE)", "los meses fuera de la ventana de los ZIP copiados"]
 datos_personales: ninguno
 estado: publicada

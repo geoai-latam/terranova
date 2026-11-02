@@ -22,6 +22,7 @@ modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
 cobertura:
   pais: CO
+  rectangulo: [-74.95, 3.6, -72.9, 6.1]
   excluye: []  # cubre solo la jurisdicción de la CAR (lo dice la descripción)
 datos_personales: ninguno
 estado: publicada

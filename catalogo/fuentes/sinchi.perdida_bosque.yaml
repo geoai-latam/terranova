@@ -32,6 +32,7 @@ copia:
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P2Y}
 cobertura:
   pais: CO
+  rectangulo: [-77.9, -4.3, -66.8, 4.2]
   excluye: []
   periodo: "2022 a 2024 (región amazónica)"
 datos_personales: ninguno

@@ -27,7 +27,7 @@ campos:
   fecha: {nombre: fecha, tipo: date, desc: "fecha del evento"}
   departamento: {nombre: departamento, tipo: str, desc: "departamento"}
   municipio: {nombre: municipio, tipo: str, desc: "municipio"}
-  codificaci_n_segun_divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio (la fuente lo guarda como número: Medellín = 5001)"}
+  codificaci_n_segun_divipola: {nombre: municipio_divipola, tipo: str, ancho: 5, desc: "código DIVIPOLA del municipio (la fuente lo guarda como número: Medellín = 5001)"}
   evento: {nombre: evento, tipo: str, desc: "tipo de evento (inundación, movimiento en masa, incendio…)"}
   muertos: {nombre: muertos, tipo: int, desc: "personas fallecidas"}
   heridos: {nombre: heridos, tipo: int, desc: "personas heridas"}

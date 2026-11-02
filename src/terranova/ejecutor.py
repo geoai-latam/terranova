@@ -27,6 +27,7 @@ from terranova.catalogo import (
     MARCADOR,
     PATRONES_ENTRADA,
     SUFIJO_SIGNIFICADO,
+    Campo,
     Catalogo,
     Derivado,
     Fuente,
@@ -198,6 +199,7 @@ def sanear(texto: str) -> str:
 
 
 _AÑO = re.compile(r"^(\d{4})")
+_MILES = re.compile(r"\d{1,3}(,\d{3})+")
 
 
 def convertir(valor: Any, tipo: str) -> Any:
@@ -206,7 +208,8 @@ def convertir(valor: Any, tipo: str) -> Any:
         return None
     try:
         if tipo == "int":
-            return int(float(valor))
+            texto = str(valor).strip()
+            return int(float(texto.replace(",", "") if _MILES.fullmatch(texto) else valor))
         if tipo == "float":
             return float(valor)
         if tipo == "bool":
@@ -223,7 +226,8 @@ def convertir(valor: Any, tipo: str) -> Any:
         return None
     if isinstance(valor, dict) and "url" in valor:  # Socrata da las URL como {url: …}
         valor = valor["url"]
-    return sanear(valor if isinstance(valor, str) else str(valor))
+    texto = sanear(valor if isinstance(valor, str) else str(valor))
+    return texto if texto.strip() else None
 
 
 def _fecha(valor: Any) -> str:
@@ -231,6 +235,8 @@ def _fecha(valor: Any) -> str:
         from datetime import UTC
 
         return datetime.fromtimestamp(valor / 1000, UTC).isoformat()
+    if re.fullmatch(r"\d{8}", texto := str(valor)):  # AAAAMMDD del SDMX del BanRep
+        return f"{texto[:4]}-{texto[4:6]}-{texto[6:]}"
     return sanear(str(valor))
 
 
@@ -288,7 +294,7 @@ def mapear_fila(
             valor = fila[presente]
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
-            out[campo.nombre] = convertir(valor, campo.tipo)
+            out[campo.nombre] = _validar(campo, convertir(valor, campo.tipo))
             if campo.codigos is not None:
                 # un código solo no dice nada: el significado va al lado, no en la ficha técnica
                 out[f"{campo.nombre}{SUFIJO_SIGNIFICADO}"] = campo.codigos.get(
@@ -308,6 +314,16 @@ def mapear_fila(
             base = out.get(d.campo or "")
             out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
     return out
+
+
+def _validar(campo: Campo, valor: Any) -> Any:
+    if valor is None:
+        return None
+    if campo.ancho:
+        return str(valor).zfill(campo.ancho)
+    if campo.maximo_valido is not None and valor > campo.maximo_valido:
+        return None
+    return valor
 
 
 def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int | None) -> Any:
@@ -495,6 +511,9 @@ class Ejecutor:
         la cosecha trae datos y no pasa por aquí. Sin esto, «¿homicidios en Chía en 2030?» volvía
         `no_encontrado` y un agente lo dio como «0 homicidios» (GEO Copilot, fiabilidad)."""
         anio = valores.get("anio")
+        desde_anio = fuente.cobertura.desde_anio
+        if desde_anio and str(anio).isdigit() and int(str(anio)) < desde_anio:
+            return f"Esta fuente cubre desde {desde_anio}: {anio} no está."
         columna = fuente.cobertura.columna_tiempo
         metadatos = self.catalogo.metadatos.get(fuente.id)
         campo = metadatos.campos.get(columna) if metadatos and columna else None
@@ -726,10 +745,14 @@ class Ejecutor:
             avisos.append(
                 f"Hay {len(elementos)} resultados; se muestra el primero (todos van en la capa)."
             )
-        lejos = not hay_algo and fuente.cobertura.pais == "CO" and fuera_de_colombia(h, valores)
+        lejos = not hay_algo and fuente.cobertura.pais == "CO" and fuera_de(h, valores)
+        regional = fuente.cobertura.rectangulo
         if lejos:
             estado = "fuera_de_cobertura"
             avisos.append("Ese lugar queda fuera de Colombia y esta fuente solo cubre Colombia.")
+        elif not hay_algo and regional and fuera_de(h, valores, regional):
+            estado = "fuera_de_cobertura"
+            avisos.append(f"Ese lugar queda fuera del área que cubre {fuente.entidad}.")
         elif not hay_algo and fuente.cobertura.indice in COBERTURAS:
             veredicto = await COBERTURAS[fuente.cobertura.indice](self, h, valores, consultado_en)
             procedencia += veredicto.procedencia
@@ -999,10 +1022,14 @@ def _aviso_de_homonimos(h: Herramienta, v: dict[str, Any]) -> str | None:
     return None
 
 
-def fuera_de_colombia(h: Herramienta, v: dict[str, Any]) -> bool:
-    """Si la zona pedida queda entera fuera del rectángulo de Colombia. Solo por rectángulo: Quito o
-    Panamá caen dentro y siguen siendo «no encontrado»."""
-    oeste, sur, este, norte = RECTANGULO_COLOMBIA
+def fuera_de(
+    h: Herramienta,
+    v: dict[str, Any],
+    rectangulo: tuple[float, float, float, float] = RECTANGULO_COLOMBIA,
+) -> bool:
+    """Si la zona pedida queda entera fuera del rectángulo. Solo por rectángulo: Quito o Panamá caen
+    dentro del de Colombia y siguen siendo «no encontrado»."""
+    oeste, sur, este, norte = rectangulo
     if "lon" in v and "lat" in v:
         return not (oeste <= float(v["lon"]) <= este and sur <= float(v["lat"]) <= norte)
     for nombre, tipo in h.entrada.items():
