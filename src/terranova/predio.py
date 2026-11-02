@@ -42,7 +42,14 @@ ESQUEMA_ENTRADA: dict[str, Any] = {
 }
 
 
-async def ficha(ej: Ejecutor, entrada: dict[str, Any], *, plan: Plan = "normal", **_: Any) -> Sobre:
+async def ficha(
+    ej: Ejecutor,
+    entrada: dict[str, Any],
+    *,
+    plan: Plan = "normal",
+    geometria_completa: bool = False,
+    **_: Any,
+) -> Sobre:
     """`entrada`: `{lon, lat}`; la puerta atiende `geometria` antes de llegar aquí (ADR-0032)."""
     if set(entrada) != {"lon", "lat"}:
         raise ErrorEntrada("entrada", "envíe {lon, lat}")
@@ -50,13 +57,17 @@ async def ficha(ej: Ejecutor, entrada: dict[str, Any], *, plan: Plan = "normal",
     sinic: Sobre | None = None
     falla: ErrorEjecucion | None = None
     try:
-        sinic = await ej.ejecutar(PREDIO_SINIC.herramienta, entrada, plan=plan)
+        sinic = await ej.ejecutar(
+            PREDIO_SINIC.herramienta, entrada, plan=plan, geometria_completa=geometria_completa
+        )
     except ErrorEjecucion as exc:
         falla = exc
     if sinic is not None and sinic.estado == "encontrado":
         return sinic.model_copy(update={"herramienta": f"{HERRAMIENTA}@{VERSION}"})
 
-    igac = await ej.ejecutar(PREDIO_EN_PUNTO.herramienta, entrada, plan=plan)
+    igac = await ej.ejecutar(
+        PREDIO_EN_PUNTO.herramienta, entrada, plan=plan, geometria_completa=geometria_completa
+    )
     # «no hay» solo vale si se pudo mirar en las dos: con el SINIC caído es «no se pudo»
     if falla is not None and igac.estado != "encontrado":
         raise falla

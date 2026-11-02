@@ -94,6 +94,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   MCP y en la validación de la puerta.
 - **Fechas:** llevan `format: date`, y una fecha imposible (2026-13-45) responde 400 sin ir a la fuente.
 
+## Geometría fiel (2026-11-01)
+
+- **`geometria: true`:** ahora da la forma guardada. Antes, las herramientas con `simplificada` la devolvían
+  a unos 55 m aunque se pidiera completa. `ficha_lugar` sigue igual por ahora.
+- **Listas largas:** con más de 20 elementos posibles sigue simplificada, porque serían decenas de
+  MB, y la respuesta lo avisa.
+- **Lo simplificado al ingerir** (agrología ~11 m, SINCHI ~56 m, UPRA ~6 m, SINIC ~1 m) no se
+  recupera: cada respuesta lo dice en `avisos` y en `transformaciones`.
+- **Falta:** comparar el área de un polígono con la fuente en producción, que es su aceptación.
+
 ## Una sola herramienta de predio (2026-11-01)
 
 - **`predio_en_punto`:** mira el SINIC y, si no tiene el punto, la base del IGAC. Va en

@@ -61,6 +61,10 @@ MAX_TEXTO_LIBRE = 200
 # ADR-0035: un lote o una finca, no un departamento
 MAX_VERTICES_POLIGONO = 500
 MAX_LADO_POLIGONO_GRADOS = 1.0
+# ADR-0032: `geometria: true` da la forma guardada si la lista es corta. Una zona puede traer
+# cientos de polígonos completos, decenas de MB: esas siguen simplificadas y lo avisan.
+MAX_ELEMENTOS_GEOMETRIA_FIEL = 20
+METROS_POR_GRADO = 111_320
 Plan = Literal["evaluacion", "normal"]
 
 
@@ -520,6 +524,7 @@ class Ejecutor:
         *,
         plan: Plan = "normal",
         frescura: Frescura = "normal",
+        geometria_completa: bool = False,
     ) -> Sobre:
         h = self.catalogo.herramientas.get(herramienta)
         if h is None:
@@ -536,18 +541,22 @@ class Ejecutor:
 
         # ADR-0008: caché por frescura de la fuente; con la fuente caída, la copia vieja sale como
         # «obsoleto» y lo dice. `frescura=estricta` nunca usa caché.
-        k = clave_cache(h.id, h.version, valores)
+        simplificada = h.consulta.argumentos.get("geometria") == "simplificada"
+        fiel = geometria_completa and simplificada and _lista_corta(h)
+        aviso = AVISO_SIMPLIFICADA if geometria_completa and simplificada and not fiel else None
+        k = clave_cache(h.id, h.version, valores | ({"_geometria": "completa"} if fiel else {}))
         guardado = None
         if self.almacen is not None and frescura == "normal":
             guardado = await self.almacen.leer(k)
             if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
                 metricas.CACHE_ACIERTOS.inc()
-                return self._servir(self._desde_cache(guardado, "cache"), h, valores)
+                return self._servir(self._desde_cache(guardado, "cache"), h, valores, aviso)
         try:
-            sobre = await self._desde_fuente(h, fuente, valores)
+            sobre = await self._desde_fuente(h, fuente, valores, fiel)
         except ErrorEjecucion as exc:
             if guardado and exc.codigo in CODIGOS_DE_CAIDA:
-                return self._servir(self._desde_cache(guardado, "obsoleto", exc.codigo), h, valores)
+                obsoleto = self._desde_cache(guardado, "obsoleto", exc.codigo)
+                return self._servir(obsoleto, h, valores, aviso)
             raise
         if self.almacen is not None and sobre.estado != "parcial":
             await self.almacen.guardar(
@@ -555,9 +564,11 @@ class Ejecutor:
                 {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
                 RETENCION_S,
             )
-        return self._servir(sobre, h, valores)
+        return self._servir(sobre, h, valores, aviso)
 
-    def _servir(self, sobre: Sobre, h: Herramienta, valores: dict[str, Any]) -> Sobre:
+    def _servir(
+        self, sobre: Sobre, h: Herramienta, valores: dict[str, Any], aviso: str | None = None
+    ) -> Sobre:
         """Los avisos que salen del catálogo y no de la fuente: se agregan al servir (de la fuente
         o de la caché) y no se guardan en la caché. Los homónimos del municipio, y si los datos
         no son recientes: ICFES Saber 11 no cambia desde 2023 y la respuesta solo decía la fecha
@@ -567,6 +578,8 @@ class Ejecutor:
         fuente = self.catalogo.fuentes[h.fuente]
         avisos = [
             *((a,) if (a := _aviso_de_homonimos(h, valores)) else ()),
+            *((a,) if (a := _aviso_de_escala(fuente)) else ()),
+            *((aviso,) if aviso else ()),
             *(
                 f"Datos no recientes: {a}."
                 for a in atraso(fuente, self.catalogo.metadatos.get(fuente.id), ahora().date())
@@ -594,7 +607,9 @@ class Ejecutor:
             {**crudo, "solicitud_id": nueva_solicitud_id(), "avisos": avisos, "creditos": 0}
         )
 
-    async def _desde_fuente(self, h: Herramienta, fuente: Fuente, valores: dict[str, Any]) -> Sobre:
+    async def _desde_fuente(
+        self, h: Herramienta, fuente: Fuente, valores: dict[str, Any], fiel: bool = False
+    ) -> Sobre:
         consultado_en = ahora()
 
         capas: list[str | None] = [str(c) for c in h.consulta.capas] or [None]
@@ -604,6 +619,8 @@ class Ejecutor:
                 h.consulta.argumentos,
                 {**valores, "url_fuente": fuente.url, "url_capa": f"{fuente.url}/{capa}"},
             )
+            if fiel:
+                argumentos["geometria"] = "completa"
             llamadas.append(self._una(h, fuente.conector, capa, argumentos))
         respuestas, fallos = await _reunir_capas(llamadas)
         if not respuestas:
@@ -792,10 +809,32 @@ class Ejecutor:
             consulta={**r.argumentos, **({"capa": r.capa} if r.capa else {})},
             completitud=completitud_de(r, h.consulta.completo_por_construccion),
             cache=Cache(acierto=False, edad_s=0),
-            transformaciones=[],
+            transformaciones=[e] if (e := _aviso_de_escala(fuente)) else [],
             conector=fuente.conector,
             huella=huella({"elementos": mapeadas}),
         )
+
+
+AVISO_SIMPLIFICADA = (
+    "Geometría simplificada a unos 55 m: la lista es larga para las formas completas. Pida cada "
+    "elemento en un punto suyo para ver su forma completa."
+)
+
+
+def _lista_corta(h: Herramienta) -> bool:
+    argumentos = h.consulta.argumentos
+    return (argumentos.get("limite") or argumentos.get("max_features") or 0) <= (
+        MAX_ELEMENTOS_GEOMETRIA_FIEL
+    )
+
+
+def _aviso_de_escala(fuente: Fuente) -> str | None:
+    """Lo simplificado al copiar no se recupera: el cruce y el área son tan finos como la copia."""
+    tolerancia = fuente.copia.tolerancia if fuente.copia else None
+    if not tolerancia:
+        return None
+    metros = max(1, round(tolerancia * METROS_POR_GRADO))
+    return f"La copia simplificó la geometría a unos {metros} m: bordes y áreas llegan hasta ahí."
 
 
 def _fecha_de_copia(hechos: dict[str, Any]) -> datetime:

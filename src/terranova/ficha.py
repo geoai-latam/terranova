@@ -379,6 +379,7 @@ async def ficha(
     hoy: date | None = None,
     tope_s: float = TOPE_S,
     curado: Restricciones | None = None,
+    **_otros: Any,
 ) -> Sobre:
     """`entrada`: `{lon, lat}` o `{codigo}` (número predial nacional)."""
     hoy = hoy or date.today()

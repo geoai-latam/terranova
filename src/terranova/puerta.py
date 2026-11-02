@@ -369,7 +369,7 @@ async def ejecutar(
                 pagina = int(pagina)  # 3.0 es un entero en JSON Schema
             if not isinstance(pagina, int) or isinstance(pagina, bool) or pagina < 1:
                 raise ErrorEntrada(PAGINA, "debe ser un entero desde 1")
-        sobre = await _ejecutar(ficha, entrada, principal)
+        sobre = await _ejecutar(ficha, entrada, principal, completa)
         sobre = paginar(sobre, pagina)  # la caché y la idempotencia guardan la lista entera
     except ValidationError as exc:
         # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
@@ -455,7 +455,9 @@ async def ejecutar_idempotente(
     return sobre, False
 
 
-async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | None) -> Sobre:
+async def _ejecutar(
+    ficha: str, entrada: dict[str, Any], principal: Principal | None, completa: bool = False
+) -> Sobre:
     if ESTADO.conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
     h = CATALOGO.herramientas.get(ficha)
@@ -474,9 +476,14 @@ async def _ejecutar(ficha: str, entrada: dict[str, Any], principal: Principal | 
             # las partes fuera de los scopes de la llave no se consultan (salen en avisos)
             puede = principal.puede if principal is not None else (lambda _f: True)
             return await compuesta.correr(
-                ejecutor, entrada, plan=plan, puede=puede, curado=ESTADO.curado
+                ejecutor,
+                entrada,
+                plan=plan,
+                puede=puede,
+                curado=ESTADO.curado,
+                geometria_completa=completa,
             )
-        return await ejecutor.ejecutar(ficha, entrada, plan=plan)
+        return await ejecutor.ejecutar(ficha, entrada, plan=plan, geometria_completa=completa)
 
     costo = compuesta.tope_creditos if compuesta else h.creditos if h is not None else None
     if ESTADO.cuota is None or principal is None or costo is None:
