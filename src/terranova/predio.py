@@ -43,9 +43,9 @@ ESQUEMA_ENTRADA: dict[str, Any] = {
 
 
 async def ficha(ej: Ejecutor, entrada: dict[str, Any], *, plan: Plan = "normal", **_: Any) -> Sobre:
-    """`entrada`: `{lon, lat}` y, si se quiere la forma completa, `geometria`."""
-    if not {"lon", "lat"} <= set(entrada) <= {"lon", "lat", GEOMETRIA}:
-        raise ErrorEntrada("entrada", "envíe {lon, lat} y, si quiere la forma, geometria")
+    """`entrada`: `{lon, lat}`; la puerta atiende `geometria` antes de llegar aquí (ADR-0032)."""
+    if set(entrada) != {"lon", "lat"}:
+        raise ErrorEntrada("entrada", "envíe {lon, lat}")
     consultado_en = ahora()
     sinic: Sobre | None = None
     falla: ErrorEjecucion | None = None

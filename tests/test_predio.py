@@ -5,6 +5,7 @@ from typing import Any
 import pytest
 
 from terranova import predio as p
+from terranova import puerta
 from terranova.catalogo import cargar
 from terranova.contrato import Sobre
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -72,3 +73,8 @@ async def test_sinic_caido_sin_predio_en_el_igac_es_no_se_pudo(estado: str) -> N
 async def test_entrada_invalida(entrada: dict[str, Any]) -> None:
     with pytest.raises(ErrorEntrada):
         await p.ficha(Falso(), entrada)  # type: ignore[arg-type]
+
+
+def test_la_puerta_atiende_geometria_antes_de_la_compuesta() -> None:
+    # Schemathesis: si llegara a la compuesta, las dos bases lo rechazarían como parámetro suelto
+    assert puerta.admite_geometria(p.HERRAMIENTA)
