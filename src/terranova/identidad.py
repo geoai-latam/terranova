@@ -60,6 +60,7 @@ class Registro(Protocol):
     def revocar(self, llave_id: str) -> bool: ...
     def listar(self, org: str | None = None) -> list[Llave]: ...
     def verificar(self, llave: str) -> Principal | None: ...
+    def principal_de(self, llave_id: str) -> Principal | None: ...
     def fijar_nivel(
         self, org: str, nivel: str, *, hasta: date | None = None, nota: str | None = None
     ) -> None: ...
@@ -214,11 +215,18 @@ class RegistroSql:
         """Principal de una llave vigente, o None. La comparación es por HMAC (sin la llave)."""
         if not FORMATO.fullmatch(llave):
             return None
+        return self._principal("l.huella = ?", self._huella(llave))
+
+    def principal_de(self, llave_id: str) -> Principal | None:
+        """El principal de una llave vigente por su id: un token OAuth hereda todo de su llave."""
+        return self._principal("l.llave_id = ?", llave_id)
+
+    def _principal(self, condicion: str, valor: str) -> Principal | None:
         filas, _ = self._bd.ejecutar(
             "SELECT l.llave_id, l.org, l.plan, l.scopes, l.expira, l.revocada, o.nivel, v.hasta "
             "FROM llaves l LEFT JOIN orgs o ON o.org = l.org "
-            "LEFT JOIN orgs_vigencia v ON v.org = l.org WHERE l.huella = ?",
-            (self._huella(llave),),
+            f"LEFT JOIN orgs_vigencia v ON v.org = l.org WHERE {condicion}",
+            (valor,),
         )
         if not filas or filas[0][5] is not None:
             return None

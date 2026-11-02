@@ -131,6 +131,13 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   [spec 12](specs/12-monitores.md). Se avisa lo que entró tras cada refresco de una copia, comparando
   versiones ya guardadas, sin tocar la fuente. Se construye cuando un piloto lo pida.
 
+## OAuth para conectores remotos (2026-11-02)
+
+- **Construido, apagado:** [ADR-0037](decisions/0037-oauth-en-la-puerta.md). Servidor de autorización dentro
+  de la puerta, con PKCE, CIMD, registro dinámico sin estado y tokens atados a la llave. Solo sirven en MCP.
+- **Para encenderlo:** desplegar, poner `TERRANOVA_OAUTH=1` y recargar Caddy, que suma la ruta `/oauth/*`.
+- **Sin probar todavía:** conectar de verdad desde claude.ai y ChatGPT; solo hay pruebas locales.
+
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 
 - **Calidad del aire:** Cali bajó de 54 s a 9 s medidos en la fuente. El filtro ya no castea la columna.

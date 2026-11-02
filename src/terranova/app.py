@@ -18,12 +18,12 @@ from contextlib import AsyncExitStack
 from datetime import UTC, datetime
 from html import escape
 from typing import Annotated, Any
-from urllib.parse import parse_qs
+from urllib.parse import parse_qs, urlsplit
 
 from fastapi import FastAPI, Query, Request, Response
 from fastapi.exceptions import RequestValidationError
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse
+from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, create_model, model_validator
 from pydantic.json_schema import SkipJsonSchema
@@ -58,6 +58,7 @@ from terranova.descripcion import ai_catalogo, llms_txt, tarjeta_estandar, tarje
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica, resumen
 from terranova.identidad import bearer
+from terranova.oauth import PREFIJO_ACCESO, ErrorOAuth, Pedido
 from terranova.pagina_estado import pagina_estado, pagina_simple
 from terranova.vigilancia import (
     VENTANA_NIVELES,
@@ -479,6 +480,93 @@ def crear_api() -> FastAPI:
         filas = canarios.historial(VENTANA_NIVELES) if canarios is not None else []
         return niveles_por_fuente(filas, puerta.VENDIBLE)
 
+    # --- OAuth de los conectores remotos (ADR-0037): apagado salvo TERRANOVA_OAUTH=1 -----------
+
+    @api.get("/.well-known/oauth-protected-resource", include_in_schema=False)
+    @api.get("/.well-known/oauth-protected-resource/{ruta:path}", include_in_schema=False)
+    async def oauth_recurso(ruta: str = "mcp") -> JSONResponse:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None or not ruta.partition("/")[0] == "mcp":
+            return problema("no_existe", "este recurso no usa OAuth")
+        return JSONResponse(oauth.metadatos_recurso(f"/{ruta}"))
+
+    @api.get("/.well-known/oauth-authorization-server", include_in_schema=False)
+    async def oauth_servidor() -> JSONResponse:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None:
+            return problema("no_existe", "OAuth no está activo")
+        return JSONResponse(oauth.metadatos_servidor())
+
+    @api.post("/oauth/registro", include_in_schema=False)
+    async def oauth_registro(request: Request) -> JSONResponse:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None:
+            return problema("no_existe", "OAuth no está activo")
+        cuerpo = await request.body()
+        try:
+            if len(cuerpo) > 20_000:
+                raise ErrorOAuth("invalid_client_metadata", "el cuerpo es demasiado grande")
+            try:
+                datos = json.loads(cuerpo)
+            except ValueError as exc:
+                raise ErrorOAuth("invalid_client_metadata", "el cuerpo no es JSON") from exc
+            return JSONResponse(oauth.registrar(datos), status_code=201, headers=_SIN_CACHE)
+        except ErrorOAuth as exc:
+            return _error_oauth(exc)
+
+    @api.get("/oauth/autorizar", include_in_schema=False)
+    async def oauth_autorizar(request: Request) -> Response:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None:
+            return problema("no_existe", "OAuth no está activo")
+        q = dict(request.query_params)
+        try:
+            cliente, uri = await oauth.validar_redireccion(q)
+        except ErrorOAuth as exc:  # sin redirect_uri validada no se redirige a ningún lado
+            return _pagina_oauth(_pagina_error("Conectar", exc.descripcion, 400))
+        try:
+            pedido = oauth.pedido(cliente, uri, q)
+        except ErrorOAuth as exc:
+            return RedirectResponse(
+                oauth.redireccion_con_error(uri, exc, q.get("state")), status_code=303
+            )
+        return _pagina_oauth(_pagina_consentimiento(oauth.sellar_pedido(pedido), pedido))
+
+    @api.post("/oauth/autorizar", include_in_schema=False)
+    async def oauth_consentir(request: Request) -> Response:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None:
+            return problema("no_existe", "OAuth no está activo")
+        f = await _formulario(request)
+        try:
+            pedido = oauth.abrir_pedido(f.get("pedido", ""))
+        except ErrorOAuth as exc:
+            return _pagina_oauth(_pagina_error("Conectar", exc.descripcion, 400))
+        if f.get("decision") != "aceptar":
+            negado = ErrorOAuth("access_denied", "la persona no autorizó")
+            return RedirectResponse(
+                oauth.redireccion_con_error(pedido.redirect_uri, negado, pedido.estado),
+                status_code=303,
+            )
+        try:
+            destino = await asyncio.to_thread(oauth.autorizar, pedido, f.get("llave", ""))
+        except ErrorOAuth as exc:
+            aviso = exc.descripcion
+            pagina = _pagina_consentimiento(oauth.sellar_pedido(pedido), pedido, aviso)
+            return _pagina_oauth(pagina, 400)
+        return RedirectResponse(destino, status_code=303, headers=_SIN_CACHE)
+
+    @api.post("/oauth/token", include_in_schema=False)
+    async def oauth_token(request: Request) -> JSONResponse:
+        oauth = puerta.ESTADO.oauth
+        if oauth is None:
+            return problema("no_existe", "OAuth no está activo")
+        f = await _formulario(request)
+        try:
+            return JSONResponse(await asyncio.to_thread(oauth.token, f), headers=_SIN_CACHE)
+        except ErrorOAuth as exc:
+            return _error_oauth(exc)
+
     # --- alta de la llave de prueba y contacto (ADR-0034): formularios del sitio, sin JS ------
 
     @api.post("/v1/alta", include_in_schema=False)
@@ -649,6 +737,52 @@ def _pagina_error(rotulo: str, mensaje: str, estado: int) -> HTMLResponse:
     return HTMLResponse(pagina_simple("No se pudo", rotulo, cuerpo), status_code=estado)
 
 
+_SIN_CACHE = {"Cache-Control": "no-store", "Pragma": "no-cache"}
+
+
+def _error_oauth(exc: ErrorOAuth) -> JSONResponse:
+    """El error de RFC 6749: el cliente espera este formato, no problem+json."""
+    return JSONResponse(
+        {"error": exc.codigo, "error_description": exc.descripcion},
+        status_code=400,
+        headers=_SIN_CACHE,
+    )
+
+
+def _pagina_oauth(pagina: HTMLResponse | str, estado: int = 200) -> HTMLResponse:
+    """Nada de marcos: un sitio ajeno no debe poder cubrir esta página para robar el clic."""
+    respuesta = pagina if isinstance(pagina, HTMLResponse) else HTMLResponse(pagina, estado)
+    respuesta.headers.update(
+        {
+            **_SIN_CACHE,
+            "Content-Security-Policy": "frame-ancestors 'none'",
+            "X-Frame-Options": "DENY",
+            "Referrer-Policy": "no-referrer",
+        }
+    )
+    return respuesta
+
+
+def _pagina_consentimiento(sello: str, pedido: Pedido, aviso: str | None = None) -> str:
+    destino = urlsplit(pedido.redirect_uri).hostname or ""
+    error = f'<p class="s-error">{escape(aviso)}</p>' if aviso else ""
+    cuerpo = (
+        f"{error}<p><b>{escape(pedido.nombre)}</b> pide consultar Terrnova con tu organización. "
+        f"Al aceptar volverás a <b>{escape(destino)}</b>. Podrá usar tu saldo hasta que revoques "
+        "la llave.</p>"
+        '<form method="post" action="/oauth/autorizar">'
+        f'<input type="hidden" name="pedido" value="{escape(sello)}">'
+        '<label>Tu llave de Terrnova <input name="llave" type="password" autocomplete="off" '
+        'required></label><p class="s-boton-fila">'
+        '<button class="s-boton" type="submit" name="decision" value="aceptar">Autorizar</button> '
+        '<button class="s-boton" type="submit" name="decision" value="negar" formnovalidate>'
+        "No autorizar</button></p></form>"
+        '<p>¿Sin llave? <a class="enlace" href="/#alta">Pide una de prueba</a>. Solo se usa para '
+        "comprobar tu organización: el cliente nunca la ve.</p>"
+    )
+    return pagina_simple("Conectar con Terrnova", "Conectar", cuerpo)
+
+
 def _pagina_enviada() -> HTMLResponse:
     cuerpo = (
         "<p>Si el correo es válido, te llegará en unos minutos un enlace para recibir tu llave. "
@@ -774,15 +908,20 @@ class Aplicacion:
             if puerta.ESTADO.registro is not None:
                 cabeceras = {k.decode().lower(): v.decode() for k, v in scope.get("headers", [])}
                 llave = bearer(cabeceras.get("authorization"))
-                principal = (
-                    await asyncio.to_thread(puerta.ESTADO.registro.verificar, llave)
-                    if llave
-                    else None
-                )
+                oauth = puerta.ESTADO.oauth
+                principal = None
+                if llave and oauth and llave.startswith(PREFIJO_ACCESO):
+                    if app is not self.api:  # un token de MCP no abre la API (RFC 8707)
+                        principal = await asyncio.to_thread(oauth.verificar_acceso, llave, ruta)
+                elif llave:
+                    principal = await asyncio.to_thread(puerta.ESTADO.registro.verificar, llave)
                 if principal is None:
+                    desafio: list[tuple[bytes, bytes]] = []
+                    if oauth and app is not self.api:  # de aquí arranca el cliente MCP (RFC 9728)
+                        desafio = [(b"www-authenticate", oauth.desafio_www(ruta).encode())]
                     await problema(
                         "no_autenticado", "falta una llave válida (Authorization: Bearer)"
-                    )(scope, receive, send)
+                    )(scope, receive, _con_cabeceras(send, desafio))
                     return
                 scope.setdefault("state", {})["principal"] = principal
                 cobrar = True

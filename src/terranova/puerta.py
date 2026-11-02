@@ -65,6 +65,7 @@ from terranova.ficha_tecnica import ficha_tecnica
 from terranova.identidad import Principal, Registro, registro_desde_entorno
 from terranova.medicion import Evento, Outbox, OutboxSql, registrar_sin_fallar
 from terranova.medicion import ahora as ahora_iso
+from terranova.oauth import ServidorOAuth, oauth_desde_entorno
 from terranova.proteccion import Proteccion
 from terranova.vigilancia import RegistroCanarios
 
@@ -120,6 +121,7 @@ class EstadoPuerta:
     canarios: RegistroCanarios | None = None
     curado: Restricciones | None = None
     altas: Altas | None = None  # alta de llaves y contacto (ADR-0034)
+    oauth: ServidorOAuth | None = None  # conectores remotos de MCP (ADR-0037); apagado por defecto
     # El estado de los cortacircuitos vive lo que vive la puerta (una por réplica).
     proteccion: Proteccion = field(default_factory=Proteccion)
     iniciados: dict[str, Conector] = field(default_factory=dict)
@@ -518,6 +520,7 @@ async def iniciar() -> None:
         return
     ESTADO.registro = registro_desde_entorno()  # sin pimienta, la puerta no arranca
     ESTADO.altas = altas_desde_entorno(ESTADO.registro)
+    ESTADO.oauth = oauth_desde_entorno(ESTADO.registro)
     redis_url = os.environ.get("TERRANOVA_REDIS_URL")
     ESTADO.almacen = AlmacenTolerante(AlmacenRedis(redis_url)) if redis_url else AlmacenMemoria()
     ESTADO.cuota = cuota_desde_entorno(redis_url)
@@ -559,6 +562,7 @@ async def detener() -> None:
     usar_conectores(None)
     ESTADO.almacen = None
     ESTADO.registro = None
+    ESTADO.oauth = None
     ESTADO.cuota = None
     ESTADO.outbox = None
     ESTADO.canarios = None

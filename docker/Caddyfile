@@ -44,7 +44,7 @@ handle @sitio {
 # /metrics no está: es de la red interna (Prometheus lee cada réplica directo) y por el borde da la
 # 404 del sitio. Antes, `respond /metrics 404` nunca corría (handle va antes que respond) y el
 # proxy de todo lo demás la dejaba salir.
-@puerta path /v1/* /mcp /mcp/* /docs /docs/* /redoc /openapi.json /llms.txt /.well-known/* /estado /salud /listo
+@puerta path /v1/* /oauth/* /mcp /mcp/* /docs /docs/* /redoc /openapi.json /llms.txt /.well-known/* /estado /salud /listo
 handle @puerta {
 	reverse_proxy {$TERRANOVA_REPLICAS} {
 		lb_policy least_conn

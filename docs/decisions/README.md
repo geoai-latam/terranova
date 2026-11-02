@@ -64,3 +64,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0034 · Llave de prueba con correo verificado y formulario de contacto propio](0034-alta-con-correo-verificado.md)
 - [ADR-0035 · Consulta por polígono en las copias espaciales](0035-consulta-por-poligono.md)
 - [ADR-0036 · Monitores sobre las copias: avisar lo nuevo sin consultar al Estado](0036-monitores-sobre-copias.md)
+- [ADR-0037 · OAuth 2.1 en la propia puerta para los conectores remotos](0037-oauth-en-la-puerta.md)
