@@ -325,7 +325,7 @@ class _TodasLasCapasCaen:
 
 def test_paridad_rest_mcp_entero_estricto() -> None:
     """ADR-0004: REST (modelo pydantic estricto) y MCP (`validar_entrada`) aceptan y rechazan la
-    misma entrada. Antes `5.0` pasaba por MCP y lo rechazaba REST: misma herramienta, dos reglas."""
+    misma entrada. `5.0` es un entero en JSON Schema, y Schemathesis lo manda: vale en los dos."""
     from pydantic import ValidationError
 
     from terranova.app import modelo_entrada
@@ -347,9 +347,15 @@ def test_paridad_rest_mcp_entero_estricto() -> None:
         except ErrorEntrada:
             return False
 
-    for e in ({"ultimas": 5}, {"ultimas": 5.0}, {"ultimas": "5"}, {"ultimas": True}):
+    for e in (
+        {"ultimas": 5},
+        {"ultimas": 5.0},
+        {"ultimas": 5.5},
+        {"ultimas": "5"},
+        {"ultimas": True},
+    ):
         assert rest_acepta(e) == mcp_acepta(e), e
-    assert mcp_acepta({"ultimas": 5}) and not mcp_acepta({"ultimas": 5.0})  # 5.0 no es 5
+    assert mcp_acepta({"ultimas": 5.0}) and not mcp_acepta({"ultimas": 5.5})
 
 
 @pytest.mark.anyio
@@ -378,3 +384,20 @@ async def test_todas_las_capas_caidas_falla_entero() -> None:
         await ej.ejecutar(
             "igac_construcciones_en_predio", {"codigo": _PREDIO_CONSTRUCCIONES}, plan="evaluacion"
         )
+
+
+def test_enteros_y_fechas_fuera_de_lo_real() -> None:
+    from terranova.ejecutor import _valor
+
+    assert _valor("anio", "int", 2030) == 2030  # lo dice la cobertura, no la entrada
+    assert _valor("desde", "fecha", "2024-02-29") == "2024-02-29"
+    for nombre, tipo, valor in (
+        ("anio", "int", 1899),
+        ("anio", "int", 2101),
+        ("nit_entidad", "int", -1),
+        ("nit_entidad", "int", 10**16),
+        ("desde", "fecha", "2026-13-45"),
+        ("desde", "fecha", "2023-02-29"),
+    ):
+        with pytest.raises(ErrorEntrada):
+            _valor(nombre, tipo, valor)

@@ -114,6 +114,21 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "codigo_oaci": ("indicador OACI del aeródromo, 4 caracteres en mayúscula", "SKBO"),
 }
 
+# Un `int` llega a una plantilla SoQL o a una URL: un número desmedido no le sirve a nadie y le
+# cuesta una consulta a la fuente. El año 2030 sí pasa: la respuesta dice que está fuera de
+# cobertura.
+MAX_ENTERO = 10**15
+
+
+def rango_entero(nombre: str) -> tuple[int, int]:
+    return (1900, 2100) if nombre == "anio" else (0, MAX_ENTERO)
+
+
+def entero_de_json(valor: Any) -> Any:
+    """`5.0` es un entero en JSON Schema: se recibe como 5, por MCP y por REST (ADR-0004)."""
+    return int(valor) if isinstance(valor, float) and valor.is_integer() else valor
+
+
 TipoEntrada = Literal[
     "float",
     "int",
