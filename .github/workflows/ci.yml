@@ -30,6 +30,7 @@ jobs:
       deps: ${{ steps.f.outputs.deps }}
       observabilidad: ${{ steps.f.outputs.observabilidad }}
       datasets: ${{ steps.f.outputs.datasets }}
+      conectores: ${{ steps.f.outputs.conectores }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
         with:
@@ -41,7 +42,7 @@ jobs:
         env:
           BASE: ${{ github.base_ref }}
         run: |
-          trabajos="codigo api postgres descubrimiento imagen deps observabilidad datasets"
+          trabajos="codigo api postgres descubrimiento imagen deps observabilidad datasets conectores"
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             for t in $trabajos; do echo "$t=true" >> "$GITHUB_OUTPUT"; done; exit 0
           fi
@@ -56,6 +57,7 @@ jobs:
           hay imagen '^(src|catalogo)/|^Dockerfile$|^\.dockerignore$'
           hay deps '^$'
           hay observabilidad '^docker/observabilidad/'
+          hay conectores '^conectores/'
           hay datasets '^src/terranova/restricciones[a-z_]*\.py$|^scripts/dataset_|^tests/test_restricciones\.py$'
 
   check:
@@ -211,6 +213,51 @@ jobs:
         continue-on-error: true
         run: |
           docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.67.0 image             --exit-code 1 --severity HIGH,CRITICAL --ignore-unfixed --no-progress terranova/puerta:ci
+
+  # Los conectores son imágenes aparte (conectores/, con sus requirements.txt): antes no los miraba
+  # nadie. Se revisa el error real, sin el largo de línea, porque es código vendorizado.
+  conectores-lint:
+    name: conectores (ruff)
+    needs: cambios
+    if: needs.cambios.outputs.conectores == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Ruff
+        run: pipx run ruff==0.17.3 check conectores --isolated --select F,E9,B --target-version py311
+
+  conectores:
+    name: conector ${{ matrix.servicio }}
+    needs: cambios
+    if: needs.cambios.outputs.conectores == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        servicio: [amenazas_mcp, arcgis_mcp, dane_mcp, datos_abiertos_mcp, imagery_mcp, web_mcp]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Construir la imagen
+        run: docker build -t conector:ci -f conectores/services/${{ matrix.servicio }}/Dockerfile conectores
+
+      # Humo: el servidor importa con las dependencias que de verdad quedaron en la imagen.
+      - name: Humo
+        run: docker run --rm --entrypoint python conector:ci -c "import ${{ matrix.servicio }}.server"
+
+      - name: pip-audit
+        run: pipx run pip-audit -r conectores/services/${{ matrix.servicio }}/requirements.txt
+
+      # Informativo mientras se conoce la línea base; lo que encuentre queda en el registro.
+      - name: Trivy (informativo)
+        continue-on-error: true
+        run: >-
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock
+          aquasec/trivy:0.67.2 image --quiet --scanners vuln --ignore-unfixed
+          --severity HIGH,CRITICAL --exit-code 1 conector:ci
 
   seguridad:
     name: seguridad (pip-audit)

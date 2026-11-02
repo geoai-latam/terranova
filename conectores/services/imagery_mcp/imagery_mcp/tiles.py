@@ -106,7 +106,7 @@ class _SceneLanes:
     @contextmanager
     def take(self) -> Iterator[int]:
         """Toma un carril libre (o espera uno por turnos) y devuelve su índice."""
-        for i, lk in enumerate(self.locks):
+        for i, lk in enumerate(self.locks):  # noqa: B007 (i se usa después del bucle)
             if lk.acquire(blocking=False):
                 break
         else:
