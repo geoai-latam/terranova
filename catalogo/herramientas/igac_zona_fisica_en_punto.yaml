@@ -1,13 +1,16 @@
 id: igac_zona_fisica_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.zona_fisica
 pregunta: "¿Qué características físicas tiene la zona homogénea del IGAC en este punto?"
 descripcion: >
   Zona homogénea física (IGAC) que contiene un punto: su código, área homogénea de tierra,
   disponibilidad de agua, influencia vial, uso actual del suelo, norma de uso (POT) y vigencia (en
-  lo urbano, topografía, servicios públicos y tipificación de la construcción). Los usos y
-  disponibilidades vienen como códigos del IGAC. La vigencia (año del estudio de valores) viene vacía en cerca de 1 de cada 8 zonas rurales (todas las
+  lo urbano, topografía, servicios públicos y tipificación de la construcción). Cada código del
+  IGAC llega con su significado al lado (`*_significado`), según el dominio que publica la capa:
+  rural y urbana dan otro sentido al mismo número. Un código que el IGAC no define (0, o usos de 17
+  en adelante, cerca de 1 de cada 8 zonas rurales) llega con significado vacío. La topografía urbana
+  es texto sin uniformar. La vigencia (año del estudio de valores) viene vacía en cerca de 1 de cada 8 zonas rurales (todas las
   rurales de Chía) y va de 1990 a 2026, con fechas imposibles (1899, 4670): un valor de una vigencia
   vieja no es el de hoy. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente.
@@ -34,7 +37,10 @@ canario:
     codigo_zona_fisica: "035"
     area_homogenea_tierra: FH67c
     norma_uso_suelo: "ZJM- Zona Jardín de Uso Múltiple"
+    disponibilidad_agua_significado: Suficientes
+    influencia_vial_significado: "Buenas 1 - Pavimentada, dos o más vías"
+    uso_actual_suelo_significado: Tierras de labor no irrigadas
     zona: rural
     municipio_divipola: "25175"
-  campos: [area_homogenea_tierra, codigo_municipio_zona, codigo_zona_fisica, disponibilidad_agua, influencia_vial, municipio_divipola, norma_uso_suelo, uso_actual_suelo, vigencia, zona]
+  campos: [area_homogenea_tierra, codigo_municipio_zona, codigo_zona_fisica, disponibilidad_agua, disponibilidad_agua_significado, influencia_vial, influencia_vial_significado, municipio_divipola, norma_uso_suelo, uso_actual_suelo, uso_actual_suelo_significado, vigencia, zona]
   latencia_max_ms: 5000

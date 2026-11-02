@@ -222,6 +222,10 @@ class Campo(_Ficha):
     codigos: dict[str, str] | None = Field(
         default=None, description="significado de cada código, cuando la fuente no lo publica"
     )
+    codigos_por_capa: dict[str, dict[str, str]] | None = Field(
+        default=None,
+        description="como `codigos`, cuando cada capa da otro significado al mismo código",
+    )
     codigos_norma: str | None = Field(
         default=None, description="la norma que define `codigos` (resolución, artículo, URL)"
     )
@@ -248,9 +252,19 @@ class Campo(_Ficha):
 
     @model_validator(mode="after")
     def _codigos_con_norma(self) -> Self:
-        if (self.codigos is None) != (self.codigos_norma is None):
+        if self.codigos is not None and self.codigos_por_capa is not None:
+            raise ValueError("spec 08: `codigos` o `codigos_por_capa`, no los dos")
+        tiene_codigos = self.codigos is not None or self.codigos_por_capa is not None
+        if tiene_codigos != (self.codigos_norma is not None):
             raise ValueError("spec 08: los códigos escritos a mano van con la norma que los define")
         return self
+
+    def significado(self, valor: Any, capa: str | None) -> str | None:
+        """Qué quiere decir un código; None si la tabla no lo define."""
+        tabla = self.codigos
+        if tabla is None:
+            tabla = (self.codigos_por_capa or {}).get(capa or "", {})
+        return tabla.get(str(valor))
 
 
 class Frescura(_Ficha):
@@ -656,7 +670,9 @@ class Fuente(_Ficha):
     @property
     def nombres_rt(self) -> set[str]:
         return {c.nombre for c in self.campos.values()} | {
-            f"{c.nombre}{SUFIJO_SIGNIFICADO}" for c in self.campos.values() if c.codigos is not None
+            f"{c.nombre}{SUFIJO_SIGNIFICADO}"
+            for c in self.campos.values()
+            if c.codigos is not None or c.codigos_por_capa is not None
         }
 
 

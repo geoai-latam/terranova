@@ -24,6 +24,30 @@ def test_una_letra_que_ninguna_norma_define_llega_sin_significado() -> None:
     assert fila["destino_economico_significado"] is None
 
 
+def _zona(fila: Mapping[str, object], capa: str) -> dict[str, object]:
+    h = CATALOGO.herramientas["igac_zona_fisica_en_punto"]
+    return mapear_fila(h, CATALOGO.fuentes[h.fuente], dict(fila), capa)
+
+
+def test_el_mismo_codigo_dice_otra_cosa_en_lo_rural_y_en_lo_urbano() -> None:
+    # dominio publicado por el IGAC en las capas 15 y 16 (medido el 2026-11-02)
+    rural = _zona({"USO_ACTUAL_SUELO": 1, "INFLUENCIA_VIAL": 1, "DISPONIBILIDAD_AGUA": 2}, "15")
+    assert rural["uso_actual_suelo_significado"] == "Edificios"
+    assert rural["influencia_vial_significado"] == "Buenas 1 - Pavimentada, dos o más vías"
+    assert rural["disponibilidad_agua_significado"] == "Suficientes"
+    urbano = _zona({"USO_ACTUAL_SUELO": 1, "INFLUENCIA_VIAL": 1, "SERVICIO_PUBLICO": 3}, "16")
+    assert urbano["uso_actual_suelo_significado"] == "Residencial"
+    assert urbano["influencia_vial_significado"] == "Pavimentadas"
+    assert urbano["servicios_publicos_significado"] == "Servicios básicos completos"
+
+
+def test_un_codigo_que_el_igac_no_define_queda_sin_significado() -> None:
+    fila = _zona({"USO_ACTUAL_SUELO": 20, "DISPONIBILIDAD_AGUA": 0}, "15")
+    assert fila["uso_actual_suelo"] == 20
+    assert fila["uso_actual_suelo_significado"] is None
+    assert fila["disponibilidad_agua_significado"] is None
+
+
 def test_el_uso_numerico_tambien() -> None:
     fila = _mapear("igac_caracteristicas_predio", {"USO_1": 28})
     assert fila["uso_construccion_significado"] == "Comercio (comercial)"

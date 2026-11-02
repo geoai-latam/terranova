@@ -32,13 +32,97 @@ campos:
   CODIGO: {nombre: codigo_municipio_zona, tipo: str, desc: "municipio y zona catastral, 7 dígitos"}
   CODIGO_ZONA_FISICA: {nombre: codigo_zona_fisica, tipo: str, desc: "código de la zona homogénea física"}
   AREA_HOMOGENEA_TIERRA: {nombre: area_homogenea_tierra, tipo: str, desc: "área homogénea de tierra (rural)"}
-  DISPONIBILIDAD_AGUA: {nombre: disponibilidad_agua, tipo: int, desc: "código de disponibilidad de agua (rural)"}
-  TOPOGRAFIA: {nombre: topografia, tipo: str, desc: "topografía (urbana)"}
-  SERVICIO_PUBLICO: {nombre: servicios_publicos, tipo: int, desc: "código de servicios públicos (urbana)"}
-  INFLUENCIA_VIAL: {nombre: influencia_vial, tipo: int, desc: "código de influencia vial"}
-  USO_ACTUAL_SUELO: {nombre: uso_actual_suelo, tipo: int, desc: "código de uso actual del suelo"}
+  DISPONIBILIDAD_AGUA:
+    nombre: disponibilidad_agua
+    tipo: int
+    desc: "código de disponibilidad de agua (rural)"
+    codigos:
+      "1": "Abundabtes"
+      "2": "Suficientes"
+      "3": "Escasas"
+      "4": "Sin aguas"
+    codigos_norma: "dominio publicado por el IGAC en la capa 15 del servicio Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026"
+  TOPOGRAFIA: {nombre: topografia, tipo: str, desc: "topografía (urbana), texto sin uniformar: PLANO, Inclinado, 1, PLANA…; el dominio del IGAC es plano 0-7 %, inclinado 7-14 %, empinado más de 14 %"}
+  SERVICIO_PUBLICO:
+    nombre: servicios_publicos
+    tipo: int
+    desc: "código de servicios públicos (urbana)"
+    codigos:
+      "1": "Sin servicios"
+      "2": "Servicios básicos incompletos"
+      "3": "Servicios básicos completos"
+      "4": "Servicios básicos y complementarios"
+      "5": "Servicios básicos incompletos y complementarios"
+    codigos_norma: "dominio publicado por el IGAC en la capa 16 del servicio Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026"
+  INFLUENCIA_VIAL:
+    nombre: influencia_vial
+    tipo: int
+    desc: "código de influencia vial; rural y urbana usan tablas distintas"
+    codigos_por_capa:
+      "15":
+        "1": "Buenas 1 - Pavimentada, dos o más vías"
+        "2": "Buenas 2 - Sin pavimentar, dos o más vías"
+        "3": "Regulares 3 - Pavimentadas, vía angosta"
+        "4": "Regulares 4 - Sin pavimentar, vía angosta"
+        "5": "Malas 5 - Transitable en tiempo seco"
+        "6": "Malas 6 - Carreteable sólo para vehículos medianos"
+        "7": "Malas 7 - Camino real o de herradura"
+        "8": "Sin vías 8 - Sendero"
+        "9": "Sin vías 9 - Sin vías"
+      "16":
+        "1": "Pavimentadas"
+        "2": "Sin Pavimentar"
+        "3": "Peatonales"
+        "4": "Sin Vias"
+    codigos_norma: "dominio publicado por el IGAC en las capas 15 y 16 del servicio Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026"
+  USO_ACTUAL_SUELO:
+    nombre: uso_actual_suelo
+    tipo: int
+    desc: "código de uso actual del suelo; rural y urbana usan tablas distintas"
+    codigos_por_capa:
+      "15":
+        "1": "Edificios"
+        "2": "Otras Construcciones"
+        "3": "Parques, Jardines y Huertos"
+        "4": "Cultivos de caracter permanente"
+        "5": "Tierras de labor irrigadas"
+        "6": "Tierras de labor no irrigadas"
+        "7": "Tierras con maleza"
+        "8": "Tierras improductivas"
+        "9": "Pastos naturales"
+        "10": "Pastos artificiales"
+        "11": "Pastos naturales mejorados"
+        "12": "Bosques"
+        "13": "Selvas vírgenes"
+        "14": "Condiciones especiales"
+        "15": "Cuerpos de agua"
+        "16": "Mixto"
+      "16":
+        "1": "Residencial"
+        "2": "Comercial"
+        "3": "Industrial"
+        "4": "Institucional"
+        "5": "Lote"
+    codigos_norma: "dominio publicado por el IGAC en las capas 15 y 16 del servicio Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026"
   NORMA_USO_SUELO: {nombre: norma_uso_suelo, tipo: str, desc: "norma de uso del suelo (POT)"}
-  TIPIFICACION_CONSTRUCCION: {nombre: tipificacion_construccion, tipo: int, desc: "código de tipificación de la construcción (urbana)"}
+  TIPIFICACION_CONSTRUCCION:
+    nombre: tipificacion_construccion
+    tipo: int
+    desc: "código de tipificación de la construcción (urbana)"
+    codigos:
+      "1": "Residencial 1 - (Bajo-Bajo)"
+      "2": "Residencial 2 - (Bajo)"
+      "3": "Residencial 3 - (Medio-Bajo)"
+      "4": "Residencial 4 - (Medio)"
+      "5": "Residencial 5 - (Medio-Alto)"
+      "6": "Residencial 6 - (Alto)"
+      "7": "Comercial Barrial"
+      "8": "Comercial Sectorial"
+      "9": "Comercial Especializado"
+      "10": "Industrial Liviana"
+      "11": "Industrial Mediana"
+      "12": "Industrial Pesada"
+    codigos_norma: "dominio publicado por el IGAC en la capa 16 del servicio Zonas_Homogeneas_Gestor_IGAC_Vigencias_2026"
   VIGENCIA: {nombre: vigencia, tipo: date, desc: "vigencia del estudio de la zona; a menudo vacía o imposible (ver el perfil)"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: IGAC, theme: catastro, accrualPeriodicity: annual}
@@ -60,4 +144,6 @@ perfil:
   - '1899-12-30 es la «fecha cero» de Excel y Access: una vigencia vacía disfrazada de fecha'
   - 173 municipios rurales tienen zonas de varias vigencias, que no se solapan (5 de 5 medidos)
   - el punto de prueba toca un solo elemento
+  - 'códigos fuera del dominio publicado (medido el 2026-11-02): uso rural 0 y 17-20 en cerca de 1 de cada 8 zonas; uso urbano 0 y 6-21 en 1 de cada 10; agua 0 y 56 en 1 de cada 25'
+  - 'la topografía urbana no sigue su dominio: PLANO, Inclinado, 1, PLANA, Plano 0-7%, Bajamar'
   decision: en vivo por punto; la descripción advierte la vigencia
