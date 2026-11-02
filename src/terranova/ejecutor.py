@@ -749,6 +749,11 @@ class Ejecutor:
             valores, procedencia_previa = await self._previa(h, valores, consultado_en)
             previas.append(procedencia_previa)
 
+        complemento = (
+            asyncio.ensure_future(self._complemento(h, valores, consultado_en))
+            if h.consulta.complemento is not None
+            else None
+        )
         capas: list[str | None] = [str(c) for c in h.consulta.capas] or [None]
         llamadas = []
         for capa in capas:
@@ -761,6 +766,8 @@ class Ejecutor:
             llamadas.append(self._una(h, fuente.conector, capa, argumentos))
         respuestas, fallos = await _reunir_capas(llamadas)
         if not respuestas:
+            if complemento is not None:
+                complemento.cancel()
             raise fallos[0]  # todas las capas fallaron: se falla igual (no hay `parcial` de una)
         capas_incompletas = len(fallos)  # unas capas sí respondieron y otras no: será `parcial`
         hechos_de_dato = [k for k, c in fuente.campos.items() if c.origen == "hecho"]
@@ -808,6 +815,18 @@ class Ejecutor:
                 f"la fuente dice que hay {total} y no entregó ninguno: no se pudo leer la "
                 "respuesta",
             )
+        hechos_complemento: dict[str, Any] = {}
+        aviso_complemento: str | None = None
+        if complemento is not None:
+            try:
+                hechos_complemento, procedencia_complemento = await complemento
+                procedencia.append(procedencia_complemento)  # después del total: no cuenta
+            except Exception as fallo:  # noqa: BLE001 — la principal respondió: se sigue sin esto
+                assert h.consulta.complemento is not None
+                aviso_complemento = (
+                    f"No se pudo saber {h.consulta.complemento.que_dice}: la consulta "
+                    f"complementaria falló ({type(fallo).__name__})."
+                )
         derivar_secuencia(h, elementos)
         agregados = {
             nombre: derivar_resultado(d, elementos, total)
@@ -818,6 +837,8 @@ class Ejecutor:
         if es_relleno(h, elementos, hechos):
             elementos, hechos = [], {}
         hay_algo = bool(elementos) or bool(hechos)
+        if hay_algo:
+            hechos = {**hechos, **hechos_complemento}
         if h.consulta.forma == "uno":
             datos = {
                 **(elementos[0] if elementos else {}),
@@ -830,7 +851,7 @@ class Ejecutor:
                 datos["elementos"] = elementos
         datos = {k: v for k, v in datos.items() if v is not None} if hay_algo else {}
 
-        avisos: list[str] = []
+        avisos: list[str] = [aviso_complemento] if aviso_complemento and hay_algo else []
         estado: Estado = "encontrado" if hay_algo else "no_encontrado"
         # honestidad: una fila cuyos campos de lista blanca mapean todos a None deja `datos` vacío
         # (forma «uno»); «encontrado» con datos vacío es indistinguible de un bug → «no encontrado»
@@ -953,6 +974,25 @@ class Ejecutor:
         vistos = [{previa.columna: v} for v in hallados]
         procedencia = self._procedencia(h, fuente, r, consultado_en, vistos)
         return {**valores, MARCADOR_PREVIA: lista}, procedencia
+
+    async def _complemento(
+        self, h: Herramienta, valores: dict[str, Any], consultado_en: datetime
+    ) -> tuple[dict[str, Any], Procedencia]:
+        """La consulta complementaria: su primera fila, con los nombres y tipos de `hechos`."""
+        comp = h.consulta.complemento
+        assert comp is not None
+        fuente = self.catalogo.fuentes[comp.fuente]
+        argumentos = renderizar(comp.argumentos, {**valores, "url_fuente": fuente.url})
+        sc = await self.llamar(fuente.conector, comp.tool, argumentos, fuente_id=fuente.id)
+        r = separar(h, None, argumentos, sc)
+        fila = r.filas[0] if r.filas else {}
+        hechos = {
+            hecho.nombre: convertir(fila.get(columna), hecho.tipo)
+            for columna, hecho in comp.hechos.items()
+        }
+        hechos = {k: v for k, v in hechos.items() if v is not None}
+        procedencia = self._procedencia(h, fuente, r, consultado_en, [hechos] if hechos else [])
+        return hechos, procedencia
 
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]

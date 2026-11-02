@@ -753,6 +753,29 @@ class Previa(_Ficha):
     patron: str
 
 
+class HechoComplemento(_Ficha):
+    nombre: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    tipo: Literal["str", "int", "float", "date"]
+    desc: str
+
+
+class Complemento(_Ficha):
+    """Una consulta además de la principal, cuya primera fila sale como hechos del resultado: hasta
+    qué mes llega la fuente en el año pedido (la Policía publica 2026 hasta julio, y un municipio
+    sin casos en julio no lo dice). Corre a la vez que la principal y no cuenta en su total. Si
+    falla, la respuesta lo avisa y sigue sin esos hechos."""
+
+    fuente: str
+    tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    argumentos: dict[str, Any]
+    hechos: dict[str, HechoComplemento] = Field(
+        min_length=1, description="columna de la respuesta → hecho que sale en el resultado"
+    )
+    que_dice: str = Field(
+        min_length=5, description="lo que dan los hechos, para el aviso si la consulta falla"
+    )
+
+
 class Consulta(_Ficha):
     """Cómo se responde la pregunta con un conector. El ejecutor (F2.1) la sigue tal cual.
 
@@ -793,11 +816,15 @@ class Consulta(_Ficha):
     argumentos: dict[str, Any]
     campos: list[str] = Field(min_length=1, description="campos de la fuente que se piden")
     previa: Previa | None = None
+    complemento: Complemento | None = None
 
     @property
     def marcadores(self) -> set[str]:
         previa = self.previa.argumentos if self.previa else {}
-        return set(MARCADOR.findall(json.dumps([self.argumentos, previa], ensure_ascii=False)))
+        complemento = self.complemento.argumentos if self.complemento else {}
+        return set(
+            MARCADOR.findall(json.dumps([self.argumentos, previa, complemento], ensure_ascii=False))
+        )
 
     @property
     def forma(self) -> Literal["uno", "lista"]:
@@ -1060,9 +1087,22 @@ def validar(catalogo: Catalogo) -> list[str]:
                 errores.append(
                     f"{donde}: la consulta previa valida con «{previa.patron}», que no tiene patrón"
                 )
+        if (complemento := h.consulta.complemento) is not None:
+            if complemento.fuente not in catalogo.fuentes:
+                errores.append(f"{donde}: el complemento usa {complemento.fuente}, que no existe")
+            nombres = [x.nombre for x in complemento.hechos.values()]
+            if chocan := set(nombres) & (fuente.nombres_rt | set(h.derivados)):
+                errores.append(
+                    f"{donde}: el complemento repite nombres que ya salen: {sorted(chocan)}"
+                )
         argumentos_todos = {
             **h.consulta.argumentos,
             **({"_previa": h.consulta.previa.argumentos} if h.consulta.previa else {}),
+            **(
+                {"_complemento": h.consulta.complemento.argumentos}
+                if h.consulta.complemento
+                else {}
+            ),
         }
         for marcador in sorted(_enteros_en_codigo(argumentos_todos) & set(h.entrada)):
             if h.entrada[marcador] not in ("int", "float", "anio", "bool"):
@@ -1082,6 +1122,8 @@ def validar(catalogo: Catalogo) -> list[str]:
         if faltan := set(h.consulta.campos) - set(fuente.campos):
             errores.append(f"{donde}: pide campos fuera de la lista blanca: {sorted(faltan)}")
         salen = fuente.nombres_rt | set(h.derivados)
+        if h.consulta.complemento:
+            salen |= {x.nombre for x in h.consulta.complemento.hechos.values()}
         for nombre, d in h.derivados.items():
             if d.de in (
                 "prefijo",

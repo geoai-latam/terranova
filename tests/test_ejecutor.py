@@ -575,3 +575,45 @@ def test_cifras_con_signo_de_pesos() -> None:
     assert fila["ganancia_perdida"] == 0 and math.copysign(1, fila["ganancia_perdida"]) == -1
     with pytest.raises(ValueError):
         Campo(nombre="n", tipo="str", desc="x", moneda=True)
+class _PoliciaFalsa:
+    """La consulta del municipio y la del corte de la fuente (la que pide `hasta_mes`)."""
+
+    def __init__(self, municipio: list[dict[str, Any]], corte_falla: bool = False) -> None:
+        self.municipio = municipio
+        self.corte_falla = corte_falla
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        if "hasta_mes" in argumentos["select"]:
+            if self.corte_falla:
+                raise RuntimeError("se cayó")
+            filas = [{"hasta_mes": "07", "meses": "7"}]
+        else:
+            filas = self.municipio
+        return {"artifacts": [{"kind": "table", "rows": filas}], "facts": {}}
+
+
+@pytest.mark.anyio
+async def test_el_complemento_dice_hasta_que_mes_publica_la_fuente() -> None:
+    """Medellín 2026 tenía 2 955 hurtos de vehículos hasta julio, frente a 5 916 en todo 2025: sin
+    decir el corte, «el hurto bajó a la mitad» (medido el 2026-11-02)."""
+    from terranova.ejecutor import Ejecutor
+
+    filas = [{"tipo_de_hurto": "HURTO MOTOCICLETAS", "genero": "MASCULINO", "casos": "1913"}]
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": _PoliciaFalsa(filas)})
+    entrada = {"municipio_divipola": "05001", "anio": 2026}
+    sobre = await ej.ejecutar("policia_hurto_vehiculos_municipio", entrada, plan="evaluacion")
+    assert sobre.estado == "encontrado"
+    assert sobre.datos["fuente_hasta_mes"] == 7 and sobre.datos["fuente_meses_publicados"] == 7
+    assert sobre.datos["total_casos"] == 1913  # el complemento no cuenta en el resultado
+    assert any("El año está incompleto" in a for a in sobre.avisos)
+
+    # si el complemento falla, la respuesta sigue y lo dice
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": _PoliciaFalsa(filas, corte_falla=True)})
+    sobre = await ej.ejecutar("policia_hurto_vehiculos_municipio", entrada, plan="evaluacion")
+    assert sobre.estado == "encontrado" and "fuente_hasta_mes" not in sobre.datos
+    assert any("No se pudo saber hasta qué mes" in a for a in sobre.avisos)
+
+    # sin casos en el municipio, el corte no convierte el vacío en «encontrado»
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": _PoliciaFalsa([])})
+    sobre = await ej.ejecutar("policia_hurto_vehiculos_municipio", entrada, plan="evaluacion")
+    assert sobre.estado == "no_encontrado" and sobre.datos == {}

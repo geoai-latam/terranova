@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T06:33:31+00:00",
+ "grabado": "2026-11-02T18:12:56+00:00",
  "herramienta": "policia_hurto_comercio_residencias_municipio",
  "llamadas": [
   {
@@ -60,6 +60,54 @@
      "filas": 3,
      "filas_que_resume": 361,
      "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "id": "6sqw-8cg5",
+    "portal": "datos.gov.co",
+    "select": "max(substring(fecha_hecho, 4, 2)) AS hasta_mes, count(distinct substring(fecha_hecho, 4, 2)) AS meses",
+    "where": "fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_mes",
+       "meses"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_mes": "12",
+        "meses": "12"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "6sqw-8cg5",
+     "consulta": {
+      "conjunto": "6sqw-8cg5",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(substring(fecha_hecho, 4, 2)) AS hasta_mes, count(distinct substring(fecha_hecho, 4, 2)) AS meses",
+      "where": "(fecha_hecho like '%/2024')"
+     },
+     "filas": 1,
+     "filas_que_resume": 68123,
+     "filtro_soql": "(fecha_hecho like '%/2024')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"
