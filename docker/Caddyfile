@@ -1,5 +1,11 @@
 # Caddy: TLS automático con un dominio (TERRANOVA_DOMINIO=api.ejemplo.org); en local, HTTP en :80.
-{$TERRANOVA_DOMINIO}
+# TERRANOVA_WWW=www.terrnova.com suma ese nombre, con su certificado. Se pone después del CNAME; sin
+# él, solo sirve el dominio principal.
+{$TERRANOVA_DOMINIO} {$TERRANOVA_WWW}
+
+# `redir` corre antes que cualquier `handle`: www nunca sirve contenido, solo manda al dominio.
+@www host www.{$TERRANOVA_DOMINIO}
+redir @www https://{$TERRANOVA_DOMINIO}{uri} permanent
 
 encode zstd gzip
 
