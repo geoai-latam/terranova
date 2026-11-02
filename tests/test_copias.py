@@ -4,6 +4,7 @@ Las pruebas del plan y del conector no usan red ni base. Las del almacén corren
 `TERRANOVA_PG_PRUEBAS=postgresql://…` (en CI, el job de Postgres).
 """
 
+import json
 import os
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
@@ -352,6 +353,10 @@ def test_plan_espacial_por_punto_y_por_zona() -> None:
     assert "ST_MakeEnvelope(%s, %s, %s, %s, 4326)" in zona.sql and not zona.geometria
     assert '"_geom"' not in zona.sql and "*" not in zona.sql  # sin select: la lista blanca
     assert zona.sql_total is not None and zona.parametros_total == (-74.5, 4.0, -73.5, 5.0)
+    lote = {"type": "Polygon", "coordinates": [[[-74, 4], [-73, 4], [-73, 5], [-74, 4]]]}
+    area = plan_de_consulta(RUNAP, {"poligono": lote})
+    assert "ST_GeomFromGeoJSON(%s)" in area.sql and "ST_MakeValid" in area.sql
+    assert "-74" not in area.sql and json.loads(area.parametros[0]) == lote  # va como parámetro
 
 
 def test_plan_espacial_rechaza_lo_que_no_es() -> None:
@@ -360,6 +365,7 @@ def test_plan_espacial_rechaza_lo_que_no_es() -> None:
         ({"punto": [1.0, float("nan")]}, "2 números"),
         ({"bbox": [-73.0, 4.0, -74.0, 5.0]}, "oeste, sur, este, norte"),
         ({"punto": [1, 2], "bbox": [0, 0, 1, 1]}, "no van juntos"),
+        ({"punto": [1, 2], "poligono": {"type": "Polygon"}}, "no van juntos"),
         ({"geometria": "toda"}, "geometría desconocida"),
         ({"agregados": {"n": "count"}, "geometria": "completa"}, "no sale geometría"),
     ):
@@ -538,6 +544,16 @@ def test_copia_espacial_en_postgis() -> None:
     # el moño se reparó al cargar: el cruce no falla y lo encuentra
     filas, total = consultar({"bbox": [-76.0, 3.0, -72.0, 8.0], "order": ["objectid"]})
     assert [f["objectid"] for f in filas] == [1, 2] and total == 2
+    # una astilla cuyo rectángulo toca las dos áreas, y ella solo una: se usa el polígono
+    lote = {
+        "type": "Polygon",
+        "coordinates": [[[-73.5, 4.5], [-73.4, 4.5], [-74.5, 6.1], [-73.5, 4.5]]],
+    }
+    filas, total = consultar({"poligono": lote, "select": ["objectid"]})
+    assert [f["objectid"] for f in filas] == [1] and total == 1
+    # el que se cruza a sí mismo se repara: no rompe la consulta
+    filas, _ = consultar({"poligono": {"type": "Polygon", "coordinates": _MONO}})
+    assert [f["objectid"] for f in filas] == [2]
     filas, _ = consultar({"punto": [-73.5, 4.5], "geometria": "completa", "select": ["objectid"]})
     assert '"Polygon"' in filas[0]["_geojson"]
 

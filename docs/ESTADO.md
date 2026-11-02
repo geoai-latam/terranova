@@ -48,6 +48,19 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Consulta por polígono (2026-11-01, ADR-0035)
+
+- **Motor:** tipo de entrada `poligono` (GeoJSON `Polygon` en EPSG:4326, hasta 500 vértices y 1 grado
+  de lado) y cruce en PostGIS sobre cualquier copia espacial. Va como parámetro, nunca dentro del
+  SQL, y un anillo que se cruza a sí mismo se repara con `ST_MakeValid`.
+- **Herramientas:** `urt_microzona_en_poligono` y `pnn_areas_protegidas_en_poligono`.
+- **Medido contra la fuente:** 6 lotes por fuente con el mismo resultado exacto. Los canarios usan una
+  franja en diagonal donde el rectángulo trae más que el polígono (7 contra 4 en URT, 12 contra 2 en
+  RUNAP): se ponen rojos si el cruce deja de ser por polígono.
+- **Falta en producción:** la dorada de RUNAP se grabó con una copia local de las 12 áreas del
+  rectángulo del canario, no con la copia entera. La de URT depende de reconstruir `urt.microzonas`
+  (`docker compose exec copias terranova copias actualizar urt.microzonas`).
+
 ## Una sola herramienta de predio (2026-11-01)
 
 - **`predio_en_punto`:** mira el SINIC y, si no tiene el punto, la base del IGAC. Va en

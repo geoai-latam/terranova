@@ -56,6 +56,9 @@ from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.proteccion import Proteccion
 
 MAX_TEXTO_LIBRE = 200
+# ADR-0035: un lote o una finca, no un departamento
+MAX_VERTICES_POLIGONO = 500
+MAX_LADO_POLIGONO_GRADOS = 1.0
 Plan = Literal["evaluacion", "normal"]
 
 
@@ -95,6 +98,8 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
         if not (-180 <= x0 < x1 <= 180 and -90 <= y0 < y1 <= 90):
             raise ErrorEntrada(nombre, "rectángulo inválido en EPSG:4326 (lon, lat; min < max)")
         return [x0, y0, x1, y1]
+    if tipo == "poligono":
+        return _poligono(nombre, v)
     if tipo == "geojson":
         if not isinstance(v, dict) or "type" not in v:
             raise ErrorEntrada(nombre, "debe ser un objeto GeoJSON")
@@ -114,6 +119,37 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
     if len(v) > MAX_TEXTO_LIBRE or not texto_es_limpio(v):
         raise ErrorEntrada(nombre, f"texto de hasta {MAX_TEXTO_LIBRE} caracteres, sin control")
     return v
+
+
+def _poligono(nombre: str, v: Any) -> dict[str, Any]:
+    """Un GeoJSON `Polygon` en EPSG:4326 dentro de los topes de la ADR-0035, solo con lo suyo."""
+    if not isinstance(v, dict) or v.get("type") != "Polygon":
+        raise ErrorEntrada(nombre, 'debe ser un GeoJSON {"type": "Polygon", "coordinates": [...]}')
+    anillos = v.get("coordinates")
+    if not isinstance(anillos, list) or not anillos:
+        raise ErrorEntrada(nombre, "le faltan las coordenadas")
+    vertices = 0
+    limpios: list[list[list[float]]] = []
+    for anillo in anillos:
+        if not isinstance(anillo, list) or len(anillo) < 4:
+            raise ErrorEntrada(nombre, "cada anillo lleva al menos 4 vértices")
+        if not all(
+            isinstance(p, list) and len(p) == 2 and all(_numero(c) for c in p) for p in anillo
+        ):
+            raise ErrorEntrada(nombre, "cada vértice es [lon, lat]")
+        puntos = [[float(p[0]), float(p[1])] for p in anillo]
+        if puntos[0] != puntos[-1]:
+            raise ErrorEntrada(nombre, "cada anillo termina en su primer vértice")
+        if not all(-180 <= x <= 180 and -90 <= y <= 90 for x, y in puntos):
+            raise ErrorEntrada(nombre, "fuera de rango (EPSG:4326)")
+        vertices += len(puntos)
+        limpios.append(puntos)
+    if vertices > MAX_VERTICES_POLIGONO:
+        raise ErrorEntrada(nombre, f"tiene {vertices} vértices; el tope es {MAX_VERTICES_POLIGONO}")
+    lons, lats = [x for x, _ in limpios[0]], [y for _, y in limpios[0]]
+    if max(max(lons) - min(lons), max(lats) - min(lats)) > MAX_LADO_POLIGONO_GRADOS:
+        raise ErrorEntrada(nombre, f"pasa de {MAX_LADO_POLIGONO_GRADOS:g} grado de lado")
+    return {"type": "Polygon", "coordinates": limpios}
 
 
 def _numero(x: Any) -> bool:
@@ -897,6 +933,8 @@ def _zona(
     for nombre, tipo in h.entrada.items():
         if tipo == "bbox":
             return ZonaUsada(tipo="bbox", valor=v[nombre], crs="EPSG:4326")
+        if tipo == "poligono":
+            return ZonaUsada(tipo="poligono", valor=v[nombre], crs="EPSG:4326")
         if tipo == "divipola":
             lugar = (municipios or {}).get(v[nombre]) or {}
             nombre_lugar = ", ".join(

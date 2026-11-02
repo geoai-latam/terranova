@@ -120,6 +120,7 @@ TipoEntrada = Literal[
     "str",
     "bool",
     "bbox",
+    "poligono",
     "geojson",
     "codigo_predial",
     "divipola",

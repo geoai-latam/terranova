@@ -1,0 +1,39 @@
+id: urt_microzona_en_poligono
+version: 1
+familia: territorio
+fuente: urt.microzonas
+pregunta: "¿Este polígono toca zonas microfocalizadas para la restitución de tierras?"
+descripcion: >
+  Zonas microfocalizadas por la Unidad de Restitución de Tierras (URT) que tocan un polígono (GeoJSON
+  Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): la resolución vigente, su fecha, el
+  estado (en firme o cerrada), municipio (DIVIPOLA) y la territorial que la atiende. Sirve para un
+  lote o una finca. Tocar una microzona no significa que el lote tenga una solicitud: significa que
+  la URT puede tramitar solicitudes ahí. Solo la zona; nunca solicitudes ni sentencias por predio.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: URT; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: urt_microzonas
+    poligono: "{poligono}"
+    select: [id_microzona, cod_dane, depto, mpio, n_res_m, fecha_res_vigente, estado_micro, territorial]
+    geometria: ninguna
+    order: [id_microzona]
+    limite: 200
+  campos: [id_microzona, cod_dane, depto, mpio, n_res_m, fecha_res_vigente, estado_micro, territorial]
+salida: MicrozonasEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+cobro: zona
+canario:
+  # Franja en diagonal por el Cauca; medido el 2026-11-01 en la capa 3 con el mismo anillo
+  # (esriGeometryPolygon, intersects): 4 microzonas (216, 843, 911 y 1294), y 7 con su rectángulo.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-76.60, 2.40], [-76.35, 2.60], [-76.36, 2.61], [-76.61, 2.41], [-76.60, 2.40]]]
+  verdad: {total: 4}
+  campos: [departamento, estado, fecha_resolucion, id_microzona, municipio, municipio_divipola, resolucion, territorial, total]
+  latencia_max_ms: 5000
