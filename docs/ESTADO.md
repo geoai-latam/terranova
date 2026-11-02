@@ -88,6 +88,24 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
 - **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
+## Despliegue y prueba en producción (2026-11-02, `main` en #240)
+
+- El servidor pasó de #212 a #240. La copia de `urt.microzonas` quedó construida (1 314 filas) y
+  OAuth está encendido (`TERRANOVA_OAUTH=1`): metadatos, registro de clientes y autorización
+  responden en `https://terrnova.com`.
+- Canarios con el código nuevo: 209 de 213 en verde. Rojo `secop1_paa_detalle`: la fuente se
+  republicó el 2026-11-02 y el plan 372838 ya no existe (la herramienta dijo «no encontrado», bien);
+  canario y dorada nuevos con el plan 352782, medido en la fuente.
+- `secop_entidades_buscar` llegaba al tope (14,5 s recorriendo 3,6 millones de contratos para 5 282
+  entidades). La copia gana `indices_contiene`: un índice de trigramas con la misma expresión sin
+  mayúsculas ni tildes que usa `contiene`. Aplica desde la siguiente reconstrucción de la copia. La
+  descripción (v2) avisa que Medellín sale como «DISTRITO ESPECIAL… DE MEDELLIN», no como alcaldía.
+- Capacidad de uso: el 27 % de los polígonos dice solo «CA» o «ZU» en la descripción. Ahora llegan
+  con `unidad_capacidad_significado` (cuerpo de agua; coberturas artificializadas), tomado de la capa
+  de vocación del mismo IGAC.
+- Siguen lentos y no se relajan: `ideam_calidad_aire_municipio` (40 s) e `igac_vereda_en_punto`
+  (6,4 s).
+
 ## Códigos de la zona física y unidad de la UPRA (2026-11-02)
 
 - `igac_zona_fisica_en_punto` v2: agua, vías, uso del suelo, servicios y tipificación llegan con

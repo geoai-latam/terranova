@@ -26,10 +26,11 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
-  # Medido el 2026-10-22 directamente en azeg-sgqg (idpaa = 372838): 239
-  # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
-  entrada: {id_paa: 372838}
-  verdad: {id_paa: "372838", id_item: "42694562"}
-  minimos: {numero_registros: 239}
+  # Medido el 2026-11-02 directamente en azeg-sgqg (idpaa = 352782): 260 registros; el primero con
+  # el orden de la ficha da la verdad. El plan del canario anterior (372838, medido el 2026-10-22)
+  # desapareció cuando la fuente se republicó el 2026-11-02: un plan puede salir del conjunto.
+  entrada: {id_paa: 352782}
+  verdad: {id_paa: "352782", id_item: "41236380"}
+  minimos: {numero_registros: 260}
   campos: [codigo_unspsc, descripcion, duracion, fecha_inicio, fuente_recursos, id_item, id_paa, modalidad, numero_registros, valor_estimado, valor_vigencia_actual, vigencias_futuras]
   latencia_max_ms: 10000

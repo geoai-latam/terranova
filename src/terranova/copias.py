@@ -74,6 +74,11 @@ def _plano(texto: str) -> str:
     return texto.lower().translate(str.maketrans(*_TILDES))
 
 
+def _plano_sql(columna: str) -> str:
+    """La misma expresión en la consulta de `contiene` y en su índice: si difieren, no se usa."""
+    return f"translate(lower({columna}), '{_TILDES[0]}', '{_TILDES[1]}')"
+
+
 def _coordenadas(valor: Any, n: int, nombre: str) -> list[float]:
     """`n` números finitos (lon, lat…): van como parámetros, nunca dentro del SQL."""
     import math
@@ -152,9 +157,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         campo = fuente.campos.get(columna)
         parametros.append(str(valor) if campo and campo.tipo == "str" else valor)
     for columna, buscado in (argumentos.get("contiene") or {}).items():
-        expresion = (
-            f"translate(lower({_columna(columna, permitidas)}), '{_TILDES[0]}', '{_TILDES[1]}')"
-        )
+        expresion = _plano_sql(_columna(columna, permitidas))
         palabras = _plano(str(buscado)).split()
         if not palabras:
             raise ErrorCopia(f"`contiene` de «{columna}» está vacío")
@@ -975,6 +978,16 @@ class AlmacenCopias:
                 self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
             if copia.texto:
                 self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
+            if copia.indices_contiene:
+                # `contiene` busca '%palabra%': un btree no sirve; los trigramas sí. Sin el índice,
+                # buscar una entidad en SECOP recorría 3,6 millones de filas (14 s, al tope).
+                self._c.execute("CREATE EXTENSION IF NOT EXISTS pg_trgm")
+                for col in copia.indices_contiene:
+                    expresion = _plano_sql(f'"{col}"')
+                    self._c.execute(
+                        f"CREATE INDEX ON {fisica} USING gin ({expresion} gin_trgm_ops)"
+                    )
+                self._c.execute(f"ANALYZE {fisica}")
             if copia.espacial and copia.proyeccion:
                 # llegaron en las coordenadas del archivo, rotuladas 4326: se pasan a lon/lat
                 self._c.execute(

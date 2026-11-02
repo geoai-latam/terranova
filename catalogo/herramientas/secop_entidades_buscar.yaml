@@ -1,5 +1,5 @@
 id: secop_entidades_buscar
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.contratos_copia
 pregunta: "¿Cuál es el NIT de esta entidad pública?"
@@ -8,7 +8,9 @@ descripcion: >
   sus contratos y su valor en pesos, de la que más contrata a la que menos. Sirve para conocer el
   NIT antes de usar las herramientas que lo piden, en vez de suponerlo. No distingue mayúsculas ni
   tildes y exige todas las palabras: use las que identifican a la entidad, como «Chía» (SECOP
-  escribe «ALCALDIA MUNICIPAL DE CHIA»). Una misma entidad puede salir con varios nombres.
+  escribe «ALCALDIA MUNICIPAL DE CHIA»). Las ciudades que son distrito no salen como alcaldía:
+  Medellín es «DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN», así que busque
+  por el nombre de la ciudad. Una misma entidad puede salir con varios nombres.
   Sale de la copia de Terrnova: cubre las entidades con contratos firmados en SECOP II desde 2023,
   así que no encontrarla no significa que no exista; las cifras son solo de esa ventana.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)

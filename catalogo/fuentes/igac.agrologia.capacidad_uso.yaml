@@ -36,7 +36,17 @@ datos_personales: ninguno
 estado: publicada
 campos:
   OBJECTID: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la fuente republica la capa)"}
-  UCCapacida: {nombre: unidad_capacidad, tipo: str, desc: "clase y subclase de capacidad de uso (p. ej. 2c)"}
+  UCCapacida:
+    nombre: unidad_capacidad
+    tipo: str
+    desc: "clase y subclase de capacidad de uso (p. ej. 2c); CA y ZU no son clases y su descripción repite la sigla"
+    # Medido en la copia (2026-11-02): 15 128 polígonos dicen solo «CA» y 2 732 solo «ZU» (27 % del
+    # país). El IGAC define las siglas en la capa hermana de vocación de uso. Las demás unidades ya
+    # traen su descripción, así que su significado queda vacío.
+    codigos:
+      CA: Cuerpo de agua
+      ZU: Coberturas artificializadas (urbanas y suburbanas)
+    codigos_norma: "IGAC, capa de vocación de uso de las tierras 1:100.000 (UCVocacion CA y ZU), misma serie que esta"
   Descripcio: {nombre: descripcion_capacidad, tipo: str, desc: "descripción de la capacidad de uso"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
