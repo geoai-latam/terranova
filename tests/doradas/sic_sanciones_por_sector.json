@@ -1,16 +1,16 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T00:51:19+00:00",
+ "grabado": "2026-11-02T19:30:07+00:00",
  "herramienta": "sic_sanciones_por_sector",
  "llamadas": [
   {
    "argumentos": {
-    "group": "sector",
+    "group": "upper(sector)",
     "id": "73dx-n59j",
     "max_filas": 200,
-    "order": "sector",
+    "order": "valor_total DESC, nombre_sector",
     "portal": "datos.gov.co",
-    "select": "sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total",
+    "select": "min(sector) AS nombre_sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total, max(date_extract_m(fecha_emitida)) AS ultimo_mes",
     "where": "date_extract_y(fecha_emitida) = 2024"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,231 +18,258 @@
     "artifacts": [
      {
       "columns": [
+       "nombre_sector",
        "resoluciones",
        "sanciones",
-       "sector",
+       "ultimo_mes",
        "valor_total"
       ],
       "kind": "table",
       "rows": [
        {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Actividades de parques y atracciones",
-        "valor_total": "30487584"
-       },
-       {
-        "resoluciones": "6",
-        "sanciones": "6",
-        "sector": "Alimentos / Bebidas",
-        "valor_total": "172365688"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Alimentos / Bebidas (Lactosueros)",
-        "valor_total": "19054740"
-       },
-       {
-        "resoluciones": "31",
-        "sanciones": "31",
-        "sector": "Automotores",
-        "valor_total": "302798756"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "2",
-        "sector": "Comercialización",
-        "valor_total": "19500000"
-       },
-       {
-        "resoluciones": "52",
-        "sanciones": "52",
-        "sector": "Comercio electrónico",
-        "valor_total": "1693440160"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Comercio electrónico - Influenciador",
-        "valor_total": "813002240"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Comercio electrónico - Seguridad",
-        "valor_total": "1270316"
-       },
-       {
-        "resoluciones": "5",
-        "sanciones": "5",
-        "sector": "Confecciones, calzado y marroquinería",
-        "valor_total": "693160264"
-       },
-       {
-        "resoluciones": "5",
-        "sanciones": "5",
-        "sector": "Educación",
-        "valor_total": "431023016"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Electrodomésticos",
-        "valor_total": "13000000"
-       },
-       {
-        "resoluciones": "4",
-        "sanciones": "4",
-        "sector": "Espectáculos públicos",
-        "valor_total": "148626972"
-       },
-       {
+        "nombre_sector": "Inmuebles",
         "resoluciones": "29",
         "sanciones": "32",
-        "sector": "Inmuebles",
+        "ultimo_mes": "12",
         "valor_total": "3804947328"
        },
        {
-        "resoluciones": "3",
-        "sanciones": "3",
-        "sector": "Muebles",
-        "valor_total": "10310948"
-       },
-       {
-        "resoluciones": "2",
-        "sanciones": "2",
-        "sector": "Parqueaderos",
-        "valor_total": "10251580"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Peluquería y otros tratamientos de belleza - servicios personales",
-        "valor_total": "6500000"
-       },
-       {
-        "resoluciones": "7",
-        "sanciones": "7",
-        "sector": "Prestación de servicios",
-        "valor_total": "28214108"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Productos de aseo",
-        "valor_total": "76218960"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Productos electrónicos",
-        "valor_total": "41600000"
-       },
-       {
-        "resoluciones": "4",
-        "sanciones": "4",
-        "sector": "Productos farmaceúticos",
-        "valor_total": "49221896"
-       },
-       {
-        "resoluciones": "3",
-        "sanciones": "3",
-        "sector": "Productos milagro",
-        "valor_total": "55721896"
-       },
-       {
-        "resoluciones": "2",
-        "sanciones": "2",
-        "sector": "Productos tecnológicos",
-        "valor_total": "196650112"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Recreación y deporte",
-        "valor_total": "15600000"
-       },
-       {
-        "resoluciones": "14",
-        "sanciones": "14",
-        "sector": "Restaurantes / Bares",
-        "valor_total": "292736676"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "Revisiones técnicas de gas",
-        "valor_total": "2540632"
-       },
-       {
-        "resoluciones": "11",
-        "sanciones": "11",
-        "sector": "Servicios de financiación",
-        "valor_total": "2113507664"
-       },
-       {
-        "resoluciones": "7",
-        "sanciones": "7",
-        "sector": "Servicios funerarios",
-        "valor_total": "1072165788"
-       },
-       {
-        "resoluciones": "72",
-        "sanciones": "78",
-        "sector": "Turismo",
-        "valor_total": "1317082608"
-       },
-       {
-        "resoluciones": "1",
-        "sanciones": "1",
-        "sector": "TURISMO",
-        "valor_total": "10162528"
-       },
-       {
-        "resoluciones": "39",
-        "sanciones": "39",
-        "sector": "Venta en almacenes",
-        "valor_total": "1111117816"
-       },
-       {
+        "nombre_sector": "Venta en almacenes - Máscaras",
         "resoluciones": "3",
         "sanciones": "7",
-        "sector": "Venta en almacenes - Máscaras",
+        "ultimo_mes": "1",
         "valor_total": "3763500000"
        },
        {
+        "nombre_sector": "Servicios de financiación",
+        "resoluciones": "11",
+        "sanciones": "11",
+        "ultimo_mes": "11",
+        "valor_total": "2113507664"
+       },
+       {
+        "nombre_sector": "Comercio electrónico",
+        "resoluciones": "52",
+        "sanciones": "52",
+        "ultimo_mes": "12",
+        "valor_total": "1693440160"
+       },
+       {
+        "nombre_sector": "Turismo",
+        "resoluciones": "73",
+        "sanciones": "79",
+        "ultimo_mes": "12",
+        "valor_total": "1327245136"
+       },
+       {
+        "nombre_sector": "Venta en almacenes",
+        "resoluciones": "39",
+        "sanciones": "39",
+        "ultimo_mes": "12",
+        "valor_total": "1111117816"
+       },
+       {
+        "nombre_sector": "Servicios funerarios",
+        "resoluciones": "7",
+        "sanciones": "7",
+        "ultimo_mes": "12",
+        "valor_total": "1072165788"
+       },
+       {
+        "nombre_sector": "Comercio electrónico - Influenciador",
         "resoluciones": "1",
         "sanciones": "1",
-        "sector": "Venta en almacenes - Mascotas",
+        "ultimo_mes": "4",
+        "valor_total": "813002240"
+       },
+       {
+        "nombre_sector": "Confecciones, calzado y marroquinería",
+        "resoluciones": "5",
+        "sanciones": "5",
+        "ultimo_mes": "9",
+        "valor_total": "693160264"
+       },
+       {
+        "nombre_sector": "Educación",
+        "resoluciones": "5",
+        "sanciones": "5",
+        "ultimo_mes": "8",
+        "valor_total": "431023016"
+       },
+       {
+        "nombre_sector": "Automotores",
+        "resoluciones": "31",
+        "sanciones": "31",
+        "ultimo_mes": "12",
+        "valor_total": "302798756"
+       },
+       {
+        "nombre_sector": "Restaurantes / Bares",
+        "resoluciones": "14",
+        "sanciones": "14",
+        "ultimo_mes": "12",
+        "valor_total": "292736676"
+       },
+       {
+        "nombre_sector": "Productos tecnológicos",
+        "resoluciones": "2",
+        "sanciones": "2",
+        "ultimo_mes": "4",
+        "valor_total": "196650112"
+       },
+       {
+        "nombre_sector": "Alimentos / Bebidas",
+        "resoluciones": "6",
+        "sanciones": "6",
+        "ultimo_mes": "8",
+        "valor_total": "172365688"
+       },
+       {
+        "nombre_sector": "Espectáculos públicos",
+        "resoluciones": "4",
+        "sanciones": "4",
+        "ultimo_mes": "11",
+        "valor_total": "148626972"
+       },
+       {
+        "nombre_sector": "Productos de aseo",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "8",
+        "valor_total": "76218960"
+       },
+       {
+        "nombre_sector": "Productos milagro",
+        "resoluciones": "3",
+        "sanciones": "3",
+        "ultimo_mes": "12",
+        "valor_total": "55721896"
+       },
+       {
+        "nombre_sector": "Productos farmaceúticos",
+        "resoluciones": "4",
+        "sanciones": "4",
+        "ultimo_mes": "4",
+        "valor_total": "49221896"
+       },
+       {
+        "nombre_sector": "Productos electrónicos",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "1",
+        "valor_total": "41600000"
+       },
+       {
+        "nombre_sector": "Actividades de parques y atracciones",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "5",
+        "valor_total": "30487584"
+       },
+       {
+        "nombre_sector": "Prestación de servicios",
+        "resoluciones": "7",
+        "sanciones": "7",
+        "ultimo_mes": "8",
+        "valor_total": "28214108"
+       },
+       {
+        "nombre_sector": "Comercialización",
+        "resoluciones": "1",
+        "sanciones": "2",
+        "ultimo_mes": "1",
+        "valor_total": "19500000"
+       },
+       {
+        "nombre_sector": "Venta por métodos no tradicionales / Distancia",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "1",
+        "valor_total": "19500000"
+       },
+       {
+        "nombre_sector": "Alimentos / Bebidas (Lactosueros)",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "5",
+        "valor_total": "19054740"
+       },
+       {
+        "nombre_sector": "Venta en almacenes - Mascotas",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "8",
         "valor_total": "17784424"
        },
        {
+        "nombre_sector": "Recreación y deporte",
         "resoluciones": "1",
         "sanciones": "1",
-        "sector": "Venta por métodos no tradicionales / Distancia",
-        "valor_total": "19500000"
+        "ultimo_mes": "1",
+        "valor_total": "15600000"
+       },
+       {
+        "nombre_sector": "Electrodomésticos",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "2",
+        "valor_total": "13000000"
+       },
+       {
+        "nombre_sector": "Muebles",
+        "resoluciones": "3",
+        "sanciones": "3",
+        "ultimo_mes": "10",
+        "valor_total": "10310948"
+       },
+       {
+        "nombre_sector": "Parqueaderos",
+        "resoluciones": "2",
+        "sanciones": "2",
+        "ultimo_mes": "4",
+        "valor_total": "10251580"
+       },
+       {
+        "nombre_sector": "Peluquería y otros tratamientos de belleza - servicios personales",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "1",
+        "valor_total": "6500000"
+       },
+       {
+        "nombre_sector": "Revisiones técnicas de gas",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "2",
+        "valor_total": "2540632"
+       },
+       {
+        "nombre_sector": "Comercio electrónico - Seguridad",
+        "resoluciones": "1",
+        "sanciones": "1",
+        "ultimo_mes": "12",
+        "valor_total": "1270316"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 33,
+      "total": 32,
       "truncado": false,
-      "vistos": 33
+      "vistos": 32
      },
      "completo": true,
      "conjunto": "73dx-n59j",
      "consulta": {
       "conjunto": "73dx-n59j",
-      "group": "sector",
+      "group": "upper(sector)",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total",
+      "select": "min(sector) AS nombre_sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total, max(date_extract_m(fecha_emitida)) AS ultimo_mes",
       "where": "(date_extract_y(fecha_emitida) = 2024)"
      },
-     "filas": 33,
+     "filas": 32,
      "filas_que_resume": 327,
      "filtro_soql": "(date_extract_y(fecha_emitida) = 2024)",
      "portal": "datos.gov.co"

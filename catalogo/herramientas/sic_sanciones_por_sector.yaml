@@ -1,13 +1,14 @@
 id: sic_sanciones_por_sector
-version: 1
+version: 2
 familia: empresas
 fuente: sic.sanciones
 pregunta: "¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector?"
 descripcion: >
   Sanciones en firme de la Superintendencia de Industria y Comercio en un año (por fecha de la
-  resolución), agrupadas por sector: resoluciones, sanciones (una por sancionado: una resolución
-  puede sancionar a varios) y valor total en pesos. Una resolución con sancionados de varios sectores
-  cuenta en cada uno.
+  resolución), agrupadas por sector y de la mayor suma a la menor: resoluciones, sanciones (una por
+  sancionado: una resolución puede sancionar a varios), valor total en pesos y el último mes con
+  sanciones. Una resolución con sancionados de varios sectores cuenta en cada uno. Da también el valor
+  de todo el año y hasta qué mes llega (`hasta_mes`), y avisa si el año no está completo.
   (Fuente: SIC; licencia: CC BY-SA 4.0.)
 entrada: {anio: int}
 consulta:
@@ -17,23 +18,38 @@ consulta:
   argumentos:
     id: 73dx-n59j
     portal: datos.gov.co
-    select: "sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total"
+    # La fuente escribe un mismo sector con mayúsculas distintas («Turismo» y «TURISMO» en 2024):
+    # se agrupa sin ellas y sale una de sus grafías.
+    select: "min(sector) AS nombre_sector, count(distinct radicado) AS resoluciones, count(*) AS sanciones, sum(valor) AS valor_total, max(date_extract_m(fecha_emitida)) AS ultimo_mes"
     where: "date_extract_y(fecha_emitida) = {anio}"
-    group: sector
-    order: "sector"
+    group: "upper(sector)"
+    order: "valor_total DESC, nombre_sector"
     max_filas: 200
   campos: [fecha_emitida, valor, sector]
 salida: SancionesSicPorSector
 derivados:
+  sector: {de: columna, campo: nombre_sector}
+  ultimo_mes: {de: columna, campo: ultimo_mes, tipo: int}
+  hasta_mes: {de: maximo, campo: ultimo_mes, tipo: int}
+  valor_total_anio: {de: suma, campo: valor_total, tipo: float}
+  sectores: {de: conteo, tipo: int}
   resoluciones: {de: columna, campo: resoluciones, tipo: int}
   sanciones: {de: columna, campo: sanciones, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
+avisos:
+- cuando: encontrado
+  si: {campo: hasta_mes, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año está incompleto: las resoluciones llegan hasta el mes que dice hasta_mes. De 2013 a 2025
+    todos los años llegan a diciembre; 2026 llega a mayo (medido el 2026-11-02). Las cifras no son
+    las de un año entero.
 cobro: agregado
 canario:
-  # Medido el 2026-10-22 en 73dx-n59j: en 2024, el primer sector (orden alfabético) es «Actividades
-  # de parques y atracciones», con 1 resolución y 1 sanción de $30 487 584. En todo 2024: 312
-  # resoluciones y 327 sancionados.
+  # Medido el 2026-11-02 en 73dx-n59j (agrupado sin mayúsculas, de la mayor suma a la menor): en
+  # 2024 el primero es «Inmuebles», con 29 resoluciones, 32 sanciones y $3 804 947 328. En todo 2024,
+  # 32 sectores y $18 353 064 700; «Turismo» suma 73 resoluciones (antes se partía en dos).
   entrada: {anio: 2024}
-  verdad: {sector: "Actividades de parques y atracciones", resoluciones: 1, sanciones: 1, valor_total: 30487584.0}
-  campos: [resoluciones, sanciones, sector, valor_total]
+  verdad: {sector: "Inmuebles", resoluciones: 29, sanciones: 32, valor_total: 3804947328.0, hasta_mes: 12, valor_total_anio: 18353064700.0}
+  minimos: {sectores: 32}
+  campos: [hasta_mes, resoluciones, sanciones, sector, sectores, ultimo_mes, valor_total, valor_total_anio]
   latencia_max_ms: 10000
