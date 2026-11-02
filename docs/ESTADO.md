@@ -60,6 +60,12 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Falta en producción:** la dorada de RUNAP se grabó con una copia local de las 12 áreas del
   rectángulo del canario, no con la copia entera. La de URT depende de reconstruir `urt.microzonas`
   (`docker compose exec copias terranova copias actualizar urt.microzonas`).
+## `www.terrnova.com` (2026-11-01)
+
+- **Caddy:** con `TERRANOVA_WWW=www.terrnova.com`, `www` redirige al dominio principal con 301 y tiene
+  su certificado. Sin la variable, todo sigue igual.
+- **Falta, del dueño y en este orden:** crear el CNAME `www` hacia `terrnova.com`, poner la variable
+  en el `.env` de producción y recrear Caddy.
 
 ## Una sola herramienta de predio (2026-11-01)
 
