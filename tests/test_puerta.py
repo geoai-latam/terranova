@@ -135,6 +135,8 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
     assert sobre is not None
     Sobre.model_validate(sobre)
     assert sobre["estado"] == "encontrado" and sobre["creditos"] == 10
+    assert r.meta is not None and r.meta["geo"]["tipo"] == "punto"  # enmienda de la ADR-0005
+    assert r.meta["geo"]["crs"] == "EPSG:4326" and r.meta["geo"]["elementos"] == 1
     assert sobre["datos"] == {
         "codigo_predial": CODIGO_CHIA,
         "codigo_predial_anterior": "25175000000050067000",
