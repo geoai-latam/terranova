@@ -393,3 +393,23 @@ def test_una_lista_de_codigos_compartida_llena_el_campo(tmp_path: Path) -> None:
     )
     with pytest.raises(CatalogoInvalido, match="no existe la lista de códigos"):
         cargar(raiz)
+
+
+def test_un_derivado_toma_sus_valores_de_una_lista_compartida(tmp_path: Path) -> None:
+    """La unidad de la cantidad de cada subpartida (~7 000) vive en catalogo/codigos/ y la usan las
+    dos herramientas de comercio exterior: el crudo va en metros cúbicos, no en barriles."""
+    catalogo = cargar()
+    for herramienta in (
+        "dian_comex_exportaciones_por_subpartida",
+        "dian_comex_importaciones_por_subpartida",
+    ):
+        valores = catalogo.herramientas[herramienta].derivados["unidad_cantidad"].valores
+        assert valores and valores["2709000000"] == "metros cúbicos"
+        assert valores["0901119000"] == "kilogramos"
+    raiz = _catalogo_con(
+        tmp_path,
+        "herramientas/dian_comex_exportaciones_por_subpartida.yaml",
+        _set(derivados__unidad_cantidad__valores_lista="no_existe"),
+    )
+    with pytest.raises(CatalogoInvalido, match="no existe la lista de códigos"):
+        cargar(raiz)
