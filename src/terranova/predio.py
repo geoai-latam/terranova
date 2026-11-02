@@ -24,8 +24,8 @@ DESCRIPCION = (
     "hace falta saber qué gestor catastral lo atiende. Mira primero el SINIC del IGAC (los 333 "
     "municipios con gestor propio, como Bogotá, Medellín y Cali) y, si no lo tiene, la base "
     "catastral pública del IGAC. Devuelve la respuesta de la base que lo tiene; la procedencia "
-    "dice cuál fue. Use esta herramienta para el predio de un punto. Para todo lo demás de un lugar "
-    "(restricciones, suelo, sismos), ficha_lugar."
+    "dice cuál fue. Use esta herramienta para el predio de un punto. Para todo lo demás de un "
+    "lugar (restricciones, suelo, sismos), ficha_lugar."
 )
 ESQUEMA_ENTRADA: dict[str, Any] = {
     "type": "object",
