@@ -39,3 +39,4 @@ Reglas:
 | UPRA, precio comercial de la tierra rural (capa nacional y datos.gov.co) | [upra.precio_tierra.md](upra.precio_tierra.md) |
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
+| Función Pública, servidores públicos del SIGEP (`2jzx-383z`) | [funcionpublica.sigep.md](funcionpublica.sigep.md) |
