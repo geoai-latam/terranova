@@ -80,6 +80,13 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   su certificado. Sin la variable, todo sigue igual.
 - **Falta, del dueño y en este orden:** crear el CNAME `www` hacia `terrnova.com`, poner la variable
   en el `.env` de producción y recrear Caddy.
+## Avisos por correo (2026-11-01)
+
+- **`terranova avisos`:** job diario (servicio `avisos`, 14:00 UTC) que escribe a las altas del sitio
+  3 días antes de que venza la llave, al llegar al 80 % del saldo y al agotarlo.
+- **Un aviso por evento:** la tabla `avisos_enviados` lo recuerda; uno que no salió se reintenta al
+  otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
+- **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
 ## Una sola herramienta de predio (2026-11-01)
 

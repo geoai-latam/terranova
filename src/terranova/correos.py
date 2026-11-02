@@ -410,6 +410,69 @@ def ya_tiene_llave(
     return Mensaje(asunto, texto, html, soporte)
 
 
+def aviso_vencimiento(nombre: str, vence: date, *, soporte: str) -> Mensaje:
+    n = nombre_visible(nombre)
+    asunto = "Tu llave de Terrnova vence pronto"
+    previa = f"Vence el {fecha(vence)}. Si quieres seguir, responde este correo."
+    pie = "Recibes este correo porque tienes una llave de prueba de Terrnova."
+    aviso = f"Hola, {escape(n)}. Tu llave de prueba vence el {fecha(vence)}."
+    sigue = "Después de esa fecha deja de responder. ¿Quieres seguir? Responde este correo."
+    cuerpo = (
+        _titulo("Tu llave vence pronto")
+        + _p(aviso)
+        + _p(sigue)
+        + _enlaces([("Planes y créditos", f"{URL}/precios", "Cuando la prueba se te quede corta.")])
+        + _firma()
+    )
+    texto = _texto(
+        [
+            f"Hola, {n}. Tu llave de prueba vence el {fecha(vence)}.",
+            sigue,
+            f"Planes y créditos: {URL}/precios",
+        ],
+        pie,
+    )
+    html = _pagina(asunto, previa, cuerpo, pie, etiqueta="Llave de prueba")
+    return Mensaje(asunto, texto, html, soporte)
+
+
+def aviso_saldo(nombre: str, *, usados: int, limite: int, reinicia: date, soporte: str) -> Mensaje:
+    n = nombre_visible(nombre)
+    agotado = usados >= limite
+    asunto = "Se agotó tu saldo de Terrnova" if agotado else "Te queda poco saldo en Terrnova"
+    previa = f"Usaste {usados} de {limite} créditos. Se renuevan el {fecha(reinicia)}."
+    pie = "Recibes este correo porque tienes una llave de Terrnova."
+    estado = (
+        "Tu llave responderá con el error saldo_agotado hasta que se renueve."
+        if agotado
+        else "Cuando se acaben, tu llave responderá con el error saldo_agotado."
+    )
+    sigue = "¿Necesitas más créditos? Responde este correo."
+    filas = [
+        ("Usados", f"{usados} de {limite} créditos"),
+        ("Se renuevan", fecha(reinicia)),
+    ]
+    cuerpo = (
+        _titulo("Se agotó tu saldo" if agotado else "Te queda poco saldo")
+        + _p(f"Hola, {escape(n)}. {estado}")
+        + _ficha(filas)
+        + _p(sigue)
+        + _enlaces([("Planes y créditos", f"{URL}/precios", "Cuando la prueba se te quede corta.")])
+        + _firma()
+    )
+    texto = _texto(
+        [
+            f"Hola, {n}. {estado}",
+            "\n".join(f"{k}: {v}" for k, v in filas),
+            sigue,
+            f"Planes y créditos: {URL}/precios",
+        ],
+        pie,
+    )
+    html = _pagina(asunto, previa, cuerpo, pie, etiqueta="Saldo")
+    return Mensaje(asunto, texto, html, soporte)
+
+
 COMANDO_CLAUDE = (
     "claude mcp add --transport http terrnova \\\n"
     "  https://terrnova.com/mcp/catalogo \\\n"
