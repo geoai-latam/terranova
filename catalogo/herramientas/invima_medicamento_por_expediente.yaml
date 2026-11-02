@@ -1,11 +1,12 @@
 id: invima_medicamento_por_expediente
-version: 1
+version: 2
 familia: estadisticas
 fuente: invima.cum_vigentes
 pregunta: "¿Qué dice el INVIMA del medicamento con este expediente?"
 descripcion: >
   Presentaciones (CUM) vigentes de un medicamento por su número de expediente en el INVIMA:
-  producto, titular, registro sanitario, vencimiento, principio activo y presentación, una fila
+  producto, titular, registro sanitario, vencimiento, principio activo, dosis (p. ej. «800 mg por TABLETA RECUBIERTA») y
+  presentación, una fila
   por presentación y rol: quién la fabrica y quién la importa.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {expediente: int}
@@ -16,17 +17,23 @@ consulta:
   argumentos:
     id: i7cb-raxc
     portal: datos.gov.co
-    select: "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad, tiporol, nombrerol"
+    select: "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, modalidad, tiporol, nombrerol"
     where: "expediente = '{expediente}'"
     order: "consecutivocum, tiporol"
     max_filas: 200
-  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad, tiporol, nombrerol]
+  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, formafarmaceutica, modalidad, tiporol, nombrerol]
 salida: MedicamentoPorExpediente
+derivados:
+  dosis: {de: columna, campo: dosis, tipo: str}
+avisos:
+- cuando: vacio
+  texto: >
+    El expediente no tiene presentaciones vigentes en el INVIMA. No quiere decir que no exista: el INVIMA publica cada estado en un conjunto aparte, y el expediente puede estar en otro (en trámite de renovación: invima_medicamento_en_renovacion_por_expediente; vencidas: invima_medicamento_vencido_por_expediente; en otros estados: invima_medicamento_otros_estados_por_expediente).
 cobro: registro
 canario:
   # Medido el 2026-10-22 en i7cb-raxc: 5 presentaciones × 2 roles = 10 filas; la primera, el
   # fabricante (PFIZERS.A. DE C.V., escrito así en la fuente).
   entrada: {expediente: 31330}
   verdad: {expediente: 31330, consecutivo_cum: 1, titular: "PFIZER S.A.S.", registro_sanitario: "INVIMA 2019M-011317-R3", rol: FABRICANTE, empresa_rol: "PFIZERS.A. DE C.V."}
-  campos: [atc, concentracion, consecutivo_cum, descripcion_atc, empresa_rol, estado_cum, estado_registro, expediente, forma_farmaceutica, modalidad, presentacion, principio_activo, producto, registro_sanitario, rol, titular, unidad_medida, via_administracion]
+  campos: [atc, cantidad, concentracion, consecutivo_cum, descripcion_atc, dosis, empresa_rol, estado_cum, estado_registro, expediente, forma_farmaceutica, modalidad, presentacion, principio_activo, producto, registro_sanitario, rol, titular, unidad_medida, unidad_referencia, via_administracion]
   latencia_max_ms: 10000

@@ -524,3 +524,26 @@ def test_avisos_de_la_ficha() -> None:
     vacio = avisos_de_la_ficha(prop, fp, sobre("no_encontrado", {}))
     assert vacio == [a.texto for a in prop.avisos if a.cuando == "vacio"]  # la propia reemplaza
     assert avisos_de_la_ficha(prop, fp, sobre("fuera_de_cobertura", {})) == []
+
+
+def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
+    """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
+    salen en ISO, y el relleno sale vacío, no como fecha (medido el 2026-11-02 en i7cb-raxc)."""
+    from terranova.catalogo import Campo
+    from terranova.ejecutor import _validar, fecha_en_orden
+
+    assert fecha_en_orden("06/15/2016", "mda") == "2016-06-15"
+    assert fecha_en_orden("15/06/2016", "dma") == "2016-06-15"
+    assert fecha_en_orden("2016-03-25T00:00:00.000", "mda") == "2016-03-25T00:00:00.000"
+    campo = Campo(
+        nombre="fecha_vencimiento",
+        tipo="date",
+        desc="vencimiento",
+        orden_fecha="mda",
+        anios_validos=(1950, 2049),
+    )
+    for relleno in ("01/01/3000", "12/31/3000", "01/01/1900", "01/01/9999"):
+        assert _validar(campo, convertir(fecha_en_orden(relleno, "mda"), "date")) is None
+    assert _validar(campo, convertir(fecha_en_orden("04/14/2026", "mda"), "date")) == "2026-04-14"
+    with pytest.raises(ValueError):
+        Campo(nombre="n", tipo="str", desc="x", orden_fecha="mda")

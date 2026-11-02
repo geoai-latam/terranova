@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T00:50:25+00:00",
+ "grabado": "2026-11-02T17:24:09+00:00",
  "herramienta": "invima_medicamento_por_expediente",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 200,
     "order": "consecutivocum, tiporol",
     "portal": "datos.gov.co",
-    "select": "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad, tiporol, nombrerol",
+    "select": "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, modalidad, tiporol, nombrerol",
     "where": "expediente = '31330'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,10 +18,12 @@
      {
       "columns": [
        "atc",
+       "cantidad",
        "concentracion",
        "consecutivocum",
        "descripcionatc",
        "descripcioncomercial",
+       "dosis",
        "estadocum",
        "estadoregistro",
        "expediente",
@@ -34,16 +36,19 @@
        "tiporol",
        "titular",
        "unidadmedida",
+       "unidadreferencia",
        "viaadministracion"
       ],
       "kind": "table",
       "rows": [
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "1",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "MUESTRA MEDICA CAJA POR 2 TABLETAS EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -56,14 +61,17 @@
         "tiporol": "FABRICANTE",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "1",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "MUESTRA MEDICA CAJA POR 2 TABLETAS EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -76,14 +84,17 @@
         "tiporol": "IMPORTADOR",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "2",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 24 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -96,14 +107,17 @@
         "tiporol": "FABRICANTE",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "2",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 24 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -116,14 +130,17 @@
         "tiporol": "IMPORTADOR",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "3",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 30 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -136,14 +153,17 @@
         "tiporol": "FABRICANTE",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "3",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 30 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Activo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -156,14 +176,17 @@
         "tiporol": "IMPORTADOR",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "4",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 60 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -176,14 +199,17 @@
         "tiporol": "FABRICANTE",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "4",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 60 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -196,14 +222,17 @@
         "tiporol": "IMPORTADOR",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "5",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 100 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -216,14 +245,17 @@
         "tiporol": "FABRICANTE",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        },
        {
         "atc": "M01AE01",
+        "cantidad": "800",
         "concentracion": "A",
         "consecutivocum": "5",
         "descripcionatc": "IBUPROFENO",
         "descripcioncomercial": "CAJA POR 100 TABLETAS EN EMPAQUE EN ENVASE DE BURBUJA PVC/ ALUMINIO",
+        "dosis": "800 mg por TABLETA RECUBIERTA",
         "estadocum": "Inactivo",
         "estadoregistro": "Vigente",
         "expediente": "31330",
@@ -236,6 +268,7 @@
         "tiporol": "IMPORTADOR",
         "titular": "PFIZER S.A.S.",
         "unidadmedida": "mg",
+        "unidadreferencia": "TABLETA RECUBIERTA",
         "viaadministracion": "ORAL"
        }
       ]
@@ -253,7 +286,7 @@
       "conjunto": "i7cb-raxc",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, formafarmaceutica, modalidad, tiporol, nombrerol",
+      "select": "expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, modalidad, tiporol, nombrerol",
       "where": "(expediente = '31330')"
      },
      "cumplen_en_el_portal": 10,

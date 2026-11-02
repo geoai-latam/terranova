@@ -26,7 +26,7 @@ campos:
   titular: {nombre: titular, tipo: str, desc: "titular del registro sanitario"}
   registrosanitario: {nombre: registro_sanitario, tipo: str, desc: "número del registro sanitario"}
   estadoregistro: {nombre: estado_registro, tipo: str, desc: "estado del registro"}
-  fechavencimiento: {nombre: fecha_vencimiento, tipo: date, desc: "vencimiento del registro"}
+  fechavencimiento: {nombre: fecha_vencimiento, tipo: date, orden_fecha: mda, anios_validos: [1950, 2049], desc: "vencimiento del registro; vacío si la fuente no da fecha o pone un año de relleno (1000, 1900, 2099, 3000, 9999)"}
   consecutivocum: {nombre: consecutivo_cum, tipo: int, desc: "consecutivo del CUM dentro del expediente"}
   descripcioncomercial: {nombre: presentacion, tipo: str, desc: "presentación comercial"}
   estadocum: {nombre: estado_cum, tipo: str, desc: "estado del CUM"}
@@ -34,8 +34,10 @@ campos:
   descripcionatc: {nombre: descripcion_atc, tipo: str, desc: "descripción del ATC"}
   viaadministracion: {nombre: via_administracion, tipo: str, desc: "vía de administración"}
   principioactivo: {nombre: principio_activo, tipo: str, desc: "principio activo"}
-  concentracion: {nombre: concentracion, tipo: str, desc: "concentración"}
-  unidadmedida: {nombre: unidad_medida, tipo: str, desc: "unidad de la concentración"}
+  concentracion: {nombre: concentracion, tipo: str, desc: "código de letra de la fuente (A-F y S, sin tabla publicada); no es la dosis, que sale en dosis"}
+  unidadmedida: {nombre: unidad_medida, tipo: str, desc: "unidad de cantidad (g, mg, UI…)"}
+  cantidad: {nombre: cantidad, tipo: float, desc: "cantidad del principio activo en la unidad de referencia: 2.5 en «2.5 g por AMPOLLA DE 5 ML» (la descripción de la fuente dice otra cosa; medido 2026-11-02)"}
+  unidadreferencia: {nombre: unidad_referencia, tipo: str, desc: "a qué se refiere la cantidad (AMPOLLA DE 5 ML, TABLETA…)"}
   formafarmaceutica: {nombre: forma_farmaceutica, tipo: str, desc: "forma farmacéutica"}
   modalidad: {nombre: modalidad, tipo: str, desc: "modalidad del registro (fabricar y vender, importar…)"}
   tiporol: {nombre: rol, tipo: str, desc: "FABRICANTE o IMPORTADOR (los únicos en la fuente, medido 2026-10-22)"}

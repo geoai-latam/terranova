@@ -87,6 +87,13 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **`supersolidaria_entidades_buscar` (v2):** busca también en la sigla, con la sigla exacta
   primero. Con «COOMEVA» daba el colegio y el fondo de empleados, no la cooperativa, cuya razón
   social es «Cooperativa Médica del Valle y de Profesionales de Colombia».
+- **INVIMA, la dosis:**
+  - Las cinco herramientas de medicamentos con principio activo dan `dosis` («2.5 g por AMPOLLA DE
+    5 ML»). Antes daban `concentracion: "A"`, que es un código de letra.
+  - El motor suma `orden_fecha` y `anios_validos`: las fechas del CUM salen en ISO, y los años de
+    relleno (3000, 1900, 9999) salen vacíos.
+  - El vacío de cada herramienta por expediente nombra los otros tres estados.
+  - Pendiente: una sola herramienta de estado por expediente, que pide consultas múltiples.
 
 ## Ficha de un lote (2026-11-01)
 
