@@ -30,11 +30,11 @@ campos:
   ciudad_domicilio: {nombre: ciudad, tipo: str, desc: "ciudad del domicilio"}
   ciiu: {nombre: ciiu, tipo: str, ancho: 4, desc: "CIIU a cuatro dígitos (la fuente pierde el cero inicial)"}
   macrosector: {nombre: macrosector, tipo: str, desc: "macrosector"}
-  ingresos_operacionales: {nombre: ingresos_operacionales, tipo: str, desc: "ingresos operacionales, en billones de pesos, como texto de la fuente ($84.95)"}
-  ganancia_p_rdida: {nombre: ganancia_perdida, tipo: str, desc: "ganancia o pérdida, en billones de pesos"}
-  total_activos: {nombre: total_activos, tipo: str, desc: "total de activos, en billones de pesos"}
-  total_pasivos: {nombre: total_pasivos, tipo: str, desc: "total de pasivos, en billones de pesos"}
-  total_patrimonio: {nombre: total_patrimonio, tipo: str, desc: "patrimonio, en billones de pesos"}
+  ingresos_operacionales: {nombre: ingresos_operacionales, tipo: float, moneda: true, desc: "ingresos operacionales, en billones de pesos, redondeado a centésimas (±0,005 billones, unos ±5 000 millones); la fuente los escribe como texto ($84.95)"}
+  ganancia_p_rdida: {nombre: ganancia_perdida, tipo: float, moneda: true, desc: "ganancia o pérdida, en billones de pesos, redondeado a centésimas (±0,005 billones, unos ±5 000 millones); -0.0 es una pérdida menor que eso"}
+  total_activos: {nombre: total_activos, tipo: float, moneda: true, desc: "total de activos, en billones de pesos, redondeado a centésimas (±0,005 billones, unos ±5 000 millones)"}
+  total_pasivos: {nombre: total_pasivos, tipo: float, moneda: true, desc: "total de pasivos, en billones de pesos, redondeado a centésimas (±0,005 billones, unos ±5 000 millones)"}
+  total_patrimonio: {nombre: total_patrimonio, tipo: float, moneda: true, desc: "patrimonio, en billones de pesos, redondeado a centésimas (±0,005 billones, unos ±5 000 millones)"}
   a_o_de_corte: {nombre: anio_corte, tipo: int, desc: "año de corte"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de Sociedades, theme: comercio, accrualPeriodicity: monthly}
