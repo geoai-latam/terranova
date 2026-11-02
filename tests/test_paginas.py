@@ -107,7 +107,9 @@ async def test_la_puerta_pagina_y_valida(monkeypatch: pytest.MonkeyPatch) -> Non
     lista = await _lista(120)
     pedidas: list[dict[str, Any]] = []
 
-    async def ejecutar(ficha: str, entrada: dict[str, Any], principal: Any) -> Sobre:
+    async def ejecutar(
+        ficha: str, entrada: dict[str, Any], principal: Any, completa: bool = False
+    ) -> Sobre:
         pedidas.append(entrada)
         return lista
 
