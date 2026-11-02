@@ -104,6 +104,14 @@ services:
       <<: *entorno
       TERRANOVA_ALERTA_URL: ${TERRANOVA_ALERTA_URL:-}
 
+  # Avisos por correo: llave por vencer y saldo bajo. A las 09:00 de Colombia, una vez por evento.
+  avisos:
+    <<: *puerta
+    build: !reset null
+    pull_policy: never
+    command: ["terranova", "avisos", "--a-las", "14:00"]
+    healthcheck: {disable: true}  # es un job, no sirve HTTP
+
   # G3 (ADR-0024): reconstruye una vez al día las copias del catálogo (`modo: copia`) en el esquema
   # `copia` de Postgres. La puerta las lee con el conector interno `copia`.
   copias:

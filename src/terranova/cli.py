@@ -235,6 +235,41 @@ def canarios(argumentos: list[str]) -> int:
     return repetir(lambda: asyncio.run(una_vez()), a.a_las, a.cada_horas)
 
 
+def avisos(argumentos: list[str]) -> int:
+    """Los correos de vencimiento y de saldo. Sin correo configurado, no hace nada."""
+    import asyncio
+    import os
+
+    from terranova.alta import CorreoSmtp
+    from terranova.avisos import Avisos
+    from terranova.cuota import cuota_desde_entorno
+    from terranova.identidad import registro_desde_entorno
+
+    parser = argparse.ArgumentParser(prog="terranova avisos")
+    _opciones_de_repeticion(parser)
+    a = parser.parse_args(argumentos)
+    smtp = os.environ.get("TERRANOVA_SMTP_URL")
+    bd = os.environ.get("TERRANOVA_BD", "datos_locales/terranova.db")
+
+    def una_vez() -> bool:
+        if not smtp:
+            print("sin TERRANOVA_SMTP_URL: no se mandan avisos")
+            return True
+        remitente = os.environ.get("TERRANOVA_CORREO_DE", "Terrnova <no-responder@terrnova.com>")
+        servicio = Avisos(
+            bd,
+            registro_desde_entorno(),
+            cuota_desde_entorno(os.environ.get("TERRANOVA_REDIS_URL")),
+            CorreoSmtp(smtp, remitente),
+            soporte=os.environ.get("TERRANOVA_SOPORTE", "soporte@terrnova.com"),
+        )
+        enviados, fallidos = asyncio.run(servicio.correr())
+        print(f"avisos: {enviados} enviados, {fallidos} no salieron")
+        return fallidos == 0
+
+    return repetir(una_vez, a.a_las, a.cada_horas)
+
+
 def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
@@ -622,6 +657,8 @@ def main() -> None:
         sys.exit(0)
     if argumentos[:1] == ["canarios"]:
         sys.exit(canarios(argumentos[1:]))
+    if argumentos[:1] == ["avisos"]:
+        sys.exit(avisos(argumentos[1:]))
     if argumentos[:1] == ["llaves"]:
         sys.exit(llaves(argumentos[1:]))
     if argumentos[:1] == ["orgs"]:
