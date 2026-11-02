@@ -142,6 +142,11 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **Aerocivil:** «Medellín» ya da el José María Córdova (MDE, registrado en Rionegro), y «Apartadó»,
   el de Carepa. Tráfico y operaciones dicen cuántos meses trae el año: en 2026, el tráfico llega a
   junio y las operaciones a julio.
+- **SIC, sanciones por sector (v2):**
+  - Agrupa sin mayúsculas: «Turismo» y «TURISMO» eran dos sectores en 2024, y ahora es uno solo
+    con 73 resoluciones.
+  - Va de la mayor suma a la menor y da el valor del año.
+  - Avisa si el año no llega a diciembre: 2026 llega a mayo, y de 2013 a 2025 todos llegan.
 
 ## Ficha de un lote (2026-11-01)
 

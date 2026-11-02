@@ -34,3 +34,4 @@ Reglas:
 | Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |
 | ANH: producción de crudo y gas, y regalías liquidadas | [anh.md](anh.md) |
 | Aerocivil: tráfico origen-destino y operaciones | [aerocivil.md](aerocivil.md) |
+| SIC, sanciones en firme de protección al consumidor (`73dx-n59j`) | [sic.sanciones.md](sic.sanciones.md) |
