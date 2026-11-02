@@ -48,6 +48,16 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Entidad pública por nombre (2026-11-01)
+
+- **`secop_entidades_buscar`:** del nombre al NIT, en todos los perfiles. Sale de la copia de SECOP,
+  sin fuente nueva ni reingesta: no distingue mayúsculas ni tildes y exige todas las palabras.
+- **Por qué así:** en vivo no sirve (corte a 150 s; 76 s y cero filas con «CHÍA», porque SECOP escribe
+  «CHIA»). El directorio de entidades del MinTIC no trae NIT.
+- **Medido:** 1,6 s sobre 3,6 M de filas sintéticas en PostGIS, contra un tope de 10 s; falta medirlo
+  en producción. El canario usa filas reales de Chía (Alcaldía, 899999172).
+- **Límite:** cubre las entidades con contratos desde 2023, y la herramienta lo dice.
+
 ## Fuentes que no estaban en verde (2026-11-01)
 
 Canario de las 09:00 UTC: 164 verdes, 7 rojas y 6 degradadas. Se midió cada una en la fuente, desde
