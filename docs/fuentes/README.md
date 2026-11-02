@@ -1,8 +1,9 @@
 # Fuentes: lo que sabemos de cada una
 
 Un archivo por fuente del catálogo (`catalogo/fuentes/<id>.yaml`), con el mismo nombre:
-`<id>.md`. La ficha YAML dice **cómo** se consulta. Este archivo dice **qué es** la fuente y qué
-aprendimos midiéndola. Tiene cinco partes:
+`<id>.md`. Una familia de conjuntos con la misma forma comparte uno, como los once del CNMH.
+La ficha YAML dice **cómo** se consulta. Este archivo dice **qué es** la fuente y qué aprendimos
+midiéndola. Tiene cinco partes:
 
 1. **Qué publica:** la unidad de cada fila, quién la produce y con qué frecuencia.
 2. **Campos que importan:** lo que significan de verdad, no lo que dice su nombre.
@@ -26,3 +27,4 @@ Reglas:
 | SECOP II, ejecución (`mfmm-jqmq`) | [cce.secop2.ejecucion.md](cce.secop2.ejecucion.md) |
 | SECOP II, compromisos (`skc9-met7`) | [cce.secop2.compromisos.md](cce.secop2.compromisos.md) |
 | SECOP II, rubros (`cwhv-7fnp`) | [cce.secop2.rubros.md](cce.secop2.rubros.md) |
+| CNMH, SIEVCAC: once conjuntos de víctimas por modalidad, con la misma forma | [cnmh.sievcac.md](cnmh.sievcac.md) |

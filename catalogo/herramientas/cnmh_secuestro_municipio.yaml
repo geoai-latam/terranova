@@ -2,11 +2,12 @@ id: cnmh_secuestro_municipio
 version: 1
 familia: justicia
 fuente: cnmh.sievcac_secuestro
-pregunta: "¿Cuántos secuestros del conflicto armado hubo en este municipio, por año y por grupo?"
+pregunta: "¿Cuántos secuestros del conflicto armado hubo en este municipio, por año?"
 descripcion: >
   Víctimas de secuestro del conflicto armado en un municipio (DIVIPOLA), según el Observatorio de Memoria y
   Conflicto del CNMH: personas y casos por año.
-  El año 0 es «sin información». Solo conteos, nunca el registro de una persona.
+  El año 0 es «sin información». Las modalidades son excluyentes: un hecho cuenta en una sola herramienta cnmh_*.
+  Solo conteos, nunca el registro de una persona.
   (Fuente: Centro Nacional de Memoria Histórica; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -27,6 +28,10 @@ derivados:
   victimas: {de: columna, campo: victimas, tipo: int}
   casos: {de: columna, campo: casos, tipo: int}
   total_victimas: {de: suma, campo: victimas, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Las modalidades del CNMH son excluyentes: cada víctima cuenta en una sola, y un mismo hecho puede estar en otra herramienta cnmh_*_municipio. Por ejemplo, las 81 víctimas civiles de Bojayá del 2 de mayo de 2002 están en acciones bélicas, no en masacres. Para el total del municipio hay que sumar las modalidades.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en sg55-sszm: GRANADA (05313), 87 víctimas en todos los años.
