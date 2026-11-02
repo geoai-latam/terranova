@@ -74,8 +74,8 @@ Hay tres entradas, con las mismas herramientas por debajo:
 | Un caso de uso de un solo dominio (catastro, contratación…) | `/mcp/<familia>` | lo más preciso y lo más rápido: el modelo ve solo las herramientas de su tema |
 
 **claude.ai y la interfaz web de ChatGPT todavía no conectan:** sus conectores remotos piden
-OAuth, y Terrnova usa una llave en la cabecera `Authorization`. OAuth está en el plan. Mientras
-tanto, use Claude Desktop con `mcp-remote` o la API.
+OAuth. Ya está construido ([ADR-0037](decisions/0037-oauth-en-la-puerta.md)), pero falta encenderlo
+en producción y probarlo con ellos. Mientras tanto, use Claude Desktop con `mcp-remote` o la API.
 
 Opus 5.5 y gpt-5.4-mini acertaron lo mismo en los tres modos: lo que cambia entre ellos es el costo
 en contexto, no la precisión.

@@ -45,6 +45,8 @@ x-puerta: &puerta
     TERRANOVA_EMBEDDINGS_URL: http://embeddings:9950
     # ADR-0034: correo saliente del alta y del contacto (sin él, el alta remite a soporte)
     TERRANOVA_SMTP_URL: ${TERRANOVA_SMTP_URL:-}
+    TERRANOVA_OAUTH: ${TERRANOVA_OAUTH:-}
+    TERRANOVA_URL_PUBLICA: ${TERRANOVA_URL_PUBLICA:-https://terrnova.com}
     TERRANOVA_CORREO_DE: ${TERRANOVA_CORREO_DE:-Terrnova <no-responder@terrnova.com>}
     PYTHONUNBUFFERED: "1"  # los logs de los jobs salen en vivo en `docker logs`
   depends_on:
