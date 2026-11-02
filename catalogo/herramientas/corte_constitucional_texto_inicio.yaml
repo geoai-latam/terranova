@@ -1,5 +1,5 @@
 id: corte_constitucional_texto_inicio
-version: 1
+version: 2
 familia: normativa
 fuente: corteconstitucional.relatoria
 pregunta: "¿De qué trata esta sentencia de la Corte Constitucional?"
@@ -12,6 +12,7 @@ entrada: {anio: int, sentencia: sentencia_relatoria}
 consulta:
   operacion: buscar
   tool: web_html
+  minimo_caracteres: 500
   argumentos:
     url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
     max_caracteres: 8000

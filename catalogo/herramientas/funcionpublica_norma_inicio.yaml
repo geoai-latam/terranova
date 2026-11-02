@@ -1,5 +1,5 @@
 id: funcionpublica_norma_inicio
-version: 1
+version: 2
 familia: normativa
 fuente: funcionpublica.gestor_normativo
 pregunta: "¿Cuándo se expidió esta norma, cuándo entró en vigencia y dónde se publicó?"
@@ -14,6 +14,7 @@ entrada: {norma: int}
 consulta:
   operacion: buscar
   tool: web_html
+  documento_ausente: [302]
   argumentos:
     url: "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i={norma}"
     max_caracteres: 6000

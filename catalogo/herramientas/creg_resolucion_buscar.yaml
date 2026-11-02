@@ -1,5 +1,5 @@
 id: creg_resolucion_buscar
-version: 1
+version: 2
 familia: normativa
 fuente: creg.gestor_normativo
 pregunta: "¿Qué dice esta resolución de la CREG sobre este tema?"
@@ -12,6 +12,7 @@ entrada: {documento: documento_normativo, buscar: str}
 consulta:
   operacion: buscar
   tool: web_html
+  documento_ausente: [404]
   argumentos:
     url: "https://gestornormativo.creg.gov.co/gestor/entorno/docs/{documento}.htm"
     buscar: "{buscar}"

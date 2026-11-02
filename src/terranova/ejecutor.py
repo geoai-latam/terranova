@@ -199,6 +199,7 @@ def sanear(texto: str) -> str:
 
 
 _AÑO = re.compile(r"^(\d{4})")
+_HTTP_DE_FUENTE = re.compile(r"el servicio respondió HTTP (\d{3})")
 _MILES = re.compile(r"\d{1,3}(,\d{3})+")
 _DECIMALES = re.compile(r"\.0+$")
 
@@ -323,6 +324,15 @@ def aviso_de_anio_incompleto(fuente: Fuente, valores: dict[str, Any]) -> str | N
     if hasta and anio.isdigit() and int(anio) <= hasta:
         return fuente.cobertura.aviso_incompleta or "Este año está incompleto en la fuente."
     return None
+
+
+def es_relleno(h: Herramienta, elementos: list[Any], hechos: dict[str, Any]) -> bool:
+    """La fuente contestó, pero sin el documento: una portada de 32 caracteres no es la sentencia,
+    y un título sin resultados no es un resultado."""
+    minimo = h.consulta.minimo_caracteres
+    if minimo and int(hechos.get("caracteres") or 0) < minimo:
+        return True
+    return h.consulta.solo_elementos and not elementos
 
 
 def _validar(campo: Campo, valor: Any) -> Any:
@@ -544,7 +554,13 @@ class Ejecutor:
         return self._indices[nombre]
 
     async def llamar(
-        self, conector: str, tool: str, argumentos: dict[str, Any], *, fuente_id: str | None = None
+        self,
+        conector: str,
+        tool: str,
+        argumentos: dict[str, Any],
+        *,
+        fuente_id: str | None = None,
+        ausente: Sequence[int] = (),
     ) -> dict[str, Any]:
         c = self.conectores.get(conector)
         if c is None:
@@ -557,6 +573,9 @@ class Ejecutor:
             try:
                 return await c.llamar(tool, argumentos)
             except ErrorConector as exc:
+                # La fuente respondió que eso no existe: ni es una caída ni cuenta para el corte.
+                if (m := _HTTP_DE_FUENTE.search(str(exc))) and int(m[1]) in ausente:
+                    return {}
                 raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
             finally:
                 metricas.FUENTE_LATENCIA.labels(fuente_id or conector).observe(
@@ -726,6 +745,8 @@ class Ejecutor:
             if not d.por_elemento
         }
 
+        if es_relleno(h, elementos, hechos):
+            elementos, hechos = [], {}
         hay_algo = bool(elementos) or bool(hechos)
         if h.consulta.forma == "uno":
             datos = {
@@ -842,7 +863,13 @@ class Ejecutor:
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]
     ) -> Respuesta:
-        sc = await self.llamar(conector, h.consulta.tool, argumentos, fuente_id=h.fuente)
+        sc = await self.llamar(
+            conector,
+            h.consulta.tool,
+            argumentos,
+            fuente_id=h.fuente,
+            ausente=h.consulta.documento_ausente,
+        )
         return separar(h, capa, argumentos, sc)
 
     def _procedencia(
