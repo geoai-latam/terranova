@@ -48,6 +48,20 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Ficha de un lote (2026-11-01)
+
+- **`ficha_lote`:** recibe un polígono y cruza áreas protegidas (RUNAP), microzonas de la URT,
+  capacidad de uso (IGAC) y, en Bogotá, área de actividad y tratamiento urbanístico. Va por
+  `POST /v1/fichas/lote` y por MCP. Una parte caída deja la ficha en `parcial`, nunca en «no hay».
+- **Capas nuevas por polígono:** `igac_capacidad_uso_en_poligono`, `sdp_area_actividad_en_poligono` y
+  `sdp_tratamiento_urbanistico_en_poligono`, medidas en la capa publicada.
+- **Fuera por ahora, y la ficha lo dice en cada respuesta:**
+  - Vocación y conflictos de uso: el servidor del IGAC respondió 503 y agotó el tiempo esa noche.
+  - Pérdida de bosque: el servicio del SINCHI respondió 500 con geometría.
+  - Amenaza por movimiento en masa: la fuente es una descarga, sin capa que consultar.
+  - Resguardos y reservas campesinas: no tienen copia.
+- **Pendiente:** validarla en GEO Copilot en el navegador, que es su criterio de aceptación.
+
 ## Consulta por polígono (2026-11-01, ADR-0035)
 
 - **Motor:** tipo de entrada `poligono` (GeoJSON `Polygon` en EPSG:4326, hasta 500 vértices y 1 grado

@@ -30,7 +30,7 @@ from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from terranova import ficha as ficha_lugar
-from terranova import ficha_empresa, metricas, predio, puerta
+from terranova import ficha_empresa, lote, metricas, predio, puerta
 from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
 from terranova.catalogo import (
     FORMAS_ENTRADA,
@@ -42,6 +42,7 @@ from terranova.catalogo import (
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
+    ESQUEMA_POLIGONO,
     GEOMETRIA,
     PAGINA,
     PATRON_TEXTO_LIMPIO,
@@ -62,6 +63,9 @@ Scope = MutableMapping[str, Any]
 logger = logging.getLogger("terranova.app")
 
 
+_POLIGONO: Any = Annotated[dict[str, Any], Field(json_schema_extra=ESQUEMA_POLIGONO)]
+
+
 def _tipo(nombre: str, tipo: str) -> Any:
     """El tipo Python (con sus restricciones) de una entrada del catálogo, para OpenAPI."""
     if tipo == "float":
@@ -74,8 +78,7 @@ def _tipo(nombre: str, tipo: str) -> Any:
     if tipo == "bbox":
         return Annotated[list[float], Field(min_length=4, max_length=4)]
     if tipo == "poligono":
-        esquema = puerta.esquema_del_tipo("poligono")
-        return Annotated[dict[str, Any], Field(json_schema_extra=esquema)]
+        return _POLIGONO
     if tipo == "geojson":
         return dict[str, Any]
     if tipo in PATRONES_ENTRADA:
@@ -146,6 +149,12 @@ class FichaEmpresaEntrada(_EntradaRest):
     """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, sin dígito de verificación."""
 
     nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
+
+
+class LoteEntrada(_EntradaRest):
+    """El polígono del lote."""
+
+    poligono: _POLIGONO
 
 
 class PredioEntrada(_EntradaRest):
@@ -306,6 +315,22 @@ def crear_api() -> FastAPI:
         operation_id=predio.HERRAMIENTA,
         summary=predio.PREGUNTA,
         description=predio.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
+
+    api.add_api_route(
+        "/v1/fichas/lote",
+        _ruta(lote.HERRAMIENTA, LoteEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=lote.HERRAMIENTA,
+        summary=lote.PREGUNTA,
+        description=lote.DESCRIPCION,
         tags=["fichas"],
         responses={
             c: {"model": Problema, "content": {"application/problem+json": {}}}

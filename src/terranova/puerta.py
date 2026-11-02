@@ -44,6 +44,7 @@ from terranova.conector import Conector, ConectorMCP, conectores_desde_entorno
 from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
+    ESQUEMA_POLIGONO,
     GEOMETRIA,
     PAGINA,
     PATRON_TEXTO_LIMPIO,
@@ -87,15 +88,7 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
         "maxItems": 4,
         "description": "[lon_min, lat_min, lon_max, lat_max] EPSG:4326",
     },
-    "poligono": {
-        "type": "object",
-        "properties": {
-            "type": {"const": "Polygon"},
-            "coordinates": {"type": "array", "minItems": 1},
-        },
-        "required": ["type", "coordinates"],
-        "description": "GeoJSON Polygon en EPSG:4326 (lon, lat): hasta 500 vértices y 1° de lado",
-    },
+    "poligono": ESQUEMA_POLIGONO,
     "geojson": {"type": "object"},
     **{
         tipo: {
@@ -153,11 +146,6 @@ def mensaje_saldo_agotado(org: str, ahora: float) -> str:
     if url := os.environ.get("TERRANOVA_URL_PLANES"):
         mensaje += f" o al subir de plan: {url}"
     return mensaje
-
-
-def esquema_del_tipo(tipo: str) -> dict[str, Any]:
-    """El JSON Schema público de un tipo de entrada: el mismo por MCP y por REST."""
-    return _TIPOS_JSON[tipo]
 
 
 def trae_geometria(h: Herramienta) -> bool:

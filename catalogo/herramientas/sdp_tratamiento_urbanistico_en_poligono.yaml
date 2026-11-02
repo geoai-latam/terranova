@@ -1,0 +1,38 @@
+id: sdp_tratamiento_urbanistico_en_poligono
+version: 1
+familia: territorio
+fuente: sdp.pot555_tratamiento
+pregunta: "¿Qué tratamientos urbanísticos tocan este polígono en Bogotá?"
+descripcion: >
+  Tratamiento urbanístico del POT de Bogotá (Decreto 555 de 2021) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): consolidación,
+  renovación urbana, desarrollo, conservación o mejoramiento integral, con la altura máxima permitida
+  en pisos, la tipología y el subtratamiento cuando aplican. Es la norma general: un predio puede
+  tener normas específicas (planes parciales, bienes de interés cultural). Solo Bogotá. Sale de la
+  copia de Terrnova. Para los usos, sdp_area_actividad_en_punto.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_pot555_tratamiento
+    poligono: "{poligono}"
+    select: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 200
+  campos: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+salida: TratamientoUrbanisticoEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+cobro: zona
+canario:
+  # Franja en diagonal junto al punto del canario de sdp_tratamiento_urbanistico_en_punto; medido el 2026-11-01 en la capa
+  # 2 con el mismo anillo (esriGeometryPolygon, intersects): 99, y 370 con su rectángulo.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.0765, 4.6286], [-74.0365, 4.6686], [-74.0405, 4.6726], [-74.0805, 4.6326], [-74.0765, 4.6286]]]
+  verdad: {total: 99}
+  campos: [altura_maxima, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tipologia, total, tratamiento]
+  latencia_max_ms: 8000

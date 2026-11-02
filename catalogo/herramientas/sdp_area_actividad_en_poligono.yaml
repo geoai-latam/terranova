@@ -1,0 +1,38 @@
+id: sdp_area_actividad_en_poligono
+version: 1
+familia: territorio
+fuente: sdp.pot555_area_actividad
+pregunta: "¿Qué áreas de actividad del POT tocan este polígono en Bogotá?"
+descripcion: >
+  Área de actividad del POT de Bogotá (Decreto 555 de 2021) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado), que define los usos del
+  suelo permitidos (de proximidad, estructurante, de grandes servicios metropolitanos, entre otras),
+  con el acto que la adopta. Es la norma general: los usos exactos dependen además del tamaño y la
+  ubicación del predio. Solo Bogotá. Sale de la copia de Terrnova. Para la altura y el tratamiento,
+  sdp_tratamiento_urbanistico_en_punto.
+  (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: sdp_pot555_area_actividad
+    poligono: "{poligono}"
+    select: [CODIGO_AREA_ACTIVIDAD, NOMBRE_AREA_ACTIVIDAD, ACTO_ADMINISTRATIVO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 200
+  campos: [CODIGO_AREA_ACTIVIDAD, NOMBRE_AREA_ACTIVIDAD, ACTO_ADMINISTRATIVO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
+salida: AreaActividadEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+cobro: zona
+canario:
+  # Franja en diagonal junto al punto del canario de sdp_area_actividad_en_punto; medido el 2026-11-01 en la capa
+  # 9 con el mismo anillo (esriGeometryPolygon, intersects): 18, y 63 con su rectángulo.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.0765, 4.6286], [-74.0365, 4.6686], [-74.0405, 4.6726], [-74.0805, 4.6326], [-74.0765, 4.6286]]]
+  verdad: {total: 18}
+  campos: [area_actividad, codigo_area_actividad, fecha_acto, numero_acto, tipo_acto, total]
+  latencia_max_ms: 8000

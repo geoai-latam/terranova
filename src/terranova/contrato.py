@@ -21,6 +21,15 @@ MAX_TEXTO = 4000  # caracteres por campo de texto de la fuente (regla 9)
 
 #: Parámetro común de las herramientas que pueden devolver geometría (ADR-0032).
 GEOMETRIA = "geometria"
+ESQUEMA_POLIGONO: Final[dict[str, Any]] = {
+    "type": "object",
+    "properties": {
+        "type": {"const": "Polygon"},
+        "coordinates": {"type": "array", "minItems": 1},
+    },
+    "required": ["type", "coordinates"],
+    "description": "GeoJSON Polygon en EPSG:4326 (lon, lat): hasta 500 vértices y 1° de lado",
+}
 ESQUEMA_GEOMETRIA: Final[dict[str, Any]] = {
     "type": "boolean",
     "default": False,

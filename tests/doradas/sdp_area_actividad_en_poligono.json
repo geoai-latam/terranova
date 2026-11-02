@@ -1,0 +1,388 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T03:40:59+00:00",
+ "herramienta": "sdp_area_actividad_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 200,
+    "order": [
+     "OBJECTID"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.0765,
+        4.6286
+       ],
+       [
+        -74.0365,
+        4.6686
+       ],
+       [
+        -74.0405,
+        4.6726
+       ],
+       [
+        -74.0805,
+        4.6326
+       ],
+       [
+        -74.0765,
+        4.6286
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "CODIGO_AREA_ACTIVIDAD",
+     "NOMBRE_AREA_ACTIVIDAD",
+     "ACTO_ADMINISTRATIVO",
+     "NUMERO_ACTO_ADMINISTRATIVO",
+     "FECHA_ACTO_ADMINISTRATIVO"
+    ],
+    "tabla": "sdp_pot555_area_actividad"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05489,
+           4.65219
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "PEMP",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Plan Especial de Manejo y Protección -PEMP BIC Nacional: se rige por lo establecido en la Resolución que lo aprueba o la norma que la modifique o sustituya",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05591,
+           4.65394
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "PEMP",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Plan Especial de Manejo y Protección -PEMP BIC Nacional: se rige por lo establecido en la Resolución que lo aprueba o la norma que la modifique o sustituya",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07602,
+           4.63251
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0769,
+           4.63797
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07347,
+           4.64063
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07427,
+           4.65598
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04148,
+           4.67139
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06275,
+           4.64341
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAGSM",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Grandes Servicios Metropolitanos - AAGSM",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0584,
+           4.64523
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAGSM",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Grandes Servicios Metropolitanos - AAGSM",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06182,
+           4.64779
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAGSM",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Grandes Servicios Metropolitanos - AAGSM",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05878,
+           4.64984
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAGSM",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Grandes Servicios Metropolitanos - AAGSM",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06062,
+           4.65222
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAGSM",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Grandes Servicios Metropolitanos - AAGSM",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07228,
+           4.6314
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAERVIS",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Estructurante - AAE - Receptora de vivienda de interés social",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06273,
+           4.6901
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "RES",
+          "CODIGO_AREA_ACTIVIDAD": "AAERVIS",
+          "FECHA_ACTO_ADMINISTRATIVO": "2025-06-25",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Estructurante - AAE - Receptora de vivienda de interés social",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1023"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07981,
+           4.6333
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "RES",
+          "CODIGO_AREA_ACTIVIDAD": "AAERVIS",
+          "FECHA_ACTO_ADMINISTRATIVO": "2025-06-25",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad Estructurante - AAE - Receptora de vivienda de interés social",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1023"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04367,
+           4.68004
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "RES",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1094"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05813,
+           4.64765
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0586,
+           4.64652
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMINISTRATIVO": "DEC",
+          "CODIGO_AREA_ACTIVIDAD": "AAPGSU",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_AREA_ACTIVIDAD": "Área de Actividad de Proximidad - AAP- Generadora de soportes urbanos",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 18,
+      "truncado": false,
+      "vistos": 18
+     },
+     "consultado_en": "2026-11-02T03:40:22.008219+00:00",
+     "copia": {
+      "filas": 63,
+      "huella": "sha256:810d19cbeb974ce0ef69aed34bc9f9b2dfbca8e24bfa4db9d499eaeeac06de1a",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261102034022008219"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

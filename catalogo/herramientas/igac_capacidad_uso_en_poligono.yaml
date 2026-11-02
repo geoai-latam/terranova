@@ -1,0 +1,37 @@
+id: igac_capacidad_uso_en_poligono
+version: 1
+familia: territorio
+fuente: igac.agrologia.capacidad_uso
+pregunta: "¿Qué capacidad de uso tiene el suelo de este polígono?"
+descripcion: >
+  Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): clase y subclase de
+  capacidad y su descripción. Cobertura nacional; a esa escala no sirve para un predio.
+  Sale de la copia de Terrnova de la capa del IGAC.
+  (Fuente: IGAC; licencia: CC BY 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: igac_capacidad_uso
+    poligono: "{poligono}"
+    select: [UCCapacida, Descripcio]
+    geometria: simplificada
+    order: [OBJECTID]
+    limite: 200
+  campos: [UCCapacida, Descripcio]
+salida: CapacidadUsoEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+cobro: zona
+canario:
+  # Franja en diagonal junto al punto del canario de igac_capacidad_uso_en_punto; medido el 2026-11-01 en la capa
+  # 0 con el mismo anillo (esriGeometryPolygon, intersects): 7, y 13 con su rectángulo.
+  # La copia está simplificada: un borde puede cambiar el total exacto, así que se pide al menos uno.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.0462, 4.8419], [-74.0062, 4.8819], [-74.0102, 4.8859], [-74.0502, 4.8459], [-74.0462, 4.8419]]]
+  minimos: {total: 1}
+  campos: [descripcion_capacidad, total, unidad_capacidad]
+  latencia_max_ms: 8000
