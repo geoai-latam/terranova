@@ -76,6 +76,14 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Garantías, ejecución, compromisos y rubros de SECOP II ya lo usan. Las garantías cubren menos
     del 0,5 % de los contratos, y el PAE de Chía no está en ninguno de los cuatro conjuntos.
   - Proponentes avisa cuando hay un solo proponente.
+- **CNMH, las once modalidades:**
+  - Avisan que son excluyentes, con el caso de Bojayá: las 81 víctimas civiles del 2 de mayo de
+    2002 están en acciones bélicas, no en masacres.
+  - Su vacío dice que «no registra» en una modalidad no quiere decir que no hubo violencia.
+  - Asesinatos selectivos y secuestro ya no prometen «por grupo».
+  - Reclutamiento (v2) da `victimas_sin_anio`: en el país son 11 484 sin año frente a 6 903 con año.
+  - Pendiente: la herramienta resumen `cnmh_conflicto_municipio`, que pide consultas múltiples en el
+    motor.
 
 ## Ficha de un lote (2026-11-01)
 

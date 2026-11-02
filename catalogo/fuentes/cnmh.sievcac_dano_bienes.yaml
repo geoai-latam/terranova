@@ -19,7 +19,11 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/a2ga-ur2i.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
-cobertura: {pais: CO, columna_tiempo: a_o}
+cobertura:
+  pais: CO
+  columna_tiempo: a_o
+  aviso_vacio: >
+    El CNMH no registra víctimas de daño a bienes civiles en este municipio. No quiere decir que no hubo violencia: las modalidades del CNMH son excluyentes, y el hecho puede estar en otra de las once, cada una con su herramienta cnmh_*_municipio.
 datos_personales: filtrados
 estado: publicada
 campos:
