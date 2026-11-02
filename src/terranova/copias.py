@@ -115,7 +115,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     ({alias: "count" | "sum:col" | "median:col" …}), `group` (columnas), `order` (columnas; con
     `-` delante, descendente), `limite` y `contiene` ({columna: palabras}: la columna trae todas
     las palabras, sin distinguir mayúsculas ni tildes). En una copia espacial, además: `punto`
-    ([lon, lat]) o
+    ([lon, lat]), `poligono` (GeoJSON, ADR-0035) o
     `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan, y
     `geometria` («completa», «simplificada» o «ninguna», la de por defecto).
     """
@@ -130,7 +130,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     columnas = [_columna(c, permitidas) for c in argumentos.get("select") or []]
     if agregados and (sueltas := set(columnas) - set(group)):
         raise ErrorCopia(f"con agregados, las columnas van en `group`: {sorted(sueltas)}")
-    espaciales = [k for k in ("punto", "bbox") if argumentos.get(k) is not None]
+    espaciales = [k for k in ("punto", "bbox", "poligono") if argumentos.get(k) is not None]
     geometria = str(argumentos.get("geometria") or "ninguna")
     if (espaciales or geometria != "ninguna") and not fuente.copia.espacial:
         raise ErrorCopia(f"{fuente.id} no tiene geometría en su copia")
@@ -168,7 +168,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         condiciones.append("_texto @@ plainto_tsquery('spanish', %s)")
         parametros.append(str(texto))
     if len(espaciales) > 1:
-        raise ErrorCopia("`punto` y `bbox` no van juntos")
+        raise ErrorCopia("`punto`, `bbox` y `poligono` no van juntos")
     if (punto := argumentos.get("punto")) is not None:
         condiciones.append("ST_Intersects(_geom, ST_SetSRID(ST_MakePoint(%s, %s), 4326))")
         parametros += _coordenadas(punto, 2, "punto")
@@ -178,6 +178,11 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
             raise ErrorCopia("`bbox` va como [oeste, sur, este, norte]")
         condiciones.append("ST_Intersects(_geom, ST_MakeEnvelope(%s, %s, %s, %s, 4326))")
         parametros += caja
+    if (poligono := argumentos.get("poligono")) is not None:
+        condiciones.append(
+            "ST_Intersects(_geom, ST_MakeValid(ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326)))"
+        )
+        parametros.append(json.dumps(poligono))
     donde = f" WHERE {' AND '.join(condiciones)}" if condiciones else ""
 
     orden = []

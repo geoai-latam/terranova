@@ -73,6 +73,9 @@ def _tipo(nombre: str, tipo: str) -> Any:
         return bool
     if tipo == "bbox":
         return Annotated[list[float], Field(min_length=4, max_length=4)]
+    if tipo == "poligono":
+        esquema = puerta.esquema_del_tipo("poligono")
+        return Annotated[dict[str, Any], Field(json_schema_extra=esquema)]
     if tipo == "geojson":
         return dict[str, Any]
     if tipo in PATRONES_ENTRADA:

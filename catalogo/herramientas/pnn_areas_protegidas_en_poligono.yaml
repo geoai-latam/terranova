@@ -1,0 +1,40 @@
+id: pnn_areas_protegidas_en_poligono
+version: 1
+familia: ambiente
+fuente: pnn.runap
+pregunta: "¿Qué áreas protegidas del RUNAP tocan este polígono?"
+descripcion: >
+  Áreas protegidas inscritas en el RUNAP que tocan un polígono (GeoJSON Polygon en EPSG:4326, hasta
+  500 vértices y 1 grado de lado): nombre, categoría de manejo, autoridad ambiental, área según el
+  acto y fecha de inscripción. Sirve para un lote o una finca: toca es que comparten aunque sea un
+  borde, no que el lote quede adentro. Cubre todo el país y todas las categorías del SINAP; un área
+  declarada que aún no esté inscrita no aparece.
+  Sale de la copia de Terrnova (se rehace cada dos semanas): la procedencia dice de cuándo es.
+  (Fuente: PNN; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: runap
+    poligono: "{poligono}"
+    select: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+    geometria: simplificada
+    order: [ap_nombre]
+    limite: 1000
+  campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+salida: AreasProtegidasEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+cobro: zona
+canario:
+  # Franja en diagonal por el Eje Cafetero; medido el 2026-11-01 en la capa 0 con el mismo anillo
+  # (esriGeometryPolygon, intersects): 2 áreas, y 12 con su rectángulo. Así el canario se pone rojo
+  # si el cruce deja de ser por polígono.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-75.50, 5.00], [-75.28, 5.20], [-75.29, 5.21], [-75.51, 5.01], [-75.50, 5.00]]]
+  verdad: {total: 2}
+  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, nombre, total]
+  latencia_max_ms: 8000

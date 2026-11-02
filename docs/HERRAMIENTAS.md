@@ -22,6 +22,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ideam_nivel_rio_diario_estacion` | ¿Cómo estuvo el nivel del río cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_normales_climatologicas_estacion` | ¿Cuál es el clima normal (mes a mes) en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_temperatura_diaria_estacion` | ¿Qué temperatura hizo cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
+| `pnn_areas_protegidas_en_poligono` | ¿Qué áreas protegidas del RUNAP tocan este polígono? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
 | `sinchi_perdida_bosque_en_punto` | ¿Este punto de la Amazonia perdió bosque entre 2022 y 2024? | Instituto Amazónico de Investigaciones Científicas (SINCHI) | CC-BY-4.0 | 10 |
@@ -241,6 +242,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
 | `upra_precio_tierra_en_punto` | ¿Cuánto vale la tierra rural en este punto según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 10 |
 | `upra_rangos_precio_municipio` | ¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
+| `urt_microzona_en_poligono` | ¿Este polígono toca zonas microfocalizadas para la restitución de tierras? | Unidad de Restitución de Tierras (URT) | CC-BY-SA-4.0 | 20 |
 | `urt_microzona_en_punto` | ¿Este punto está en una zona microfocalizada para la restitución de tierras? | Unidad de Restitución de Tierras (URT) | CC-BY-SA-4.0 | 10 |
 
 ## Ficha técnica de una fuente

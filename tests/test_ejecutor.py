@@ -1,5 +1,6 @@
 """Piezas del ejecutor: entrada, plantillas, saneamiento y conversión de tipos."""
 
+import math
 from typing import Any
 
 import pytest
@@ -10,6 +11,19 @@ from terranova.ejecutor import convertir, renderizar, sanear, validar_entrada
 from terranova.errores import ErrorEntrada
 
 CATALOGO = cargar()
+POLIGONO = "urt_microzona_en_poligono"
+
+
+def _lote(anillo: list[list[Any]]) -> dict[str, Any]:
+    return {"type": "Polygon", "coordinates": [anillo]}
+
+
+def _circulo(vertices: int) -> list[list[float]]:
+    """Un anillo cerrado de `vertices` vértices (el último repite el primero)."""
+    n = vertices - 1
+    pasos = [2 * math.pi * i / n for i in range(n)]
+    puntos = [[-74 + 0.1 * math.cos(t), 4 + 0.1 * math.sin(t)] for t in pasos]
+    return [*puntos, puntos[0]]
 
 
 @pytest.mark.parametrize(
@@ -28,6 +42,24 @@ CATALOGO = cargar()
         ),
         ("pnn_areas_protegidas_en_zona", {"bbox": [-74, 4, -75, 5]}, "bbox"),
         ("pnn_areas_protegidas_en_zona", {"bbox": [-74, 4, -73]}, "bbox"),
+        (POLIGONO, {"poligono": {"type": "Point", "coordinates": [-74, 4]}}, "poligono"),
+        (POLIGONO, {"poligono": {"type": "MultiPolygon", "coordinates": []}}, "poligono"),
+        (POLIGONO, {"poligono": [-74, 4, -73, 5]}, "poligono"),
+        (POLIGONO, {"poligono": _lote([[-74, 4], [-73.5, 4], [-74, 4]])}, "poligono"),
+        (
+            POLIGONO,
+            {"poligono": _lote([[-74, 4], [-73.5, 4], [-73.5, 4.5], [-74, 4.5]])},
+            "poligono",
+        ),
+        (POLIGONO, {"poligono": _lote([[-74, 4], ["x", 4], [-73.5, 4.5], [-74, 4]])}, "poligono"),
+        (POLIGONO, {"poligono": _lote([[-74, 4], [-73, 95], [-73.5, 4.5], [-74, 4]])}, "poligono"),
+        (
+            POLIGONO,
+            {"poligono": _lote([[-74, 4, 9], [-73, 5, 9], [-74, 5, 9], [-74, 4, 9]])},
+            "poligono",
+        ),
+        (POLIGONO, {"poligono": _lote([[-75, 4], [-73.5, 4], [-73.5, 4.5], [-75, 4]])}, "poligono"),
+        (POLIGONO, {"poligono": _lote(_circulo(501))}, "poligono"),
     ],
 )
 def test_entrada_invalida(herramienta: str, entrada: dict[str, Any], param: str) -> None:
@@ -39,6 +71,13 @@ def test_entrada_invalida(herramienta: str, entrada: dict[str, Any], param: str)
 def test_entrada_valida_se_normaliza() -> None:
     h = CATALOGO.herramientas["pnn_areas_protegidas_en_zona"]
     assert validar_entrada(h, {"bbox": [-74, 4, -73, 5]}) == {"bbox": [-74.0, 4.0, -73.0, 5.0]}
+    h = CATALOGO.herramientas[POLIGONO]
+    lote = _lote([[-74, 4], [-73.9, 4], [-73.9, 4.1], [-74, 4]]) | {"crs": "cualquiera"}
+    assert validar_entrada(h, {"poligono": lote})["poligono"] == {
+        "type": "Polygon",
+        "coordinates": [[[-74.0, 4.0], [-73.9, 4.0], [-73.9, 4.1], [-74.0, 4.0]]],
+    }  # solo lo suyo: lo que venga de más no llega al SQL
+    assert validar_entrada(h, {"poligono": _lote(_circulo(500))})
     h = CATALOGO.herramientas["secop_contratos_municipio"]
     assert validar_entrada(h, {"municipio": "Chía", "departamento": "Cundinamarca"})
 
