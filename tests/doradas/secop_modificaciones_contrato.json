@@ -1,15 +1,15 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T00:51:16+00:00",
+ "grabado": "2026-11-02T15:45:30+00:00",
  "herramienta": "secop_modificaciones_contrato",
  "llamadas": [
   {
    "argumentos": {
     "id": "u8cx-r425",
     "max_filas": 1000,
-    "order": "fecha_de_aprobacion, identificador_modificacion",
+    "order": "fecha_creacion, identificador_modificacion",
     "portal": "datos.gov.co",
-    "select": "distinct id_contrato, identificador_modificacion, proposito_modificacion, descripcion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion",
+    "select": "distinct id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion",
     "where": "id_contrato = 'CO1.PCCNTR.3712964'"
    },
    "conector": "datos-abiertos-mcp",
@@ -17,9 +17,9 @@
     "artifacts": [
      {
       "columns": [
-       "descripcion",
        "dias_extendidos",
        "estado_modificacion",
+       "fecha_creacion",
        "fecha_de_aprobacion",
        "id_contrato",
        "identificador_modificacion",
@@ -29,221 +29,172 @@
       "kind": "table",
       "rows": [
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2022-09-06T00:00:00.000",
+        "fecha_creacion": "2022-09-02T22:31:58.195",
+        "fecha_de_aprobacion": "2022-09-06T14:55:18.508",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.9142646",
         "proposito_modificacion": "la consultoria se encuentra en proceso de dar respuesta a las observaciones emitidas por la Secretaría de Salud de la Gobernacion del Huila segun oficio ADM-DH1N-PIT-0016",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2022-09-15T00:00:00.000",
+        "fecha_creacion": "2022-09-15T20:05:17.155",
+        "fecha_de_aprobacion": "2022-09-15T20:07:39.726",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.9238517",
         "proposito_modificacion": "No definido",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "178",
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-02-28T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.10640343",
-        "proposito_modificacion": "se ajusta la fecha de terminación según acta de reinicio firmada por las partes",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "92",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-02-28T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.10641205",
-        "proposito_modificacion": "se ajusta la terminación del contrato según acta firmada por las partes",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-02-28T00:00:00.000",
+        "fecha_creacion": "2022-11-08T19:24:02.817",
+        "fecha_de_aprobacion": "2023-02-28T15:15:35.346",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.9668969",
         "proposito_modificacion": "contrato en mención una vez solucionados y/o superados los inconvenientes qua ocasionaron la suspensión.",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
+        "dias_extendidos": "178.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2023-02-28T15:16:52.076",
+        "fecha_de_aprobacion": "2023-02-28T15:19:20.938",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.10640343",
+        "proposito_modificacion": "se ajusta la fecha de terminación según acta de reinicio firmada por las partes",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "92.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2023-02-28T16:38:12.824",
+        "fecha_de_aprobacion": "2023-02-28T18:05:10.479",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.10641205",
+        "proposito_modificacion": "se ajusta la terminación del contrato según acta firmada por las partes",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
+        "fecha_creacion": "2023-05-08T22:07:05.950",
+        "fecha_de_aprobacion": "2023-05-08T22:10:13.334",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.11123902",
         "proposito_modificacion": "No definido",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
+        "fecha_creacion": "2023-05-08T22:14:06.273",
+        "fecha_de_aprobacion": "2023-05-08T22:15:25.088",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.11124003",
         "proposito_modificacion": "la disponibilidad de servicios por parte de Electrohuila no hace parte del alcance del contrato pero si es exigida por el Ministerio para expedir la viabilidad del proyecto de· construcción del Hospital de Primer Nivel para Pitalito Huila  por ello solicitamos  suspender  la  ejecución  del contrato de la referencia hasta el día 30 de junio de 2023.",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Rechazado",
-        "fecha_de_aprobacion": "2023-05-08T00:00:00.000",
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Cancelado",
+        "fecha_creacion": "2023-05-08T22:51:58.562",
+        "fecha_de_aprobacion": "2023-05-19T21:53:34.698",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.11124213",
         "proposito_modificacion": "La disponibilidad de servicios por parte de Electrohuila no hace parte del alcance del contrato pero si es exigida por el Ministerio para expedir la viabilidad del proyecto de· construcción del Hospital de Primer Nivel para Pitalito Huila  por ello solicitamos  suspender  la  ejecución  del contrato de la referencia hasta el día 30 de junio de 2023.",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2023-05-19T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.11124213",
-        "proposito_modificacion": "La disponibilidad de servicios por parte de Electrohuila no hace parte del alcance del contrato pero si es exigida por el Ministerio para expedir la viabilidad del proyecto de· construcción del Hospital de Primer Nivel para Pitalito Huila  por ello solicitamos  suspender  la  ejecución  del contrato de la referencia hasta el día 30 de junio de 2023.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Aceptado por el Proveedor",
-        "fecha_de_aprobacion": "2023-05-19T00:00:00.000",
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2023-05-19T22:34:08.372",
+        "fecha_de_aprobacion": "2023-05-24T19:57:53.186",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.11228494",
         "proposito_modificacion": "Se suspende el Contrato de  Consultoría N° 290-2022 de acuerdo al plazo que se tome el Ministerio de Salud y Protección Social hasta el día 30 de julio de 2023 y/o hasta la emisión de la respectiva viabilidad técnica del proyecto por parte del Ministerio de Salud y Protección Social.",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-05-24T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.11228494",
-        "proposito_modificacion": "Se suspende el Contrato de  Consultoría N° 290-2022 de acuerdo al plazo que se tome el Ministerio de Salud y Protección Social hasta el día 30 de julio de 2023 y/o hasta la emisión de la respectiva viabilidad técnica del proyecto por parte del Ministerio de Salud y Protección Social.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
+        "dias_extendidos": "0.000000",
         "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2023-08-17T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12311910",
-        "proposito_modificacion": "los motivos que ocasionaron la  suspension fueron  superados del contrato N° 290 de 2023",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Rechazado",
-        "fecha_de_aprobacion": "2023-08-17T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12311910",
-        "proposito_modificacion": "los motivos que ocasionaron la  suspension fueron  superados del contrato N° 290 de 2023",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Enviado al Proveedor",
-        "fecha_de_aprobacion": "2023-08-18T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12320135",
-        "proposito_modificacion": "El contrato en mención ya supero los inconvenientes qua ocasionaron la suspensión.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Rechazado por el Proveedor",
-        "fecha_de_aprobacion": "2023-08-18T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12320135",
-        "proposito_modificacion": "El contrato en mención ya supero los inconvenientes qua ocasionaron la suspensión.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Cancelado",
-        "fecha_de_aprobacion": "2023-08-29T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12423897",
-        "proposito_modificacion": "El contrato en mension ya supéro los inconvenientes que ocasionaron la suspension razon por la cual se reactiva.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-08-29T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12433718",
-        "proposito_modificacion": "EL CONTRATO 290 YA SUPERO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION.",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "94",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2023-08-30T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.12445469",
-        "proposito_modificacion": "se modifica la fecha de terminación según acta de reinicio2 publicada",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Publicado",
-        "fecha_de_aprobacion": "2024-08-14T00:00:00.000",
-        "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.16396297",
-        "proposito_modificacion": "SE CAMBIA EL ESTADO A TERMINADO AL CONTRATO",
-        "valor_modificacion": "1173577000"
-       },
-       {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "Cancelado",
+        "fecha_creacion": "2023-08-03T22:47:09.346",
         "id_contrato": "CO1.PCCNTR.3712964",
         "identificador_modificacion": "CO1.CTRMOD.12175774",
         "proposito_modificacion": "No definido",
-        "valor_modificacion": "1173577000"
+        "valor_modificacion": "1173577000.000000"
        },
        {
-        "descripcion": "ELABORACIÓN DE LOS ESTUDIOS Y DISEÑOS PARA LA CONSTRUCCIÓN DEL HOSPITAL DE PRIMER NIVEL DEL MUNICIPIO DE PITALITO HUILA",
-        "dias_extendidos": "0",
-        "estado_modificacion": "En Edición",
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Cancelado",
+        "fecha_creacion": "2023-08-17T20:07:45.152",
+        "fecha_de_aprobacion": "2023-08-17T20:12:19.676",
         "id_contrato": "CO1.PCCNTR.3712964",
-        "identificador_modificacion": "CO1.CTRMOD.9668969",
-        "proposito_modificacion": "No definido",
-        "valor_modificacion": "1173577000"
+        "identificador_modificacion": "CO1.CTRMOD.12311910",
+        "proposito_modificacion": "los motivos que ocasionaron la  suspension fueron  superados del contrato N° 290 de 2023",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Rechazado por el Proveedor",
+        "fecha_creacion": "2023-08-18T15:30:54.594",
+        "fecha_de_aprobacion": "2023-08-18T15:37:46.560",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.12320135",
+        "proposito_modificacion": "El contrato en mención ya supero los inconvenientes qua ocasionaron la suspensión.",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Cancelado",
+        "fecha_creacion": "2023-08-29T16:58:11.662",
+        "fecha_de_aprobacion": "2023-08-29T17:00:26.532",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.12423897",
+        "proposito_modificacion": "El contrato en mension ya supéro los inconvenientes que ocasionaron la suspension razon por la cual se reactiva.",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2023-08-29T21:32:07.897",
+        "fecha_de_aprobacion": "2023-08-29T21:49:05.809",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.12433718",
+        "proposito_modificacion": "EL CONTRATO 290 YA SUPERO LOS INCONVENIENTES QUE OCASIONARON LA SUSPENSION.",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "94.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2023-08-30T18:49:55.473",
+        "fecha_de_aprobacion": "2023-08-30T18:54:19.694",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.12445469",
+        "proposito_modificacion": "se modifica la fecha de terminación según acta de reinicio2 publicada",
+        "valor_modificacion": "1173577000.000000"
+       },
+       {
+        "dias_extendidos": "0.000000",
+        "estado_modificacion": "Publicado",
+        "fecha_creacion": "2024-08-14T15:58:49.234",
+        "fecha_de_aprobacion": "2024-08-14T22:06:07.925",
+        "id_contrato": "CO1.PCCNTR.3712964",
+        "identificador_modificacion": "CO1.CTRMOD.16396297",
+        "proposito_modificacion": "SE CAMBIA EL ESTADO A TERMINADO AL CONTRATO",
+        "valor_modificacion": "1173577000.000000"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 21,
+      "total": 16,
       "truncado": false,
-      "vistos": 21
+      "vistos": 16
      },
      "completo": true,
      "conjunto": "u8cx-r425",
@@ -251,11 +202,11 @@
       "conjunto": "u8cx-r425",
       "max_filas": 1000,
       "portal": "datos.gov.co",
-      "select": "distinct id_contrato, identificador_modificacion, proposito_modificacion, descripcion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion",
+      "select": "distinct id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion",
       "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
      },
-     "filas": 21,
-     "filas_que_resume": 33,
+     "filas": 16,
+     "filas_que_resume": 16,
      "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3712964')",
      "portal": "datos.gov.co"
     },

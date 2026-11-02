@@ -19,7 +19,11 @@ modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
 cobertura: {pais: CO, columna_tiempo: fecharegistro}
 datos_personales: ninguno
-estado: publicada
+# En borrador desde el 2026-11-02: no son solo adiciones, es el registro de todos los cambios (los
+# mismos CO1.CTRMOD que u8cx-r425), y su `tipo` no sirve para saber el valor: «Modificacion
+# General» también sube el valor (CO1.PCCNTR.7143094) y la «Reactivación» y la «Suspensión» de
+# CO1.PCCNTR.7180851 traen el texto cruzado. secop_modificaciones_contrato contesta lo mismo.
+estado: borrador
 campos:
   id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato (CO1.PCCNTR.…)"}
   identificador: {nombre: id_adicion, tipo: str, desc: "identificador de la adición"}

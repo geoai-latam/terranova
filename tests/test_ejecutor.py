@@ -401,3 +401,100 @@ def test_enteros_y_fechas_fuera_de_lo_real() -> None:
     ):
         with pytest.raises(ErrorEntrada):
             _valor(nombre, tipo, valor)
+
+
+def test_diferencia_con_la_anterior_vigente() -> None:
+    """SECOP da el valor total del contrato tras cada modificación: lo añadido es la diferencia con
+    la anterior vigente. Una cancelada no cuenta ni es «la anterior» (CO1.PCCNTR.7143094)."""
+    from terranova.ejecutor import derivar_resultado, derivar_secuencia
+
+    h = CATALOGO.herramientas["secop_modificaciones_contrato"]
+    elementos: list[dict[str, Any]] = [
+        {"vigente": "sí", "valor_contrato_tras_cambio": 24476320.0, "dias_extendidos": 61},
+        {"vigente": "no", "valor_contrato_tras_cambio": 99000000.0, "dias_extendidos": 30},
+        {"vigente": "sí", "valor_contrato_tras_cambio": 32446432.0, "dias_extendidos": 62},
+        {"vigente": None, "valor_contrato_tras_cambio": None, "dias_extendidos": None},
+        {"vigente": "sí", "valor_contrato_tras_cambio": 40574368.0, "dias_extendidos": 61},
+    ]
+    derivar_secuencia(h, elementos)
+    assert [e["cambio_valor"] for e in elementos] == [None, None, 7970112.0, None, 8127936.0]
+
+    def agregado(nombre: str) -> Any:
+        return derivar_resultado(h.derivados[nombre], elementos, None)
+
+    assert agregado("valor_actual") == 40574368.0
+    assert agregado("valor_tras_primera") == 24476320.0
+    assert agregado("cambio_valor_desde_primera") == 16098048.0
+    assert agregado("dias_extendidos_total") == 184  # sin los 30 de la cancelada
+    assert agregado("modificaciones_vigentes") == 3
+    assert agregado("numero_registros") == 5
+
+
+def test_solo_si_no_aplica_a_un_derivado_por_elemento() -> None:
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Derivado
+
+    with pytest.raises(ValidationError, match="no usa `solo_si`"):
+        Derivado.model_validate(
+            {"de": "columna", "campo": "x", "solo_si": {"campo": "y", "valores": ["1"]}}
+        )
+
+
+class _SecopFalso:
+    """p6dx da las fases de un proceso de compra (con una basura que no es un id de SECOP) y
+    hgi6 contesta solo si la consulta principal pide esas fases."""
+
+    def __init__(self) -> None:
+        self.llamadas: list[dict[str, Any]] = []
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        self.llamadas.append(argumentos)
+        if argumentos["id"] == "p6dx-8zbt":
+            filas = [
+                {"id_del_proceso": "CO1.REQ.3004001"},
+                {"id_del_proceso": "CO1.REQ.2978420"},
+                {"id_del_proceso": "x') OR 1=1 --"},
+            ]
+        elif "'CO1.REQ.3004001'" in argumentos["where"]:
+            filas = [{"id_procedimiento": "CO1.REQ.3004001", "proveedor": "TEAK INGENIERIA S.A.S"}]
+        else:
+            filas = []
+        return {"artifacts": [{"kind": "table", "rows": filas}], "facts": {}}
+
+
+@pytest.mark.anyio
+async def test_la_previa_traduce_el_proceso_de_compra_a_sus_fases() -> None:
+    """El contrato trae CO1.BDOS y los proponentes cuelgan de CO1.REQ: la previa traduce, y lo que
+    devuelve la fuente solo entra a la consulta si cumple el patrón (nada de inyección)."""
+    from terranova.ejecutor import Ejecutor
+
+    falso = _SecopFalso()
+    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": falso})
+    sobre = await ej.ejecutar(
+        "secop_proponentes_proceso", {"id_proceso": "CO1.BDOS.2898382"}, plan="evaluacion"
+    )
+    principal = falso.llamadas[1]["where"]
+    assert principal == "id_procedimiento IN ('CO1.REQ.2978420', 'CO1.REQ.3004001')"
+    assert sobre.estado == "encontrado" and sobre.datos["numero_proponentes"] == 1
+    assert [p.fuente_id for p in sobre.procedencia] == [
+        "cce.secop2.procesos",
+        "cce.secop2.proponentes",
+    ]
+
+
+@pytest.mark.anyio
+async def test_sin_fases_la_previa_no_encuentra_nada() -> None:
+    from terranova.ejecutor import Ejecutor
+
+    class _SinFases(_SecopFalso):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            self.llamadas.append(argumentos)
+            return {"artifacts": [{"kind": "table", "rows": []}], "facts": {}}
+
+    falso = _SinFases()
+    sobre = await Ejecutor(CATALOGO, {"datos-abiertos-mcp": falso}).ejecutar(
+        "secop_proponentes_proceso", {"id_proceso": "CO1.BDOS.1"}, plan="evaluacion"
+    )
+    assert falso.llamadas[1]["where"] == "id_procedimiento IN ('')"
+    assert sobre.estado == "no_encontrado"

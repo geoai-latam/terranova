@@ -66,7 +66,7 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 | `secop_entidades_municipio` | alto | da el NIT como número |
 | `secop_contratos_proveedor` | alto | |
 | `secop_contratos_buscar` | alto | |
-| `secop_contrato_por_id` | alto | entrega `id_proceso` como BDOS, que la herramienta de proponentes no acepta (en arreglo) |
+| `secop_contrato_por_id` | alto | entrega `id_proceso` como BDOS; desde #243 la herramienta de proponentes lo acepta |
 
 ## Decisiones
 

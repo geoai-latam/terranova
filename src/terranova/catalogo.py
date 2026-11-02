@@ -683,6 +683,20 @@ class Fuente(_Ficha):
 
 MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
 MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
+MARCADOR_PREVIA = "previa"
+
+
+class Previa(_Ficha):
+    """Una consulta antes de la principal que traduce la entrada: el contrato de SECOP II trae el
+    proceso de compra (CO1.BDOS…), y los proponentes cuelgan de sus fases (CO1.REQ…). Los valores
+    de `columna` que devuelve van a `{previa}` como lista SoQL entre comillas, solo si cumplen el
+    patrón `patron` (un tipo de PATRONES_ENTRADA): lo que viene de la fuente no entra crudo."""
+
+    fuente: str
+    tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
+    argumentos: dict[str, Any]
+    columna: str
+    patron: str
 
 
 class Consulta(_Ficha):
@@ -724,10 +738,12 @@ class Consulta(_Ficha):
     capas: list[int | str] = Field(default_factory=list)
     argumentos: dict[str, Any]
     campos: list[str] = Field(min_length=1, description="campos de la fuente que se piden")
+    previa: Previa | None = None
 
     @property
     def marcadores(self) -> set[str]:
-        return set(MARCADOR.findall(json.dumps(self.argumentos, ensure_ascii=False)))
+        previa = self.previa.argumentos if self.previa else {}
+        return set(MARCADOR.findall(json.dumps([self.argumentos, previa], ensure_ascii=False)))
 
     @property
     def forma(self) -> Literal["uno", "lista"]:
@@ -738,7 +754,20 @@ class Consulta(_Ficha):
 
 # Vocabulario cerrado de campos que calcula la puerta (ADR-0012: nada de código suelto por fuente).
 DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo"})
-DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "completitud_total"})
+# por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
+DE_SECUENCIA = frozenset({"diferencia_anterior"})
+DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "ultimo", "completitud_total"})
+
+
+class SoloSi(_Ficha):
+    """Qué elementos cuentan para un derivado: los que tienen `campo` (nombre rt/1) en `valores`.
+    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior»."""
+
+    campo: str
+    valores: list[str] = Field(min_length=1)
+
+    def cumple(self, elemento: dict[str, Any]) -> bool:
+        return str(elemento.get(self.campo)) in self.valores
 
 
 class Derivado(_Ficha):
@@ -748,9 +777,10 @@ class Derivado(_Ficha):
     primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
     resultado, p. ej. un alias de un `select` agregado) y `codigo` (el significado de un código
     de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre oficial del departamento
-    por su código DIVIPOLA). Del resultado: `conteo`, `suma` y
-    `maximo` de `campo`, `primero` (el `campo` del primer elemento) y `completitud_total` (el
-    total que dio la fuente).
+    por su código DIVIPOLA). En secuencia: `diferencia_anterior` (el `campo` menos el del elemento
+    anterior en el orden de la consulta; el primero queda vacío). Del resultado: `conteo`, `suma` y
+    `maximo` de `campo`, `primero` y `ultimo` (el `campo` del primer o del último elemento) y
+    `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos elementos.
     """
 
     de: Literal[
@@ -762,16 +792,28 @@ class Derivado(_Ficha):
         "suma",
         "maximo",
         "primero",
+        "ultimo",
+        "diferencia_anterior",
         "completitud_total",
     ]
     campo: str | None = None
+    solo_si: SoloSi | None = None
     n: int | None = Field(default=None, ge=1)
     valores: dict[str, str] | None = None
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
 
     @model_validator(mode="after")
     def _completo(self) -> Self:
-        necesita_campo = {"prefijo", "columna", "codigo", "suma", "maximo", "primero"}
+        necesita_campo = {
+            "prefijo",
+            "columna",
+            "codigo",
+            "suma",
+            "maximo",
+            "primero",
+            "ultimo",
+            "diferencia_anterior",
+        }
         if self.de in necesita_campo and not self.campo:
             raise ValueError(f"un derivado «{self.de}» necesita `campo`")
         if self.de == "prefijo" and self.n is None:
@@ -780,11 +822,13 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
         if self.de == "codigo" and not self.valores:
             raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
+        if self.solo_si is not None and self.de in DE_ELEMENTO | {"completitud_total"}:
+            raise ValueError(f"un derivado «{self.de}» no usa `solo_si`")
         return self
 
     @property
     def por_elemento(self) -> bool:
-        return self.de in DE_ELEMENTO
+        return self.de in DE_ELEMENTO | DE_SECUENCIA
 
 
 class Canario(_Ficha):
@@ -959,16 +1003,28 @@ def validar(catalogo: Catalogo) -> list[str]:
         if fuente is None:
             errores.append(f"{donde}: la fuente {h.fuente} no existe")
             continue
-        if sueltos := h.consulta.marcadores - set(h.entrada) - MARCADORES_DE_LA_PUERTA:
+        de_la_puerta = MARCADORES_DE_LA_PUERTA | ({MARCADOR_PREVIA} if h.consulta.previa else set())
+        if sueltos := h.consulta.marcadores - set(h.entrada) - de_la_puerta:
             errores.append(f"{donde}: la consulta usa marcadores sin entrada: {sorted(sueltos)}")
-        for marcador in sorted(_enteros_en_codigo(h.consulta.argumentos) & set(h.entrada)):
+        if (previa := h.consulta.previa) is not None:
+            if previa.fuente not in catalogo.fuentes:
+                errores.append(f"{donde}: la consulta previa usa {previa.fuente}, que no existe")
+            if previa.patron not in PATRONES_ENTRADA:
+                errores.append(
+                    f"{donde}: la consulta previa valida con «{previa.patron}», que no tiene patrón"
+                )
+        argumentos_todos = {
+            **h.consulta.argumentos,
+            **({"_previa": h.consulta.previa.argumentos} if h.consulta.previa else {}),
+        }
+        for marcador in sorted(_enteros_en_codigo(argumentos_todos) & set(h.entrada)):
             if h.entrada[marcador] not in ("int", "float", "anio", "bool"):
                 errores.append(
                     f"{donde}: «{marcador}» ({h.entrada[marcador]}) es el valor entero de una "
                     "clave con código (where, select, url…): inyección. Ponlo entre comillas "
                     "dentro del texto, con un tipo con patrón"
                 )
-        for marcador in sorted(_interpolados(h.consulta.argumentos) & set(h.entrada)):
+        for marcador in sorted(_interpolados(argumentos_todos) & set(h.entrada)):
             if h.entrada[marcador] not in SEGUROS_EN_TEXTO:
                 errores.append(
                     f"{donde}: «{marcador}» ({h.entrada[marcador]}) va dentro de un texto de la "
@@ -986,8 +1042,14 @@ def validar(catalogo: Catalogo) -> list[str]:
                 "suma",
                 "maximo",
                 "primero",
+                "ultimo",
+                "diferencia_anterior",
             ) and d.campo not in fuente.nombres_rt | set(h.derivados):
                 errores.append(f"{donde}: el derivado {nombre} usa «{d.campo}», que no sale")
+            if d.solo_si and d.solo_si.campo not in fuente.nombres_rt | set(h.derivados):
+                errores.append(
+                    f"{donde}: el derivado {nombre} filtra por «{d.solo_si.campo}», que no sale"
+                )
             if d.de == "capa" and set(map(str, h.consulta.capas)) != set(d.valores or {}):
                 errores.append(f"{donde}: el derivado {nombre} debe dar un valor para cada capa")
         if fuera := (set(h.canario.verdad) | set(h.canario.minimos)) - salen:

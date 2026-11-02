@@ -59,6 +59,17 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   de la Personería. Ahora agrupa por año y entidad, da primero lo más reciente y dice hasta qué
   fecha va el año en curso (`ultima_firma`). Era el mismo error que se arregló en
   `secop_contratos_entidad_anio`.
+- **`secop_modificaciones_contrato` (v2):** `valor_modificacion` es el valor total del contrato tras
+  cada cambio, no lo añadido (en el PAE de Chía vale 64 938 millones en las 9). Ahora se llama
+  `valor_contrato_tras_cambio`, cada cambio dice si está vigente y `cambio_valor` es la diferencia
+  con el vigente anterior. Los totales usan solo los vigentes. La fuente no publica el valor con
+  que se firmó: la primera adición no se puede calcular, y la respuesta no la inventa.
+- **`secop_adiciones_contrato`, retirada:** daba los mismos eventos con un `tipo` que no sirve
+  para el valor; su fuente quedó en borrador.
+- **`secop_proponentes_proceso` (v2):** acepta el `CO1.BDOS` que trae el contrato (antes daba «no
+  encontrado») y lo traduce a sus fases. Con eso se ve que el PAE de Chía tuvo un solo proponente.
+- **Motor:** derivados `diferencia_anterior` y `ultimo`, el filtro `solo_si` y la consulta
+  `previa`, cuyos valores solo entran si cumplen el patrón de la entrada.
 
 ## Ficha de un lote (2026-11-01)
 

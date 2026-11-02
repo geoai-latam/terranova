@@ -1,16 +1,66 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T22:43:45+00:00",
+ "grabado": "2026-11-02T15:55:16+00:00",
  "herramienta": "secop_proponentes_proceso",
  "llamadas": [
   {
    "argumentos": {
+    "id": "p6dx-8zbt",
+    "max_filas": 50,
+    "portal": "datos.gov.co",
+    "select": "id_del_proceso",
+    "where": "id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "id_del_proceso"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "id_del_proceso": "CO1.REQ.2978420"
+       },
+       {
+        "id_del_proceso": "CO1.REQ.3004001"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "p6dx-8zbt",
+     "consulta": {
+      "conjunto": "p6dx-8zbt",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "id_del_proceso",
+      "where": "(id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382')"
+     },
+     "cumplen_en_el_portal": 2,
+     "filas": 2,
+     "filtro_soql": "(id_del_proceso = 'CO1.BDOS.2898382' OR id_del_portafolio = 'CO1.BDOS.2898382')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
     "id": "hgi6-6wh3",
     "max_filas": 500,
-    "order": "proveedor",
+    "order": "id_procedimiento, proveedor",
     "portal": "datos.gov.co",
     "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n",
-    "where": "id_procedimiento = 'CO1.REQ.3004001'"
+    "where": "id_procedimiento IN ('CO1.REQ.2978420', 'CO1.REQ.3004001')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -52,11 +102,11 @@
       "max_filas": 500,
       "portal": "datos.gov.co",
       "select": "id_procedimiento, nombre_procedimiento, entidad_compradora, nit_entidad, proveedor, nit_proveedor, fecha_publicaci_n",
-      "where": "(id_procedimiento = 'CO1.REQ.3004001')"
+      "where": "(id_procedimiento IN ('CO1.REQ.2978420', 'CO1.REQ.3004001'))"
      },
      "cumplen_en_el_portal": 1,
      "filas": 1,
-     "filtro_soql": "(id_procedimiento = 'CO1.REQ.3004001')",
+     "filtro_soql": "(id_procedimiento IN ('CO1.REQ.2978420', 'CO1.REQ.3004001'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"
