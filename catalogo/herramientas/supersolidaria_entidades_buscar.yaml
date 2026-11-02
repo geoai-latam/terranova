@@ -1,12 +1,12 @@
 id: supersolidaria_entidades_buscar
-version: 1
+version: 2
 familia: empresas
 fuente: supersolidaria.entidades
 pregunta: "¿Esta cooperativa o fondo de empleados está registrado ante la Supersolidaria?"
 descripcion: >
   Busca entidades del sector solidario (cooperativas, fondos de empleados, mutuales) por una parte de
-  su nombre: NIT, razón social, sigla, tipo, municipio, actividad, nivel de supervisión y el último
-  año que reportó a la Supersolidaria (un año viejo puede querer decir que dejó de reportar).
+  su razón social o de su sigla (COOMEVA), con la sigla exacta primero: NIT, razón social, sigla,
+  tipo, municipio, actividad, nivel de supervisión y el último año que reportó a la Supersolidaria (un año viejo puede querer decir que dejó de reportar).
   (Fuente: Supersolidaria; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:
@@ -17,9 +17,12 @@ consulta:
     id: kg2d-yfyg
     portal: datos.gov.co
     select: "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte"
-    where: "upper(nombreentidad) like upper('%{nombre}%')"
+    # COOMEVA es la sigla: la razón social es «COOPERATIVA MEDICA DEL VALLE Y DE PROFESIONALES DE
+    # COLOMBIA». Buscar solo en la razón social daba el Colegio Cooperativo Coomeva (2026-11-02).
+    where: "upper(nombreentidad) like upper('%{nombre}%') OR upper(sigla) like upper('%{nombre}%')"
     group: "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision"
-    order: "length(nombreentidad), nombreentidad"  # la coincidencia más corta primero
+    # la sigla exacta primero; luego la razón social más corta
+    order: "case(upper(sigla) = upper('{nombre}'), 0, true, 1), length(nombreentidad), nombreentidad"
     max_filas: 50
   campos: [nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, a_o]
 salida: SupersolidariaEntidadesBuscar
@@ -27,9 +30,11 @@ derivados:
   ultimo_reporte: {de: columna, campo: ultimo_reporte, tipo: str}
 cobro: agregado
 canario:
-  # Medido el 2026-10-23 en kg2d-yfyg: «CONFIAR» da 2 entidades; con la coincidencia más corta primero,
-  # la Fundación Confiar (811-007-658-1), que reportó por última vez en 2020.
-  entrada: {nombre: CONFIAR}
-  verdad: {nit: 811-007-658-1, ultimo_reporte: "2020"}
+  # Medido el 2026-11-02 en kg2d-yfyg: «COOMEVA» es una sigla. Con la sigla exacta primero sale
+  # la Cooperativa Médica del Valle y de Profesionales de Colombia (890-300-625-1), antes que el
+  # Colegio Cooperativo Coomeva y el Fondo de Empleados de Coomeva. El último reporte cambia
+  # cada mes: no va en la verdad.
+  entrada: {nombre: COOMEVA}
+  verdad: {nit: 890-300-625-1, sigla: COOMEVA}
   campos: [actividad, entidad, municipio, nit, nivel_supervision, sigla, tipo, ultimo_reporte]
   latencia_max_ms: 10000

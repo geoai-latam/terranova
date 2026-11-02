@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T08:40:17+00:00",
+ "grabado": "2026-11-02T17:41:14+00:00",
  "herramienta": "supersolidaria_entidades_buscar",
  "llamadas": [
   {
@@ -8,10 +8,10 @@
     "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
     "id": "kg2d-yfyg",
     "max_filas": 50,
-    "order": "length(nombreentidad), nombreentidad",
+    "order": "case(upper(sigla) = upper('COOMEVA'), 0, true, 1), length(nombreentidad), nombreentidad",
     "portal": "datos.gov.co",
     "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
-    "where": "upper(nombreentidad) like upper('%CONFIAR%')"
+    "where": "upper(nombreentidad) like upper('%COOMEVA%') OR upper(sigla) like upper('%COOMEVA%')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -30,32 +30,43 @@
       "kind": "table",
       "rows": [
        {
-        "municipio": "MEDELLÍN",
-        "nit": "811-007-658-1",
+        "municipio": "CALI",
+        "nit": "890-300-625-1",
         "nombreactividad": "Otras actividades",
-        "nombreentidad": "FUNDACION CONFIAR",
-        "nombretipo": "Instituciones auxiliares especializadas",
-        "supervision": "2",
-        "ultimo_reporte": "2020"
+        "nombreentidad": "COOPERATIVA MEDICA DEL VALLE Y DE PROFESIONALES DE COLOMBIA",
+        "nombretipo": "Multiactiva sin seccion de ahorro",
+        "sigla": "COOMEVA",
+        "supervision": "1",
+        "ultimo_reporte": "2026"
        },
        {
-        "municipio": "MONTERÍA",
-        "nit": "900-354-104-1",
-        "nombreactividad": "Otras actividades",
-        "nombreentidad": "COOPERATIVA MULTIACTIVA CONFIARCOOP",
-        "nombretipo": "Multiactiva sin seccion de ahorro",
-        "sigla": "CONFIARCOOP",
+        "municipio": "CALI",
+        "nit": "890-319-982-8",
+        "nombreactividad": "Educacion",
+        "nombreentidad": "COLEGIO COOPERATIVO COOMEVA",
+        "nombretipo": "Especializada sin seccion de ahorro",
+        "sigla": "COLEGIO COOMEVA",
         "supervision": "3",
-        "ultimo_reporte": "2017"
+        "ultimo_reporte": "2025"
+       },
+       {
+        "municipio": "CALI",
+        "nit": "800-005-340-4",
+        "nombreactividad": "Servicios de ahorro y credito",
+        "nombreentidad": "FONDO DE EMPLEADOS DE COOMEVA",
+        "nombretipo": "Fondos de empleados",
+        "sigla": "FECOOMEVA",
+        "supervision": "1",
+        "ultimo_reporte": "2026"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 2,
+      "total": 3,
       "truncado": false,
-      "vistos": 2
+      "vistos": 3
      },
      "completo": true,
      "conjunto": "kg2d-yfyg",
@@ -65,11 +76,11 @@
       "max_filas": 50,
       "portal": "datos.gov.co",
       "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
-      "where": "(upper(nombreentidad) like upper('%CONFIAR%'))"
+      "where": "(upper(nombreentidad) like upper('%COOMEVA%') OR upper(sigla) like upper('%COOMEVA%'))"
      },
-     "filas": 2,
-     "filas_que_resume": 15,
-     "filtro_soql": "(upper(nombreentidad) like upper('%CONFIAR%'))",
+     "filas": 3,
+     "filas_que_resume": 257,
+     "filtro_soql": "(upper(nombreentidad) like upper('%COOMEVA%') OR upper(sigla) like upper('%COOMEVA%'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

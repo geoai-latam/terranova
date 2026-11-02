@@ -84,6 +84,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Reclutamiento (v2) da `victimas_sin_anio`: en el país son 11 484 sin año frente a 6 903 con año.
   - Pendiente: la herramienta resumen `cnmh_conflicto_municipio`, que pide consultas múltiples en el
     motor.
+- **`supersolidaria_entidades_buscar` (v2):** busca también en la sigla, con la sigla exacta
+  primero. Con «COOMEVA» daba el colegio y el fondo de empleados, no la cooperativa, cuya razón
+  social es «Cooperativa Médica del Valle y de Profesionales de Colombia».
 
 ## Ficha de un lote (2026-11-01)
 

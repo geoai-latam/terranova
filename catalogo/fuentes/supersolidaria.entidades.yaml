@@ -24,11 +24,11 @@ estado: publicada
 campos:
   nit: {nombre: nit, tipo: str, desc: "NIT con guiones y dígito de verificación (800-112-808-7)"}
   nombreentidad: {nombre: entidad, tipo: str, desc: "razón social"}
-  sigla: {nombre: sigla, tipo: str, desc: "sigla"}
+  sigla: {nombre: sigla, tipo: str, desc: "sigla; muchas entidades se conocen por ella (COOMEVA), no por la razón social"}
   nombretipo: {nombre: tipo, tipo: str, desc: "tipo de entidad (fondo de empleados, cooperativa multiactiva…)"}
   municipio: {nombre: municipio, tipo: str, desc: "municipio del domicilio"}
   nombreactividad: {nombre: actividad, tipo: str, desc: "actividad"}
-  supervision: {nombre: nivel_supervision, tipo: str, desc: "nivel de supervisión (1, 2 o 3)"}
+  supervision: {nombre: nivel_supervision, tipo: str, desc: "nivel de supervisión, 1, 2 o 3: las más grandes están en 1 (Coomeva y Comedal; 397 entidades en 2026, frente a 508 en 2 y 1 309 en 3)"}
   a_o: {nombre: anio, tipo: str, desc: "año del reporte"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia de la Economía Solidaria, theme: economia, accrualPeriodicity: monthly}

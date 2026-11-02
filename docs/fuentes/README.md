@@ -28,3 +28,4 @@ Reglas:
 | SECOP II, compromisos (`skc9-met7`) | [cce.secop2.compromisos.md](cce.secop2.compromisos.md) |
 | SECOP II, rubros (`cwhv-7fnp`) | [cce.secop2.rubros.md](cce.secop2.rubros.md) |
 | CNMH, SIEVCAC: once conjuntos de víctimas por modalidad, con la misma forma | [cnmh.sievcac.md](cnmh.sievcac.md) |
+| Supersolidaria, entidades del sector solidario (`kg2d-yfyg`) | [supersolidaria.entidades.md](supersolidaria.entidades.md) |
