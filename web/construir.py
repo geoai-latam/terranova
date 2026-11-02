@@ -1815,14 +1815,14 @@ def seccion_cobertura() -> str:
 <div class="con-fig cob3">
 <div class="cab">
 <p class="sv3-capa">Una fuente, de cerca · IGAC SINIC</p>
-<h2 class="t2">Del barrio al país</h2>
-<p class="entrada">Cada fuente del catálogo tiene su cobertura medida. La del catastro SINIC, desde el punto de arriba: el barrio de Santa Marta está dentro de una celda de unos {km} km de radio, y cada columna cuenta los predios de la muestra que caen en la suya.</p>
+<h2 class="t2">Cuánto cubre cada fuente, medido</h2>
+<p class="entrada">Antes de responder sabemos qué cubre cada fuente. La del catastro SINIC, en el país: cada columna es una celda de unos {km} km de radio y su altura cuenta los predios de la muestra que caen en ella.</p>
 <p class="cob3-plana">Una celda plana no es un cero inventado: es territorio sin predios en la muestra. El SINIC cubre los {SINIC_MUNICIPIOS} municipios con gestor catastral propio; el resto lo responde la base del IGAC.</p>
 <ul class="lista-l"><li><b>{SINIC_TERRENOS}</b><span>terrenos en la copia SINIC ({SINIC_MUNICIPIOS} municipios)</span></li><li><b>{miles(total)}</b><span>en la muestra (3 %)</span></li><li><b>{miles(celdas)}</b><span>celdas con predios</span></li></ul>
 <div class="cob3-ley" aria-hidden="true"><span>menos</span><i><b style="background:#A6D8CC"></b><b style="background:#7DB5A8"></b><b style="background:#559385"></b><b style="background:#2D7062"></b><b style="background:#14564A"></b></i><span>más predios por celda</span></div>
 <p class="fuente-dato">IGAC SINIC · conteo de la ficha de la fuente, medido el {SINIC_MEDIDO} · muestra del 3 %</p>
 </div>
-<figure class="fig-iso f3-cob" data-f3="cobertura"><div class="lienzo f3-lienzo" tabindex="0" role="group" aria-label="Mapa de cobertura del SINIC. Arrastra o usa las flechas para girar."><canvas role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra del 3 %: {miles(total)} predios en {miles(celdas)} celdas. Empieza en el predio del héroe, en Santa Marta: la cámara sube hasta su celda y se abre al país, y las columnas suben desde ahí; las más altas y oscuras cuentan más predios. Las celdas planas son territorio sin predios en la muestra."></canvas><div class="f3-rot" aria-hidden="true"></div></div><figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="polite">{miles(total)} predios de la muestra (3 %) en {miles(celdas)} celdas</span></span><span class="pista">gira sola; pasa el puntero por las columnas o arrastra para girarla</span></figcaption></figure>
+<figure class="fig-iso f3-cob" data-f3="cobertura"><div class="lienzo f3-lienzo" tabindex="0" role="group" aria-label="Mapa de cobertura del SINIC. Arrastra o usa las flechas para girar."><canvas role="img" aria-label="Columnas hexagonales sobre Colombia con los predios SINIC de la muestra del 3 %: {miles(total)} predios en {miles(celdas)} celdas. Las columnas suben desde la celda de Santa Marta hacia afuera y el mapa gira despacio; las más altas y oscuras cuentan más predios. Las celdas planas son territorio sin predios en la muestra."></canvas><div class="f3-rot" aria-hidden="true"></div></div><figcaption class="lectura-l"><span class="lin"><span data-lectura aria-live="polite">{miles(total)} predios de la muestra (3 %) en {miles(celdas)} celdas</span></span><span class="pista">gira sola; pasa el puntero por las columnas o arrastra para girarla</span></figcaption></figure>
 </div>
 </div></section>"""
 

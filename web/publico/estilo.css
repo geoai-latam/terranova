@@ -982,7 +982,8 @@ pre.suelto { background: #0B231C; color: #E6EAE2; border-radius: var(--radio-md)
 @media (max-width: 480px) { .p3-notas li { grid-template-columns: minmax(0, 1fr); } }
 
 /* cobertura (el mapa del SINIC) */
-.f3-cob .f3-lienzo { aspect-ratio: 1 / 0.92; cursor: grab; touch-action: pan-y; }
+.f3-cob .f3-lienzo { aspect-ratio: 1 / 0.86; cursor: grab; touch-action: pan-y;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 9%, #000 94%, transparent); }
 .f3-cob .f3-ciudad { font: 500 12px/1 var(--font-sans); color: var(--tinta); display: inline-flex; align-items: center; gap: 5px; }
 .f3-cob .f3-ciudad::before { content: ''; width: 5px; height: 5px; background: var(--tinta); flex: none; margin-left: -2.5px; }
 .f3-cob .f3-mar { font: 400 italic 12px/1 var(--font-sans); color: var(--tinta-tenue); transform: translate(-50%, -50%); }
