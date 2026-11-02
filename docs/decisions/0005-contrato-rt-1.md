@@ -13,6 +13,10 @@
   (`vistos ≤ total`, `parcial ⇒ errores ≠ ∅`, toda fuente usada tiene procedencia y licencia) y
   prueba de que el hub de GEO Copilot materializa el bloque `geo_result` (spike F0).
 - **Validación (2026-10-21):** Corregido `modo` → `servido_desde` para alinear con la spec 01. El spike F0.3 ya emite el subconjunto; el bloque `geo_result` se confirma en F0.4.
+- **Enmienda (2026-11-01):** el resultado MCP con geometría lleva `_meta.geo`: `bbox`, `crs`, `tipo`
+  (`punto`, `linea`, `poligono` o `mixto`) y `elementos`. Así un cliente de mapas puede encuadrar y
+  decir qué capa está viendo sin leer los datos. El sobre no cambia, salvo `tipos_geometria` en la
+  colección resumida, porque `geometry: null` pierde el tipo. Por REST sale de `geo_result`.
 - **Corrección (2026-10-21, spike F0.4):** decía «GEO Copilot lo pinta sin adaptador», y no era
   cierto: el hub solo reconocía el GeoResult en la raíz. Se mantiene el anidado, para no deformar el
   contrato de todos los clientes por uno, y el hub aprendió a desanidarlo. Además, el GeoResult del

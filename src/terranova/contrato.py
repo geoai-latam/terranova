@@ -30,6 +30,15 @@ ESQUEMA_POLIGONO: Final[dict[str, Any]] = {
     "required": ["type", "coordinates"],
     "description": "GeoJSON Polygon en EPSG:4326 (lon, lat): hasta 500 vértices y 1° de lado",
 }
+TIPOS_GEOMETRIA = "tipos_geometria"
+_TIPO_CAPA: Final[dict[str, str]] = {
+    "Point": "punto",
+    "MultiPoint": "punto",
+    "LineString": "linea",
+    "MultiLineString": "linea",
+    "Polygon": "poligono",
+    "MultiPolygon": "poligono",
+}
 ESQUEMA_GEOMETRIA: Final[dict[str, Any]] = {
     "type": "boolean",
     "default": False,
@@ -437,6 +446,13 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
         datos = art.data
         if art.kind == "feature_collection" and isinstance(datos, dict):
             rasgos = []
+            tipos = sorted(
+                {
+                    str(g["type"])
+                    for r in datos.get("features", [])
+                    if isinstance(g := r.get("geometry"), dict) and g.get("type")
+                }
+            )
             for rasgo in datos.get("features", []):
                 g = rasgo.get("geometry")
                 if isinstance(g, dict) and g.get("type") not in ("Point", "MultiPoint"):
@@ -448,7 +464,8 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
                     rasgo = {**rasgo, "properties": {"elemento": posicion}}
                     referidos = True
                 rasgos.append(rasgo)
-            datos = {**datos, "features": rasgos}
+            # el tipo se pierde con `geometry: null`: lo necesita `resumen_geo`
+            datos = {**datos, "features": rasgos, TIPOS_GEOMETRIA: tipos}
         artefactos.append(art.model_copy(update={"data": datos}))
     if not (envolventes or referidos):
         return sobre
@@ -459,6 +476,43 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
 
 def _canonico(valor: Any) -> str:
     return json.dumps(valor, ensure_ascii=False, sort_keys=True, default=str)
+
+
+def resumen_geo(sobre: Sobre) -> dict[str, Any] | None:
+    """Lo que un cliente de mapas necesita sin leer los datos: encuadre, CRS, tipo y cuántos. Va en
+    `_meta.geo` del resultado MCP (enmienda de la ADR-0005). None si no hay nada que encuadrar."""
+    if sobre.geo_result is None:
+        return None
+    cajas: list[list[float]] = []
+    tipos: set[str] = set()
+    crs: set[str] = set()
+    for art in sobre.geo_result.artifacts:
+        datos = art.data
+        if art.kind != "feature_collection" or not isinstance(datos, dict):
+            continue
+        tipos.update(datos.get(TIPOS_GEOMETRIA) or [])
+        for rasgo in datos.get("features", []):
+            g = rasgo.get("geometry")
+            if isinstance(g, dict) and g.get("type"):
+                tipos.add(str(g["type"]))
+            caja = rasgo.get("bbox") or _envolvente((g or {}).get("coordinates"))
+            if caja:
+                cajas.append(caja)
+                crs.add(art.crs or "EPSG:4326")
+    if not cajas:
+        return None
+    nombres = {_TIPO_CAPA.get(t, "mixto") for t in tipos}
+    return {
+        "bbox": [
+            min(c[0] for c in cajas),
+            min(c[1] for c in cajas),
+            max(c[2] for c in cajas),
+            max(c[3] for c in cajas),
+        ],
+        "crs": crs.pop() if len(crs) == 1 else None,
+        "tipo": nombres.pop() if len(nombres) == 1 else "mixto",
+        "elementos": len(cajas),
+    }
 
 
 def _envolvente(coordenadas: Any) -> list[float] | None:

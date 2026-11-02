@@ -54,6 +54,7 @@ from terranova.contrato import (
     nueva_solicitud_id,
     paginar,
     problema_de,
+    resumen_geo,
     resumir_geometria,
 )
 from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
@@ -302,9 +303,11 @@ async def _correr(ficha: str, arguments: dict[str, Any]) -> ToolResult:
         return resultado_de_error("parametro_invalido", str(exc), param=exc.param)
     except ErrorEjecucion as exc:
         return resultado_de_error(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
+    geo = resumen_geo(sobre)
     return ToolResult(
         content=[TextContent(type="text", text=texto_del_sobre(sobre))],
         structured_content=sobre.model_dump(mode="json"),
+        meta={"geo": geo} if geo else None,
     )
 
 

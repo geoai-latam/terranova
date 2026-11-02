@@ -103,6 +103,11 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
 - **Lo simplificado al ingerir** (agrología ~11 m, SINCHI ~56 m, UPRA ~6 m, SINIC ~1 m) no se
   recupera: cada respuesta lo dice en `avisos` y en `transformaciones`.
 - **Falta:** comparar el área de un polígono con la fuente en producción, que es su aceptación.
+## `_meta.geo` en el MCP (2026-11-01)
+
+- **Qué lleva:** cada resultado con geometría dice su `bbox`, `crs`, `tipo` y número de `elementos`,
+  para que GEO Copilot encuadre y diga «lo que estoy viendo» sin leer los datos.
+- **Falta:** validarlo en GEO Copilot en el navegador, que es su aceptación.
 
 ## Una sola herramienta de predio (2026-11-01)
 
