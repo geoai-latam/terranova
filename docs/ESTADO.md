@@ -106,6 +106,15 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   norma inexistente de CREG, DIAN o Función Pública daba error de la fuente y sumaba para el cortacircuitos.
 - **Ahora:** los tres casos son `no_encontrado`, sin tocar el cortacircuitos. La regla va por herramienta
   en el catálogo (`documento_ausente`, `minimo_caracteres`, `solo_elementos`).
+## Vigencia e historial de plan (2026-11-02)
+
+- **Ahora:** `terranova orgs nivel acme pro --hasta 2027-01-31 --nota "factura 12"`. Pasado ese día, la
+  organización baja sola a `con_llave`: se calcula al leer, así que no depende de una tarea programada.
+- **Historial:** `terranova orgs historial [--org X]` da cada cambio de plan, con su nota.
+- **Sin `--hasta`, el plan no vence.** Las tablas son nuevas (`orgs_vigencia`, `orgs_historial`) y se
+  crean solas: lo que ya está en `orgs` no cambia.
+- **Falta:** el aviso por correo antes de que venza un plan de pago; hoy solo se avisa a las altas. Y el
+  webhook de la pasarela, que depende de elegirla.
 
 ## Auditoría de herramientas: ambiente y estadísticas (2026-11-02)
 

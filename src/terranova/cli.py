@@ -174,6 +174,10 @@ def orgs(argumentos: list[str]) -> int:
     nivel = sub.add_parser("nivel")
     nivel.add_argument("org")
     nivel.add_argument("nivel", choices=list(NIVELES))
+    nivel.add_argument("--hasta", type=date.fromisoformat, help="AAAA-MM-DD; sin ella, no vence")
+    nivel.add_argument("--nota", help="de dónde sale el cambio: número de factura, acuerdo…")
+    historial = sub.add_parser("historial", help="cada cambio de plan")
+    historial.add_argument("--org")
     sub.add_parser("listar")
     uso = sub.add_parser("uso", help="saldo y consumo del mes por organización")
     uso.add_argument("--org")
@@ -184,12 +188,19 @@ def orgs(argumentos: list[str]) -> int:
     if a.accion == "uso":
         return _uso_orgs(registro, a.org, a.mes)
     if a.accion == "nivel":
-        registro.fijar_nivel(a.org, a.nivel)
-        print(f"{a.org}: nivel {a.nivel} ({_miles(NIVELES[a.nivel])} créditos al mes)")
+        registro.fijar_nivel(a.org, a.nivel, hasta=a.hasta, nota=a.nota)
+        vence = f", hasta {a.hasta}" if a.hasta else ""
+        print(f"{a.org}: nivel {a.nivel} ({_miles(NIVELES[a.nivel])} créditos al mes{vence})")
         return 0
+    if a.accion == "historial":
+        for org, niv, hasta, nota, cuando in registro.historial(a.org):
+            print(f"{cuando}  {org}  {niv}  hasta {hasta or 'sin fecha'}  {nota or ''}".rstrip())
+        return 0
+    vigencias = registro.vigencias()
     for org, niv, vigentes in registro.listar_orgs():
         creditos = _miles(NIVELES.get(niv, NIVELES["con_llave"]))
-        print(f"{org}  {niv}  {creditos} créditos/mes  {vigentes} llaves vigentes")
+        vence = f"  hasta {vigencias[org]}" if org in vigencias else ""
+        print(f"{org}  {niv}  {creditos} créditos/mes  {vigentes} llaves vigentes{vence}")
     return 0
 
 
