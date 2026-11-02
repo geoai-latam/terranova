@@ -498,3 +498,29 @@ async def test_sin_fases_la_previa_no_encuentra_nada() -> None:
     )
     assert falso.llamadas[1]["where"] == "id_procedimiento IN ('')"
     assert sobre.estado == "no_encontrado"
+
+
+def test_avisos_de_la_ficha() -> None:
+    """Patrón A: el vacío de garantías no es «no hay garantía», y un solo proponente se avisa."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    def sobre(estado: str, datos: dict[str, Any]) -> Any:
+        return Sobre.model_construct(estado=estado, datos=datos, avisos=[])
+
+    garantias = CATALOGO.herramientas["secop_garantias_contrato"]
+    fuente = CATALOGO.fuentes[garantias.fuente]
+    assert fuente.cobertura.aviso_vacio
+    vacio_garantias = avisos_de_la_ficha(garantias, fuente, sobre("no_encontrado", {}))
+    assert vacio_garantias == [fuente.cobertura.aviso_vacio.strip()]
+    assert not vacio_garantias[0].endswith("\n")
+    assert avisos_de_la_ficha(garantias, fuente, sobre("encontrado", {"x": 1})) == []
+
+    prop = CATALOGO.herramientas["secop_proponentes_proceso"]
+    fp = CATALOGO.fuentes[prop.fuente]
+    uno = avisos_de_la_ficha(prop, fp, sobre("encontrado", {"numero_proponentes": 1}))
+    assert len(uno) == 1 and uno[0].startswith("Un solo proponente")
+    assert avisos_de_la_ficha(prop, fp, sobre("encontrado", {"numero_proponentes": 3})) == []
+    vacio = avisos_de_la_ficha(prop, fp, sobre("no_encontrado", {}))
+    assert vacio == [a.texto for a in prop.avisos if a.cuando == "vacio"]  # la propia reemplaza
+    assert avisos_de_la_ficha(prop, fp, sobre("fuera_de_cobertura", {})) == []

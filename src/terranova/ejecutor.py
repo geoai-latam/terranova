@@ -326,6 +326,24 @@ def aviso_de_anio_incompleto(fuente: Fuente, valores: dict[str, Any]) -> str | N
     return None
 
 
+def avisos_de_la_ficha(h: Herramienta, fuente: Fuente, sobre: Sobre) -> list[str]:
+    """Lo que la ficha sabe y la fuente no dice (patrón A de la revisión de valor): un vacío que no
+    es «no hay» (garantías de SECOP: menos del 0,5 % de los contratos) y lo que hay que saber al
+    leer ciertos datos (un solo proponente). Un aviso de vacío de la herramienta reemplaza el de
+    la fuente."""
+    if sobre.estado == "no_encontrado":
+        propios = [a.texto.strip() for a in h.avisos if a.cuando == "vacio"]
+        de_la_fuente = (fuente.cobertura.aviso_vacio or "").strip()  # el `>` de YAML deja un salto
+        return propios or ([de_la_fuente] if de_la_fuente else [])
+    if sobre.estado not in ("encontrado", "parcial"):
+        return []
+    return [
+        a.texto.strip()
+        for a in h.avisos
+        if a.cuando == "encontrado" and (a.si is None or a.si.cumple(sobre.datos))
+    ]
+
+
 def es_relleno(h: Herramienta, elementos: list[Any], hechos: dict[str, Any]) -> bool:
     """La fuente contestó, pero sin el documento: una portada de 32 caracteres no es la sentencia,
     y un título sin resultados no es un resultado."""
@@ -672,6 +690,7 @@ class Ejecutor:
 
         fuente = self.catalogo.fuentes[h.fuente]
         avisos = [
+            *avisos_de_la_ficha(h, fuente, sobre),
             *((a,) if (a := _aviso_de_homonimos(h, valores)) else ()),
             *((a,) if (a := _aviso_de_escala(fuente)) else ()),
             *((aviso,) if aviso else ()),

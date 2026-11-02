@@ -76,3 +76,8 @@ canario:
   minimos: {numero_registros: 16}
   campos: [cambio_valor, cambio_valor_desde_primera, dias_extendidos, dias_extendidos_total, estado, fecha_aprobacion, fecha_creacion, id_contrato, id_modificacion, modificaciones_vigentes, numero_registros, proposito, valor_actual, valor_contrato_tras_cambio, valor_tras_primera, vigente]
   latencia_max_ms: 10000
+avisos:
+  - cuando: encontrado
+    texto: "SECOP II no publica el valor con que se firmó el contrato: lo que añadió la primera modificación no se puede calcular aquí. cambio_valor_desde_primera es lo añadido después de ella, no todo lo añadido."
+  - cuando: vacio
+    texto: "Ese contrato no tiene modificaciones publicadas en SECOP II (o el identificador no es de un contrato de SECOP II, CO1.PCCNTR.…)."

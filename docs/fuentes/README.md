@@ -22,3 +22,7 @@ Reglas:
 | SECOP II, contratos (`jbjy-vk9h`) | [cce.secop2.contratos.md](cce.secop2.contratos.md) |
 | SECOP II, modificaciones (`u8cx-r425`), con su hermano «adiciones» (`cb9c-h8sn`) | [cce.secop2.modificaciones.md](cce.secop2.modificaciones.md) |
 | SECOP II, proponentes (`hgi6-6wh3`) | [cce.secop2.proponentes.md](cce.secop2.proponentes.md) |
+| SECOP II, garantías (`gjp9-cutm`) | [cce.secop2.garantias.md](cce.secop2.garantias.md) |
+| SECOP II, ejecución (`mfmm-jqmq`) | [cce.secop2.ejecucion.md](cce.secop2.ejecucion.md) |
+| SECOP II, compromisos (`skc9-met7`) | [cce.secop2.compromisos.md](cce.secop2.compromisos.md) |
+| SECOP II, rubros (`cwhv-7fnp`) | [cce.secop2.rubros.md](cce.secop2.rubros.md) |
