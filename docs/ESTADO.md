@@ -107,6 +107,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Las siete de Policía dan `fuente_hasta_mes` del año pedido, en todo el país, y avisan si el año
     está incompleto: 2026 llega a julio. Medellín tiene 2 955 hurtos de vehículos en 2026 frente a
     5 916 en 2025, y sin el corte parecía que el hurto había bajado a la mitad.
+- **ANH, los meses que faltan:** las seis dan `meses_con_datos` y `hasta_mes`, y avisan cuando
+  falta alguno. Castilla 2025 no tiene octubre ni noviembre, y 2026 llega a marzo. El motor suma el
+  derivado `distintos`.
 
 ## Ficha de un lote (2026-11-01)
 

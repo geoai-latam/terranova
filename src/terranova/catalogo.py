@@ -837,7 +837,9 @@ class Consulta(_Ficha):
 DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo"})
 # por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
 DE_SECUENCIA = frozenset({"diferencia_anterior"})
-DE_RESULTADO = frozenset({"conteo", "suma", "maximo", "primero", "ultimo", "completitud_total"})
+DE_RESULTADO = frozenset(
+    {"conteo", "suma", "maximo", "primero", "ultimo", "distintos", "completitud_total"}
+)
 
 
 class Derivado(_Ficha):
@@ -849,7 +851,8 @@ class Derivado(_Ficha):
     de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre oficial del departamento
     por su código DIVIPOLA). En secuencia: `diferencia_anterior` (el `campo` menos el del elemento
     anterior en el orden de la consulta; el primero queda vacío). Del resultado: `conteo`, `suma` y
-    `maximo` de `campo`, `primero` y `ultimo` (el `campo` del primer o del último elemento) y
+    `maximo` de `campo`, `primero` y `ultimo` (el `campo` del primer o del último elemento),
+    `distintos` (cuántos valores distintos de `campo` hay: los meses con datos de un año) y
     `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos elementos.
     """
 
@@ -863,6 +866,7 @@ class Derivado(_Ficha):
         "maximo",
         "primero",
         "ultimo",
+        "distintos",
         "diferencia_anterior",
         "completitud_total",
     ]
@@ -882,6 +886,7 @@ class Derivado(_Ficha):
             "maximo",
             "primero",
             "ultimo",
+            "distintos",
             "diferencia_anterior",
         }
         if self.de in necesita_campo and not self.campo:
@@ -1132,6 +1137,7 @@ def validar(catalogo: Catalogo) -> list[str]:
                 "maximo",
                 "primero",
                 "ultimo",
+                "distintos",
                 "diferencia_anterior",
             ) and d.campo not in fuente.nombres_rt | set(h.derivados):
                 errores.append(f"{donde}: el derivado {nombre} usa «{d.campo}», que no sale")

@@ -419,6 +419,8 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
         return convertir(valores[0], d.tipo) if valores else None
     if d.de == "ultimo":
         return convertir(valores[-1], d.tipo) if valores else None
+    if d.de == "distintos":
+        return len({str(v) for v in valores if v is not None})
     if d.de == "completitud_total":
         return total
     raise ValueError(d.de)

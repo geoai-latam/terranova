@@ -1,5 +1,5 @@
 id: anh_crudo_municipio
-version: 1
+version: 2
 familia: estadisticas
 fuente: anh.produccion_crudo
 pregunta: "¿Cuánto petróleo (crudo) produjo este municipio en un año, mes a mes?"
@@ -29,17 +29,27 @@ consulta:
     max_filas: 100
   campos: [departamento, municipio, vigencia, mes, campo, produccion_bls]
 derivados:
+  meses_con_datos: {de: distintos, campo: mes, tipo: int}
+  hasta_mes: {de: maximo, campo: mes, tipo: int}
   produccion_barriles: {de: columna, campo: barriles, tipo: float}
   campos_reportados: {de: columna, campo: n_campos, tipo: int}
   produccion_total_barriles: {de: suma, campo: produccion_barriles, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 salida: ProduccionCrudoMunicipio
+avisos:
+- cuando: encontrado
+  si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
+    el último). Puede ser que la fuente aún no los publique o que falten: noviembre de 2025 trae 106
+    filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
+    de 2025 (medido el 2026-11-02). El total no es el de un año entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en fdvb-hsrf: Puerto Gaitán (Meta) 2024, 12 meses; enero 6 293 701
   # barriles de 26 campos; el año, 73 525 507 barriles.
   entrada: {departamento: "Meta", municipio: "Puerto Gaitán", anio: 2024}
-  verdad: {mes: 1, produccion_barriles: 6293701.0, campos_reportados: 26, produccion_total_barriles: 73525507.0}
+  verdad: {meses_con_datos: 12, mes: 1, produccion_barriles: 6293701.0, campos_reportados: 26, produccion_total_barriles: 73525507.0}
   minimos: {numero_registros: 12}
-  campos: [anio, campos_reportados, departamento, mes, municipio, numero_registros, produccion_barriles, produccion_total_barriles]
+  campos: [anio, campos_reportados, departamento, hasta_mes, mes, meses_con_datos, municipio, numero_registros, produccion_barriles, produccion_total_barriles]
   latencia_max_ms: 20000

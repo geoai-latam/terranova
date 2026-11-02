@@ -619,3 +619,18 @@ async def test_el_complemento_dice_hasta_que_mes_publica_la_fuente() -> None:
     ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": _PoliciaFalsa([])})
     sobre = await ej.ejecutar("policia_hurto_vehiculos_municipio", entrada, plan="evaluacion")
     assert sobre.estado == "no_encontrado" and sobre.datos == {}
+
+
+def test_distintos_cuenta_los_meses_con_datos() -> None:
+    """Castilla 2025 trae dos filas en diciembre y ninguna en octubre ni noviembre: 11 filas, 10
+    meses (medido el 2026-11-02 en fdvb-hsrf)."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 12]
+    elementos = [{"mes": m} for m in meses]
+    d = Derivado(de="distintos", campo="mes", tipo="int")
+    assert derivar_resultado(d, elementos, None) == 10
+    assert derivar_resultado(Derivado(de="maximo", campo="mes", tipo="int"), elementos, None) == 12
+    with pytest.raises(ValueError):
+        Derivado(de="distintos", tipo="int")

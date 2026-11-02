@@ -1,5 +1,5 @@
 id: anh_crudo_campo
-version: 1
+version: 2
 familia: estadisticas
 fuente: anh.produccion_crudo
 pregunta: "¿Cuánto petróleo (crudo) produjo este campo en un año, mes a mes y por municipio?"
@@ -26,16 +26,26 @@ consulta:
     max_filas: 500
   campos: [campo, departamento, municipio, operadora, vigencia, mes, produccion_bls]
 derivados:
+  meses_con_datos: {de: distintos, campo: mes, tipo: int}
+  hasta_mes: {de: maximo, campo: mes, tipo: int}
   produccion_barriles: {de: columna, campo: barriles, tipo: float}
   produccion_total_barriles: {de: suma, campo: produccion_barriles, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 salida: ProduccionCrudoCampo
+avisos:
+- cuando: encontrado
+  si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
+    el último). Puede ser que la fuente aún no los publique o que falten: noviembre de 2025 trae 106
+    filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
+    de 2025 (medido el 2026-11-02). El total no es el de un año entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en fdvb-hsrf: Rubiales 2024, Puerto Gaitán (Meta), Ecopetrol, 12 meses;
   # enero 3 077 162 barriles; el año, 35 860 259 barriles.
   entrada: {campo: "Rubiales", anio: 2024}
-  verdad: {campo: RUBIALES, municipio: PUERTO GAITAN, operadora: "ECOPETROL S.A.", mes: 1, produccion_barriles: 3077162.0, produccion_total_barriles: 35860259.0}
+  verdad: {meses_con_datos: 12, campo: RUBIALES, municipio: PUERTO GAITAN, operadora: "ECOPETROL S.A.", mes: 1, produccion_barriles: 3077162.0, produccion_total_barriles: 35860259.0}
   minimos: {numero_registros: 12}
-  campos: [anio, campo, departamento, mes, municipio, numero_registros, operadora, produccion_barriles, produccion_total_barriles]
+  campos: [anio, campo, departamento, hasta_mes, mes, meses_con_datos, municipio, numero_registros, operadora, produccion_barriles, produccion_total_barriles]
   latencia_max_ms: 20000

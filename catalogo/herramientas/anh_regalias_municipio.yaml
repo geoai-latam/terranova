@@ -1,5 +1,5 @@
 id: anh_regalias_municipio
-version: 1
+version: 2
 familia: estadisticas
 fuente: anh.regalias_liquidadas
 pregunta: "¿Cuántas regalías generó la producción de petróleo y gas de este municipio en un año, por campo?"
@@ -24,25 +24,37 @@ consulta:
     # coordenadas): primero un grupo por línea, luego la suma.
     previo_select: "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop"
     previo_group: "departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop"
-    select: "departamento, municipio, campo, tipohidrocarburo, a_o, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen"
+    select: "departamento, municipio, campo, tipohidrocarburo, a_o, sum(replace(regaliascop, ',', '')::number) AS pesos, sum(replace(volumenregaliablskpc, ',', '')::number) AS volumen, count(distinct mes) AS meses, max(mes) AS ultimo_mes"
     where: "replace(replace(replace(replace(replace(replace(upper(municipio), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') = replace(replace(replace(replace(replace(replace(upper('{municipio}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') AND replace(replace(replace(replace(replace(replace(upper('{departamento}'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') like '%' || replace(replace(replace(replace(replace(replace(upper(departamento), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), ' ', '') || '%' AND a_o = {anio}"
     group: "departamento, municipio, campo, tipohidrocarburo, a_o"
     order: "departamento, municipio, campo, tipohidrocarburo"
     max_filas: 500
   campos: [departamento, municipio, a_o, mes, contrato, campo, tipoprod, tipohidrocarburo, porcregalia, regimenreg, prodgravableblskpc, volumenregaliablskpc, regaliascop]
 derivados:
+  meses_liquidados: {de: columna, campo: meses, tipo: int}
+  ultimo_mes_liquidado: {de: columna, campo: ultimo_mes, tipo: int}
+  meses_con_datos: {de: maximo, campo: meses_liquidados, tipo: int}
+  hasta_mes: {de: maximo, campo: ultimo_mes_liquidado, tipo: int}
   hidrocarburo: {de: codigo, campo: tipo_hidrocarburo_codigo, valores: {O: petróleo, G: gas}}
   regalias_pesos: {de: columna, campo: pesos, tipo: float}
   volumen_regalia: {de: columna, campo: volumen, tipo: float}
   regalias_total_pesos: {de: suma, campo: regalias_pesos, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 salida: RegaliasMunicipioProduccion
+avisos:
+- cuando: encontrado
+  si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
+    el último). Puede ser que la fuente aún no los publique o que falten: noviembre de 2025 trae 106
+    filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
+    de 2025 (medido el 2026-11-02). El total no es el de un año entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en j7js-yk74: Puerto Gaitán (Meta) 2024, 29 filas (campo e hidrocarburo);
   # la primera, Cabiona (petróleo), $3 163 929 685; el año, $1 704 793 478 038.
   entrada: {departamento: "Meta", municipio: "Puerto Gaitán", anio: 2024}
-  verdad: {campo: CABIONA, hidrocarburo: petróleo, regalias_pesos: 3163929685.0, regalias_total_pesos: 1704793478038.0}
+  verdad: {meses_con_datos: 12, campo: CABIONA, hidrocarburo: petróleo, regalias_pesos: 3163929685.0, regalias_total_pesos: 1704793478038.0}
   minimos: {numero_registros: 29}
-  campos: [anio, campo, departamento, hidrocarburo, municipio, numero_registros, regalias_pesos, regalias_total_pesos, tipo_hidrocarburo_codigo, volumen_regalia]
+  campos: [anio, campo, departamento, hasta_mes, hidrocarburo, meses_con_datos, meses_liquidados, municipio, numero_registros, regalias_pesos, regalias_total_pesos, tipo_hidrocarburo_codigo, ultimo_mes_liquidado, volumen_regalia]
   latencia_max_ms: 20000
