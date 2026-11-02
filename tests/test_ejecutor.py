@@ -547,6 +547,8 @@ def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     assert _validar(campo, convertir(fecha_en_orden("04/14/2026", "mda"), "date")) == "2026-04-14"
     with pytest.raises(ValueError):
         Campo(nombre="n", tipo="str", desc="x", orden_fecha="mda")
+
+
 def test_cifras_con_signo_de_pesos() -> None:
     """Las 10 000 empresas de Supersociedades escriben «$84.95», «$ 2.31» y «-$0.00»: salen como
     número, y el signo de una pérdida pequeña se conserva (medido el 2026-11-02 en 6cat-2gcs)."""
