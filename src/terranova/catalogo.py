@@ -253,6 +253,11 @@ class Campo(_Ficha):
         description="años posibles para esta fecha: fuera de ellos es relleno de la fuente (el "
         "INVIMA pone 1000, 1900, 3000 o 9999 en el vencimiento) y sale vacía, no como fecha",
     )
+    moneda: bool = Field(
+        default=False,
+        description="la fuente escribe la cifra como texto con signo de pesos ($84.95, «$ 2.31», "
+        "-$0.00): sale como número",
+    )
     alias: list[str] = Field(
         default_factory=list,
         description="otros nombres del mismo campo en capas de servicios distintos (los POMCA de "
@@ -271,6 +276,8 @@ class Campo(_Ficha):
             raise ValueError("`orden_fecha` y `anios_validos` son de campos de fecha")
         if self.anios_validos and self.anios_validos[0] > self.anios_validos[1]:
             raise ValueError("`anios_validos` va de menor a mayor")
+        if self.moneda and self.tipo not in ("int", "float"):
+            raise ValueError("`moneda` es de campos numéricos")
         return self
 
     def significado(self, valor: Any, capa: str | None) -> str | None:

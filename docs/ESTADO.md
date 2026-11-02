@@ -94,6 +94,13 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     relleno (3000, 1900, 9999) salen vacíos.
   - El vacío de cada herramienta por expediente nombra los otros tres estados.
   - Pendiente: una sola herramienta de estado por expediente, que pide consultas múltiples.
+- **Supersociedades, la unidad:**
+  - Las cuatro de estados financieros avisan que los valores están en miles de pesos. La carátula
+    solo lo declara desde 2025; de 2022 a 2024 se verificó contra las 10 000 empresas. También
+    avisan que separado y consolidado van por aparte.
+  - Las 10 000 empresas (v3) dan las cifras como número y avisan el redondeo a ±5 000 millones.
+    El motor suma `moneda`.
+  - Pendiente: el puesto en el ranking y el filtro por corte.
 
 ## Ficha de un lote (2026-11-01)
 

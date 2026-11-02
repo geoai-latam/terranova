@@ -30,3 +30,4 @@ Reglas:
 | CNMH, SIEVCAC: once conjuntos de víctimas por modalidad, con la misma forma | [cnmh.sievcac.md](cnmh.sievcac.md) |
 | Supersolidaria, entidades del sector solidario (`kg2d-yfyg`) | [supersolidaria.entidades.md](supersolidaria.entidades.md) |
 | INVIMA, Código Único de Medicamentos: cuatro conjuntos, uno por estado | [invima.cum.md](invima.cum.md) |
+| Supersociedades: estados financieros NIIF (cinco conjuntos) y las 10 000 empresas | [supersociedades.md](supersociedades.md) |
