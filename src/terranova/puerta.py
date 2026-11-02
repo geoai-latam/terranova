@@ -591,7 +591,9 @@ def fuente_describir(fuente: str) -> dict[str, Any]:
 
 # De nombre a código, en todos los perfiles: sin ellas el agente supone los códigos (en el banco de
 # agente mandó 25095 como DIVIPOLA de Chía, que es 25175, y un NIT inventado para su alcaldía).
-HERRAMIENTAS_COMUNES = frozenset({"dane_divipola_buscar", "secop_entidades_municipio"})
+HERRAMIENTAS_COMUNES = frozenset(
+    {"dane_divipola_buscar", "secop_entidades_municipio", "secop_entidades_buscar"}
+)
 
 
 def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> FastMCP:
@@ -740,5 +742,6 @@ INSTRUCCIONES_CATALOGO = (
     "Para responder: 1) `buscar_herramienta` con la pregunta; 2) `consultar` con el id y la "
     "entrada que trae el resultado. Si el resultado no sirve, busque otra vez con otras palabras. "
     "Para pasar un nombre de municipio a su código DIVIPOLA use `dane_divipola_buscar`; para el "
-    "NIT de una entidad pública, `secop_entidades_municipio`. No suponga códigos."
+    "NIT de una entidad pública, `secop_entidades_buscar` por su nombre o "
+    "`secop_entidades_municipio` por su municipio. No suponga códigos."
 )

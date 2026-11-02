@@ -41,6 +41,25 @@ def anyio_backend() -> str:
 # --- plan de consulta ---------------------------------------------------------------------------
 
 
+def test_contiene_todas_las_palabras_sin_tildes_ni_comodines() -> None:
+    plan = plan_de_consulta(
+        SECOP,
+        {
+            "contiene": {"nombre_entidad": "Alcaldía  CHÍA 100%_"},
+            "select": ["nombre_entidad", "nit_entidad"],
+            "group": ["nombre_entidad", "nit_entidad"],
+            "agregados": {"contratos": "count"},
+        },
+    )
+    assert plan.sql.count("LIKE %s") == 3 and "translate(lower(" in plan.sql
+    # lo que escribe el usuario va como parámetro y sus comodines no comodinean
+    assert plan.parametros[:3] == ("%alcaldia%", "%chia%", r"%100\%\_%")
+    with pytest.raises(ErrorCopia, match="vacío"):
+        plan_de_consulta(SECOP, {"contiene": {"nombre_entidad": "   "}})
+    with pytest.raises(ErrorCopia, match="lista blanca"):
+        plan_de_consulta(SECOP, {"contiene": {"columna_rara": "x"}})
+
+
 def test_la_entrada_va_como_parametro_nunca_en_el_texto() -> None:
     malicioso = "x'); DROP TABLE copia.versiones; --"
     plan = plan_de_consulta(

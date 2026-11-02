@@ -66,6 +66,14 @@ _GEOMETRIA = {
 }
 
 
+# Sin mayúsculas ni tildes, en la columna y en lo buscado: SECOP escribe «CHIA» y el agente, «Chía».
+_TILDES = ("áéíóúüñ", "aeiouun")
+
+
+def _plano(texto: str) -> str:
+    return texto.lower().translate(str.maketrans(*_TILDES))
+
+
 def _coordenadas(valor: Any, n: int, nombre: str) -> list[float]:
     """`n` números finitos (lon, lat…): van como parámetros, nunca dentro del SQL."""
     import math
@@ -105,7 +113,9 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     `argumentos` (de la ficha, ya con la entrada puesta): `select` (columnas), `filtros`
     ({columna: valor}, igualdad), `texto` (búsqueda en las columnas `copia.texto`), `agregados`
     ({alias: "count" | "sum:col" | "median:col" …}), `group` (columnas), `order` (columnas; con
-    `-` delante, descendente) y `limite`. En una copia espacial, además: `punto` ([lon, lat]) o
+    `-` delante, descendente), `limite` y `contiene` ({columna: palabras}: la columna trae todas
+    las palabras, sin distinguir mayúsculas ni tildes). En una copia espacial, además: `punto`
+    ([lon, lat]) o
     `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan, y
     `geometria` («completa», «simplificada» o «ninguna», la de por defecto).
     """
@@ -141,6 +151,17 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         # de texto («2001») haría fallar la consulta (text = integer)
         campo = fuente.campos.get(columna)
         parametros.append(str(valor) if campo and campo.tipo == "str" else valor)
+    for columna, buscado in (argumentos.get("contiene") or {}).items():
+        expresion = (
+            f"translate(lower({_columna(columna, permitidas)}), '{_TILDES[0]}', '{_TILDES[1]}')"
+        )
+        palabras = _plano(str(buscado)).split()
+        if not palabras:
+            raise ErrorCopia(f"`contiene` de «{columna}» está vacío")
+        for palabra in palabras:
+            condiciones.append(f"{expresion} LIKE %s")  # la barra invertida escapa por defecto
+            seguro = re.sub(r"([\\%_])", r"\\\1", palabra)
+            parametros.append(f"%{seguro}%")
     if (texto := argumentos.get("texto")) is not None:
         if not fuente.copia.texto:
             raise ErrorCopia(f"{fuente.id} no tiene columnas de texto en su copia")

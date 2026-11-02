@@ -1,0 +1,111 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-02T02:35:40+00:00",
+ "herramienta": "secop_entidades_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "agregados": {
+     "contratos": "count",
+     "valor": "sum:valor_del_contrato"
+    },
+    "contiene": {
+     "nombre_entidad": "Chía"
+    },
+    "group": [
+     "nombre_entidad",
+     "nit_entidad",
+     "departamento",
+     "ciudad"
+    ],
+    "limite": 20,
+    "order": [
+     "-contratos",
+     "nombre_entidad"
+    ],
+    "select": [
+     "nombre_entidad",
+     "nit_entidad",
+     "departamento",
+     "ciudad"
+    ],
+    "tabla": "secop_contratos"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad",
+       "contratos",
+       "departamento",
+       "nit_entidad",
+       "nombre_entidad",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad": "Chía",
+        "contratos": 4298,
+        "departamento": "Cundinamarca",
+        "nit_entidad": "899999172",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE CHIA",
+        "valor": 713860067894.41
+       },
+       {
+        "ciudad": "Chía",
+        "contratos": 1671,
+        "departamento": "Cundinamarca",
+        "nit_entidad": "800201907",
+        "nombre_entidad": "INSTITUTO MUNICIPAL DE RECREACIÓN Y DEPORTES DE CHIA",
+        "valor": 65922006987.909996
+       },
+       {
+        "ciudad": "Chía",
+        "contratos": 170,
+        "departamento": "Cundinamarca",
+        "nit_entidad": "900233350",
+        "nombre_entidad": "CONCEJO MUNICIPAL CHIA",
+        "valor": 5040362269.67
+       },
+       {
+        "ciudad": "Chía",
+        "contratos": 166,
+        "departamento": "Cundinamarca",
+        "nit_entidad": "899999172",
+        "nombre_entidad": "PERSONERIA MUNICIPAL DE CHIA",
+        "valor": 4730063670.0
+       },
+       {
+        "ciudad": "Chía",
+        "contratos": 62,
+        "departamento": "Cundinamarca",
+        "nit_entidad": "899999714",
+        "nombre_entidad": "EMPRESA DE SERVICIOS PUBLICOS DE CHIA E.S.P.",
+        "valor": 4872550268.780001
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "consultado_en": "2026-11-02T02:35:06.089721+00:00",
+     "copia": {
+      "filas": 8750,
+      "huella": "sha256:f0d91547ab43eb714bf7a3f899555c585e419a3ba5adae781ee526370857e7a2",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": "2023-01-01",
+      "version": "20261102023506089721"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

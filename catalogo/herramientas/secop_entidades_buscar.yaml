@@ -1,0 +1,42 @@
+id: secop_entidades_buscar
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos_copia
+pregunta: "¿Cuál es el NIT de esta entidad pública?"
+descripcion: >
+  Busca una entidad estatal por su nombre y devuelve su NIT, su departamento y su municipio, con
+  sus contratos y su valor en pesos, de la que más contrata a la que menos. Sirve para conocer el
+  NIT antes de usar las herramientas que lo piden, en vez de suponerlo. No distingue mayúsculas ni
+  tildes y exige todas las palabras: use las que identifican a la entidad, como «Chía» (SECOP
+  escribe «ALCALDIA MUNICIPAL DE CHIA»). Una misma entidad puede salir con varios nombres.
+  Sale de la copia de Terrnova: cubre las entidades con contratos firmados en SECOP II desde 2023,
+  así que no encontrarla no significa que no exista; las cifras son solo de esa ventana.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: secop_contratos
+    contiene: {nombre_entidad: "{nombre}"}
+    select: [nombre_entidad, nit_entidad, departamento, ciudad]
+    group: [nombre_entidad, nit_entidad, departamento, ciudad]
+    agregados: {contratos: count, valor: "sum:valor_del_contrato"}
+    order: ["-contratos", nombre_entidad]
+    limite: 20
+  campos: [nombre_entidad, nit_entidad, departamento, ciudad]
+salida: EntidadesBuscar
+derivados:
+  contratos: {de: columna, campo: contratos, tipo: int}
+  valor: {de: columna, campo: valor, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+cobro: agregado
+canario:
+  # Medido el 2026-11-01 en jbjy-vk9h (ciudad = 'Chía', firmados desde 2023): la que más contrata es
+  # la Alcaldía (899999172), con 4 298 contratos. El número crece cada día: mínimo.
+  entrada: {nombre: Chía}
+  verdad: {entidad: "ALCALDIA MUNICIPAL DE CHIA", nit_entidad: "899999172"}
+  minimos: {contratos: 4298}
+  campos: [contratos, departamento, entidad, municipio, nit_entidad, numero_registros, valor]
+  latencia_max_ms: 10000
