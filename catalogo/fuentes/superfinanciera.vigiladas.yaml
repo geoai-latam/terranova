@@ -23,13 +23,48 @@ cobertura: {pais: CO}
 datos_personales: filtrados
 estado: publicada
 campos:
-  tipo_entidad: {nombre: tipo_entidad, tipo: int, desc: "código de tipo de entidad de la SFC (el de Bancolombia es 1); la fuente no publica la tabla"}
+  tipo_entidad:
+    nombre: tipo_entidad
+    tipo: int
+    desc: "código de tipo de entidad de la SFC (el de Bancolombia es 1); su nombre sale al lado"
+    # Los nombres los publica la SFC en otro conjunto, el CUIF (mxk5-ce6w, corte del 2026-08-31),
+    # abreviados y a veces cortados («COMPANIAS DE FINANCIAMIENTO COMERCI»): aquí van completos.
+    # Los tipos sin entidades en el CUIF (11, 20, 27, 93, 108, 111, 129, 142, 262, 507, 508, 510,
+    # 600) no tienen nombre publicado y salen sin él: no se adivinan.
+    codigos:
+      "1": Establecimientos bancarios
+      "2": Corporaciones financieras
+      "4": Compañías de financiamiento
+      "5": Sociedades fiduciarias
+      "6": Almacenes generales de depósito
+      "10": Sociedades de capitalización
+      "13": Compañías de seguros generales
+      "14": Compañías de seguros de vida
+      "15": Sociedades cooperativas de seguros
+      "22": Instituciones oficiales especiales
+      "23": Administradoras de fondos de pensiones y cesantías
+      "25": Administradoras del régimen solidario de prima media
+      "32": Cooperativas de carácter financiero
+      "81": Organismos de autorregulación
+      "82": Bolsas de valores
+      "83": Sociedades administradoras de depósitos centralizados de valores
+      "84": Sociedades calificadoras de valores
+      "85": Comisionistas de bolsa de valores
+      "118": Sistemas de pago de bajo valor
+      "128": Sociedades especializadas en depósitos y pagos electrónicos
+      "400": Bolsas agropecuarias
+      "401": Sociedades comisionistas de bolsas agropecuarias
+      "501": Administradoras de sistemas de negociación y registro de divisas
+      "502": Administradoras de sistemas de negociación y registro de valores
+      "504": Cámaras de riesgo central de contraparte
+      "509": Proveedores de precios para valoración
+    codigos_norma: "SFC, conjunto CUIF de datos.gov.co (mxk5-ce6w), columna nombre_tipo_entidad, corte del 2026-08-31"
   cod_entidad: {nombre: codigo_entidad, tipo: int, desc: "código de la entidad dentro de su tipo"}
   razon_social: {nombre: razon_social, tipo: str, desc: "razón social (con las denominaciones que puede usar)"}
   ciudad: {nombre: ciudad, tipo: str, desc: "ciudad"}
-  direccion: {nombre: direccion, tipo: str, desc: "dirección de la entidad («Pendiente» si no la reportó)"}
-  numeroidentificacion: {nombre: nit_con_dv, tipo: str, desc: "NIT con el dígito de verificación pegado al final (8909039388 = 890903938-8)"}
-  uripaginaweb: {nombre: pagina_web, tipo: str, desc: "página web"}
+  direccion: {nombre: direccion, tipo: str, vacios: ["Pendiente"], desc: "dirección de la entidad (vacía si la fuente dice «Pendiente»)"}
+  numeroidentificacion: {nombre: nit_con_dv, tipo: str, vacios: ["0"], desc: "NIT con el dígito de verificación pegado al final (8909039388 = 890903938-8); vacío en las entidades del exterior, que la fuente trae con «0»"}
+  uripaginaweb: {nombre: pagina_web, tipo: str, vacios: ["Pendiente"], desc: "página web (vacía si la fuente dice «Pendiente»)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Superintendencia Financiera de Colombia, theme: economia, accrualPeriodicity: daily}
 # Spec 07: medido en la fuente, no en Terrnova.

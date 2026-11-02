@@ -1,12 +1,12 @@
 id: superfinanciera_vigiladas_buscar
-version: 1
+version: 2
 familia: empresas
 fuente: superfinanciera.vigiladas
 pregunta: "¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre?"
 descripcion: >
   Busca entidades vigiladas por la Superintendencia Financiera por una parte de su razón social
-  (p. ej. BANCOLOMBIA): tipo y código de entidad, razón social, ciudad, NIT con dígito y página web;
-  hasta 50.
+  (p. ej. BANCOLOMBIA): tipo de entidad (código y nombre), código de entidad, razón social, ciudad,
+  NIT con dígito y página web; hasta 50, primero los bancos y al final las filiales del exterior.
   (Fuente: Superintendencia Financiera; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:
@@ -18,7 +18,10 @@ consulta:
     portal: datos.gov.co
     select: "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb"
     where: "upper(razon_social) like upper('%{nombre}%')"
-    order: "length(razon_social), razon_social"  # la coincidencia más corta primero
+    # Primero por tipo (1 son los bancos; las filiales del exterior tienen tipos de tres cifras) y
+    # dentro de él la razón social más corta: antes, por longitud, el banco Bancolombia salía de
+    # último porque su razón social trae la cláusula legal entera.
+    order: "tipo_entidad, length(razon_social), razon_social"
     max_filas: 50
   campos: [tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb]
 salida: VigiladasSuperfinancieraBuscar
@@ -29,5 +32,5 @@ canario:
   # Medido el 2026-10-23 en sr9n-792w: «BANCOLOMBIA» da 7 entidades vigiladas. Puede cambiar: mínimo.
   entrada: {nombre: BANCOLOMBIA}
   minimos: {numero_registros: 5}
-  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad]
+  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad, tipo_entidad_significado]
   latencia_max_ms: 10000

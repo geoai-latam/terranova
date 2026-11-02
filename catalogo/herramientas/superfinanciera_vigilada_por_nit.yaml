@@ -1,5 +1,5 @@
 id: superfinanciera_vigilada_por_nit
-version: 1
+version: 2
 familia: empresas
 fuente: superfinanciera.vigiladas
 pregunta: "¿Esta empresa está vigilada por la Superintendencia Financiera?"
@@ -30,5 +30,5 @@ canario:
   # Medido el 2026-10-23 en sr9n-792w: Bancolombia (890903938) es la entidad 7 del tipo 1, en Medellín.
   entrada: {nit: "890903938"}
   verdad: {tipo_entidad: 1, codigo_entidad: 7, ciudad: MEDELLIN, nit_con_dv: "8909039388"}
-  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad]
+  campos: [ciudad, codigo_entidad, direccion, nit_con_dv, numero_registros, pagina_web, razon_social, tipo_entidad, tipo_entidad_significado]
   latencia_max_ms: 10000
