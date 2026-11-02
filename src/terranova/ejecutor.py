@@ -297,11 +297,10 @@ def mapear_fila(
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
             out[campo.nombre] = _validar(campo, convertir(valor, campo.tipo))
-            if campo.codigos is not None:
+            if campo.codigos is not None or campo.codigos_por_capa is not None:
                 # un código solo no dice nada: el significado va al lado, no en la ficha técnica
-                out[f"{campo.nombre}{SUFIJO_SIGNIFICADO}"] = campo.codigos.get(
-                    str(out[campo.nombre])
-                )
+                significado = campo.significado(out[campo.nombre], capa)
+                out[f"{campo.nombre}{SUFIJO_SIGNIFICADO}"] = significado
     for nombre, d in h.derivados.items():
         if not d.por_elemento:
             continue

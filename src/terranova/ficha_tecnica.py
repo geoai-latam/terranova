@@ -127,6 +127,9 @@ def _campos(fuente: Fuente, metadatos: Metadatos | None) -> list[dict[str, Any]]
             vistos = (de_la_fuente.valores or {}) if de_la_fuente else {}
             if sin_definir := sorted(v for v in vistos if v.strip() and v not in codigos):
                 fila["sin_definir"] = sin_definir
+        elif campo.codigos_por_capa:
+            fila["codigos_por_capa"] = campo.codigos_por_capa
+            fila["codigos_norma"] = campo.codigos_norma
         salida.append(fila)
     return salida
 

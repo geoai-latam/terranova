@@ -88,6 +88,18 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   otro día. Sin `TERRANOVA_SMTP_URL` no manda nada.
 - **Alcance:** solo cubre las altas, que son las que dejaron un correo verificado.
 
+## Códigos de la zona física y unidad de la UPRA (2026-11-02)
+
+- `igac_zona_fisica_en_punto` v2: agua, vías, uso del suelo, servicios y tipificación llegan con
+  `*_significado`, del dominio que publica el IGAC en las capas 15 y 16. Rural y urbana dan otro
+  sentido al mismo número (uso 1 = «Edificios» en lo rural, «Residencial» en lo urbano), así que el
+  campo nuevo `codigos_por_capa` elige la tabla por capa.
+- Medido en la fuente: cerca de 1 de cada 8 zonas rurales trae un uso que el IGAC no define (0,
+  17-20); llega con significado vacío, no inventado. La topografía urbana es texto sin uniformar y
+  se deja como viene.
+- UPRA: la descripción de la capa dice que los rangos están en millones de pesos por hectárea; ahora
+  lo dicen la fuente y las dos herramientas (v2).
+
 ## Auditoría de herramientas: justicia y empresas (2026-11-02)
 
 - **Supersociedades:** los estados financieros salían del corte más viejo al más nuevo y en páginas de
