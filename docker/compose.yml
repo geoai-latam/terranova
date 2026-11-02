@@ -78,6 +78,7 @@ services:
       - caddy_datos:/data
     environment:
       TERRANOVA_DOMINIO: ${TERRANOVA_DOMINIO:-:80}
+      TERRANOVA_WWW: ${TERRANOVA_WWW:-}
       TERRANOVA_REPLICAS: puerta-a:8100 puerta-b:8100
     depends_on: [puerta-a, puerta-b]
     networks: [borde]
