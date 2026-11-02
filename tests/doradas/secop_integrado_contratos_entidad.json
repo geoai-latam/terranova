@@ -12,7 +12,7 @@
     "portal": "datos.gov.co",
     "previo_group": "anio, origen, numero_del_contrato",
     "previo_select": "date_extract_y(fecha_de_firma_del_contrato) AS anio, origen, numero_del_contrato, max(valor_contrato) AS valor",
-    "select": "anio, origen, count(*) AS contratos, sum(valor) AS valor_total",
+    "select": "anio, origen, count(*) AS contratos, sum(case(valor < 20000000000000, valor, true, 0)) AS valor_total, sum(case(valor >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
     "where": "nit_de_la_entidad = '891180077'"
    },
    "conector": "datos-abiertos-mcp",
@@ -132,7 +132,7 @@
       "max_filas": 100,
       "portal": "datos.gov.co",
       "previo_group": "anio, origen, numero_del_contrato",
-      "select": "anio, origen, count(*) AS contratos, sum(valor) AS valor_total",
+      "select": "anio, origen, count(*) AS contratos, sum(case(valor < 20000000000000, valor, true, 0)) AS valor_total, sum(case(valor >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(nit_de_la_entidad = '891180077')"
      },
      "filas": 15,

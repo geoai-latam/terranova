@@ -97,6 +97,12 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   texto en blanco como vacío.
 - **Cobertura:** las fuentes de Bogotá, la CAR y el SINCHI responden `fuera_de_cobertura` fuera de su
   área, y el comex de la DIAN, antes de 2025. Ninguno descuenta créditos.
+## Valores imposibles en SECOP (2026-11-02)
+
+- **Qué pasaba:** los contratos de Medellín sumaban 475 000 billones, más de 200 veces el PIB, por ocho
+  contratos mal digitados; uno solo dice 440 000 billones. Sin ellos son 67 billones.
+- **Ahora:** los contratos de 20 billones o más no suman y `contratos_valor_atipico` dice cuántos
+  hubo. Afecta a las 6 herramientas que suman valores de SECOP.
 
 ## Auditoría de herramientas: territorio (2026-11-01)
 
