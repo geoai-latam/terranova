@@ -193,6 +193,10 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     sin importar las tildes. Si no encuentra, avisa que el SIGEP no trae a todo el Estado.
   - `sigep_planta_por_entidad` (v2) dice el nombre de la entidad y el total de servidores.
   - Medido: el SIGEP no trae la Rama Judicial ni Ecopetrol, ni al personal uniformado.
+- **ANH, unidades y ceros (patrones D y E):**
+  - Las regalías dicen la unidad del volumen: barriles para el petróleo, kpc para el gas.
+  - El gas por campo ya no lista las líneas en 0, que eran la mitad. Los meses se cuentan sobre la
+    fuente entera, y un campo en 0 todo el año lo dice el vacío.
 
 ## Ficha de un lote (2026-11-01)
 

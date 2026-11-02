@@ -1,5 +1,5 @@
 id: anh_crudo_municipio
-version: 2
+version: 3
 familia: estadisticas
 fuente: anh.produccion_crudo
 pregunta: "¿Cuánto petróleo (crudo) produjo este municipio en un año, mes a mes?"
@@ -41,7 +41,7 @@ avisos:
   si: {campo: meses_con_datos, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
   texto: >
     Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
-    el último). Puede ser que la fuente aún no los publique o que falten: noviembre de 2025 trae 106
+    el último). Puede ser que la fuente aún no los publique, que falten o que el campo empezara o dejara de producir ese año (el gas de Borbón empieza en julio de 2025): noviembre de 2025 trae 106
     filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
     de 2025 (medido el 2026-11-02). El total no es el de un año entero.
 cobro: agregado
