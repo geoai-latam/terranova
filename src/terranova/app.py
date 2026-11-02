@@ -393,7 +393,12 @@ def crear_api() -> FastAPI:
         ultimos = puerta.ESTADO.canarios.ultimos() if puerta.ESTADO.canarios is not None else []
         return estado_por_fuente(ultimos, puerta.VENDIBLE)
 
-    @api.get("/v1/estado/historial", tags=["catálogo"], operation_id="ver_historial_estado")
+    @api.get(
+        "/v1/estado/historial",
+        tags=["catálogo"],
+        operation_id="ver_historial_estado",
+        responses={400: {"model": Problema, "content": {"application/problem+json": {}}}},
+    )
     async def historial_estado(dias: int = Query(default=7, ge=1, le=30)) -> dict[str, Any]:
         """Lo que falló en los últimos `dias` según los canarios, día por día: dice si un rojo fue
         de una noche o se repite. Las herramientas siempre en verde solo se cuentan. Público."""
