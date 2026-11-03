@@ -1,12 +1,14 @@
 id: creg_resolucion_buscar
-version: 2
+version: 3
 familia: normativa
 fuente: creg.gestor_normativo
 pregunta: "¿Qué dice esta resolución de la CREG sobre este tema?"
 descripcion: >
-  Busca en una resolución de la CREG por el nombre del documento (resolucion_creg_101-131_2026) y
-  devuelve hasta 20 fragmentos alrededor de cada aparición, con cuántas hay. Solo fragmentos del
-  texto oficial.
+  Busca en una resolución de la CREG por el nombre del documento y devuelve hasta 20 fragmentos
+  alrededor de cada aparición, con cuántas hay. Solo fragmentos del texto oficial. El nombre es
+  resolucion_creg_<número>_<año>, con el número en cuatro cifras: la 015 de 2018 es
+  resolucion_creg_0015_2018 (resolucion_creg_015_2018 no existe). Las de numeración nueva llevan
+  guion: resolucion_creg_101-131_2026. La CREG no publica un índice para buscar el nombre.
   (Fuente: CREG, gestor normativo; licencia: Ley 23 de 1982, art. 41.)
 entrada: {documento: documento_normativo, buscar: str}
 consulta:

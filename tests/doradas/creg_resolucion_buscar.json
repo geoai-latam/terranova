@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T03:30:56+00:00",
+ "grabado": "2026-11-03T11:56:30+00:00",
  "herramienta": "creg_resolucion_buscar",
  "llamadas": [
   {
@@ -45,14 +45,14 @@
     "facts": {
      "apariciones": 4,
      "buscar": "ARTÍCULO 1",
-     "caracteres": 17345,
+     "caracteres": 17505,
      "completitud": {
       "total": 4,
       "truncado": false,
       "vistos": 4
      },
      "titulo": "Alejandría - Resolución 101_131 de 2026 CREG",
-     "url": "https://141.148.2.149/gestor/entorno/docs/resolucion_creg_101-131_2026.htm"
+     "url": "https://gestornormativo.creg.gov.co/gestor/entorno/docs/resolucion_creg_101-131_2026.htm"
     },
     "geo_result": "1"
    },
