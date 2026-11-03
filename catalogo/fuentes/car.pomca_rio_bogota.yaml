@@ -26,7 +26,9 @@ cobertura:
   excluye: []  # solo la cuenca del río Bogotá (lo dice la descripción)
   periodo: "POMCA vigente del río Bogotá (2019)"
 datos_personales: ninguno
-estado: publicada
+# 2026-11-03: borrador. La herramienta car_pomca_rio_bogota_en_punto se retiró porque daba lo mismo
+# que car_pomca_en_punto, que incluye esta capa (revisión de valor, patrón F).
+estado: borrador
 campos:
   CAT_ORD: {nombre: categoria_ordenacion, tipo: str, desc: "categoría de ordenación: conservación y protección ambiental, o uso múltiple"}
   ZO_US_MA: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)"}
