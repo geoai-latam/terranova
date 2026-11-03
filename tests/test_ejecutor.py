@@ -1148,3 +1148,21 @@ def test_el_digito_de_verificacion_de_nit_conocidos() -> None:
     assert digito_verificacion("890903938") == 8
     assert digito_verificacion("899999061") == 9
     assert digito_verificacion("860034313") == 7
+
+
+def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
+    """El INVIMA repite la presentación por vía: Buscapina daba 28 filas para 14 (2026-11-03)."""
+    from terranova.ejecutor import juntar_filas
+
+    filas: list[dict[str, Any]] = [
+        {"cum": 1, "via": "INTRAMUSCULAR"},
+        {"cum": 1, "via": "INTRAVENOSA"},
+        {"cum": 2, "via": "INTRAMUSCULAR"},
+        {"cum": 1, "via": "INTRAVENOSA"},
+        {"cum": 3, "via": None},
+    ]
+    assert juntar_filas(filas, "via") == [
+        {"cum": 1, "via": ["INTRAMUSCULAR", "INTRAVENOSA"]},
+        {"cum": 2, "via": ["INTRAMUSCULAR"]},
+        {"cum": 3, "via": []},
+    ]

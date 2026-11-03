@@ -1,12 +1,12 @@
 id: invima_medicamento_vencido_por_expediente
-version: 3
+version: 4
 familia: empresas
 fuente: invima.cum_vencidos
 pregunta: "¿Este medicamento tiene el registro vencido en el INVIMA?"
 descripcion: >
   Presentaciones (CUM) vencidos de un medicamento por su expediente en el INVIMA: producto,
   titular, registro sanitario y su estado, consecutivo y estado del CUM, principio activo (una fila por
-  cada uno), dosis (p. ej. «2.5 g por AMPOLLA DE 5 ML»), forma farmacéutica, vía y ATC. Las vigentes salen en
+  cada uno), dosis (p. ej. «2.5 g por AMPOLLA DE 5 ML»), forma farmacéutica, vías (una lista: la fuente repite la presentación por cada vía) y ATC. Las vigentes salen en
   invima_medicamento_por_expediente.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {expediente: int}
@@ -22,6 +22,8 @@ consulta:
     order: "consecutivocum, estadocum, principioactivo"
     max_filas: 500
   campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, formafarmaceutica, viaadministracion, atc]
+  # La fuente repite la presentación por vía (Buscapina: 28 filas para 14 presentaciones).
+  juntar: via_administracion
 salida: InvimaMedicamentoVencidoPorExpediente
 derivados:
   dosis: {de: columna, campo: dosis, tipo: str}
