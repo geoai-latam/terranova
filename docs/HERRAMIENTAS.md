@@ -67,6 +67,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop_garantias_contrato` | ¿Qué pólizas de garantía tiene este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_integrado_contratos_entidad` | ¿Cuántos contratos firmó esta entidad cada año, sumando SECOP I y SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_modificaciones_contrato` | ¿Qué cambios tuvo este contrato de SECOP II y cuánto le añadieron en valor y en plazo? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
+| `secop_multas_entidad` | ¿Qué multas y sanciones a contratistas ha registrado esta entidad en SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_pagos_contrato` | ¿Qué pagos tiene registrados este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_proceso_por_id` | ¿Qué es este proceso de contratación de SECOP II y en qué estado está? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_proponentes_proceso` | ¿Quiénes se presentaron a este proceso de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |

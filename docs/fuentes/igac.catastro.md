@@ -42,7 +42,14 @@ gestores no están.
    catastro no lo lleva el IGAC. Chía, en cambio, tiene 15 448 urbanos, 16 832 rurales y 66 936
    registros (2026-11-03).
 3. **Lento a veces:** el predio de Yopal tardó 11,8 s la primera vez y 0,6 s la segunda.
-4. **Vías: una vía en muchos tramos, con espacios de más.**
+4. **Perímetro urbano: `CODIGO_NOMBRE` tiene dominio y `TIPO_AVALUO` no.**
+   - `CODIGO_NOMBRE` va de 8301 a 8328 (cabecera municipal, centro poblado, corregimiento…). Hay
+     30 perímetros con 8307 y 14 con 8326.
+   - El texto es el de la fuente, aunque no cuadre: Chía sale «Corregimiento» siendo cabecera, y
+     El Crucito (23807) sale 8326, «Zona Urbana».
+   - `TIPO_AVALUO` no tiene dominio publicado. Trae «01» (721 perímetros), «02» (325) y así hasta
+     «43», además de valores de 7 dígitos y la palabra «URBANO». Su significado no se inventa.
+5. **Vías: una vía en muchos tramos, con espacios de más.**
    - La capa de vías trae un tramo por fila. En el canario de Chía son 29 tramos de 19 vías.
    - El nombre viene con espacios de más («CARRERA 11 » en Chía, «CALLE  3» en Popayán). Sin
      normalizarlos, la misma vía contaba dos veces.
@@ -56,15 +63,10 @@ gestores no están.
 |---|---|---|
 | `igac_predio_por_codigo` | bajo → alto | terreno + registro: dirección, destino con significado, áreas |
 | `igac_registro_predio` | alto | el registro por código, con hasta 5 filas |
+| `igac_perimetro_urbano_en_punto` (v2) | medio | el tipo de centro poblado con su significado; el tipo de avalúo, sin inventarlo |
 | `igac_vias_en_zona` (v2) | medio | vías distintas y tramos por vía; avisa el código de municipio de la capa |
 
 ## Decisiones
-
-- **2026-11-03, vías (`igac_vias_en_zona` v2):**
-  - `vias` cuenta las vías distintas y `tramos_por_via` dice cuántos tramos tiene cada una. El
-    motor quita los espacios de más al contar (`conteo_por` y `distintos`).
-  - Un aviso dice que `municipio_codigo_capa` es el que trae la capa y puede no ser el del
-    municipio.
 
 - **2026-11-03, revisión de valor (`igac_predio_por_codigo` v2):**
   - El motor admite un `complemento`, y su primera fila da los hechos. Aquí el complemento es el
@@ -73,3 +75,12 @@ gestores no están.
   - Sin fila en el registro, un aviso lo dice y remite al gestor del municipio.
   - Si el registro se cae, sale «No se pudo saber…» y no el aviso de «no lo trae». El motor no
     da un aviso que mire un hecho de un complemento que falló.
+- **2026-11-03, perímetro urbano (`igac_perimetro_urbano_en_punto` v2):**
+  - `CODIGO_NOMBRE` lleva sus `codigos` (8301–8328) con los nombres como los escribe el IGAC, y la
+    respuesta da `_significado`.
+  - `TIPO_AVALUO` dice que no tiene dominio publicado.
+- **2026-11-03, vías (`igac_vias_en_zona` v2):**
+  - `vias` cuenta las vías distintas y `tramos_por_via` dice cuántos tramos tiene cada una. El
+    motor quita los espacios de más al contar (`conteo_por` y `distintos`).
+  - Un aviso dice que `municipio_codigo_capa` es el que trae la capa y puede no ser el del
+    municipio.

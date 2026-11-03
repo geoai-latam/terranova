@@ -1,0 +1,48 @@
+id: secop_multas_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop2.sanciones
+pregunta: "¿Qué multas y sanciones a contratistas ha registrado esta entidad en SECOP II?"
+descripcion: >
+  Multas, cláusulas penales y otras sanciones a contratistas registradas en SECOP II por las
+  entidades cuyo nombre contiene un texto (p. ej. INVIAS, ICBF REGIONAL BOGOTA, PALMIRA; con o sin
+  tilde): contrato, entidad, contratista, tipo, valor, valor pagado, estado, fecha y número del
+  acto, de la más reciente a la más antigua; hasta 500. Dice cuántas hay por estado y por entidad, y
+  suma el valor solo de las publicadas: «A la espera de aprobación» aún no es firme, y «Borrador» y
+  «Rechazado» no son sanciones. La fuente no trae municipio ni NIT de la entidad: se busca por su
+  nombre. Para SECOP I, secop1_multas_municipio; para un contrato, secop_sanciones_contrato.
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {entidad: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    portal: datos.gov.co
+    id: it5q-hg94
+    select: "id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto"
+    where: "upper(nombre_entidad_creadora) like upper('%{entidad:sin_tildes}%')"
+    order: "fecha_evento DESC NULL LAST, numero_de_acto"
+    max_filas: 500
+  campos: [id_contrato, nombre_entidad_creadora, nombre_proveedor_objeto_de, tipo_de_sancion, valor, valor_pagado, estado, fecha_evento, numero_de_acto]
+salida: SecopMultasEntidad
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+  por_estado: {de: conteo_por, campo: estado}
+  por_entidad: {de: conteo_por, campo: entidad}
+  publicadas: {de: conteo, tipo: int, solo_si: {campo: estado, valores: ["Publicado por el administrador de la plataforma"]}}
+  valor_publicadas: {de: suma, campo: valor, tipo: int, solo_si: {campo: estado, valores: ["Publicado por el administrador de la plataforma"]}}
+avisos:
+- cuando: encontrado
+  texto: >
+    Solo «Publicado por el administrador de la plataforma» es una sanción publicada en SECOP II. «A la espera de aprobación» (la mayoría, 378 de 588 el 2026-11-03) aún no la aprueba la plataforma, y «Borrador» y «Rechazado» no son sanciones: valor_publicadas suma solo las publicadas. Una misma sanción puede salir en varias filas, con el mismo acto y el mismo valor: un consorcio y sus integrantes (Palmira, Resolución 071 de 2022), o el acto repetido. Antes de sumar valores, mire numero_acto. La fuente trae algunas fechas de evento futuras (2027 y 2028) y 55 sin fecha, que van al final.
+- cuando: vacio
+  texto: >
+    SECOP II no registra multas ni sanciones de una entidad con ese nombre. La fuente es pequeña (588 en todo el país el 2026-11-03) y se busca por el nombre como lo escribe la entidad: pruebe una parte del nombre (ICBF, INVIAS, el municipio). Las de SECOP I están en secop1_multas_municipio.
+cobro: agregado
+canario:
+  # Medido el 2026-11-03 en it5q-hg94: «INVIAS» tiene 42 registros. Crece: mínimo.
+  entrada: {entidad: INVIAS}
+  minimos: {numero_registros: 40}
+  campos: [contratista, entidad, estado, fecha_evento, id_contrato, numero_acto, numero_registros, por_entidad, por_estado, publicadas, tipo_sancion, valor, valor_pagado, valor_publicadas]
+  latencia_max_ms: 10000

@@ -1,5 +1,5 @@
 id: esa_cobertura_suelo_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: esa.worldcover
 pregunta: "¿Qué cobertura del suelo hay alrededor de este punto?"
@@ -24,11 +24,13 @@ salida: CoberturaSueloEnPunto
 derivados:
   clase_dominante: {de: primero, campo: clase_cobertura}
   codigo_clase_dominante: {de: primero, campo: codigo_clase, tipo: int}
+  # el mapa es de 2021 y no se actualiza: el año va en la respuesta, no solo en la ficha
+  anio: {de: fijo, valor: 2021, tipo: int}
 cobro: zona
 # Medido el 2026-10-22 (UTC) leyendo la ventana ±0,005° de ESA_WorldCover_10m_2021_v200_N03W075_Map.tif
 # (Kennedy, Bogotá): 50 Construido 90,8 %, 30 Pastizal 5,2 %, 10 Árboles 2,7 %; el píxel del punto es 50.
 canario:
   entrada: {lon: -74.152, lat: 4.628}
-  verdad: {codigo_clase_dominante: 50, clase_dominante: Construido}
-  campos: [area_clase_km2, clase_cobertura, clase_dominante, codigo_clase, codigo_clase_dominante, porcentaje_area]
+  verdad: {codigo_clase_dominante: 50, clase_dominante: Construido, anio: 2021}
+  campos: [anio, area_clase_km2, clase_cobertura, clase_dominante, codigo_clase, codigo_clase_dominante, porcentaje_area]
   latencia_max_ms: 20000

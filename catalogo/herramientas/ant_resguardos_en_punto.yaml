@@ -1,12 +1,15 @@
 id: ant_resguardos_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: ant.resguardos_indigenas
 pregunta: "¿En qué resguardo indígena formalizado cae este punto?"
 descripcion: >
   Resguardo indígena formalizado por la ANT que contiene un punto: nombre, pueblo, departamento y
-  municipio (DIVIPOLA), último acto administrativo y área. Cubre todo el país, solo resguardos
-  formalizados; las solicitudes en trámite y otros territorios étnicos no están en esta fuente.
+  municipio (DIVIPOLA), último acto administrativo y área. Cubre todo el país, pero solo los 989
+  resguardos que la ANT publica: faltan algunos formalizados, como los de origen colonial de
+  Toribío (Cauca), y las solicitudes en trámite y otros territorios étnicos. Un «no encontrado» no
+  descarta un territorio indígena. Un resguardo grande da un solo municipio aunque cruce varios, y
+  en 46 de los 989 la ANT escribe el nombre del municipio en vez del código DIVIPOLA.
   (Fuente: ANT; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
@@ -21,6 +24,13 @@ consulta:
     max_features: 5
   campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
 salida: ResguardoEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    La capa de la ANT no tiene un resguardo en este punto, pero no publica todos: faltan, por
+    ejemplo, Toribío, Tacueyó y San Francisco, los resguardos nasa de origen colonial de Toribío
+    (Cauca). Tampoco trae solicitudes en trámite ni otros territorios étnicos. Esto no descarta un
+    territorio indígena: para una consulta previa, confirme con el Ministerio del Interior.
 cobro: punto
 canario:
   # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
