@@ -1,12 +1,14 @@
 id: invima_medicamentos_por_titular
-version: 1
+version: 2
 familia: empresas
 fuente: invima.cum_vigentes
 pregunta: "¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA?"
 descripcion: >
   Medicamentos vigentes del Código Único de Medicamentos (INVIMA) cuyo titular contiene un nombre
-  (p. ej. LAFRANCOL): expediente, producto, titular, registro sanitario, su estado y vencimiento;
-  cada producto una vez, hasta 500, por expediente.
+  (p. ej. LAFRANCOL; con o sin tilde): uno por expediente, con producto, titular, registro sanitario,
+  su estado y vencimiento, el principio activo (si son varios, el primero en orden alfabético, y
+  `principios_activos` dice cuántos) y cuántas presentaciones (CUM) activas tiene. Hasta 500, por
+  nombre de producto. Un vencimiento vacío es que la fuente no da fecha (pone el año 3000).
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {titular: nombre}
 consulta:
@@ -16,19 +18,26 @@ consulta:
   argumentos:
     id: i7cb-raxc
     portal: datos.gov.co
-    # Spec 07: la fuente repite cada presentación por rol y por principio activo: distinct sin ellos.
-    select: "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento"
-    where: "upper(titular) like upper('%{titular}%')"
+    # La fuente repite cada presentación por rol, por vía y por principio activo, y un mismo
+    # expediente puede traer el titular escrito de dos formas: se agrupa por expediente.
+    select: "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones"
+    where: "upper(titular) like upper('%{titular:sin_tildes}%') AND estadocum = 'Activo'"
+    group: "expediente, producto, registrosanitario, estadoregistro, fechavencimiento"
+    order: "producto, expediente"
     max_filas: 500
-  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento]
+  campos: [expediente, producto, registrosanitario, estadoregistro, fechavencimiento]
 salida: MedicamentosPorTitular
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  titular: {de: columna, campo: titular_registrado, tipo: str}
+  principio_activo: {de: columna, campo: principio_activo_1, tipo: str}
+  principios_activos: {de: columna, campo: principios_activos, tipo: int}
+  presentaciones_activas: {de: columna, campo: presentaciones, tipo: int}
 cobro: agregado
 canario:
-  # Medido el 2026-10-22 en i7cb-raxc: «LAFRANCOL» tiene 193 productos vigentes distintos. Cambia con los
-  # registros: mínimo.
+  # Medido el 2026-11-03 en i7cb-raxc: «LAFRANCOL» tiene 176 expedientes con CUM activos (193 filas
+  # antes, con el titular escrito de dos formas y CUM inactivos). Cambia con los registros: mínimo.
   entrada: {titular: LAFRANCOL}
   minimos: {numero_registros: 150}
-  campos: [estado_registro, expediente, fecha_vencimiento, numero_registros, producto, registro_sanitario, titular]
+  campos: [estado_registro, expediente, fecha_vencimiento, numero_registros, presentaciones_activas, principio_activo, principios_activos, producto, registro_sanitario, titular]
   latencia_max_ms: 15000

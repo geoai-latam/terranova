@@ -260,6 +260,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **INVIMA por titular (patrón F):** uno por expediente, aunque el titular se escriba de dos formas,
+  solo con CUM activos, con el principio activo y las presentaciones activas (LAFRANCOL: 193 → 176).
 
 ## Ficha de un lote (2026-11-01)
 
