@@ -26,12 +26,15 @@ De 1992 a la última sentencia indexada. Medido el 2026-11-03: 2026 llega hasta 
    C-155A/93, T-539A/93, T-066A/94, T-133A/95… La entrada las rechazaba; ahora las acepta.
 2. **El año en curso parece completo.** Medido en la fuente: 584, 530, 520 y 313 sentencias en
    2023-2026. La cifra de 2026, 313, va solo hasta el 30 de septiembre, y nada lo decía.
+3. **El enlace de las SU.** El índice escribe SU-214/16, pero la relatoría guarda el texto como
+   `SU214-16.htm`, sin el primer guion. `SU-214-16.htm` responde 200 con una página vacía de
+   8 607 bytes: un 200 no prueba que el enlace sirva; hay que medir el tamaño.
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `corte_constitucional_sentencia` | alto | v2: con `url` del texto en la relatoría y aviso de vacío |
+| `corte_constitucional_sentencia` | alto | v3: con `url` del texto en la relatoría (bien también en las SU) y aviso de vacío |
 | `corte_constitucional_sentencias_anio` | bajo → medio | v2: con `total_sentencias` y `hasta_fecha` (la última sentencia del año en el índice) |
 
 ## Decisiones
@@ -44,8 +47,13 @@ De 1992 a la última sentencia indexada. Medido el 2026-11-03: 2026 llega hasta 
     `'…/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(sentencia, '/', '-') || '.htm'`.
   - **Medido el 2026-11-03:**
     - el año del número cuadra con el de la fecha en todas las filas (0 discrepancias);
-    - la relatoría responde 200 en T-001/92, C-155A/93, T-133A/95, C-355/06, T-760/08, SU-214/16
-      y C-316/26.
+    - la relatoría responde 200 en T-001/92, C-155A/93, T-133A/95, C-355/06, T-760/08 y C-316/26.
+      En SU-214/16 también daba 200, pero era la página vacía (ver la trampa 3): se corrigió en la
+      v3.
   - **Entrada:** `sentencia_cc` y `sentencia_relatoria` aceptan una letra tras el número.
   - **Vacío:** el aviso da la forma correcta del número y recuerda que el índice va unas semanas
     detrás.
+- **2026-11-03, v3:** el enlace de las SU sale sin el primer guion:
+  `replace(replace(sentencia, '/', '-'), 'SU-', 'SU')`. Se midió por tamaño: `SU214-16.htm` pesa
+  2,5 MB y `SU-214-16.htm`, 8 607 bytes. El texto de la sentencia está en
+  [corteconstitucional.relatoria.md](corteconstitucional.relatoria.md).
