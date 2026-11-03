@@ -1,12 +1,14 @@
 id: corte_constitucional_texto_buscar
-version: 2
+version: 3
 familia: normativa
 fuente: corteconstitucional.relatoria
 pregunta: "¿Qué dice esta sentencia de la Corte Constitucional sobre este tema?"
 descripcion: >
   Busca en el texto de una sentencia de la Corte Constitucional y devuelve hasta 20 fragmentos
-  alrededor de cada aparición, con cuántas hay. Pide el año de la sentencia y su número con guiones
-  (T-760-08); el índice (fecha, ponente) sale de corte_constitucional_sentencia.
+  alrededor de cada aparición, con cuántas hay en total. Las apariciones cercanas van en un solo
+  fragmento, que dice cuántas trae (veces_en_fragmento). Pide el año de la sentencia y su número
+  con guiones (T-760-08, SU-214-16); el índice (fecha, ponente) sale de
+  corte_constitucional_sentencia.
   (Fuente: Corte Constitucional, relatoría; licencia: Ley 23 de 1982, art. 41.)
 entrada: {anio: int, sentencia: sentencia_relatoria, buscar: str}
 consulta:
@@ -16,15 +18,21 @@ consulta:
   argumentos:
     url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
     buscar: "{buscar}"
-  campos: [n, posicion, texto, titulo, caracteres, apariciones]
+  campos: [n, posicion, veces, texto, caracteres, apariciones]
 salida: TextoSentenciaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    No salió ningún fragmento: o la sentencia no tiene lo buscado (la búsqueda es literal, sin
+    distinguir mayúsculas), o la relatoría no tiene esa sentencia en ese año (revise el número, con
+    guiones: T-760-08; corte_constitucional_sentencia dice si existe).
 cobro: agregado
 canario:
   # Medido el 2026-10-22: T-760/08 tiene 32 apariciones de «derecho fundamental a la salud».
   entrada: {anio: 2008, sentencia: T-760-08, buscar: derecho fundamental a la salud}
   verdad: {apariciones: 32}
   minimos: {numero_registros: 20}
-  campos: [apariciones, caracteres, n, numero_registros, posicion, texto, titulo]
+  campos: [apariciones, caracteres, n, numero_registros, posicion, texto, veces_en_fragmento]
   latencia_max_ms: 30000

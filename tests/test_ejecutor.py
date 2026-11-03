@@ -83,6 +83,32 @@ def test_entrada_valida_se_normaliza() -> None:
 
 
 @pytest.mark.parametrize(
+    ("escrita", "en_la_relatoria"),
+    [
+        ("T-760-08", "T-760-08"),
+        ("t-622-16", "T-622-16"),
+        ("C-155A-93", "C-155A-93"),
+        # la relatoría guarda las de unificación sin el primer guion: SU-214-16.htm es una página
+        # vacía con estado 200
+        ("SU-214-16", "SU214-16"),
+        ("SU214-16", "SU214-16"),
+        (" su-095-18 ", "SU095-18"),
+    ],
+)
+def test_la_sentencia_queda_como_la_guarda_la_relatoria(escrita: str, en_la_relatoria: str) -> None:
+    h = CATALOGO.herramientas["corte_constitucional_resuelve"]
+    entrada = validar_entrada(h, {"anio": 2016, "sentencia": escrita})
+    assert entrada["sentencia"] == en_la_relatoria
+
+
+def test_la_sentencia_no_acepta_rutas() -> None:
+    h = CATALOGO.herramientas["corte_constitucional_resuelve"]
+    for mala in ("T-760/08", "../T-760-08", "X-1-08", "T760-08"):
+        with pytest.raises(ErrorEntrada):
+            validar_entrada(h, {"anio": 2008, "sentencia": mala})
+
+
+@pytest.mark.parametrize(
     ("anillo", "motivo"),
     [
         # un moño: los lados 1 y 3 se cruzan en el centro
