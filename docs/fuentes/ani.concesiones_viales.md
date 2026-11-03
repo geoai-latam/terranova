@@ -40,12 +40,19 @@ Medido el 2026-11-02:
    billones indexados a 2020, 412 veces más, cuando la inflación del periodo multiplica por unos 4.
    Se publica tal cual: no se sabe cuál de los dos está mal.
 5. **Espacios duros en nombres** («Troncal del Magdalena C1» trae espacios sin corte).
+6. **Corredores partidos en miles de piezas.** Medido el 2026-11-03, simplificado a ~55 m: IP
+   Conexión Centro tiene 9 440 piezas (19 424 vértices), la Malla Vial del Valle 7 645 y Accesos
+   Norte Fase II 7 138. Simplificar no junta piezas, así que el peso viene de esos tres. Las 47
+   concesiones pesan 1,6 MB simplificadas; el canario (norte de Bogotá, cuatro), 323 KB, y completo,
+   1,1 MB.
+7. **La consulta devuelve el corredor entero,** no el tramo dentro del rectángulo: Briceño-Tunja-
+   Sogamoso sale con sus 206 km aunque el rectángulo toque una punta.
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `ani_concesiones_viales_en_zona` | alto | v2: avance con su fecha, valor con la fecha de sus pesos y el indexado, aviso |
+| `ani_concesiones_viales_en_zona` (v3) | alto | avance con su fecha, valor con la fecha de sus pesos y el indexado, aviso; corredor simplificado |
 
 ## Decisiones
 
@@ -55,4 +62,6 @@ Medido el 2026-11-02:
   - Un aviso dice que el avance es una fracción, de 2022, y que los valores están en pesos de
     fechas distintas.
   - El avance se deja como fracción, como lo publica la fuente: se aclara, no se transforma.
-- **Pendiente:** la geometría del corredor. La pregunta es espacial y la respuesta no trae la vía.
+- **2026-11-03, revisión de valor (v3):** sale el corredor de cada concesión, simplificado a ~55 m
+  (`geometria: simplificada`). Responde en 1 a 2 s. La descripción dice que es el corredor entero y
+  que sirve para verlo en un mapa, no para medir.
