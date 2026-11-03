@@ -33,8 +33,12 @@ campos:
   etp: {nombre: etapa, tipo: str, desc: "etapa del proyecto (preconstrucción, construcción, operación…)"}
   concesionario: {nombre: concesionario, tipo: str, desc: "empresa concesionaria"}
   lngcnc: {nombre: longitud_concesionada_m, tipo: int, desc: "longitud concesionada, en metros"}
-  prcavn: {nombre: avance_obra, tipo: float, desc: "avance de obra (0 a 1) cuando la ANI lo reporta"}
-  vlrcnt: {nombre: valor_contrato, tipo: float, desc: "valor del contrato en pesos"}
+  prcavn: {nombre: avance_obra, tipo: float, desc: "avance de obra como fracción de 0 a 1 (0,93 es 93 %), cuando la ANI lo reporta"}
+  fecrep: {nombre: avance_reportado_el, tipo: date, orden_fecha: dma, desc: "fecha del reporte del avance de obra"}
+  vlrcnt: {nombre: valor_contrato, tipo: float, desc: "valor del contrato en pesos de su fecha de referencia (valor_contrato_pesos_de), no de hoy"}
+  fecref: {nombre: valor_contrato_pesos_de, tipo: date, orden_fecha: dma, desc: "fecha de los pesos en que está el valor del contrato"}
+  vlrcntix: {nombre: valor_contrato_indexado, tipo: float, desc: "valor del contrato llevado a pesos de valor_indexado_a"}
+  fecindx: {nombre: valor_indexado_a, tipo: date, orden_fecha: dma, desc: "fecha de los pesos del valor indexado"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 capas_servicio: [3]
 dcat: {publisher: ANI, theme: transporte}
@@ -47,4 +51,8 @@ perfil:
   hallazgos:
   - "las vías son líneas: se consulta por zona, no por punto"
   - "el avance de obra viene vacío en proyectos que no han empezado construcción"
+  - "medido el 2026-11-02: el avance se reportó por última vez entre el 30/10/2022 y el 30/11/2022 (37 de 47); 10 sin reporte"
+  - "el valor del contrato está en pesos de su fecha de referencia (12 en 2012, 11 en 2013; Armenia-Pereira-Manizales en 1996: 3 467 millones); el indexado va a pesos de 2021 en 34 de 47"
+  - "la capa 3 no se edita desde el 2023-09-27 (last_edited_date de todas las filas)"
+  - "Armenia-Pereira-Manizales: 3 467 millones de pesos de 1996 y 1,43 billones indexados a 2020 (412 veces): no cuadra con la inflación; se publica tal cual"
   decision: "en vivo por zona (bbox)"

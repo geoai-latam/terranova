@@ -1,12 +1,13 @@
 id: ani_concesiones_viales_en_zona
-version: 1
+version: 2
 familia: territorio
 fuente: ani.concesiones_viales
 pregunta: "¿Qué concesiones viales de la ANI pasan por esta zona?"
 descripcion: >
   Concesiones viales nacionales de la ANI cuyo corredor cruza un rectángulo: proyecto, generación
-  (1G a 5G), etapa, empresa concesionaria, longitud concesionada, avance de obra y valor del
-  contrato. Solo las vías concesionadas por la ANI; la red vial a cargo del INVÍAS no está aquí.
+  (1G a 5G), etapa, empresa concesionaria, longitud concesionada, avance de obra (fracción de 0 a 1,
+  con la fecha del reporte) y valor del contrato (en pesos de su fecha de referencia, y llevado a
+  pesos de 2021). Solo las vías concesionadas por la ANI; la red vial a cargo del INVÍAS no está aquí.
   Para los peajes, ani_peajes_en_zona.
   (Fuente: ANI; licencia: CC BY-SA 4.0.)
 entrada: {bbox: bbox}
@@ -18,17 +19,25 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: ninguna
-    out_fields: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, vlrcnt]
+    out_fields: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
     max_features: 100
-  campos: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, vlrcnt]
+  campos: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: ConcesionesVialesEnZona
+avisos:
+- cuando: encontrado
+  texto: >
+    El avance de obra es una fracción (0,93 es 93 %) y viene del último reporte que la ANI cargó en
+    la capa: noviembre de 2022 (avance_reportado_el). La capa no se edita desde septiembre de 2023,
+    así que el avance de hoy puede ser mayor. El valor del contrato está en pesos de su
+    fecha de referencia (valor_contrato_pesos_de: 2012 o 2013 en la mayoría, 1996 en las más
+    viejas); para comparar contratos sirve valor_contrato_indexado, en pesos de valor_indexado_a.
 cobro: zona
 canario:
   # Norte de Bogotá; medido el 2026-10-28 en la capa 3: 4 concesiones (Accesos Norte a Bogotá,
   # Accesos Norte Fase II, Perimetral de Oriente y Briceño-Tunja-Sogamoso).
   entrada: {bbox: [-74.10, 4.80, -73.90, 5.05]}
   minimos: {numero_registros: 4}
-  campos: [avance_obra, concesionario, etapa, generacion, longitud_concesionada_m, numero_registros, proyecto, valor_contrato]
+  campos: [avance_obra, avance_reportado_el, concesionario, etapa, generacion, longitud_concesionada_m, numero_registros, proyecto, valor_contrato, valor_contrato_indexado, valor_contrato_pesos_de, valor_indexado_a]
   latencia_max_ms: 8000

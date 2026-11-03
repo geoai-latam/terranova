@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T06:38:37+00:00",
+ "grabado": "2026-11-03T00:45:09+00:00",
  "herramienta": "ani_concesiones_viales_en_zona",
  "llamadas": [
   {
@@ -20,7 +20,11 @@
      "concesionario",
      "lngcnc",
      "prcavn",
-     "vlrcnt"
+     "fecrep",
+     "vlrcnt",
+     "fecref",
+     "vlrcntix",
+     "fecindx"
     ],
     "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/3"
    },
@@ -36,11 +40,15 @@
          "properties": {
           "concesionario": "PERIMETRAL ORIENTAL DE BOGOTA S.A.S",
           "etp": "Construcción",
+          "fecindx": "31/12/2021",
+          "fecref": "31/12/2012",
+          "fecrep": "15/11/2022",
           "generacion": "4G",
           "lngcnc": 152240,
           "nombrepr": "Perimetral de Oriente de Cundinamarca",
           "prcavn": 0.432205,
-          "vlrcnt": 1647776111169.0
+          "vlrcnt": 1647776111169.0,
+          "vlrcntix": 2352065810959.0
          },
          "type": "Feature"
         },
@@ -49,11 +57,15 @@
          "properties": {
           "concesionario": "BTS CONCESIONARIO S.A.S.",
           "etp": "Operación",
+          "fecindx": "31/12/2020",
+          "fecref": "31/12/2000",
+          "fecrep": "15/11/2022",
           "generacion": "3G",
           "lngcnc": 206000,
           "nombrepr": "Briceño - Tunja - Sogamoso",
           "prcavn": 1,
-          "vlrcnt": 238853000000
+          "vlrcnt": 238853000000,
+          "vlrcntix": 582255000000
          },
          "type": "Feature"
         },
@@ -62,11 +74,15 @@
          "properties": {
           "concesionario": "ACCESOS NORTE DE BOGOTÁ S.A.S.",
           "etp": "Construcción",
+          "fecindx": "31/12/2021",
+          "fecref": "31/12/2014",
+          "fecrep": "30/11/2022",
           "generacion": "4G",
           "lngcnc": 62000,
           "nombrepr": "IP - Accesos Norte a Bogotá",
           "prcavn": 0.725744,
-          "vlrcnt": 1225686247240.0
+          "vlrcnt": 1225686247240.0,
+          "vlrcntix": 1655798530435.0
          },
          "type": "Feature"
         },
@@ -75,11 +91,15 @@
          "properties": {
           "concesionario": "CONCESIONARIA RUTA BOGOTÁ NORTE S.A.S.",
           "etp": "Pre-construcción",
+          "fecindx": null,
+          "fecref": "31/12/2019",
+          "fecrep": null,
           "generacion": "5G",
           "lngcnc": 17960,
           "nombrepr": "Accesos Norte Fase II",
           "prcavn": null,
-          "vlrcnt": 1797269095995.0
+          "vlrcnt": 1797269095995.0,
+          "vlrcntix": null
          },
          "type": "Feature"
         }
@@ -119,7 +139,11 @@
        "concesionario",
        "lngcnc",
        "prcavn",
-       "vlrcnt"
+       "fecrep",
+       "vlrcnt",
+       "fecref",
+       "vlrcntix",
+       "fecindx"
       ],
       "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/3",
       "where": "1=1"
