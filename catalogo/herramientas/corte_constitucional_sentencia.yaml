@@ -1,5 +1,5 @@
 id: corte_constitucional_sentencia
-version: 2
+version: 3
 familia: justicia
 fuente: corteconstitucional.sentencias
 pregunta: "¿Qué dice el índice de la Corte Constitucional sobre esta sentencia?"
@@ -18,10 +18,11 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: v2k4-2t8s
-    # la relatoría guarda cada sentencia en relatoria/<año>/<T-760-08>.htm (medido el 2026-11-03:
-    # 200 en T-001/92, C-155A/93, C-355/06, T-760/08, SU-214/16 y C-316/26; el año del número
-    # cuadra con el de la fecha en todas las filas)
-    select: "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv, 'https://www.corteconstitucional.gov.co/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(sentencia, '/', '-') || '.htm' AS url"
+    # la relatoría guarda cada sentencia en relatoria/<año>/<T-760-08>.htm, y las de unificación
+    # sin el primer guion: SU214-16.htm. Medido el 2026-11-03 por tamaño, no por estado: la relatoría
+    # responde 200 también a lo que no tiene, con una página vacía de 8 607 bytes (SU-214-16.htm).
+    # El año del número cuadra con el de la fecha en todas las filas.
+    select: "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv, 'https://www.corteconstitucional.gov.co/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(replace(sentencia, '/', '-'), 'SU-', 'SU') || '.htm' AS url"
     where: "sentencia = '{sentencia}'"
     order: "sentencia"
     max_filas: 10

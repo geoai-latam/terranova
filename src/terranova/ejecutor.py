@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import functools
+import html
 import itertools
 import math
 import re
@@ -131,9 +132,15 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
             return normalizar_nit(v)
         except ValueError as e:
             raise ErrorEntrada(nombre, str(e)) from None
+    if tipo == "sentencia_relatoria":
+        v = v.strip().upper()
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
+        if tipo == "sentencia_relatoria" and v.startswith("SU-"):
+            # la relatoría guarda las de unificación como SU214-16.htm; SU-214-16.htm es una página
+            # vacía con estado 200 (medido el 2026-11-03)
+            return "SU" + v[3:]
         if tipo == "fecha":
             try:
                 date.fromisoformat(v)
@@ -264,12 +271,17 @@ _TILDES = str.maketrans(dict.fromkeys("ÁÉÍÓÚÜáéíóúü", "_"))
 
 def _marcador(m: re.Match[str], valores: dict[str, Any]) -> Any:
     valor = valores[m.group(1)]
-    return str(valor).translate(_TILDES) if m.group(0).endswith(":sin_tildes}") else valor
+    if m.group(0).endswith(":sin_tildes}"):
+        return str(valor).translate(_TILDES)
+    if m.group(0).endswith(":ascii}"):
+        return unicodedata.normalize("NFKD", str(valor)).encode("ascii", "ignore").decode()
+    return valor
 
 
 def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
     """Reemplaza `{marcador}`: si el texto es solo el marcador, el valor conserva su tipo.
-    `{marcador:sin_tildes}` cambia cada vocal con tilde por `_`, el comodín de LIKE."""
+    `{marcador:sin_tildes}` cambia cada vocal con tilde por `_`, el comodín de LIKE;
+    `{marcador:ascii}` quita tildes y eñes («daño» → «dano»)."""
     if isinstance(plantilla, str):
         entero = MARCADOR.fullmatch(plantilla)
         if entero:
@@ -420,6 +432,8 @@ def mapear_fila(
             if d.patron is not None and crudo is not None:
                 hallado = re.search(d.patron, str(crudo))
                 crudo = hallado.group(1) if hallado else None
+            if d.html and crudo is not None:
+                crudo = texto_de_html(str(crudo))
             if d.orden_fecha and isinstance(crudo, str):
                 crudo = fecha_en_orden(crudo, d.orden_fecha)
             out[nombre] = convertir(crudo, d.tipo)
@@ -431,6 +445,13 @@ def mapear_fila(
         if nombre in out:  # otros (p. ej. las diferencias entre filas) se calculan después
             out[nombre] = redondear(out[nombre], d.decimales)
     return out
+
+
+def texto_de_html(texto: str) -> str | None:
+    """Un pedazo de HTML como texto: sin etiquetas, con las entidades leídas y los espacios de
+    más quitados. Vacío, None."""
+    limpio = " ".join(html.unescape(re.sub(r"<[^>]+>", " ", texto)).split())
+    return limpio or None
 
 
 def redondear(valor: Any, decimales: int | None) -> Any:

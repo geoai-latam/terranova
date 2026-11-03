@@ -186,6 +186,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `corte_constitucional_resuelve` | ¿Qué decidió la Corte Constitucional en esta sentencia? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `corte_constitucional_texto_buscar` | ¿Qué dice esta sentencia de la Corte Constitucional sobre este tema? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `corte_constitucional_texto_inicio` | ¿De qué trata esta sentencia de la Corte Constitucional? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `creg_resolucion_buscar` | ¿Qué dice esta resolución de la CREG sobre este tema? | Comisión de Regulación de Energía y Gas (CREG) | LicenseRef-ley23-1982-art41 | 5 |
