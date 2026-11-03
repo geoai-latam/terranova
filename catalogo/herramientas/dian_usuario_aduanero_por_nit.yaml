@@ -1,12 +1,13 @@
 id: dian_usuario_aduanero_por_nit
-version: 1
+version: 2
 familia: empresas
 fuente: dian.usuarios_aduaneros
 pregunta: "¿Qué habilitaciones aduaneras tiene esta empresa ante la DIAN?"
 descripcion: >
   Habilitaciones vigentes de un usuario aduanero de la DIAN por su NIT de empresa: calidad (agencia
   de aduanas, depósito, aeropuerto…), número de registro, seccional y área. Sale del archivo diario
-  que publica la DIAN.
+  que publica la DIAN. Solo están los que tienen una habilitación aduanera especial: no aparecer no
+  quiere decir que la empresa no importe ni exporte.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: DIAN; licencia: términos de uso de la DIAN, sin fines de lucro, sin uso comercial.)
 entrada: {nit: nit_empresa}
 consulta:
@@ -21,6 +22,10 @@ consulta:
 salida: UsuarioAduaneroPorNit
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    La DIAN no registra una habilitación aduanera vigente para ese NIT. El archivo lista solo a quienes tienen una calidad aduanera especial (sociedad de comercialización internacional, agente de carga, usuario con trámite simplificado, agencia de aduanas, depósito, zona franca, transportador…): no aparecer no quiere decir que la empresa no importe ni exporte. Las herramientas dian_comex dan el comercio exterior por subpartida, no por empresa.
 cobro: registro
 canario:
   # Medido el 2026-10-22: la Aerocivil (899999059) tiene 6 habilitaciones de aeropuerto.
