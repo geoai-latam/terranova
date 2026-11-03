@@ -62,6 +62,10 @@ Medido el 2026-11-02 sobre 9 429 647 filas de `c82u-588k`:
     se escribe una vez y la usan varias fuentes con `codigos_lista`.
   - La de la CIIU la arma `scripts/codigos_ciiu.py` desde los tres Excel del DANE. Dice su norma.
   - «9999» sale vacío (`vacios`).
-- **Pendiente:** fechas «0000-00-00» (patrón I).
+- **2026-11-03, patrón I:**
+  - Las fechas del RUES (matrícula, renovación, cancelación) declaran `anios_validos: [1800, 2100]`:
+    «0000-00-00» sale vacía, no como fecha.
+  - Medido: Alpina Productos Alimenticios S.A. en Cali tiene `fecha_matricula` «0000-00-00» y
+    categoría «PERSONA NATURAL» en una sociedad. La categoría se deja como la publica la fuente.
 - **Cuando el RUES pase a la Rev. 5:** volver a medir qué códigos trae y cambiar de lista. No se
   mezclan las dos.

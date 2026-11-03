@@ -33,9 +33,9 @@ campos:
   tipo_sociedad: {nombre: tipo_sociedad, tipo: str, desc: "tipo de sociedad"}
   categoria_matricula: {nombre: categoria_matricula, tipo: str, desc: "categoría de la matrícula"}
   estado_matricula: {nombre: estado_matricula, tipo: str, desc: "estado de la matrícula"}
-  fecha_matricula: {nombre: fecha_matricula, tipo: date, desc: "fecha de matrícula"}
+  fecha_matricula: {nombre: fecha_matricula, tipo: date, anios_validos: [1800, 2100], desc: "fecha de matrícula; vacía si la fuente pone «0000-00-00»"}
   ultimo_ano_renovado: {nombre: ultimo_ano_renovado, tipo: int, desc: "último año renovado"}
-  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, desc: "fecha de cancelación"}
+  fecha_cancelacion: {nombre: fecha_cancelacion, tipo: date, anios_validos: [1800, 2100], desc: "fecha de cancelación; vacía si la fuente pone «0000-00-00»"}
   # El RUES usa la CIIU Rev. 4 A.C. (no la Rev. 5, que rige desde la Resolución 992 de 2026):
   # medido el 2026-11-02, 1 009 683 filas traen códigos que solo existen en la Rev. 4. «9999» es
   # relleno (1 373 373 filas). Los códigos viejos con letra (G521102) quedan sin nombre.
