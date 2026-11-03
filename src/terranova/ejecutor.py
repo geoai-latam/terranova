@@ -345,6 +345,8 @@ def avisos_de_la_ficha(h: Herramienta, fuente: Fuente, sobre: Sobre) -> list[str
         propios = [a.texto.strip() for a in h.avisos if a.cuando == "vacio"]
         de_la_fuente = (fuente.cobertura.aviso_vacio or "").strip()  # el `>` de YAML deja un salto
         return propios or ([de_la_fuente] if de_la_fuente else [])
+    if sobre.estado == "fuera_de_cobertura":
+        return [a.texto.strip() for a in h.avisos if a.cuando == "fuera"]
     if sobre.estado not in ("encontrado", "parcial"):
         return []
     return [

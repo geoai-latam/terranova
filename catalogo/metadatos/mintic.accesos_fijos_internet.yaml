@@ -1,0 +1,162 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: mintic.accesos_fijos_internet
+metodo: cosechado
+cosechado: '2026-11-02'
+origen: https://www.datos.gov.co/api/views/hwrp-3su3.json
+pagina: https://www.datos.gov.co/d/hwrp-3su3
+titulo: Accesos Fijos a Internet por Proveedor, Departamento, Municipio, Tecnología, Segmento y ancho
+  de banda
+descripcion: Información de accesos fijos a Internet por proveedor según Departamento, Municipio, Segmento,
+  tasa de transferencia máxima de bajada (Downstream) y de subida (Upstream) medida en Megabits por segundo
+  (Mbps) y Tecnología. Información agrupada y publicada conforme a la Resolución 6333 de 2021.
+publicado: '2026-10-23'
+datos_actualizados: '2026-10-26'
+frecuencia_declarada: Anual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ciencia, Tecnología e Innovación
+etiquetas:
+- accesos
+- acceso a internet
+- proveedor
+- municipio
+- departamento
+- segmento
+- tasa
+filas: 2072381
+campos:
+  anno:
+    tipo_fuente: number
+    etiqueta: ANNO
+    descripcion: Corresponde al año para el cual se reporta la información.
+    nulos: 0
+    minimo: '2023'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2024': 767508
+      '2025': 696096
+      '2026': 411833
+      '2023': 196944
+  trimestre:
+    tipo_fuente: number
+    etiqueta: TRIMESTRE
+    descripcion: Corresponde al trimestre del año para el cual se reporta la información
+    nulos: 0
+    minimo: '1'
+    maximo: '4'
+    comparacion: numero
+    valores:
+      '1': 580055
+      '2': 575424
+      '4': 551957
+      '3': 364945
+  proveedor:
+    tipo_fuente: text
+    etiqueta: PROVEEDOR
+    descripcion: Corresponde al nombre del proveedor que reporto la información
+  codigo_dane_municipio:
+    tipo_fuente: number
+    etiqueta: CODIGO_DANE_MUNICIPIO
+    descripcion: Corresponde al código DANE (5 dígitos) para la ubicación geográfica. Los municipios se
+      identifican de acuerdo con la división político-administrativa de Colombia, DIVIPOLA, presente en
+      el sistema de consulta del DANE.
+    nulos: 0
+    minimo: '5001'
+    maximo: '99773'
+    comparacion: numero
+  municipio:
+    tipo_fuente: text
+    etiqueta: MUNICIPIO
+    descripcion: Corresponde al Nombre de Municipio según Divipola
+    nulos: 0
+    minimo: ABEJORRAL
+    comparacion: texto
+  segmento:
+    tipo_fuente: text
+    etiqueta: SEGMENTO
+    descripcion: '''Segmento – Estrato: Corresponde al uso que se da al servicio fijo o los servicios
+      fijos empaquetados'
+    nulos: 0
+    minimo: CORPORATIVO
+    comparacion: texto
+    valores:
+      CORPORATIVO: 576853
+      RESIDENCIAL - ESTRATO 2: 504188
+      RESIDENCIAL - ESTRATO 1: 363999
+      RESIDENCIAL - ESTRATO 3: 309621
+      RESIDENCIAL - ESTRATO 4: 147073
+      RESIDENCIAL - ESTRATO 5: 61717
+      RESIDENCIAL - ESTRATO 6: 47780
+      SIN ESTRATIFICAR: 45886
+      USO PROPIO INTERNO DEL OPERADOR: 10094
+      CORPORATIVO  (ACCESOS ADICIONALES): 5170
+  tecnologia:
+    tipo_fuente: text
+    etiqueta: TECNOLOGIA
+    descripcion: 'Tecnología del acceso fijo a Internet: Tipo de tecnología usada para el acceso fijo
+      a Internet: xDSL, Cable, Satelital, WiFi, WiMAX, HFC (Hybrid Fiber Coaxial), Fiber To The Home,
+      (FTTH), Fiber To The Node (FTTN), Fiber To The Cabinet (FFTC), FTTB (Fiber to the building o Fiber
+      to the basement), FTTA (Fiber to the antenna), FTTP (Fiber-to-the-premises), Otras tecnologías de
+      fibra y otras tecnologías inalámbricas y fijas. Este campo se debe reportar cuando el servicio corresponda,
+      o el paquete incluya, al servicio de Internet fijo, en caso contrario se deberá diligenciar como
+      “NA”.'
+    nulos: 0
+    maximo: XDSL
+    comparacion: texto
+    valores:
+      FIBER TO THE HOME (FTTH): 896100
+      HYBRID FIBER COAXIAL (HFC): 536727
+      XDSL: 136486
+      OTRAS TECNOLOGÍAS INALÁMBRICAS: 126906
+      OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX): 98293
+      CABLE: 86033
+      WIFI: 69286
+      SATELITAL: 57816
+      OTRAS TECNOLOGÍAS FIJAS: 16132
+      FIBER TO THE PREMISES: 13142
+      WIMAX: 12458
+      FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB): 12125
+      FIBER TO THE CABINET (FTTC): 3577
+      FIBER TO THE NODE (FTTN): 2821
+      SATELITAL LEO: 2592
+      FIBER TO THE ANTENNA (FTTA): 1317
+      5G FWA: 466
+      NA (NO APLICA): 104
+  velocidad_bajada:
+    tipo_fuente: number
+    etiqueta: VELOCIDAD_BAJADA
+    descripcion: '''Corresponde a la Velocidad efectiva Downstream: Es la capacidad de transmisión medida
+      en Megabits por segundo (Mbps) garantizada por el ISP hacia el usuario, incluyendo tanto el segmento
+      de acceso como los canales nacionales e internacionales, y que corresponde al valor mínimo de las
+      mediciones asociadas según la metodología definida en el Capítulo 1 del Título V de la presente
+      resolución. Este campo se debe reportar cuando el servicio corresponda, o el paquete incluya, al
+      servicio de internet fijo, en caso contrario se deberá diligenciar con valor cero (0).'
+    nulos: 0
+    minimo: '0'
+    maximo: '995000'
+    comparacion: numero
+  velocidad_subida:
+    tipo_fuente: number
+    etiqueta: VELOCIDAD_SUBIDA
+    descripcion: 'Velocidad efectiva Upstream: Es la capacidad de transmisión medida en Megabits por segundo
+      (Mbps) garantizada desde el usuario hacia el ISP, incluyendo tanto el segmento de acceso como los
+      canales nacionales e internacionales, y que corresponde al valor mínimo de las mediciones asociadas
+      según la metodología definida en el Capítulo 1 del Título V de la presente resolución. Este campo
+      se debe reportar cuando el servicio corresponda, o el paquete incluya, al servicio de internet fijo,
+      en caso contrario se deberá diligenciar con valor cero (0).'
+    nulos: 0
+    minimo: '0'
+    maximo: '995000'
+    comparacion: numero
+  accesos_fijos_internet:
+    tipo_fuente: number
+    etiqueta: ACCESOS_FIJOS_INTERNET
+    descripcion: Cantidad de accesos que se encuentran conectados al último día del trimestre a reportar.
+      Se deben incluir aquellas líneas o accesos que se encuentren funcionando, aquellas suspendidas temporalmente
+      (independientemente de la causa que genera dicha suspensión), así como las líneas de uso propio
+      o interno del proveedor de redes y servicios de telecomunicaciones.
+    nulos: 0
+    minimo: '0'
+    maximo: '210646'
+    comparacion: numero

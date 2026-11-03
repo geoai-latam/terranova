@@ -1,12 +1,14 @@
 id: mintic_internet_fijo_municipio
-version: 1
+version: 2
 familia: estadisticas
-fuente: mintic.internet_fijo_accesos
+fuente: mintic.accesos_fijos_internet
 pregunta: "¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología?"
 descripcion: >
-  Accesos a internet fijo de un municipio (DIVIPOLA) en un año, por trimestre y tecnología (fibra,
-  cable, xDSL, satelital…), sumando todos los proveedores y segmentos. El conjunto llega hasta el
-  tercer trimestre de 2023.
+  Accesos a internet fijo de un municipio (DIVIPOLA) en un año, por trimestre y tecnología (fibra
+  hasta el hogar, cable HFC, satelital…), sumando todos los proveedores y segmentos. Arriba, el
+  total de cada trimestre y el último trimestre con datos; abajo, el trimestre más reciente primero
+  y la tecnología con más accesos primero. Cubre del cuarto trimestre de 2023 al último publicado
+  (hoy, el segundo de 2026); de 2016 al tercero de 2023 está mintic_internet_fijo_municipio_2016_2023.
   (Fuente: MinTIC; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, anio: int}
 consulta:
@@ -14,22 +16,42 @@ consulta:
   resultado: lista
   tool: datos_consultar
   argumentos:
-    id: n48w-gutb
+    id: hwrp-3su3
     portal: datos.gov.co
-    select: "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos"
-    where: "cod_municipio = '{municipio_divipola}' AND anno = '{anio}'"
-    group: "trimestre, tecnologia"
-    order: "trimestre, tecnologia"
+    select: "anno, trimestre, tecnologia, sum(accesos_fijos_internet) AS accesos"
+    where: "codigo_dane_municipio = '{municipio_divipola}' AND anno = '{anio}'"
+    group: "anno, trimestre, tecnologia"
+    order: "trimestre DESC, accesos DESC"
     max_filas: 200
-  campos: [anno, trimestre, cod_municipio, tecnologia, no_de_accesos]
+  campos: [anno, trimestre, codigo_dane_municipio, tecnologia, accesos_fijos_internet]
 salida: InternetFijoMunicipio
 derivados:
+  anio_consultado: {de: primero, campo: anio}
+  ultimo_trimestre: {de: primero, campo: trimestre, tipo: int}
+  accesos_trimestre_1: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["1"]}, tipo: int}
+  accesos_trimestre_2: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["2"]}, tipo: int}
+  accesos_trimestre_3: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["3"]}, tipo: int}
+  accesos_trimestre_4: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["4"]}, tipo: int}
   accesos: {de: columna, campo: accesos, tipo: int}
+avisos:
+- cuando: encontrado
+  si: {campo: anio_consultado, valores: ["2023"]}
+  texto: >
+    De 2023 aquí está solo el cuarto trimestre: el MinTIC cambió de conjunto con la Resolución 6333
+    de 2021. Los tres primeros trimestres de 2023 están en mintic_internet_fijo_municipio_2016_2023.
+- cuando: vacio
+  texto: >
+    No hay accesos de ese municipio en ese año en este conjunto, que va del cuarto trimestre de 2023
+    al último publicado. Revise el código DIVIPOLA.
+- cuando: fuera
+  texto: >
+    De 2016 al tercer trimestre de 2023, los accesos están en otro conjunto del MinTIC: use
+    mintic_internet_fijo_municipio_2016_2023.
 cobro: agregado
 canario:
-  # Medido el 2026-10-23 en n48w-gutb: Chía 2023, 30 grupos; el primero, trimestre 1
-  # CABLE: 25973 accesos.
-  entrada: {municipio_divipola: "25175", anio: 2023}
-  verdad: {trimestre: "1", tecnologia: "CABLE", accesos: 25973}
-  campos: [accesos, tecnologia, trimestre]
+  # Medido el 2026-11-02 en hwrp-3su3: Chía 2025, cuarto trimestre, 54 027 accesos; la primera
+  # tecnología es FIBER TO THE HOME (FTTH).
+  entrada: {municipio_divipola: "25175", anio: 2025}
+  verdad: {ultimo_trimestre: 4, accesos_trimestre_1: 51671, accesos_trimestre_4: 54027, trimestre: "4", tecnologia: "FIBER TO THE HOME (FTTH)"}
+  campos: [accesos, accesos_trimestre_1, accesos_trimestre_2, accesos_trimestre_3, accesos_trimestre_4, anio, anio_consultado, tecnologia, trimestre, ultimo_trimestre]
   latencia_max_ms: 15000

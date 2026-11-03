@@ -1,0 +1,50 @@
+id: mintic_internet_fijo_municipio_2016_2023
+version: 1
+familia: estadisticas
+fuente: mintic.internet_fijo_accesos
+pregunta: "¿Cuántas conexiones de internet fijo tenía este municipio entre 2016 y 2023?"
+descripcion: >
+  La serie vieja de accesos a internet fijo de un municipio (DIVIPOLA): un año de 2016 a 2023, por
+  trimestre y tecnología (fibra, cable, xDSL, satelital…), sumando todos los proveedores y
+  segmentos. Arriba, el total de cada trimestre. El conjunto llega al tercer trimestre de 2023; lo
+  que sigue está en mintic_internet_fijo_municipio.
+  (Fuente: MinTIC; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, anio: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: n48w-gutb
+    portal: datos.gov.co
+    select: "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos"
+    where: "cod_municipio = '{municipio_divipola}' AND anno = '{anio}'"
+    group: "trimestre, tecnologia"
+    order: "trimestre DESC, accesos DESC"
+    max_filas: 200
+  campos: [anno, trimestre, cod_municipio, tecnologia, no_de_accesos]
+salida: InternetFijoMunicipio
+derivados:
+  ultimo_trimestre: {de: primero, campo: trimestre, tipo: int}
+  accesos_trimestre_1: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["1"]}, tipo: int}
+  accesos_trimestre_2: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["2"]}, tipo: int}
+  accesos_trimestre_3: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["3"]}, tipo: int}
+  accesos_trimestre_4: {de: suma, campo: accesos, solo_si: {campo: trimestre, valores: ["4"]}, tipo: int}
+  accesos: {de: columna, campo: accesos, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay accesos de ese municipio en ese año en este conjunto, que va de 2016 al tercer trimestre
+    de 2023. Revise el código DIVIPOLA.
+- cuando: fuera
+  texto: >
+    Desde el cuarto trimestre de 2023, los accesos están en otro conjunto del MinTIC: use
+    mintic_internet_fijo_municipio.
+cobro: agregado
+canario:
+  # Medido el 2026-10-23 en n48w-gutb: Chía 2023, trimestre 1, CABLE: 25 973 accesos.
+  # Medido el 2026-11-02: en 2023 llega al trimestre 3; total del 1, 50 987; del 3, 49 325.
+  entrada: {municipio_divipola: "25175", anio: 2023}
+  verdad: {ultimo_trimestre: 3, accesos_trimestre_1: 50987, accesos_trimestre_3: 49325}
+  campos: [accesos, accesos_trimestre_1, accesos_trimestre_2, accesos_trimestre_3, tecnologia, trimestre, ultimo_trimestre]
+  latencia_max_ms: 15000

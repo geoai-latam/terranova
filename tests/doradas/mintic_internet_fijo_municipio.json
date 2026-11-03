@@ -1,17 +1,17 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T07:05:33+00:00",
+ "grabado": "2026-11-03T02:56:21+00:00",
  "herramienta": "mintic_internet_fijo_municipio",
  "llamadas": [
   {
    "argumentos": {
-    "group": "trimestre, tecnologia",
-    "id": "n48w-gutb",
+    "group": "anno, trimestre, tecnologia",
+    "id": "hwrp-3su3",
     "max_filas": 200,
-    "order": "trimestre, tecnologia",
+    "order": "trimestre DESC, accesos DESC",
     "portal": "datos.gov.co",
-    "select": "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos",
-    "where": "cod_municipio = '25175' AND anno = '2023'"
+    "select": "anno, trimestre, tecnologia, sum(accesos_fijos_internet) AS accesos",
+    "where": "codigo_dane_municipio = '25175' AND anno = '2025'"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -19,183 +19,280 @@
      {
       "columns": [
        "accesos",
+       "anno",
        "tecnologia",
        "trimestre"
       ],
       "kind": "table",
       "rows": [
        {
-        "accesos": "25973",
-        "tecnologia": "CABLE",
-        "trimestre": "1"
-       },
-       {
-        "accesos": "48",
-        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
-        "trimestre": "1"
-       },
-       {
-        "accesos": "11893",
+        "accesos": "31938",
+        "anno": "2025",
         "tecnologia": "FIBER TO THE HOME (FTTH)",
-        "trimestre": "1"
+        "trimestre": "4"
        },
        {
-        "accesos": "1",
-        "tecnologia": "FIBER TO THE PREMISES",
-        "trimestre": "1"
-       },
-       {
-        "accesos": "2669",
+        "accesos": "18230",
+        "anno": "2025",
         "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
-        "trimestre": "1"
+        "trimestre": "4"
        },
        {
-        "accesos": "1889",
+        "accesos": "2313",
+        "anno": "2025",
         "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
-        "trimestre": "1"
+        "trimestre": "4"
        },
        {
-        "accesos": "2115",
-        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
-        "trimestre": "1"
-       },
-       {
-        "accesos": "19",
+        "accesos": "1065",
+        "anno": "2025",
         "tecnologia": "SATELITAL",
-        "trimestre": "1"
+        "trimestre": "4"
        },
        {
-        "accesos": "2165",
+        "accesos": "259",
+        "anno": "2025",
         "tecnologia": "WIFI",
-        "trimestre": "1"
+        "trimestre": "4"
        },
        {
-        "accesos": "4215",
-        "tecnologia": "XDSL",
-        "trimestre": "1"
+        "accesos": "118",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "4"
        },
        {
-        "accesos": "25239",
-        "tecnologia": "CABLE",
-        "trimestre": "2"
+        "accesos": "52",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS FIJAS",
+        "trimestre": "4"
        },
        {
-        "accesos": "48",
+        "accesos": "42",
+        "anno": "2025",
         "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
-        "trimestre": "2"
+        "trimestre": "4"
        },
        {
-        "accesos": "11602",
+        "accesos": "5",
+        "anno": "2025",
+        "tecnologia": "XDSL",
+        "trimestre": "4"
+       },
+       {
+        "accesos": "4",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "4"
+       },
+       {
+        "accesos": "1",
+        "anno": "2025",
+        "tecnologia": "WIMAX",
+        "trimestre": "4"
+       },
+       {
+        "accesos": "30395",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE HOME (FTTH)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "20190",
+        "anno": "2025",
+        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "1471",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "675",
+        "anno": "2025",
+        "tecnologia": "SATELITAL",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "107",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "44",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "18",
+        "anno": "2025",
+        "tecnologia": "WIFI",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "9",
+        "anno": "2025",
+        "tecnologia": "XDSL",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "4",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "1",
+        "anno": "2025",
+        "tecnologia": "WIMAX",
+        "trimestre": "3"
+       },
+       {
+        "accesos": "29385",
+        "anno": "2025",
         "tecnologia": "FIBER TO THE HOME (FTTH)",
         "trimestre": "2"
        },
        {
-        "accesos": "1",
-        "tecnologia": "FIBER TO THE PREMISES",
-        "trimestre": "2"
-       },
-       {
-        "accesos": "2976",
+        "accesos": "19516",
+        "anno": "2025",
         "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
         "trimestre": "2"
        },
        {
-        "accesos": "1493",
+        "accesos": "2397",
+        "anno": "2025",
         "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
         "trimestre": "2"
        },
        {
-        "accesos": "2040",
-        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
-        "trimestre": "2"
-       },
-       {
-        "accesos": "17",
+        "accesos": "577",
+        "anno": "2025",
         "tecnologia": "SATELITAL",
         "trimestre": "2"
        },
        {
-        "accesos": "2761",
+        "accesos": "252",
+        "anno": "2025",
         "tecnologia": "WIFI",
         "trimestre": "2"
        },
        {
-        "accesos": "3658",
-        "tecnologia": "XDSL",
+        "accesos": "106",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
         "trimestre": "2"
        },
        {
-        "accesos": "25014",
-        "tecnologia": "CABLE",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "53",
+        "accesos": "46",
+        "anno": "2025",
         "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "12120",
-        "tecnologia": "FIBER TO THE HOME (FTTH)",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "1",
-        "tecnologia": "FIBER TO THE PREMISES",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "3278",
-        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "2090",
-        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "1928",
-        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
-        "trimestre": "3"
+        "trimestre": "2"
        },
        {
         "accesos": "15",
-        "tecnologia": "SATELITAL",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "1673",
-        "tecnologia": "WIFI",
-        "trimestre": "3"
-       },
-       {
-        "accesos": "3153",
+        "anno": "2025",
         "tecnologia": "XDSL",
-        "trimestre": "3"
+        "trimestre": "2"
+       },
+       {
+        "accesos": "4",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "1",
+        "anno": "2025",
+        "tecnologia": "WIMAX",
+        "trimestre": "2"
+       },
+       {
+        "accesos": "28223",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE HOME (FTTH)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "19741",
+        "anno": "2025",
+        "tecnologia": "HYBRID FIBER COAXIAL (HFC)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "2720",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS DE FIBRA (ANTES FTTX)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "512",
+        "anno": "2025",
+        "tecnologia": "SATELITAL",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "260",
+        "anno": "2025",
+        "tecnologia": "WIFI",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "100",
+        "anno": "2025",
+        "tecnologia": "OTRAS TECNOLOGÍAS INALÁMBRICAS",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "61",
+        "anno": "2025",
+        "tecnologia": "XDSL",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "51",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE BUILDING O FIBER TO THE BASEMENT (FTTB)",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "2",
+        "anno": "2025",
+        "tecnologia": "FIBER TO THE PREMISES",
+        "trimestre": "1"
+       },
+       {
+        "accesos": "1",
+        "anno": "2025",
+        "tecnologia": "WIMAX",
+        "trimestre": "1"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 30,
+      "total": 41,
       "truncado": false,
-      "vistos": 30
+      "vistos": 41
      },
      "completo": true,
-     "conjunto": "n48w-gutb",
+     "conjunto": "hwrp-3su3",
      "consulta": {
-      "conjunto": "n48w-gutb",
-      "group": "trimestre, tecnologia",
+      "conjunto": "hwrp-3su3",
+      "group": "anno, trimestre, tecnologia",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "trimestre, tecnologia, sum(no_de_accesos::number) AS accesos",
-      "where": "(cod_municipio = '25175' AND anno = '2023')"
+      "select": "anno, trimestre, tecnologia, sum(accesos_fijos_internet) AS accesos",
+      "where": "(codigo_dane_municipio = '25175' AND anno = '2025')"
      },
-     "filas": 30,
-     "filas_que_resume": 6623,
-     "filtro_soql": "(cod_municipio = '25175' AND anno = '2023')",
+     "filas": 41,
+     "filas_que_resume": 5269,
+     "filtro_soql": "(codigo_dane_municipio = '25175' AND anno = '2025')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

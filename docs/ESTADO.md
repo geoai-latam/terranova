@@ -235,6 +235,12 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Las dos herramientas dicen que el dato es de 2018 (`anio`, con el nuevo derivado `fijo`).
   - El IPM avisa que no se compara con el IPM oficial.
   - Las privaciones van de la peor a la mejor: en Bojayá, trabajo informal, 95,9 %.
+- **MinTIC, internet fijo (patrón E):**
+  - `mintic_internet_fijo_municipio` estaba en 2023 porque su conjunto dejó de actualizarse. Pasa al
+    conjunto nuevo del MinTIC (`hwrp-3su3`, 2023-4T a 2026-2T), con el total de cada trimestre
+    arriba: en Chía, 54 027 accesos en el cuarto trimestre de 2025.
+  - La serie de 2016 a 2023 queda en `mintic_internet_fijo_municipio_2016_2023`.
+  - El motor suma los avisos `cuando: fuera`, que dicen a qué herramienta ir.
 
 ## Ficha de un lote (2026-11-01)
 

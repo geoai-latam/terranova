@@ -754,10 +754,11 @@ class AvisoFicha(_Ficha):
     """Un aviso que sale del catálogo, no de la fuente. `cuando: vacio` sale con «no encontrado»
     (y reemplaza el `aviso_vacio` de la fuente: la herramienta sabe a cuál remitir);
     `cuando: encontrado` sale con datos, y con `si` solo cuando el campo de arriba de `datos`
-    tiene uno de esos valores (un solo proponente: no hubo competencia)."""
+    tiene uno de esos valores (un solo proponente: no hubo competencia); `cuando: fuera` sale con
+    «fuera de cobertura» (dónde está lo que no cubre: la serie vieja en otra herramienta)."""
 
     texto: str = Field(min_length=10)
-    cuando: Literal["vacio", "encontrado"] = "vacio"
+    cuando: Literal["vacio", "encontrado", "fuera"] = "vacio"
     si: SoloSi | None = None
 
     @model_validator(mode="after")
