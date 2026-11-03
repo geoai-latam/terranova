@@ -260,9 +260,6 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
-- **UPRA por municipio, versión datos.gov.co (patrón F):** no se retira, porque Andes (Antioquia)
-  solo está ahí. Agrupa por rango, con hectáreas, polígonos, la unidad y las siglas traducidas, y
-  remite a la capa nacional.
 
 ## Ficha de un lote (2026-11-01)
 
