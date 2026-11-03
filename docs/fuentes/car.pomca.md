@@ -47,8 +47,8 @@ ninguna.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `car_pomca_en_punto` | medio → alto | v2: sin `descripcion`; su vacío remite al Sumapaz |
-| `car_pomca_rio_sumapaz_en_punto` | medio | v2: su vacío remite a las otras nueve cuencas |
+| `car_pomca_en_punto` | medio → alto | v3: sin `descripcion`; su vacío remite al Sumapaz; polígono simplificado |
+| `car_pomca_rio_sumapaz_en_punto` | medio | v3: su vacío remite a las otras nueve cuencas; polígono simplificado |
 | `car_pomca_rio_bogota_en_punto` | — | retirada el 2026-11-03 |
 
 ## Decisiones
@@ -59,7 +59,18 @@ ninguna.
     BY-SA. Mezclarla con capas CC BY borraría esa diferencia. Va aparte, y cada vacío remite al
     otro.
   - `DESCRIP` sale de la lista blanca.
-- **Pendiente:**
-  - devolver la geometría de la zona; un polígono pesa decenas de KB, así que habría que
-    simplificarla;
-  - las rondas hídricas (`car.rondas_delimitadas`).
+- **2026-11-03, geometría:** las dos herramientas devuelven el polígono de la zona simplificado
+  (~55 m, `geometria: simplificada`). Medido en la fuente:
+
+  | Punto | Completo | Simplificado |
+  |---|---|---|
+  | Bogotá urbana (río Bogotá, ZU) | 816 KB, 22 725 vértices | 21 KB, 1 077 |
+  | Chía rural (río Bogotá, ARUM) | 34 KB, 950 | 1 KB, 64 |
+  | río Negro (agrosilvopastoril) | 610 KB, 16 991 | 7 KB, 356 |
+  | Quetame (Guayuriba, UM1) | 123 KB, 3 429 | 1 KB, 51 |
+
+  Responden en 1 a 3 s. Sirve para ver la zona en un mapa, no para medir linderos: lo dice la
+  descripción.
+- **Pendiente:** una herramienta por polígono (área de cada zona dentro de un lote). Pide copiar
+  las ~550 000 zonas.
+- Las rondas hídricas tienen su propia ficha: [car.rondas_delimitadas.md](car.rondas_delimitadas.md).
