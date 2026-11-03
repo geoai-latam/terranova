@@ -64,3 +64,25 @@ Reglas:
 | SDP Bogotá, POT 555: tratamiento, área de actividad y más (copia) | [sdp.pot555.md](sdp.pot555.md) |
 | IDEAM, lluvia de las estaciones automáticas (`s54a-sgyg`) | [ideam.precipitacion.md](ideam.precipitacion.md) |
 | IDEAM, calidad del aire del SISAIRE (`g4t8-zkc3`) | [ideam.calidad_aire.md](ideam.calidad_aire.md) |
+| ANM, títulos mineros con explotador autorizado en el RUCOM (`42ha-fhvj`) | [anm.titulos_mineros.md](anm.titulos_mineros.md) |
+| IDEAM, alertas diarias por deslizamiento e incendios (OSPA) | [ideam.alertas.md](ideam.alertas.md) |
+| URT, zonas microfocalizadas para la restitución de tierras | [urt.microzonas.md](urt.microzonas.md) |
+| SDP, estrato socioeconómico por manzana en Bogotá | [sdp.estratificacion_manzana.md](sdp.estratificacion_manzana.md) |
+| UAECD, valor de referencia del m² de terreno por manzana en Bogotá | [uaecd.valor_referencia.md](uaecd.valor_referencia.md) |
+| CREG, gestor normativo (resoluciones) | [creg.gestor_normativo.md](creg.gestor_normativo.md) |
+| DIAN, Normograma (compilación jurídica) | [dian.normograma.md](dian.normograma.md) |
+| ICFES, Saber 11 (copia agregada por grupos) | [icfes.saber11.md](icfes.saber11.md) |
+| CAR Cundinamarca, rondas hídricas delimitadas | [car.rondas_delimitadas.md](car.rondas_delimitadas.md) |
+| Corte Constitucional, texto de las sentencias (relatoría) | [corteconstitucional.relatoria.md](corteconstitucional.relatoria.md) |
+| Colombia Compra Eficiente, relatoría (conceptos y providencias) | [ancp.relatoria.md](ancp.relatoria.md) |
+| SECOP II, ubicaciones de ejecución | [cce.secop2.ubicaciones.md](cce.secop2.ubicaciones.md) |
+| Catálogo DCAT de datos.gov.co y de la ICDE (el buscador del catálogo) | [descubrimiento.catalogo_dcat.md](descubrimiento.catalogo_dcat.md) |
+| IGAC, catastro: terreno, registro, perímetro, vías, manzana y sector | [igac.catastro.md](igac.catastro.md) |
+| IGAC, capacidad de uso de las tierras | [igac.agrologia.capacidad_uso.md](igac.agrologia.capacidad_uso.md) |
+| ANT, resguardos indígenas formalizados | [ant.resguardos_indigenas.md](ant.resguardos_indigenas.md) |
+| SINCHI, cambio del bosque en la Amazonia 2022-2024 | [sinchi.perdida_bosque.md](sinchi.perdida_bosque.md) |
+| ESA WorldCover 2021 | [esa.worldcover.md](esa.worldcover.md) |
+| SECOP I y II, multas y sanciones (`4n4q-k399`, `it5q-hg94`) | [cce.multas.md](cce.multas.md) |
+| SECOP I, archivos de los procesos (`ps88-5e3v`) | [cce.secop1.archivos.md](cce.secop1.archivos.md) |
+| SECOP I, proponentes (`tauh-5jvn`) | [cce.secop1.proponentes.md](cce.secop1.proponentes.md) |
+| DIAN, usuarios aduaneros habilitados (archivo de la DIAN) | [dian.usuarios_aduaneros.md](dian.usuarios_aduaneros.md) |

@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-11-02.*
+*Actualizado: 2026-11-03.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -47,6 +47,57 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Revisión de valor, herramienta por herramienta (2026-11-02 y 2026-11-03, #304 a #345)
+
+Cada herramienta con hallazgo en `interno/REVISION_VALOR.md` se ajustó, se probó en producción con
+preguntas reales y se leyó la respuesta completa. Hubo una rama y un PR por fuente, y cada fuente
+tocada tiene su ficha en `docs/fuentes/` (índice en `docs/fuentes/README.md`). El catálogo tiene
+219 fichas de herramienta y 183 de fuente (5 en borrador), contadas el 2026-11-03.
+
+- **Motor** (sirve a todas las fuentes):
+  - `previa` con `formato: coma` (#341);
+  - `consulta.juntar`, para filas iguales salvo un campo (#340);
+  - derivados `igual` (#305), `columna` con `patron`, `html` y `valores` (#318, #322) y
+    `suma_por` entero (#324);
+  - el marcador `{x:ascii}`, que quita tildes y eñes de un parámetro de URL (#322);
+  - el aviso de datos no recientes dice a qué fecha se revisaron los metadatos (#332);
+  - un documento que la fuente dice que no existe lo avisa (#312);
+  - copias con orden físico (#308) y copias preagregadas por grupos (#314).
+- **Herramientas nuevas:**
+  - `cnmh_conflicto_municipio`, compuesta (#329);
+  - `secop_multas_entidad` (#331);
+  - `sic_sanciones_por_empresa`, que solo busca personas jurídicas (#338);
+  - `ancp_conceptos_por_tema` y `ancp_providencias_por_tema` (#341);
+  - `car_ronda_hidrica_en_poligono` (#318);
+  - `corte_constitucional_resuelve` (#321);
+  - una sola herramienta de estado del medicamento del INVIMA (#320).
+- **A copia:** ZRC de la ANT (#315), Saber 11 (#314) y rondas de la CAR (#318). Las tres copias
+  ya están construidas en producción.
+- **Fuera del MCP:** `igac_predio_en_punto` y `sinic_predio_en_punto`; el agente ve
+  `predio_en_punto` (#311, ADR-0031 enmendada).
+- **Cerradas con medición en la fuente:**
+  - territorio: capacidad de uso, predio por código, perímetro, vías, manzana y sector, UPRA,
+    ANM, ANI y POMCA;
+  - ambiente: resguardos, SINCHI y ESA;
+  - contratación: SECOP I documentos y proponentes, multas, ubicaciones y relatoría;
+  - empresas: DIAN aduanero y SIC;
+  - justicia: Corte, SUIN y CNMH;
+  - salud: INVIMA;
+  - normativa: CREG y DIAN Normograma.
+
+**Al desplegar** (la revisión se hizo contra producción desde los worktrees; `main` aún no está
+desplegado):
+1. Reconstruir `web-mcp`: `corte_constitucional_resuelve` usa el conector web con `desde`.
+2. Medir SECOP por NIT tras el orden físico (#308): Medellín en frío tardaba 16 s.
+3. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
+
+**Decisiones del dueño:**
+- El héroe muestra `sinic_predio_en_punto`, que ya no está en el MCP.
+- El DNS de Contabo da SERVFAIL a ratos para gestornormativo.creg.gov.co: ¿fijar resolvedores en
+  el compose?
+- POMCA por polígono pide copiar 548 908 zonas en 10 capas, 172 069 solo en el río Negro (medido
+  el 2026-11-03). Es una decisión de disco y de refresco manual, no de código.
 
 ## La portada habla a organizaciones (2026-11-02)
 
