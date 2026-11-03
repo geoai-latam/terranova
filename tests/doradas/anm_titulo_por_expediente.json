@@ -1,16 +1,62 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-26T12:06:23+00:00",
+ "grabado": "2026-11-03T21:22:03+00:00",
  "herramienta": "anm_titulo_por_expediente",
  "llamadas": [
+  {
+   "argumentos": {
+    "id": "42ha-fhvj",
+    "portal": "datos.gov.co",
+    "select": "count(distinct nombre_persona) AS total",
+    "where": "codigo_expediente = 'ABQ-101'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "total": "4"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "42ha-fhvj",
+     "consulta": {
+      "conjunto": "42ha-fhvj",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "count(distinct nombre_persona) AS total",
+      "where": "(codigo_expediente = 'ABQ-101')"
+     },
+     "filas": 1,
+     "filas_que_resume": 8,
+     "filtro_soql": "(codigo_expediente = 'ABQ-101')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "group": "mineral, municipio, departamento, codigo_dane",
     "id": "42ha-fhvj",
     "max_filas": 200,
-    "order": "mineral",
+    "order": "explotadores DESC, mineral",
     "portal": "datos.gov.co",
-    "select": "mineral, municipio, departamento, codigo_dane, count(*) AS registros",
+    "select": "mineral, municipio, departamento, codigo_dane, count(distinct nombre_persona) AS explotadores",
     "where": "codigo_expediente = 'ABQ-101'"
    },
    "conector": "datos-abiertos-mcp",
@@ -20,25 +66,25 @@
       "columns": [
        "codigo_dane",
        "departamento",
+       "explotadores",
        "mineral",
-       "municipio",
-       "registros"
+       "municipio"
       ],
       "kind": "table",
       "rows": [
        {
         "codigo_dane": "76892",
         "departamento": "VALLE",
+        "explotadores": "4",
         "mineral": "DIABASA",
-        "municipio": "YUMBO",
-        "registros": "4"
+        "municipio": "YUMBO"
        },
        {
         "codigo_dane": "76892",
         "departamento": "VALLE",
+        "explotadores": "4",
         "mineral": "ROCA MUERTA",
-        "municipio": "YUMBO",
-        "registros": "4"
+        "municipio": "YUMBO"
        }
       ]
      }
@@ -56,7 +102,7 @@
       "group": "mineral, municipio, departamento, codigo_dane",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "mineral, municipio, departamento, codigo_dane, count(*) AS registros",
+      "select": "mineral, municipio, departamento, codigo_dane, count(distinct nombre_persona) AS explotadores",
       "where": "(codigo_expediente = 'ABQ-101')"
      },
      "filas": 2,
