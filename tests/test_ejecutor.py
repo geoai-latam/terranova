@@ -1222,3 +1222,21 @@ async def test_la_previa_por_coma_pasa_los_descriptores_a_la_url() -> None:
     )
     assert falso.llamadas[1]["params"]["descriptor"] == "0"
     assert sobre.estado == "no_encontrado"
+
+
+def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
+    """El INVIMA repite la presentación por vía: Buscapina daba 28 filas para 14 (2026-11-03)."""
+    from terranova.ejecutor import juntar_filas
+
+    filas: list[dict[str, Any]] = [
+        {"cum": 1, "via": "INTRAMUSCULAR"},
+        {"cum": 1, "via": "INTRAVENOSA"},
+        {"cum": 2, "via": "INTRAMUSCULAR"},
+        {"cum": 1, "via": "INTRAVENOSA"},
+        {"cum": 3, "via": None},
+    ]
+    assert juntar_filas(filas, "via") == [
+        {"cum": 1, "via": ["INTRAMUSCULAR", "INTRAVENOSA"]},
+        {"cum": 2, "via": ["INTRAMUSCULAR"]},
+        {"cum": 3, "via": []},
+    ]

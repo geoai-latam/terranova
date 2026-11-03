@@ -81,13 +81,13 @@ ninguno de los otros tres.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `invima_medicamento_por_expediente` (v2) | medio → alto | con dosis |
+| `invima_medicamento_por_expediente` (v4) | medio → alto | con dosis y las vías en una lista |
 | `invima_medicamentos_por_principio_activo` (v3) | medio → alto | un producto por fila, solo CUM activos, con dosis y presentaciones activas; busca con o sin tilde |
 | `invima_medicamentos_por_titular` (v2) | medio → alto | uno por expediente, solo CUM activos, con principio activo y presentaciones activas |
 | `invima_medicamento_estado_por_expediente` (v1) | alto | mira los cuatro conjuntos y dice en cuál está, con un registro por fila |
-| `invima_medicamento_en_renovacion_por_expediente` (v3) | bajo → medio | con dosis; fuera del MCP desde el 2026-11-03 |
-| `invima_medicamento_otros_estados_por_expediente` (v3) | bajo → medio | igual |
-| `invima_medicamento_vencido_por_expediente` (v3) | bajo → medio | igual |
+| `invima_medicamento_en_renovacion_por_expediente` (v4) | bajo → medio | con dosis y vías en lista; fuera del MCP desde el 2026-11-03 |
+| `invima_medicamento_otros_estados_por_expediente` (v4) | bajo → medio | igual |
+| `invima_medicamento_vencido_por_expediente` (v4) | bajo → medio | igual |
 
 ## Decisiones
 
@@ -139,4 +139,12 @@ ninguno de los otros tres.
     herramienta espera al más lento: de 3 a 14 s, con tope de 20 s.
   - Un expediente está en un solo conjunto: los 131 en renovación no salen en los otros tres, ni
     300 vencidos en vigentes u otros estados.
-- **Pendiente:** agrupar las vías en una lista.
+- **2026-11-03, vías en una lista:**
+  - El motor suma `consulta.juntar`: las filas iguales en todo menos ese campo salen como una, y
+    el campo queda como lista de sus valores distintos, en el orden en que llegaron.
+  - El aviso de «vinieron N de M» cuenta las filas recibidas, no las juntadas.
+  - Las cuatro de detalle por expediente (v4) juntan `via_administracion`. Buscapina (36344, en
+    renovación) pasa de 28 filas a 14, con `["INTRAMUSCULAR", "INTRAVENOSA"]`. Su canario pide
+    ahora 14.
+  - Motrin (31330, vigente) sigue con una fila por presentación y rol: el fabricante y el
+    importador son filas distintas, y eso es dato.

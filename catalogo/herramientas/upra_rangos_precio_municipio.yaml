@@ -1,5 +1,5 @@
 id: upra_rangos_precio_municipio
-version: 3
+version: 4
 familia: territorio
 fuente: upra.rango_precios_nacional
 pregunta: "¿Cuántas hectáreas de tierra rural hay en cada rango de precio en este municipio según la UPRA?"
@@ -27,7 +27,7 @@ consulta:
   campos: [vigencia, cod_precios, rango_precios, area_ha, consecutivo, cod_dane_mpio]
 salida: RangosPrecioMunicipio
 derivados:
-  hectareas: {de: columna, campo: hectareas, tipo: float}
+  hectareas: {de: columna, campo: hectareas, tipo: float, decimales: 2}
   zonas: {de: columna, campo: zonas, tipo: int}
 avisos:
 - cuando: encontrado
@@ -40,6 +40,6 @@ canario:
   # Medido el 2026-10-22 en rango_precios_nacional/MapServer/0 (agrupado por vigencia y rango): Cota,
   # 2016, el primer rango (4.1.1, «Mayor que 60 - hasta 70») suma 984,143 ha en 28 zonas.
   entrada: {municipio_divipola: "25214"}
-  verdad: {vigencia: 2016, codigo_rango_precio: "4.1.1", hectareas: 984.143, zonas: 28}
+  verdad: {vigencia: 2016, codigo_rango_precio: "4.1.1", hectareas: 984.14, zonas: 28}
   campos: [codigo_rango_precio, hectareas, rango_precio, vigencia, zonas]
   latencia_max_ms: 10000
