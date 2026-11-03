@@ -260,6 +260,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **Minas de Presidencia (patrón F):** nombra la del CNMH y explica por qué no cuadran (Granada, 78
+  frente a 66). Va del año más reciente al más viejo, con los muertos, los civiles y el último año.
 
 ## Ficha de un lote (2026-11-01)
 
