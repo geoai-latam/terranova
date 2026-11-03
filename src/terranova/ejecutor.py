@@ -323,6 +323,8 @@ def mapear_fila(
         elif d.de == "codigo":
             base = out.get(d.campo or "")
             out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
+        elif d.de == "fijo":
+            out[nombre] = convertir(d.valor, d.tipo)
     return out
 
 

@@ -676,3 +676,12 @@ def test_un_numero_sale_con_los_decimales_que_publica_la_fuente() -> None:
         None,
     )
     assert fila["valor"] == 13.6
+
+
+def test_un_derivado_fijo_pone_el_mismo_valor_en_cada_elemento() -> None:
+    """El IPM municipal es la medida censal de 2018, y la tabla del DANE no trae el año."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["dane_ipm_municipio"]
+    fila = mapear_fila(h, CATALOGO.fuentes[h.fuente], {"ID": "27099", "IPM": 77.1}, None)
+    assert fila["anio"] == 2018 and fila["ipm_total"] == 77.1
