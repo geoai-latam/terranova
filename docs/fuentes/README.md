@@ -60,3 +60,7 @@ Reglas:
 | Corte Constitucional, índice de sentencias (`v2k4-2t8s`) | [corteconstitucional.sentencias.md](corteconstitucional.sentencias.md) |
 | MinJusticia, SUIN-Juriscol (`fiev-nid6`) | [minjusticia.suin.md](minjusticia.suin.md) |
 | ANT, zonas de reserva campesina constituidas | [ant.zonas_reserva_campesina.md](ant.zonas_reserva_campesina.md) |
+| IDEAM, nivel de los ríos en las estaciones automáticas (`bdmn-sqnh`) | [ideam.nivel_rio.md](ideam.nivel_rio.md) |
+| SDP Bogotá, POT 555: tratamiento, área de actividad y más (copia) | [sdp.pot555.md](sdp.pot555.md) |
+| IDEAM, lluvia de las estaciones automáticas (`s54a-sgyg`) | [ideam.precipitacion.md](ideam.precipitacion.md) |
+| IDEAM, calidad del aire del SISAIRE (`g4t8-zkc3`) | [ideam.calidad_aire.md](ideam.calidad_aire.md) |

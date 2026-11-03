@@ -287,6 +287,37 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **Zonas de reserva campesina, fechas (patrón I):** la constitución sale en ISO (Cabrera,
   2000-11-07, no 11 de julio) y la modificación aparte (Río Pato, 2024-09-26). El motor suma
   `patron` y `orden_fecha` al derivado `columna`.
+- **IDEAM, nivel del río:** dos decimales, los días con dato y el último día (Bolombolo: del 25 de
+  octubre al 2 de noviembre, 7 días, el último el 1). Un vacío explica que solo están las
+  estaciones automáticas.
+- **SDP, POT 555 en un polígono (patrón E):** cada pieza trae sus hectáreas dentro de la zona, con la
+  suma por tratamiento y por área de actividad (`suma_por`, nuevo en el motor, y `area_en_poligono`
+  en las copias). El tope sube de 200 a 1000 piezas para que las sumas no salgan de una parte.
+- **IDEAM, lluvia diaria:** el total de cada sensor, sin sumarlos, con un aviso cuando hay más de uno
+  (Valledupar: 55,79 frente a 25,1 mm) y un vacío que explica las convencionales (hallazgo #10 de
+  GEO Copilot).
+- **IDEAM, calidad del aire:** cada serie contra la norma de la Resolución 2254 (Tabla 1),
+  «pocas horas» con menos del 75 % del año y las horas sobre la norma horaria. Bogotá 2024: 4
+  series sobre la norma anual.
+- **Plan de producto, B1 y B2** (hallazgos de GEO Copilot, plan en `interno/PLAN_PRODUCTO.md`):
+  - **NIT:** se acepta con puntos, guion o dígito de verificación, y la puerta comprueba el dígito
+    (módulo 11 de la DIAN). Con el dígito pegado, antes salía «no encontrado» sin aviso.
+  - **Saldo:** el 402 dice cuántos créditos quedan y cuánto reserva la consulta (decía «agotó sus
+    créditos» con 31 libres).
+  - **Tope de la consulta:** una lista que llega al tope lo avisa en el sobre («Vinieron N de T»), y
+    la paginación ya no dice «lista completa».
+  - **Polígono:** el que se cruza o no tiene área se rechaza con el motivo (antes salía «no
+    encontrado»). Pasar los topes es `zona_demasiado_grande`, y los topes van en el esquema
+    (enmienda de la ADR-0035).
+- **Siguiente:**
+  - **B3**, el contrato `rt/1.1`, según `interno/INVESTIGACION_RESPUESTAS_AGENTE.md`:
+    - la geometría una sola vez (hoy va en `entrada`, en `zona_usada` y en la procedencia);
+    - `_meta.geo` en los argumentos;
+    - la completitud en la raíz;
+    - una procedencia compacta.
+  - **B4**, las descripciones y los avisos por fuente: títulos mineros (RUCOM), alertas del IDEAM
+    (`ultimo_boletin`), SECOP «desde 2023», URT, estrato en la vía y predio.
+  - Los patrones G e H que quedan de la revisión de valor.
 
 ## Ficha de un lote (2026-11-01)
 
