@@ -117,6 +117,7 @@ async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[An
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",
+        "cnmh_conflicto_municipio",
         "predio_en_punto",
         "fuente_describir",
     }
