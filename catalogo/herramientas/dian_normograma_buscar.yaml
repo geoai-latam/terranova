@@ -1,12 +1,15 @@
 id: dian_normograma_buscar
-version: 2
+version: 3
 familia: normativa
 fuente: dian.normograma
 pregunta: "¿Qué dice esta norma tributaria o aduanera sobre este tema?"
 descripcion: >
-  Busca en una norma del Normograma de la DIAN por el nombre del documento (decreto_1165_2019,
-  ley_2277_2022, estatuto_tributario…) y devuelve hasta 20 fragmentos alrededor de cada aparición, con
-  cuántas hay. Solo fragmentos del texto oficial.
+  Busca en una norma del Normograma de la DIAN por el nombre del documento y devuelve hasta 20
+  fragmentos alrededor de cada aparición, con cuántas hay. Solo fragmentos del texto oficial. El
+  nombre es tipo_número_año (decreto_1165_2019, el estatuto aduanero; ley_2277_2022;
+  decreto_1625_2016, el decreto único tributario), salvo el Estatuto Tributario, que es
+  estatuto_tributario. La búsqueda no distingue mayúsculas pero sí tildes: busque el artículo
+  como lo escribe la DIAN, «ARTÍCULO 240.» (sin la tilde salen solo textos antiguos).
   (Fuente: DIAN, Normograma; licencia: Ley 23 de 1982, art. 41.)
 entrada: {documento: documento_normativo, buscar: str}
 consulta:
