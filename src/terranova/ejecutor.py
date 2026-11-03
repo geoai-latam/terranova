@@ -334,7 +334,8 @@ def mapear_fila(
             out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
         elif d.de == "fijo":
             out[nombre] = convertir(d.valor, d.tipo)
-        out[nombre] = redondear(out[nombre], d.decimales)
+        if nombre in out:  # otros (p. ej. las diferencias entre filas) se calculan después
+            out[nombre] = redondear(out[nombre], d.decimales)
     return out
 
 
