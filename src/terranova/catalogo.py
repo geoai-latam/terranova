@@ -877,15 +877,16 @@ class Derivado(_Ficha):
 
     Por elemento: `capa` (valor según la capa que respondió, `valores`), `prefijo` (los `n`
     primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
-    resultado, p. ej. un alias de un `select` agregado) y `codigo` (el significado de un código
-    de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre oficial del departamento
-    por su código DIVIPOLA) y `fijo` (un `valor` que vale para toda la fuente: el año 2018 de una
-    medida censal que no lo trae en la tabla). En secuencia: `diferencia_anterior` (el `campo`
-    menos el del elemento anterior en el orden de la consulta; el primero queda vacío). Del
-    resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y `ultimo` (el `campo` del
-    primer o del último elemento), `distintos` (cuántos valores distintos de `campo` hay: los
-    meses con datos de un año) y `completitud_total` (el total que dio la fuente). `solo_si` deja
-    contar solo algunos elementos.
+    resultado, p. ej. un alias de un `select` agregado; con `patron`, solo el grupo 1 de esa
+    expresión regular, y con `orden_fecha`, la fecha en texto pasa a ISO) y `codigo` (el
+    significado de un código de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre
+    oficial del departamento por su código DIVIPOLA) y `fijo` (un `valor` que vale para toda la
+    fuente: el año 2018 de una medida censal que no lo trae en la tabla). En secuencia:
+    `diferencia_anterior` (el `campo` menos el del elemento anterior en el orden de la consulta;
+    el primero queda vacío). Del resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y
+    `ultimo` (el `campo` del primer o del último elemento), `distintos` (cuántos valores
+    distintos de `campo` hay: los meses con datos de un año) y `completitud_total` (el total que
+    dio la fuente). `solo_si` deja contar solo algunos elementos.
     """
 
     de: Literal[
@@ -908,6 +909,10 @@ class Derivado(_Ficha):
     n: int | None = Field(default=None, ge=1)
     valores: dict[str, str] | None = None
     valor: str | int | float | None = None
+    # solo con `columna`: la parte del texto que interesa (el grupo 1 de una expresión regular) y,
+    # si es una fecha en texto, en qué orden viene
+    patron: str | None = None
+    orden_fecha: Literal["mda", "dma"] | None = None
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
 
     @model_validator(mode="after")
@@ -931,6 +936,10 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
         if self.de == "codigo" and not self.valores:
             raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
+        if (self.patron or self.orden_fecha) and self.de != "columna":
+            raise ValueError("`patron` y `orden_fecha` van solo en un derivado «columna»")
+        if self.patron is not None and re.compile(self.patron).groups != 1:
+            raise ValueError("`patron` lleva exactamente un grupo: la parte que se toma")
         if (self.de == "fijo") != (self.valor is not None):
             raise ValueError("`valor` va solo, y siempre, en un derivado «fijo»")
         if self.solo_si is not None and self.de in DE_ELEMENTO | {"completitud_total"}:

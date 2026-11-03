@@ -30,7 +30,7 @@ campos:
   DEPARTAMENTO: {nombre: departamento, tipo: str, desc: "nombre del departamento o departamentos"}
   MUNICIPIOS: {nombre: municipios, tipo: str, desc: "nombre del municipio o municipios"}
   ACTO_ADMIN: {nombre: acto_administrativo, tipo: str, desc: "acto de constitución (p. ej. «Resolución 046 de 2000»)"}
-  FECHA_CONSTITUCION: {nombre: fecha_constitucion, tipo: str, desc: "fecha de constitución tal como la publica la fuente (texto d/m/aaaa)"}
+  FECHA_CONSTITUCION: {nombre: fecha_constitucion, tipo: date, orden_fecha: dma, desc: "fecha de constitución (la fuente la escribe d/m/aaaa; en dos zonas le pega «Fecha de modificación: …», que sale aparte)"}
   Area_HA: {nombre: area_ha, tipo: float, desc: "área en hectáreas"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat, reintentos_si_vacio: 3}
 dcat: {publisher: ANT, theme: ordenamiento_rural}
@@ -48,5 +48,6 @@ perfil:
     agrupar: 0.4
   hallazgos:
   - el punto de prueba toca un solo elemento
+  - "FECHA_CONSTITUCION es texto d/m/aaaa en las 30 zonas (7/11/2000 es el 7 de noviembre: Resolución 046 de 2000); Río Pato y La Tuna le pegan «Fecha de modificación: d/m/aaaa» (medido el 2026-11-03)"
   - "la fuente (proxy utility.arcgis.com) responde vacío sin error ~25 % de las veces (4 de 16, 2026-10-23): se reintenta 3 veces antes de decir no_encontrado"
   decision: en vivo por punto
