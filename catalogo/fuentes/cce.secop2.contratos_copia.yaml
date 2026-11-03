@@ -27,6 +27,9 @@ copia:
   ventana: {columna: fecha_de_firma, desde: 2023-01-01}
   indices: [nit_entidad, ciudad, fecha_de_firma]
   indices_contiene: [nombre_entidad]
+  # Las filas de un NIT quedan juntas en el disco: buscar «medellin» toca 50 142 contratos, que en
+  # frío (sin caché) tardaban 16 s leídos de páginas sueltas (medido el 2026-11-03).
+  orden_fisico: nit_entidad
   texto: [objeto_del_contrato]
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P2D}
 cobertura:
