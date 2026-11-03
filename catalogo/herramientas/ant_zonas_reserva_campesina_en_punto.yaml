@@ -1,5 +1,5 @@
 id: ant_zonas_reserva_campesina_en_punto
-version: 2
+version: 3
 familia: ambiente
 fuente: ant.zonas_reserva_campesina
 pregunta: "¿En qué zona de reserva campesina constituida cae este punto?"
@@ -12,14 +12,14 @@ descripcion: >
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
-    max_features: 5
+    tabla: ant_zonas_reserva_campesina
+    punto: ["{lon}", "{lat}"]
+    select: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
+    geometria: simplificada
+    order: [OBJECTID_1]
+    limite: 5
   campos: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
 salida: ZonaReservaCampesinaEnPunto
 derivados:
@@ -29,9 +29,15 @@ derivados:
     patron: 'modificaci[oó]n:\s*(\d{1,2}/\d{1,2}/\d{4})'
     orden_fecha: dma
     tipo: date
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ninguna de las zonas de reserva campesina constituidas que publica la ANT.
+    Las zonas en trámite no están en esta fuente, así que esto no descarta que se esté
+    constituyendo una.
 cobro: punto
 canario:
-  # ZRC de Cabrera (Cundinamarca); medido el 2026-10-21 en la capa 0 (punto), 0,6 s.
+  # ZRC de Cabrera (Cundinamarca); medido el 2026-10-21 en la capa 0 de la fuente (punto).
   entrada: {lon: -74.46, lat: 3.88}
   verdad: {nombre: Cabrera, acto_administrativo: "Resolución 046 de 2000", fecha_constitucion: "2000-11-07"}
   campos: [acto_administrativo, area_ha, departamento, fecha_constitucion, municipios, nombre]

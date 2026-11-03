@@ -1,19 +1,20 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T06:23:34+00:00",
+ "grabado": "2026-11-03T13:45:15+00:00",
  "herramienta": "ant_zonas_reserva_campesina_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -74.46,
-     3.88,
+    "geometria": "simplificada",
+    "limite": 5,
+    "order": [
+     "OBJECTID_1"
+    ],
+    "punto": [
      -74.46,
      3.88
     ],
-    "geometria": "simplificada",
-    "max_features": 5,
-    "out_fields": [
+    "select": [
      "NOMBRE_ZON",
      "DEPARTAMENTO",
      "MUNICIPIOS",
@@ -21,9 +22,9 @@
      "FECHA_CONSTITUCION",
      "Area_HA"
     ],
-    "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0"
+    "tabla": "ant_zonas_reserva_campesina"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -33,7 +34,7 @@
         {
          "geometry": {
           "coordinates": [
-           -74.37981,
+           -74.37982,
            4.03552
           ],
           "type": "Point"
@@ -51,52 +52,27 @@
        ],
        "type": "FeatureCollection"
       },
-      "kind": "feature_collection",
-      "name": "Zona_de_Reserva_Campesina_Constituida"
+      "kind": "feature_collection"
      }
     ],
     "facts": {
-     "bbox": [
-      -74.46,
-      3.88,
-      -74.46,
-      3.88
-     ],
-     "capa": "Zona_de_Reserva_Campesina_Constituida",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -74.46,
-       3.88,
-       -74.46,
-       3.88
-      ],
-      "max_features": 5,
-      "out_fields": [
-       "NOMBRE_ZON",
-       "DEPARTAMENTO",
-       "MUNICIPIOS",
-       "ACTO_ADMIN",
-       "FECHA_CONSTITUCION",
-       "Area_HA"
-      ],
-      "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0",
-      "where": "1=1"
+     "consultado_en": "2026-11-03T13:42:28.663266+00:00",
+     "copia": {
+      "filas": 30,
+      "huella": "sha256:ba5ff48b7c02b2b1c8b4d7cd0d21a0d1e28a6975bbdd5e1f0100ed517974bed1",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261103134228663266"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer/0"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }

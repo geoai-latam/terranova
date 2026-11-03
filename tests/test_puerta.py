@@ -246,26 +246,40 @@ class ConectorIntermitente(ConectorFalso):
         return await super().llamar(herramienta, argumentos)
 
 
-ZRC = "ant_zonas_reserva_campesina_en_punto"
-CABRERA = {"type": "Feature", "geometry": None, "properties": {"NOMBRE_ZON": "Cabrera"}}
+# Los resguardos van en vivo por la capa 0 de la ANT; la prueba les pone los reintentos que tenía la
+# reserva campesina antes de pasar a copia (el proxy de la ANT respondía vacío ~25 % de las veces).
+RESGUARDOS = "ant_resguardos_en_punto"
+TOTARCO = {"type": "Feature", "geometry": None, "properties": {"NOMBRE": "Totarco Dinde"}}
+
+
+@pytest.fixture
+def con_reintentos(monkeypatch: pytest.MonkeyPatch) -> None:
+    fid = puerta.CATALOGO.herramientas[RESGUARDOS].fuente
+    fuente = puerta.CATALOGO.fuentes[fid]
+    comportamiento = fuente.comportamiento.model_copy(update={"reintentos_si_vacio": 3})
+    nueva = fuente.model_copy(update={"comportamiento": comportamiento})
+    for catalogo in (puerta.CATALOGO, puerta.VENDIBLE):
+        monkeypatch.setitem(catalogo.fuentes, fid, nueva)
 
 
 @pytest.mark.anyio
-@_con(ConectorIntermitente([CABRERA], vacias=2))
+@_con(ConectorIntermitente([TOTARCO], vacias=2))
 async def test_un_vacio_falso_se_reintenta_antes_de_decir_no_encontrado(
-    cliente_con: Client[Any],
+    con_reintentos: None, cliente_con: Client[Any]
 ) -> None:
     """«No se pudo» no es «no hay»: la fuente marcada se vuelve a preguntar si responde vacío."""
-    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+    r = await cliente_con.call_tool(RESGUARDOS, {"lon": -75.3, "lat": 3.1})
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "encontrado"
-    assert r.structured_content["datos"]["nombre"] == "Cabrera"
+    assert r.structured_content["datos"]["nombre"] == "Totarco Dinde"
 
 
 @pytest.mark.anyio
-@_con(ConectorIntermitente([CABRERA], vacias=10))
-async def test_vacio_tras_los_reintentos_lo_dice(cliente_con: Client[Any]) -> None:
-    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+@_con(ConectorIntermitente([TOTARCO], vacias=10))
+async def test_vacio_tras_los_reintentos_lo_dice(
+    con_reintentos: None, cliente_con: Client[Any]
+) -> None:
+    r = await cliente_con.call_tool(RESGUARDOS, {"lon": -75.3, "lat": 3.1})
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "no_encontrado"
     assert any("4 veces" in a for a in r.structured_content["avisos"])
