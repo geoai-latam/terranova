@@ -304,6 +304,8 @@ def mapear_fila(
             if campo.vacios and valor is not None and str(valor).strip() in campo.vacios:
                 valor = None  # relleno de la fuente («0», «Pendiente»), no un dato
             out[campo.nombre] = _validar(campo, convertir(valor, campo.tipo))
+            if campo.decimales is not None and isinstance(out[campo.nombre], float):
+                out[campo.nombre] = round(out[campo.nombre], campo.decimales)
             if campo.codigos is not None or campo.codigos_por_capa is not None:
                 # un código solo no dice nada: el significado va al lado, no en la ficha técnica
                 significado = campo.significado(out[campo.nombre], capa)

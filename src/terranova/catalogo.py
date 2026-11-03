@@ -258,6 +258,13 @@ class Campo(_Ficha):
         description="la fuente escribe la cifra como texto con signo de pesos ($84.95, «$ 2.31», "
         "-$0.00): sale como número",
     )
+    decimales: int | None = Field(
+        default=None,
+        ge=0,
+        le=6,
+        description="redondea un número con más decimales de los que tiene sentido (el anexo de la "
+        "GEIH trae la tasa de desempleo con 15: 10.859452814202058); el DANE la publica con uno",
+    )
     vacios: tuple[str, ...] = Field(
         default=(),
         description="textos que la fuente pone en lugar de un dato que no tiene (la SFC escribe "

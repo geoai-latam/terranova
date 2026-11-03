@@ -30,6 +30,10 @@ copia:
     fila_encabezado: 12
     filas_encabezado: 2
     largo_desde: 2
+    # La hoja trae dos tablas apiladas: Total Nacional (filas 12 a 30) y Total Cabeceras (32 a
+    # 52). Medido el 2026-11-02 en anex-GEIH-sep2026.xlsx: sin este corte, la copia mezclaba las
+    # dos sin decir cuál es cuál (población de enero de 2026: 52 339 y 40 765 miles).
+    hasta_fila: 30
   tabla: dane_geih_nacional
   clave: _fila
   indices: [columna]
@@ -42,7 +46,7 @@ campos:
   Concepto: {nombre: indicador, tipo: str, desc: "indicador (TGP, TO, TD…) o población, en miles"}
   columna: {nombre: anio, tipo: str, desc: "año"}
   subcolumna: {nombre: mes, tipo: str, desc: "mes (Ene, Feb, …)"}
-  valor: {nombre: valor, tipo: float, desc: "porcentaje para las tasas; miles de personas para las poblaciones"}
+  valor: {nombre: valor, tipo: float, decimales: 1, desc: "porcentaje para las tasas; miles de personas para las poblaciones; con un decimal, como lo publica el DANE"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terrnova.
@@ -55,4 +59,5 @@ perfil:
   - "tabla ancha: el año combinado sobre 12 meses; se pasa a una fila por indicador y mes"
   - "algunos indicadores (TCDFTP) valen 0 en los primeros años: no se medían"
   - "los nombres de los indicadores traen espacios al final"
+  - "la hoja «Total nacional» apila Total Nacional y Total Cabeceras con los mismos indicadores: la copia corta en la fila 30 (medido el 2026-11-02)"
   decision: "por copia (el DANE bloquea al datacenter) del anexo del último mes, por año"
