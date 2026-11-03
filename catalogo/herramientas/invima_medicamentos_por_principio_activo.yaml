@@ -1,12 +1,15 @@
 id: invima_medicamentos_por_principio_activo
-version: 2
+version: 3
 familia: estadisticas
 fuente: invima.cum_vigentes
 pregunta: "¿Qué medicamentos con este principio activo tienen registro vigente en el INVIMA?"
 descripcion: >
-  Medicamentos vigentes del Código Único de Medicamentos (INVIMA) que contienen un principio
-  activo (p. ej. IBUPROFENO): producto, titular, registro sanitario, presentación, dosis,
-  forma farmacéutica y ATC; cada presentación una vez, hasta 200, ordenadas por expediente.
+  Medicamentos con registro vigente en el INVIMA que contienen un principio activo (p. ej.
+  IBUPROFENO), uno por producto: expediente, producto, titular, registro sanitario, dosis
+  («800 mg por TABLETA RECUBIERTA»), forma farmacéutica, ATC y cuántas presentaciones activas
+  tiene. Solo cuenta las presentaciones (CUM) activas: las inactivas ya no se comercializan.
+  Ordenados por producto, hasta 500. Arriba, cuántos productos hay. Busca el texto dentro del
+  principio activo, con o sin tilde. El INVIMA escribe ACETAMINOFEN, no paracetamol.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {principio_activo: nombre}
 consulta:
@@ -16,21 +19,33 @@ consulta:
   argumentos:
     id: i7cb-raxc
     portal: datos.gov.co
-    # Spec 07: la fuente repite cada presentación por fabricante e importador (3 019 filas para 1 822
-    # presentaciones con ibuprofeno): una vez cada una.
-    select: "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, modalidad"
-    where: "upper(principioactivo) like upper('%{principio_activo}%')"
-    order: "expediente, consecutivocum"
-    max_filas: 200
-  campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, formafarmaceutica, modalidad]
+    # Medido el 2026-11-02: la fuente da una fila por presentación, principio, vía y rol (3 710
+    # filas activas con acetaminofén para 276 productos), y 405 de las 1 789 de metformina son de
+    # CUM inactivos. Se agrupa por producto y dosis, solo con CUM activos.
+    select: "expediente, producto, titular, registrosanitario, principioactivo, cantidad || ' ' || unidadmedida || ' por ' || unidadreferencia AS dosis, formafarmaceutica, atc, descripcionatc, count(distinct consecutivocum) AS presentaciones_activas"
+    where: "upper(principioactivo) like upper('%{principio_activo:sin_tildes}%') AND estadocum = 'Activo'"
+    group: "expediente, producto, titular, registrosanitario, principioactivo, dosis, formafarmaceutica, atc, descripcionatc"
+    order: "producto, expediente"
+    max_filas: 500
+  campos: [expediente, producto, titular, registrosanitario, principioactivo, formafarmaceutica, atc, descripcionatc]
 salida: MedicamentosPorPrincipio
 derivados:
   dosis: {de: columna, campo: dosis, tipo: str}
+  presentaciones_activas: {de: columna, campo: presentaciones_activas, tipo: int}
+  numero_productos: {de: distintos, campo: expediente}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún medicamento con registro vigente y presentación activa tiene ese texto en el principio
+    activo. Revise cómo lo escribe el INVIMA (ACETAMINOFEN, no paracetamol) o pruebe con parte del
+    nombre. Los registros vencidos o en otros estados no están en esta búsqueda.
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en i7cb-raxc: 1 822 presentaciones vigentes con ibuprofeno; la primera por
-  # expediente es el 31330 (Motrin 800 mg, Pfizer).
+  # Medido el 2026-11-02 en i7cb-raxc: 163 productos con ibuprofeno y CUM activos; el primero por
+  # nombre es Actron Max (expediente 20179712, Bayer), 400 mg por cápsula blanda, 15 presentaciones.
   entrada: {principio_activo: IBUPROFENO}
-  verdad: {expediente: 31330, titular: "PFIZER S.A.S.", principio_activo: IBUPROFENO}
-  campos: [atc, cantidad, concentracion, consecutivo_cum, descripcion_atc, dosis, estado_cum, estado_registro, expediente, fecha_vencimiento, forma_farmaceutica, modalidad, presentacion, principio_activo, producto, registro_sanitario, titular, unidad_medida, unidad_referencia, via_administracion]
+  verdad: {expediente: 20179712, titular: "BAYER S.A.", dosis: "400 mg por CÁPSULA BLANDA", presentaciones_activas: 15}
+  minimos: {numero_productos: 150}
+  campos: [atc, descripcion_atc, dosis, expediente, forma_farmaceutica, numero_productos, numero_registros, presentaciones_activas, principio_activo, producto, registro_sanitario, titular]
   latencia_max_ms: 15000

@@ -64,13 +64,24 @@ ninguno de los otros tres.
 2. **Cuatro conjuntos para una pregunta.** Quien tiene el expediente no sabe en qué estado está, y
    el vacío de cada herramienta parecía un «no existe».
 3. **Fechas en tres formas en la misma respuesta**, y años de relleno que parecen fechas.
+4. **Muchas filas por producto, y CUM inactivos primero.** Medido el 2026-11-02:
+   - 3 710 filas activas con acetaminofén son 276 productos;
+   - de las 1 789 filas de metformina, 405 son de presentaciones inactivas (Glucophage uso
+     institucional).
+5. **La búsqueda es literal:**
+   - «PARACETAMOL» da 26 productos y «acetaminofén», con tilde, 18. Sin tilde son 276; con el
+     comodín de tildes, 289.
+   - El INVIMA escribe ACETAMINOFEN, a veces con tilde, y a veces con el excipiente delante
+     («361.11 MG DE ACETAMINOFEN DC 90. EQUIVALENTE A ACETAMINOFEN»).
+   - Buscar también en `descripcionatc` (PARACETAMOL) se probó y no sirve: trae las filas de los
+     otros principios de cada combinación (532 para paracetamol).
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
 | `invima_medicamento_por_expediente` (v2) | medio → alto | con dosis |
-| `invima_medicamentos_por_principio_activo` (v2) | medio | con dosis; falta solo CUM activos y agrupar por producto |
+| `invima_medicamentos_por_principio_activo` (v3) | medio → alto | un producto por fila, solo CUM activos, con dosis y presentaciones activas; busca con o sin tilde |
 | `invima_medicamentos_por_titular` | medio | falta el principio activo; el titular se escribe de dos formas |
 | `invima_medicamento_en_renovacion_por_expediente` (v2) | bajo → medio | con dosis y vacío que remite a los otros estados |
 | `invima_medicamento_otros_estados_por_expediente` (v2) | bajo → medio | igual |
@@ -85,6 +96,13 @@ ninguno de los otros tres.
   - El motor suma `orden_fecha` (mda o dma, declarado por campo) y `anios_validos`. Las fechas
     salen en ISO, y un vencimiento fuera de 1950-2049 sale vacío, no como fecha.
   - El vacío de cada herramienta por expediente nombra las otras tres.
+- **2026-11-02, patrón E (principio activo, v3):**
+  - Se agrupa por producto y dosis, solo con CUM activos, con `presentaciones_activas` y
+    `numero_productos` arriba. El orden es por nombre de producto y el tope, 500.
+  - El motor suma `{marcador:sin_tildes}`, que cambia cada vocal con tilde por `_`, el comodín de
+    una letra de LIKE.
+  - El caso contrario (escribir sin tilde lo que la fuente tiene con tilde) no se cubre: con
+    acetaminofén son 13 de 289 productos.
 - **Pendiente:**
   - Una sola `invima_medicamento_estado_por_expediente` que mire los cuatro conjuntos. Pide
     consultas múltiples en el motor, igual que `cnmh_conflicto_municipio`.

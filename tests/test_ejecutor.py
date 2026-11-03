@@ -96,6 +96,16 @@ def test_renderizar_conserva_tipos_y_arma_texto() -> None:
     }
 
 
+def test_un_marcador_sin_tildes_busca_con_y_sin_tilde() -> None:
+    """El INVIMA escribe ACETAMINOFEN; quien pregunta escribe «acetaminofén» (medido el
+    2026-11-02 en i7cb-raxc: 18 productos con la tilde, 289 con el comodín)."""
+    where = "upper(p) like upper('%{p:sin_tildes}%') AND x = '{p}'"
+    assert renderizar(where, {"p": "acetaminofén"}) == (
+        "upper(p) like upper('%acetaminof_n%') AND x = 'acetaminofén'"
+    )
+    assert renderizar("{p:sin_tildes}", {"p": "Bogotá"}) == "Bogot_"
+
+
 @pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
 def test_sanear_quita_control_y_bidi(sucio: str) -> None:
     assert texto_es_limpio(sanear(sucio))

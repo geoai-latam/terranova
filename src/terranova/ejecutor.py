@@ -172,13 +172,22 @@ def _numero(x: Any) -> bool:
     return isinstance(x, int | float) and not isinstance(x, bool) and math.isfinite(x)
 
 
+_TILDES = str.maketrans(dict.fromkeys("ÁÉÍÓÚÜáéíóúü", "_"))
+
+
+def _marcador(m: re.Match[str], valores: dict[str, Any]) -> Any:
+    valor = valores[m.group(1)]
+    return str(valor).translate(_TILDES) if m.group(0).endswith(":sin_tildes}") else valor
+
+
 def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
-    """Reemplaza `{marcador}`: si el texto es solo el marcador, el valor conserva su tipo."""
+    """Reemplaza `{marcador}`: si el texto es solo el marcador, el valor conserva su tipo.
+    `{marcador:sin_tildes}` cambia cada vocal con tilde por `_`, el comodín de LIKE."""
     if isinstance(plantilla, str):
         entero = MARCADOR.fullmatch(plantilla)
         if entero:
-            return valores[entero.group(1)]
-        return MARCADOR.sub(lambda m: str(valores[m.group(1)]), plantilla)
+            return _marcador(entero, valores)
+        return MARCADOR.sub(lambda m: str(_marcador(m, valores)), plantilla)
     if isinstance(plantilla, list):
         return [renderizar(v, valores) for v in plantilla]
     if isinstance(plantilla, dict):

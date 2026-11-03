@@ -241,6 +241,10 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     arriba: en Chía, 54 027 accesos en el cuarto trimestre de 2025.
   - La serie de 2016 a 2023 queda en `mintic_internet_fijo_municipio_2016_2023`.
   - El motor suma los avisos `cuando: fuera`, que dicen a qué herramienta ir.
+- **INVIMA, medicamentos por principio activo (patrón E):**
+  - Da un producto por fila, solo con presentaciones activas, con la dosis, y arriba cuántos
+    productos hay: 163 con ibuprofeno y 95 con metformina.
+  - El motor suma `{marcador:sin_tildes}`: «acetaminofén» pasa de 18 productos a 289.
 
 ## Ficha de un lote (2026-11-01)
 
