@@ -1,5 +1,5 @@
 id: men_educacion_etc
-version: 2
+version: 3
 familia: estadisticas
 fuente: men.educacion_etc
 pregunta: "¿Cómo están la cobertura, la deserción y la aprobación escolar en esta entidad territorial certificada?"
@@ -7,6 +7,7 @@ descripcion: >
   Indicadores de educación preescolar, básica y media de una entidad territorial certificada (ETC)
   por su código del MEN (p. ej. 3759 Medellín), por año desde 2011: población de 5 a 16 años, tasa de
   matriculación, cobertura neta y bruta, deserción, aprobación, reprobación y repitencia, en %.
+  El año más reciente va primero, y arriba su cobertura neta y su deserción.
   (Fuente: MinEducación; licencia: CC BY-SA 4.0.)
 entrada: {codigo_etc: int}
 consulta:
@@ -18,17 +19,27 @@ consulta:
     portal: datos.gov.co
     select: "ano, cod_etc, nombre_etc, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia"
     where: "cod_etc = '{codigo_etc}'"
-    order: "ano"
+    order: "ano DESC"
     max_filas: 100
   campos: [ano, cod_etc, nombre_etc, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia]
 salida: EducacionPorEtc
 derivados:
+  ultimo_anio: {de: primero, campo: anio, tipo: int}
+  cobertura_neta_ultimo_anio: {de: primero, campo: cobertura_neta, tipo: float}
+  desercion_ultimo_anio: {de: primero, campo: desercion, tipo: float}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una cobertura de más de 100 % es posible y no es un error: el denominador es la población de 5
+    a 16 años que proyecta el DANE, y en el lugar estudian niños que viven en otro, o la proyección
+    quedó corta. La bruta cuenta además a quienes están en un grado que no es el de su edad. En 2024,
+    94 de 1 122 municipios pasan de 100 % en la neta y 281 en la bruta.
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en sras-4t5p: Medellín (3759), 2011 → cobertura neta 108,49 %, deserción 3,69 %.
+  # Medido el 2026-11-02 en sras-4t5p: Medellín (3759), 2024 → cobertura neta 93,58 %, deserción 3,18 %.
   entrada: {codigo_etc: 3759}
-  verdad: {anio: 2011, codigo_etc: "3759", cobertura_neta: 108.49, desercion: 3.69}
+  verdad: {anio: 2024, codigo_etc: "3759", cobertura_neta: 93.58, desercion: 3.18, ultimo_anio: 2024, cobertura_neta_ultimo_anio: 93.58}
   minimos: {numero_registros: 14}
-  campos: [anio, aprobacion, cobertura_bruta, cobertura_neta, codigo_etc, desercion, etc, numero_registros, poblacion_5_16, repitencia, reprobacion, tasa_matriculacion_5_16]
+  campos: [anio, aprobacion, cobertura_bruta, cobertura_neta, cobertura_neta_ultimo_anio, codigo_etc, desercion, desercion_ultimo_anio, etc, numero_registros, poblacion_5_16, repitencia, reprobacion, tasa_matriculacion_5_16, ultimo_anio]
   latencia_max_ms: 10000

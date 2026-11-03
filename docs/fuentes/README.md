@@ -46,3 +46,4 @@ Reglas:
 | DANE, mercado laboral total nacional (anexo de la GEIH, copia) | [dane.geih_nacional.md](dane.geih_nacional.md) |
 | DANE, índice de precios al consumidor (anexo de índices, copia) | [dane.ipc_indices.md](dane.ipc_indices.md) |
 | INS, calidad del agua, IRCA (`nxt2-39c3`) | [ins.calidad_agua_irca.md](ins.calidad_agua_irca.md) |
+| MinEducación, educación básica y media (municipio, departamento y ETC) | [men.educacion.md](men.educacion.md) |
