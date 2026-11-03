@@ -43,3 +43,4 @@ Reglas:
 | DANE y DIAN, comercio exterior por subpartida (copias de los microdatos) | [dian.comex.md](dian.comex.md) |
 | IDEAM, normales climatológicas (`nsz2-kzcq`) | [ideam.normales_climatologicas.md](ideam.normales_climatologicas.md) |
 | ANI, concesiones viales (capa 3 de ANIscopio) | [ani.concesiones_viales.md](ani.concesiones_viales.md) |
+| DANE, mercado laboral total nacional (anexo de la GEIH, copia) | [dane.geih_nacional.md](dane.geih_nacional.md) |

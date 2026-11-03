@@ -656,3 +656,23 @@ def test_relleno_de_la_fuente_sale_vacio_y_el_tipo_con_su_nombre() -> None:
     )
     assert nequi["tipo_entidad_significado"] == "Compañías de financiamiento"
     assert nequi["nit_con_dv"] == "9016332760"
+
+
+def test_un_numero_sale_con_los_decimales_que_publica_la_fuente() -> None:
+    """El anexo de la GEIH trae la tasa de desempleo con 15 decimales; el DANE la publica con uno
+    (medido el 2026-11-02 en anex-GEIH-sep2026.xlsx: 13.608424834543777 es 13,6)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["dane_mercado_laboral_nacional"]
+    fila = mapear_fila(
+        h,
+        CATALOGO.fuentes[h.fuente],
+        {
+            "Concepto": "Tasa de Desocupación (TD)",
+            "columna": "2001",
+            "subcolumna": "Dic",
+            "valor": 13.608424834543777,
+        },
+        None,
+    )
+    assert fila["valor"] == 13.6

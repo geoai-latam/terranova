@@ -211,6 +211,13 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - El avance de obra dice que es una fracción y de cuándo es: el último reporte es de noviembre de
     2022, y la capa no se edita desde septiembre de 2023.
   - El valor del contrato dice en pesos de qué fecha está (de 1996 a 2019) y suma el valor indexado.
+- **DANE, mercado laboral (patrón E), con un error de fondo:**
+  - La copia mezclaba Total Nacional y Total Cabeceras, que la hoja trae apiladas, sin decir cuál
+    era cuál. Ahora corta en la fila 30.
+  - **Falta reconstruir la copia en producción** (a mano, desde Colombia). Hasta entonces el canario
+    está rojo, y es honesto que lo esté.
+  - Arriba van el último mes y sus tasas de desempleo, ocupación y participación, con un decimal.
+    El motor suma `decimales` por campo.
 
 ## Ficha de un lote (2026-11-01)
 
