@@ -1,13 +1,18 @@
 id: ideam_calidad_aire_municipio
-version: 1
+version: 2
 familia: ambiente
 fuente: ideam.calidad_aire
 pregunta: "¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…)"
 descripcion: >
   Calidad del aire de un municipio (DIVIPOLA) en un año, por estación y contaminante, según el
   SISAIRE del IDEAM: concentración promedio y máxima horaria (µg/m³) de PM2.5, PM10, O3, NO2, SO2 y
-  CO, con las horas medidas (pocas horas = promedio poco representativo). La norma colombiana de
-  referencia es la Resolución 2254 de 2017. Datos de 2020 a 2025; solo municipios con estaciones.
+  CO, con las horas medidas (pocas horas = promedio poco representativo). Compara con la norma
+  vigente (Resolución 2254 de 2017, Tabla 1): el promedio del año contra el límite anual de PM10
+  (50), PM2.5 (25) y NO2 (60), y cuenta las horas por encima del límite de una hora de NO2 (200),
+  SO2 (100) y CO (35 000). Con menos de 6 570 horas medidas (75 % del año), supera_norma_anual dice
+  «pocas horas» en vez de sí o no. El O3 (8 horas) y los límites de 24 horas no se calculan aquí. Cada
+  contaminante va de la estación con el promedio más alto a la más baja. Datos de 2020 a 2025; solo
+  municipios con estaciones.
   (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, anio: anio}
 consulta:
@@ -17,24 +22,31 @@ consulta:
   argumentos:
     id: g4t8-zkc3
     portal: datos.gov.co
-    select: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas"
+    select: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad, avg(med_concentracion_estandar) AS promedio, max(med_concentracion_estandar) AS maximo, count(*) AS horas, case(msfl_code = 'PM10', 50, msfl_code = 'PM2.5', 25, msfl_code = 'NO2', 60) AS norma_anual, case(msfl_code = 'NO2', 200, msfl_code = 'SO2', 100, msfl_code = 'CO', 35000) AS norma_horaria, case(msfl_code in ('PM10', 'PM2.5', 'NO2') AND count(*) < 6570, 'pocas horas', msfl_code = 'PM10' AND avg(med_concentracion_estandar) > 50, 'sí', msfl_code = 'PM2.5' AND avg(med_concentracion_estandar) > 25, 'sí', msfl_code = 'NO2' AND avg(med_concentracion_estandar) > 60, 'sí', msfl_code in ('PM10', 'PM2.5', 'NO2'), 'no') AS supera_anual, case(msfl_code in ('NO2', 'SO2', 'CO'), sum(case(msfl_code = 'NO2' AND med_concentracion_estandar > 200, 1, msfl_code = 'SO2' AND med_concentracion_estandar > 100, 1, msfl_code = 'CO' AND med_concentracion_estandar > 35000, 1, true, 0))) AS horas_sobre_norma"
     where: "codigo_municipio = ('{municipio_divipola}')::number::text AND msfl_code in ('PM2.5', 'PM10', 'O3', 'NO2', 'SO2', 'CO') AND med_fecha_inicio like '{anio}-%'"
     group: "estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad"
-    order: "msfl_code, nombre_est"
+    order: "msfl_code, promedio DESC"
     max_filas: 500
   campos: [estacion_id, nombre_est, nombre_fgda, msfl_code, sigla_unidad]
 derivados:
-  promedio: {de: columna, campo: promedio, tipo: float}
-  maximo: {de: columna, campo: maximo, tipo: float}
+  promedio: {de: columna, campo: promedio, tipo: float, decimales: 1}
+  maximo: {de: columna, campo: maximo, tipo: float, decimales: 1}
   horas: {de: columna, campo: horas, tipo: int}
+  norma_anual: {de: columna, campo: norma_anual, tipo: int}
+  supera_norma_anual: {de: columna, campo: supera_anual}
+  norma_horaria: {de: columna, campo: norma_horaria, tipo: int}
+  horas_sobre_norma_horaria: {de: columna, campo: horas_sobre_norma, tipo: int}
   numero_registros: {de: conteo, tipo: int}
+  estaciones: {de: distintos, campo: estacion_id, tipo: int}
+  series_sobre_norma_anual: {de: conteo, solo_si: {campo: supera_norma_anual, valores: ["sí"]}, tipo: int}
 salida: CalidadAireMunicipio
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en g4t8-zkc3: Medellín 2025 tiene 36 series (15 de PM2.5); la primera en el
-  # orden es CO en la estación Politécnico JIC (9023), 8 270 horas.
+  # orden es CO en la estación Politécnico JIC (9023), 8 270 horas. El 2026-11-03: 20 estaciones, y
+  # una serie sobre la norma anual (PM10 en Altavista, 52,5 µg/m³ en 7 961 horas).
   entrada: {municipio_divipola: "05001", anio: "2025"}
-  verdad: {contaminante: CO, estacion_id: "9023", horas: 8270}
+  verdad: {contaminante: CO, estacion_id: "9023", horas: 8270, norma_horaria: 35000, horas_sobre_norma_horaria: 0, estaciones: 20, series_sobre_norma_anual: 1}
   minimos: {numero_registros: 30}
-  campos: [autoridad, contaminante, estacion, estacion_id, horas, maximo, numero_registros, promedio, unidad]
+  campos: [autoridad, contaminante, estacion, estacion_id, estaciones, horas, horas_sobre_norma_horaria, maximo, norma_anual, norma_horaria, numero_registros, promedio, series_sobre_norma_anual, supera_norma_anual, unidad]
   latencia_max_ms: 20000
