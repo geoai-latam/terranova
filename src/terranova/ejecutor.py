@@ -328,7 +328,13 @@ def mapear_fila(
             base = out.get(d.campo or "")
             out[nombre] = str(base)[: d.n] if base else None
         elif d.de == "columna":
-            out[nombre] = convertir(fila.get(d.campo or ""), d.tipo)
+            crudo = fila.get(d.campo or "")
+            if d.patron is not None and crudo is not None:
+                hallado = re.search(d.patron, str(crudo))
+                crudo = hallado.group(1) if hallado else None
+            if d.orden_fecha and isinstance(crudo, str):
+                crudo = fecha_en_orden(crudo, d.orden_fecha)
+            out[nombre] = convertir(crudo, d.tipo)
         elif d.de == "codigo":
             base = out.get(d.campo or "")
             out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
@@ -390,8 +396,9 @@ def _validar(campo: Campo, valor: Any) -> Any:
 
 def fecha_en_orden(texto: str, orden: str) -> str:
     """«06/15/2016» (mda) o «15/06/2016» (dma) a ISO. Lo que no tiene esa forma pasa igual: el
-    mismo conjunto puede traer fechas ISO en otras filas."""
-    m = re.fullmatch(r"\s*(\d{1,2})/(\d{1,2})/(\d{4})\s*", texto)
+    mismo conjunto puede traer fechas ISO en otras filas. Si detrás de la fecha viene más texto
+    («18/12/1997 Fecha de modificación: 26/09/2024»), cuenta la primera."""
+    m = re.match(r"\s*(\d{1,2})/(\d{1,2})/(\d{4})(?!\d)", texto)
     if not m:
         return texto
     a, b, anio = m.groups()

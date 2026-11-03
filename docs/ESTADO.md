@@ -260,6 +260,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **Zonas de reserva campesina, fechas (patrón I):** la constitución sale en ISO (Cabrera,
+  2000-11-07, no 11 de julio) y la modificación aparte (Río Pato, 2024-09-26). El motor suma
+  `patron` y `orden_fecha` al derivado `columna`.
 
 ## Ficha de un lote (2026-11-01)
 

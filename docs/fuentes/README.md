@@ -52,3 +52,4 @@ Reglas:
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
 | CAR Cundinamarca, POMCA (diez cuencas) | [car.pomca.md](car.pomca.md) |
+| ANT, zonas de reserva campesina constituidas | [ant.zonas_reserva_campesina.md](ant.zonas_reserva_campesina.md) |

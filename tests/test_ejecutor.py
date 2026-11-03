@@ -695,6 +695,37 @@ def test_un_numero_sale_con_los_decimales_que_publica_la_fuente() -> None:
     assert fila["valor"] == 13.6
 
 
+def test_la_fecha_de_constitucion_y_la_de_modificacion_salen_aparte() -> None:
+    """La ANT escribe d/m/aaaa y en dos zonas le pega la modificación al mismo campo (medido el
+    2026-11-03): la constitución sale de la primera fecha y la modificación, del `patron`."""
+    from terranova.ejecutor import fecha_en_orden, mapear_fila
+
+    assert fecha_en_orden("7/11/2000", "dma") == "2000-11-07"
+    assert fecha_en_orden("18/12/1997 Fecha de modificación: 26/09/2024", "dma") == "1997-12-18"
+    assert fecha_en_orden("18/12/19975", "dma") == "18/12/19975"  # no es una fecha
+    h = CATALOGO.herramientas["ant_zonas_reserva_campesina_en_punto"]
+    fuente = CATALOGO.fuentes[h.fuente]
+    pato = {
+        "NOMBRE_ZON": "Pato",
+        "FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024",
+    }
+    fila = mapear_fila(h, fuente, pato, 0)
+    assert fila["fecha_constitucion"] == "1997-12-18" and fila["fecha_modificacion"] == "2024-09-26"
+    cabrera = mapear_fila(
+        h, fuente, {"NOMBRE_ZON": "Cabrera", "FECHA_CONSTITUCION": "7/11/2000"}, 0
+    )
+    assert cabrera["fecha_constitucion"] == "2000-11-07" and cabrera["fecha_modificacion"] is None
+
+
+def test_patron_y_orden_fecha_solo_en_un_derivado_columna() -> None:
+    from terranova.catalogo import Derivado
+
+    with pytest.raises(ValueError, match="solo en un derivado «columna»"):
+        Derivado(de="primero", campo="x", patron="(a)")
+    with pytest.raises(ValueError, match="exactamente un grupo"):
+        Derivado(de="columna", campo="x", patron="a")
+
+
 def test_un_derivado_fijo_pone_el_mismo_valor_en_cada_elemento() -> None:
     """El IPM municipal es la medida censal de 2018, y la tabla del DANE no trae el año."""
     from terranova.ejecutor import mapear_fila
