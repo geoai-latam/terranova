@@ -1,5 +1,5 @@
 id: sdp_tratamiento_urbanistico_en_poligono
-version: 1
+version: 2
 familia: territorio
 fuente: sdp.pot555_tratamiento
 pregunta: "¿Qué tratamientos urbanísticos tocan este polígono en Bogotá?"
@@ -19,12 +19,16 @@ consulta:
     poligono: "{poligono}"
     select: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
     geometria: simplificada
-    order: [OBJECTID]
+    area_en_poligono: true
+    order: ["-_area_ha", OBJECTID]
     limite: 200
   campos: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
 salida: TratamientoUrbanisticoEnPoligono
 derivados:
   total: {de: completitud_total, tipo: int}
+  area_ha: {de: columna, campo: _area_ha, tipo: float}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float}
+  tratamiento_principal: {de: primero, campo: tratamiento}
 cobro: zona
 canario:
   # Franja en diagonal junto al punto del canario de sdp_tratamiento_urbanistico_en_punto; medido el 2026-11-01 en la capa
