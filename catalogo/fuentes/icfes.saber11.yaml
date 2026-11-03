@@ -13,24 +13,46 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: ICFES, Resultados únicos Saber 11. Fuente: Portal de Datos Abiertos www.datos.gov.co"
 protocolo: socrata
-conector: datos-abiertos-mcp
-# Microdatos por estudiante (7,1 M filas): solo salen agregados por grupo con n ≥ 10 (ADR-0014),
-# nunca filas de personas. Los puntajes vienen como texto: se convierten con ::number.
+conector: copia
+# Microdatos por estudiante (7,1 M filas). Agregar en vivo en dos etapas pasaba de 90 s en un
+# municipio grande, así que se copian ya agregados: la copia guarda grupos (periodo, municipio,
+# sede y estrato) con cuántos estudiantes tienen y la suma de sus puntajes; nunca el seudónimo
+# del estudiante ni una fila suya. Solo salen grupos de 10 o más (ADR-0014).
 url: https://www.datos.gov.co/resource/kgxf-xxbe.json
-modo: en_vivo
+modo: copia
+copia:
+  origen: socrata_agregado
+  conjunto: kgxf-xxbe
+  tabla: icfes_saber11
+  clave: _fila
+  preagregado:
+    particion: periodo
+    unico: estu_consecutivo
+    grupo: [periodo, cole_cod_mcpio_ubicacion, cole_cod_dane_sede, fami_estratovivienda]
+    medidas: [punt_global, punt_matematicas, punt_lectura_critica]
+    nombre: cole_nombre_sede
+    cuenta: estudiantes
+  indices: [cole_cod_mcpio_ubicacion, cole_cod_dane_sede]
+  orden_fisico: cole_cod_mcpio_ubicacion
+# El ICFES publica una vez al año los resultados del año anterior.
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P6M}
 cobertura: {pais: CO, columna_tiempo: periodo}
 datos_personales: filtrados
 estado: publicada
 campos:
-  periodo: {nombre: periodo, tipo: str, desc: "periodo del examen, AAAAS (año y semestre: 20224 = 2022 calendario B)"}
+  periodo: {nombre: periodo, tipo: str, desc: "periodo del examen, AAAAS: el año y luego 1 (primer semestre: pocos colegios, sobre todo de calendario B) o 2 y 4 (segundo semestre: calendario A, la mayoría); 20224 = 2022, segundo semestre"}
   cole_cod_mcpio_ubicacion: {nombre: municipio_divipola, tipo: str, desc: "municipio del colegio, DIVIPOLA"}
-  punt_global: {nombre: punt_global, tipo: float, desc: "puntaje global (0–500); solo se usa promediado"}
-  punt_matematicas: {nombre: punt_matematicas, tipo: float, desc: "puntaje de matemáticas; solo promediado"}
-  punt_lectura_critica: {nombre: punt_lectura_critica, tipo: float, desc: "puntaje de lectura crítica; solo promediado"}
   cole_cod_dane_sede: {nombre: codigo_dane_sede, tipo: str, desc: "código DANE de la sede del colegio"}
-  cole_nombre_sede: {nombre: sede, tipo: str, desc: "nombre de la sede (cambia de escritura entre años)"}
-  fami_estratovivienda: {nombre: estrato, tipo: str, desc: "estrato de la vivienda del estudiante (sin dato si vacío); solo agregado"}
+  fami_estratovivienda: {nombre: estrato, tipo: str, desc: "estrato de la vivienda del estudiante (vacío si no lo declaró)"}
+  cole_nombre_sede: {nombre: sede, tipo: str, desc: "nombre de la sede (cambia de escritura entre años: sale el mayor)"}
+  estudiantes: {nombre: estudiantes, tipo: int, desc: "estudiantes del grupo, cada uno una vez aunque la fuente lo repita"}
+  suma_punt_global: {nombre: suma_punt_global, tipo: float, desc: "suma del puntaje global (0–500) de los estudiantes con dato"}
+  n_punt_global: {nombre: n_punt_global, tipo: int, desc: "estudiantes con puntaje global"}
+  suma_punt_matematicas: {nombre: suma_punt_matematicas, tipo: float, desc: "suma del puntaje de matemáticas"}
+  n_punt_matematicas: {nombre: n_punt_matematicas, tipo: int, desc: "estudiantes con puntaje de matemáticas"}
+  suma_punt_lectura_critica: {nombre: suma_punt_lectura_critica, tipo: float, desc: "suma del puntaje de lectura crítica"}
+  n_punt_lectura_critica: {nombre: n_punt_lectura_critica, tipo: int, desc: "estudiantes con puntaje de lectura crítica"}
+  _fila: {nombre: fila, tipo: int, desc: "número del grupo en la copia (la copia lo numera)"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: Instituto Colombiano para la Evaluación de la Educación, theme: educacion, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terrnova.

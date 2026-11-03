@@ -31,6 +31,9 @@ salida: PredioEnPunto
 derivados:
   zona: {de: capa, valores: {"14": rural, "7": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
+# Fuera del MCP: predio_en_punto elige la base sola y el agente confundía las dos (#15). Sigue
+# en REST y dentro de predio_en_punto, ficha_lugar y ficha_lote.
+en_mcp: false
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}

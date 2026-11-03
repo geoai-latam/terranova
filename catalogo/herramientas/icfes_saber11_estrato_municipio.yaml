@@ -1,40 +1,50 @@
 id: icfes_saber11_estrato_municipio
-version: 1
+version: 2
 familia: estadisticas
 fuente: icfes.saber11
 pregunta: "¿Cómo varía el puntaje del Saber 11 según el estrato en este municipio?"
 descripcion: >
-  Prueba Saber 11 (ICFES) en los colegios de un municipio y un periodo del examen (AAAAS, p. ej.
-  20224), por estrato de la vivienda del estudiante: número de estudiantes y promedio del puntaje
-  global. Solo agregados: un estrato con menos de 10 estudiantes no sale; sin estrato sale vacío.
-  Cada estudiante cuenta una vez.
+  Prueba Saber 11 (ICFES) en los colegios de un municipio (código DANE / DIVIPOLA) y un periodo del
+  examen, por estrato de la vivienda del estudiante: número de estudiantes y promedio del puntaje
+  global (0–500). El periodo es AAAAS, de 20101 a 20224: el año y luego 1 (primer semestre, pocos
+  colegios) o 2 y 4 (segundo semestre, la mayoría); el más reciente con todos los colegios es
+  20224. Solo agregados: un estrato con menos de 10 estudiantes no sale. Los estratos se
+  escriben como los publica la fuente («Estrato 1» … «Estrato 6», «Sin Estrato»); los que no
+  respondieron salen con el estrato vacío. Cada estudiante cuenta una vez.
   (Fuente: ICFES; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, periodo: int}
 consulta:
   operacion: por_codigo
   resultado: lista
-  tool: datos_consultar
+  tool: consultar_copia
   argumentos:
-    id: kgxf-xxbe
-    portal: datos.gov.co
-    previo_select: "fami_estratovivienda, estu_consecutivo, avg(punt_global::number) AS g"
-    previo_group: "fami_estratovivienda, estu_consecutivo"
-    select: "fami_estratovivienda, count(*) AS estudiantes, avg(g) AS promedio_global"
-    where: "cole_cod_mcpio_ubicacion = '{municipio_divipola}' AND periodo = '{periodo}'"
-    group: fami_estratovivienda
-    having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas
-    order: fami_estratovivienda
-    max_filas: 20
-  campos: [fami_estratovivienda, cole_cod_mcpio_ubicacion, periodo, punt_global]
+    tabla: icfes_saber11
+    filtros: {cole_cod_mcpio_ubicacion: "{municipio_divipola}", periodo: "{periodo}"}
+    select: [fami_estratovivienda]
+    group: [fami_estratovivienda]
+    agregados:
+      estudiantes: "sum:estudiantes"
+      promedio_global: "cociente:suma_punt_global/n_punt_global"
+    minimo: {"sum:estudiantes": 10}  # ADR-0014: sin grupos chicos de personas
+    order: [fami_estratovivienda]
+    limite: 20
+  campos: [fami_estratovivienda, cole_cod_mcpio_ubicacion, periodo, estudiantes, suma_punt_global, n_punt_global]
 salida: Saber11EstratoMunicipio
 derivados:
   estudiantes: {de: columna, campo: estudiantes, tipo: int}
-  promedio_global: {de: columna, campo: promedio_global, tipo: float}
+  promedio_global: {de: columna, campo: promedio_global, tipo: float, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay resultados del Saber 11 para ese municipio en ese periodo, o ningún estrato llegó a 10
+    estudiantes (por debajo de eso no se publican). Revise el periodo: va como AAAAS (p. ej. 20224)
+    y la fuente no trae el segundo semestre de 2018, 2020 ni 2021; icfes_saber11_municipio dice
+    qué periodos tiene el municipio.
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en kgxf-xxbe: Chía 20224, estrato 1 → 71 estudiantes y 248,37 de promedio;
   # estrato 5 → 64 y 313,22. Hay 65 sin estrato.
   entrada: {municipio_divipola: "25175", periodo: 20224}
-  verdad: {estrato: Estrato 1, estudiantes: 71}
+  verdad: {estrato: Estrato 1, estudiantes: 71, promedio_global: 248.37}
   campos: [estrato, estudiantes, promedio_global]
   latencia_max_ms: 30000

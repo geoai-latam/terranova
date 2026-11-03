@@ -186,7 +186,8 @@ async def test_el_aviso_de_datos_no_recientes_sale_tambien_desde_cache() -> None
 
     fuente, reloj, almacen = Grabada(), Reloj(), AlmacenMemoria()
     almacen.reloj = reloj
-    ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": fuente}, almacen, reloj)
+    conector = grabado["llamadas"][0]["conector"]  # la copia, desde que el Saber 11 va por ella
+    ej = Ejecutor(CATALOGO, {conector: fuente}, almacen, reloj)
     primero = await ej.ejecutar(h.id, h.canario.entrada)
     segundo = await ej.ejecutar(h.id, h.canario.entrada)
     assert segundo.procedencia[0].servido_desde == "cache"

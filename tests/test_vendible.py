@@ -131,14 +131,15 @@ async def test_mcp_a_una_llave_de_produccion_solo_lista_lo_vendible(
 ) -> None:
     c, viva, prueba = app_con_llaves
     vistas = await _listar(c, "/mcp", viva)
-    assert vistas == set(puerta.VENDIBLE.herramientas) | SIEMPRE
+    ocultas = {h.id for h in CATALOGO.herramientas.values() if not h.en_mcp}  # ADR-0031
+    assert vistas == set(puerta.VENDIBLE.herramientas) - ocultas | SIEMPRE
     assert not vistas & NO_VENDIBLES
     # los perfiles por familia, igual (la DIAN es de «empresas»; catalogo_buscar, de «meta»)
     for hid in NO_VENDIBLES:
         familia = CATALOGO.herramientas[hid].familia
         assert hid not in await _listar(c, f"/mcp/{familia}", viva), (familia, hid)
     # una llave de evaluación ve todo el catálogo (ADR-0007)
-    assert await _listar(c, "/mcp", prueba) == set(CATALOGO.herramientas) | SIEMPRE
+    assert await _listar(c, "/mcp", prueba) == set(CATALOGO.herramientas) - ocultas | SIEMPRE
 
 
 @pytest.mark.anyio

@@ -610,6 +610,25 @@ def test_copia_espacial_en_postgis() -> None:
         ).fetchone()
     assert tablas == (1,)  # la que falló no quedó huérfana; la vigente sigue
     assert almacen.vigente("runap") == v
+    # el proxy de la ANT responde vacío sin error: una descarga sin filas no reemplaza la vigente
+    with pytest.raises(ErrorCopia, match="sin filas"):
+        almacen.construir(RUNAP, iter([[]]), None)
+    assert almacen.vigente("runap") == v
+
+    # una fecha d/m/aaaa se guarda como texto: Postgres la leería mes/día («7/11/2000» → julio), y
+    # lo que trae detrás lo usa un derivado; el ejecutor la pasa a ISO al responder
+    zrc = CATALOGO.fuentes["ant.zonas_reserva_campesina"]
+    pato = {
+        "OBJECTID_1": 7,
+        "NOMBRE_ZON": "Pato",
+        "FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024",
+        "_geom": {"type": "Polygon", "coordinates": _CUADRO},
+    }
+    almacen.construir(zrc, iter([[pato]]), None)
+    filas, _ = almacen.consultar(
+        plan_de_consulta(zrc, {"punto": [-73.5, 4.5], "select": ["FECHA_CONSTITUCION"]})
+    )
+    assert filas == [{"FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024"}]
 
 
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")

@@ -67,7 +67,9 @@ def anyio_backend() -> str:
 async def cliente_con(request: pytest.FixtureRequest) -> AsyncIterator[Client[Any]]:
     puerta.usar_conectores({"arcgis-mcp": request.param})
     try:
-        async with Client(puerta.puerta) as cliente:
+        # con las fichas fuera del MCP: `igac_predio_en_punto` es la de muestra del protocolo
+        servidor = puerta.crear_servidor(con_ciclo=False, con_ocultas=True)
+        async with Client(servidor) as cliente:
             yield cliente
     finally:
         puerta.usar_conectores(None)
@@ -105,10 +107,13 @@ async def test_cada_perfil_cabe_en_un_cliente_openai() -> None:
 @pytest.mark.anyio
 @_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
+    async with Client(puerta.puerta) as mcp:
+        visibles = {t.name for t in await mcp.list_tools()}
+    ocultas = {h.id for h in puerta.CATALOGO.herramientas.values() if not h.en_mcp}
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
     # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08). Sin
     # llave el plan es `normal`: solo lo vendible (las de evaluación, en test_vendible.py)
-    assert set(herramientas) == set(puerta.VENDIBLE.herramientas) | {
+    assert visibles == set(puerta.VENDIBLE.herramientas) - ocultas | {
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",
@@ -246,26 +251,40 @@ class ConectorIntermitente(ConectorFalso):
         return await super().llamar(herramienta, argumentos)
 
 
-ZRC = "ant_zonas_reserva_campesina_en_punto"
-CABRERA = {"type": "Feature", "geometry": None, "properties": {"NOMBRE_ZON": "Cabrera"}}
+# Los resguardos van en vivo por la capa 0 de la ANT; la prueba les pone los reintentos que tenía la
+# reserva campesina antes de pasar a copia (el proxy de la ANT respondía vacío ~25 % de las veces).
+RESGUARDOS = "ant_resguardos_en_punto"
+TOTARCO = {"type": "Feature", "geometry": None, "properties": {"NOMBRE": "Totarco Dinde"}}
+
+
+@pytest.fixture
+def con_reintentos(monkeypatch: pytest.MonkeyPatch) -> None:
+    fid = puerta.CATALOGO.herramientas[RESGUARDOS].fuente
+    fuente = puerta.CATALOGO.fuentes[fid]
+    comportamiento = fuente.comportamiento.model_copy(update={"reintentos_si_vacio": 3})
+    nueva = fuente.model_copy(update={"comportamiento": comportamiento})
+    for catalogo in (puerta.CATALOGO, puerta.VENDIBLE):
+        monkeypatch.setitem(catalogo.fuentes, fid, nueva)
 
 
 @pytest.mark.anyio
-@_con(ConectorIntermitente([CABRERA], vacias=2))
+@_con(ConectorIntermitente([TOTARCO], vacias=2))
 async def test_un_vacio_falso_se_reintenta_antes_de_decir_no_encontrado(
-    cliente_con: Client[Any],
+    con_reintentos: None, cliente_con: Client[Any]
 ) -> None:
     """«No se pudo» no es «no hay»: la fuente marcada se vuelve a preguntar si responde vacío."""
-    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+    r = await cliente_con.call_tool(RESGUARDOS, {"lon": -75.3, "lat": 3.1})
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "encontrado"
-    assert r.structured_content["datos"]["nombre"] == "Cabrera"
+    assert r.structured_content["datos"]["nombre"] == "Totarco Dinde"
 
 
 @pytest.mark.anyio
-@_con(ConectorIntermitente([CABRERA], vacias=10))
-async def test_vacio_tras_los_reintentos_lo_dice(cliente_con: Client[Any]) -> None:
-    r = await cliente_con.call_tool(ZRC, {"lon": -74.46, "lat": 3.88})
+@_con(ConectorIntermitente([TOTARCO], vacias=10))
+async def test_vacio_tras_los_reintentos_lo_dice(
+    con_reintentos: None, cliente_con: Client[Any]
+) -> None:
+    r = await cliente_con.call_tool(RESGUARDOS, {"lon": -75.3, "lat": 3.1})
     assert r.structured_content is not None
     assert r.structured_content["estado"] == "no_encontrado"
     assert any("4 veces" in a for a in r.structured_content["avisos"])
