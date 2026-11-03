@@ -102,14 +102,16 @@ MAX_TEXTO = 200_000
 @mcp.tool(
     description=("Lee una página HTML pública (`url` https de un dominio permitido): su título y su texto limpio, "
                  "sin menús ni scripts. Para una norma o una sentencia larga, `buscar` (p. ej. «ARTÍCULO 5») "
-                 "devuelve solo los fragmentos alrededor de cada aparición; `enlaces_con` (expresión regular "
-                 "sobre la URL) lista los enlaces de un índice. Los hechos dicen cuántos caracteres tiene la "
+                 "devuelve solo los fragmentos alrededor de cada aparición (los que se tocan, en uno); "
+                 "`desde` (expresión regular) da el texto desde la primera línea que la cumple, como la parte "
+                 "resolutiva de una sentencia (`R\\s*E\\s*S\\s*U\\s*E\\s*L\\s*V\\s*E`); `enlaces_con` "
+                 "(expresión regular sobre la URL) lista los enlaces de un índice. Los hechos dicen cuántos caracteres tiene la "
                  "página y si el texto vino entero."),
     annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
     meta=geo_meta(inputs={}, outputs=["table"], cost="low"),
 )
 def web_html(url: str, params: dict | None = None, buscar: str | None = None, enlaces_con: str | None = None,
-             max_caracteres: int = 20_000) -> CallToolResult:
+             max_caracteres: int = 20_000, desde: str | None = None) -> CallToolResult:
     def leer() -> dict:
         r = fuentes.pedir(url, params)
         if "html" not in r.headers.get("content-type", "html").lower():
@@ -124,11 +126,25 @@ def web_html(url: str, params: dict | None = None, buscar: str | None = None, en
         hechos: dict[str, Any] = {"url": final, "titulo": titulo, "caracteres": len(texto)}
         if buscar:
             filas, total = paginas.fragmentos(texto, buscar)
+            # un fragmento puede traer varias apariciones: lo que cuenta es cuántas quedan cubiertas
+            cubiertas = sum(f["veces"] for f in filas)
             hechos.update({"buscar": buscar, "apariciones": total,
-                           "completitud": completitud(len(filas), total, truncado=len(filas) < total)})
+                           "completitud": completitud(cubiertas, total, truncado=cubiertas < total)})
         elif enlaces_con:
             filas = paginas.enlaces_con(enlaces, enlaces_con)
             hechos.update({"enlaces": len(filas), "completitud": completitud(len(filas), len(filas))})
+        elif desde:
+            pos = paginas.desde(texto, desde)
+            hechos["desde"] = desde
+            if pos is None:  # la página no tiene esa parte: «no encontrado», no un error
+                filas = []
+                hechos["completitud"] = completitud(0, 0)
+            else:
+                resto = texto[pos:]
+                filas = [{"texto": resto[:tope].strip(), "posicion": pos}]
+                hechos["completitud"] = completitud(
+                    min(len(resto), tope), len(resto), truncado=len(resto) > tope,
+                    motivo=f"max_caracteres={tope}" if len(resto) > tope else None)
         else:
             filas = [{"titulo": titulo, "texto": texto[:tope]}]
             hechos["completitud"] = completitud(min(len(texto), tope), len(texto), truncado=len(texto) > tope,

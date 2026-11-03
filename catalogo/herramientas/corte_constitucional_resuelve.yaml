@@ -1,0 +1,41 @@
+id: corte_constitucional_resuelve
+version: 1
+familia: normativa
+fuente: corteconstitucional.relatoria
+pregunta: "¿Qué decidió la Corte Constitucional en esta sentencia?"
+descripcion: >
+  La parte resolutiva de una sentencia de la Corte Constitucional, lo que la Corte decidió: el texto
+  desde el «RESUELVE» (Primero, Segundo…), hasta 15 000 caracteres, con dónde empieza en la
+  sentencia. Pide el año y el número con guiones (T-760-08, SU-214-16). Después de lo resuelto
+  pueden venir las firmas y los salvamentos o aclaraciones de voto, que no son la decisión. Para el
+  comienzo y los temas, corte_constitucional_texto_inicio.
+  (Fuente: Corte Constitucional, relatoría; licencia: Ley 23 de 1982, art. 41.)
+entrada: {anio: int, sentencia: sentencia_relatoria}
+consulta:
+  operacion: buscar
+  tool: web_html
+  minimo_caracteres: 500
+  argumentos:
+    url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
+    # la primera línea que es solo «RESUELVE», con dos puntos o sin ellos, y con la palabra
+    # espaciada o no; «resuelve la tensión…» en minúscula no cuenta
+    desde: 'R\s*E\s*S\s*U\s*E\s*L\s*V\s*E\s*:?\s*$'
+    max_caracteres: 15000
+  campos: [texto, posicion, caracteres]
+salida: SentenciaResuelve
+avisos:
+- cuando: vacio
+  texto: >
+    No salió la parte resolutiva. O la relatoría no tiene esa sentencia (revise el año y el número:
+    corte_constitucional_sentencia dice si existe y da su enlace), o el texto no tiene una línea
+    «RESUELVE», como un auto. En ese caso, busque la decisión con corte_constitucional_texto_buscar
+    («Declarar», «Ordenar»).
+cobro: agregado
+canario:
+  # Medido el 2026-11-03: la T-025/04 (desplazamiento forzado) resuelve en la posición 275 877 de
+  # 450 817 caracteres: «PRIMERO.- Declarar la existencia de un estado de cosas inconstitucional».
+  entrada: {anio: 2004, sentencia: T-025-04}
+  verdad: {posicion: 275877}
+  minimos: {caracteres: 400000}
+  campos: [caracteres, posicion, texto]
+  latencia_max_ms: 30000

@@ -119,11 +119,29 @@ def fragmentos(texto: str, buscar: str, contexto: int = CONTEXTO) -> tuple[list[
         return [], 0
     patron = re.compile(re.escape(buscar.strip()), re.IGNORECASE)
     apariciones = list(patron.finditer(texto))
-    salida = []
-    for n, m in enumerate(apariciones[:MAX_FRAGMENTOS], start=1):
-        ini = max(0, m.start() - contexto // 4)
-        salida.append({"n": n, "posicion": m.start(), "texto": texto[ini:m.start() + contexto].strip()})
+    # dos apariciones cercanas darían casi el mismo pasaje dos veces: los que se tocan se funden en
+    # uno, que dice cuántas apariciones lleva (`veces`; `n` es el número de la primera)
+    tramos: list[list[int]] = []  # [inicio, fin, posición de la primera, n de la primera, cuántas]
+    for n, m in enumerate(apariciones, start=1):
+        ini, fin = max(0, m.start() - contexto // 4), m.start() + contexto
+        if tramos and ini <= tramos[-1][1]:
+            tramos[-1][1] = max(tramos[-1][1], fin)
+            tramos[-1][4] += 1
+        elif len(tramos) < MAX_FRAGMENTOS:
+            tramos.append([ini, fin, m.start(), n, 1])
+        else:
+            break
+    salida = [{"n": n, "posicion": pos, "veces": k, "texto": texto[ini:fin].strip()}
+              for ini, fin, pos, n, k in tramos]
     return salida, len(apariciones)
+
+
+def desde(texto: str, patron: str) -> int | None:
+    """Dónde empieza la primera línea que cumple `patron` (expresión regular, distingue
+    mayúsculas): la parte resolutiva de una sentencia empieza en una línea «RESUELVE», que puede
+    venir espaciada («R E S U E L V E»), y no en «resuelve la tensión…». Sin línea así, None."""
+    m = re.search(rf"^\s*(?:{patron})", texto, re.MULTILINE)
+    return None if m is None else m.start()
 
 
 def enlaces_con(enlaces: list[tuple[str, str]], patron: str) -> list[dict]:

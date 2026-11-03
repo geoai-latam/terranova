@@ -79,8 +79,9 @@ PATRONES_ENTRADA: dict[str, str] = {
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
     # Corte Constitucional: T-760/08; en 1993-1995, algunas con letra (C-155A/93)
     "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}[A-Z]?/[0-9]{2}$",
-    # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas)
-    "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}[A-Z]?-[0-9]{2}$",
+    # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas). Las de unificación van sin el
+    # primer guion (SU214-16); la puerta acepta las dos formas y deja la de la relatoría
+    "sentencia_relatoria": r"^(C-|T-|SU-?)[0-9]{1,4}[A-Z]?-[0-9]{2}$",
     # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas. El año va
     # casi siempre, pero no en todos: el Estatuto Tributario es `estatuto_tributario` en la DIAN
     "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}$",
@@ -127,7 +128,7 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "contrato_secop": ("identificador de SECOP II o constancia de SECOP I", "CO1.PCCNTR.5141215"),
     "fecha": ("fecha AAAA-MM-DD", "2026-10-23"),
     "sentencia_cc": ("sentencia de la Corte Constitucional, tipo-número/año", "T-760/08"),
-    "sentencia_relatoria": ("sentencia como la escribe la relatoría, con guiones", "T-760-08"),
+    "sentencia_relatoria": ("sentencia con guiones en vez de barra", "T-760-08"),
     "documento_normativo": (
         "documento del gestor normativo, tipo_número_año (o su nombre, como estatuto_tributario)",
         "decreto_1165_2019",
@@ -849,9 +850,11 @@ class Fuente(_Ficha):
         }
 
 
-# `{nombre}` o `{nombre:sin_tildes}`: con el modificador, cada vocal con tilde va como `_`, el
-# comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H)
-MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::sin_tildes)?\}")
+# `{nombre}`, `{nombre:sin_tildes}` o `{nombre:ascii}`. Con `sin_tildes`, cada vocal con tilde va
+# como `_`, el comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H).
+# Con `ascii`, sin tildes ni eñes («daño» → «dano»): la búsqueda de la relatoría de Colombia
+# Compra devuelve todo si el texto trae una letra fuera de ASCII (medido el 2026-11-03).
+MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::(?:sin_tildes|ascii))?\}")
 MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
 MARCADOR_PREVIA = "previa"
 
@@ -1052,6 +1055,9 @@ class Derivado(_Ficha):
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
     orden_fecha: Literal["mda", "dma"] | None = None
+    # solo con `columna`: el texto viene en HTML; lo que sale va sin etiquetas y con las entidades
+    # leídas («Prórroga &#8211; Procedencia» sale con su raya, no con la entidad)
+    html: bool = False
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
     # un promedio calculado en la consulta trae 16 decimales (27.2083333333333333 °C)
     decimales: int | None = Field(default=None, ge=0, le=6)
@@ -1079,8 +1085,8 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
         if self.de == "codigo" and not self.valores:
             raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
-        if (self.patron or self.orden_fecha) and self.de != "columna":
-            raise ValueError("`patron` y `orden_fecha` van solo en un derivado «columna»")
+        if (self.patron or self.orden_fecha or self.html) and self.de != "columna":
+            raise ValueError("`patron`, `orden_fecha` y `html` van solo en un derivado «columna»")
         if self.patron is not None and re.compile(self.patron).groups != 1:
             raise ValueError("`patron` lleva exactamente un grupo: la parte que se toma")
         if (self.de == "igual") != (self.igual_a is not None) or (
