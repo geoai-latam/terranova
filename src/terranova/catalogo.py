@@ -906,6 +906,8 @@ class Consulta(_Ficha):
 DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo", "fijo"})
 # por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
 DE_SECUENCIA = frozenset({"diferencia_anterior"})
+# al final, con los agregados y los hechos del complemento ya en `datos`: compara dos de ellos
+DE_FINAL = frozenset({"igual"})
 DE_RESULTADO = frozenset(
     {
         "conteo",
@@ -939,7 +941,8 @@ class Derivado(_Ficha):
     tratamiento),
     `distintos` (cuántos valores distintos de `campo` hay: los meses con datos de un año) y
     `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos
-    elementos.
+    elementos. Al final: `igual` (si `campo` vale lo mismo que `igual_a`, ya con los agregados y
+    los hechos del complemento: la última alerta del municipio es la del último boletín).
     """
 
     de: Literal[
@@ -958,6 +961,7 @@ class Derivado(_Ficha):
         "distintos",
         "diferencia_anterior",
         "completitud_total",
+        "igual",
     ]
     campo: str | None = None
     solo_si: SoloSi | None = None
@@ -966,6 +970,8 @@ class Derivado(_Ficha):
     valor: str | int | float | None = None
     # solo con `suma_por`: el campo rt/1 que se suma en cada grupo de `campo`
     sumar: str | None = None
+    # solo con `igual`: el otro campo de `datos` con el que se compara `campo`
+    igual_a: str | None = None
     # solo con `columna`: la parte del texto que interesa (el grupo 1 de una expresión regular) y,
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
@@ -1001,6 +1007,10 @@ class Derivado(_Ficha):
             raise ValueError("`patron` y `orden_fecha` van solo en un derivado «columna»")
         if self.patron is not None and re.compile(self.patron).groups != 1:
             raise ValueError("`patron` lleva exactamente un grupo: la parte que se toma")
+        if (self.de == "igual") != (self.igual_a is not None) or (
+            self.de == "igual" and not self.campo
+        ):
+            raise ValueError("un derivado «igual» lleva `campo` e `igual_a`, y solo él")
         if (self.de == "suma_por") != (self.sumar is not None):
             raise ValueError("`sumar` va solo, y siempre, en un derivado «suma_por»")
         if (self.de == "fijo") != (self.valor is not None):
@@ -1012,6 +1022,10 @@ class Derivado(_Ficha):
     @property
     def por_elemento(self) -> bool:
         return self.de in DE_ELEMENTO | DE_SECUENCIA
+
+    @property
+    def al_final(self) -> bool:
+        return self.de in DE_FINAL
 
 
 class Canario(_Ficha):
@@ -1292,6 +1306,8 @@ def validar(catalogo: Catalogo) -> list[str]:
                 "diferencia_anterior",
             ) and d.campo not in fuente.nombres_rt | set(h.derivados):
                 errores.append(f"{donde}: el derivado {nombre} usa «{d.campo}», que no sale")
+            if d.de == "igual" and not {d.campo, d.igual_a} <= salen:
+                errores.append(f"{donde}: el derivado {nombre} compara campos que no salen")
             if d.de in ("conteo_por", "suma_por") and d.campo not in salen:
                 errores.append(f"{donde}: el derivado {nombre} agrupa por «{d.campo}», que no sale")
             if d.sumar is not None and d.sumar not in fuente.nombres_rt | set(h.derivados):

@@ -826,6 +826,65 @@ def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:
         Derivado(de="suma", campo="area_ha", sumar="area_ha")
 
 
+class _AlertasFalsas:
+    """La copia de las alertas de deslizamiento: las del municipio y, en el complemento, la fecha
+    del último boletín de cualquier municipio."""
+
+    def __init__(self, fechas: list[str], ultimo: str | None) -> None:
+        self.fechas, self.ultimo = fechas, ultimo
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        if argumentos.get("agregados"):
+            filas: list[dict[str, Any]] = [{"ultimo": self.ultimo}]
+        else:
+            fila = {"COD_DANE": "05002", "MUNICIPIO": "ABEJORRAL", "TEXTO_AMENAZA": "ALTA"}
+            filas = [{**fila, "FECHA_EJECUCION": f} for f in self.fechas]
+        n = len(filas)
+        return {
+            "artifacts": [{"kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": n, "total": n, "truncado": False},
+                "consultado_en": "2026-11-02T13:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("fechas", "ultimo", "vigente"),
+    [
+        (["2026-11-01", "2026-10-31"], "2026-11-01", True),  # Abejorral, boletín del 01-11
+        (["2026-04-28"], "2026-11-01", False),  # Chía: su última alerta fue en abril
+        (["2026-11-01"], None, None),  # sin la fecha del boletín no se afirma nada
+    ],
+)
+async def test_alerta_vigente_si_la_ultima_es_la_del_ultimo_boletin(
+    fechas: list[str], ultimo: str | None, vigente: bool | None
+) -> None:
+    """El IDEAM publica cada noche solo los municipios con alerta ese día. La última alerta de un
+    municipio no dice que siga: GEO Copilot llamó «vigente» una de abril (medido el 2026-11-03)."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"copia": _AlertasFalsas(fechas, ultimo)})
+    sobre = await ej.ejecutar(
+        "ideam_alertas_deslizamiento_municipio", {"municipio_divipola": "05002"}, plan="evaluacion"
+    )
+    assert sobre.estado == "encontrado"
+    assert sobre.datos["ultima_alerta"] == fechas[0]
+    assert sobre.datos.get("alerta_vigente") is vigente
+
+
+def test_igual_lleva_campo_e_igual_a_y_solo_el() -> None:
+    from terranova.catalogo import Derivado
+
+    with pytest.raises(ValueError, match="igual"):
+        Derivado(de="igual", campo="ultima_alerta")
+    with pytest.raises(ValueError, match="igual"):
+        Derivado(de="igual", igual_a="ultimo_boletin")
+    with pytest.raises(ValueError, match="igual"):
+        Derivado(de="primero", campo="fecha", igual_a="ultimo_boletin")
+
+
 @pytest.mark.parametrize(
     "escrito",
     [

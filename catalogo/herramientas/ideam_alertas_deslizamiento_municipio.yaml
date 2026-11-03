@@ -1,5 +1,5 @@
 id: ideam_alertas_deslizamiento_municipio
-version: 1
+version: 2
 familia: ambiente
 fuente: ideam.alertas_deslizamiento
 pregunta: "¿Hay alerta por deslizamiento en este municipio? ¿Cuáles fueron sus alertas recientes?"
@@ -7,9 +7,10 @@ descripcion: >
   Las alertas más recientes por deslizamiento de tierra (detonado por lluvia) de un municipio
   (DIVIPOLA), según los boletines diarios del IDEAM: fecha, nivel (ALTA = roja, MODERADA = naranja,
   BAJA = amarilla) y la lluvia acumulada en 3 y 10 días. Primero la más reciente; hasta 15. El IDEAM
-  publica cada noche (~23:30) solo los municipios con alerta ese día: si la fecha más reciente no
-  es la del último boletín, el municipio no tiene alerta vigente; «no encontrado» = ninguna alerta en
-  el año. Sale de la copia diaria de Terrnova (la fecha de la copia va en la procedencia).
+  publica cada noche (~23:30) solo los municipios con alerta ese día: alerta_vigente dice si la
+  última alerta del municipio (ultima_alerta) es la del último boletín (ultimo_boletin): si no, no
+  tiene alerta vigente; «no encontrado» = ninguna alerta en el año. Sale de la copia de Terrnova: el
+  último boletín es el de la copia, no siempre el de hoy.
   (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -22,10 +23,21 @@ consulta:
     select: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, ACUMULADO_TRES, ACUMULADO_DIEZ, DIAS_LLUVIA, FECHA_EJECUCION]
     order: [-FECHA_EJECUCION]
     limite: 15
+  complemento:
+    fuente: ideam.alertas_deslizamiento
+    tool: consultar_copia
+    argumentos:
+      tabla: ideam_alertas_deslizamiento
+      agregados: {ultimo: "max:FECHA_EJECUCION"}
+    hechos:
+      ultimo: {nombre: ultimo_boletin, tipo: date, desc: "fecha del último boletín del IDEAM en la copia de Terrnova (de cualquier municipio)"}
+    que_dice: "la fecha del último boletín, para saber si la alerta sigue vigente"
   campos: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, ACUMULADO_TRES, ACUMULADO_DIEZ, DIAS_LLUVIA, FECHA_EJECUCION]
 salida: AlertasDeslizamientoMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  ultima_alerta: {de: primero, campo: fecha, tipo: date}
+  alerta_vigente: {de: igual, campo: ultima_alerta, igual_a: ultimo_boletin}
 cobro: registro
 canario:
   # Medido el 2026-10-28 en alertas_deslizamientos.csv: Medellín (05001) tuvo alerta en 109 de los
@@ -33,5 +45,5 @@ canario:
   # pide las 15 más recientes. Ojo: el archivo se reinicia cada 1 de enero.
   entrada: {municipio_divipola: "05001"}
   minimos: {numero_registros: 15}
-  campos: [departamento, dias_con_lluvia, fecha, lluvia_10_dias_mm, lluvia_3_dias_mm, municipio, municipio_divipola, nivel_alerta, numero_registros, region]
+  campos: [alerta_vigente, departamento, dias_con_lluvia, fecha, lluvia_10_dias_mm, lluvia_3_dias_mm, municipio, municipio_divipola, nivel_alerta, numero_registros, region, ultima_alerta, ultimo_boletin]
   latencia_max_ms: 5000

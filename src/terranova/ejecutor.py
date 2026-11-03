@@ -963,7 +963,7 @@ class Ejecutor:
         agregados = {
             nombre: redondear(derivar_resultado(d, elementos, total), d.decimales)
             for nombre, d in h.derivados.items()
-            if not d.por_elemento
+            if not d.por_elemento and not d.al_final
         }
 
         if es_relleno(h, elementos, hechos):
@@ -981,6 +981,11 @@ class Ejecutor:
             datos = {**hechos, **(agregados if hay_algo else {})}
             if any(c.origen == "fila" for c in fuente.campos.values()):
                 datos["elementos"] = elementos
+        if hay_algo:
+            for nombre, d in h.derivados.items():
+                if d.al_final:
+                    a, b = datos.get(d.campo or ""), datos.get(d.igual_a or "")
+                    datos[nombre] = None if a is None or b is None else str(a) == str(b)
         datos = {k: v for k, v in datos.items() if v is not None} if hay_algo else {}
 
         avisos: list[str] = [aviso_complemento] if aviso_complemento and hay_algo else []
