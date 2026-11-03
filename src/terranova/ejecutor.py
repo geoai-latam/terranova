@@ -918,7 +918,13 @@ class Ejecutor:
         for capa in capas:
             argumentos = renderizar(
                 h.consulta.argumentos,
-                {**valores, "url_fuente": fuente.url, "url_capa": f"{fuente.url}/{capa}"},
+                # `capa` sola sirve cuando cada capa es un conjunto (un id de Socrata), no una url
+                {
+                    **valores,
+                    "url_fuente": fuente.url,
+                    "url_capa": f"{fuente.url}/{capa}",
+                    "capa": capa or "",
+                },
             )
             if fiel:
                 argumentos["geometria"] = "completa"

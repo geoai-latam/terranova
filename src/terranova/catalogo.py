@@ -855,7 +855,7 @@ class Fuente(_Ficha):
 # Con `ascii`, sin tildes ni eñes («daño» → «dano»): la búsqueda de la relatoría de Colombia
 # Compra devuelve todo si el texto trae una letra fuera de ASCII (medido el 2026-11-03).
 MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::(?:sin_tildes|ascii))?\}")
-MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
+MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente", "capa"})
 MARCADOR_PREVIA = "previa"
 
 
@@ -1336,6 +1336,8 @@ def validar(catalogo: Catalogo) -> list[str]:
         de_la_puerta = MARCADORES_DE_LA_PUERTA | ({MARCADOR_PREVIA} if h.consulta.previa else set())
         if sueltos := h.consulta.marcadores - set(h.entrada) - de_la_puerta:
             errores.append(f"{donde}: la consulta usa marcadores sin entrada: {sorted(sueltos)}")
+        if "capa" in h.consulta.marcadores and not h.consulta.capas:
+            errores.append(f"{donde}: la consulta usa {{capa}} sin `capas`")
         if (previa := h.consulta.previa) is not None:
             if previa.fuente not in catalogo.fuentes:
                 errores.append(f"{donde}: la consulta previa usa {previa.fuente}, que no existe")

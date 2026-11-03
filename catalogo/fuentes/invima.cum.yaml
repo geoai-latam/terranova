@@ -1,0 +1,45 @@
+id: invima.cum
+titulo: "Código Único de Medicamentos (CUM) en sus cuatro estados"
+entidad: Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA)
+competencia: autoridad sanitaria de medicamentos (Ley 100 de 1993, art. 245; Decreto 2078 de 2012)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/i7cb-raxc.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International (los cuatro conjuntos)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: INVIMA, Código Único de Medicamentos (CUM). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+# El INVIMA publica el CUM en cuatro conjuntos, uno por estado del registro: vigentes (i7cb-raxc),
+# en trámite de renovación (vgr4-gemg), otros estados (spzp-dfuc) y vencidos (vwwf-4ftk). Cada
+# conjunto es una capa de esta fuente: la herramienta los consulta a la vez y dice de cuál salió.
+# Los cuatro tienen las mismas columnas; el detalle de cada uno está en su propia fuente.
+url: https://www.datos.gov.co/resource
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  expediente: {nombre: expediente, tipo: int, desc: "número de expediente del registro sanitario"}
+  producto: {nombre: producto, tipo: str, desc: "nombre del producto"}
+  registrosanitario: {nombre: registro_sanitario, tipo: str, desc: "número del registro sanitario"}
+  estadoregistro: {nombre: estado_registro, tipo: str, desc: "estado del registro como lo escribe el INVIMA (Vigente, En tramite renov, Vencido, Negado, Cancelado, Desistido…)"}
+  fechavencimiento: {nombre: fecha_vencimiento, tipo: date, orden_fecha: mda, anios_validos: [1950, 2049], desc: "vencimiento del registro; vacío si la fuente no da fecha o pone un año de relleno (1000, 1900, 2099, 3000, 9999)"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: "Instituto Nacional de Vigilancia de Medicamentos y Alimentos", accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-03
+  fila: "una presentación por principio activo, vía y rol; 156 913 vigentes, 1 352 en renovación, 114 423 en otros estados, 153 394 vencidos"
+  clave: {columna: expediente + consecutivocum + principioactivo, unica: false}
+  operaciones: {filtrar: 0.4, contar: 0.4}
+  hallazgos:
+  - "un expediente está en un solo conjunto: los 131 en renovación no salen en ninguno de los otros tres, ni 300 vencidos en vigentes u otros estados (medido 2026-11-03)"
+  - "vigentes y otros estados dan el vencimiento en texto mes/día/año; renovación y vencidos, en ISO"
+  - "agrupado por expediente, producto, registro, estado y vencimiento, cada conjunto da una fila por registro"
+  decision: "en vivo por expediente, los cuatro conjuntos a la vez"
