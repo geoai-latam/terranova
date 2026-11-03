@@ -63,3 +63,19 @@ bienes de interés cultural o PEMP.
   - Las dos herramientas en polígono van de la pieza mayor a la menor, con `area_ha` y
     `area_ha_total`.
   - Se dejan las piezas, no se agrupan: cada una trae su geometría para el mapa y su altura.
+  - El motor suma también el derivado `suma_por`, que da las hectáreas de cada categoría, la mayor
+    primero: `area_ha_por_tratamiento` y `area_ha_por_area_actividad`.
+  - No hay un «tratamiento principal» calculado: el primero de la lista es la pieza más grande,
+    no la categoría con más área. La categoría con más área es la primera clave de la suma.
+  - El `limite` sube de 200 a 1000 (el tope del motor). Con 200, la consulta de GEO Copilot en
+    Chapinero trajo una parte de 948 piezas, y las sumas habrían salido incompletas. La respuesta
+    se pagina de 50 en 50, pero las sumas cuentan todo lo traído.
+- **Medido el 2026-11-03:**
+  - En la franja del canario, 345,51 ha: consolidación 174,12, renovación 113,86 y conservación
+    57,54.
+  - En un rectángulo de Chapinero (de −74,075 a −74,03 y de 4,625 a 4,68), 384 piezas y
+    1691,17 ha: consolidación 897,19, renovación 502,70, conservación 267,12 y desarrollo 24,16.
+    Las áreas de actividad suman 1693,73 ha en 59 piezas.
+  - El resto del rectángulo (unas 3000 ha) es espacio público y vías sin tratamiento.
+- **Pendiente (plan de producto, B1):** avisar en la raíz cuando la consulta llegue al tope y no
+  traiga todo.

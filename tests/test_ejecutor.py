@@ -761,3 +761,31 @@ def test_conteo_por_categoria_con_la_mas_frecuente_primero() -> None:
     resultado = derivar_resultado(d, elementos, None)
     assert resultado == {"Reserva Natural": 2, "Parque": 1}
     assert list(resultado) == ["Reserva Natural", "Parque"]
+
+
+def test_suma_por_categoria_con_la_mayor_primero() -> None:
+    """Las hectáreas de cada tratamiento dentro de un polígono (medido el 2026-11-03 en la copia del
+    POT 555: en la franja del canario, 174,12 ha de consolidación y 113,86 de renovación)."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    d = Derivado(de="suma_por", campo="tratamiento", sumar="area_ha", decimales=2)
+    elementos: list[dict[str, Any]] = [
+        {"tratamiento": "Renovación", "area_ha": 29.4059},
+        {"tratamiento": "Consolidación", "area_ha": 40.3819},
+        {"tratamiento": "Consolidación", "area_ha": 20.2935},
+        {"tratamiento": None, "area_ha": 3.0},
+        {"tratamiento": "Renovación", "area_ha": None},
+    ]
+    resultado = derivar_resultado(d, elementos, None)
+    assert resultado == {"Consolidación": 60.68, "Renovación": 29.41}
+    assert list(resultado) == ["Consolidación", "Renovación"]
+
+
+def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:
+    from terranova.catalogo import Derivado
+
+    with pytest.raises(ValueError, match="sumar"):
+        Derivado(de="suma_por", campo="tratamiento")
+    with pytest.raises(ValueError, match="sumar"):
+        Derivado(de="suma", campo="area_ha", sumar="area_ha")

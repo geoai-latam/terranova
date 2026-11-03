@@ -7,8 +7,10 @@ descripcion: >
   Tratamiento urbanístico del POT de Bogotá (Decreto 555 de 2021) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): consolidación,
   renovación urbana, desarrollo, conservación o mejoramiento integral, con la altura máxima permitida
   en pisos, la tipología y el subtratamiento cuando aplican. Es la norma general: un predio puede
-  tener normas específicas (planes parciales, bienes de interés cultural). Solo Bogotá. Sale de la
-  copia de Terrnova. Para los usos, sdp_area_actividad_en_punto.
+  tener normas específicas (planes parciales, bienes de interés cultural). Cada polígono trae las
+  hectáreas que caen dentro de la zona (area_ha), del más grande al más pequeño, y el resultado
+  suma las hectáreas por tratamiento (area_ha_por_tratamiento) y en total. Solo Bogotá. Sale de la
+  copia de Terrnova. Para los usos, sdp_area_actividad_en_poligono.
   (Fuente: SDP Bogotá; licencia: CC BY 4.0.)
 entrada: {poligono: poligono}
 consulta:
@@ -21,14 +23,14 @@ consulta:
     geometria: simplificada
     area_en_poligono: true
     order: ["-_area_ha", OBJECTID]
-    limite: 200
+    limite: 1000
   campos: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
 salida: TratamientoUrbanisticoEnPoligono
 derivados:
   total: {de: completitud_total, tipo: int}
-  area_ha: {de: columna, campo: _area_ha, tipo: float}
-  area_ha_total: {de: suma, campo: area_ha, tipo: float}
-  tratamiento_principal: {de: primero, campo: tratamiento}
+  area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
+  area_ha_por_tratamiento: {de: suma_por, campo: tratamiento, sumar: area_ha, decimales: 2}
 cobro: zona
 canario:
   # Franja en diagonal junto al punto del canario de sdp_tratamiento_urbanistico_en_punto; medido el 2026-11-01 en la capa
@@ -37,6 +39,6 @@ canario:
     poligono:
       type: Polygon
       coordinates: [[[-74.0765, 4.6286], [-74.0365, 4.6686], [-74.0405, 4.6726], [-74.0805, 4.6326], [-74.0765, 4.6286]]]
-  verdad: {total: 99}
-  campos: [altura_maxima, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tipologia, total, tratamiento]
+  verdad: {total: 99, area_ha_total: 345.51}
+  campos: [altura_maxima, area_ha, area_ha_por_tratamiento, area_ha_total, codigo_tratamiento, fecha_acto, numero_acto, subtratamiento, tipologia, total, tratamiento]
   latencia_max_ms: 8000

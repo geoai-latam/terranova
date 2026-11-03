@@ -1,13 +1,15 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T03:40:59+00:00",
+ "grabado": "2026-11-03T07:30:13+00:00",
  "herramienta": "sdp_tratamiento_urbanistico_en_poligono",
  "llamadas": [
   {
    "argumentos": {
+    "area_en_poligono": true,
     "geometria": "simplificada",
-    "limite": 200,
+    "limite": 1000,
     "order": [
+     "-_area_ha",
      "OBJECTID"
     ],
     "poligono": {
@@ -58,216 +60,47 @@
         {
          "geometry": {
           "coordinates": [
-           -74.06014,
-           4.64521
+           -74.04706,
+           4.6631
           ],
           "type": "Point"
          },
          "properties": {
-          "ALTURA_MAXIMA": "7",
+          "ALTURA_MAXIMA": "8-11",
           "CODIGO_TRATAMIENTO": "2",
           "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": "TA",
+          "_area_ha": 40.3819
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.04708,
-           4.6668
+           -74.06553,
+           4.63993
           ],
           "type": "Point"
          },
          "properties": {
-          "ALTURA_MAXIMA": "10",
-          "CODIGO_TRATAMIENTO": "2",
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
           "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 29.4059
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.07296,
-           4.6316
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "2",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07539,
-           4.63381
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "2-5",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0504,
-           4.66178
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07745,
-           4.6304
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07489,
-           4.6336
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07621,
-           4.62923
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07418,
-           4.62516
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05473,
-           4.64865
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4-6",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05448,
-           4.65264
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4-7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07347,
+           -74.07348,
            4.64062
           ],
           "type": "Point"
@@ -279,311 +112,8 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07539,
-           4.63381
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5-6",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07192,
-           4.6417
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5-7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04699,
-           4.65966
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "6",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05346,
-           4.65301
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04796,
-           4.66249
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "9",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04426,
-           4.66857
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.03946,
-           4.67229
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04528,
-           4.66429
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4-6",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05363,
-           4.65927
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0553,
-           4.66158
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0432,
-           4.66831
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05329,
-           4.65172
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7-11",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05169,
-           4.65251
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7-11",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04428,
-           4.66805
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "8-11",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0471,
-           4.66408
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "8-11",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05534,
-           4.65854
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "9-11",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
+          "TIPOLOGIA": " ",
+          "_area_ha": 20.2935
          },
          "type": "Feature"
         },
@@ -602,653 +132,8 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05206,
-           4.66046
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "9-14",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05673,
-           4.65475
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "PEMP",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05748,
-           4.65526
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "PEMP",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05592,
-           4.65513
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "PEMP",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07794,
-           4.62908
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "F2",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07436,
-           4.63572
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-6",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05453,
-           4.65278
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "PEMP",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04162,
-           4.67443
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "BIC NAL",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05665,
-           4.64872
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07157,
-           4.64167
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07267,
-           4.63732
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05752,
-           4.65133
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0576,
-           4.65507
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": null,
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05666,
-           4.65565
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": null,
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06127,
-           4.64537
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05687,
-           4.65534
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": null,
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05592,
-           4.65513
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": null,
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06551,
-           4.64012
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07563,
-           4.63386
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07838,
-           4.63025
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06224,
-           4.64201
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06276,
-           4.64328
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05852,
-           4.64789
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06931,
-           4.64088
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06906,
-           4.63679
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06655,
-           4.63941
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07953,
-           4.6346
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0675,
-           4.63958
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07591,
-           4.6331
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06761,
-           4.65015
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06877,
-           4.64134
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05952,
-           4.64851
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05815,
-           4.65071
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0588,
-           4.65666
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": " ",
-          "CODIGO_TRATAMIENTO": "4",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Renovación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": "TA",
+          "_area_ha": 16.9628
          },
          "type": "Feature"
         },
@@ -1267,15 +152,36 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 15.453
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.06566,
-           4.63927
+           -74.06979,
+           4.63425
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 15.2742
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05952,
+           4.64851
           ],
           "type": "Point"
          },
@@ -1286,15 +192,36 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 13.91
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.0836,
-           4.63087
+           -74.05206,
+           4.66046
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "9-14",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 10.9722
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05815,
+           4.6507
           ],
           "type": "Point"
          },
@@ -1305,148 +232,56 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 10.6715
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.05979,
-           4.64582
+           -74.06877,
+           4.64134
           ],
           "type": "Point"
          },
          "properties": {
-          "ALTURA_MAXIMA": null,
+          "ALTURA_MAXIMA": "4",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 8.7308
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0675,
+           4.63958
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
           "CODIGO_TRATAMIENTO": "4",
           "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 7.3262
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.05248,
-           4.65232
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04713,
-           4.66125
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "14",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0444,
-           4.66559
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "8",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04744,
-           4.6615
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "10",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04248,
-           4.66435
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "10",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04488,
-           4.66078
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04332,
-           4.66703
+           -74.03947,
+           4.67231
           ],
           "type": "Point"
          },
@@ -1457,15 +292,356 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
+          "TIPOLOGIA": "TA",
+          "_area_ha": 7.0834
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.05357,
-           4.65298
+           -74.05475,
+           4.64872
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4-6",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 6.8664
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04528,
+           4.66429
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4-6",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 6.6166
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05921,
+           4.65264
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 6.5869
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04426,
+           4.66857
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 6.3813
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07591,
+           4.6331
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 5.351
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07539,
+           4.63381
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "2-5",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 4.6722
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07539,
+           4.63381
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5-6",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 4.4154
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07898,
+           4.6345
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.9892
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05743,
+           4.64927
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.6416
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05932,
+           4.64627
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.3969
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0588,
+           4.65666
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.2447
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06931,
+           4.64088
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.2348
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07169,
+           4.6345
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.1026
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0432,
+           4.66831
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 3.054
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0751,
+           4.63388
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 3.0024
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07157,
+           4.64167
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.8967
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05346,
+           4.65301
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.807
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0469,
+           4.65558
           ],
           "type": "Point"
          },
@@ -1476,330 +652,8 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04409,
-           4.66533
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.04507,
-           4.66306
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": "TA"
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.08063,
-           4.6311
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "7",
-          "CODIGO_TRATAMIENTO": "2",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Consolidación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07394,
-           4.63758
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0732,
-           4.6369
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07333,
-           4.63473
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.07273,
-           4.63542
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06977,
-           4.63428
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.0573,
-           4.65552
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-7",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.06086,
-           4.65236
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "4",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05758,
-           4.65128
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-9",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05752,
-           4.65133
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05622,
-           4.6533
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-12",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05546,
-           4.65123
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05437,
-           4.65303
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "5",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05546,
-           4.65123
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3-6",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
-         },
-         "type": "Feature"
-        },
-        {
-         "geometry": {
-          "coordinates": [
-           -74.05766,
-           4.65121
-          ],
-          "type": "Point"
-         },
-         "properties": {
-          "ALTURA_MAXIMA": "3",
-          "CODIGO_TRATAMIENTO": "1",
-          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
-          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
-          "NOMBRE_TRATAMIENTO": "Conservación",
-          "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.8061
          },
          "type": "Feature"
         },
@@ -1818,7 +672,328 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Conservación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.7805
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07745,
+           4.6304
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.7539
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04428,
+           4.66805
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "8-11",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 2.6169
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05979,
+           4.64582
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": null,
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.6166
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04248,
+           4.66435
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "10",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 2.6165
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07418,
+           4.62516
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.3245
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04488,
+           4.66078
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 2.2492
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0481,
+           4.65809
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "11",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": null,
+          "_area_ha": 2.226
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05453,
+           4.65278
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "PEMP",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.2024
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05546,
+           4.65123
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-6",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.1856
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07794,
+           4.62908
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "F2",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.1706
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06655,
+           4.63941
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.0879
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07295,
+           4.63746
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 2.0743
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0836,
+           4.63087
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.9584
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07296,
+           4.6316
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "2",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.8312
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06276,
+           4.64328
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.7156
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07563,
+           4.63386
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.5316
          },
          "type": "Feature"
         },
@@ -1837,7 +1012,68 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Conservación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.5091
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05758,
+           4.65128
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-9",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.495
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04667,
+           4.66086
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "14",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 1.4108
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05546,
+           4.65123
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.3737
          },
          "type": "Feature"
         },
@@ -1856,53 +1092,76 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Conservación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.3687
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.05792,
-           4.65459
+           -74.07332,
+           4.63473
           ],
           "type": "Point"
          },
          "properties": {
-          "ALTURA_MAXIMA": "3-8",
+          "ALTURA_MAXIMA": "3-5",
           "CODIGO_TRATAMIENTO": "1",
           "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Conservación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.3258
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.04885,
-           4.65978
+           -74.05363,
+           4.65928
           ],
           "type": "Point"
          },
          "properties": {
-          "ALTURA_MAXIMA": "11",
+          "ALTURA_MAXIMA": "5",
           "CODIGO_TRATAMIENTO": "2",
           "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": null
+          "TIPOLOGIA": "TA",
+          "_area_ha": 1.246
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.06931,
-           4.64088
+           -74.04713,
+           4.66125
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "10",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 1.2006
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07198,
+           4.64138
           ],
           "type": "Point"
          },
@@ -1913,15 +1172,336 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
           "NOMBRE_TRATAMIENTO": "Renovación",
           "NUMERO_ACTO_ADMINISTRATIVO": "555",
-          "TIPOLOGIA": " "
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.1533
          },
          "type": "Feature"
         },
         {
          "geometry": {
           "coordinates": [
-           -74.04296,
-           4.66819
+           -74.06551,
+           4.64012
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.1289
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05622,
+           4.6533
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-12",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.1261
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05504,
+           4.65766
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "9-11",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 1.0996
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05622,
+           4.6533
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-8",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.0501
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05592,
+           4.65387
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": null,
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 1.0433
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05752,
+           4.65134
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.915
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05059,
+           4.66153
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.908
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05559,
+           4.65455
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": null,
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.8991
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07436,
+           4.63572
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-6",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.8863
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04035,
+           4.67402
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "BIC NAL",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.8641
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06127,
+           4.64537
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.8094
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07838,
+           4.63025
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.775
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04744,
+           4.6615
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "9",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.7695
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05344,
+           4.65229
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "6",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.7506
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05453,
+           4.65278
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.6334
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05617,
+           4.65472
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "PEMP",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.6283
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04317,
+           4.66742
           ],
           "type": "Point"
          },
@@ -1932,7 +1512,528 @@
           "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
           "NOMBRE_TRATAMIENTO": "Consolidación",
           "NUMERO_ACTO_ADMINISTRATIVO": "1094",
-          "TIPOLOGIA": "TA"
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.6117
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05273,
+           4.6518
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.6035
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04297,
+           4.66752
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2026-05-26",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "1094",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.5747
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07281,
+           4.6365
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.5596
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06761,
+           4.65016
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.503
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05168,
+           4.65251
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7-11",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.4704
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04507,
+           4.66306
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.4651
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05692,
+           4.65527
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": null,
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.4472
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05361,
+           4.65196
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4-7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.439
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06224,
+           4.64201
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.428
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05666,
+           4.65491
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": null,
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.4218
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07621,
+           4.62923
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.4095
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0444,
+           4.66559
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "8",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.3732
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05697,
+           4.6509
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.3653
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06804,
+           4.63661
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": " ",
+          "CODIGO_TRATAMIENTO": "4",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Renovación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.3528
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05329,
+           4.65172
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7-11",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.3161
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04445,
+           4.6655
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.2426
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07192,
+           4.6417
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5-7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1874
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06086,
+           4.65236
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "4",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1478
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05755,
+           4.65515
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-7",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1384
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08063,
+           4.6311
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1284
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0571,
+           4.655
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "PEMP",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1212
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05646,
+           4.65455
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "PEMP",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.1176
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05908,
+           4.64513
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "7",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.0959
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04708,
+           4.6668
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "10",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.0918
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0553,
+           4.66158
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "5",
+          "CODIGO_TRATAMIENTO": "2",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Consolidación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": "TA",
+          "_area_ha": 0.0589
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06977,
+           4.63428
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ALTURA_MAXIMA": "3-5",
+          "CODIGO_TRATAMIENTO": "1",
+          "CÓDIGO_SUBTRATAMIENTO": "No Aplica",
+          "FECHA_ACTO_ADMINISTRATIVO": "2021-12-29",
+          "NOMBRE_TRATAMIENTO": "Conservación",
+          "NUMERO_ACTO_ADMINISTRATIVO": "555",
+          "TIPOLOGIA": " ",
+          "_area_ha": 0.0
          },
          "type": "Feature"
         }
@@ -1948,13 +2049,13 @@
       "truncado": false,
       "vistos": 99
      },
-     "consultado_en": "2026-11-02T03:40:27.077811+00:00",
+     "consultado_en": "2026-10-28T08:06:45.960595+00:00",
      "copia": {
-      "filas": 370,
-      "huella": "sha256:df95086289e6107d5b60c32807ec52257fd18ede53bdbc202d6736fd3c847910",
+      "filas": 5754,
+      "huella": "sha256:7e727cecba40a679d811d0f38e89dea57af819032017a7cab04630f5b2499fc2",
       "repetidas_en_la_fuente": 0,
       "ventana_desde": null,
-      "version": "20261102034027077811"
+      "version": "20261028080645960595"
      },
      "servido_desde": "copia"
     }
