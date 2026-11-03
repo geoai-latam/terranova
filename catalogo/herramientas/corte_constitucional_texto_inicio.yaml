@@ -1,12 +1,13 @@
 id: corte_constitucional_texto_inicio
-version: 2
+version: 3
 familia: normativa
 fuente: corteconstitucional.relatoria
 pregunta: "¿De qué trata esta sentencia de la Corte Constitucional?"
 descripcion: >
   El comienzo del texto de una sentencia de la Corte Constitucional (hasta 8 000 caracteres): número,
   notas de relatoría y descriptores o síntesis, con cuántos caracteres tiene la sentencia entera.
-  Para buscar dentro, corte_constitucional_texto_buscar.
+  Pide el año y el número con guiones (T-760-08, SU-214-16). Lo que se decidió está al final: sale
+  en corte_constitucional_resuelve. Para buscar dentro, corte_constitucional_texto_buscar.
   (Fuente: Corte Constitucional, relatoría; licencia: Ley 23 de 1982, art. 41.)
 entrada: {anio: int, sentencia: sentencia_relatoria}
 consulta:
@@ -16,12 +17,18 @@ consulta:
   argumentos:
     url: "https://www.corteconstitucional.gov.co/relatoria/{anio}/{sentencia}.htm"
     max_caracteres: 8000
-  campos: [texto, titulo, caracteres]
+  # sin `titulo`: la página lo trae como «***», «VI» o «Sentencia No»
+  campos: [texto, caracteres]
 salida: TextoSentenciaInicio
+avisos:
+- cuando: vacio
+  texto: >
+    La relatoría no tiene esa sentencia en ese año. Revise el año y el número, con guiones
+    (T-760-08, SU-214-16): corte_constitucional_sentencia dice si existe y da su enlace.
 cobro: agregado
 canario:
   # Medido el 2026-10-22: T-760/08 tiene 1 398 924 caracteres; el texto empieza «T-760-08».
   entrada: {anio: 2008, sentencia: T-760-08}
   minimos: {caracteres: 1000000}
-  campos: [caracteres, texto, titulo]
+  campos: [caracteres, texto]
   latencia_max_ms: 30000

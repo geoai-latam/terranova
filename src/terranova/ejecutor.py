@@ -131,9 +131,15 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
             return normalizar_nit(v)
         except ValueError as e:
             raise ErrorEntrada(nombre, str(e)) from None
+    if tipo == "sentencia_relatoria":
+        v = v.strip().upper()
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
+        if tipo == "sentencia_relatoria" and v.startswith("SU-"):
+            # la relatoría guarda las de unificación como SU214-16.htm; SU-214-16.htm es una página
+            # vacía con estado 200 (medido el 2026-11-03)
+            return "SU" + v[3:]
         if tipo == "fecha":
             try:
                 date.fromisoformat(v)

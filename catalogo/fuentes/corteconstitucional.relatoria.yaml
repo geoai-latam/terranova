@@ -22,11 +22,11 @@ cobertura: {pais: CO}
 datos_personales: ninguno
 estado: publicada
 campos:
-  titulo: {nombre: titulo, tipo: str, desc: "título de la página", origen: hecho}
   caracteres: {nombre: caracteres, tipo: int, desc: "caracteres de texto de toda la página", origen: hecho}
   apariciones: {nombre: apariciones, tipo: int, desc: "veces que aparece lo buscado", origen: hecho}
-  n: {nombre: n, tipo: int, desc: "número del fragmento"}
-  posicion: {nombre: posicion, tipo: int, desc: "posición del fragmento en el texto"}
+  n: {nombre: n, tipo: int, desc: "número de la primera aparición que trae el fragmento"}
+  veces: {nombre: veces_en_fragmento, tipo: int, desc: "apariciones que caben en el fragmento: las cercanas se funden en uno"}
+  posicion: {nombre: posicion, tipo: int, desc: "posición en el texto de la primera aparición del fragmento, o de donde empieza la parte resolutiva"}
   texto: {nombre: texto, tipo: str, desc: "fragmento del texto oficial (o el comienzo de la página)"}
 comportamiento: {max_por_pagina: 20}
 dcat: {publisher: "Corte Constitucional", theme: normativa, accrualPeriodicity: irregular}
@@ -39,6 +39,8 @@ perfil:
   - "el texto está en HTML estático (relatoria/<año>/<T-760-08>.htm); robots.txt permite /relatoria/"
   - "declara windows-1252 solo en el <meta>"
   - "la búsqueda JSON del sitio es un backend interno (Elasticsearch) sin documentar: no se usa sin permiso (ADR-0018)"
-  - "el título de la página es «***»: el número sale del texto"
+  - "el título de la página es «***», «VI» o «Sentencia No»: no se usa; el número sale del texto"
+  - "las de unificación están como SU214-16.htm; SU-214-16.htm responde 200 con una página vacía de 8 607 bytes (medido 2026-11-03)"
+  - "la parte resolutiva empieza en la primera línea que es solo «RESUELVE» (con dos puntos o sin ellos): 9 de 9 sentencias de 1992 a 2021 (medido 2026-11-03)"
   - "la Corte reemplaza con datos ficticios los nombres en algunas tutelas (nota de relatoría)"
   decision: "fragmentos alrededor de lo buscado y el comienzo del texto; el índice sale de corte_constitucional_sentencia"

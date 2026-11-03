@@ -1,7 +1,7 @@
 {
  "capas": {
   "fuentes": 176,
-  "herramientas": 212,
+  "herramientas": 213,
   "familias": [
    [
     "Estadísticas",
@@ -29,7 +29,7 @@
    ],
    [
     "Normativa",
-    11
+    12
    ]
   ],
   "modulos": [
