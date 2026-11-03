@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T20:02:58+00:00",
+ "grabado": "2026-11-03T01:39:33+00:00",
  "herramienta": "dane_ipc_indice_anio",
  "llamadas": [
   {
@@ -15,7 +15,10 @@
     "select": [
      "Mes",
      "columna",
-     "valor"
+     "valor",
+     "variacion_mensual",
+     "variacion_anual",
+     "variacion_anio_corrido"
     ],
     "tabla": "dane_ipc_indices"
    },
@@ -26,69 +29,108 @@
       "columns": [
        "Mes",
        "columna",
-       "valor"
+       "valor",
+       "variacion_anio_corrido",
+       "variacion_anual",
+       "variacion_mensual"
       ],
       "kind": "table",
       "rows": [
        {
         "Mes": "Enero",
         "columna": "2025",
-        "valor": 146.24
+        "valor": 146.24,
+        "variacion_anio_corrido": 0.94,
+        "variacion_anual": 5.22,
+        "variacion_mensual": 0.94
        },
        {
         "Mes": "Febrero",
         "columna": "2025",
-        "valor": 147.9
+        "valor": 147.9,
+        "variacion_anio_corrido": 2.08,
+        "variacion_anual": 5.27,
+        "variacion_mensual": 1.14
        },
        {
         "Mes": "Marzo",
         "columna": "2025",
-        "valor": 148.68
+        "valor": 148.68,
+        "variacion_anio_corrido": 2.62,
+        "variacion_anual": 5.09,
+        "variacion_mensual": 0.53
        },
        {
         "Mes": "Abril",
         "columna": "2025",
-        "valor": 149.66
+        "valor": 149.66,
+        "variacion_anio_corrido": 3.3,
+        "variacion_anual": 5.16,
+        "variacion_mensual": 0.66
        },
        {
         "Mes": "Mayo",
         "columna": "2025",
-        "valor": 150.14
+        "valor": 150.14,
+        "variacion_anio_corrido": 3.63,
+        "variacion_anual": 5.05,
+        "variacion_mensual": 0.32
        },
        {
         "Mes": "Junio",
         "columna": "2025",
-        "valor": 150.3
+        "valor": 150.3,
+        "variacion_anio_corrido": 3.74,
+        "variacion_anual": 4.83,
+        "variacion_mensual": 0.11
        },
        {
         "Mes": "Julio",
         "columna": "2025",
-        "valor": 150.71
+        "valor": 150.71,
+        "variacion_anio_corrido": 4.02,
+        "variacion_anual": 4.9,
+        "variacion_mensual": 0.27
        },
        {
         "Mes": "Agosto",
         "columna": "2025",
-        "valor": 150.99
+        "valor": 150.99,
+        "variacion_anio_corrido": 4.22,
+        "variacion_anual": 5.1,
+        "variacion_mensual": 0.19
        },
        {
         "Mes": "Septiembre",
         "columna": "2025",
-        "valor": 151.48
+        "valor": 151.48,
+        "variacion_anio_corrido": 4.56,
+        "variacion_anual": 5.18,
+        "variacion_mensual": 0.32
        },
        {
         "Mes": "Octubre",
         "columna": "2025",
-        "valor": 151.76
+        "valor": 151.76,
+        "variacion_anio_corrido": 4.75,
+        "variacion_anual": 5.51,
+        "variacion_mensual": 0.18
        },
        {
         "Mes": "Noviembre",
         "columna": "2025",
-        "valor": 151.87
+        "valor": 151.87,
+        "variacion_anio_corrido": 4.82,
+        "variacion_anual": 5.3,
+        "variacion_mensual": 0.07
        },
        {
         "Mes": "Diciembre",
         "columna": "2025",
-        "valor": 152.27
+        "valor": 152.27,
+        "variacion_anio_corrido": 5.1,
+        "variacion_anual": 5.1,
+        "variacion_mensual": 0.26
        }
       ]
      }
@@ -99,13 +141,13 @@
       "truncado": false,
       "vistos": 12
      },
-     "consultado_en": "2026-10-28T20:02:13.418835+00:00",
+     "consultado_en": "2026-11-03T01:38:12.922610+00:00",
      "copia": {
       "filas": 285,
-      "huella": "sha256:ef23122abc55b4b6d0926b97a2e2005f61dcab7e3dc45e7b0545a6cdf9882a6e",
+      "huella": "sha256:909509e86ff08990c5b4af5015121604a68b7e094dda5084e98d40ca049b3cc1",
       "repetidas_en_la_fuente": 0,
       "ventana_desde": null,
-      "version": "20261028200213418835"
+      "version": "20261103013812922610"
      },
      "servido_desde": "copia"
     }

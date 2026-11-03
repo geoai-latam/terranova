@@ -551,7 +551,51 @@ def descargar_conector(
     if not filas:
         raise ErrorCopia(f"{copia.tool} dio una tabla vacía: la copia no se publica")
     columnas = [c for c in fuente.campos if c != FILA]
-    yield [{**{c: fila.get(c) for c in columnas}, FILA: i} for i, fila in enumerate(filas, start=1)]
+    salida = [
+        {**{c: fila.get(c) for c in columnas}, FILA: i} for i, fila in enumerate(filas, start=1)
+    ]
+    if copia.variaciones is not None:
+        con_variaciones(
+            salida, copia.variaciones.indice, copia.variaciones.anio, copia.variaciones.mes
+        )
+    yield salida
+
+
+MESES = (
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+)  # fmt: skip
+
+
+def con_variaciones(filas: list[dict[str, Any]], indice: str, anio: str, mes: str) -> None:
+    """Suma a cada fila `variacion_mensual`, `variacion_anual` y `variacion_anio_corrido` de un
+    índice mensual, en porcentaje con dos decimales (como las publica el DANE). Sin el mes con qué
+    comparar (el primero de la serie), la variación queda vacía: no se inventa."""
+    valores: dict[tuple[int, int], float] = {}
+    for fila in filas:
+        clave = _mes_y_anio(fila.get(anio), fila.get(mes))
+        if clave is not None and isinstance(fila.get(indice), int | float):
+            valores[clave] = float(fila[indice])
+
+    def variacion(actual: float | None, base: tuple[int, int]) -> float | None:
+        previo = valores.get(base)
+        return None if actual is None or not previo else round((actual / previo - 1) * 100, 2)
+
+    for fila in filas:
+        clave = _mes_y_anio(fila.get(anio), fila.get(mes))
+        actual = valores.get(clave) if clave else None
+        a, m = clave or (0, 0)
+        fila["variacion_mensual"] = variacion(actual, (a - 1, 12) if m == 1 else (a, m - 1))
+        fila["variacion_anual"] = variacion(actual, (a - 1, m))
+        fila["variacion_anio_corrido"] = variacion(actual, (a - 1, 12))
+
+
+def _mes_y_anio(anio: Any, mes: Any) -> tuple[int, int] | None:
+    nombre = str(mes or "").strip().lower()
+    try:
+        return (int(float(str(anio))), MESES.index(nombre) + 1)
+    except ValueError:
+        return None
 
 
 # --- un GeoJSON publicado como archivo (origen geojson) -------------------------------------------
@@ -1046,9 +1090,11 @@ class AlmacenCopias:
     def _publicar(self, v: Version, fisica: str) -> None:
         """La vista pasa a la versión nueva y el manifiesto la marca vigente, en una transacción."""
         with self._c.transaction():
-            self._c.execute(
-                f'CREATE OR REPLACE VIEW {ESQUEMA}."{v.tabla}" AS SELECT * FROM {fisica}'
-            )
+            # DROP y CREATE, no CREATE OR REPLACE: este no deja cambiar las columnas de la vista
+            # (una copia que suma columnas, como las variaciones del IPC). En la misma transacción,
+            # quien consulta no ve el hueco.
+            self._c.execute(f'DROP VIEW IF EXISTS {ESQUEMA}."{v.tabla}"')
+            self._c.execute(f'CREATE VIEW {ESQUEMA}."{v.tabla}" AS SELECT * FROM {fisica}')
             self._c.execute(
                 f"UPDATE {ESQUEMA}.versiones SET vigente = false WHERE tabla = %s", (v.tabla,)
             )
