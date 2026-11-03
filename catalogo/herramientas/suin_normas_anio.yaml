@@ -1,11 +1,14 @@
 id: suin_normas_anio
-version: 1
+version: 2
 familia: normativa
 fuente: minjusticia.suin
 pregunta: "¿Cuántas leyes, decretos y resoluciones de este año están cargados en SUIN-Juriscol?"
 descripcion: >
   Normas de un año cargadas en SUIN-Juriscol (Ministerio de Justicia), contadas por tipo (ley,
-  decreto, resolución, circular…). Es lo que SUIN tiene cargado, no todo lo que se expidió.
+  decreto, resolución, circular…), del tipo con más normas al de menos, con cuántas están vigentes,
+  cuántas no tienen aún dato de vigencia en SUIN (en las recientes son la mayoría: 954 de 1 320 en
+  2025) y el total. Es lo que SUIN tiene cargado, no todo lo que se expidió (de los decretos y resoluciones,
+  SUIN carga una parte). Para una norma: suin_norma.
   (Fuente: MinJusticia, SUIN-Juriscol; licencia: CC BY-SA 4.0.)
 entrada: {anio: int}
 consulta:
@@ -15,21 +18,26 @@ consulta:
   argumentos:
     id: fiev-nid6
     portal: datos.gov.co
-    select: "tipo, count(*) AS normas"
+    select: "tipo, count(*) AS normas, sum(case(vigencia = 'Vigente', 1, true, 0)) AS vigentes, sum(case(vigencia = 'NULL', 1, true, 0)) AS sin_dato"
     where: "a_o = '{anio}'"
     group: tipo
-    order: tipo
+    order: "normas DESC, tipo"
     max_filas: 50
   campos: [tipo, a_o]
 salida: NormasSuinAnio
 derivados:
   normas: {de: columna, campo: normas, tipo: int}
+  vigentes: {de: columna, campo: vigentes, tipo: int}
+  sin_dato_vigencia: {de: columna, campo: sin_dato, tipo: int}
   total_normas: {de: suma, campo: normas, tipo: int}
+  total_vigentes: {de: suma, campo: vigentes, tipo: int}
+  total_sin_dato_vigencia: {de: suma, campo: sin_dato_vigencia, tipo: int}
 cobro: agregado
 canario:
-  # Medido el 2026-10-23 en fiev-nid6: 2019, 650 normas (70 leyes, 318 decretos). SUIN sigue cargando: el total es un mínimo.
+  # Medido el 2026-11-03 en fiev-nid6: 2019, 650 normas; la mayoría, 318 decretos (163 vigentes).
+  # SUIN sigue cargando: el total es un mínimo.
   entrada: {anio: 2019}
-  verdad: {tipo: "ACTO LEGISLATIVO", normas: 5}
-  minimos: {total_normas: 650}
-  campos: [normas, tipo, total_normas]
+  verdad: {tipo: "DECRETO"}
+  minimos: {total_normas: 650, normas: 318}
+  campos: [normas, sin_dato_vigencia, tipo, total_normas, total_sin_dato_vigencia, total_vigentes, vigentes]
   latencia_max_ms: 10000
