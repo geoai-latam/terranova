@@ -709,10 +709,10 @@ def test_la_fecha_de_constitucion_y_la_de_modificacion_salen_aparte() -> None:
         "NOMBRE_ZON": "Pato",
         "FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024",
     }
-    fila = mapear_fila(h, fuente, pato, 0)
+    fila = mapear_fila(h, fuente, pato, None)
     assert fila["fecha_constitucion"] == "1997-12-18" and fila["fecha_modificacion"] == "2024-09-26"
     cabrera = mapear_fila(
-        h, fuente, {"NOMBRE_ZON": "Cabrera", "FECHA_CONSTITUCION": "7/11/2000"}, 0
+        h, fuente, {"NOMBRE_ZON": "Cabrera", "FECHA_CONSTITUCION": "7/11/2000"}, None
     )
     assert cabrera["fecha_constitucion"] == "2000-11-07" and cabrera["fecha_modificacion"] is None
 
