@@ -52,3 +52,11 @@ Reglas:
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
 | CAR Cundinamarca, POMCA (diez cuencas) | [car.pomca.md](car.pomca.md) |
+| DANE, crecimiento del PIB trimestral (anexo de producción, copia) | [dane.pib_crecimiento_trimestral.md](dane.pib_crecimiento_trimestral.md) |
+| IDEAM, temperatura del aire de las estaciones (`sbwg-7ju4`) | [ideam.temperatura.md](ideam.temperatura.md) |
+| PNN, Registro Único Nacional de Áreas Protegidas (RUNAP, copia) | [pnn.runap.md](pnn.runap.md) |
+| Colombia Compra, SECOP II pagos y facturas (`uymx-8p3j`, `ibyt-yi2f`) | [cce.secop2.pagos.md](cce.secop2.pagos.md) |
+| Presidencia, víctimas de minas, Descontamina Colombia (`yhxn-eqqw`) | [presidencia.victimas_minas.md](presidencia.victimas_minas.md) |
+| Corte Constitucional, índice de sentencias (`v2k4-2t8s`) | [corteconstitucional.sentencias.md](corteconstitucional.sentencias.md) |
+| MinJusticia, SUIN-Juriscol (`fiev-nid6`) | [minjusticia.suin.md](minjusticia.suin.md) |
+| ANT, zonas de reserva campesina constituidas | [ant.zonas_reserva_campesina.md](ant.zonas_reserva_campesina.md) |
