@@ -41,3 +41,4 @@ Reglas:
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
 | Función Pública, servidores públicos del SIGEP (`2jzx-383z`) | [funcionpublica.sigep.md](funcionpublica.sigep.md) |
 | DANE y DIAN, comercio exterior por subpartida (copias de los microdatos) | [dian.comex.md](dian.comex.md) |
+| IDEAM, normales climatológicas (`nsz2-kzcq`) | [ideam.normales_climatologicas.md](ideam.normales_climatologicas.md) |

@@ -203,6 +203,10 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Sale de una lista de 7 007 subpartidas armada con los microdatos del DANE
     (`scripts/codigos_unidad_subpartida.py`), donde cada subpartida tiene una sola unidad.
   - El catálogo suma `valores_lista` para los derivados `codigo`.
+- **IDEAM, normales con unidad (patrón D):**
+  - Cada fila dice su unidad y si el anual es suma o promedio. Brillo solar y evaporación son por
+    día, medido en todo el conjunto.
+  - Si la estación no tiene normal, el aviso explica que pide 30 años de datos.
 
 ## Ficha de un lote (2026-11-01)
 
