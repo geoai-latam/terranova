@@ -203,7 +203,7 @@ def test_una_fuente_copiada_va_por_el_conector_copia() -> None:
 def test_las_herramientas_del_saber_nunca_sacan_grupos_chicos() -> None:
     """ADR-0014: toda herramienta sobre la copia agrega y exige 10 estudiantes por grupo."""
     sobre = [h for h in CATALOGO.herramientas.values() if h.fuente == ICFES.id]
-    assert len(sobre) == 3
+    assert len(sobre) == 4
     for h in sobre:
         argumentos = h.consulta.argumentos
         assert argumentos["agregados"] and argumentos["group"], h.id

@@ -433,6 +433,13 @@ verdades:
     entrada: {municipio_divipola: "25175", periodo: 20224}
     verdad: {estrato: "Estrato 1", estudiantes: 71}
     medicion: "kgxf-xxbe, estudiantes distintos por estrato, Chía, periodo 20224"
+  - id: s08b
+    familia: estadisticas
+    pregunta: "¿Qué código DANE tiene el colegio Diversificado de Chía?"
+    herramienta: icfes_saber11_sede_buscar
+    entrada: {municipio_divipola: "25175", nombre: diversificado}
+    verdad: {codigo_dane_sede: "125175000493"}
+    medicion: "kgxf-xxbe, cole_cod_mcpio_ubicacion = '25175' y el nombre con «DIVERSIFICADO» (2026-11-03)"
   - id: s09
     familia: estadisticas
     pregunta: "¿Cuál es la TRM de los últimos días?"

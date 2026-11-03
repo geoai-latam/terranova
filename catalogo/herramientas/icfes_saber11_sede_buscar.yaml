@@ -1,0 +1,55 @@
+id: icfes_saber11_sede_buscar
+version: 1
+familia: estadisticas
+fuente: icfes.saber11
+pregunta: "¿Cuál es el código DANE de este colegio, para ver sus resultados del Saber 11?"
+descripcion: >
+  Busca las sedes educativas de un municipio (código DANE / DIVIPOLA) por palabras de su nombre y
+  devuelve su código DANE de sede (12 dígitos), que es lo que pide icfes_saber11_colegio, con los
+  estudiantes que presentaron el Saber 11 de 2010 a 2022 y el último periodo en que lo
+  presentaron. No distingue mayúsculas ni tildes y exige todas las palabras: use las que
+  identifican al colegio («Diversificado»), no «colegio» ni «institución», que la fuente escribe de
+  varias formas (I.E., INSTITUCION EDUCATIVA, COL.). Un colegio con varias sedes sale una vez por
+  sede. Solo salen las sedes con 10 estudiantes o más en total (ADR-0014).
+  (Fuente: ICFES; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola, nombre: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: icfes_saber11
+    filtros: {cole_cod_mcpio_ubicacion: "{municipio_divipola}"}
+    contiene: {cole_nombre_sede: "{nombre}"}
+    select: [cole_cod_dane_sede]
+    group: [cole_cod_dane_sede]
+    agregados:
+      # el nombre cambia de escritura entre años: sale el mayor
+      sede: "max:cole_nombre_sede"
+      estudiantes_2010_2022: "sum:estudiantes"
+      ultimo_periodo: "max:periodo"
+    minimo: {"sum:estudiantes": 10}  # ADR-0014: sin grupos chicos de personas
+    order: ["-estudiantes_2010_2022"]
+    limite: 20
+  campos: [cole_cod_dane_sede, cole_cod_mcpio_ubicacion, cole_nombre_sede, estudiantes, periodo]
+salida: Saber11SedesBuscar
+derivados:
+  sede: {de: columna, campo: sede, tipo: str}
+  estudiantes_2010_2022: {de: columna, campo: estudiantes_2010_2022, tipo: int}
+  ultimo_periodo: {de: columna, campo: ultimo_periodo, tipo: str}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna sede de ese municipio con 10 estudiantes o más en el Saber 11 trae todas esas palabras
+    en su nombre. Pruebe con menos palabras, sin «colegio» ni «institución» (la fuente las abrevia),
+    y revise el código DIVIPOLA del municipio (5 dígitos).
+cobro: agregado
+canario:
+  # Medido el 2026-11-03 en kgxf-xxbe (cole_cod_mcpio_ubicacion = '25175' y el nombre con
+  # «DIVERSIFICADO»): una sola sede, 125175000493, INSTITUCION EDUCATIVA DIVERSIFICADO - SEDE
+  # PRINCIPAL.
+  entrada: {municipio_divipola: "25175", nombre: diversificado}
+  verdad: {codigo_dane_sede: "125175000493", sede: "INSTITUCION EDUCATIVA DIVERSIFICADO - SEDE PRINCIPAL", numero_registros: 1}
+  campos: [codigo_dane_sede, estudiantes_2010_2022, numero_registros, sede, ultimo_periodo]
+  latencia_max_ms: 10000

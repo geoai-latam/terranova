@@ -8,7 +8,8 @@ descripcion: >
   examen, de 2010 a 2022: estudiantes, nombre de la sede y promedio del puntaje global (0–500). El
   periodo es AAAAS: el año y luego 1 (primer semestre) o 2 y 4 (segundo semestre). Hasta 20141 no
   traen puntaje global ni de lectura crítica. Solo agregados: un periodo con menos de 10 estudiantes no
-  sale. Cada estudiante cuenta una vez, aunque la fuente lo repita.
+  sale. Cada estudiante cuenta una vez, aunque la fuente lo repita. Si no sabe el código, búsquelo
+  por el nombre con icfes_saber11_sede_buscar.
   (Fuente: ICFES; licencia: CC BY-SA 4.0.)
 entrada: {codigo_dane_sede: codigo_dane_sede}
 consulta:
