@@ -60,8 +60,12 @@ async def test_dorada(herramienta: str) -> None:
     assert comprobar(h, sobre) == [], "la verdad medida del canario no coincide"
     assert sorted(campos_presentes(sobre)) == h.canario.campos, "corre scripts/campos_canario.py"
     permitidos = fuente.nombres_rt | set(h.derivados) | {"elementos"}
-    if h.consulta.complemento:  # sus hechos salen arriba, con su nombre declarado
-        permitidos |= {x.nombre for x in h.consulta.complemento.hechos.values()}
+    if (comp := h.consulta.complemento) is not None:  # sus hechos salen arriba, con su nombre
+        cf = CATALOGO.fuentes[comp.fuente]
+        for col, x in comp.hechos.items():
+            permitidos.add(x.nombre)
+            if col in cf.campos and cf.campos[col].codigos is not None:
+                permitidos.add(x.nombre + "_significado")  # el código va con su significado
     assert fuera_de_lista_blanca(sobre, permitidos) == set(), "regla 10: campo fuera de la lista"
     for elemento in sobre.datos.get("elementos", []):
         assert set(elemento) <= permitidos

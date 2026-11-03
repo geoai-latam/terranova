@@ -1,12 +1,14 @@
 id: igac_predio_por_codigo
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.terreno
 pregunta: "¿Qué predio del catastro IGAC tiene este número predial?"
 descripcion: >
-  Predio catastral (IGAC) a partir de su número predial nacional de 30 dígitos: número anterior,
-  zona (rural o urbana) y municipio. Cubre los municipios con gestión catastral del IGAC; Bogotá,
-  Medellín, Cali y otros gestores no están en esta fuente.
+  Predio catastral (IGAC) a partir de su número predial nacional de 30 dígitos: su terreno en el
+  mapa, número anterior, zona (rural o urbana) y municipio, y del registro catastral la dirección
+  (en lo rural, el nombre del predio), el destino económico con su significado y las áreas de
+  terreno y construida en m². Cubre los municipios con gestión catastral del IGAC; Bogotá,
+  Medellín, Cali y otros gestores no están en esta fuente. Sin datos de propietarios.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 # La puerta debe validar que `codigo` sean 30 dígitos (^[0-9]{30}$) antes de armar el where.
 entrada: {codigo: codigo_predial}
@@ -20,11 +22,37 @@ consulta:
     out_fields: [CODIGO, CODIGO_ANTERIOR]
     max_features: 1
   campos: [CODIGO, CODIGO_ANTERIOR]
+  # El registro catastral (tabla 17 del mismo servicio) tiene lo que dice qué es el predio: en el
+  # terreno solo están los códigos (revisión de valor: «devuelve el código que se le dio»).
+  complemento:
+    fuente: igac.catastro.registro1
+    tool: arcgis_query_features
+    argumentos:
+      url: "{url_fuente}/17"
+      where: "NUMERO_PREDIAL = '{codigo}'"
+      out_fields: [DIRECCION, DESTINO_ECONOMICO, AREA_TERRENO, AREA_CONSTRUIDA]
+      max_features: 1
+    hechos:
+      DIRECCION: {nombre: direccion, tipo: str, desc: "dirección del predio (en lo rural, su nombre), del registro catastral"}
+      DESTINO_ECONOMICO: {nombre: destino_economico, tipo: str, desc: "código de destino económico del IGAC (Res. 070 de 2011)"}
+      AREA_TERRENO: {nombre: area_terreno_m2, tipo: float, desc: "área del terreno según el registro, m²"}
+      AREA_CONSTRUIDA: {nombre: area_construida_m2, tipo: float, desc: "área construida según el registro, m²"}
+    que_dice: "la dirección, el destino y las áreas del registro catastral"
 salida: PredioPorCodigo
 # `zona` sale de la capa que respondió; `municipio_divipola`, de los 5 primeros dígitos del código.
 derivados:
   zona: {de: capa, valores: {"14": rural, "7": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_predial, n: 5}
+# Sin fila en el registro el complemento no da hechos y el campo falta: `si` lo ve como "None".
+# Yopal: 5 terrenos urbanos sueltos y ninguna fila en el registro (medido el 2026-11-03); su
+# catastro no lo lleva el IGAC.
+avisos:
+- cuando: encontrado
+  si: {campo: destino_economico, valores: ["None"]}
+  texto: >
+    El terreno está en la base del IGAC, pero el registro catastral no trae este predio: no hay
+    dirección, destino ni áreas. Pasa en municipios que no gestiona el IGAC, donde quedan
+    terrenos sueltos; consulte al gestor catastral del municipio.
 cobro: registro
 canario:
   entrada: {codigo: "251750000000000050067000000000"}
@@ -33,5 +61,9 @@ canario:
     codigo_predial_anterior: "25175000000050067000"
     zona: rural
     municipio_divipola: "25175"
-  campos: [codigo_predial, codigo_predial_anterior, municipio_divipola, zona]
+    # medido el 2026-11-03 en la tabla 17 del corte 06_2026
+    destino_economico: G
+    destino_economico_significado: Recreacional
+    area_terreno_m2: 56069
+  campos: [area_construida_m2, area_terreno_m2, codigo_predial, codigo_predial_anterior, destino_economico, destino_economico_significado, direccion, municipio_divipola, zona]
   latencia_max_ms: 5000

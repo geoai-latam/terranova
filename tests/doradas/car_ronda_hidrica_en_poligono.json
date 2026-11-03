@@ -1,0 +1,93 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-03T14:41:21+00:00",
+ "herramienta": "car_ronda_hidrica_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "ninguna",
+    "limite": 100,
+    "order": [
+     "-_area_ha",
+     "OBJECTID"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.5245,
+        4.63
+       ],
+       [
+        -74.5213,
+        4.63
+       ],
+       [
+        -74.5213,
+        4.6332
+       ],
+       [
+        -74.5245,
+        4.6332
+       ],
+       [
+        -74.5245,
+        4.63
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "OBJECTID",
+     "Fuente",
+     "Acto_Admin",
+     "Fecha"
+    ],
+    "tabla": "car_rondas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "Acto_Admin",
+       "Fecha",
+       "Fuente",
+       "OBJECTID",
+       "_area_ha"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "Acto_Admin": "Resolución 0352 de 2018",
+        "Fecha": "2018-02-20",
+        "Fuente": "Río Apulo",
+        "OBJECTID": 96,
+        "_area_ha": 5.8118
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-11-03T14:38:07.428295+00:00",
+     "copia": {
+      "filas": 203,
+      "huella": "sha256:f07aff644405578750d59283295159a30a7b2298827bcd098fd943c19aba69b7",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261103143807428295"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

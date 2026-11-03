@@ -211,6 +211,16 @@ def test_sanear_conserva_saltos_y_corta_lo_largo() -> None:
     assert len(largo) == MAX_TEXTO and largo.endswith("…")
 
 
+def test_sanear_repara_la_i_partida() -> None:
+    """SECOP escribe «Medellín» con la «í» partida: U+FFFD y un guion suave (medido el 2026-11-03
+    en gra4-pcp2, 223 466 filas)."""
+    assert (
+        sanear("Colombia;  Antioquia ;  Medell\ufffd\u00adn") == "Colombia;  Antioquia ;  Medellín"
+    )
+    assert sanear("Bol\ufffd\u00advar y Quind\ufffd\u00ado") == "Bolívar y Quindío"
+    assert sanear("sin guion \ufffd") == "sin guion \ufffd"
+
+
 @pytest.mark.parametrize(
     ("valor", "tipo", "esperado"),
     [
@@ -732,6 +742,95 @@ async def test_el_complemento_dice_hasta_que_mes_publica_la_fuente() -> None:
     assert sobre.estado == "no_encontrado" and sobre.datos == {}
 
 
+class _IgacFalso:
+    """El terreno (capa 14, rural) y el registro catastral (tabla 17) de un predio."""
+
+    def __init__(self, registro: list[dict[str, Any]] | None) -> None:
+        self.registro = registro  # None: la tabla 17 se cae
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        url = argumentos["url"]
+        if url.endswith("/17"):
+            if self.registro is None:
+                raise RuntimeError("se cayó")
+            filas = [{"attributes": r} for r in self.registro]
+            return {
+                "artifacts": [
+                    {
+                        "kind": "feature_collection",
+                        "data": {
+                            "features": [
+                                {"type": "Feature", "geometry": None, "properties": r}
+                                for r in self.registro
+                            ]
+                        },
+                    }
+                ]
+                if filas
+                else [{"kind": "feature_collection", "data": {"features": []}}],
+                "facts": {},
+            }
+        if not url.endswith("/14"):
+            return {
+                "artifacts": [{"kind": "feature_collection", "data": {"features": []}}],
+                "facts": {},
+            }
+        terreno = {
+            "CODIGO": "251750000000000050067000000000",
+            "CODIGO_ANTERIOR": "25175000000050067000",
+        }
+        poligono = {
+            "type": "Polygon",
+            "coordinates": [[[-74.03, 4.86], [-74.02, 4.86], [-74.02, 4.87], [-74.03, 4.86]]],
+        }
+        return {
+            "artifacts": [
+                {
+                    "kind": "feature_collection",
+                    "data": {
+                        "features": [
+                            {"type": "Feature", "geometry": poligono, "properties": terreno}
+                        ]
+                    },
+                }
+            ],
+            "facts": {},
+        }
+
+
+@pytest.mark.anyio
+async def test_el_predio_por_codigo_trae_el_registro_con_el_significado_del_destino() -> None:
+    """Revisión de valor: devolvía el código que se le daba. El registro del predio del canario
+    (medido el 2026-11-03): «KASTILO», destino G (recreacional), 56 069 m² de terreno."""
+    from terranova.ejecutor import Ejecutor
+
+    entrada = {"codigo": "251750000000000050067000000000"}
+    registro = {
+        "DIRECCION": "KASTILO",
+        "DESTINO_ECONOMICO": "G",
+        "AREA_TERRENO": 56069,
+        "AREA_CONSTRUIDA": 6572,
+    }
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso([registro])})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert sobre.datos["destino_economico"] == "G"
+    assert sobre.datos["destino_economico_significado"] == "Recreacional"
+    assert sobre.datos["area_terreno_m2"] == 56069 and sobre.datos["direccion"] == "KASTILO"
+    assert not any("registro catastral no trae" in a for a in sobre.avisos)
+
+    # sin fila en el registro (Yopal: su catastro no lo lleva el IGAC), lo avisa
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso([])})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert sobre.estado == "encontrado" and "destino_economico" not in sobre.datos
+    assert any("registro catastral no trae" in a for a in sobre.avisos)
+
+    # si el registro se cae, eso es «no se pudo», no «no lo trae»
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso(None)})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert any(a.startswith("No se pudo saber la dirección") for a in sobre.avisos)
+    assert not any("registro catastral no trae" in a for a in sobre.avisos)
+
+
 def test_distintos_cuenta_los_meses_con_datos() -> None:
     """Castilla 2025 trae dos filas en diciembre y ninguna en octubre ni noviembre: 11 filas, 10
     meses (medido el 2026-11-02 en fdvb-hsrf)."""
@@ -811,6 +910,28 @@ def test_la_fecha_de_constitucion_y_la_de_modificacion_salen_aparte() -> None:
     assert cabrera["fecha_constitucion"] == "2000-11-07" and cabrera["fecha_modificacion"] is None
 
 
+def test_la_ronda_separa_el_cuerpo_de_agua_del_componente() -> None:
+    """La CAR pega el componente al nombre («Quebrada Carrizal - APCA»), lo escribe de dos formas
+    («Faja Paralela», «Faja paralela») y a veces repite el nombre en otra línea (medido el
+    2026-11-03 en las 203 rondas)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["car_ronda_hidrica_en_punto"]
+    fuente = CATALOGO.fuentes[h.fuente]
+    casos = {
+        "Quebrada Carrizal - APCA": ("Quebrada Carrizal", "APCA"),
+        "Quebrada Suralá - Faja Paralela": ("Quebrada Suralá", "faja paralela"),
+        "Quebrada Chucua Sopó - Faja paralela": ("Quebrada Chucua Sopó", "faja paralela"),
+        "Quebrada Artesa \r\nQuebrada Artesa": ("Quebrada Artesa", None),
+        "Río Teusacá_parte alta": ("Río Teusacá_parte alta", None),
+        "": (None, None),
+    }
+    for nombre, (cuerpo, componente) in casos.items():
+        fila = mapear_fila(h, fuente, {"Fuente": nombre}, None)
+        assert (fila["cuerpo_de_agua"], fila["componente"]) == (cuerpo, componente), nombre
+        assert fila["nombre_en_la_fuente"] == (nombre or None)  # tal como lo escribe la CAR
+
+
 def test_patron_y_orden_fecha_solo_en_un_derivado_columna() -> None:
     from terranova.catalogo import Derivado
 
@@ -874,6 +995,23 @@ def test_suma_por_categoria_con_la_mayor_primero() -> None:
     resultado = derivar_resultado(d, elementos, None)
     assert resultado == {"Consolidación": 60.68, "Renovación": 29.41}
     assert list(resultado) == ["Consolidación", "Renovación"]
+
+
+def test_suma_por_de_un_conteo_sale_entera() -> None:
+    """Los casos de cada delito en Yopal 2025 (medido el 2026-11-03 en d4fr-sbn2): 21 abigeatos,
+    no 21.0."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    d = Derivado(de="suma_por", campo="tipo", sumar="casos", tipo="int")
+    elementos: list[dict[str, Any]] = [
+        {"tipo": "HURTO ABIGEATO", "casos": 4},
+        {"tipo": "HURTO ABIGEATO", "casos": 17},
+        {"tipo": "HURTO ENTIDADES FINANCIERAS", "casos": 1},
+    ]
+    resultado = derivar_resultado(d, elementos, None)
+    assert resultado == {"HURTO ABIGEATO": 21, "HURTO ENTIDADES FINANCIERAS": 1}
+    assert all(type(v) is int for v in resultado.values())
 
 
 def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:

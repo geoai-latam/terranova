@@ -1,87 +1,66 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T06:38:38+00:00",
+ "grabado": "2026-11-03T14:41:21+00:00",
  "herramienta": "car_ronda_hidrica_en_punto",
  "llamadas": [
   {
    "argumentos": {
-    "bbox": [
-     -74.522902,
-     4.631558,
+    "geometria": "ninguna",
+    "limite": 5,
+    "order": [
+     "OBJECTID"
+    ],
+    "punto": [
      -74.522902,
      4.631558
     ],
-    "geometria": "ninguna",
-    "max_features": 5,
-    "out_fields": [
+    "select": [
+     "OBJECTID",
      "Fuente",
      "Acto_Admin",
      "Fecha"
     ],
-    "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0"
+    "tabla": "car_rondas"
    },
-   "conector": "arcgis-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
-      "crs": "EPSG:4326",
-      "data": {
-       "features": [
-        {
-         "geometry": null,
-         "properties": {
-          "Acto_Admin": "Resolución 0352 de 2018",
-          "Fecha": 1519084800000,
-          "Fuente": "Río Apulo"
-         },
-         "type": "Feature"
-        }
-       ],
-       "type": "FeatureCollection"
-      },
-      "kind": "feature_collection",
-      "name": "Rondas Delimitadas CAR"
+      "columns": [
+       "Acto_Admin",
+       "Fecha",
+       "Fuente",
+       "OBJECTID"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "Acto_Admin": "Resolución 0352 de 2018",
+        "Fecha": "2018-02-20",
+        "Fuente": "Río Apulo",
+        "OBJECTID": 96
+       }
+      ]
      }
     ],
     "facts": {
-     "bbox": [
-      -74.522902,
-      4.631558,
-      -74.522902,
-      4.631558
-     ],
-     "capa": "Rondas Delimitadas CAR",
      "completitud": {
       "total": 1,
       "truncado": false,
       "vistos": 1
      },
-     "completo": true,
-     "consulta": {
-      "bbox": [
-       -74.522902,
-       4.631558,
-       -74.522902,
-       4.631558
-      ],
-      "max_features": 5,
-      "out_fields": [
-       "Fuente",
-       "Acto_Admin",
-       "Fecha"
-      ],
-      "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0",
-      "where": "1=1"
+     "consultado_en": "2026-11-03T14:38:07.428295+00:00",
+     "copia": {
+      "filas": 203,
+      "huella": "sha256:f07aff644405578750d59283295159a30a7b2298827bcd098fd943c19aba69b7",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261103143807428295"
      },
-     "filtro": "1=1",
-     "tipo_geometria": "Polygon",
-     "total_en_servicio": 1,
-     "traidos": 1,
-     "url": "https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer/0"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "arcgis_query_features"
+   "tool": "consultar_copia"
   }
  ]
 }
