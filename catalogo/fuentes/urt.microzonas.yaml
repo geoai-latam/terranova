@@ -35,9 +35,11 @@ datos_personales: ninguno
 estado: publicada
 campos:
   id_microzona: {nombre: id_microzona, tipo: int, desc: "identificador de la microzona en la URT"}
-  cod_dane: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
-  depto: {nombre: departamento, tipo: str, desc: "departamento"}
-  mpio: {nombre: municipio, tipo: str, desc: "municipio"}
+  # La URT registra cada microzona con un municipio, pero puede abarcar varios: la 609 dice «Cajicá»
+  # y cubre Chía, Tabio y Zipaquirá (65 170 ha; medido el 2026-11-03 en la copia y en la capa 3).
+  cod_dane: {nombre: municipio_registrado_divipola, tipo: str, desc: "DIVIPOLA del municipio con que la URT registró la microzona; puede abarcar otros"}
+  depto: {nombre: departamento_registrado, tipo: str, desc: "departamento con que la URT registró la microzona"}
+  mpio: {nombre: municipio_registrado, tipo: str, desc: "municipio con que la URT registró la microzona; puede abarcar otros"}
   n_res_m: {nombre: resolucion, tipo: str, desc: "resolución de microfocalización vigente"}
   fecha_res_vigente: {nombre: fecha_resolucion, tipo: date, desc: "fecha de la resolución vigente"}
   estado_micro: {nombre: estado, tipo: str, desc: "estado de la microzona (En firme o Cerrada)"}

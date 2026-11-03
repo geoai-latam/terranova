@@ -1,13 +1,15 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T03:21:45+00:00",
+ "grabado": "2026-11-03T10:13:19+00:00",
  "herramienta": "urt_microzona_en_poligono",
  "llamadas": [
   {
    "argumentos": {
+    "area_en_poligono": true,
     "geometria": "ninguna",
     "limite": 200,
     "order": [
+     "-_area_ha",
      "id_microzona"
     ],
     "poligono": {
@@ -54,6 +56,7 @@
     "artifacts": [
      {
       "columns": [
+       "_area_ha",
        "cod_dane",
        "depto",
        "estado_micro",
@@ -66,6 +69,7 @@
       "kind": "table",
       "rows": [
        {
+        "_area_ha": 2333.7374,
         "cod_dane": "19001",
         "depto": "Cauca",
         "estado_micro": "Cerrada",
@@ -76,16 +80,7 @@
         "territorial": "Popayán"
        },
        {
-        "cod_dane": "19760",
-        "depto": "Cauca",
-        "estado_micro": "En firme",
-        "fecha_res_vigente": "2017-03-09",
-        "id_microzona": 843,
-        "mpio": "Sotará",
-        "n_res_m": "RC  00145",
-        "territorial": "Popayán"
-       },
-       {
+        "_area_ha": 1617.403,
         "cod_dane": "19824",
         "depto": "Cauca",
         "estado_micro": "En firme",
@@ -96,6 +91,7 @@
         "territorial": "Popayán"
        },
        {
+        "_area_ha": 1452.1239,
         "cod_dane": "19743",
         "depto": "Cauca",
         "estado_micro": "En firme",
@@ -103,6 +99,17 @@
         "id_microzona": 1294,
         "mpio": "Silvia",
         "n_res_m": "RC  00211",
+        "territorial": "Popayán"
+       },
+       {
+        "_area_ha": 130.7296,
+        "cod_dane": "19760",
+        "depto": "Cauca",
+        "estado_micro": "En firme",
+        "fecha_res_vigente": "2017-03-09",
+        "id_microzona": 843,
+        "mpio": "Sotará",
+        "n_res_m": "RC  00145",
         "territorial": "Popayán"
        }
       ]
@@ -114,13 +121,13 @@
       "truncado": false,
       "vistos": 4
      },
-     "consultado_en": "2026-11-02T03:12:48.936058+00:00",
+     "consultado_en": "2026-11-02T12:40:11.724030+00:00",
      "copia": {
       "filas": 1314,
       "huella": "sha256:a73d4ed8665ba305b63a182932f26980e686cce541e23e1854fba14730066a28",
       "repetidas_en_la_fuente": 0,
       "ventana_desde": null,
-      "version": "20261102031248936058"
+      "version": "20261102124011724030"
      },
      "servido_desde": "copia"
     }

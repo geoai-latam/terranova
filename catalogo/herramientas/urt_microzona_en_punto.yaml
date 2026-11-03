@@ -1,12 +1,13 @@
 id: urt_microzona_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: urt.microzonas
 pregunta: "¿Este punto está en una zona microfocalizada para la restitución de tierras?"
 descripcion: >
   Zona microfocalizada por la Unidad de Restitución de Tierras (URT) que contiene un punto: la
-  resolución vigente, su fecha, el estado (en firme o cerrada), municipio (DIVIPOLA) y la territorial
-  que la atiende. Estar en una microzona no significa que un predio tenga una solicitud: significa
+  resolución vigente, su fecha, el estado (en firme o cerrada), el municipio con que la URT la
+  registró y la territorial que la atiende. Ese municipio no es por fuerza el del punto: una
+  microzona puede abarcar varios (la 609, «Cajicá», cubre Chía, Tabio y Zipaquirá). Estar en una microzona no significa que un predio tenga una solicitud: significa
   que la URT puede tramitar solicitudes ahí. Solo la zona; nunca solicitudes ni sentencias por predio.
   Sale de la copia de Terrnova: la procedencia dice de cuándo es.
   (Fuente: URT; licencia: CC BY-SA 4.0.)
@@ -28,6 +29,6 @@ canario:
   # El Carmen de Bolívar; medido el 2026-10-28 en la capa 3: microzona 3, RDM 0001 del 6 de agosto
   # de 2012, cerrada.
   entrada: {lon: -75.045, lat: 9.67}
-  verdad: {id_microzona: 3, municipio_divipola: "13244", resolucion: "RDM 0001 DE AGOSTO 6 DE 2012", estado: Cerrada}
-  campos: [departamento, estado, fecha_resolucion, id_microzona, municipio, municipio_divipola, resolucion, territorial]
+  verdad: {id_microzona: 3, municipio_registrado_divipola: "13244", resolucion: "RDM 0001 DE AGOSTO 6 DE 2012", estado: Cerrada}
+  campos: [departamento_registrado, estado, fecha_resolucion, id_microzona, municipio_registrado, municipio_registrado_divipola, resolucion, territorial]
   latencia_max_ms: 5000
