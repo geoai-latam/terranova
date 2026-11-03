@@ -20,7 +20,9 @@ modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
 cobertura: {pais: CO}
 datos_personales: filtrados
-estado: publicada
+# 2026-11-03: borrador. secop_facturas_contrato se retiró: da las mismas filas que
+# secop_pagos_contrato (uymx-8p3j), que además trae la fecha real de pago (revisión de valor, patrón F).
+estado: borrador
 campos:
   id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato"}
   id_pago: {nombre: id_pago, tipo: str, desc: "identificador del pago"}
