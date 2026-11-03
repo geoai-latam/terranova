@@ -1,36 +1,46 @@
 id: icfes_saber11_colegio
-version: 1
+version: 2
 familia: estadisticas
 fuente: icfes.saber11
 pregunta: "¿Cuántos estudiantes de este colegio presentaron el Saber 11 y qué puntaje promedio sacaron?"
 descripcion: >
   Prueba Saber 11 (ICFES) de una sede educativa por su código DANE (12 dígitos), por periodo del
-  examen: estudiantes, nombre de la sede y promedio del puntaje global. Solo agregados: un periodo
-  con menos de 10 estudiantes no sale. Cada estudiante cuenta una vez, aunque la fuente lo repita.
+  examen, de 2010 a 2022: estudiantes, nombre de la sede y promedio del puntaje global (0–500). El
+  periodo es AAAAS: el año y luego 1 (primer semestre) o 2 y 4 (segundo semestre). Hasta 20141 no
+  traen puntaje global ni de lectura crítica. Solo agregados: un periodo con menos de 10 estudiantes no
+  sale. Cada estudiante cuenta una vez, aunque la fuente lo repita.
   (Fuente: ICFES; licencia: CC BY-SA 4.0.)
 entrada: {codigo_dane_sede: codigo_dane_sede}
 consulta:
   operacion: por_codigo
   resultado: lista
-  tool: datos_consultar
+  tool: consultar_copia
   argumentos:
-    id: kgxf-xxbe
-    portal: datos.gov.co
-    # Spec 07: un grupo por estudiante y luego el agregado. El nombre de la sede cambia de escritura
-    # entre años («I.E. DIVERSIFICADO» / «INSTITUCION EDUCATIVA DIVERSIFICADO»): sale con max().
-    previo_select: "periodo, estu_consecutivo, max(cole_nombre_sede) AS sede, avg(punt_global::number) AS g"
-    previo_group: "periodo, estu_consecutivo"
-    select: "periodo, max(sede) AS sede, count(*) AS estudiantes, avg(g) AS promedio_global"
-    where: "cole_cod_dane_sede = '{codigo_dane_sede}'"
-    group: periodo
-    having: "count(*) >= 10"  # ADR-0014: sin grupos chicos de personas
-    max_filas: 200
-  campos: [periodo, cole_cod_dane_sede, cole_nombre_sede, punt_global]
+    tabla: icfes_saber11
+    filtros: {cole_cod_dane_sede: "{codigo_dane_sede}"}
+    select: [periodo]
+    group: [periodo]
+    agregados:
+      # el nombre cambia de escritura entre años («I.E. DIVERSIFICADO» / «INSTITUCION EDUCATIVA
+      # DIVERSIFICADO»): sale el mayor
+      sede: "max:cole_nombre_sede"
+      estudiantes: "sum:estudiantes"
+      promedio_global: "cociente:suma_punt_global/n_punt_global"
+    minimo: {"sum:estudiantes": 10}  # ADR-0014: sin grupos chicos de personas
+    order: [periodo]
+    limite: 50
+  campos: [periodo, cole_cod_dane_sede, cole_nombre_sede, estudiantes, suma_punt_global, n_punt_global]
 salida: Saber11Colegio
 derivados:
   sede: {de: columna, campo: sede, tipo: str}
   estudiantes: {de: columna, campo: estudiantes, tipo: int}
-  promedio_global: {de: columna, campo: promedio_global, tipo: float}
+  promedio_global: {de: columna, campo: promedio_global, tipo: float, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay resultados del Saber 11 para esa sede: o el código DANE no es el de una sede que
+    presentara el examen (son 12 dígitos), o en ningún periodo llegó a 10 estudiantes (por debajo
+    de eso no se publican).
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en kgxf-xxbe: la I.E. Diversificado de Chía (125175000493), 20102 → 153

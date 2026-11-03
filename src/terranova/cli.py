@@ -296,6 +296,7 @@ def copias(argumentos: list[str]) -> int:
         descargar_csv,
         descargar_geojson,
         descargar_socrata,
+        descargar_socrata_agregado,
         descargar_zip_dane,
         toca_actualizar,
     )
@@ -312,6 +313,7 @@ def copias(argumentos: list[str]) -> int:
     # cada origen baja la fuente a su manera; todos dan páginas de filas (ADR-0024)
     descargas: dict[str, Callable[[Fuente, date | None], Iterator[list[dict[str, Any]]]]] = {
         "socrata": descargar_socrata,
+        "socrata_agregado": descargar_socrata_agregado,
         "zip_dane": descargar_zip_dane,
         "arcgis": descargar_arcgis,
         "conector": descargar_conector,

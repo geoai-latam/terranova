@@ -29,7 +29,7 @@ from terranova.catalogo import Catalogo, Copia, Fuente
 ESQUEMA = "copia"
 PAGINA = 50_000
 MAX_LIMITE = 1_000
-AGREGADOS = {"count", "sum", "avg", "median", "min", "max"}
+AGREGADOS = {"count", "sum", "avg", "median", "min", "max", "cociente"}
 _ALIAS = re.compile(r"^[a-z][a-z0-9_]{0,40}$")
 _TIPO_SQL = {
     "str": "text",
@@ -106,15 +106,26 @@ def _columna(nombre: str, permitidas: set[str]) -> str:
 def _agregado(alias: str, expresion: str, permitidas: set[str]) -> str:
     if not _ALIAS.match(alias):
         raise ErrorCopia(f"alias inválido: «{alias}»")
+    return f'{_expresion_agregada(expresion, permitidas)} AS "{alias}"'
+
+
+def _expresion_agregada(expresion: str, permitidas: set[str]) -> str:
     funcion, _, columna = expresion.partition(":")
     if funcion not in AGREGADOS:
         raise ErrorCopia(f"agregado desconocido: «{funcion}» (se puede {sorted(AGREGADOS)})")
     if funcion == "count" and not columna:
-        return f'count(*) AS "{alias}"'
+        return "count(*)"
+    if funcion == "cociente":
+        # promedio de una copia preagregada: suma de las sumas sobre suma de los conteos
+        numerador, barra, denominador = columna.partition("/")
+        if not barra:
+            raise ErrorCopia("`cociente` va como «cociente:suma/conteo»")
+        num, den = _columna(numerador, permitidas), _columna(denominador, permitidas)
+        return f"sum({num})::float / nullif(sum({den}), 0)"
     col = _columna(columna, permitidas)
     if funcion == "median":
-        return f'percentile_cont(0.5) WITHIN GROUP (ORDER BY {col}) AS "{alias}"'
-    return f'{funcion}({col}) AS "{alias}"'
+        return f"percentile_cont(0.5) WITHIN GROUP (ORDER BY {col})"
+    return f"{funcion}({col})"
 
 
 def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
@@ -122,7 +133,8 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
 
     `argumentos` (de la ficha, ya con la entrada puesta): `select` (columnas), `filtros`
     ({columna: valor}, igualdad), `texto` (búsqueda en las columnas `copia.texto`), `agregados`
-    ({alias: "count" | "sum:col" | "median:col" …}), `group` (columnas), `order` (columnas; con
+    ({alias: "count" | "sum:col" | "median:col" | "cociente:suma/conteo" …}), `group`
+    (columnas), `minimo` ({agregado: n}: solo los grupos en que llega a n), `order` (columnas; con
     `-` delante, descendente), `limite` y `contiene` ({columna: palabras}: la columna trae todas
     las palabras, sin distinguir mayúsculas ni tildes). En una copia espacial, además: `punto`
     ([lon, lat]), `poligono` (GeoJSON, ADR-0035) o
@@ -217,16 +229,27 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         orden.append(f"{expr} {'DESC' if desc else 'ASC'} NULLS LAST")
     limite = max(1, min(int(argumentos.get("limite") or MAX_LIMITE), MAX_LIMITE))
 
+    # `minimo` ({agregado: n}): solo los grupos en que el agregado llega a n, p. ej. 10 personas
+    # (ADR-0014: un grupo chico de personas no sale)
+    minimos, parametros_minimo = [], []
+    for expresion, n in (argumentos.get("minimo") or {}).items():
+        if not group:
+            raise ErrorCopia("`minimo` va con `group`")
+        minimos.append(f"{_expresion_agregada(expresion, permitidas)} >= %s")
+        parametros_minimo.append(int(n))
+
     sql = f"SELECT {seleccion} FROM {vista}{donde}"
     if group:
         sql += f" GROUP BY {', '.join(group)}"
+    if minimos:
+        sql += f" HAVING {' AND '.join(minimos)}"
     if orden:
         sql += f" ORDER BY {', '.join(orden)}"
     sql += " LIMIT %s"
     sql_total = None if agregados else f"SELECT count(*) FROM {vista}{donde}"
     return Plan(
         sql,
-        (*parametros_seleccion, *parametros, limite),
+        (*parametros_seleccion, *parametros, *parametros_minimo, limite),
         sql_total,
         tuple(parametros),
         limite,
@@ -269,6 +292,115 @@ def descargar_socrata(
             if len(pagina) < PAGINA:
                 return
             desplazamiento += len(pagina)
+    finally:
+        if propio:
+            http.close()
+
+
+# --- microdatos de personas, copiados ya agregados (origen socrata_agregado) ----------------------
+#
+# El Saber 11 trae una fila por estudiante (7,1 M) y la fuente repite algunos. Agregar en vivo en
+# dos etapas (por estudiante y luego por grupo) pasa de 90 s en un municipio grande. La copia baja
+# una tanda (periodo) a la vez, cuenta a cada persona una vez dentro de su tanda y guarda solo los
+# grupos: personas, y suma y número de datos de cada medida. El seudónimo no se guarda (ADR-0014).
+
+
+def _numero(valor: Any) -> float | None:
+    if valor in (None, ""):
+        return None
+    try:
+        return float(valor)
+    except (TypeError, ValueError):
+        return None
+
+
+def agregar_tanda(
+    filas: Iterator[dict[str, Any]], pre: Any, vistos: set[int] | None = None
+) -> list[dict[str, Any]]:
+    """Los grupos de una tanda, sin `_fila`. Una persona (`pre.unico`) cuenta una vez: se toma su
+    primera fila (la fuente repite la misma, con los mismos puntajes)."""
+    vistos = set() if vistos is None else vistos
+    grupos: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for fila in filas:
+        unico = fila.get(pre.unico)
+        if unico in (None, ""):
+            continue  # sin seudónimo no se puede saber si es una persona repetida
+        huella = hash(str(unico))  # un entero ocupa menos que el texto: la tanda trae ~1 M
+        if huella in vistos:
+            continue
+        vistos.add(huella)
+        clave = tuple(fila.get(c) or None for c in pre.grupo)
+        grupo = grupos.get(clave)
+        if grupo is None:
+            grupo = dict(zip(pre.grupo, clave, strict=True))
+            grupo[pre.cuenta] = 0
+            for m in pre.medidas:
+                grupo[f"suma_{m}"], grupo[f"n_{m}"] = 0.0, 0
+            if pre.nombre:
+                grupo[pre.nombre] = None
+            grupos[clave] = grupo
+        grupo[pre.cuenta] += 1
+        for m in pre.medidas:
+            if (valor := _numero(fila.get(m))) is not None:
+                grupo[f"suma_{m}"] += valor
+                grupo[f"n_{m}"] += 1
+        if pre.nombre and (nombre := fila.get(pre.nombre)):
+            if grupo[pre.nombre] is None or nombre > grupo[pre.nombre]:
+                grupo[pre.nombre] = nombre
+    for grupo in grupos.values():
+        for m in pre.medidas:
+            if not grupo[f"n_{m}"]:
+                grupo[f"suma_{m}"] = None  # sin datos: vacío, no 0
+    return list(grupos.values())
+
+
+def descargar_socrata_agregado(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Baja el conjunto tanda por tanda (`particion`), en orden de `:id`, y rinde los grupos de
+    cada tanda con `_fila` desde 1. `desde` se ignora: se copia entero. Una tanda sin filas no se
+    publica: la copia se cae antes de quedar a medias."""
+    import httpx
+
+    assert fuente.copia is not None and fuente.copia.preagregado is not None
+    pre = fuente.copia.preagregado
+    url = f"https://www.datos.gov.co/resource/{fuente.copia.conjunto}.json"
+    propio = cliente is None
+    http = cliente or httpx.Client(timeout=180, headers={"User-Agent": "terranova-copias/1"})
+    try:
+        tandas = _pedir(
+            http, url, {"$select": pre.particion, "$group": pre.particion, "$limit": 1000}
+        )
+        valores = sorted(str(t[pre.particion]) for t in tandas if t.get(pre.particion))
+        if not valores:
+            raise ErrorCopia("la fuente no dio ninguna tanda: la copia no se publica")
+        numero = 0
+        for valor in valores:
+            seguro = valor.replace("'", "''")
+            params = {
+                "$select": ", ".join(pre.columnas_fuente),
+                "$where": f"{pre.particion} = '{seguro}'",
+                "$order": ":id",
+            }
+
+            def filas(params: dict[str, Any] = params) -> Iterator[dict[str, Any]]:
+                desplazamiento = 0
+                while True:
+                    pagina = _pedir(
+                        http, url, {**params, "$limit": PAGINA, "$offset": desplazamiento}
+                    )
+                    yield from pagina
+                    if len(pagina) < PAGINA:
+                        return
+                    desplazamiento += len(pagina)
+
+            grupos = agregar_tanda(filas(), pre)
+            if not grupos:
+                raise ErrorCopia(f"la tanda {valor} llegó sin filas: la copia no se publica")
+            for grupo in grupos:
+                numero += 1
+                grupo[FILA] = numero
+            yield grupos
     finally:
         if propio:
             http.close()
