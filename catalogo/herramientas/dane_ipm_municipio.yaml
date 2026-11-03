@@ -1,5 +1,5 @@
 id: dane_ipm_municipio
-version: 1
+version: 2
 familia: estadisticas
 fuente: dane.ipm_municipal_2018
 pregunta: "¿Qué porcentaje de la población de este municipio está en pobreza multidimensional?"
@@ -7,6 +7,7 @@ descripcion: >
   Incidencia de la pobreza multidimensional de un municipio (DIVIPOLA) según la medida censal 2018
   del DANE: total, cabeceras y centros poblados y rural disperso, en %. Es una aproximación con el
   censo: el DANE advierte que no es comparable con el IPM oficial (dane_ipm_departamento).
+  Es la foto de 2018 (`anio`): el DANE no ha publicado otra medida municipal.
   Sale de la copia de Terrnova del anexo censal del DANE.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {municipio_divipola: divipola}
@@ -23,11 +24,18 @@ consulta:
   campos: [ID, Municipio, IPM, Cabeceras, IPM Centros poblados y rural disperso]
 salida: IpmMunicipio
 derivados:
+  anio: {de: fijo, valor: 2018, tipo: int}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Es la medida censal de 2018, la única municipal que publica el DANE. El DANE advierte que no se
+    compara con el IPM oficial, que sale de una encuesta y llega a departamentos
+    (dane_ipm_departamento): no sirve para decir cuánta pobreza hay hoy ni si subió o bajó.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en el anexo censal 2018: Chía (25175) → 6,7 % total, 6,3 % cabeceras, 8,6 % rural.
   entrada: {municipio_divipola: "25175"}
-  verdad: {municipio_divipola: "25175", ipm_total: 6.7, ipm_cabeceras: 6.3, ipm_rural: 8.6}
-  campos: [ipm_cabeceras, ipm_rural, ipm_total, municipio, municipio_divipola, numero_registros]
+  verdad: {anio: 2018, municipio_divipola: "25175", ipm_total: 6.7, ipm_cabeceras: 6.3, ipm_rural: 8.6}
+  campos: [anio, ipm_cabeceras, ipm_rural, ipm_total, municipio, municipio_divipola, numero_registros]
   latencia_max_ms: 5000

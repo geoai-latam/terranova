@@ -231,6 +231,10 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Si el municipio dejó de reportar (Bojayá, el último en 2019), un aviso lo dice.
 - **MinEducación (patrón E):** las tres herramientas ponen primero el año más reciente, con su
   cobertura neta y su deserción arriba, y un aviso explica por qué la cobertura puede pasar de 100 %.
+- **DANE, IPM municipal y privaciones (patrón E):**
+  - Las dos herramientas dicen que el dato es de 2018 (`anio`, con el nuevo derivado `fijo`).
+  - El IPM avisa que no se compara con el IPM oficial.
+  - Las privaciones van de la peor a la mejor: en Bojayá, trabajo informal, 95,9 %.
 
 ## Ficha de un lote (2026-11-01)
 

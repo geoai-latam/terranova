@@ -861,7 +861,7 @@ class Consulta(_Ficha):
 
 
 # Vocabulario cerrado de campos que calcula la puerta (ADR-0012: nada de código suelto por fuente).
-DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo"})
+DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo", "fijo"})
 # por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
 DE_SECUENCIA = frozenset({"diferencia_anterior"})
 DE_RESULTADO = frozenset(
@@ -876,11 +876,13 @@ class Derivado(_Ficha):
     primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
     resultado, p. ej. un alias de un `select` agregado) y `codigo` (el significado de un código
     de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre oficial del departamento
-    por su código DIVIPOLA). En secuencia: `diferencia_anterior` (el `campo` menos el del elemento
-    anterior en el orden de la consulta; el primero queda vacío). Del resultado: `conteo`, `suma` y
-    `maximo` de `campo`, `primero` y `ultimo` (el `campo` del primer o del último elemento),
-    `distintos` (cuántos valores distintos de `campo` hay: los meses con datos de un año) y
-    `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos elementos.
+    por su código DIVIPOLA) y `fijo` (un `valor` que vale para toda la fuente: el año 2018 de una
+    medida censal que no lo trae en la tabla). En secuencia: `diferencia_anterior` (el `campo`
+    menos el del elemento anterior en el orden de la consulta; el primero queda vacío). Del
+    resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y `ultimo` (el `campo` del
+    primer o del último elemento), `distintos` (cuántos valores distintos de `campo` hay: los
+    meses con datos de un año) y `completitud_total` (el total que dio la fuente). `solo_si` deja
+    contar solo algunos elementos.
     """
 
     de: Literal[
@@ -888,6 +890,7 @@ class Derivado(_Ficha):
         "prefijo",
         "columna",
         "codigo",
+        "fijo",
         "conteo",
         "suma",
         "maximo",
@@ -901,6 +904,7 @@ class Derivado(_Ficha):
     solo_si: SoloSi | None = None
     n: int | None = Field(default=None, ge=1)
     valores: dict[str, str] | None = None
+    valor: str | int | float | None = None
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
 
     @model_validator(mode="after")
@@ -924,6 +928,8 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
         if self.de == "codigo" and not self.valores:
             raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
+        if (self.de == "fijo") != (self.valor is not None):
+            raise ValueError("`valor` va solo, y siempre, en un derivado «fijo»")
         if self.solo_si is not None and self.de in DE_ELEMENTO | {"completitud_total"}:
             raise ValueError(f"un derivado «{self.de}» no usa `solo_si`")
         return self
