@@ -289,9 +289,15 @@ _BIDI_Y_CONTROL = re.compile(
 )
 
 
+# La «í» en UTF-8 es C3 AD. Si la fuente pierde el C3, queda U+FFFD seguido de un guion suave
+# (U+00AD): SECOP escribe «Medell\ufffd\u00adn» en 223 466 ubicaciones (medido el 2026-11-03 en
+# gra4-pcp2). Ese par no es texto en ningún caso: se lee como la «í» que era.
+_I_PARTIDA = "\ufffd\u00ad"
+
+
 def sanear(texto: str) -> str:
     """Texto de la fuente sin control ni bidi y con el largo máximo de `rt/1` (regla 9)."""
-    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto))
+    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto.replace(_I_PARTIDA, "í")))
     return limpio if len(limpio) <= MAX_TEXTO else limpio[: MAX_TEXTO - 1] + "…"
 
 
