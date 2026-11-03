@@ -1,12 +1,14 @@
 id: igac_vias_en_zona
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.nomenclatura_vial
 pregunta: "¿Qué calles y vías hay en esta zona según el catastro IGAC?"
 descripcion: >
   Vías de la base catastral IGAC que cruzan un rectángulo (bbox en EPSG:4326, mejor de pocas
-  cuadras): nombre de cada tramo, como capa de líneas. Un nombre puede tener varios tramos. Cubre
-  los municipios con gestión catastral del IGAC.
+  cuadras): nombre de cada tramo, como capa de líneas. Una vía viene en varios tramos: `vias` dice
+  cuántas vías distintas hay y `tramos_por_via`, cuántos tramos tiene cada una (la de más tramos
+  primero). `municipio_codigo_capa` es el código que trae la capa y puede estar errado: no lo use
+  para saber el municipio. Cubre los municipios con gestión catastral del IGAC.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {bbox: bbox}
 consulta:
@@ -23,11 +25,19 @@ consulta:
 salida: ViasEnZona
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  vias: {de: distintos, campo: via, tipo: int}
+  tramos_por_via: {de: conteo_por, campo: via}
+avisos:
+- cuando: encontrado
+  texto: >
+    `municipio_codigo_capa` es el código que trae la capa del IGAC y no siempre es el del
+    municipio: en el centro de Chía (25175) los 29 tramos dicen 23175, que es Chinú (Córdoba); en
+    Popayán sí dice 19001. Para el municipio, use la DIVIPOLA del lugar, no este código.
 cobro: zona
 canario:
   # Medido el 2026-10-22: el rectángulo del centro de Chía tiene 29 tramos urbanos (CALLE 11 a 17,
-  # AV PRADILLA…).
+  # AV PRADILLA…). El 2026-11-03: 29 tramos de 19 vías; CARRERA 9 y CALLE 16A con 3 cada una.
   entrada: {bbox: [-74.061, 4.861, -74.056, 4.866]}
-  minimos: {numero_registros: 25}
-  campos: [municipio_codigo_capa, numero_registros, via]
+  minimos: {numero_registros: 25, vias: 15}
+  campos: [municipio_codigo_capa, numero_registros, tramos_por_via, via, vias]
   latencia_max_ms: 15000
