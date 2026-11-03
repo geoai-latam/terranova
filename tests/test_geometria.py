@@ -34,7 +34,8 @@ def plan_evaluacion(monkeypatch: pytest.MonkeyPatch) -> None:
 async def mcp() -> AsyncIterator[Client[Any]]:
     puerta.usar_conectores({"arcgis-mcp": ConectorFalso({14: [PREDIO_POLIGONO]})})
     try:
-        async with Client(puerta.puerta) as cliente:
+        # con las fichas fuera del MCP: `igac_predio_en_punto` es la de muestra (ADR-0031)
+        async with Client(puerta.crear_servidor(con_ciclo=False, con_ocultas=True)) as cliente:
             yield cliente
     finally:
         puerta.usar_conectores(None)

@@ -642,12 +642,17 @@ HERRAMIENTAS_COMUNES = frozenset(
 )
 
 
-def crear_servidor(familia: str | None = None, *, con_ciclo: bool = True) -> FastMCP:
-    """`/mcp` con todo o un perfil por familia (`/mcp/territorio`…, ADR-0006)."""
+def crear_servidor(
+    familia: str | None = None, *, con_ciclo: bool = True, con_ocultas: bool = False
+) -> FastMCP:
+    """`/mcp` con todo o un perfil por familia (`/mcp/territorio`…, ADR-0006). `con_ocultas` suma
+    las fichas con `en_mcp: false`: solo para las pruebas del protocolo, nunca en un perfil."""
     nombre = "terranova" if familia is None else f"terranova-{familia}"
     servidor = FastMCP(nombre, instructions=INSTRUCCIONES, lifespan=_ciclo if con_ciclo else None)
     servidor.add_middleware(SoloLoHabilitado())
     for h in CATALOGO.herramientas.values():
+        if not h.en_mcp and not con_ocultas:
+            continue
         if familia is None or h.familia == familia or h.id in HERRAMIENTAS_COMUNES:
             servidor.add_tool(HerramientaDelCatalogo.desde(h))
     for c in COMPUESTAS.values():

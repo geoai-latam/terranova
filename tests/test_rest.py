@@ -61,7 +61,9 @@ def _sin_lo_propio_de_cada_llamada(sobre: dict[str, Any]) -> dict[str, Any]:
 
 
 @pytest.mark.anyio
-@pytest.mark.parametrize("herramienta", sorted(CATALOGO.herramientas))
+@pytest.mark.parametrize(
+    "herramienta", sorted(h.id for h in CATALOGO.herramientas.values() if h.en_mcp)
+)
 async def test_paridad_rest_mcp(rest: httpx.AsyncClient, herramienta: str) -> None:
     h = CATALOGO.herramientas[herramienta]
     puerta.usar_conectores(_con_grabacion(herramienta))
@@ -76,6 +78,29 @@ async def test_paridad_rest_mcp(rest: httpx.AsyncClient, herramienta: str) -> No
     assert _sin_lo_propio_de_cada_llamada(r.json()) == _sin_lo_propio_de_cada_llamada(
         m.structured_content
     )
+
+
+@pytest.mark.anyio
+async def test_las_que_cubre_una_compuesta_siguen_en_rest_y_no_salen_en_mcp(
+    rest: httpx.AsyncClient,
+) -> None:
+    """El agente confundía `igac_predio_en_punto` y `sinic_predio_en_punto`; `predio_en_punto`
+    elige la base sola (hallazgo #15 de GEO Copilot)."""
+    ocultas = {h.id for h in CATALOGO.herramientas.values() if not h.en_mcp}
+    assert ocultas == {"igac_predio_en_punto", "sinic_predio_en_punto"}
+    async with Client(puerta.crear_servidor(con_ciclo=False)) as mcp:
+        nombres = {t.name for t in await mcp.list_tools()}
+    assert "predio_en_punto" in nombres and not ocultas & nombres
+    for familia in puerta.FAMILIAS:
+        async with Client(puerta.crear_servidor(familia, con_ciclo=False)) as c:
+            assert not ocultas & {t.name for t in await c.list_tools()}, familia
+    h = CATALOGO.herramientas["sinic_predio_en_punto"]
+    puerta.usar_conectores(_con_grabacion(h.id))
+    try:
+        r = await rest.post(f"/v1/co/{h.familia}/{h.id}", json=h.canario.entrada)
+    finally:
+        puerta.usar_conectores(None)
+    assert r.status_code == 200, r.text
 
 
 @pytest.mark.anyio

@@ -34,7 +34,8 @@ def _ids(indice: IndiceHerramientas, consulta: str, **kw: Any) -> list[str]:
 
 def test_cada_herramienta_del_catalogo_tiene_su_documento() -> None:
     docs = documentos(puerta.CATALOGO)
-    assert {d.herramienta for d in docs} == set(puerta.CATALOGO.herramientas) | {
+    ocultas = {h.id for h in puerta.CATALOGO.herramientas.values() if not h.en_mcp}
+    assert {d.herramienta for d in docs} == set(puerta.CATALOGO.herramientas) - ocultas | {
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",
@@ -46,7 +47,7 @@ def test_cada_herramienta_del_catalogo_tiene_su_documento() -> None:
 @pytest.mark.parametrize(
     ("consulta", "esperada"),
     [
-        ("¿cuál es el predio en esta coordenada?", "igac_predio_en_punto"),
+        ("¿cuál es el predio en esta coordenada?", "predio_en_punto"),
         ("población proyectada de Chía en 2026", "dane_poblacion_proyectada_municipio"),
         ("alertas por incendios en un municipio", "ideam_alertas_incendios_municipio"),
         ("código DIVIPOLA de un municipio por su nombre", "dane_divipola_buscar"),
@@ -161,7 +162,7 @@ async def test_el_perfil_trae_pocas_herramientas(catalogo_mcp: Client[Any]) -> N
 async def test_buscar_devuelve_la_entrada_lista_para_consultar(catalogo_mcp: Client[Any]) -> None:
     r = await catalogo_mcp.call_tool("buscar_herramienta", {"pregunta": "predio en un punto"})
     hallados = r.structured_content["herramientas"]  # type: ignore[index]
-    predio = next(h for h in hallados if h["herramienta"] == PREDIO)
+    predio = next(h for h in hallados if h["herramienta"] == "predio_en_punto")
     assert set(predio["entrada"]["required"]) == {"lon", "lat"}
     assert predio["creditos"] == 10
 

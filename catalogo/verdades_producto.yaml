@@ -16,6 +16,7 @@ verdades:
     pregunta: "¿Qué predio hay en este punto de Chía (-74.0262, 4.8619)?"
     herramienta: igac_predio_en_punto
     entrada: {lon: -74.0262, lat: 4.8619}
+    alternativas: [predio_en_punto]  # la que ve el agente por MCP; elige la base sola (#15)
     verdad: {codigo_predial: "251750000000000050067000000000", zona: rural, municipio_divipola: "25175"}
     medicion: "ArcGIS R_TERRENO (Base_Catastral_Publica_del_Gestor_IGAC_06_2026, capa 14), query por punto"
   - id: t02
@@ -51,6 +52,7 @@ verdades:
     pregunta: "¿La base catastral pública del gestor IGAC tiene el predio de este punto de Bogotá (-74.0721, 4.711)?"
     herramienta: igac_predio_en_punto
     entrada: {lon: -74.0721, lat: 4.711}
+    alternativas: [predio_en_punto]  # su procedencia dice que respondió el SINIC, no la base pública
     estado: fuera_de_cobertura
     medicion: "Bogotá la gestiona la UAECD: 0 sectores de 11001 en la base pública (catalogo/cobertura/cobertura_catastral.yaml, F1.5)"
   # --- territorio: suelo y restricciones ----------------------------------------------------

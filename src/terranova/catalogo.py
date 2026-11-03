@@ -1074,6 +1074,9 @@ class Herramienta(_Ficha):
     derivados: dict[str, Derivado] = Field(
         default_factory=dict, description="campos rt/1 que calcula la puerta"
     )
+    # false: la herramienta sigue en REST y en las compuestas, pero no sale en ningún perfil MCP.
+    # Para las que una compuesta ya cubre: el agente confundía las hermanas (predio_en_punto, #15).
+    en_mcp: bool = True
     cobro: Cobro
     canario: Canario
     avisos: list[AvisoFicha] = Field(
