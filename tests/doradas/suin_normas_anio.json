@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T08:30:24+00:00",
+ "grabado": "2026-11-03T06:06:23+00:00",
  "herramienta": "suin_normas_anio",
  "llamadas": [
   {
@@ -8,9 +8,9 @@
     "group": "tipo",
     "id": "fiev-nid6",
     "max_filas": 50,
-    "order": "tipo",
+    "order": "normas DESC, tipo",
     "portal": "datos.gov.co",
-    "select": "tipo, count(*) AS normas",
+    "select": "tipo, count(*) AS normas, sum(case(vigencia = 'Vigente', 1, true, 0)) AS vigentes, sum(case(vigencia = 'NULL', 1, true, 0)) AS sin_dato",
     "where": "a_o = '2019'"
    },
    "conector": "datos-abiertos-mcp",
@@ -19,45 +19,65 @@
      {
       "columns": [
        "normas",
-       "tipo"
+       "sin_dato",
+       "tipo",
+       "vigentes"
       ],
       "kind": "table",
       "rows": [
        {
-        "normas": "5",
-        "tipo": "ACTO LEGISLATIVO"
-       },
-       {
-        "normas": "1",
-        "tipo": "ACUERDO"
-       },
-       {
-        "normas": "21",
-        "tipo": "CIRCULAR"
-       },
-       {
-        "normas": "2",
-        "tipo": "CIRCULAR CONJUNTA"
-       },
-       {
-        "normas": "3",
-        "tipo": "CIRCULAR EXTERNA"
-       },
-       {
         "normas": "318",
-        "tipo": "DECRETO"
-       },
-       {
-        "normas": "13",
-        "tipo": "DIRECTIVA PRESIDENCIAL"
-       },
-       {
-        "normas": "70",
-        "tipo": "LEY"
+        "sin_dato": "113",
+        "tipo": "DECRETO",
+        "vigentes": "163"
        },
        {
         "normas": "217",
-        "tipo": "RESOLUCION"
+        "sin_dato": "101",
+        "tipo": "RESOLUCION",
+        "vigentes": "115"
+       },
+       {
+        "normas": "70",
+        "sin_dato": "8",
+        "tipo": "LEY",
+        "vigentes": "60"
+       },
+       {
+        "normas": "21",
+        "sin_dato": "21",
+        "tipo": "CIRCULAR",
+        "vigentes": "0"
+       },
+       {
+        "normas": "13",
+        "sin_dato": "6",
+        "tipo": "DIRECTIVA PRESIDENCIAL",
+        "vigentes": "6"
+       },
+       {
+        "normas": "5",
+        "sin_dato": "3",
+        "tipo": "ACTO LEGISLATIVO",
+        "vigentes": "2"
+       },
+       {
+        "normas": "3",
+        "sin_dato": "2",
+        "tipo": "CIRCULAR EXTERNA",
+        "vigentes": "0"
+       },
+       {
+        "normas": "2",
+        "sin_dato": "2",
+        "tipo": "CIRCULAR CONJUNTA",
+        "vigentes": "0"
+       },
+       {
+        "normas": "1",
+        "sin_dato": "1",
+        "tipo": "ACUERDO",
+        "vigentes": "0"
        }
       ]
      }
@@ -75,7 +95,7 @@
       "group": "tipo",
       "max_filas": 50,
       "portal": "datos.gov.co",
-      "select": "tipo, count(*) AS normas",
+      "select": "tipo, count(*) AS normas, sum(case(vigencia = 'Vigente', 1, true, 0)) AS vigentes, sum(case(vigencia = 'NULL', 1, true, 0)) AS sin_dato",
       "where": "(a_o = '2019')"
      },
      "filas": 9,

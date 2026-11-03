@@ -299,11 +299,12 @@ verdades:
     nota: "SUIN la clasifica con materia «Administración de justicia» y sector Justicia: error de la fuente; una respuesta honesta cita lo que dice SUIN, no lo corrige"
   - id: n06
     familia: normativa
-    pregunta: "¿Cuántas leyes de 2020 están cargadas en SUIN-Juriscol?"
+    pregunta: "¿Qué tipo de norma de 2020 tiene más cargadas SUIN-Juriscol, y cuántas?"
     herramienta: suin_normas_anio
     entrada: {anio: 2020}
-    verdad: {tipo: LEY, normas: 60}
-    medicion: "fiev-nid6, count(*) where tipo = 'LEY' AND a_o = '2020'"
+    verdad: {tipo: DECRETO}
+    minimos: {normas: 566}
+    medicion: "fiev-nid6, count(*) where a_o = '2020' group by tipo (2026-11-03: DECRETO 566, RESOLUCION 337, LEY 60)"
   # --- justicia: delitos, muertes violentas y conflicto (medido el 2026-10-23) ----------------
   - id: j01
     familia: justicia
