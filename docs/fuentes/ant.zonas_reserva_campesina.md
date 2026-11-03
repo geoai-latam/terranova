@@ -1,8 +1,8 @@
 # ANT: zonas de reserva campesina constituidas (`ant.zonas_reserva_campesina`)
 
 Las zonas de reserva campesina (ZRC) que ha constituido la Agencia Nacional de Tierras. Están en un
-servicio ArcGIS de la ANT, publicado por el proxy de ArcGIS Online, con licencia CC BY-SA 4.0. Se
-consulta en vivo, por punto.
+servicio ArcGIS de la ANT, publicado por el proxy de ArcGIS Online, con licencia CC BY-SA 4.0. Desde el 2026-11-03 se
+consulta en una copia de Terrnova (30 polígonos), por punto.
 
 ## Qué publica
 
@@ -34,7 +34,12 @@ Cumanday). Las que están en trámite no están.
 ## Trampas medidas
 
 1. **El vacío falso.** El proxy responde vacío sin error cerca del 25 % de las veces (4 de 16, el
-   2026-10-23). La fuente reintenta 3 veces antes de decir «no encontrado» y lo avisa.
+   2026-10-23).
+   - En vivo había que reintentar 3 veces antes de decir «no encontrado», y un vacío tardaba
+     2-3 s.
+   - La copia lo resuelve: el vacío es real y responde en ~10 ms.
+   - La copia se protege del mismo vacío. Compara con el conteo de la capa, y una descarga sin
+     filas no reemplaza la copia vigente.
 2. **La fecha ambigua.** «7/11/2000» se puede leer como 11 de julio.
 3. **Dos fechas en un campo.** Ver arriba.
 
@@ -42,7 +47,7 @@ Cumanday). Las que están en trámite no están.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `ant_zonas_reserva_campesina_en_punto` | medio | v2: `fecha_constitucion` en ISO y `fecha_modificacion` aparte |
+| `ant_zonas_reserva_campesina_en_punto` | medio | v3: sobre la copia, con aviso de vacío y área con dos decimales |
 
 ## Decisiones
 
@@ -59,4 +64,19 @@ Cumanday). Las que están en trámite no están.
     | Río Pato | 1997-12-18 | 2024-09-26 |
     | La Tuna | 2022-12-12 | 2024-12-10 |
 
-- **Pendiente:** pasarla a copia. Son 30 polígonos: la copia sería instantánea y sin vacíos falsos.
+- **2026-11-03, copia (v3):**
+  - **Origen y frescura:** origen `arcgis`, capa 0, clave `OBJECTID_1`. El SLA es de 3 meses, así
+    que se rehace cada mes y medio: la ANT constituyó dos zonas en agosto de 2026.
+  - **Fechas día/mes:** `FECHA_CONSTITUCION` se guarda como texto. Postgres leería «7/11/2000»
+    como 11 de julio, y el derivado de la modificación necesita lo que viene detrás. Es una regla
+    del motor: un campo con `orden_fecha` se copia como texto y el ejecutor lo pasa a ISO al
+    responder.
+  - **Avisos:** el vacío avisa que las zonas en trámite no están en la fuente.
+  - **Medido en producción:**
+    - Cabrera, el canario: 2000-11-07.
+    - Río Pato: 1997-12-18, modificada el 2024-09-26, igual que en la fuente en vivo.
+    - La Tuna: 2022-12-12, modificada el 2024-12-10.
+    - Río Cafre: 2026-08-04.
+    - Bogotá: «no encontrado», con el aviso, en 10 ms.
+  - **Reintentos:** la prueba de `reintentos_si_vacio` pasó a los resguardos, que siguen en vivo
+    por el mismo proxy.

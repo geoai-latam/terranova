@@ -20,14 +20,14 @@ FAMILIA = "territorio"
 TOPE_CREDITOS = 10
 PREGUNTA = "¿Qué predio hay en este punto de Colombia?"
 DESCRIPCION = (
-    "Predio que contiene un punto (lon, lat en EPSG:4326), en cualquier municipio de Colombia: no "
-    "hace falta saber qué gestor catastral lo atiende. Mira primero el SINIC del IGAC (los 333 "
-    "municipios con gestor propio, como Bogotá, Medellín y Cali) y, si no lo tiene, la base "
-    "catastral pública del IGAC. Devuelve la respuesta de la base que lo tiene; la procedencia "
-    "dice cuál fue. Las vías, los andenes y las plazas no son terreno de ningún predio: un punto "
-    "que cae ahí no trae predio aunque haya lotes a pocos metros; para un lote, un punto dentro "
-    "de él, o ficha_lote con su polígono. Use esta herramienta para el predio de un punto. Para "
-    "todo lo demás de un lugar (restricciones, suelo, sismos), ficha_lugar."
+    "Predio que contiene un punto o coordenada (lon, lat en EPSG:4326), en cualquier municipio de "
+    "Colombia: no hace falta saber qué gestor catastral lo atiende. Mira primero el SINIC del IGAC "
+    "(los 333 municipios con gestor propio, como Bogotá, Medellín y Cali) y, si no lo tiene, la "
+    "base catastral pública del IGAC. Devuelve la respuesta de la base que lo tiene; la "
+    "procedencia dice cuál fue. Las vías, los andenes y las plazas no son terreno de ningún "
+    "predio: un punto que cae ahí no trae predio aunque haya lotes a pocos metros; para un lote, "
+    "un punto dentro de él, o ficha_lote con su polígono. Use esta herramienta para el predio de "
+    "un punto. Para todo lo demás de un lugar (restricciones, suelo, sismos), ficha_lugar."
 )
 ESQUEMA_ENTRADA: dict[str, Any] = {
     "type": "object",

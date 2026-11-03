@@ -149,3 +149,15 @@
       - e01: busca la empresa por nombre en vez de por NIT.
   - Si el catálogo crece, la palanca es la regla de escala (§7): partir familias grandes en
     subperfiles, no aplanar.
+- **Enmienda (2026-11-03), herramientas que cubre una compuesta (hallazgo #15 de GEO Copilot):**
+  - Una ficha puede llevar `en_mcp: false`. Sigue en REST y dentro de las compuestas, pero no sale
+    en ningún perfil MCP ni en el índice de `buscar_herramienta`.
+  - Se aplica a `igac_predio_en_punto` y `sinic_predio_en_punto`.
+    - `predio_en_punto` elige la base sola, y el agente seguía confundiendo las dos hermanas, como ya
+      mostraba el banco de esta ADR.
+    - Ver tres herramientas para la misma pregunta le cuesta tokens al agente y lo hace dudar.
+  - **Lo que se comprobó al hacerlo:** sin las dos, la búsqueda por palabras de «¿cuál es el predio
+    en esta coordenada?» no encontraba `predio_en_punto`. Su descripción ahora dice «punto o
+    coordenada».
+  - El banco de agente acepta `predio_en_punto` como alternativa en t01 y t06. El E2E-02 la usa
+    por MCP.

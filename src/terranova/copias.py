@@ -1063,6 +1063,17 @@ def _pedir(http: Any, url: str, params: dict[str, Any], intentos: int = 3) -> li
     return []
 
 
+def _tipo_de_valor(campo: Any) -> str:
+    """Una fecha en texto con orden propio («7/11/2000», día/mes) se guarda tal cual: Postgres la
+    leería mes/día, y lo que trae detrás («Fecha de modificación: …») lo usa un derivado. La pasa
+    a ISO el ejecutor al responder, igual que en vivo."""
+    return "str" if campo.orden_fecha else campo.tipo
+
+
+def _tipo_en_copia(campo: Any) -> str:
+    return _TIPO_SQL[_tipo_de_valor(campo)]
+
+
 def _convertir(valor: Any, tipo: str) -> Any:
     if valor in (None, ""):
         return None
@@ -1145,7 +1156,7 @@ class AlmacenCopias:
         ahora = datetime.now(UTC)
         version = ahora.strftime("%Y%m%d%H%M%S%f")  # dos corridas en el mismo segundo no chocan
         fisica = f'{ESQUEMA}."{copia.tabla}_{version}"'
-        tipos = {c: _TIPO_SQL[campo.tipo] for c, campo in fuente.campos.items()}
+        tipos = {c: _tipo_en_copia(campo) for c, campo in fuente.campos.items()}
         definicion = ", ".join(f'"{c}" {t}' for c, t in tipos.items())
         texto = " || ' ' || ".join(f"coalesce(\"{c}\", '')" for c in copia.texto)
         generada = (
@@ -1170,13 +1181,20 @@ class AlmacenCopias:
                             repetidas += 1
                             continue
                         anterior = fila.get(copia.clave)
-                        valores = [_convertir(fila.get(c), fuente.campos[c].tipo) for c in columnas]
+                        valores = [
+                            _convertir(fila.get(c), _tipo_de_valor(fuente.campos[c]))
+                            for c in columnas
+                        ]
                         if copia.espacial:
                             geometria = fila.get(GEOMETRIA)
                             valores.append(ewkt(geometria) if geometria else None)
                         cp.write_row(valores)
                         resumen.update(json.dumps(valores, default=str).encode())
                         filas += 1
+            if filas == 0:
+                # una fuente que responde vacío sin error (el proxy de la ANT, ~25 % de las veces)
+                # dejaría la copia vacía y cada consulta diría «no hay»: se queda la anterior
+                raise ErrorCopia("la fuente llegó sin filas: la copia no se publica")
             self._c.execute(f'ALTER TABLE {fisica} ADD PRIMARY KEY ("{copia.clave}")')
             for col in copia.indices:
                 if col == copia.orden_fisico:

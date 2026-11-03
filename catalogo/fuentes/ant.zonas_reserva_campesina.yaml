@@ -13,12 +13,22 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Agencia Nacional de Tierras"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Ítem del dueño `Datos_Abiertos_ANT`; su url es el proxy público de ArcGIS Online hacia el servidor
 # de la ANT. Capa 0: polígonos de las ZRC (30 el 2026-10-21).
 url: https://utility.arcgis.com/usrsvcs/servers/0eca5beb8afe43708622fdd7646cd577/rest/services/DatosAbiertos/Zonas_de_Reserva_Campesina_Constituida/FeatureServer
-modo: en_vivo
-frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+modo: copia
+# ADR-0024: copia en PostGIS. Son 30 polígonos y el proxy responde vacío sin error ~25 % de las
+# veces: en vivo había que reintentar 3 veces y un vacío tardaba 2-3 s. Copiada, el vacío es real.
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: ant_zonas_reserva_campesina
+  clave: OBJECTID_1
+  por_pagina: 100
+# La ANT constituye pocas zonas al año (dos en agosto de 2026): con SLA de 3 meses se rehace cada
+# mes y medio.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
 cobertura:
   pais: CO
   excluye: []
@@ -26,13 +36,14 @@ datos_personales: ninguno
 estado: publicada
 # TIPO_ACTO viene como código sin dominio publicado («1»): no entra.
 campos:
+  OBJECTID_1: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la ANT republica la capa)"}
   NOMBRE_ZON: {nombre: nombre, tipo: str, desc: "nombre de la zona de reserva campesina"}
   DEPARTAMENTO: {nombre: departamento, tipo: str, desc: "nombre del departamento o departamentos"}
   MUNICIPIOS: {nombre: municipios, tipo: str, desc: "nombre del municipio o municipios"}
   ACTO_ADMIN: {nombre: acto_administrativo, tipo: str, desc: "acto de constitución (p. ej. «Resolución 046 de 2000»)"}
   FECHA_CONSTITUCION: {nombre: fecha_constitucion, tipo: date, orden_fecha: dma, desc: "fecha de constitución (la fuente la escribe d/m/aaaa; en dos zonas le pega «Fecha de modificación: …», que sale aparte)"}
-  Area_HA: {nombre: area_ha, tipo: float, desc: "área en hectáreas"}
-comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat, reintentos_si_vacio: 3}
+  Area_HA: {nombre: area_ha, tipo: float, decimales: 2, desc: "área en hectáreas"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
 dcat: {publisher: ANT, theme: ordenamiento_rural}
 # Spec 07: medido en la fuente, no en Terrnova.
 perfil:
@@ -50,4 +61,4 @@ perfil:
   - el punto de prueba toca un solo elemento
   - "FECHA_CONSTITUCION es texto d/m/aaaa en las 30 zonas (7/11/2000 es el 7 de noviembre: Resolución 046 de 2000); Río Pato y La Tuna le pegan «Fecha de modificación: d/m/aaaa» (medido el 2026-11-03)"
   - "la fuente (proxy utility.arcgis.com) responde vacío sin error ~25 % de las veces (4 de 16, 2026-10-23): se reintenta 3 veces antes de decir no_encontrado"
-  decision: en vivo por punto
+  decision: copia (30 polígonos); en vivo daba vacíos falsos

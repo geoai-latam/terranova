@@ -63,6 +63,8 @@ def documentos(catalogo: Catalogo) -> list[Documento]:
     entidad. Puro: mismo catálogo, mismos documentos."""
     docs = []
     for h in catalogo.herramientas.values():
+        if not h.en_mcp:
+            continue  # la cubre una compuesta: buscarla la volvería a poner frente al agente
         f = catalogo.fuentes.get(h.fuente)
         partes = [h.id.replace("_", " "), h.pregunta, h.descripcion]
         if f is not None:
