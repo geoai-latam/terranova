@@ -1,13 +1,13 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T06:59:11+00:00",
+ "grabado": "2026-11-03T02:12:19+00:00",
  "herramienta": "ins_calidad_agua_municipio",
  "llamadas": [
   {
    "argumentos": {
     "id": "nxt2-39c3",
     "max_filas": 100,
-    "order": "a_o",
+    "order": "a_o DESC",
     "portal": "datos.gov.co",
     "select": "municipiocodigo, municipio, departamento, a_o, irca, nivel_de_riesgo, ircaurbano, nivel_de_riesgo_urbano, ircarural, nivel_de_riesgo_rural",
     "where": "municipiocodigo = '25175'"
@@ -31,34 +31,10 @@
       "kind": "table",
       "rows": [
        {
-        "a_o": "2007",
+        "a_o": "2024",
         "departamento": "Cundinamarca",
-        "irca": "6.4",
-        "ircarural": "4.4",
-        "ircaurbano": "8.1",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Riesgo bajo",
-        "nivel_de_riesgo_rural": "Sin riesgo",
-        "nivel_de_riesgo_urbano": "Riesgo bajo"
-       },
-       {
-        "a_o": "2008",
-        "departamento": "Cundinamarca",
-        "irca": "4.2",
-        "ircarural": "4.7",
-        "ircaurbano": "3.9",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Sin riesgo",
-        "nivel_de_riesgo_rural": "Sin riesgo",
-        "nivel_de_riesgo_urbano": "Sin riesgo"
-       },
-       {
-        "a_o": "2009",
-        "departamento": "Cundinamarca",
-        "irca": "1.7",
-        "ircarural": "1.2",
+        "irca": "3.6",
+        "ircarural": "3.5",
         "ircaurbano": "3.8",
         "municipio": "Chía",
         "municipiocodigo": "25175",
@@ -67,11 +43,11 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2010",
+        "a_o": "2023",
         "departamento": "Cundinamarca",
-        "irca": "1.8",
-        "ircarural": "1.3",
-        "ircaurbano": "0.0",
+        "irca": "1.4",
+        "ircarural": "1.7",
+        "ircaurbano": "0.4",
         "municipio": "Chía",
         "municipiocodigo": "25175",
         "nivel_de_riesgo": "Sin riesgo",
@@ -79,11 +55,11 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2011",
+        "a_o": "2022",
         "departamento": "Cundinamarca",
-        "irca": "1.1",
+        "irca": "0.8",
         "ircarural": "0.5",
-        "ircaurbano": "3.1",
+        "ircaurbano": "1.6",
         "municipio": "Chía",
         "municipiocodigo": "25175",
         "nivel_de_riesgo": "Sin riesgo",
@@ -91,10 +67,22 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2012",
+        "a_o": "2021",
         "departamento": "Cundinamarca",
-        "irca": "0.0",
-        "ircarural": "0.0",
+        "irca": "1.5",
+        "ircarural": "0.1",
+        "ircaurbano": "4.7",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Sin riesgo",
+        "nivel_de_riesgo_rural": "Sin riesgo",
+        "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2020",
+        "departamento": "Cundinamarca",
+        "irca": "1.7",
+        "ircarural": "2.4",
         "ircaurbano": "0.0",
         "municipio": "Chía",
         "municipiocodigo": "25175",
@@ -103,22 +91,46 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2013",
-        "departamento": "Cundinamarca",
-        "irca": "0.0",
-        "ircarural": "0.0",
-        "ircaurbano": "0.0",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Sin riesgo",
-        "nivel_de_riesgo_rural": "Sin riesgo",
-        "nivel_de_riesgo_urbano": "Sin riesgo"
-       },
-       {
-        "a_o": "2014",
+        "a_o": "2019",
         "departamento": "Cundinamarca",
         "irca": "0.2",
-        "ircarural": "0.3",
+        "ircarural": "ND",
+        "ircaurbano": "0.2",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Sin riesgo",
+        "nivel_de_riesgo_rural": "ND",
+        "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2018",
+        "departamento": "Cundinamarca",
+        "irca": "0.1",
+        "ircarural": "0.2",
+        "ircaurbano": "0.1",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Sin riesgo",
+        "nivel_de_riesgo_rural": "Sin riesgo",
+        "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2017",
+        "departamento": "Cundinamarca",
+        "irca": "0.0",
+        "ircarural": "0.0",
+        "ircaurbano": "0.0",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Sin riesgo",
+        "nivel_de_riesgo_rural": "Sin riesgo",
+        "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2016",
+        "departamento": "Cundinamarca",
+        "irca": "0.0",
+        "ircarural": "0.2",
         "ircaurbano": "0.0",
         "municipio": "Chía",
         "municipiocodigo": "25175",
@@ -139,10 +151,10 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2016",
+        "a_o": "2014",
         "departamento": "Cundinamarca",
-        "irca": "0.0",
-        "ircarural": "0.2",
+        "irca": "0.2",
+        "ircarural": "0.3",
         "ircaurbano": "0.0",
         "municipio": "Chía",
         "municipiocodigo": "25175",
@@ -151,7 +163,7 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2017",
+        "a_o": "2013",
         "departamento": "Cundinamarca",
         "irca": "0.0",
         "ircarural": "0.0",
@@ -163,34 +175,10 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2018",
+        "a_o": "2012",
         "departamento": "Cundinamarca",
-        "irca": "0.1",
-        "ircarural": "0.2",
-        "ircaurbano": "0.1",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Sin riesgo",
-        "nivel_de_riesgo_rural": "Sin riesgo",
-        "nivel_de_riesgo_urbano": "Sin riesgo"
-       },
-       {
-        "a_o": "2019",
-        "departamento": "Cundinamarca",
-        "irca": "0.2",
-        "ircarural": "ND",
-        "ircaurbano": "0.2",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Sin riesgo",
-        "nivel_de_riesgo_rural": "ND",
-        "nivel_de_riesgo_urbano": "Sin riesgo"
-       },
-       {
-        "a_o": "2020",
-        "departamento": "Cundinamarca",
-        "irca": "1.7",
-        "ircarural": "2.4",
+        "irca": "0.0",
+        "ircarural": "0.0",
         "ircaurbano": "0.0",
         "municipio": "Chía",
         "municipiocodigo": "25175",
@@ -199,23 +187,11 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2021",
+        "a_o": "2011",
         "departamento": "Cundinamarca",
-        "irca": "1.5",
-        "ircarural": "0.1",
-        "ircaurbano": "4.7",
-        "municipio": "Chía",
-        "municipiocodigo": "25175",
-        "nivel_de_riesgo": "Sin riesgo",
-        "nivel_de_riesgo_rural": "Sin riesgo",
-        "nivel_de_riesgo_urbano": "Sin riesgo"
-       },
-       {
-        "a_o": "2022",
-        "departamento": "Cundinamarca",
-        "irca": "0.8",
+        "irca": "1.1",
         "ircarural": "0.5",
-        "ircaurbano": "1.6",
+        "ircaurbano": "3.1",
         "municipio": "Chía",
         "municipiocodigo": "25175",
         "nivel_de_riesgo": "Sin riesgo",
@@ -223,11 +199,11 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2023",
+        "a_o": "2010",
         "departamento": "Cundinamarca",
-        "irca": "1.4",
-        "ircarural": "1.7",
-        "ircaurbano": "0.4",
+        "irca": "1.8",
+        "ircarural": "1.3",
+        "ircaurbano": "0.0",
         "municipio": "Chía",
         "municipiocodigo": "25175",
         "nivel_de_riesgo": "Sin riesgo",
@@ -235,16 +211,40 @@
         "nivel_de_riesgo_urbano": "Sin riesgo"
        },
        {
-        "a_o": "2024",
+        "a_o": "2009",
         "departamento": "Cundinamarca",
-        "irca": "3.6",
-        "ircarural": "3.5",
+        "irca": "1.7",
+        "ircarural": "1.2",
         "ircaurbano": "3.8",
         "municipio": "Chía",
         "municipiocodigo": "25175",
         "nivel_de_riesgo": "Sin riesgo",
         "nivel_de_riesgo_rural": "Sin riesgo",
         "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2008",
+        "departamento": "Cundinamarca",
+        "irca": "4.2",
+        "ircarural": "4.7",
+        "ircaurbano": "3.9",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Sin riesgo",
+        "nivel_de_riesgo_rural": "Sin riesgo",
+        "nivel_de_riesgo_urbano": "Sin riesgo"
+       },
+       {
+        "a_o": "2007",
+        "departamento": "Cundinamarca",
+        "irca": "6.4",
+        "ircarural": "4.4",
+        "ircaurbano": "8.1",
+        "municipio": "Chía",
+        "municipiocodigo": "25175",
+        "nivel_de_riesgo": "Riesgo bajo",
+        "nivel_de_riesgo_rural": "Sin riesgo",
+        "nivel_de_riesgo_urbano": "Riesgo bajo"
        }
       ]
      }

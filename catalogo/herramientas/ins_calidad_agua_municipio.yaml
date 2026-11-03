@@ -1,5 +1,5 @@
 id: ins_calidad_agua_municipio
-version: 1
+version: 2
 familia: estadisticas
 fuente: ins.calidad_agua_irca
 pregunta: "¿Es potable el agua en este municipio? (IRCA del INS, año por año)"
@@ -7,7 +7,8 @@ descripcion: >
   Índice de riesgo de la calidad del agua para consumo humano (IRCA) de un municipio (DIVIPOLA), año
   por año desde 2007: el índice total (0 a 100, menos es mejor), su nivel de riesgo (sin riesgo, bajo,
   medio, alto o inviable sanitariamente) y el detalle urbano y rural. Es el indicador oficial de
-  vigilancia del INS (SIVICAP); «ND» indica que no hubo dato.
+  vigilancia del INS (SIVICAP). El año más reciente va primero, y arriba su IRCA y su nivel de
+  riesgo. Urbano o rural vacío: la fuente dice «ND», no hubo dato.
   (Fuente: INS; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -19,18 +20,27 @@ consulta:
     portal: datos.gov.co
     select: "municipiocodigo, municipio, departamento, a_o, irca, nivel_de_riesgo, ircaurbano, nivel_de_riesgo_urbano, ircarural, nivel_de_riesgo_rural"
     where: "municipiocodigo = '{municipio_divipola}'"
-    order: "a_o"
+    order: "a_o DESC"
     max_filas: 100
   campos: [municipiocodigo, municipio, departamento, a_o, irca, nivel_de_riesgo, ircaurbano, nivel_de_riesgo_urbano, ircarural, nivel_de_riesgo_rural]
 derivados:
+  ultimo_anio: {de: primero, campo: anio, tipo: int}
+  irca_ultimo_anio: {de: primero, campo: irca, tipo: float}
+  nivel_riesgo_ultimo_anio: {de: primero, campo: nivel_riesgo}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  si: {campo: ultimo_anio, valores: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]}
+  texto: >
+    La fuente llega a 2024, pero el último IRCA de este municipio es más viejo (ultimo_anio). En los
+    años siguientes el INS no publica dato: no se sabe si el agua mejoró ni si empeoró.
 salida: CalidadAguaMunicipio
 cobro: codigo
 canario:
-  # Medido el 2026-10-28 en nxt2-39c3: Chía tiene 18 años (2007 a 2024); el primero, 2007, IRCA 6,4
-  # «Riesgo bajo».
+  # Medido el 2026-11-02 en nxt2-39c3: Chía tiene 18 años (2007 a 2024); el más reciente, 2024,
+  # IRCA 3,6 «Sin riesgo» (urbano 3,8; rural 3,5).
   entrada: {municipio_divipola: "25175"}
-  verdad: {municipio_divipola: "25175", anio: 2007, irca: 6.4, nivel_riesgo: "Riesgo bajo"}
+  verdad: {municipio_divipola: "25175", anio: 2024, irca: 3.6, nivel_riesgo: "Sin riesgo", irca_urbano: 3.8, irca_rural: 3.5, ultimo_anio: 2024, irca_ultimo_anio: 3.6, nivel_riesgo_ultimo_anio: "Sin riesgo"}
   minimos: {numero_registros: 18}
-  campos: [anio, departamento, irca, irca_rural, irca_urbano, municipio, municipio_divipola, nivel_riesgo, nivel_riesgo_rural, nivel_riesgo_urbano, numero_registros]
+  campos: [anio, departamento, irca, irca_rural, irca_ultimo_anio, irca_urbano, municipio, municipio_divipola, nivel_riesgo, nivel_riesgo_rural, nivel_riesgo_ultimo_anio, nivel_riesgo_urbano, numero_registros, ultimo_anio]
   latencia_max_ms: 8000

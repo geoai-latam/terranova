@@ -27,10 +27,10 @@ campos:
   a_o: {nombre: anio, tipo: int, desc: "año"}
   irca: {nombre: irca, tipo: float, desc: "índice de riesgo de la calidad del agua (0 a 100; menos es mejor)"}
   nivel_de_riesgo: {nombre: nivel_riesgo, tipo: str, desc: "nivel de riesgo (sin riesgo, bajo, medio, alto, inviable sanitariamente)"}
-  ircaurbano: {nombre: irca_urbano, tipo: str, desc: "IRCA urbano (texto: «ND» cuando no hay dato)"}
-  nivel_de_riesgo_urbano: {nombre: nivel_riesgo_urbano, tipo: str, desc: "nivel de riesgo urbano"}
-  ircarural: {nombre: irca_rural, tipo: str, desc: "IRCA rural (texto: «ND» cuando no hay dato)"}
-  nivel_de_riesgo_rural: {nombre: nivel_riesgo_rural, tipo: str, desc: "nivel de riesgo rural"}
+  ircaurbano: {nombre: irca_urbano, tipo: float, vacios: ["ND"], desc: "IRCA urbano (0 a 100); vacío cuando la fuente dice «ND» (no hubo dato)"}
+  nivel_de_riesgo_urbano: {nombre: nivel_riesgo_urbano, tipo: str, vacios: ["ND"], desc: "nivel de riesgo urbano; vacío si no hubo dato"}
+  ircarural: {nombre: irca_rural, tipo: float, vacios: ["ND"], desc: "IRCA rural (0 a 100); vacío cuando la fuente dice «ND» (no hubo dato)"}
+  nivel_de_riesgo_rural: {nombre: nivel_riesgo_rural, tipo: str, vacios: ["ND"], desc: "nivel de riesgo rural; vacío si no hubo dato"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: INS, theme: salud, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terrnova.
@@ -40,6 +40,7 @@ perfil:
   clave: {columna: a_o, unica: true}
   operaciones: {filtrar: 0.4, contar: 0.2, ordenar: 0.2, agrupar: 0.2}
   hallazgos:
-  - "el IRCA urbano y rural vienen como texto, con «ND» cuando no hay dato: no se convierten a número"
+  - "el IRCA urbano y rural vienen como texto, con «ND» cuando no hay dato (urbano 1 268 filas, rural 9 615); lo demás es número: salen como número y «ND» vacío (2026-11-02)"
+  - "la fuente llega a 2024 (1 038 municipios); hay municipios sin dato desde hace años (Bojayá, el último en 2019)"
   - "en un municipio, el año es único (la clave medida es el año dentro del municipio)"
   decision: "en vivo por municipio, todos los años"

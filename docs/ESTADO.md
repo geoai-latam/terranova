@@ -226,6 +226,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     coinciden con las cifras del DANE de 2021 a 2024.
   - El almacén de copias publica la vista con `DROP` y `CREATE`, para poder sumar columnas.
   - Copia reconstruida desde Colombia el 2026-11-02.
+- **INS, calidad del agua (patrón E):**
+  - El año más reciente va primero, con su IRCA y nivel de riesgo arriba; el «ND» sale vacío.
+  - Si el municipio dejó de reportar (Bojayá, el último en 2019), un aviso lo dice.
 
 ## Ficha de un lote (2026-11-01)
 
