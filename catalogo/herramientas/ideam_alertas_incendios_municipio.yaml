@@ -1,15 +1,16 @@
 id: ideam_alertas_incendios_municipio
-version: 1
+version: 2
 familia: ambiente
 fuente: ideam.alertas_incendios
 pregunta: "¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes?"
 descripcion: >
   Las alertas más recientes por incendios de la cobertura vegetal (forestales) de un municipio
   (DIVIPOLA), según los boletines diarios del IDEAM: fecha y nivel (ALTA = roja, MODERADA = naranja,
-  BAJA = amarilla). Primero la más reciente; hasta 15. El IDEAM publica cada noche (~23:30) solo
-  los municipios con alerta ese día: si la fecha más reciente no es la del último boletín, el
-  municipio no tiene alerta vigente; «no encontrado» = ninguna alerta en el año. Sale de la copia
-  diaria de Terrnova (la fecha de la copia va en la procedencia).
+  BAJA = amarilla). Primero la más reciente; hasta 15. El IDEAM publica cada noche (~23:30) solo los
+  municipios con alerta ese día: alerta_vigente dice si la última alerta del municipio
+  (ultima_alerta) es la del último boletín (ultimo_boletin): si no, no tiene alerta vigente; «no
+  encontrado» = ninguna alerta en el año. Sale de la copia de Terrnova: el último boletín es el de
+  la copia, no siempre el de hoy.
   (Fuente: IDEAM; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -22,10 +23,21 @@ consulta:
     select: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, FECHA_EJECUCION]
     order: [-FECHA_EJECUCION]
     limite: 15
+  complemento:
+    fuente: ideam.alertas_incendios
+    tool: consultar_copia
+    argumentos:
+      tabla: ideam_alertas_incendios
+      agregados: {ultimo: "max:FECHA_EJECUCION"}
+    hechos:
+      ultimo: {nombre: ultimo_boletin, tipo: date, desc: "fecha del último boletín del IDEAM en la copia de Terrnova (de cualquier municipio)"}
+    que_dice: "la fecha del último boletín, para saber si la alerta sigue vigente"
   campos: [COD_DANE, MUNICIPIO, DEPARTAMENTO, REGION, TEXTO_AMENAZA, FECHA_EJECUCION]
 salida: AlertasIncendiosMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  ultima_alerta: {de: primero, campo: fecha, tipo: date}
+  alerta_vigente: {de: igual, campo: ultima_alerta, igual_a: ultimo_boletin}
 cobro: registro
 canario:
   # Medido el 2026-10-28 en alertas_incendios.csv: Bogotá (11001) tuvo alerta en 82 de los 300
@@ -33,5 +45,5 @@ canario:
   # más recientes. Ojo: el archivo se reinicia cada 1 de enero.
   entrada: {municipio_divipola: "11001"}
   minimos: {numero_registros: 15}
-  campos: [departamento, fecha, municipio, municipio_divipola, nivel_alerta, numero_registros, region]
+  campos: [alerta_vigente, departamento, fecha, municipio, municipio_divipola, nivel_alerta, numero_registros, region, ultima_alerta, ultimo_boletin]
   latencia_max_ms: 5000
