@@ -260,8 +260,6 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
-- **SUIN por año (patrón F):** de los tipos con más normas a los de menos, con cuántas están vigentes
-  y cuántas no tienen aún dato de vigencia (2025: 954 de 1 320).
 
 ## Ficha de un lote (2026-11-01)
 
