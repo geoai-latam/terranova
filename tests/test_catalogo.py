@@ -101,6 +101,11 @@ CASOS = [
         "marcadores sin entrada",
     ),
     (HERRAMIENTA, _set(consulta__capas=[]), "no declara capas"),
+    (
+        HERRAMIENTA,
+        _set(consulta__capas=[], consulta__argumentos={"id": "{capa}"}),
+        "usa {capa} sin `capas`",
+    ),
     (HERRAMIENTA, _set(consulta__tool="Arcgis Query"), "tool"),
     (HERRAMIENTA, _set(canario__verdad={"propietario": "x"}), "no salen"),
     (HERRAMIENTA, _set(descripcion="Predio en un punto."), "cerrar con"),
@@ -271,8 +276,9 @@ def test_toda_fuente_tiene_ficha_tecnica() -> None:
     assert not sin_ficha, f"fuentes sin catalogo/metadatos/<id>.yaml (spec 08): {sin_ficha}"
     for fid, m in catalogo.metadatos.items():
         protocolo = catalogo.fuentes[fid].protocolo
-        # una fuente de varios servicios ArcGIS (su url es la carpeta) no tiene un ítem que cosechar
-        varios = str(catalogo.fuentes[fid].url).endswith("/rest/services")
+        # una fuente de varios servicios ArcGIS o conjuntos de Socrata (su url es la carpeta) no
+        # tiene un ítem que cosechar
+        varios = str(catalogo.fuentes[fid].url).endswith(("/rest/services", "/resource"))
         if protocolo in ("socrata", "arcgis_rest") and not varios:
             assert m.metodo == "cosechado", f"{fid}: {protocolo} se cosecha, no se escribe a mano"
 

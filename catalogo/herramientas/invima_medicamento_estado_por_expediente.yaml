@@ -1,0 +1,63 @@
+id: invima_medicamento_estado_por_expediente
+version: 1
+familia: empresas
+fuente: invima.cum
+pregunta: "¿En qué estado está el registro sanitario de este medicamento en el INVIMA?"
+descripcion: >
+  Estado del registro sanitario de un medicamento por su número de expediente en el INVIMA. Mira
+  a la vez los cuatro conjuntos en que el INVIMA publica el Código Único de Medicamentos (vigente,
+  en trámite de renovación, otros estados y vencido) y dice en cuál está (`conjunto`), con
+  producto, titular, registro sanitario, su estado como lo escribe el INVIMA (Vigente, Vencido,
+  Negado, Cancelado, Desistido…), vencimiento, el principio activo (si son varios, el primero en
+  orden alfabético, y `principios_activos` dice cuántos) y cuántas presentaciones (CUM) tiene. Para
+  la dosis y las presentaciones de uno vigente, invima_medicamento_por_expediente. Un vencimiento
+  vacío es que la fuente no da fecha o pone un año de relleno (3000).
+  (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
+entrada: {expediente: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: datos_consultar
+  capas: [i7cb-raxc, vgr4-gemg, spzp-dfuc, vwwf-4ftk]
+  argumentos:
+    portal: datos.gov.co
+    id: "{capa}"
+    # Cada presentación se repite por principio activo, vía y rol: se agrupa por registro.
+    select: "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum"
+    where: "expediente = '{expediente}'"
+    group: "expediente, producto, registrosanitario, estadoregistro, fechavencimiento"
+    order: "registrosanitario"
+    max_filas: 50
+  campos: [expediente, producto, registrosanitario, estadoregistro, fechavencimiento]
+salida: MedicamentoEstadoPorExpediente
+derivados:
+  conjunto:
+    de: capa
+    valores:
+      i7cb-raxc: vigente
+      vgr4-gemg: en trámite de renovación
+      spzp-dfuc: otros estados
+      vwwf-4ftk: vencido
+  titular: {de: columna, campo: titular_registrado, tipo: str}
+  principio_activo: {de: columna, campo: principio_activo_1, tipo: str}
+  principios_activos: {de: columna, campo: principios_activos, tipo: int}
+  presentaciones: {de: columna, campo: presentaciones_cum, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El expediente no está en ninguno de los cuatro conjuntos del Código Único de Medicamentos del
+    INVIMA (vigentes, en renovación, otros estados y vencidos). Revise el número: es el expediente,
+    no el registro sanitario (INVIMA 2008M-0008745) ni el CUM. Si es un alimento, un cosmético o
+    un dispositivo médico, no está en el CUM: invima_registro_sanitario_por_expediente o
+    invima_dispositivo_por_expediente.
+cobro: registro
+canario:
+  # Medido el 2026-11-03 en los cuatro conjuntos: el expediente 36344 (Buscapina Compositum
+  # ampollas) está solo en el de renovación, con 7 presentaciones y vencimiento 2026-04-14.
+  entrada: {expediente: 36344}
+  verdad: {conjunto: en trámite de renovación, registro_sanitario: "INVIMA 2021M-003172-R5", presentaciones: 7, numero_registros: 1}
+  campos: [conjunto, estado_registro, expediente, fecha_vencimiento, numero_registros, presentaciones, principio_activo, principios_activos, producto, registro_sanitario, titular]
+  # Espera a los cuatro conjuntos: datos.gov.co tardó de 0,7 a 14,3 s por conjunto desde la VPS
+  # (medido el 2026-11-03, en paralelo).
+  latencia_max_ms: 20000
