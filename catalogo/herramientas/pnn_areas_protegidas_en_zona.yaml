@@ -1,5 +1,5 @@
 id: pnn_areas_protegidas_en_zona
-version: 1
+version: 2
 familia: ambiente
 fuente: pnn.runap
 pregunta: "¿Qué áreas protegidas del RUNAP tocan esta zona?"
@@ -7,7 +7,8 @@ descripcion: >
   Áreas protegidas inscritas en el RUNAP que se cruzan con un rectángulo (bbox en EPSG:4326):
   nombre, categoría de manejo, autoridad ambiental, área según el acto y fecha de inscripción. Cubre
   todo el país y todas las categorías del SINAP; un área declarada que aún no esté inscrita no
-  aparece. Se cruza con el rectángulo, no con un polígono, y el total dice cuántas hay.
+  aparece. Se cruza con el rectángulo, no con un polígono, y el total dice cuántas hay. Van de la
+  más grande a la más pequeña, y arriba, cuántas hay de cada categoría.
   Sale de la copia de Terrnova (se rehace cada dos semanas): la procedencia dice de cuándo es.
   (Fuente: PNN; licencia: CC BY-SA 4.0.)
 entrada: {bbox: bbox}
@@ -19,18 +20,21 @@ consulta:
     bbox: "{bbox}"
     select: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
     geometria: simplificada
-    order: [ap_nombre]
+    order: ["-area_ha_total_resolucion", ap_nombre]
     limite: 1000
   campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
 salida: AreasProtegidasEnZona
 # `total` es el de `completitud` (returnCountOnly del servicio), no un campo de cada área.
 derivados:
   total: {de: completitud_total, tipo: int}
+  por_categoria: {de: conteo_por, campo: categoria}
 cobro: zona
 canario:
   # Bbox de la prueba de ogc_mcp en GEO Copilot (Bogotá y alrededores). Medido el 2026-10-21 con
   # returnCountOnly sobre la capa 0 (envelope, esriSpatialRelIntersects): 169, 1,3 s.
   entrada: {bbox: [-74.5, 4.0, -73.5, 5.0]}
-  verdad: {total: 169}
-  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, nombre, total]
+  # Medido el 2026-11-02 en la copia: la más grande es Sumapaz (210 739 ha), y 110 de las 169 son
+  # reservas naturales de la sociedad civil.
+  verdad: {total: 169, nombre: Sumapaz}
+  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, nombre, por_categoria, total]
   latencia_max_ms: 8000

@@ -744,3 +744,20 @@ def test_un_derivado_sale_con_sus_decimales() -> None:
     crudo = {"promedio": "27.2083333333333333", "minima": "23.5", "observaciones": "24"}
     fila = mapear_fila(h, CATALOGO.fuentes[h.fuente], crudo, None)
     assert fila["promedio_c"] == 27.2 and fila["minima_c"] == 23.5 and fila["observaciones"] == 24
+
+
+def test_conteo_por_categoria_con_la_mas_frecuente_primero() -> None:
+    """169 áreas protegidas alrededor de Bogotá: 110 son reservas de la sociedad civil (medido el
+    2026-11-02 en la copia del RUNAP)."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    d = Derivado(de="conteo_por", campo="categoria")
+    elementos = [
+        {"categoria": "Reserva Natural"},
+        {"categoria": "Parque"},
+        {"categoria": "Reserva Natural"},
+    ]
+    resultado = derivar_resultado(d, elementos, None)
+    assert resultado == {"Reserva Natural": 2, "Parque": 1}
+    assert list(resultado) == ["Reserva Natural", "Parque"]
