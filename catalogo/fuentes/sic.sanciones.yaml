@@ -14,7 +14,8 @@ clase_acceso: api
 atribucion: "Fuente: SIC, Sanciones impuestas en firme. Fuente: Portal de Datos Abiertos www.datos.gov.co"
 protocolo: socrata
 conector: datos-abiertos-mcp
-# Solo agregados por sector: `multado` puede ser una persona natural (ADR-0014).
+# `multado` puede ser una persona natural (ADR-0014): sale solo en sic_sanciones_por_empresa, que
+# filtra a los nombres con forma jurídica (S.A., S.A.S., LTDA…). Nunca se busca a una persona.
 url: https://www.datos.gov.co/resource/73dx-n59j.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
@@ -22,6 +23,10 @@ cobertura: {pais: CO, columna_tiempo: fecha_emitida}
 datos_personales: filtrados
 estado: publicada
 campos:
+  radicado: {nombre: radicado, tipo: str, desc: "radicado del expediente"}
+  res_sancion: {nombre: resolucion, tipo: str, desc: "número de la resolución de sanción"}
+  multado: {nombre: sancionado, tipo: str, desc: "empresa sancionada (solo personas jurídicas: ADR-0014)"}
+  conducta: {nombre: conducta, tipo: str, desc: "conducta sancionada"}
   fecha_emitida: {nombre: fecha, tipo: date, desc: "fecha de la resolución"}
   valor: {nombre: valor, tipo: float, desc: "valor de la sanción, en pesos"}
   sector: {nombre: sector, tipo: str, desc: "sector económico"}

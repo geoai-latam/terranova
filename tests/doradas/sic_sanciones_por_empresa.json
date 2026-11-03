@@ -1,0 +1,373 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-03T19:39:48+00:00",
+ "herramienta": "sic_sanciones_por_empresa",
+ "llamadas": [
+  {
+   "argumentos": {
+    "id": "73dx-n59j",
+    "max_filas": 500,
+    "order": "fecha_emitida DESC, radicado",
+    "portal": "datos.gov.co",
+    "select": "radicado, res_sancion, fecha_emitida, multado, valor, conducta, sector",
+    "where": "upper(multado) like upper('%ALMACENES EXITO%') AND (upper(multado) like '%S.A%' OR upper(multado) like '% S A' OR upper(multado) like '% S A %' OR upper(multado) like '% SAS%' OR upper(multado) like '%LTDA%' OR upper(multado) like '%LIMITADA%' OR upper(multado) like '%E.S.P%' OR upper(multado) like '% Y CIA%' OR upper(multado) like '% & CIA%' OR upper(multado) like '%S EN C%' OR upper(multado) like '%S. EN C%' OR upper(multado) like '%SOCIEDAD%' OR upper(multado) like '%CORPORACI%' OR upper(multado) like '%FUNDACI%' OR upper(multado) like '%ASOCIACI%' OR upper(multado) like '%COOPERATIVA%' OR upper(multado) like '%COMPA_IA%' OR upper(multado) like '%BANCO%' OR upper(multado) like '%UNIVERSIDAD%')"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "conducta",
+       "fecha_emitida",
+       "multado",
+       "radicado",
+       "res_sancion",
+       "sector",
+       "valor"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2025-07-30T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "23 334365",
+        "res_sancion": "51492",
+        "sector": "Venta en almacenes",
+        "valor": "691456512"
+       },
+       {
+        "conducta": "Calidad, información y publicidad engañosa",
+        "fecha_emitida": "2024-09-26T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "21 425046",
+        "res_sancion": "56522",
+        "sector": "Venta en almacenes",
+        "valor": "332822792"
+       },
+       {
+        "conducta": "Publicidad engañosa",
+        "fecha_emitida": "2023-10-09T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "21 120726",
+        "res_sancion": "61736",
+        "sector": "Venta en almacenes",
+        "valor": "247080000"
+       },
+       {
+        "conducta": "Calidad, falta de información e incumplir las obligaciones de comercio electrónico",
+        "fecha_emitida": "2022-12-09T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "20 179907",
+        "res_sancion": "87591",
+        "sector": "Venta en almacenes",
+        "valor": "270000000"
+       },
+       {
+        "conducta": "Calidad, falta de información, publicidad engañosa e incumplir las obligaciones de comercio electrónico",
+        "fecha_emitida": "2022-01-18T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "16 455430",
+        "res_sancion": "1075",
+        "sector": "Comercio electrónico",
+        "valor": "280000000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2018-04-26T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "14 255939",
+        "res_sancion": "28260",
+        "sector": "Venta En Almacenes",
+        "valor": "781242000"
+       },
+       {
+        "conducta": "Publicidad engañosa y protección contractual",
+        "fecha_emitida": "2017-06-15T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "14 169502",
+        "res_sancion": "34736",
+        "sector": "Venta en almacenes",
+        "valor": "51640190"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2017-02-10T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "15 285102",
+        "res_sancion": "4216",
+        "sector": "Venta en almacenes",
+        "valor": "11803472"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2016-06-08T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 154098",
+        "res_sancion": "35864",
+        "sector": "Venta en almacenes",
+        "valor": "2757816"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2016-02-24T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 231077",
+        "res_sancion": "7888",
+        "sector": "Venta en almacenes",
+        "valor": "172363500"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2016-02-24T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 47481",
+        "res_sancion": "7862",
+        "sector": "Venta en almacenes",
+        "valor": "2068362"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2016-01-20T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 36184",
+        "res_sancion": "871",
+        "sector": "Venta en almacenes",
+        "valor": "137890800"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2015-07-31T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 290977",
+        "res_sancion": "48208",
+        "sector": "Electrodomésticos",
+        "valor": "180418000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2015-06-18T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 138245",
+        "res_sancion": "31088",
+        "sector": "Venta en almacenes",
+        "valor": "96652500"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2015-04-29T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 95655",
+        "res_sancion": "21322",
+        "sector": "Venta en almacenes",
+        "valor": "12887000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2014-12-22T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 33811",
+        "res_sancion": "79272",
+        "sector": "Venta en almacenes",
+        "valor": "34496000"
+       },
+       {
+        "conducta": "Seguridad de producto",
+        "fecha_emitida": "2014-10-31T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 273391",
+        "res_sancion": "65609",
+        "sector": "Venta en almacenes",
+        "valor": "554400000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2014-08-25T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 217463",
+        "res_sancion": "50059",
+        "sector": "Venta en almacenes",
+        "valor": "86240000"
+       },
+       {
+        "conducta": "Publicidad engañosa y protección contractual",
+        "fecha_emitida": "2014-08-22T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 231814",
+        "res_sancion": "49588",
+        "sector": "Comercio electrónico",
+        "valor": "32648000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2014-07-08T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 219803",
+        "res_sancion": "42268",
+        "sector": "Venta en almacenes",
+        "valor": "94248000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2014-02-20T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 47294",
+        "res_sancion": "9397",
+        "sector": "Venta en almacenes",
+        "valor": "154000000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-12-17T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 87394",
+        "res_sancion": "79050",
+        "sector": "Venta en almacenes",
+        "valor": "88425000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-10-31T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "11 21860",
+        "res_sancion": "64523",
+        "sector": "Tabaco",
+        "valor": "159165000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-10-31T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 26882",
+        "res_sancion": "64819",
+        "sector": "Venta en almacenes",
+        "valor": "58950000"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2013-05-29T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 128783",
+        "res_sancion": "33032",
+        "sector": "Venta en almacenes",
+        "valor": "29475000"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2013-05-29T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 105148",
+        "res_sancion": "32966",
+        "sector": "Venta en almacenes",
+        "valor": "29475000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-04-30T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 170827",
+        "res_sancion": "26035",
+        "sector": "Venta en almacenes",
+        "valor": "29475000"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2013-04-30T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 215284",
+        "res_sancion": "24536",
+        "sector": "Venta en almacenes",
+        "valor": "38317500"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-04-30T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 56050",
+        "res_sancion": "26004",
+        "sector": "Venta en almacenes",
+        "valor": "11790000"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2013-04-30T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "13 2816",
+        "res_sancion": "26066",
+        "sector": "Venta en almacenes",
+        "valor": "8842500"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-03-22T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 91819",
+        "res_sancion": "13858",
+        "sector": "Venta en almacenes",
+        "valor": "47160000"
+       },
+       {
+        "conducta": "Inobservancia de órdenes e instrucciones impartidas",
+        "fecha_emitida": "2013-03-21T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 37768",
+        "res_sancion": "12465",
+        "sector": "Venta en almacenes",
+        "valor": "29475000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-03-13T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 49640",
+        "res_sancion": "9768",
+        "sector": "Venta en almacenes",
+        "valor": "58950000"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-02-28T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 231692",
+        "res_sancion": "8035",
+        "sector": "Venta en almacenes",
+        "valor": "41854500"
+       },
+       {
+        "conducta": "Información y publicidad engañosa",
+        "fecha_emitida": "2013-01-31T00:00:00.000",
+        "multado": "ALMACENES EXITO S.A.",
+        "radicado": "12 30456",
+        "res_sancion": "3136",
+        "sector": "Tabaco",
+        "valor": "147375000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 35,
+      "truncado": false,
+      "vistos": 35
+     },
+     "completo": true,
+     "conjunto": "73dx-n59j",
+     "consulta": {
+      "conjunto": "73dx-n59j",
+      "max_filas": 500,
+      "portal": "datos.gov.co",
+      "select": "radicado, res_sancion, fecha_emitida, multado, valor, conducta, sector",
+      "where": "(upper(multado) like upper('%ALMACENES EXITO%') AND (upper(multado) like '%S.A%' OR upper(multado) like '% S A' OR upper(multado) like '% S A %' OR upper(multado) like '% SAS%' OR upper(multado) like '%LTDA%' OR upper(multado) like '%LIMITADA%' OR upper(multado) like '%E.S.P%' OR upper(multado) like '% Y CIA%' OR upper(multado) like '% & CIA%' OR upper(multado) like '%S EN C%' OR upper(multado) like '%S. EN C%' OR upper(multado) like '%SOCIEDAD%' OR upper(multado) like '%CORPORACI%' OR upper(multado) like '%FUNDACI%' OR upper(multado) like '%ASOCIACI%' OR upper(multado) like '%COOPERATIVA%' OR upper(multado) like '%COMPA_IA%' OR upper(multado) like '%BANCO%' OR upper(multado) like '%UNIVERSIDAD%'))"
+     },
+     "cumplen_en_el_portal": 35,
+     "filas": 35,
+     "filtro_soql": "(upper(multado) like upper('%ALMACENES EXITO%') AND (upper(multado) like '%S.A%' OR upper(multado) like '% S A' OR upper(multado) like '% S A %' OR upper(multado) like '% SAS%' OR upper(multado) like '%LTDA%' OR upper(multado) like '%LIMITADA%' OR upper(multado) like '%E.S.P%' OR upper(multado) like '% Y CIA%' OR upper(multado) like '% & CIA%' OR upper(multado) like '%S EN C%' OR upper(multado) like '%S. EN C%' OR upper(multado) like '%SOCIEDAD%' OR upper(multado) like '%CORPORACI%' OR upper(multado) like '%FUNDACI%' OR upper(multado) like '%ASOCIACI%' OR upper(multado) like '%COOPERATIVA%' OR upper(multado) like '%COMPA_IA%' OR upper(multado) like '%BANCO%' OR upper(multado) like '%UNIVERSIDAD%'))",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
