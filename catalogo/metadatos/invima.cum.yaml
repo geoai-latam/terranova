@@ -1,0 +1,20 @@
+# Ficha técnica escrita a mano (spec 08): la fuente son los cuatro conjuntos del CUM en
+# datos.gov.co, cada uno con su ficha cosechada (invima.cum_vigentes, invima.cum_renovacion,
+# invima.cum_otros_estados, invima.cum_vencidos); se resume lo que dicen.
+fuente: invima.cum
+metodo: manual
+cosechado: '2026-11-03'
+origen: https://www.datos.gov.co/api/views/i7cb-raxc.json
+pagina: https://www.datos.gov.co/d/i7cb-raxc
+titulo: Código Único de Medicamentos (CUM) en sus cuatro estados
+descripcion: Cuatro conjuntos del INVIMA en datos.gov.co, uno por estado del registro sanitario
+  (vigentes i7cb-raxc, en trámite de renovación vgr4-gemg, otros estados spzp-dfuc y vencidos
+  vwwf-4ftk), con las mismas columnas. Un expediente está en uno solo.
+idioma: Español
+filas: 426082
+campos:
+  expediente: {tipo_fuente: number, etiqueta: expediente}
+  producto: {tipo_fuente: text, etiqueta: producto}
+  registrosanitario: {tipo_fuente: text, etiqueta: registrosanitario}
+  estadoregistro: {tipo_fuente: text, etiqueta: estadoregistro}
+  fechavencimiento: {tipo_fuente: text, etiqueta: fechavencimiento}

@@ -1,5 +1,5 @@
 id: invima_medicamento_otros_estados_por_expediente
-version: 2
+version: 3
 familia: empresas
 fuente: invima.cum_otros_estados
 pregunta: "¿En qué estado está este medicamento en el INVIMA, si no está vigente?"
@@ -29,7 +29,12 @@ derivados:
 avisos:
 - cuando: vacio
   texto: >
-    El expediente no tiene presentaciones en otros estados en el INVIMA. No quiere decir que no exista: el INVIMA publica cada estado en un conjunto aparte, y el expediente puede estar en otro (vigentes: invima_medicamento_por_expediente; en trámite de renovación: invima_medicamento_en_renovacion_por_expediente; vencidas: invima_medicamento_vencido_por_expediente).
+    El expediente no tiene presentaciones en otros estados en el INVIMA. No quiere decir que no exista: el
+    INVIMA publica cada estado en un conjunto aparte, y
+    invima_medicamento_estado_por_expediente dice en cuál está.
+# Fuera del MCP: invima_medicamento_estado_por_expediente mira los cuatro conjuntos y el agente
+# no sabía en cuál buscar (revisión de valor). Sigue en REST.
+en_mcp: false
 cobro: registro
 canario:
   # Medido el 2026-10-22 en spzp-dfuc: el expediente 3277 tiene 8 filas distintas; la primera
