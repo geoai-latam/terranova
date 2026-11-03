@@ -407,14 +407,20 @@ def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
             artefactos.append(art.model_copy(update={"data": fc}))
         geo = geo.model_copy(update={"artifacts": artefactos})
     siguiente = f" Pida `pagina: {pagina + 1}` para los siguientes." if pagina < paginas else ""
+    # si la consulta llegó a su tope, «la lista completa» es la que vino, no la de la fuente
+    cuentan = (
+        "cuentan los elementos que vinieron (no todos los de la fuente: ver el aviso del tope)"
+        if any(p.completitud.truncado for p in sobre.procedencia)
+        else "cuentan la lista completa"
+    )
     aviso = (
         f"Lista larga: van los elementos {ini + 1}-{ini + len(tramo)} de {len(elementos)} (página "
-        f"{pagina} de {paginas}).{siguiente} Los totales de `datos` cuentan la lista completa."
+        f"{pagina} de {paginas}).{siguiente} Los totales de `datos` {cuentan}."
     )
     if not tramo:  # una página que no existe no es un error: vacía, y se dice cuántas hay
         aviso = (
             f"La página {pagina} no existe: la lista tiene {len(elementos)} elementos en {paginas} "
-            "página(s). Los totales de `datos` cuentan la lista completa."
+            f"página(s). Los totales de `datos` {cuentan}."
         )
     return sobre.model_copy(
         update={
