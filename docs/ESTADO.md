@@ -260,6 +260,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **Corte Constitucional por año (patrón F):** suma el total y la fecha de la última sentencia del año
+  en el índice: 2026 va hasta el 30 de septiembre (313).
 
 ## Ficha de un lote (2026-11-01)
 

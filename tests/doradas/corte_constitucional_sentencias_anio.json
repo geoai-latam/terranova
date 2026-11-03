@@ -1,8 +1,54 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T02:56:33+00:00",
+ "grabado": "2026-11-03T05:59:32+00:00",
  "herramienta": "corte_constitucional_sentencias_anio",
  "llamadas": [
+  {
+   "argumentos": {
+    "id": "v2k4-2t8s",
+    "portal": "datos.gov.co",
+    "select": "max(fecha_sentencia) AS ultima",
+    "where": "date_extract_y(fecha_sentencia) = 2008"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ultima"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ultima": "2008-12-19T00:00:00.000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "v2k4-2t8s",
+     "consulta": {
+      "conjunto": "v2k4-2t8s",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(fecha_sentencia) AS ultima",
+      "where": "(date_extract_y(fecha_sentencia) = 2008)"
+     },
+     "filas": 1,
+     "filas_que_resume": 1257,
+     "filtro_soql": "(date_extract_y(fecha_sentencia) = 2008)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "group": "sentencia_tipo",
