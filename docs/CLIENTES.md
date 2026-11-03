@@ -229,7 +229,7 @@ Los errores llegan en `application/problem+json` (RFC 9457), con un `code` estab
 |---|---|---|
 | 400 | `parametro_invalido`, `zona_demasiado_grande` | corregir la entrada; `param` dice cuál |
 | 401 | `no_autenticado` | falta la llave o no es válida |
-| 402 | `saldo_agotado` | se acabaron los créditos del mes; el mensaje dice cuándo se renuevan (y dónde subir de plan) |
+| 402 | `saldo_agotado` | los créditos del mes no alcanzan para esta consulta. Si quedan, el mensaje dice cuántos y cuánto reserva la consulta (una ficha reserva su tope y devuelve lo que no cobra); si no, cuándo se renuevan (y dónde subir de plan) |
 | 403 | `sin_permiso`, `licencia_no_habilitada` | la llave no cubre esa familia o esa fuente |
 | 404 | `no_existe` | la herramienta o la fuente no existe (sugiere ids parecidos) |
 | 429 | `limite_tasa` | demasiadas consultas seguidas: espere lo que dice `Retry-After` (segundos) |

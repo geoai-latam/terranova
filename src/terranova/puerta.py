@@ -141,12 +141,23 @@ def plan_actual() -> Plan:
     return "evaluacion" if os.environ.get("TERRANOVA_PLAN") == "evaluacion" else "normal"
 
 
-def mensaje_saldo_agotado(org: str, ahora: float) -> str:
-    """Igual por REST y por MCP (ADR-0004): cuándo se renueva y, si hay, dónde subir de plan."""
-    mensaje = (
-        f"la organización {org} agotó sus créditos del mes; "
-        f"se renuevan el {reinicio(ahora).date().isoformat()} (UTC)"
-    )
+def mensaje_saldo_agotado(
+    org: str, ahora: float, costo: int | None = None, quedan: int | None = None
+) -> str:
+    """Igual por REST y por MCP (ADR-0004): cuándo se renueva y, si hay, dónde subir de plan.
+
+    Si aún quedan créditos, pero menos de los que la consulta reserva (su costo, o el tope de una
+    ficha), lo dice con las cifras: «agotó sus créditos» con 31 libres era falso (GEO Copilot,
+    2026-11-03). Lo que no se cobra de la reserva se devuelve al terminar."""
+    renuevan = f"se renuevan el {reinicio(ahora).date().isoformat()} (UTC)"
+    if costo is not None and quedan is not None and quedan > 0:
+        mensaje = (
+            f"esta consulta reserva hasta {costo} créditos y a la organización {org} le quedan "
+            f"{quedan} este mes; pruebe una que cueste {quedan} o menos (el costo de cada "
+            f"herramienta está en su descripción y en /v1/herramientas), o espere: {renuevan}"
+        )
+    else:
+        mensaje = f"la organización {org} agotó sus créditos del mes; {renuevan}"
     if url := os.environ.get("TERRANOVA_URL_PLANES"):
         mensaje += f" o al subir de plan: {url}"
     return mensaje
@@ -495,12 +506,12 @@ async def _ejecutar(
         return await correr()
     cuota = ESTADO.cuota
     # ADR-0010: se reserva el costo antes de llamar y se devuelve lo que no se cobró
-    reservado, _ = await cuota.reservar(principal.org, principal.nivel, costo)
+    reservado, quedan = await cuota.reservar(principal.org, principal.nivel, costo)
     if not reservado:
         ahora = time.time()
         raise ErrorEjecucion(
             "saldo_agotado",
-            mensaje_saldo_agotado(principal.org, ahora),
+            mensaje_saldo_agotado(principal.org, ahora, costo, quedan),
             segundos_hasta_el_mes_siguiente(ahora),
         )
     try:

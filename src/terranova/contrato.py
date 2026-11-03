@@ -269,7 +269,7 @@ class Problema(_Modelo):
 
 TITULOS_ERROR: Final[dict[str, str]] = {
     "limite_tasa": "Demasiadas consultas seguidas",
-    "saldo_agotado": "Créditos del mes agotados",
+    "saldo_agotado": "Créditos del mes insuficientes",
     "no_autenticado": "Falta una llave válida",
     "sin_permiso": "La llave no tiene permiso para esta familia",
     "parametro_invalido": "Parámetro inválido",
