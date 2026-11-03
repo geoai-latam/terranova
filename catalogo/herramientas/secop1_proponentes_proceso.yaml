@@ -1,11 +1,14 @@
 id: secop1_proponentes_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.proponentes
 pregunta: "¿Quiénes se presentaron a este proceso de SECOP I y quién ganó?"
 descripcion: >
   Proponentes de un proceso de SECOP I por su constancia: nombre, tipo y número de documento
-  (como los publica la fuente: ADR-0025), calificación y si fue adjudicado.
+  (como los publica la fuente: ADR-0025), calificación y si fue adjudicado, con la fila adjudicada
+  primero. `adjudicado_a` y `contrato_adjudicado` dicen quién ganó y su contrato. La fuente repite
+  al mismo proponente en varias filas y a veces escribe su nombre de dos formas: contar filas no es
+  contar proponentes. La calificación va como la publica la fuente, sin escala documentada.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {constancia: constancia_secop}
 consulta:
@@ -17,12 +20,23 @@ consulta:
     portal: datos.gov.co
     select: "id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato"
     where: "id_proceso = '{constancia}'"
-    order: "proponente"
+    # La fila adjudicada primero: es la única con documento y contrato (medido el 2026-11-03).
+    order: "adjudicado DESC, proponente"
     max_filas: 1000
   campos: [id_proceso, proponente, tipo_doc_proponente, num_doc_proponente, calificacion, adjudicado, numero_contrato]
 salida: Secop1ProponentesProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  adjudicado_a: {de: primero, campo: proponente, solo_si: {campo: adjudicado, valores: ["Si"]}}
+  contrato_adjudicado: {de: primero, campo: numero_contrato, solo_si: {campo: adjudicado, valores: ["Si"]}}
+avisos:
+- cuando: encontrado
+  texto: >
+    La fuente repite al mismo proponente en varias filas, y a veces escribe su nombre de dos formas: en el proceso 21-11-11918076 son tres filas de un solo proponente, con el nombre en dos órdenes, y solo la adjudicada trae documento y contrato. El número de filas no es el número de proponentes. La calificación va como la publica SECOP I («100000», «9800», «000»), sin escala documentada: no la compare entre procesos.
+- cuando: encontrado
+  si: {campo: adjudicado_a, valores: ["None"]}
+  texto: >
+    Ninguna fila figura como adjudicada: el proceso pudo quedar desierto o sin adjudicar en SECOP I. El estado del proceso está en secop1_proceso_por_constancia.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en tauh-5jvn (id_proceso = 09-1-47723): 3

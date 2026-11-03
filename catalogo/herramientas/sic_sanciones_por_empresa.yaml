@@ -1,0 +1,48 @@
+id: sic_sanciones_por_empresa
+version: 1
+familia: empresas
+fuente: sic.sanciones
+pregunta: "¿La SIC ha sancionado en firme a esta empresa por protección al consumidor?"
+descripcion: >
+  Sanciones en firme de la Superintendencia de Industria y Comercio a las empresas cuyo nombre
+  contiene un texto (p. ej. EXITO, FALABELLA, OLIMPICA; con o sin tilde): resolución, radicado, fecha,
+  sancionado, valor en pesos, conducta y sector, de la más reciente a la más antigua; hasta 500. Da
+  cuántas hay por sancionado, el valor total y cuántas resoluciones. Solo personas jurídicas: salen
+  los sancionados cuyo nombre lleva su forma jurídica (S.A., S.A.S., LTDA, E.S.P., fundación,
+  cooperativa…), nunca una persona natural (ADR-0014). La fuente no trae NIT. Para el año por
+  sector, sic_sanciones_por_sector.
+  (Fuente: SIC; licencia: CC BY-SA 4.0.)
+entrada: {empresa: nombre}
+consulta:
+  operacion: buscar
+  resultado: lista
+  tool: datos_consultar
+  argumentos:
+    id: 73dx-n59j
+    portal: datos.gov.co
+    select: "radicado, res_sancion, fecha_emitida, multado, valor, conducta, sector"
+    # ADR-0014: solo nombres con forma jurídica; una persona natural no sale nunca.
+    where: "upper(multado) like upper('%{empresa:sin_tildes}%') AND (upper(multado) like '%S.A%' OR upper(multado) like '% S A' OR upper(multado) like '% S A %' OR upper(multado) like '% SAS%' OR upper(multado) like '%LTDA%' OR upper(multado) like '%LIMITADA%' OR upper(multado) like '%E.S.P%' OR upper(multado) like '% Y CIA%' OR upper(multado) like '% & CIA%' OR upper(multado) like '%S EN C%' OR upper(multado) like '%S. EN C%' OR upper(multado) like '%SOCIEDAD%' OR upper(multado) like '%CORPORACI%' OR upper(multado) like '%FUNDACI%' OR upper(multado) like '%ASOCIACI%' OR upper(multado) like '%COOPERATIVA%' OR upper(multado) like '%COMPA_IA%' OR upper(multado) like '%BANCO%' OR upper(multado) like '%UNIVERSIDAD%')"
+    order: "fecha_emitida DESC, radicado"
+    max_filas: 500
+  campos: [radicado, res_sancion, fecha_emitida, multado, valor, conducta, sector]
+salida: SancionesSicPorEmpresa
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+  resoluciones: {de: distintos, campo: radicado, tipo: int}
+  valor_total: {de: suma, campo: valor, tipo: int}
+  por_sancionado: {de: conteo_por, campo: sancionado}
+avisos:
+- cuando: encontrado
+  texto: >
+    Son sanciones de protección al consumidor en firme, desde 2013. El nombre es texto libre: la misma empresa puede salir escrita de varias formas («SUPERTIENDAS Y DROGUERIAS OLIMPICA S.A.-OLIMPICA S.A.»), y el texto puede encontrar a otras que lo contengan; por_sancionado dice cuáles salieron.
+- cuando: vacio
+  texto: >
+    La SIC no registra sanciones en firme de protección al consumidor a una empresa con ese nombre. Solo salen nombres con su forma jurídica (S.A., S.A.S., LTDA…): una empresa registrada sin ella, o escrita de otra forma, no aparece. Pruebe una parte del nombre.
+cobro: agregado
+canario:
+  # Medido el 2026-11-03 en 73dx-n59j: «ALMACENES EXITO» tiene 35 sanciones. Crece: mínimo.
+  entrada: {empresa: ALMACENES EXITO}
+  minimos: {numero_registros: 35}
+  campos: [conducta, fecha, numero_registros, por_sancionado, radicado, resolucion, resoluciones, sancionado, sector, valor, valor_total]
+  latencia_max_ms: 10000

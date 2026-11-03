@@ -90,6 +90,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `rues_empresa_por_nit` | ¿Qué dice el RUES de la empresa con este NIT? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 2 |
 | `rues_empresas_buscar` | ¿Qué empresas o entidades registradas en el RUES tienen este nombre? | Confederación Colombiana de Cámaras de Comercio (Confecámaras) | CC-BY-SA-4.0 | 5 |
 | `rues_establecimientos_por_nit` | ¿Qué establecimientos de comercio, agencias o sucursales tiene esta empresa? | Confecámaras | CC-BY-SA-4.0 | 2 |
+| `sic_sanciones_por_empresa` | ¿La SIC ha sancionado en firme a esta empresa por protección al consumidor? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
 | `sic_sanciones_por_sector` | ¿Cuántas sanciones en firme impuso la SIC en este año y por cuánto, por sector? | Superintendencia de Industria y Comercio (SIC) | CC-BY-SA-4.0 | 5 |
 | `superfinanciera_vigilada_por_nit` | ¿Esta empresa está vigilada por la Superintendencia Financiera? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 2 |
 | `superfinanciera_vigiladas_buscar` | ¿Qué entidades vigiladas por la Superintendencia Financiera tienen este nombre? | Superintendencia Financiera de Colombia (SFC) | CC-BY-SA-4.0 | 5 |
