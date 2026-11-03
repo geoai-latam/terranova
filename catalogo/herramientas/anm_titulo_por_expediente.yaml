@@ -1,12 +1,15 @@
 id: anm_titulo_por_expediente
-version: 1
+version: 2
 familia: territorio
 fuente: anm.titulos_mineros
 pregunta: "¿Qué minerales ampara y dónde está el título minero con este expediente?"
 descripcion: >
   Minerales autorizados y ubicación (municipio, departamento, código DANE) de un título minero por
-  su código de expediente, con cuántos registros tiene cada mineral. Un expediente puede amparar
-  varios minerales. No se publica el nombre del titular (ADR-0014).
+  su código de expediente en el RUCOM, con cuántos explotadores autorizados tiene cada mineral y
+  en total. Un expediente puede amparar varios minerales. La fuente repite filas iguales (una de
+  cada cuatro en todo el conjunto): se cuentan explotadores distintos, no filas. No trae la
+  vigencia, el área ni el polígono del título: eso está en el catastro minero (AnnA Minería), que
+  no está en Terrnova. No se publica el nombre de los explotadores (ADR-0014).
   (Fuente: Agencia Nacional de Minería (ANM), RUCOM; licencia: CC BY-SA 4.0.)
 entrada: {expediente: expediente_minero}
 consulta:
@@ -16,20 +19,40 @@ consulta:
   argumentos:
     id: 42ha-fhvj
     portal: datos.gov.co
-    select: "mineral, municipio, departamento, codigo_dane, count(*) AS registros"
+    # contar nombres distintos no expone ninguno: es un agregado (ADR-0014)
+    select: "mineral, municipio, departamento, codigo_dane, count(distinct nombre_persona) AS explotadores"
     where: "codigo_expediente = '{expediente}'"
     group: "mineral, municipio, departamento, codigo_dane"
-    order: "mineral"
+    order: "explotadores DESC, mineral"
     max_filas: 200
+  complemento:
+    fuente: anm.titulos_mineros
+    tool: datos_consultar
+    argumentos:
+      portal: datos.gov.co
+      id: 42ha-fhvj
+      select: "count(distinct nombre_persona) AS total"
+      where: "codigo_expediente = '{expediente}'"
+    hechos:
+      total: {nombre: explotadores_total, tipo: int, desc: "explotadores autorizados distintos del título en el RUCOM: el que explota varios minerales cuenta una vez"}
+    que_dice: "cuántos explotadores distintos tiene el título, sin contar dos veces al que explota varios minerales"
   campos: [codigo_expediente, mineral, municipio, departamento, codigo_dane]
 salida: TituloMineroExpediente
 derivados:
-  registros: {de: columna, campo: registros, tipo: int}
+  explotadores: {de: columna, campo: explotadores, tipo: int}
+  minerales: {de: distintos, campo: mineral}
+avisos:
+- cuando: encontrado
+  texto: >
+    Que el expediente salga aquí quiere decir que tiene explotadores inscritos en el RUCOM para comercializar minerales en la última carga de la ANM. Este conjunto no trae la vigencia, el área ni el polígono del título: para eso, el catastro minero (AnnA Minería), que no está en Terrnova.
+- cuando: vacio
+  texto: >
+    El RUCOM no tiene explotadores autorizados con ese expediente. Eso no quiere decir que el título no exista: este conjunto solo trae los títulos con explotador inscrito para comercializar. El catastro minero completo (AnnA Minería) no está en Terrnova.
 cobro: registro
 canario:
-  # Medido el 2026-10-26 en 42ha-fhvj: el expediente ABQ-101 ampara DIABASA y ROCA MUERTA en Yumbo
-  # (Valle, 76892); 1ra por mineral DIABASA, 4 registros.
+  # Medido el 2026-11-03 en 42ha-fhvj: el expediente ABQ-101 ampara DIABASA y ROCA MUERTA en Yumbo
+  # (Valle, 76892), con 4 explotadores distintos cada uno (8 filas).
   entrada: {expediente: "ABQ-101"}
-  verdad: {mineral: "DIABASA", municipio: "YUMBO", departamento: "VALLE", codigo_dane: "76892", registros: 4}
-  campos: [codigo_dane, departamento, mineral, municipio, registros]
+  verdad: {mineral: "DIABASA", municipio: "YUMBO", departamento: "VALLE", codigo_dane: "76892", explotadores: 4}
+  campos: [codigo_dane, departamento, explotadores, explotadores_total, mineral, minerales, municipio]
   latencia_max_ms: 15000
