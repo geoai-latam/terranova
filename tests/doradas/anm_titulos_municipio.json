@@ -1,14 +1,60 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-26T12:06:30+00:00",
+ "grabado": "2026-11-03T09:13:37+00:00",
  "herramienta": "anm_titulos_municipio",
  "llamadas": [
+  {
+   "argumentos": {
+    "id": "42ha-fhvj",
+    "portal": "datos.gov.co",
+    "select": "count(distinct codigo_expediente) AS total",
+    "where": "codigo_dane = '76892'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "total"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "total": "29"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "42ha-fhvj",
+     "consulta": {
+      "conjunto": "42ha-fhvj",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "count(distinct codigo_expediente) AS total",
+      "where": "(codigo_dane = '76892')"
+     },
+     "filas": 1,
+     "filas_que_resume": 121,
+     "filtro_soql": "(codigo_dane = '76892')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "group": "mineral",
     "id": "42ha-fhvj",
     "max_filas": 200,
-    "order": "mineral",
+    "order": "titulos DESC, mineral",
     "portal": "datos.gov.co",
     "select": "mineral, count(distinct codigo_expediente) AS titulos",
     "where": "codigo_dane = '76892'"
@@ -24,24 +70,36 @@
       "kind": "table",
       "rows": [
        {
-        "mineral": "ARCILLA",
-        "titulos": "1"
+        "mineral": "MATERIALES DE CONSTRUCCION",
+        "titulos": "12"
+       },
+       {
+        "mineral": "CALIZA",
+        "titulos": "9"
+       },
+       {
+        "mineral": "DEMAS_CONCESIBLES",
+        "titulos": "4"
        },
        {
         "mineral": "ARENAS Y GRAVAS NATURALES Y SILICEAS",
         "titulos": "2"
        },
        {
-        "mineral": "ASOCIADOS",
-        "titulos": "1"
-       },
-       {
         "mineral": "BASALTOS",
         "titulos": "2"
        },
        {
-        "mineral": "CALIZA",
-        "titulos": "9"
+        "mineral": "DIABASA",
+        "titulos": "2"
+       },
+       {
+        "mineral": "ARCILLA",
+        "titulos": "1"
+       },
+       {
+        "mineral": "ASOCIADOS",
+        "titulos": "1"
        },
        {
         "mineral": "CALIZA TRITURADA O MOLIDA",
@@ -50,14 +108,6 @@
        {
         "mineral": "CONGLOMERADO (ROCA O PIEDRA)",
         "titulos": "1"
-       },
-       {
-        "mineral": "DEMAS_CONCESIBLES",
-        "titulos": "4"
-       },
-       {
-        "mineral": "DIABASA",
-        "titulos": "2"
        },
        {
         "mineral": "DOLOMITA",
@@ -78,10 +128,6 @@
        {
         "mineral": "MATERIAL DE ARRASTRE",
         "titulos": "1"
-       },
-       {
-        "mineral": "MATERIALES DE CONSTRUCCION",
-        "titulos": "12"
        },
        {
         "mineral": "MATERIALES DE CONSTRUCCIÓN",
