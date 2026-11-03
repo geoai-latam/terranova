@@ -1,5 +1,5 @@
 id: ideam_normales_climatologicas_estacion
-version: 1
+version: 2
 familia: ambiente
 fuente: ideam.normales_climatologicas
 pregunta: "¿Cuál es el clima normal (mes a mes) en esta estación del IDEAM?"
@@ -7,7 +7,8 @@ descripcion: >
   Normales climatológicas de una estación del IDEAM: el valor normal de cada mes y el anual, por
   variable y periodo de 30 años (1961-1990, 1971-2000, 1981-2010, 1991-2020). Variables:
   precipitación (mm, total del mes y del año), días con lluvia ≥ 1 mm, temperatura media, máxima y
-  mínima (°C), humedad relativa (%), brillo solar (horas) y evaporación (mm/día). No todas las
+  mínima (°C), humedad relativa (%), brillo solar (horas por día) y evaporación (mm por día). Cada fila dice su unidad y si el anual
+  es suma o promedio. No todas las
   estaciones tienen todas las variables ni todos los periodos. Sirve para comparar lo observado con lo
   normal. El código de la estación tiene 10 dígitos con ceros a la izquierda (ideam_estaciones_en_zona
   lo da).
@@ -26,7 +27,41 @@ consulta:
     max_filas: 100
   campos: [periodo, par_metro, c_digo, categoria, estaci_n, municipio, departamento, ao, altitud_m, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic, anual]
 derivados:
+  # Las unidades las dice la ficha del conjunto (nsz2-kzcq). Brillo solar y evaporación son promedio
+  # por día: medido el 2026-11-02, ningún mes pasa de 9,3 h ni de 8,7 mm. La precipitación y los días
+  # con lluvia suman: el anual de Valledupar (1 016,7 mm) es la suma de sus meses; las demás
+  # variables promedian (brillo solar: 7,4 h = el promedio de los doce meses).
+  unidad:
+    de: codigo
+    campo: variable
+    valores:
+      "PRECIPITACIÓN": "mm en el mes"
+      "No. DE DIAS CON LLUVIA ≥ 1 mm": "días en el mes"
+      "TEMPERATURA MEDIA": "°C"
+      "TEMPERATURA MÁXIMA": "°C"
+      "TEMPERATURA MÍNIMA": "°C"
+      "HUMEDAD RELATIVA": "%"
+      "BRILLO SOLAR": "horas por día"
+      "EVAPORACIÓN": "mm por día"
+  anual_es:
+    de: codigo
+    campo: variable
+    valores:
+      "PRECIPITACIÓN": "la suma de los meses"
+      "No. DE DIAS CON LLUVIA ≥ 1 mm": "la suma de los meses"
+      "TEMPERATURA MEDIA": "el promedio de los meses"
+      "TEMPERATURA MÁXIMA": "el promedio de los meses"
+      "TEMPERATURA MÍNIMA": "el promedio de los meses"
+      "HUMEDAD RELATIVA": "el promedio de los meses"
+      "BRILLO SOLAR": "el promedio de los meses"
+      "EVAPORACIÓN": "el promedio de los meses"
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    La estación no tiene normales en la fuente. Una normal pide 30 años de datos que cumplan la
+    directriz de la OMM, así que una estación nueva o con huecos no la tiene. Las estaciones cercanas
+    salen con ideam_estaciones_en_zona; las más antiguas son las que pueden tenerla.
 salida: NormalesClimatologicasEstacion
 cobro: agregado
 canario:
@@ -34,7 +69,7 @@ canario:
   # 22 normales; la primera en el orden es brillo solar 1991-2020: enero 9,1 h, anual 7,4 h.
   # Precipitación 1991-2020: 1 016,7 mm al año.
   entrada: {codigo_estacion: "0028025502"}
-  verdad: {variable: "BRILLO SOLAR", periodo: "1991-2020", ene: 9.1, anual: 7.4}
+  verdad: {variable: "BRILLO SOLAR", periodo: "1991-2020", ene: 9.1, anual: 7.4, unidad: "horas por día", anual_es: "el promedio de los meses"}
   minimos: {numero_registros: 20}
-  campos: [abr, ago, altitud_m, anual, area_operativa, categoria, codigo_estacion, departamento, dic, ene, estacion, feb, jul, jun, mar, may, municipio, nov, numero_registros, oct, periodo, sep, variable]
+  campos: [abr, ago, altitud_m, anual, anual_es, area_operativa, categoria, codigo_estacion, departamento, dic, ene, estacion, feb, jul, jun, mar, may, municipio, nov, numero_registros, oct, periodo, sep, unidad, variable]
   latencia_max_ms: 10000
