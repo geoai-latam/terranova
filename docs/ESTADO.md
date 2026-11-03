@@ -257,6 +257,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   se detuvo en diciembre de 2020.
 - **SUIT, oferta de trámites (patrón F):** un trámite por fila, aunque la fuente lo repita con otro
   nombre (Chía 2021: 115 → 105). Va del más pedido al menos, con el total de solicitudes del año.
+- **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
+  general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
+  herramienta (Fusagasugá → Sumapaz).
 
 ## Ficha de un lote (2026-11-01)
 

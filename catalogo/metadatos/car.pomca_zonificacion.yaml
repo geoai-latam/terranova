@@ -19,4 +19,3 @@ campos:
   ZO_US_MA: {tipo_fuente: esriFieldTypeString, etiqueta: ZO_US_MA}
   SZO_US_M: {tipo_fuente: esriFieldTypeString, etiqueta: SZO_US_M}
   NOMENCLAT: {tipo_fuente: esriFieldTypeString, etiqueta: NOMENCLAT}
-  DESCRIP: {tipo_fuente: esriFieldTypeString, etiqueta: DESCRIP}

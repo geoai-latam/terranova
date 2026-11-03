@@ -35,7 +35,6 @@ campos:
   ZO_US_MA: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)", alias: [ZO_US_M_A, ZONA]}
   SZO_US_M: {nombre: subzona_uso_manejo, tipo: str, desc: "subzona de uso y manejo", alias: [SZO_US_M_A, SUBZONA]}
   NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, ARUM…); algunas capas la dejan en blanco", alias: [FIRST_NOMENCLAT]}
-  DESCRIP: {nombre: descripcion, tipo: str, desc: "descripción de la subzona"}
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
 dcat: {publisher: CAR, theme: ambiente}
 # Spec 07: medido en la fuente, no en Terrnova.
@@ -49,4 +48,5 @@ perfil:
   - "las capas llaman a la categoría CAT_ORD, CAT_ORD_A o CATEGORIA (en el río Seco, FIRST_CAT_ORD es un código)"
   - "el río Negro y el Alto Suárez dejan la sigla en blanco en parte de sus polígonos"
   - "las capas están en EPSG:3116 o 9377 y aceptan un punto en 4326"
+  - "DESCRIP no es uniforme: en el Guayuriba y el Garagoa describe la subzona; en el río Bogotá repite la sigla; en el río Negro y el Alto Suárez trae notas del método («Cultivos Permanentes SemiintensivosIUAAlto», «Capacidad uso, Validacion por conflicto del suelo*»). Se sacó de la lista blanca el 2026-11-03"
   decision: "en vivo por punto, las nueve capas a la vez"
