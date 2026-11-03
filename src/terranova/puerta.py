@@ -302,7 +302,7 @@ async def _correr(ficha: str, arguments: dict[str, Any]) -> ToolResult:
     try:
         sobre = await ejecutar(ficha, arguments, principal_de_la_peticion())
     except ErrorEntrada as exc:
-        return resultado_de_error("parametro_invalido", str(exc), param=exc.param)
+        return resultado_de_error(exc.codigo, str(exc), param=exc.param)
     except ErrorEjecucion as exc:
         return resultado_de_error(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
     geo = resumen_geo(sobre)
@@ -386,7 +386,7 @@ async def ejecutar(
             "fuente_respuesta_invalida", "la fuente respondió algo inválido"
         ) from exc
     except (ErrorEjecucion, ErrorEntrada) as exc:
-        codigo = exc.codigo if isinstance(exc, ErrorEjecucion) else "parametro_invalido"
+        codigo = exc.codigo
         await _medir(principal, ficha, nueva_solicitud_id(), 0, codigo, None)
         metricas.SOLICITUDES.labels(etiqueta, "error", codigo).inc()
         raise

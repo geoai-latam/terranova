@@ -208,7 +208,7 @@ def _ruta(ficha: str, Entrada: type[BaseModel]) -> Callable[..., Awaitable[Any]]
                 response.headers["Idempotent-Replayed"] = "true"
             return sobre
         except ErrorEntrada as exc:
-            return problema("parametro_invalido", str(exc), param=exc.param)
+            return problema(exc.codigo, str(exc), param=exc.param)
         except ErrorEjecucion as exc:
             return problema(exc.codigo, str(exc), reintentar=exc.reintentar_en_s)
 

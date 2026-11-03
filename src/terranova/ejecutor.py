@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import functools
+import itertools
 import math
 import re
 import time
@@ -162,11 +163,84 @@ def _poligono(nombre: str, v: Any) -> dict[str, Any]:
         vertices += len(puntos)
         limpios.append(puntos)
     if vertices > MAX_VERTICES_POLIGONO:
-        raise ErrorEntrada(nombre, f"tiene {vertices} vértices; el tope es {MAX_VERTICES_POLIGONO}")
+        raise ErrorEntrada(
+            nombre,
+            f"tiene {vertices} vértices; el tope es {MAX_VERTICES_POLIGONO}: simplifíquelo",
+            "zona_demasiado_grande",
+        )
     lons, lats = [x for x, _ in limpios[0]], [y for _, y in limpios[0]]
     if max(max(lons) - min(lons), max(lats) - min(lats)) > MAX_LADO_POLIGONO_GRADOS:
-        raise ErrorEntrada(nombre, f"pasa de {MAX_LADO_POLIGONO_GRADOS:g} grado de lado")
+        raise ErrorEntrada(
+            nombre,
+            f"pasa de {MAX_LADO_POLIGONO_GRADOS:g} grado de lado: divídalo en partes",
+            "zona_demasiado_grande",
+        )
+    # ADR-0035 lo reparaba en la base (ST_MakeValid) y uno degenerado salía «no encontrado»: un
+    # polígono sin área o que se cruza no es una pregunta, es un error de quien lo dibujó
+    for i, anillo in enumerate(limpios):
+        que = "el borde" if i == 0 else f"el hueco {i}"
+        if len({(x, y) for x, y in anillo}) < 3:
+            raise ErrorEntrada(nombre, f"{que} tiene menos de 3 vértices distintos")
+        # el cruce va antes: un moño simétrico también suma área cero
+        if cruce := _autocruce(anillo):
+            raise ErrorEntrada(
+                nombre,
+                f"{que} se cruza consigo mismo (los lados {cruce[0] + 1} y {cruce[1] + 1}): "
+                "dibújelo sin que los lados se crucen",
+            )
+        if abs(_area_anillo(anillo)) < MIN_AREA_GRADOS2:
+            raise ErrorEntrada(nombre, f"{que} no tiene área: sus vértices están alineados")
     return {"type": "Polygon", "coordinates": limpios}
+
+
+# un metro cuadrado en el ecuador es ~8e-11 grados²: menos que esto es una línea, no un lote
+MIN_AREA_GRADOS2 = 1e-12
+
+
+def _area_anillo(anillo: list[list[float]]) -> float:
+    """Área con signo (fórmula del cordón), en grados²: basta para saber si hay área."""
+    return sum(x0 * y1 - x1 * y0 for (x0, y0), (x1, y1) in itertools.pairwise(anillo)) / 2
+
+
+def _autocruce(anillo: list[list[float]]) -> tuple[int, int] | None:
+    """El primer par de lados no vecinos que se tocan, o None. Hasta 500 vértices: ~125 000
+    pares, unos 100 ms."""
+    # un vértice repetido seguido es un lado de largo cero, no un cruce
+    sin_repetidos = [p for k, p in enumerate(anillo) if k == 0 or p != anillo[k - 1]]
+    lados = list(itertools.pairwise(sin_repetidos))
+    n = len(lados)
+    for i in range(n):
+        for j in range(i + 2, n):
+            if i == 0 and j == n - 1:  # el primero y el último comparten el vértice de cierre
+                continue
+            if _se_tocan(*lados[i], *lados[j]):
+                return i, j
+    return None
+
+
+def _se_tocan(a: list[float], b: list[float], c: list[float], d: list[float]) -> bool:
+    def orientacion(p: list[float], q: list[float], r: list[float]) -> float:
+        return (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+
+    def en_lado(p: list[float], q: list[float], r: list[float]) -> bool:
+        return min(p[0], q[0]) <= r[0] <= max(p[0], q[0]) and min(p[1], q[1]) <= r[1] <= max(
+            p[1], q[1]
+        )
+
+    o1, o2, o3, o4 = (
+        orientacion(a, b, c),
+        orientacion(a, b, d),
+        orientacion(c, d, a),
+        orientacion(c, d, b),
+    )
+    if (o1 > 0) != (o2 > 0) and (o3 > 0) != (o4 > 0) and o1 and o2 and o3 and o4:
+        return True
+    return (
+        (o1 == 0 and en_lado(a, b, c))
+        or (o2 == 0 and en_lado(a, b, d))
+        or (o3 == 0 and en_lado(c, d, a))
+        or (o4 == 0 and en_lado(c, d, b))
+    )
 
 
 def _numero(x: Any) -> bool:
