@@ -28,6 +28,9 @@ consulta:
     limite: 5
   campos: [cod_divipola, departamento, municipio, numero_predial_nacional, zona, condicion_predio, destinacion_economica, tipo_predio, tipo_derecho]
 salida: PredioSinicEnPunto
+# Fuera del MCP: predio_en_punto elige la base sola y el agente confundía las dos (#15). Sigue
+# en REST y dentro de predio_en_punto, ficha_lugar y ficha_lote.
+en_mcp: false
 cobro: punto
 canario:
   # Chapinero (Bogotá); medido el 2026-10-28 en la capa 3: número predial 110010182020400210003900000000,

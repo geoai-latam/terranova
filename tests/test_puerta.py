@@ -67,7 +67,9 @@ def anyio_backend() -> str:
 async def cliente_con(request: pytest.FixtureRequest) -> AsyncIterator[Client[Any]]:
     puerta.usar_conectores({"arcgis-mcp": request.param})
     try:
-        async with Client(puerta.puerta) as cliente:
+        # con las fichas fuera del MCP: `igac_predio_en_punto` es la de muestra del protocolo
+        servidor = puerta.crear_servidor(con_ciclo=False, con_ocultas=True)
+        async with Client(servidor) as cliente:
             yield cliente
     finally:
         puerta.usar_conectores(None)
@@ -105,10 +107,13 @@ async def test_cada_perfil_cabe_en_un_cliente_openai() -> None:
 @pytest.mark.anyio
 @_con(ConectorFalso({}))
 async def test_una_herramienta_mcp_por_ficha_del_catalogo(cliente_con: Client[Any]) -> None:
+    async with Client(puerta.puerta) as mcp:
+        visibles = {t.name for t in await mcp.list_tools()}
+    ocultas = {h.id for h in puerta.CATALOGO.herramientas.values() if not h.en_mcp}
     herramientas = {t.name: t for t in await cliente_con.list_tools()}
     # ficha_lugar compone herramientas; fuente_describir es GET /v1/fuentes/{id} (spec 08). Sin
     # llave el plan es `normal`: solo lo vendible (las de evaluación, en test_vendible.py)
-    assert set(herramientas) == set(puerta.VENDIBLE.herramientas) | {
+    assert visibles == set(puerta.VENDIBLE.herramientas) - ocultas | {
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",

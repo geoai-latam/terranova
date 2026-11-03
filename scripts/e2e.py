@@ -2,7 +2,8 @@
 
 E2E-01: con una llave creada por CLI, `igac_predio_en_punto` por REST → 200, `rt/1` válido, la
 verdad de Chía, la licencia del ítem y 10 créditos descontados en `/v1/uso`.
-E2E-02: la misma llamada por MCP da la misma huella.
+E2E-02: la misma pregunta por MCP, con `predio_en_punto` (la de predio que ve el agente: la del IGAC
+ya no sale en el MCP), da la misma huella.
 
 Uso: `uv run scripts/e2e.py --base http://127.0.0.1:8180 --llave rt_live_…`
 """
@@ -62,7 +63,7 @@ async def main(base: str, llave: str) -> int:
     print("E2E-02 · MCP")
     transporte = StreamableHttpTransport(f"{base}/mcp", headers=cab)
     async with Client(transporte) as mcp:
-        m = await mcp.call_tool("igac_predio_en_punto", CHIA)
+        m = await mcp.call_tool("predio_en_punto", CHIA)
         sc = m.structured_content or {}
         _ok(
             sobre is not None and sc.get("huella") == sobre.huella,
