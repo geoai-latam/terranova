@@ -56,6 +56,13 @@ gestores no están.
    - `municipio_codigo_capa` no siempre es el del municipio: en Chía dice 23175 (Chinú, Córdoba)
      y en Popayán dice bien 19001.
    - Yopal y Fusagasugá no tienen vías en la capa: su catastro no lo lleva el IGAC.
+6. **Manzana y sector: solo códigos.**
+   - `U_MANZANA` trae `CODIGO`, `BARRIO_CODIGO` y `CODIGO_ANTERIOR`. `U_SECTOR` y `R_SECTOR`
+     traen solo `CODIGO`. No hay capa de barrios ni nombre de barrio en ninguna parte.
+   - `Shape__Area` está en Web Mercator (3857): en Chía infla el área en 0,7 %, y a 12° de latitud
+     en 4,5 %. No se publica como m².
+   - El sector rural de Chía pesa 263 KB completo y 4 KB simplificado a ~55 m. El sector urbano,
+     72 KB y 1 KB. La manzana, 4 KB completa (medido el 2026-11-03).
 
 ## Herramientas que la usan (revisadas)
 
@@ -65,6 +72,8 @@ gestores no están.
 | `igac_registro_predio` | alto | el registro por código, con hasta 5 filas |
 | `igac_perimetro_urbano_en_punto` (v2) | medio | el tipo de centro poblado con su significado; el tipo de avalúo, sin inventarlo |
 | `igac_vias_en_zona` (v2) | medio | vías distintas y tramos por vía; avisa el código de municipio de la capa |
+| `igac_manzana_en_punto` (v2) | medio | polígono completo; avisa que no hay nombre de barrio y remite a `predio_en_punto` |
+| `igac_sector_en_punto` (v2) | medio | polígono simplificado; remite a `predio_en_punto` |
 
 ## Decisiones
 
@@ -83,4 +92,14 @@ gestores no están.
   - `vias` cuenta las vías distintas y `tramos_por_via` dice cuántos tramos tiene cada una. El
     motor quita los espacios de más al contar (`conteo_por` y `distintos`).
   - Un aviso dice que `municipio_codigo_capa` es el que trae la capa y puede no ser el del
+    municipio.
+- **2026-11-03, manzana y sector (v2):**
+  - La revisión decía «solo códigos». La fuente no publica más: los códigos son la llave, no la
+    respuesta. La manzana avisa que `codigo_barrio` es un código y que no hay nombre de barrio. Las
+    dos remiten a `predio_en_punto` para los datos del lote.
+  - El polígono ya salía completo. El del sector pasa a simplificado.
+  - No se descompone el código (zona, sector, comuna, barrio): el significado de los dígitos de
+    zona no se midió en la fuente.
+  - Medido en producción: la manzana de Chía y la de Tabio (25785, 0,8 s); el sector rural de Chía
+    y el de Tabio (257850001). Zipaquirá sale `fuera_de_cobertura` porque su catastro lo lleva el
     municipio.
