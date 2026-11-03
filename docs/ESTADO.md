@@ -260,6 +260,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **IDEAM, temperatura diaria (patrón E, decimales):** promedio, mínima y máxima con un decimal (antes
+  27.2083333333333333). El motor suma `decimales` a los derivados.
 
 ## Ficha de un lote (2026-11-01)
 

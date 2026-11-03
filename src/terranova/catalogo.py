@@ -909,6 +909,8 @@ class Derivado(_Ficha):
     valores: dict[str, str] | None = None
     valor: str | int | float | None = None
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
+    # un promedio calculado en la consulta trae 16 decimales (27.2083333333333333 °C)
+    decimales: int | None = Field(default=None, ge=0, le=6)
 
     @model_validator(mode="after")
     def _completo(self) -> Self:
