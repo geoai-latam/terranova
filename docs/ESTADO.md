@@ -252,6 +252,11 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - SECOP I avisa que los valores los digita la entidad: Vergara declara 12,8 billones.
 - **DIAN, comercio exterior (patrón E, decimales):** valores, peso y cantidad con dos decimales;
   antes salía el ruido de la suma (9930919822.169998).
+- **SUIT, trámites por entidad (patrón E):** lo más reciente primero; arriba, la última cifra del NIT
+  sumando todas sus entidades (Bogotá: 306 trámites de 18 secretarías), y un aviso de que la serie
+  se detuvo en diciembre de 2020.
+- **SUIT, oferta de trámites (patrón F):** un trámite por fila, aunque la fuente lo repita con otro
+  nombre (Chía 2021: 115 → 105). Va del más pedido al menos, con el total de solicitudes del año.
 
 ## Ficha de un lote (2026-11-01)
 

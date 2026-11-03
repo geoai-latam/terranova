@@ -1,11 +1,13 @@
 id: suit_tramites_entidad
-version: 1
+version: 2
 familia: normativa
 fuente: funcionpublica.suit_historico
 pregunta: "¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea?"
 descripcion: >
   Trámites inscritos en el SUIT (Función Pública) por una entidad, mes a mes: total, presenciales
-  y en línea. Es el histórico que publica Función Pública (se actualiza con retraso).
+  y en línea, del mes más reciente al más viejo. Arriba, la última cifra y su mes, sumando todas las
+  entidades que reportan con ese NIT (el de Bogotá agrupa 18 secretarías). Es el histórico
+  que publica Función Pública, y la serie se detuvo en diciembre de 2020.
   Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int}
@@ -17,15 +19,43 @@ consulta:
     id: dd24-8p6w
     portal: datos.gov.co
     select: "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total"
-    where: "nit = '{nit_entidad}'"
-    order: "a_o, mes"
+    # Medido el 2026-11-02: las 43 filas de enero de 2021 traen «NULL» en las cifras, y `mes` es
+    # texto («9» va después de «12» en orden de texto).
+    where: "nit = '{nit_entidad}' AND tr_mites_inscritos_total != 'NULL'"
+    order: "a_o DESC, mes::number DESC"
     max_filas: 500
+  complemento:
+    fuente: funcionpublica.suit_historico
+    tool: datos_consultar
+    argumentos:
+      id: dd24-8p6w
+      portal: datos.gov.co
+      # un NIT puede tener varias entidades (el de Bogotá, 18 secretarías): el total va por mes
+      select: "a_o, mes, sum(tr_mites_inscritos_total::number) AS total, sum(tr_mites_inscritos_en_l_nea::number) AS en_linea, count(*) AS entidades"
+      where: "nit = '{nit_entidad}' AND tr_mites_inscritos_total != 'NULL'"
+      group: "a_o, mes"
+      order: "a_o DESC, mes::number DESC"
+      max_filas: 1
+    hechos:
+      a_o: {nombre: ultimo_anio, tipo: int, desc: "año de la última cifra"}
+      mes: {nombre: ultimo_mes, tipo: int, desc: "mes de la última cifra"}
+      total: {nombre: tramites_total_ultimo, tipo: int, desc: "trámites inscritos ese mes, sumando todas las entidades del NIT"}
+      en_linea: {nombre: tramites_en_linea_ultimo, tipo: int, desc: "de ellos, los que se hacen en línea"}
+      entidades: {nombre: entidades_del_nit, tipo: int, desc: "entidades que reportan con ese NIT (el de Bogotá agrupa 18 secretarías)"}
+    que_dice: "la última cifra del NIT, sumando todas sus entidades"
   campos: [nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total]
 salida: TramitesEntidad
+avisos:
+- cuando: encontrado
+  texto: >
+    La serie del SUIT que publica Función Pública se detuvo en diciembre de 2020: la última cifra
+    no es la de hoy. Las solicitudes de cada trámite, hasta 2023, salen con
+    suit_oferta_tramites_entidad.
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en dd24-8p6w: el Ministerio de Educación, noviembre de 2018 → 18.
+  # Medido el 2026-11-02 en dd24-8p6w: el Ministerio de Educación, diciembre de 2020 → 21 (en
+  # noviembre de 2018, la primera cifra, 18).
   entrada: {nit_entidad: 899999001}
-  verdad: {anio: 2018, mes: 11, tramites_total: 18}
-  campos: [anio, entidad, mes, nit_entidad, tramites_en_linea, tramites_presenciales, tramites_total]
+  verdad: {ultimo_anio: 2020, ultimo_mes: 12, tramites_total_ultimo: 21, entidades_del_nit: 1, anio: 2020, mes: 12}
+  campos: [anio, entidad, entidades_del_nit, mes, nit_entidad, tramites_en_linea, tramites_en_linea_ultimo, tramites_presenciales, tramites_total, tramites_total_ultimo, ultimo_anio, ultimo_mes]
   latencia_max_ms: 10000
