@@ -214,6 +214,10 @@ def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
     assert re.fullmatch(PATRONES_ENTRADA["id_secop"], "CO1.PCCNTR.5141215")
     assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], "resolucion_creg_101-131_2026")
     assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], "../etc/passwd_2026") is None
+    # el Estatuto Tributario no lleva año en la DIAN (200, 11,9 MB; medido el 2026-11-03)
+    assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], "estatuto_tributario")
+    for malo in ("../etc/passwd", "estatuto.tributario", "a/b_2026", "ET"):
+        assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], malo) is None, malo
     assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "T-760-08")
 
 

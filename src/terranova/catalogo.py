@@ -80,8 +80,9 @@ PATRONES_ENTRADA: dict[str, str] = {
     "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}/[0-9]{2}$",  # Corte Constitucional: T-760/08
     # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas)
     "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}-[0-9]{2}$",
-    # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas
-    "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}_[0-9]{4}$",
+    # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas. El año va
+    # casi siempre, pero no en todos: el Estatuto Tributario es `estatuto_tributario` en la DIAN
+    "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}$",
     # NIT de persona jurídica (empieza por 8 o 9): buscar por cédula queda fuera (ADR-0014). Se
     # acepta como lo escribe la gente (899.999.172-8, 8999991728) y `normalizar_nit` lo deja en 9
     # dígitos, con el dígito de verificación comprobado.
@@ -126,7 +127,10 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "fecha": ("fecha AAAA-MM-DD", "2026-10-23"),
     "sentencia_cc": ("sentencia de la Corte Constitucional, tipo-número/año", "T-760/08"),
     "sentencia_relatoria": ("sentencia como la escribe la relatoría, con guiones", "T-760-08"),
-    "documento_normativo": ("documento del gestor normativo, tipo_número_año", "decreto_1165_2019"),
+    "documento_normativo": (
+        "documento del gestor normativo, tipo_número_año (o su nombre, como estatuto_tributario)",
+        "decreto_1165_2019",
+    ),
     "nit_empresa": (
         "NIT de la empresa: 9 dígitos, con o sin puntos y dígito de verificación",
         "899999714",
