@@ -194,10 +194,21 @@ def test_el_tema_sale_del_html_sin_etiquetas_ni_entidades() -> None:
         "Autonomía de la voluntad"
     )
     assert "content.rendered" not in fila and "contenido" not in fila
+    # sin negrilla, el tema va hasta el salto de línea, tras los párrafos vacíos (medido en la
+    # providencia 66727 y el concepto 67155)
     sin_negrilla = mapear_fila(
-        h, CATALOGO.fuentes[h.fuente], {"id": 2, "content.rendered": "<p>Sin tema</p>"}, None
+        h,
+        CATALOGO.fuentes[h.fuente],
+        {
+            "id": 2,
+            "content.rendered": "<p>&nbsp;</p>\n<p><strong>\xa0</strong></p>\n"
+            "<p>PLIEGO DE CONDICIONES &#8211; Naturaleza<br />\n[…] texto</p>",
+        },
+        None,
     )
-    assert sin_negrilla["tema"] is None
+    assert sin_negrilla["tema"] == f"PLIEGO DE CONDICIONES {raya} Naturaleza"
+    vacio = mapear_fila(h, CATALOGO.fuentes[h.fuente], {"id": 3, "content.rendered": ""}, None)
+    assert vacio["tema"] is None
 
 
 @pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
