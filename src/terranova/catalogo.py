@@ -113,6 +113,9 @@ PATRONES_ENTRADA: dict[str, str] = {
     "codigo_iata": r"^[A-Z0-9]{3}$",
     # indicador de lugar OACI del aeródromo (SKBO); algunos aeródromos menores tienen 3 caracteres
     "codigo_oaci": r"^[A-Z0-9]{3,4}$",
+    # identificador numérico de un registro de la fuente (un descriptor de la relatoría: 12021);
+    # lo usa la consulta previa para validar lo que devuelve la fuente
+    "id_numerico": r"^[0-9]{1,9}$",
 }
 # Qué forma lleva cada tipo con patrón, con un ejemplo válido: el agente lo lee en el esquema de la
 # herramienta. Sin esto, uno leyó en la ficha técnica «DIVIPOLA seguido de 000» y mandó 25175000.
@@ -156,6 +159,7 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "campo_hidrocarburos": ("nombre del campo de hidrocarburos (ANH)", "Rubiales"),
     "codigo_iata": ("sigla IATA del aeropuerto, 3 caracteres en mayúscula", "BOG"),
     "codigo_oaci": ("indicador OACI del aeródromo, 4 caracteres en mayúscula", "SKBO"),
+    "id_numerico": ("identificador numérico", "12021"),
 }
 
 # Un `int` llega a una plantilla SoQL o a una URL: un número desmedido no le sirve a nadie y le
@@ -891,14 +895,20 @@ class AvisoFicha(_Ficha):
 class Previa(_Ficha):
     """Una consulta antes de la principal que traduce la entrada: el contrato de SECOP II trae el
     proceso de compra (CO1.BDOS…), y los proponentes cuelgan de sus fases (CO1.REQ…). Los valores
-    de `columna` que devuelve van a `{previa}` como lista SoQL entre comillas, solo si cumplen el
-    patrón `patron` (un tipo de PATRONES_ENTRADA): lo que viene de la fuente no entra crudo."""
+    de `columna` que devuelve van a `{previa}` como lista SoQL entre comillas (o separados por coma,
+    con `formato: coma`), solo si cumplen el patrón `patron` (un tipo de PATRONES_ENTRADA): lo que
+    viene de la fuente no entra crudo."""
 
     fuente: str
     tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
     argumentos: dict[str, Any]
     columna: str
     patron: str
+    formato: Literal["soql", "coma"] = Field(
+        default="soql",
+        description="soql: lista entre comillas para un `in (…)`; coma: ids separados por coma "
+        "para un parámetro de URL (`?descriptor=12021,24562`), y sin ninguno, «0»",
+    )
 
 
 class HechoComplemento(_Ficha):

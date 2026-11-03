@@ -1,0 +1,218 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-03T20:13:19+00:00",
+ "herramienta": "ancp_providencias_por_tema",
+ "llamadas": [
+  {
+   "argumentos": {
+    "params": {
+     "_fields": "id",
+     "per_page": 100,
+     "search": "contratacion directa"
+    },
+    "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/descriptor"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "id"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "id": 21775
+       },
+       {
+        "id": 23336
+       },
+       {
+        "id": 23163
+       },
+       {
+        "id": 12437
+       },
+       {
+        "id": 24562
+       },
+       {
+        "id": 22157
+       },
+       {
+        "id": 12021
+       },
+       {
+        "id": 21312
+       },
+       {
+        "id": 22801
+       },
+       {
+        "id": 18746
+       },
+       {
+        "id": 20014
+       },
+       {
+        "id": 31175
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 12,
+      "truncado": false,
+      "vistos": 12
+     },
+     "filas": 12,
+     "params": {
+      "_fields": "id",
+      "per_page": 100,
+      "search": "contratacion directa"
+     },
+     "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/descriptor"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_json"
+  },
+  {
+   "argumentos": {
+    "params": {
+     "_fields": "id,date,title,link,content",
+     "descriptor": "12021,12437,18746,20014,21312,21775,22157,22801,23163,23336,24562,31175",
+     "order": "desc",
+     "orderby": "date",
+     "per_page": 20
+    },
+    "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/providencias"
+   },
+   "conector": "web-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "content.protected",
+       "content.rendered",
+       "date",
+       "id",
+       "link",
+       "title.rendered"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "content.protected": false,
+        "content.rendered": "<p style=\"text-align: justify;\"><strong>PARTES DEL CONTRATO – Entidades del Estado – Ley 80 de 1993 artículo 2 </strong></p>\n<p style=\"text-align: justify;\">[…] el negocio fue suscrito entre el municipio de Armenia y la Empresa de Desarrollo Urbano de Armenia Ltda. -Empresa Industrial y Comercial del Estado del orden municipal-. Así, se advierte que tanto la entidad territorial como la EDUA se encuentran entre las entidades estatales consagradas en el artículo 2 de la Ley 80 de 1993.</p>\n<p style=\"text-align: justify;\"><strong>CONTRATO Y CONVENIO INTERADMINISTRATIVO – Diferencias &#8211; Acuerdo de contenido patrimonial – Oneroso &#8211; Obligaciones reciprocas </strong></p>\n<p style=\"text-align: justify;\">[…] Esta Subsección ha precisado que el contrato interadministrativo, a diferencia del convenio interadministrativo, es un acuerdo de contenido patrimonial, característicamente oneroso, donde existe una prestación y una contraprestación en función del interés de cada una de las partes, y que se expresa a través de la estipulación de obligaciones recíprocas que se miran como equivalentes, según las previsiones iniciales acordadas al momento de proponer o contratar</p>\n<p style=\"text-align: justify;\">[…] el acuerdo de voluntades que se analiza es, efectivamente, un contrato interadministrativo, pues: (i) fue suscrito por dos entidades públicas, en los términos del artículo 2 de la Ley 80 de 1993; y (ii) existió un ánimo o interés remuneratorio en el acuerdo interadministrativo de una de las partes (la empresa), pues se pactó una contraprestación (dineraria en este caso) a cambio de una prestación ejecutada (se trató, pues, de una relación conmutativa). De ese modo, el negocio jurídico en cuestión estuvo sometido al EGCAP, y bajo él debe analizarse su validez.</p>\n<p style=\"text-align: justify;\"><strong>NULIDAD DEL CONTRATO ESTATAL –Ley 80 de 1993 artículo 44 – Causales – Alcance &#8211; Declaratoria de oficio por parte del juez &#8211; CPACA.</strong></p>\n<p style=\"text-align: justify;\">[…] Conforme al artículo 44 de la Ley 80 de 1993, los contratos estatales son absolutamente nulos, además de los casos previstos en el derecho común, cuando: (i) se celebren con personas incursas en causales de inhabilidad o incompatibilidad previstas en la Constitución y la ley; (ii) contra expresa prohibición constitucional o legal; (iii) con abuso o desviación de poder; (iv) se declaren nulos los actos administrativos en que se fundamenten; y (v) se hubieren celebrado con desconocimiento de los criterios previstos en el artículo 21 del EGCAP.»</p>\n<p style=\"text-align: justify;\">Como lo ha reconocido la jurisprudencia de esta Subsección, “el instituto de la nulidad absoluta de los contratos (…) supone una sanción que el ordenamiento jurídico concibe para afectar la validez de un negocio jurídico, siempre que el supuesto de hecho que empaña la legalidad del acuerdo se encuadre en una de las causales taxativas que con ese efecto regula la legislación”.</p>\n<p style=\"text-align: justify;\">[…]</p>\n<p style=\"text-align: justify;\">El artículo 141 del CPACA consolida ese entendimiento, al indicar que el juez administrativo podrá declarar de oficio la nulidad absoluta del contrato “cuando esté plenamente demostrada en el proceso, siempre y cuando en él hayan intervenido las partes contratantes o sus causahabientes”.</p>\n<p style=\"text-align: justify;\">[…]</p>\n<p style=\"text-align: justify;\">Así, aunque el juez del contrato no se encuentra limitado en sus facultades anulatorias por el hecho de que las partes invoquen una determinada causal, o no aludan a ninguna, el ordenamiento sí condiciona la posibilidad de invalidación absoluta a la plena demostración sobre su configuración.</p>\n<p style=\"text-align: justify;\"><strong>NULIDAD POR OBJETO ILÍCITO – Desconocimiento de la selección objetiva – Vicio en el nacimiento del negocio jurídico – Prohibición de desconocer los procedimientos de selección objetiva en el EGCAP – Autonomía de la voluntad – Llímites – Normas de orden público </strong></p>\n<p style=\"text-align: justify;\">[…] la causal de nulidad por objeto ilícito […] tiene lugar, entre otros eventos, cuando se desconoce el deber de selección objetiva en la contratación estatal, lo cual redunda en la presencia de un vicio de origen o nacimiento mismo del negocio jurídico.</p>\n<p style=\"text-align: justify;\">[…] Así, en materia de contratación estatal, el legislador prohibió a las autoridades eludir los procedimientos de selección objetiva previstos en el EGCAP, de manera que se colige que un acuerdo de voluntades celebrado en contravención de este mandato está viciado de objeto ilícito, y de esa forma debe ser declarado.</p>\n<p style=\"text-align: justify;\"><strong>MODALIDAD DE CONTRATACIÓN DIRECTA – Ley 1150 de 2007 artículo 2 &#8211; Contratos interadministrativos – Procedencia – Excepciones en cuanto a objeto del contrato &#8211;  </strong></p>\n<p style=\"text-align: justify;\">[…] En ese contexto, el artículo 2 de la Ley 1150 de 2007 habilita a las entidades sometidas al EGCAP a acudir a la modalidad de selección de contratación directa, entre otros, para celebrar contratos interadministrativos siempre que las obligaciones derivadas del mismo tengan relación directa con el objeto de la entidad ejecutora, exceptuando &#8216;los contratos de obra, suministro, prestación de servicios de evaluación de conformidad respecto de las normas o reglamentos técnicos, encargos fiduciarios y fiducia pública cuando las instituciones de educación superior públicas o las Sociedades de Economía Mixta con participación mayoritaria del Estado, o las personas jurídicas sin ánimo de lucro conformadas por la asociación de entidades públicas, o las federaciones de entidades territoriales sean las ejecutoras. Estos contratos podrán ser ejecutados por las mismas, siempre que participen en procesos de licitación pública o contratación abreviada de acuerdo con lo dispuesto por los numerales 1 y 2 del presente artículo.</p>\n<p style=\"text-align: justify;\">[…]</p>\n<p style=\"text-align: justify;\">[…] solo contempla como condicionantes expresos para acudir al mecanismo de contratación directa para la celebración de contratos interadministrativos: (i) que las obligaciones derivadas de aquellos tengan relación directa con el objeto de la entidad ejecutora; y (ii) que no se trate de contratos de obra, suministro, prestación de servicios de evaluación de conformidad respecto de las normas o reglamentos técnicos, encargos fiduciarios y fiducia pública, cuando la entidad ejecutora sea una institución de educación superior, sociedad de economía mixta con participación mayoritaria estatal, personas jurídicas sin ánimo de lucro conformadas por la asociación de entidades públicas, o las federaciones de entidades territoriales.</p>\n<p style=\"text-align: justify;\"><strong>OBJETO ESTATUTARIO – Diferencia entre desarrollador de proyectos urbanísticos y constructor de obras – Contrato de Obra – Ley 80 de 1993 artpiculo 32 numera 1 – Intervenciones constructivas o trabajos materiales sobre un bien inmueble – Nulidad &#8211; Objeto ilícito – No coincidió con el de la unidad ejecutora  </strong></p>\n<p style=\"text-align: justify;\">[…] resulta necesario distinguir entre un desarrollador de proyectos urbanísticos y un constructor de obras, a la luz de la finalidad estatutaria de la persona de que se trate y la naturaleza de la actividad que el ordenamiento jurídico le habilita a desempeñar. En este caso, el vocablo “construcción”, contenido en el objeto societario, no puede ser entendido de forma aislada del resto del enunciado estatutario, de manera que de ella no se sigue que la EDUA, en el momento de celebración del pacto, tuviese la calidad de sociedad constructora o que actuara en el mercado de servicios de construcción de obras, en tanto su objeto, se insiste, era el de desarrollar de proyectos urbanísticos o inmobiliarios. Así, no puede perderse de vista que, en los términos del artículo 32, numeral 1, de la Ley 80 de 1993, del contrato de obra emanan obligaciones de realizar intervenciones constructivas o trabajos materiales directos sobre un bien inmueble. En ese contexto, es a esa noción a la que debe aludir el objeto social de quien pretende ejecutar una construcción, condición que no puede entenderse satisfecha con la simple inclusión del verbo “construir” y su lectura inconexa del contexto en que se inscribe.</p>\n<p style=\"text-align: justify;\">[…]</p>\n<p style=\"text-align: justify;\">En suma, la realidad procesal analizada permite a esta Subsección concluir que el contrato interadministrativo n.° 08 de 2015 es espurio en su objeto, no porque se atentara contra una expresa prohibición legal de subcontratar -como quedó descartado-, sino porque se celebró con un objeto que no coincidió con el de la entidad ejecutora, como lo exige el artículo 2, numeral 4, literal c) de la Ley 1150 de 2007; lo que, a su vez, no permitía la contratación directa.</p>\n<p style=\"text-align: justify;\"><strong>EFECTOS DE LA NULIDAD ABSOLUTA – Restituciones mutuas &#8211; &#8211; Contratos de  ejecución sucesiva  &#8211; Ley 80 de 1993 artículo 48 – Reconocimiento de prestaciones ejecutadas a satisfacción hasta el momento de la declaratoria de nulidad –Ley 80 de 1893 artículo 48 – Código Civil artículo 1746</strong></p>\n<p style=\"text-align: justify;\">[…] el negocio declarado nulo de forma absoluta desaparece del mundo jurídico y, en virtud de ello, la ley consagra en cabeza de las partes afectadas con esa decisión el derecho de restituirse mutuamente lo recibido como prestación frente a la ejecución de ese contrato, con el fin de retrotraer los efectos de ese acuerdo”.</p>\n<p style=\"text-align: justify;\">[…]para el caso de los contratos estatales de ejecución sucesiva (como el examinado), el artículo 48 de la Ley 80 de 1993 establece que la configuración de la nulidad absoluta no constituye un motivo para desconocer, en principio, el pago de las prestaciones ejecutadas a satisfacción o de forma idónea por el contratista hasta el momento de su declaratoria.</p>\n<p style=\"text-align: justify;\">[…]</p>\n<p style=\"text-align: justify;\">A su vez, con fundamento en el artículo 13 ejusdem, en punto de las restituciones, debe acudirse al derecho privado, particularmente, al artículo 1746 del Código Civil, que regula los efectos de la nulidad pronunciada judicialmente respecto de actos o contratos. Por virtud de lo allí dispuesto, las partes del negocio tienen “derecho a ser restituidas al mismo estado en que se hallarían si no hubiese existido el acto o contrato nulo; sin perjuicio de lo prevenido sobre el objeto o causa ilícita”.</p>\n<p style=\"text-align: justify;\"><strong>RESTITUCIONES MUTUAS – Contratos estatales de tracto sucesivo – Características </strong></p>\n<p style=\"text-align: justify;\">(i) La invalidación absoluta de un acuerdo de voluntades produce como efecto general que las cosas vuelvan al estado anterior a su celebración (artículo 1746 del C.C.).</p>\n<p style=\"text-align: justify;\">(ii) Como consecuencia de ello, las partes tienen derecho, por regla, a ser restituidas mutuamente en lo dado o pagado, siempre que ello resulte posible (ibid.).</p>\n<p style=\"text-align: justify;\">(iii) En todo caso, las previsiones relacionadas con el objeto y causa ilícitos deben ser observadas para dicho efecto (ibid.).</p>\n<p style=\"text-align: justify;\">(iv) Cuando el negocio -de tracto sucesivo- está sometido a las normas de la contratación estatal pública -que incluyen el derecho privado-, la nulidad no impide, en principio, el reconocimiento y pago de las prestaciones ejecutadas hasta el momento de la declaratoria.</p>\n<p style=\"text-align: justify;\">(v) No obstante, si el vicio declarado consistió en la ilicitud del objeto o causa, solo procede el referido reconocimiento si se prueba que la entidad estatal ha obtenido beneficio, y únicamente hasta el monto de él (artículo 48 de la Ley 80 de 1993).</p>\n<p style=\"text-align: justify;\"><strong>BENEFICIO DE LA ENTIDAD ESTATAL – Ley 80 de 1993 artículo 48 &#8211; Alcance – Efecto retroactivo pecuniario </strong></p>\n<p style=\"text-align: justify;\">[…] resulta insoslayable lo previsto en el inciso final del referido artículo 48 de la Ley 80 de 1993, cuando define qué debe entenderse por beneficio de la entidad estatal, en los siguientes términos: “se entenderá que la entidad estatal se ha beneficiado en cuanto las prestaciones cumplidas le hubieren servido para satisfacer un interés público”.</p>\n<p style=\"text-align: justify;\">[…] Considerando que la obra objeto del acuerdo interadministrativo se encontraba inconclusa a la fecha de la demanda (y no se observan elementos probatorios que den cuenta de lo contrario a la presente data), no podría sostenerse válidamente que el interés público perseguido con el negocio hubiese sido satisfecho o que las actividades desarrolladas hasta el momento redunden en una utilidad comprobable para el municipio, el patrimonio cultural de la Nación o la comunidad beneficiaria de la intervención civil. Así, la ausencia de dicha condición impide aplicar el supuesto contenido en el segundo inciso del citado artículo 48 de la Ley 80, pues no se puede entender, para el caso concreto, que la entidad pública contratante hubiese obtenido provecho de lo ejecutado, de manera que no hay lugar al reconocimiento pecuniario por las prestaciones llevadas a cabo por la EDUA.</p>\n<p style=\"text-align: justify;\">Como consecuencia de la imposibilidad de reconocer beneficio alguno por razón de lo ejecutado por la demandada, el efecto retroactivo pecuniario derivado de la nulidad debe circunscribirse al reintegro del importe total de los recursos comprometidos en la ejecución del negocio (no solo frente a aquellos no ejecutados); de manera que le asiste razón al apelante en su reclamo.</p>\n<p style=\"text-align: justify;\"><strong>LÍMITES MATERIALES A LAS RESTITUCIONES MUTUAS &#8211; </strong><strong>Imposibilidad física de retrotraer las cosas a su estado primigenio – Inviabilidad del restablecimiento patrimonial en contratos de tracto sucesivo con prestaciones cumplidas y retribuidas </strong></p>\n<p style=\"text-align: justify;\">[&#8230;] existen eventos en los cuales no es posible efectuar las restituciones mutuas desde el punto de vista material &#8216;cuando los contratos ya se han ejecutado y existe un beneficio por esas prestaciones. En efecto, se ha reconocido que, en el caso de contratos de tracto sucesivo en los que la obligación material se ha cumplido (v.gr., la ejecución de obras), es inviable ordenar que se restablezcan los patrimonios al estado de cosas anterior a la celebración del negocio, máxime cuando se encuentra que la finalidad que se perseguía ya se ha satisfecho y ésta ya ha sido debidamente retribuida por la entidad&#8217;.</p>\n<p style=\"text-align: justify;\">\n",
+        "date": "2026-06-18T17:13:11",
+        "id": 65473,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/63001233300020220005801-de-2026/",
+        "title.rendered": "63001233300020220005801 de 2026"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p style=\"text-align: justify;\"><strong>CONTRATACIÓN DIRECTA – Objeto </strong></p>\n<p style=\"text-align: justify;\">El literal c), numeral 4°, del artículo 2 de la Ley 1150 de 2007, modificado parcialmente por los artículos 92 y 95 de la Ley 1474 de 2011, autoriza la celebración de contratos interadministrativos mediante la modalidad de contratación directa, siempre que las obligaciones que emanan del negocio jurídico tengan relación directa con el objeto de la entidad ejecutora. La autorización para contratar directamente no opera frente a contratos de obra, suministro, evaluación de conformidad técnica, encargos fiduciarios o fiducia pública ejecutados por instituciones públicas de educación superior, sociedades de economía mixta con participación mayoritaria estatal, asociación de entidades públicas sin ánimo de lucro o federaciones de entes territoriales. Antes de determinar si las obligaciones del contrato interadministrativo guardan relación directa con el objeto de la entidad ejecutora, es necesario analizar la naturaleza de la contribución de valorización, aspecto central del objeto contractual.</p>\n<p style=\"text-align: justify;\">\n<p style=\"text-align: justify;\"><strong>CONTRATO INTERADMINISTRATIVO – Obligaciones – Excepciones </strong></p>\n<p style=\"text-align: justify;\">El literal c) del numeral 4° del artículo 2 de la Ley 1150 de 2007, modificado parcialmente por los artículos 92 y 95 de la Ley 1474 de 2011, establece la siguiente regla: solo si las obligaciones de un contrato interadministrativo tienen relación directa con el objeto de la entidad estatal ejecutora, se puede contratar aplicando la modalidad de contratación directa. El inciso segundo introduce una excepción, según la cual, en el caso de contratos de obra, suministro, prestación de servicios de evaluación de conformidad, encargos fiduciarios y fiducia pública, esta modalidad de contratación no aplica cuando las entidades ejecutoras son instituciones de educación superior públicas, sociedades de economía mixta con participación estatal mayoritaria o personas jurídicas sin ánimo de lucro conformadas por asociaciones de entidades públicas o federaciones de entidades territoriales. En tales situaciones, la modalidad de selección aplicable es la licitación pública o la selección abreviada, según corresponda.</p>\n<p style=\"text-align: justify;\">La excepción antes indicada versa sobre sobre la modalidad de selección aplicable, aunque independientemente de ésta, las obligaciones del contrato siempre deben tener una relación directa con el objeto de la entidad estatal ejecutora. Esta es una condición sine qua non establecida en el literal c) del numeral 4° del artículo 2 de la Ley 1150 de 2007, disposición de carácter imperativo77. En el caso concreto, es manifiesto que las obligaciones derivadas del contrato interadministrativo celebrado entre el Municipio de Armenia y la EDUA no tienen relación directa con el objeto de esta última entidad pública. Por lo tanto, se contravino una norma imperativa que disciplina el régimen al que se someten los contratos interadministrativos.</p>\n<p style=\"text-align: justify;\">\n<p style=\"text-align: justify;\"><strong>RÉGIMEN DE NULIDADES DEL CONTRATO ESTATAL – Fundamento – Condiciones para la celebración </strong></p>\n<p style=\"text-align: justify;\"><strong> </strong></p>\n<p style=\"text-align: justify;\">Los artículos 16 y 1519 del Código Civil, que se integran al régimen de nulidades del contrato estatal, establecen respectivamente que no podrán derogarse por convenios particulares las leyes en cuya observancia está interesado el orden público y que hay objeto ilícito en todo lo que contraviene al derecho público de la nación. Con fundamento en estas disposiciones legales, la vulneración de normas imperativas y de orden público, como las relativas a los procedimientos de selección y las condiciones para la celebración de contratos interadministrativos, conllevan la configuración de un objeto ilícito. Esta Subsección ha explicado que esto se debe a que este conjunto de normas, por estar íntimamente relacionadas con el cumplimiento de los fines de la contratación pública, integran el orden de público de la Nación y, por ello, son de perentoria y obligatoria observancia, sin que puedan ser objeto de inaplicación ni disposición por pacto de los contratantes.</p>\n<p style=\"text-align: justify;\"><strong>NULIDAD DEL CONTRATO ESTATAL – Normativa </strong></p>\n<p style=\"text-align: justify;\">El artículo 48 de la Ley 80 de 1993 establece que la declaración de nulidad de un contrato de ejecución sucesiva no impide el pago de las prestaciones ejecutadas. Además, cuando la nulidad es por objeto o causa ilícita, la norma dispone que procede el reconocimiento de las prestaciones ejecutadas y no pagadas al momento de tal declaración en los casos en que la entidad estatal contratante se hubiera beneficiado, es decir, cuando tales prestaciones le hubieran servido para satisfacer un interés público. Por otra parte, el artículo 1746 del Código Civil establece que un efecto de la nulidad son las restituciones mutuas de las prestaciones ejecutadas por las partes.</p>\n",
+        "date": "2024-12-23T16:39:49",
+        "id": 57488,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/63001233300020190025201-de-2024/",
+        "title.rendered": "63001233300020190025201 de 2024"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 11001-03-26-000-2009-00070-00_37044_B &#8211; Fecha: 07-03-2011 &#8211; Número Interno: 37044_B &#8211; Demandado: GOBIERNO NACIONAL &#8211; Actor: EDGAR PINZON GAONA &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: B &#8211; Ponente: Enrique Gil Botero &#8211; Medio de control: Nulidad Simple &#8211; Recurso: Apelacion &#8211; Tipo Contrato: Contractual &#8211; Tema: Contractual &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> CONTRATO ESTATAL,CONTRATACIÓN DIRECTA,PROCESO DE SELECCIÓN DE CONTRATISTAS &#8211; <strong>Restrictor:</strong> Decreto 2474 de 2008  Reglamenta las leyes 80 de 1993,Ley 1150 de 2007,Principio de selección objetiva,Selección abreviada,Potestad reglamentaria,Justificación,Artículo 2,parágrafo de la ley 1150 de 2007 &#8211; Mes: marzo &#8211; Año: 2011</p>\n",
+        "date": "2024-04-24T18:54:30",
+        "id": 39238,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/11001-03-26-000-2009-00070-00_37044_b/",
+        "title.rendered": "11001-03-26-000-2009-00070-00_37044_B"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 25000-23-26-000-1997-03512-01_21487 &#8211; Fecha: 30-10-2013 &#8211; Número Interno: 21487 &#8211; Demandado: SOCIEDAD GENERAL DE PROVISIONES LTDA &#8211; Actor: INSTITUTO DE SEGUROS SOCIALES &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: A &#8211; Ponente: Hernán Andrade Rincón &#8211; Medio de control: Controversias Contractuales &#8211; Recurso: Apelación sentencia &#8211; Tipo Contrato: Contrato de arrendamiento &#8211; Tema: Nulidad del contrato &#8211; Naturaleza: N/A &#8211; <strong>Descriptor:</strong> CONTRATO DE ARRENDAMIENTO,NULIDAD ABSOLUTA DEL CONTRATO,RÉGIMEN DE CONTRATACIÓN ADMINISTRATIVA,PRINCIPIOS DE LA CONTRATACIÓN ESTATAL,PRINCIPIO DE TRANSPARENCIA,PRINCIPIO DE ECONOMÍA,CONTRATACIÓN DIRECTA,CONTRATO SERVICIO PÚBLICO DE SA &#8211; <strong>Restrictor:</strong> Principios,seleccion objetiva,Transparencia,Igualdad,Planeación,Celebración,Prohibición legal,Restituciones mutuas,Contrato de tracto sucesivo,Causales,Normativa contractual,Principio de transparencia,Principio de economía,P &#8211; Mes: octubre &#8211; Año: 2013</p>\n",
+        "date": "2024-04-24T18:52:44",
+        "id": 38699,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/25000-23-26-000-1997-03512-01_21487/",
+        "title.rendered": "25000-23-26-000-1997-03512-01_21487"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 11001-03-26-000-2009-00043-00_36805 &#8211; Fecha: 23-07-2015 &#8211; Número Interno: 36805 &#8211; Demandado: NACION &#8211; PRESIDENCIA DE LA REPUBLICA Y OTROS &#8211; Actor: MARTIN BERMUDEZ MUÑOZ &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sala Plena de Sección Tercera &#8211; Subsección: N/A &#8211; Ponente: Hernán Andrade Rincón &#8211; Medio de control: Nulidad Simple &#8211; Recurso: Apelacion &#8211; Tipo Contrato: N/A &#8211; Tema: Nulidad del acto administrativo &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> PRINCIPIO DE IMPARCIALIDAD,SELECCIÓN OBJETIVA,PRINCIPIO DE TRANSPARENCIA,POTESTAD REGLAMENTARIA,SELECCIÓN ABREVIADA,CONTRATACION DIRECTA,DOCUMENTOS PÚBLICOS,PRINCIPIOS &#8211; <strong>Restrictor:</strong> Procedimiento de contratación,Causales,Contratación de bienes y servicios que se requieran para la defensa y seguridad nacional,Restricción,Fuerza normativa &#8211; Mes: julio &#8211; Año: 2015</p>\n",
+        "date": "2024-04-24T18:48:21",
+        "id": 36810,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/11001-03-26-000-2009-00043-00_36805/",
+        "title.rendered": "11001-03-26-000-2009-00043-00_36805"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2017_10001-03-26-000-2016-00017-00_56307 &#8211; Fecha: 29-03-2017 &#8211; Número Interno: 56307 &#8211; Demandado: NACIÓN &#8211; AGENCIA NACIONAL DE CONTRATACIÓN PÚBLICA &#8211; COLOMBIA COMPRA EFICIENTE &#8211; Actor: ÁLVARO MEJÍA MEJÍA &#8211; Providencia: Autos &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: A &#8211; Ponente: Carlos Alberto Zambrano Barrera &#8211; Medio de control: Nulidad Simple &#8211; Recurso: N/A &#8211; Tipo Contrato: Acuerdo Marco de Precios &#8211; Tema: Suspensión provisional &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> SUSPENSIÓN PROVISIONAL,MODALIDADES DE SELECCIÓN,SELECCIÓN DEL CONTRATISTA,CONTRATACIÓN DIRECTA,MÍNIMA CUANTÍA,SELECCIÓN ABREVIADA,ACUERDO MARCO DE PRECIOS,Operación secundaria,MEDIDAS CAUTELARES &#8211; <strong>Restrictor:</strong> Suspensión provisional,Marco jurídico aplicable,Requisitos de procedencia,Ley 1437 de 2011,Tipologías,Ley 80 de 1993,Ley 1150 de 2007,Modalidades,Noción,Mínima cuantía,No existe concurrencia,Definición,Etapas,Operación s &#8211; Mes: marzo &#8211; Año: 2017</p>\n",
+        "date": "2024-04-24T18:45:57",
+        "id": 35728,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2017_10001-03-26-000-2016-00017-00_56307/",
+        "title.rendered": "2017_10001-03-26-000-2016-00017-00_56307"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2017_25000-23-26-000-2001-00309-01_35163_B &#8211; Fecha: 05-04-2017 &#8211; Número Interno: 35163_B &#8211; Demandado: LA NACION  MINISTERIO DE DEFENSA  FUERZA ÁREA COLOMBIANA &#8211; Actor: INTRACOM LTDA., ISEC LTDA. Y M PROYECTOS DE INGENIERÍA LTDA &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: A &#8211; Ponente: Hernán Andrade Rincón &#8211; Medio de control: Nulidad y Restablecimiento del Derecho &#8211; Recurso: N/A &#8211; Tipo Contrato: Acto de adjudicación &#8211; Tema: Nulidad del acto administrativo de adjudicación &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> NULIDAD Y RESTABLECIMIENTO DEL DERECHO,CONTRATACIÓN DIRECTA,PLIEGO DE CONDICIONES &#8211; <strong>Restrictor:</strong> Actos precontractuales,Cómputo,Término de caducidad,Principios,Principio de transparencia,Presupuestos,Reiteración jurisprudencial,Vulneración,Principios de transparencia,selección objetiva e igualdad,Modificación extemporánea, &#8211; Mes: abril &#8211; Año: 2017</p>\n",
+        "date": "2024-04-24T18:45:36",
+        "id": 35556,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2017_25000-23-26-000-2001-00309-01_35163_b/",
+        "title.rendered": "2017_25000-23-26-000-2001-00309-01_35163_B"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2017_05001-23-31-000-1999-02776-01_39285 &#8211; Fecha: 30-11-2017 &#8211; Número Interno: 39285 &#8211; Demandado: MUNICIPIO DE MEDELLIN &#8211; Actor: ACCESORIOS Y SISTEMAS LTDA &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: B &#8211; Ponente: Ramiro De Jesús Pazos Guerrero &#8211; Medio de control: Controversias Contractuales &#8211; Recurso: N/A &#8211; Tipo Contrato: Acto de declaratoria de siniestro &#8211; Tema: Nulidad del acto administrativo de declaratoria de desierta &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> LITISCONSORCIO CUASINECESARIO,CLÁUSULA PENAL,SENTENCIA ANULATORIA DE ACTO ADMINISTRATIVO,CONTRATO ESTATAL,CONTRATACIÓN DIRECTA,PLIEGO DE CONDICIONES,ACTO QUE DECLARA EL SINIESTRO &#8211; <strong>Restrictor:</strong> Acción procedente,Efectos,Relación Procesal Entre Contratista Y Aseguradora,Definición,Declaratoria de nulidad,Sin procedimiento administrativo previo,Procedencia con la verificación de un vicio,Apelante Único,Objeto,Deber de selec &#8211; Mes: noviembre &#8211; Año: 2017</p>\n",
+        "date": "2024-04-24T18:44:52",
+        "id": 35260,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2017_05001-23-31-000-1999-02776-01_39285/",
+        "title.rendered": "2017_05001-23-31-000-1999-02776-01_39285"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2018_11001-03-06-000-2018-00095-00_2382 &#8211; Fecha: 08-05-2018 &#8211; Número Interno: 2382 &#8211; Demandado: N/A &#8211; Actor: MINISTERIO DE CULTURA &#8211; Providencia: Conceptos &#8211; Sección / Sala: Sala de Consulta &#8211; Subsección: N/A &#8211; Ponente: Álvaro Namén Vargas &#8211; Medio de control: Concepto &#8211; Recurso: N/A &#8211; Tipo Contrato: Contrato de asociación público privada &#8211; Tema: Ley de garantias &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> PATRIMONIO CULTURAL SUMERGIDO,CONTRATACIÓN DIRECTA,MODALIDADES DE SELECCIÓN,LEY DE GARANTÍAS,ASOCIACIONES PÚBLICO PRIVADAS &#8211; <strong>Restrictor:</strong> Prohibición,Definición,Alcance,Régimen de contratación,Proceso de contratación,Regla general,Asociación público privada,Patrimonio cultural sumergido,Contratación,Finalidad,Modalidades de asociación,Iniciativa privada,Ini &#8211; Mes: mayo &#8211; Año: 2018</p>\n",
+        "date": "2024-04-24T18:43:38",
+        "id": 34669,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2018_11001-03-06-000-2018-00095-00_2382/",
+        "title.rendered": "2018_11001-03-06-000-2018-00095-00_2382"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2018_11001-03-26-000-2014-00035-00_50222 &#8211; Fecha: 24-05-2018 &#8211; Número Interno: 50222 &#8211; Demandado: PRESIDENCIA DE LA REPUBLICA Y DEPARTAMENTO NACIONAL DE PLANEACIÓN &#8211; Actor: MARTÍN BERMÚDEZ MUÑOZ &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: A &#8211; Ponente: Marta Nubia Velásquez Rico &#8211; Medio de control: Nulidad Simple &#8211; Recurso: N/A &#8211; Tipo Contrato: N/A &#8211; Tema: Decreto 1510 de 2013 &#8211; Bienes y servicios para la defensa y seguridad nacional &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> NULIDAD SIMPLE,BIENES Y SERVICIOS QUE SE REQUIERAN PARA LA DEFENSA Y SEGURIDAD NACIONAL,DECRETO 1510 de 2013,CONTRATACIÓN DIRECTA,ACTO DE JUSTIFICACIÓN DE LA CONTRATACIÓN DIRECTA,SELECCIÓN ABREVIADA &#8211; <strong>Restrictor:</strong> Decreto 1510 de 2013,Competencia,Lista abierta,lista cerrada,Artículo 65,Legalidad condicionada de los actos administrativos,Reglamentación,Principios de economía,transparencia y selección objetiva,Deberes de la entidad,Alcance,A &#8211; Mes: mayo &#8211; Año: 2018</p>\n",
+        "date": "2024-04-24T18:43:18",
+        "id": 34525,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2018_11001-03-26-000-2014-00035-00_50222/",
+        "title.rendered": "2018_11001-03-26-000-2014-00035-00_50222"
+       },
+       {
+        "content.protected": false,
+        "content.rendered": "<p><strong>Detalle:</strong> 2018_25000-23-26-000-2003-01980-01_36947 &#8211; Fecha: 01-03-2018 &#8211; Número Interno: 36947 &#8211; Demandado: EMPRESA DE LICORES DE CUNDINAMARCA &#8211; Actor: DE SARGO LTDA. &#8211; Providencia: Sentencias &#8211; Sección / Sala: Sección Tercera &#8211; Subsección: B &#8211; Ponente: Danilo Rojas Betancourth &#8211; Medio de control: Controversias Contractuales &#8211; Recurso: N/A &#8211; Tipo Contrato: Contrato de suministro &#8211; Tema: Nulidad del contrato &#8211; Naturaleza: Contractual &#8211; <strong>Descriptor:</strong> MODALIDADES DE SELECCIÓN,CONTRATACIÓN DIRECTA,CONTROVERSIAS CONTRACTUALES,ACTO DE ADJUDICACIÓN &#8211; <strong>Restrictor:</strong> Eventos,Contratación directa,Alcance,Deber de selección objetiva,Empresa de Licores de Cundinamarca,Naturaleza y régimen de contratación,Empresas industriales y comerciales del estado,Nulidad,Carga probatoria,Mejor oferta &#8211; Mes: marzo &#8211; Año: 2018</p>\n",
+        "date": "2024-04-24T18:42:54",
+        "id": 34376,
+        "link": "https://relatoria.colombiacompra.gov.co/providencias/2018_25000-23-26-000-2003-01980-01_36947/",
+        "title.rendered": "2018_25000-23-26-000-2003-01980-01_36947"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 11,
+      "truncado": false,
+      "vistos": 11
+     },
+     "filas": 11,
+     "params": {
+      "_fields": "id,date,title,link,content",
+      "descriptor": "12021,12437,18746,20014,21312,21775,22157,22801,23163,23336,24562,31175",
+      "order": "desc",
+      "orderby": "date",
+      "per_page": 20
+     },
+     "url": "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/providencias"
+    },
+    "geo_result": "1"
+   },
+   "tool": "web_json"
+  }
+ ]
+}

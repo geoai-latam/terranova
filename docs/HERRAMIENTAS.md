@@ -34,7 +34,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
 | `ancp_conceptos_buscar` | ¿Qué conceptos de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
+| `ancp_conceptos_por_tema` | ¿Qué conceptos de Colombia Compra Eficiente tratan este tema? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
 | `ancp_providencias_buscar` | ¿Qué providencias de Colombia Compra Eficiente hablan de esto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
+| `ancp_providencias_por_tema` | ¿Qué providencias de Colombia Compra Eficiente tratan este tema? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | por verificar | 5 |
 | `dnp_proyecto_sgr_por_bpin` | ¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 2 |
 | `dnp_proyectos_sgr_municipio` | ¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van? | Departamento Nacional de Planeación (DNP) | CC-BY-SA-4.0 | 5 |
 | `secop1_adiciones_adjudicacion` | ¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
