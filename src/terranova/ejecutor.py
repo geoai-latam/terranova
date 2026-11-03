@@ -541,7 +541,11 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
             if clave is not None and valor is not None and _numero(valor):
                 sumas[str(clave)] = sumas.get(str(clave), 0.0) + float(valor)
         cifras = 6 if d.decimales is None else d.decimales
-        return {k: round(v, cifras) for k, v in sorted(sumas.items(), key=lambda kv: -kv[1])}
+        # con `tipo: int`, un conteo sale entero (21, no 21.0)
+        return {
+            k: round(v) if d.tipo == "int" else round(v, cifras)
+            for k, v in sorted(sumas.items(), key=lambda kv: -kv[1])
+        }
     if d.de == "suma":
         return convertir(round(sum(numeros), 6), d.tipo) if numeros else None
     if d.de == "maximo":

@@ -817,6 +817,23 @@ def test_suma_por_categoria_con_la_mayor_primero() -> None:
     assert list(resultado) == ["Consolidación", "Renovación"]
 
 
+def test_suma_por_de_un_conteo_sale_entera() -> None:
+    """Los casos de cada delito en Yopal 2025 (medido el 2026-11-03 en d4fr-sbn2): 21 abigeatos,
+    no 21.0."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    d = Derivado(de="suma_por", campo="tipo", sumar="casos", tipo="int")
+    elementos: list[dict[str, Any]] = [
+        {"tipo": "HURTO ABIGEATO", "casos": 4},
+        {"tipo": "HURTO ABIGEATO", "casos": 17},
+        {"tipo": "HURTO ENTIDADES FINANCIERAS", "casos": 1},
+    ]
+    resultado = derivar_resultado(d, elementos, None)
+    assert resultado == {"HURTO ABIGEATO": 21, "HURTO ENTIDADES FINANCIERAS": 1}
+    assert all(type(v) is int for v in resultado.values())
+
+
 def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:
     from terranova.catalogo import Derivado
 
