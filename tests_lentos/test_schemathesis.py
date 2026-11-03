@@ -12,6 +12,7 @@ from schemathesis.specs.openapi.checks import positive_data_acceptance
 
 from terranova import puerta
 from terranova.app import crear_aplicacion
+from terranova.catalogo import TIPOS_NIT
 from terranova.identidad import RegistroSql
 
 
@@ -66,6 +67,11 @@ DIVIPOLA = {
     if t == "divipola"
 }
 
+# las entradas de NIT: con dígito de verificación, la puerta lo comprueba (módulo 11 de la DIAN)
+NIT = {
+    n for h in puerta.CATALOGO.herramientas.values() for n, t in h.entrada.items() if t in TIPOS_NIT
+}
+
 
 @schema.parametrize()
 @settings(max_examples=25, deadline=None, suppress_health_check=list(HealthCheck))
@@ -75,11 +81,16 @@ def test_api(case: Any) -> None:
     # herramientas se omite la comprobación de «dato válido aceptado»; las demás siguen.
     # Igual con un municipio por nombre: «uno» cumple el patrón, pero no hay un municipio con ese
     # nombre (o hay varios) y la puerta responde 400 con los candidatos. Con el código no se omite.
-    # Y un polígono: «anillo cerrado» y «1 grado de lado» tampoco caben en JSON Schema.
+    # Y un polígono: «anillo cerrado» y «1 grado de lado» tampoco caben en JSON Schema. Ni que el
+    # dígito de verificación de un NIT cuadre: 9999999998 cumple el esquema y la puerta dice cuál
+    # es el dígito correcto.
     cuerpo = case.body if isinstance(case.body, dict) else {}
     con_zona = "bbox" in cuerpo or "poligono" in cuerpo
     por_nombre = any(
         k in DIVIPOLA and isinstance(v, str) and not v.isdigit() for k, v in cuerpo.items()
     )
-    omitir = con_zona or por_nombre
+    con_dv = any(
+        k in NIT and len(str(v).replace(".", "").replace("-", "")) > 9 for k, v in cuerpo.items()
+    )
+    omitir = con_zona or por_nombre or con_dv
     case.call_and_validate(excluded_checks=[positive_data_acceptance] if omitir else [])
