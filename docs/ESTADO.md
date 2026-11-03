@@ -229,6 +229,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **INS, calidad del agua (patrón E):**
   - El año más reciente va primero, con su IRCA y nivel de riesgo arriba; el «ND» sale vacío.
   - Si el municipio dejó de reportar (Bojayá, el último en 2019), un aviso lo dice.
+- **MinEducación (patrón E):** las tres herramientas ponen primero el año más reciente, con su
+  cobertura neta y su deserción arriba, y un aviso explica por qué la cobertura puede pasar de 100 %.
 
 ## Ficha de un lote (2026-11-01)
 

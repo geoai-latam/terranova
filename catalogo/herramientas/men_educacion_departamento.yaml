@@ -1,5 +1,5 @@
 id: men_educacion_departamento
-version: 1
+version: 2
 familia: estadisticas
 fuente: men.educacion_departamento
 pregunta: "¿Cómo va la educación básica y media en este departamento: cobertura, deserción, aprobación?"
@@ -7,6 +7,7 @@ descripcion: >
   Indicadores de educación preescolar, básica y media (MinEducación) de un departamento, año por año desde
   2011: población de 5 a 16 años, tasa de matriculación, cobertura neta y bruta, deserción,
   aprobación, reprobación y repitencia (en %).
+  El año más reciente va primero, y arriba su cobertura neta y su deserción.
   (Fuente: MinEducación; licencia: CC BY-SA 4.0.)
 entrada: {departamento_divipola: int}
 consulta:
@@ -18,14 +19,26 @@ consulta:
     portal: datos.gov.co
     select: "ano, c_digo_departamento, departamento, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia"
     where: "c_digo_departamento = {departamento_divipola}"
-    order: "ano"
+    order: "ano DESC"
     max_filas: 100
   campos: [ano, c_digo_departamento, departamento, poblacion_5_16, tasa_matriculacion_5_16, cobertura_neta, cobertura_bruta, desercion, aprobacion, reprobacion, repitencia]
 salida: EducacionPorDepartamento
+derivados:
+  ultimo_anio: {de: primero, campo: anio, tipo: int}
+  cobertura_neta_ultimo_anio: {de: primero, campo: cobertura_neta, tipo: float}
+  desercion_ultimo_anio: {de: primero, campo: desercion, tipo: float}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una cobertura de más de 100 % es posible y no es un error: el denominador es la población de 5
+    a 16 años que proyecta el DANE, y en el lugar estudian niños que viven en otro, o la proyección
+    quedó corta. La bruta cuenta además a quienes están en un grado que no es el de su edad. En 2024,
+    94 de 1 122 municipios pasan de 100 % en la neta y 281 en la bruta.
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en ji8i-4anb, ordenado por año: el primer año es 2011.
+  # Medido el 2026-11-02 en ji8i-4anb: Cundinamarca 2024, cobertura neta 89,44 %, deserción 3,49 %.
   entrada: {departamento_divipola: 25}
-  verdad: {anio: 2011, departamento: Cundinamarca, cobertura_neta: 91.93, desercion: 3.6}
-  campos: [anio, aprobacion, cobertura_bruta, cobertura_neta, departamento, departamento_divipola, desercion, poblacion_5_16, repitencia, reprobacion, tasa_matriculacion_5_16]
+  verdad: {anio: 2024, departamento: Cundinamarca, cobertura_neta: 89.44, desercion: 3.49, ultimo_anio: 2024, cobertura_neta_ultimo_anio: 89.44}
+  campos: [anio, aprobacion, cobertura_bruta, cobertura_neta, cobertura_neta_ultimo_anio, departamento, departamento_divipola, desercion, desercion_ultimo_anio, numero_registros, poblacion_5_16, repitencia, reprobacion, tasa_matriculacion_5_16, ultimo_anio]
   latencia_max_ms: 10000

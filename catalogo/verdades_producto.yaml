@@ -402,8 +402,8 @@ verdades:
     pregunta: "¿Cómo ha sido la cobertura neta y la deserción escolar en Chía?"
     herramienta: men_educacion_municipio
     entrada: {municipio_divipola: "25175"}
-    verdad: {anio: 2011, cobertura_neta: 92.4, desercion: 4.5}
-    medicion: "MEN estadísticas por municipio, código 25175"
+    verdad: {anio: 2024, cobertura_neta: 107.03, desercion: 3.36}
+    medicion: "MEN estadísticas por municipio, código 25175; el año más reciente va primero (2026-11-02)"
   - id: s05
     familia: estadisticas
     pregunta: "¿Cuánta plata de regalías tiene presupuestada Chía en el bienio actual?"
@@ -445,5 +445,5 @@ verdades:
     pregunta: "¿Qué cobertura neta en educación tenía Cundinamarca?"
     herramienta: men_educacion_departamento
     entrada: {departamento_divipola: 25}
-    verdad: {anio: 2011, departamento: Cundinamarca, cobertura_neta: 91.93, desercion: 3.6}
-    medicion: "MEN estadísticas por departamento, código 25"
+    verdad: {anio: 2024, departamento: Cundinamarca, cobertura_neta: 89.44, desercion: 3.49}
+    medicion: "MEN estadísticas por departamento, código 25; el año más reciente va primero (2026-11-02)"
