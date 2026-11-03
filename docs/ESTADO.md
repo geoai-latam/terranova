@@ -260,9 +260,6 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
-- **SECOP II, pagos (patrón F):** se retira `secop_facturas_contrato`, que daba las mismas filas. Los
-  pagos van del más reciente al más viejo, con lo facturado, lo pagado, el último pago y el valor
-  del contrato arriba (PAE de Chía: 34 829 de 64 938 millones pagados).
 
 ## Ficha de un lote (2026-11-01)
 
