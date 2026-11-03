@@ -1,14 +1,16 @@
 id: sinchi_perdida_bosque_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: sinchi.perdida_bosque
 pregunta: "¿Este punto de la Amazonia perdió bosque entre 2022 y 2024?"
 descripcion: >
   Clase del cambio del bosque entre 2022 y 2024 en un punto de la Amazonia colombiana, según el
   monitoreo del SINCHI a escala 1:100.000: Perdida (deforestado en el periodo), Conservado,
-  Recuperado u Otras coberturas (no era bosque). Sirve para la debida diligencia de deforestación
-  (EUDR) en la Amazonia. Fuera de la región amazónica no hay respuesta. Sale de la copia de
-  Terrnova (simplificada a ~55 m).
+  Recuperado u Otras coberturas (no era bosque). `periodo` dice los años que mide. Es un indicio
+  de deforestación reciente, no una prueba para el reglamento europeo (EUDR): la EUDR pide que no
+  haya deforestación después del 31 de diciembre de 2020, y esta capa no ve 2021. A 1:100.000 y
+  simplificada a ~55 m, tampoco sirve para el borde de una finca. Fuera de la región amazónica no
+  hay respuesta. Sale de la copia de Terrnova.
   (Fuente: SINCHI; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
@@ -23,10 +25,13 @@ consulta:
     limite: 2
   campos: [deforestacion]
 salida: PerdidaBosqueEnPunto
+derivados:
+  # la capa es TMAPB_Region_100K_2022_2024: un solo periodo
+  periodo: {de: fijo, valor: "2022-2024"}
 cobro: punto
 canario:
   # Cerca de La Macarena (Meta); medido el 2026-10-28 en TMAPB_Region_100K_2022_2024: «Perdida».
   entrada: {lon: -74.68082, lat: 2.9347}
-  verdad: {clase: Perdida}
-  campos: [clase]
+  verdad: {clase: Perdida, periodo: "2022-2024"}
+  campos: [clase, periodo]
   latencia_max_ms: 5000
