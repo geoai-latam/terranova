@@ -33,6 +33,12 @@ logger = logging.getLogger("terranova.perfil_catalogo")
 #: Cuántas herramientas devuelve una búsqueda (Anthropic y OpenAI devuelven de 3 a 5; aquí un poco
 #: más porque la entrada viene en el mismo resultado y no hace falta otra vuelta para describirla).
 K_POR_DEFECTO = 6
+#: BM25 desde el que una herramienta casa de verdad con una pregunta del buscador de datasets
+#: (`catalogo_buscar`). Medido el 2026-11-03 en 12 preguntas reales: las que aciertan dan de 7,8 a
+#: 14,1 (áreas protegidas, calidad del agua, vuelos, accidentes, temperatura, matrícula); las que
+#: no, de 4,2 a 6,7 (vivienda → población, TransMilenio → peajes, aves, empresas). Dos aciertos
+#: quedan por debajo (contratos de Cali, 6,9; población de Yopal, 5,8): sin remisión, como antes.
+MINIMO_LEXICO = 7.0
 _RRF = 60  # constante clásica de la fusión por rango recíproco
 _PALABRAS_VACIAS = frozenset(
     "a al como con cual cuales cuanto cuantos cuantas de del donde el en es esta este hay la las "
@@ -183,6 +189,20 @@ class IndiceHerramientas:
                 propios = [orden[0], *propios]
             orden = propios
         return [self.docs[i] for i in orden[:k]]
+
+    def por_palabras(
+        self, consulta: str, minimo: float = MINIMO_LEXICO, k: int = 3
+    ) -> list[Documento]:
+        """Las herramientas que casan con fuerza con las palabras de `consulta` (BM25 desde
+        `minimo`), la de más puntaje primero, sin las compuestas. Solo léxico: el umbral está
+        medido en BM25; uno por coseno de e5 no se ha medido."""
+        puntajes = self._bm25.puntajes(consulta)
+        orden = sorted(range(len(self.docs)), key=lambda i: -puntajes[i])
+        return [
+            self.docs[i]
+            for i in orden
+            if puntajes[i] >= minimo and self.docs[i].herramienta not in COMPUESTAS
+        ][:k]
 
 
 #: Qué cubre cada familia, para que el agente sepa qué existe antes de buscar (Speakeasy: con

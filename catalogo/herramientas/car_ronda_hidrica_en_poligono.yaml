@@ -1,0 +1,60 @@
+id: car_ronda_hidrica_en_poligono
+version: 1
+familia: ambiente
+fuente: car.rondas_delimitadas
+pregunta: "¿Este lote toca una ronda hídrica delimitada por la CAR Cundinamarca, y cuánta área de ella tiene?"
+descripcion: >
+  Rondas hídricas delimitadas por la CAR Cundinamarca que tocan un polígono (GeoJSON Polygon en
+  EPSG:4326, hasta 500 vértices y 1 grado de lado), con cuántas hectáreas de cada una caen dentro
+  (area_ha), de la mayor a la menor, y el total: el cuerpo de agua, el componente si la CAR lo
+  distingue (APCA, el área de protección y conservación ambiental, o la faja paralela al cauce),
+  el acto que la delimita y su fecha. La ronda es suelo de protección: el área dentro del lote es
+  la que no se puede construir. Sirve para un lote o una finca; para un punto,
+  car_ronda_hidrica_en_punto. Solo cubre la jurisdicción de la CAR y las 203 rondas que ya
+  delimitó. Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: car_rondas
+    poligono: "{poligono}"
+    select: [OBJECTID, Fuente, Acto_Admin, Fecha]
+    geometria: ninguna
+    area_en_poligono: true
+    order: ["-_area_ha", OBJECTID]
+    limite: 100
+  campos: [OBJECTID, Fuente, Acto_Admin, Fecha]
+salida: RondasHidricasEnPoligono
+derivados:
+  cuerpo_de_agua:
+    de: columna
+    campo: Fuente
+    patron: '^\s*(.+?)(?:\s+-\s+(?:APCA|Faja [Pp]aralela))?\s*(?:[\r\n]|$)'
+  componente:
+    de: columna
+    campo: Fuente
+    patron: '\s-\s+(APCA|Faja [Pp]aralela)\s*$'
+    valores: {APCA: APCA, Faja Paralela: faja paralela, Faja paralela: faja paralela}
+  area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 4}
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca ninguna de las 203 rondas que la CAR Cundinamarca ya delimitó. Eso no quiere
+    decir que no haya ronda: muchos cuerpos de agua de la jurisdicción no tienen aún su ronda
+    delimitada, y esta fuente no los trae.
+cobro: zona
+canario:
+  # Un lote de ~350 m de lado sobre el río Apulo; medido el 2026-11-03 en la capa 0 de la fuente
+  # con el mismo anillo (esriGeometryPolygon, intersects): una ronda, la 96 (Resolución 0352 de
+  # 2018).
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.5245, 4.6300], [-74.5213, 4.6300], [-74.5213, 4.6332], [-74.5245, 4.6332], [-74.5245, 4.6300]]]
+  verdad: {total: 1, cuerpo_de_agua: "Río Apulo", acto_administrativo: "Resolución 0352 de 2018"}
+  campos: [acto_administrativo, area_ha, area_ha_total, componente, cuerpo_de_agua, fecha_acto, id_ronda, nombre_en_la_fuente, total]
+  latencia_max_ms: 5000

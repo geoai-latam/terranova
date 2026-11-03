@@ -211,6 +211,16 @@ def test_sanear_conserva_saltos_y_corta_lo_largo() -> None:
     assert len(largo) == MAX_TEXTO and largo.endswith("…")
 
 
+def test_sanear_repara_la_i_partida() -> None:
+    """SECOP escribe «Medellín» con la «í» partida: U+FFFD y un guion suave (medido el 2026-11-03
+    en gra4-pcp2, 223 466 filas)."""
+    assert (
+        sanear("Colombia;  Antioquia ;  Medell\ufffd\u00adn") == "Colombia;  Antioquia ;  Medellín"
+    )
+    assert sanear("Bol\ufffd\u00advar y Quind\ufffd\u00ado") == "Bolívar y Quindío"
+    assert sanear("sin guion \ufffd") == "sin guion \ufffd"
+
+
 @pytest.mark.parametrize(
     ("valor", "tipo", "esperado"),
     [
@@ -900,6 +910,28 @@ def test_la_fecha_de_constitucion_y_la_de_modificacion_salen_aparte() -> None:
     assert cabrera["fecha_constitucion"] == "2000-11-07" and cabrera["fecha_modificacion"] is None
 
 
+def test_la_ronda_separa_el_cuerpo_de_agua_del_componente() -> None:
+    """La CAR pega el componente al nombre («Quebrada Carrizal - APCA»), lo escribe de dos formas
+    («Faja Paralela», «Faja paralela») y a veces repite el nombre en otra línea (medido el
+    2026-11-03 en las 203 rondas)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["car_ronda_hidrica_en_punto"]
+    fuente = CATALOGO.fuentes[h.fuente]
+    casos = {
+        "Quebrada Carrizal - APCA": ("Quebrada Carrizal", "APCA"),
+        "Quebrada Suralá - Faja Paralela": ("Quebrada Suralá", "faja paralela"),
+        "Quebrada Chucua Sopó - Faja paralela": ("Quebrada Chucua Sopó", "faja paralela"),
+        "Quebrada Artesa \r\nQuebrada Artesa": ("Quebrada Artesa", None),
+        "Río Teusacá_parte alta": ("Río Teusacá_parte alta", None),
+        "": (None, None),
+    }
+    for nombre, (cuerpo, componente) in casos.items():
+        fila = mapear_fila(h, fuente, {"Fuente": nombre}, None)
+        assert (fila["cuerpo_de_agua"], fila["componente"]) == (cuerpo, componente), nombre
+        assert fila["nombre_en_la_fuente"] == (nombre or None)  # tal como lo escribe la CAR
+
+
 def test_patron_y_orden_fecha_solo_en_un_derivado_columna() -> None:
     from terranova.catalogo import Derivado
 
@@ -963,6 +995,23 @@ def test_suma_por_categoria_con_la_mayor_primero() -> None:
     resultado = derivar_resultado(d, elementos, None)
     assert resultado == {"Consolidación": 60.68, "Renovación": 29.41}
     assert list(resultado) == ["Consolidación", "Renovación"]
+
+
+def test_suma_por_de_un_conteo_sale_entera() -> None:
+    """Los casos de cada delito en Yopal 2025 (medido el 2026-11-03 en d4fr-sbn2): 21 abigeatos,
+    no 21.0."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    d = Derivado(de="suma_por", campo="tipo", sumar="casos", tipo="int")
+    elementos: list[dict[str, Any]] = [
+        {"tipo": "HURTO ABIGEATO", "casos": 4},
+        {"tipo": "HURTO ABIGEATO", "casos": 17},
+        {"tipo": "HURTO ENTIDADES FINANCIERAS", "casos": 1},
+    ]
+    resultado = derivar_resultado(d, elementos, None)
+    assert resultado == {"HURTO ABIGEATO": 21, "HURTO ENTIDADES FINANCIERAS": 1}
+    assert all(type(v) is int for v in resultado.values())
 
 
 def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:

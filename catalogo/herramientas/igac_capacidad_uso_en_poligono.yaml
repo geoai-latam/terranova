@@ -1,12 +1,15 @@
 id: igac_capacidad_uso_en_poligono
-version: 2
+version: 3
 familia: territorio
 fuente: igac.agrologia.capacidad_uso
 pregunta: "¿Qué capacidad de uso tiene el suelo de este polígono?"
 descripcion: >
   Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): clase y subclase de
   capacidad y su descripción. El agua (CA) y lo urbano (ZU) no tienen clase agrológica:
-  `unidad_capacidad_significado` dice qué son. Cobertura nacional; a esa escala no sirve para un predio.
+  `unidad_capacidad_significado` dice qué son. Cada fila trae `area_ha`, las hectáreas de esa
+  unidad dentro del polígono (la mayor primero); `area_ha_por_unidad` las suma por unidad (una
+  unidad puede venir en varios pedazos) y `area_ha_total` da el total, para sacar el porcentaje.
+  Cobertura nacional; a esa escala no sirve para un predio.
   Sale de la copia de Terrnova de la capa del IGAC.
   (Fuente: IGAC; licencia: CC BY 4.0.)
 entrada: {poligono: poligono}
@@ -18,12 +21,16 @@ consulta:
     poligono: "{poligono}"
     select: [UCCapacida, Descripcio]
     geometria: simplificada
-    order: [OBJECTID]
+    area_en_poligono: true
+    order: ["-_area_ha", OBJECTID]
     limite: 200
   campos: [UCCapacida, Descripcio]
 salida: CapacidadUsoEnPoligono
 derivados:
   total: {de: completitud_total, tipo: int}
+  area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
+  area_ha_por_unidad: {de: suma_por, campo: unidad_capacidad, sumar: area_ha, decimales: 2}
 cobro: zona
 canario:
   # Franja en diagonal junto al punto del canario de igac_capacidad_uso_en_punto; medido el 2026-11-01 en la capa
@@ -34,5 +41,5 @@ canario:
       type: Polygon
       coordinates: [[[-74.0462, 4.8419], [-74.0062, 4.8819], [-74.0102, 4.8859], [-74.0502, 4.8459], [-74.0462, 4.8419]]]
   minimos: {total: 1}
-  campos: [descripcion_capacidad, total, unidad_capacidad, unidad_capacidad_significado]
+  campos: [area_ha, area_ha_por_unidad, area_ha_total, descripcion_capacidad, total, unidad_capacidad, unidad_capacidad_significado]
   latencia_max_ms: 8000

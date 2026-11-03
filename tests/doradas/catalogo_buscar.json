@@ -1,5 +1,6 @@
 {
- "grabado": "2026-10-25T00:00:00+00:00",
+ "geometria_reducida": true,
+ "grabado": "2026-11-03T17:09:52+00:00",
  "herramienta": "catalogo_buscar",
  "llamadas": [
   {
@@ -8,11 +9,9 @@
     "limite": 20
    },
    "conector": "catalogo_dcat",
-   "tool": "buscar_catalogo",
    "respuesta": {
     "artifacts": [
      {
-      "kind": "table",
       "columns": [
        "id",
        "titulo",
@@ -23,38 +22,250 @@
        "url",
        "parecido"
       ],
+      "kind": "table",
       "rows": [
        {
-        "id": "4a673b3d51c146abab5fd462992dd2c0:0",
-        "titulo": "runap - Registro Único Nacional de Áreas Protegidas",
-        "entidad": "Parques Nacionales Naturales de Colombia",
-        "licencia": "http://creativecommons.org/licenses/by/4.0/",
-        "actualizado_en": "2026-09-30T00:00:00.000Z",
-        "protocolo": "arcgis_rest",
-        "url": "https://mapas.parquesnacionales.gov.co/arcgis/rest/services/pnn/runap/MapServer",
-        "parecido": 0.66
+        "actualizado_en": "",
+        "entidad": "Parques Nacionales Naturales de Colombia (PNN)",
+        "id": "pnn_areas_protegidas_en_punto",
+        "licencia": "CC-BY-SA-4.0",
+        "parecido": null,
+        "protocolo": "terrnova",
+        "titulo": "¿Qué áreas protegidas del RUNAP contienen este punto?",
+        "url": "https://terrnova.com/v1/co/ambiente/pnn_areas_protegidas_en_punto"
        },
        {
-        "id": "7365da6723ee43ff9124d8c7777dbe64:3",
-        "titulo": "Dato Fundamental - Límites de áreas protegidas",
-        "entidad": "Instituto Geográfico Agustín Codazzi",
-        "licencia": "http://creativecommons.org/licenses/by/4.0/",
-        "actualizado_en": "2026-09-30T00:00:00.000Z",
-        "protocolo": "arcgis_rest",
-        "url": "https://mapas.igac.gov.co/server/rest/services/Dato_Fundamental/MapServer",
-        "parecido": 0.58
+        "actualizado_en": "",
+        "entidad": "Parques Nacionales Naturales de Colombia (PNN)",
+        "id": "pnn_areas_protegidas_en_zona",
+        "licencia": "CC-BY-SA-4.0",
+        "parecido": null,
+        "protocolo": "terrnova",
+        "titulo": "¿Qué áreas protegidas del RUNAP tocan esta zona?",
+        "url": "https://terrnova.com/v1/co/ambiente/pnn_areas_protegidas_en_zona"
+       },
+       {
+        "actualizado_en": "",
+        "entidad": "Parques Nacionales Naturales de Colombia (PNN)",
+        "id": "pnn_areas_protegidas_en_poligono",
+        "licencia": "CC-BY-SA-4.0",
+        "parecido": null,
+        "protocolo": "terrnova",
+        "titulo": "¿Qué áreas protegidas del RUNAP tocan este polígono?",
+        "url": "https://terrnova.com/v1/co/ambiente/pnn_areas_protegidas_en_poligono"
+       },
+       {
+        "actualizado_en": "2025-07-07T15:08:29.000Z",
+        "entidad": "Alcaldía de Restrepo, Valle del Cauca",
+        "id": "sww2-xjp6",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.861,
+        "protocolo": "socrata",
+        "titulo": "CENSO DE AREAS PROTEGIDAS DEL MUNICIPIO DE RESTREPO VALLE",
+        "url": "https://www.datos.gov.co/resource/sww2-xjp6.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:52:48.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "7pf4-wap5",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.874,
+        "protocolo": "socrata",
+        "titulo": "Predios en Sector de Interés Urbanístico",
+        "url": "https://www.datos.gov.co/resource/7pf4-wap5.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:52:48.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "2cxh-cb3n",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.817,
+        "protocolo": "socrata",
+        "titulo": "Predios del Parque Arqueológico y del Patrimonio de Usme",
+        "url": "https://www.datos.gov.co/resource/2cxh-cb3n.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:50:46.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "9vit-8rxn",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.8,
+        "protocolo": "socrata",
+        "titulo": "Mediana del valor comercial por metro cuadrado de terreno por manzana – Valor de referencia. Bogotá D.C.",
+        "url": "https://www.datos.gov.co/resource/9vit-8rxn.json"
+       },
+       {
+        "actualizado_en": "2025-07-22T16:10:52.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "sk7s-sksz",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.863,
+        "protocolo": "socrata",
+        "titulo": "POT - Área de protección forestal de recursos hídricos",
+        "url": "https://www.datos.gov.co/resource/sk7s-sksz.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:50:52.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "wixp-p6ti",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.825,
+        "protocolo": "socrata",
+        "titulo": "Mediana del avalúo catastral por manzana. Bogotá D.C.",
+        "url": "https://www.datos.gov.co/resource/wixp-p6ti.json"
+       },
+       {
+        "actualizado_en": "2026-06-12T18:42:25.000Z",
+        "entidad": "Corporación Autónoma Regional de la Orinoquia, Casanare",
+        "id": "ii4j-7z73",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.86,
+        "protocolo": "socrata",
+        "titulo": "AREAS PROTEGIDAS JURIDICCIÓN CORPORINOQUIA",
+        "url": "https://www.datos.gov.co/resource/ii4j-7z73.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:50:53.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "3crt-7k2k",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.816,
+        "protocolo": "socrata",
+        "titulo": "Mediana del avalúo catastral por metro cuadrado de predios en propiedad horizontal por manzana. Bogotá D.C",
+        "url": "https://www.datos.gov.co/resource/3crt-7k2k.json"
+       },
+       {
+        "actualizado_en": "2026-03-26T16:42:10.000Z",
+        "entidad": "Corporación Autónoma Regional del Centro de Antioquia, Antioquia",
+        "id": "e5yn-j87n",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.856,
+        "protocolo": "socrata",
+        "titulo": "Áreas protegidas Corantioquia",
+        "url": "https://www.datos.gov.co/resource/e5yn-j87n.json"
+       },
+       {
+        "actualizado_en": "2025-11-21T21:01:40.000Z",
+        "entidad": "Unidad de Planificación de Tierras Rurales, Adecuación de Tierras y Usos Agropecuarios - UPRA, Bogotá D.C.",
+        "id": "5e9y-hi5u",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.852,
+        "protocolo": "socrata",
+        "titulo": "Áreas de Protección para la Producción de alimentos de los municipios de Fredonia, departamento de Antioquia.",
+        "url": "https://www.datos.gov.co/resource/5e9y-hi5u.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:50:52.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "y4vn-rqq5",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.813,
+        "protocolo": "socrata",
+        "titulo": "Mediana del avalúo catastral por manzana según grupo de uso económico. Bogotá D.C.",
+        "url": "https://www.datos.gov.co/resource/y4vn-rqq5.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:52:16.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "izri-h849",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.852,
+        "protocolo": "socrata",
+        "titulo": "Predio ubicado en polígono de monitoreo",
+        "url": "https://www.datos.gov.co/resource/izri-h849.json"
+       },
+       {
+        "actualizado_en": "2026-07-10T19:50:53.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "q2iy-82tm",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.812,
+        "protocolo": "socrata",
+        "titulo": "Mediana del avalúo catastral por metro cuadrado de predios en propiedad horizontal por manzana según grupo de uso económico. Bogotá D.C.",
+        "url": "https://www.datos.gov.co/resource/q2iy-82tm.json"
+       },
+       {
+        "actualizado_en": "2025-07-22T16:12:35.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "bea9-792z",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.851,
+        "protocolo": "socrata",
+        "titulo": "POT - Áreas protegidas",
+        "url": "https://www.datos.gov.co/resource/bea9-792z.json"
+       },
+       {
+        "actualizado_en": "2025-07-22T16:12:49.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "2w4u-4u4s",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.82,
+        "protocolo": "socrata",
+        "titulo": "Inventario de los humedales urbanos de Santiago de Cali",
+        "url": "https://www.datos.gov.co/resource/2w4u-4u4s.json"
+       },
+       {
+        "actualizado_en": "2025-07-22T16:12:01.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "gst2-atwp",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.849,
+        "protocolo": "socrata",
+        "titulo": "POT - Áreas de protección forestal AF",
+        "url": "https://www.datos.gov.co/resource/gst2-atwp.json"
+       },
+       {
+        "actualizado_en": "2025-07-22T16:11:10.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "adat-82s2",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.849,
+        "protocolo": "socrata",
+        "titulo": "POT - Polígonos SIMAP",
+        "url": "https://www.datos.gov.co/resource/adat-82s2.json"
+       },
+       {
+        "actualizado_en": "2023-11-22T21:18:04.000Z",
+        "entidad": "Corporación Autónoma Regional del Guavio, Cundinamarca",
+        "id": "xpgq-dbtk",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.849,
+        "protocolo": "socrata",
+        "titulo": "AREAS PROTEGIDAS",
+        "url": "https://www.datos.gov.co/resource/xpgq-dbtk.json"
+       },
+       {
+        "actualizado_en": "2026-03-20T19:02:06.000Z",
+        "entidad": "Ministerio de Tecnologías de la Información y las Comunicaciones - Datos Abiertos",
+        "id": "fkui-y2jm",
+        "licencia": "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)",
+        "parecido": 0.849,
+        "protocolo": "socrata",
+        "titulo": "Areas protegidas declaradas CAR",
+        "url": "https://www.datos.gov.co/resource/fkui-y2jm.json"
+       },
+       {
+        "actualizado_en": "2023-04-17T21:29:22.000Z",
+        "entidad": "Alcaldía de Palmira, Valle del Cauca",
+        "id": "etbu-9933",
+        "licencia": "Creative Commons Attribution | Share Alike 4.0 International",
+        "parecido": 0.849,
+        "protocolo": "socrata",
+        "titulo": "Predios para conservación y protección Palmira.",
+        "url": "https://www.datos.gov.co/resource/etbu-9933.json"
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "vistos": 2,
-      "total": 2,
-      "truncado": false
+      "total": 38,
+      "truncado": true,
+      "vistos": 23
      }
     }
-   }
+   },
+   "tool": "buscar_catalogo"
   }
  ]
 }

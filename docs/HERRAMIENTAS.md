@@ -11,6 +11,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_sumapaz_en_punto` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este punto? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 10 |
+| `car_ronda_hidrica_en_poligono` | ¿Este lote toca una ronda hídrica delimitada por la CAR Cundinamarca, y cuánta área de ella tiene? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
 | `ideam_alertas_deslizamiento_municipio` | ¿Hay alerta por deslizamiento en este municipio? ¿Cuáles fueron sus alertas recientes? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 2 |

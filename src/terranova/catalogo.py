@@ -1009,7 +1009,8 @@ class Derivado(_Ficha):
     Por elemento: `capa` (valor según la capa que respondió, `valores`), `prefijo` (los `n`
     primeros caracteres de `campo`, ya en nombre rt/1) y `columna` (una columna cruda del
     resultado, p. ej. un alias de un `select` agregado; con `patron`, solo el grupo 1 de esa
-    expresión regular, y con `orden_fecha`, la fecha en texto pasa a ISO) y `codigo` (el
+    expresión regular; con `valores`, lo hallado escrito de varias formas pasa a una sola, y con
+    `orden_fecha`, la fecha en texto pasa a ISO) y `codigo` (el
     significado de un código de `campo`, ya en nombre rt/1, según `valores`: p. ej. el nombre
     oficial del departamento por su código DIVIPOLA) y `fijo` (un `valor` que vale para toda la
     fuente: el año 2018 de una medida censal que no lo trae en la tabla). En secuencia:

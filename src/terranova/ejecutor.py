@@ -301,9 +301,15 @@ _BIDI_Y_CONTROL = re.compile(
 )
 
 
+# La «í» en UTF-8 es C3 AD. Si la fuente pierde el C3, queda U+FFFD seguido de un guion suave
+# (U+00AD): SECOP escribe «Medell\ufffd\u00adn» en 223 466 ubicaciones (medido el 2026-11-03 en
+# gra4-pcp2). Ese par no es texto en ningún caso: se lee como la «í» que era.
+_I_PARTIDA = "\ufffd\u00ad"
+
+
 def sanear(texto: str) -> str:
     """Texto de la fuente sin control ni bidi y con el largo máximo de `rt/1` (regla 9)."""
-    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto))
+    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto.replace(_I_PARTIDA, "í")))
     return limpio if len(limpio) <= MAX_TEXTO else limpio[: MAX_TEXTO - 1] + "…"
 
 
@@ -434,6 +440,9 @@ def mapear_fila(
                 crudo = hallado.group(1) if hallado else None
             if d.html and crudo is not None:
                 crudo = texto_de_html(str(crudo))
+            if d.valores is not None and crudo is not None:
+                # la misma cosa escrita de varias formas («Faja Paralela», «Faja paralela»)
+                crudo = d.valores.get(str(crudo), crudo)
             if d.orden_fecha and isinstance(crudo, str):
                 crudo = fecha_en_orden(crudo, d.orden_fecha)
             out[nombre] = convertir(crudo, d.tipo)
@@ -570,7 +579,11 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
             if clave is not None and valor is not None and _numero(valor):
                 sumas[str(clave)] = sumas.get(str(clave), 0.0) + float(valor)
         cifras = 6 if d.decimales is None else d.decimales
-        return {k: round(v, cifras) for k, v in sorted(sumas.items(), key=lambda kv: -kv[1])}
+        # con `tipo: int`, un conteo sale entero (21, no 21.0)
+        return {
+            k: round(v) if d.tipo == "int" else round(v, cifras)
+            for k, v in sorted(sumas.items(), key=lambda kv: -kv[1])
+        }
     if d.de == "suma":
         return convertir(round(sum(numeros), 6), d.tipo) if numeros else None
     if d.de == "maximo":
