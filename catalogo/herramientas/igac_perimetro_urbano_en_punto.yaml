@@ -1,11 +1,13 @@
 id: igac_perimetro_urbano_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.perimetro
 pregunta: "¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál?"
 descripcion: >
   Perímetro urbano catastral (IGAC) que contiene un punto: el casco urbano o centro poblado COMPLETO
-  (su nombre, su tipo y los códigos del departamento y del municipio). Es el límite del casco urbano,
+  (su nombre, su tipo con su significado si la capa da un código, y los códigos del departamento
+  y del municipio: el DIVIPOLA es los dos juntos). `tipo_avaluo` es un código que la capa no
+  explica: no lo interprete. Es el límite del casco urbano,
   NO la manzana; para la manzana concreta de ese punto usa igac_manzana_en_punto. Fuera de los
   perímetros (suelo rural) no responde. Cubre los municipios con gestión catastral del IGAC; Bogotá,
   Medellín, Cali y otros gestores no están en esta fuente.

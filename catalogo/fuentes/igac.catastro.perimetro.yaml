@@ -30,8 +30,17 @@ datos_personales: ninguno
 estado: publicada
 campos:
   NOMBRE_GEOGRAFICO: {nombre: nombre_centro_poblado, tipo: str, desc: "nombre del casco urbano o centro poblado"}
-  CODIGO_NOMBRE: {nombre: tipo_centro_poblado, tipo: str, desc: "tipo según el IGAC (cabecera, corregimiento…)"}
-  TIPO_AVALUO: {nombre: tipo_avaluo, tipo: str, desc: "código del tipo de avalúo (01 urbano)"}
+  # La mayoría trae el tipo en texto («Cabecera Municipal»); algunos, el código del dominio de la
+  # capa («8326», 14 perímetros; «8307», 30): el significado los traduce. Medido el 2026-11-03.
+  CODIGO_NOMBRE:
+    nombre: tipo_centro_poblado
+    tipo: str
+    desc: "tipo según el IGAC (cabecera, corregimiento…), en texto o como código del dominio de la capa"
+    codigos: {"8301": "Área Metropolitana", "8302": "Área Natural Única", "8303": "Barrio", "8304": "Cabecera Municipal", "8305": "Caserío", "8306": "Tierras Colectivas de Comunidades Negras", "8307": "Corregimiento", "8308": "Corregimiento Departamental", "8309": "Departamento", "8310": "Distrito", "8311": "Localidad", "8312": "Municipio", "8313": "Parque Arqueológico", "8314": "Parque Nacional Natural", "8315": "Provincia", "8316": "Ranchería Indígena", "8317": "República", "8318": "Reserva Indígena", "8319": "Reserva Natural", "8320": "Resguardo Indígena", "8321": "Santuario de Flora y Fauna", "8322": "Vereda", "8323": "Inspección de Policía", "8324": "Capital", "8325": "Región", "8326": "Zona Urbana", "8327": "Sector", "8328": "Comuna"}
+    codigos_norma: "dominio de CODIGO_NOMBRE en la capa U_PERIMETRO (2) del servicio Base_Catastral_Publica_del_Gestor_IGAC_06_2026"
+  # Sin dominio publicado: «01» en 721 perímetros, «02» en 325… hasta «43», más códigos de 7
+  # dígitos, vacíos y un «URBANO» (medido el 2026-11-03). No es «01 urbano».
+  TIPO_AVALUO: {nombre: tipo_avaluo, tipo: str, desc: "código de avalúo que trae la capa, sin significado publicado (01, 02… y códigos de 7 dígitos)"}
   DEPARTAMENTO_CODIGO: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento, 2 dígitos"}
   MUNICIPIO_CODIGO: {nombre: municipio_codigo, tipo: str, desc: "código del municipio dentro del departamento, 3 dígitos (el DIVIPOLA es departamento + municipio)"}
 # `codigo_municipio` de la fuente no se usa: para Chía dice 23175 (el DIVIPOLA es 25175), medido el 2026-10-22
