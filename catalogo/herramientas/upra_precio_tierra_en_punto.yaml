@@ -1,5 +1,5 @@
 id: upra_precio_tierra_en_punto
-version: 3
+version: 4
 familia: territorio
 fuente: upra.rango_precios_nacional
 pregunta: "¿Cuánto vale la tierra rural en este punto según la UPRA?"
@@ -23,6 +23,8 @@ consulta:
     limite: 5
   campos: [departamen, municipio, cod_dane_mpio, rango_precios, cod_precios, categoria_mtv11, vigencia, area_ha, consecutivo]
 salida: PrecioTierraEnPunto
+derivados:
+  area_ha: {de: columna, campo: area_ha, tipo: float, decimales: 2}
 avisos:
 - cuando: encontrado
   texto: >

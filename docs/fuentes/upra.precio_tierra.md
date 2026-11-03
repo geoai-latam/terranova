@@ -53,8 +53,8 @@ texto («Mayor que 60 - hasta 70»), su código, la categoría para el mercado d
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `upra_precio_tierra_en_punto` | medio → alto | aviso del año del estudio y del vacío |
-| `upra_rangos_precio_municipio` | medio → alto | igual; agrega hectáreas y zonas por rango |
+| `upra_precio_tierra_en_punto` (v4) | alto | aviso del año del estudio y del vacío; área con dos decimales |
+| `upra_rangos_precio_municipio` (v4) | alto | igual; agrega hectáreas (dos decimales) y zonas por rango |
 | `upra_precio_tierra_rural_municipio` (v2) | bajo → medio | agregada por rango, con unidad y categorías; para lo que la capa nacional no trae |
 
 ## Decisiones
@@ -73,3 +73,8 @@ texto («Mayor que 60 - hasta 70»), su código, la categoría para el mercado d
   - `categoria` traduce las siglas CA, ZU, NS y SI.
   - Un aviso da la unidad y que esta versión no trae el año. La descripción y el vacío remiten a
     `upra_rangos_precio_municipio`.
+- **2026-11-03, revisión de valor (cierre):**
+  - Revisado en producción que el aviso del año ya no contradice los datos. Casos: Cota, vigencia
+    2016; Magangué (13430), vigencia 2023; Chía, vacío con su aviso.
+  - Las hectáreas llegaban con 8 a 12 decimales (`53369.444637750035`). En la v4 de las dos
+    herramientas de la capa nacional salen con dos.
