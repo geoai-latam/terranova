@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T00:45:09+00:00",
+ "grabado": "2026-11-03T20:53:57+00:00",
  "herramienta": "ani_concesiones_viales_en_zona",
  "llamadas": [
   {
@@ -11,7 +11,7 @@
      -73.9,
      5.05
     ],
-    "geometria": "ninguna",
+    "geometria": "simplificada",
     "max_features": 100,
     "out_fields": [
      "nombrepr",
@@ -36,7 +36,13 @@
       "data": {
        "features": [
         {
-         "geometry": null,
+         "geometry": {
+          "coordinates": [
+           -73.94253,
+           4.91343
+          ],
+          "type": "Point"
+         },
          "properties": {
           "concesionario": "PERIMETRAL ORIENTAL DE BOGOTA S.A.S",
           "etp": "Construcción",
@@ -53,7 +59,13 @@
          "type": "Feature"
         },
         {
-         "geometry": null,
+         "geometry": {
+          "coordinates": [
+           -73.94907,
+           4.94812
+          ],
+          "type": "Point"
+         },
          "properties": {
           "concesionario": "BTS CONCESIONARIO S.A.S.",
           "etp": "Operación",
@@ -70,7 +82,13 @@
          "type": "Feature"
         },
         {
-         "geometry": null,
+         "geometry": {
+          "coordinates": [
+           -74.03131,
+           4.81887
+          ],
+          "type": "Point"
+         },
          "properties": {
           "concesionario": "ACCESOS NORTE DE BOGOTÁ S.A.S.",
           "etp": "Construcción",
@@ -87,7 +105,13 @@
          "type": "Feature"
         },
         {
-         "geometry": null,
+         "geometry": {
+          "coordinates": [
+           -74.04317,
+           4.76932
+          ],
+          "type": "Point"
+         },
          "properties": {
           "concesionario": "CONCESIONARIA RUTA BOGOTÁ NORTE S.A.S.",
           "etp": "Pre-construcción",

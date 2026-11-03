@@ -1,5 +1,5 @@
 id: ani_concesiones_viales_en_zona
-version: 2
+version: 3
 familia: territorio
 fuente: ani.concesiones_viales
 pregunta: "¿Qué concesiones viales de la ANI pasan por esta zona?"
@@ -8,7 +8,8 @@ descripcion: >
   (1G a 5G), etapa, empresa concesionaria, longitud concesionada, avance de obra (fracción de 0 a 1,
   con la fecha del reporte) y valor del contrato (en pesos de su fecha de referencia, y llevado a
   pesos de 2021). Solo las vías concesionadas por la ANI; la red vial a cargo del INVÍAS no está aquí.
-  Para los peajes, ani_peajes_en_zona.
+  Trae el corredor de cada concesión, entero y simplificado a unos 55 m: sirve para verlo en un
+  mapa, no para medir. Para los peajes, ani_peajes_en_zona.
   (Fuente: ANI; licencia: CC BY-SA 4.0.)
 entrada: {bbox: bbox}
 consulta:
@@ -18,7 +19,7 @@ consulta:
   argumentos:
     url: "{url_capa}"
     bbox: "{bbox}"
-    geometria: ninguna
+    geometria: simplificada  # el corredor entero (no solo el tramo dentro del rectángulo); canario 323 KB, el país 1,6 MB (medido 2026-11-03)
     out_fields: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
     max_features: 100
   campos: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
