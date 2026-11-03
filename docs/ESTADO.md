@@ -250,6 +250,8 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     arriba.
   - En SECOP II se suma cuánto va por contratación directa: Chía 2026, 1 586 de 1 814 ítems.
   - SECOP I avisa que los valores los digita la entidad: Vergara declara 12,8 billones.
+- **DIAN, comercio exterior (patrón E, decimales):** valores, peso y cantidad con dos decimales;
+  antes salía el ruido de la suma (9930919822.169998).
 
 ## Ficha de un lote (2026-11-01)
 
