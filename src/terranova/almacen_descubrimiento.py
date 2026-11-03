@@ -28,9 +28,15 @@ from terranova.descubrimiento import (
 )
 
 if TYPE_CHECKING:
+    from terranova.catalogo import Catalogo
     from terranova.descubrimiento import Embedder
+    from terranova.perfil_catalogo import IndiceHerramientas
 
 ESQUEMA = "descubrimiento"
+URL_PUBLICA = "https://terrnova.com"
+EF_SEARCH = 400
+# ADR-0019: una fuente sin licencia verificada se trata como BY-SA
+LICENCIA_NO_DECLARADA = "no declarada: se trata como CC BY-SA 4.0 (ADR-0019)"
 
 
 def _vector_literal(v: tuple[float, ...]) -> str:
@@ -72,10 +78,12 @@ class AlmacenDescubrimiento:
             import importlib
 
             psycopg: Any = importlib.import_module("psycopg")  # extra opcional `postgres`
-            opciones = (
-                {"options": f"-c statement_timeout={self._timeout_ms}"} if self._timeout_ms else {}
-            )
-            self._conexion = psycopg.connect(self._url, autocommit=True, **opciones)
+            # HNSW mira solo los `ef_search` vecinos más cercanos (40 por defecto) y después aplica
+            # el piso: «buses de TransMilenio» contaba 6 sobre el piso y devolvía 2 (2026-11-03).
+            opciones = f"-c hnsw.ef_search={EF_SEARCH}"
+            if self._timeout_ms:
+                opciones += f" -c statement_timeout={self._timeout_ms}"
+            self._conexion = psycopg.connect(self._url, autocommit=True, options=opciones)
         return self._conexion
 
     def rota(self) -> bool:
@@ -332,9 +340,45 @@ class ConectorCatalogo:
     La herramienta `catalogo_buscar` embebe la consulta (con el microservicio) y busca en
     `descubrimiento.datasets`. La puerta no decide nada: solo recupera y surte procedencia."""
 
-    def __init__(self, almacen: AlmacenDescubrimiento, embedder: Embedder | None) -> None:
+    def __init__(
+        self,
+        almacen: AlmacenDescubrimiento,
+        embedder: Embedder | None,
+        catalogo: Catalogo | None = None,
+    ) -> None:
         self._almacen = almacen
         self._embedder = embedder
+        self._catalogo = catalogo
+        self._indice: IndiceHerramientas | None = None
+
+    def herramientas(self, consulta: str, k: int = 3) -> list[dict[str, Any]]:
+        """Las herramientas de Terrnova que casan con fuerza con la consulta, como filas del
+        buscador (`protocolo: terrnova`). Van antes que los datasets: su licencia está verificada
+        y su respuesta, curada (revisión de valor: a «áreas protegidas de un predio» el buscador
+        daba primero un censo de Restrepo, y la herramienta del RUNAP no salía)."""
+        if self._catalogo is None:
+            return []
+        from terranova.perfil_catalogo import IndiceHerramientas, documentos
+
+        if self._indice is None:
+            self._indice = IndiceHerramientas(documentos(self._catalogo))
+        filas = []
+        for d in self._indice.por_palabras(consulta, k=k):
+            h = self._catalogo.herramientas[d.herramienta]
+            f = self._catalogo.fuentes.get(h.fuente)
+            filas.append(
+                {
+                    "id": h.id,
+                    "titulo": h.pregunta,
+                    "entidad": f.entidad if f else "",
+                    "licencia": (f.licencia.spdx if f else None) or LICENCIA_NO_DECLARADA,
+                    "actualizado_en": "",
+                    "protocolo": "terrnova",
+                    "url": f"{URL_PUBLICA}/v1/co/{h.familia}/{h.id}",
+                    "parecido": None,
+                }
+            )
+        return filas
 
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         from terranova.conector import ErrorConector
@@ -358,12 +402,14 @@ class ConectorCatalogo:
             # (dimensión de vector, SQL) = error_interno (honestidad: no es que la fuente se cayera,
             # y así no recicla caché obsoleta ni abre el cortacircuitos de proteccion.py)
             raise ErrorConector(f"catalogo: {type(exc).__name__}", _codigo_catalogo(exc)) from exc
-        filas = [
+        propias = await asyncio.to_thread(self.herramientas, consulta)
+        filas = propias + [
             {
                 "id": d.id_socrata,
                 "titulo": d.titulo,
                 "entidad": d.entidad,
-                "licencia": d.licencia or "",
+                # ADR-0019: sin licencia declarada se trata como BY-SA, y el cliente debe saberlo
+                "licencia": d.licencia or LICENCIA_NO_DECLARADA,
                 "actualizado_en": d.actualizado_en or "",
                 "protocolo": d.protocolo,
                 "url": d.url,
@@ -390,9 +436,10 @@ class ConectorCatalogo:
             "artifacts": [{"kind": "table", "columns": columnas, "rows": filas}],
             "facts": {
                 "completitud": {
+                    # las herramientas propias cuentan en lo visto y en el total
                     "vistos": len(filas),
-                    "total": total,
-                    "truncado": len(filas) < total,
+                    "total": total + len(propias),
+                    "truncado": len(filas) < total + len(propias),
                 }
             },
         }
@@ -421,7 +468,7 @@ def _codigo_catalogo(exc: Exception) -> str:
     return "fuente_no_disponible" if type(exc).__name__ in _CAIDA else "error_interno"
 
 
-def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:
+def conector_catalogo_desde_entorno(catalogo: Catalogo | None = None) -> ConectorCatalogo | None:
     """El conector `catalogo_dcat` si hay base (`TERRANOVA_CURADO_URL`/`TERRANOVA_COPIAS_URL`). El
     embebedor habla con el microservicio (`TERRANOVA_EMBEDDINGS_URL`); sin él, el conector existe
     pero responde `fuente_no_disponible` (honesto: no hay con qué embeber)."""
@@ -446,4 +493,4 @@ def conector_catalogo_desde_entorno() -> ConectorCatalogo | None:
         except ImportError:
             embedder = None
     tope = int(os.environ.get("TERRANOVA_COPIAS_TIMEOUT_MS", "15000"))
-    return ConectorCatalogo(AlmacenDescubrimiento(url, timeout_ms=tope), embedder)
+    return ConectorCatalogo(AlmacenDescubrimiento(url, timeout_ms=tope), embedder, catalogo)

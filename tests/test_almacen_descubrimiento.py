@@ -143,6 +143,31 @@ async def test_conector_catalogo_busca_y_surte_procedencia() -> None:
 
 
 @pytest.mark.anyio
+async def test_las_herramientas_de_terrnova_van_antes_que_los_datasets() -> None:
+    """Revisión de valor: a «áreas protegidas de un predio» el buscador daba primero un censo de
+    Restrepo y no remitía a la herramienta del RUNAP (medido en producción el 2026-11-03)."""
+    from terranova.catalogo import cargar
+
+    sin_licencia = _ds("censo", "Censo de áreas protegidas de Restrepo", licencia=None)
+    con = ConectorCatalogo(_AlmacenFalso([sin_licencia]), _EmbedderFalso(), cargar())  # type: ignore[arg-type]
+    r = await con.llamar("buscar_catalogo", {"consulta": "áreas protegidas de un predio"})
+    filas = r["artifacts"][0]["rows"]
+    assert [f["id"] for f in filas[:3]] == [
+        "pnn_areas_protegidas_en_punto",
+        "pnn_areas_protegidas_en_zona",
+        "pnn_areas_protegidas_en_poligono",
+    ]
+    assert filas[0]["protocolo"] == "terrnova" and filas[0]["parecido"] is None
+    assert filas[0]["url"] == "https://terrnova.com/v1/co/ambiente/pnn_areas_protegidas_en_punto"
+    assert filas[0]["licencia"] == "CC-BY-SA-4.0"
+    assert filas[3]["id"] == "censo" and filas[3]["licencia"].startswith("no declarada")
+    assert r["facts"]["completitud"] == {"vistos": 4, "total": 4, "truncado": False}
+    # una pregunta sin herramienta clara no remite a ninguna (TransMilenio no es un peaje)
+    r = await con.llamar("buscar_catalogo", {"consulta": "buses de TransMilenio"})
+    assert [f["protocolo"] for f in r["artifacts"][0]["rows"]] == ["icde"]
+
+
+@pytest.mark.anyio
 async def test_conector_catalogo_herramienta_desconocida() -> None:
     con = ConectorCatalogo(_AlmacenFalso([]), _EmbedderFalso())  # type: ignore[arg-type]
     with pytest.raises(ErrorConector) as exc:

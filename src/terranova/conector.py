@@ -177,6 +177,6 @@ def conectores_desde_entorno(catalogo: Catalogo | None = None) -> dict[str, Cone
             conectores["copia"] = copia
     from terranova.almacen_descubrimiento import conector_catalogo_desde_entorno
 
-    if (cat := conector_catalogo_desde_entorno()) is not None:
+    if (cat := conector_catalogo_desde_entorno(catalogo)) is not None:
         conectores["catalogo_dcat"] = cat  # G6 (ADR-0028): el buscador del catálogo
     return conectores
