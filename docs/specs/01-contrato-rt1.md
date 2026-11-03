@@ -44,7 +44,7 @@
    fuente no cubre esa zona (índice de cobertura) y no descuenta.
 3. Toda fuente consultada aparece en `procedencia` con licencia y atribución, aunque no haya
    encontrado nada.
-4. `vistos ≤ total`; `truncado ⇔ vistos < total`; si `total` es desconocido, `null` y aviso.
+4. `vistos ≤ total`; `truncado ⇔ vistos < total`; si `total` es desconocido, `null` y aviso. Si una lista de más de un elemento llega al tope de la consulta, el sobre lo avisa («Vinieron N de T…») y lo que `datos` suma o cuenta va solo sobre lo que vino; la paginación lo repite.
 5. `parcial ⇒ errores ≠ []` y cada error nombra su `fuente_id`.
 6. `servido_desde` ∈ {`fuente`, `copia`, `curado`, `cache`, `obsoleto`}; `obsoleto ⇒ aviso` y
    `consultado_en` es la fecha original.

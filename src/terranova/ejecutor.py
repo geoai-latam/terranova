@@ -956,6 +956,22 @@ class Ejecutor:
                 )
         if any(p.completitud.total is None for p in procedencia):
             avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
+        # la lista llegó al tope de la consulta: decirlo en el sobre, no solo en la procedencia.
+        # Con un tope de 200, Chapinero trajo una parte de 948 tratamientos y nada lo decía
+        # (GEO Copilot, 2026-11-03).
+        # (el inicio de un texto largo es un solo elemento cuyo total son caracteres: lo dice
+        # `caracteres`, no este aviso)
+        if (
+            len(elementos) > 1
+            and total is not None
+            and len(elementos) < total
+            and any(p.completitud.truncado for p in principales)
+        ):
+            avisos.append(
+                f"Vinieron {len(elementos)} de {total}: la consulta trae como máximo "
+                f"{len(elementos)}, y la lista y lo que `datos` suma o cuenta van solo sobre esos. "
+                "Acote la búsqueda (zona, periodo o filtro) para tenerlo todo."
+            )
         if fuente.modo == "copia":
             avisos += [_aviso_de_copia(r.hechos) for r in respuestas[:1]]
         if fuente.uso_comercial == "no":

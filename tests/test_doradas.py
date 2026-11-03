@@ -139,3 +139,32 @@ def test_ninguna_dorada_guarda_una_cedula() -> None:
                 for tipo, numero in DOCUMENTOS_SECOP:
                     es_cedula = "dula" in str(fila.get(tipo) or "")
                     assert not (es_cedula and fila.get(numero)), f"{ruta.name}: cédula grabada"
+
+
+@pytest.mark.anyio
+async def test_una_lista_que_llega_al_tope_lo_dice_en_el_sobre() -> None:
+    """Con un tope de 200, Chapinero trajo una parte de 948 tratamientos y solo la procedencia lo
+    decía (GEO Copilot, 2026-11-03). La ANCP grabó 20 de 1207 conceptos."""
+    from terranova.contrato import paginar
+
+    h = CATALOGO.herramientas["ancp_conceptos_buscar"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    assert any(
+        a.startswith("Vinieron 20 de 1207: la consulta trae como máximo 20") for a in sobre.avisos
+    )
+    pagina = paginar(
+        sobre.model_copy(
+            update={"datos": {**sobre.datos, "elementos": sobre.datos["elementos"] * 3}}
+        ),
+        1,
+    )
+    assert "cuentan los elementos que vinieron" in pagina.avisos[-1]
+
+
+@pytest.mark.anyio
+async def test_el_inicio_de_un_texto_largo_no_lleva_el_aviso_del_tope() -> None:
+    h = CATALOGO.herramientas["corte_constitucional_texto_inicio"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    assert not any(a.startswith("Vinieron") for a in sobre.avisos)
