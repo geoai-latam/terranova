@@ -811,6 +811,28 @@ def test_la_fecha_de_constitucion_y_la_de_modificacion_salen_aparte() -> None:
     assert cabrera["fecha_constitucion"] == "2000-11-07" and cabrera["fecha_modificacion"] is None
 
 
+def test_la_ronda_separa_el_cuerpo_de_agua_del_componente() -> None:
+    """La CAR pega el componente al nombre («Quebrada Carrizal - APCA»), lo escribe de dos formas
+    («Faja Paralela», «Faja paralela») y a veces repite el nombre en otra línea (medido el
+    2026-11-03 en las 203 rondas)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["car_ronda_hidrica_en_punto"]
+    fuente = CATALOGO.fuentes[h.fuente]
+    casos = {
+        "Quebrada Carrizal - APCA": ("Quebrada Carrizal", "APCA"),
+        "Quebrada Suralá - Faja Paralela": ("Quebrada Suralá", "faja paralela"),
+        "Quebrada Chucua Sopó - Faja paralela": ("Quebrada Chucua Sopó", "faja paralela"),
+        "Quebrada Artesa \r\nQuebrada Artesa": ("Quebrada Artesa", None),
+        "Río Teusacá_parte alta": ("Río Teusacá_parte alta", None),
+        "": (None, None),
+    }
+    for nombre, (cuerpo, componente) in casos.items():
+        fila = mapear_fila(h, fuente, {"Fuente": nombre}, None)
+        assert (fila["cuerpo_de_agua"], fila["componente"]) == (cuerpo, componente), nombre
+        assert fila["nombre_en_la_fuente"] == (nombre or None)  # tal como lo escribe la CAR
+
+
 def test_patron_y_orden_fecha_solo_en_un_derivado_columna() -> None:
     from terranova.catalogo import Derivado
 

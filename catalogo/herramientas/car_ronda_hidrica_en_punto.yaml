@@ -1,31 +1,54 @@
 id: car_ronda_hidrica_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: car.rondas_delimitadas
 pregunta: "¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca?"
 descripcion: >
   Ronda hídrica delimitada por la CAR Cundinamarca que contiene un punto: el cuerpo de agua (río,
-  quebrada, laguna, embalse), el acto administrativo que la delimita y su fecha. La ronda es suelo de
-  protección. Solo cubre la jurisdicción de la CAR y las rondas ya delimitadas: si no hay resultado,
-  no quiere decir que el punto esté fuera de toda ronda.
+  quebrada, laguna, embalse), el componente de la ronda si la CAR lo distingue (APCA, el área de
+  protección y conservación ambiental, o la faja paralela al cauce), el acto administrativo que la
+  delimita y su fecha. La ronda es suelo de protección. Una faja paralela mide unos 30 m de ancho:
+  un punto casi siempre cae afuera aunque el lote la toque, así que para un lote use
+  car_ronda_hidrica_en_poligono. Solo cubre la jurisdicción de la CAR y las 203 rondas que ya
+  delimitó: sin resultado no quiere decir que el punto esté fuera de toda ronda. Sale de la copia de
+  Terrnova: la procedencia dice de cuándo es.
   (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
+    tabla: car_rondas
+    punto: ["{lon}", "{lat}"]
+    select: [OBJECTID, Fuente, Acto_Admin, Fecha]
     geometria: ninguna  # franjas de decenas de miles de vértices
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [Fuente, Acto_Admin, Fecha]
-    max_features: 5
-  campos: [Fuente, Acto_Admin, Fecha]
+    order: [OBJECTID]
+    limite: 5
+  campos: [OBJECTID, Fuente, Acto_Admin, Fecha]
 salida: RondaHidricaEnPunto
+derivados:
+  # «Quebrada Carrizal - APCA», «Quebrada Artesa \r\nQuebrada Artesa»: el nombre, sin el
+  # componente ni la línea repetida
+  cuerpo_de_agua:
+    de: columna
+    campo: Fuente
+    patron: '^\s*(.+?)(?:\s+-\s+(?:APCA|Faja [Pp]aralela))?\s*(?:[\r\n]|$)'
+  componente:
+    de: columna
+    campo: Fuente
+    patron: '\s-\s+(APCA|Faja [Pp]aralela)\s*$'
+    valores: {APCA: APCA, Faja Paralela: faja paralela, Faja paralela: faja paralela}
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ninguna de las 203 rondas que la CAR Cundinamarca ya delimitó. Eso no quiere
+    decir que esté fuera de toda ronda: muchas no se han delimitado, y una faja paralela mide unos
+    30 m, así que un punto a pocos metros del cauce puede quedar afuera. Para un lote,
+    car_ronda_hidrica_en_poligono con su polígono.
 cobro: punto
 canario:
-  # Río Apulo (Cundinamarca); medido el 2026-10-28 en la capa 0: Resolución 0352 de 2018.
+  # Río Apulo (Cundinamarca); medido el 2026-10-28 en la capa 0 de la fuente: Resolución 0352 de 2018.
   entrada: {lon: -74.522902, lat: 4.631558}
   verdad: {cuerpo_de_agua: "Río Apulo", acto_administrativo: "Resolución 0352 de 2018"}
-  campos: [acto_administrativo, cuerpo_de_agua, fecha_acto]
+  campos: [acto_administrativo, cuerpo_de_agua, fecha_acto, id_ronda, nombre_en_la_fuente]
   latencia_max_ms: 5000
