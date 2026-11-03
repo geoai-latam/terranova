@@ -895,9 +895,9 @@ class Derivado(_Ficha):
     el primero queda vacío). Del resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y
     `ultimo` (el `campo` del primer o del último elemento), `conteo_por` (cuántos elementos hay
     con cada valor de `campo`, el más frecuente primero: áreas protegidas por categoría),
-    `distintos` (cuántos valores
-    distintos de `campo` hay: los meses con datos de un año) y `completitud_total` (el total que
-    dio la fuente). `solo_si` deja contar solo algunos elementos.
+    `distintos` (cuántos valores distintos de `campo` hay: los meses con datos de un año) y
+    `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos
+    elementos.
     """
 
     de: Literal[
