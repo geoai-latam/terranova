@@ -13,6 +13,7 @@ import json
 import sys
 import time
 from datetime import UTC, datetime
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
@@ -34,8 +35,16 @@ def _reducir(geometria: Any) -> Any:
     return geometria
 
 
+def _numero(valor: Any) -> float:
+    if isinstance(valor, Decimal):
+        return float(valor)
+    raise TypeError(f"no se puede grabar {type(valor).__name__}")
+
+
 def _ligera(respuesta: dict[str, Any]) -> dict[str, Any]:
-    copia: dict[str, Any] = json.loads(json.dumps(respuesta))
+    # La copia (Postgres) suma en `numeric` y el conector en proceso devuelve Decimal; el MCP lo
+    # entrega como número, y así se graba.
+    copia: dict[str, Any] = json.loads(json.dumps(respuesta, default=_numero))
     for art in copia.get("artifacts") or []:
         for rasgo in (art.get("data") or {}).get("features") or []:
             rasgo["geometry"] = _reducir(rasgo.get("geometry"))

@@ -1026,24 +1026,38 @@ class ErrorDeLista(ValueError):
     """Un campo pide una lista de códigos que no está en `catalogo/codigos/`."""
 
 
+def _lista_de_codigos(lista: str, raiz: Path) -> dict[str, Any]:
+    ruta = raiz / "codigos" / f"{lista}.yaml"
+    if not re.fullmatch(r"[a-z0-9_]+", lista) or not ruta.is_file():
+        raise ErrorDeLista(f"no existe la lista de códigos catalogo/codigos/{lista}.yaml")
+    datos: dict[str, Any] = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+    return datos
+
+
 def _con_listas_de_codigos(crudo: Any, raiz: Path) -> None:
-    """Cambia `codigos_lista: <nombre>` por los `codigos` y la `codigos_norma` de
-    `catalogo/codigos/<nombre>.yaml`. Es para las tablas largas y oficiales que comparten varias
-    fuentes (la CIIU del DANE, ~500 clases, en las dos del RUES): una sola copia, con su norma."""
-    if not isinstance(crudo, dict) or not isinstance(crudo.get("campos"), dict):
+    """Cambia `codigos_lista: <nombre>` (en un campo de una fuente) por los `codigos` y la
+    `codigos_norma` de `catalogo/codigos/<nombre>.yaml`, y `valores_lista: <nombre>` (en un
+    derivado `codigo` de una herramienta) por sus `valores`. Es para las tablas largas y oficiales
+    que comparten varias fichas (la CIIU del DANE, ~500 clases, en las dos del RUES; la unidad de
+    cada subpartida, ~7 000, en el comercio exterior): una sola copia, con su norma."""
+    if not isinstance(crudo, dict):
         return
-    for campo in crudo["campos"].values():
-        if not isinstance(campo, dict) or "codigos_lista" not in campo:
+    for clave, opcion, destino in (
+        ("campos", "codigos_lista", "codigos"),
+        ("derivados", "valores_lista", "valores"),
+    ):
+        if not isinstance(crudo.get(clave), dict):
             continue
-        lista = str(campo.pop("codigos_lista"))
-        if "codigos" in campo:
-            raise ErrorDeLista(f"el campo trae `codigos` y `codigos_lista` ({lista}): una sola")
-        ruta = raiz / "codigos" / f"{lista}.yaml"
-        if not re.fullmatch(r"[a-z0-9_]+", lista) or not ruta.is_file():
-            raise ErrorDeLista(f"no existe la lista de códigos catalogo/codigos/{lista}.yaml")
-        datos = yaml.safe_load(ruta.read_text(encoding="utf-8"))
-        campo["codigos"] = {str(k): str(v) for k, v in datos["codigos"].items()}
-        campo.setdefault("codigos_norma", datos["norma"])
+        for campo in crudo[clave].values():
+            if not isinstance(campo, dict) or opcion not in campo:
+                continue
+            lista = str(campo.pop(opcion))
+            if destino in campo:
+                raise ErrorDeLista(f"trae `{destino}` y `{opcion}` ({lista}): una sola")
+            datos = _lista_de_codigos(lista, raiz)
+            campo[destino] = {str(k): str(v) for k, v in datos["codigos"].items()}
+            if clave == "campos":
+                campo.setdefault("codigos_norma", datos["norma"])
 
 
 def cargar(raiz: Path = RAIZ) -> Catalogo:
@@ -1059,8 +1073,7 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
             nombre = ruta.relative_to(raiz).as_posix()
             try:
                 crudo = yaml.safe_load(ruta.read_text(encoding="utf-8"))
-                if modelo is Fuente:
-                    _con_listas_de_codigos(crudo, raiz)
+                _con_listas_de_codigos(crudo, raiz)
                 ficha = modelo.model_validate(crudo)
             except ErrorDeLista as exc:
                 errores.append(f"{nombre}: {exc}")

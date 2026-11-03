@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-26T12:00:00+00:00",
+ "grabado": "2026-11-02T23:44:16+00:00",
  "herramienta": "dian_comex_exportaciones_por_subpartida",
  "llamadas": [
   {
@@ -9,6 +9,7 @@
      "cantidad": "sum:cantidad",
      "lineas": "sum:lineas",
      "peso_neto_kg": "sum:peso_neto_kg",
+     "subpartida": "max:subpartida",
      "valor_fob_pesos": "sum:valor_fob_pesos",
      "valor_fob_usd": "sum:valor_fob_usd"
     },
@@ -27,17 +28,19 @@
        "cantidad",
        "lineas",
        "peso_neto_kg",
+       "subpartida",
        "valor_fob_pesos",
        "valor_fob_usd"
       ],
       "kind": "table",
       "rows": [
        {
-        "cantidad": 25835738.88,
-        "lineas": 131,
+        "cantidad": 25835738.87999999,
+        "lineas": 131.0,
         "peso_neto_kg": 23885871792.72,
-        "valor_fob_pesos": 40212181560533.8,
-        "valor_fob_usd": 9930919822.17
+        "subpartida": "2709000000",
+        "valor_fob_pesos": 40212181560533.78,
+        "valor_fob_usd": 9930919822.169998
        }
       ]
      }
@@ -48,13 +51,13 @@
       "truncado": false,
       "vistos": 1
      },
-     "consultado_en": "2026-10-26T12:00:00+00:00",
+     "consultado_en": "2026-10-27T05:47:34.097684+00:00",
      "copia": {
-      "filas": 192262,
-      "huella": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "filas": 313241,
+      "huella": "sha256:40dfa7c2f662a83fe6c023034bfb56a2121f1fb62c807df7f382aade96642346",
       "repetidas_en_la_fuente": 0,
-      "version": "20261026120000000000",
-      "ventana_desde": null
+      "ventana_desde": null,
+      "version": "20261027054734097684"
      },
      "servido_desde": "copia"
     }

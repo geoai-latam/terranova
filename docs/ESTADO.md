@@ -197,6 +197,12 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Las regalías dicen la unidad del volumen: barriles para el petróleo, kpc para el gas.
   - El gas por campo ya no lista las líneas en 0, que eran la mitad. Los meses se cuentan sobre la
     fuente entera, y un campo en 0 todo el año lo dice el vacío.
+- **DIAN comercio exterior, la unidad de la cantidad (patrón D):**
+  - Las dos herramientas dicen `unidad_cantidad`. El crudo va en metros cúbicos, no en barriles; el
+    café en kilogramos; los celulares en unidades.
+  - Sale de una lista de 7 007 subpartidas armada con los microdatos del DANE
+    (`scripts/codigos_unidad_subpartida.py`), donde cada subpartida tiene una sola unidad.
+  - El catálogo suma `valores_lista` para los derivados `codigo`.
 
 ## Ficha de un lote (2026-11-01)
 

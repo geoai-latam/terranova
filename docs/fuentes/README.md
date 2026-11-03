@@ -40,3 +40,4 @@ Reglas:
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
 | Función Pública, servidores públicos del SIGEP (`2jzx-383z`) | [funcionpublica.sigep.md](funcionpublica.sigep.md) |
+| DANE y DIAN, comercio exterior por subpartida (copias de los microdatos) | [dian.comex.md](dian.comex.md) |

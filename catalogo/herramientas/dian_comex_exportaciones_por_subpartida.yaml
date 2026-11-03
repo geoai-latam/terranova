@@ -1,5 +1,5 @@
 id: dian_comex_exportaciones_por_subpartida
-version: 1
+version: 2
 familia: estadisticas
 fuente: dian.comex_exportaciones
 pregunta: "¿Cuánto exportó Colombia de una subpartida arancelaria en un año?"
@@ -25,10 +25,14 @@ consulta:
       peso_neto_kg: "sum:peso_neto_kg"
       cantidad: "sum:cantidad"
       lineas: "sum:lineas"
+      subpartida: "max:subpartida"
     limite: 2
-  campos: [valor_fob_usd, valor_fob_pesos, peso_neto_kg, cantidad, lineas]
+  campos: [valor_fob_usd, valor_fob_pesos, peso_neto_kg, cantidad, lineas, subpartida]
 salida: ComexExportacionSubpartida
-derivados: {}
+derivados:
+  # La unidad de `cantidad` depende de la subpartida (crudo en metros cúbicos, café en kilogramos,
+  # celulares en unidades). Sale del microdato del DANE: cada subpartida tiene una sola.
+  unidad_cantidad: {de: codigo, campo: subpartida, valores_lista: unidad_subpartida}
 cobro: registro
 canario:
   # Medido el 2026-10-26 en los microdatos ANDA 859 (año 2025 completo, ZIP Expo_2025). La subpartida
@@ -37,5 +41,6 @@ canario:
   # revisarse, pero nunca por debajo de un mes ya observado.
   entrada: {subpartida: "2709000000", anio: "2025"}
   minimos: {valor_fob_usd: 876117891}
-  campos: [cantidad, lineas, peso_neto_kg, valor_fob_pesos, valor_fob_usd]
+  verdad: {unidad_cantidad: metros cúbicos}
+  campos: [cantidad, lineas, peso_neto_kg, subpartida, unidad_cantidad, valor_fob_pesos, valor_fob_usd]
   latencia_max_ms: 5000
