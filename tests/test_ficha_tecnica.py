@@ -24,6 +24,9 @@ def test_el_icfes_dice_sus_anios_y_que_esta_atrasado() -> None:
     assert f["cobertura"]["periodo"].startswith("20101 a 20224")
     assert f["frescura"]["datos_actualizados"] == "2023-08-23"
     assert any("semestral" in a and "2023-08-23" in a for a in f["alertas"])
+    # dice a qué fecha se midió: la fuente pudo cambiar después de la cosecha
+    cosecha = CATALOGO.metadatos["icfes.saber11"].cosechado.isoformat()
+    assert any(f"revisión de sus metadatos ({cosecha})" in a for a in f["alertas"])
     assert any("posterior a 2022;" in a for a in f["alertas"])  # «20224»: año y semestre
     assert any("registro único" in a for a in f["alertas"])  # el perfil: estudiantes repetidos
     assert f["es_geografica"] is False
@@ -45,7 +48,7 @@ def test_el_catastro_dice_su_geometria_capas_y_corte() -> None:
 def test_una_fuente_al_dia_no_tiene_alerta_de_atraso() -> None:
     f = CATALOGO.fuentes["cce.secop2.contratos"]
     m = CATALOGO.metadatos["cce.secop2.contratos"]
-    assert not any("no cambian desde" in a for a in alertas(f, m, m.datos_actualizados or HOY))
+    assert not any("no cambiaban desde" in a for a in alertas(f, m, m.datos_actualizados or HOY))
 
 
 @pytest.mark.anyio

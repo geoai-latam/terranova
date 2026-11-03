@@ -7,7 +7,7 @@ Junta tres capas sin mezclarlas:
 3. lo **medido** en el perfil (spec 07): qué es una fila, su clave, sus trampas.
 
 Y calcula las **alertas** que salen de cruzarlas (p. ej. «declara actualización semestral y sus
-datos no cambian desde 2023»). La sirven `/v1/fuentes/{id}` y la herramienta MCP
+datos no cambiaban desde 2023»). La sirven `/v1/fuentes/{id}` y la herramienta MCP
 `fuente_describir`; no llama a la fuente ni usa LLM (ADR-0012).
 """
 
@@ -51,9 +51,12 @@ def atraso(fuente: Fuente, metadatos: Metadatos | None, hoy: date) -> list[str]:
         # (sin esto, todo SECOP, diario, salía «atrasado» tres días después de cosechar)
         atraso = (min(hoy, metadatos.cosechado) - metadatos.datos_actualizados).days
         if dias and atraso > max(_HOLGURA * dias, _ATRASO_MINIMO):
+            # con la fecha de la cosecha: la fuente pudo cambiar después (SECOP II de multas se
+            # cosechó el 2026-10-22 «sin cambios desde el 8» y se actualizó el 2026-11-03)
             salida.append(
-                f"la fuente declara actualización {metadatos.frecuencia_declarada.lower()} y sus "
-                f"datos no cambian desde {metadatos.datos_actualizados.isoformat()}"
+                f"la fuente declara actualización {metadatos.frecuencia_declarada.lower()} y, en "
+                f"la última revisión de sus metadatos ({metadatos.cosechado.isoformat()}), sus "
+                f"datos no cambiaban desde {metadatos.datos_actualizados.isoformat()}"
             )
     if (rango := _rango(fuente, metadatos)) and (m := _AÑO.match(rango[1])):
         if int(m.group(1)) < hoy.year - _HOLGURA:
