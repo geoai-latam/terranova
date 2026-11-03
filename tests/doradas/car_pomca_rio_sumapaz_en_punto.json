@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T05:29:59+00:00",
+ "grabado": "2026-11-03T14:57:19+00:00",
  "herramienta": "car_pomca_rio_sumapaz_en_punto",
  "llamadas": [
   {
@@ -11,7 +11,7 @@
      -74.364,
      4.337
     ],
-    "geometria": "ninguna",
+    "geometria": "simplificada",
     "max_features": 5,
     "out_fields": [
      "T_CAT_ORD",
@@ -29,7 +29,13 @@
       "data": {
        "features": [
         {
-         "geometry": null,
+         "geometry": {
+          "coordinates": [
+           -74.35063,
+           4.35103
+          ],
+          "type": "Point"
+         },
          "properties": {
           "NOMENCLAT": "ZU",
           "T_CAT_ORD": "Uso Multiple",

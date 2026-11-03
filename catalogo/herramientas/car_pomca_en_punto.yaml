@@ -1,5 +1,5 @@
 id: car_pomca_en_punto
-version: 2
+version: 3
 familia: ambiente
 fuente: car.pomca_zonificacion
 pregunta: "¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca?"
@@ -8,7 +8,8 @@ descripcion: >
   la jurisdicción de la CAR, en nueve cuencas: río Bogotá, Carare-Minero, Garagoa, río Negro, Alto
   Suárez, Medio y Bajo Suárez, río Seco y otros directos al Magdalena, Guavio y Guayuriba. Da la
   cuenca, la categoría de ordenación (conservación y protección ambiental, o uso múltiple), la zona y
-  la subzona de uso y manejo, con su sigla. Es determinante ambiental del ordenamiento municipal.
+  la subzona de uso y manejo, con su sigla, y el polígono de la zona simplificado a ~55 m (sirve para
+  verla en un mapa, no para medir linderos). Es determinante ambiental del ordenamiento municipal.
   Para la cuenca del río Sumapaz (Fusagasugá, Melgar…), car_pomca_rio_sumapaz_en_punto.
   (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
@@ -26,7 +27,7 @@ consulta:
   - ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0
   - ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0
   argumentos:
-    geometria: ninguna  # un polígono pesa decenas de KB
+    geometria: simplificada  # completa pesa hasta 816 KB; simplificada, 1-21 KB (medido 2026-11-03)
     url: "{url_capa}"
     bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
     max_features: 5  # sin out_fields: cada capa nombra distinto sus campos (ver los alias)
