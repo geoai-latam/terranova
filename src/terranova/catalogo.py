@@ -436,10 +436,58 @@ class VariacionesIndice(_Ficha):
     mes: str = Field(description="columna del mes, con su nombre en español (Enero … Diciembre)")
 
 
+class Preagregado(_Ficha):
+    """Un conjunto de datos.gov.co de personas que se copia ya agregado (origen `socrata_agregado`):
+    p. ej. el Saber 11, una fila por estudiante. La copia guarda solo grupos, con cuántas personas
+    tiene cada uno y la suma de sus medidas; nunca el identificador ni una fila de persona
+    (ADR-0014). Las herramientas sacan promedios como cociente de sumas y exigen un mínimo de
+    personas por grupo."""
+
+    particion: str = Field(
+        description="columna con que se baja la fuente por tandas (el periodo): la cuenta de "
+        "personas únicas se hace dentro de cada una"
+    )
+    unico: str = Field(
+        description="columna que identifica a la persona en la fuente (seudónimo): la fuente "
+        "repite filas y cada persona cuenta una vez por tanda; no se copia"
+    )
+    grupo: list[str] = Field(min_length=1, description="columnas de la fuente que forman el grupo")
+    medidas: list[str] = Field(
+        default_factory=list,
+        description="columnas numéricas: la copia guarda `suma_<m>` y `n_<m>` (con dato)",
+    )
+    nombre: str | None = Field(
+        default=None,
+        description="columna de texto que se guarda con el mayor valor del grupo (el nombre de la "
+        "sede, que cambia de escritura entre años)",
+    )
+    cuenta: str = Field(
+        default="personas", pattern=IDENTIFICADOR_SQL, description="columna con las personas"
+    )
+
+    @property
+    def columnas_fuente(self) -> list[str]:
+        """Lo que se pide a la fuente, cada columna una vez (Socrata rechaza un `$select` con una
+        repetida, y la partición suele ir también en el grupo)."""
+        nombre = [self.nombre] if self.nombre else []
+        columnas = [self.particion, self.unico, *self.grupo, *self.medidas, *nombre]
+        return list(dict.fromkeys(columnas))
+
+    @property
+    def columnas_copia(self) -> list[str]:
+        """Lo que guarda la copia, además de `_fila`."""
+        sumas = [f"{p}_{m}" for m in self.medidas for p in ("suma", "n")]
+        nombre = [self.nombre] if self.nombre else []
+        grupo = [c for c in self.grupo if c != self.particion]
+        return [self.particion, *grupo, *nombre, self.cuenta, *sumas]
+
+
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
-    origen: Literal["socrata", "zip_dane", "arcgis", "conector", "geojson", "csv"]
+    origen: Literal[
+        "socrata", "socrata_agregado", "zip_dane", "arcgis", "conector", "geojson", "csv"
+    ]
     conjunto: str | None = Field(
         default=None,
         pattern=r"^[a-z0-9]{4}-[a-z0-9]{4}$",
@@ -549,10 +597,20 @@ class Copia(_Ficha):
         "en caché (SECOP por NIT: los 50 142 contratos de Medellín tardaban 16 s en frío)",
     )
 
+    preagregado: Preagregado | None = Field(
+        default=None, description="cómo se agrega al copiar (origen socrata_agregado)"
+    )
+
     @model_validator(mode="after")
     def _origen_coherente(self) -> Copia:
-        if self.origen == "socrata" and not self.conjunto:
-            raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
+        if self.origen in ("socrata", "socrata_agregado") and not self.conjunto:
+            raise ValueError(f"ADR-0024: origen `{self.origen}` exige `conjunto` (id datos.gov.co)")
+        if (self.origen == "socrata_agregado") != (self.preagregado is not None):
+            raise ValueError("ADR-0024: `preagregado` va con el origen `socrata_agregado`")
+        if self.preagregado is not None and self.clave != "_fila":
+            raise ValueError("ADR-0024: una copia preagregada lleva `clave: _fila`")
+        if self.ventana is not None and self.preagregado is not None:
+            raise ValueError("ADR-0024: una copia preagregada se baja entera, sin `ventana`")
         if self.orden_fisico is not None and self.orden_fisico not in self.indices:
             raise ValueError("`orden_fisico` va sobre una columna de `indices`")
         if (self.origen == "arcgis") != (self.capa is not None):
@@ -604,6 +662,8 @@ class Copia(_Ficha):
     def columnas_usadas(self) -> set[str]:
         ventana = {self.ventana.columna} if self.ventana else set()
         extra = set(self.medidas) | ({self.pais_col} if self.pais_col else set())
+        if self.preagregado is not None:
+            extra |= set(self.preagregado.columnas_copia)
         return {self.clave, *ventana, *self.indices, *self.indices_contiene, *self.texto, *extra}
 
 
@@ -764,6 +824,9 @@ class Fuente(_Ficha):
             raise ValueError("spec 08: cobertura.columna_tiempo no está en la lista blanca")
         if (self.modo == "copia") != (self.copia is not None):
             raise ValueError("ADR-0024: `modo: copia` va con su bloque `copia:` (y solo con él)")
+        if self.modo == "copia" and self.conector != "copia":
+            # la herramienta iría al conector en vivo con `consultar_copia`, que no lo tiene
+            raise ValueError("ADR-0024: una fuente con `modo: copia` lleva `conector: copia`")
         if self.copia is not None and (sueltas := self.copia.columnas_usadas - set(self.campos)):
             raise ValueError(f"ADR-0024: la copia usa columnas no listadas: {sorted(sueltas)}")
         nombres = [c.nombre for c in self.campos.values()]
