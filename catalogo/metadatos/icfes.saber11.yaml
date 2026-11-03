@@ -1,7 +1,7 @@
 # Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
 fuente: icfes.saber11
 metodo: cosechado
-cosechado: '2026-10-22'
+cosechado: '2026-11-03'
 origen: https://www.datos.gov.co/api/views/kgxf-xxbe.json
 pagina: https://www.datos.gov.co/d/kgxf-xxbe
 titulo: Resultados únicos Saber 11
@@ -81,27 +81,3 @@ campos:
       Sin Estrato: 89332
       Estrato 6: 74772
       Vive en una zona rural donde no hay estratificación socioeconómica: 1
-  punt_matematicas:
-    tipo_fuente: text
-    etiqueta: PUNT_MATEMATICAS
-    descripcion: Puntaje Matemáticas
-    nulos: 0
-    minimo: '0'
-    maximo: '99.48'
-    comparacion: texto
-  punt_lectura_critica:
-    tipo_fuente: text
-    etiqueta: PUNT_LECTURA_CRITICA
-    descripcion: Puntaje Lectura crítica
-    nulos: 2609523
-    minimo: '0'
-    maximo: '99'
-    comparacion: texto
-  punt_global:
-    tipo_fuente: text
-    etiqueta: PUNT_GLOBAL
-    descripcion: Puntaje Global
-    nulos: 2609523
-    minimo: '0'
-    maximo: '99'
-    comparacion: texto

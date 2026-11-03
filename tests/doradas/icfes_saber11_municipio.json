@@ -1,21 +1,35 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T00:52:18+00:00",
+ "grabado": "2026-11-03T13:09:35+00:00",
  "herramienta": "icfes_saber11_municipio",
  "llamadas": [
   {
    "argumentos": {
-    "group": "periodo",
-    "having": "count(*) >= 10",
-    "id": "kgxf-xxbe",
-    "max_filas": 200,
-    "portal": "datos.gov.co",
-    "previo_group": "periodo, estu_consecutivo",
-    "previo_select": "periodo, estu_consecutivo, avg(punt_global::number) AS g, avg(punt_matematicas::number) AS m, avg(punt_lectura_critica::number) AS l",
-    "select": "periodo, count(*) AS estudiantes, avg(g) AS promedio_global, avg(m) AS promedio_matematicas, avg(l) AS promedio_lectura_critica",
-    "where": "cole_cod_mcpio_ubicacion = '25175'"
+    "agregados": {
+     "estudiantes": "sum:estudiantes",
+     "promedio_global": "cociente:suma_punt_global/n_punt_global",
+     "promedio_lectura_critica": "cociente:suma_punt_lectura_critica/n_punt_lectura_critica",
+     "promedio_matematicas": "cociente:suma_punt_matematicas/n_punt_matematicas"
+    },
+    "filtros": {
+     "cole_cod_mcpio_ubicacion": "25175"
+    },
+    "group": [
+     "periodo"
+    ],
+    "limite": 50,
+    "minimo": {
+     "sum:estudiantes": 10
+    },
+    "order": [
+     "periodo"
+    ],
+    "select": [
+     "periodo"
+    ],
+    "tabla": "icfes_saber11"
    },
-   "conector": "datos-abiertos-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -29,147 +43,165 @@
       "kind": "table",
       "rows": [
        {
-        "estudiantes": "464",
+        "estudiantes": 464.0,
         "periodo": "20101",
-        "promedio_matematicas": "54.2905172413793103"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 54.290517241379305
        },
        {
-        "estudiantes": "1550",
+        "estudiantes": 1550.0,
         "periodo": "20102",
-        "promedio_matematicas": "54.4869548387096774"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 54.486954838709636
        },
        {
-        "estudiantes": "499",
+        "estudiantes": 499.0,
         "periodo": "20111",
-        "promedio_matematicas": "58.1793787575150301"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 58.17937875751503
        },
        {
-        "estudiantes": "1568",
+        "estudiantes": 1568.0,
         "periodo": "20112",
-        "promedio_matematicas": "51.9834183673469388"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 51.983418367346935
        },
        {
-        "estudiantes": "530",
+        "estudiantes": 530.0,
         "periodo": "20121",
-        "promedio_matematicas": "58.1886792452830189"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 58.18867924528302
        },
        {
-        "estudiantes": "1728",
+        "estudiantes": 1728.0,
         "periodo": "20122",
-        "promedio_matematicas": "49.8408564814814815"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 49.84085648148148
        },
        {
-        "estudiantes": "512",
+        "estudiantes": 512.0,
         "periodo": "20131",
-        "promedio_matematicas": "59.1953125000000000"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 59.1953125
        },
        {
-        "estudiantes": "1717",
+        "estudiantes": 1717.0,
         "periodo": "20132",
-        "promedio_matematicas": "49.7705299941758882"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 49.77052999417589
        },
        {
-        "estudiantes": "567",
+        "estudiantes": 567.0,
         "periodo": "20141",
-        "promedio_matematicas": "55.7495590828924162"
+        "promedio_global": null,
+        "promedio_lectura_critica": null,
+        "promedio_matematicas": 55.74955908289242
        },
        {
-        "estudiantes": "1738",
+        "estudiantes": 1738.0,
         "periodo": "20142",
-        "promedio_global": "279.5650172612197929",
-        "promedio_lectura_critica": "56.0506329113924051",
-        "promedio_matematicas": "55.7928653624856157"
+        "promedio_global": 279.5650172612198,
+        "promedio_lectura_critica": 56.050632911392405,
+        "promedio_matematicas": 55.792865362485614
        },
        {
-        "estudiantes": "525",
+        "estudiantes": 525.0,
         "periodo": "20151",
-        "promedio_global": "319.0209523809523810",
-        "promedio_lectura_critica": "60.8723809523809524",
-        "promedio_matematicas": "63.1428571428571429"
+        "promedio_global": 319.0209523809524,
+        "promedio_lectura_critica": 60.87238095238095,
+        "promedio_matematicas": 63.142857142857146
        },
        {
-        "estudiantes": "1738",
+        "estudiantes": 1738.0,
         "periodo": "20152",
-        "promedio_global": "275.1927502876869965",
-        "promedio_lectura_critica": "54.0535097813578826",
-        "promedio_matematicas": "55.2197928653624856"
+        "promedio_global": 275.192750287687,
+        "promedio_lectura_critica": 54.05350978135788,
+        "promedio_matematicas": 55.219792865362486
        },
        {
-        "estudiantes": "351",
+        "estudiantes": 351.0,
         "periodo": "20161",
-        "promedio_global": "346.3390313390313390",
-        "promedio_lectura_critica": "63.6695156695156695",
-        "promedio_matematicas": "72.2393162393162393"
+        "promedio_global": 346.33903133903135,
+        "promedio_lectura_critica": 63.66951566951567,
+        "promedio_matematicas": 72.23931623931624
        },
        {
-        "estudiantes": "1854",
+        "estudiantes": 1854.0,
         "periodo": "20162",
-        "promedio_global": "285.0598705501618123",
-        "promedio_lectura_critica": "56.9460625674217907",
-        "promedio_matematicas": "56.3554476806903991"
+        "promedio_global": 285.0598705501618,
+        "promedio_lectura_critica": 56.94606256742179,
+        "promedio_matematicas": 56.355447680690396
        },
        {
-        "estudiantes": "329",
+        "estudiantes": 329.0,
         "periodo": "20171",
-        "promedio_global": "329.2978723404255319",
-        "promedio_lectura_critica": "64.4863221884498480",
-        "promedio_matematicas": "64.8389057750759878"
+        "promedio_global": 329.29787234042556,
+        "promedio_lectura_critica": 64.48632218844985,
+        "promedio_matematicas": 64.83890577507599
        },
        {
-        "estudiantes": "1752",
+        "estudiantes": 1752.0,
         "periodo": "20172",
-        "promedio_global": "281.2163242009132420",
-        "promedio_lectura_critica": "57.79908675799086757991",
-        "promedio_matematicas": "55.2990867579908676"
+        "promedio_global": 281.2163242009132,
+        "promedio_lectura_critica": 57.79908675799087,
+        "promedio_matematicas": 55.29908675799087
        },
        {
-        "estudiantes": "481",
+        "estudiantes": 481.0,
         "periodo": "20181",
-        "promedio_global": "306.2349272349272349",
-        "promedio_lectura_critica": "62.0893970893970894",
-        "promedio_matematicas": "60.2619542619542620"
+        "promedio_global": 306.2349272349272,
+        "promedio_lectura_critica": 62.08939708939709,
+        "promedio_matematicas": 60.26195426195426
        },
        {
-        "estudiantes": "286",
+        "estudiantes": 286.0,
         "periodo": "20191",
-        "promedio_global": "335.6818181818181818",
-        "promedio_lectura_critica": "66.7587412587412587",
-        "promedio_matematicas": "67.5244755244755245"
+        "promedio_global": 335.6818181818182,
+        "promedio_lectura_critica": 66.75874125874125,
+        "promedio_matematicas": 67.52447552447552
        },
        {
-        "estudiantes": "1878",
+        "estudiantes": 1878.0,
         "periodo": "20194",
-        "promedio_global": "275.2854100106496273",
-        "promedio_lectura_critica": "57.1395101171458999",
-        "promedio_matematicas": "56.3386581469648562"
+        "promedio_global": 275.2854100106496,
+        "promedio_lectura_critica": 57.1395101171459,
+        "promedio_matematicas": 56.33865814696485
        },
        {
-        "estudiantes": "379",
+        "estudiantes": 379.0,
         "periodo": "20201",
-        "promedio_global": "299.2875989445910290",
-        "promedio_lectura_critica": "61.1451187335092348",
-        "promedio_matematicas": "60.4089709762532982"
+        "promedio_global": 299.287598944591,
+        "promedio_lectura_critica": 61.145118733509236,
+        "promedio_matematicas": 60.4089709762533
        },
        {
-        "estudiantes": "468",
+        "estudiantes": 468.0,
         "periodo": "20211",
-        "promedio_global": "307.0641025641025641",
-        "promedio_lectura_critica": "62.2029914529914530",
-        "promedio_matematicas": "61.4423076923076923"
+        "promedio_global": 307.06410256410254,
+        "promedio_lectura_critica": 62.202991452991455,
+        "promedio_matematicas": 61.44230769230769
        },
        {
-        "estudiantes": "414",
+        "estudiantes": 414.0,
         "periodo": "20221",
-        "promedio_global": "302.5869565217391304",
-        "promedio_lectura_critica": "61.8333333333333333",
-        "promedio_matematicas": "60.7439613526570048"
+        "promedio_global": 302.5869565217391,
+        "promedio_lectura_critica": 61.833333333333336,
+        "promedio_matematicas": 60.743961352657
        },
        {
-        "estudiantes": "1686",
+        "estudiantes": 1686.0,
         "periodo": "20224",
-        "promedio_global": "277.4039145907473310",
-        "promedio_lectura_critica": "57.8368920521945433",
-        "promedio_matematicas": "55.9181494661921708"
+        "promedio_global": 277.4039145907473,
+        "promedio_lectura_critica": 57.83689205219454,
+        "promedio_matematicas": 55.91814946619217
        }
       ]
      }
@@ -180,26 +212,18 @@
       "truncado": false,
       "vistos": 23
      },
-     "completo": true,
-     "conjunto": "kgxf-xxbe",
-     "consulta": {
-      "conjunto": "kgxf-xxbe",
-      "group": "periodo",
-      "having": "count(*) >= 10",
-      "max_filas": 200,
-      "portal": "datos.gov.co",
-      "previo_group": "periodo, estu_consecutivo",
-      "select": "periodo, count(*) AS estudiantes, avg(g) AS promedio_global, avg(m) AS promedio_matematicas, avg(l) AS promedio_lectura_critica",
-      "where": "(cole_cod_mcpio_ubicacion = '25175')"
+     "consultado_en": "2026-11-03T12:47:38.326253+00:00",
+     "copia": {
+      "filas": 381010,
+      "huella": "sha256:23bf080c3c514612d133ab1bcb7dc506b0676eb00c2b252bb532b1f6597e33d5",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261103124738326253"
      },
-     "filas": 23,
-     "filas_que_resume": 26929,
-     "filtro_soql": "(cole_cod_mcpio_ubicacion = '25175')",
-     "portal": "datos.gov.co"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "datos_consultar"
+   "tool": "consultar_copia"
   }
  ]
 }

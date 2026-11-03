@@ -167,11 +167,11 @@ def test_arcgis_con_geometrias_distintas_no_es_una_fuente() -> None:
 def test_la_deriva_dice_que_cambio() -> None:
     antes = CATALOGO.metadatos["icfes.saber11"]
     campos = dict(antes.campos)
-    quitado = campos.pop("punt_global")
+    quitado = campos.pop("cole_nombre_sede")
     tipo = campos["periodo"].model_copy(update={"tipo_fuente": "number"})
     ahora = antes.model_copy(update={"campos": {**campos, "periodo": tipo}, "corte": "otro"})
     cambios = diferencias(antes, ahora)
-    assert any("punt_global" in c for c in cambios) and quitado.tipo_fuente
+    assert any("cole_nombre_sede" in c for c in cambios) and quitado.tipo_fuente
     assert any("periodo cambió de tipo" in c for c in cambios)
     assert any(c.startswith("corte:") for c in cambios)
     assert diferencias(antes, antes) == []
