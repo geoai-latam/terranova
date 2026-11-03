@@ -77,9 +77,10 @@ PATRONES_ENTRADA: dict[str, str] = {
     "constancia_secop": r"^[0-9]{2}-[0-9]{1,2}-[0-9]+$",  # SECOP I: 19-12-10176235
     "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
-    "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}/[0-9]{2}$",  # Corte Constitucional: T-760/08
+    # Corte Constitucional: T-760/08; en 1993-1995, algunas con letra (C-155A/93)
+    "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}[A-Z]?/[0-9]{2}$",
     # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas)
-    "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}-[0-9]{2}$",
+    "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}[A-Z]?-[0-9]{2}$",
     # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas. El año va
     # casi siempre, pero no en todos: el Estatuto Tributario es `estatuto_tributario` en la DIAN
     "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}$",
