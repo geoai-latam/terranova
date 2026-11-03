@@ -1,12 +1,12 @@
 id: invima_medicamento_en_renovacion_por_expediente
-version: 3
+version: 4
 familia: empresas
 fuente: invima.cum_renovacion
 pregunta: "¿Este medicamento está en trámite de renovación en el INVIMA?"
 descripcion: >
   Presentaciones (CUM) en trámite de renovación de un medicamento por su expediente en el INVIMA: producto,
   titular, registro sanitario y su estado, consecutivo y estado del CUM, principio activo (una fila por
-  cada uno), dosis (p. ej. «2.5 g por AMPOLLA DE 5 ML»), forma farmacéutica, vía y ATC. Las vigentes salen en
+  cada uno), dosis (p. ej. «2.5 g por AMPOLLA DE 5 ML»), forma farmacéutica, vías (una lista: la fuente repite la presentación por cada vía) y ATC. Las vigentes salen en
   invima_medicamento_por_expediente.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {expediente: int}
@@ -22,6 +22,8 @@ consulta:
     order: "consecutivocum, estadocum, principioactivo"
     max_filas: 500
   campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, fechainactivo, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, formafarmaceutica, viaadministracion, atc]
+  # La fuente repite la presentación por vía (Buscapina: 28 filas para 14 presentaciones).
+  juntar: via_administracion
 salida: InvimaMedicamentoEnRenovacionPorExpediente
 derivados:
   dosis: {de: columna, campo: dosis, tipo: str}
@@ -41,6 +43,7 @@ canario:
   # (consecutivo 1) es BUSCAPINA® COMPOSITUM AMPOLLAS.
   entrada: {expediente: 36344}
   verdad: {expediente: 36344, consecutivo_cum: 1, titular: "OPELLA HEALTHCARE COLOMBIA S.A.S", registro_sanitario: "INVIMA 2021M-003172-R5"}
-  minimos: {numero_registros: 28}
+  # 28 filas de la fuente: 14 presentaciones y principios, cada una por dos vías (2026-11-03).
+  minimos: {numero_registros: 14}
   campos: [atc, cantidad, concentracion, consecutivo_cum, dosis, estado_cum, estado_registro, expediente, fecha_inactivo, fecha_vencimiento, forma_farmaceutica, numero_registros, presentacion, principio_activo, producto, registro_sanitario, titular, unidad_medida, unidad_referencia, via_administracion]
   latencia_max_ms: 10000

@@ -12,6 +12,7 @@ import asyncio
 import functools
 import html
 import itertools
+import json
 import math
 import re
 import time
@@ -506,6 +507,19 @@ def avisos_de_la_ficha(h: Herramienta, fuente: Fuente, sobre: Sobre) -> list[str
     ]
 
 
+def juntar_filas(elementos: list[dict[str, Any]], campo: str) -> list[dict[str, Any]]:
+    """Las filas iguales en todo menos `campo` salen como una, con `campo` como lista de sus
+    valores distintos, en el orden en que llegaron. El INVIMA repite cada presentación por vía de
+    administración: Buscapina daba 28 filas para 14 presentaciones (2026-11-03)."""
+    grupos: dict[str, dict[str, Any]] = {}
+    for e in elementos:
+        clave = json.dumps({k: v for k, v in e.items() if k != campo}, sort_keys=True, default=str)
+        fila = grupos.setdefault(clave, {**e, campo: []})
+        if (valor := e.get(campo)) is not None and valor not in fila[campo]:
+            fila[campo].append(valor)
+    return list(grupos.values())
+
+
 def es_relleno(h: Herramienta, elementos: list[Any], hechos: dict[str, Any]) -> bool:
     """La fuente contestó, pero sin el documento: una portada de 32 caracteres no es la sentencia,
     y un título sin resultados no es un resultado."""
@@ -983,6 +997,9 @@ class Ejecutor:
                     hechos[campo.nombre] = convertir(r.hechos[clave], campo.tipo)
             procedencia.append(self._procedencia(h, fuente, r, consultado_en, mapeadas))
 
+        filas_recibidas = len(elementos)
+        if h.consulta.juntar:
+            elementos = juntar_filas(elementos, h.consulta.juntar)
         total = None
         principales = procedencia[len(previas) :]  # la previa no cuenta en el total
         if len(principales) == 1:
@@ -1110,14 +1127,15 @@ class Ejecutor:
         # (el inicio de un texto largo es un solo elemento cuyo total son caracteres: lo dice
         # `caracteres`, no este aviso)
         if (
-            len(elementos) > 1
+            filas_recibidas > 1
             and total is not None
-            and len(elementos) < total
+            and filas_recibidas < total
             and any(p.completitud.truncado for p in principales)
         ):
             avisos.append(
-                f"Vinieron {len(elementos)} de {total}: la consulta trae como máximo "
-                f"{len(elementos)}, y la lista y lo que `datos` suma o cuenta van solo sobre esos. "
+                f"Vinieron {filas_recibidas} de {total}: la consulta trae como máximo "
+                f"{filas_recibidas}, y la lista y lo que `datos` suma o cuenta van solo sobre "
+                "esos. "
                 "Acote la búsqueda (zona, periodo o filtro) para tenerlo todo."
             )
         if fuente.modo == "copia":

@@ -966,6 +966,11 @@ class Consulta(_Ficha):
     campos: list[str] = Field(min_length=1, description="campos de la fuente que se piden")
     previa: Previa | None = None
     complemento: Complemento | None = None
+    juntar: str | None = Field(
+        default=None,
+        description="campo rt/1 que se junta en una lista: las filas iguales en todo lo demás "
+        "salen como una (una presentación del INVIMA repetida por cada vía de administración)",
+    )
 
     @property
     def marcadores(self) -> set[str]:
@@ -1346,6 +1351,8 @@ def validar(catalogo: Catalogo) -> list[str]:
                 errores.append(
                     f"{donde}: la consulta previa valida con «{previa.patron}», que no tiene patrón"
                 )
+        if (juntar := h.consulta.juntar) is not None and juntar not in fuente.nombres_rt:
+            errores.append(f"{donde}: `juntar` usa «{juntar}», que no sale de la fuente")
         if (complemento := h.consulta.complemento) is not None:
             if complemento.fuente not in catalogo.fuentes:
                 errores.append(f"{donde}: el complemento usa {complemento.fuente}, que no existe")

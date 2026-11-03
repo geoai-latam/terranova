@@ -1,5 +1,5 @@
 id: invima_medicamento_por_expediente
-version: 3
+version: 4
 familia: estadisticas
 fuente: invima.cum_vigentes
 pregunta: "¿Qué dice el INVIMA del medicamento con este expediente?"
@@ -7,7 +7,8 @@ descripcion: >
   Presentaciones (CUM) vigentes de un medicamento por su número de expediente en el INVIMA:
   producto, titular, registro sanitario, vencimiento, principio activo, dosis (p. ej. «800 mg por TABLETA RECUBIERTA») y
   presentación, una fila
-  por presentación y rol: quién la fabrica y quién la importa.
+  por presentación y rol: quién la fabrica y quién la importa. Las vías de administración van en
+  una lista: la fuente repite la presentación por cada vía.
   (Fuente: INVIMA; licencia: CC BY-SA 4.0.)
 entrada: {expediente: int}
 consulta:
@@ -22,6 +23,8 @@ consulta:
     order: "consecutivocum, tiporol"
     max_filas: 200
   campos: [expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento, consecutivocum, descripcioncomercial, estadocum, atc, descripcionatc, viaadministracion, principioactivo, concentracion, unidadmedida, cantidad, unidadreferencia, formafarmaceutica, modalidad, tiporol, nombrerol]
+  # La fuente repite la presentación por vía (Buscapina: 28 filas para 14 presentaciones).
+  juntar: via_administracion
 salida: MedicamentoPorExpediente
 derivados:
   dosis: {de: columna, campo: dosis, tipo: str}

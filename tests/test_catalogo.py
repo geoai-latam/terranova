@@ -428,3 +428,14 @@ def test_un_derivado_toma_sus_valores_de_una_lista_compartida(tmp_path: Path) ->
     )
     with pytest.raises(CatalogoInvalido, match="no existe la lista de códigos"):
         cargar(raiz)
+
+
+def test_juntar_un_campo_que_no_sale_de_la_fuente_es_un_error() -> None:
+    from terranova.catalogo import cargar, validar
+
+    cat = cargar()
+    h = cat.herramientas["invima_medicamento_en_renovacion_por_expediente"]
+    mala = h.model_copy(update={"consulta": h.consulta.model_copy(update={"juntar": "via"})})
+    roto = cat.model_copy(update={"herramientas": {**cat.herramientas, h.id: mala}})
+    assert any("`juntar` usa «via»" in e for e in validar(roto))
+    assert not any("juntar" in e for e in validar(cat))
