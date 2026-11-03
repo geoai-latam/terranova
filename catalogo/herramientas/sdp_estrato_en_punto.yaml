@@ -1,5 +1,5 @@
 id: sdp_estrato_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: sdp.estratificacion_manzana
 pregunta: "¿Qué estrato socioeconómico tiene este punto de Bogotá?"
@@ -27,6 +27,13 @@ derivados:
     campo: estrato
     valores: {"0": sin estrato, "1": estrato 1 (bajo-bajo), "2": estrato 2 (bajo), "3": estrato 3 (medio-bajo), "4": estrato 4 (medio), "5": estrato 5 (medio-alto), "6": estrato 6 (alto), "7": sin información, "9": sin estrato}
 salida: EstratoEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna manzana contiene el punto. Las manzanas no cubren las calles, y un punto en la vía queda
+    entre dos manzanas: si es una dirección, mueva el punto hacia dentro del predio y vuelva a
+    preguntar. Fuera del suelo urbano de Bogotá no hay estrato en esta capa. Que el punto no tenga
+    manzana no dice qué estrato tiene la zona.
 cobro: punto
 canario:
   # Chapinero; medido el 2026-10-28 en la capa 1: manzana 00820421, estrato 4, Decreto 394 de 2017.
