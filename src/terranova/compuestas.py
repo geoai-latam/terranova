@@ -11,8 +11,8 @@ from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from typing import Any
 
+from terranova import conflicto, ficha_empresa, lote, predio
 from terranova import ficha as ficha_lugar
-from terranova import ficha_empresa, lote, predio
 from terranova.contrato import Sobre
 
 
@@ -75,6 +75,17 @@ COMPUESTAS: dict[str, Compuesta] = {
             lote.TOPE_CREDITOS,
             "/v1/fichas/lote",
             lote.ficha,
+        ),
+        Compuesta(
+            conflicto.HERRAMIENTA,
+            conflicto.VERSION,
+            conflicto.FAMILIA,
+            conflicto.PREGUNTA,
+            conflicto.DESCRIPCION,
+            conflicto.ESQUEMA_ENTRADA,
+            conflicto.TOPE_CREDITOS,
+            "/v1/fichas/conflicto",
+            conflicto.ficha,
         ),
     )
 }
