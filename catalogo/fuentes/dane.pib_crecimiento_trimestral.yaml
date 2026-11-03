@@ -46,7 +46,7 @@ campos:
   Concepto: {nombre: actividad, tipo: str, desc: "Producto Interno Bruto, Valor agregado bruto, impuestos o una de las 12 agrupaciones de actividades (CIIU Rev. 4)"}
   columna: {nombre: anio, tipo: str, desc: "año; «2025pr» es preliminar y «p», provisional"}
   subcolumna: {nombre: trimestre, tipo: str, desc: "trimestre (I, II, III, IV)"}
-  valor: {nombre: crecimiento_anual_pct, tipo: float, desc: "crecimiento frente al mismo trimestre del año anterior, %, series encadenadas de volumen, datos originales (sin desestacionalizar)"}
+  valor: {nombre: crecimiento_anual_pct, tipo: float, decimales: 1, desc: "crecimiento frente al mismo trimestre del año anterior, %, series encadenadas de volumen, datos originales (sin desestacionalizar)"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: quarterly}
 # Spec 07: medido en la fuente, no en Terrnova.
@@ -57,5 +57,6 @@ perfil:
   hallazgos:
   - "el Cuadro 1 apila los niveles (miles de millones de pesos), el crecimiento anual, el año corrido y más tablas: se lee solo la del crecimiento anual"
   - "los años recientes vienen rotulados «2025pr» (preliminar) y «2026pr»: no se filtra por año, se piden los últimos trimestres"
+  - "el valor viene con 15 decimales (3.523392637718743); el boletín del DANE lo publica con uno (3,5 %)"
   - "corte del II trimestre de 2026 (actualizado el 18 de agosto): el PIB creció 3,52 % frente al II de 2025 y 2,19 % en el I"
   decision: "por copia (el DANE bloquea al datacenter) del anexo del último trimestre; los últimos N trimestres por actividad"
