@@ -260,8 +260,6 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
-- **RUES, fechas en cero (patrón I):** «0000-00-00» sale vacía en matrícula, renovación y
-  cancelación (Alpina en Cali).
 
 ## Ficha de un lote (2026-11-01)
 
