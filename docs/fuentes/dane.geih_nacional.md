@@ -23,8 +23,8 @@ desocupada, fuera de la fuerza de trabajo, subocupada, fuerza de trabajo potenci
 
 ## Cobertura
 
-El anexo de septiembre de 2026 se publicó el 30 de octubre. La copia de producción es del anexo de
-agosto (2026-10-28): hay que refrescarla a mano.
+El anexo de septiembre de 2026 se publicó el 30 de octubre. La copia se reconstruyó con él el
+2026-11-02, desde Colombia: 4 944 filas, ninguna repetida.
 
 ## Trampas medidas
 
@@ -43,14 +43,13 @@ agosto (2026-10-28): hay que refrescarla a mano.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `dane_mercado_laboral_nacional` | alto (tras refrescar la copia) | v2: solo total nacional, un decimal, resumen del último mes |
+| `dane_mercado_laboral_nacional` | alto | v2: solo total nacional, un decimal, resumen del último mes |
 
 ## Decisiones
 
 - **2026-11-02, patrón E de la revisión de valor:**
-  - La copia corta en la fila 30 (`hasta_fila`, como el PIB y el IPC). **Hay que reconstruir la
-    copia** para que el arreglo llegue a producción; hasta entonces el canario está rojo, y es
-    honesto que lo esté.
+  - La copia corta en la fila 30 (`hasta_fila`, como el PIB y el IPC). Se reconstruyó el
+    2026-11-02, y en producción el desempleo de septiembre de 2026 da 8,0 %.
   - Arriba van `ultimo_mes` y las tasas de desempleo, ocupación y participación de ese mes.
   - El motor suma `decimales` por campo; aquí, uno.
   - No se da la tabla de cabeceras: si hace falta, va como herramienta aparte, con su nombre.

@@ -1,14 +1,15 @@
 id: dane_ipc_indice_anio
-version: 1
+version: 2
 familia: estadisticas
 fuente: dane.ipc_indices
-pregunta: "¿Cuál fue la inflación (IPC) en Colombia? Índice mes a mes en un año"
+pregunta: "¿Cuál fue la inflación (IPC) en Colombia en un año, mes a mes?"
 descripcion: >
-  Índice de Precios al Consumidor (IPC) total nacional del DANE, mes a mes en un año (desde 2003;
-  diciembre de 2018 = 100). La inflación anual de un mes es el índice de ese mes dividido por el del
-  mismo mes del año anterior, menos 1 (pida los dos años); la mensual, el índice del mes sobre el del
-  mes anterior, menos 1. Los meses que aún no salen no vienen. Sale de la copia de Terrnova del
-  anexo del último mes publicado.
+  Inflación de Colombia según el IPC total nacional del DANE, mes a mes en un año (desde 2003): la
+  inflación anual de cada mes (contra el mismo mes del año anterior), la de lo corrido del año y la
+  mensual, en porcentaje, con el índice (diciembre de 2018 = 100). Arriba, el último mes y su
+  inflación anual. En 2003 no hay año anterior con qué comparar, y esas variaciones salen vacías.
+  Los meses que aún no salen no vienen. Sale de la copia de Terrnova del anexo del último mes
+  publicado.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {anio: int}
 consulta:
@@ -18,19 +19,21 @@ consulta:
   argumentos:
     tabla: dane_ipc_indices
     filtros: {columna: "{anio}"}
-    select: [Mes, columna, valor]
+    select: [Mes, columna, valor, variacion_mensual, variacion_anual, variacion_anio_corrido]
     order: [_fila]
     limite: 12
-  campos: [Mes, columna, valor]
+  campos: [Mes, columna, valor, variacion_mensual, variacion_anual, variacion_anio_corrido]
 salida: IpcIndiceAnio
 derivados:
+  ultimo_mes: {de: ultimo, campo: mes}
+  inflacion_anual_ultimo_mes: {de: ultimo, campo: inflacion_anual, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
-  # Medido el 2026-10-28 en anex-IPC-Indices-sep2026.xlsx: 2025 está cerrado; enero 146,24 (el
-  # primero), diciembre 152,27.
+  # Medido el 2026-11-02 en anex-IPC-Indices-sep2026.xlsx: 2025 está cerrado; enero 146,24 (el
+  # primero), con inflación anual de 5,22 % contra enero de 2024 (138,98); diciembre 152,27, 5,10 %,
+  # la cifra que publicó el DANE.
   entrada: {anio: 2025}
-  verdad: {anio: "2025", mes: Enero, indice: 146.24}
-  minimos: {numero_registros: 12}
-  campos: [anio, indice, mes, numero_registros]
+  verdad: {anio: "2025", mes: Enero, indice: 146.24, inflacion_anual: 5.22, ultimo_mes: Diciembre, inflacion_anual_ultimo_mes: 5.1, numero_registros: 12}
+  campos: [anio, indice, inflacion_anio_corrido, inflacion_anual, inflacion_anual_ultimo_mes, mes, numero_registros, ultimo_mes, variacion_mensual]
   latencia_max_ms: 5000

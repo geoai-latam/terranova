@@ -382,6 +382,17 @@ class Ventana(_Ficha):
     desde: date
 
 
+class VariacionesIndice(_Ficha):
+    """Un índice mensual (el IPC del DANE) con un año por columna: al copiar, cada fila suma su
+    variación mensual, anual y en lo corrido del año, en porcentaje y con dos decimales, como las
+    publica el DANE. Se calculan con el índice porque el anexo no las trae juntas, y una consulta
+    de un año no ve el anterior."""
+
+    indice: str = Field(description="columna del índice")
+    anio: str = Field(description="columna del año")
+    mes: str = Field(description="columna del mes, con su nombre en español (Enero … Diciembre)")
+
+
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
@@ -468,6 +479,10 @@ class Copia(_Ficha):
     )
     argumentos: dict[str, Any] = Field(
         default_factory=dict, description="argumentos de la tool, sin filtros (origen conector)"
+    )
+    variaciones: VariacionesIndice | None = Field(
+        default=None,
+        description="calcula al copiar las variaciones de un índice mensual (origen conector)",
     )
     tabla: str = Field(pattern=IDENTIFICADOR_SQL, description="nombre de la vista en `copia.`")
     clave: str = Field(

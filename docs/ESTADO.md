@@ -218,6 +218,14 @@ cada fuente queda en `docs/fuentes/<id>.md`.
     está rojo, y es honesto que lo esté.
   - Arriba van el último mes y sus tasas de desempleo, ocupación y participación, con un decimal.
     El motor suma `decimales` por campo.
+  - La copia se reconstruyó desde Colombia el 2026-11-02, con el anexo de septiembre: 4 944 filas,
+    ninguna repetida; desempleo de septiembre de 2026, 8,0 %.
+- **DANE, IPC con la inflación (patrón E):**
+  - La herramienta da la inflación anual, la del año corrido y la mensual de cada mes, y arriba la
+    del último mes (septiembre de 2026: 6,28 %). Se calculan al copiar (`copia.variaciones`);
+    coinciden con las cifras del DANE de 2021 a 2024.
+  - El almacén de copias publica la vista con `DROP` y `CREATE`, para poder sumar columnas.
+  - Copia reconstruida desde Colombia el 2026-11-02.
 
 ## Ficha de un lote (2026-11-01)
 

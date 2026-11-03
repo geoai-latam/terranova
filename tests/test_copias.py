@@ -1018,3 +1018,24 @@ def test_geojson_en_la_cartesiana_de_bogota_se_reproyecta() -> None:
     )
     assert filas == [{"CATEGORIZA": "2"}] and total == 1
     assert almacen.consultar(plan_de_consulta(fuente, {"punto": [-74.1500, 4.680486111]}))[1] == 0
+
+
+def test_las_variaciones_de_un_indice_se_calculan_al_copiar() -> None:
+    """El anexo del IPC trae el índice y no la inflación: al copiar, cada mes suma la variación
+    mensual, la anual y la del año corrido. Medido el 2026-11-02: diciembre de 2023 da 9,28 % y el
+    de 2024, 5,20 %, las cifras que publicó el DANE; el primer mes de la serie no tiene con qué
+    compararse y queda vacío."""
+    from terranova.copias import con_variaciones
+
+    filas = [
+        {"Mes": "Diciembre", "columna": "2022", "valor": 126.03},
+        {"Mes": "Noviembre", "columna": "2023", "valor": 136.89},
+        {"Mes": "Diciembre", "columna": "2023", "valor": 137.72},
+        {"Mes": "Diciembre", "columna": "2024", "valor": 144.88},
+    ]
+    con_variaciones(filas, "valor", "columna", "Mes")
+    primera, noviembre, dic_2023, dic_2024 = filas
+    assert primera["variacion_anual"] is None and primera["variacion_mensual"] is None
+    assert dic_2023["variacion_anual"] == 9.28 and dic_2024["variacion_anual"] == 5.2
+    assert dic_2023["variacion_mensual"] == round((137.72 / 136.89 - 1) * 100, 2)
+    assert noviembre["variacion_anio_corrido"] == round((136.89 / 126.03 - 1) * 100, 2)

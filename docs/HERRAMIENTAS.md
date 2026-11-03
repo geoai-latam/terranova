@@ -118,7 +118,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
-| `dane_ipc_indice_anio` | ¿Cuál fue la inflación (IPC) en Colombia? Índice mes a mes en un año | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_ipc_indice_anio` | ¿Cuál fue la inflación (IPC) en Colombia en un año, mes a mes? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |

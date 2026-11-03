@@ -32,6 +32,9 @@ copia:
     fila_encabezado: 9
     largo_desde: 2
     hasta_fila: 21
+  # El anexo trae el índice; la inflación se calcula al copiar (anual: el mes contra el mismo mes del
+  # año anterior), porque la consulta de un año no ve el anterior.
+  variaciones: {indice: valor, anio: columna, mes: Mes}
   tabla: dane_ipc_indices
   clave: _fila
   indices: [columna]
@@ -44,6 +47,9 @@ campos:
   Mes: {nombre: mes, tipo: str, desc: "mes (Enero, Febrero, …)"}
   columna: {nombre: anio, tipo: str, desc: "año"}
   valor: {nombre: indice, tipo: float, desc: "número índice del IPC total nacional (diciembre de 2018 = 100)"}
+  variacion_mensual: {nombre: variacion_mensual, tipo: float, desc: "variación del índice contra el mes anterior, en porcentaje (calculada al copiar)"}
+  variacion_anual: {nombre: inflacion_anual, tipo: float, desc: "inflación anual: variación del índice contra el mismo mes del año anterior, en porcentaje (calculada al copiar)"}
+  variacion_anio_corrido: {nombre: inflacion_anio_corrido, tipo: float, desc: "variación del índice contra diciembre del año anterior, en porcentaje (calculada al copiar)"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", theme: estadisticas, accrualPeriodicity: monthly}
 # Spec 07: medido en la fuente, no en Terrnova.
