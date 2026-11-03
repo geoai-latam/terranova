@@ -29,6 +29,17 @@ No trae el epígrafe ni el texto.
 
 - `materia` es «NULL» en la mayoría de las leyes recientes: 85 de las 120 de 2025.
 - `subtipo` es «NULL» si no tiene.
+- Medido el 2026-11-03 en las 89 366 normas, el texto «NULL» aparece en:
+
+  | Campo | Normas con «NULL» |
+  |---|---|
+  | `materia` | 73 311 |
+  | `subtipo` | 11 878 |
+  | `sector` | 5 239 |
+  | `entidad` | 2 404 |
+  | `art_culos` | 2 173 (el único valor no numérico) |
+
+  La Ley 2294 de 2023 (Plan Nacional de Desarrollo) sale sin entidad.
 
 ## Cobertura
 
@@ -46,7 +57,7 @@ una parte. SUIN sigue cargando, así que los conteos de un año crecen.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `suin_norma` | alto | pendiente: `articulos` repite `articulos_n` como texto; lenta (6-14 s) |
+| `suin_norma` | alto | v2: `articulos` como número, los «NULL» vacíos y aviso de vacío |
 | `suin_normas_anio` | bajo → medio | v2: del tipo con más normas al de menos, con `vigentes` y `sin_dato_vigencia` por tipo y en total |
 
 ## Decisiones
@@ -56,3 +67,12 @@ una parte. SUIN sigue cargando, así que los conteos de un año crecen.
   - No se convierte en una lista de normas: sin epígrafe, la lista dice poco. Para una norma
     concreta está `suin_norma`.
   - La v2 cuenta `vigencia = 'Vigente'` y `vigencia = 'NULL'` con `sum(case(...))`.
+- **2026-11-03, `suin_norma` v2 (revisión de valor):**
+  - **Artículos:** `articulos` sale como número y se quita `articulos_n`, que lo repetía como
+    texto.
+  - **Vacíos:** los «NULL» de `subtipo`, `vigencia`, `entidad`, `sector`, `materia` y `art_culos`
+    salen vacíos (`vacios`). La descripción dice que una vigencia vacía es que SUIN no la ha
+    estudiado.
+  - **Aviso:** el vacío avisa que SUIN carga solo una parte de los decretos y las resoluciones.
+  - **Latencia:** la fuente respondía en menos de 1 s en frío. En producción, la herramienta tardó
+    de 1,5 a 2,5 s con cinco normas, no los 6-14 s de la revisión.

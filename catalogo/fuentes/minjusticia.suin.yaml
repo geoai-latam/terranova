@@ -24,12 +24,12 @@ campos:
   tipo: {nombre: tipo, tipo: str, desc: "tipo de norma en mayúsculas y sin tildes (LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO…)"}
   n_mero: {nombre: numero, tipo: str, desc: "número de la norma"}
   a_o: {nombre: anio, tipo: str, desc: "año de expedición"}
-  subtipo: {nombre: subtipo, tipo: str, desc: "subtipo (LEY ESTATUTARIA, DECRETO ÚNICO…; «NULL» si no tiene)"}
-  vigencia: {nombre: vigencia, tipo: str, desc: "vigencia según SUIN (Vigente, No vigente…)"}
-  entidad: {nombre: entidad, tipo: str, desc: "entidad que la expidió"}
-  sector: {nombre: sector, tipo: str, desc: "sector administrativo"}
-  materia: {nombre: materia, tipo: str, desc: "materias, separadas por «|»"}
-  art_culos: {nombre: articulos, tipo: str, desc: "número de artículos (texto en la fuente)"}
+  subtipo: {nombre: subtipo, tipo: str, vacios: ["NULL"], desc: "subtipo (LEY ESTATUTARIA, DECRETO ÚNICO…); vacío si no tiene"}
+  vigencia: {nombre: vigencia, tipo: str, vacios: ["NULL"], desc: "vigencia según SUIN (Vigente, Derogado, Compilado); vacía si SUIN aún no la ha estudiado, lo que no quiere decir que no esté vigente"}
+  entidad: {nombre: entidad, tipo: str, vacios: ["NULL"], desc: "entidad que la expidió"}
+  sector: {nombre: sector, tipo: str, vacios: ["NULL"], desc: "sector administrativo"}
+  materia: {nombre: materia, tipo: str, vacios: ["NULL"], desc: "materias, separadas por «|»; vacía en la mayoría (73 311 de 89 366 normas)"}
+  art_culos: {nombre: articulos, tipo: int, vacios: ["NULL"], desc: "número de artículos (texto en la fuente: «NULL» en 2 173 normas, que salen vacías)"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Ministerio de Justicia y del Derecho, theme: justicia, accrualPeriodicity: monthly}
 # Spec 07: medido en la fuente, no en Terrnova.

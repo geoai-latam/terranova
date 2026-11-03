@@ -1,14 +1,17 @@
 id: suin_norma
-version: 1
+version: 2
 familia: normativa
 fuente: minjusticia.suin
 pregunta: "¿Esta ley o decreto sigue vigente, quién lo expidió y cuántos artículos tiene?"
 descripcion: >
   Si una ley o decreto está vigente y cuántos artículos tiene, por su tipo, número y año, según
-  SUIN-Juriscol (Ministerio de Justicia): subtipo (ley
-  estatutaria, decreto único…), vigencia, entidad que la expidió, sector, materias y número de
-  artículos. El tipo va sin tildes: LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO, CIRCULAR… Puede
-  salir más de una norma si varias entidades usaron el mismo número.
+  SUIN-Juriscol (Ministerio de Justicia): subtipo (ley estatutaria, decreto único…), vigencia
+  (Vigente, Derogado o Compilado; vacía si SUIN aún no la estudia, sobre todo en las normas
+  recientes, lo que no quiere decir que no esté vigente), entidad que la expidió, sector, materias
+  y número de artículos. El tipo va sin tildes: LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO,
+  CIRCULAR… Puede salir más de una norma si varias entidades usaron el mismo número. No trae el
+  texto: SUIN carga solo una parte de los decretos y las resoluciones, así que no encontrar una no
+  quiere decir que no exista.
   (Fuente: MinJusticia, SUIN-Juriscol; licencia: CC BY-SA 4.0.)
 entrada: {tipo: nombre, numero: int, anio: int}
 consulta:
@@ -23,11 +26,17 @@ consulta:
   campos: [tipo, n_mero, a_o, subtipo, vigencia, entidad, sector, materia, art_culos]
 salida: NormaSuin
 derivados:
-  articulos_n: {de: columna, campo: art_culos, tipo: int}
+  numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SUIN-Juriscol no tiene cargada esa norma. SUIN carga solo una parte de los decretos y las
+    resoluciones, así que esto no quiere decir que no exista. Revise el tipo (sin tildes: LEY,
+    DECRETO, RESOLUCION), el número y el año.
 cobro: registro
 canario:
   # Medido el 2026-10-23 en fiev-nid6: Ley 1581 de 2012 (protección de datos personales).
   entrada: {tipo: ley, numero: 1581, anio: 2012}
-  verdad: {subtipo: "LEY ESTATUTARIA", vigencia: "Vigente", entidad: "CONGRESO DE COLOMBIA", articulos_n: 30}
-  campos: [anio, articulos, articulos_n, entidad, materia, numero, sector, subtipo, tipo, vigencia]
+  verdad: {subtipo: "LEY ESTATUTARIA", vigencia: "Vigente", entidad: "CONGRESO DE COLOMBIA", articulos: 30}
+  campos: [anio, articulos, entidad, materia, numero, numero_registros, sector, subtipo, tipo, vigencia]
   latencia_max_ms: 10000
