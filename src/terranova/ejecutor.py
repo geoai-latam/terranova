@@ -420,6 +420,9 @@ def mapear_fila(
             if d.patron is not None and crudo is not None:
                 hallado = re.search(d.patron, str(crudo))
                 crudo = hallado.group(1) if hallado else None
+            if d.valores is not None and crudo is not None:
+                # la misma cosa escrita de varias formas («Faja Paralela», «Faja paralela»)
+                crudo = d.valores.get(str(crudo), crudo)
             if d.orden_fecha and isinstance(crudo, str):
                 crudo = fecha_en_orden(crudo, d.orden_fecha)
             out[nombre] = convertir(crudo, d.tipo)

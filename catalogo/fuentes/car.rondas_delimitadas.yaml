@@ -13,12 +13,21 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR)"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Ítem «Delimitación de Rondas» del dueño `publicador_CARCundinamarca` (ArcGIS Online). Capa 0: las
 # rondas delimitadas por acto administrativo. Los polígonos son franjas muy detalladas (el río Apulo
 # tiene 43 mil vértices): se piden sin geometría.
 url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Delimitacion_Rondas/FeatureServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS. Son 203 franjas: en vivo solo se podía preguntar por un punto y sin
+# geometría (decenas de miles de vértices). Copiadas, se cruzan con el polígono de un lote y se
+# mide cuánto de la ronda cae en él. Sin simplificar: una faja paralela mide 30 m de ancho.
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: car_rondas
+  clave: OBJECTID
+  por_pagina: 20
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
 cobertura:
   pais: CO
@@ -27,7 +36,8 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
-  Fuente: {nombre: cuerpo_de_agua, tipo: str, desc: "río, quebrada, laguna o embalse cuya ronda se delimitó"}
+  OBJECTID: {nombre: id_ronda, tipo: int, desc: "identificador de la ronda en el servicio (cambia si la CAR republica la capa)"}
+  Fuente: {nombre: nombre_en_la_fuente, tipo: str, desc: "el nombre como lo escribe la CAR, con el componente pegado («Quebrada Carrizal - APCA») y a veces repetido en otra línea; las herramientas lo separan en cuerpo_de_agua y componente"}
   Acto_Admin: {nombre: acto_administrativo, tipo: str, desc: "acto que delimita la ronda"}
   Fecha: {nombre: fecha_acto, tipo: date, desc: "fecha del acto"}
 comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
@@ -42,4 +52,4 @@ perfil:
   - "el punto de prueba (río Apulo) toca una sola ronda"
   - "solo las rondas que la CAR ya delimitó: un punto fuera de ellas puede estar en una ronda sin delimitar"
   - "polígonos de decenas de miles de vértices: se consultan sin geometría"
-  decision: "en vivo por punto"
+  decision: "copia: por punto y por el polígono de un lote, con el área de la ronda dentro"
