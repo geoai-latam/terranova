@@ -260,9 +260,6 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
-- **DANE, PIB trimestral (patrón E, decimales):** el crecimiento sale con un decimal, como en el
-  boletín, con el último trimestre arriba (II de 2026: 3,5 %), y un aviso explica las cifras «pr» y
-  «p».
 
 ## Ficha de un lote (2026-11-01)
 
