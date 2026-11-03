@@ -1,12 +1,14 @@
 id: secop2_paa_items
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.paa
 pregunta: "¿Qué piensa comprar esta entidad según su plan anual de adquisiciones de SECOP II?"
 descripcion: >
   Ítems del plan anual de adquisiciones de SECOP II de una entidad por su código de SECOP (lo da
   secop2_paa_entidad) y año: descripción, fecha de inicio, duración, modalidad, origen de los
-  recursos, valor estimado y si requiere vigencias futuras. Cada ítem sale una vez; hasta 2000.
+  recursos, valor estimado y si requiere vigencias futuras. Cada ítem sale una vez, del más caro
+  al más barato, hasta 2000. Arriba, el valor total planeado y cuánto va por contratación directa.
+  La fecha de inicio es solo el mes, del año del plan.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {codigo_entidad: int, anio: int}
 consulta:
@@ -16,20 +18,29 @@ consulta:
   argumentos:
     id: 9sue-ezhx
     portal: datos.gov.co
-    # Spec 07: `distinct` quita la repetición por categoría UNSPSC; va sin orden, porque ordenar el
-    # `distinct` no responde en 300 s. Cabe en una página (2000 ítems).
-    select: "distinct id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras"
+    # Spec 07: un ítem se repite por cada categoría UNSPSC; agrupar lo deja una vez y deja ordenar
+    # (medido el 2026-11-02: Chía 2026, 2 047 filas, 1 814 ítems, en 2 s; el `distinct` ordenado
+    # no respondía en 300 s). Cabe en una página (2000 ítems).
+    select: "id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras, count(*) AS categorias_unspsc"
     where: "codigo_entidad = '{codigo_entidad}' AND annio = {anio}"
+    group: "id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras"
+    order: "valor_total_esperado DESC, id"
     max_filas: 2000
   campos: [id, descripcion, fecha_esperada_de_inicio, duracion_esperada, unidad_de_duracion_esperada, modalidad, origen_recursos, valor_total_esperado, valor_esperado_de_presupuesto, requiere_vigencias_futuras, codigo_entidad, annio]
 salida: Secop2PaaItems
 derivados:
+  categorias_unspsc: {de: columna, campo: categorias_unspsc, tipo: int}
+  valor_total_planeado: {de: suma, campo: valor_esperado, tipo: float}
+  items_contratacion_directa: {de: conteo, solo_si: {campo: modalidad, valores: ["CONTRATACION DIRECTA", "CONTRATACION DIRECTA (CON OFERTAS)"]}, tipo: int}
+  valor_contratacion_directa: {de: suma, campo: valor_esperado, solo_si: {campo: modalidad, valores: ["CONTRATACION DIRECTA", "CONTRATACION DIRECTA (CON OFERTAS)"]}, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en 9sue-ezhx: el plan 2025 del municipio de Pitalito (702330010) tiene 582
-  # ítems distintos (754 filas). Es el plan cerrado del año.
+  # Medido el 2026-11-02 en 9sue-ezhx: el plan 2025 del municipio de Pitalito (702330010) tiene 582
+  # ítems distintos (754 filas) que suman 54 007 710 964; 482 van por contratación directa. El más
+  # caro es la actualización catastral (MarketplaceCO1652525979). Es el plan cerrado del año.
   entrada: {codigo_entidad: 702330010, anio: 2025}
+  verdad: {id_item: "MarketplaceCO1652525979", valor_total_planeado: 54007710964.0, items_contratacion_directa: 482}
   minimos: {numero_registros: 582}
-  campos: [descripcion, duracion, fecha_inicio, id_item, modalidad, numero_registros, origen_recursos, unidad_duracion, valor_esperado, valor_vigencia_actual, vigencias_futuras]
+  campos: [categorias_unspsc, descripcion, duracion, fecha_inicio, id_item, items_contratacion_directa, modalidad, numero_registros, origen_recursos, unidad_duracion, valor_contratacion_directa, valor_esperado, valor_total_planeado, valor_vigencia_actual, vigencias_futuras]
   latencia_max_ms: 30000

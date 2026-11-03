@@ -245,6 +245,11 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Da un producto por fila, solo con presentaciones activas, con la dosis, y arriba cuántos
     productos hay: 163 con ibuprofeno y 95 con metformina.
   - El motor suma `{marcador:sin_tildes}`: «acetaminofén» pasa de 18 productos a 289.
+- **Colombia Compra, planes anuales de adquisiciones (patrón E):**
+  - Los ítems del PAA, en SECOP I y II, van del más caro al más barato, con el total planeado
+    arriba.
+  - En SECOP II se suma cuánto va por contratación directa: Chía 2026, 1 586 de 1 814 ítems.
+  - SECOP I avisa que los valores los digita la entidad: Vergara declara 12,8 billones.
 
 ## Ficha de un lote (2026-11-01)
 
