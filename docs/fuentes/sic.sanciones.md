@@ -48,6 +48,7 @@ Medido el 2026-11-02, último mes con sanciones en cada año:
 | Herramienta | Valor | Estado |
 |---|---|---|
 | `sic_sanciones_por_sector` | medio | agrupa sin mayúsculas, de la mayor suma a la menor, con `hasta_mes` y aviso |
+| `sic_sanciones_por_empresa` | alto | nueva: sanciones de una empresa por su nombre, solo personas jurídicas |
 
 ## Decisiones
 
@@ -58,5 +59,18 @@ Medido el 2026-11-02, último mes con sanciones en cada año:
   - Cada sector dice su último mes; el resultado da `hasta_mes`, `valor_total_anio` y `sectores`,
     y avisa si `hasta_mes` es menor que 12.
   - Aquí no hace falta el `complemento`: el último mes sale del propio agregado.
-- **Pendiente:** evaluar `sic_sanciones_por_empresa` por NIT o razón social, solo de personas
-  jurídicas (ADR-0014).
+- **2026-11-03, `sic_sanciones_por_empresa`:**
+  - La fuente no trae NIT: se busca por el nombre del sancionado (`multado`), que es texto libre.
+  - `multado` puede ser una persona natural (ADR-0014). La consulta exige que el nombre lleve una
+    forma jurídica: S.A., S A al final, SAS, LTDA, LIMITADA, E.S.P., Y CIA, S EN C, sociedad,
+    corporación, fundación, asociación, cooperativa, compañía, banco o universidad. Así una
+    persona natural no sale nunca, aunque se busque su nombre.
+  - Medido el 2026-11-03:
+    - De 3 254 sancionados distintos, 2 255 llevan forma jurídica y suman 2 885 de las 3 938
+      filas. En una muestra de 25 del resto, todos son nombres de 3 a 5 palabras.
+    - «GARCIA» y «MARIA» solo dan empresas (una agencia S.A.S. y un centro de estética S.A.S.).
+  - Da `resoluciones` (radicados distintos), `valor_total` y `por_sancionado`. Este último hace
+    falta porque el texto encuentra a varias: «Falabella» da FALABELLA DE COLOMBIA S A (11),
+    FALABELLA.COM S.A.S. (2) y una agencia de viajes (1).
+  - Canario: ALMACENES EXITO S.A., 35 sanciones por 5 005 844 444 pesos.
+- **Pendiente:** las empresas inscritas sin forma jurídica en el nombre no salen; avisa el vacío.
