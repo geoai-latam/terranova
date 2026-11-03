@@ -4,7 +4,7 @@ familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto?"
 descripcion: >
-  Contratos de SECOP II de una entidad estatal por su NIT (sin dígito de verificación), por año de
+  Contratos de SECOP II de una entidad estatal por su NIT (9 dígitos; si trae el dígito de verificación, se comprueba y se quita), por año de
   firma y entidad: número de contratos, valor total en pesos y la fecha de la última firma, del año
   más reciente al más viejo. Un NIT puede cubrir varias entidades (la alcaldía, la personería y el
   concejo de un municipio suelen compartirlo): cada fila dice de cuál es, y no se deben sumar como
@@ -15,7 +15,7 @@ descripcion: >
   Los contratos de 20 billones o más no suman: son errores de digitación de la fuente (uno de
   Medellín dice 440 000 billones) y `contratos_valor_atipico` dice cuántos hubo.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
-entrada: {nit_entidad: int}
+entrada: {nit_entidad: nit_entidad}
 consulta:
   operacion: por_codigo
   resultado: lista

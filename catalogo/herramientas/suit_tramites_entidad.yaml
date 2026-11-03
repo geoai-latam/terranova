@@ -10,7 +10,7 @@ descripcion: >
   que publica Función Pública, y la serie se detuvo en diciembre de 2020.
   Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
-entrada: {nit_entidad: int}
+entrada: {nit_entidad: nit_entidad}
 consulta:
   operacion: por_codigo
   resultado: lista

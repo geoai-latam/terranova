@@ -5,7 +5,7 @@ fuente: confecamaras.rues
 pregunta: "¿Qué dice el RUES de la empresa con este NIT?"
 descripcion: >
   Matrícula mercantil en el RUES de una persona jurídica o entidad sin ánimo de lucro por su NIT
-  (sin dígito de verificación): razón social, cámara, matrícula, organización jurídica, estado,
+  (9 dígitos; si trae el dígito de verificación, se comprueba y se quita): razón social, cámara, matrícula, organización jurídica, estado,
   fechas, último año renovado y CIIU (código y nombre, Rev. 4 A.C. del DANE). Las personas
   naturales no se consultan.
   Si no tiene el NIT, búsquelo por el nombre con rues_empresas_buscar; no lo suponga. (Fuente: Confecámaras; licencia: CC BY-SA 4.0.)

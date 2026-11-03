@@ -41,6 +41,33 @@ TARIFA: dict[str, int] = {
 # Tipos de entrada. Los que tienen patrón los valida la puerta antes de llamar; solo esos y los
 # numéricos se pueden meter dentro de un texto de la consulta (un `where`): un `str` libre ahí sería
 # inyección SQL/SoQL.
+PATRON_NIT = r"^[89][0-9]{2}\.?[0-9]{3}\.?[0-9]{3}(-?[0-9])?$"
+TIPOS_NIT = frozenset({"nit_empresa", "nit_entidad"})
+# DIAN: pesos del dígito de verificación, del último dígito del NIT hacia el primero
+_PESOS_DV = (3, 7, 13, 17, 19, 23, 29, 37, 41, 43, 47, 53, 59, 67, 71)
+
+
+def digito_verificacion(nit: str) -> int:
+    """El dígito de verificación de la DIAN (módulo 11) de un NIT sin él."""
+    resto = sum(int(d) * p for d, p in zip(reversed(nit), _PESOS_DV, strict=False)) % 11
+    return resto if resto < 2 else 11 - resto
+
+
+def normalizar_nit(texto: str) -> str:
+    """El NIT en 9 dígitos. Quita puntos y, si trae el dígito de verificación (con guion o pegado
+    como décimo dígito), lo comprueba: un dígito que no cuadra es un error, no un NIT distinto.
+    Espera un texto que ya cumple `PATRON_NIT`."""
+    limpio = texto.replace(".", "")
+    base, _, dv = limpio.partition("-")
+    if not dv and len(base) == 10:
+        base, dv = base[:9], base[9]
+    if dv and int(dv) != digito_verificacion(base):
+        raise ValueError(
+            f"el dígito de verificación no cuadra: el de {base} es {digito_verificacion(base)}"
+        )
+    return base
+
+
 PATRONES_ENTRADA: dict[str, str] = {
     "codigo_predial": r"^[0-9]{30}$",
     # el código, o el nombre del municipio (con «, departamento» si hace falta): la puerta lo
@@ -55,8 +82,12 @@ PATRONES_ENTRADA: dict[str, str] = {
     "sentencia_relatoria": r"^(C|T|SU)-[0-9]{1,4}-[0-9]{2}$",
     # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas
     "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}_[0-9]{4}$",
-    # NIT de persona jurídica (empieza por 8 o 9): buscar por cédula queda fuera (ADR-0014)
-    "nit_empresa": r"^[89][0-9]{8}$",
+    # NIT de persona jurídica (empieza por 8 o 9): buscar por cédula queda fuera (ADR-0014). Se
+    # acepta como lo escribe la gente (899.999.172-8, 8999991728) y `normalizar_nit` lo deja en 9
+    # dígitos, con el dígito de verificación comprobado.
+    "nit_empresa": PATRON_NIT,
+    # el NIT de una entidad pública (alcaldía, ministerio): la misma forma
+    "nit_entidad": PATRON_NIT,
     "codigo_dane_sede": r"^[0-9]{12}$",  # sede educativa (DANE): 125175000493
     "matricula_inmobiliaria": r"^[0-9A-Z]{2,4}-[0-9]{1,10}$",  # folio de matrícula: 50N-20849403
     "bpin": r"^[0-9]{13,14}$",  # proyecto del Banco de Proyectos (DNP): 2013157610001
@@ -96,7 +127,14 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "sentencia_cc": ("sentencia de la Corte Constitucional, tipo-número/año", "T-760/08"),
     "sentencia_relatoria": ("sentencia como la escribe la relatoría, con guiones", "T-760-08"),
     "documento_normativo": ("documento del gestor normativo, tipo_número_año", "decreto_1165_2019"),
-    "nit_empresa": ("NIT de la empresa, 9 dígitos sin dígito de verificación", "899999714"),
+    "nit_empresa": (
+        "NIT de la empresa: 9 dígitos, con o sin puntos y dígito de verificación",
+        "899999714",
+    ),
+    "nit_entidad": (
+        "NIT de la entidad pública: 9 dígitos, con o sin puntos y dígito de verificación",
+        "899999172",
+    ),
     "codigo_dane_sede": ("código DANE de la sede educativa, 12 dígitos", "125175000493"),
     "matricula_inmobiliaria": ("folio de matrícula: oficina, guion y número", "50N-20849403"),
     "bpin": ("código BPIN del proyecto, 13 o 14 dígitos", "2013157610001"),
@@ -148,6 +186,7 @@ TipoEntrada = Literal[
     "sentencia_relatoria",
     "documento_normativo",
     "nit_empresa",
+    "nit_entidad",
     "codigo_dane_sede",
     "matricula_inmobiliaria",
     "bpin",

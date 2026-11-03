@@ -35,6 +35,7 @@ from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
 from terranova.catalogo import (
     FORMAS_ENTRADA,
     PATRONES_ENTRADA,
+    TIPOS_NIT,
     Herramienta,
     entero_de_json,
     ids_parecidos,
@@ -90,6 +91,13 @@ def _tipo(nombre: str, tipo: str) -> Any:
         return _POLIGONO
     if tipo == "geojson":
         return dict[str, Any]
+    if tipo in TIPOS_NIT:  # texto o número: la puerta lo normaliza (899.999.172-8 → 899999172)
+        forma, ejemplo = FORMAS_ENTRADA[tipo]
+        return Annotated[
+            Annotated[str, Field(pattern=PATRONES_ENTRADA[tipo])]
+            | Annotated[int, Field(ge=800_000_000, le=9_999_999_999)],
+            Field(description=f"{forma} (ej. {ejemplo})"),
+        ]
     if tipo in PATRONES_ENTRADA:
         forma, ejemplo = FORMAS_ENTRADA[tipo]
         return Annotated[
@@ -160,7 +168,8 @@ def problema(
 
 
 class FichaEmpresaEntrada(_EntradaRest):
-    """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, sin dígito de verificación."""
+    """El NIT de una empresa: 9 dígitos que empiezan por 8 o 9, con o sin puntos y dígito de
+    verificación (899.999.714-1)."""
 
     nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
 

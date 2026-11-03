@@ -32,6 +32,7 @@ from terranova.cache import Almacen, AlmacenMemoria, AlmacenRedis, AlmacenTolera
 from terranova.catalogo import (
     FORMAS_ENTRADA,
     PATRONES_ENTRADA,
+    TIPOS_NIT,
     Catalogo,
     Herramienta,
     cargar,
@@ -100,6 +101,17 @@ _TIPOS_JSON: dict[str, dict[str, Any]] = {
             "description": f"{FORMAS_ENTRADA[tipo][0]} (ej. {FORMAS_ENTRADA[tipo][1]})",
         }
         for tipo, patron in PATRONES_ENTRADA.items()
+    },
+    # un NIT llega también como número (899999172): era `int` antes de normalizarse (2026-11-03)
+    **{
+        tipo: {
+            "anyOf": [
+                {"type": "string", "pattern": PATRONES_ENTRADA[tipo]},
+                {"type": "integer", "minimum": 800_000_000, "maximum": 9_999_999_999},
+            ],
+            "description": f"{FORMAS_ENTRADA[tipo][0]} (ej. {FORMAS_ENTRADA[tipo][1]})",
+        }
+        for tipo in TIPOS_NIT
     },
 }
 
