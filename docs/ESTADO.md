@@ -207,6 +207,10 @@ cada fuente queda en `docs/fuentes/<id>.md`.
   - Cada fila dice su unidad y si el anual es suma o promedio. Brillo solar y evaporación son por
     día, medido en todo el conjunto.
   - Si la estación no tiene normal, el aviso explica que pide 30 años de datos.
+- **ANI, concesiones viales (patrón D):**
+  - El avance de obra dice que es una fracción y de cuándo es: el último reporte es de noviembre de
+    2022, y la capa no se edita desde septiembre de 2023.
+  - El valor del contrato dice en pesos de qué fecha está (de 1996 a 2019) y suma el valor indexado.
 
 ## Ficha de un lote (2026-11-01)
 
