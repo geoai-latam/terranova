@@ -1,7 +1,8 @@
 # ICFES · Resultados únicos Saber 11
 
 La fuente es `icfes.saber11` (datos.gov.co `kgxf-xxbe`). Sus herramientas son
-`icfes_saber11_municipio`, `icfes_saber11_estrato_municipio` e `icfes_saber11_colegio`.
+`icfes_saber11_municipio`, `icfes_saber11_estrato_municipio`, `icfes_saber11_colegio` e
+`icfes_saber11_sede_buscar`.
 
 ## Qué publica
 
@@ -83,4 +84,10 @@ lo mismo que el promedio sobre los estudiantes únicos.
   - Chía 20101: 464 estudiantes;
   - Chía 20224, estrato 1: 71 estudiantes, con promedio de 248,37;
   - sede 125175000493 en 20102: 153 estudiantes.
-- **Pendiente:** buscar una sede por su nombre (`icfes_saber11_colegio` pide el código DANE).
+- **`icfes_saber11_sede_buscar`, 2026-11-03:** busca sedes por municipio y palabras del nombre y da
+  el código DANE que pide `icfes_saber11_colegio`.
+  - El municipio es obligatorio, porque un nombre como «Diversificado» se repite en todo el país.
+  - La fuente abrevia «colegio» e «institución» de varias formas (COL, I.E., INSTITUCION
+    EDUCATIVA): se busca con las palabras propias del nombre.
+  - Medido: «diversificado» en Chía da una sede, 125175000493; «San Bartolomé» en Bogotá da dos
+    (COL SAN BARTOLOME LA MERCED y FUND COL MAYOR DE SAN BARTOLOME).
