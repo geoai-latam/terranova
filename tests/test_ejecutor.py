@@ -732,6 +732,95 @@ async def test_el_complemento_dice_hasta_que_mes_publica_la_fuente() -> None:
     assert sobre.estado == "no_encontrado" and sobre.datos == {}
 
 
+class _IgacFalso:
+    """El terreno (capa 14, rural) y el registro catastral (tabla 17) de un predio."""
+
+    def __init__(self, registro: list[dict[str, Any]] | None) -> None:
+        self.registro = registro  # None: la tabla 17 se cae
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        url = argumentos["url"]
+        if url.endswith("/17"):
+            if self.registro is None:
+                raise RuntimeError("se cayó")
+            filas = [{"attributes": r} for r in self.registro]
+            return {
+                "artifacts": [
+                    {
+                        "kind": "feature_collection",
+                        "data": {
+                            "features": [
+                                {"type": "Feature", "geometry": None, "properties": r}
+                                for r in self.registro
+                            ]
+                        },
+                    }
+                ]
+                if filas
+                else [{"kind": "feature_collection", "data": {"features": []}}],
+                "facts": {},
+            }
+        if not url.endswith("/14"):
+            return {
+                "artifacts": [{"kind": "feature_collection", "data": {"features": []}}],
+                "facts": {},
+            }
+        terreno = {
+            "CODIGO": "251750000000000050067000000000",
+            "CODIGO_ANTERIOR": "25175000000050067000",
+        }
+        poligono = {
+            "type": "Polygon",
+            "coordinates": [[[-74.03, 4.86], [-74.02, 4.86], [-74.02, 4.87], [-74.03, 4.86]]],
+        }
+        return {
+            "artifacts": [
+                {
+                    "kind": "feature_collection",
+                    "data": {
+                        "features": [
+                            {"type": "Feature", "geometry": poligono, "properties": terreno}
+                        ]
+                    },
+                }
+            ],
+            "facts": {},
+        }
+
+
+@pytest.mark.anyio
+async def test_el_predio_por_codigo_trae_el_registro_con_el_significado_del_destino() -> None:
+    """Revisión de valor: devolvía el código que se le daba. El registro del predio del canario
+    (medido el 2026-11-03): «KASTILO», destino G (recreacional), 56 069 m² de terreno."""
+    from terranova.ejecutor import Ejecutor
+
+    entrada = {"codigo": "251750000000000050067000000000"}
+    registro = {
+        "DIRECCION": "KASTILO",
+        "DESTINO_ECONOMICO": "G",
+        "AREA_TERRENO": 56069,
+        "AREA_CONSTRUIDA": 6572,
+    }
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso([registro])})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert sobre.datos["destino_economico"] == "G"
+    assert sobre.datos["destino_economico_significado"] == "Recreacional"
+    assert sobre.datos["area_terreno_m2"] == 56069 and sobre.datos["direccion"] == "KASTILO"
+    assert not any("registro catastral no trae" in a for a in sobre.avisos)
+
+    # sin fila en el registro (Yopal: su catastro no lo lleva el IGAC), lo avisa
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso([])})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert sobre.estado == "encontrado" and "destino_economico" not in sobre.datos
+    assert any("registro catastral no trae" in a for a in sobre.avisos)
+
+    # si el registro se cae, eso es «no se pudo», no «no lo trae»
+    ej = Ejecutor(CATALOGO, {"arcgis-mcp": _IgacFalso(None)})
+    sobre = await ej.ejecutar("igac_predio_por_codigo", entrada, plan="evaluacion")
+    assert any(a.startswith("No se pudo saber la dirección") for a in sobre.avisos)
+    assert not any("registro catastral no trae" in a for a in sobre.avisos)
+
+
 def test_distintos_cuenta_los_meses_con_datos() -> None:
     """Castilla 2025 trae dos filas en diciembre y ninguna en octubre ni noviembre: 11 filas, 10
     meses (medido el 2026-11-02 en fdvb-hsrf)."""

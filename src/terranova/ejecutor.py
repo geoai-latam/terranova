@@ -482,10 +482,18 @@ def avisos_de_la_ficha(h: Herramienta, fuente: Fuente, sobre: Sobre) -> list[str
         return [a.texto.strip() for a in h.avisos if a.cuando == "fuera"]
     if sobre.estado not in ("encontrado", "parcial"):
         return []
+    # si el complemento falló, la falta de sus hechos es «no se pudo», no «no hay»: un aviso que
+    # mira uno de ellos no sale (el predio de Chía no está «sin registro» porque el registro cayó)
+    sin_complemento: set[str] = set()
+    if (comp := h.consulta.complemento) is not None and any(
+        av.startswith(f"No se pudo saber {comp.que_dice}") for av in sobre.avisos
+    ):
+        sin_complemento = {x.nombre for x in comp.hechos.values()}
     return [
         a.texto.strip()
         for a in h.avisos
-        if a.cuando == "encontrado" and (a.si is None or a.si.cumple(sobre.datos))
+        if a.cuando == "encontrado"
+        and (a.si is None or (a.si.campo not in sin_complemento and a.si.cumple(sobre.datos)))
     ]
 
 
@@ -1180,6 +1188,12 @@ class Ejecutor:
             for columna, hecho in comp.hechos.items()
         }
         hechos = {k: v for k, v in hechos.items() if v is not None}
+        for columna, hecho in comp.hechos.items():
+            campo = fuente.campos.get(columna)
+            if campo is not None and campo.codigos is not None and hecho.nombre in hechos:
+                significado = campo.significado(hechos[hecho.nombre], None)
+                if significado is not None:
+                    hechos[f"{hecho.nombre}{SUFIJO_SIGNIFICADO}"] = significado
         procedencia = self._procedencia(h, fuente, r, consultado_en, [hechos] if hechos else [])
         return hechos, procedencia
 

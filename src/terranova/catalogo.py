@@ -911,7 +911,8 @@ class Complemento(_Ficha):
     """Una consulta además de la principal, cuya primera fila sale como hechos del resultado: hasta
     qué mes llega la fuente en el año pedido (la Policía publica 2026 hasta julio, y un municipio
     sin casos en julio no lo dice). Corre a la vez que la principal y no cuenta en su total. Si
-    falla, la respuesta lo avisa y sigue sin esos hechos."""
+    falla, la respuesta lo avisa y sigue sin esos hechos. Un hecho de una columna con `codigos` en
+    su fuente sale con su `_significado` al lado, como en una fila."""
 
     fuente: str
     tool: str = Field(pattern=r"^[a-z][a-z0-9_]*$")
@@ -1379,8 +1380,14 @@ def validar(catalogo: Catalogo) -> list[str]:
         if faltan := set(h.consulta.campos) - set(fuente.campos):
             errores.append(f"{donde}: pide campos fuera de la lista blanca: {sorted(faltan)}")
         salen = fuente.nombres_rt | set(h.derivados)
-        if h.consulta.complemento:
-            salen |= {x.nombre for x in h.consulta.complemento.hechos.values()}
+        if (comp := h.consulta.complemento) is not None:
+            salen |= {x.nombre for x in comp.hechos.values()}
+            if (cf := catalogo.fuentes.get(comp.fuente)) is not None:
+                salen |= {
+                    x.nombre + SUFIJO_SIGNIFICADO
+                    for col, x in comp.hechos.items()
+                    if col in cf.campos and cf.campos[col].codigos is not None
+                }
         for nombre, d in h.derivados.items():
             if d.de in (
                 "prefijo",
