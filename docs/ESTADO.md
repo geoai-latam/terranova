@@ -260,6 +260,33 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **DANE, PIB trimestral (patrón E, decimales):** el crecimiento sale con un decimal, como en el
+  boletín, con el último trimestre arriba (II de 2026: 3,5 %), y un aviso explica las cifras «pr» y
+  «p».
+- **IDEAM, temperatura diaria (patrón E, decimales):** promedio, mínima y máxima con un decimal (antes
+  27.2083333333333333). El motor suma `decimales` a los derivados.
+- **PNN, áreas protegidas en zona (patrón E):** de la más grande a la más pequeña (Sumapaz y Chingaza
+  primero, no «África», 4 ha), con el conteo por categoría arriba (`conteo_por`, nuevo en el
+  motor).
+- **INVIMA por titular (patrón F):** uno por expediente, aunque el titular se escriba de dos formas,
+  solo con CUM activos, con el principio activo y las presentaciones activas (LAFRANCOL: 193 → 176).
+- **SECOP II, pagos (patrón F):** se retira `secop_facturas_contrato`, que daba las mismas filas. Los
+  pagos van del más reciente al más viejo, con lo facturado, lo pagado, el último pago y el valor
+  del contrato arriba (PAE de Chía: 34 829 de 64 938 millones pagados).
+- **Minas de Presidencia (patrón F):** nombra la del CNMH y explica por qué no cuadran (Granada, 78
+  frente a 66). Va del año más reciente al más viejo, con los muertos, los civiles y el último año.
+- **UPRA por municipio, versión datos.gov.co (patrón F):** no se retira, porque Andes (Antioquia)
+  solo está ahí. Agrupa por rango, con hectáreas, polígonos, la unidad y las siglas traducidas, y
+  remite a la capa nacional.
+- **Corte Constitucional por año (patrón F):** suma el total y la fecha de la última sentencia del año
+  en el índice: 2026 va hasta el 30 de septiembre (313).
+- **SUIN por año (patrón F):** de los tipos con más normas a los de menos, con cuántas están vigentes
+  y cuántas no tienen aún dato de vigencia (2025: 954 de 1 320).
+- **RUES, fechas en cero (patrón I):** «0000-00-00» sale vacía en matrícula, renovación y
+  cancelación (Alpina en Cali).
+- **Zonas de reserva campesina, fechas (patrón I):** la constitución sale en ISO (Cabrera,
+  2000-11-07, no 11 de julio) y la modificación aparte (Río Pato, 2024-09-26). El motor suma
+  `patron` y `orden_fecha` al derivado `columna`.
 
 ## Ficha de un lote (2026-11-01)
 
