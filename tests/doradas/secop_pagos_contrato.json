@@ -1,13 +1,60 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T21:54:05+00:00",
+ "grabado": "2026-11-03T05:36:50+00:00",
  "herramienta": "secop_pagos_contrato",
  "llamadas": [
   {
    "argumentos": {
+    "id": "jbjy-vk9h",
+    "max_filas": 1,
+    "portal": "datos.gov.co",
+    "select": "valor_del_contrato",
+    "where": "id_contrato = 'CO1.PCCNTR.3712964'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "valor_del_contrato"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "valor_del_contrato": "1173577000"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "jbjy-vk9h",
+     "consulta": {
+      "conjunto": "jbjy-vk9h",
+      "max_filas": 1,
+      "portal": "datos.gov.co",
+      "select": "valor_del_contrato",
+      "where": "(id_contrato = 'CO1.PCCNTR.3712964')"
+     },
+     "cumplen_en_el_portal": 1,
+     "filas": 1,
+     "filtro_soql": "(id_contrato = 'CO1.PCCNTR.3712964')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
     "id": "uymx-8p3j",
     "max_filas": 1000,
-    "order": "fecha_de_emision, id_de_pago",
+    "order": "fecha_de_emision DESC, id_de_pago::number DESC",
     "portal": "datos.gov.co",
     "select": "id_del_contrato, id_de_pago, numero_de_factura, fecha_de_emision, valor_total_de_la_factura, valor_a_pagar, estado, fecha_real_de_pago, nit_entidad, nombre_entidad",
     "where": "id_del_contrato = 'CO1.PCCNTR.3712964'"
@@ -32,20 +79,20 @@
       "rows": [
        {
         "estado": "Pagado",
-        "fecha_de_emision": "2022-07-22T00:00:00.000",
-        "fecha_real_de_pago": "2022-08-01T00:00:00.000",
-        "id_de_pago": "1",
+        "fecha_de_emision": "2023-09-01T15:15:00.000",
+        "fecha_real_de_pago": "2023-09-27T17:00:00.000",
+        "id_de_pago": "3",
         "id_del_contrato": "CO1.PCCNTR.3712964",
         "nit_entidad": "891180077",
         "nombre_entidad": "MUNICIPIO DE PITALITO",
-        "numero_de_factura": "FEV31",
-        "valor_a_pagar": "352073100",
-        "valor_total_de_la_factura": "352073100"
+        "numero_de_factura": "FEV37",
+        "valor_a_pagar": "575052730",
+        "valor_total_de_la_factura": "575052730"
        },
        {
         "estado": "Pagado",
-        "fecha_de_emision": "2023-03-28T00:00:00.000",
-        "fecha_real_de_pago": "2023-04-21T00:00:00.000",
+        "fecha_de_emision": "2023-03-28T19:32:00.000",
+        "fecha_real_de_pago": "2023-04-21T13:27:00.000",
         "id_de_pago": "2",
         "id_del_contrato": "CO1.PCCNTR.3712964",
         "nit_entidad": "891180077",
@@ -56,15 +103,15 @@
        },
        {
         "estado": "Pagado",
-        "fecha_de_emision": "2023-09-01T00:00:00.000",
-        "fecha_real_de_pago": "2023-09-27T00:00:00.000",
-        "id_de_pago": "3",
+        "fecha_de_emision": "2022-07-22T17:20:00.000",
+        "fecha_real_de_pago": "2022-08-01T19:00:00.000",
+        "id_de_pago": "1",
         "id_del_contrato": "CO1.PCCNTR.3712964",
         "nit_entidad": "891180077",
         "nombre_entidad": "MUNICIPIO DE PITALITO",
-        "numero_de_factura": "FEV37",
-        "valor_a_pagar": "575052730",
-        "valor_total_de_la_factura": "575052730"
+        "numero_de_factura": "FEV31",
+        "valor_a_pagar": "352073100",
+        "valor_total_de_la_factura": "352073100"
        }
       ]
      }
