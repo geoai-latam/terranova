@@ -57,5 +57,5 @@ canario:
   entrada: {municipio_divipola: "25175", anio: 2024}
   verdad: {fuente_hasta_mes: 12, genero: "MASCULINO", casos: 3, tipo: "HURTO ABIGEATO"}
   minimos: {total_casos: 3}
-  campos: [casos, fuente_hasta_mes, fuente_meses_publicados, genero, tipo, total_casos]
+  campos: [casos, casos_por_tipo, fuente_hasta_mes, fuente_meses_publicados, genero, tipo, total_casos]
   latencia_max_ms: 10000
