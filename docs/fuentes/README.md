@@ -50,3 +50,4 @@ Reglas:
 | DANE, pobreza multidimensional municipal y sus privaciones (censo 2018, copia) | [dane.ipm_municipal_2018.md](dane.ipm_municipal_2018.md) |
 | MinTIC, accesos a internet fijo (`hwrp-3su3` y la serie vieja `n48w-gutb`) | [mintic.internet_fijo.md](mintic.internet_fijo.md) |
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
+| Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
