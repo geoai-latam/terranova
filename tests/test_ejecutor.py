@@ -211,6 +211,16 @@ def test_sanear_conserva_saltos_y_corta_lo_largo() -> None:
     assert len(largo) == MAX_TEXTO and largo.endswith("…")
 
 
+def test_sanear_repara_la_i_partida() -> None:
+    """SECOP escribe «Medellín» con la «í» partida: U+FFFD y un guion suave (medido el 2026-11-03
+    en gra4-pcp2, 223 466 filas)."""
+    assert (
+        sanear("Colombia;  Antioquia ;  Medell\ufffd\u00adn") == "Colombia;  Antioquia ;  Medellín"
+    )
+    assert sanear("Bol\ufffd\u00advar y Quind\ufffd\u00ado") == "Bolívar y Quindío"
+    assert sanear("sin guion \ufffd") == "sin guion \ufffd"
+
+
 @pytest.mark.parametrize(
     ("valor", "tipo", "esperado"),
     [
