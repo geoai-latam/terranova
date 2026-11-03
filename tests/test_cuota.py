@@ -217,6 +217,33 @@ def test_mensaje_de_saldo_sin_url_de_planes(monkeypatch: pytest.MonkeyPatch) -> 
     )
 
 
+def test_mensaje_de_saldo_cuando_quedan_creditos_pero_no_alcanzan(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """GEO Copilot recibió «agotó sus créditos» con 31 libres: una zona en paralelo con otra
+    reserva 20 y 20 (2026-11-03). Con saldo, el mensaje da las cifras."""
+    monkeypatch.delenv("TERRANOVA_URL_PLANES", raising=False)
+    octubre = datetime(2026, 10, 22, tzinfo=UTC).timestamp()
+    mensaje = puerta.mensaje_saldo_agotado("geoai", octubre, costo=50, quedan=31)
+    assert mensaje.startswith(
+        "esta consulta reserva hasta 50 créditos y a la organización geoai le quedan 31 este mes"
+    )
+    assert "agotó" not in mensaje and "2026-11-01" in mensaje
+    sin_saldo = puerta.mensaje_saldo_agotado("geoai", octubre, costo=20, quedan=0)
+    assert sin_saldo.startswith("la organización geoai agotó sus créditos del mes")
+
+
+@pytest.mark.anyio
+async def test_la_reserva_que_no_alcanza_dice_cuanto_queda() -> None:
+    from terranova.cuota import NIVELES, CuotaMemoria
+
+    cuota = CuotaMemoria()
+    limite = NIVELES["con_llave"]
+    assert await cuota.reservar("geoai", "con_llave", limite - 31) == (True, 31)
+    assert await cuota.reservar("geoai", "con_llave", 50) == (False, 31)
+    assert await cuota.reservar("geoai", "con_llave", 20) == (True, 11)
+
+
 @pytest.mark.anyio
 async def test_limite_de_tasa_es_429_con_retry_after(
     montaje: tuple[RegistroSqlite, Fuente], cliente: httpx.AsyncClient
