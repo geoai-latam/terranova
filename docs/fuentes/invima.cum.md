@@ -1,4 +1,4 @@
-# INVIMA, Código Único de Medicamentos (`invima.cum_*`)
+# INVIMA, Código Único de Medicamentos (`invima.cum`, `invima.cum_*`)
 
 Cuatro conjuntos de datos.gov.co, uno por estado del registro sanitario. Los publica el INVIMA.
 Licencia CC BY-SA 4.0. Se consultan en vivo.
@@ -9,6 +9,7 @@ Licencia CC BY-SA 4.0. Se consultan en vivo.
 | `invima.cum_renovacion` | `vgr4-gemg` | en trámite de renovación | 1 352 | `invima_medicamento_en_renovacion_por_expediente` |
 | `invima.cum_otros_estados` | `spzp-dfuc` | otros estados | 114 423 | `invima_medicamento_otros_estados_por_expediente` |
 | `invima.cum_vencidos` | `vwwf-4ftk` | vencido | 153 394 | `invima_medicamento_vencido_por_expediente` |
+| `invima.cum` | los cuatro, como capas | todos | 426 082 | `invima_medicamento_estado_por_expediente` |
 
 Las filas de vigentes se midieron el 2026-11-02; las demás vienen del perfil de cada ficha.
 
@@ -83,9 +84,10 @@ ninguno de los otros tres.
 | `invima_medicamento_por_expediente` (v2) | medio → alto | con dosis |
 | `invima_medicamentos_por_principio_activo` (v3) | medio → alto | un producto por fila, solo CUM activos, con dosis y presentaciones activas; busca con o sin tilde |
 | `invima_medicamentos_por_titular` (v2) | medio → alto | uno por expediente, solo CUM activos, con principio activo y presentaciones activas |
-| `invima_medicamento_en_renovacion_por_expediente` (v2) | bajo → medio | con dosis y vacío que remite a los otros estados |
-| `invima_medicamento_otros_estados_por_expediente` (v2) | bajo → medio | igual |
-| `invima_medicamento_vencido_por_expediente` (v2) | bajo → medio | igual |
+| `invima_medicamento_estado_por_expediente` (v1) | alto | mira los cuatro conjuntos y dice en cuál está, con un registro por fila |
+| `invima_medicamento_en_renovacion_por_expediente` (v3) | bajo → medio | con dosis; fuera del MCP desde el 2026-11-03 |
+| `invima_medicamento_otros_estados_por_expediente` (v3) | bajo → medio | igual |
+| `invima_medicamento_vencido_por_expediente` (v3) | bajo → medio | igual |
 
 ## Decisiones
 
@@ -115,7 +117,26 @@ ninguno de los otros tres.
     van con otro nombre.
   - TECNOQUIMICAS: 331 expedientes. «IBUPROFENO 800 MG» sale dos veces, pero son dos registros
     distintos.
-- **Pendiente:**
-  - Una sola `invima_medicamento_estado_por_expediente` que mire los cuatro conjuntos. Pide
-    consultas múltiples en el motor, igual que `cnmh_conflicto_municipio`.
-  - Agrupar las vías en una lista.
+- **2026-11-03, cuatro herramientas para una pregunta:**
+  - Nueva fuente `invima.cum`, con los cuatro conjuntos como capas. El motor da `{capa}` a la
+    consulta, de modo que cada capa es un id de Socrata, y `conjunto` dice de cuál salió.
+  - Nueva `invima_medicamento_estado_por_expediente`, agrupada por registro: producto, titular,
+    registro, estado, vencimiento, principio activo y presentaciones.
+  - Las tres por estado (renovación, otros, vencidos) salen del MCP y siguen en REST. El vacío de
+    las cuatro de detalle remite a la de estado.
+  - Medido en producción:
+
+    | Expediente | Producto | Conjunto | Registro |
+    |---|---|---|---|
+    | 36344 | Buscapina | renovación | 2021M-003172-R5, 7 presentaciones |
+    | 19994744 | cetirizina | vigente | vencimiento vacío (año 3000) |
+    | 3277 | Hiderax | otros estados | Desistido |
+    | 2203 | acetaminofén Genfar | vencido | 2022-03-22 |
+
+    Un número inexistente da `no_encontrado` con un aviso que pide revisar el número y remite a
+    alimentos y dispositivos.
+  - **Latencia:** desde la VPS, datos.gov.co tardó de 0,7 a 14,3 s por conjunto, en paralelo. La
+    herramienta espera al más lento: de 3 a 14 s, con tope de 20 s.
+  - Un expediente está en un solo conjunto: los 131 en renovación no salen en los otros tres, ni
+    300 vencidos en vigentes u otros estados.
+- **Pendiente:** agrupar las vías en una lista.

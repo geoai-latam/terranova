@@ -85,12 +85,20 @@ async def test_las_que_cubre_una_compuesta_siguen_en_rest_y_no_salen_en_mcp(
     rest: httpx.AsyncClient,
 ) -> None:
     """El agente confundía `igac_predio_en_punto` y `sinic_predio_en_punto`; `predio_en_punto`
-    elige la base sola (hallazgo #15 de GEO Copilot)."""
+    elige la base sola (hallazgo #15 de GEO Copilot). Y no sabía en cuál de los cuatro conjuntos
+    del INVIMA buscar un expediente: `invima_medicamento_estado_por_expediente` mira los cuatro."""
     ocultas = {h.id for h in CATALOGO.herramientas.values() if not h.en_mcp}
-    assert ocultas == {"igac_predio_en_punto", "sinic_predio_en_punto"}
+    assert ocultas == {
+        "igac_predio_en_punto",
+        "sinic_predio_en_punto",
+        "invima_medicamento_en_renovacion_por_expediente",
+        "invima_medicamento_otros_estados_por_expediente",
+        "invima_medicamento_vencido_por_expediente",
+    }
     async with Client(puerta.crear_servidor(con_ciclo=False)) as mcp:
         nombres = {t.name for t in await mcp.list_tools()}
     assert "predio_en_punto" in nombres and not ocultas & nombres
+    assert "invima_medicamento_estado_por_expediente" in nombres
     for familia in puerta.FAMILIAS:
         async with Client(puerta.crear_servidor(familia, con_ciclo=False)) as c:
             assert not ocultas & {t.name for t in await c.list_tools()}, familia
