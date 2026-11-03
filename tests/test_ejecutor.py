@@ -141,6 +141,39 @@ def test_un_marcador_sin_tildes_busca_con_y_sin_tilde() -> None:
     assert renderizar("{p:sin_tildes}", {"p": "Bogotá"}) == "Bogot_"
 
 
+def test_un_marcador_ascii_quita_tildes_y_enes() -> None:
+    """La relatoría de Colombia Compra devuelve sus 7 761 conceptos si la búsqueda trae una letra
+    fuera de ASCII (medido el 2026-11-03: «daño antijurídico», 7 761; «dano antijuridico», 8)."""
+    assert renderizar("{p:ascii}", {"p": "daño antijurídico"}) == "dano antijuridico"
+    assert renderizar("q={p:ascii}&r={p}", {"p": "Ñuñoa"}) == "q=Nunoa&r=Ñuñoa"
+
+
+def test_el_tema_sale_del_html_sin_etiquetas_ni_entidades() -> None:
+    """El tema de un concepto es la primera negrilla de su resumen, con entidades (medido el
+    2026-11-03 en C-1491 de 2026)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["ancp_conceptos_buscar"]
+    contenido = (
+        '<p style="text-align: justify;"><strong>MODIFICACIÓN DE LOS CONTRATOS ESTATALES \u2013 '
+        "Prórroga &#8211; Procedencia &#8211;\n<em>Autonomía</em> de la voluntad </strong></p>"
+        "<p>Texto del concepto…</p>"
+    )
+    fila = mapear_fila(
+        h, CATALOGO.fuentes[h.fuente], {"id": 1, "content.rendered": contenido}, None
+    )
+    raya = "\u2013"
+    assert fila["tema"] == (
+        f"MODIFICACIÓN DE LOS CONTRATOS ESTATALES {raya} Prórroga {raya} Procedencia {raya} "
+        "Autonomía de la voluntad"
+    )
+    assert "content.rendered" not in fila and "contenido" not in fila
+    sin_negrilla = mapear_fila(
+        h, CATALOGO.fuentes[h.fuente], {"id": 2, "content.rendered": "<p>Sin tema</p>"}, None
+    )
+    assert sin_negrilla["tema"] is None
+
+
 @pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
 def test_sanear_quita_control_y_bidi(sucio: str) -> None:
     assert texto_es_limpio(sanear(sucio))
