@@ -42,6 +42,12 @@ texto («Mayor que 60 - hasta 70»), su código, la categoría para el mercado d
 3. **El rango «Mayor que 1000 »** trae un espacio al final, desde la fuente.
 4. **La versión de datos.gov.co da un registro por polígono**: Cota, 116 polígonos sin agregar
    por rango.
+5. **La versión de datos.gov.co escribe el mismo rango de dos formas.** «Mayor a 2 - hasta 3» y
+   «Mayor que 2 - hasta 3» van con el mismo código. Las categorías salen como sigla o como nombre
+   («CA» o «Cuerpo de Agua», «ZU» o «Zona Urbana»).
+6. **Las dos versiones no tienen los mismos municipios.** Medido el 2026-11-03: de los 244 de
+   datos.gov.co, uno no está en la capa nacional, Andes (Antioquia, 05034: 130 polígonos y
+   25 068 ha). En Antioquia, la capa nacional tiene 15 municipios y datos.gov.co, 16.
 
 ## Herramientas que la usan
 
@@ -49,7 +55,7 @@ texto («Mayor que 60 - hasta 70»), su código, la categoría para el mercado d
 |---|---|---|
 | `upra_precio_tierra_en_punto` | medio → alto | aviso del año del estudio y del vacío |
 | `upra_rangos_precio_municipio` | medio → alto | igual; agrega hectáreas y zonas por rango |
-| `upra_precio_tierra_rural_municipio` | bajo | redundante con la anterior y sin agregar: a fundir o retirar (patrón F) |
+| `upra_precio_tierra_rural_municipio` (v2) | bajo → medio | agregada por rango, con unidad y categorías; para lo que la capa nacional no trae |
 
 ## Decisiones
 
@@ -59,3 +65,11 @@ texto («Mayor que 60 - hasta 70»), su código, la categoría para el mercado d
     último año de la fuente, no el de la respuesta.
   - Las dos herramientas de la capa nacional avisan que el precio es del año del estudio, y la
     fuente avisa el vacío.
+- **2026-11-03, patrón F:**
+  - `upra_precio_tierra_rural_municipio` no se retira: Andes solo está en datos.gov.co.
+  - Su v2 agrupa por código de rango y toma `max()` del nombre, para quedarse con la forma larga.
+    Va del rango con más hectáreas al de menos, con `area_ha_total`, `poligonos_total` y
+    `rango_con_mas_area`.
+  - `categoria` traduce las siglas CA, ZU, NS y SI.
+  - Un aviso da la unidad y que esta versión no trae el año. La descripción y el vacío remiten a
+    `upra_rangos_precio_municipio`.

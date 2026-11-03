@@ -159,7 +159,7 @@ verdades:
     pregunta: "¿Cuántas hectáreas rurales de Cota tienen precio de referencia de la UPRA?"
     herramienta: upra_precio_tierra_rural_municipio
     entrada: {municipio_divipola: "25214"}
-    verdad: {poligonos: 116, area_ha_total: 4315.86}
+    verdad: {poligonos_total: 116, area_ha_total: 4315.86}
     medicion: "datos.gov.co rttb-pk7n, where cod_dane_m = '25214'"
   - id: t22
     familia: territorio
