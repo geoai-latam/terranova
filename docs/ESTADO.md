@@ -260,6 +260,9 @@ cada fuente queda en `docs/fuentes/<id>.md`.
 - **POMCA de la CAR (patrón F):** se retira la herramienta del río Bogotá, que daba lo mismo que la
   general. Sale la `descripcion`, que en dos cuencas era ruido, y cada vacío remite a la otra
   herramienta (Fusagasugá → Sumapaz).
+- **PNN, áreas protegidas en zona (patrón E):** de la más grande a la más pequeña (Sumapaz y Chingaza
+  primero, no «África», 4 ha), con el conteo por categoría arriba (`conteo_por`, nuevo en el
+  motor).
 
 ## Ficha de un lote (2026-11-01)
 

@@ -14,6 +14,7 @@ import math
 import re
 import time
 import unicodedata
+from collections import Counter
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import date, datetime
@@ -444,6 +445,8 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
     numeros = [float(v) for v in valores if v is not None and _numero(v)]
     if d.de == "conteo":
         return len(elementos)
+    if d.de == "conteo_por":
+        return dict(Counter(str(v) for v in valores if v is not None).most_common())
     if d.de == "suma":
         return convertir(round(sum(numeros), 6), d.tipo) if numeros else None
     if d.de == "maximo":

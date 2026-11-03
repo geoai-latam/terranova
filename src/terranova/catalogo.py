@@ -868,7 +868,16 @@ DE_ELEMENTO = frozenset({"capa", "prefijo", "columna", "codigo", "fijo"})
 # por elemento, pero mirando al anterior de la lista: se calcula con todos los elementos en mano
 DE_SECUENCIA = frozenset({"diferencia_anterior"})
 DE_RESULTADO = frozenset(
-    {"conteo", "suma", "maximo", "primero", "ultimo", "distintos", "completitud_total"}
+    {
+        "conteo",
+        "conteo_por",
+        "suma",
+        "maximo",
+        "primero",
+        "ultimo",
+        "distintos",
+        "completitud_total",
+    }
 )
 
 
@@ -884,7 +893,9 @@ class Derivado(_Ficha):
     fuente: el año 2018 de una medida censal que no lo trae en la tabla). En secuencia:
     `diferencia_anterior` (el `campo` menos el del elemento anterior en el orden de la consulta;
     el primero queda vacío). Del resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y
-    `ultimo` (el `campo` del primer o del último elemento), `distintos` (cuántos valores
+    `ultimo` (el `campo` del primer o del último elemento), `conteo_por` (cuántos elementos hay
+    con cada valor de `campo`, el más frecuente primero: áreas protegidas por categoría),
+    `distintos` (cuántos valores
     distintos de `campo` hay: los meses con datos de un año) y `completitud_total` (el total que
     dio la fuente). `solo_si` deja contar solo algunos elementos.
     """
@@ -896,6 +907,7 @@ class Derivado(_Ficha):
         "codigo",
         "fijo",
         "conteo",
+        "conteo_por",
         "suma",
         "maximo",
         "primero",
@@ -923,6 +935,7 @@ class Derivado(_Ficha):
             "prefijo",
             "columna",
             "codigo",
+            "conteo_por",
             "suma",
             "maximo",
             "primero",
