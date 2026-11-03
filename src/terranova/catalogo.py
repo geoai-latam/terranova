@@ -872,6 +872,7 @@ DE_RESULTADO = frozenset(
         "conteo",
         "conteo_por",
         "suma",
+        "suma_por",
         "maximo",
         "primero",
         "ultimo",
@@ -895,6 +896,8 @@ class Derivado(_Ficha):
     el primero queda vacío). Del resultado: `conteo`, `suma` y `maximo` de `campo`, `primero` y
     `ultimo` (el `campo` del primer o del último elemento), `conteo_por` (cuántos elementos hay
     con cada valor de `campo`, el más frecuente primero: áreas protegidas por categoría),
+    `suma_por` (la suma de `sumar` en cada valor de `campo`, la mayor primero: hectáreas por
+    tratamiento),
     `distintos` (cuántos valores distintos de `campo` hay: los meses con datos de un año) y
     `completitud_total` (el total que dio la fuente). `solo_si` deja contar solo algunos
     elementos.
@@ -908,6 +911,7 @@ class Derivado(_Ficha):
         "fijo",
         "conteo",
         "conteo_por",
+        "suma_por",
         "suma",
         "maximo",
         "primero",
@@ -921,6 +925,8 @@ class Derivado(_Ficha):
     n: int | None = Field(default=None, ge=1)
     valores: dict[str, str] | None = None
     valor: str | int | float | None = None
+    # solo con `suma_por`: el campo rt/1 que se suma en cada grupo de `campo`
+    sumar: str | None = None
     # solo con `columna`: la parte del texto que interesa (el grupo 1 de una expresión regular) y,
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
@@ -936,6 +942,7 @@ class Derivado(_Ficha):
             "columna",
             "codigo",
             "conteo_por",
+            "suma_por",
             "suma",
             "maximo",
             "primero",
@@ -955,6 +962,8 @@ class Derivado(_Ficha):
             raise ValueError("`patron` y `orden_fecha` van solo en un derivado «columna»")
         if self.patron is not None and re.compile(self.patron).groups != 1:
             raise ValueError("`patron` lleva exactamente un grupo: la parte que se toma")
+        if (self.de == "suma_por") != (self.sumar is not None):
+            raise ValueError("`sumar` va solo, y siempre, en un derivado «suma_por»")
         if (self.de == "fijo") != (self.valor is not None):
             raise ValueError("`valor` va solo, y siempre, en un derivado «fijo»")
         if self.solo_si is not None and self.de in DE_ELEMENTO | {"completitud_total"}:
@@ -1244,6 +1253,10 @@ def validar(catalogo: Catalogo) -> list[str]:
                 "diferencia_anterior",
             ) and d.campo not in fuente.nombres_rt | set(h.derivados):
                 errores.append(f"{donde}: el derivado {nombre} usa «{d.campo}», que no sale")
+            if d.de in ("conteo_por", "suma_por") and d.campo not in salen:
+                errores.append(f"{donde}: el derivado {nombre} agrupa por «{d.campo}», que no sale")
+            if d.sumar is not None and d.sumar not in fuente.nombres_rt | set(h.derivados):
+                errores.append(f"{donde}: el derivado {nombre} suma «{d.sumar}», que no sale")
             if d.solo_si and d.solo_si.campo not in fuente.nombres_rt | set(h.derivados):
                 errores.append(
                     f"{donde}: el derivado {nombre} filtra por «{d.solo_si.campo}», que no sale"

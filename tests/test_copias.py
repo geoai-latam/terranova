@@ -372,6 +372,13 @@ def test_plan_espacial_por_punto_y_por_zona() -> None:
     area = plan_de_consulta(RUNAP, {"poligono": lote})
     assert "ST_GeomFromGeoJSON(%s)" in area.sql and "ST_MakeValid" in area.sql
     assert "-74" not in area.sql and json.loads(area.parametros[0]) == lote  # va como parámetro
+    pesada = plan_de_consulta(
+        RUNAP, {"poligono": lote, "area_en_poligono": True, "order": ["-_area_ha", "ap_nombre"]}
+    )
+    assert "ST_Intersection(_geom" in pesada.sql and "ORDER BY _area_ha DESC" in pesada.sql
+    # el polígono va dos veces, en la selección y en el filtro, y el conteo solo lleva el filtro
+    assert pesada.parametros[:2] == (json.dumps(lote), json.dumps(lote))
+    assert pesada.parametros_total == (json.dumps(lote),)
 
 
 def test_plan_espacial_rechaza_lo_que_no_es() -> None:
@@ -383,6 +390,7 @@ def test_plan_espacial_rechaza_lo_que_no_es() -> None:
         ({"punto": [1, 2], "poligono": {"type": "Polygon"}}, "no van juntos"),
         ({"geometria": "toda"}, "geometría desconocida"),
         ({"agregados": {"n": "count"}, "geometria": "completa"}, "no sale geometría"),
+        ({"area_en_poligono": True}, "va con `poligono`"),
     ):
         with pytest.raises(ErrorCopia, match=error):
             plan_de_consulta(RUNAP, argumentos)
@@ -571,6 +579,16 @@ def test_copia_espacial_en_postgis() -> None:
     assert [f["objectid"] for f in filas] == [2]
     filas, _ = consultar({"punto": [-73.5, 4.5], "geometria": "completa", "select": ["objectid"]})
     assert '"Polygon"' in filas[0]["_geojson"]
+    # un lote a caballo del borde: cuenta solo la mitad que cae dentro
+    # (0,05° de ancho por 0,1° de alto, ≈ 6150 ha)
+    borde = {
+        "type": "Polygon",
+        "coordinates": [
+            [[-73.05, 4.5], [-72.95, 4.5], [-72.95, 4.6], [-73.05, 4.6], [-73.05, 4.5]]
+        ],
+    }
+    filas, _ = consultar({"poligono": borde, "select": ["objectid"], "area_en_poligono": True})
+    assert [f["objectid"] for f in filas] == [1] and 6000 < filas[0]["_area_ha"] < 6300
 
     def rota() -> Any:
         yield [area(3, _CUADRO)]

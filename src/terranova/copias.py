@@ -66,6 +66,11 @@ _GEOMETRIA = {
 }
 
 
+_POLIGONO = "ST_MakeValid(ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326))"
+# la columna con el área de cada elemento dentro del polígono (`area_en_poligono`)
+AREA_EN_POLIGONO = "_area_ha"
+
+
 # Sin mayúsculas ni tildes, en la columna y en lo buscado: SECOP escribe «CHIA» y el agente, «Chía».
 _TILDES = ("áéíóúüñ", "aeiouun")
 
@@ -121,8 +126,10 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     `-` delante, descendente), `limite` y `contiene` ({columna: palabras}: la columna trae todas
     las palabras, sin distinguir mayúsculas ni tildes). En una copia espacial, además: `punto`
     ([lon, lat]), `poligono` (GeoJSON, ADR-0035) o
-    `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan, y
-    `geometria` («completa», «simplificada» o «ninguna», la de por defecto).
+    `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan,
+    `geometria` («completa», «simplificada» o «ninguna», la de por defecto) y, con `poligono`,
+    `area_en_poligono` (la columna `_area_ha`: las hectáreas de cada elemento dentro del polígono;
+    se puede ordenar por ella).
     """
     if fuente.copia is None:
         raise ErrorCopia(f"{fuente.id} no tiene copia")
@@ -147,6 +154,17 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         columnas = [_columna(c, permitidas) for c in fuente.campos]  # `*` traería `_geom` cruda
     con_geometria = geometria != "ninguna"
     salida = [f"{_GEOMETRIA[geometria]} AS _geojson"] if con_geometria else []
+    parametros_seleccion: list[Any] = []
+    if argumentos.get("area_en_poligono"):
+        # cuánto de cada elemento cae dentro del polígono, en hectáreas (geodésicas): lo que
+        # pesa cada tratamiento o cada uso en un lote, no solo que lo toca
+        if argumentos.get("poligono") is None or agregados:
+            raise ErrorCopia("`area_en_poligono` va con `poligono` y sin agregados")
+        salida.append(
+            f"round((ST_Area(ST_Intersection(_geom, {_POLIGONO})::geography) / 10000)::numeric, 4)"
+            f"::float AS {AREA_EN_POLIGONO}"
+        )
+        parametros_seleccion.append(json.dumps(argumentos["poligono"]))
     seleccion = ", ".join([*(columnas or ([] if agregados else ["*"])), *agregados, *salida])
 
     condiciones, parametros = [], []
@@ -182,9 +200,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         condiciones.append("ST_Intersects(_geom, ST_MakeEnvelope(%s, %s, %s, %s, 4326))")
         parametros += caja
     if (poligono := argumentos.get("poligono")) is not None:
-        condiciones.append(
-            "ST_Intersects(_geom, ST_MakeValid(ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326)))"
-        )
+        condiciones.append(f"ST_Intersects(_geom, {_POLIGONO})")
         parametros.append(json.dumps(poligono))
     donde = f" WHERE {' AND '.join(condiciones)}" if condiciones else ""
 
@@ -192,7 +208,12 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     for c in argumentos.get("order") or []:
         desc = c.startswith("-")
         nombre = c.lstrip("-")
-        expr = f'"{nombre}"' if agregados and _ALIAS.match(nombre) else _columna(nombre, permitidas)
+        if nombre == AREA_EN_POLIGONO and parametros_seleccion:
+            expr = AREA_EN_POLIGONO
+        elif agregados and _ALIAS.match(nombre):
+            expr = f'"{nombre}"'
+        else:
+            expr = _columna(nombre, permitidas)
         orden.append(f"{expr} {'DESC' if desc else 'ASC'} NULLS LAST")
     limite = max(1, min(int(argumentos.get("limite") or MAX_LIMITE), MAX_LIMITE))
 
@@ -203,7 +224,14 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         sql += f" ORDER BY {', '.join(orden)}"
     sql += " LIMIT %s"
     sql_total = None if agregados else f"SELECT count(*) FROM {vista}{donde}"
-    return Plan(sql, (*parametros, limite), sql_total, tuple(parametros), limite, con_geometria)
+    return Plan(
+        sql,
+        (*parametros_seleccion, *parametros, limite),
+        sql_total,
+        tuple(parametros),
+        limite,
+        con_geometria,
+    )
 
 
 # --- el job: descarga y almacén --------------------------------------------------------------
