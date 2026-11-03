@@ -297,6 +297,7 @@ def sanear(texto: str) -> str:
 
 _AÑO = re.compile(r"^(\d{4})")
 _HTTP_DE_FUENTE = re.compile(r"el servicio respondió HTTP (\d{3})")
+AUSENTE = "documento_ausente"  # hecho interno: la fuente respondió que ese documento no existe
 _MILES = re.compile(r"\d{1,3}(,\d{3})+")
 _DECIMALES = re.compile(r"\.0+$")
 
@@ -770,7 +771,9 @@ class Ejecutor:
             except ErrorConector as exc:
                 # La fuente respondió que eso no existe: ni es una caída ni cuenta para el corte.
                 if (m := _HTTP_DE_FUENTE.search(str(exc))) and int(m[1]) in ausente:
-                    return {}
+                    # cero de cero: la fuente sí dijo cuántos hay (ninguno), no es un silencio
+                    completitud = {"vistos": 0, "total": 0, "truncado": False}
+                    return {"facts": {"completitud": completitud, AUSENTE: int(m[1])}}
                 raise ErrorEjecucion(exc.codigo, str(exc), exc.reintentar_en_s) from exc
             finally:
                 metricas.FUENTE_LATENCIA.labels(fuente_id or conector).observe(
@@ -1047,6 +1050,12 @@ class Ejecutor:
                 )
         if any(p.completitud.total is None for p in procedencia):
             avisos.append("La fuente no dijo cuántos elementos hay: no se sabe si vino todo.")
+        if any(AUSENTE in r.hechos for r in respuestas):
+            # «015» en vez de «0015» en la CREG: antes salía «la fuente no dijo cuántos hay»
+            avisos.append(
+                "La fuente respondió que ese documento no existe: revise cómo se escribe su "
+                "nombre (la descripción de la herramienta da la forma y ejemplos). No es una caída."
+            )
         # la lista llegó al tope de la consulta: decirlo en el sobre, no solo en la procedencia.
         # Con un tope de 200, Chapinero trajo una parte de 948 tratamientos y nada lo decía
         # (GEO Copilot, 2026-11-03).

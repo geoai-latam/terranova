@@ -85,6 +85,9 @@ async def test_lo_que_la_fuente_dice_que_no_existe_no_corta_la_fuente(
     sobre = await ej.ejecutar(herramienta, entrada)
     assert sobre.estado == "no_encontrado"
     assert not proteccion.abierto(CATALOGO.herramientas[herramienta].fuente)
+    # dice que el documento no existe, no que «la fuente no dijo cuántos hay» (CREG 015 de 2018)
+    assert any("documento no existe" in a for a in sobre.avisos), sobre.avisos
+    assert not any("no dijo cuántos" in a for a in sobre.avisos)
 
 
 @pytest.mark.anyio
