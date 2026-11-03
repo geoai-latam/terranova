@@ -46,10 +46,10 @@ campos:
   mes: {nombre: mes, tipo: int, desc: "mes de la declaración (1–12)"}
   subpartida: {nombre: subpartida, tipo: str, desc: "subpartida arancelaria NANDINA de 10 dígitos (POSAR)"}
   pais_destino: {nombre: pais_destino, tipo: str, desc: "código DANE del país de destino de la mercancía (PAIS)"}
-  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, desc: "valor FOB en dólares (suma, FOBDOL)"}
-  valor_fob_pesos: {nombre: valor_fob_pesos, tipo: float, desc: "valor FOB en pesos colombianos (suma, FOBPES)"}
-  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, desc: "peso neto en kilogramos (suma, PNK)"}
-  cantidad: {nombre: cantidad, tipo: float, desc: "cantidad en unidades físicas de la subpartida (suma, CANTI)"}
+  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, decimales: 2, desc: "valor FOB en dólares (suma, FOBDOL)"}
+  valor_fob_pesos: {nombre: valor_fob_pesos, tipo: float, decimales: 2, desc: "valor FOB en pesos colombianos (suma, FOBPES)"}
+  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, decimales: 2, desc: "peso neto en kilogramos (suma, PNK)"}
+  cantidad: {nombre: cantidad, tipo: float, decimales: 2, desc: "cantidad en unidades físicas de la subpartida (suma, CANTI)"}
   lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}

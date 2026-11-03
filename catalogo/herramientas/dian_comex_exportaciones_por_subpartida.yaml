@@ -1,5 +1,5 @@
 id: dian_comex_exportaciones_por_subpartida
-version: 2
+version: 3
 familia: estadisticas
 fuente: dian.comex_exportaciones
 pregunta: "¿Cuánto exportó Colombia de una subpartida arancelaria en un año?"

@@ -60,3 +60,7 @@ importaciones de 2025 vienen en dos semestres.
 - **Pendiente:**
   - los decimales de sobra en las sumas (9 930 919 822,169998);
   - un buscador de subpartidas por producto: hoy hay que saberse los 10 dígitos.
+- **2026-11-02, patrón E (decimales de sobra):**
+  - Los valores en dólares y pesos, el peso neto y la cantidad salen con dos decimales
+    (`decimales: 2`).
+  - La suma en la copia dejaba ruido de coma flotante: 9930919822.169998 ahora es 9930919822.17.

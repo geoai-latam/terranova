@@ -48,11 +48,11 @@ campos:
   mes: {nombre: mes, tipo: int, desc: "mes de la declaración (1–12)"}
   subpartida: {nombre: subpartida, tipo: str, desc: "subpartida arancelaria NANDINA de 10 dígitos (NABAN)"}
   pais_origen: {nombre: pais_origen, tipo: str, desc: "código DANE del país de origen de la mercancía (PAISGEN)"}
-  valor_cif_pesos: {nombre: valor_cif_pesos, tipo: float, desc: "valor CIF en pesos colombianos (suma, VACIP)"}
-  valor_cif_usd: {nombre: valor_cif_usd, tipo: float, desc: "valor CIF en dólares (suma, VACID)"}
-  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, desc: "valor FOB en dólares (suma, VAFODO)"}
-  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, desc: "peso neto en kilogramos (suma, PNK)"}
-  cantidad: {nombre: cantidad, tipo: float, desc: "cantidad en unidades físicas de la subpartida (suma, CANU)"}
+  valor_cif_pesos: {nombre: valor_cif_pesos, tipo: float, decimales: 2, desc: "valor CIF en pesos colombianos (suma, VACIP)"}
+  valor_cif_usd: {nombre: valor_cif_usd, tipo: float, decimales: 2, desc: "valor CIF en dólares (suma, VACID)"}
+  valor_fob_usd: {nombre: valor_fob_usd, tipo: float, decimales: 2, desc: "valor FOB en dólares (suma, VAFODO)"}
+  peso_neto_kg: {nombre: peso_neto_kg, tipo: float, decimales: 2, desc: "peso neto en kilogramos (suma, PNK)"}
+  cantidad: {nombre: cantidad, tipo: float, decimales: 2, desc: "cantidad en unidades físicas de la subpartida (suma, CANU)"}
   lineas: {nombre: lineas, tipo: int, desc: "número de líneas de declaración agregadas"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo Nacional de Estadística, theme: comercio_exterior, accrualPeriodicity: monthly}
