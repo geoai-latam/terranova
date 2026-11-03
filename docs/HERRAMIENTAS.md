@@ -79,6 +79,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
 | `invima_medicamento_en_renovacion_por_expediente` | ¿Este medicamento está en trámite de renovación en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
+| `invima_medicamento_estado_por_expediente` | ¿En qué estado está el registro sanitario de este medicamento en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_otros_estados_por_expediente` | ¿En qué estado está este medicamento en el INVIMA, si no está vigente? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamento_vencido_por_expediente` | ¿Este medicamento tiene el registro vencido en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 2 |
 | `invima_medicamentos_por_titular` | ¿Qué medicamentos vigentes tiene registrados este laboratorio en el INVIMA? | Instituto Nacional de Vigilancia de Medicamentos y Alimentos (INVIMA) | CC-BY-SA-4.0 | 5 |
@@ -185,6 +186,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `corte_constitucional_resuelve` | ¿Qué decidió la Corte Constitucional en esta sentencia? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `corte_constitucional_texto_buscar` | ¿Qué dice esta sentencia de la Corte Constitucional sobre este tema? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `corte_constitucional_texto_inicio` | ¿De qué trata esta sentencia de la Corte Constitucional? | Corte Constitucional | LicenseRef-ley23-1982-art41 | 5 |
 | `creg_resolucion_buscar` | ¿Qué dice esta resolución de la CREG sobre este tema? | Comisión de Regulación de Energía y Gas (CREG) | LicenseRef-ley23-1982-art41 | 5 |
