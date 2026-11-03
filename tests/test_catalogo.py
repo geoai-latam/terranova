@@ -219,6 +219,11 @@ def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
     for malo in ("../etc/passwd", "estatuto.tributario", "a/b_2026", "ET"):
         assert re.fullmatch(PATRONES_ENTRADA["documento_normativo"], malo) is None, malo
     assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "T-760-08")
+    # la Corte numeró algunas con letra en 1993-1995 (C-155A/93: 200 en la relatoría)
+    assert re.fullmatch(PATRONES_ENTRADA["sentencia_cc"], "C-155A/93")
+    assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "C-155A-93")
+    for malo in ("C-155AB/93", "C-155a/93", "C-155A/93/x"):
+        assert re.fullmatch(PATRONES_ENTRADA["sentencia_cc"], malo) is None, malo
 
 
 def test_cada_tipo_con_patron_dice_su_forma_con_un_ejemplo_valido() -> None:

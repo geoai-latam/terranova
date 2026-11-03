@@ -1,12 +1,14 @@
 id: corte_constitucional_sentencia
-version: 1
+version: 2
 familia: justicia
 fuente: corteconstitucional.sentencias
 pregunta: "¿Qué dice el índice de la Corte Constitucional sobre esta sentencia?"
 descripcion: >
   Sentencia de la Corte Constitucional por su número (p. ej. T-760/08, C-355/06, SU-214/16): tipo,
-  fecha, proceso, expediente, magistrado ponente, sala y si hubo salvamento o aclaración de voto. Es
-  el índice oficial; el texto completo está en la relatoría de la Corte.
+  fecha, proceso, expediente, magistrado ponente, sala, si hubo salvamento o aclaración de voto y el
+  enlace a su texto completo en la relatoría de la Corte (url). Es el índice oficial: no trae el
+  tema ni lo que se decidió. Para leer el texto, corte_constitucional_texto_inicio, o
+  corte_constitucional_texto_buscar para encontrar una palabra en él.
   (Fuente: Corte Constitucional; licencia: CC BY-SA 4.0.)
 entrada: {sentencia: sentencia_cc}
 consulta:
@@ -16,18 +18,28 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: v2k4-2t8s
-    select: "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv"
+    # la relatoría guarda cada sentencia en relatoria/<año>/<T-760-08>.htm (medido el 2026-11-03:
+    # 200 en T-001/92, C-155A/93, C-355/06, T-760/08, SU-214/16 y C-316/26; el año del número
+    # cuadra con el de la fecha en todas las filas)
+    select: "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv, 'https://www.corteconstitucional.gov.co/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(sentencia, '/', '-') || '.htm' AS url"
     where: "sentencia = '{sentencia}'"
     order: "sentencia"
     max_filas: 10
   campos: [sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv]
 salida: SentenciaCorteConstitucional
 derivados:
+  url: {de: columna, campo: url, tipo: str}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El índice de la Corte no tiene esa sentencia. Revise cómo se escribe: tipo, número y año en dos
+    cifras, con barra (T-760/08, C-155A/93). El índice llega hasta la última sentencia que la Corte
+    ha indexado, unas semanas detrás de la fecha.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en v2k4-2t8s: T-760/08, tutela del 2008-07-31 (salud).
   entrada: {sentencia: "T-760/08"}
-  verdad: {sentencia: "T-760/08", tipo: T, proceso: Tutela, magistrado_ponente: "Manuel José Cepeda Espinosa", expediente: "1281247"}
-  campos: [aclaracion_voto, expediente, expediente_tipo, fecha, magistrado_ponente, numero_registros, proceso, sala, salvamento_voto, sentencia, tipo]
+  verdad: {sentencia: "T-760/08", tipo: T, proceso: Tutela, magistrado_ponente: "Manuel José Cepeda Espinosa", expediente: "1281247", url: "https://www.corteconstitucional.gov.co/relatoria/2008/T-760-08.htm"}
+  campos: [aclaracion_voto, expediente, expediente_tipo, fecha, magistrado_ponente, numero_registros, proceso, sala, salvamento_voto, sentencia, tipo, url]
   latencia_max_ms: 10000
