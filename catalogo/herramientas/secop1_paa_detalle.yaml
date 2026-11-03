@@ -1,12 +1,13 @@
 id: secop1_paa_detalle
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.paa_detalle
 pregunta: "¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I?"
 descripcion: >
   Ítems de un plan anual de adquisiciones de SECOP I por su identificador (id_paa, que da
   secop1_paa_entidad): código UNSPSC, descripción, fecha de inicio, duración, modalidad, fuente de
-  los recursos y valor estimado.
+  los recursos y valor estimado, del más caro al más barato. Arriba, el valor total planeado. La
+  modalidad viene como la escribió cada entidad («CONTRATACIONDIRECTA», «Contratacin Directa»…).
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_paa: int}
 consulta:
@@ -18,19 +19,27 @@ consulta:
     portal: datos.gov.co
     select: "idpaa, id, codigo_unspsc, descripcio_item, fecha_inicio, duracion_estimada, modalidad, fuente_de_recursos, valor_estimado, valor_estimado_vig_actual, requiere_vigencias_futuras"
     where: "idpaa = {id_paa}"
-    order: "id"
+    order: "valor_estimado::number DESC, id"
     max_filas: 1000
   campos: [idpaa, id, codigo_unspsc, descripcio_item, fecha_inicio, duracion_estimada, modalidad, fuente_de_recursos, valor_estimado, valor_estimado_vig_actual, requiere_vigencias_futuras]
 salida: Secop1PaaDetalle
 derivados:
+  valor_total_planeado: {de: suma, campo: valor_estimado, tipo: float}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Los valores son los que digitó la entidad en SECOP I, sin revisión. Hay errores de digitación:
+    el plan 2024 de Vergara (352782) declara un presupuesto de 12,8 billones de pesos, y la suma de
+    sus ítems da 132 782 millones. Contraste las cifras grandes antes de usarlas.
 cobro: registro
 canario:
-  # Medido el 2026-11-02 directamente en azeg-sgqg (idpaa = 352782): 260 registros; el primero con
-  # el orden de la ficha da la verdad. El plan del canario anterior (372838, medido el 2026-10-22)
-  # desapareció cuando la fuente se republicó el 2026-11-02: un plan puede salir del conjunto.
+  # Medido el 2026-11-02 en azeg-sgqg (idpaa = 352782, Vergara 2024): 260 ítems que suman
+  # 132 782 359 242; el más caro es el 41236607 (acueducto, 115 000 millones). El plan del canario
+  # anterior (372838, medido el 2026-10-22) desapareció cuando la fuente se republicó el
+  # 2026-11-02: un plan puede salir del conjunto.
   entrada: {id_paa: 352782}
-  verdad: {id_paa: "352782", id_item: "41236380"}
+  verdad: {id_paa: "352782", id_item: "41236607", valor_total_planeado: 132782359242.0}
   minimos: {numero_registros: 260}
-  campos: [codigo_unspsc, descripcion, duracion, fecha_inicio, fuente_recursos, id_item, id_paa, modalidad, numero_registros, valor_estimado, valor_vigencia_actual, vigencias_futuras]
+  campos: [codigo_unspsc, descripcion, duracion, fecha_inicio, fuente_recursos, id_item, id_paa, modalidad, numero_registros, valor_estimado, valor_total_planeado, valor_vigencia_actual, vigencias_futuras]
   latencia_max_ms: 10000
