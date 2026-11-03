@@ -205,7 +205,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ani_recaudo_peaje_mensual` | ¿Cuánto dinero recaudó este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
 | `ani_trafico_peaje_mensual` | ¿Cuántos vehículos pasaron por este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
 | `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
-| `anm_titulos_municipio` | ¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
+| `anm_titulos_municipio` | ¿Qué minerales tienen explotador autorizado en el RUCOM en este municipio, y cuántos títulos? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
 | `ant_uaf_en_punto` | ¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `igac_capacidad_uso_en_poligono` | ¿Qué capacidad de uso tiene el suelo de este polígono? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 20 |

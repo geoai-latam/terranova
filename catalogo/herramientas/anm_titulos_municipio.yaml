@@ -1,11 +1,16 @@
 id: anm_titulos_municipio
-version: 1
+version: 2
 familia: territorio
 fuente: anm.titulos_mineros
-pregunta: "¿Qué minerales se explotan en este municipio y cuántos títulos de cada uno?"
+pregunta: "¿Qué minerales tienen explotador autorizado en el RUCOM en este municipio, y cuántos títulos?"
 descripcion: >
-  Minerales autorizados en un municipio (código DANE / DIVIPOLA) y cuántos títulos mineros amparan
-  cada mineral, ordenados por mineral. No se publica el nombre del titular (ADR-0014).
+  Títulos mineros de un municipio (código DANE / DIVIPOLA) inscritos en el RUCOM con explotador
+  autorizado para comercializar, por mineral (del que tiene más títulos al que menos) y el total
+  de títulos distintos. NO es el catastro minero: un título sin explotador inscrito en el RUCOM no
+  aparece, así que «0» no quiere decir que el municipio no tenga títulos (el conjunto trae 2 807
+  títulos en 668 municipios). La fuente escribe el mismo mineral de varias formas (ORO, ORO
+  ALUVION, MINERALES DE ORO Y SUS CONCENTRADOS): no se juntan. Para un título, por su expediente,
+  anm_titulo_por_expediente. No se publica el nombre del titular (ADR-0014).
   (Fuente: Agencia Nacional de Minería (ANM), RUCOM; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -18,16 +23,35 @@ consulta:
     select: "mineral, count(distinct codigo_expediente) AS titulos"
     where: "codigo_dane = '{municipio_divipola}'"
     group: "mineral"
-    order: "mineral"
+    order: "titulos DESC, mineral"
     max_filas: 200
+  complemento:
+    fuente: anm.titulos_mineros
+    tool: datos_consultar
+    argumentos:
+      portal: datos.gov.co
+      id: 42ha-fhvj
+      select: "count(distinct codigo_expediente) AS total"
+      where: "codigo_dane = '{municipio_divipola}'"
+    hechos:
+      total: {nombre: titulos_total, tipo: int, desc: "títulos distintos del municipio en el RUCOM: un título con varios minerales cuenta una vez"}
+    que_dice: "cuántos títulos distintos tiene el municipio, sin contar dos veces el que ampara varios minerales"
   campos: [mineral, codigo_expediente, codigo_dane]
 salida: TitulosMineroMunicipio
 derivados:
   titulos: {de: columna, campo: titulos, tipo: int}
+  minerales: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El RUCOM no tiene títulos con explotador autorizado en este municipio. Eso no quiere decir que
+    no haya títulos mineros: este conjunto solo trae los títulos cuyo explotador está inscrito para
+    comercializar. El catastro minero completo (AnnA Minería) no está en Terrnova.
 cobro: agregado
 canario:
-  # Medido el 2026-10-26 en 42ha-fhvj: Yumbo (76892); 1er mineral (orden alfabético) ARCILLA, 1 título.
+  # Medido el 2026-11-03 en 42ha-fhvj (última carga del 2026-03-18): Yumbo (76892) tiene 29 títulos
+  # distintos y 21 formas de mineral; el primero, MATERIALES DE CONSTRUCCION, con 12.
   entrada: {municipio_divipola: "76892"}
-  verdad: {mineral: "ARCILLA", titulos: 1}
-  campos: [mineral, titulos]
+  verdad: {mineral: "MATERIALES DE CONSTRUCCION", titulos: 12, titulos_total: 29, minerales: 21}
+  campos: [mineral, minerales, titulos, titulos_total]
   latencia_max_ms: 15000
