@@ -1,0 +1,45 @@
+id: mintic.accesos_fijos_internet
+titulo: "Accesos fijos a internet por proveedor, municipio, tecnología, segmento y velocidad (MinTIC)"
+entidad: Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC)
+competencia: publica las estadísticas del sector TIC con los reportes de los proveedores (Resolución 6333 de 2021)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-02
+  evidencia: https://www.datos.gov.co/api/views/hwrp-3su3.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: MinTIC, accesos fijos a internet por proveedor, municipio, tecnología, segmento y velocidad. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+conector: datos-abiertos-mcp
+url: https://www.datos.gov.co/resource/hwrp-3su3.json
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura: {pais: CO, columna_tiempo: anno}
+datos_personales: ninguno
+estado: publicada
+campos:
+  anno: {nombre: anio, tipo: str, desc: "año"}
+  trimestre: {nombre: trimestre, tipo: str, desc: "trimestre (1 a 4)"}
+  proveedor: {nombre: proveedor, tipo: str, desc: "proveedor de internet"}
+  codigo_dane_municipio: {nombre: municipio_divipola, tipo: str, ancho: 5, desc: "municipio (DIVIPOLA, 5 dígitos; la fuente lo guarda como número)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio"}
+  segmento: {nombre: segmento, tipo: str, desc: "segmento: residencial por estrato, corporativo, sin estratificar o uso propio del operador"}
+  tecnologia: {nombre: tecnologia, tipo: str, desc: "tecnología de acceso, con el nombre en inglés que publica el MinTIC (FIBER TO THE HOME (FTTH) es fibra hasta el hogar; HYBRID FIBER COAXIAL (HFC), cable)"}
+  velocidad_bajada: {nombre: velocidad_bajada_mbps, tipo: float, desc: "velocidad máxima de bajada, Mbps"}
+  velocidad_subida: {nombre: velocidad_subida_mbps, tipo: float, desc: "velocidad máxima de subida, Mbps"}
+  accesos_fijos_internet: {nombre: accesos, tipo: int, desc: "número de accesos al cierre del trimestre"}
+comportamiento: {max_por_pagina: 50000}
+dcat: {publisher: MinTIC, theme: tic, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-02
+  fila: "un proveedor, municipio, segmento, tecnología y velocidad en un trimestre; 2 072 381 filas"
+  operaciones: {filtrar: 1.0, agrupar: 1.0}
+  hallazgos:
+  - "va del cuarto trimestre de 2023 al segundo de 2026: sigue a n48w-gutb, que llega al tercero de 2023"
+  - "el DIVIPOLA es número (5001 para Medellín), pero el filtro acepta el texto '05001'"
+  - "la suma nacional pasa un poco la del boletín del MinTIC (2024-4T: 9 292 233 contra 9,09 millones; 2025-2T: 9 731 621 contra 9,68)"
+  decision: "en vivo por municipio y año, sumando accesos por trimestre y tecnología"

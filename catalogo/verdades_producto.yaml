@@ -414,7 +414,7 @@ verdades:
   - id: s06
     familia: estadisticas
     pregunta: "¿Cuántas conexiones de internet fijo por cable tenía Chía en el primer trimestre de 2023?"
-    herramienta: mintic_internet_fijo_municipio
+    herramienta: mintic_internet_fijo_municipio_2016_2023
     entrada: {municipio_divipola: "25175", anio: 2023}
     verdad: {trimestre: "1", tecnologia: CABLE, accesos: 25973}
     medicion: "n48w-gutb, sum(no_de_accesos::number) where cod_municipio = '25175' AND anno = '2023'"

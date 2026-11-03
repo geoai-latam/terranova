@@ -142,6 +142,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `men_educacion_municipio` | ¿Cómo va la educación básica y media en este municipio: cobertura, deserción, aprobación? | Ministerio de Educación Nacional (MEN) | CC-BY-SA-4.0 | 2 |
 | `minhacienda_regalias_municipio` | ¿Cuánta plata de regalías tiene presupuestada este municipio y cuánta ha aprobado en proyectos? | Ministerio de Hacienda y Crédito Público | CC-BY-SA-4.0 | 2 |
 | `mintic_internet_fijo_municipio` | ¿Cuántas conexiones de internet fijo hay en este municipio y de qué tecnología? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 5 |
+| `mintic_internet_fijo_municipio_2016_2023` | ¿Cuántas conexiones de internet fijo tenía este municipio entre 2016 y 2023? | Ministerio de Tecnologías de la Información y las Comunicaciones (MinTIC) | CC-BY-SA-4.0 | 5 |
 | `sigep_entidades_buscar` | ¿Cuál es el código SIGEP de esta entidad pública? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 | `sigep_planta_por_entidad` | ¿Cuántos servidores públicos tiene una entidad, por nivel jerárquico? | Departamento Administrativo de la Función Pública (DAFP) | CC-BY-SA-4.0 | 5 |
 | `supertransporte_contenedores_puerto` | ¿Cuántos contenedores (TEU) movió esta zona portuaria (o sociedad portuaria) en un año? | Superintendencia de Transporte (Supertransporte) | CC-BY-SA-4.0 | 5 |

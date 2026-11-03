@@ -1,7 +1,7 @@
 {
  "capas": {
-  "fuentes": 177,
-  "herramientas": 212,
+  "fuentes": 178,
+  "herramientas": 213,
   "familias": [
    [
     "Territorio",
@@ -9,7 +9,7 @@
    ],
    [
     "Estadísticas",
-    45
+    46
    ],
    [
     "Contratación",
@@ -104,7 +104,7 @@
    2,
    2,
    2,
-   1,
+   2,
    1,
    1,
    1,

@@ -48,3 +48,4 @@ Reglas:
 | INS, calidad del agua, IRCA (`nxt2-39c3`) | [ins.calidad_agua_irca.md](ins.calidad_agua_irca.md) |
 | MinEducación, educación básica y media (municipio, departamento y ETC) | [men.educacion.md](men.educacion.md) |
 | DANE, pobreza multidimensional municipal y sus privaciones (censo 2018, copia) | [dane.ipm_municipal_2018.md](dane.ipm_municipal_2018.md) |
+| MinTIC, accesos a internet fijo (`hwrp-3su3` y la serie vieja `n48w-gutb`) | [mintic.internet_fijo.md](mintic.internet_fijo.md) |

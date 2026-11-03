@@ -525,6 +525,13 @@ def test_avisos_de_la_ficha() -> None:
     assert vacio == [a.texto for a in prop.avisos if a.cuando == "vacio"]  # la propia reemplaza
     assert avisos_de_la_ficha(prop, fp, sobre("fuera_de_cobertura", {})) == []
 
+    # fuera de cobertura, la ficha dice dónde está lo que no cubre: la serie vieja del MinTIC
+    internet = CATALOGO.herramientas["mintic_internet_fijo_municipio"]
+    fi = CATALOGO.fuentes[internet.fuente]
+    fuera = avisos_de_la_ficha(internet, fi, sobre("fuera_de_cobertura", {}))
+    assert len(fuera) == 1 and "mintic_internet_fijo_municipio_2016_2023" in fuera[0]
+    assert fuera[0] not in avisos_de_la_ficha(internet, fi, sobre("no_encontrado", {}))
+
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
