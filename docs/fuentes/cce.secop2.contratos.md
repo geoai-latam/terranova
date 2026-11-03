@@ -54,6 +54,17 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
    - Una suma de «lo que contrató» los incluye.
 5. **El año en curso parece completo y no lo es.**
    - Hay que mostrar hasta qué fecha va (`ultima_firma`).
+6. **Entidades con sigla** (2026-11-03).
+   - El IGAC (NIT 899999004) publica como «IGAC Sede Central *», con 19 884 contratos desde 2023.
+     Buscar «Instituto Geográfico Agustín Codazzi» no lo encuentra; «Codazzi» trae el municipio
+     del Cesar.
+7. **La búsqueda por nombre de una ciudad grande es lenta en frío** (2026-11-03, copia del 03-11).
+   - «medellin» toca 50 142 contratos y «bogota» 35 746. Leerlos del disco tarda 16 s y 14 s, y la
+     herramienta se corta a los 15 s (`QueryCanceled`).
+   - Con el caché caliente, la misma consulta agrupada tarda 0,6 s. El costo es leer filas sueltas
+     de 3,6 millones, no agrupar. «chia» (6 766 contratos) tarda 0,1 s, que no cabe sin el
+     índice de trigramas.
+   - Son solo 5 282 entidades: el arreglo es una tabla de entidades armada al refrescar la copia.
 
 ## Herramientas que la usan
 
@@ -62,7 +73,7 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 | `secop_contratos_entidad` | alto desde #242 | agrupa por año **y entidad**, de lo más reciente a lo más viejo, con `ultima_firma`. Antes salía todo a nombre de la Personería (trampa 1) |
 | `secop_contratos_entidad_anio` | alto | ya agrupaba por entidad. El NIT, como texto o número, con o sin dígito de verificación |
 | `secop_contratos_municipio` | medio | el aviso «la fuente no dijo cuántos elementos» sale sin sentido en una suma; no da el rango de años; mete los empréstitos (trampa 4) |
-| `secop_entidades_buscar` | alto, lenta | 15,9 s pese al índice de #241 (sin medir si el índice se usa). Da el NIT como texto |
+| `secop_entidades_buscar` | alto, lenta en frío | v3: `contratos_desde_2023` y `valor_desde_2023`. Se corta en frío con ciudades grandes (trampa 7) |
 | `secop_entidades_municipio` | alto | da el NIT como número |
 | `secop_contratos_proveedor` | alto | |
 | `secop_contratos_buscar` | alto | |
@@ -89,3 +100,7 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
     de la Alcaldía de Chía en 2026, y `899999172-3` da «el dígito de verificación no cuadra: el de
     899999172 es 8».
   - Los números que empiezan por 1 a 7 (cédulas) siguen fuera (ADR-0014).
+- **2026-11-03, el periodo en el nombre del campo** (hallazgo #14 de GEO Copilot):
+  `secop_entidades_buscar` v3 devuelve `contratos_desde_2023` y `valor_desde_2023` en vez de
+  `contratos` y `valor`. La descripción ya decía la ventana, pero «contratos: 4 298» se leía como
+  todos los de la entidad. La descripción también nombra la sigla del IGAC (trampa 6).
