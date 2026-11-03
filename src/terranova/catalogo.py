@@ -734,7 +734,9 @@ class Fuente(_Ficha):
         }
 
 
-MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
+# `{nombre}` o `{nombre:sin_tildes}`: con el modificador, cada vocal con tilde va como `_`, el
+# comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H)
+MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::sin_tildes)?\}")
 MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
 MARCADOR_PREVIA = "previa"
 
