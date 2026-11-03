@@ -17,7 +17,7 @@ import time
 from collections.abc import Callable
 from typing import Any
 
-from terranova.catalogo import PATRONES_ENTRADA, motivo_no_vendible, vendible
+from terranova.catalogo import PATRONES_ENTRADA, motivo_no_vendible, normalizar_nit, vendible
 from terranova.contrato import Sobre, ZonaUsada, ahora, huella, nueva_solicitud_id
 from terranova.ejecutor import Ejecutor, Plan
 from terranova.errores import ErrorEjecucion, ErrorEntrada
@@ -30,13 +30,13 @@ TOPE_S = 12.0
 TOPE_CREDITOS = 30
 PREGUNTA = "¿Qué dicen las fuentes oficiales de la empresa con este NIT?"
 DESCRIPCION = (
-    "Ficha de una empresa colombiana por NIT (9 dígitos, sin dígito de verificación; solo personas "
-    "jurídicas): registro mercantil y establecimientos (RUES), estado de situación financiera y "
-    "resultados (Supersociedades), si la vigila la Superfinanciera y sus contratos públicos como "
-    "proveedor por año (SECOP II). Partes en paralelo, cada una con su procedencia y licencia; si "
-    "una falla, la ficha sale «parcial» con el error de esa parte. Tope de 12 s. Para una sola "
-    "fuente o más detalle (flujo de efectivo, carátula, otro resultado integral), use la "
-    "herramienta de esa fuente."
+    "Ficha de una empresa colombiana por NIT (9 dígitos; si trae el dígito de verificación, se "
+    "comprueba; solo personas jurídicas): registro mercantil y establecimientos (RUES), estado de "
+    "situación financiera y resultados (Supersociedades), si la vigila la Superfinanciera y sus "
+    "contratos públicos como proveedor por año (SECOP II). Partes en paralelo, cada una con su "
+    "procedencia y licencia; si una falla, la ficha sale «parcial» con el error de esa parte. Tope "
+    "de 12 s. Para una sola fuente o más detalle (flujo de efectivo, carátula, otro resultado "
+    "integral), use la herramienta de esa fuente."
 )
 ESQUEMA_ENTRADA: dict[str, Any] = {
     "type": "object",
@@ -44,7 +44,9 @@ ESQUEMA_ENTRADA: dict[str, Any] = {
         "nit": {
             "type": "string",
             "pattern": PATRONES_ENTRADA["nit_empresa"],
-            "description": "NIT de la empresa, 9 dígitos sin dígito de verificación: 899999068",
+            "description": (
+                "NIT de la empresa, 9 dígitos, con o sin puntos y dígito de verificación: 899999068"
+            ),
         }
     },
     "required": ["nit"],
@@ -84,8 +86,12 @@ async def ficha(
         raise ErrorEntrada("nit", "debe ser texto: el NIT de 9 dígitos entre comillas")
     import re
 
-    if not re.fullmatch(PATRONES_ENTRADA["nit_empresa"], nit):
+    if not re.fullmatch(PATRONES_ENTRADA["nit_empresa"], nit.strip()):
         raise ErrorEntrada("nit", "NIT de empresa: 9 dígitos que empiezan por 8 o 9")
+    try:
+        nit = normalizar_nit(nit.strip())
+    except ValueError as e:
+        raise ErrorEntrada("nit", str(e)) from None
     consultado_en = ahora()
     limite = time.monotonic() + tope_s
     acc = _Acumulado({}, [], [], [], [])

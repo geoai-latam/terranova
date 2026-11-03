@@ -789,3 +789,52 @@ def test_suma_por_necesita_sumar_y_sumar_va_solo_con_suma_por() -> None:
         Derivado(de="suma_por", campo="tratamiento")
     with pytest.raises(ValueError, match="sumar"):
         Derivado(de="suma", campo="area_ha", sumar="area_ha")
+
+
+@pytest.mark.parametrize(
+    "escrito",
+    [
+        "899999172",
+        "899.999.172",
+        "899999172-8",
+        "899.999.172-8",
+        "8999991728",
+        " 899999172 ",
+        899999172,
+    ],
+)
+def test_el_nit_de_la_entidad_se_acepta_como_lo_escribe_la_gente(escrito: Any) -> None:
+    """Con el dígito de verificación pegado (8999991728), antes se buscaba ese número de 10
+    dígitos y salía «no encontrado» sin aviso. Chía: 899.999.172-8."""
+    from terranova.ejecutor import validar_entrada
+
+    h = CATALOGO.herramientas["secop_contratos_entidad"]
+    entrada = {**h.canario.entrada, "nit_entidad": escrito}
+    assert validar_entrada(h, entrada)["nit_entidad"] == "899999172"
+
+
+@pytest.mark.parametrize(
+    ("escrito", "motivo"),
+    [
+        ("899999172-3", "dígito de verificación no cuadra"),
+        ("8999991723", "dígito de verificación no cuadra"),
+        ("79999917", "NIT de 9 dígitos"),  # una cédula: ADR-0014
+        ("1020304050", "NIT de 9 dígitos"),
+        ("899 999 172", "NIT de 9 dígitos"),
+    ],
+)
+def test_un_nit_mal_escrito_se_rechaza_con_el_motivo(escrito: str, motivo: str) -> None:
+    from terranova.ejecutor import validar_entrada
+
+    h = CATALOGO.herramientas["rues_empresa_por_nit"]
+    with pytest.raises(ErrorEntrada, match=motivo):
+        validar_entrada(h, {**h.canario.entrada, "nit": escrito})
+
+
+def test_el_digito_de_verificacion_de_nit_conocidos() -> None:
+    """Bancolombia 890.903.938-8, Bogotá D. C. 899.999.061-9, Davivienda 860.034.313-7."""
+    from terranova.catalogo import digito_verificacion
+
+    assert digito_verificacion("890903938") == 8
+    assert digito_verificacion("899999061") == 9
+    assert digito_verificacion("860034313") == 7

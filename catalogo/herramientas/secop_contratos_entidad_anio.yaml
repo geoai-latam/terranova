@@ -13,7 +13,7 @@ descripcion: >
   Los contratos de 20 billones o más no suman: son errores de digitación de la fuente (uno de
   Medellín dice 440 000 billones) y `contratos_valor_atipico` dice cuántos hubo.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
-entrada: {nit_entidad: int, anio: int}
+entrada: {nit_entidad: nit_entidad, anio: int}
 consulta:
   operacion: por_codigo
   resultado: lista

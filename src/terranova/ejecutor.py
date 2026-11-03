@@ -29,6 +29,7 @@ from terranova.catalogo import (
     MARCADOR_PREVIA,
     PATRONES_ENTRADA,
     SUFIJO_SIGNIFICADO,
+    TIPOS_NIT,
     Campo,
     Catalogo,
     Derivado,
@@ -37,6 +38,7 @@ from terranova.catalogo import (
     cargar_cobertura,
     entero_de_json,
     motivo_no_vendible,
+    normalizar_nit,
     rango_entero,
     vendible,
 )
@@ -116,8 +118,18 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
         if not isinstance(v, dict) or "type" not in v:
             raise ErrorEntrada(nombre, "debe ser un objeto GeoJSON")
         return v
+    if tipo in TIPOS_NIT and isinstance(v, int) and not isinstance(v, bool):
+        v = str(v)  # un NIT escrito como número (899999172) es el mismo NIT
     if not isinstance(v, str):
         raise ErrorEntrada(nombre, "debe ser texto")
+    if tipo in TIPOS_NIT:
+        v = v.strip()
+        if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
+            raise ErrorEntrada(nombre, "NIT de 9 dígitos que empieza por 8 o 9 (ej. 899999172)")
+        try:
+            return normalizar_nit(v)
+        except ValueError as e:
+            raise ErrorEntrada(nombre, str(e)) from None
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")

@@ -15,7 +15,7 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 
 ## Campos que importan
 
-- `nit_entidad`: el NIT **sin** dígito de verificación. No identifica a una sola entidad (ver
+- `nit_entidad`: el NIT **sin** dígito de verificación (la puerta lo quita si viene). No identifica a una sola entidad (ver
   trampa 1).
 - `nombre_entidad`: el nombre que la entidad usa en SECOP. Cambia con el tiempo: Medellín sale como
   «DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN».
@@ -60,7 +60,7 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 | Herramienta | Valor | Estado |
 |---|---|---|
 | `secop_contratos_entidad` | alto desde #242 | agrupa por año **y entidad**, de lo más reciente a lo más viejo, con `ultima_firma`. Antes salía todo a nombre de la Personería (trampa 1) |
-| `secop_contratos_entidad_anio` | alto | ya agrupaba por entidad. Pide el NIT como entero |
+| `secop_contratos_entidad_anio` | alto | ya agrupaba por entidad. El NIT, como texto o número, con o sin dígito de verificación |
 | `secop_contratos_municipio` | medio | el aviso «la fuente no dijo cuántos elementos» sale sin sentido en una suma; no da el rango de años; mete los empréstitos (trampa 4) |
 | `secop_entidades_buscar` | alto, lenta | 15,9 s pese al índice de #241 (sin medir si el índice se usa). Da el NIT como texto |
 | `secop_entidades_municipio` | alto | da el NIT como número |
@@ -73,5 +73,19 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 - **#242 (2026-11-02):** `secop_contratos_entidad` agrupa por `nombre_entidad`, ordena con
   `anio DESC NULL LAST` y agrega `ultima_firma`. El canario vigila que la primera fila de Pitalito
   sea del Municipio.
-- **Pendiente:** aceptar el NIT como texto o como número en toda la familia (hoy unas herramientas
-  lo piden entero y otras lo dan como texto).
+- **2026-11-03, NIT normalizado** (patrón H de la revisión de valor; hallazgo de GEO Copilot y del
+  caso de compras de la URT):
+  - **El fallo:** con el dígito de verificación pegado (`8999991728`), el `int` dejaba pasar ese
+    número de 10 dígitos y la fuente respondía «no encontrado» sin aviso. Con puntos o guion, se
+    rechazaba.
+  - **El tipo nuevo:** `nit_entidad` (y `nit_empresa`) acepta `899999172`, `899.999.172`,
+    `899999172-8`, `899.999.172-8`, `8999991728` o el número. La puerta lo deja en 9 dígitos y
+    comprueba el dígito de verificación con el módulo 11 de la DIAN. Si no cuadra, el error dice
+    cuál es el correcto.
+  - **Siete herramientas pasan de `int` a `nit_entidad`:** las de contratos por entidad, el
+    SECOP Integrado, los dos PAA y los dos del SUIT. El esquema acepta texto o número, así que un
+    cliente que mandaba el entero sigue igual.
+  - **Probado en producción el 2026-11-03:** `899.999.172-8` y `8999991728` dan los 1119 contratos
+    de la Alcaldía de Chía en 2026, y `899999172-3` da «el dígito de verificación no cuadra: el de
+    899999172 es 8».
+  - Los números que empiezan por 1 a 7 (cédulas) siguen fuera (ADR-0014).
