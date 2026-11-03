@@ -1,5 +1,5 @@
 id: invima_medicamento_vencido_por_expediente
-version: 2
+version: 3
 familia: empresas
 fuente: invima.cum_vencidos
 pregunta: "¿Este medicamento tiene el registro vencido en el INVIMA?"
@@ -29,7 +29,12 @@ derivados:
 avisos:
 - cuando: vacio
   texto: >
-    El expediente no tiene presentaciones vencidas en el INVIMA. No quiere decir que no exista: el INVIMA publica cada estado en un conjunto aparte, y el expediente puede estar en otro (vigentes: invima_medicamento_por_expediente; en trámite de renovación: invima_medicamento_en_renovacion_por_expediente; en otros estados: invima_medicamento_otros_estados_por_expediente).
+    El expediente no tiene presentaciones vencidas en el INVIMA. No quiere decir que no exista: el
+    INVIMA publica cada estado en un conjunto aparte, y
+    invima_medicamento_estado_por_expediente dice en cuál está.
+# Fuera del MCP: invima_medicamento_estado_por_expediente mira los cuatro conjuntos y el agente
+# no sabía en cuál buscar (revisión de valor). Sigue en REST.
+en_mcp: false
 cobro: registro
 canario:
   # Medido el 2026-10-22 en vwwf-4ftk: el expediente 2203 tiene 3 filas distintas; la primera

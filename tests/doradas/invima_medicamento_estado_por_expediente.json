@@ -1,0 +1,205 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-03T15:12:51+00:00",
+ "herramienta": "invima_medicamento_estado_por_expediente",
+ "llamadas": [
+  {
+   "argumentos": {
+    "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+    "id": "i7cb-raxc",
+    "max_filas": 50,
+    "order": "registrosanitario",
+    "portal": "datos.gov.co",
+    "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+    "where": "expediente = '36344'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [],
+      "kind": "table",
+      "rows": []
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "conjunto": "i7cb-raxc",
+     "consulta": {
+      "conjunto": "i7cb-raxc",
+      "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+      "where": "(expediente = '36344')"
+     },
+     "filas": 0,
+     "filas_que_resume": 0,
+     "filtro_soql": "(expediente = '36344')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+    "id": "vwwf-4ftk",
+    "max_filas": 50,
+    "order": "registrosanitario",
+    "portal": "datos.gov.co",
+    "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+    "where": "expediente = '36344'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [],
+      "kind": "table",
+      "rows": []
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "conjunto": "vwwf-4ftk",
+     "consulta": {
+      "conjunto": "vwwf-4ftk",
+      "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+      "where": "(expediente = '36344')"
+     },
+     "filas": 0,
+     "filas_que_resume": 0,
+     "filtro_soql": "(expediente = '36344')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+    "id": "vgr4-gemg",
+    "max_filas": 50,
+    "order": "registrosanitario",
+    "portal": "datos.gov.co",
+    "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+    "where": "expediente = '36344'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "estadoregistro",
+       "expediente",
+       "fechavencimiento",
+       "presentaciones_cum",
+       "principio_activo_1",
+       "principios_activos",
+       "producto",
+       "registrosanitario",
+       "titular_registrado"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "estadoregistro": "En tramite renov",
+        "expediente": "36344",
+        "fechavencimiento": "2026-04-14T00:00:00.000",
+        "presentaciones_cum": "7",
+        "principio_activo_1": "DIPIRONA SODICA",
+        "principios_activos": "2",
+        "producto": "BUSCAPINA® COMPOSITUM AMPOLLAS",
+        "registrosanitario": "INVIMA 2021M-003172-R5",
+        "titular_registrado": "OPELLA HEALTHCARE COLOMBIA S.A.S"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "vgr4-gemg",
+     "consulta": {
+      "conjunto": "vgr4-gemg",
+      "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+      "where": "(expediente = '36344')"
+     },
+     "filas": 1,
+     "filas_que_resume": 84,
+     "filtro_soql": "(expediente = '36344')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+    "id": "spzp-dfuc",
+    "max_filas": 50,
+    "order": "registrosanitario",
+    "portal": "datos.gov.co",
+    "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+    "where": "expediente = '36344'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [],
+      "kind": "table",
+      "rows": []
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 0,
+      "truncado": false,
+      "vistos": 0
+     },
+     "completo": true,
+     "conjunto": "spzp-dfuc",
+     "consulta": {
+      "conjunto": "spzp-dfuc",
+      "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
+      "max_filas": 50,
+      "portal": "datos.gov.co",
+      "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones_cum",
+      "where": "(expediente = '36344')"
+     },
+     "filas": 0,
+     "filas_que_resume": 0,
+     "filtro_soql": "(expediente = '36344')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  }
+ ]
+}
