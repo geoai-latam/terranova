@@ -1,11 +1,12 @@
 id: secop1_documentos_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.archivos
 pregunta: "¿Qué documentos publicó la entidad en este proceso de SECOP I?"
 descripcion: >
   Documentos de un proceso de SECOP I por su constancia: nombre, título, descripción, tipo,
-  extensión, fecha y enlace de descarga.
+  extensión, fecha y enlace de descarga, del más antiguo al más reciente. El enlace es una IP sin
+  dominio y sin cifrado (http://20.96.127.85/descarga/…), como lo publica la fuente.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {constancia: constancia_secop}
 consulta:
@@ -23,6 +24,10 @@ consulta:
 salida: Secop1DocumentosProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Los enlaces de descarga van a http://20.96.127.85/descarga/…, una IP sin dominio y sin cifrado, como los publica SECOP I; por HTTPS no responde (medido el 2026-11-03). Algunos navegadores y clientes bloquean las descargas por HTTP. El archivo llega con su nombre, pero con un tipo genérico (application/octet-stream): la extensión es la del campo extension.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en ps88-5e3v (numero_de_constancia = 26-21-55446): 32
