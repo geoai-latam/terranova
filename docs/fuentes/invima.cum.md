@@ -82,7 +82,7 @@ ninguno de los otros tres.
 |---|---|---|
 | `invima_medicamento_por_expediente` (v2) | medio → alto | con dosis |
 | `invima_medicamentos_por_principio_activo` (v3) | medio → alto | un producto por fila, solo CUM activos, con dosis y presentaciones activas; busca con o sin tilde |
-| `invima_medicamentos_por_titular` | medio | falta el principio activo; el titular se escribe de dos formas |
+| `invima_medicamentos_por_titular` (v2) | medio → alto | uno por expediente, solo CUM activos, con principio activo y presentaciones activas |
 | `invima_medicamento_en_renovacion_por_expediente` (v2) | bajo → medio | con dosis y vacío que remite a los otros estados |
 | `invima_medicamento_otros_estados_por_expediente` (v2) | bajo → medio | igual |
 | `invima_medicamento_vencido_por_expediente` (v2) | bajo → medio | igual |
@@ -103,6 +103,18 @@ ninguno de los otros tres.
     una letra de LIKE.
   - El caso contrario (escribir sin tilde lo que la fuente tiene con tilde) no se cubre: con
     acetaminofén son 13 de 289 productos.
+- **2026-11-03, patrón F (titular, v2):**
+  - Se agrupa por expediente. El titular sale con `min(titular)`: Lafrancol figura como
+    «LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S.» y como cotitular «LAFRANCOL INTERNACIONAL
+    S.A.S», y CARDIOMAX y NEDOX salían dos veces.
+  - Solo cuenta CUM activos. LAFRANCOL pasa de 193 filas a 176 expedientes.
+  - Suma `principio_activo` (el primero en orden alfabético), `principios_activos` (cuántos) y
+    `presentaciones_activas`.
+  - Trampa SoQL: un alias con el nombre de una columna (`min(titular) AS titular`) hace que el
+    `where` sobre esa columna vea el agregado y falle («aggregate in ungrouped context»). Los alias
+    van con otro nombre.
+  - TECNOQUIMICAS: 331 expedientes. «IBUPROFENO 800 MG» sale dos veces, pero son dos registros
+    distintos.
 - **Pendiente:**
   - Una sola `invima_medicamento_estado_por_expediente` que mire los cuatro conjuntos. Pide
     consultas múltiples en el motor, igual que `cnmh_conflicto_municipio`.

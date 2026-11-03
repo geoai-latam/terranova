@@ -1,15 +1,17 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T05:00:21+00:00",
+ "grabado": "2026-11-03T05:19:31+00:00",
  "herramienta": "invima_medicamentos_por_titular",
  "llamadas": [
   {
    "argumentos": {
+    "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
     "id": "i7cb-raxc",
     "max_filas": 500,
+    "order": "producto, expediente",
     "portal": "datos.gov.co",
-    "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento",
-    "where": "upper(titular) like upper('%LAFRANCOL%')"
+    "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones",
+    "where": "upper(titular) like upper('%LAFRANCOL%') AND estadocum = 'Activo'"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -19,1428 +21,1835 @@
        "estadoregistro",
        "expediente",
        "fechavencimiento",
+       "presentaciones",
+       "principio_activo_1",
+       "principios_activos",
        "producto",
        "registrosanitario",
-       "titular"
+       "titular_registrado"
       ],
       "kind": "table",
       "rows": [
        {
         "estadoregistro": "Vigente",
-        "expediente": "1980002",
-        "producto": "HYTRIN® TABLETAS 5 MG",
-        "registrosanitario": "INVIMA 2008 M- 009696 R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "209154",
-        "producto": "DICETEL® TABLETAS 100 MG",
-        "registrosanitario": "INVIMA 2008 M-011466 R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994556",
-        "producto": "CARDIOMAX® TABLETA CUBIERTA 40 MG",
-        "registrosanitario": "INVIMA 2009M-0009477",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994556",
-        "producto": "CARDIOMAX® TABLETA CUBIERTA 40 MG",
-        "registrosanitario": "INVIMA 2009M-0009477",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20001339",
-        "producto": "NEDOX® 10 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2009M-0009580",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20007729",
-        "producto": "ESTEINE®OVULO VAGINAL DE LIBERACION SOSTENIDA",
-        "registrosanitario": "INVIMA 2010M-0010768",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "37168",
-        "producto": "LISIPRIL® TABLETAS",
-        "registrosanitario": "INVIMA 2010 M-011650 R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "37564",
-        "producto": "LISIPRIL® 10 MG TABLETAS",
-        "registrosanitario": "INVIMA 2010 M-011914 R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19904833",
-        "fechavencimiento": "01/01/3000",
-        "producto": "EROXIM",
-        "registrosanitario": "INVIMA 2010 M-014175 R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19904833",
-        "fechavencimiento": "01/01/3000",
-        "producto": "EROXIM",
-        "registrosanitario": "INVIMA 2010 M-014175 R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20040666",
-        "producto": "DUSPATALIN® SUSPENSION",
-        "registrosanitario": "INVIMA 2013M-0014358",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19940848",
-        "fechavencimiento": "01/01/3000",
-        "producto": "FUNIDE® 250 MG",
-        "registrosanitario": "INVIMA 2014M-0003112 R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19944041",
-        "producto": "VALCOTE® ER 250 MG",
-        "registrosanitario": "INVIMA 2014M-0003327-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20070619",
-        "producto": "FACETIX MINI 20 TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2014M-0015154",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20070573",
-        "producto": "FACETIX®SUAVE 30",
-        "registrosanitario": "INVIMA 2014M-0015288",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20058720",
-        "producto": "RIFAX® 550MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2014M-0015323",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19941719",
-        "producto": "NEDOX® 40 MG",
-        "registrosanitario": "INVIMA 2015M-0003236-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19941719",
-        "producto": "NEDOX® 40 MG",
-        "registrosanitario": "INVIMA 2015M-0003236-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20019190",
-        "producto": "LUMBAL FORTE® TABLETAS",
-        "registrosanitario": "INVIMA 2015M-0011033-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20015464",
-        "fechavencimiento": "01/01/3000",
-        "producto": "ATTENTHO ®10 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2015M-0011506-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20080647",
-        "producto": "DURAX® VSD 5 MG",
-        "registrosanitario": "INVIMA 2015M-0015784",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20080649",
-        "producto": "DURAX VSD 20MG",
-        "registrosanitario": "INVIMA 2015M-0015785",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20080650",
-        "producto": "DURAX VSD 10 MG",
-        "registrosanitario": "INVIMA 2015M-0015786",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20087542",
-        "producto": "SEMAZIN® ÓVULOS",
-        "registrosanitario": "INVIMA 2015M-0016060",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20083500",
-        "fechavencimiento": "01/01/3000",
-        "producto": "SAMEXID® 30 MG",
-        "registrosanitario": "INVIMA 2015M-0016064",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20090473",
-        "fechavencimiento": "01/01/3000",
-        "producto": "LUMBAL RELAX® TABLETAS RECUBIERTA",
-        "registrosanitario": "INVIMA 2015M-0016179",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20068384",
-        "producto": "SAMEXID® 50MG",
-        "registrosanitario": "INVIMA 2015M-0016301",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20083499",
-        "fechavencimiento": "01/01/3000",
-        "producto": "SAMEXID 70 MG",
-        "registrosanitario": "INVIMA 2015M-0016302",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20083126",
-        "producto": "FLEXIMAX® ACE TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2015M-0016335",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20076616",
-        "fechavencimiento": "01/01/3000",
-        "producto": "CREON MINIMICROSPHERES ® 5000",
-        "registrosanitario": "INVIMA 2015M-0016538",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "45821",
-        "producto": "RYTMONORM® 300 MG TABLETAS",
-        "registrosanitario": "INVIMA 2015M-004879-R3",
-        "titular": "LABORATORIOS FRANCO COLOMBIANO LAFRANCOL S.A.S"
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "45820",
-        "producto": "RYTMONORM® 150 MG TABLETAS",
-        "registrosanitario": "INVIMA 2015 M-004902-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19953331",
-        "producto": "NAPROXENO 250MG TABLETAS",
-        "registrosanitario": "INVIMA 2016M-0004871-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19960276",
-        "fechavencimiento": "01/01/1900",
-        "producto": "ANTISS® JARABE",
-        "registrosanitario": "INVIMA 2016M-0005678-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S.SIGLALAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20015394",
-        "fechavencimiento": "01/01/3000",
-        "producto": "ATTENTHO® 40 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2016M-0011312-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20015465",
-        "fechavencimiento": "01/01/3000",
-        "producto": "ATTENTHO®25 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2016M-0011318-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20031521",
-        "producto": "CIMOXEN® 500 MG TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2016M-0012005-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20086452",
-        "fechavencimiento": "01/01/3000",
-        "producto": "KLARICID® UD",
-        "registrosanitario": "INVIMA 2016M-0016909",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20093972",
-        "fechavencimiento": "01/01/3000",
-        "producto": "SUAXINA® TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2016M-0017043",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20104080",
-        "producto": "DABIX® 160/25 MG TABLETAS",
-        "registrosanitario": "INVIMA 2016M-0017187",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20066852",
-        "producto": "DICETEL® DUO",
-        "registrosanitario": "INVIMA 2016M-0017223",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20104101",
-        "producto": "DABIX80/12.5 MG TABLETAS",
-        "registrosanitario": "INVIMA 2016M-0017229",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "58899",
-        "producto": "DICLOXACILINA500 MG",
-        "registrosanitario": "INVIMA 2016M-005176-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "104739",
-        "producto": "VALCOTE ® 500 MG TABLETAS DE LIBERACION RETARDADA",
-        "registrosanitario": "INVIMA 2016M-007660-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19911414",
-        "producto": "FINIGAX® MASTICABLE SABORES (MENTA. CEREZA)",
-        "registrosanitario": "INVIMA 2016M-014779-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19905313",
-        "producto": "CREON® CAPSULAS DE LIBERACION RETARADADA 10.000",
-        "registrosanitario": "INVIMA 2016M-13915-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19962743",
-        "producto": "DISGRASIL®",
-        "registrosanitario": "INVIMA 2017M-0006196-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19962743",
-        "producto": "DISGRASIL®",
-        "registrosanitario": "INVIMA 2017M-0006196-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20028711",
-        "producto": "COLIK FORTE® TABLETAS",
-        "registrosanitario": "INVIMA 2017M-0012468-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20109354",
-        "producto": "VORIX® 0.5 MG",
-        "registrosanitario": "INVIMA 2017M-0017675",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20109429",
-        "producto": "VORIX® 1.0 MG",
-        "registrosanitario": "INVIMA 2017M-0017676",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20069479",
-        "producto": "SINOIMPLANT®",
-        "registrosanitario": "INVIMA 2017M-0017722",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "59330",
-        "producto": "CETIRAX-D SOLUCION ORAL",
-        "registrosanitario": "INVIMA 2017M-005381-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "59395",
-        "producto": "CETIRAX ®",
-        "registrosanitario": "INVIMA 2017M-005502-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19914092",
-        "producto": "SEVEDOL ®",
-        "registrosanitario": "INVIMA 2017M-015027-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19914092",
-        "producto": "SEVEDOL ®",
-        "registrosanitario": "INVIMA 2017M-015027-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19937070",
-        "fechavencimiento": "01/01/3000",
-        "producto": "EROXIMFAST INSTANTAB",
-        "registrosanitario": "INVIMA 2018M-0002511-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19937070",
-        "fechavencimiento": "01/01/3000",
-        "producto": "EROXIMFAST INSTANTAB",
-        "registrosanitario": "INVIMA 2018M-0002511-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19973411",
-        "fechavencimiento": "01/01/1900",
-        "producto": "EROXIM100 MG",
-        "registrosanitario": "INVIMA 2018M-0006822-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19973411",
-        "fechavencimiento": "01/01/1900",
-        "producto": "EROXIM100 MG",
-        "registrosanitario": "INVIMA 2018M-0006822-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19985046",
-        "producto": "CARDIOMAX® 20MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2018M-0008663-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19985046",
-        "producto": "CARDIOMAX® 20MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2018M-0008663-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994456",
-        "producto": "CARDIOMAX ® 10MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2018M-0008899-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994456",
-        "producto": "CARDIOMAX ® 10MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2018M-0008899-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20001058",
-        "producto": "BELLAFACE®",
-        "registrosanitario": "INVIMA 2018M-0009470-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20001661",
-        "producto": "BONDIGEST® 10 MG",
-        "registrosanitario": "INVIMA 2018M-0009534-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20059808",
-        "producto": "STAFEN®135 / 5 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2018M-0014839-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20135075",
-        "fechavencimiento": "01/01/3000",
-        "producto": "SEMAZIN®",
-        "registrosanitario": "INVIMA 2018M-0018402",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20140915",
-        "producto": "DABIX® 160/12.5 TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2018M-0018640",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20148739",
-        "producto": "CLUVAX FORTE®",
-        "registrosanitario": "INVIMA 2018M-0018651",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19927018",
-        "producto": "AMOXICILINA SUSPENSION",
-        "registrosanitario": "INVIMA 2019M-0001066-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930430",
-        "producto": "SYNTHROID® 88 MCG",
-        "registrosanitario": "INVIMA 2019M-0001685-R2",
-        "titular": "LABORATORIOS FRANCO COLOMBIANO LAFRANCOL S.A.S"
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930428",
-        "producto": "SYNTHROID® 50 MCG",
-        "registrosanitario": "INVIMA 2019M-0001697-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930427",
-        "producto": "SYNTHROID® 25 MCG",
-        "registrosanitario": "INVIMA 2019M-0001698-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930431",
-        "producto": "SYNTHROID® 100 MCG TABLETAS",
-        "registrosanitario": "INVIMA 2019M-0001709-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930429",
-        "producto": "SYNTHROID® 75 MCG TABLETAS",
-        "registrosanitario": "INVIMA 2019M-0001714-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930433",
-        "producto": "SYNTHROID® 125 MCG TABLETAS",
-        "registrosanitario": "INVIMA 2019M-0001743-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19930432",
-        "producto": "SYNTHROID® 112 MCG TABLETAS",
-        "registrosanitario": "INVIMA 2019M-0001765-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19939887",
-        "producto": "BETASERC ® 16 MG TABLETA",
-        "registrosanitario": "INVIMA 2019M-0002984-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19972047",
-        "fechavencimiento": "01/01/3000",
-        "producto": "CETIRAX® GOTAS",
-        "registrosanitario": "INVIMA 2019M-0006821-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19989771",
-        "producto": "KAZIDE® 200 MG TABLETAS DISPERSABLE",
-        "registrosanitario": "INVIMA 2019M-0008733-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994205",
-        "producto": "BETASERC ® 24",
-        "registrosanitario": "INVIMA 2019M-0009132-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S"
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20059807",
-        "producto": "ERICOX 60 MG",
-        "registrosanitario": "INVIMA 2019M-0014663-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20060553",
-        "producto": "ERICOX120MG",
-        "registrosanitario": "INVIMA 2019M-0014723-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20065755",
-        "producto": "TRILIPIX®135MG",
-        "registrosanitario": "INVIMA 2019M-0015218-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20069694",
-        "fechavencimiento": "01/01/3000",
-        "producto": "PLURIAMIN® TABLETAS DE LIBERACIÓN RETARDADA",
-        "registrosanitario": "INVIMA 2019M-0015221-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20055000",
-        "producto": "BELLAFACE® SUAVE",
-        "registrosanitario": "INVIMA 2019M-0015240-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20151816",
-        "producto": "BROCRIPTIN® 5MG/2.5MG",
-        "registrosanitario": "INVIMA 2019M-0018869",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20151832",
-        "producto": "BROCRIPTIN® 10 MG/ 5 MG",
-        "registrosanitario": "INVIMA 2019M-0018870",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20128919",
-        "producto": "DOXU® 7.5",
-        "registrosanitario": "INVIMA 2019M-0018877",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20156284",
-        "producto": "BELLANEW®",
-        "registrosanitario": "INVIMA 2019M-0018900",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20155037",
-        "producto": "PEDIALAB FEVER 7 +® JARABE",
-        "registrosanitario": "INVIMA 2019M-0018988",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20157741",
-        "producto": "NEDOX® 20MG TABLETAS GASTRORRESISTENTES",
-        "registrosanitario": "INVIMA 2019M-0019178",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20157742",
-        "fechavencimiento": "01/01/3000",
-        "producto": "FEXU D® SUSPENSION",
-        "registrosanitario": "INVIMA 2019M-0019179",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20159113",
-        "producto": "NEDOX® 40 MG TABLETAS GASTRORRESISTENTES",
-        "registrosanitario": "INVIMA 2019M-0019430",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20151057",
-        "producto": "GYNETS® 4 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2019M-0019511",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "230359",
-        "producto": "TARKA® SR TABLETAS",
-        "registrosanitario": "INVIMA 2019M-012157-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19902458",
-        "producto": "AMDIPIN H® 10 MG",
-        "registrosanitario": "INVIMA 2019M-13514- R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19902457",
-        "producto": "AMDIPIN H 5-12.5",
-        "registrosanitario": "INVIMA 2019M-13527-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20143846",
-        "producto": "BISINTEX",
-        "registrosanitario": "INVIMA 2019MBT-0000002",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19942420",
-        "producto": "KAZIDE® 500 MG TABLETAS",
-        "registrosanitario": "INVIMA 2020M-0003363-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19943236",
-        "producto": "FUNIDE® CREMA",
-        "registrosanitario": "INVIMA 2020M-0003460-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19946883",
-        "fechavencimiento": "01/01/3000",
-        "producto": "NOFERTYL® INYECTABLE",
-        "registrosanitario": "INVIMA 2020M-0003611-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19946883",
-        "fechavencimiento": "01/01/3000",
-        "producto": "NOFERTYL® INYECTABLE",
-        "registrosanitario": "INVIMA 2020M-0003611-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19951553",
-        "producto": "POSTDAY® 0.75 MG TABLETA",
-        "registrosanitario": "INVIMA 2020M-0004157-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19951775",
-        "producto": "YAX®",
-        "registrosanitario": "INVIMA 2020M-0004318-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20004012",
-        "fechavencimiento": "01/01/3000",
-        "producto": "GYNCLOX® OVULOS",
-        "registrosanitario": "INVIMA 2020M-0009749-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20012741",
-        "producto": "ANTISS® D",
-        "registrosanitario": "INVIMA 2020M-0010924-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20018073",
-        "producto": "SERTREX 800 MG",
-        "registrosanitario": "INVIMA 2020M-0011072-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20060069",
-        "producto": "ERICOX ® 90",
-        "registrosanitario": "INVIMA 2020M-0014892-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20086917",
-        "producto": "DOXU ® 5/250 MG TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2020M-0015903-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20086913",
-        "producto": "DOXU® PLUS 10 / 250 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2020M-0015984-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20085859",
-        "producto": "ERICOX® 30 MG",
-        "registrosanitario": "INVIMA 2020M-0015999-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20087008",
-        "producto": "DOLIREN® TABLETAS RECUBIERTAS.",
-        "registrosanitario": "INVIMA 2020M-0016217-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20087545",
-        "producto": "ACETAMINOFEN 325 MG/CODEINA 30 MG TABLETAS.",
-        "registrosanitario": "INVIMA 2020M-0016371-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20090751",
-        "producto": "DUSPATALIN® 135 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2020M-0016582-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20151834",
-        "producto": "ACIX®",
-        "registrosanitario": "INVIMA 2020M-0019588",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20167246",
-        "fechavencimiento": "01/01/3000",
-        "producto": "ALLERZITINA ® SPRAY NASAL",
-        "registrosanitario": "INVIMA 2020M-0019598",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20145819",
-        "fechavencimiento": "01/01/3000",
-        "producto": "FEMOSTON® TABLETAS",
-        "registrosanitario": "INVIMA 2020M-0019721",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20179259",
-        "producto": "KLARICID® SUSPENSION 125 MG/ 5 ML",
-        "registrosanitario": "INVIMA 2020M-0019918",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "40284",
-        "producto": "DEPAKENE® JARABE",
-        "registrosanitario": "INVIMA 2020M-004240-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "50786",
-        "producto": "DUPHALAC® SOLUCION ORAL",
-        "registrosanitario": "INVIMA 2020M-006430-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "93689",
-        "producto": "VALCOTE® 250 MG TABLETAS CON CUBIERTA ENTÉRICA",
-        "registrosanitario": "INVIMA 2020M-007747-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "1991423",
-        "fechavencimiento": "01/01/3000",
-        "producto": "BISBACTER® SUSPENSION",
-        "registrosanitario": "INVIMA 2020 M-014647-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20146427",
-        "fechavencimiento": "01/01/3000",
-        "producto": "INFLUVAC®TETRA",
-        "registrosanitario": "INVIMA 2020MB-0000008",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
         "expediente": "20179635",
+        "presentaciones": "1",
+        "principio_activo_1": "BEVACIZUMAB (EQUIVALENTE A 25MG/ML)",
+        "principios_activos": "1",
         "producto": "ABXEDA®",
         "registrosanitario": "INVIMA 2020MBT-0019816",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19951978",
-        "producto": "LISIPRIL® 5",
-        "registrosanitario": "INVIMA 2021M-0004534-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19953021",
-        "producto": "FEMOSTON® CONTI",
-        "registrosanitario": "INVIMA 2021M-0004603-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19959810",
-        "producto": "GASTRUM® 10 MG TABLETA",
-        "registrosanitario": "INVIMA 2021M-0004920-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19953409",
-        "producto": "FUNIDE® LOCIÓN",
-        "registrosanitario": "INVIMA 2021M-0004936-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19980628",
-        "producto": "YAXIBELLE®",
-        "registrosanitario": "INVIMA 2021M-0007655-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "52435",
-        "producto": "KLARICID",
-        "registrosanitario": "INVIMA 2021M-001008-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL SA"
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20013336",
-        "producto": "VAGICORT® CREMA VAGINAL",
-        "registrosanitario": "INVIMA 2021M-0011210-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20016201",
-        "fechavencimiento": "01/01/3000",
-        "producto": "ZIMAQUIN50 MG TABLETAS",
-        "registrosanitario": "INVIMA 2021M-0011469-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20100748",
-        "fechavencimiento": "01/01/3000",
-        "producto": "UROMAX® 1000MG/4 ML SOLUCIÓNINYECTABLE",
-        "registrosanitario": "INVIMA 2021M-0016617-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20080366",
-        "producto": "LUMBAL MAX®",
-        "registrosanitario": "INVIMA 2021M-0016727-R1",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20101174",
-        "producto": "CARDIOL 25 MG®",
-        "registrosanitario": "INVIMA 2021M-0017009-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "59491",
-        "producto": "LUVOX 100 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2021M-001927-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "21475",
-        "producto": "FENILSONE®",
-        "registrosanitario": "INVIMA 2021M-002376-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "1984133",
-        "producto": "CEFALEXINA 500 MG",
-        "registrosanitario": "INVIMA 2021M-004225-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19902103",
-        "producto": "DUSPATALIN® CÁPSULA DE LIBERACIÓN PROLONGADA 200 MG",
-        "registrosanitario": "INVIMA 2021M-013424-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19961994",
-        "producto": "KLARICID® TABLETAS 500 MG",
-        "registrosanitario": "INVIMA 2022M-0005143-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20038827",
-        "producto": "DIENOMET 2 MG TABLETAS",
-        "registrosanitario": "INVIMA 2022M-0012966-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20038056",
-        "producto": "CANDAM® 10/16 MG TABLETAS",
-        "registrosanitario": "INVIMA 2022M-0013412-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20038055",
-        "fechavencimiento": "01/01/3000",
-        "producto": "CANDAM® 5/16 MG TABLETAS",
-        "registrosanitario": "INVIMA 2022M-0013416-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20037986",
-        "fechavencimiento": "01/01/3000",
-        "producto": "CANDAM® 5/32 MG TABLETAS",
-        "registrosanitario": "INVIMA 2022M-0013418-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20025390",
-        "fechavencimiento": "01/01/3000",
-        "producto": "STAFEN® 135 / 20 MG CAPSULA",
-        "registrosanitario": "INVIMA 2022M-0014122-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20110972",
-        "producto": "BEMERIN® LOCION TOPICA",
-        "registrosanitario": "INVIMA 2022M-0017905-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20112042",
-        "producto": "FEXU® 120 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2022M-0017922-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "1984178",
-        "producto": "CEFRADINA 500MG CAPSULAS",
-        "registrosanitario": "INVIMA 2022M-004669-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "60069",
-        "producto": "CEFALEXINA POLVO PARA RECONSTITUIR A SUSPENSIÓN ORAL 250MG/5ML",
-        "registrosanitario": "INVIMA 2022M-005678-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "40927",
-        "fechavencimiento": "01/01/3000",
-        "producto": "NIDIP® 30 MG",
-        "registrosanitario": "INVIMA 2022M-013061-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "59081",
-        "producto": "TROMIX® TABLETAS 500 MG",
-        "registrosanitario": "INVIMA 2022M-015012-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20186253",
-        "producto": "RYTUZEQ",
-        "registrosanitario": "INVIMA 2022MBT-0000056",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19915479",
-        "fechavencimiento": "12/31/3000",
-        "producto": "LACORYL ® 60 MG CAPSULAS",
-        "registrosanitario": "INVIMA 2023M-0000132-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19915081",
-        "producto": "LUMBAL® TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2023M-0001294-R3",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S.SIGLALAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19915081",
-        "producto": "LUMBAL® TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2023M-0001294-R3",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19974084",
-        "producto": "AMOXICILINA500 MG",
-        "registrosanitario": "INVIMA 2023M-0006751-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19976628",
-        "producto": "AMITRIPTILINA 25 MG",
-        "registrosanitario": "INVIMA 2023M-0007138-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19981474",
-        "producto": "SINOVUL®",
-        "registrosanitario": "INVIMA 2023M-0007478-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19977582",
-        "producto": "POSTDAY 1®",
-        "registrosanitario": "INVIMA 2023M-0007480-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19984012",
-        "producto": "GYNFLU® D TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0008096-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19983165",
-        "producto": "SEVEDOL® EXTRAFUERTE TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2023M-0008219-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19983165",
-        "producto": "SEVEDOL® EXTRAFUERTE TABLETA RECUBIERTA",
-        "registrosanitario": "INVIMA 2023M-0008219-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19994061",
-        "producto": "TRAZODONA CLORHIDRATO 50 MG TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0008619-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19992892",
-        "producto": "CETIRAX 10 MG TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0008913-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "19992892",
-        "producto": "CETIRAX 10 MG TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0008913-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20016190",
-        "producto": "CARDIOMAXPLUS10/20 MG TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0011316-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20016190",
-        "producto": "CARDIOMAXPLUS10/20 MG TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0011316-R2",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20019972",
-        "producto": "CREON® CÁPSULAS 25000",
-        "registrosanitario": "INVIMA 2023M-0011611-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20027722",
-        "producto": "SYNTHROID® 137 MCG",
-        "registrosanitario": "INVIMA 2023M-0012120-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20031838",
-        "producto": "SYNTHROID ®200 MCG",
-        "registrosanitario": "INVIMA 2023M-0012786-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20031721",
-        "producto": "SYNTHROID 175 MCG",
-        "registrosanitario": "INVIMA 2023M-0012787-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20035560",
-        "producto": "SEVEDOL GRIPA TABLETAS",
-        "registrosanitario": "INVIMA 2023M-0013023-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20055574",
-        "producto": "PROGENDO 400 MG",
-        "registrosanitario": "INVIMA 2023M-0014333-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20056822",
-        "fechavencimiento": "01/01/3000",
-        "producto": "GASTRUM PLUX®",
-        "registrosanitario": "INVIMA 2023M-0014584-R2",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20112088",
-        "fechavencimiento": "01/01/3000",
-        "producto": "FEXU® 180 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2023M-0018002-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20119257",
-        "producto": "VALCOTE® ER 500 MG",
-        "registrosanitario": "INVIMA 2023M-0018046-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20126544",
-        "producto": "CARDIOL® 12.5 MG",
-        "registrosanitario": "INVIMA 2023M-0018115-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20120725",
-        "producto": "GYNORELLE 30®",
-        "registrosanitario": "INVIMA 2023M-0018256-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20120592",
-        "producto": "SEGUFEM MINI®.",
-        "registrosanitario": "INVIMA 2023M-0018339-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20117306",
-        "fechavencimiento": "01/01/3000",
-        "producto": "IBONE D 30000",
-        "registrosanitario": "INVIMA 2023M-0018361-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20137591",
-        "producto": "DOLIREN® PLUS",
-        "registrosanitario": "INVIMA 2023M-0018365-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20137593",
-        "producto": "DOLIREN® 7.5",
-        "registrosanitario": "INVIMA 2023M-0018366-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "42932",
-        "producto": "BISBACTER® TABLETAS",
-        "registrosanitario": "INVIMA 2023M-013059-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "41713",
-        "producto": "LORATADINA JARABE",
-        "registrosanitario": "INVIMA 2023M-013564-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "48062",
-        "fechavencimiento": "01/01/3000",
-        "producto": "AMDIPIN® COMPRIMIDOS 5 MG",
-        "registrosanitario": "INVIMA 2023M-014025-R4",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
-       },
-       {
-        "estadoregistro": "Vigente",
-        "expediente": "20066850",
-        "producto": "GENFILGRAS® PEG",
-        "registrosanitario": "INVIMA 2023MBT-0015317-R1",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
        },
        {
         "estadoregistro": "Vigente",
         "expediente": "20237880",
         "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "BEVACIZUMAB",
+        "principios_activos": "1",
         "producto": "ABXEDA E®",
         "registrosanitario": "INVIMA 2024MBT-0000123",
-        "titular": "LAFRANCOL INTERNACIONAL S.A.S"
+        "titular_registrado": "LAFRANCOL INTERNACIONAL S.A.S"
        },
        {
         "estadoregistro": "Vigente",
-        "expediente": "20208204",
-        "fechavencimiento": "05/14/2030",
-        "producto": "RIVACRIST®RIVAROXABAN 10 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2025M-0021900",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+        "expediente": "20087545",
+        "presentaciones": "7",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "2",
+        "producto": "ACETAMINOFEN 325 MG/CODEINA 30 MG TABLETAS.",
+        "registrosanitario": "INVIMA 2020M-0016371-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
        },
        {
         "estadoregistro": "Vigente",
-        "expediente": "20208213",
-        "fechavencimiento": "05/14/2030",
-        "producto": "RIVACRIST® RIVAROXABAN 15 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2025M-0021901",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+        "expediente": "20151834",
+        "presentaciones": "4",
+        "principio_activo_1": "AMOXICILINA TRIHIDRATO POLVO 14.37 G EXPRESADA COMO AMOXICILINA BASE",
+        "principios_activos": "2",
+        "producto": "ACIX®",
+        "registrosanitario": "INVIMA 2020M-0019588",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
        },
        {
         "estadoregistro": "Vigente",
-        "expediente": "20208216",
-        "fechavencimiento": "05/14/2030",
-        "producto": "RIVACRIST® RIVAROXABAN 20 MG TABLETAS RECUBIERTAS",
-        "registrosanitario": "INVIMA 2025M-0021902",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+        "expediente": "20167246",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "1",
+        "principio_activo_1": "SODIO CLORURO",
+        "principios_activos": "1",
+        "producto": "ALLERZITINA ® SPRAY NASAL",
+        "registrosanitario": "INVIMA 2020M-0019598",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "48062",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "9",
+        "principio_activo_1": "AMLODIPINO BESILATO EQUIVALENTE A AMLODIPINO BASE",
+        "principios_activos": "1",
+        "producto": "AMDIPIN® COMPRIMIDOS 5 MG",
+        "registrosanitario": "INVIMA 2023M-014025-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19902458",
+        "presentaciones": "4",
+        "principio_activo_1": "AMLODIPINO BESILATO EQUIVALENTE A AMLODIPINO",
+        "principios_activos": "2",
+        "producto": "AMDIPIN H® 10 MG",
+        "registrosanitario": "INVIMA 2019M-13514- R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19902457",
+        "presentaciones": "5",
+        "principio_activo_1": "AMLODIPINO BESILATO (6.935) EQUIVALENTE A AMLODIPINO BASE",
+        "principios_activos": "2",
+        "producto": "AMDIPIN H 5-12.5",
+        "registrosanitario": "INVIMA 2019M-13527-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19976628",
+        "presentaciones": "8",
+        "principio_activo_1": "AMITRIPTILINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "AMITRIPTILINA 25 MG",
+        "registrosanitario": "INVIMA 2023M-0007138-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19974084",
+        "presentaciones": "4",
+        "principio_activo_1": "AMOXICILINA TRIHIDRATO COMPACTADA EQUIVALENTE A AMOXICILINA BASE",
+        "principios_activos": "1",
+        "producto": "AMOXICILINA500 MG",
+        "registrosanitario": "INVIMA 2023M-0006751-R2",
+        "titular_registrado": "LAFRANCOL INTERNACIONAL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19927018",
+        "presentaciones": "1",
+        "principio_activo_1": "AMOXICILINA TRIHIDRATO EQUIVALENTE A AMOXICILINA BASE 5.746G",
+        "principios_activos": "1",
+        "producto": "AMOXICILINA SUSPENSION",
+        "registrosanitario": "INVIMA 2019M-0001066-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20012741",
+        "presentaciones": "17",
+        "principio_activo_1": "FENILEFRINA CLORHIDRATO",
+        "principios_activos": "2",
+        "producto": "ANTISS® D",
+        "registrosanitario": "INVIMA 2020M-0010924-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19960276",
+        "fechavencimiento": "01/01/1900",
+        "presentaciones": "8",
+        "principio_activo_1": "LEVOCETIRIZINA DICLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "ANTISS® JARABE",
+        "registrosanitario": "INVIMA 2016M-0005678-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S.SIGLALAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20015464",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "9",
+        "principio_activo_1": "ATOMOXETINA CLORHIDRATO 11.43 MG EQUIVALENTE A ATOMOXETINA BASE",
+        "principios_activos": "1",
+        "producto": "ATTENTHO ®10 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2015M-0011506-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20015465",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "19",
+        "principio_activo_1": "ATOMOXETINA CLORHIDRATO EQUIVALENTE A ATOMOXETINA BASE",
+        "principios_activos": "1",
+        "producto": "ATTENTHO®25 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2016M-0011318-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20015394",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "19",
+        "principio_activo_1": "ATOMOXETINA CLORHIDRATO 45.71MG EQUIVALENTE A ATOMOXETINA BASE",
+        "principios_activos": "1",
+        "producto": "ATTENTHO® 40 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2016M-0011312-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20001058",
+        "presentaciones": "12",
+        "principio_activo_1": "DIENOGEST",
+        "principios_activos": "2",
+        "producto": "BELLAFACE®",
+        "registrosanitario": "INVIMA 2018M-0009470-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20055000",
+        "presentaciones": "6",
+        "principio_activo_1": "DIENOGEST",
+        "principios_activos": "2",
+        "producto": "BELLAFACE® SUAVE",
+        "registrosanitario": "INVIMA 2019M-0015240-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20156284",
+        "presentaciones": "2",
+        "principio_activo_1": "DIENOGEST",
+        "principios_activos": "2",
+        "producto": "BELLANEW®",
+        "registrosanitario": "INVIMA 2019M-0018900",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20110972",
+        "presentaciones": "8",
+        "principio_activo_1": "ACIDO SALICILICO",
+        "principios_activos": "2",
+        "producto": "BEMERIN® LOCION TOPICA",
+        "registrosanitario": "INVIMA 2022M-0017905-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19939887",
+        "presentaciones": "16",
+        "principio_activo_1": "BETAHISTINA DICLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "BETASERC ® 16 MG TABLETA",
+        "registrosanitario": "INVIMA 2019M-0002984-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19994205",
+        "presentaciones": "16",
+        "principio_activo_1": "BETAHISTINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "BETASERC ® 24",
+        "registrosanitario": "INVIMA 2019M-0009132-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S"
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "1991423",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "5",
+        "principio_activo_1": "SUBSALICILATO DE BISMUTO",
+        "principios_activos": "1",
+        "producto": "BISBACTER® SUSPENSION",
+        "registrosanitario": "INVIMA 2020 M-014647-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "42932",
+        "presentaciones": "10",
+        "principio_activo_1": "SUBSALICILATO DE BISMUTO",
+        "principios_activos": "1",
+        "producto": "BISBACTER® TABLETAS",
+        "registrosanitario": "INVIMA 2023M-013059-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20143846",
+        "presentaciones": "1",
+        "principio_activo_1": "TRASTUZUMAB",
+        "principios_activos": "1",
+        "producto": "BISINTEX",
+        "registrosanitario": "INVIMA 2019MBT-0000002",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20001661",
+        "presentaciones": "10",
+        "principio_activo_1": "MOSAPRIDA CITRATO",
+        "principios_activos": "1",
+        "producto": "BONDIGEST® 10 MG",
+        "registrosanitario": "INVIMA 2018M-0009534-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20151832",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOCETIRIZINA DICLORHIDRATO",
+        "principios_activos": "2",
+        "producto": "BROCRIPTIN® 10 MG/ 5 MG",
+        "registrosanitario": "INVIMA 2019M-0018870",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20151816",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOCETIRIZINA DICLORHIDRATO",
+        "principios_activos": "2",
+        "producto": "BROCRIPTIN® 5MG/2.5MG",
+        "registrosanitario": "INVIMA 2019M-0018869",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20038056",
+        "presentaciones": "11",
+        "principio_activo_1": "AMLODIPINOBESILATOEQUIVALENTEA10MG DE AMLODIPINO.",
+        "principios_activos": "2",
+        "producto": "CANDAM® 10/16 MG TABLETAS",
+        "registrosanitario": "INVIMA 2022M-0013412-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20038055",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "10",
+        "principio_activo_1": "BESILATO DE AMLODIPINO 6.93MGEQUIVALENTE AAMLODIPINO BASE .",
+        "principios_activos": "2",
+        "producto": "CANDAM® 5/16 MG TABLETAS",
+        "registrosanitario": "INVIMA 2022M-0013416-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20037986",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "11",
+        "principio_activo_1": "BESILATO DE AMLODIPINO EQUIVALENTE A AMLODIPINO.",
+        "principios_activos": "2",
+        "producto": "CANDAM® 5/32 MG TABLETAS",
+        "registrosanitario": "INVIMA 2022M-0013418-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20126544",
+        "presentaciones": "10",
+        "principio_activo_1": "CLORTALIDONA",
+        "principios_activos": "1",
+        "producto": "CARDIOL® 12.5 MG",
+        "registrosanitario": "INVIMA 2023M-0018115-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20101174",
+        "presentaciones": "3",
+        "principio_activo_1": "CLORTALIDONA",
+        "principios_activos": "1",
+        "producto": "CARDIOL 25 MG®",
+        "registrosanitario": "INVIMA 2021M-0017009-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19994456",
+        "presentaciones": "10",
+        "principio_activo_1": "ROSUVASTATINA CALCICA 10.40MG ( EQUIVALENTE A ROSUVASTATINA",
+        "principios_activos": "1",
+        "producto": "CARDIOMAX ® 10MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2018M-0008899-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19985046",
+        "presentaciones": "10",
+        "principio_activo_1": "ROSUVASTATINA CALCICA (20.79 MG) EQUIVALENTES A ROSUVASTATINA",
+        "principios_activos": "1",
+        "producto": "CARDIOMAX® 20MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2018M-0008663-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20016190",
+        "presentaciones": "8",
+        "principio_activo_1": "EZETIMIBA MICRONIZADA",
+        "principios_activos": "2",
+        "producto": "CARDIOMAXPLUS10/20 MG TABLETAS",
+        "registrosanitario": "INVIMA 2023M-0011316-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19994556",
+        "presentaciones": "10",
+        "principio_activo_1": "ROSUVASTATINA CALCICA 41.58 MG. EQUIVALENTE A ROSUVASTATINA BASE",
+        "principios_activos": "1",
+        "producto": "CARDIOMAX® TABLETA CUBIERTA 40 MG",
+        "registrosanitario": "INVIMA 2009M-0009477",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "1984133",
+        "presentaciones": "7",
+        "principio_activo_1": "CEFALEXINA MONOHIDRATO COMPACTADA EQUIVALENTE A 500 MG DE CEFALEXINA BASE",
+        "principios_activos": "1",
+        "producto": "CEFALEXINA 500 MG",
+        "registrosanitario": "INVIMA 2021M-004225-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "60069",
+        "presentaciones": "1",
+        "principio_activo_1": "CEFALEXINA MONOHIDRATO 5.259 G EQUIVALENTE A CEFALEXINA BASE",
+        "principios_activos": "1",
+        "producto": "CEFALEXINA POLVO PARA RECONSTITUIR A SUSPENSIÓN ORAL 250MG/5ML",
+        "registrosanitario": "INVIMA 2022M-005678-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "1984178",
+        "presentaciones": "4",
+        "principio_activo_1": "CEFRADINA ANHIDRA COMPACTADA 526.31 MG EQUIVALENTE A CEFRADINA",
+        "principios_activos": "1",
+        "producto": "CEFRADINA 500MG CAPSULAS",
+        "registrosanitario": "INVIMA 2022M-004669-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "59395",
+        "presentaciones": "4",
+        "principio_activo_1": "CETIRIZINA DICLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "CETIRAX ®",
+        "registrosanitario": "INVIMA 2017M-005502-R2",
+        "titular_registrado": "LAFRANCOL INTERNACIONAL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19992892",
+        "presentaciones": "5",
+        "principio_activo_1": "CETIRIZINA DICLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "CETIRAX 10 MG TABLETAS",
+        "registrosanitario": "INVIMA 2023M-0008913-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "59330",
+        "presentaciones": "9",
+        "principio_activo_1": "CETIRIZINA DICLORHIDRATO",
+        "principios_activos": "2",
+        "producto": "CETIRAX-D SOLUCION ORAL",
+        "registrosanitario": "INVIMA 2017M-005381-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19972047",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "CETIRIZINA DICLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "CETIRAX® GOTAS",
+        "registrosanitario": "INVIMA 2019M-0006821-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20031521",
+        "presentaciones": "8",
+        "principio_activo_1": "CIPROFLOXACINO CLORHIDRATO 582.212 MG . EQUIVALENTE A CIPROFLOXACINO BASE",
+        "principios_activos": "1",
+        "producto": "CIMOXEN® 500 MG TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2016M-0012005-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20148739",
+        "presentaciones": "2",
+        "principio_activo_1": "1.25 G. DE CLINDAMICINA FOSFATO EQUIVALENTE A CLINDAMICINA BASE",
+        "principios_activos": "2",
+        "producto": "CLUVAX FORTE®",
+        "registrosanitario": "INVIMA 2018M-0018651",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20028711",
+        "presentaciones": "15",
+        "principio_activo_1": "ACETAMINOFEN COMPRESION DIRECTA EQUIVALENTE AACETAMINOFEN (ACETAMINOFEN 90%. ALMIDON DE MAIZ 7%. POVIDONA K-30 1.50%. GLICOLATO DE ALMIDON SODICO 1%. ACIDO ESTEARICO 0.50%)",
+        "principios_activos": "3",
+        "producto": "COLIK FORTE® TABLETAS",
+        "registrosanitario": "INVIMA 2017M-0012468-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20019972",
+        "presentaciones": "14",
+        "principio_activo_1": "PANCREATINA CORRESPONDIENTE A: 18.000 U DE AMILASA. 25.000 U DE LIPASA. 1000 U DE PROTEASAS TOTALES",
+        "principios_activos": "1",
+        "producto": "CREON® CÁPSULAS 25000",
+        "registrosanitario": "INVIMA 2023M-0011611-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19905313",
+        "presentaciones": "9",
+        "principio_activo_1": "POLVO DE PANCREAS EQUIVALENTE A PANCREATINA LA CUAL CONTIENE: 8.000 U PH EUR Ó 45600 U USP DE AMILASA. 10.000 U PH EUR Ó 10.000 U USP DE LIPASA Y 600 U PH EUR Ó 38400 U USP DE PROTEASA",
+        "principios_activos": "1",
+        "producto": "CREON® CAPSULAS DE LIBERACION RETARADADA 10.000",
+        "registrosanitario": "INVIMA 2016M-13915-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20076616",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "PANCREATINA EQUIVALENTE A:5000 UNIDADES PH EUR. LIPASA3600 UNIDADES PH EUR. AMILASA200 UNIDADES PH EUR.PROTEASA",
+        "principios_activos": "1",
+        "producto": "CREON MINIMICROSPHERES ® 5000",
+        "registrosanitario": "INVIMA 2015M-0016538",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20140915",
+        "presentaciones": "5",
+        "principio_activo_1": "CLORTALIDONA",
+        "principios_activos": "2",
+        "producto": "DABIX® 160/12.5 TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2018M-0018640",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20104080",
+        "presentaciones": "7",
+        "principio_activo_1": "CLORTALIDONA",
+        "principios_activos": "2",
+        "producto": "DABIX® 160/25 MG TABLETAS",
+        "registrosanitario": "INVIMA 2016M-0017187",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20104101",
+        "presentaciones": "6",
+        "principio_activo_1": "CLORTALIDONA",
+        "principios_activos": "2",
+        "producto": "DABIX80/12.5 MG TABLETAS",
+        "registrosanitario": "INVIMA 2016M-0017229",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "40284",
+        "presentaciones": "4",
+        "principio_activo_1": "ACIDO VALPROICO",
+        "principios_activos": "1",
+        "producto": "DEPAKENE® JARABE",
+        "registrosanitario": "INVIMA 2020M-004240-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20066852",
+        "presentaciones": "13",
+        "principio_activo_1": "BROMURO DE PINAVERIO",
+        "principios_activos": "2",
+        "producto": "DICETEL® DUO",
+        "registrosanitario": "INVIMA 2016M-0017223",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "209154",
+        "presentaciones": "14",
+        "principio_activo_1": "BROMURO DE PINAVERIO",
+        "principios_activos": "1",
+        "producto": "DICETEL® TABLETAS 100 MG",
+        "registrosanitario": "INVIMA 2008 M-011466 R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "58899",
+        "presentaciones": "4",
+        "principio_activo_1": "542.5 MG DE DICLOXACILINA SODICAEQUIVALENTE A DICLOXACILINA",
+        "principios_activos": "1",
+        "producto": "DICLOXACILINA500 MG",
+        "registrosanitario": "INVIMA 2016M-005176-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20038827",
+        "presentaciones": "16",
+        "principio_activo_1": "DIENOGEST",
+        "principios_activos": "1",
+        "producto": "DIENOMET 2 MG TABLETAS",
+        "registrosanitario": "INVIMA 2022M-0012966-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19962743",
+        "presentaciones": "14",
+        "principio_activo_1": "ORLISTAT",
+        "principios_activos": "1",
+        "producto": "DISGRASIL®",
+        "registrosanitario": "INVIMA 2017M-0006196-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20137593",
+        "presentaciones": "6",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "2",
+        "producto": "DOLIREN® 7.5",
+        "registrosanitario": "INVIMA 2023M-0018366-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20137591",
+        "presentaciones": "7",
+        "principio_activo_1": "HIDROCODONA BITARTRATO",
+        "principios_activos": "2",
+        "producto": "DOLIREN® PLUS",
+        "registrosanitario": "INVIMA 2023M-0018365-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20087008",
+        "presentaciones": "12",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "2",
+        "producto": "DOLIREN® TABLETAS RECUBIERTAS.",
+        "registrosanitario": "INVIMA 2020M-0016217-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20086917",
+        "presentaciones": "9",
+        "principio_activo_1": "HIDROCODONA BITARTRATO DISESQUIHIDRATO",
+        "principios_activos": "2",
+        "producto": "DOXU ® 5/250 MG TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2020M-0015903-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20128919",
+        "presentaciones": "3",
+        "principio_activo_1": "HIDROCODONA BITARTRATO(DISESQUIHIDRATO)",
+        "principios_activos": "2",
+        "producto": "DOXU® 7.5",
+        "registrosanitario": "INVIMA 2019M-0018877",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20086913",
+        "presentaciones": "9",
+        "principio_activo_1": "HIDROCODONA BITARTRATO DISESQUIHIDRATO",
+        "principios_activos": "2",
+        "producto": "DOXU® PLUS 10 / 250 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2020M-0015984-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "50786",
+        "presentaciones": "21",
+        "principio_activo_1": "LACTULOSA",
+        "principios_activos": "1",
+        "producto": "DUPHALAC® SOLUCION ORAL",
+        "registrosanitario": "INVIMA 2020M-006430-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20080650",
+        "presentaciones": "7",
+        "principio_activo_1": "TADALAFILO MICRONIZADO",
+        "principios_activos": "1",
+        "producto": "DURAX VSD 10 MG",
+        "registrosanitario": "INVIMA 2015M-0015786",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20080649",
+        "presentaciones": "11",
+        "principio_activo_1": "TADALAFILO MICRONIZADO",
+        "principios_activos": "1",
+        "producto": "DURAX VSD 20MG",
+        "registrosanitario": "INVIMA 2015M-0015785",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20080647",
+        "presentaciones": "7",
+        "principio_activo_1": "TADALAFIL MICRONIZADO",
+        "principios_activos": "1",
+        "producto": "DURAX® VSD 5 MG",
+        "registrosanitario": "INVIMA 2015M-0015784",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20090751",
+        "presentaciones": "10",
+        "principio_activo_1": "CLORHIDRATO DE MEBEVERINA",
+        "principios_activos": "1",
+        "producto": "DUSPATALIN® 135 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2020M-0016582-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19902103",
+        "presentaciones": "12",
+        "principio_activo_1": "MEBEVERINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "DUSPATALIN® CÁPSULA DE LIBERACIÓN PROLONGADA 200 MG",
+        "registrosanitario": "INVIMA 2021M-013424-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20040666",
+        "presentaciones": "4",
+        "principio_activo_1": "CLORHIDRATO DE MEBEVERINA",
+        "principios_activos": "1",
+        "producto": "DUSPATALIN® SUSPENSION",
+        "registrosanitario": "INVIMA 2013M-0014358",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20060553",
+        "presentaciones": "5",
+        "principio_activo_1": "ETORICOXIB",
+        "principios_activos": "1",
+        "producto": "ERICOX120MG",
+        "registrosanitario": "INVIMA 2019M-0014723-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20085859",
+        "presentaciones": "10",
+        "principio_activo_1": "ETORICOXIB",
+        "principios_activos": "1",
+        "producto": "ERICOX® 30 MG",
+        "registrosanitario": "INVIMA 2020M-0015999-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20059807",
+        "presentaciones": "3",
+        "principio_activo_1": "ETORICOXIB",
+        "principios_activos": "1",
+        "producto": "ERICOX 60 MG",
+        "registrosanitario": "INVIMA 2019M-0014663-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20060069",
+        "presentaciones": "4",
+        "principio_activo_1": "ETORICOXIB",
+        "principios_activos": "1",
+        "producto": "ERICOX ® 90",
+        "registrosanitario": "INVIMA 2020M-0014892-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19904833",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "8",
+        "principio_activo_1": "SILDENAFILO CITRATO TIPO II 70.200 MG EQUIVALENTE A SILDENAFILO BASE",
+        "principios_activos": "1",
+        "producto": "EROXIM",
+        "registrosanitario": "INVIMA 2010 M-014175 R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19937070",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "5",
+        "principio_activo_1": "SILDENAFIL CITRATO 70.24MG (EQUIVALENTE A SILDENAFIL BASE)",
+        "principios_activos": "1",
+        "producto": "EROXIMFAST INSTANTAB",
+        "registrosanitario": "INVIMA 2018M-0002511-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20007729",
+        "presentaciones": "6",
+        "principio_activo_1": "ESTRIOL",
+        "principios_activos": "1",
+        "producto": "ESTEINE®OVULO VAGINAL DE LIBERACION SOSTENIDA",
+        "registrosanitario": "INVIMA 2010M-0010768",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20070619",
+        "presentaciones": "2",
+        "principio_activo_1": "CIPROTERONA ACETATO",
+        "principios_activos": "2",
+        "producto": "FACETIX MINI 20 TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2014M-0015154",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20070573",
+        "presentaciones": "2",
+        "principio_activo_1": "CIPROTERONA ACETATO MICRONIZADA",
+        "principios_activos": "2",
+        "producto": "FACETIX®SUAVE 30",
+        "registrosanitario": "INVIMA 2014M-0015288",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19953021",
+        "presentaciones": "6",
+        "principio_activo_1": "DIDROGESTERONA",
+        "principios_activos": "2",
+        "producto": "FEMOSTON® CONTI",
+        "registrosanitario": "INVIMA 2021M-0004603-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20145819",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "DIDROGESTERONA MICRONIZADA (TABLETA COLOR GRIS)",
+        "principios_activos": "3",
+        "producto": "FEMOSTON® TABLETAS",
+        "registrosanitario": "INVIMA 2020M-0019721",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "21475",
+        "presentaciones": "6",
+        "principio_activo_1": "CLOTRIMAZOL",
+        "principios_activos": "1",
+        "producto": "FENILSONE®",
+        "registrosanitario": "INVIMA 2021M-002376-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20112042",
+        "presentaciones": "9",
+        "principio_activo_1": "FEXOFENADINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "FEXU® 120 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2022M-0017922-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20112088",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "8",
+        "principio_activo_1": "FEXOFENADINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "FEXU® 180 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2023M-0018002-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20157742",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "13",
+        "principio_activo_1": "FENILEFRINA CLORHIDRATO",
+        "principios_activos": "2",
+        "producto": "FEXU D® SUSPENSION",
+        "registrosanitario": "INVIMA 2019M-0019179",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19911414",
+        "presentaciones": "7",
+        "principio_activo_1": "SIMETICONA",
+        "principios_activos": "1",
+        "producto": "FINIGAX® MASTICABLE SABORES (MENTA. CEREZA)",
+        "registrosanitario": "INVIMA 2016M-014779-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20083126",
+        "presentaciones": "10",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "2",
+        "producto": "FLEXIMAX® ACE TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2015M-0016335",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19940848",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "7",
+        "principio_activo_1": "TERBINAFINA CLORHIDRATO281.285MG EQUIVALENTE ATERBINAFINA BASE",
+        "principios_activos": "1",
+        "producto": "FUNIDE® 250 MG",
+        "registrosanitario": "INVIMA 2014M-0003112 R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19943236",
+        "presentaciones": "6",
+        "principio_activo_1": "TERBINAFINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "FUNIDE® CREMA",
+        "registrosanitario": "INVIMA 2020M-0003460-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19953409",
+        "presentaciones": "6",
+        "principio_activo_1": "TERBINAFINA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "FUNIDE® LOCIÓN",
+        "registrosanitario": "INVIMA 2021M-0004936-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19959810",
+        "presentaciones": "17",
+        "principio_activo_1": "FAMOTIDINA",
+        "principios_activos": "1",
+        "producto": "GASTRUM® 10 MG TABLETA",
+        "registrosanitario": "INVIMA 2021M-0004920-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20056822",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "17",
+        "principio_activo_1": "HIDROTALCITA MICROFINA",
+        "principios_activos": "1",
+        "producto": "GASTRUM PLUX®",
+        "registrosanitario": "INVIMA 2023M-0014584-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20066850",
+        "presentaciones": "1",
+        "principio_activo_1": "PEGFILGRASTIM (FACTOR ESTIMULANTE DE COLONIAS DE GRANULOCITOS HUMANO RECOMBINANTE PEGILADO",
+        "principios_activos": "1",
+        "producto": "GENFILGRAS® PEG",
+        "registrosanitario": "INVIMA 2023MBT-0015317-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20004012",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "4",
+        "principio_activo_1": "CADA ÓVULO CONTIENE: CLINDAMICINA FOSFATO 118.82MG. EQUIVALENTE ACLINDAMICINA BASE.",
+        "principios_activos": "2",
+        "producto": "GYNCLOX® OVULOS",
+        "registrosanitario": "INVIMA 2020M-0009749-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20151057",
+        "presentaciones": "2",
+        "principio_activo_1": "DROSPIRENONA",
+        "principios_activos": "1",
+        "producto": "GYNETS® 4 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2019M-0019511",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19984012",
+        "presentaciones": "3",
+        "principio_activo_1": "FLUCONAZOL",
+        "principios_activos": "2",
+        "producto": "GYNFLU® D TABLETAS",
+        "registrosanitario": "INVIMA 2023M-0008096-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20120725",
+        "presentaciones": "2",
+        "principio_activo_1": "ACETATO DE CLORMADINONA",
+        "principios_activos": "2",
+        "producto": "GYNORELLE 30®",
+        "registrosanitario": "INVIMA 2023M-0018256-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "1980002",
+        "presentaciones": "6",
+        "principio_activo_1": "TERAZOSINA CLORHIDRATO DIHIDRATO EQUIVALENTE A TERAZOSIN",
+        "principios_activos": "1",
+        "producto": "HYTRIN® TABLETAS 5 MG",
+        "registrosanitario": "INVIMA 2008 M- 009696 R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20117306",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "4",
+        "principio_activo_1": "ACIDO IBANDRONICO",
+        "principios_activos": "2",
+        "producto": "IBONE D 30000",
+        "registrosanitario": "INVIMA 2023M-0018361-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20146427",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "1",
+        "principio_activo_1": "HEMAGLUTININA DE LA CEPA DE TIPO A/MISSOURI/11/2025 (H1N1)PDM09 - (A/SWITZERLAND/6849/2025. IVR-278)",
+        "principios_activos": "4",
+        "producto": "INFLUVAC®TETRA",
+        "registrosanitario": "INVIMA 2020MB-0000008",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
        },
        {
         "estadoregistro": "Vigente",
         "expediente": "20282342",
         "fechavencimiento": "07/16/2036",
+        "presentaciones": "1",
+        "principio_activo_1": "HEMAGLUTININA DE A/THAILAND/8/2022 (H3N2)",
+        "principios_activos": "3",
         "producto": "INFLUVAC®TRI",
         "registrosanitario": "INVIMA 2026MB-0000173",
-        "titular": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19989771",
+        "presentaciones": "3",
+        "principio_activo_1": "NITAZOXANIDA",
+        "principios_activos": "1",
+        "producto": "KAZIDE® 200 MG TABLETAS DISPERSABLE",
+        "registrosanitario": "INVIMA 2019M-0008733-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19942420",
+        "presentaciones": "20",
+        "principio_activo_1": "NITAZOXANIDA MICRONIZADA",
+        "principios_activos": "1",
+        "producto": "KAZIDE® 500 MG TABLETAS",
+        "registrosanitario": "INVIMA 2020M-0003363-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "52435",
+        "presentaciones": "5",
+        "principio_activo_1": "CLARITROMICINA",
+        "principios_activos": "1",
+        "producto": "KLARICID",
+        "registrosanitario": "INVIMA 2021M-001008-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL SA"
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20179259",
+        "presentaciones": "6",
+        "principio_activo_1": "CLARITROMICINA",
+        "principios_activos": "1",
+        "producto": "KLARICID® SUSPENSION 125 MG/ 5 ML",
+        "registrosanitario": "INVIMA 2020M-0019918",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19961994",
+        "presentaciones": "5",
+        "principio_activo_1": "CLARITROMICINA",
+        "principios_activos": "1",
+        "producto": "KLARICID® TABLETAS 500 MG",
+        "registrosanitario": "INVIMA 2022M-0005143-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20086452",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "12",
+        "principio_activo_1": "CLARITROMICINA",
+        "principios_activos": "1",
+        "producto": "KLARICID® UD",
+        "registrosanitario": "INVIMA 2016M-0016909",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19915479",
+        "fechavencimiento": "12/31/3000",
+        "presentaciones": "9",
+        "principio_activo_1": "EXTRACTO NORMALIZADO DE LA CORTEZA DE PINUS PINASTER (PINO MARITIMO) 60 MG EQUIVALENTE A PROCIANIDINAS",
+        "principios_activos": "1",
+        "producto": "LACORYL ® 60 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2023M-0000132-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "37564",
+        "presentaciones": "4",
+        "principio_activo_1": "LISINOPRIL DIHIDRATO 10.888MGEQUIVALENTEALISINOPRIL",
+        "principios_activos": "1",
+        "producto": "LISIPRIL® 10 MG TABLETAS",
+        "registrosanitario": "INVIMA 2010 M-011914 R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19951978",
+        "presentaciones": "6",
+        "principio_activo_1": "LISINOPRIL DIHIDRATO EQUIVALENTE A LISINOPRIL BASE",
+        "principios_activos": "1",
+        "producto": "LISIPRIL® 5",
+        "registrosanitario": "INVIMA 2021M-0004534-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "37168",
+        "presentaciones": "3",
+        "principio_activo_1": "LISINOPRIL DIHIDRATO 21.777 MG EQUIVALENTE A LISINOPRIL ANHIDRO",
+        "principios_activos": "1",
+        "producto": "LISIPRIL® TABLETAS",
+        "registrosanitario": "INVIMA 2010 M-011650 R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "41713",
+        "presentaciones": "1",
+        "principio_activo_1": "LORATADINA",
+        "principios_activos": "1",
+        "producto": "LORATADINA JARABE",
+        "registrosanitario": "INVIMA 2023M-013564-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20019190",
+        "presentaciones": "19",
+        "principio_activo_1": "CAFEINA",
+        "principios_activos": "2",
+        "producto": "LUMBAL FORTE® TABLETAS",
+        "registrosanitario": "INVIMA 2015M-0011033-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20080366",
+        "presentaciones": "10",
+        "principio_activo_1": "ACETAMINOFEN COMPRESION DIRECTA ES EQUIVALENTE A ACETAMINOFEN",
+        "principios_activos": "3",
+        "producto": "LUMBAL MAX®",
+        "registrosanitario": "INVIMA 2021M-0016727-R1",
+        "titular_registrado": "LAFRANCOL INTERNACIONAL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19915081",
+        "presentaciones": "12",
+        "principio_activo_1": "CAFEINA",
+        "principios_activos": "2",
+        "producto": "LUMBAL® TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2023M-0001294-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S.SIGLALAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "59491",
+        "presentaciones": "15",
+        "principio_activo_1": "MALEATO DE FLUVOXAMINA",
+        "principios_activos": "1",
+        "producto": "LUVOX 100 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2021M-001927-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19953331",
+        "presentaciones": "5",
+        "principio_activo_1": "NAPROXENO SÓDICO 273.864 MG EQUIVALENTE ANAPROXENO",
+        "principios_activos": "1",
+        "producto": "NAPROXENO 250MG TABLETAS",
+        "registrosanitario": "INVIMA 2016M-0004871-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20001339",
+        "presentaciones": "12",
+        "principio_activo_1": "ESOMEPRAZOL PELLETS 8.5 % 117.647 MG.EQUIVALENTE A ESOMEPRAZOL",
+        "principios_activos": "1",
+        "producto": "NEDOX® 10 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2009M-0009580",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20157741",
+        "presentaciones": "11",
+        "principio_activo_1": "ESOMEPRAZOL MAGNESICO TRIHIDRATO 22.211 EQUIVALENTE A ESOMEPRAZOL BASE",
+        "principios_activos": "1",
+        "producto": "NEDOX® 20MG TABLETAS GASTRORRESISTENTES",
+        "registrosanitario": "INVIMA 2019M-0019178",
+        "titular_registrado": "LAFRANCOL INTERNACIONAL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19941719",
+        "presentaciones": "7",
+        "principio_activo_1": "PELLETS DE ESOMEPRAZOL AL 8.5% (470.588 MG) EQUIVALENTES A ESOMEPRAZOL",
+        "principios_activos": "1",
+        "producto": "NEDOX® 40 MG",
+        "registrosanitario": "INVIMA 2015M-0003236-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20159113",
+        "presentaciones": "10",
+        "principio_activo_1": "ESOMEPRAZOL MAGNESICO TRIHIDRATO 44.421 MG EQUIVALENTE A ESOMEPRAZOL",
+        "principios_activos": "1",
+        "producto": "NEDOX® 40 MG TABLETAS GASTRORRESISTENTES",
+        "registrosanitario": "INVIMA 2019M-0019430",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "40927",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "8",
+        "principio_activo_1": "NIMODIPINO",
+        "principios_activos": "1",
+        "producto": "NIDIP® 30 MG",
+        "registrosanitario": "INVIMA 2022M-013061-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19946883",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "53",
+        "principio_activo_1": "ENANTATODENORETISTERONA",
+        "principios_activos": "2",
+        "producto": "NOFERTYL® INYECTABLE",
+        "registrosanitario": "INVIMA 2020M-0003611-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20069694",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "10",
+        "principio_activo_1": "DOXILAMINA SUCCINATO",
+        "principios_activos": "2",
+        "producto": "PLURIAMIN® TABLETAS DE LIBERACIÓN RETARDADA",
+        "registrosanitario": "INVIMA 2019M-0015221-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19951553",
+        "presentaciones": "13",
+        "principio_activo_1": "LEVONORGESTREL",
+        "principios_activos": "1",
+        "producto": "POSTDAY® 0.75 MG TABLETA",
+        "registrosanitario": "INVIMA 2020M-0004157-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19977582",
+        "presentaciones": "11",
+        "principio_activo_1": "LEVONORGESTREL",
+        "principios_activos": "1",
+        "producto": "POSTDAY 1®",
+        "registrosanitario": "INVIMA 2023M-0007480-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20055574",
+        "presentaciones": "25",
+        "principio_activo_1": "PROGESTERONA MICRONIZADA",
+        "principios_activos": "1",
+        "producto": "PROGENDO 400 MG",
+        "registrosanitario": "INVIMA 2023M-0014333-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20058720",
+        "presentaciones": "5",
+        "principio_activo_1": "RIFAXIMINA",
+        "principios_activos": "1",
+        "producto": "RIFAX® 550MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2014M-0015323",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20208204",
+        "fechavencimiento": "05/14/2030",
+        "presentaciones": "5",
+        "principio_activo_1": "RIVAROXABAN",
+        "principios_activos": "1",
+        "producto": "RIVACRIST®RIVAROXABAN 10 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2025M-0021900",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20208213",
+        "fechavencimiento": "05/14/2030",
+        "presentaciones": "5",
+        "principio_activo_1": "RIVAROXABAN",
+        "principios_activos": "1",
+        "producto": "RIVACRIST® RIVAROXABAN 15 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2025M-0021901",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20208216",
+        "fechavencimiento": "05/14/2030",
+        "presentaciones": "5",
+        "principio_activo_1": "RIVAROXABAN",
+        "principios_activos": "1",
+        "producto": "RIVACRIST® RIVAROXABAN 20 MG TABLETAS RECUBIERTAS",
+        "registrosanitario": "INVIMA 2025M-0021902",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "45820",
+        "presentaciones": "29",
+        "principio_activo_1": "PROPAFENONA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "RYTMONORM® 150 MG TABLETAS",
+        "registrosanitario": "INVIMA 2015 M-004902-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "45821",
+        "presentaciones": "23",
+        "principio_activo_1": "PROPAFENONA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "RYTMONORM® 300 MG TABLETAS",
+        "registrosanitario": "INVIMA 2015M-004879-R3",
+        "titular_registrado": "LABORATORIOS FRANCO COLOMBIANO LAFRANCOL S.A.S"
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20186253",
+        "presentaciones": "2",
+        "principio_activo_1": "RITUXIMAB",
+        "principios_activos": "1",
+        "producto": "RYTUZEQ",
+        "registrosanitario": "INVIMA 2022MBT-0000056",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20083500",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "11",
+        "principio_activo_1": "LISDEXANFETAMINA DIMESILATO",
+        "principios_activos": "1",
+        "producto": "SAMEXID® 30 MG",
+        "registrosanitario": "INVIMA 2015M-0016064",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20068384",
+        "presentaciones": "11",
+        "principio_activo_1": "LISDEXANFETAMINA DIMESILATO",
+        "principios_activos": "1",
+        "producto": "SAMEXID® 50MG",
+        "registrosanitario": "INVIMA 2015M-0016301",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20083499",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "11",
+        "principio_activo_1": "LISDEXANFETAMINADIMESILATO",
+        "principios_activos": "1",
+        "producto": "SAMEXID 70 MG",
+        "registrosanitario": "INVIMA 2015M-0016302",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20120592",
+        "presentaciones": "2",
+        "principio_activo_1": "DIENOGEST",
+        "principios_activos": "2",
+        "producto": "SEGUFEM MINI®.",
+        "registrosanitario": "INVIMA 2023M-0018339-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20135075",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "SERTACONAZOL NITRATO",
+        "principios_activos": "1",
+        "producto": "SEMAZIN®",
+        "registrosanitario": "INVIMA 2018M-0018402",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20087542",
+        "presentaciones": "4",
+        "principio_activo_1": "SERTACONAZOL NITRATO",
+        "principios_activos": "1",
+        "producto": "SEMAZIN® ÓVULOS",
+        "registrosanitario": "INVIMA 2015M-0016060",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20018073",
+        "presentaciones": "4",
+        "principio_activo_1": "SEVELAMER CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "SERTREX 800 MG",
+        "registrosanitario": "INVIMA 2020M-0011072-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19914092",
+        "presentaciones": "16",
+        "principio_activo_1": "ACETAMINOFEN COMPRESION DIRECTA 90% 277.78 MG EQUIVALENTE AACETAMINOFEN",
+        "principios_activos": "3",
+        "producto": "SEVEDOL ®",
+        "registrosanitario": "INVIMA 2017M-015027-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19983165",
+        "presentaciones": "29",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "3",
+        "producto": "SEVEDOL® EXTRAFUERTE TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2023M-0008219-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20035560",
+        "presentaciones": "18",
+        "principio_activo_1": "ACETAMINOFEN",
+        "principios_activos": "3",
+        "producto": "SEVEDOL GRIPA TABLETAS",
+        "registrosanitario": "INVIMA 2023M-0013023-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20069479",
+        "presentaciones": "11",
+        "principio_activo_1": "LEVONORGESTREL",
+        "principios_activos": "1",
+        "producto": "SINOIMPLANT®",
+        "registrosanitario": "INVIMA 2017M-0017722",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19981474",
+        "presentaciones": "6",
+        "principio_activo_1": "ETINILESTRADIOL",
+        "principios_activos": "2",
+        "producto": "SINOVUL®",
+        "registrosanitario": "INVIMA 2023M-0007478-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20025390",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "17",
+        "principio_activo_1": "GRANULADO DE ROSUVASTATINA QUE CONTIENE ROSUVASTATINA CALCICA ANHIDRA EQUIVALENTE A ROSUVASTATINA BASE",
+        "principios_activos": "2",
+        "producto": "STAFEN® 135 / 20 MG CAPSULA",
+        "registrosanitario": "INVIMA 2022M-0014122-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20059808",
+        "presentaciones": "19",
+        "principio_activo_1": "GRANULADO DEROSUVASTATINA CALCICA ANHIDRA EQUIVALENTE A ROSUVASTATINA BASE",
+        "principios_activos": "2",
+        "producto": "STAFEN®135 / 5 MG CAPSULAS",
+        "registrosanitario": "INVIMA 2018M-0014839-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20093972",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "16",
+        "principio_activo_1": "NAPROXENO SÓDICO",
+        "principios_activos": "2",
+        "producto": "SUAXINA® TABLETA RECUBIERTA",
+        "registrosanitario": "INVIMA 2016M-0017043",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930431",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SODICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 100 MCG TABLETAS",
+        "registrosanitario": "INVIMA 2019M-0001709-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930432",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SODICA *(*INCLUYE 3% DE EXCESO)",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 112 MCG TABLETAS",
+        "registrosanitario": "INVIMA 2019M-0001765-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930433",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SODICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 125 MCG TABLETAS",
+        "registrosanitario": "INVIMA 2019M-0001743-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20027722",
+        "presentaciones": "14",
+        "principio_activo_1": "LEVOTIROXINA SODICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 137 MCG",
+        "registrosanitario": "INVIMA 2023M-0012120-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20031721",
+        "presentaciones": "9",
+        "principio_activo_1": "LEVOTIROXINA DE SODIO",
+        "principios_activos": "1",
+        "producto": "SYNTHROID 175 MCG",
+        "registrosanitario": "INVIMA 2023M-0012787-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20031838",
+        "presentaciones": "10",
+        "principio_activo_1": "LEVOTIROXINA SÓDICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID ®200 MCG",
+        "registrosanitario": "INVIMA 2023M-0012786-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930427",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SÓDICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 25 MCG",
+        "registrosanitario": "INVIMA 2019M-0001698-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930428",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SÓDICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 50 MCG",
+        "registrosanitario": "INVIMA 2019M-0001697-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930429",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SODICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 75 MCG TABLETAS",
+        "registrosanitario": "INVIMA 2019M-0001714-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19930430",
+        "presentaciones": "7",
+        "principio_activo_1": "LEVOTIROXINA SÓDICA",
+        "principios_activos": "1",
+        "producto": "SYNTHROID® 88 MCG",
+        "registrosanitario": "INVIMA 2019M-0001685-R2",
+        "titular_registrado": "LABORATORIOS FRANCO COLOMBIANO LAFRANCOL S.A.S"
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "230359",
+        "presentaciones": "6",
+        "principio_activo_1": "TRANDOLAPRIL",
+        "principios_activos": "2",
+        "producto": "TARKA® SR TABLETAS",
+        "registrosanitario": "INVIMA 2019M-012157-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19994061",
+        "presentaciones": "2",
+        "principio_activo_1": "TRAZODONA CLORHIDRATO",
+        "principios_activos": "1",
+        "producto": "TRAZODONA CLORHIDRATO 50 MG TABLETAS",
+        "registrosanitario": "INVIMA 2023M-0008619-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20065755",
+        "presentaciones": "12",
+        "principio_activo_1": "NUCLEO DE LA MINITABLETA: FENOFIBRATO DE COLINA(178.8MG) EQUIVALENTE A ACIDO FENOFIBRICO.",
+        "principios_activos": "1",
+        "producto": "TRILIPIX®135MG",
+        "registrosanitario": "INVIMA 2019M-0015218-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "59081",
+        "presentaciones": "7",
+        "principio_activo_1": "AZITROMICINA DIHIDRATO EQUIVALENTE A AZITROMICINA BASE",
+        "principios_activos": "1",
+        "producto": "TROMIX® TABLETAS 500 MG",
+        "registrosanitario": "INVIMA 2022M-015012-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20100748",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "2",
+        "principio_activo_1": "TESTOSTERONA UNDECANOATO (EQUIVALENTE A 631.5 MG DE TESTOSTERONA)",
+        "principios_activos": "1",
+        "producto": "UROMAX® 1000MG/4 ML SOLUCIÓNINYECTABLE",
+        "registrosanitario": "INVIMA 2021M-0016617-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20013336",
+        "presentaciones": "4",
+        "principio_activo_1": "DEXAMETASONA TERT- BUTIL ACETATO 4.475 MG EQUIVALENTE A DEXAMETASONA",
+        "principios_activos": "2",
+        "producto": "VAGICORT® CREMA VAGINAL",
+        "registrosanitario": "INVIMA 2021M-0011210-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "93689",
+        "presentaciones": "4",
+        "principio_activo_1": "DIVALPROATO SODICO 296.06 MG EQUIVALENTE A 250 MG DE ACIDO VALPROICO",
+        "principios_activos": "1",
+        "producto": "VALCOTE® 250 MG TABLETAS CON CUBIERTA ENTÉRICA",
+        "registrosanitario": "INVIMA 2020M-007747-R4",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "104739",
+        "presentaciones": "4",
+        "principio_activo_1": "DIVALPROATO SODICO EQUIVALENTE A 500MG DE ACIDO VALPROICO",
+        "principios_activos": "1",
+        "producto": "VALCOTE ® 500 MG TABLETAS DE LIBERACION RETARDADA",
+        "registrosanitario": "INVIMA 2016M-007660-R3",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19944041",
+        "presentaciones": "20",
+        "principio_activo_1": "DIVALPROATO SODICO 269.1MG (EQUIVALENTE A ACIDO VALPROICO 250MG)",
+        "principios_activos": "1",
+        "producto": "VALCOTE® ER 250 MG",
+        "registrosanitario": "INVIMA 2014M-0003327-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20119257",
+        "presentaciones": "19",
+        "principio_activo_1": "DIVALPROATO SODICO 538.1 MG EQUIVALENTEAACIDOVALPROICO",
+        "principios_activos": "1",
+        "producto": "VALCOTE® ER 500 MG",
+        "registrosanitario": "INVIMA 2023M-0018046-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20109354",
+        "presentaciones": "2",
+        "principio_activo_1": "ENTECAVIR MONOHIDRATO 0.532 MG EQUIVALENTES A ENTECAVIR",
+        "principios_activos": "1",
+        "producto": "VORIX® 0.5 MG",
+        "registrosanitario": "INVIMA 2017M-0017675",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20109429",
+        "presentaciones": "2",
+        "principio_activo_1": "ENTECAVIR MONOHIDRATO 1.065 MG EQUIVALENTE A ENTECAVIR",
+        "principios_activos": "1",
+        "producto": "VORIX® 1.0 MG",
+        "registrosanitario": "INVIMA 2017M-0017676",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19951775",
+        "presentaciones": "12",
+        "principio_activo_1": "DROSPIRENONA MICRONIZADA",
+        "principios_activos": "2",
+        "producto": "YAX®",
+        "registrosanitario": "INVIMA 2020M-0004318-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "19980628",
+        "presentaciones": "2",
+        "principio_activo_1": "DROSPIRENONA",
+        "principios_activos": "2",
+        "producto": "YAXIBELLE®",
+        "registrosanitario": "INVIMA 2021M-0007655-R1",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S."
+       },
+       {
+        "estadoregistro": "Vigente",
+        "expediente": "20016201",
+        "fechavencimiento": "01/01/3000",
+        "presentaciones": "13",
+        "principio_activo_1": "CLOMIFENO CITRATO",
+        "principios_activos": "1",
+        "producto": "ZIMAQUIN50 MG TABLETAS",
+        "registrosanitario": "INVIMA 2021M-0011469-R2",
+        "titular_registrado": "LABORATORIO FRANCO COLOMBIANO LAFRANCOL S.A.S."
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 193,
+      "total": 176,
       "truncado": false,
-      "vistos": 193
+      "vistos": 176
      },
      "completo": true,
      "conjunto": "i7cb-raxc",
      "consulta": {
       "conjunto": "i7cb-raxc",
+      "group": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento",
       "max_filas": 500,
       "portal": "datos.gov.co",
-      "select": "distinct expediente, producto, titular, registrosanitario, estadoregistro, fechavencimiento",
-      "where": "(upper(titular) like upper('%LAFRANCOL%'))"
+      "select": "expediente, producto, registrosanitario, estadoregistro, fechavencimiento, min(titular) AS titular_registrado, min(principioactivo) AS principio_activo_1, count(distinct principioactivo) AS principios_activos, count(distinct consecutivocum) AS presentaciones",
+      "where": "(upper(titular) like upper('%LAFRANCOL%') AND estadocum = 'Activo')"
      },
-     "filas": 193,
-     "filas_que_resume": 4579,
-     "filtro_soql": "(upper(titular) like upper('%LAFRANCOL%'))",
+     "filas": 176,
+     "filas_que_resume": 3790,
+     "filtro_soql": "(upper(titular) like upper('%LAFRANCOL%') AND estadocum = 'Activo')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"
