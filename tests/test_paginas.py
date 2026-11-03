@@ -127,7 +127,7 @@ async def test_la_puerta_pagina_y_valida(monkeypatch: pytest.MonkeyPatch) -> Non
 async def test_pagina_solo_en_las_herramientas_de_lista() -> None:
     puerta.usar_conectores({})
     try:
-        async with Client(puerta.puerta) as mcp:
+        async with Client(puerta.crear_servidor(con_ciclo=False, con_ocultas=True)) as mcp:
             esquemas = {t.name: t.input_schema for t in await mcp.list_tools()}
         transporte = httpx.ASGITransport(app=crear_api())
         async with httpx.AsyncClient(transport=transporte, base_url="http://puerta") as rest:
