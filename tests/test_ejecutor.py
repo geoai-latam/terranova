@@ -194,10 +194,21 @@ def test_el_tema_sale_del_html_sin_etiquetas_ni_entidades() -> None:
         "Autonomía de la voluntad"
     )
     assert "content.rendered" not in fila and "contenido" not in fila
+    # sin negrilla, el tema va hasta el salto de línea, tras los párrafos vacíos (medido en la
+    # providencia 66727 y el concepto 67155)
     sin_negrilla = mapear_fila(
-        h, CATALOGO.fuentes[h.fuente], {"id": 2, "content.rendered": "<p>Sin tema</p>"}, None
+        h,
+        CATALOGO.fuentes[h.fuente],
+        {
+            "id": 2,
+            "content.rendered": "<p>&nbsp;</p>\n<p><strong>\xa0</strong></p>\n"
+            "<p>PLIEGO DE CONDICIONES &#8211; Naturaleza<br />\n[…] texto</p>",
+        },
+        None,
     )
-    assert sin_negrilla["tema"] is None
+    assert sin_negrilla["tema"] == f"PLIEGO DE CONDICIONES {raya} Naturaleza"
+    vacio = mapear_fila(h, CATALOGO.fuentes[h.fuente], {"id": 3, "content.rendered": ""}, None)
+    assert vacio["tema"] is None
 
 
 @pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
@@ -1148,6 +1159,69 @@ def test_el_digito_de_verificacion_de_nit_conocidos() -> None:
     assert digito_verificacion("890903938") == 8
     assert digito_verificacion("899999061") == 9
     assert digito_verificacion("860034313") == 7
+
+
+RAYA = chr(0x2013)
+
+
+class _RelatoriaFalsa:
+    """La relatoría: los descriptores que casan (con una basura que no es un id) y los conceptos
+    que llevan el descriptor 12021."""
+
+    def __init__(self) -> None:
+        self.llamadas: list[dict[str, Any]] = []
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        self.llamadas.append(argumentos)
+        if argumentos["url"].endswith("/descriptor"):
+            filas: list[dict[str, Any]] = (
+                [{"id": 12021}, {"id": 24562}, {"id": "1&per_page=100"}]
+                if argumentos["params"]["search"] == "contratacion directa"
+                else []
+            )
+        elif "12021" in str(argumentos["params"]["descriptor"]).split(","):
+            filas = [
+                {
+                    "id": 67400,
+                    "date": "2026-10-22T10:00:00",
+                    "title.rendered": "C-100",
+                    "link": "https://relatoria.colombiacompra.gov.co/conceptos/c-100/",
+                    "content.rendered": "<p><strong>CONTRATACIÓN DIRECTA </strong><strong>"
+                    + RAYA
+                    + "</strong><strong> Deber de planeación</strong></p><p>[…] texto</p>",
+                }
+            ]
+        else:
+            filas = []
+        n = len(filas)
+        return {
+            "artifacts": [{"kind": "table", "rows": filas}],
+            "facts": {"completitud": {"vistos": n, "total": n, "truncado": False}},
+        }
+
+
+@pytest.mark.anyio
+async def test_la_previa_por_coma_pasa_los_descriptores_a_la_url() -> None:
+    """`formato: coma`: los ids que cumplen el patrón van separados por coma; sin ninguno, «0»
+    (con el parámetro vacío, la relatoría devolvería todo)."""
+    from terranova.ejecutor import Ejecutor
+
+    falso = _RelatoriaFalsa()
+    ej = Ejecutor(CATALOGO, {"web-mcp": falso})
+    sobre = await ej.ejecutar(
+        "ancp_conceptos_por_tema", {"texto": "contratación directa"}, plan="evaluacion"
+    )
+    assert falso.llamadas[1]["params"]["descriptor"] == "12021,24562"
+    assert sobre.estado == "encontrado"
+    tema = "CONTRATACIÓN DIRECTA " + RAYA + " Deber de planeación"
+    assert sobre.datos["elementos"][0]["tema"] == tema
+
+    falso = _RelatoriaFalsa()
+    sobre = await Ejecutor(CATALOGO, {"web-mcp": falso}).ejecutar(
+        "ancp_conceptos_por_tema", {"texto": "nada"}, plan="evaluacion"
+    )
+    assert falso.llamadas[1]["params"]["descriptor"] == "0"
+    assert sobre.estado == "no_encontrado"
 
 
 def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:

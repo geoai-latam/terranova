@@ -35,16 +35,31 @@ También tiene taxonomías (`descriptor`, `restrictor`) con ids de términos. `e
    y el título es un número: en la práctica queda por fecha. Con «garantias», los primeros son
    sobre publicidad o pliegos.
 3. **Sin lematizar.** «garantia» da 1 596 y «garantias», 1 215.
-4. **El tema viene con entidades HTML** (`&#8211;`) y a veces con etiquetas dentro de la
-   negrilla. Una providencia de 10 no tiene negrilla, y su tema sale vacío.
+4. **El tema viene con entidades HTML** (`&#8211;`) y la relatoría lo parte en varias negrillas
+   seguidas («<strong>CONTRATACIÓN DIRECTA </strong><strong>–</strong><strong> Deber…»). Tomar
+   solo la primera negrilla dejaba el tema a medias.
 5. **El título de una providencia es el radicado.** Sin el tema no se sabe de qué trata.
+6. **Dos formatos de providencia.** Las reseñadas desde 2025 empiezan por el tema en negrilla. Las
+   cargadas el 2024-04-24 (de sentencias desde los noventa) traen «Detalle: radicado – Fecha –
+   Demandado – Actor – … – Descriptor: A,B,C – Restrictor: …», con los descriptores separados por
+   coma.
+7. **La fuente corta la lista de descriptores.** En las providencias viejas viene truncada:
+   «…DAÑO ANTIJURÍDICO,DAÑO PRECONTRAC» (85001-23-31-000-2011-00109-01, medido el 2026-11-03). La
+   herramienta la entrega como llega.
+8. **Un concepto tiene varios descriptores.** Buscar por «contratacion directa» trae conceptos cuyo
+   tema principal es otro («DEFENSA Y SEGURIDAD – Concepto Jurídico Indeterminado»): también están
+   etiquetados con CONTRATACIÓN DIRECTA.
+9. **`descriptor=` vacío no filtra.** Sin ids, la relatoría devuelve todo; con `descriptor=0`,
+   nada. Por eso la previa, si no halla descriptores, pasa «0».
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `ancp_conceptos_buscar` | bajo → medio | v2: con `tema`; busca sin tildes ni eñes; acepta números («Ley 80»); aviso de vacío |
-| `ancp_providencias_buscar` | bajo → medio | igual |
+| `ancp_conceptos_buscar` (v3) | medio | por palabras en todo el texto; con `tema` entero; sin tildes ni eñes; acepta números («Ley 80»); aviso de vacío |
+| `ancp_providencias_buscar` (v3) | medio | igual |
+| `ancp_conceptos_por_tema` | alto | nueva: por los descriptores de la relatoría |
+| `ancp_providencias_por_tema` | medio → alto | nueva: igual, en providencias |
 
 ## Decisiones
 
@@ -58,9 +73,7 @@ También tiene taxonomías (`descriptor`, `restrictor`) con ids de términos. `e
     tildes y eñes: «daño» se busca como «dano».
   - **Entrada `str`.** El tipo `nombre` no aceptaba números («Ley 80» se rechazaba). El texto va a
     un parámetro de la URL, no a SQL, así que basta `str`.
-  - **El orden sigue siendo por fecha,** y la descripción lo dice. No se probó buscar por la
-    taxonomía `descriptor` (`/descriptor?search=…` y luego `?descriptor=<ids>`): pide dos llamadas y
-    el motor no tiene cómo pasar una lista de ids. Queda pendiente.
+  - **El orden sigue siendo por fecha,** y la descripción lo dice.
   - **Medido en producción:**
 
     | Búsqueda | Conceptos | Providencias |
@@ -72,3 +85,22 @@ También tiene taxonomías (`descriptor`, `restrictor`) con ids de términos. `e
     | sin coincidencias | `no_encontrado` con aviso | |
 
     Todas respondieron entre 0,6 y 1,7 s.
+- **2026-11-03, búsqueda por tema (v3 y dos herramientas nuevas):**
+  - **Por descriptor.** Una previa busca en `/descriptor?search=<texto>` (5 640 descriptores) y
+    pasa sus ids a `?descriptor=<ids>`. Para eso, la previa tiene la opción nueva `formato: coma`
+    (ids separados por coma; «0» si no halla ninguno) y el patrón `id_numerico`.
+  - **El tema entero.** El patrón nuevo toma el primer párrafo en negrilla, aunque venga partido en
+    varias negrillas, y en las providencias viejas, lo que sigue a «Descriptor:» hasta
+    «Restrictor».
+  - **Se queda la búsqueda por texto.** Encuentra lo que no está etiquetado; la de tema remite a
+    ella cuando no halla nada.
+  - **Medido en producción:**
+
+    | Tema | Conceptos | Providencias | Por texto (conceptos) |
+    |---|---|---|---|
+    | «contratacion directa» | 134 | 11 | 2 034 |
+    | «supervision» | 146 | | |
+    | «daño antijuridico» | | 12 | 8 |
+    | «zzzqqq» | `no_encontrado` con aviso | | |
+
+    Respondieron entre 1,5 y 2,8 s (dos llamadas).

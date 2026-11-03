@@ -1,5 +1,5 @@
 id: ancp_conceptos_buscar
-version: 2
+version: 3
 familia: contratacion
 fuente: ancp.conceptos
 pregunta: "¿Qué conceptos de Colombia Compra Eficiente hablan de esto?"
@@ -23,8 +23,10 @@ consulta:
   # `content.rendered` no sale: es el resumen entero en HTML; de él se toma el tema
 salida: ConceptosBuscar
 derivados:
-  # el tema es la primera línea en negrilla del resumen de la relatoría
-  tema: {de: columna, campo: content.rendered, patron: '(?s)<strong>(.+?)</strong>', html: true}
+  # el tema es el primer párrafo con texto del resumen (salta los vacíos; puede venir en varias
+  # negrillas o sin ninguna, hasta un salto de línea); en las providencias viejas
+  # («Detalle: … Descriptor: …»), sus descriptores
+  tema: {de: columna, campo: content.rendered, patron: '(?s)^(?:\s*<p[^>]*>(?:\s|&nbsp;|<strong>(?:\s|&nbsp;)*</strong>)*</p>)*\s*(?:<p[^>]*>\s*<strong>Detalle:</strong>.*?<strong>Descriptor:</strong>\s*|<p[^>]*>\s*)(.+?)\s*(?:&#8211;\s*<strong>Restrictor|<br\s*/?>|</p>)', html: true}
   coincidencias: {de: completitud_total, tipo: int}
 avisos:
 - cuando: vacio

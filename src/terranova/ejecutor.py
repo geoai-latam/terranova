@@ -1187,7 +1187,8 @@ class Ejecutor:
         self, h: Herramienta, valores: dict[str, Any], consultado_en: datetime
     ) -> tuple[dict[str, Any], Procedencia]:
         """La consulta previa: sus valores de `columna` que cumplen el patrón van a `{previa}`.
-        Sin ninguno, `{previa}` es `''`: la consulta principal no encuentra nada, y lo dice."""
+        Sin ninguno, `{previa}` es `''` (o «0» con `formato: coma`): la consulta principal no
+        encuentra nada, y lo dice."""
         previa = h.consulta.previa
         assert previa is not None
         fuente = self.catalogo.fuentes[previa.fuente]
@@ -1202,7 +1203,12 @@ class Ejecutor:
                 if f.get(previa.columna) is not None and patron.fullmatch(str(f[previa.columna]))
             }
         )
-        lista = ", ".join(f"'{v}'" for v in hallados) or "''"
+        if previa.formato == "coma":
+            # sin ninguno, «0»: un id que no existe (WordPress da 0 resultados con descriptor=0;
+            # vacío, en cambio, quita el filtro y devolvería todo)
+            lista = ",".join(hallados) or "0"
+        else:
+            lista = ", ".join(f"'{v}'" for v in hallados) or "''"
         vistos = [{previa.columna: v} for v in hallados]
         procedencia = self._procedencia(h, fuente, r, consultado_en, vistos)
         return {**valores, MARCADOR_PREVIA: lista}, procedencia

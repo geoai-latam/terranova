@@ -1,0 +1,51 @@
+id: ancp_providencias_por_tema
+version: 1
+familia: contratacion
+fuente: ancp.providencias
+pregunta: "¿Qué providencias de Colombia Compra Eficiente tratan este tema?"
+descripcion: >
+  Busca en la relatoría de Colombia Compra Eficiente (providencias) por tema: primero los descriptores
+  de la relatoría cuyo nombre contiene el texto (p. ej. «contratación directa», «supervisión»,
+  «liquidación del contrato»), y luego las 20 más recientes con alguno de ellos, cada
+  una con su tema, título, fecha y enlace, y cuántos hay en total. Es más preciso que
+  ancp_providencias_buscar, que busca las palabras en todo el texto: «contratación directa» da 134 por
+  tema y 2 034 por texto en los conceptos. Pero solo encuentra lo que la relatoría etiquetó: si da
+  poco o nada, use ancp_providencias_buscar.
+  (Fuente: Colombia Compra Eficiente; licencia: dato público reutilizable.)
+entrada: {texto: str}  # va a un parámetro de la URL (search), no a una consulta SQL
+consulta:
+  operacion: buscar
+  tool: web_json
+  # Los descriptores de la relatoría (5 640 el 2026-11-03): su id va al filtro `descriptor`.
+  previa:
+    fuente: ancp.providencias
+    tool: web_json
+    argumentos:
+      url: "https://relatoria.colombiacompra.gov.co/wp-json/wp/v2/descriptor"
+      params: {search: "{texto:ascii}", per_page: 100, _fields: "id"}
+    columna: id
+    patron: id_numerico
+    formato: coma
+  argumentos:
+    url: "{url_fuente}"
+    params: {descriptor: "{previa}", per_page: 20, orderby: date, order: desc, _fields: "id,date,title,link,content"}
+  campos: [id, date, title.rendered, link]
+  # `content.rendered` no sale: es el resumen entero en HTML; de él se toma el tema
+salida: ProvidenciasPorTema
+derivados:
+  # el tema es el primer párrafo con texto del resumen (salta los vacíos; puede venir en varias
+  # negrillas o sin ninguna, hasta un salto de línea); en las providencias viejas
+  # («Detalle: … Descriptor: …»), sus descriptores
+  tema: {de: columna, campo: content.rendered, patron: '(?s)^(?:\s*<p[^>]*>(?:\s|&nbsp;|<strong>(?:\s|&nbsp;)*</strong>)*</p>)*\s*(?:<p[^>]*>\s*<strong>Detalle:</strong>.*?<strong>Descriptor:</strong>\s*|<p[^>]*>\s*)(.+?)\s*(?:&#8211;\s*<strong>Restrictor|<br\s*/?>|</p>)', html: true}
+  coincidencias: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún descriptor de la relatoría contiene ese texto, o los que lo contienen no tienen providencias. Esta herramienta solo encuentra lo que la relatoría etiquetó con un tema: ancp_providencias_buscar busca las palabras en todo el texto.
+cobro: agregado
+canario:
+  # Medido el 2026-11-03: «contratacion directa» da 11 providencias con el descriptor CONTRATACIÓN DIRECTA (12021). Crece con cada publicación: mínimo.
+  entrada: {texto: contratacion directa}
+  minimos: {coincidencias: 8}
+  campos: [coincidencias, fecha, id, tema, titulo, url]
+  latencia_max_ms: 10000
