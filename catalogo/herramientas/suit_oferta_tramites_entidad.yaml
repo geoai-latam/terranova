@@ -1,12 +1,14 @@
 id: suit_oferta_tramites_entidad
-version: 1
+version: 2
 familia: normativa
 fuente: funcionpublica.suit_oferta
 pregunta: "¿Qué trámites ofrece esta entidad y cuántas solicitudes tuvo cada uno en el año?"
 descripcion: >
   Trámites y otros procedimientos que una entidad tiene inscritos en el SUIT, por NIT y año (2014 a
   2023): código, nombre, solicitudes presenciales y en línea, PQRD, si cuesta y cuántos requisitos
-  pide. Cada trámite sale una vez por año aunque la fuente lo repita.
+  pide, del más solicitado al menos, con el total del año. Cada trámite sale una vez aunque
+  la fuente lo repita con otro nombre. Un NIT puede agrupar varias entidades (el de Bogotá, todas
+  sus secretarías).
   Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
   (Fuente: Función Pública; licencia: CC BY-SA 4.0.)
 entrada: {nit_entidad: int, anio: int}
@@ -17,20 +19,28 @@ consulta:
   argumentos:
     portal: datos.gov.co
     id: k7xp-z2d2
-    select: "distinct nit_entidad, nombre_entidad, codigo_id_tramite, fuente, fecha_vigencia, numero_solicitudes_presenciales, numero_solicitudes_enlinea, numero_solicitudes_linea_parcial, numero_total_solicitudes, numero_pqrd, tiene_costo, numero_de_requisitos"
+    # La fuente repite un trámite con varios nombres y las mismas cifras (Chía 2021, código 10320,
+    # tres veces): se agrupa sin el nombre y se toma uno.
+    select: "nit_entidad, nombre_entidad, codigo_id_tramite, min(fuente) AS fuente, fecha_vigencia, numero_solicitudes_presenciales, numero_solicitudes_enlinea, numero_solicitudes_linea_parcial, numero_total_solicitudes, numero_pqrd, tiene_costo, numero_de_requisitos"
     where: "nit_entidad = '{nit_entidad}' AND fecha_vigencia = '{anio}'"
-    order: "codigo_id_tramite, numero_total_solicitudes"
+    group: "nit_entidad, nombre_entidad, codigo_id_tramite, fecha_vigencia, numero_solicitudes_presenciales, numero_solicitudes_enlinea, numero_solicitudes_linea_parcial, numero_total_solicitudes, numero_pqrd, tiene_costo, numero_de_requisitos"
+    order: "numero_total_solicitudes::number DESC, codigo_id_tramite"
     max_filas: 2000
   campos: [nit_entidad, nombre_entidad, codigo_id_tramite, fuente, fecha_vigencia, numero_solicitudes_presenciales, numero_solicitudes_enlinea, numero_solicitudes_linea_parcial, numero_total_solicitudes, numero_pqrd, tiene_costo, numero_de_requisitos]
 salida: SuitOfertaTramitesEntidad
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  numero_tramites: {de: distintos, campo: codigo_tramite, tipo: int}
+  solicitudes_total: {de: suma, campo: solicitudes, tipo: int}
+  solicitudes_en_linea_total: {de: suma, campo: solicitudes_en_linea, tipo: int}
+  tramite_mas_solicitado: {de: primero, campo: tramite}
 cobro: registro
 canario:
-  # Medido el 2026-10-22 en k7xp-z2d2: Alcaldía de Chía (899999172), 2021 → 115 filas distintas; la
-  # primera, el SISBEN (10043) con 10 123 solicitudes.
+  # Medido el 2026-11-03 en k7xp-z2d2: Alcaldía de Chía (899999172), 2021 → 105 trámites (115 filas
+  # antes de juntar los nombres repetidos), 107 737 solicitudes; el más pedido, el predial (16671)
+  # con 32 858.
   entrada: {nit_entidad: 899999172, anio: 2021}
-  verdad: {codigo_tramite: "10043", solicitudes: 10123}
-  minimos: {numero_registros: 115}
-  campos: [anio, codigo_tramite, entidad, nit_entidad, numero_registros, pqrd, solicitudes, solicitudes_en_linea, solicitudes_parcialmente_en_linea, solicitudes_presenciales, tramite]
+  verdad: {codigo_tramite: "16671", solicitudes: 32858, solicitudes_total: 107737}
+  minimos: {numero_registros: 100}
+  campos: [anio, codigo_tramite, entidad, nit_entidad, numero_registros, numero_tramites, pqrd, solicitudes, solicitudes_en_linea, solicitudes_en_linea_total, solicitudes_parcialmente_en_linea, solicitudes_presenciales, solicitudes_total, tramite, tramite_mas_solicitado]
   latencia_max_ms: 15000
