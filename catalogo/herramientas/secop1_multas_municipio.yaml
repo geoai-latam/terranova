@@ -1,5 +1,5 @@
 id: secop1_multas_municipio
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.multas
 pregunta: "¿Qué multas y sanciones a contratistas se impusieron en este municipio (SECOP I)?"
@@ -7,7 +7,8 @@ descripcion: >
   Multas y sanciones a contratistas registradas en SECOP I por las entidades de un municipio (su
   nombre, p. ej. Girardot): entidad, resolución, contrato, contratista (como lo publica SECOP),
   valor en pesos y fechas, de la más reciente a la más antigua; hasta 500. No salen las filas de
-  prueba que publica la fuente. Para SECOP II, secop_sanciones_contrato.
+  prueba que publica la fuente. Solo SECOP I: las multas de SECOP II, por nombre de entidad, en
+  secop_multas_entidad; las de un contrato de SECOP II, en secop_sanciones_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {municipio: nombre}
 consulta:
@@ -26,6 +27,13 @@ consulta:
 salida: Secop1MultasMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Son solo las multas registradas en SECOP I. Las de SECOP II están en secop_multas_entidad (por el nombre de la entidad: la fuente no trae municipio).
+- cuando: vacio
+  texto: >
+    SECOP I no registra multas de entidades de ese municipio. Las de SECOP II no están aquí: búsquelas en secop_multas_entidad por el nombre de la entidad (la alcaldía, el ICBF regional, el hospital).
 cobro: registro
 canario:
   # Medido el 2026-10-22 en 4n4q-k399: Girardot tiene 11 multas, todas a empresas o institutos; la
