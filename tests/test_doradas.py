@@ -144,14 +144,17 @@ def test_ninguna_dorada_guarda_una_cedula() -> None:
 @pytest.mark.anyio
 async def test_una_lista_que_llega_al_tope_lo_dice_en_el_sobre() -> None:
     """Con un tope de 200, Chapinero trajo una parte de 948 tratamientos y solo la procedencia lo
-    decía (GEO Copilot, 2026-11-03). La ANCP grabó 20 de 1207 conceptos."""
+    decía (GEO Copilot, 2026-11-03). La ANCP graba 20 de más de 1 200 conceptos."""
     from terranova.contrato import paginar
 
     h = CATALOGO.herramientas["ancp_conceptos_buscar"]
     grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
     sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    total = sobre.datos["coincidencias"]
+    assert total > 1000
     assert any(
-        a.startswith("Vinieron 20 de 1207: la consulta trae como máximo 20") for a in sobre.avisos
+        a.startswith(f"Vinieron 20 de {total}: la consulta trae como máximo 20")
+        for a in sobre.avisos
     )
     pagina = paginar(
         sobre.model_copy(

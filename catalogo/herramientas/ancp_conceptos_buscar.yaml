@@ -1,28 +1,42 @@
 id: ancp_conceptos_buscar
-version: 1
+version: 2
 familia: contratacion
 fuente: ancp.conceptos
 pregunta: "¿Qué conceptos de Colombia Compra Eficiente hablan de esto?"
 descripcion: >
-  Busca en la relatoría de Colombia Compra Eficiente (conceptos) por palabras: los 20 más recientes con
-  título, fecha y enlace al texto, y cuántos hay en total.
+  Busca en la relatoría de Colombia Compra Eficiente (conceptos) los que mencionan unas palabras en su
+  texto (p. ej. «garantías», «Ley 80», «contratación directa»): los 20 más recientes, cada uno con
+  su tema como lo resume la relatoría (p. ej. «GARANTÍAS CONTRACTUALES – Exigencia – Finalidad»),
+  título, fecha y enlace, y cuántos hay en total. Van por fecha, no por pertinencia: la búsqueda
+  de la relatoría no ordena por parecido, así que conviene leer el tema y afinar las palabras.
   (Fuente: Colombia Compra Eficiente; licencia: dato público reutilizable.)
-entrada: {texto: nombre}
+entrada: {texto: str}  # va a un parámetro de la URL (search), no a una consulta SQL
 consulta:
   operacion: buscar
   tool: web_json
   argumentos:
     url: "{url_fuente}"
-    params: {search: "{texto}", per_page: 20, orderby: date, order: desc, _fields: "id,date,title,link"}
+    # sin tildes ni eñes: con una letra fuera de ASCII la relatoría devuelve todo (7 761 de 7 761
+    # con «contratación directa»; 2 034 con «contratacion directa», medido el 2026-11-03)
+    params: {search: "{texto:ascii}", per_page: 20, orderby: date, order: desc, _fields: "id,date,title,link,content"}
   campos: [id, date, title.rendered, link]
+  # `content.rendered` no sale: es el resumen entero en HTML; de él se toma el tema
 salida: ConceptosBuscar
 derivados:
+  # el tema es la primera línea en negrilla del resumen de la relatoría
+  tema: {de: columna, campo: content.rendered, patron: '(?s)<strong>(.+?)</strong>', html: true}
   coincidencias: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún concepto de la relatoría menciona esas palabras. La búsqueda es la de la relatoría: palabras en el texto, sin
+    lematizar («garantia» y «garantias» dan resultados distintos), y sin tildes ni eñes (Terrnova
+    las quita antes de buscar). Pruebe con menos palabras o con otra forma.
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en la API de la relatoría (search=garantias): 1207 conceptos (X-WP-Total).
   # Crece con cada publicación: es un mínimo.
   entrada: {texto: garantias}
   minimos: {coincidencias: 1207}
-  campos: [coincidencias, fecha, id, titulo, url]
+  campos: [coincidencias, fecha, id, tema, titulo, url]
   latencia_max_ms: 10000

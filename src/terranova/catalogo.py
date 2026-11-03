@@ -850,9 +850,11 @@ class Fuente(_Ficha):
         }
 
 
-# `{nombre}` o `{nombre:sin_tildes}`: con el modificador, cada vocal con tilde va como `_`, el
-# comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H)
-MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::sin_tildes)?\}")
+# `{nombre}`, `{nombre:sin_tildes}` o `{nombre:ascii}`. Con `sin_tildes`, cada vocal con tilde va
+# como `_`, el comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H).
+# Con `ascii`, sin tildes ni eñes («daño» → «dano»): la búsqueda de la relatoría de Colombia
+# Compra devuelve todo si el texto trae una letra fuera de ASCII (medido el 2026-11-03).
+MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::(?:sin_tildes|ascii))?\}")
 MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente"})
 MARCADOR_PREVIA = "previa"
 
@@ -1053,6 +1055,9 @@ class Derivado(_Ficha):
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
     orden_fecha: Literal["mda", "dma"] | None = None
+    # solo con `columna`: el texto viene en HTML; lo que sale va sin etiquetas y con las entidades
+    # leídas («Prórroga &#8211; Procedencia» sale con su raya, no con la entidad)
+    html: bool = False
     tipo: Literal["str", "int", "float", "bool", "date", "datetime"] = "str"
     # un promedio calculado en la consulta trae 16 decimales (27.2083333333333333 °C)
     decimales: int | None = Field(default=None, ge=0, le=6)
@@ -1080,8 +1085,8 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «capa» necesita `valores` (capa → valor)")
         if self.de == "codigo" and not self.valores:
             raise ValueError("un derivado «codigo» necesita `valores` (código → significado)")
-        if (self.patron or self.orden_fecha) and self.de != "columna":
-            raise ValueError("`patron` y `orden_fecha` van solo en un derivado «columna»")
+        if (self.patron or self.orden_fecha or self.html) and self.de != "columna":
+            raise ValueError("`patron`, `orden_fecha` y `html` van solo en un derivado «columna»")
         if self.patron is not None and re.compile(self.patron).groups != 1:
             raise ValueError("`patron` lleva exactamente un grupo: la parte que se toma")
         if (self.de == "igual") != (self.igual_a is not None) or (
