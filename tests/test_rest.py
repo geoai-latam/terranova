@@ -257,6 +257,7 @@ async def test_llms_txt_y_tarjeta_mcp(rest: httpx.AsyncClient) -> None:
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",
+        "cnmh_conflicto_municipio",
         "predio_en_punto",
     }
     familias = {h.familia for h in puerta.VENDIBLE.herramientas.values()}

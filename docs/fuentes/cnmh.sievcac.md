@@ -79,6 +79,7 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
 | `cnmh_ataques_poblados_municipio` | medio | mismo aviso |
 | `cnmh_reclutamiento_municipio` (v2) | medio | `victimas_sin_anio` y aviso del año 0 |
 | `cnmh_dano_bienes_municipio` | bajo | casi siempre 0 víctimas; poca demanda |
+| `cnmh_conflicto_municipio` (compuesta) | alto | las once modalidades en una: total, resumen por modalidad y años pico |
 
 ## Decisiones
 
@@ -91,6 +92,22 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
   - Reclutamiento suma `victimas_sin_anio` (suma con `solo_si` año 0) y un aviso con la proporción
     nacional.
   - Minas nombra a `presidencia_victimas_minas_municipio` y dice que no cuadran.
-- **Pendiente:** una `cnmh_conflicto_municipio` con las víctimas de las once modalidades en una
-  sola respuesta. El motor hace una consulta por herramienta (más la `previa`), así que pide
-  sumar consultas múltiples al motor: va aparte, con su spec.
+- **2026-11-03, `cnmh_conflicto_municipio`:**
+  - Es una ficha compuesta, como `ficha_empresa`, y no una herramienta del catálogo: corre las
+    once en paralelo, con un tope de 20 s y de 20 créditos.
+  - Por modalidad da víctimas, casos, víctimas sin año, primer y último año, y el año pico. No da
+    la serie: para eso está cada herramienta.
+  - Da el total y los cinco años con más víctimas, sumando las modalidades sin el año 0.
+  - Los avisos que repiten las once partes (el de las excluyentes, el del homónimo y el de «no
+    registra») salen una sola vez. Lo que dice una sola parte (minas, reclutamiento, ataques a
+    poblados) va con su nombre.
+  - Si una modalidad falla, la ficha sale `parcial` y avisa que el total es un mínimo.
+  - Medido el 2026-11-03 (8 a 15 s):
+    - Granada (05313): 1 252 víctimas; el pico es 2002, con 224.
+    - Bojayá (27099): 315 víctimas; en 2002 son 113, y 89 de ellas están en acciones bélicas.
+    - Toribío: 828 víctimas en las once modalidades. Las 131 víctimas de masacre de 1985 son
+      Tacueyó.
+- **Pendiente:**
+  - Un código que no existe (99999) da «no encontrado» en las once y en la ficha, como cualquier
+    municipio sin víctimas. La puerta no comprueba que el código DIVIPOLA exista.
+  - Civiles frente a combatientes por modalidad: pide una consulta más por conjunto.

@@ -39,6 +39,7 @@ def test_cada_herramienta_del_catalogo_tiene_su_documento() -> None:
         "ficha_lugar",
         "ficha_empresa",
         "ficha_lote",
+        "cnmh_conflicto_municipio",
         "predio_en_punto",
     }
     assert all(d.texto for d in docs)

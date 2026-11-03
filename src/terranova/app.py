@@ -29,8 +29,8 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, create_model
 from pydantic.json_schema import SkipJsonSchema
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from terranova import conflicto, ficha_empresa, lote, metricas, predio, puerta
 from terranova import ficha as ficha_lugar
-from terranova import ficha_empresa, lote, metricas, predio, puerta
 from terranova.alta import NIVEL_ALTA, VIGENCIA_LLAVE, ErrorAlta
 from terranova.catalogo import (
     FORMAS_ENTRADA,
@@ -172,6 +172,12 @@ class FichaEmpresaEntrada(_EntradaRest):
     verificación (899.999.714-1)."""
 
     nit: Annotated[str, Field(pattern=PATRONES_ENTRADA["nit_empresa"])]
+
+
+class ConflictoEntrada(_EntradaRest):
+    """El municipio: código DIVIPOLA de 5 dígitos (05313) o su nombre."""
+
+    municipio_divipola: Annotated[str, Field(pattern=PATRONES_ENTRADA["divipola"])]
 
 
 class LoteEntrada(_EntradaRest):
@@ -354,6 +360,22 @@ def crear_api() -> FastAPI:
         operation_id=lote.HERRAMIENTA,
         summary=lote.PREGUNTA,
         description=lote.DESCRIPCION,
+        tags=["fichas"],
+        responses={
+            c: {"model": Problema, "content": {"application/problem+json": {}}}
+            for c in (400, 401, 402, 403, 429, 500, 502, 504)
+        },
+        openapi_extra={"security": [{"llave": []}]},
+    )
+
+    api.add_api_route(
+        "/v1/fichas/conflicto",
+        _ruta(conflicto.HERRAMIENTA, ConflictoEntrada),
+        methods=["POST"],
+        response_model=Sobre,
+        operation_id=conflicto.HERRAMIENTA,
+        summary=conflicto.PREGUNTA,
+        description=conflicto.DESCRIPCION,
         tags=["fichas"],
         responses={
             c: {"model": Problema, "content": {"application/problem+json": {}}}
