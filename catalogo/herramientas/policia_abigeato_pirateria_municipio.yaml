@@ -1,12 +1,16 @@
 id: policia_abigeato_pirateria_municipio
-version: 3
+version: 4
 familia: justicia
 fuente: policia.abigeato_pirateria
 pregunta: "¿Cuántos robos de ganado, de carga o a bancos hubo en este municipio en el año?"
 descripcion: >
-  Casos de abigeato, piratería terrestre y hurto a entidades financieras reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
-  por tipo y género de la víctima. `total_casos` suma los tres tipos: para uno solo, sume sus filas. Son denuncias: no todos los delitos se denuncian. El año en curso está incompleto:
-  fuente_hasta_mes dice hasta qué mes lo publica la fuente.
+  Casos de abigeato (robo de ganado), piratería terrestre (robo de carga en carretera) y hurto a
+  entidades financieras reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año. Son
+  tres delitos distintos que la Policía publica juntos: `casos_por_tipo` da el total de cada uno
+  (Yopal 2025: 21 abigeatos y 1 hurto a entidad financiera), y las filas, por tipo y género de la
+  víctima. `total_casos` suma los tres, así que no es la cifra de ninguno. Son denuncias: no todos
+  los delitos se denuncian. El año en curso está incompleto: fuente_hasta_mes dice hasta qué mes
+  lo publica la fuente.
   (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, anio: int}
 consulta:
@@ -39,6 +43,7 @@ consulta:
 salida: PoliciaAbigeatoPirateriaMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
+  casos_por_tipo: {de: suma_por, campo: tipo, sumar: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
 avisos:
 - cuando: encontrado
@@ -52,5 +57,5 @@ canario:
   entrada: {municipio_divipola: "25175", anio: 2024}
   verdad: {fuente_hasta_mes: 12, genero: "MASCULINO", casos: 3, tipo: "HURTO ABIGEATO"}
   minimos: {total_casos: 3}
-  campos: [casos, fuente_hasta_mes, fuente_meses_publicados, genero, tipo, total_casos]
+  campos: [casos, casos_por_tipo, fuente_hasta_mes, fuente_meses_publicados, genero, tipo, total_casos]
   latencia_max_ms: 10000

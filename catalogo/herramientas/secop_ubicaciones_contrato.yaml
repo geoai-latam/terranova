@@ -1,12 +1,14 @@
 id: secop_ubicaciones_contrato
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.ubicaciones
 pregunta: "¿Dónde se ejecuta este contrato de SECOP II?"
 descripcion: >
-  DÓNDE se ejecuta un contrato de SECOP II: los lugares geográficos (municipios/departamentos) de
-  ejecución, con la entidad. Es la ubicación, no el avance; para cómo va el contrato (entregas,
-  hitos, % de avance) usa secop_ejecucion_contrato.
+  DÓNDE se ejecuta un contrato de SECOP II: cada lugar de ejecución que registró la entidad, con
+  el departamento y el municipio aparte, y cuántos lugares son. Un contrato puede tener varios
+  (un PAE en varios municipios). SECOP solo publica el país, el departamento y el municipio: no
+  hay dirección ni coordenadas, y a veces solo el departamento. Es la ubicación, no el avance;
+  para cómo va el contrato (entregas, hitos, % de avance) usa secop_ejecucion_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -23,13 +25,31 @@ consulta:
   campos: [id_contrato, localizaci_n, nombre_entidad, nit_entidad]
 salida: SecopUbicacionesContrato
 derivados:
+  # «Colombia;  Valle del Cauca ;  Cali», «Colombia; Bogotá», «Colombia»
+  departamento:
+    de: columna
+    campo: localizaci_n
+    patron: '^\s*[^;]+;\s*([^;]*[^;\s])\s*(?:;|$)'
+  municipio:
+    de: columna
+    campo: localizaci_n
+    patron: '^\s*[^;]+;[^;]*;\s*([^;]*[^;\s])\s*$'
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP no tiene lugar de ejecución registrado para ese contrato, o el id no es de un contrato
+    de SECOP II (CO1.PCCNTR.…): secop_contrato_por_id dice si existe y trae su municipio.
+- cuando: encontrado
+  texto: >
+    SECOP publica el lugar de ejecución hasta el municipio: no trae la dirección ni coordenadas.
+    Un lugar sin municipio es que la entidad solo registró el departamento.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en gra4-pcp2 (id_contrato = CO1.PCCNTR.3795896): 1
   # registros; el primero con el orden de la ficha da la verdad. Los registros solo crecen: mínimo.
   entrada: {id_contrato: "CO1.PCCNTR.3795896"}
-  verdad: {id_contrato: "CO1.PCCNTR.3795896", localizacion: "Colombia;  Valle del Cauca ;  Cali"}
+  verdad: {id_contrato: "CO1.PCCNTR.3795896", departamento: "Valle del Cauca", municipio: Cali}
   minimos: {numero_registros: 1}
-  campos: [entidad, id_contrato, localizacion, nit_entidad, numero_registros]
+  campos: [departamento, entidad, id_contrato, localizacion, municipio, nit_entidad, numero_registros]
   latencia_max_ms: 10000
