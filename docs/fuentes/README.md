@@ -52,4 +52,3 @@ Reglas:
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
 | CAR Cundinamarca, POMCA (diez cuencas) | [car.pomca.md](car.pomca.md) |
-| Corte Constitucional, índice de sentencias (`v2k4-2t8s`) | [corteconstitucional.sentencias.md](corteconstitucional.sentencias.md) |
