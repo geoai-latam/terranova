@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T20:59:53+00:00",
+ "grabado": "2026-11-03T21:07:11+00:00",
  "herramienta": "igac_sector_en_punto",
  "llamadas": [
   {
@@ -11,6 +11,7 @@
      -74.0262,
      4.8619
     ],
+    "geometria": "simplificada",
     "max_features": 5,
     "out_fields": [
      "CODIGO"
@@ -76,6 +77,7 @@
      -74.0262,
      4.8619
     ],
+    "geometria": "simplificada",
     "max_features": 5,
     "out_fields": [
      "CODIGO"
@@ -92,8 +94,8 @@
         {
          "geometry": {
           "coordinates": [
-           -74.006835,
-           4.9137932
+           -74.00684,
+           4.91379
           ],
           "type": "Point"
          },
