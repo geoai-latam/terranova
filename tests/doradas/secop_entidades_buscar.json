@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T02:35:40+00:00",
+ "grabado": "2026-11-03T09:49:14+00:00",
  "herramienta": "secop_entidades_buscar",
  "llamadas": [
   {
@@ -47,11 +47,11 @@
       "rows": [
        {
         "ciudad": "Chía",
-        "contratos": 4298,
+        "contratos": 4299,
         "departamento": "Cundinamarca",
         "nit_entidad": "899999172",
         "nombre_entidad": "ALCALDIA MUNICIPAL DE CHIA",
-        "valor": 713860067894.41
+        "valor": 714001952894.4102
        },
        {
         "ciudad": "Chía",
@@ -59,7 +59,15 @@
         "departamento": "Cundinamarca",
         "nit_entidad": "800201907",
         "nombre_entidad": "INSTITUTO MUNICIPAL DE RECREACIÓN Y DEPORTES DE CHIA",
-        "valor": 65922006987.909996
+        "valor": 65922006987.91001
+       },
+       {
+        "ciudad": "Covarachía",
+        "contratos": 397,
+        "departamento": "Boyacá",
+        "nit_entidad": "891857920",
+        "nombre_entidad": "MUNICIPIO DE COVARACHIA1",
+        "valor": 23353018453.42
        },
        {
         "ciudad": "Chía",
@@ -84,23 +92,31 @@
         "nit_entidad": "899999714",
         "nombre_entidad": "EMPRESA DE SERVICIOS PUBLICOS DE CHIA E.S.P.",
         "valor": 4872550268.780001
+       },
+       {
+        "ciudad": "Nunchía",
+        "contratos": 1,
+        "departamento": "Casanare",
+        "nit_entidad": "800099425",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE NUNCHIA",
+        "valor": 1025615377.0
        }
       ]
      }
     ],
     "facts": {
      "completitud": {
-      "total": 5,
+      "total": 7,
       "truncado": false,
-      "vistos": 5
+      "vistos": 7
      },
-     "consultado_en": "2026-11-02T02:35:06.089721+00:00",
+     "consultado_en": "2026-11-03T08:00:06.816160+00:00",
      "copia": {
-      "filas": 8750,
-      "huella": "sha256:f0d91547ab43eb714bf7a3f899555c585e419a3ba5adae781ee526370857e7a2",
-      "repetidas_en_la_fuente": 0,
+      "filas": 3678730,
+      "huella": "sha256:9701e683eb00e4d5c65fdfc1fbcd0eeabea75db467951dc0d8027e1723c45e44",
+      "repetidas_en_la_fuente": 263,
       "ventana_desde": "2023-01-01",
-      "version": "20261102023506089721"
+      "version": "20261103080006816160"
      },
      "servido_desde": "copia"
     }
