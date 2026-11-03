@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T02:56:32+00:00",
+ "grabado": "2026-11-03T13:59:35+00:00",
  "herramienta": "corte_constitucional_sentencia",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 10,
     "order": "sentencia",
     "portal": "datos.gov.co",
-    "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv",
+    "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv, 'https://www.corteconstitucional.gov.co/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(sentencia, '/', '-') || '.htm' AS url",
     "where": "sentencia = 'T-760/08'"
    },
    "conector": "datos-abiertos-mcp",
@@ -26,7 +26,8 @@
        "sala",
        "sentencia",
        "sentencia_tipo",
-       "sv_spv"
+       "sv_spv",
+       "url"
       ],
       "kind": "table",
       "rows": [
@@ -40,7 +41,8 @@
         "sala": "Salas de Revisión",
         "sentencia": "T-760/08",
         "sentencia_tipo": "T",
-        "sv_spv": "No"
+        "sv_spv": "No",
+        "url": "https://www.corteconstitucional.gov.co/relatoria/2008/T-760-08.htm"
        }
       ]
      }
@@ -57,7 +59,7 @@
       "conjunto": "v2k4-2t8s",
       "max_filas": 10,
       "portal": "datos.gov.co",
-      "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv",
+      "select": "sentencia, sentencia_tipo, fecha_sentencia, proceso, expediente_tipo, expediente_numero, magistrado_a, sala, sv_spv, av_apv, 'https://www.corteconstitucional.gov.co/relatoria/' || date_extract_y(fecha_sentencia) || '/' || replace(sentencia, '/', '-') || '.htm' AS url",
       "where": "(sentencia = 'T-760/08')"
      },
      "cumplen_en_el_portal": 1,
