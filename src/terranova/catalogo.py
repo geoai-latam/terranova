@@ -538,11 +538,19 @@ class Copia(_Ficha):
     texto: list[str] = Field(
         default_factory=list, description="columnas de la búsqueda de texto completo (español)"
     )
+    orden_fisico: str | None = Field(
+        default=None,
+        description="columna de `indices` por la que se ordenan las filas en el disco (CLUSTER): "
+        "las de un mismo valor quedan juntas y se leen en pocas páginas aunque la copia no esté "
+        "en caché (SECOP por NIT: los 50 142 contratos de Medellín tardaban 16 s en frío)",
+    )
 
     @model_validator(mode="after")
     def _origen_coherente(self) -> Copia:
         if self.origen == "socrata" and not self.conjunto:
             raise ValueError("ADR-0024: origen `socrata` exige `conjunto` (id datos.gov.co)")
+        if self.orden_fisico is not None and self.orden_fisico not in self.indices:
+            raise ValueError("`orden_fisico` va sobre una columna de `indices`")
         if (self.origen == "arcgis") != (self.capa is not None):
             raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
         if self.tolerancia is not None and not (self.origen == "arcgis" and self.geometria):

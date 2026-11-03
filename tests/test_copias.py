@@ -225,6 +225,14 @@ def test_construir_publicar_buscar_y_podar() -> None:
             )
         ]
     assert any("gin_trgm_ops" in d and "translate(lower" in d for d in definiciones)
+    # las filas quedan ordenadas por NIT en el disco (CLUSTER sobre su índice)
+    with psycopg.connect(URL_PG) as c:
+        agrupada = c.execute(
+            "SELECT i.indisclustered FROM pg_index i JOIN pg_class t ON t.oid = i.indrelid "
+            "JOIN pg_class x ON x.oid = i.indexrelid WHERE t.relname = %s AND x.relname = %s",
+            (f"secop_contratos_{v1.version}", f"secop_contratos_{v1.version}_orden"),
+        ).fetchone()
+    assert agrupada == (True,)
 
     v2 = almacen.construir(SECOP, iter([[fila(9, "otra")]]), None)
     assert almacen.vigente("secop_contratos") == v2 and v2.huella != v1.huella

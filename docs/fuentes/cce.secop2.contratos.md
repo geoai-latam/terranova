@@ -64,7 +64,8 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
    - Con el caché caliente, la misma consulta agrupada tarda 0,6 s. El costo es leer filas sueltas
      de 3,6 millones, no agrupar. «chia» (6 766 contratos) tarda 0,1 s, que no cabe sin el
      índice de trigramas.
-   - Son solo 5 282 entidades: el arreglo es una tabla de entidades armada al refrescar la copia.
+   - La correlación física de `nit_entidad` era −0,03: los contratos de una entidad estaban
+     regados por toda la tabla. Se arregla con `orden_fisico` (ver Decisiones).
 
 ## Herramientas que la usan
 
@@ -104,3 +105,11 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
   `secop_entidades_buscar` v3 devuelve `contratos_desde_2023` y `valor_desde_2023` en vez de
   `contratos` y `valor`. La descripción ya decía la ventana, pero «contratos: 4 298» se leía como
   todos los de la entidad. La descripción también nombra la sigla del IGAC (trampa 6).
+- **2026-11-03, filas ordenadas por NIT en el disco** (trampa 7):
+  - La copia lleva `orden_fisico: nit_entidad`. Al reconstruirse, CLUSTER deja juntos los contratos
+    de cada NIT, y una búsqueda lee pocas páginas aunque nada esté en caché. Lo aprovechan también
+    las herramientas que filtran por NIT.
+  - Se descartó una tabla aparte de las 5 282 entidades: pide una fuente nueva en el catálogo y
+    solo sirve a una herramienta.
+  - La copia se reconstruye sola cada día a las 08:00. El efecto se mide después del despliegue:
+    «medellin» en frío, que antes tardaba 16 s.

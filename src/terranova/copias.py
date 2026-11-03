@@ -1047,7 +1047,13 @@ class AlmacenCopias:
                         filas += 1
             self._c.execute(f'ALTER TABLE {fisica} ADD PRIMARY KEY ("{copia.clave}")')
             for col in copia.indices:
-                self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
+                if col == copia.orden_fisico:
+                    # antes de los demás índices: CLUSTER reescribe la tabla y los rehace todos
+                    indice = f'"{copia.tabla}_{version}_orden"'
+                    self._c.execute(f'CREATE INDEX {indice} ON {fisica} ("{col}")')
+                    self._c.execute(f"CLUSTER {fisica} USING {indice}")
+                else:
+                    self._c.execute(f'CREATE INDEX ON {fisica} ("{col}")')
             if copia.texto:
                 self._c.execute(f"CREATE INDEX ON {fisica} USING gin (_texto)")
             if copia.indices_contiene:
