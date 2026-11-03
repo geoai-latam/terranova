@@ -732,6 +732,25 @@ async def test_el_complemento_dice_hasta_que_mes_publica_la_fuente() -> None:
     assert sobre.estado == "no_encontrado" and sobre.datos == {}
 
 
+def test_conteo_por_y_distintos_no_separan_por_espacios_de_mas() -> None:
+    """El IGAC escribe «CARRERA 11 » (Chía) y «CALLE  3» (Popayán) con espacios de más (medido
+    el 2026-11-03)."""
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    elementos: list[dict[str, Any]] = [
+        {"via": "CARRERA 11 "},
+        {"via": "CARRERA 11"},
+        {"via": "CALLE  3"},
+        {"via": "CALLE 3"},
+    ]
+    por = Derivado(de="conteo_por", campo="via")
+    assert derivar_resultado(por, elementos, None) == {"CARRERA 11": 2, "CALLE 3": 2}
+    assert (
+        derivar_resultado(Derivado(de="distintos", campo="via", tipo="int"), elementos, None) == 2
+    )
+
+
 def test_distintos_cuenta_los_meses_con_datos() -> None:
     """Castilla 2025 trae dos filas en diciembre y ninguna en octubre ni noviembre: 11 filas, 10
     meses (medido el 2026-11-02 en fdvb-hsrf)."""

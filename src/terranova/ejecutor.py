@@ -554,7 +554,11 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
     if d.de == "conteo":
         return len(elementos)
     if d.de == "conteo_por":
-        return dict(Counter(str(v) for v in valores if v is not None).most_common())
+        # sin espacios de más: el IGAC escribe «CARRERA 11 » y «CALLE  3» en unos tramos y
+        # «CARRERA 11» y «CALLE 3» en otros, y son la misma vía
+        return dict(
+            Counter(" ".join(str(v).split()) for v in valores if v is not None).most_common()
+        )
     if d.de == "suma_por":
         sumas: dict[str, float] = {}
         for e in elementos:
@@ -572,7 +576,7 @@ def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int |
     if d.de == "ultimo":
         return convertir(valores[-1], d.tipo) if valores else None
     if d.de == "distintos":
-        return len({str(v) for v in valores if v is not None})
+        return len({" ".join(str(v).split()) for v in valores if v is not None})
     if d.de == "completitud_total":
         return total
     raise ValueError(d.de)
