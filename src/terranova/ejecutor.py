@@ -340,7 +340,16 @@ def mapear_fila(
             out[nombre] = (d.valores or {}).get(str(base)) if base is not None else None
         elif d.de == "fijo":
             out[nombre] = convertir(d.valor, d.tipo)
+        if nombre in out:  # otros (p. ej. las diferencias entre filas) se calculan después
+            out[nombre] = redondear(out[nombre], d.decimales)
     return out
+
+
+def redondear(valor: Any, decimales: int | None) -> Any:
+    """Un número con los decimales que tienen sentido; lo demás pasa igual."""
+    if decimales is None or not isinstance(valor, float):
+        return valor
+    return round(valor, decimales)
 
 
 def aviso_de_anio_incompleto(fuente: Fuente, valores: dict[str, Any]) -> str | None:
@@ -855,7 +864,7 @@ class Ejecutor:
                 )
         derivar_secuencia(h, elementos)
         agregados = {
-            nombre: derivar_resultado(d, elementos, total)
+            nombre: redondear(derivar_resultado(d, elementos, total), d.decimales)
             for nombre, d in h.derivados.items()
             if not d.por_elemento
         }

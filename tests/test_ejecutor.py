@@ -733,3 +733,14 @@ def test_un_derivado_fijo_pone_el_mismo_valor_en_cada_elemento() -> None:
     h = CATALOGO.herramientas["dane_ipm_municipio"]
     fila = mapear_fila(h, CATALOGO.fuentes[h.fuente], {"ID": "27099", "IPM": 77.1}, None)
     assert fila["anio"] == 2018 and fila["ipm_total"] == 77.1
+
+
+def test_un_derivado_sale_con_sus_decimales() -> None:
+    """El promedio que calcula la consulta trae 16 decimales; la temperatura se lee con uno
+    (medido el 2026-10-28 en sbwg-7ju4: 27.2083333333333333 °C es 27,2)."""
+    from terranova.ejecutor import mapear_fila
+
+    h = CATALOGO.herramientas["ideam_temperatura_diaria_estacion"]
+    crudo = {"promedio": "27.2083333333333333", "minima": "23.5", "observaciones": "24"}
+    fila = mapear_fila(h, CATALOGO.fuentes[h.fuente], crudo, None)
+    assert fila["promedio_c"] == 27.2 and fila["minima_c"] == 23.5 and fila["observaciones"] == 24
