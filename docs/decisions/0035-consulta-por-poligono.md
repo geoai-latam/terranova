@@ -31,3 +31,19 @@
   diagonal donde el rectángulo trae más (7 contra 4 en URT, 12 contra 2 en RUNAP). URT se comparó
   con su copia completa y RUNAP con las áreas de cada lote, sin rehacer la copia. Hay pruebas de los
   topes y de la entrada inválida.
+- **Enmienda (2026-11-03), puntos 2 y 4, por un hallazgo de GEO Copilot:**
+  - **Punto 4, se rechaza, no se repara.** Un polígono que se cruza a sí mismo, que no tiene área
+    (vértices alineados) o que tiene menos de 3 vértices distintos responde `parametro_invalido`.
+    El mensaje dice el motivo y, en un cruce, los dos lados que se cruzan.
+    - Antes, `ST_MakeValid` lo reparaba en la base. Uno degenerado quedaba como una línea o vacío,
+      y salía «no encontrado»: una respuesta falsa a una pregunta mal hecha.
+    - La validación corre en la puerta, sin la base. El cruce de lados se busca entre todos los
+      pares: con 500 vértices son unos 125 000 y tarda unos 100 ms (medido el 2026-11-03).
+    - `ST_MakeValid` se queda en la consulta como defensa. Con la validación, ya no cambia nada.
+  - **Punto 2, `zona_demasiado_grande`.** Pasar de 500 vértices o de 1 grado de lado responde
+    `zona_demasiado_grande`, el código que la spec 01 ya reservaba para eso, no
+    `parametro_invalido`.
+  - **Los topes van en el esquema.** El esquema del polígono pone `maxItems: 500` por anillo y
+    cada vértice como `[lon, lat]`. Los dos topes van también en `x-terrnova-max-vertices` y
+    `x-terrnova-max-lado-grados`, porque la suma de vértices de todos los anillos no cabe en JSON
+    Schema.

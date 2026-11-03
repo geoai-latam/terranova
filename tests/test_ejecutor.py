@@ -82,6 +82,41 @@ def test_entrada_valida_se_normaliza() -> None:
     assert validar_entrada(h, {"municipio": "Chía", "departamento": "Cundinamarca"})
 
 
+@pytest.mark.parametrize(
+    ("anillo", "motivo"),
+    [
+        # un moño: los lados 1 y 3 se cruzan en el centro
+        ([[-74, 4], [-73.9, 4.1], [-73.9, 4], [-74, 4.1], [-74, 4]], "se cruza consigo mismo"),
+        ([[-74, 4], [-73.9, 4], [-73.8, 4], [-74, 4]], "no tiene área"),  # alineados
+        ([[-74, 4], [-74, 4], [-73.9, 4], [-74, 4]], "menos de 3 vértices distintos"),
+    ],
+)
+def test_un_poligono_degenerado_se_rechaza_con_el_motivo(
+    anillo: list[list[float]], motivo: str
+) -> None:
+    """Antes se reparaba en la base (ST_MakeValid) y salía «no encontrado» (GEO Copilot,
+    2026-11-03)."""
+    with pytest.raises(ErrorEntrada, match=motivo) as exc:
+        validar_entrada(CATALOGO.herramientas[POLIGONO], {"poligono": _lote(anillo)})
+    assert exc.value.codigo == "parametro_invalido"
+
+
+def test_un_vertice_repetido_seguido_no_es_un_cruce() -> None:
+    anillo: list[list[Any]] = [[-74, 4], [-73.9, 4], [-73.9, 4], [-73.9, 4.1], [-74, 4.1], [-74, 4]]
+    assert validar_entrada(CATALOGO.herramientas[POLIGONO], {"poligono": _lote(anillo)})
+
+
+@pytest.mark.parametrize(
+    "anillo",
+    [_circulo(501), [[-75.0, 4.0], [-73.5, 4.0], [-73.5, 4.5], [-75.0, 4.0]]],
+)
+def test_pasar_los_topes_es_zona_demasiado_grande(anillo: list[list[float]]) -> None:
+    """La spec 01 promete `zona_demasiado_grande` para un polígono sobre el tope."""
+    with pytest.raises(ErrorEntrada) as exc:
+        validar_entrada(CATALOGO.herramientas[POLIGONO], {"poligono": _lote(anillo)})
+    assert exc.value.codigo == "zona_demasiado_grande"
+
+
 def test_renderizar_conserva_tipos_y_arma_texto() -> None:
     plantilla = {
         "bbox": ["{lon}", "{lat}", "{lon}", "{lat}"],

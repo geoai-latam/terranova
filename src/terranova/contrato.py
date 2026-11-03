@@ -25,10 +25,34 @@ ESQUEMA_POLIGONO: Final[dict[str, Any]] = {
     "type": "object",
     "properties": {
         "type": {"const": "Polygon"},
-        "coordinates": {"type": "array", "minItems": 1},
+        "coordinates": {
+            "type": "array",
+            "minItems": 1,
+            "description": "el borde y, si los hay, los huecos; cada anillo cierra",
+            "items": {
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 500,
+                "items": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {"type": "number"},
+                    "description": "[lon, lat]",
+                },
+            },
+        },
     },
     "required": ["type", "coordinates"],
-    "description": "GeoJSON Polygon en EPSG:4326 (lon, lat): hasta 500 vértices y 1° de lado",
+    "description": (
+        "GeoJSON Polygon en EPSG:4326 (lon, lat): hasta 500 vértices en total y 1° de lado; con "
+        "área y sin lados que se crucen. Pasar los topes da `zona_demasiado_grande`; un polígono "
+        "sin área o que se cruza, `parametro_invalido` con el motivo."
+    ),
+    # los topes, legibles por máquina (la suma de vértices de todos los anillos no cabe en JSON
+    # Schema)
+    "x-terrnova-max-vertices": 500,
+    "x-terrnova-max-lado-grados": 1,
 }
 TIPOS_GEOMETRIA = "tipos_geometria"
 _TIPO_CAPA: Final[dict[str, str]] = {

@@ -6,9 +6,11 @@ from __future__ import annotations
 class ErrorEntrada(Exception):
     """Entrada que no cumple su tipo: `parametro_invalido`, no se llama a la fuente."""
 
-    def __init__(self, param: str, mensaje: str) -> None:
+    def __init__(self, param: str, mensaje: str, codigo: str = "parametro_invalido") -> None:
         super().__init__(f"{param}: {mensaje}")
         self.param = param
+        # `zona_demasiado_grande` (spec 01): la entrada es válida, pero pasa del tope
+        self.codigo = codigo
 
 
 class ErrorEjecucion(Exception):
