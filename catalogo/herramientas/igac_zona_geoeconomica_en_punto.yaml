@@ -1,5 +1,5 @@
 id: igac_zona_geoeconomica_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.zona_geoeconomica
 pregunta: "¿Cuánto vale el suelo en este punto según la zona homogénea geoeconómica del IGAC?"
@@ -26,6 +26,8 @@ salida: ZonaGeoeconomicaEnPunto
 derivados:
   zona: {de: capa, valores: {"11": rural, "13": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
+  # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
+  municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona económica 006
@@ -34,5 +36,5 @@ canario:
     valor_hectarea_cop: 7000000000.0
     zona: rural
     municipio_divipola: "25175"
-  campos: [codigo_municipio_zona, codigo_zona_geoeconomica, municipio_divipola, valor_hectarea_cop, zona, zonas_fisicas]
+  campos: [codigo_municipio_zona, codigo_zona_geoeconomica, municipio, municipio_divipola, valor_hectarea_cop, zona, zonas_fisicas]
   latencia_max_ms: 5000

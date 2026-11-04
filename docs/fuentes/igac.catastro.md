@@ -103,3 +103,18 @@ gestores no están.
   - Medido en producción: la manzana de Chía y la de Tabio (25785, 0,8 s); el sector rural de Chía
     y el de Tabio (257850001). Zipaquirá sale `fuera_de_cobertura` porque su catastro lo lleva el
     municipio.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción: manzana, perímetro, predio, sector y vereda en Chía urbano y rural, en
+  Tunja y en un punto rural de Suesca. Todas contestan.
+- **El municipio salía solo como código** («25772»). Ahora `municipio` trae el nombre (SUESCA),
+  de la tabla DIVIPOLA del DANE (`catalogo/codigos/divipola_municipios.yaml`). Va en las seis
+  herramientas de punto que lo sacan del prefijo del código.
+- **La verificación de cobertura casi nunca llega.** Un vacío de esta base dice «no se pudo
+  comprobar si el IGAC cubre el municipio», aun donde sí lo cubre.
+  - Causa: la capa de gestores de mapas.igac.gov.co tarda ~15 s desde la VPS, y el tope es de
+    5 s.
+  - Propuesta: copiar esa capa desde Colombia.
+- El perímetro de Chía dice `tipo_centro_poblado: Corregimiento`, cuando es la cabecera. Es un
+  error de la fuente y se deja como lo publica.
