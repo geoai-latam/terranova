@@ -19,7 +19,9 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/2343-nuqp.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO, periodo: "2025 en adelante"}
+# medido el 2026-11-04: min y max de fecha, 2025-01-01 y 2025-12-31; la fuente se actualizó el
+# 2026-09-22 sin traer 2026
+cobertura: {pais: CO, periodo: "2025 (enero a diciembre)"}
 datos_personales: ninguno
 estado: publicada
 campos:

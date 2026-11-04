@@ -1438,3 +1438,18 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
+    """La fuente va del 2025-01-01 al 2025-12-31 (medido el 2026-11-04): 2026 no está."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["ungrd_emergencias_municipio"]
+    f = CATALOGO.fuentes[h.fuente]
+    for estado, datos in [("encontrado", {"numero_registros": 9}), ("no_encontrado", {})]:
+        avisos = avisos_de_la_ficha(
+            h, f, Sobre.model_construct(estado=estado, datos=datos, avisos=[])
+        )
+        assert len(avisos) == 1 and "2026" in avisos[0], estado
+    assert "2025" in f.cobertura.periodo and "adelante" not in f.cobertura.periodo
