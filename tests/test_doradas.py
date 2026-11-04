@@ -175,3 +175,13 @@ async def test_el_inicio_de_un_texto_largo_no_lleva_el_aviso_del_tope() -> None:
     grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
     sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
     assert not any(a.startswith("Vinieron") for a in sobre.avisos)
+
+
+@pytest.mark.anyio
+async def test_el_bpin_de_un_proceso_sale_resumido_arriba() -> None:
+    """El CO1.REQ.11194762 trae 41 filas (una por contrato), todas del mismo BPIN (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_bpin_proceso"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    por_bpin = sobre.datos["contratos_por_bpin"]
+    assert list(por_bpin) == ["2024080010085"] and por_bpin["2024080010085"] >= 41
