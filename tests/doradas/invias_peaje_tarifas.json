@@ -10,7 +10,7 @@
     "order": "nombre_peaje, c_digo_peaje",
     "portal": "datos.gov.co",
     "select": "c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud",
-    "where": "upper(nombre_peaje) like upper('%Río Frío%')"
+    "where": "upper(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(nombre_peaje, 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ñ', 'N'), 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ñ', 'n'), 'Ü', 'U'), 'ü', 'u')) like upper('%Rio Frio%')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {

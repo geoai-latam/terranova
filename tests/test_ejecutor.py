@@ -875,6 +875,15 @@ def test_avisos_de_la_ficha() -> None:
     assert avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "U2"})) == []
 
 
+def test_fecha_con_puntos_del_invias_en_iso() -> None:
+    """Los puentes del INVÍAS escriben la inspección «2012.07.07» (medido el 2026-11-04)."""
+    from terranova.ejecutor import fecha_en_orden
+
+    assert fecha_en_orden("2012.07.07", "amd") == "2012-07-07"
+    assert fecha_en_orden("2012.7.7", "amd") == "2012-07-07"
+    assert fecha_en_orden("sin fecha", "amd") == "sin fecha"
+
+
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
     salen en ISO, y el relleno sale vacío, no como fecha (medido el 2026-11-02 en i7cb-raxc)."""
