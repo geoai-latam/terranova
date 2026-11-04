@@ -1,5 +1,5 @@
 id: cnmh_reclutamiento_municipio
-version: 2
+version: 3
 familia: justicia
 fuente: cnmh.sievcac_reclutamiento
 pregunta: "¿Cuántos niños, niñas y adolescentes fueron reclutados por grupos armados en este municipio?"
@@ -32,7 +32,7 @@ derivados:
 avisos:
 - cuando: encontrado
   texto: >
-    Las modalidades del CNMH son excluyentes: cada víctima cuenta en una sola, y un mismo hecho puede estar en otra herramienta cnmh_*_municipio. Por ejemplo, las 81 víctimas civiles de Bojayá del 2 de mayo de 2002 están en acciones bélicas, no en masacres. Para el total del municipio hay que sumar las modalidades.
+    Las modalidades del CNMH son excluyentes: cada víctima cuenta en una sola, y un mismo hecho puede estar en otra herramienta cnmh_*_municipio. Por ejemplo, las 81 víctimas civiles de Bojayá del 2 de mayo de 2002 están en acciones bélicas, no en masacres. Para el total del municipio en una sola respuesta, cnmh_conflicto_municipio.
 - cuando: encontrado
   texto: >
     La mayoría de las víctimas de reclutamiento no tiene año (año 0, «sin información»): en todo el país son 11 484 sin año frente a 6 903 con año (medido el 2026-11-02). La serie por año se queda corta; victimas_sin_anio dice cuántas faltan en este municipio.
