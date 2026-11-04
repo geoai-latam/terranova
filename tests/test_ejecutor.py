@@ -1492,6 +1492,8 @@ def test_avisos_del_pot_de_bogota() -> None:
     sin = avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 0}))
     assert len(sin) == 1 and sin[0].startswith("La manzana no tiene estrato")
     assert avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 4})) == []
+
+
 def test_ultimo_con_dato_salta_el_anio_sin_valor() -> None:
     """La manzana 002569002 de la UAECD cierra su serie con 2021 sin valor (2026-11-04)."""
     from pydantic import ValidationError
@@ -1511,6 +1513,8 @@ def test_ultimo_con_dato_salta_el_anio_sin_valor() -> None:
         SoloSi(campo="x")
     with pytest.raises(ValidationError):
         SoloSi(campo="x", valores=["1"], con_dato=True)
+
+
 def test_el_vacio_del_sinic_remite_a_la_base_del_igac() -> None:
     """Chía no tiene gestor propio: su predio no está en el SINIC sino en la base del IGAC."""
     from terranova.contrato import Sobre
@@ -1523,8 +1527,12 @@ def test_el_vacio_del_sinic_remite_a_la_base_del_igac() -> None:
         Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[]),
     )
     assert len(vacio) == 1 and "igac_predio_en_punto" in vacio[0]
+
+
 def test_los_vacios_de_las_alertas_y_del_aire_del_ideam() -> None:
     """Barranquilla sin alertas en el año y Cali en 2019 sin aire volvían vacíos a secas."""
+
+
 def test_los_vacios_de_los_procesos_de_secop1_remiten_al_otro_periodo() -> None:
     """Una constancia de 2015 en la herramienta de 2018 en adelante salía vacía sin pista."""
     from terranova.contrato import Sobre
@@ -1540,6 +1548,8 @@ def test_los_vacios_de_los_procesos_de_secop1_remiten_al_otro_periodo() -> None:
         avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
         assert len(avisos) == 1 and dice in avisos[0], tid
     assert CATALOGO.fuentes["ideam.calidad_aire"].cobertura.desde_anio == 2020
+
+
 def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
     """La fuente va del 2025-01-01 al 2025-12-31 (medido el 2026-11-04): 2026 no está."""
     from terranova.contrato import Sobre
@@ -1553,6 +1563,8 @@ def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
         )
         assert len(avisos) == 1 and "2026" in avisos[0], estado
     assert "2025" in f.cobertura.periodo and "adelante" not in f.cobertura.periodo
+
+
 def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
     """La adjudicación 10000645 tiene tres prórrogas y una adición de 30 millones (2026-11-04)."""
     from terranova.ejecutor import derivar_resultado
@@ -1574,6 +1586,8 @@ def test_las_multas_de_secop1_encuentran_bogota_dc() -> None:
     h = CATALOGO.herramientas["secop1_multas_municipio"]
     where = renderizar(h.consulta.argumentos, {"municipio": "Bogotá"})["where"]
     assert "upper('Bogotá D.C.')" in where and "upper('Bogotá')" in where
+
+
 def test_los_planes_de_secop1_no_cuentan_copias_como_versiones() -> None:
     """Las «11 versiones» de cada plan eran 11 copias idénticas del encabezado (2026-11-04), y el
     detalle de un plan con encabezado puede no estar publicado."""
