@@ -73,7 +73,7 @@ SECOP I llega a 2024.
     (la fuente los repite por categoría UNSPSC) y la suma de su valor.
   - La fuente tiene 19,6 M filas. Agruparla por año para descubrir los años pasó de 180 s
     (ReadTimeout). Una página de 50 000 filas de un año tarda 13 s. Por eso los años van escritos
-    en la ficha (`tandas`, de 2015 a 2026), y las 145 filas con año -1 no se copian.
+    en la ficha (`tandas`, de 2016 a 2026). No se copian ni 2015, que tiene una sola fila y sin ítem, ni las 145 filas con año -1.
   - El caché de metadatos del conjunto está viejo: dice 13 filas para 2026, y solo Chía tiene
     1 814 ítems ese año. No sirve para saber los años.
   - Se rehace cada mes desde Colombia: unas 400 páginas, una a la vez.

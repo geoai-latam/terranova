@@ -35,15 +35,15 @@ copia:
     nombre: nombre_entidad
     cuenta: items
     # Agrupar 19,6 M filas por año pasó de 180 s (2026-11-04); una página de un año, 13 s. Los años
-    # van escritos: hay planes de 2015 a 2026 y 145 filas con año -1, que no se copian. Un año nuevo
+    # van escritos: hay planes de 2016 a 2026; 2015 tiene una sola fila, sin ítem, y 145 filas dicen año -1: no se copian. Un año nuevo
     # se agrega aquí (y en `cobertura`).
-    tandas: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]
+    tandas: ["2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]
   indices: [nit_entidad, codigo_entidad]
   orden_fisico: nit_entidad
 # datos.gov.co la actualiza a diario, pero son 19,6 M filas: se rehace cada mes, desde Colombia
 # (~400 páginas de 50 000 filas, una a la vez).
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
-cobertura: {pais: CO, columna_tiempo: annio, desde_anio: 2015, hasta_anio: 2026}
+cobertura: {pais: CO, columna_tiempo: annio, desde_anio: 2016, hasta_anio: 2026}
 datos_personales: ninguno
 estado: publicada
 campos:
