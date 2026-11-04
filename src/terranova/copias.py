@@ -378,10 +378,13 @@ def descargar_socrata_agregado(
     propio = cliente is None
     http = cliente or httpx.Client(timeout=180, headers={"User-Agent": "terranova-copias/1"})
     try:
-        tandas = _pedir(
-            http, url, {"$select": pre.particion, "$group": pre.particion, "$limit": 1000}
-        )
-        valores = sorted(str(t[pre.particion]) for t in tandas if t.get(pre.particion))
+        if pre.tandas:
+            valores = list(pre.tandas)
+        else:
+            tandas = _pedir(
+                http, url, {"$select": pre.particion, "$group": pre.particion, "$limit": 1000}
+            )
+            valores = sorted(str(t[pre.particion]) for t in tandas if t.get(pre.particion))
         if not valores:
             raise ErrorCopia("la fuente no dio ninguna tanda: la copia no se publica")
         numero = 0

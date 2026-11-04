@@ -272,3 +272,19 @@ def test_el_plan_de_secop2_cuenta_cada_item_una_vez() -> None:
     assert grupos["702330010"]["suma_valor_total_esperado"] == 150.0
     assert grupos["724816145"]["items"] == 1
     assert "id" not in grupos["702330010"]
+
+
+def test_con_tandas_escritas_no_se_agrupa_la_fuente(monkeypatch: pytest.MonkeyPatch) -> None:
+    """El PAA de SECOP II no responde en 180 s al agrupar 19,6 M filas por año: la ficha escribe
+    los años y la copia los baja sin preguntar."""
+    import terranova.copias as copias
+
+    monkeypatch.setattr(copias, "PAGINA", 2)
+    assert ICFES.copia is not None and ICFES.copia.preagregado is not None
+    pre = ICFES.copia.preagregado.model_copy(update={"tandas": ["20224"]})
+    fuente = ICFES.model_copy(update={"copia": ICFES.copia.model_copy(update={"preagregado": pre})})
+    por_periodo = {"20224": [_estudiante("B1"), _estudiante("B2")], "20101": [_estudiante("A")]}
+    http = SocrataFalso(por_periodo, pagina=2)
+    paginas = list(descargar_socrata_agregado(fuente, None, cliente=http))
+    assert not any("$group" in p for p in http.pedidos)
+    assert [g["periodo"] for p in paginas for g in p] == ["20224"]

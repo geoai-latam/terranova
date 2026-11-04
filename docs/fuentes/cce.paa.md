@@ -67,3 +67,14 @@ SECOP I llega a 2024.
   a 2023», pero eso era el canario (Cabuyaro, 2020 a 2023). La fuente tiene planes hasta 2026
   (423 538 filas de ese año, medido el 2026-11-03; datos.gov.co la actualizó ese mismo día), más
   unas pocas filas con años de 2027, 2028 y 2060, digitados por las entidades.
+- **2026-11-04, copia del resumen por entidad (`cce.secop2.paa_entidades_copia`):**
+  - `secop2_paa_entidad` tardaba de 37 a más de 100 s en vivo, sobre un tope de 30 s. Pasa a una
+    copia ya agregada: un grupo por entidad, NIT, año y versión, con los ítems contados una vez
+    (la fuente los repite por categoría UNSPSC) y la suma de su valor.
+  - La fuente tiene 19,6 M filas. Agruparla por año para descubrir los años pasó de 180 s
+    (ReadTimeout). Una página de 50 000 filas de un año tarda 13 s. Por eso los años van escritos
+    en la ficha (`tandas`, de 2015 a 2026), y las 145 filas con año -1 no se copian.
+  - El caché de metadatos del conjunto está viejo: dice 13 filas para 2026, y solo Chía tiene
+    1 814 ítems ese año. No sirve para saber los años.
+  - Se rehace cada mes desde Colombia: unas 400 páginas, una a la vez.
+  - `secop2_paa_items`, por código, sigue en vivo: responde en 2 a 4 s.
