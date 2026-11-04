@@ -1,15 +1,16 @@
 id: ant_resguardos_en_punto
-version: 2
+version: 3
 familia: ambiente
 fuente: ant.resguardos_indigenas
 pregunta: "¿En qué resguardo indígena formalizado cae este punto?"
 descripcion: >
   Resguardo indígena formalizado por la ANT que contiene un punto: nombre, pueblo, departamento y
-  municipio (DIVIPOLA), último acto administrativo y área. Cubre todo el país, pero solo los 989
-  resguardos que la ANT publica: faltan algunos formalizados, como los de origen colonial de
-  Toribío (Cauca), y las solicitudes en trámite y otros territorios étnicos. Un «no encontrado» no
-  descarta un territorio indígena. Un resguardo grande da un solo municipio aunque cruce varios, y
-  en 46 de los 989 la ANT escribe el nombre del municipio en vez del código DIVIPOLA.
+  municipio (código DIVIPOLA y su nombre en `*_significado`), último acto administrativo y área.
+  Cubre todo el país, pero solo los 989 resguardos que la ANT publica: faltan algunos
+  formalizados, como los de origen colonial de Toribío (Cauca), y las solicitudes en trámite y
+  otros territorios étnicos. Un «no encontrado» no descarta un territorio indígena. Un resguardo
+  grande da un solo municipio aunque cruce varios, y en 46 de los 989 la ANT escribe el nombre del
+  municipio en vez del código DIVIPOLA (entonces no sale nombre al lado).
   (Fuente: ANT; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
@@ -36,5 +37,5 @@ canario:
   # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
   entrada: {lon: -70.5, lat: 0.8}
   verdad: {nombre: "Resguardo Indígena Vaupes", municipio_divipola: "97001", numero_acto: "378"}
-  campos: [area_ha_actos, departamento_divipola, fecha_acto, municipio_divipola, nombre, numero_acto, pueblo, tipo_acto]
+  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, pueblo, tipo_acto]
   latencia_max_ms: 5000

@@ -27,8 +27,8 @@ estado: publicada
 campos:
   NOMBRE: {nombre: nombre, tipo: str, desc: "nombre del resguardo"}
   PUEBLO: {nombre: pueblo, tipo: str, desc: "pueblo o pueblos indígenas del resguardo"}
-  DEPARTAMENTO: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento"}
-  MUNICIPIO: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  DEPARTAMENTO: {nombre: departamento_divipola, tipo: str, codigos_lista: divipola_departamentos, desc: "código DIVIPOLA del departamento; su nombre sale al lado"}
+  MUNICIPIO: {nombre: municipio_divipola, tipo: str, codigos_lista: divipola_municipios, desc: "código DIVIPOLA del municipio que anota la ANT (uno solo, aunque el territorio cruce varios); su nombre sale al lado"}
   ULTIMO_TIPO_ACTO_ADMIN: {nombre: tipo_acto, tipo: str, desc: "tipo del último acto administrativo (acuerdo, resolución)"}
   ULTIMO_NUMERO_ACTO_ADMIN: {nombre: numero_acto, tipo: str, desc: "número del último acto administrativo"}
   ULTIMA_FECHA_ACTO_ADMIN: {nombre: fecha_acto, tipo: date, desc: "fecha del último acto administrativo"}

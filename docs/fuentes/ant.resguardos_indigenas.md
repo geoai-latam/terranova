@@ -52,3 +52,16 @@ Probada en producción el 2026-11-03:
   - Los códigos errados se dejan como los publica la ANT y la descripción los advierte.
 - **Pendiente:** buscar una capa pública más completa (IGAC o Ministerio del Interior) sin inicio de
   sesión.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción: Vaupés (canario), Sierra Nevada (Kogui - Malayo y Arhuaco, con la forma
+  completa: un MultiPolygon de ~21 000 vértices) y Bogotá (vacío, con su aviso). Contesta bien.
+- Los códigos DIVIPOLA salían solos («47», «47001»): un agente no sabe que es Magdalena, Santa
+  Marta. Ahora `departamento_divipola_significado` y `municipio_divipola_significado` traen el
+  nombre, de la tabla DIVIPOLA del DANE (`catalogo/codigos/divipola_*.yaml`, que arma
+  `scripts/codigos_divipola.py`). Lo mismo en los consejos comunitarios.
+- La ANT anota un solo municipio aunque el resguardo cruce varios (el Kogui cubre parte de
+  Magdalena, La Guajira y Cesar y dice «47001»): la descripción del campo lo advierte.
+- En la UAF (`ant_uaf_en_punto`) un punto fuera de los 286 municipios publicados salía «no
+  encontrado» sin aviso. Ahora el vacío dice que la capa no cubre el punto, no que no haya UAF.

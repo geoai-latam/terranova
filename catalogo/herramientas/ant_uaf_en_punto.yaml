@@ -1,5 +1,5 @@
 id: ant_uaf_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: ant.unidad_agricola_familiar
 pregunta: "¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto?"
@@ -23,6 +23,12 @@ consulta:
     out_fields: [Departamento, Municipio, Cod_Dane, T_UAF_MIN_AC, T_UAF_MAX_AC, Calculo_UAF, Resultado, clase_ufh, Acto_Administrativo]
     max_features: 5
   campos: [Departamento, Municipio, Cod_Dane, T_UAF_MIN_AC, T_UAF_MAX_AC, Calculo_UAF, Resultado, clase_ufh, Acto_Administrativo]
+avisos:
+- cuando: vacio
+  texto: >
+    La capa de la ANT no tiene una UAF para este punto. La ANT solo la publica para 286 municipios
+    de 25 departamentos (medido el 2026-11-01; faltan, por ejemplo, Medellín, Cali, Bucaramanga y
+    todo Chocó): esto no quiere decir que allí no haya UAF, sino que la capa no la trae.
 salida: UafEnPunto
 cobro: punto
 canario:

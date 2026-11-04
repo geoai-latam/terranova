@@ -1,11 +1,12 @@
 id: ant_consejos_comunitarios_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: ant.consejos_comunitarios
 pregunta: "¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto?"
 descripcion: >
   Consejo comunitario titulado por la ANT (territorio colectivo de comunidades negras, Ley 70 de
-  1993) que contiene un punto: nombre, departamento y municipio (DIVIPOLA), último acto
+  1993) que contiene un punto: nombre, departamento y municipio (código DIVIPOLA y su nombre en
+  `*_significado`; la ANT anota un solo municipio aunque el territorio cruce varios), último acto
   administrativo y área. Solo títulos formalizados; las solicitudes en trámite no están. Para
   resguardos indígenas, ant_resguardos_en_punto.
   (Fuente: ANT; licencia: CC BY-SA 4.0.)
@@ -28,5 +29,5 @@ canario:
   # Atrato (ACIA), municipio 27001, Resolución 4566.
   entrada: {lon: -76.70, lat: 6.20}
   verdad: {nombre: "Consejo Comunitario Mayor del Medio Atrato - ACIA", municipio_divipola: "27001", numero_acto: "4566"}
-  campos: [area_ha_actos, departamento_divipola, fecha_acto, municipio_divipola, nombre, numero_acto, tipo_acto]
+  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, tipo_acto]
   latencia_max_ms: 5000

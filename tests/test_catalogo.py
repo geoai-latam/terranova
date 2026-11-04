@@ -410,6 +410,25 @@ def test_una_lista_de_codigos_compartida_llena_el_campo(tmp_path: Path) -> None:
         cargar(raiz)
 
 
+def test_los_codigos_divipola_de_la_ant_salen_con_su_nombre() -> None:
+    """La ANT da solo «27» y «27001»: la tabla DIVIPOLA del DANE dice que es Chocó, Quibdó, y trae
+    27493 (Nuevo Belén de Bajirá, creado en 2022). Un código que no está no inventa nombre."""
+    from terranova.ejecutor import mapear_fila
+
+    catalogo = cargar()
+    h = catalogo.herramientas["ant_consejos_comunitarios_en_punto"]
+    fila = mapear_fila(
+        h, catalogo.fuentes[h.fuente], {"DEPARTAMENTO": "27", "MUNICIPIO": "27001"}, ""
+    )
+    assert fila["departamento_divipola_significado"] == "CHOCÓ"
+    assert fila["municipio_divipola_significado"] == "QUIBDÓ"
+    municipios = catalogo.fuentes["ant.resguardos_indigenas"].campos["MUNICIPIO"].codigos
+    assert municipios and municipios["27493"] == "NUEVO BELÉN DE BAJIRÁ" and len(municipios) >= 1122
+    h = catalogo.herramientas["ant_resguardos_en_punto"]
+    fila = mapear_fila(h, catalogo.fuentes[h.fuente], {"MUNICIPIO": "Toribío"}, "")
+    assert not fila.get("municipio_divipola_significado")
+
+
 def test_un_derivado_toma_sus_valores_de_una_lista_compartida(tmp_path: Path) -> None:
     """La unidad de la cantidad de cada subpartida (~7 000) vive en catalogo/codigos/ y la usan las
     dos herramientas de comercio exterior: el crudo va en metros cúbicos, no en barriles."""
