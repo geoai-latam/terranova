@@ -68,7 +68,7 @@ Medido el 2026-11-03 con `secop_multas_entidad`:
 |---|---|---|
 | `secop_multas_entidad` | alto | nueva: multas de SECOP II por nombre de entidad, con totales por estado |
 | `secop1_multas_municipio` (v2) | medio | dice que es solo SECOP I y remite a SECOP II |
-| `secop_sanciones_contrato` | medio | por contrato |
+| `secop_sanciones_contrato` (v2) | medio → alto | por contrato; cuenta y suma las publicadas; vacío con remisión |
 
 ## Decisiones
 
@@ -81,5 +81,8 @@ Medido el 2026-11-03 con `secop_multas_entidad`:
     remite a SECOP I.
   - `secop1_multas_municipio` v2 avisa, con datos y sin ellos, que es solo SECOP I.
   - Se recosecharon los metadatos de `cce.secop2.sanciones`.
-- **Pendiente:** que el aviso de atraso diga a qué fecha se midió (PR aparte: afecta a todas las
-  fuentes).
+- **2026-11-03, `secop_sanciones_contrato` (v2):** los mismos `por_estado`, `publicadas` y
+  `valor_publicadas` que `secop_multas_entidad`, el mismo aviso de estados y un vacío que remite a
+  la búsqueda por entidad y a SECOP I. Medido en producción: el canario (CO1.PCCNTR.292923, dos
+  multas en «Borrador», 0 publicadas) y el PAE de Chía (vacío con aviso).
+- El aviso de atraso ya dice a qué fecha se revisaron los metadatos (#332).
