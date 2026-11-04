@@ -1,5 +1,5 @@
 id: igac_manzana_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: igac.catastro.manzana
 pregunta: "¿En qué manzana urbana del catastro IGAC está este punto?"
@@ -27,6 +27,8 @@ salida: ManzanaEnPunto
 # `municipio_divipola`, de los 5 primeros dígitos del código de la manzana.
 derivados:
   municipio_divipola: {de: prefijo, campo: codigo_manzana, n: 5}
+  # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
+  municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
 avisos:
 - cuando: encontrado
   texto: >
@@ -35,5 +37,5 @@ cobro: punto
 canario:
   entrada: {lon: -74.0587, lat: 4.8633}  # casco urbano de Chía
   verdad: {codigo_manzana: "25175010000000043", codigo_barrio: "2517501000000", municipio_divipola: "25175"}
-  campos: [codigo_barrio, codigo_manzana, codigo_manzana_anterior, municipio_divipola]
+  campos: [codigo_barrio, codigo_manzana, codigo_manzana_anterior, municipio, municipio_divipola]
   latencia_max_ms: 5000
