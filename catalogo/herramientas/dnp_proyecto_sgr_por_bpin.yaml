@@ -1,5 +1,5 @@
 id: dnp_proyecto_sgr_por_bpin
-version: 1
+version: 2
 familia: contratacion
 fuente: dnp.proyectos_sgr
 pregunta: "¿Qué es este proyecto de regalías (BPIN), quién lo ejecuta y cómo va?"
@@ -18,7 +18,9 @@ consulta:
     select: "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos"
     where: "codigobpin = '{bpin}'"
     group: codigobpin
-    max_filas: 1
+    # 2 y no 1: agrupado por el BPIN pedido sale un grupo o ninguno, y con tope 1 el conector
+    # creía que había cortado («no se sabe si vino todo» en cada proyecto)
+    max_filas: 2
   campos: [codigobpin, nombre, estado, sector, valortotal, ejecucionfisica, ejecucionfinanciera, entidadejecutora, departamento]
 salida: ProyectoSgr
 derivados:
@@ -30,6 +32,12 @@ derivados:
   ejecucion_financiera: {de: columna, campo: ejecucion_financiera, tipo: float}
   ejecutor: {de: columna, campo: ejecutor, tipo: str}
   departamentos: {de: columna, campo: departamentos, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún proyecto del Sistema General de Regalías tiene ese BPIN. Esta fuente trae solo los
+    proyectos del SGR: un BPIN de inversión nacional (PGN) o territorial no está aquí. Revise
+    los 13 o 14 dígitos.
 cobro: registro
 canario:
   # Medido el 2026-10-23 en mzgh-shtp: ADECUACIÓN Y MEJORAMIENTO DE LA VIA ALTERNA SOMONDOCO- SECTO… (MUNICIPIO DE SOMONDOCO), TERMINADO.

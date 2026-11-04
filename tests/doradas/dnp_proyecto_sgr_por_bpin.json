@@ -7,7 +7,7 @@
    "argumentos": {
     "group": "codigobpin",
     "id": "mzgh-shtp",
-    "max_filas": 1,
+    "max_filas": 2,
     "portal": "datos.gov.co",
     "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos",
     "where": "codigobpin = '2013157610001'"
@@ -44,19 +44,18 @@
      }
     ],
     "facts": {
-     "aviso": "vinieron 1 grupos y es el tope: puede haber más; sube `max_filas`",
      "completitud": {
-      "motivo": "max_filas=1",
-      "total": null,
-      "truncado": true,
+      "motivo": null,
+      "total": 1,
+      "truncado": false,
       "vistos": 1
      },
-     "completo": false,
+     "completo": true,
      "conjunto": "mzgh-shtp",
      "consulta": {
       "conjunto": "mzgh-shtp",
       "group": "codigobpin",
-      "max_filas": 1,
+      "max_filas": 2,
       "portal": "datos.gov.co",
       "select": "codigobpin, max(nombre) AS nombre, max(estado) AS estado, max(sector) AS sector, max(valortotal) AS valor_total, max(ejecucionfisica) AS ejecucion_fisica, max(ejecucionfinanciera) AS ejecucion_financiera, max(entidadejecutora) AS ejecutor, count(*) AS departamentos",
       "where": "(codigobpin = '2013157610001')"
