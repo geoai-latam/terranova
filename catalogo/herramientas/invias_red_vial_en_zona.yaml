@@ -1,5 +1,5 @@
 id: invias_red_vial_en_zona
-version: 1
+version: 2
 familia: territorio
 fuente: invias.red_vial
 pregunta: "¿Qué vía nacional pasa por esta zona, quién la administra y está pavimentada?"
@@ -53,6 +53,12 @@ derivados:
     campo: revision
     valores: {"1": Revisado, "2": No Revisado, "No Revisado": No Revisado}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún tramo de la red vial nacional cruza ese rectángulo. Esta capa no trae las vías
+    departamentales ni las municipales, ni las calles de una ciudad: para las calles de los
+    municipios del IGAC, igac_vias_en_zona.
 salida: RedVialEnZona
 cobro: zona
 canario:

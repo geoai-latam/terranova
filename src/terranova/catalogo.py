@@ -292,9 +292,10 @@ class Campo(_Ficha):
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
         "en general «1,234» es ambiguo",
     )
-    orden_fecha: Literal["mda", "dma"] | None = Field(
+    orden_fecha: Literal["mda", "dma", "amd"] | None = Field(
         default=None,
-        description="la fuente escribe la fecha en texto, mes/día/año (mda) o día/mes/año (dma): "
+        description="la fuente escribe la fecha en texto, mes/día/año (mda), día/mes/año (dma) o "
+        "año.mes.día (amd): "
         "sale en ISO. Se declara por campo, porque «05/11/2017» es ambiguo",
     )
     anios_validos: tuple[int, int] | None = Field(
@@ -1090,7 +1091,7 @@ class Derivado(_Ficha):
     # solo con `columna`: la parte del texto que interesa (el grupo 1 de una expresión regular) y,
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
-    orden_fecha: Literal["mda", "dma"] | None = None
+    orden_fecha: Literal["mda", "dma", "amd"] | None = None
     # solo con `columna`: el texto viene en HTML; lo que sale va sin etiquetas y con las entidades
     # leídas («Prórroga &#8211; Procedencia» sale con su raya, no con la entidad)
     html: bool = False
