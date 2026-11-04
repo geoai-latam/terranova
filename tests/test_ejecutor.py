@@ -867,6 +867,12 @@ def test_avisos_de_la_ficha() -> None:
     cinco = avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 5}))
     assert len(cinco) == 1 and "doce meses" in cinco[0]
     assert avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 12})) == []
+    # PRD_ND del IGAC no es un conflicto: es un dato que falta (nubes)
+    conflicto = CATALOGO.herramientas["igac_conflictos_uso_en_punto"]
+    fc = CATALOGO.fuentes[conflicto.fuente]
+    nd = avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "PRD_ND"}))
+    assert len(nd) == 1 and "no midió" in nd[0]
+    assert avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "U2"})) == []
 
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
