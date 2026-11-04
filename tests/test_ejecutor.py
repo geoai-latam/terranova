@@ -1438,3 +1438,19 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
+    """La adjudicación 10000645 tiene tres prórrogas y una adición de 30 millones (2026-11-04)."""
+    from terranova.ejecutor import derivar_resultado
+
+    h = CATALOGO.herramientas["secop1_adiciones_adjudicacion"]
+    filas = [
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 30, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 30000000.0, "adicion_dias": 30, "adicion_meses": 0},
+    ]
+    assert derivar_resultado(h.derivados["adicion_valor_total"], filas, None) == 30000000.0
+    assert derivar_resultado(h.derivados["adicion_dias_total"], filas, None) == 118
+    assert derivar_resultado(h.derivados["adicion_meses_total"], filas, None) == 0

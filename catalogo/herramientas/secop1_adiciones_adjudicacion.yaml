@@ -1,11 +1,11 @@
 id: secop1_adiciones_adjudicacion
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.adiciones
 pregunta: "¿Qué adiciones en valor o en plazo tuvo esta adjudicación de SECOP I?"
 descripcion: >
   Adiciones de una adjudicación de SECOP I (su id_adjudicacion, que da secop1_proceso_por_constancia):
-  valor, días, meses y fecha de firma.
+  valor, días, meses y fecha de firma, y la suma de las adiciones (valor, días y meses).
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_adjudicacion: int}
 consulta:
@@ -23,6 +23,17 @@ consulta:
 salida: Secop1AdicionesAdjudicacion
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  # 10000645 tiene 4 prórrogas (29, 30, 29 y 30 días) y una adición de 30 millones: la suma es lo
+  # que se pregunta («¿cuánto se adicionó?»)
+  adicion_valor_total: {de: suma, campo: adicion_valor, tipo: float}
+  adicion_dias_total: {de: suma, campo: adicion_dias, tipo: int}
+  adicion_meses_total: {de: suma, campo: adicion_meses, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no tiene adiciones para esa adjudicación. Puede que no haya tenido adiciones, o que
+    el número no sea un id_adjudicacion: ese id sale de secop1_proceso_por_constancia, no es la
+    constancia del proceso.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en 7fix-nd37 (id_adjudicacion = 9378960): 1
@@ -30,5 +41,5 @@ canario:
   entrada: {id_adjudicacion: 9378960}
   verdad: {id_adjudicacion: "9378960"}
   minimos: {numero_registros: 1}
-  campos: [adicion_dias, adicion_meses, adicion_valor, fecha_firma, id_adjudicacion, numero_registros]
+  campos: [adicion_dias, adicion_dias_total, adicion_meses, adicion_meses_total, adicion_valor, adicion_valor_total, fecha_firma, id_adjudicacion, numero_registros]
   latencia_max_ms: 10000
