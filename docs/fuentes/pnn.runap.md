@@ -50,3 +50,21 @@ Todo el país, con las áreas inscritas. Un área declarada que no esté inscrit
     Bogotá, primero Sumapaz (210 739 ha) y Chingaza.
   - El motor suma el derivado `conteo_por`, un diccionario {valor: cuántos}, de mayor a menor.
     Aquí va por categoría de manejo.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - Chingaza (canario).
+  - Un lote en los cerros de Bogotá: la Reserva Forestal Protectora Bosque Oriental de Bogotá,
+    en punto y en polígono.
+  - El cuadro de Bogotá: 169 áreas, Sumapaz primero, 110 reservas de la sociedad civil, en cuatro
+    páginas con totales completos.
+  - Bogotá urbano: vacío **sin aviso**. Ahora el vacío dice que un área declarada sin inscribir,
+    o un suelo de protección del POT o del POMCA, no sale aquí.
+- **Pendiente: cuánto del lote cae en cada área.** La herramienta de polígono dice que el lote
+  «toca» el área, pero no cuántas hectáreas quedan adentro. La copia ya sabe calcularlo
+  (`area_en_poligono`, como en el POMCA).
+  - Falta una verdad medida para el canario. El servidor de PNN responde con un reto de
+    Cloudflare desde la VPS y desde esta red, y no se pasan captchas.
+  - Se mide en la copia cuando se rehaga desde Colombia, o con la herramienta ya desplegada, y
+    entonces se graba la dorada.
