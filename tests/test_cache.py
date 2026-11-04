@@ -199,7 +199,7 @@ async def test_el_aviso_de_datos_no_recientes_sale_tambien_desde_cache() -> None
 
 
 def _con_otra_atribucion() -> Any:
-    """El mismo catálogo con la ficha de la fuente cambiada (una licencia o una atribución nueva)."""
+    """El mismo catálogo con la ficha de la fuente cambiada (otra licencia o atribución)."""
     fuente = CATALOGO.fuentes[H.fuente]
     otra = fuente.model_copy(update={"atribucion": "Fuente: otra atribución"})
     return CATALOGO.model_copy(update={"fuentes": {**CATALOGO.fuentes, H.fuente: otra}})
