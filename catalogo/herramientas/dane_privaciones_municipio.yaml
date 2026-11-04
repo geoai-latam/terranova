@@ -28,6 +28,12 @@ derivados:
   peor_privacion: {de: primero, campo: privacion}
   porcentaje_peor_privacion: {de: primero, campo: porcentaje, tipo: float}
   numero_registros: {de: conteo, tipo: int}
+avisos:
+# La respuesta no decía el año de la medida; solo la descripción (revisión de valor, 2026-11-04).
+- cuando: encontrado
+  texto: >
+    Son porcentajes de hogares del censo de 2018, la única medida municipal del DANE: dicen dónde
+    estaba peor el municipio entonces, no cómo está hoy ni si mejoró.
 cobro: registro
 canario:
   # Medido el 2026-10-22: Chía (25175) tiene 15 privaciones; la peor, trabajo informal, 69,6 %.

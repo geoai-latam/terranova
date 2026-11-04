@@ -56,3 +56,10 @@ El anexo de septiembre de 2026 se publicó el 7 de octubre. Llega hasta septiemb
     REPLACE` no deja sumar columnas, y la primera reconstrucción falló por eso, sin tocar la copia
     vigente.
   - La copia se reconstruyó desde Colombia el 2026-11-02.
+
+## Revisión de valor (2026-11-04)
+
+- 1990 y 2027 volvían `no_encontrado` a secas. Ahora la fuente declara `desde_anio: 2003` y el motor
+  dice cuándo un año es futuro, así que los dos salen `fuera_de_cobertura` con su razón.
+- El IPM (nacional y departamental) trae el año en número y la nota literal del DANE para los años
+  con asterisco (2017*, 2020**, 2021***), leída en los anexos 2025.

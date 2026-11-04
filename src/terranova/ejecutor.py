@@ -20,12 +20,13 @@ import unicodedata
 from collections import Counter
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from typing import Any, Literal
 
 from terranova import metricas
 from terranova.cache import RETENCION_S, Almacen
 from terranova.cache import clave as clave_cache
+from terranova.cache import huella as huella_cache
 from terranova.catalogo import (
     AVISO_DATO_PUBLICO,
     MARCADOR,
@@ -351,8 +352,6 @@ def convertir(valor: Any, tipo: str) -> Any:
 
 def _fecha(valor: Any) -> str:
     if isinstance(valor, int | float) and not isinstance(valor, bool):  # epoch ms de ArcGIS
-        from datetime import UTC
-
         return datetime.fromtimestamp(valor / 1000, UTC).isoformat()
     if re.fullmatch(r"\d{8}", texto := str(valor)):  # AAAAMMDD del SDMX del BanRep
         return f"{texto[:4]}-{texto[4:6]}-{texto[6:]}"
@@ -787,22 +786,40 @@ class Ejecutor:
         `no_encontrado` y un agente lo dio como «0 homicidios» (GEO Copilot, fiabilidad)."""
         anio = valores.get("anio")
         desde_anio = fuente.cobertura.desde_anio
-        if desde_anio and str(anio).isdigit() and int(str(anio)) < desde_anio:
-            return f"Esta fuente cubre desde {desde_anio}: {anio} no está."
+        hasta_anio = fuente.cobertura.hasta_anio
+        if str(anio).isdigit() and (
+            (desde_anio and int(str(anio)) < desde_anio)
+            or (hasta_anio and int(str(anio)) > hasta_anio)
+        ):
+            if desde_anio and hasta_anio:
+                return f"Esta fuente cubre de {desde_anio} a {hasta_anio}: {anio} no está."
+            if desde_anio and int(str(anio)) < desde_anio:
+                return f"Esta fuente cubre desde {desde_anio}: {anio} no está."
+            return f"Esta fuente cubre hasta {hasta_anio}: {anio} no está."
         columna = fuente.cobertura.columna_tiempo
         metadatos = self.catalogo.metadatos.get(fuente.id)
         campo = metadatos.campos.get(columna) if metadatos and columna else None
         if not isinstance(anio, int) or not campo or not campo.minimo or not campo.maximo:
-            return None
+            return None if hasta_anio else self._anio_futuro(anio)
         desde, hasta = (
             int(m[1]) if (m := _AÑO.match(v)) else None for v in (campo.minimo, campo.maximo)
         )
-        if desde is None or hasta is None or desde <= anio <= hasta:
+        if desde is None or hasta is None:
+            return self._anio_futuro(anio)
+        if desde <= anio <= hasta:
             return None
         return (
             f"La fuente cubre de {desde} a {hasta}: {anio} está fuera de su cobertura (no es que "
             "haya cero casos)."
         )
+
+    def _anio_futuro(self, anio: Any) -> str | None:
+        """«¿Inflación en 2027?» volvía `no_encontrado` a secas: un año que aún no llega no es un
+        año sin datos (revisión de valor, 2026-11-04). Solo cuando no hay cobertura cosechada, que
+        dice más."""
+        if str(anio).isdigit() and int(str(anio)) > datetime.fromtimestamp(self.reloj(), UTC).year:
+            return f"{anio} todavía no ha llegado: la fuente no tiene datos de un año futuro."
+        return None
 
     def indice(self, nombre: str) -> dict[str, Any]:
         if nombre not in self._indices:
@@ -873,9 +890,14 @@ class Ejecutor:
         aviso = AVISO_SIMPLIFICADA if geometria_completa and simplificada and not fiel else None
         k = clave_cache(h.id, h.version, valores | ({"_geometria": "completa"} if fiel else {}))
         guardado = None
+        vigente = huella_cache(h.model_dump_json(), fuente.model_dump_json())
         if self.almacen is not None and frescura == "normal":
             guardado = await self.almacen.leer(k)
-            if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
+            if (
+                guardado
+                and guardado.get("huella") == vigente
+                and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s
+            ):
                 metricas.CACHE_ACIERTOS.inc()
                 return self._servir(self._desde_cache(guardado, "cache"), h, valores, aviso)
         try:
@@ -888,7 +910,11 @@ class Ejecutor:
         if self.almacen is not None and sobre.estado != "parcial":
             await self.almacen.guardar(
                 k,
-                {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
+                {
+                    "guardado_en": self.reloj(),
+                    "huella": vigente,
+                    "sobre": sobre.model_dump(mode="json"),
+                },
                 RETENCION_S,
             )
         return self._servir(sobre, h, valores, aviso)
@@ -1099,6 +1125,8 @@ class Ejecutor:
         ):
             estado = "fuera_de_cobertura"
             avisos.append(fuera)
+        if not hay_algo and estado == "no_encontrado" and (raro := _codigo_desconocido(h, valores)):
+            avisos.append(raro)
         errores: list[ErrorParte] = []
         if capas_incompletas and estado != "fuera_de_cobertura":
             # honestidad: con unas capas caídas no se puede afirmar «encontrado» ni «no encontrado»
@@ -1135,6 +1163,7 @@ class Ejecutor:
             and total is not None
             and filas_recibidas < total
             and any(p.completitud.truncado for p in principales)
+            and filas_recibidas != _tope_pedido(h, valores)
         ):
             avisos.append(
                 f"Vinieron {filas_recibidas} de {total}: la consulta trae como máximo "
@@ -1402,6 +1431,34 @@ def municipio_por_nombre(param: str, texto: str, municipios: dict[str, Any]) -> 
         f"«{texto.strip()}» es ambiguo: {len(lista)} municipios se llaman así: {opciones}. Usa el "
         "código o «nombre, departamento»",
     )
+
+
+def _tope_pedido(h: Herramienta, v: dict[str, Any]) -> int | None:
+    """Cuántas filas pidió quien pregunta, si el tope de la consulta sale de su entrada («los
+    últimos 6 trimestres»). Con 6 pedidos y 6 recibidos, «vinieron 6 de 82, acote la búsqueda»
+    contradecía la pregunta (revisión de valor, 2026-11-04)."""
+    plantilla = h.consulta.argumentos.get("limite")
+    marcador = MARCADOR.fullmatch(plantilla) if isinstance(plantilla, str) else None
+    pedido = v.get(marcador.group(1)) if marcador else None
+    return pedido if isinstance(pedido, int) else None
+
+
+def _codigo_desconocido(h: Herramienta, v: dict[str, Any]) -> str | None:
+    """Un código DIVIPOLA que no figura en la lista de municipios y volvió vacío: puede estar mal
+    escrito. No se rechaza (la lista no trae los municipios más nuevos, como 27493), pero se dice:
+    «99999» volvía `no_encontrado` como un municipio real sin datos (revisión de valor,
+    2026-11-04)."""
+    municipios = _municipios()
+    for nombre, tipo in h.entrada.items():
+        codigo = v.get(nombre)
+        if tipo == "divipola" and isinstance(codigo, str) and codigo not in municipios:
+            return (
+                f"{codigo} no figura en la lista de municipios de Terrnova: puede estar mal "
+                "escrito o ser un municipio creado hace poco (como 27493, Nuevo Belén de Bajirá, "
+                "de 2022). Compruébelo con dane_divipola_buscar antes de leer el vacío como «sin "
+                "datos»."
+            )
+    return None
 
 
 def homonimos(codigo: str, municipios: dict[str, Any], *, tope: int = 6) -> list[str]:

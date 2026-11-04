@@ -92,6 +92,27 @@ def _fallo(operacion: str) -> None:
     logging.getLogger("terranova.cache").warning("la caché falló al %s; sigue sin caché", operacion)
 
 
+def _huella_del_codigo() -> str:
+    """Huella de los módulos de la puerta, leída una vez por proceso: cambia con cada despliegue."""
+    import pathlib
+
+    h = hashlib.sha256()
+    for archivo in sorted(pathlib.Path(__file__).parent.rglob("*.py")):
+        h.update(archivo.read_bytes())
+    return h.hexdigest()[:16]
+
+
+HUELLA_CODIGO = _huella_del_codigo()
+
+
+def huella(*fichas: str) -> str:
+    """Lo que hace que un sobre guardado siga valiendo: las fichas que lo arman (herramienta y
+    fuente, en JSON) y el código de la puerta. Sin esto, un sobre en caché seguía saliendo con la
+    licencia, la atribución y los avisos de antes hasta por 30 días (revisión de valor, 2026-11-04:
+    «copia de Terranova» seis días después del cambio de marca)."""
+    return hashlib.sha256("|".join((HUELLA_CODIGO, *fichas)).encode()).hexdigest()[:16]
+
+
 def clave(herramienta: str, version: int, entrada: dict[str, Any]) -> str:
     canonico = json.dumps(
         {"h": herramienta, "v": version, "e": entrada}, sort_keys=True, separators=(",", ":")

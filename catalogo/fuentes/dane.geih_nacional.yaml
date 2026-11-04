@@ -49,7 +49,10 @@ campos:
   Concepto: {nombre: indicador, tipo: str, desc: "indicador (TGP, TO, TD…) o población, en miles"}
   columna: {nombre: anio, tipo: str, desc: "año"}
   subcolumna: {nombre: mes, tipo: str, desc: "mes (Ene, Feb, …)"}
-  valor: {nombre: valor, tipo: float, decimales: 1, desc: "porcentaje para las tasas; miles de personas para las poblaciones; con un decimal, como lo publica el DANE"}
+  # El anexo pone 0 donde el indicador no se medía: TCDFTP, MCSFT y la fuerza de trabajo potencial
+  # de 2001 a 2020 (la serie empieza en 2021) y la subocupación de marzo a julio de 2020 (nota* del
+  # anexo, por la pandemia). Ninguna tasa ni población nacional vale 0: el 0 sale vacío.
+  valor: {nombre: valor, tipo: float, decimales: 1, vacios: ["0", "0.0"], desc: "porcentaje para las tasas; miles de personas para las poblaciones; con un decimal, como lo publica el DANE; vacío donde el DANE no lo midió"}
   _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el anexo (la copia la numera)"}
 dcat: {publisher: "Departamento Administrativo Nacional de Estadística (DANE)", accrualPeriodicity: irregular}
 # Spec 07: medido en la fuente, no en Terrnova.

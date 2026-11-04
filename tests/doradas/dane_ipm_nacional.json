@@ -5,7 +5,7 @@
  "llamadas": [
   {
    "argumentos": {
-    "filtros": {
+    "contiene": {
      "columna_1": "Nacional"
     },
     "limite": 100,

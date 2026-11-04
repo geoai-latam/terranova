@@ -10,7 +10,7 @@
     "order": "length(nom_mpio), cod_mpio",
     "portal": "datos.gov.co",
     "select": "cod_mpio, nom_mpio, cod_dpto, dpto, tipo_municipio, longitud, latitud",
-    "where": "upper(nom_mpio) like upper('%Chía%')"
+    "where": "upper(replace(replace(replace(replace(replace(replace(replace(nom_mpio, 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N')) like upper('%Chia%')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {

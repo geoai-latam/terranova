@@ -329,6 +329,204 @@ async def test_un_anio_fuera_de_la_fuente_no_es_cero_casos(anio: int, estado: st
     assert any("2015 a 2024" in a for a in sobre.avisos) is (estado == "fuera_de_cobertura")
 
 
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("anio", "aviso"),
+    [(1990, "cubre desde 2003"), (2027, "todavía no ha llegado"), (2010, None)],
+)
+async def test_un_anio_antes_o_despues_de_la_serie_se_dice(anio: int, aviso: str | None) -> None:
+    """IPC del DANE (revisión de valor, 2026-11-04): 1990 y 2027 vacíos volvían `no_encontrado` a
+    secas. Antes de 2003 o en un año futuro es fuera de cobertura y se dice por qué; un año dentro
+    de la serie que vuelve vacío sigue siendo `no_encontrado`."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-11-03T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()}, reloj=lambda: 1_793_000_000.0)  # 2026-10
+    sobre = await ej.ejecutar("dane_ipc_indice_anio", {"anio": anio}, plan="evaluacion")
+    if aviso is None:
+        assert sobre.estado == "no_encontrado"
+    else:
+        assert sobre.estado == "fuera_de_cobertura"
+        assert any(aviso in a for a in sobre.avisos)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(("codigo", "avisa"), [("99999", True), ("25175", False)])
+async def test_un_codigo_que_no_esta_en_el_divipola_se_dice(codigo: str, avisa: bool) -> None:
+    """«99999» vacío no es «sin datos»: puede ser un código mal escrito."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-11-03T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()})
+    sobre = await ej.ejecutar(
+        "dane_ipm_municipio", {"municipio_divipola": codigo}, plan="evaluacion"
+    )
+    assert sobre.estado == "no_encontrado"
+    assert any("no figura en la lista de municipios" in a for a in sobre.avisos) is avisa
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("anio", ["2010", "2050"])
+async def test_la_proyeccion_dice_su_rango_y_no_que_el_anio_no_llega(anio: str) -> None:
+    """La proyección del DANE llega a 2042: 2050 vacío no es «un año que aún no llega» sino uno
+    fuera de su rango, y 2010 es anterior al censo de base (revisión de valor, 2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-10-28T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()}, reloj=lambda: 1_793_000_000.0)
+    sobre = await ej.ejecutar(
+        "dane_poblacion_proyectada_municipio",
+        {"municipio_divipola": "76001", "anio": anio},
+        plan="evaluacion",
+    )
+    assert sobre.estado == "fuera_de_cobertura"
+    assert any("cubre de 2018 a 2042" in a for a in sobre.avisos)
+    assert not any("todavía no ha llegado" in a for a in sobre.avisos)
+
+
+class _CopiaGeih:
+    """Filas del anexo de la GEIH como las guarda la copia: nombres con espacios al final, meses de
+    2020 con asterisco y ceros donde el DANE no midió."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        columnas = ["Concepto", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Tasa de Desocupación (TD)", "2020", "Jul*", 20.2],
+                ["Tasa de Subocupación (TS)", "2020", "Jul*", 0],
+                ["TCDFTP", "2020", "Dic", 0.0],
+                ["Fuerza de trabajo  ", "2020", "Dic", 24000.5],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 4, "total": 4, "truncado": False},
+                "consultado_en": "2026-11-03T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_mercado_laboral_no_da_ceros_que_el_dane_no_midio() -> None:
+    """GEIH (revisión de valor, 2026-11-04): el 0 del anexo es «no se midió» (TCDFTP antes de 2021,
+    subocupación de marzo a julio de 2020): sale vacío; el mes va sin asterisco y con la nota; la
+    sigla con su nombre, el nombre sin espacios y la unidad en cada fila."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaGeih()})
+    sobre = await ej.ejecutar("dane_mercado_laboral_nacional", {"anio": 2020}, plan="evaluacion")
+    td, ts, tcdftp, ft = sobre.datos["elementos"]
+    assert (td["mes"], td["valor"], td["unidad"]) == ("Jul", 20.2, "%")
+    assert "subocupada" in td["nota"]
+    assert ts["valor"] is None
+    assert tcdftp["valor"] is None
+    assert tcdftp["indicador_nombre"].startswith("Tasa combinada de desocupación")
+    assert (ft["indicador"], ft["unidad"], ft["nota"]) == (
+        "Fuerza de trabajo",
+        "miles de personas",
+        None,
+    )
+
+
+class _CopiaPib:
+    """Los dos últimos trimestres del PIB de 82, como los da la copia con `limite: 2`."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        columnas = ["Concepto", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Producto Interno Bruto", "2026pr", "II", 3.5],
+                ["Producto Interno Bruto", "2023", "IV", 0.4],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 2, "total": 82, "truncado": True},
+                "consultado_en": "2026-10-28T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_pib_trae_lo_pedido_sin_pedir_que_se_acote() -> None:
+    """Con 2 trimestres pedidos y 2 recibidos no se dice «vinieron 2 de 82, acote la búsqueda»; y
+    «2026pr» sale como año 2026, cifra preliminar (revisión de valor, 2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaPib()})
+    sobre = await ej.ejecutar(
+        "dane_pib_crecimiento_trimestral", {"trimestres": 2}, plan="evaluacion"
+    )
+    assert not any("Acote la búsqueda" in a for a in sobre.avisos)
+    reciente, viejo = sobre.datos["elementos"]
+    assert (reciente["anio"], reciente["cifra"]) == (2026, "preliminar")
+    assert (viejo["anio"], viejo["cifra"]) == (2023, None)
+    assert sobre.datos["ultimo_anio"] == 2026
+
+
+class _CopiaIpm:
+    """Filas del anexo departamental del IPM 2025 como las guarda la copia (año con asteriscos)."""
+
+    def __init__(self) -> None:
+        self.argumentos: dict[str, Any] = {}
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        self.argumentos = argumentos
+        columnas = ["Departamento", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Chocó", "2019", "Total", 42.3],
+                ["Chocó", "2020**", "Total", 49.0],
+                ["Chocó", "2021***", "Total", 36.0],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 3, "total": 3, "truncado": False},
+                "consultado_en": "2026-10-28T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_ipm_dice_la_nota_de_cada_anio_marcado() -> None:
+    """El DANE escribe «2020**» y «2021***» y explica los asteriscos al pie del anexo: el año sale
+    en número, la nota va con su fila, y el departamento se busca sin tildes (revisión de valor,
+    2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    copia = _CopiaIpm()
+    ej = Ejecutor(CATALOGO, {"copia": copia})
+    sobre = await ej.ejecutar("dane_ipm_departamento", {"departamento": "choco"}, plan="evaluacion")
+    assert copia.argumentos["contiene"] == {"Departamento": "choco"}
+    filas = sobre.datos["elementos"]
+    assert [f["anio"] for f in filas] == [2019, 2020, 2021]
+    assert filas[0]["nota"] is None
+    assert "SIMAT" in filas[1]["nota"]
+    assert "registro fotográfico" in filas[2]["nota"]
+
+
 @pytest.mark.parametrize(
     ("texto", "codigo"),
     [
