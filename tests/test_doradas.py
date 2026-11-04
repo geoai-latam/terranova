@@ -186,3 +186,15 @@ async def test_un_proyecto_sgr_por_bpin_no_dice_que_falte_algo() -> None:
     sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
     assert sobre.estado == "encontrado"
     assert not any("no se sabe si vino todo" in a for a in sobre.avisos)
+
+
+def test_el_vacio_de_regalias_del_municipio_no_es_no_recibir() -> None:
+    """Medellín sale vacío: su alcaldía no ejecuta proyectos del SGR (los ejecutan Ruta N y la
+    Universidad de Medellín, medido el 2026-11-04), y eso no es «no recibe regalías»."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["dnp_proyectos_sgr_municipio"]
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+    assert len(avisos) == 1 and "no quiere decir que no reciba" in avisos[0]

@@ -18,3 +18,9 @@
   - `max_filas: 2`.
   - Un aviso en el vacío dice que la fuente trae solo proyectos del SGR.
   - Los nombres salen como los publica la fuente («BOYACa», espacios dobles).
+- **`dnp_proyectos_sgr_municipio`:**
+  - Abejorral (el canario): 4 580 millones. Bogotá: 514 332 millones.
+  - Medellín y Chía salen vacíos. Medido en la fuente, ninguna de las dos alcaldías ejecuta
+    proyectos del SGR. En Medellín los ejecutan Ruta N (6666535) y la Universidad de Medellín
+    (6666761).
+  - El vacío no lo decía y se podía leer como «no recibe regalías». Ahora el aviso lo aclara.

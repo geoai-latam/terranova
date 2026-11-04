@@ -1,5 +1,5 @@
 id: dnp_proyectos_sgr_municipio
-version: 1
+version: 2
 familia: contratacion
 fuente: dnp.proyectos_sgr
 pregunta: "¿Qué proyectos con plata de regalías ejecuta este municipio y cómo van?"
@@ -32,6 +32,13 @@ derivados:
   ejecucion_financiera: {de: columna, campo: ejecucion_financiera, tipo: float}
   ejecutor: {de: columna, campo: ejecutor, tipo: str}
   valor_proyectos: {de: suma, campo: valor_total, tipo: float}
+avisos:
+- cuando: vacio
+  texto: >
+    La alcaldía de este municipio no ejecuta ningún proyecto del Sistema General de Regalías.
+    Eso no quiere decir que no reciba regalías: los proyectos que lo benefician pueden
+    ejecutarlos el departamento u otras entidades (en Medellín, Ruta N, la Universidad de
+    Medellín), y esta herramienta solo busca los que ejecuta el municipio.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en mzgh-shtp: Abejorral (05002; prueba el cero inicial) ejecuta 5 proyectos;
