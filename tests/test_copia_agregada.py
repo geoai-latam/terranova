@@ -244,3 +244,31 @@ def test_promedio_y_minimo_en_postgis() -> None:
     assert todo["promedio"] == pytest.approx((sum(range(200, 212)) + 3 * 400) / 15)
     # por estrato, el de 3 estudiantes no sale
     assert [f["fami_estratovivienda"] for f in consultar("fami_estratovivienda")] == ["Estrato 1"]
+
+
+def test_el_plan_de_secop2_cuenta_cada_item_una_vez() -> None:
+    """El PAA de SECOP II repite un ítem por cada categoría UNSPSC, con el mismo valor: sumar filas
+    inflaba el plan 2025 de Pitalito de $54 008 millones a $91 410 millones. La copia cuenta el
+    ítem una vez, con su valor una vez."""
+    paa = CATALOGO.fuentes["cce.secop2.paa_entidades_copia"]
+    assert paa.copia is not None and paa.copia.preagregado is not None
+    pre = paa.copia.preagregado
+
+    def item(id_: str, valor: str, codigo: str = "702330010") -> dict[str, Any]:
+        return {
+            "annio": "2025",
+            "id": id_,
+            "nit_entidad": "891180077",
+            "codigo_entidad": codigo,
+            "version_del_paa": "40",
+            "valor_total_esperado": valor,
+            "nombre_entidad": "MUNICIPIO DE PITALITO",
+        }
+
+    filas = [item("1", "100"), item("1", "100"), item("1", "100"), item("2", "50")]
+    filas.append(item("3", "7", codigo="724816145"))
+    grupos = {g["codigo_entidad"]: g for g in agregar_tanda(iter(filas), pre)}
+    assert grupos["702330010"]["items"] == 2
+    assert grupos["702330010"]["suma_valor_total_esperado"] == 150.0
+    assert grupos["724816145"]["items"] == 1
+    assert "id" not in grupos["702330010"]

@@ -1,21 +1,28 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T02:19:39+00:00",
+ "grabado": "2026-11-04T12:00:00+00:00",
  "herramienta": "secop2_paa_entidad",
  "llamadas": [
   {
    "argumentos": {
-    "group": "codigo_entidad, nombre_entidad, version_del_paa",
-    "id": "9sue-ezhx",
-    "max_filas": 50,
-    "order": "codigo_entidad",
-    "portal": "datos.gov.co",
-    "previo_group": "codigo_entidad, nombre_entidad, version_del_paa, id",
-    "previo_select": "codigo_entidad, nombre_entidad, version_del_paa, id, max(valor_total_esperado) AS v",
-    "select": "codigo_entidad, nombre_entidad, version_del_paa, count(*) AS items, sum(v) AS valor_total",
-    "where": "nit_entidad = '891180077' AND annio = 2025"
+    "filtros": {
+     "annio": 2025,
+     "nit_entidad": "891180077"
+    },
+    "limite": 50,
+    "order": [
+     "codigo_entidad"
+    ],
+    "select": [
+     "codigo_entidad",
+     "nombre_entidad",
+     "version_del_paa",
+     "items",
+     "suma_valor_total_esperado"
+    ],
+    "tabla": "secop2_paa_entidades"
    },
-   "conector": "datos-abiertos-mcp",
+   "conector": "copia",
    "respuesta": {
     "artifacts": [
      {
@@ -23,31 +30,31 @@
        "codigo_entidad",
        "items",
        "nombre_entidad",
-       "valor_total",
+       "suma_valor_total_esperado",
        "version_del_paa"
       ],
       "kind": "table",
       "rows": [
        {
         "codigo_entidad": "702330010",
-        "items": "582",
+        "items": 582,
         "nombre_entidad": "MUNICIPIO DE PITALITO",
-        "valor_total": "54007710964",
-        "version_del_paa": "40"
+        "suma_valor_total_esperado": 54007710964.0,
+        "version_del_paa": 40
        },
        {
         "codigo_entidad": "716138425",
-        "items": "4",
+        "items": 4,
         "nombre_entidad": "PERSONERIA MUNICIPAL DE PITALITO",
-        "valor_total": "70880000",
-        "version_del_paa": "1"
+        "suma_valor_total_esperado": 70880000.0,
+        "version_del_paa": 1
        },
        {
         "codigo_entidad": "724816145",
-        "items": "12",
+        "items": 12,
         "nombre_entidad": "CONCEJO DE PITALITO",
-        "valor_total": "206322500",
-        "version_del_paa": "5"
+        "suma_valor_total_esperado": 206322500.0,
+        "version_del_paa": 5
        }
       ]
      }
@@ -58,25 +65,18 @@
       "truncado": false,
       "vistos": 3
      },
-     "completo": true,
-     "conjunto": "9sue-ezhx",
-     "consulta": {
-      "conjunto": "9sue-ezhx",
-      "group": "codigo_entidad, nombre_entidad, version_del_paa",
-      "max_filas": 50,
-      "portal": "datos.gov.co",
-      "previo_group": "codigo_entidad, nombre_entidad, version_del_paa, id",
-      "select": "codigo_entidad, nombre_entidad, version_del_paa, count(*) AS items, sum(v) AS valor_total",
-      "where": "(nit_entidad = '891180077' AND annio = 2025)"
+     "consultado_en": "2026-11-04T12:00:00+00:00",
+     "copia": {
+      "filas": 1,
+      "huella": "sha256:0",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261104120000000000"
      },
-     "filas": 3,
-     "filas_que_resume": 770,
-     "filtro_soql": "(nit_entidad = '891180077' AND annio = 2025)",
-     "portal": "datos.gov.co"
-    },
-    "geo_result": "1"
+     "servido_desde": "copia"
+    }
    },
-   "tool": "datos_consultar"
+   "tool": "consultar_copia"
   }
  ]
 }
