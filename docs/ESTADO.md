@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-11-03.*
+*Actualizado: 2026-11-04.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -48,6 +48,49 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
+## Despliegue y cierre de la revisión de valor (2026-11-04, `main` en #350)
+
+- **En producción:** el servidor sirve `main` en #350 (0bed75b). Se desplegó dos veces: #346 el
+  2026-11-03 y #350 el 2026-11-04, con `--no-deps` y la puerta sana después de cada uno.
+- **Catálogo:** 223 fichas de herramienta y 185 de fuente (5 en borrador).
+- **Estado de las fuentes justo después del despliegue** (`/v1/estado`, 179 publicadas):
+  - 168 en verde, 5 degradadas, 5 sin datos y 1 roja.
+  - Roja: `dane.geih_nacional`.
+  - Degradadas: UAF de la ANT, SECOP I modificaciones de procesos, calidad del aire del IDEAM y
+    los dos CUM del INVIMA.
+  - Sin datos: las dos copias nuevas de los POMCA (su canario aún no corre), el CUM del INVIMA,
+    los homicidios de MinDefensa y los accesos fijos de MinTIC.
+- **POMCA por polígono (#350):**
+  - El motor de copias junta varias capas de ArcGIS en una tabla (`copia.servicios`), con los
+    alias y el campo de id de cada capa.
+  - Hay dos copias construidas en producción: 516 999 zonas de las nueve cuencas CC BY y 31 909
+    del Sumapaz (BY-SA, aparte). Suman las 548 908 de la fuente.
+  - Hay dos herramientas nuevas, `car_pomca_en_poligono` y `car_pomca_rio_sumapaz_en_poligono`:
+    las hectáreas de cada zona dentro de un lote, por subzona y por categoría.
+  - Ficha: `docs/fuentes/car.pomca.md`.
+- **Lo que faltaba de la revisión, en paralelo:**
+  - CNMH (#347): las 11 herramientas por modalidad remiten a `cnmh_conflicto_municipio`, y daño a
+    bienes avisa que solo trae los daños con víctimas. Toca el motor (`conflicto.py`).
+  - SECOP II:
+    - CDP (#348);
+    - sanciones del contrato (#349);
+    - convenio interadministrativo (#351);
+    - cronograma (#354).
+  - SECOP I:
+    - modificaciones del proceso (#352);
+    - origen de los recursos (#353).
+  - Docs (#355): dos fichas nuevas y siete filas en el índice.
+  - Garantías, ejecución, compromisos, rubros, suspensiones y PAA se midieron y quedaron sin
+    cambios: la respuesta ya estaba bien. El PAA llega a 2026; lo de 2023 era solo la entidad del
+    canario.
+  - No se hizo el resumen por tipo de `secop1_paa_detalle`: el campo es texto libre y agruparlo
+    pediría inventar una normalización.
+- **Pendiente:**
+  1. Medir SECOP por entidad (Cali tardaba 15 s) tras la reconstrucción de las 08:00, la primera
+     con el orden físico de #308.
+  2. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
+  3. Ver si el canario de las dos copias POMCA sale en verde en la próxima ronda.
+
 ## Revisión de valor, herramienta por herramienta (2026-11-02 y 2026-11-03, #304 a #345)
 
 Cada herramienta con hallazgo en `interno/REVISION_VALOR.md` se ajustó, se probó en producción con
@@ -86,9 +129,8 @@ tocada tiene su ficha en `docs/fuentes/` (índice en `docs/fuentes/README.md`). 
   - salud: INVIMA;
   - normativa: CREG y DIAN Normograma.
 
-**Al desplegar** (la revisión se hizo contra producción desde los worktrees; `main` aún no está
-desplegado):
-1. Reconstruir `web-mcp`: `corte_constitucional_resuelve` usa el conector web con `desde`.
+**Al desplegar** (hecho el 2026-11-03 y el 2026-11-04; queda lo que sigue):
+1. Reconstruir `web-mcp`: hecho el 2026-11-03.
 2. Medir SECOP por NIT tras el orden físico (#308): Medellín en frío tardaba 16 s.
 3. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
 
@@ -96,8 +138,7 @@ desplegado):
 - El héroe muestra `sinic_predio_en_punto`, que ya no está en el MCP.
 - El DNS de Contabo da SERVFAIL a ratos para gestornormativo.creg.gov.co: ¿fijar resolvedores en
   el compose?
-- POMCA por polígono pide copiar 548 908 zonas en 10 capas, 172 069 solo en el río Negro (medido
-  el 2026-11-03). Es una decisión de disco y de refresco manual, no de código.
+- POMCA por polígono: resuelto en #350 (copias construidas el 2026-11-04).
 
 ## La portada habla a organizaciones (2026-11-02)
 
