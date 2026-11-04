@@ -1492,3 +1492,22 @@ def test_avisos_del_pot_de_bogota() -> None:
     sin = avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 0}))
     assert len(sin) == 1 and sin[0].startswith("La manzana no tiene estrato")
     assert avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 4})) == []
+def test_ultimo_con_dato_salta_el_anio_sin_valor() -> None:
+    """La manzana 002569002 de la UAECD cierra su serie con 2021 sin valor (2026-11-04)."""
+    from pydantic import ValidationError
+
+    from terranova.catalogo import SoloSi
+    from terranova.ejecutor import derivar_resultado
+
+    h = CATALOGO.herramientas["uaecd_valor_referencia_en_punto"]
+    serie = [
+        {"valor_m2": 165522.0, "vigencia": "2019-01-01"},
+        {"valor_m2": 220823.5, "vigencia": "2020-01-01"},
+        {"valor_m2": None, "vigencia": "2021-01-01"},
+    ]
+    assert derivar_resultado(h.derivados["valor_m2_ultimo"], serie, None) == 220823.5
+    assert derivar_resultado(h.derivados["vigencia_ultima"], serie, None) == "2020-01-01"
+    with pytest.raises(ValidationError):
+        SoloSi(campo="x")
+    with pytest.raises(ValidationError):
+        SoloSi(campo="x", valores=["1"], con_dato=True)
