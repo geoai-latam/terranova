@@ -366,6 +366,11 @@ class Cobertura(_Ficha):
     desde_anio: int | None = Field(
         default=None, description="primer año que cubre, cuando la columna no se cosecha"
     )
+    hasta_anio: int | None = Field(
+        default=None,
+        description="último año que cubre, cuando la columna no se cosecha: una proyección llega "
+        "a un año futuro fijo (2042) y no se puede decir «aún no llega» de lo que pasa de ahí",
+    )
     incompleta_hasta: int | None = Field(
         default=None, description="último año en que a la fuente le falta parte de lo que promete"
     )

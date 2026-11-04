@@ -786,13 +786,21 @@ class Ejecutor:
         `no_encontrado` y un agente lo dio como «0 homicidios» (GEO Copilot, fiabilidad)."""
         anio = valores.get("anio")
         desde_anio = fuente.cobertura.desde_anio
-        if desde_anio and str(anio).isdigit() and int(str(anio)) < desde_anio:
-            return f"Esta fuente cubre desde {desde_anio}: {anio} no está."
+        hasta_anio = fuente.cobertura.hasta_anio
+        if str(anio).isdigit() and (
+            (desde_anio and int(str(anio)) < desde_anio)
+            or (hasta_anio and int(str(anio)) > hasta_anio)
+        ):
+            if desde_anio and hasta_anio:
+                return f"Esta fuente cubre de {desde_anio} a {hasta_anio}: {anio} no está."
+            if desde_anio and int(str(anio)) < desde_anio:
+                return f"Esta fuente cubre desde {desde_anio}: {anio} no está."
+            return f"Esta fuente cubre hasta {hasta_anio}: {anio} no está."
         columna = fuente.cobertura.columna_tiempo
         metadatos = self.catalogo.metadatos.get(fuente.id)
         campo = metadatos.campos.get(columna) if metadatos and columna else None
         if not isinstance(anio, int) or not campo or not campo.minimo or not campo.maximo:
-            return self._anio_futuro(anio)
+            return None if hasta_anio else self._anio_futuro(anio)
         desde, hasta = (
             int(m[1]) if (m := _AÑO.match(v)) else None for v in (campo.minimo, campo.maximo)
         )
@@ -1437,15 +1445,18 @@ def _tope_pedido(h: Herramienta, v: dict[str, Any]) -> int | None:
 
 def _codigo_desconocido(h: Herramienta, v: dict[str, Any]) -> str | None:
     """Un código DIVIPOLA que no figura en la lista de municipios y volvió vacío: puede estar mal
-    escrito. No se rechaza (la lista no trae los municipios más nuevos), pero se dice: «99999»
-    volvía `no_encontrado` como un municipio real sin datos (revisión de valor, 2026-11-04)."""
+    escrito. No se rechaza (la lista no trae los municipios más nuevos, como 27493), pero se dice:
+    «99999» volvía `no_encontrado` como un municipio real sin datos (revisión de valor,
+    2026-11-04)."""
     municipios = _municipios()
     for nombre, tipo in h.entrada.items():
         codigo = v.get(nombre)
         if tipo == "divipola" and isinstance(codigo, str) and codigo not in municipios:
             return (
-                f"{codigo} no figura en la lista DIVIPOLA de Terrnova: revise el código (o "
-                "búsquelo con dane_divipola_buscar) antes de leer el vacío como «sin datos»."
+                f"{codigo} no figura en la lista de municipios de Terrnova: puede estar mal "
+                "escrito o ser un municipio creado hace poco (como 27493, Nuevo Belén de Bajirá, "
+                "de 2022). Compruébelo con dane_divipola_buscar antes de leer el vacío como «sin "
+                "datos»."
             )
     return None
 

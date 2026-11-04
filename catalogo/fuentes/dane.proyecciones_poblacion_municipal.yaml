@@ -36,7 +36,7 @@ copia:
   indices: [MPIO]
 # El DANE las rehace cuando cambia la tendencia (la última, el 30-07-2025); no tienen fecha fija.
 frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
-cobertura: {pais: CO, periodo: "2018-2042 (proyección; actualizada el 30-07-2025)"}
+cobertura: {pais: CO, desde_anio: 2018, hasta_anio: 2042, periodo: "2018-2042 (proyección; actualizada el 30-07-2025)"}
 datos_personales: ninguno
 estado: publicada
 clasificacion_licencia: verde

@@ -5,7 +5,7 @@
  "llamadas": [
   {
    "argumentos": {
-    "filtros": {
+    "contiene": {
      "Departamento": "Antioquia"
     },
     "limite": 100,

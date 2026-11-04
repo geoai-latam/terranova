@@ -372,7 +372,31 @@ async def test_un_codigo_que_no_esta_en_el_divipola_se_dice(codigo: str, avisa: 
         "dane_ipm_municipio", {"municipio_divipola": codigo}, plan="evaluacion"
     )
     assert sobre.estado == "no_encontrado"
-    assert any("no figura en la lista DIVIPOLA" in a for a in sobre.avisos) is avisa
+    assert any("no figura en la lista de municipios" in a for a in sobre.avisos) is avisa
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("anio", ["2010", "2050"])
+async def test_la_proyeccion_dice_su_rango_y_no_que_el_anio_no_llega(anio: str) -> None:
+    """La proyección del DANE llega a 2042: 2050 vacío no es «un año que aún no llega» sino uno
+    fuera de su rango, y 2010 es anterior al censo de base (revisión de valor, 2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-10-28T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()}, reloj=lambda: 1_793_000_000.0)
+    sobre = await ej.ejecutar(
+        "dane_poblacion_proyectada_municipio",
+        {"municipio_divipola": "76001", "anio": anio},
+        plan="evaluacion",
+    )
+    assert sobre.estado == "fuera_de_cobertura"
+    assert any("cubre de 2018 a 2042" in a for a in sobre.avisos)
+    assert not any("todavía no ha llegado" in a for a in sobre.avisos)
 
 
 class _CopiaGeih:
