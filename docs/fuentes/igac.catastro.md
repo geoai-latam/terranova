@@ -118,3 +118,8 @@ gestores no están.
   - Propuesta: copiar esa capa desde Colombia.
 - El perímetro de Chía dice `tipo_centro_poblado: Corregimiento`, cuando es la cabecera. Es un
   error de la fuente y se deja como lo publica.
+- **Zona geoeconómica.**
+  - La descripción decía que el valor es catastral y no de mercado, y que la vigencia puede
+    venir vacía o vieja, pero la respuesta no lo decía. Chía rural da $7 000 millones por
+    hectárea sin vigencia; Calarcá, $480 000 por hectárea de 2014.
+  - Ahora la respuesta lleva un aviso con datos.

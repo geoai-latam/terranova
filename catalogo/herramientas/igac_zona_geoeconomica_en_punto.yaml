@@ -28,6 +28,12 @@ derivados:
   municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
   # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
   municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
+avisos:
+- cuando: encontrado
+  texto: >
+    Es el valor catastral de referencia de la zona, con el que el IGAC calcula el avalúo: no es un
+    precio de mercado. Está en pesos de su vigencia. Si `vigencia` no viene (todas las zonas
+    rurales de Chía) o es vieja (hay de 1990), no es el valor de hoy.
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona económica 006
