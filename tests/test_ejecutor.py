@@ -1438,3 +1438,18 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_los_planes_de_secop1_no_cuentan_copias_como_versiones() -> None:
+    """Las «11 versiones» de cada plan eran 11 copias idénticas del encabezado (2026-11-04), y el
+    detalle de un plan con encabezado puede no estar publicado."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    paa = CATALOGO.herramientas["secop1_paa_entidad"]
+    assert "versiones" not in paa.derivados
+    assert "count(*)" not in paa.consulta.argumentos["select"]
+    detalle = CATALOGO.herramientas["secop1_paa_detalle"]
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    avisos = avisos_de_la_ficha(detalle, CATALOGO.fuentes[detalle.fuente], vacio)
+    assert len(avisos) == 1 and "no publica ítems" in avisos[0]
