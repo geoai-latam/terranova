@@ -1,13 +1,14 @@
 id: dane_ipm_departamento
-version: 1
+version: 2
 familia: estadisticas
 fuente: dane.ipm_departamental
 pregunta: "¿Qué porcentaje de la población de este departamento está en pobreza multidimensional?"
 descripcion: >
   Incidencia de la pobreza multidimensional (IPM) de un departamento según el DANE, por año (desde
   2018) y zona: total, cabeceras y centros poblados y rural disperso, en porcentaje. Sale de la
-  copia de Terrnova del anexo vigente del DANE. El nombre va como lo escribe el DANE
-  (Antioquia, Bogotá D.C., …).
+  copia de Terrnova del anexo vigente del DANE. El nombre se busca sin distinguir tildes ni
+  mayúsculas («bogota», «valle»); «Santander» trae también Norte de Santander, y cada fila dice su
+  departamento. Los años que el DANE marca con nota (2020, 2021) traen la nota en `nota`.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {departamento: nombre}
 consulta:
@@ -16,20 +17,26 @@ consulta:
   tool: consultar_copia
   argumentos:
     tabla: dane_ipm_departamental
-    filtros: {Departamento: "{departamento}"}
+    # Sin distinguir tildes ni mayúsculas: «Bogota» o «valle» volvían vacíos con la igualdad
+    # exacta (revisión de valor, 2026-11-04).
+    contiene: {Departamento: "{departamento}"}
     select: [Departamento, columna, subcolumna, valor]
     order: [_fila]
     limite: 100
   campos: [Departamento, columna, subcolumna, valor]
 salida: IpmDepartamento
 derivados:
+  # El DANE marca años con asteriscos y explica cada uno en una nota al pie (leídas en los
+  # anexos 2025 el 2026-11-04). La nota va con su fila y el año queda en número.
+  nota: {de: codigo, campo: anio, valores: {"2020**": "Nota del DANE (**): para el año 2020 el indicador de Inasistencia escolar integra información del SIMAT – C600 – ECV.", "2021***": "Nota del DANE (***): en 2021 el operativo de campo de la ENCV incorporó un registro fotográfico para obtener información sobre la cobertura de servicios públicos domiciliarios en zona rural, en particular, acceso a servicios de acueducto y energía eléctrica."}}
+  anio: {de: columna, campo: columna, patron: '^(\d{4})', tipo: int}
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
   # Medido el 2026-10-22 en anex-PMultidimensional-Departamental-2025.xlsx: Antioquia 2018, total,
   # 15,3 %; 8 años × 3 zonas = 24 filas.
   entrada: {departamento: Antioquia}
-  verdad: {departamento: Antioquia, anio: "2018", zona: Total, valor: 15.3}
+  verdad: {departamento: Antioquia, anio: 2018, zona: Total, valor: 15.3}
   minimos: {numero_registros: 24}
-  campos: [anio, departamento, numero_registros, valor, zona]
+  campos: [anio, departamento, nota, numero_registros, valor, zona]
   latencia_max_ms: 5000

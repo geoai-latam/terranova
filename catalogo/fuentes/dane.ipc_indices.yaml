@@ -42,7 +42,7 @@ copia:
   clave: _fila
   indices: [columna]
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO, periodo: "enero de 2003 al último mes publicado (base diciembre de 2018 = 100)"}
+cobertura: {pais: CO, desde_anio: 2003, periodo: "enero de 2003 al último mes publicado (base diciembre de 2018 = 100)"}
 datos_personales: ninguno
 estado: publicada
 clasificacion_licencia: verde

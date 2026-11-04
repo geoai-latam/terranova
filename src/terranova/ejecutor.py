@@ -20,7 +20,7 @@ import unicodedata
 from collections import Counter
 from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from typing import Any, Literal
 
 from terranova import metricas
@@ -351,8 +351,6 @@ def convertir(valor: Any, tipo: str) -> Any:
 
 def _fecha(valor: Any) -> str:
     if isinstance(valor, int | float) and not isinstance(valor, bool):  # epoch ms de ArcGIS
-        from datetime import UTC
-
         return datetime.fromtimestamp(valor / 1000, UTC).isoformat()
     if re.fullmatch(r"\d{8}", texto := str(valor)):  # AAAAMMDD del SDMX del BanRep
         return f"{texto[:4]}-{texto[4:6]}-{texto[6:]}"
@@ -793,16 +791,26 @@ class Ejecutor:
         metadatos = self.catalogo.metadatos.get(fuente.id)
         campo = metadatos.campos.get(columna) if metadatos and columna else None
         if not isinstance(anio, int) or not campo or not campo.minimo or not campo.maximo:
-            return None
+            return self._anio_futuro(anio)
         desde, hasta = (
             int(m[1]) if (m := _AÑO.match(v)) else None for v in (campo.minimo, campo.maximo)
         )
-        if desde is None or hasta is None or desde <= anio <= hasta:
+        if desde is None or hasta is None:
+            return self._anio_futuro(anio)
+        if desde <= anio <= hasta:
             return None
         return (
             f"La fuente cubre de {desde} a {hasta}: {anio} está fuera de su cobertura (no es que "
             "haya cero casos)."
         )
+
+    def _anio_futuro(self, anio: Any) -> str | None:
+        """«¿Inflación en 2027?» volvía `no_encontrado` a secas: un año que aún no llega no es un
+        año sin datos (revisión de valor, 2026-11-04). Solo cuando no hay cobertura cosechada, que
+        dice más."""
+        if str(anio).isdigit() and int(str(anio)) > datetime.fromtimestamp(self.reloj(), UTC).year:
+            return f"{anio} todavía no ha llegado: la fuente no tiene datos de un año futuro."
+        return None
 
     def indice(self, nombre: str) -> dict[str, Any]:
         if nombre not in self._indices:
@@ -1099,6 +1107,8 @@ class Ejecutor:
         ):
             estado = "fuera_de_cobertura"
             avisos.append(fuera)
+        if not hay_algo and estado == "no_encontrado" and (raro := _codigo_desconocido(h, valores)):
+            avisos.append(raro)
         errores: list[ErrorParte] = []
         if capas_incompletas and estado != "fuera_de_cobertura":
             # honestidad: con unas capas caídas no se puede afirmar «encontrado» ni «no encontrado»
@@ -1402,6 +1412,21 @@ def municipio_por_nombre(param: str, texto: str, municipios: dict[str, Any]) -> 
         f"«{texto.strip()}» es ambiguo: {len(lista)} municipios se llaman así: {opciones}. Usa el "
         "código o «nombre, departamento»",
     )
+
+
+def _codigo_desconocido(h: Herramienta, v: dict[str, Any]) -> str | None:
+    """Un código DIVIPOLA que no figura en la lista de municipios y volvió vacío: puede estar mal
+    escrito. No se rechaza (la lista no trae los municipios más nuevos), pero se dice: «99999»
+    volvía `no_encontrado` como un municipio real sin datos (revisión de valor, 2026-11-04)."""
+    municipios = _municipios()
+    for nombre, tipo in h.entrada.items():
+        codigo = v.get(nombre)
+        if tipo == "divipola" and isinstance(codigo, str) and codigo not in municipios:
+            return (
+                f"{codigo} no figura en la lista DIVIPOLA de Terrnova: revise el código (o "
+                "búsquelo con dane_divipola_buscar) antes de leer el vacío como «sin datos»."
+            )
+    return None
 
 
 def homonimos(codigo: str, municipios: dict[str, Any], *, tope: int = 6) -> list[str]:

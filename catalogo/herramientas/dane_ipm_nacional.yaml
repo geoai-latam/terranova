@@ -1,12 +1,14 @@
 id: dane_ipm_nacional
-version: 1
+version: 2
 familia: estadisticas
 fuente: dane.ipm_nacional
 pregunta: "¿Cómo ha evolucionado la pobreza multidimensional en Colombia?"
 descripcion: >
   Incidencia de la pobreza multidimensional (IPM) según el DANE para un dominio (Nacional, Cabecera,
   Centros poblados y rural disperso, o una región), por año desde 2010, en porcentaje. Sale de la copia
-  de Terrnova del anexo vigente del DANE.
+  de Terrnova del anexo vigente del DANE. El dominio se busca sin distinguir tildes ni mayúsculas.
+  2017 solo sale para Cabeceras: el DANE dice que ese año solo es representativo ahí. Los años con
+  nota del DANE (2017, 2020, 2021) la traen en `nota`.
   (Fuente: DANE; licencia: términos de uso del DANE.)
 entrada: {dominio: nombre}
 consulta:
@@ -15,19 +17,24 @@ consulta:
   tool: consultar_copia
   argumentos:
     tabla: dane_ipm_nacional
-    filtros: {columna_1: "{dominio}"}
+    # Sin distinguir tildes ni mayúsculas: «nacional» volvía vacío (revisión de valor, 2026-11-04).
+    contiene: {columna_1: "{dominio}"}
     select: [columna_1, columna, valor]
     order: [_fila]
     limite: 100
   campos: [columna_1, columna, valor]
 salida: IpmNacional
 derivados:
+  # El DANE marca años con asteriscos y explica cada uno en una nota al pie (leídas en los
+  # anexos 2025 el 2026-11-04). La nota va con su fila y el año queda en número.
+  nota: {de: codigo, campo: anio, valores: {"2017*": "Nota del DANE (*): para el año 2017 los datos son representativos únicamente para el dominio Cabeceras.", "2020**": "Nota del DANE (**): para el año 2020 el indicador de Inasistencia escolar integra información del SIMAT – C600 – ECV.", "2021***": "Nota del DANE (***): en 2021 el operativo de campo de la ENCV incorporó un registro fotográfico para obtener información sobre la cobertura de servicios públicos domiciliarios en zona rural, en particular, acceso a servicios de acueducto y energía eléctrica."}}
+  anio: {de: columna, campo: columna, patron: '^(\d{4})', tipo: int}
   numero_registros: {de: conteo, tipo: int}
 cobro: registro
 canario:
   # Medido el 2026-10-22 en anex-PMultidimensional-2025.xlsx: Nacional 2010, 29,7 %.
   entrada: {dominio: Nacional}
-  verdad: {dominio: Nacional, anio: "2010", valor: 29.7}
+  verdad: {dominio: Nacional, anio: 2010, valor: 29.7}
   minimos: {numero_registros: 15}
-  campos: [anio, dominio, numero_registros, valor]
+  campos: [anio, dominio, nota, numero_registros, valor]
   latencia_max_ms: 5000

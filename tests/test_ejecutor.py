@@ -329,6 +329,96 @@ async def test_un_anio_fuera_de_la_fuente_no_es_cero_casos(anio: int, estado: st
     assert any("2015 a 2024" in a for a in sobre.avisos) is (estado == "fuera_de_cobertura")
 
 
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("anio", "aviso"),
+    [(1990, "cubre desde 2003"), (2027, "todavía no ha llegado"), (2010, None)],
+)
+async def test_un_anio_antes_o_despues_de_la_serie_se_dice(anio: int, aviso: str | None) -> None:
+    """IPC del DANE (revisión de valor, 2026-11-04): 1990 y 2027 vacíos volvían `no_encontrado` a
+    secas. Antes de 2003 o en un año futuro es fuera de cobertura y se dice por qué; un año dentro
+    de la serie que vuelve vacío sigue siendo `no_encontrado`."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-11-03T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()}, reloj=lambda: 1_793_000_000.0)  # 2026-10
+    sobre = await ej.ejecutar("dane_ipc_indice_anio", {"anio": anio}, plan="evaluacion")
+    if aviso is None:
+        assert sobre.estado == "no_encontrado"
+    else:
+        assert sobre.estado == "fuera_de_cobertura"
+        assert any(aviso in a for a in sobre.avisos)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(("codigo", "avisa"), [("99999", True), ("25175", False)])
+async def test_un_codigo_que_no_esta_en_el_divipola_se_dice(codigo: str, avisa: bool) -> None:
+    """«99999» vacío no es «sin datos»: puede ser un código mal escrito."""
+    from terranova.ejecutor import Ejecutor
+
+    class _CopiaVacia(_SinFilas):
+        async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+            r = await super().llamar(herramienta, argumentos)
+            r["facts"]["consultado_en"] = "2026-11-03T00:00:00+00:00"
+            return r
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaVacia()})
+    sobre = await ej.ejecutar(
+        "dane_ipm_municipio", {"municipio_divipola": codigo}, plan="evaluacion"
+    )
+    assert sobre.estado == "no_encontrado"
+    assert any("no figura en la lista DIVIPOLA" in a for a in sobre.avisos) is avisa
+
+
+class _CopiaIpm:
+    """Filas del anexo departamental del IPM 2025 como las guarda la copia (año con asteriscos)."""
+
+    def __init__(self) -> None:
+        self.argumentos: dict[str, Any] = {}
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        self.argumentos = argumentos
+        columnas = ["Departamento", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Chocó", "2019", "Total", 42.3],
+                ["Chocó", "2020**", "Total", 49.0],
+                ["Chocó", "2021***", "Total", 36.0],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 3, "total": 3, "truncado": False},
+                "consultado_en": "2026-10-28T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_ipm_dice_la_nota_de_cada_anio_marcado() -> None:
+    """El DANE escribe «2020**» y «2021***» y explica los asteriscos al pie del anexo: el año sale
+    en número, la nota va con su fila, y el departamento se busca sin tildes (revisión de valor,
+    2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    copia = _CopiaIpm()
+    ej = Ejecutor(CATALOGO, {"copia": copia})
+    sobre = await ej.ejecutar("dane_ipm_departamento", {"departamento": "choco"}, plan="evaluacion")
+    assert copia.argumentos["contiene"] == {"Departamento": "choco"}
+    filas = sobre.datos["elementos"]
+    assert [f["anio"] for f in filas] == [2019, 2020, 2021]
+    assert filas[0]["nota"] is None
+    assert "SIMAT" in filas[1]["nota"]
+    assert "registro fotográfico" in filas[2]["nota"]
+
+
 @pytest.mark.parametrize(
     ("texto", "codigo"),
     [
