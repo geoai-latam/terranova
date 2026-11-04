@@ -46,3 +46,16 @@ La fuente es `uaecd.valor_referencia` y la herramienta, `uaecd_valor_referencia_
   - `valor_m2_ultimo` y `vigencia_ultima` dan el dato que se pregunta casi siempre sin leer la
     serie. Lo medido: la 008204021 da $5 800 000 (2026) y la 004108032 da $3 500 000 (2026).
 - **Pendiente (B5, #17a):** proponer la manzana más cercana, como en el estrato de la SDP.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:**
+  - El canario (Chapinero, manzana 008204021): 10 años, de 3,4 a 5,8 millones por m², con un
+    salto de 4,3 a 5,8 entre 2025 y 2026.
+  - Una manzana grande de Ciudad Bolívar (002569002): de 39 025 en 2017 a 220 823 en 2020, y 2021
+    sin valor. Su serie no llega a 2026.
+  - Chía, que da `fuera_de_cobertura`.
+- **Hallazgo:** con el año final sin valor, `vigencia_ultima` decía 2021 y `valor_m2_ultimo` no
+  salía. Se leía como «el último valor es de 2021» sin decir cuál.
+- **Arreglo:** los dos derivados toman el último año **con valor**. Para eso, `solo_si` admite
+  `con_dato: true` en lugar de `valores`. La serie sigue completa, con el año sin valor incluido.

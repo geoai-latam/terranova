@@ -889,13 +889,24 @@ MARCADOR_PREVIA = "previa"
 
 class SoloSi(_Ficha):
     """Qué elementos cuentan para un derivado: los que tienen `campo` (nombre rt/1) en `valores`.
-    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior»."""
+    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior».
+    Con `con_dato: true` en lugar de `valores`, cuentan los que tienen `campo` no nulo: el último
+    año de la UAECD con valor, no el último año de la lista, que puede venir sin valor."""
 
     campo: str
-    valores: list[str] = Field(min_length=1)
+    valores: list[str] | None = Field(default=None, min_length=1)
+    con_dato: bool = False
+
+    @model_validator(mode="after")
+    def _una_condicion(self) -> SoloSi:
+        if (self.valores is None) == (not self.con_dato):
+            raise ValueError("`solo_si` lleva `valores` o `con_dato: true`, uno de los dos")
+        return self
 
     def cumple(self, elemento: dict[str, Any]) -> bool:
-        return str(elemento.get(self.campo)) in self.valores
+        if self.con_dato:
+            return elemento.get(self.campo) is not None
+        return str(elemento.get(self.campo)) in (self.valores or [])
 
 
 class AvisoFicha(_Ficha):
