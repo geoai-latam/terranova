@@ -86,10 +86,19 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - No se hizo el resumen por tipo de `secop1_paa_detalle`: el campo es texto libre y agruparlo
     pediría inventar una normalización.
 - **Pendiente:**
-  1. Medir SECOP por entidad (Cali tardaba 15 s) tras la reconstrucción de las 08:00, la primera
-     con el orden físico de #308.
-  2. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
-  3. Ver si el canario de las dos copias POMCA sale en verde en la próxima ronda.
+  1. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
+- **Cerrado el 2026-11-04:**
+  - SECOP por entidad, con la copia reconstruida y ordenada por NIT:
+    - Cali, de 15 s a 2,7 s en la primera llamada;
+    - «medellin» por nombre, de 16 s a 4,8 s;
+    - todo bajo el tope de 10 s.
+
+    Detalle en `docs/fuentes/cce.secop2.contratos.md`.
+  - Los canarios de las dos copias POMCA, verdes con la comprobación del canario (1,4 s y 0,04 s).
+  - El sitio y el correo de bienvenida nombran `predio_en_punto` (#357). El ejemplo MCP de
+    `/desarrolladores` llamaba a una herramienta que ya no está en el MCP.
+  - El DNS de la CREG resuelve bien con los resolvedores de Contabo, 1.1.1.1 y 8.8.8.8, y
+    `web-mcp` no registró errores de resolución en una semana. No se fijan resolvedores.
 
 ## Revisión de valor, herramienta por herramienta (2026-11-02 y 2026-11-03, #304 a #345)
 
@@ -131,13 +140,13 @@ tocada tiene su ficha en `docs/fuentes/` (índice en `docs/fuentes/README.md`). 
 
 **Al desplegar** (hecho el 2026-11-03 y el 2026-11-04; queda lo que sigue):
 1. Reconstruir `web-mcp`: hecho el 2026-11-03.
-2. Medir SECOP por NIT tras el orden físico (#308): Medellín en frío tardaba 16 s.
+2. Medir SECOP por NIT tras el orden físico (#308): hecho el 2026-11-04.
 3. Validar en el navegador que GEO Copilot usa `predio_en_punto` (#311).
 
 **Decisiones del dueño:**
-- El héroe muestra `sinic_predio_en_punto`, que ya no está en el MCP.
-- El DNS de Contabo da SERVFAIL a ratos para gestornormativo.creg.gov.co: ¿fijar resolvedores en
-  el compose?
+- El héroe muestra `sinic_predio_en_punto`: resuelto en #357.
+- El DNS de Contabo para gestornormativo.creg.gov.co: medido el 2026-11-04, sin fallas; no se
+  cambia.
 - POMCA por polígono: resuelto en #350 (copias construidas el 2026-11-04).
 
 ## La portada habla a organizaciones (2026-11-02)
