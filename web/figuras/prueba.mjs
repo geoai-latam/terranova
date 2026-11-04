@@ -1,7 +1,7 @@
 // Fig. prueba: un fichero oscuro (bosque, con el filo claro) de cinco fichas sobre un banco, con su
 // tampón y su sello al lado de la última ficha, la de la huella. Cada ficha es una capa de la
 // prueba que trae toda respuesta rt/1 (dato y estado, procedencia, licencia, servido_desde y
-// huella), con los valores de la respuesta real del predio de Santa Marta (sinic_predio_en_punto). Lo que se mueve: la ficha
+// huella), con los valores de la respuesta real del predio de Santa Marta (predio_en_punto). Lo que se mueve: la ficha
 // que se lee sube y su pestaña se enciende (el único ámbar); con la huella, el sello se entinta en
 // el tampón y la ficha queda sellada.
 import { D, L, S, base, encuadre, k, r1, regla, sombra, svgDe } from "./comun.mjs";

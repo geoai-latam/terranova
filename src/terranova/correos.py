@@ -481,10 +481,12 @@ COMANDO_CLAUDE = (
 PRIMERA_PREGUNTA = "¿Qué predio hay en 11,2211 N, 74,1572 W?"
 
 # Una respuesta real de producción a PRIMERA_PREGUNTA (solicitud req_01M6AEQ1Q10XH5SZP1ZYRMS212,
-# 01-11-2026). El héroe de la bienvenida dibuja los linderos de web/publico/datos/sm.json alrededor
-# de este mismo predio. Si cambia la fuente, se vuelve a medir y se actualiza junto con la imagen.
+# 01-11-2026, con sinic_predio_en_punto). Desde el 2026-11-04 se nombra predio_en_punto, la que ve
+# el agente por MCP (#311): medido en producción, da los mismos datos y la misma huella. El héroe de
+# la bienvenida dibuja los linderos de web/publico/datos/sm.json alrededor de este mismo predio. Si
+# cambia la fuente, se vuelve a medir y se actualiza junto con la imagen.
 EJEMPLO: dict[str, str] = {
-    "herramienta": "sinic_predio_en_punto",
+    "herramienta": "predio_en_punto",
     "estado": "encontrado",
     "predio": "470010109000002580801800000308",
     "lugar": "Santa Marta, Magdalena · zona urbana",

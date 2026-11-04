@@ -517,7 +517,7 @@ TURNOS = [
         "k": "predio",
         "boton": "Predio",
         "pregunta": "¿Qué predio hay en 11,2211 N, 74,1572 W?",
-        "herr": "sinic_predio_en_punto",
+        "herr": "predio_en_punto",
         "filas": [
             ("estado", '<span class="ok">encontrado</span>'),
             ("predial", "4700101090000025808…"),
@@ -567,7 +567,8 @@ TURNOS = [
 
 
 def consola() -> str:
-    ids = {h.id for h in HERR}
+    # las compuestas (predio_en_punto) también son herramientas del MCP
+    ids = {h.id for h in HERR} | set(COMPUESTAS)
     pest, turnos = [], []
     for i, t in enumerate(TURNOS):
         assert t["herr"] in ids, t["herr"]
@@ -1283,7 +1284,7 @@ CAPAS_PRUEBA = [
     ("servido_desde", "copia del 28-10-2026", "la copia oficial, con su fecha"),
     ("huella", "sha256:7a2cc965…", "para comprobar que no cambió"),
 ]
-assert EJEMPLO["herramienta"] == "sinic_predio_en_punto" and EJEMPLO["estado"] == "encontrado"
+assert EJEMPLO["herramienta"] == "predio_en_punto" and EJEMPLO["estado"] == "encontrado"
 assert EJEMPLO["predio"].startswith("47001") and EJEMPLO["predio"].endswith("0308")
 assert EJEMPLO["destinacion"].casefold().startswith("habitacional")
 assert EJEMPLO["entidad"].startswith("Instituto Geográfico Agustín Codazzi (IGAC), SINIC")
@@ -1468,7 +1469,7 @@ def corto_predio(codigo: str) -> str:
 
 
 TURNO_PREDIO = TURNOS[0]
-assert TURNO_PREDIO["herr"] == EJEMPLO["herramienta"] == "sinic_predio_en_punto"
+assert TURNO_PREDIO["herr"] == EJEMPLO["herramienta"] == "predio_en_punto"
 TURNO_NORMA = TURNOS[2]
 assert TURNO_NORMA["herr"] == "suin_norma"
 PRED = corto_predio(EJEMPLO["predio"])
@@ -2267,11 +2268,12 @@ def precios() -> str:
     )
 
 
-# La respuesta real de producción a PRIMERA_PREGUNTA (correos.EJEMPLO, solicitud
-# req_01M6AEQ1Q10XH5SZP1ZYRMS212, 01-11-2026), recortada: sin la consulta interna ni la geometría.
+# La respuesta real de producción a PRIMERA_PREGUNTA (correos.EJEMPLO, 01-11-2026), recortada: sin
+# la consulta interna ni la geometría. Desde el 2026-11-04 la nombra predio_en_punto, la que ve el
+# agente por MCP (#311): da los mismos datos y la misma huella que sinic_predio_en_punto.
 SOBRE_PREDIO = {
     "contrato": "rt/1",
-    "herramienta": "sinic_predio_en_punto@1",
+    "herramienta": "predio_en_punto@2",
     "estado": "encontrado",
     "datos": {
         "municipio": "SANTA MARTA",
@@ -2305,7 +2307,8 @@ def misma_consulta() -> str:
     """Pestañas: pegar en Claude Code, MCP y REST; al lado, la respuesta real (la misma por las tres)."""
     lon, lat = -74.1572, 11.2211
     hid = EJEMPLO["herramienta"]
-    fam = CAT.herramientas[hid].familia
+    comp = COMPUESTAS[hid]  # predio_en_punto: compuesta, con su propia ruta REST
+    fam = comp.familia
     pasos = {
         "claude": (
             "Pega en Claude Code",
@@ -2331,7 +2334,7 @@ def misma_consulta() -> str:
         ),
         "rest": (
             "REST",
-            f"curl -s -X POST https://terrnova.com/v1/co/{fam}/{hid} \\\n"
+            f"curl -s -X POST https://terrnova.com{comp.ruta_rest} \\\n"
             '  -H "Authorization: Bearer $TERRNOVA_LLAVE" \\\n'
             '  -H "Content-Type: application/json" \\\n'
             + escape(f"  -d '{json.dumps({'lon': lon, 'lat': lat})}'"),
