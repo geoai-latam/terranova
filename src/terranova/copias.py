@@ -139,7 +139,8 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     las palabras, sin distinguir mayúsculas ni tildes). En una copia espacial, además: `punto`
     ([lon, lat]), `poligono` (GeoJSON, ADR-0035) o
     `bbox` ([oeste, sur, este, norte]), en EPSG:4326, para los elementos que los tocan,
-    `geometria` («completa», «simplificada» o «ninguna», la de por defecto) y, con `poligono`,
+    `geometria` («completa», «simplificada» o «ninguna», la de por defecto; con `poligono`,
+    también «recortada»: solo la parte de cada elemento que cae dentro) y, con `poligono`,
     `area_en_poligono` (la columna `_area_ha`: las hectáreas de cada elemento dentro del polígono;
     se puede ordenar por ella).
     """
@@ -158,15 +159,24 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     geometria = str(argumentos.get("geometria") or "ninguna")
     if (espaciales or geometria != "ninguna") and not fuente.copia.espacial:
         raise ErrorCopia(f"{fuente.id} no tiene geometría en su copia")
-    if geometria not in (*_GEOMETRIA, "ninguna"):
+    if geometria not in (*_GEOMETRIA, "ninguna", "recortada"):
         raise ErrorCopia(f"geometría desconocida: «{geometria}»")
     if geometria != "ninguna" and agregados:
         raise ErrorCopia("con agregados no sale geometría")
     if not columnas and not agregados and fuente.copia.espacial:
         columnas = [_columna(c, permitidas) for c in fuente.campos]  # `*` traería `_geom` cruda
     con_geometria = geometria != "ninguna"
-    salida = [f"{_GEOMETRIA[geometria]} AS _geojson"] if con_geometria else []
+    salida: list[str] = []
     parametros_seleccion: list[Any] = []
+    if geometria == "recortada":
+        # la parte de cada elemento dentro del polígono: en una ronda que cruza un lote, la franja
+        # que no se puede construir, no los 40 km del río
+        if argumentos.get("poligono") is None:
+            raise ErrorCopia("la geometría «recortada» va con `poligono`")
+        salida.append(f"ST_AsGeoJSON(ST_Intersection(_geom, {_POLIGONO}), 7) AS _geojson")
+        parametros_seleccion.append(json.dumps(argumentos["poligono"]))
+    elif con_geometria:
+        salida.append(f"{_GEOMETRIA[geometria]} AS _geojson")
     if argumentos.get("area_en_poligono"):
         # cuánto de cada elemento cae dentro del polígono, en hectáreas (geodésicas): lo que
         # pesa cada tratamiento o cada uso en un lote, no solo que lo toca
@@ -220,7 +230,7 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     for c in argumentos.get("order") or []:
         desc = c.startswith("-")
         nombre = c.lstrip("-")
-        if nombre == AREA_EN_POLIGONO and parametros_seleccion:
+        if nombre == AREA_EN_POLIGONO and argumentos.get("area_en_poligono"):
             expr = AREA_EN_POLIGONO
         elif agregados and _ALIAS.match(nombre):
             expr = f'"{nombre}"'

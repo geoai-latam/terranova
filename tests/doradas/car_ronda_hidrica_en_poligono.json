@@ -6,7 +6,7 @@
   {
    "argumentos": {
     "area_en_poligono": true,
-    "geometria": "ninguna",
+    "geometria": "recortada",
     "limite": 100,
     "order": [
      "-_area_ha",

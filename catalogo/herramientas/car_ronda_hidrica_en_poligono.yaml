@@ -1,5 +1,5 @@
 id: car_ronda_hidrica_en_poligono
-version: 1
+version: 2
 familia: ambiente
 fuente: car.rondas_delimitadas
 pregunta: "¿Este lote toca una ronda hídrica delimitada por la CAR Cundinamarca, y cuánta área de ella tiene?"
@@ -9,7 +9,8 @@ descripcion: >
   (area_ha), de la mayor a la menor, y el total: el cuerpo de agua, el componente si la CAR lo
   distingue (APCA, el área de protección y conservación ambiental, o la faja paralela al cauce),
   el acto que la delimita y su fecha. La ronda es suelo de protección: el área dentro del lote es
-  la que no se puede construir. Sirve para un lote o una finca; para un punto,
+  la que no se puede construir, y con `geometria: true` sale su forma recortada al lote, lista
+  para pintarla sobre el plano. Sirve para un lote o una finca; para un punto,
   car_ronda_hidrica_en_punto. Solo cubre la jurisdicción de la CAR y las 203 rondas que ya
   delimitó. Sale de la copia de Terrnova: la procedencia dice de cuándo es.
   (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
@@ -21,7 +22,9 @@ consulta:
     tabla: car_rondas
     poligono: "{poligono}"
     select: [OBJECTID, Fuente, Acto_Admin, Fecha]
-    geometria: ninguna
+    # solo la franja de cada ronda dentro del lote: lo que no se puede construir (una ronda entera
+    # son decenas de miles de vértices)
+    geometria: recortada
     area_en_poligono: true
     order: ["-_area_ha", OBJECTID]
     limite: 100

@@ -81,3 +81,19 @@ aún su ronda, así que no encontrar una no quiere decir que no haya ronda.
     Todos respondieron entre 17 y 180 ms.
 - **Pendiente:** consultar por cercanía (radio). El polígono del lote ya contesta la pregunta de
   quien evalúa un predio.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - el canario del río Apulo, en punto y en polígono;
+  - un cuadro de ~4 × 4 km en Chía: cuatro rondas, del río Bogotá (82,6 ha), del río Frío
+    (26,5 ha) y la quebrada Cuchua de Fagua, partida en APCA y faja paralela;
+  - un punto urbano de Chía: vacío, con el aviso de que muchas rondas faltan por delimitar y de
+    que la faja mide ~30 m.
+- Faltaba lo que más pide quien mira un lote: **dónde** cae la ronda dentro de él. La herramienta
+  de polígono daba las hectáreas sin forma, y la ronda entera son decenas de miles de vértices.
+  - Ahora la copia sabe dar la geometría `recortada` (`ST_Intersection` con el polígono): solo la
+    franja dentro del lote.
+  - Sale como envolvente por defecto, y con `geometria: true` sale la forma.
+- Falta medirlo en producción después del despliegue: la forma recortada del canario debe sumar
+  las 5,81 ha que ya da `area_ha`.
