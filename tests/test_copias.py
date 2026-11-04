@@ -7,7 +7,7 @@ Las pruebas del plan y del conector no usan red ni base. Las del almacén corren
 import json
 import os
 from datetime import UTC, date, datetime, timedelta
-from typing import Any
+from typing import Any, ClassVar
 
 import pytest
 
@@ -541,7 +541,7 @@ def test_la_capa_va_con_el_origen_arcgis() -> None:
 
     from terranova.catalogo import Copia
 
-    with pytest.raises(ValidationError, match="`capa` va con el origen `arcgis`"):
+    with pytest.raises(ValidationError, match="lleva `capa` o `servicios`"):
         Copia(origen="arcgis", tabla="t", clave="objectid")
     with pytest.raises(ValidationError, match="`tolerancia` solo aplica"):
         Copia(origen="socrata", conjunto="abcd-1234", tabla="t", clave="id", tolerancia=0.0001)
@@ -1084,3 +1084,70 @@ def test_las_variaciones_de_un_indice_se_calculan_al_copiar() -> None:
     assert dic_2023["variacion_anual"] == 9.28 and dic_2024["variacion_anual"] == 5.2
     assert dic_2023["variacion_mensual"] == round((137.72 / 136.89 - 1) * 100, 2)
     assert noviembre["variacion_anio_corrido"] == round((136.89 / 126.03 - 1) * 100, 2)
+
+
+class _ServiciosFalsos:
+    """Dos capas de POMCA como la CAR: cada una nombra a su manera la categoría y tiene su propio
+    campo de id (OBJECTID_1 en el río Bogotá, CATEGORIA y OBJECTID en el río Seco)."""
+
+    CAPAS: ClassVar[dict[str, tuple[str, dict[str, str]]]] = {
+        "Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0": (
+            "OBJECTID_1",
+            {"CAT_ORD": "USO MÚLTIPLE", "ZO_US_MA": "Z", "SZO_US_M": "S", "NOMENCLAT": "ZU"},
+        ),
+        "Zonificacion_POMCA_Seco/FeatureServer/0": (
+            "OBJECTID",
+            {"CATEGORIA": "CONSERVACIÓN", "ZONA": "Z2", "SUBZONA": "S2", "FIRST_NOMENCLAT": "AP"},
+        ),
+    }
+
+    def __init__(self) -> None:
+        self.pedidos: list[str] = []
+
+    def get(self, url: str, params: dict[str, Any]) -> _Respuesta:
+        self.pedidos.append(url)
+        ruta = next(r for r in self.CAPAS if r in url)
+        id_capa, valores = self.CAPAS[ruta]
+        if not url.endswith("/query"):
+            campos = [{"name": n} for n in [id_capa, "DESCRIP", *valores]]
+            return _Respuesta({"objectIdField": id_capa, "fields": campos})
+        if params.get("returnCountOnly"):
+            return _Respuesta({"count": 3})
+        donde = params["where"]
+        desde = -1 if donde.endswith("IS NOT NULL") else int(donde.split(">")[1])
+        rasgos = [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Polygon", "coordinates": _CUADRO},
+                "properties": {id_capa: c, **valores},
+            }
+            for c in (5, 6, 7)
+            if c > desde
+        ]
+        return _Respuesta({"type": "FeatureCollection", "features": rasgos})
+
+
+def test_una_copia_junta_varias_capas_con_sus_nombres_y_una_clave_unica() -> None:
+    """`copia.servicios`: cada capa con sus alias y su campo de id, en una tabla con la cuenca."""
+    from terranova.copias import descargar_arcgis
+
+    fuente = CATALOGO.fuentes["car.pomca_zonificacion_copia"]
+    copia = fuente.copia
+    assert copia is not None
+    dos = {r: copia.servicios[r] for r in _ServiciosFalsos.CAPAS}
+    fuente = fuente.model_copy(update={"copia": copia.model_copy(update={"servicios": dos})})
+    http = _ServiciosFalsos()
+    filas = [f for p in descargar_arcgis(fuente, cliente=http, pausa_s=0) for f in p]
+    assert [f["ID_ZONA"] for f in filas] == [
+        1_000_005,
+        1_000_006,
+        1_000_007,
+        2_000_005,
+        2_000_006,
+        2_000_007,
+    ]
+    bogota, seco = filas[0], filas[3]
+    assert bogota["CUENCA"] == "río Bogotá" and bogota["CAT_ORD"] == "USO MÚLTIPLE"
+    assert seco["CUENCA"] == "río Seco y otros directos al Magdalena"
+    assert (seco["CAT_ORD"], seco["NOMENCLAT"]) == ("CONSERVACIÓN", "AP")  # por los alias
+    assert seco["_geom"]["type"] == "Polygon" and set(seco) == {*fuente.campos, "_geom"}

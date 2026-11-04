@@ -542,6 +542,18 @@ class Copia(_Ficha):
     # Capa de un servicio ArcGIS (origen arcgis): se copia con su geometría, en EPSG:4326, a una
     # columna `_geom` con índice espacial; `consultar_copia` la cruza con un punto o un bbox.
     capa: int | None = Field(default=None, ge=0, description="capa del servicio (origen arcgis)")
+    # Varias capas en una sola copia (origen arcgis), p. ej. la zonificación de los POMCA de la CAR:
+    # un servicio por cuenca, cada uno con sus nombres de campo (los `alias` de la ficha) y su campo
+    # de id. La clave de la copia se arma: posición del servicio por 1 000 000 + el id en su capa.
+    servicios: dict[str, str] = Field(
+        default_factory=dict,
+        description="capas a juntar (origen arcgis): {«<servicio>/FeatureServer/<capa>», relativa "
+        "a la url: valor de `columna_servicio` en sus filas}",
+    )
+    columna_servicio: str | None = Field(
+        default=None,
+        description="columna que dice de qué servicio salió cada fila (con `servicios`)",
+    )
     filtro: str | None = Field(
         default=None,
         pattern=r"^[A-Za-z0-9_ ,'()=<>.-]+$",
@@ -619,8 +631,12 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: una copia preagregada se baja entera, sin `ventana`")
         if self.orden_fisico is not None and self.orden_fisico not in self.indices:
             raise ValueError("`orden_fisico` va sobre una columna de `indices`")
-        if (self.origen == "arcgis") != (self.capa is not None):
-            raise ValueError("ADR-0024: `capa` va con el origen `arcgis` (y solo con él)")
+        if (self.origen == "arcgis") != ((self.capa is not None) != bool(self.servicios)):
+            raise ValueError(
+                "ADR-0024: el origen `arcgis` lleva `capa` o `servicios` (uno), y solo él"
+            )
+        if bool(self.servicios) != (self.columna_servicio is not None):
+            raise ValueError("ADR-0024: `servicios` y `columna_servicio` van juntos")
         if self.tolerancia is not None and not (self.origen == "arcgis" and self.geometria):
             raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS con geometría")
         if self.filtro is not None and self.origen != "arcgis":
@@ -670,6 +686,8 @@ class Copia(_Ficha):
         extra = set(self.medidas) | ({self.pais_col} if self.pais_col else set())
         if self.preagregado is not None:
             extra |= set(self.preagregado.columnas_copia)
+        if self.columna_servicio is not None:
+            extra.add(self.columna_servicio)
         return {self.clave, *ventana, *self.indices, *self.indices_contiene, *self.texto, *extra}
 
 
@@ -841,7 +859,8 @@ class Fuente(_Ficha):
         alias = [a for c in self.campos.values() for a in c.alias]
         if len(alias) != len(set(alias)) or set(alias) & set(self.campos):
             raise ValueError("un alias repite un campo de la fuente u otro alias")
-        if alias and self.copia is not None:
+        if alias and self.copia is not None and not self.copia.servicios:
+            # con `servicios`, los alias dicen cómo llama cada capa a la columna de la copia
             raise ValueError("ADR-0024: los alias son de capas en vivo; la copia trae una tabla")
         return self
 
