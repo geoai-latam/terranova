@@ -1502,7 +1502,7 @@ def test_ultimo_con_dato_salta_el_anio_sin_valor() -> None:
     from terranova.ejecutor import derivar_resultado
 
     h = CATALOGO.herramientas["uaecd_valor_referencia_en_punto"]
-    serie = [
+    serie: list[dict[str, Any]] = [
         {"valor_m2": 165522.0, "vigencia": "2019-01-01"},
         {"valor_m2": 220823.5, "vigencia": "2020-01-01"},
         {"valor_m2": None, "vigencia": "2021-01-01"},
@@ -1562,7 +1562,8 @@ def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
             h, f, Sobre.model_construct(estado=estado, datos=datos, avisos=[])
         )
         assert len(avisos) == 1 and "2026" in avisos[0], estado
-    assert "2025" in f.cobertura.periodo and "adelante" not in f.cobertura.periodo
+    periodo = f.cobertura.periodo or ""
+    assert "2025" in periodo and "adelante" not in periodo
 
 
 def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
