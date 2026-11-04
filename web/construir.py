@@ -460,6 +460,12 @@ SISTEMAS = {
     "Supersolidaria": ["Sector solidario"],
     "Catastro de Bogotá": ["Valor de referencia del m²"],
     "UNGRD": ["Emergencias"],
+    "UPME": [
+        "Subestaciones",
+        "Líneas de transmisión",
+        "Centrales de generación",
+        "Ductos de hidrocarburos",
+    ],
     "Unidad de Restitución de Tierras": ["Restitución de tierras"],
     "USGS": ["Sismos"],
 }

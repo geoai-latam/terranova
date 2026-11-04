@@ -685,6 +685,8 @@ def descargar_arcgis_servicios(
                     continue
                 hallado = next((n for n in (columna, *campo.alias) if n in nombres), None)
                 if hallado is None:
+                    if columna in copia.opcionales:
+                        continue  # esta capa no la trae: la fila la lleva vacía
                     raise ErrorCopia(f"{ruta}: no tiene «{columna}» ni sus alias {campo.alias}")
                 origen[columna] = hallado
             campos = {n: fuente.campos[c] for c, n in origen.items()}
@@ -709,7 +711,8 @@ def descargar_arcgis_servicios(
                     id_fila = int(fila[id_capa])
                     if not 0 <= id_fila < POR_SERVICIO:
                         raise ErrorCopia(f"{ruta}: el id {id_fila} no cabe en la clave de la copia")
-                    nueva = {c: fila.get(n) for c, n in origen.items()}
+                    nueva: dict[str, Any] = dict.fromkeys(copia.opcionales)
+                    nueva.update({c: fila.get(n) for c, n in origen.items()})
                     nueva[copia.clave] = posicion * POR_SERVICIO + id_fila
                     nueva[columna_servicio] = valor
                     if copia.espacial:

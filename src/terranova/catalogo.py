@@ -559,6 +559,11 @@ class Copia(_Ficha):
         default=None,
         description="columna que dice de qué servicio salió cada fila (con `servicios`)",
     )
+    opcionales: list[str] = Field(
+        default_factory=list,
+        description="columnas que no todas las capas de `servicios` tienen: en la que no la "
+        "tiene, la fila la lleva vacía (p. ej. la tensión, que una central de generación no trae)",
+    )
     filtro: str | None = Field(
         default=None,
         pattern=r"^[A-Za-z0-9_ ,'()=<>.-]+$",
