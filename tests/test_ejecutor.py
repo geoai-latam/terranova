@@ -1438,3 +1438,19 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_los_vacios_de_los_procesos_de_secop1_remiten_al_otro_periodo() -> None:
+    """Una constancia de 2015 en la herramienta de 2018 en adelante salía vacía sin pista."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    for tid, remite in [
+        ("secop1_proceso_por_constancia", "secop1_proceso_historico_por_constancia"),
+        ("secop1_proceso_historico_por_constancia", "secop1_proceso_por_constancia"),
+        ("secop1_proponentes_proceso", "secop1_proceso_por_constancia"),
+    ]:
+        h = CATALOGO.herramientas[tid]
+        avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+        assert len(avisos) == 1 and remite in avisos[0], tid
