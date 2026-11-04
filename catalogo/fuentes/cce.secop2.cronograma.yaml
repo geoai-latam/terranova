@@ -45,4 +45,5 @@ perfil:
     agrupar: 0.2
   hallazgos:
   - las fechas de aceptación de ofertas, adjudicación, garantía y creación vienen vacías en la muestra
+  - 'medido el 2026-11-03: 9 184 138 filas; la apertura de ofertas falta en 8 917 895, toda la contratación directa y el régimen especial'
   decision: en vivo, como está

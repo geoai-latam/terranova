@@ -1,5 +1,5 @@
 id: secop_cronograma_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.cronograma
 pregunta: "¿Cuál es el cronograma de este proceso de SECOP II?"
@@ -23,6 +23,13 @@ consulta:
 salida: SecopCronogramaProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una fecha vacía no quiere decir que el paso no ocurrió: SECOP II solo llena el cronograma en
+    las modalidades con ofertas. En contratación directa y régimen especial (8 de los 9,2 millones
+    de fases) la apertura de ofertas viene vacía siempre, y en mínima cuantía en 385 207 de 387 803
+    (medido el 2026-11-03). La fecha de firma y el estado salen con secop_contrato_por_id.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en f3ev-294c (id_del_proceso = CO1.BDOS.2898382): 2

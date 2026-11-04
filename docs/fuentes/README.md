@@ -86,3 +86,10 @@ Reglas:
 | SECOP I, archivos de los procesos (`ps88-5e3v`) | [cce.secop1.archivos.md](cce.secop1.archivos.md) |
 | SECOP I, proponentes (`tauh-5jvn`) | [cce.secop1.proponentes.md](cce.secop1.proponentes.md) |
 | DIAN, usuarios aduaneros habilitados (archivo de la DIAN) | [dian.usuarios_aduaneros.md](dian.usuarios_aduaneros.md) |
+| SECOP II, solicitudes de CDP (`a86w-fh92`) | [cce.secop2.cdps.md](cce.secop2.cdps.md) |
+| SECOP I y II, convenios interadministrativos (`s484-c9k3`) | [cce.secop.convenios.md](cce.secop.convenios.md) |
+| SECOP II, suspensiones de contratos (`u99c-7mfm`) | [cce.secop2.suspensiones.md](cce.secop2.suspensiones.md) |
+| SECOP II, fechas del cronograma (`f3ev-294c`) | [cce.secop2.cronograma.md](cce.secop2.cronograma.md) |
+| SECOP I, modificaciones a procesos (`36vw-pbq2`) | [cce.secop1.modificaciones_procesos.md](cce.secop1.modificaciones_procesos.md) |
+| SECOP I, modificaciones a adjudicaciones (`u5b4-ae3s`) | [cce.secop1.modificaciones_adjudicaciones.md](cce.secop1.modificaciones_adjudicaciones.md) |
+| SECOP I, origen de los recursos (`3xwx-53wt`) | [cce.secop1.origen_recursos.md](cce.secop1.origen_recursos.md) |

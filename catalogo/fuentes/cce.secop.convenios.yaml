@@ -17,7 +17,10 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/s484-c9k3.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO}
+cobertura:
+  pais: CO
+  aviso_vacio: >
+    Ese identificador no está entre los convenios interadministrativos de SECOP (desde 2019). Puede ser otro tipo de contrato: para SECOP II, secop_contrato_por_id; para una constancia de SECOP I, secop1_proceso_por_constancia.
 datos_personales: ninguno
 estado: publicada
 campos:

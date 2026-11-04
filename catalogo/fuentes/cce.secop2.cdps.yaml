@@ -17,7 +17,10 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/a86w-fh92.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO}
+cobertura:
+  pais: CO
+  aviso_vacio: >
+    SECOP II no tiene solicitudes de CDP para ese contrato. No quiere decir que el contrato no tenga disponibilidad presupuestal: esta fuente solo trae las solicitudes de CDP registradas en SECOP II. El proyecto de inversión puede estar en secop_bpin_proceso.
 datos_personales: filtrados
 estado: publicada
 campos:

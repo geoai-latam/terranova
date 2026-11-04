@@ -1,5 +1,5 @@
 id: secop1_origen_recursos_adjudicacion
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.origen_recursos
 pregunta: "¿De dónde salen los recursos de esta adjudicación de SECOP I?"
@@ -22,6 +22,12 @@ consulta:
 salida: Secop1OrigenRecursosAdjudicacion
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    El origen es el que eligió la entidad en SECOP I, y «Otros recursos» no siempre es otro: de
+    sus 783 949 filas, 185 338 dicen «propios» en la descripción y 89 320 hablan del SGP (medido el
+    2026-11-03). Lea la descripción antes de sumar por origen.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en 3xwx-53wt (id_adjudicacion = 10639119): 1

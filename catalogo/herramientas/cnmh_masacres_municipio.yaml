@@ -1,5 +1,5 @@
 id: cnmh_masacres_municipio
-version: 1
+version: 2
 familia: justicia
 fuente: cnmh.sievcac_masacres
 pregunta: "¿Cuántas víctimas de masacres ha tenido este municipio en el conflicto armado?"
@@ -31,7 +31,7 @@ derivados:
 avisos:
 - cuando: encontrado
   texto: >
-    Las modalidades del CNMH son excluyentes: cada víctima cuenta en una sola, y un mismo hecho puede estar en otra herramienta cnmh_*_municipio. Por ejemplo, las 81 víctimas civiles de Bojayá del 2 de mayo de 2002 están en acciones bélicas, no en masacres. Para el total del municipio hay que sumar las modalidades.
+    Las modalidades del CNMH son excluyentes: cada víctima cuenta en una sola, y un mismo hecho puede estar en otra herramienta cnmh_*_municipio. Por ejemplo, las 81 víctimas civiles de Bojayá del 2 de mayo de 2002 están en acciones bélicas, no en masacres. Para el total del municipio en una sola respuesta, cnmh_conflicto_municipio.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en cj8q-zu3u: GRANADA (05313), 74 víctimas en todos los años.

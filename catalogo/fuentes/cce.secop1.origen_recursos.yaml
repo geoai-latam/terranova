@@ -41,5 +41,6 @@ perfil:
     contar: 0.2
     ordenar: 0.4
     agrupar: 0.3
-  hallazgos: []
+  hallazgos:
+  - 'medido el 2026-11-03: «Otros recursos» tiene 783 949 filas; 185 338 dicen «propios» y 89 320 hablan del SGP en la descripción'
   decision: en vivo, como está

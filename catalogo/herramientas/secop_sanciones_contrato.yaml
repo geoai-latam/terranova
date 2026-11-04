@@ -1,10 +1,14 @@
 id: secop_sanciones_contrato
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.sanciones
 pregunta: "¿Este contrato de SECOP II tiene multas o sanciones?"
 descripcion: >
-  Multas y sanciones de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  Multas, cláusulas penales y otras sanciones de un contrato de SECOP II por su identificador
+  (CO1.PCCNTR.…): entidad, contratista, tipo, valor, valor pagado, estado, fecha y número del acto.
+  Dice cuántas están publicadas y suma su valor: «A la espera de aprobación» aún no es firme, y
+  «Borrador» y «Rechazado» no son sanciones. Para las de una entidad, secop_multas_entidad; para
+  SECOP I, secop1_multas_municipio.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -22,10 +26,20 @@ consulta:
 salida: SecopSancionesContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  por_estado: {de: conteo_por, campo: estado}
+  publicadas: {de: conteo, tipo: int, solo_si: {campo: estado, valores: ["Publicado por el administrador de la plataforma"]}}
+  valor_publicadas: {de: suma, campo: valor, tipo: int, solo_si: {campo: estado, valores: ["Publicado por el administrador de la plataforma"]}}
+avisos:
+- cuando: encontrado
+  texto: >
+    Solo «Publicado por el administrador de la plataforma» es una sanción publicada en SECOP II. «A la espera de aprobación» (la mayoría, 378 de 588 el 2026-11-03) aún no la aprueba la plataforma, y «Borrador» y «Rechazado» no son sanciones: valor_publicadas suma solo las publicadas. Una misma sanción puede salir en varias filas, con el mismo acto y el mismo valor.
+- cuando: vacio
+  texto: >
+    SECOP II no registra multas ni sanciones para este contrato. La fuente es pequeña (588 en todo el país el 2026-11-03): solo trae las que la entidad registró en la plataforma. Las de toda la entidad están en secop_multas_entidad, y las de SECOP I, en secop1_multas_municipio.
 cobro: registro
 canario:
   entrada: {id_contrato: CO1.PCCNTR.292923}
   verdad: {id_contrato: CO1.PCCNTR.292923}
   minimos: {numero_registros: 2}
-  campos: [contratista, entidad, estado, fecha_evento, id_contrato, numero_acto, numero_registros, tipo_sancion, valor, valor_pagado]
+  campos: [contratista, entidad, estado, fecha_evento, id_contrato, numero_acto, numero_registros, por_estado, publicadas, tipo_sancion, valor, valor_pagado]  # sin valor_publicadas: el canario no tiene publicadas
   latencia_max_ms: 10000
