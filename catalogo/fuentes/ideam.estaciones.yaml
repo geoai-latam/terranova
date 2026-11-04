@@ -37,8 +37,8 @@ campos:
   altitud: {nombre: altitud_m, tipo: float, desc: "altitud sobre el nivel del mar, en metros"}
   latitud: {nombre: lat, tipo: float, desc: "latitud en grados decimales (MAGNA-SIRGAS)"}
   longitud: {nombre: lon, tipo: float, desc: "longitud en grados decimales (MAGNA-SIRGAS)"}
-  fecha_instalacion: {nombre: fecha_instalacion, tipo: str, desc: "fecha de instalación como la publica la fuente (dd/mm/aaaa)"}
-  fecha_suspension: {nombre: fecha_suspension, tipo: str, desc: "fecha de suspensión como la publica la fuente (dd/mm/aaaa); vacía si sigue activa"}
+  fecha_instalacion: {nombre: fecha_instalacion, tipo: date, orden_fecha: dma, desc: "fecha de instalación; en las estaciones viejas casi siempre dice el día 15, que parece de relleno (solo se sabría el mes)"}
+  fecha_suspension: {nombre: fecha_suspension, tipo: date, orden_fecha: dma, desc: "fecha de suspensión; vacía si sigue activa (y a veces también en una suspendida)"}
   entidad: {nombre: entidad_propietaria, tipo: str, desc: "entidad dueña de la estación"}
 comportamiento: {p95_ms_medido: 1200, max_por_pagina: 50000, orden_coordenadas: lon_lat}
 dcat: {publisher: IDEAM, theme: ambiente, accrualPeriodicity: daily}

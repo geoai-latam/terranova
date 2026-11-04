@@ -45,3 +45,10 @@ Datos de hace un día. Medido el 2026-11-02 en el aeropuerto Alfonso López de V
   - El motor suma `decimales` a los derivados (`redondear`), para los promedios que se calculan en
     la consulta.
   - Aquí va un decimal, como mide el sensor.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción: U. de la Sabana (2120500135), del 28-10 al 03-11. Mínimas de 7,9 a
+  11 °C, máximas de 18 a 23 °C y 21 a 24 observaciones por día. Es coherente con la Sabana.
+- sbwg-7ju4 trae la misma cláusula que el nivel y la lluvia: datos crudos, sin validar y sin
+  valor de prueba jurídica. Ahora va el mismo aviso con datos.

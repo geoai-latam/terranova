@@ -1,5 +1,5 @@
 id: ideam_temperatura_diaria_estacion
-version: 2
+version: 3
 familia: ambiente
 fuente: ideam.temperatura
 pregunta: "¿Qué temperatura hizo cada día en esta estación del IDEAM?"
@@ -31,6 +31,12 @@ derivados:
   minima_c: {de: columna, campo: minima, tipo: float, decimales: 1}
   maxima_c: {de: columna, campo: maxima, tipo: float, decimales: 1}
   observaciones: {de: columna, campo: observaciones, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Son observaciones crudas de los sensores, sin validar por el IDEAM: pueden traer errores por
+    fuera de lo normal. El IDEAM advierte que no sirven como prueba jurídica; los datos validados
+    salen por sus canales oficiales (DHIME).
 salida: TemperaturaDiariaEstacion
 cobro: agregado
 canario:

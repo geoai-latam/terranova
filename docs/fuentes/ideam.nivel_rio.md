@@ -59,3 +59,22 @@ En Bolombolo hay una lectura por hora (24 al día).
 - **Pendiente: un complemento que corra con el resultado vacío** para decir la fecha de la última
   lectura de la estación (plan de producto, B5). Hoy el motor solo une el complemento cuando hay
   datos.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - Bolombolo (canario): 3,00 m.
+  - Universidad de la Sabana (2120700146, río Bogotá en Chía), 28-10 a 03-11: el máximo diario
+    es **4,1 m en seis de siete días**, con un promedio de ~2,2 m.
+  - Puente La Balsa (automática y activa en el catálogo): sin lecturas desde septiembre en la
+    fuente. El vacío es honesto.
+- En la fuente (una petición): las lecturas saltan de 2,0 a 4,1 m en una hora y vuelven
+  (29-10, a las 00, 01, 02, 08, 09 y 13 h). Es un valor del sensor, no una creciente. Sube el
+  máximo y también el promedio (2,74 m contra 2,49 m de mediana).
+- La descripción del conjunto en datos.gov.co lo dice: los datos «no han sido validados por el
+  IDEAM», son crudos, pueden estar «por fuera de los límites considerados normales» y no sirven
+  como evidencia jurídica. Nada de eso llegaba a la respuesta.
+- Arreglo:
+  - `mediana_m` (SoQL `median`, medido en la fuente: 2,995 en el canario);
+  - un aviso con datos, que dice que son lecturas crudas y cómo reconocer un pico;
+  - el mismo aviso en `ideam_lluvia_diaria_estacion` (s54a-sgyg trae la misma cláusula).

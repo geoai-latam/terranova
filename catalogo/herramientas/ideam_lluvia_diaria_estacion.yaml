@@ -1,5 +1,5 @@
 id: ideam_lluvia_diaria_estacion
-version: 2
+version: 3
 familia: ambiente
 fuente: ideam.precipitacion
 pregunta: "¿Cuánto llovió cada día en esta estación del IDEAM?"
@@ -46,6 +46,11 @@ avisos:
     estaciones automáticas del IDEAM: si la estación es convencional, o está suspendida, no aparece
     aunque exista. ideam_estaciones_en_zona dice su tecnología, si está activa y desde cuándo está
     suspendida. Las observaciones llegan con un día de retraso.
+- cuando: encontrado
+  texto: >
+    Son observaciones crudas de los sensores, sin validar por el IDEAM: pueden traer errores por
+    fuera de lo normal. El IDEAM advierte que no sirven como prueba jurídica; los datos validados
+    salen por sus canales oficiales (DHIME).
 salida: LluviaDiariaEstacion
 cobro: agregado
 canario:

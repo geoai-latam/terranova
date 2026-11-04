@@ -10,7 +10,7 @@
     "max_filas": 500,
     "order": "dia, codigosensor",
     "portal": "datos.gov.co",
-    "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
+    "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, median(valorobservado) AS mediana, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
     "where": "codigoestacion = '0026207080' AND fechaobservacion between '2026-10-20T00:00:00' and '2026-10-20T23:59:59'"
    },
    "conector": "datos-abiertos-mcp",
@@ -25,6 +25,7 @@
        "dia",
        "lecturas",
        "maximo",
+       "mediana",
        "minimo",
        "municipio",
        "nombreestacion",
@@ -42,6 +43,7 @@
         "dia": "2026-10-20T00:00:00.000",
         "lecturas": "24",
         "maximo": "3.11",
+        "mediana": "2.995",
         "minimo": "2.94",
         "municipio": "Venecia",
         "nombreestacion": "BOLOMBOLO - AUT [26207080]",
@@ -65,7 +67,7 @@
       "group": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, dia",
       "max_filas": 500,
       "portal": "datos.gov.co",
-      "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
+      "select": "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, median(valorobservado) AS mediana, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas",
       "where": "(codigoestacion = '0026207080' AND fechaobservacion between '2026-10-20T00:00:00' and '2026-10-20T23:59:59')"
      },
      "filas": 1,
