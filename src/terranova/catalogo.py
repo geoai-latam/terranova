@@ -292,9 +292,10 @@ class Campo(_Ficha):
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
         "en general «1,234» es ambiguo",
     )
-    orden_fecha: Literal["mda", "dma"] | None = Field(
+    orden_fecha: Literal["mda", "dma", "amd"] | None = Field(
         default=None,
-        description="la fuente escribe la fecha en texto, mes/día/año (mda) o día/mes/año (dma): "
+        description="la fuente escribe la fecha en texto, mes/día/año (mda), día/mes/año (dma) o "
+        "año.mes.día (amd): "
         "sale en ISO. Se declara por campo, porque «05/11/2017» es ambiguo",
     )
     anios_validos: tuple[int, int] | None = Field(
@@ -889,13 +890,24 @@ MARCADOR_PREVIA = "previa"
 
 class SoloSi(_Ficha):
     """Qué elementos cuentan para un derivado: los que tienen `campo` (nombre rt/1) en `valores`.
-    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior»."""
+    Una modificación cancelada de SECOP sigue en la lista, pero no suma ni es «la anterior».
+    Con `con_dato: true` en lugar de `valores`, cuentan los que tienen `campo` no nulo: el último
+    año de la UAECD con valor, no el último año de la lista, que puede venir sin valor."""
 
     campo: str
-    valores: list[str] = Field(min_length=1)
+    valores: list[str] | None = Field(default=None, min_length=1)
+    con_dato: bool = False
+
+    @model_validator(mode="after")
+    def _una_condicion(self) -> SoloSi:
+        if (self.valores is None) == (not self.con_dato):
+            raise ValueError("`solo_si` lleva `valores` o `con_dato: true`, uno de los dos")
+        return self
 
     def cumple(self, elemento: dict[str, Any]) -> bool:
-        return str(elemento.get(self.campo)) in self.valores
+        if self.con_dato:
+            return elemento.get(self.campo) is not None
+        return str(elemento.get(self.campo)) in (self.valores or [])
 
 
 class AvisoFicha(_Ficha):
@@ -1095,7 +1107,7 @@ class Derivado(_Ficha):
     # solo con `columna`: la parte del texto que interesa (el grupo 1 de una expresión regular) y,
     # si es una fecha en texto, en qué orden viene
     patron: str | None = None
-    orden_fecha: Literal["mda", "dma"] | None = None
+    orden_fecha: Literal["mda", "dma", "amd"] | None = None
     # solo con `columna`: el texto viene en HTML; lo que sale va sin etiquetas y con las entidades
     # leídas («Prórroga &#8211; Procedencia» sale con su raya, no con la entidad)
     html: bool = False

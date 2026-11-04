@@ -1,5 +1,5 @@
 id: secop1_proceso_por_constancia
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.procesos
 pregunta: "¿Qué es este proceso de SECOP I y a quién se adjudicó?"
@@ -25,6 +25,12 @@ consulta:
 salida: Secop1ProcesoPorConstancia
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no tiene ese proceso entre lo cargado desde 2018. Los primeros dos dígitos de la
+    constancia son el año: si empieza por 04 a 17 (p. ej. 15-13-3881619), búsquela en
+    secop1_proceso_historico_por_constancia. Los procesos de SECOP II no están aquí.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en f789-7hwg (numero_de_constancia = 19-12-10176235): 1

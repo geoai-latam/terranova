@@ -36,7 +36,7 @@ campos:
   secci_n_transversal: {nombre: seccion_transversal, tipo: str, desc: "código de la sección transversal (ver seccion_transversal_nombre)"}
   # La fuente publica el año dividido por mil (1.926 = 1926); la herramienta lo pide multiplicado.
   fecha_de_construcci_n: {nombre: anio_construccion, tipo: int, desc: "año de construcción"}
-  fecha_de_inspecci_n: {nombre: fecha_inspeccion, tipo: str, desc: "fecha de la última inspección registrada, como la publica la fuente (AAAA.MM.DD)"}
+  fecha_de_inspecci_n: {nombre: fecha_inspeccion, tipo: date, orden_fecha: amd, desc: "fecha de la última inspección registrada (la fuente la escribe AAAA.MM.DD)"}
 comportamiento: {max_por_pagina: 50000, orden_coordenadas: lon_lat}
 dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terrnova.

@@ -1,5 +1,5 @@
 id: sdp_tratamiento_urbanistico_en_poligono
-version: 2
+version: 3
 familia: territorio
 fuente: sdp.pot555_tratamiento
 pregunta: "¿Qué tratamientos urbanísticos tocan este polígono en Bogotá?"
@@ -31,6 +31,13 @@ derivados:
   area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
   area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
   area_ha_por_tratamiento: {de: suma_por, campo: tratamiento, sumar: area_ha, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    La zona no toca ningún tratamiento urbanístico del POT de Bogotá. Los tratamientos son del
+    suelo urbano y de expansión, así que puede estar en suelo rural o fuera de Bogotá. El
+    rectángulo de cobertura incluye municipios vecinos (Soacha, Mosquera, La Calera…), que no
+    tienen POT de Bogotá: confirme que el punto o la zona está dentro del Distrito.
 cobro: zona
 canario:
   # Franja en diagonal junto al punto del canario de sdp_tratamiento_urbanistico_en_punto; medido el 2026-11-01 en la capa

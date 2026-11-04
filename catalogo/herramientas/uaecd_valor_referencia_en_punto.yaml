@@ -1,12 +1,12 @@
 id: uaecd_valor_referencia_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: uaecd.valor_referencia
 pregunta: "¿Cuál es el valor de referencia del m² de terreno en este punto de Bogotá?"
 descripcion: >
   Valor de referencia del suelo en Bogotá que calcula el catastro distrital (UAECD): la mediana del
   valor comercial por m² de terreno de la manzana que contiene un punto, en pesos, año por año desde
-  2017, y el del último año (valor_m2_ultimo, vigencia_ultima). Es un valor de referencia por manzana, no el avalúo de un predio. Solo zonas urbanas y de
+  2017, y el del último año con valor (valor_m2_ultimo, vigencia_ultima). Un año puede venir sin valor (null). Es un valor de referencia por manzana, no el avalúo de un predio. Solo zonas urbanas y de
   expansión de Bogotá. Sale de la copia de Terrnova.
   (Fuente: UAECD; licencia: CC BY 4.0.)
 entrada: {lon: float, lat: float}
@@ -24,8 +24,10 @@ consulta:
   campos: [MANCODIGO, V_REF, ANO]
 derivados:
   numero_registros: {de: conteo, tipo: int}
-  valor_m2_ultimo: {de: ultimo, campo: valor_m2, tipo: float}
-  vigencia_ultima: {de: ultimo, campo: vigencia, tipo: date}
+  # el último año con valor: una manzana puede cerrar su serie con un año sin valor (la 002569002
+  # de Ciudad Bolívar trae 2021 vacío), y ese año no es «el último valor»
+  valor_m2_ultimo: {de: ultimo, campo: valor_m2, tipo: float, solo_si: {campo: valor_m2, con_dato: true}}
+  vigencia_ultima: {de: ultimo, campo: vigencia, tipo: date, solo_si: {campo: valor_m2, con_dato: true}}
 salida: ValorReferenciaEnPunto
 avisos:
 - cuando: vacio

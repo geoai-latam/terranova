@@ -1,13 +1,14 @@
 id: invias_peaje_tarifas
-version: 1
+version: 2
 familia: territorio
 fuente: invias.peajes
 pregunta: "¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo?"
 descripcion: >
   Tarifas vigentes de un peaje de la red vial nacional a cargo del INVÍAS, buscado por su nombre (o
   parte de él): categorías I a V en pesos (automóviles, buses, camiones de dos, tres-cuatro y cinco
-  ejes), el tramo y el sentido de cobro. Solo peajes del INVÍAS; los de las concesiones de la ANI
-  están en ani_peajes_en_zona.
+  ejes), el tramo, el sentido de cobro y quién lo opera (`responsable`: el INVÍAS o una
+  concesión, como Siberia). Busca sin tildes. Es la tabla del INVÍAS; los peajes de las
+  concesiones de la ANI, con su recaudo y su tráfico, están en ani_peajes_en_zona.
   (Fuente: INVÍAS; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:
@@ -18,10 +19,16 @@ consulta:
     id: 68qj-5xux
     portal: datos.gov.co
     select: "c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud"
-    where: "upper(nombre_peaje) like upper('%{nombre}%')"
+    # sin tildes en la columna ni en lo buscado: «rio frio» encuentra «Río Frío»
+    where: "upper(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(nombre_peaje, 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ñ', 'N'), 'á', 'a'), 'é', 'e'), 'í', 'i'), 'ó', 'o'), 'ú', 'u'), 'ñ', 'n'), 'Ü', 'U'), 'ü', 'u')) like upper('%{nombre:ascii}%')"
     order: "nombre_peaje, c_digo_peaje"
     max_filas: 20
   campos: [c_digo_peaje, nombre_peaje, ubicaci_n, sector, sentido, categoria_i, categoria_ii, categoria_iii, categoria_iv, categoria_v, responsable, latitud, longitud]
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún peaje con ese nombre en la tabla de tarifas del INVÍAS. Pruebe con parte del nombre
+    (una palabra); los peajes de las concesiones de la ANI están en ani_peajes_en_zona.
 salida: PeajeTarifas
 cobro: codigo
 canario:

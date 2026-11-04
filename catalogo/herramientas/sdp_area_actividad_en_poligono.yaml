@@ -1,5 +1,5 @@
 id: sdp_area_actividad_en_poligono
-version: 2
+version: 3
 familia: territorio
 fuente: sdp.pot555_area_actividad
 pregunta: "¿Qué áreas de actividad del POT tocan este polígono en Bogotá?"
@@ -31,6 +31,13 @@ derivados:
   area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
   area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
   area_ha_por_area_actividad: {de: suma_por, campo: area_actividad, sumar: area_ha, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    La zona no toca ningún área de actividad del POT de Bogotá. Puede estar fuera de Bogotá, o
+    en suelo que el POT no reparte en áreas de actividad, como el suelo rural. El rectángulo de
+    cobertura incluye municipios vecinos (Soacha, Mosquera, La Calera…), que no tienen POT de
+    Bogotá: confirme que el punto o la zona está dentro del Distrito.
 cobro: zona
 canario:
   # Franja en diagonal junto al punto del canario de sdp_area_actividad_en_punto; medido el 2026-11-01 en la capa

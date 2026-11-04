@@ -50,3 +50,12 @@ La fuente es `sdp.estratificacion_manzana` y la herramienta, `sdp_estrato_en_pun
   dice nada del estrato de la zona.
 - **Pendiente (B5, #17a):** proponer la manzana más cercana a 30 m o menos, con la distancia, en vez
   de solo avisar. Es un cambio del motor que sirve igual a la UAECD.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:** el canario (Chapinero, estrato 4), la Plaza de Bolívar y una manzana
+  de unas 100 ha en Ciudad Bolívar (−74,1655, 4,5605), las dos con estrato 0, y dos puntos en la
+  vía (vacío, con su aviso).
+- **Hallazgo:** el estrato 0 («sin estrato») es una manzana sin vivienda, pero la respuesta no lo
+  decía, y se podía leer como un estrato bajo o un dato perdido. Ahora lleva un aviso cuando el
+  estrato es 0 o 9.

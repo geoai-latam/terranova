@@ -1,5 +1,5 @@
 id: invias_puentes_en_zona
-version: 1
+version: 2
 familia: territorio
 fuente: invias.puentes
 pregunta: "¿Qué puentes de la red vial nacional hay en esta zona?"

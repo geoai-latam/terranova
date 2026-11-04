@@ -104,3 +104,18 @@ También tiene taxonomías (`descriptor`, `restrictor`) con ids de términos. `e
     | «zzzqqq» | `no_encontrado` con aviso | | |
 
     Respondieron entre 1,5 y 2,8 s (dos llamadas).
+
+## Revisión de valor (2026-11-04)
+
+- **Conceptos:**
+  - Búsqueda por texto, «garantías»: 1 216 conceptos. Los 20 primeros van por fecha y casi ninguno
+    trata de garantías, como advierte la ficha.
+  - Búsqueda por tema:
+    - «contratación directa»: 134 conceptos, casi todos del tema.
+    - «garantías»: 696, que mezclan la ley de garantías electorales con las garantías
+      contractuales.
+- **Providencias:** «contratación directa» da 135 por texto y 11 por tema.
+- **Hallazgo:** la descripción de `ancp_providencias_por_tema` traía las cifras de los conceptos
+  (134 y 2 034), copiadas de su gemela. Ahora trae las de las providencias.
+- **Pendiente:** devolver los nombres de los descriptores que casaron, para que quien pregunta pueda
+  afinar. Hace falta que la `previa` devuelva los nombres además de los id.

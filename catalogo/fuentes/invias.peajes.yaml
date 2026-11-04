@@ -33,7 +33,9 @@ campos:
   categoria_v: {nombre: tarifa_cat_v, tipo: int, desc: "tarifa categoría V (camiones de cinco ejes), en pesos"}
   responsable: {nombre: responsable, tipo: str, desc: "entidad responsable del peaje"}
   latitud: {nombre: lat, tipo: float, desc: "latitud del peaje"}
-  longitud: {nombre: lon, tipo: float, desc: "longitud del peaje"}
+  # Colombia está al oeste de -66: una longitud mayor es un error de la fuente (Siberia trae la
+  # latitud repetida, 4.78035984, medido el 2026-11-04) y sale vacía, no en otro continente
+  longitud: {nombre: lon, tipo: float, maximo_valido: -66, desc: "longitud del peaje; vacía si la fuente trae una imposible"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: INVÍAS, theme: transporte, accrualPeriodicity: annual}
 # Spec 07: medido en la fuente, no en Terrnova.

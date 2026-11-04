@@ -61,3 +61,22 @@ Las fuentes son `ideam.alertas_deslizamiento` e `ideam.alertas_incendios`. Las h
   y los campos.
 - **El derivado `igual` del motor** corre al final, con los agregados y los hechos del complemento
   ya en `datos`. Es genérico: compara dos campos que salen.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:**
+  - Deslizamiento:
+    - Medellín: alerta vigente; 111 alertas en el año, la lista trae 15.
+    - Chía: la última fue en abril, sin alerta vigente.
+    - Barranquilla: vacío.
+  - Incendio:
+    - Puerto Gaitán: la última fue en agosto.
+    - Chía: vigente.
+    - Leticia: la última fue el 29 de octubre.
+- **Hallazgo:** el vacío (ninguna alerta en el año) volvía `no_encontrado` sin aviso. Ahora el
+  aviso dice que el IDEAM solo publica los municipios con alerta, y que no haber tenido alertas no
+  es no tener amenaza.
+- **Pendiente:**
+  - El aviso genérico de lista corta («Acote la búsqueda») no aplica aquí, porque la entrada es
+    solo el municipio.
+  - Un conteo por nivel en el año daría más que las 15 últimas.

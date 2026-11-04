@@ -1,5 +1,5 @@
 id: secop1_paa_detalle
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop1.paa_detalle
 pregunta: "¿Qué piensa comprar esta entidad según su plan anual de adquisiciones en SECOP I?"
@@ -27,6 +27,12 @@ derivados:
   valor_total_planeado: {de: suma, campo: valor_estimado, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no publica ítems para ese plan. El detalle no está para todos los planes que tienen
+    encabezado: de los cuatro de Cabuyaro (2020 a 2023), solo el de 2023 tiene ítems (medido el
+    2026-11-04). Que no haya ítems no quiere decir que el plan estuviera vacío; el presupuesto
+    total del plan sale en secop1_paa_entidad.
 - cuando: encontrado
   texto: >
     Los valores son los que digitó la entidad en SECOP I, sin revisión. Hay errores de digitación:
