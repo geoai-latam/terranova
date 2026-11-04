@@ -148,6 +148,7 @@ async def test_predio_rural_encontrado(cliente_con: Client[Any]) -> None:
         "codigo_predial_anterior": "25175000000050067000",
         "zona": "rural",
         "municipio_divipola": "25175",
+        "municipio": "CHÍA",  # v3: el nombre, de la DIVIPOLA del DANE
     }
     (rasgo,) = sobre["geo_result"]["artifacts"][0]["data"]["features"]
     assert rasgo["properties"] == {"elemento": 0}  # sus atributos ya van en `datos` (ADR-0033)
