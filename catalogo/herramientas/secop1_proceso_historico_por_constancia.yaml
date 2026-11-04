@@ -1,5 +1,5 @@
 id: secop1_proceso_historico_por_constancia
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.procesos_historico
 pregunta: "¿Qué es este proceso antiguo de SECOP I (2004–2017) y a quién se adjudicó?"
@@ -24,6 +24,12 @@ consulta:
 salida: Secop1ProcesoHistoricoPorConstancia
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no tiene ese proceso entre lo cargado de 2004 a 2017. Los primeros dos dígitos de la
+    constancia son el año: si empieza por 18 o más (p. ej. 19-12-10176235), búsquela en
+    secop1_proceso_por_constancia. Los procesos de SECOP II no están aquí.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en qddk-cgux: la constancia 15-13-3881619 (Covarachía, 2015) es un proceso

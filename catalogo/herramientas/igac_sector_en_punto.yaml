@@ -1,5 +1,5 @@
 id: igac_sector_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: igac.catastro.sector
 pregunta: "¿En qué sector catastral del IGAC está este punto?"
@@ -26,9 +26,11 @@ salida: SectorEnPunto
 derivados:
   zona: {de: capa, valores: {"16": rural, "8": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_sector, n: 5}
+  # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
+  municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía
   verdad: {codigo_sector: "251750000", zona: rural, municipio_divipola: "25175"}
-  campos: [codigo_sector, municipio_divipola, zona]
+  campos: [codigo_sector, municipio, municipio_divipola, zona]
   latencia_max_ms: 5000

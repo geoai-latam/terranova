@@ -1,5 +1,5 @@
 id: ideam_alertas_incendios_municipio
-version: 2
+version: 3
 familia: ambiente
 fuente: ideam.alertas_incendios
 pregunta: "¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes?"
@@ -38,6 +38,12 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
   ultima_alerta: {de: primero, campo: fecha, tipo: date}
   alerta_vigente: {de: igual, campo: ultima_alerta, igual_a: ultimo_boletin}
+avisos:
+- cuando: vacio
+  texto: >
+    Este municipio no tuvo ninguna alerta por incendio de la cobertura vegetal en lo que va del
+    año, hasta el último boletín de la copia. El IDEAM solo publica los municipios con alerta
+    cada día. Que no haya alertas no quiere decir que no haya habido incendios.
 cobro: registro
 canario:
   # Medido el 2026-10-28 en alertas_incendios.csv: Bogotá (11001) tuvo alerta en 82 de los 300

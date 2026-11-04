@@ -1,5 +1,5 @@
 id: ani_trafico_peaje_mensual
-version: 1
+version: 2
 familia: territorio
 fuente: ani.trafico_peajes
 pregunta: "¿Cuántos vehículos pasaron por este peaje de la ANI cada mes de un año?"
@@ -29,6 +29,14 @@ consulta:
 derivados:
   numero_registros: {de: conteo, tipo: int}
   total_vehiculos: {de: suma, campo: vehiculos, tipo: int}
+  ultimo_mes: {de: ultimo, campo: mes, tipo: date}
+avisos:
+- cuando: encontrado
+  si: {campo: numero_registros, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año no trae los doce meses: van los que dice numero_registros, hasta ultimo_mes, y
+    total_vehiculos suma solo esos. No es el tráfico del año completo. Puede ser el año en curso
+    (la ANI publica con meses de atraso) o un peaje que empezó o dejó de operar ese año.
 salida: TraficoPeajeMensual
 cobro: agregado
 canario:
@@ -36,5 +44,5 @@ canario:
   # (668 exentos, 0 evasores) y el año 1 737 307. Desde el servidor tardó 9,3 s (tope: 20 s).
   entrada: {nombre: Fusca, anio: "2025"}
   verdad: {peaje: FUSCA, id_peaje: 17, mes: "2025-01-01", vehiculos: 117742, numero_registros: 12, total_vehiculos: 1737307}
-  campos: [evasores, exentos, hasta, id_peaje, mes, numero_registros, peaje, total_vehiculos, vehiculos]
+  campos: [evasores, exentos, hasta, id_peaje, mes, numero_registros, peaje, total_vehiculos, ultimo_mes, vehiculos]
   latencia_max_ms: 20000

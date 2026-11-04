@@ -1,5 +1,5 @@
 id: sdp_tratamiento_urbanistico_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: sdp.pot555_tratamiento
 pregunta: "¿Qué tratamiento urbanístico y qué altura máxima tiene este punto de Bogotá según el POT?"
@@ -23,6 +23,13 @@ consulta:
     limite: 5
   campos: [CODIGO_TRATAMIENTO, NOMBRE_TRATAMIENTO, TIPOLOGIA, ALTURA_MAXIMA, CÓDIGO_SUBTRATAMIENTO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
 salida: TratamientoUrbanisticoEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ningún tratamiento urbanístico del POT de Bogotá. Los tratamientos son
+    del suelo urbano y de expansión, así que puede estar en suelo rural o fuera de Bogotá. El
+    rectángulo de cobertura incluye municipios vecinos (Soacha, Mosquera, La Calera…), que no
+    tienen POT de Bogotá: confirme que el punto o la zona está dentro del Distrito.
 cobro: punto
 canario:
   # Chapinero; medido el 2026-10-28 en la capa 2: Consolidación, altura máxima 4-6, Decreto 555.

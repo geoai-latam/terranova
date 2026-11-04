@@ -10,7 +10,7 @@
     "order": "fecha_de_firmeza DESC, numero_de_resolucion",
     "portal": "datos.gov.co",
     "select": "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso",
-    "where": "upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%'"
+    "where": "upper(municipio) in (upper('Girardot'), upper('Girardot D.C.')) AND nombre_entidad not like '%PRUEBA%'"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -190,11 +190,11 @@
       "max_filas": 500,
       "portal": "datos.gov.co",
       "select": "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso",
-      "where": "(upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%')"
+      "where": "(upper(municipio) in (upper('Girardot'), upper('Girardot D.C.')) AND nombre_entidad not like '%PRUEBA%')"
      },
      "cumplen_en_el_portal": 11,
      "filas": 11,
-     "filtro_soql": "(upper(municipio) = upper('Girardot') AND nombre_entidad not like '%PRUEBA%')",
+     "filtro_soql": "(upper(municipio) in (upper('Girardot'), upper('Girardot D.C.')) AND nombre_entidad not like '%PRUEBA%')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

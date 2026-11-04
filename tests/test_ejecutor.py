@@ -855,6 +855,34 @@ def test_avisos_de_la_ficha() -> None:
     assert len(fuera) == 1 and "mintic_internet_fijo_municipio_2016_2023" in fuera[0]
     assert fuera[0] not in avisos_de_la_ficha(internet, fi, sobre("no_encontrado", {}))
 
+    # un cero de la USGS no es «no hubo sismos»: su catálogo no tiene los pequeños de Colombia
+    sismos = CATALOGO.herramientas["usgs_sismos_en_zona"]
+    fs = CATALOGO.fuentes[sismos.fuente]
+    cero = avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 0}))
+    assert len(cero) == 1 and "4,5" in cero[0] and "SGC" in cero[0]
+    assert avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 139})) == []
+    # el año en curso del recaudo de la ANI (hasta mayo de 2026) no es el recaudo del año
+    peaje = CATALOGO.herramientas["ani_recaudo_peaje_mensual"]
+    fpe = CATALOGO.fuentes[peaje.fuente]
+    cinco = avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 5}))
+    assert len(cinco) == 1 and "doce meses" in cinco[0]
+    assert avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 12})) == []
+    # PRD_ND del IGAC no es un conflicto: es un dato que falta (nubes)
+    conflicto = CATALOGO.herramientas["igac_conflictos_uso_en_punto"]
+    fc = CATALOGO.fuentes[conflicto.fuente]
+    nd = avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "PRD_ND"}))
+    assert len(nd) == 1 and "no midió" in nd[0]
+    assert avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "U2"})) == []
+
+
+def test_fecha_con_puntos_del_invias_en_iso() -> None:
+    """Los puentes del INVÍAS escriben la inspección «2012.07.07» (medido el 2026-11-04)."""
+    from terranova.ejecutor import fecha_en_orden
+
+    assert fecha_en_orden("2012.07.07", "amd") == "2012-07-07"
+    assert fecha_en_orden("2012.7.7", "amd") == "2012-07-07"
+    assert fecha_en_orden("sin fecha", "amd") == "sin fecha"
+
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
@@ -1438,3 +1466,147 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_avisos_del_pot_de_bogota() -> None:
+    """Soacha cae en el rectángulo de la SDP: el vacío dice por qué; el estrato 0 no es un dato."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    def sobre(estado: str, datos: dict[str, Any]) -> Any:
+        return Sobre.model_construct(estado=estado, datos=datos, avisos=[])
+
+    for tid in [
+        "sdp_amenaza_movimiento_masa_en_punto",
+        "sdp_area_actividad_en_punto",
+        "sdp_area_actividad_en_poligono",
+        "sdp_tratamiento_urbanistico_en_punto",
+        "sdp_tratamiento_urbanistico_en_poligono",
+    ]:
+        h = CATALOGO.herramientas[tid]
+        vacio = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], sobre("no_encontrado", {}))
+        assert len(vacio) == 1 and "Soacha" in vacio[0], tid
+
+    estrato = CATALOGO.herramientas["sdp_estrato_en_punto"]
+    fe = CATALOGO.fuentes[estrato.fuente]
+    sin = avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 0}))
+    assert len(sin) == 1 and sin[0].startswith("La manzana no tiene estrato")
+    assert avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 4})) == []
+
+
+def test_ultimo_con_dato_salta_el_anio_sin_valor() -> None:
+    """La manzana 002569002 de la UAECD cierra su serie con 2021 sin valor (2026-11-04)."""
+    from pydantic import ValidationError
+
+    from terranova.catalogo import SoloSi
+    from terranova.ejecutor import derivar_resultado
+
+    h = CATALOGO.herramientas["uaecd_valor_referencia_en_punto"]
+    serie: list[dict[str, Any]] = [
+        {"valor_m2": 165522.0, "vigencia": "2019-01-01"},
+        {"valor_m2": 220823.5, "vigencia": "2020-01-01"},
+        {"valor_m2": None, "vigencia": "2021-01-01"},
+    ]
+    assert derivar_resultado(h.derivados["valor_m2_ultimo"], serie, None) == 220823.5
+    assert derivar_resultado(h.derivados["vigencia_ultima"], serie, None) == "2020-01-01"
+    with pytest.raises(ValidationError):
+        SoloSi(campo="x")
+    with pytest.raises(ValidationError):
+        SoloSi(campo="x", valores=["1"], con_dato=True)
+
+
+def test_el_vacio_del_sinic_remite_a_la_base_del_igac() -> None:
+    """Chía no tiene gestor propio: su predio no está en el SINIC sino en la base del IGAC."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["sinic_predio_en_punto"]
+    vacio = avisos_de_la_ficha(
+        h,
+        CATALOGO.fuentes[h.fuente],
+        Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[]),
+    )
+    assert len(vacio) == 1 and "igac_predio_en_punto" in vacio[0]
+
+
+def test_los_vacios_de_las_alertas_y_del_aire_del_ideam() -> None:
+    """Barranquilla sin alertas en el año y Cali en 2019 sin aire volvían vacíos a secas."""
+
+
+def test_los_vacios_de_los_procesos_de_secop1_remiten_al_otro_periodo() -> None:
+    """Una constancia de 2015 en la herramienta de 2018 en adelante salía vacía sin pista."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    for tid, dice in [
+        ("ideam_alertas_deslizamiento_municipio", "no tuvo ninguna alerta"),
+        ("ideam_alertas_incendios_municipio", "no tuvo ninguna alerta"),
+        ("ideam_calidad_aire_municipio", "no tiene mediciones"),
+    ]:
+        h = CATALOGO.herramientas[tid]
+        avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+        assert len(avisos) == 1 and dice in avisos[0], tid
+    assert CATALOGO.fuentes["ideam.calidad_aire"].cobertura.desde_anio == 2020
+
+
+def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
+    """La fuente va del 2025-01-01 al 2025-12-31 (medido el 2026-11-04): 2026 no está."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["ungrd_emergencias_municipio"]
+    f = CATALOGO.fuentes[h.fuente]
+    for estado, datos in [("encontrado", {"numero_registros": 9}), ("no_encontrado", {})]:
+        avisos = avisos_de_la_ficha(
+            h, f, Sobre.model_construct(estado=estado, datos=datos, avisos=[])
+        )
+        assert len(avisos) == 1 and "2026" in avisos[0], estado
+    periodo = f.cobertura.periodo or ""
+    assert "2025" in periodo and "adelante" not in periodo
+
+
+def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
+    """La adjudicación 10000645 tiene tres prórrogas y una adición de 30 millones (2026-11-04)."""
+    from terranova.ejecutor import derivar_resultado
+
+    h = CATALOGO.herramientas["secop1_adiciones_adjudicacion"]
+    filas = [
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 30, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 30000000.0, "adicion_dias": 30, "adicion_meses": 0},
+    ]
+    assert derivar_resultado(h.derivados["adicion_valor_total"], filas, None) == 30000000.0
+    assert derivar_resultado(h.derivados["adicion_dias_total"], filas, None) == 118
+    assert derivar_resultado(h.derivados["adicion_meses_total"], filas, None) == 0
+
+
+def test_las_multas_de_secop1_encuentran_bogota_dc() -> None:
+    """La fuente escribe «Bogotá D.C.»: con «Bogotá» salía vacío y había 632 multas (2026-11-04)."""
+    h = CATALOGO.herramientas["secop1_multas_municipio"]
+    where = renderizar(h.consulta.argumentos, {"municipio": "Bogotá"})["where"]
+    assert "upper('Bogotá D.C.')" in where and "upper('Bogotá')" in where
+
+
+def test_los_planes_de_secop1_no_cuentan_copias_como_versiones() -> None:
+    """Las «11 versiones» de cada plan eran 11 copias idénticas del encabezado (2026-11-04), y el
+    detalle de un plan con encabezado puede no estar publicado."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    paa = CATALOGO.herramientas["secop1_paa_entidad"]
+    assert "versiones" not in paa.derivados
+    assert "count(*)" not in paa.consulta.argumentos["select"]
+    detalle = CATALOGO.herramientas["secop1_paa_detalle"]
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    avisos = avisos_de_la_ficha(detalle, CATALOGO.fuentes[detalle.fuente], vacio)
+    assert len(avisos) == 1 and "no publica ítems" in avisos[0]
+    for tid, remite in [
+        ("secop1_proceso_por_constancia", "secop1_proceso_historico_por_constancia"),
+        ("secop1_proceso_historico_por_constancia", "secop1_proceso_por_constancia"),
+        ("secop1_proponentes_proceso", "secop1_proceso_por_constancia"),
+    ]:
+        h = CATALOGO.herramientas[tid]
+        avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+        assert len(avisos) == 1 and remite in avisos[0], tid

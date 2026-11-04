@@ -79,3 +79,19 @@ bienes de interés cultural o PEMP.
   - El resto del rectángulo (unas 3000 ha) es espacio público y vías sin tratamiento.
 - **Pendiente (plan de producto, B1):** avisar en la raíz cuando la consulta llegue al tope y no
   traiga todo.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:** el canario de cada herramienta, el centro (Plaza de Bolívar:
+  amenaza baja, conservación con altura «CHB»), Kennedy (estructurante, receptora de VIS;
+  renovación) y Soacha (−74,217, 4,579), que cae dentro del rectángulo de cobertura pero fuera de
+  Bogotá.
+- **Hallazgo:** en Soacha las cinco herramientas del POT salían `no_encontrado` sin decir por qué.
+  El rectángulo de cobertura toma municipios vecinos, así que no da `fuera_de_cobertura`. Las cinco
+  llevan ahora un aviso en el vacío que explica las causas posibles: fuera del Distrito, suelo
+  rural o, en la amenaza, un área que el POT no zonifica. El aviso de la amenaza aclara que el vacío
+  no quiere decir amenaza baja.
+- **Pendiente:** la `tipologia` («TA») y algunas `altura_maxima` («CHB» en conservación) son
+  códigos. No se encontró su significado en el Decreto 555 ni en el ABC del POT. Puede estar en la
+  leyenda del mapa CU-5.1 o en el Anexo 5. Mientras no se lea en la fuente, se sirven tal cual, sin
+  traducirlos.

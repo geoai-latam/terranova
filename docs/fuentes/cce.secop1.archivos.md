@@ -43,3 +43,15 @@ eran 32.
 - **2026-11-03, revisión de valor:**
   - El enlace se entrega como lo publica la fuente: no se reescribe a HTTPS, porque no responde.
   - La descripción y un aviso dicen que es una IP sin cifrado, y de dónde sacar la extensión.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:** el canario (26-21-55446, 36 documentos) y una constancia inventada
+  (vacío, que no decía nada).
+- **Hallazgo:** el `titulo` es la etiqueta del almacenamiento de SECOP I («Nuevo Sistema de
+  Almacenamiento de Archivos PUC NO.18/19/20»), igual en casi todos. Se midió en 8 filas de la
+  fuente al azar. Lo que dice qué es cada documento es la `descripcion`: estudios previos,
+  evaluación, CDP, ficha MGA.
+- **Arreglo:**
+  - La descripción de la herramienta y la de los dos campos lo dicen.
+  - Se agregó un aviso en el vacío.
