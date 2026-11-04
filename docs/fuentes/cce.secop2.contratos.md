@@ -111,5 +111,18 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
     las herramientas que filtran por NIT.
   - Se descartó una tabla aparte de las 5 282 entidades: pide una fuente nueva en el catálogo y
     solo sirve a una herramienta.
-  - La copia se reconstruye sola cada día a las 08:00. El efecto se mide después del despliegue:
-    «medellin» en frío, que antes tardaba 16 s.
+  - La copia se reconstruye sola cada día a las 08:00 UTC.
+- **2026-11-04, medido con el orden físico.** La copia se reconstruyó a mano a las 04:01 UTC con el
+  código desplegado: 3 679 244 filas desde 2023, 263 repetidas en la fuente, en 2354 s. Quedó
+  ordenada por `nit_entidad` (índice `…_orden` marcado para CLUSTER). Cada caso se midió una vez y
+  luego se repitió; el tope de los canarios es 10 s.
+
+  | Pregunta | Antes | Primera llamada | Repetida |
+  |---|---|---|---|
+  | `secop_entidades_buscar` «medellin» | 16 s | 4,8 s | 3,4 s |
+  | `secop_entidades_buscar` «cali» | — | 4,0 s | — |
+  | `secop_contratos_entidad` Cali (890399011) | 15 s | 2,7 s | 1,9 s |
+  | `secop_contratos_entidad` Medellín (890905211) | 0,6 s caliente | 6,8 s | 1,2 s |
+  | `secop_contratos_entidad` Pitalito (canario) | — | 1,8 s | 5,3 s |
+
+  Pitalito tardó más la segunda vez: el tiempo varía con la carga del servidor.
