@@ -1,5 +1,5 @@
 id: secop1_modificaciones_adjudicacion
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.modificaciones_adjudicaciones
 pregunta: "¿Qué cambios tuvo esta adjudicación de SECOP I?"
@@ -23,6 +23,12 @@ consulta:
 salida: Secop1ModificacionesAdjudicacion
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no tiene modificaciones para esa adjudicación. Puede que no haya tenido, o que el
+    número no sea un id_adjudicacion: ese id sale de secop1_proceso_por_constancia. Las
+    adiciones de valor y plazo están aparte, en secop1_adiciones_adjudicacion.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en u5b4-ae3s (id_adjudicacion = 10878821): 3

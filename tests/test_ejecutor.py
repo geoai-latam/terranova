@@ -1551,3 +1551,24 @@ def test_las_emergencias_de_la_ungrd_dicen_que_son_solo_de_2025() -> None:
         )
         assert len(avisos) == 1 and "2026" in avisos[0], estado
     assert "2025" in f.cobertura.periodo and "adelante" not in f.cobertura.periodo
+def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
+    """La adjudicación 10000645 tiene tres prórrogas y una adición de 30 millones (2026-11-04)."""
+    from terranova.ejecutor import derivar_resultado
+
+    h = CATALOGO.herramientas["secop1_adiciones_adjudicacion"]
+    filas = [
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 30, "adicion_meses": 0},
+        {"adicion_valor": 0.0, "adicion_dias": 29, "adicion_meses": 0},
+        {"adicion_valor": 30000000.0, "adicion_dias": 30, "adicion_meses": 0},
+    ]
+    assert derivar_resultado(h.derivados["adicion_valor_total"], filas, None) == 30000000.0
+    assert derivar_resultado(h.derivados["adicion_dias_total"], filas, None) == 118
+    assert derivar_resultado(h.derivados["adicion_meses_total"], filas, None) == 0
+
+
+def test_las_multas_de_secop1_encuentran_bogota_dc() -> None:
+    """La fuente escribe «Bogotá D.C.»: con «Bogotá» salía vacío y había 632 multas (2026-11-04)."""
+    h = CATALOGO.herramientas["secop1_multas_municipio"]
+    where = renderizar(h.consulta.argumentos, {"municipio": "Bogotá"})["where"]
+    assert "upper('Bogotá D.C.')" in where and "upper('Bogotá')" in where
