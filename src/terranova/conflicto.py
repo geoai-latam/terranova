@@ -89,7 +89,7 @@ HERRAMIENTAS = frozenset(p.herramienta for p in PARTES)
 
 # El aviso que trae cada parte: aquí va una sola vez, en el de la ficha.
 EXCLUYENTES = "Las modalidades del CNMH son excluyentes"
-FIN_EXCLUYENTES = "hay que sumar las modalidades."
+FIN_EXCLUYENTES = "cnmh_conflicto_municipio."
 NO_REGISTRA = "El CNMH no registra víctimas"
 AVISO_SUMA = (
     "El total suma las once modalidades del CNMH, que son excluyentes: cada hecho cuenta en una "

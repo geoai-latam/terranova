@@ -23,7 +23,7 @@ cobertura:
   pais: CO
   columna_tiempo: a_o
   aviso_vacio: >
-    El CNMH no registra víctimas de masacres en este municipio. No quiere decir que no hubo violencia: las modalidades del CNMH son excluyentes, y el hecho puede estar en otra de las once, cada una con su herramienta cnmh_*_municipio.
+    El CNMH no registra víctimas de masacres en este municipio. No quiere decir que no hubo violencia: las modalidades del CNMH son excluyentes, y el hecho puede estar en otra de las once, cada una con su herramienta cnmh_*_municipio; cnmh_conflicto_municipio las consulta todas a la vez.
 datos_personales: filtrados
 estado: publicada
 campos:

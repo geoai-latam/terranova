@@ -63,6 +63,10 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
    `presidencia_victimas_minas_municipio` (Descontamina Colombia) cuentan lo mismo con criterios
    distintos: Granada 66 frente a 78; San Carlos 115 frente a 173 (2026-10-23).
 4. **Lentas.** Acciones bélicas tarda 7-8 s y minas, cerca de 10 s, en producción.
+5. **Daño a bienes solo trae los daños con víctimas.** El conjunto tiene una fila por víctima: en
+   todo el país son 466 filas, 466 personas y 224 casos, y ninguna fila sin persona (medido el
+   2026-11-03 en `a2ga-ur2i`). Un daño a bienes sin víctimas no está: Toribío sale con 1 caso, de
+   2014.
 
 ## Herramientas que la usan
 
@@ -78,7 +82,7 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
 | `cnmh_masacres_municipio` | medio | avisa que las modalidades son excluyentes |
 | `cnmh_ataques_poblados_municipio` | medio | mismo aviso |
 | `cnmh_reclutamiento_municipio` (v2) | medio | `victimas_sin_anio` y aviso del año 0 |
-| `cnmh_dano_bienes_municipio` | bajo | casi siempre 0 víctimas; poca demanda |
+| `cnmh_dano_bienes_municipio` (v2) | bajo → medio | avisa que solo trae los daños con víctimas |
 | `cnmh_conflicto_municipio` (compuesta) | alto | las once modalidades en una: total, resumen por modalidad y años pico |
 
 ## Decisiones
@@ -107,6 +111,14 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
     - Bojayá (27099): 315 víctimas; en 2002 son 113, y 89 de ellas están en acciones bélicas.
     - Toribío: 828 víctimas en las once modalidades. Las 131 víctimas de masacre de 1985 son
       Tacueyó.
+- **2026-11-03, las sueltas remiten a la ficha (v2 de las once):**
+  - El aviso de las excluyentes termina en `cnmh_conflicto_municipio`, que da el total en una
+    respuesta, en vez de «hay que sumar las modalidades». El vacío de cada fuente también la nombra.
+    La ficha recorta ese aviso por su final (`FIN_EXCLUYENTES`), que cambia con él.
+  - Daño a bienes avisa que el conjunto solo trae los daños con víctimas, y su vacío lo repite.
+  - Medido en producción: masacres en Bojayá (11, 2010) y Chía (vacío con la remisión); daño a
+    bienes en Granada (2, 2003) y Toribío (1, 2014); la ficha de Toribío da el aviso de daño a
+    bienes una vez, con su nombre.
 - **Pendiente:**
   - Un código que no existe (99999) da «no encontrado» en las once y en la ficha, como cualquier
     municipio sin víctimas. La puerta no comprueba que el código DIVIPOLA exista.
