@@ -3,17 +3,20 @@ titulo: "Privaciones de la medida de pobreza multidimensional municipal censal 2
 entidad: Departamento Administrativo Nacional de Estadística (DANE)
 competencia: produce las estadísticas oficiales (Decreto 262 de 2004)
 acto: null
-# Términos del DANE: uso libre citando «Fuente: DANE». Es una aproximación con el censo 2018: el DANE
-# advierte que no es comparable con el IPM oficial (encuesta).
+# Términos de dane.gov.co (ADR-0039), cláusula 2: uso, aprovechamiento, transformación y análisis
+# con la cita textual. La prohibición de comercializar (cláusula 1) recae sobre el DANE y sus
+# servidores, no sobre el usuario; las cifras son hechos (Decisión Andina 351). Son anexos
+# publicados, no microdatos. Es una aproximación con el censo 2018: el DANE advierte que no es
+# comparable con el IPM oficial (encuesta).
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: null
+  verificada: 2026-11-04
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual: “Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co”"
 uso_comercial: si
 clase_acceso: bulk
-atribucion: "Fuente: DANE, medida de pobreza multidimensional de fuente censal 2018"
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co. Medida de pobreza multidimensional de fuente censal 2018"
 protocolo: archivo
 # Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la
 # tabla se baja entera desde Colombia con el mismo `web_tabla` que la servía en vivo.
@@ -36,7 +39,7 @@ frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
 cobertura: {pais: CO, periodo: "2018 (Censo Nacional de Población y Vivienda)"}
 datos_personales: ninguno
 estado: publicada
-clasificacion_licencia: ambar
+clasificacion_licencia: verde
 campos:
   ID: {nombre: municipio_divipola, tipo: str, desc: "municipio, DIVIPOLA"}
   Municipio: {nombre: municipio, tipo: str, desc: "municipio (las tildes vienen dañadas en el archivo)"}

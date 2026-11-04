@@ -3,16 +3,19 @@ titulo: "Índice de Precios al Consumidor (IPC), total nacional, serie mensual d
 entidad: Departamento Administrativo Nacional de Estadística (DANE)
 competencia: produce las estadísticas oficiales (Decreto 262 de 2004); el IPC es la medida oficial de la inflación
 acto: null
-# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE).
+# Términos de dane.gov.co (ADR-0039), cláusula 2: uso, aprovechamiento, transformación y análisis
+# con la cita textual. La prohibición de comercializar (cláusula 1) recae sobre el DANE y sus
+# servidores, no sobre el usuario; las cifras son hechos (Decisión Andina 351). Son anexos
+# publicados, no microdatos.
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: null
+  verificada: 2026-11-04
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual: “Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co”"
 uso_comercial: si
 clase_acceso: bulk
-atribucion: "Fuente: DANE, Índice de Precios al Consumidor (IPC)"
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co. Índice de Precios al Consumidor (IPC)"
 protocolo: archivo
 # Copia (ADR-0024, origen conector): el DANE responde 403 al datacenter, así que el anexo se baja
 # desde Colombia con `web_tabla`. El archivo cambia de nombre cada mes (anex-IPC-Indices-sep2026.xlsx):
@@ -42,7 +45,7 @@ frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
 cobertura: {pais: CO, periodo: "enero de 2003 al último mes publicado (base diciembre de 2018 = 100)"}
 datos_personales: ninguno
 estado: publicada
-clasificacion_licencia: ambar
+clasificacion_licencia: verde
 campos:
   Mes: {nombre: mes, tipo: str, desc: "mes (Enero, Febrero, …)"}
   columna: {nombre: anio, tipo: str, desc: "año"}

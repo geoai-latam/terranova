@@ -42,8 +42,8 @@
     había evitado. Los términos son requisito antes del primer cobro.
   - **Licencias:** una fuente sin uso comercial (`uso_comercial: no`, como Open-Meteo) sigue
     diciendo «sin uso comercial» en cada respuesta. Hay que decidir si sale de los planes de pago o
-    se paga su plan comercial (ADR-0021). Las fuentes con términos ambiguos (DANE) necesitan base
-    legal escrita antes de venderlas.
+    se paga su plan comercial (ADR-0021). Las fuentes del DANE quedaron resueltas en la
+    [ADR-0039](0039-licencias-del-dane.md): se pueden vender con su cita.
   - **Antes de desplegar el nuevo gratis** hay que pasar a `ampliado` las organizaciones internas
     (clientes propios, pruebas y evaluación). `terranova orgs listar` muestra las que no tienen
     nivel fijado y quedarían con 1.500 créditos.

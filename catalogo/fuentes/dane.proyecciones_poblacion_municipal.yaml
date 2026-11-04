@@ -3,17 +3,19 @@ titulo: "Proyecciones de población municipal por área, 2018-2042 (DANE, actual
 entidad: Departamento Administrativo Nacional de Estadística (DANE)
 competencia: produce las estadísticas oficiales (Decreto 262 de 2004); las proyecciones son la cifra oficial de población entre censos
 acto: null
-# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE). Son
-# agregados municipales, sin persona ni reserva → dato público reutilizable (ámbar, ADR-0019).
+# Términos de dane.gov.co (ADR-0039), cláusula 2: uso, aprovechamiento, transformación y análisis
+# con la cita textual. La prohibición de comercializar (cláusula 1) recae sobre el DANE y sus
+# servidores, no sobre el usuario; las cifras son hechos (Decisión Andina 351). Son anexos
+# publicados, no microdatos.
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: null
+  verificada: 2026-11-04
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual: “Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co”"
 uso_comercial: si
 clase_acceso: bulk
-atribucion: "Fuente: DANE, Proyecciones de población municipal por área 2018-2042"
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co. Proyecciones de población municipal por área 2018-2042"
 protocolo: archivo
 # Copia (ADR-0024, origen conector): el DANE responde 403 a la IP del datacenter, así que la hoja se
 # baja entera desde Colombia con `web_tabla` (encabezado en la fila 8; ~84 mil filas, por eso el
@@ -37,7 +39,7 @@ frescura: {ttl_cache_s: 2592000, sla_actualizacion: P1Y}
 cobertura: {pais: CO, periodo: "2018-2042 (proyección; actualizada el 30-07-2025)"}
 datos_personales: ninguno
 estado: publicada
-clasificacion_licencia: ambar
+clasificacion_licencia: verde
 # Ojo: en el archivo MPIO es el código y DPMP el nombre del municipio (los rótulos van cruzados).
 campos:
   DP: {nombre: departamento_divipola, tipo: str, desc: "departamento, DIVIPOLA de 2 dígitos"}

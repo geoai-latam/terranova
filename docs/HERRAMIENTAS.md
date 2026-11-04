@@ -130,7 +130,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_ipm_nacional` | ¿Cómo ha evolucionado la pobreza multidimensional en Colombia? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_mercado_laboral_nacional` | ¿Cómo estuvo el desempleo y el empleo en Colombia en este año? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_pib_crecimiento_trimestral` | ¿Cuánto creció el PIB de Colombia en los últimos trimestres? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
-| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
+| `dane_poblacion_municipio` | ¿Cuánta gente vive en este municipio según el censo 2018? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 2 |
 | `dane_poblacion_proyectada_municipio` | ¿Cuánta gente vive hoy (o vivirá en un año) en este municipio según el DANE? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_privaciones_municipio` | ¿En qué privaciones (educación, salud, vivienda, trabajo) está más mal este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dian_comex_exportaciones_por_subpartida` | ¿Cuánto exportó Colombia de una subpartida arancelaria en un año? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 2 |
@@ -224,7 +224,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_compraventas_municipio` | ¿Cuántas compraventas de inmuebles hubo en este municipio cada año y por cuánto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 5 |
 | `igac_conflictos_uso_en_punto` | ¿Hay conflicto de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_construcciones_en_predio` | ¿Qué construcciones tiene registradas este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
-| `igac_estadisticas_catastrales_municipio` | ¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año? | Instituto Geográfico Agustín Codazzi (IGAC) | por verificar | 2 |
+| `igac_estadisticas_catastrales_municipio` | ¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 2 |
 | `igac_gestor_catastral_municipio` | ¿Quién hace el catastro de este municipio? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_manzana_en_punto` | ¿En qué manzana urbana del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_perimetro_urbano_en_punto` | ¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |

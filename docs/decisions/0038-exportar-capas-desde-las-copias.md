@@ -11,7 +11,7 @@
   - Exportar desde la fuente en vivo sería carga contra servidores del Estado. Esa regla no se
     negocia.
   - 27 fuentes ya tienen copia en PostGIS. Por licencia: 9 son CC BY 4.0, 9 CC BY-SA 4.0 y 9 siguen
-    los términos del DANE, que aún no tienen decisión.
+    los términos del DANE (resueltos en la ADR-0039: verde).
 - **Decisión propuesta:**
   1. **Solo desde una copia vigente.** Una fuente en vivo no se exporta: el archivo sale de la
      versión publicada en `AlmacenCopias`, nunca de la fuente.
@@ -27,7 +27,7 @@
   5. **Solo los campos de la lista blanca** del catálogo, los mismos que salen por consulta. Una
      fuente con `datos_personales` distinto de `ninguno` no se exporta (ADR-0014).
   6. **Qué fuentes:** licencia verificada, `uso_comercial: si` y licencia verde o ámbar según la
-     enmienda de la ADR-0019. Las del DANE quedan fuera hasta su decisión de licencia.
+     enmienda de la ADR-0019. Las del DANE entran desde la ADR-0039.
   7. **Topes:** una exportación a la vez por organización, 500 000 elementos como máximo y
      `statement_timeout` de la base. Lo que pase del tope sale truncado y lo dice en `completitud`.
 - **Lo que decide el dueño antes de implementar:**
@@ -37,7 +37,7 @@
     la misma licencia. Propuesta: el archivo lo dice en `licencia.obligaciones`, y los términos de
     uso lo repiten. Falta decidir si las capas BY-SA se exportan en todos los planes o solo en los
     de pago.
-  - **DIAN y DANE**, con la decisión de cobro y licencias que ya está pendiente.
+  - **DIAN**, con la decisión de cobro y licencias que ya está pendiente (el DANE se resolvió en la ADR-0039).
 - **Consecuencias:**
   - GEO Copilot podría pintar una capa entera sin repetir consultas por zona, y sin tocar al Estado.
   - Una exportación es tan vieja como su copia: `copiado` y el SLA de frescura van en el archivo.
