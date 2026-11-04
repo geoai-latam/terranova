@@ -387,6 +387,13 @@ def test_plan_espacial_por_punto_y_por_zona() -> None:
     # el polígono va dos veces, en la selección y en el filtro, y el conteo solo lleva el filtro
     assert pesada.parametros[:2] == (json.dumps(lote), json.dumps(lote))
     assert pesada.parametros_total == (json.dumps(lote),)
+    # «recortada»: la parte de cada elemento dentro del lote; el polígono va en la geometría, en el
+    # área y en el filtro, en ese orden
+    recorte = plan_de_consulta(
+        RUNAP, {"poligono": lote, "geometria": "recortada", "area_en_poligono": True}
+    )
+    assert "ST_AsGeoJSON(ST_Intersection(_geom" in recorte.sql and recorte.geometria
+    assert recorte.parametros[:3] == (json.dumps(lote),) * 3
 
 
 def test_plan_espacial_rechaza_lo_que_no_es() -> None:
@@ -399,6 +406,7 @@ def test_plan_espacial_rechaza_lo_que_no_es() -> None:
         ({"geometria": "toda"}, "geometría desconocida"),
         ({"agregados": {"n": "count"}, "geometria": "completa"}, "no sale geometría"),
         ({"area_en_poligono": True}, "va con `poligono`"),
+        ({"punto": [1, 2], "geometria": "recortada"}, "«recortada» va con `poligono`"),
     ):
         with pytest.raises(ErrorCopia, match=error):
             plan_de_consulta(RUNAP, argumentos)
@@ -597,6 +605,10 @@ def test_copia_espacial_en_postgis() -> None:
     }
     filas, _ = consultar({"poligono": borde, "select": ["objectid"], "area_en_poligono": True})
     assert [f["objectid"] for f in filas] == [1] and 6000 < filas[0]["_area_ha"] < 6300
+    # recortada: solo la mitad dentro del área sale como forma, sin pasar de su borde (-73)
+    filas, _ = consultar({"poligono": borde, "select": ["objectid"], "geometria": "recortada"})
+    forma = json.loads(filas[0]["_geojson"])
+    assert max(x for x, _ in forma["coordinates"][0]) <= -72.9999999
 
     def rota() -> Any:
         yield [area(3, _CUADRO)]
