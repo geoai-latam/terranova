@@ -47,3 +47,15 @@ Probada en producción el 2026-11-03: Kennedy (canario); centro de Medellín (-7
 
 - **2026-11-03, revisión de valor (v2):** el año va en la respuesta, en cada clase (derivado
   `fijo`), y no solo en la ficha.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - Kennedy en Bogotá (canario): Construido 90,8 %.
+  - El Vaupés: Árboles 100 %.
+  - La bahía de Buenaventura: agua 40 %, manglar 27 %, construido 26 %. Es coherente.
+  - El Pacífico abierto (-78.5, 4.0): vacío y **sin aviso**. El conector sí sabe por qué: dice
+    «la zona no tiene píxeles de cobertura (¿mar o fuera de los datos?)». Pero la puerta lo da
+    como «no encontrado» y la razón se pierde.
+- Arreglo: un aviso de vacío en la herramienta, que dice que el punto cae en mar abierto o fuera
+  del mapa y que eso no significa que allí no haya cobertura.
