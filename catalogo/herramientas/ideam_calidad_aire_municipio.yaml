@@ -1,5 +1,5 @@
 id: ideam_calidad_aire_municipio
-version: 2
+version: 3
 familia: ambiente
 fuente: ideam.calidad_aire
 pregunta: "¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…)"
@@ -40,6 +40,12 @@ derivados:
   estaciones: {de: distintos, campo: estacion_id, tipo: int}
   series_sobre_norma_anual: {de: conteo, solo_si: {campo: supera_norma_anual, valores: ["sí"]}, tipo: int}
 salida: CalidadAireMunicipio
+avisos:
+- cuando: vacio
+  texto: >
+    El SISAIRE no tiene mediciones de PM2.5, PM10, O3, NO2, SO2 ni CO en este municipio ese año.
+    Solo los municipios con estaciones de una autoridad ambiental tienen datos. Que no haya
+    mediciones no dice nada de la calidad del aire.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en g4t8-zkc3: Medellín 2025 tiene 36 series (15 de PM2.5); la primera en el
