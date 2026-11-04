@@ -1454,3 +1454,10 @@ def test_las_adiciones_de_secop1_suman_valor_dias_y_meses() -> None:
     assert derivar_resultado(h.derivados["adicion_valor_total"], filas, None) == 30000000.0
     assert derivar_resultado(h.derivados["adicion_dias_total"], filas, None) == 118
     assert derivar_resultado(h.derivados["adicion_meses_total"], filas, None) == 0
+
+
+def test_las_multas_de_secop1_encuentran_bogota_dc() -> None:
+    """La fuente escribe «Bogotá D.C.»: con «Bogotá» salía vacío y había 632 multas (2026-11-04)."""
+    h = CATALOGO.herramientas["secop1_multas_municipio"]
+    where = renderizar(h.consulta.argumentos, {"municipio": "Bogotá"})["where"]
+    assert "upper('Bogotá D.C.')" in where and "upper('Bogotá')" in where
