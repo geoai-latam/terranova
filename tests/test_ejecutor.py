@@ -1438,3 +1438,20 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_los_vacios_de_las_alertas_y_del_aire_del_ideam() -> None:
+    """Barranquilla sin alertas en el año y Cali en 2019 sin aire volvían vacíos a secas."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    for tid, dice in [
+        ("ideam_alertas_deslizamiento_municipio", "no tuvo ninguna alerta"),
+        ("ideam_alertas_incendios_municipio", "no tuvo ninguna alerta"),
+        ("ideam_calidad_aire_municipio", "no tiene mediciones"),
+    ]:
+        h = CATALOGO.herramientas[tid]
+        avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+        assert len(avisos) == 1 and dice in avisos[0], tid
+    assert CATALOGO.fuentes["ideam.calidad_aire"].cobertura.desde_anio == 2020
