@@ -1,5 +1,5 @@
 id: esa_cobertura_suelo_en_punto
-version: 2
+version: 3
 familia: ambiente
 fuente: esa.worldcover
 pregunta: "¿Qué cobertura del suelo hay alrededor de este punto?"
@@ -20,6 +20,12 @@ consulta:
     aoi_geojson: {type: Point, coordinates: ["{lon}", "{lat}"]}
   campos: [clase, codigo, km2, porcentaje]
 salida: CoberturaSueloEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    WorldCover no tiene píxeles en el cuadro de este punto: cae en mar abierto o fuera del mapa.
+    No quiere decir que allí no haya cobertura. En la costa sí clasifica (agua permanente,
+    manglar…).
 # La clase dominante es la de mayor área (la primera fila que da el conector).
 derivados:
   clase_dominante: {de: primero, campo: clase_cobertura}
