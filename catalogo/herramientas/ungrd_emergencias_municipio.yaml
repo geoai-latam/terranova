@@ -1,13 +1,14 @@
 id: ungrd_emergencias_municipio
-version: 2
+version: 3
 familia: ambiente
 fuente: ungrd.emergencias
-pregunta: "¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron?"
+pregunta: "¿Qué emergencias tuvo este municipio en 2025 y qué afectaciones dejaron?"
 descripcion: >
-  Emergencias que la UNGRD registró en un municipio (DIVIPOLA) desde 2025: fecha, tipo de evento
+  Emergencias que la UNGRD registró en un municipio (DIVIPOLA) en 2025: fecha, tipo de evento
   (inundación, movimiento en masa, incendio…), muertos, heridos, desaparecidos, personas y familias
   afectadas, viviendas destruidas y averiadas, y vías afectadas. Una fila por emergencia (la fuente
-  publica cada una dos veces y aquí se cuenta una). Los años anteriores a 2025 no están en esta fuente.
+  publica cada una dos veces y aquí se cuenta una), de la más antigua a la más reciente. La fuente
+  trae solo 2025, del 1 de enero al 31 de diciembre: ni los años anteriores ni 2026 están.
   (Fuente: UNGRD; licencia: CC BY 4.0.)
 entrada: {municipio_divipola: divipola}
 consulta:
@@ -26,6 +27,16 @@ derivados:
   numero_registros: {de: conteo, tipo: int}
   total_muertos: {de: suma, campo: muertos, tipo: int}
 salida: EmergenciasMunicipio
+avisos:
+- cuando: vacio
+  texto: >
+    La UNGRD no registró ninguna emergencia en este municipio en 2025. La fuente trae solo 2025:
+    las emergencias de 2026 y las de años anteriores no están, así que esto no dice nada de
+    ellas.
+- cuando: encontrado
+  texto: >
+    Son las emergencias de 2025, el único año que trae la fuente (actualizada en septiembre de
+    2026). Las de 2026 no están.
 cobro: codigo
 canario:
   # Medido el 2026-10-28 en 2343-nuqp: Medellín (05001) tuvo 9 emergencias distintas en 2025 (18
