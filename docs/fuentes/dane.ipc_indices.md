@@ -1,8 +1,9 @@
 # DANE: índice de precios al consumidor (`dane.ipc_indices`)
 
-El anexo de índices del IPC (`anex-IPC-Indices-<mes><año>.xlsx`, hoja «IndicesIPC»). Términos del
-DANE: uso libre citando «Fuente: DANE». Terrnova lo **copia** (ADR-0024): el DANE responde 403 al
-servidor, y la copia se baja desde Colombia.
+El anexo de índices del IPC (`anex-IPC-Indices-<mes><año>.xlsx`, hoja «IndicesIPC»). Términos de
+dane.gov.co, verificados el 2026-11-04 (ADR-0039): verde, con la cita textual «Fuente: Departamento
+Administrativo Nacional de Estadística: www.dane.gov.co». Terrnova lo **copia** (ADR-0024): el DANE
+responde 403 al servidor, y la copia se baja desde Colombia.
 
 | Fuente | Origen | Herramientas |
 |---|---|---|

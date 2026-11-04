@@ -72,17 +72,20 @@
 - id: dane.mgn_y_cnpv2018
   entidad: Departamento Administrativo Nacional de Estadística (DANE)
   url: https://portalgis.dane.gov.co/mparcgis/rest/services/MGN2025/Serv_CapasMGN_2025/MapServer
-  licencia: {spdx: null}
-  uso_comercial: por_verificar
-  redistribucion: por_verificar
+  licencia: {spdx: CC-BY-4.0, url: https://creativecommons.org/licenses/by/4.0/}
+  uso_comercial: si
+  redistribucion: si
   evidencia:
-    url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-    cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual"
-  decision: evaluacion
+    url: https://geoportal.dane.gov.co/acerca-del-geoportal/licencia-y-condiciones-de-uso/
+    cita: "El DANE ofrece la descarga y uso de información georreferenciada producida por la entidad bajo una licencia Creative Commons, reservando el derecho de autor sobre la obra"
+  decision: produccion
   notas: >
-    No es una licencia abierta: es una «licencia de usuario final» con cita obligatoria que no
-    menciona la redistribución. La parte de población de la ficha usa WorldPop hasta que DANE
-    responda por escrito (F0.8). Solo agregados (reserva estadística).
+    Verificada el 2026-11-04 (ADR-0039). La licencia del Geoportal es distinta de los términos de
+    dane.gov.co, que eran los que se habían leído aquí. Enlaza a CC BY 4.0 y fija la atribución
+    «Departamento Administrativo Nacional de Estadística - DANE: www.dane.gov.co». La reserva del
+    derecho de autor es la normal de una licencia CC; no restringe el uso comercial ni la
+    redistribución. Los manuales PDF del MGN prohíben reproducirlos, pero eso cubre el documento y
+    no las capas. Solo agregados (reserva estadística).
 
 - id: upra.datos_abiertos
   entidad: Unidad de Planificación Rural Agropecuaria (UPRA)

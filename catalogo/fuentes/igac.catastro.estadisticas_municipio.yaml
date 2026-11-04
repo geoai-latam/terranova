@@ -2,17 +2,16 @@ id: igac.catastro.estadisticas_municipio
 titulo: Estadísticas catastrales por municipio del IGAC (predios, áreas y avalúos por año y zona)
 entidad: Instituto Geográfico Agustín Codazzi (IGAC)
 competencia: gestor catastral de los municipios sin gestor propio (Ley 1955 de 2019, art. 79)
-acto: null
-# El ítem de ArcGIS Online no declara licencia (consultado el 2026-10-22). Son estadísticas
-# catastrales agregadas por municipio (sin datos personales), de una entidad pública, sin reserva ni
-# prohibición de uso: dato público reutilizable (ADR-0019 enmienda: ámbar, sirve con aviso). Si el
-# IGAC confirma por escrito que aplica la Res. 616/2020 (CC BY 4.0), pasa a verde (F0.8).
+acto: Resolución 616 de 2020
+# El ítem de ArcGIS Online (organización del IGAC, RVvWzU3lgJISqdke) trae licenseInfo vacío; manda
+# la Res. 616 de 2020 (art. 3: catastro; art. 7: CC BY 4.0), como en la agrología. Ver
+# catalogo/licencias/m1.yaml, entrada igac.res616.datos_abiertos. Revisado el 2026-11-04.
 licencia:
-  spdx: null
-  url: null
-  verificada: null
-  evidencia: https://www.arcgis.com/sharing/rest/content/items/61b10dc94329461094419a32e129415e?f=json
-  cita: "licenseInfo vacío"
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-04
+  evidencia: https://www.igac.gov.co/sites/default/files/transparencia/normograma/resolucion_616_de_2020.pdf
+  cita: "ARTÍCULO 7º. LICENCIA CREATIVE COMMONS CC-BY 4.0. Se adopta la Licencia Creative Commons CC-BY 4.0"
 uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: IGAC, Estadísticas catastrales municipales"
@@ -26,7 +25,7 @@ frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
 cobertura: {pais: CO, columna_tiempo: VIGENCIA_DE_INFORMACIÓN__AÑO_DE_REPORTE_}
 datos_personales: ninguno  # agregados municipales
 estado: publicada
-clasificacion_licencia: ambar
+clasificacion_licencia: verde
 campos:
   MpCodigo: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
   MUNICIPIO: {nombre: municipio, tipo: str, desc: "nombre del municipio"}

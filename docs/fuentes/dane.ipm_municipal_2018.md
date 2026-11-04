@@ -1,9 +1,9 @@
 # DANE: pobreza multidimensional municipal, censo 2018 (`dane.ipm_municipal_2018*`)
 
-El anexo censal de pobreza municipal 2018 del DANE
-(`anexo-censal-pobreza-municipal-2018.xlsx`). Términos del DANE: uso libre citando «Fuente: DANE».
-Terrnova lo **copia** (ADR-0024): el DANE responde 403 al datacenter, así que la copia se baja desde
-Colombia.
+El anexo censal de pobreza municipal 2018 del DANE (`anexo-censal-pobreza-municipal-2018.xlsx`).
+Términos de dane.gov.co, verificados el 2026-11-04 (ADR-0039): verde, con la cita textual «Fuente:
+Departamento Administrativo Nacional de Estadística: www.dane.gov.co». Terrnova lo **copia**
+(ADR-0024): el DANE responde 403 al datacenter, así que la copia se baja desde Colombia.
 
 | Fuente | Hoja | Herramientas |
 |---|---|---|

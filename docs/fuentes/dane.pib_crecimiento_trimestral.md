@@ -1,9 +1,10 @@
 # DANE: crecimiento del PIB trimestral (`dane.pib_crecimiento_trimestral`)
 
 El anexo de producción a precios constantes de las cuentas nacionales trimestrales
-(`anex-ProduccionConstantes-<trimestre>trim<año>.xlsx`, hoja «Cuadro 1»). Términos del DANE: uso
-libre citando «Fuente: DANE». Terrnova lo **copia** (ADR-0024): el DANE responde 403 al servidor, y
-la copia se baja desde Colombia.
+(`anex-ProduccionConstantes-<trimestre>trim<año>.xlsx`, hoja «Cuadro 1»). Términos de dane.gov.co,
+verificados el 2026-11-04 (ADR-0039): verde, con la cita textual «Fuente: Departamento
+Administrativo Nacional de Estadística: www.dane.gov.co». Terrnova lo **copia** (ADR-0024): el DANE
+responde 403 al servidor, y la copia se baja desde Colombia.
 
 | Fuente | Origen | Herramientas |
 |---|---|---|

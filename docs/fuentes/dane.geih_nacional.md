@@ -1,8 +1,9 @@
 # DANE: mercado laboral, total nacional (`dane.geih_nacional`)
 
-El anexo mensual de la Gran Encuesta Integrada de Hogares (GEIH), hoja «Total nacional». Términos
-del DANE: uso libre citando «Fuente: DANE». Terrnova lo **copia** (ADR-0024): el DANE responde 403 a
-la IP del servidor, y la copia se baja a mano desde Colombia.
+El anexo mensual de la Gran Encuesta Integrada de Hogares (GEIH), hoja «Total nacional». Términos de
+dane.gov.co, verificados el 2026-11-04 (ADR-0039): verde, con la cita textual «Fuente: Departamento
+Administrativo Nacional de Estadística: www.dane.gov.co». Terrnova lo **copia** (ADR-0024): el DANE
+responde 403 a la IP del servidor, y la copia se baja a mano desde Colombia.
 
 | Fuente | Origen | Herramientas |
 |---|---|---|

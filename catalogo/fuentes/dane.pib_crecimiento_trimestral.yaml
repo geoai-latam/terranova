@@ -3,16 +3,19 @@ titulo: "Crecimiento anual del PIB trimestral por actividad económica (DANE, cu
 entidad: Departamento Administrativo Nacional de Estadística (DANE)
 competencia: produce las estadísticas oficiales (Decreto 262 de 2004), entre ellas las cuentas nacionales
 acto: null
-# Términos del DANE: uso libre citando «Fuente: DANE» (como el resto de anexos del DANE).
+# Términos de dane.gov.co (ADR-0039), cláusula 2: uso, aprovechamiento, transformación y análisis
+# con la cita textual. La prohibición de comercializar (cláusula 1) recae sobre el DANE y sus
+# servidores, no sobre el usuario; las cifras son hechos (Decisión Andina 351). Son anexos
+# publicados, no microdatos.
 licencia:
   spdx: LicenseRef-dane-terminos
   url: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  verificada: null
+  verificada: 2026-11-04
   evidencia: https://www.dane.gov.co/index.php/terminos-y-condiciones
-  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis… siempre y cuando se haga la cita textual «Fuente: DANE»"
+  cita: "Se autoriza el uso, aprovechamiento, transformación y análisis de la información contenida en esta portal, siempre y cuando se haga la siguiente cita textual: “Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co”"
 uso_comercial: si
 clase_acceso: bulk
-atribucion: "Fuente: DANE, PIB_T (cuentas nacionales trimestrales)"
+atribucion: "Fuente: Departamento Administrativo Nacional de Estadística: www.dane.gov.co. PIB_T (cuentas nacionales trimestrales)"
 protocolo: archivo
 # Copia (ADR-0024, origen conector): el DANE responde 403 al datacenter, así que el anexo se baja
 # desde Colombia con `web_tabla`. El archivo cambia de nombre cada trimestre
@@ -41,7 +44,7 @@ frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
 cobertura: {pais: CO, periodo: "primer trimestre de 2006 al último publicado"}
 datos_personales: ninguno
 estado: publicada
-clasificacion_licencia: ambar
+clasificacion_licencia: verde
 campos:
   Concepto: {nombre: actividad, tipo: str, desc: "Producto Interno Bruto, Valor agregado bruto, impuestos o una de las 12 agrupaciones de actividades (CIIU Rev. 4)"}
   columna: {nombre: anio, tipo: str, desc: "año; «2025pr» es preliminar y «p», provisional"}

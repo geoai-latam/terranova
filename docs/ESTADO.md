@@ -38,7 +38,7 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
      Routing).
   3. La revisión legal de los términos y la privacidad, para publicarlos con el SLA.
   4. El token de Copernicus para ERA5-Land, que reemplaza a Open-Meteo.
-  5. Decisiones abiertas: la base legal de las licencias DANE para los planes de pago, la DIAN
+  5. Decisiones abiertas: la DIAN
      («sin fines de lucro»), los excedentes de créditos y la URL de Inspow.
 - **Huecos conocidos de fuentes (no son tareas):**
   - La deforestación del IDEAM solo sale en PDF.
@@ -47,6 +47,29 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Licencias del DANE y del IGAC (2026-11-04, ADR-0039)
+
+- **El DANE tiene tres regímenes, no uno** (ADR-0039, leídos en la fuente el 2026-11-04):
+  - El Geoportal declara CC BY 4.0 para la información georreferenciada del DANE. Cubre el MGN y el
+    CNPV integrado.
+  - Los términos de dane.gov.co autorizan el uso con la cita textual. La prohibición de
+    comercializar recae sobre la entidad, no sobre el usuario.
+  - Los microdatos solo salen agregados. El comex ya los agrega al copiarlos.
+- **Catálogo:**
+  - `dane.cnpv2018.municipio` pasa a CC BY 4.0.
+  - Los 8 anexos quedan con `LicenseRef-dane-terminos` verificada y la cita exacta.
+  - Las 9 pasan de ámbar a verde.
+  - El MGN pasa a `produccion` en `catalogo/licencias/m1.yaml`.
+  - La ADR-0038 ya no deja al DANE fuera de la exportación.
+- **IGAC:** `igac.catastro.estadisticas_municipio` pasa de ámbar a CC BY 4.0 por la Res. 616 de
+  2020 (art. 3, catastro), igual que la agrología. El ítem es de la organización del IGAC y su
+  `licenseInfo` está vacío.
+- **Revisión de licencias de todo el catálogo:**
+  - Quedan en ámbar las dos relatorías de la ANCP (conceptos y providencias). No declaran licencia,
+    y un concepto no es un acto administrativo del art. 41 de la Ley 23 de 1982.
+  - La DIAN aduanera sigue con `uso_comercial: no`, pendiente de la revisión legal.
+- **Siguiente:** los límites del MGN con geometría, como copia bajada desde Colombia.
 
 ## Despliegue y cierre de la revisión de valor (2026-11-04, `main` en #350)
 
