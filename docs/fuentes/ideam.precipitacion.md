@@ -59,3 +59,12 @@ Una estación puede tener dos sensores de lluvia:
   - `mm` sale con dos decimales.
 - **Pendiente: un complemento que corra con el resultado vacío** para decir la fecha de la última
   observación de la estación (plan de producto, B5).
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - Universidad de la Sabana (2120500135), del 25-10 al 03-11: 6,0 mm el 28-10 y 0,0 los otros
+    días. Se comprobó en la fuente: son 11 lecturas que suman exactamente 6,0.
+  - Almaviva (convencional): vacío, con el aviso correcto.
+- Lo mismo que en el nivel: son datos crudos sin validar, y eso no se decía. Ahora lleva un aviso
+  con datos.

@@ -1,11 +1,12 @@
 id: ideam_nivel_rio_diario_estacion
-version: 2
+version: 3
 familia: ambiente
 fuente: ideam.nivel_rio
 pregunta: "¿Cómo estuvo el nivel del río cada día en esta estación del IDEAM?"
 descripcion: >
   Nivel del río por día (metros) en una estación hidrológica del IDEAM entre dos fechas: promedio,
-  mínimo y máximo de las lecturas del día, por sensor, con el número de lecturas (un día con pocas
+  mediana, mínimo y máximo de las lecturas del día (son crudas, sin validar: un pico del sensor
+  sube el máximo y el promedio, no la mediana), por sensor, con el número de lecturas (un día con pocas
   tuvo huecos). El nivel se mide sobre el cero de la mira de cada estación: sirve para ver si el río
   sube o baja en esa estación, no para comparar estaciones ni es la profundidad. El código de la
   estación tiene 10 dígitos con ceros a la izquierda (ideam_estaciones_en_zona lo da). Rangos cortos:
@@ -20,7 +21,7 @@ consulta:
   argumentos:
     id: bdmn-sqnh
     portal: datos.gov.co
-    select: "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas"
+    select: "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, date_trunc_ymd(fechaobservacion) AS dia, avg(valorobservado) AS promedio, median(valorobservado) AS mediana, min(valorobservado) AS minimo, max(valorobservado) AS maximo, count(*) AS lecturas"
     where: "codigoestacion = '{codigo_estacion}' AND fechaobservacion between '{desde}T00:00:00' and '{hasta}T23:59:59'"
     group: "codigoestacion, nombreestacion, municipio, departamento, zonahidrografica, codigosensor, descripcionsensor, unidadmedida, dia"
     order: "dia, codigosensor"
@@ -29,6 +30,8 @@ consulta:
 derivados:
   dia: {de: columna, campo: dia, tipo: date}
   promedio_m: {de: columna, campo: promedio, tipo: float, decimales: 2}
+  # la mediana no la mueve un pico del sensor (4,1 m entre lecturas de 2 m, medido 2026-11-04)
+  mediana_m: {de: columna, campo: mediana, tipo: float, decimales: 2}
   minimo_m: {de: columna, campo: minimo, tipo: float, decimales: 2}
   maximo_m: {de: columna, campo: maximo, tipo: float, decimales: 2}
   lecturas: {de: columna, campo: lecturas, tipo: int}
@@ -41,6 +44,12 @@ avisos:
     automáticas del IDEAM: si la estación es convencional, o está suspendida, no aparece aunque
     exista. ideam_estaciones_en_zona dice su tecnología, si está activa y desde cuándo está
     suspendida. Las lecturas llegan con un día de retraso.
+- cuando: encontrado
+  texto: >
+    Son lecturas crudas de los sensores, sin validar por el IDEAM: pueden traer errores por fuera de
+    lo normal (un máximo que salta y vuelve en una hora es un pico del sensor, no una creciente;
+    compare con mediana_m). El IDEAM advierte que no sirven como prueba jurídica; los datos
+    validados salen por sus canales oficiales (DHIME).
 salida: NivelRioDiarioEstacion
 cobro: agregado
 canario:
@@ -48,5 +57,5 @@ canario:
   # nivel de 2,94 a 3,11 m en 24 lecturas (promedio 3,00 m).
   entrada: {codigo_estacion: "0026207080", desde: "2026-10-20", hasta: "2026-10-20"}
   verdad: {codigo_sensor: "0230", promedio_m: 3.0, minimo_m: 2.94, maximo_m: 3.11, lecturas: 24, dias_con_datos: 1, ultimo_dia: "2026-10-20"}
-  campos: [codigo_estacion, codigo_sensor, departamento, dia, dias_con_datos, estacion, lecturas, maximo_m, minimo_m, municipio, promedio_m, sensor, ultimo_dia, unidad, zona_hidrografica]
+  campos: [codigo_estacion, codigo_sensor, departamento, dia, dias_con_datos, estacion, lecturas, maximo_m, mediana_m, minimo_m, municipio, promedio_m, sensor, ultimo_dia, unidad, zona_hidrografica]
   latencia_max_ms: 15000
