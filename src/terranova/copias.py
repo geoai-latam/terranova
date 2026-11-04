@@ -555,7 +555,11 @@ def descargar_arcgis(
 
     import httpx
 
-    assert fuente.copia is not None and fuente.copia.capa is not None
+    assert fuente.copia is not None
+    if fuente.copia.servicios:
+        yield from descargar_arcgis_servicios(fuente, desde, cliente=cliente, pausa_s=pausa_s)
+        return
+    assert fuente.copia.capa is not None
     copia = fuente.copia
     url = f"{fuente.url}/{copia.capa}/query"
     columnas = list(fuente.campos)
@@ -632,6 +636,76 @@ def descargar_arcgis(
             raise ErrorCopia(
                 f"la capa dice {esperado} elementos y llegaron {vistos}: la copia no se publica"
             )
+    finally:
+        if propio:
+            http.close()
+
+
+POR_SERVICIO = 1_000_000  # la clave de la copia: posición del servicio por esto + el id en su capa
+
+
+def descargar_arcgis_servicios(
+    fuente: Fuente, desde: date | None = None, *, cliente: Any = None, pausa_s: float | None = None
+) -> Iterator[list[dict[str, Any]]]:
+    """Varias capas ArcGIS en una sola copia (`copia.servicios`), una tras otra.
+
+    Cada capa nombra a su manera las mismas columnas (los POMCA de la CAR: `CAT_ORD`, `CAT_ORD_A`
+    o `CATEGORIA`) y tiene su propio campo de id (`OBJECTID`, `OBJECTID_1`, `FID`). Se leen los
+    campos de la capa, cada columna de la copia toma el primero de sus nombres (el suyo y sus
+    `alias`) que la capa tenga, y la capa se baja con `descargar_arcgis`, con su verificación del
+    conteo. La fila lleva el valor del servicio en `columna_servicio` y una clave única en toda la
+    copia."""
+    import httpx
+
+    assert fuente.copia is not None and fuente.copia.columna_servicio is not None
+    copia = fuente.copia
+    columna_servicio: str = fuente.copia.columna_servicio
+    propias = {copia.clave, columna_servicio}
+    propio = cliente is None
+    http = cliente or httpx.Client(timeout=600, headers={"User-Agent": "terranova-copias/1"})
+    try:
+        for posicion, (ruta, valor) in enumerate(copia.servicios.items(), start=1):
+            servicio, _, capa = ruta.rpartition("/")
+            meta = _pedir_arcgis(http, f"{fuente.url}/{ruta}", {"f": "json"})
+            nombres = {str(c.get("name")) for c in meta.get("fields") or []}
+            id_capa = str(meta.get("objectIdField") or "OBJECTID")
+            origen = {}  # columna de la copia → nombre en esta capa
+            for columna, campo in fuente.campos.items():
+                if columna in propias:
+                    continue
+                hallado = next((n for n in (columna, *campo.alias) if n in nombres), None)
+                if hallado is None:
+                    raise ErrorCopia(f"{ruta}: no tiene «{columna}» ni sus alias {campo.alias}")
+                origen[columna] = hallado
+            campos = {n: fuente.campos[c] for c, n in origen.items()}
+            campos[id_capa] = fuente.campos[copia.clave]
+            una = fuente.model_copy(
+                update={
+                    "url": f"{fuente.url}/{servicio}",
+                    "campos": campos,
+                    "copia": copia.model_copy(
+                        update={
+                            "capa": int(capa),
+                            "clave": id_capa,
+                            "servicios": {},
+                            "columna_servicio": None,
+                        }
+                    ),
+                }
+            )
+            for pagina in descargar_arcgis(una, desde, cliente=http, pausa_s=pausa_s):
+                filas = []
+                for fila in pagina:
+                    id_fila = int(fila[id_capa])
+                    if not 0 <= id_fila < POR_SERVICIO:
+                        raise ErrorCopia(f"{ruta}: el id {id_fila} no cabe en la clave de la copia")
+                    nueva = {c: fila.get(n) for c, n in origen.items()}
+                    nueva[copia.clave] = posicion * POR_SERVICIO + id_fila
+                    nueva[columna_servicio] = valor
+                    if copia.espacial:
+                        nueva[GEOMETRIA] = fila.get(GEOMETRIA)
+                    filas.append(nueva)
+                yield filas
     finally:
         if propio:
             http.close()

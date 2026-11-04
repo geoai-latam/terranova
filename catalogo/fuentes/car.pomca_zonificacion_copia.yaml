@@ -1,0 +1,68 @@
+id: car.pomca_zonificacion_copia
+titulo: "Zonificación ambiental de los POMCA de la CAR (nueve cuencas), copia para cruzar con un polígono"
+entidad: Corporación Autónoma Regional de Cundinamarca (CAR)
+competencia: ordena y maneja las cuencas de su jurisdicción con el POMCA (Decreto 1640 de 2012, hoy en el Decreto 1076 de 2015)
+acto: null  # cada POMCA tiene su resolución de adopción (el del río Bogotá, la Resolución CAR 957 de 2019)
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/51959f1d58964e638e2ce7de554e6f9d?f=json
+  cita: "licenseInfo de los nueve ítems: «Esta obra está bajo una Licencia Creative Commons Atribución 4.0 Internacional»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR), zonificación ambiental de los POMCA"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024) de las mismas nueve capas que car.pomca_zonificacion sirve en vivo por
+# punto: para cruzar la zonificación con el polígono de un lote hace falta la geometría completa
+# (548 908 zonas con el Sumapaz; 172 069 solo en el río Negro, medido el 2026-11-03). Sin
+# simplificar: cada zona se simplificaría por su lado y entre vecinas quedarían huecos y traslapes,
+# que falsean el área dentro del lote. El Sumapaz va en su propia copia (licencia sin declarar).
+conector: copia
+url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    Zonificacion_POMCA_Bogota_2120_2019/FeatureServer/0: río Bogotá
+    Zonificaci%C3%B3n_Ambiental_POMCA_Carare/FeatureServer/0: río Carare-Minero
+    Zonificaci%C3%B3n_Ambiental_POMCA_Rio_Garagoa_y_Macheta/FeatureServer/0: río Garagoa
+    Zonificacion_Ambiental_POMCA_Rio_Negro_2022_2306/FeatureServer/2: río Negro
+    Zonificacion_POMCA_AltoSuarez/FeatureServer/0: río Alto Suárez
+    Zonificacion_POMCA_MedioBajoSuarez/FeatureServer/0: río Medio y Bajo Suárez
+    Zonificacion_POMCA_Seco/FeatureServer/0: río Seco y otros directos al Magdalena
+    ZonificacionAmbiental_POMCA_Guavio/FeatureServer/0: río Guavio
+    ZonificacionAmbiental_POMCA_Guayuriba/FeatureServer/0: río Guayuriba
+  columna_servicio: CUENCA
+  tabla: car_pomca_zonificacion
+  clave: ID_ZONA
+  por_pagina: 1000
+  indices: [CUENCA]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  rectangulo: [-74.95, 3.6, -72.9, 6.1]
+  excluye: []  # solo las nueve cuencas (lo dice la descripción de la herramienta)
+  periodo: "POMCA vigentes de la jurisdicción de la CAR (2019-2023)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  ID_ZONA: {nombre: id_zona, tipo: int, desc: "identificador de la zona en la copia: posición de la cuenca × 1 000 000 + su id en la capa (cambia si la CAR republica)"}
+  CUENCA: {nombre: cuenca, tipo: str, desc: "cuenca del POMCA (una capa por cuenca)"}
+  CAT_ORD: {nombre: categoria_ordenacion, tipo: str, desc: "categoría de ordenación: conservación y protección ambiental, o uso múltiple", alias: [CAT_ORD_A, CATEGORIA]}
+  ZO_US_MA: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)", alias: [ZO_US_M_A, ZONA]}
+  SZO_US_M: {nombre: subzona_uso_manejo, tipo: str, desc: "subzona de uso y manejo", alias: [SZO_US_M_A, SUBZONA]}
+  NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, ARUM…); algunas capas la dejan en blanco", alias: [FIRST_NOMENCLAT]}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: CAR, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-03
+  fila: "un polígono de zonificación ambiental; 516 999 en las nueve cuencas (de 33 en Alto Suárez a 172 069 en el río Negro)"
+  clave: {columna: ID_ZONA, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.2}
+  hallazgos:
+  - "cada capa tiene su campo de id: OBJECTID_1 (río Bogotá, Garagoa, Alto Suárez), FID (Guavio) u OBJECTID (las demás)"
+  - "las capas llaman a la categoría CAT_ORD, CAT_ORD_A o CATEGORIA (en el río Seco, FIRST_CAT_ORD es un código y CATEGORIA el texto)"
+  - "1 000 zonas del río Negro traen 128 763 vértices (2,9 MB en GeoJSON); simplificadas a ~5 m, 16 204 (459 KB)"
+  decision: "copia espacial completa de las nueve capas en una tabla, para el área de cada zona dentro de un polígono"

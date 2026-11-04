@@ -1,0 +1,52 @@
+id: car_pomca_en_poligono
+version: 1
+familia: ambiente
+fuente: car.pomca_zonificacion_copia
+pregunta: "¿Qué zonificación ambiental del POMCA de la CAR tiene este lote, y cuántas hectáreas de cada zona?"
+descripcion: >
+  Zonificación ambiental de los Planes de Ordenación y Manejo de Cuenca (POMCA) de la CAR dentro de
+  un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado), en nueve
+  cuencas: río Bogotá, Carare-Minero, Garagoa, río Negro, Alto Suárez, Medio y Bajo Suárez, río Seco
+  y otros directos al Magdalena, Guavio y Guayuriba. Cada zona que toca el polígono trae su cuenca,
+  la categoría de ordenación (conservación y protección ambiental, o uso múltiple), la zona y la
+  subzona de uso y manejo con su sigla, y las hectáreas que caen dentro (area_ha), de la más grande
+  a la más pequeña, con el polígono de la zona simplificado a ~55 m para verla en un mapa. El
+  resultado suma las hectáreas por subzona, por categoría y en total. Es determinante ambiental del
+  ordenamiento municipal. Sale de la copia de Terrnova, con la geometría completa de la CAR. Para la
+  cuenca del río Sumapaz, car_pomca_rio_sumapaz_en_poligono; para un punto, car_pomca_en_punto.
+  (Fuente: CAR Cundinamarca; licencia: CC BY 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: car_pomca_zonificacion
+    poligono: "{poligono}"
+    select: [CUENCA, CAT_ORD, ZO_US_MA, SZO_US_M, NOMENCLAT, ID_ZONA]
+    geometria: simplificada
+    area_en_poligono: true
+    order: ["-_area_ha", ID_ZONA]
+    limite: 1000
+  campos: [CUENCA, CAT_ORD, ZO_US_MA, SZO_US_M, NOMENCLAT, ID_ZONA]
+salida: PomcaCarEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
+  area_ha_por_subzona: {de: suma_por, campo: subzona_uso_manejo, sumar: area_ha, decimales: 2}
+  area_ha_por_categoria: {de: suma_por, campo: categoria_ordenacion, sumar: area_ha, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca ninguna de las nueve cuencas de esta herramienta. Si está en la cuenca del río Sumapaz (Fusagasugá, Arbeláez, Pasca, Silvania, Melgar…), su POMCA sale en car_pomca_rio_sumapaz_en_poligono. Si no, está fuera de los POMCA que la CAR publica.
+cobro: zona
+canario:
+  # Medido el 2026-11-04 en la copia (548 908 zonas): este cuadro de Chía (~123 ha) toca 13 zonas del
+  # río Bogotá que suman 122,66 ha; la mayor es agrosilvopastoril (PSI), 59,341 ha.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.031, 4.857], [-74.021, 4.857], [-74.021, 4.867], [-74.031, 4.867], [-74.031, 4.857]]]
+  verdad: {cuenca: "río Bogotá", sigla: PSI, area_ha: 59.341, id_zona: 1011375}
+  campos: [area_ha, area_ha_por_categoria, area_ha_por_subzona, area_ha_total, categoria_ordenacion, cuenca, id_zona, sigla, subzona_uso_manejo, total, zona_uso_manejo]
+  latencia_max_ms: 8000

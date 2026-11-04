@@ -1,0 +1,7 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: car.pomca_rio_sumapaz_copia
+metodo: cosechado
+cosechado: '2026-11-03'
+origen: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer?f=json
+descripcion: Contiene la Zonificación Ambiental del Plan de Ordenación y Manejo de la Cuenca del Río Sumapaz,
+  Subzona Hidrográfica con código 2119, Adoptado mediante Resolución CAR 149 de 2023.

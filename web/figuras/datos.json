@@ -1,7 +1,7 @@
 {
  "capas": {
-  "fuentes": 177,
-  "herramientas": 219,
+  "fuentes": 179,
+  "herramientas": 221,
   "familias": [
    [
     "Estadísticas",
@@ -21,7 +21,7 @@
    ],
    [
     "Ambiente",
-    22
+    24
    ],
    [
     "Empresas",
@@ -88,11 +88,11 @@
    7,
    6,
    5,
+   5,
    4,
    4,
    4,
    4,
-   3,
    3,
    3,
    3,

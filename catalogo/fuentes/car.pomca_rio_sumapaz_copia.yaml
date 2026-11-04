@@ -1,0 +1,55 @@
+id: car.pomca_rio_sumapaz_copia
+titulo: "Zonificación ambiental del POMCA del río Sumapaz (CAR), copia para cruzar con un polígono"
+entidad: Corporación Autónoma Regional de Cundinamarca (CAR)
+competencia: ordena y maneja las cuencas de su jurisdicción con el POMCA (Decreto 1640 de 2012, hoy en el Decreto 1076 de 2015)
+acto: Resolución CAR 149 de 2023
+# El ítem no declara licencia (licenseInfo vacío, ni la organización de la CAR en ArcGIS Online), a
+# diferencia de los otros nueve POMCA (CC BY 4.0): se trata como CC BY-SA 4.0 (ADR-0019) hasta que
+# la CAR lo confirme.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-28
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/d00420d48a5142a2940bf11b567c791b?f=json
+  cita: "licenseInfo vacío; se trata como CC BY-SA 4.0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Corporación Autónoma Regional de Cundinamarca (CAR), POMCA del río Sumapaz"
+protocolo: arcgis_rest
+# Copia espacial (ADR-0024) de la capa que car.pomca_rio_sumapaz sirve en vivo por punto, para
+# cruzarla con el polígono de un lote. Completa, sin simplificar (31 909 zonas, medido el
+# 2026-11-03). Va aparte de las otras nueve cuencas: su licencia no está declarada.
+conector: copia
+url: https://services6.arcgis.com/yq6pe3Lw2oWFjWtF/arcgis/rest/services/Zonificaci%C3%B3n_Ambiental_POMCA_R%C3%ADo_Sumapaz/FeatureServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: car_pomca_rio_sumapaz
+  clave: OBJECTID
+  por_pagina: 1000
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P1Y}
+cobertura:
+  pais: CO
+  rectangulo: [-74.95, 3.6, -72.9, 6.1]
+  excluye: []  # solo la cuenca del río Sumapaz (lo dice la descripción)
+  periodo: "POMCA vigente del río Sumapaz (2023)"
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_zona, tipo: int, desc: "identificador de la zona en la capa (cambia si la CAR republica)"}
+  T_CAT_ORD: {nombre: categoria_ordenacion, tipo: str, desc: "categoría de ordenación: conservación y protección ambiental, o uso múltiple"}
+  T_ZON_USO: {nombre: zona_uso_manejo, tipo: str, desc: "zona de uso y manejo (áreas protegidas, de protección, de restauración, de producción, urbanas)"}
+  T_SUBZON_USO: {nombre: subzona_uso_manejo, tipo: str, desc: "subzona de uso y manejo"}
+  NOMENCLAT: {nombre: sigla, tipo: str, desc: "sigla de la subzona (ZU, AIA…)"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: CAR, theme: ambiente}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-03
+  fila: "un polígono de zonificación ambiental; 31 909 en la cuenca del río Sumapaz"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.4, contar: 0.2}
+  hallazgos:
+  - "no trae descripción de la subzona, solo la sigla"
+  decision: "copia espacial completa, para el área de cada zona dentro de un polígono"

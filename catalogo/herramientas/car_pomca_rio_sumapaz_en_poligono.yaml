@@ -1,0 +1,50 @@
+id: car_pomca_rio_sumapaz_en_poligono
+version: 1
+familia: ambiente
+fuente: car.pomca_rio_sumapaz_copia
+pregunta: "¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este lote, y cuántas hectáreas de cada zona?"
+descripcion: >
+  Zonificación ambiental del POMCA del río Sumapaz (CAR, Resolución 149 de 2023) dentro de un
+  polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): Fusagasugá,
+  Arbeláez, Pasca, Silvania, Melgar y el resto de la cuenca. Cada zona que toca el polígono trae la
+  categoría de ordenación, la zona y la subzona de uso y manejo con su sigla, y las hectáreas que
+  caen dentro (area_ha), de la más grande a la más pequeña, con el polígono de la zona simplificado
+  a ~55 m para verla en un mapa. El resultado suma las hectáreas por subzona, por categoría y en
+  total. Sale de la copia de Terrnova, con la geometría completa de la CAR. Para las otras nueve
+  cuencas de la CAR, car_pomca_en_poligono.
+  (Fuente: CAR Cundinamarca; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: car_pomca_rio_sumapaz
+    poligono: "{poligono}"
+    select: [T_CAT_ORD, T_ZON_USO, T_SUBZON_USO, NOMENCLAT, OBJECTID]
+    geometria: simplificada
+    area_en_poligono: true
+    order: ["-_area_ha", OBJECTID]
+    limite: 1000
+  campos: [T_CAT_ORD, T_ZON_USO, T_SUBZON_USO, NOMENCLAT, OBJECTID]
+salida: PomcaSumapazEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
+  area_ha_por_subzona: {de: suma_por, campo: subzona_uso_manejo, sumar: area_ha, decimales: 2}
+  area_ha_por_categoria: {de: suma_por, campo: categoria_ordenacion, sumar: area_ha, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca la cuenca del río Sumapaz. Para las otras nueve cuencas de la CAR (río Bogotá, río Negro, Guavio…), car_pomca_en_poligono. Si no está en ninguna, está fuera de los POMCA que la CAR publica.
+cobro: zona
+canario:
+  # Medido el 2026-11-04 en la copia (31 909 zonas): este cuadro del casco urbano de Fusagasugá
+  # cae entero en una zona urbana (ZU), 122,748 ha.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.37, 4.33], [-74.36, 4.33], [-74.36, 4.34], [-74.37, 4.34], [-74.37, 4.33]]]
+  verdad: {sigla: ZU, area_ha: 122.748, id_zona: 31908}
+  campos: [area_ha, area_ha_por_categoria, area_ha_por_subzona, area_ha_total, categoria_ordenacion, id_zona, sigla, subzona_uso_manejo, total, zona_uso_manejo]
+  latencia_max_ms: 8000
