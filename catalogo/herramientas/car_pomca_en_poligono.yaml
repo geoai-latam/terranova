@@ -41,11 +41,12 @@ avisos:
     El polígono no toca ninguna de las nueve cuencas de esta herramienta. Si está en la cuenca del río Sumapaz (Fusagasugá, Arbeláez, Pasca, Silvania, Melgar…), su POMCA sale en car_pomca_rio_sumapaz_en_poligono. Si no, está fuera de los POMCA que la CAR publica.
 cobro: zona
 canario:
-  # PROVISIONAL: se reemplaza por la verdad medida en la copia construida.
+  # Medido el 2026-11-04 en la copia (548 908 zonas): este cuadro de Chía (~123 ha) toca 13 zonas del
+  # río Bogotá que suman 122,66 ha; la mayor es agrosilvopastoril (PSI), 59,341 ha.
   entrada:
     poligono:
       type: Polygon
       coordinates: [[[-74.031, 4.857], [-74.021, 4.857], [-74.021, 4.867], [-74.031, 4.867], [-74.031, 4.857]]]
-  minimos: {total: 1}
+  verdad: {cuenca: "río Bogotá", sigla: PSI, area_ha: 59.341, id_zona: 1011375}
   campos: [area_ha, area_ha_por_categoria, area_ha_por_subzona, area_ha_total, categoria_ordenacion, cuenca, id_zona, sigla, subzona_uso_manejo, total, zona_uso_manejo]
   latencia_max_ms: 8000

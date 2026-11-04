@@ -98,3 +98,15 @@ Medido el 2026-11-03: 548 908 zonas en las diez capas. Solo el río Negro tiene 
     la suma por subzona y por categoría. El polígono que sale es el de la zona entera (no el recorte dentro del lote), simplificado,
     para ver.
 - Las rondas hídricas tienen su propia ficha: [car.rondas_delimitadas.md](car.rondas_delimitadas.md).
+- **2026-11-04, copias construidas en producción:**
+  - Nueve cuencas: 516 999 zonas en 2654 s. Sumapaz: 31 909 zonas en 305 s. Entre las dos suman
+    las 548 908 de la fuente, sin ids repetidos.
+  - 41 polígonos de las nueve cuencas y 6 del Sumapaz son inválidos y pasan de 50 000 vértices.
+    Quedan como vienen de la fuente, porque repararlos pide más memoria de la que tiene el
+    contenedor. Un lote que toque uno de ellos puede dar un área imprecisa o un error.
+  - Revisado en producción:
+    - un cuadro de Chía de unas 123 ha da 13 zonas que suman 122,66 ha, sin huecos ni traslapes,
+      en 1,8 s la primera vez y 0,1 s después;
+    - un cuadro de Fusagasugá da una sola zona urbana, de 122,75 ha;
+    - Medellín sale fuera de cobertura, sin cobro;
+    - Bogotá en la herramienta del Sumapaz da vacío y remite a la otra herramienta.

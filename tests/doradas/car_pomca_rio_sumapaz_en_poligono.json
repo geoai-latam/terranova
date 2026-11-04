@@ -1,0 +1,102 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-04T01:48:17+00:00",
+ "herramienta": "car_pomca_rio_sumapaz_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "-_area_ha",
+     "OBJECTID"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.37,
+        4.33
+       ],
+       [
+        -74.36,
+        4.33
+       ],
+       [
+        -74.36,
+        4.34
+       ],
+       [
+        -74.37,
+        4.34
+       ],
+       [
+        -74.37,
+        4.33
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "T_CAT_ORD",
+     "T_ZON_USO",
+     "T_SUBZON_USO",
+     "NOMENCLAT",
+     "OBJECTID"
+    ],
+    "tabla": "car_pomca_rio_sumapaz"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.35063,
+           4.35103
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "NOMENCLAT": "ZU",
+          "OBJECTID": 31908,
+          "T_CAT_ORD": "Uso Multiple",
+          "T_SUBZON_USO": "Areas urbanas, municipales y distritales",
+          "T_ZON_USO": "Areas Urbanas",
+          "_area_ha": 122.748
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-11-04T00:54:46.706822+00:00",
+     "copia": {
+      "filas": 31909,
+      "huella": "sha256:8960200a2397d43f4ffbda5140192918ead02fd7fc242c2406337c2ab9acd954",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261104005446706822"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

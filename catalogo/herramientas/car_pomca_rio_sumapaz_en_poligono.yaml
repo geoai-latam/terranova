@@ -39,11 +39,12 @@ avisos:
     El polígono no toca la cuenca del río Sumapaz. Para las otras nueve cuencas de la CAR (río Bogotá, río Negro, Guavio…), car_pomca_en_poligono. Si no está en ninguna, está fuera de los POMCA que la CAR publica.
 cobro: zona
 canario:
-  # PROVISIONAL: se reemplaza por la verdad medida en la copia construida.
+  # Medido el 2026-11-04 en la copia (31 909 zonas): este cuadro del casco urbano de Fusagasugá
+  # cae entero en una zona urbana (ZU), 122,748 ha.
   entrada:
     poligono:
       type: Polygon
       coordinates: [[[-74.37, 4.33], [-74.36, 4.33], [-74.36, 4.34], [-74.37, 4.34], [-74.37, 4.33]]]
-  minimos: {total: 1}
+  verdad: {sigla: ZU, area_ha: 122.748, id_zona: 31908}
   campos: [area_ha, area_ha_por_categoria, area_ha_por_subzona, area_ha_total, categoria_ordenacion, id_zona, sigla, subzona_uso_manejo, total, zona_uso_manejo]
   latencia_max_ms: 8000

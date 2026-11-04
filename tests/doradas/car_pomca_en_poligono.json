@@ -1,0 +1,332 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-04T01:48:17+00:00",
+ "herramienta": "car_pomca_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "-_area_ha",
+     "ID_ZONA"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.031,
+        4.857
+       ],
+       [
+        -74.021,
+        4.857
+       ],
+       [
+        -74.021,
+        4.867
+       ],
+       [
+        -74.031,
+        4.867
+       ],
+       [
+        -74.031,
+        4.857
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "CUENCA",
+     "CAT_ORD",
+     "ZO_US_MA",
+     "SZO_US_M",
+     "NOMENCLAT",
+     "ID_ZONA"
+    ],
+    "tabla": "car_pomca_zonificacion"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.01749,
+           4.87725
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1011375,
+          "NOMENCLAT": "PSI",
+          "SZO_US_M": "Areas Agrosilvopastoriles",
+          "ZO_US_MA": "Areas para la produccion agrícola, ganadera y de uso sostenible de Recursos Naturales",
+          "_area_ha": 59.341
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.01956,
+           4.87512
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1001297,
+          "NOMENCLAT": "AIA",
+          "SZO_US_M": "Areas de importancia Ambiental",
+          "ZO_US_MA": "Areas de Protección",
+          "_area_ha": 31.4783
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.85211,
+           5.03228
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1003198,
+          "NOMENCLAT": "ARE",
+          "SZO_US_M": "Areas de restauración ecológica",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 9.873
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02871,
+           4.85852
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1005601,
+          "NOMENCLAT": "ARUM",
+          "SZO_US_M": "Areas de recuperación para el uso múltiple",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 9.8022
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03008,
+           4.86502
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1002059,
+          "NOMENCLAT": "AAN",
+          "SZO_US_M": "Areas de Amenazas Naturales",
+          "ZO_US_MA": "Areas de Protección",
+          "_area_ha": 3.6331
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02506,
+           4.87711
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1005665,
+          "NOMENCLAT": "ARUM",
+          "SZO_US_M": "Areas de recuperación para el uso múltiple",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 3.1036
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02384,
+           4.88622
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1011583,
+          "NOMENCLAT": "ZU",
+          "SZO_US_M": "Areas urbanas, municipales y distritales",
+          "ZO_US_MA": "Areas Urbanas",
+          "_area_ha": 1.6496
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.01961,
+           4.86461
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1003115,
+          "NOMENCLAT": "ARE",
+          "SZO_US_M": "Areas de restauración ecológica",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 1.3781
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03145,
+           4.85876
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1000774,
+          "NOMENCLAT": "AIA",
+          "SZO_US_M": "Areas de importancia Ambiental",
+          "ZO_US_MA": "Areas de Protección",
+          "_area_ha": 0.9581
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02289,
+           4.85717
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Uso Multiple",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1005616,
+          "NOMENCLAT": "ARUM",
+          "SZO_US_M": "Areas de recuperación para el uso múltiple",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 0.8304
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.02779,
+           4.86596
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1001398,
+          "NOMENCLAT": "AAN",
+          "SZO_US_M": "Areas de Amenazas Naturales",
+          "ZO_US_MA": "Areas de Protección",
+          "_area_ha": 0.5059
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.01382,
+           4.86033
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1000133,
+          "NOMENCLAT": "Areas SINAP",
+          "SZO_US_M": "Areas SINAP",
+          "ZO_US_MA": "Areas Protegidas",
+          "_area_ha": 0.0897
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03003,
+           4.86882
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CAT_ORD": "Conservacion y Protección Ambiental",
+          "CUENCA": "río Bogotá",
+          "ID_ZONA": 1003063,
+          "NOMENCLAT": "ARE",
+          "SZO_US_M": "Areas de restauración ecológica",
+          "ZO_US_MA": "Areas de Restauración",
+          "_area_ha": 0.0166
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 13,
+      "truncado": false,
+      "vistos": 13
+     },
+     "consultado_en": "2026-11-04T00:59:51.293254+00:00",
+     "copia": {
+      "filas": 516999,
+      "huella": "sha256:4ef71d435a9c207b92fa9cbd44f99298f77c964486e974467e065a648ae68a07",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261104005951293254"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
