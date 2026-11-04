@@ -45,3 +45,10 @@ Una fila por proponente y evaluación, con:
   - Un aviso dice que las filas se repiten y que la calificación no tiene escala. Otro, cuando no
     hay fila adjudicada, remite a `secop1_proceso_por_constancia`.
   - No se deduplica: el nombre del mismo proponente cambia de forma, y juntarlo sería adivinar.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:** el canario (09-1-47723): tres filas y ninguna adjudicada, con los dos
+  avisos. También el 19-12-10176235 de Mongua, de contratación directa, que salía vacío sin aviso.
+- **Arreglo:** un aviso en el vacío dice que la contratación directa no tiene proponentes y remite
+  a `secop1_proceso_por_constancia`.

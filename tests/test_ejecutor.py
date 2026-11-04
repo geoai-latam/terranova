@@ -1525,6 +1525,8 @@ def test_el_vacio_del_sinic_remite_a_la_base_del_igac() -> None:
     assert len(vacio) == 1 and "igac_predio_en_punto" in vacio[0]
 def test_los_vacios_de_las_alertas_y_del_aire_del_ideam() -> None:
     """Barranquilla sin alertas en el año y Cali en 2019 sin aire volvían vacíos a secas."""
+def test_los_vacios_de_los_procesos_de_secop1_remiten_al_otro_periodo() -> None:
+    """Una constancia de 2015 en la herramienta de 2018 en adelante salía vacía sin pista."""
     from terranova.contrato import Sobre
     from terranova.ejecutor import avisos_de_la_ficha
 
@@ -1585,3 +1587,11 @@ def test_los_planes_de_secop1_no_cuentan_copias_como_versiones() -> None:
     vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
     avisos = avisos_de_la_ficha(detalle, CATALOGO.fuentes[detalle.fuente], vacio)
     assert len(avisos) == 1 and "no publica ítems" in avisos[0]
+    for tid, remite in [
+        ("secop1_proceso_por_constancia", "secop1_proceso_historico_por_constancia"),
+        ("secop1_proceso_historico_por_constancia", "secop1_proceso_por_constancia"),
+        ("secop1_proponentes_proceso", "secop1_proceso_por_constancia"),
+    ]:
+        h = CATALOGO.herramientas[tid]
+        avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+        assert len(avisos) == 1 and remite in avisos[0], tid
