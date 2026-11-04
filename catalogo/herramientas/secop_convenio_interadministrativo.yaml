@@ -1,11 +1,12 @@
 id: secop_convenio_interadministrativo
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop.convenios
 pregunta: "¿Qué es este convenio interadministrativo de SECOP?"
 descripcion: >
-  Convenio interadministrativo (entre entidades públicas) de SECOP I o II por su identificador:
-  entidad, contratista (otra entidad), objeto, valor con adiciones, fechas, estado y enlace.
+  Convenio de SECOP I o II que la entidad registró como interadministrativo, por su identificador:
+  entidad, contraparte, objeto, valor con adiciones, fechas, estado y enlace. La contraparte no
+  siempre es una entidad pública: hay convenios con juntas de acción comunal (3 644 de 88 850).
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: contrato_secop}
 consulta:
@@ -23,6 +24,10 @@ consulta:
 salida: SecopConvenioInteradministrativo
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Este conjunto reúne los contratos que la entidad registró como convenio interadministrativo en SECOP I o II desde 2019 (88 850 el 2026-11-03). La contraparte no siempre es otra entidad pública: 3 644 son con juntas de acción comunal. Mire `contratista` antes de darlo por un convenio entre entidades.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en s484-c9k3 (id_contrato = 26-22-117970): 1
