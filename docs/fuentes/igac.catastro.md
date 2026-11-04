@@ -123,3 +123,10 @@ gestores no están.
     venir vacía o vieja, pero la respuesta no lo decía. Chía rural da $7 000 millones por
     hectárea sin vigencia; Calarcá, $480 000 por hectárea de 2014.
   - Ahora la respuesta lleva un aviso con datos.
+## Revisión de valor del SINIC (2026-11-04)
+
+- **Probado en producción:** Bogotá (el canario: PH matriz, habitacional), Medellín (NPH, lote
+  urbanizable de uso público), Cali (comercial) y Chía (vacío).
+- **Hallazgo:** en Chía el vacío de `sinic_predio_en_punto` no decía que el predio está en la base
+  del IGAC. Ahora el aviso remite a `igac_predio_en_punto` y a `predio_en_punto`, y recuerda que una
+  vía no es terreno.
