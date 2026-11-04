@@ -1,11 +1,13 @@
 id: igac_capacidad_uso_en_poligono
-version: 3
+version: 4
 familia: territorio
 fuente: igac.agrologia.capacidad_uso
 pregunta: "¿Qué capacidad de uso tiene el suelo de este polígono?"
 descripcion: >
   Capacidad de uso de las tierras (IGAC, escala 1:100.000) en un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de lado): clase y subclase de
-  capacidad y su descripción. El agua (CA) y lo urbano (ZU) no tienen clase agrológica:
+  capacidad y su descripción. El número es la clase (de 1, la mejor para cultivar, a 8, solo
+  conservación) y las letras, lo que la limita: c clima, e erosión, h humedad o drenaje,
+  p pendiente, s suelo (metodología del IGAC). El agua (CA) y lo urbano (ZU) no tienen clase agrológica:
   `unidad_capacidad_significado` dice qué son. Cada fila trae `area_ha`, las hectáreas de esa
   unidad dentro del polígono (la mayor primero); `area_ha_por_unidad` las suma por unidad (una
   unidad puede venir en varios pedazos) y `area_ha_total` da el total, para sacar el porcentaje.
