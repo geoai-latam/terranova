@@ -1524,6 +1524,7 @@ LICENCIAS_LEGIBLES = {
     "LicenseRef-ley23-1982-art41": "Ley 23 de 1982, art. 41",
     "LicenseRef-dane-terminos": "términos de uso del DANE",
     "LicenseRef-dian-terminos": "términos de uso de la DIAN, sin fines de lucro",
+    "LicenseRef-datosgovco-terminos": "términos de uso de datos.gov.co",
 }
 
 

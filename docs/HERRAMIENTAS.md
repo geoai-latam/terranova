@@ -189,6 +189,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `uariv_victimas_hecho_municipio` | ¿Cuántas víctimas registradas hay en este municipio por cada hecho victimizante (desplazamiento, homicidio, amenaza…)? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 | `uariv_victimas_municipio` | ¿Cuántas víctimas del conflicto armado registradas hay en este municipio? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 
+## meta
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terrnova (índice de metadatos sobre fuentes oficiales) | LicenseRef-datosgovco-terminos | 1 |
+
 ## normativa
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
