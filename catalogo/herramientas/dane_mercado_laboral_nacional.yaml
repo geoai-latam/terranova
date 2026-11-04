@@ -1,12 +1,14 @@
 id: dane_mercado_laboral_nacional
-version: 2
+version: 3
 familia: estadisticas
 fuente: dane.geih_nacional
 pregunta: "¿Cómo estuvo el desempleo y el empleo en Colombia en este año?"
 descripcion: >
   Mercado laboral del total nacional según la GEIH del DANE, mes a mes en un año (desde 2001): tasa
   global de participación, de ocupación, de desocupación (desempleo), de subocupación y las
-  poblaciones (en miles), con un decimal. Arriba, el último mes del año y sus tasas de desempleo,
+  poblaciones (en miles: cada fila dice su `unidad`), con un decimal. TCDFTP, MCSFT y la fuerza de
+  trabajo potencial empiezan en 2021, y la subocupación falta de marzo a julio de 2020 (pandemia):
+  ahí el valor sale vacío, con la nota del DANE. Arriba, el último mes del año y sus tasas de desempleo,
   ocupación y participación. Solo el total nacional, sin las cabeceras. Sale de la copia de Terrnova
   del anexo del último mes publicado.
   (Fuente: DANE; licencia: términos de uso del DANE.)
@@ -24,6 +26,14 @@ consulta:
   campos: [Concepto, columna, subcolumna, valor]
 salida: MercadoLaboralNacional
 derivados:
+  # Revisión de valor (2026-11-04, anex-GEIH-sep2026.xlsx): los nombres traen espacios al final,
+  # los meses de 2020 sin subocupación van con asterisco y su nota, las siglas se explican al pie y
+  # las poblaciones están en miles. Todo eso va en la fila, como lo dice el DANE.
+  nota: {de: codigo, campo: mes, valores: {"Mar*": "Nota* del DANE: debido al cambio en el operativo de recolección de la GEIH por la pandemia del COVID-19, no fue posible obtener información de la población subocupada entre los meses de marzo y julio de 2020.", "Abr*": "Nota* del DANE: debido al cambio en el operativo de recolección de la GEIH por la pandemia del COVID-19, no fue posible obtener información de la población subocupada entre los meses de marzo y julio de 2020.", "May*": "Nota* del DANE: debido al cambio en el operativo de recolección de la GEIH por la pandemia del COVID-19, no fue posible obtener información de la población subocupada entre los meses de marzo y julio de 2020.", "Jun*": "Nota* del DANE: debido al cambio en el operativo de recolección de la GEIH por la pandemia del COVID-19, no fue posible obtener información de la población subocupada entre los meses de marzo y julio de 2020.", "Jul*": "Nota* del DANE: debido al cambio en el operativo de recolección de la GEIH por la pandemia del COVID-19, no fue posible obtener información de la población subocupada entre los meses de marzo y julio de 2020."}}
+  mes: {de: columna, campo: subcolumna, patron: '^\s*([A-Za-z]+)'}
+  indicador: {de: columna, campo: Concepto, patron: '^\s*(.*?)\s*$'}
+  indicador_nombre: {de: codigo, campo: indicador, valores: {TCSD: "Tasa combinada de subocupación y desocupación", TCDFTP: "Tasa combinada de desocupación y fuerza de trabajo potencial", MCSFT: "Medida compuesta de subutilización de la fuerza de trabajo"}}
+  unidad: {de: codigo, campo: indicador, valores: {"% población en edad de trabajar": "%", "Tasa Global de Participación (TGP)": "%", "Tasa de Ocupación (TO)": "%", "Tasa de Desocupación (TD)": "%", "Tasa de Subocupación (TS)": "%", "TCSD": "%", "TCDFTP": "%", "MCSFT": "%", "Población total": "miles de personas", "Población en edad de trabajar (PET)": "miles de personas", "Fuerza de trabajo": "miles de personas", "Población ocupada": "miles de personas", "Población desocupada": "miles de personas", "Población fuera de la fuerza de trabajo": "miles de personas", "Población subocupada": "miles de personas", "Fuerza de trabajo potencial": "miles de personas"}}
   # El resumen que pide la pregunta: el último mes del año y sus tres tasas.
   ultimo_mes: {de: ultimo, campo: mes, solo_si: {campo: indicador, valores: ["Tasa de Desocupación (TD)"]}}
   tasa_desempleo_ultimo_mes: {de: ultimo, campo: valor, tipo: float, solo_si: {campo: indicador, valores: ["Tasa de Desocupación (TD)"]}}
@@ -37,5 +47,5 @@ canario:
   # desempleo de diciembre, 13,6 (la de las cabeceras, 15,6, ya no sale).
   entrada: {anio: 2001}
   verdad: {anio: "2001", mes: Ene, valor: 68.4, ultimo_mes: Dic, tasa_desempleo_ultimo_mes: 13.6, tasa_ocupacion_ultimo_mes: 59.4, tasa_participacion_ultimo_mes: 68.8, numero_registros: 192}
-  campos: [anio, indicador, mes, numero_registros, tasa_desempleo_ultimo_mes, tasa_ocupacion_ultimo_mes, tasa_participacion_ultimo_mes, ultimo_mes, valor]
+  campos: [anio, indicador, indicador_nombre, mes, nota, numero_registros, tasa_desempleo_ultimo_mes, tasa_ocupacion_ultimo_mes, tasa_participacion_ultimo_mes, ultimo_mes, unidad, valor]
   latencia_max_ms: 5000

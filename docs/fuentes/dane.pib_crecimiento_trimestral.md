@@ -51,3 +51,8 @@ trimestre sale a mediados de noviembre.
   - `ultimo_anio`, `ultimo_trimestre` y `crecimiento_ultimo_trimestre_pct` van arriba: en el II de
     2026, 3,5 %.
   - Un aviso explica «pr» y «p», y que la comparación es con el mismo trimestre del año anterior.
+
+## Revisión de valor (2026-11-04)
+
+- El año sale en número y `cifra` dice si es preliminar («pr») o provisional («p»).
+- Con N trimestres pedidos ya no sale el aviso «acote la búsqueda».

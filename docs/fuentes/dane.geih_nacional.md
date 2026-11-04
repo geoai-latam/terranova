@@ -54,3 +54,11 @@ El anexo de septiembre de 2026 se publicó el 30 de octubre. La copia se reconst
   - Arriba van `ultimo_mes` y las tasas de desempleo, ocupación y participación de ese mes.
   - El motor suma `decimales` por campo; aquí, uno.
   - No se da la tabla de cabeceras: si hace falta, va como herramienta aparte, con su nombre.
+
+## Revisión de valor (2026-11-04)
+
+- El anexo pone 0 donde no se medía: TCDFTP, MCSFT y la fuerza de trabajo potencial antes de 2021, y
+  la subocupación de marzo a julio de 2020 (nota* por la pandemia). Ahora el 0 sale vacío.
+- Cada fila trae su `unidad` (% o miles de personas), el nombre de la sigla, el mes sin asterisco
+  y la nota literal del DANE.
+- El canario volvió a verde (2026-11-04, 09:03 UTC).

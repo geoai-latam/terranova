@@ -375,6 +375,90 @@ async def test_un_codigo_que_no_esta_en_el_divipola_se_dice(codigo: str, avisa: 
     assert any("no figura en la lista DIVIPOLA" in a for a in sobre.avisos) is avisa
 
 
+class _CopiaGeih:
+    """Filas del anexo de la GEIH como las guarda la copia: nombres con espacios al final, meses de
+    2020 con asterisco y ceros donde el DANE no midió."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        columnas = ["Concepto", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Tasa de Desocupación (TD)", "2020", "Jul*", 20.2],
+                ["Tasa de Subocupación (TS)", "2020", "Jul*", 0],
+                ["TCDFTP", "2020", "Dic", 0.0],
+                ["Fuerza de trabajo  ", "2020", "Dic", 24000.5],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 4, "total": 4, "truncado": False},
+                "consultado_en": "2026-11-03T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_mercado_laboral_no_da_ceros_que_el_dane_no_midio() -> None:
+    """GEIH (revisión de valor, 2026-11-04): el 0 del anexo es «no se midió» (TCDFTP antes de 2021,
+    subocupación de marzo a julio de 2020): sale vacío; el mes va sin asterisco y con la nota; la
+    sigla con su nombre, el nombre sin espacios y la unidad en cada fila."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaGeih()})
+    sobre = await ej.ejecutar("dane_mercado_laboral_nacional", {"anio": 2020}, plan="evaluacion")
+    td, ts, tcdftp, ft = sobre.datos["elementos"]
+    assert (td["mes"], td["valor"], td["unidad"]) == ("Jul", 20.2, "%")
+    assert "subocupada" in td["nota"]
+    assert ts["valor"] is None
+    assert tcdftp["valor"] is None
+    assert tcdftp["indicador_nombre"].startswith("Tasa combinada de desocupación")
+    assert (ft["indicador"], ft["unidad"], ft["nota"]) == (
+        "Fuerza de trabajo",
+        "miles de personas",
+        None,
+    )
+
+
+class _CopiaPib:
+    """Los dos últimos trimestres del PIB de 82, como los da la copia con `limite: 2`."""
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        columnas = ["Concepto", "columna", "subcolumna", "valor"]
+        filas = [
+            dict(zip(columnas, f, strict=True))
+            for f in (
+                ["Producto Interno Bruto", "2026pr", "II", 3.5],
+                ["Producto Interno Bruto", "2023", "IV", 0.4],
+            )
+        ]
+        return {
+            "artifacts": [{"columns": columnas, "kind": "table", "rows": filas}],
+            "facts": {
+                "completitud": {"vistos": 2, "total": 82, "truncado": True},
+                "consultado_en": "2026-10-28T00:00:00+00:00",
+            },
+        }
+
+
+@pytest.mark.anyio
+async def test_el_pib_trae_lo_pedido_sin_pedir_que_se_acote() -> None:
+    """Con 2 trimestres pedidos y 2 recibidos no se dice «vinieron 2 de 82, acote la búsqueda»; y
+    «2026pr» sale como año 2026, cifra preliminar (revisión de valor, 2026-11-04)."""
+    from terranova.ejecutor import Ejecutor
+
+    ej = Ejecutor(CATALOGO, {"copia": _CopiaPib()})
+    sobre = await ej.ejecutar(
+        "dane_pib_crecimiento_trimestral", {"trimestres": 2}, plan="evaluacion"
+    )
+    assert not any("Acote la búsqueda" in a for a in sobre.avisos)
+    reciente, viejo = sobre.datos["elementos"]
+    assert (reciente["anio"], reciente["cifra"]) == (2026, "preliminar")
+    assert (viejo["anio"], viejo["cifra"]) == (2023, None)
+    assert sobre.datos["ultimo_anio"] == 2026
+
+
 class _CopiaIpm:
     """Filas del anexo departamental del IPM 2025 como las guarda la copia (año con asteriscos)."""
 

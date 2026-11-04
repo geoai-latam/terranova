@@ -196,3 +196,33 @@ async def test_el_aviso_de_datos_no_recientes_sale_tambien_desde_cache() -> None
         assert any("2023-08-23" in a for a in recientes) and len(recientes) == len(set(recientes))
     ((_, guardado),) = almacen._datos.values()
     assert not any(a.startswith("Datos no recientes") for a in guardado["sobre"]["avisos"])
+
+
+def _con_otra_atribucion() -> Any:
+    """El mismo catálogo con la ficha de la fuente cambiada (una licencia o una atribución nueva)."""
+    fuente = CATALOGO.fuentes[H.fuente]
+    otra = fuente.model_copy(update={"atribucion": "Fuente: otra atribución"})
+    return CATALOGO.model_copy(update={"fuentes": {**CATALOGO.fuentes, H.fuente: otra}})
+
+
+@pytest.mark.anyio
+async def test_una_ficha_cambiada_no_sale_de_la_cache_vieja() -> None:
+    """Un sobre guardado antes de cambiar la ficha no se sirve como fresco: salía con la atribución
+    y los avisos de antes hasta por 30 días (revisión de valor, 2026-11-04). Pero si la fuente cae,
+    sigue sirviendo de respaldo `obsoleto`."""
+    fuente, reloj, almacen = Fuente(), Reloj(), AlmacenMemoria()
+    almacen.reloj = reloj
+    await Ejecutor(CATALOGO, {"arcgis-mcp": fuente}, almacen, reloj).ejecutar(
+        H.id, H.canario.entrada
+    )
+    llamadas = fuente.llamadas
+    nuevo = Ejecutor(_con_otra_atribucion(), {"arcgis-mcp": fuente}, almacen, reloj)
+    sobre = await nuevo.ejecutar(H.id, H.canario.entrada)
+    assert fuente.llamadas > llamadas
+    assert sobre.procedencia[0].servido_desde == "fuente"
+    assert sobre.procedencia[0].atribucion == "Fuente: otra atribución"
+
+    fuente.caida = "fuente_no_disponible"
+    otro = Ejecutor(CATALOGO, {"arcgis-mcp": fuente}, almacen, reloj)
+    respaldo = await otro.ejecutar(H.id, H.canario.entrada)
+    assert respaldo.procedencia[0].servido_desde == "obsoleto"

@@ -26,6 +26,7 @@ from typing import Any, Literal
 from terranova import metricas
 from terranova.cache import RETENCION_S, Almacen
 from terranova.cache import clave as clave_cache
+from terranova.cache import huella as huella_cache
 from terranova.catalogo import (
     AVISO_DATO_PUBLICO,
     MARCADOR,
@@ -881,9 +882,14 @@ class Ejecutor:
         aviso = AVISO_SIMPLIFICADA if geometria_completa and simplificada and not fiel else None
         k = clave_cache(h.id, h.version, valores | ({"_geometria": "completa"} if fiel else {}))
         guardado = None
+        vigente = huella_cache(h.model_dump_json(), fuente.model_dump_json())
         if self.almacen is not None and frescura == "normal":
             guardado = await self.almacen.leer(k)
-            if guardado and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s:
+            if (
+                guardado
+                and guardado.get("huella") == vigente
+                and self.reloj() - guardado["guardado_en"] <= fuente.frescura.ttl_cache_s
+            ):
                 metricas.CACHE_ACIERTOS.inc()
                 return self._servir(self._desde_cache(guardado, "cache"), h, valores, aviso)
         try:
@@ -896,7 +902,11 @@ class Ejecutor:
         if self.almacen is not None and sobre.estado != "parcial":
             await self.almacen.guardar(
                 k,
-                {"guardado_en": self.reloj(), "sobre": sobre.model_dump(mode="json")},
+                {
+                    "guardado_en": self.reloj(),
+                    "huella": vigente,
+                    "sobre": sobre.model_dump(mode="json"),
+                },
                 RETENCION_S,
             )
         return self._servir(sobre, h, valores, aviso)
@@ -1145,6 +1155,7 @@ class Ejecutor:
             and total is not None
             and filas_recibidas < total
             and any(p.completitud.truncado for p in principales)
+            and filas_recibidas != _tope_pedido(h, valores)
         ):
             avisos.append(
                 f"Vinieron {filas_recibidas} de {total}: la consulta trae como máximo "
@@ -1412,6 +1423,16 @@ def municipio_por_nombre(param: str, texto: str, municipios: dict[str, Any]) -> 
         f"«{texto.strip()}» es ambiguo: {len(lista)} municipios se llaman así: {opciones}. Usa el "
         "código o «nombre, departamento»",
     )
+
+
+def _tope_pedido(h: Herramienta, v: dict[str, Any]) -> int | None:
+    """Cuántas filas pidió quien pregunta, si el tope de la consulta sale de su entrada («los
+    últimos 6 trimestres»). Con 6 pedidos y 6 recibidos, «vinieron 6 de 82, acote la búsqueda»
+    contradecía la pregunta (revisión de valor, 2026-11-04)."""
+    plantilla = h.consulta.argumentos.get("limite")
+    marcador = MARCADOR.fullmatch(plantilla) if isinstance(plantilla, str) else None
+    pedido = v.get(marcador.group(1)) if marcador else None
+    return pedido if isinstance(pedido, int) else None
 
 
 def _codigo_desconocido(h: Herramienta, v: dict[str, Any]) -> str | None:
