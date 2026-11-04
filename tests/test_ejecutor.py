@@ -861,6 +861,12 @@ def test_avisos_de_la_ficha() -> None:
     cero = avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 0}))
     assert len(cero) == 1 and "4,5" in cero[0] and "SGC" in cero[0]
     assert avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 139})) == []
+    # el año en curso del recaudo de la ANI (hasta mayo de 2026) no es el recaudo del año
+    peaje = CATALOGO.herramientas["ani_recaudo_peaje_mensual"]
+    fpe = CATALOGO.fuentes[peaje.fuente]
+    cinco = avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 5}))
+    assert len(cinco) == 1 and "doce meses" in cinco[0]
+    assert avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 12})) == []
 
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
