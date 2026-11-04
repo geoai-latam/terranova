@@ -103,3 +103,11 @@ gestores no están.
   - Medido en producción: la manzana de Chía y la de Tabio (25785, 0,8 s); el sector rural de Chía
     y el de Tabio (257850001). Zipaquirá sale `fuera_de_cobertura` porque su catastro lo lleva el
     municipio.
+
+## Revisión de valor del SINIC (2026-11-04)
+
+- **Probado en producción:** Bogotá (el canario: PH matriz, habitacional), Medellín (NPH, lote
+  urbanizable de uso público), Cali (comercial) y Chía (vacío).
+- **Hallazgo:** en Chía el vacío de `sinic_predio_en_punto` no decía que el predio está en la base
+  del IGAC. Ahora el aviso remite a `igac_predio_en_punto` y a `predio_en_punto`, y recuerda que una
+  vía no es terreno.

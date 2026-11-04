@@ -1438,3 +1438,17 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_el_vacio_del_sinic_remite_a_la_base_del_igac() -> None:
+    """Chía no tiene gestor propio: su predio no está en el SINIC sino en la base del IGAC."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["sinic_predio_en_punto"]
+    vacio = avisos_de_la_ficha(
+        h,
+        CATALOGO.fuentes[h.fuente],
+        Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[]),
+    )
+    assert len(vacio) == 1 and "igac_predio_en_punto" in vacio[0]
