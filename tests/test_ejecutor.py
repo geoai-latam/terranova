@@ -657,6 +657,13 @@ def test_avisos_de_la_ficha() -> None:
     assert len(fuera) == 1 and "mintic_internet_fijo_municipio_2016_2023" in fuera[0]
     assert fuera[0] not in avisos_de_la_ficha(internet, fi, sobre("no_encontrado", {}))
 
+    # PRD_ND del IGAC no es un conflicto: es un dato que falta (nubes)
+    conflicto = CATALOGO.herramientas["igac_conflictos_uso_en_punto"]
+    fc = CATALOGO.fuentes[conflicto.fuente]
+    nd = avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "PRD_ND"}))
+    assert len(nd) == 1 and "no midió" in nd[0]
+    assert avisos_de_la_ficha(conflicto, fc, sobre("encontrado", {"unidad_conflicto": "U2"})) == []
+
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
