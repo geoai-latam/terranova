@@ -657,6 +657,13 @@ def test_avisos_de_la_ficha() -> None:
     assert len(fuera) == 1 and "mintic_internet_fijo_municipio_2016_2023" in fuera[0]
     assert fuera[0] not in avisos_de_la_ficha(internet, fi, sobre("no_encontrado", {}))
 
+    # un cero de la USGS no es «no hubo sismos»: su catálogo no tiene los pequeños de Colombia
+    sismos = CATALOGO.herramientas["usgs_sismos_en_zona"]
+    fs = CATALOGO.fuentes[sismos.fuente]
+    cero = avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 0}))
+    assert len(cero) == 1 and "4,5" in cero[0] and "SGC" in cero[0]
+    assert avisos_de_la_ficha(sismos, fs, sobre("encontrado", {"total_en_catalogo": 139})) == []
+
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
