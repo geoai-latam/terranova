@@ -198,3 +198,10 @@ def test_el_vacio_de_regalias_del_municipio_no_es_no_recibir() -> None:
     vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
     avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
     assert len(avisos) == 1 and "no quiere decir que no reciba" in avisos[0]
+async def test_el_bpin_de_un_proceso_sale_resumido_arriba() -> None:
+    """El CO1.REQ.11194762 trae 41 filas (una por contrato), todas del mismo BPIN (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_bpin_proceso"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    por_bpin = sobre.datos["contratos_por_bpin"]
+    assert list(por_bpin) == ["2024080010085"] and por_bpin["2024080010085"] >= 41
