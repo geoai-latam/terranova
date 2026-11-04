@@ -657,6 +657,13 @@ def test_avisos_de_la_ficha() -> None:
     assert len(fuera) == 1 and "mintic_internet_fijo_municipio_2016_2023" in fuera[0]
     assert fuera[0] not in avisos_de_la_ficha(internet, fi, sobre("no_encontrado", {}))
 
+    # el año en curso del recaudo de la ANI (hasta mayo de 2026) no es el recaudo del año
+    peaje = CATALOGO.herramientas["ani_recaudo_peaje_mensual"]
+    fpe = CATALOGO.fuentes[peaje.fuente]
+    cinco = avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 5}))
+    assert len(cinco) == 1 and "doce meses" in cinco[0]
+    assert avisos_de_la_ficha(peaje, fpe, sobre("encontrado", {"numero_registros": 12})) == []
+
 
 def test_fechas_del_invima_en_iso_y_sin_relleno() -> None:
     """El CUM escribe mm/dd/aaaa y pone años de relleno (3000, 1900, 9999) en el vencimiento:
