@@ -29,3 +29,5 @@ valor del ítem, balance, vigencia futura y estado de integración. Son 5,9 M fi
 
 - **2026-11-02:** `cobertura.aviso_vacio` con la cobertura medida. El motor lo pone en cada «no
   encontrado» de la fuente (patrón A de la revisión de valor).
+- **2026-11-03, revisión de valor:** verificado en producción con el PAE de Chía
+  (CO1.PCCNTR.7180851): el vacío sale con el aviso de cobertura. Sin más cambios.

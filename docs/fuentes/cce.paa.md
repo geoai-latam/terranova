@@ -52,7 +52,7 @@ SECOP I llega a 2024.
 |---|---|---|
 | `secop2_paa_entidad` | alto | da el código que pide la siguiente |
 | `secop2_paa_items` | medio → alto | v2: del más caro al más barato; total planeado y contratación directa arriba; categorías UNSPSC por ítem |
-| `secop1_paa_entidad` | medio | sin cambios |
+| `secop1_paa_entidad` | medio | sin cambios: llega a 2026 |
 | `secop1_paa_detalle` | medio | v2: del más caro al más barato, total planeado, aviso de errores de digitación |
 
 ## Decisiones
@@ -63,3 +63,7 @@ SECOP I llega a 2024.
     1 814 ítems y 107 756 millones.
   - En SECOP I no se resume por modalidad: el texto libre no se deja agrupar sin inventar una
     normalización.
+- **2026-11-03, revisión de valor de `secop1_paa_entidad`:** sin cambios. La revisión anotó «llega
+  a 2023», pero eso era el canario (Cabuyaro, 2020 a 2023). La fuente tiene planes hasta 2026
+  (423 538 filas de ese año, medido el 2026-11-03; datos.gov.co la actualizó ese mismo día), más
+  unas pocas filas con años de 2027, 2028 y 2060, digitados por las entidades.
