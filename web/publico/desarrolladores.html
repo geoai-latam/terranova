@@ -77,20 +77,20 @@ Accept: application/json, text/event-stream
  &quot;id&quot;: 1,
  &quot;method&quot;: &quot;tools/call&quot;,
  &quot;params&quot;: {
-  &quot;name&quot;: &quot;sinic_predio_en_punto&quot;,
+  &quot;name&quot;: &quot;predio_en_punto&quot;,
   &quot;arguments&quot;: {
    &quot;lon&quot;: -74.1572,
    &quot;lat&quot;: 11.2211
   }
  }
-}</code></pre><pre data-t="rest" tabindex="0" hidden><code>curl -s -X POST https://terrnova.com/v1/co/territorio/sinic_predio_en_punto \
+}</code></pre><pre data-t="rest" tabindex="0" hidden><code>curl -s -X POST https://terrnova.com/v1/fichas/predio \
   -H "Authorization: Bearer $TERRNOVA_LLAVE" \
   -H "Content-Type: application/json" \
   -d &#x27;{&quot;lon&quot;: -74.1572, &quot;lat&quot;: 11.2211}&#x27;</code></pre>
 <button class="copiar" type="button" data-copiar-pre>Copiar</button></div>
 <div class="panel"><div class="pest"><span class="meta">respuesta real, recortada · 01-11-2026</span></div><pre tabindex="0" aria-label="Respuesta"><code>{
  &quot;contrato&quot;: &quot;rt/1&quot;,
- &quot;herramienta&quot;: &quot;sinic_predio_en_punto@1&quot;,
+ &quot;herramienta&quot;: &quot;predio_en_punto@2&quot;,
  &quot;estado&quot;: &quot;encontrado&quot;,
  &quot;datos&quot;: {
   &quot;municipio&quot;: &quot;SANTA MARTA&quot;,

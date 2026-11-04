@@ -209,12 +209,14 @@ def test_figuras_solo_nombran_herramientas_vendibles_y_sin_dane() -> None:
     import construir  # web/ no es un paquete
 
     datos = construir.datos_figuras()
-    vendibles = {h.id for h in construir.HERR}
+    # predio_en_punto es compuesta: sus dos partes son del IGAC (SINIC y base catastral), vendibles
+    compuestas = {"predio_en_punto"}
+    vendibles = {h.id for h in construir.HERR} | compuestas
     for fig, ids in datos["usadas"].items():
         assert ids and set(ids) <= vendibles, (
             f"{fig} nombra herramientas no vendibles: {set(ids) - vendibles}"
         )
-        for i in ids:
+        for i in set(ids) - compuestas:
             fuente = construir.CAT.fuentes[construir.CAT.herramientas[i].fuente]
             assert "DANE" not in construir.nombre_entidad(fuente.entidad), (
                 f"{fig} usa {i}, del DANE"
