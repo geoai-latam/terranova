@@ -17,7 +17,13 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/36vw-pbq2.json
 modo: en_vivo
 frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
-cobertura: {pais: CO, columna_tiempo: fecha_modificacion}
+cobertura:
+  pais: CO
+  columna_tiempo: fecha_modificacion
+  aviso_vacio: >
+    SECOP I publica pocas modificaciones a procesos: 22 057 en total, de 2014 a 2026, y 13 609 son
+    cambios de estado del proceso (medido el 2026-11-03). Sin resultado aquí no quiere decir que
+    el contrato no haya cambiado: los cambios al contrato adjudicado salen con secop1_modificaciones_adjudicacion y secop1_adiciones_adjudicacion.
 datos_personales: ninguno
 estado: publicada
 campos:
@@ -42,5 +48,6 @@ perfil:
     contar: 0.2
     ordenar: 0.2
     agrupar: 0.2
-  hallazgos: []
+  hallazgos:
+  - 'medido el 2026-11-03: 22 057 filas; en 3 383 la justificación es un número interno, no un texto'
   decision: en vivo, como está

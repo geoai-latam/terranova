@@ -1,11 +1,13 @@
 id: secop1_modificaciones_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop1.modificaciones_procesos
 pregunta: "¿Qué cambios tuvo este proceso de SECOP I?"
 descripcion: >
   Modificaciones de un proceso de SECOP I por su constancia: qué campo cambió, el valor anterior
-  y el nuevo, la fecha y la justificación.
+  y el nuevo, la fecha y la justificación. Son los cambios al proceso; los del contrato adjudicado
+  (valor, plazo, contratista) salen con secop1_modificaciones_adjudicacion y
+  secop1_adiciones_adjudicacion, con el id_adjudicacion de secop1_proceso_por_constancia.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {constancia: constancia_secop}
 consulta:
@@ -23,6 +25,13 @@ consulta:
 salida: Secop1ModificacionesProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    La justificación es la que registró SECOP I, como la publica la fuente: en 3 383 de los 22 057
+    cambios (15 %, medido el 2026-11-03) es un número interno de la plataforma, no un texto, y no
+    hay un conjunto publicado que lo traduzca. Los textos vienen con mayúsculas y minúsculas
+    revueltas y sin tildes («MoDiFiCaCion De DaToS…»).
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en 36vw-pbq2 (id_proceso = 17-4-7436473): 3
