@@ -1438,3 +1438,29 @@ def test_juntar_filas_deja_una_por_presentacion_con_sus_vias() -> None:
         {"cum": 2, "via": ["INTRAMUSCULAR"]},
         {"cum": 3, "via": []},
     ]
+
+
+def test_avisos_del_pot_de_bogota() -> None:
+    """Soacha cae en el rectángulo de la SDP: el vacío dice por qué; el estrato 0 no es un dato."""
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    def sobre(estado: str, datos: dict[str, Any]) -> Any:
+        return Sobre.model_construct(estado=estado, datos=datos, avisos=[])
+
+    for tid in [
+        "sdp_amenaza_movimiento_masa_en_punto",
+        "sdp_area_actividad_en_punto",
+        "sdp_area_actividad_en_poligono",
+        "sdp_tratamiento_urbanistico_en_punto",
+        "sdp_tratamiento_urbanistico_en_poligono",
+    ]:
+        h = CATALOGO.herramientas[tid]
+        vacio = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], sobre("no_encontrado", {}))
+        assert len(vacio) == 1 and "Soacha" in vacio[0], tid
+
+    estrato = CATALOGO.herramientas["sdp_estrato_en_punto"]
+    fe = CATALOGO.fuentes[estrato.fuente]
+    sin = avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 0}))
+    assert len(sin) == 1 and sin[0].startswith("La manzana no tiene estrato")
+    assert avisos_de_la_ficha(estrato, fe, sobre("encontrado", {"estrato": 4})) == []
