@@ -34,9 +34,9 @@ derivados:
 avisos:
 - cuando: vacio
   texto: >
-    El índice de la Corte no tiene esa sentencia. Revise cómo se escribe: tipo, número y año en dos
-    cifras, con barra (T-760/08, C-155A/93). El índice llega hasta la última sentencia que la Corte
-    ha indexado, unas semanas detrás de la fecha.
+    El índice de la Corte no tiene esa sentencia. Revise el tipo (C, T o SU), el número y el año:
+    T-25/04, T-025/04 y T-025 de 2004 son la misma. El índice llega hasta la última sentencia que la
+    Corte ha indexado, unas semanas detrás de la fecha.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en v2k4-2t8s: T-760/08, tutela del 2008-07-31 (salud).

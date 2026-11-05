@@ -14,8 +14,9 @@ clase_acceso: api
 atribucion: "Fuente: IGAC, Registro de transacciones inmobiliarias en Colombia. Fuente: Portal de Datos Abiertos www.datos.gov.co"
 protocolo: socrata
 conector: datos-abiertos-mcp
-# Una fila por anotación registral (30,9 M). Solo salen agregados por municipio y año; la
-# matrícula, el número catastral y el documento justificativo no salen (ADR-0014).
+# Una fila por anotación registral (30,9 M). Salen agregados por municipio y año, y la historia de
+# un folio por su matrícula (igac_transacciones_folio); el documento justificativo (escritura,
+# notaría, juzgado) no sale (ADR-0014).
 # El valor solo viene desde 2021: antes, `con_valor` es 0 y el promedio no existe.
 url: https://www.datos.gov.co/resource/7y2j-43cv.json
 modo: en_vivo
@@ -34,6 +35,11 @@ campos:
   count_a: {nombre: personas_a, tipo: int, desc: "cuántos intervinientes reciben (sin nombres)"}
   count_de: {nombre: personas_de, tipo: int, desc: "cuántos intervinientes otorgan (sin nombres)"}
   divipola: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  municipio: {nombre: municipio, tipo: str, desc: "nombre del municipio, como lo escribe la fuente"}
+  departamento: {nombre: departamento, tipo: str, desc: "nombre del departamento, como lo escribe la fuente"}
+  orip: {nombre: oficina_registro, tipo: str, desc: "código de la oficina de registro (ORIP) del folio, el prefijo de la matrícula"}
+  tipo_predio_zona: {nombre: zona, tipo: str, desc: "zona del predio según la fuente (URBANO o RURAL)"}
+  fecha_apertura_texto: {nombre: fecha_apertura_folio, tipo: str, desc: "fecha de apertura del folio (texto de la fuente)"}
   cod_natujur: {nombre: codigo_naturaleza_juridica, tipo: int, desc: "código de la naturaleza jurídica (125 compraventa)"}
   tiene_valor: {nombre: tiene_valor, tipo: int, desc: "1 si la anotación trae valor"}
   valor: {nombre: valor, tipo: float, desc: "valor del acto, en pesos; solo promediado"}

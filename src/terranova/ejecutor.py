@@ -43,6 +43,7 @@ from terranova.catalogo import (
     entero_de_json,
     motivo_no_vendible,
     normalizar_nit,
+    normalizar_sentencia,
     rango_entero,
     vendible,
 )
@@ -164,15 +165,13 @@ def _valor(nombre: str, tipo: str, v: Any) -> Any:
             return normalizar_nit(v)
         except ValueError as e:
             raise ErrorEntrada(nombre, str(e)) from None
-    if tipo == "sentencia_relatoria":
-        v = v.strip().upper()
     if tipo in PATRONES_ENTRADA:
         if not re.fullmatch(PATRONES_ENTRADA[tipo], v):
             raise ErrorEntrada(nombre, f"no tiene el formato de {tipo}")
-        if tipo == "sentencia_relatoria" and v.startswith("SU-"):
-            # la relatoría guarda las de unificación como SU214-16.htm; SU-214-16.htm es una página
-            # vacía con estado 200 (medido el 2026-11-03)
-            return "SU" + v[3:]
+        if tipo in ("sentencia_cc", "sentencia_relatoria"):
+            # T-25/04 no está en el índice (T-025/04 sí), y la relatoría guarda las de unificación
+            # como SU214-16.htm: lo que va a la fuente se arma de nuevo, en su forma
+            return normalizar_sentencia(v, relatoria=tipo == "sentencia_relatoria")
         if tipo == "fecha":
             try:
                 date.fromisoformat(v)

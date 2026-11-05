@@ -26,8 +26,9 @@ campos:
   a_o: {nombre: anio, tipo: int, desc: "año"}
   mes: {nombre: mes, tipo: int, desc: "mes"}
   tr_mites_inscritos_presencial: {nombre: tramites_presenciales, tipo: int, desc: "trámites inscritos presenciales"}
+  tr_mites_inscritos: {nombre: tramites_parcialmente_en_linea, tipo: int, desc: "trámites inscritos parcialmente en línea (la fuente llama a la columna «TRÁMITES INSCRITOS: PARCIALMENTE EN LÍNEA»)"}
   tr_mites_inscritos_en_l_nea: {nombre: tramites_en_linea, tipo: int, desc: "trámites inscritos en línea"}
-  tr_mites_inscritos_total: {nombre: tramites_total, tipo: int, desc: "trámites inscritos en total"}
+  tr_mites_inscritos_total: {nombre: tramites_total, tipo: int, desc: "trámites inscritos en total: presenciales, parcialmente en línea y en línea"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Departamento Administrativo de la Función Pública, theme: gobierno, accrualPeriodicity: monthly}
 # Spec 07: medido en la fuente, no en Terrnova.

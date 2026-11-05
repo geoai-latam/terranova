@@ -1,13 +1,16 @@
 id: igac_caracteristicas_predio
-version: 2
+version: 3
 familia: territorio
 fuente: igac.catastro.registro2
 pregunta: "¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC?"
 descripcion: >
   Registro 2 catastral (IGAC) de un predio por su número predial de 30 dígitos: un elemento por
-  grupo de unidades, con zona homogénea física y geoeconómica, área de terreno y construida, uso,
-  pisos, habitaciones, baños, locales y puntaje de calificación. Cubre los municipios con gestión catastral del IGAC; Bogotá,
-  Medellín, Cali y otros gestores no están en esta fuente.
+  línea del registro, y cada línea trae hasta dos zonas homogéneas (física y geoeconómica, con su
+  área de terreno) y hasta tres unidades construidas (área, uso con su significado, tipificación,
+  pisos, habitaciones, baños, locales y puntaje de calificación); los campos de la segunda y la
+  tercera llevan `_2` y `_3`. Sumadas todas, dan las áreas del registro 1 (igac_registro_predio).
+  Cubre los municipios con gestión catastral del IGAC; Bogotá, Medellín, Cali y otros gestores no
+  están en esta fuente.
   (Fuente: IGAC; licencia: CC BY-SA 4.0.)
 entrada: {codigo: codigo_predial}
 consulta:
@@ -18,15 +21,24 @@ consulta:
   argumentos:
     url: "{url_capa}"
     where: "NUMERO_PREDIAL = '{codigo}'"
-    out_fields: [NUMERO_PREDIAL, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, AREA_CONSTRUIDA_1, USO_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1]
+    out_fields: [NUMERO_PREDIAL, NUMERO_PREDIAL_ANTERIOR, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, ZONA_FISICA_2, ZONA_ECONOMICA_2, AREA_TERRENO_2, AREA_CONSTRUIDA_1, USO_1, TIPIFICACION_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1, AREA_CONSTRUIDA_2, USO_2, TIPIFICACION_2, PISOS_2, HABITACIONES_2, BANOS_2, LOCALES_2, PUNTAJE_2, AREA_CONSTRUIDA_3, USO_3, TIPIFICACION_3, PISOS_3, HABITACIONES_3, BANOS_3, LOCALES_3, PUNTAJE_3]
     max_features: 200
-  campos: [NUMERO_PREDIAL, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, AREA_CONSTRUIDA_1, USO_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1]
+  campos: [NUMERO_PREDIAL, NUMERO_PREDIAL_ANTERIOR, ZONA_FISICA_1, ZONA_ECONOMICA_1, AREA_TERRENO_1, ZONA_FISICA_2, ZONA_ECONOMICA_2, AREA_TERRENO_2, AREA_CONSTRUIDA_1, USO_1, TIPIFICACION_1, PISOS_1, HABITACIONES_1, BANOS_1, LOCALES_1, PUNTAJE_1, AREA_CONSTRUIDA_2, USO_2, TIPIFICACION_2, PISOS_2, HABITACIONES_2, BANOS_2, LOCALES_2, PUNTAJE_2, AREA_CONSTRUIDA_3, USO_3, TIPIFICACION_3, PISOS_3, HABITACIONES_3, BANOS_3, LOCALES_3, PUNTAJE_3]
 salida: CaracteristicasPredio
 derivados:
+  # cuántas líneas tiene el registro 2 del predio, no cuántas unidades: cada línea trae hasta tres
   numero_unidades: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Cada elemento es una línea del registro 2, con hasta dos zonas (campos sin sufijo y con `_2`) y
+    hasta tres unidades construidas (sin sufijo, `_2` y `_3`). numero_unidades cuenta líneas, no
+    unidades. Para el área total hay que sumar todas: en el predio 251750000000000050067000000000
+    las cuatro zonas suman 56 069 m² y las seis unidades 6 572 m², lo mismo que el registro 1
+    (medido el 2026-11-05).
 cobro: registro
 canario:
   entrada: {codigo: "251750000000000050067000000000"}  # medido en REGISTRO_2, corte 06_2026
   verdad: {numero_unidades: 2, zona_economica: "006"}
-  campos: [area_construida_m2, area_terreno_m2, banos, codigo_predial, habitaciones, locales, numero_unidades, pisos, puntaje_calificacion, uso_construccion, uso_construccion_significado, zona_economica, zona_fisica]
+  campos: [area_construida_m2, area_construida_m2_2, area_construida_m2_3, area_terreno_m2, area_terreno_m2_2, banos, banos_2, banos_3, codigo_predial, codigo_predial_anterior, habitaciones, habitaciones_2, habitaciones_3, locales, locales_2, locales_3, numero_unidades, pisos, pisos_2, pisos_3, puntaje_calificacion, puntaje_calificacion_2, puntaje_calificacion_3, tipificacion, tipificacion_2, tipificacion_3, uso_construccion, uso_construccion_2, uso_construccion_2_significado, uso_construccion_3, uso_construccion_3_significado, uso_construccion_significado, zona_economica, zona_economica_2, zona_fisica, zona_fisica_2]
   latencia_max_ms: 15000  # REGISTRO_1/2 son tablas de ~7 M filas: 7 s medidos

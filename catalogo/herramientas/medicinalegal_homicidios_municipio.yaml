@@ -1,5 +1,5 @@
 id: medicinalegal_homicidios_municipio
-version: 1
+version: 2
 familia: justicia
 fuente: medicinalegal.homicidios
 pregunta: "¿Cuántos homicidios hubo en este municipio en el año, según Medicina Legal?"
@@ -26,6 +26,11 @@ salida: MedicinalegalHomicidiosMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Medicina Legal no registra presuntos homicidios en ese municipio y año. Cuenta las víctimas por el
+    municipio donde ocurrió el hecho; muy pocas salen sin municipio (3 de 14 021 en 2024).
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en vtub-3de2: Chía 2024, 8 víctimas; el primer grupo tiene 1.

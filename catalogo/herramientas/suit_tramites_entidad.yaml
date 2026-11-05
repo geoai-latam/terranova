@@ -4,8 +4,8 @@ familia: normativa
 fuente: funcionpublica.suit_historico
 pregunta: "¿Cuántos trámites tiene inscritos esta entidad en el SUIT, y cuántos en línea?"
 descripcion: >
-  Trámites inscritos en el SUIT (Función Pública) por una entidad, mes a mes: total, presenciales
-  y en línea, del mes más reciente al más viejo. Arriba, la última cifra y su mes, sumando todas las
+  Trámites inscritos en el SUIT (Función Pública) por una entidad, mes a mes: total, presenciales,
+  parcialmente en línea y en línea (los tres suman el total), del mes más reciente al más viejo. Arriba, la última cifra y su mes, sumando todas las
   entidades que reportan con ese NIT (el de Bogotá agrupa 18 secretarías). Es el histórico
   que publica Función Pública, y la serie se detuvo en diciembre de 2020.
   Si no tiene el NIT de la entidad, búsquelo con secop_entidades_municipio; no lo suponga.
@@ -18,7 +18,9 @@ consulta:
   argumentos:
     id: dd24-8p6w
     portal: datos.gov.co
-    select: "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total"
+    # `tr_mites_inscritos` es la columna «PARCIALMENTE EN LÍNEA»: sin ella, presenciales y en línea
+    # no suman el total (Universidad de Antioquia, diciembre de 2020: 3 + 6 de 21; 12 son parciales)
+    select: "nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total"
     # Medido el 2026-11-02: las 43 filas de enero de 2021 traen «NULL» en las cifras, y `mes` es
     # texto («9» va después de «12» en orden de texto).
     where: "nit = '{nit_entidad}' AND tr_mites_inscritos_total != 'NULL'"
@@ -43,7 +45,7 @@ consulta:
       en_linea: {nombre: tramites_en_linea_ultimo, tipo: int, desc: "de ellos, los que se hacen en línea"}
       entidades: {nombre: entidades_del_nit, tipo: int, desc: "entidades que reportan con ese NIT (el de Bogotá agrupa 18 secretarías)"}
     que_dice: "la última cifra del NIT, sumando todas sus entidades"
-  campos: [nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total]
+  campos: [nit, nombre_de_la_entidad, a_o, mes, tr_mites_inscritos_presencial, tr_mites_inscritos, tr_mites_inscritos_en_l_nea, tr_mites_inscritos_total]
 salida: TramitesEntidad
 avisos:
 - cuando: encontrado
@@ -57,5 +59,5 @@ canario:
   # noviembre de 2018, la primera cifra, 18).
   entrada: {nit_entidad: 899999001}
   verdad: {ultimo_anio: 2020, ultimo_mes: 12, tramites_total_ultimo: 21, entidades_del_nit: 1, anio: 2020, mes: 12}
-  campos: [anio, entidad, entidades_del_nit, mes, nit_entidad, tramites_en_linea, tramites_en_linea_ultimo, tramites_presenciales, tramites_total, tramites_total_ultimo, ultimo_anio, ultimo_mes]
+  campos: [anio, entidad, entidades_del_nit, mes, nit_entidad, tramites_en_linea, tramites_en_linea_ultimo, tramites_parcialmente_en_linea, tramites_presenciales, tramites_total, tramites_total_ultimo, ultimo_anio, ultimo_mes]
   latencia_max_ms: 10000

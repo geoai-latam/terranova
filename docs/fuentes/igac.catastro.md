@@ -130,3 +130,30 @@ gestores no están.
 - **Hallazgo:** en Chía el vacío de `sinic_predio_en_punto` no decía que el predio está en la base
   del IGAC. Ahora el aviso remite a `igac_predio_en_punto` y a `predio_en_punto`, y recuerda que una
   vía no es terreno.
+
+## Revisión de valor de los registros, construcciones y placas (2026-11-05)
+
+- **Corte:** el servidor tiene `_04_2026`, `_05_2026` y `_06_2026`; el de junio sigue siendo el
+  último (lista de servicios leída el 2026-11-05).
+- **El registro 2 perdía dos tercios de lo construido.** Cada línea trae hasta dos zonas
+  homogéneas (`_1`, `_2`) y hasta tres unidades de construcción (`_1`, `_2`, `_3`), y
+  `igac_caracteristicas_predio` solo pedía las `_1`.
+  - En el canario (251750000000000050067000000000) salían 2 zonas y 2 unidades. La fuente trae 4
+    zonas y 6 unidades. Las zonas suman 56 069 m² y las unidades 6 572 m², lo mismo que el
+    registro 1.
+  - Ahora (v3) salen todas, con `_2` y `_3`, más `tipificacion` (sin tabla publicada) y
+    `codigo_predial_anterior`. La tabla de usos va en `catalogo/codigos/igac_uso_construccion.yaml`
+    y la comparten los tres usos.
+  - `numero_unidades` cuenta líneas, no unidades: el nombre se deja y un aviso lo explica.
+- **Construcciones: polígonos, no unidades.** `numero_construcciones` cuenta pedazos: el mismo
+  predio tiene 21 polígonos de 6 unidades (A a F), las mismas del registro 2, y el canario urbano,
+  2 polígonos de una sola unidad. Ahora (v2) `unidades` cuenta los identificadores distintos, con
+  un aviso. El vacío también tiene aviso.
+- **Placas:** el predio rural del canario no tiene placa (su registro lo nombra «KASTILO»). El
+  vacío ahora lo explica y remite a `igac_registro_predio`.
+- **Predios por destino:** no había total. Ahora (v3) `predios_total`, `area_terreno_total` y
+  `area_construida_total`: Chía da 66 936 predios, los mismos del registro 1. Yopal (85001) sale
+  vacío; el aviso dice por qué.
+- **Yopal no cuadra entre fuentes:** el registro 1 no tiene ningún predio de Yopal, la lista de
+  gestores de datos.gov.co (2025-03-05) dice «IGAC» y las estadísticas catastrales de 2025 dicen
+  «Municipio de Sabanalarga». Queda anotado; no se corrige.

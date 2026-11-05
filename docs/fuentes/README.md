@@ -32,6 +32,7 @@ Reglas:
 | INVIMA, Código Único de Medicamentos: cuatro conjuntos, uno por estado | [invima.cum.md](invima.cum.md) |
 | Supersociedades: estados financieros NIIF (cinco conjuntos) y las 10 000 empresas | [supersociedades.md](supersociedades.md) |
 | Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |
+| Medicina Legal: presuntos homicidios, suicidios y muertes accidentales (tres conjuntos) | [medicinalegal.md](medicinalegal.md) |
 | ANH: producción de crudo y gas, y regalías liquidadas | [anh.md](anh.md) |
 | ADRES, afiliados de la BDUA por municipio y EPS (dos regímenes) | [adres.bdua.md](adres.bdua.md) |
 | Banco de la República: TRM, tasa de política, IBR, DTF y UVR (SDMX) | [banrep.md](banrep.md) |
@@ -39,6 +40,7 @@ Reglas:
 | SIC, sanciones en firme de protección al consumidor (`73dx-n59j`) | [sic.sanciones.md](sic.sanciones.md) |
 | MinDefensa, homicidios en víctimas (`m8fd-ahd9`) | [mindefensa.homicidios.md](mindefensa.homicidios.md) |
 | UPRA, precio comercial de la tierra rural (capa nacional y datos.gov.co) | [upra.precio_tierra.md](upra.precio_tierra.md) |
+| IGAC, registro de transacciones inmobiliarias 2015–2023 (`7y2j-43cv`) | [igac.transacciones_inmobiliarias.md](igac.transacciones_inmobiliarias.md) |
 | IGAC, gestores catastrales de Colombia (`bhcx-bx97`) | [igac.gestores_catastrales.md](igac.gestores_catastrales.md) |
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
@@ -123,3 +125,4 @@ Reglas:
 | UNGRD: emergencias por municipio | [ungrd.emergencias.md](ungrd.emergencias.md) |
 | UPME: infraestructura energética | [upme.infraestructura_energetica.md](upme.infraestructura_energetica.md) |
 | USGS: catálogo mundial de sismos | [usgs.sismos.md](usgs.sismos.md) |
+| Supertransporte, tráfico portuario (`5r3g-zv5z`) y contenedores (`7tvr-cx9w`) | [supertransporte.puertos.md](supertransporte.puertos.md) |

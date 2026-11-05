@@ -34,6 +34,13 @@ derivados:
   solicitudes_total: {de: suma, campo: solicitudes, tipo: int}
   solicitudes_en_linea_total: {de: suma, campo: solicitudes_en_linea, tipo: int}
   tramite_mas_solicitado: {de: primero, campo: tramite}
+avisos:
+- cuando: vacio
+  texto: >
+    La oferta del SUIT no tiene filas de ese NIT en ese año. Revise el NIT (secop_entidades_municipio
+    lo da). No todas las entidades reportan aquí: la Universidad de Antioquia tiene 21 trámites
+    inscritos en el histórico del SUIT y ninguna fila en la oferta, en ningún año (medido el
+    2026-11-05). Los trámites inscritos salen con suit_tramites_entidad.
 cobro: registro
 canario:
   # Medido el 2026-11-03 en k7xp-z2d2: Alcaldía de Chía (899999172), 2021 → 105 trámites (115 filas
