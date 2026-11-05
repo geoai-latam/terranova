@@ -1,0 +1,330 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:03:03+00:00",
+ "herramienta": "bogota_vacunacion_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.09,
+     4.6,
+     -74.06,
+     4.63
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "CODIGO_LOC",
+     "OBJECTID"
+    ],
+    "select": [
+     "OBJECTID",
+     "CÓDIGO_DE",
+     "NOMBRE_DE_",
+     "NOMBRE_DEL",
+     "DIRECCIÓN",
+     "TIPO_DE_PR",
+     "CODIGO_LOC"
+    ],
+    "tabla": "bogota_ips_vacunacion"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067216,
+           4.629651
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 2,
+          "CÓDIGO_DE": 110010733504,
+          "DIRECCIÓN": "CL 42 # 13-19 TO A TO B",
+          "NOMBRE_DEL": "CAJA DE COMPENSACION FAMILIAR COMPENSAR",
+          "NOMBRE_DE_": "UNIDAD DE SERVICIOS CALLE 42",
+          "OBJECTID": 200,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064019,
+           4.628564
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 2,
+          "CÓDIGO_DE": 110010945601,
+          "DIRECCIÓN": "CRA 7 # 40 62",
+          "NOMBRE_DEL": "HOSPITAL UNIVERSITARIO SAN IGNACIO",
+          "NOMBRE_DE_": "HOSPITAL UNIVERSITARIO SAN IGNACIO",
+          "OBJECTID": 209,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06424,
+           4.628284
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 2,
+          "CÓDIGO_DE": 110011823401,
+          "DIRECCIÓN": "CARRERA 7 No. 40-62 PISO 1",
+          "NOMBRE_DEL": "PROGRAMA MADRE CANGURO INTEGRAL SAS",
+          "NOMBRE_DE_": "PROGRAMA MADRE CANGURO INTEGRAL",
+          "OBJECTID": 210,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066337,
+           4.62072
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 3,
+          "CÓDIGO_DE": 110013792801,
+          "DIRECCIÓN": "CL 34 # 5 - 89",
+          "NOMBRE_DEL": "IPS UNIVERSITARIA DE COLOMBIA SAS",
+          "NOMBRE_DE_": "IPS UNIVERSITARIA DE COLOMBIA SAS",
+          "OBJECTID": 201,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.083412,
+           4.629137
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110013955604,
+          "DIRECCIÓN": "AV CL 26 # 32 A 33 LC 101-102 Mirador de Takay",
+          "NOMBRE_DEL": "SOCIEDAD CLINICA EMCOSALUD S.A.",
+          "NOMBRE_DE_": "CLINICA EMCOSALUD UPS",
+          "OBJECTID": 164,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.082265,
+           4.628353
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110011908611,
+          "DIRECCIÓN": "AV Calle 26 No. 31 A - 35 PISOS 1,2,3,4,7",
+          "NOMBRE_DEL": "VIVA 1A IPS SA",
+          "NOMBRE_DE_": "VIVA 1A IPS AVENIDA EL DORADO",
+          "OBJECTID": 167,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07795,
+           4.623902
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110011350804,
+          "DIRECCIÓN": "CALLE 27 # 27-21",
+          "NOMBRE_DEL": "MEDICINA LABORAL S.A.S",
+          "NOMBRE_DE_": "MEDILABORAL IPS-CALLE 26",
+          "OBJECTID": 178,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.077499,
+           4.622906
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110010817105,
+          "DIRECCIÓN": "Calle 27 # 24-87 PI 2 Y 3",
+          "NOMBRE_DEL": "CAJA COLOMBIANA DE SUBSIDIO FAMILIAR COLSUBSIDIO",
+          "NOMBRE_DE_": "CENTRO MEDICO COLSUBSIDIO CALLE 26",
+          "OBJECTID": 179,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.070961,
+           4.61979
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110013630014,
+          "DIRECCIÓN": "Cl 31 B Nº 14 - 26",
+          "NOMBRE_DEL": "CENTROS MEDICOS COLSANITAS S.A.S",
+          "NOMBRE_DE_": "CENTRO MEDICO TEUSAQUILLO",
+          "OBJECTID": 188,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07005,
+           4.623208
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110010899501,
+          "DIRECCIÓN": "CALLE 34 # 14 52",
+          "NOMBRE_DEL": "ASOCIACIÓN PROFAMILIA",
+          "NOMBRE_DE_": "PROFAMILIA BOGOTA TEUSAQUILLO",
+          "OBJECTID": 190,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0692,
+           4.627058
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 13,
+          "CÓDIGO_DE": 110010303101,
+          "DIRECCIÓN": "CALLE 39 No. 14-34",
+          "NOMBRE_DEL": "MEDICA MAGDALENA SAS",
+          "NOMBRE_DE_": "NUEVA CLINICA MAGDALENA",
+          "OBJECTID": 194,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.086367,
+           4.60334
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 14,
+          "CÓDIGO_DE": 110010867901,
+          "DIRECCIÓN": "CL 10 No. 18 - 75",
+          "NOMBRE_DEL": "SOCIEDAD DE CIRUGIA DE BOGOTA HOSPITAL DE SAN JOSE",
+          "NOMBRE_DE_": "Sociedad de Cirugía de Bogotá - Hospital de San José",
+          "OBJECTID": 157,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.082622,
+           4.623364
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 14,
+          "CÓDIGO_DE": 110011864201,
+          "DIRECCIÓN": "CL 24 # 29 45",
+          "NOMBRE_DEL": "CORPORACIÓN HOSPITALARIA JUAN CIUDAD",
+          "NOMBRE_DE_": "HOSPITAL UNIVERSITARIO MAYOR-MEDERI",
+          "OBJECTID": 166,
+          "TIPO_DE_PR": "Privada"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.081108,
+           4.61711
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CODIGO_LOC": 14,
+          "CÓDIGO_DE": 110013028916,
+          "DIRECCIÓN": "CARRERA 22 NUMERO 22 A -26",
+          "NOMBRE_DEL": "SUBRED INTEGRADA DE SERVICIOS DE SALUD CENTRO ORIENTE E.S.E",
+          "NOMBRE_DE_": "UNIDAD DE SERVICIOS DE SALUD SAMPER MENDOZA",
+          "OBJECTID": 168,
+          "TIPO_DE_PR": "Pública"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 14,
+      "truncado": false,
+      "vistos": 14
+     },
+     "consultado_en": "2026-11-05T17:00:14.277377+00:00",
+     "copia": {
+      "filas": 308,
+      "huella": "sha256:7ea6ac5150e319a471de947fcc630f0ff112dd1b04e84716be4d888d2dfe8084",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105170014277377"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

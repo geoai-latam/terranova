@@ -1,0 +1,233 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:49:34+00:00",
+ "herramienta": "ant_consejos_comunitarios_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "simplificada",
+    "limite": 20,
+    "order": [
+     "-_area_ha",
+     "NOMBRE"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -77.2,
+        3.6
+       ],
+       [
+        -77.0,
+        3.8
+       ],
+       [
+        -76.99,
+        3.79
+       ],
+       [
+        -77.19,
+        3.59
+       ],
+       [
+        -77.2,
+        3.6
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "NOMBRE",
+     "DEPARTAMENTO",
+     "MUNICIPIO",
+     "ULTIMO_TIPO_ACTO_ADMIN",
+     "ULTIMO_NUMERO_ACTO_ADMIN",
+     "ULTIMA_FECHA_ACTO_ADMIN",
+     "AREA_TOTAL_ACTOS_ADMIN"
+    ],
+    "tabla": "ant_consejos_comunitarios"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -77.19097,
+           3.72464
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 20536.0,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario del Río Raposo",
+          "OBJECTID": 271,
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-12-29",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "3304",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 1720.9791
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.02727,
+           3.7734
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 16773.2151,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario Mayor Del Río Anchicaya",
+          "OBJECTID": 314,
+          "ULTIMA_FECHA_ACTO_ADMIN": "2002-12-03",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "2197",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 1290.4908
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.03481,
+           3.58259
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 19060.0,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario del Río Mayorquín y Papayal",
+          "OBJECTID": 146,
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-11-24",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "2535",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 1117.922
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.02652,
+           3.79383
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 1959.9624,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario de Alto Potedó",
+          "OBJECTID": 170,
+          "ULTIMA_FECHA_ACTO_ADMIN": "2003-04-28",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0401",
+          "ULTIMO_TIPO_ACTO_ADMIN": "Resolucion",
+          "_area_ha": 450.5474
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.15898,
+           3.74476
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 4029.4503,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario de Brazitos y Amazonas",
+          "OBJECTID": 182,
+          "ULTIMA_FECHA_ACTO_ADMIN": "2002-07-16",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "1175",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 73.0641
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -77.09434,
+           3.78604
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 1720.17,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario Comunidad Negra de Taparal",
+          "OBJECTID": 200,
+          "ULTIMA_FECHA_ACTO_ADMIN": "1998-04-29",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "1084",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 61.183
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.98977,
+           3.8225
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 1418.7517,
+          "DEPARTAMENTO": "76",
+          "MUNICIPIO": "76109",
+          "NOMBRE": "Consejo Comunitario de Zacarias Río Dagua",
+          "OBJECTID": 158,
+          "ULTIMA_FECHA_ACTO_ADMIN": "2003-04-28",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0403",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 8.2612
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 7,
+      "truncado": false,
+      "vistos": 7
+     },
+     "consultado_en": "2026-11-05T16:00:17.654739+00:00",
+     "copia": {
+      "filas": 347,
+      "huella": "sha256:e3c84a56b5805af991754135438c4d00308ad473f369519ef445da976be7214e",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105160017654739"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

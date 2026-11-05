@@ -1,0 +1,51 @@
+id: gfw.alertas_integradas
+titulo: Alertas integradas de deforestación de Global Forest Watch (GLAD-L, GLAD-S2 y RADD), desde 2019
+entidad: Global Forest Watch (WRI)
+competencia: null
+acto: null
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://data-api.globalforestwatch.org/dataset/gfw_integrated_alerts
+  cita: '"license":"[CC by 4.0](https://creativecommons.org/licenses/by/4.0/) " y "citation":"Source: \"Integrated Deforestation Alerts\". UMD/GLAD and WUR, accessed through Global Nature Watch on [date]" (metadatos del dataset en la Data API, leídos el 2026-11-05). Términos de GFW (https://www.globalforestwatch.org/terms/): «each dataset carries its own license and restrictions. You should review the dataset''s metadata»; «If You use Our APIs in Your own products, please credit Us. You agree to attribute our APIs in line with our Attribution Requirements». No hay cláusula no comercial.'
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: «Integrated Deforestation Alerts», UMD/GLAD y WUR, consultado por la Data API de Global Forest Watch / Global Nature Watch (WRI). Powered by Resource Watch (https://resourcewatch.org)"
+protocolo: api_propia
+conector: amenazas-mcp
+# Data API de GFW con llave (gratis; va en el entorno de amenazas-mcp como GFW_API_KEY, en la
+# cabecera x-api-key, nunca en el catálogo ni en una URL). Una consulta SQL sobre el ráster dentro de
+# la geometría da los conteos por fecha y confianza de todo el periodo. Hay una versión por día.
+url: https://data-api.globalforestwatch.org/dataset/gfw_integrated_alerts
+modo: en_vivo
+frescura: {ttl_cache_s: 3600, sla_actualizacion: P1D}
+cobertura: {pais: GLOBAL, desde_anio: 2019}
+datos_personales: ninguno
+estado: publicada
+campos:
+  fecha: {nombre: fecha, tipo: date, desc: "fecha de la alerta (gfw_integrated_alerts__date)"}
+  confianza:
+    nombre: confianza
+    tipo: str
+    desc: "confianza de la alerta, como la publica GFW: nominal, high o highest"
+    codigos: {"nominal": "nominal", "high": "alta", "highest": "máxima"}
+    codigos_norma: "metadatos de gfw_integrated_alerts en la Data API (medido el 2026-11-05): el campo gfw_integrated_alerts__confidence vale 2 «nominal», 3 «high» y 4 «highest»; «Alerts are classified as high confidence when detected twice by a single alert system [...] alerts detected by multiple (two or three) of these systems are classified as highest confidence» (https://data-api.globalforestwatch.org/dataset/gfw_integrated_alerts)"
+  alertas: {nombre: pixeles_alerta, tipo: int, desc: "píxeles de alerta (10 m, ~0,012 ha cada uno) de esa fecha y confianza en la zona; un píxel no es un evento"}
+  area_ha: {nombre: area_ha, tipo: float, desc: "área de esos píxeles en hectáreas (area__ha de GFW)"}
+  version_gfw: {nombre: version_gfw, tipo: str, desc: "versión del dataset consultada (una por día, p. ej. v20261105)", origen: hecho}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: Global Forest Watch (WRI), theme: ambiente, accrualPeriodicity: daily}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-05'
+  fila: un día y una confianza dentro de la zona, con sus píxeles de alerta y sus hectáreas (la fuente es un ráster de 10 m)
+  operaciones: {}
+  hallazgos:
+  - 'en [-74.5, 1.5, -74.0, 2.0] (enero de 2024): high 13 583 píxeles (167,12 ha) y highest 30 024 (369,40 ha); igual en las versiones v20260701, v20261101 y v20261105'
+  - 'en el rectángulo de Colombia y sus vecinos [-79.1, -4.3, -66.8, 13.5]: enero de 2024 da nominal 1 620, high 1 487 873 y highest 1 888 095 píxeles; desde el 2026-09-01, nominal 2 912 264, high 1 926 167 y highest 531 420 (lo reciente es sobre todo nominal)'
+  - 'la consulta del rectángulo de Colombia, un año entero por fecha y confianza, tardó 19,5 s; un rectángulo de 0,5° y un mes, 3 s'
+  - 'antes del 2019-01-01 la consulta da vacío; el 2019-01-01 trae un pico (179 028 píxeles en [-76, 0, -72, 4])'
+  - 'sobre el mar la respuesta es {"data": [], "status": "success"}'
+  - 'latest responde 307 a la versión del día (v20261105)'
+  decision: herramienta por rectángulo y otra por polígono, con la consulta SQL de la Data API; el canario va en una ventana de 2024, que no cambió entre versiones

@@ -61,3 +61,11 @@ Medido contra la copia el 2026-11-04, desde Colombia por túnel, así que el tie
 - **Salud, educación, telecomunicaciones:** no hay capa oficial nacional con geometría y licencia
   usable. El REPS no trae coordenadas; las sedes del MEN en el servicio SISE no declaran licencia,
   y las de datos.gov.co (`x5ay-984n`, CC BY-SA) son de 2019. Siguen como pendientes.
+
+## Geometrías mixtas (2026-11-05)
+
+Al reparar los polígonos inválidos, ST_MakeValid dejó 14 elementos (punto más líneas) como GeometryCollection: la forma con
+restos de línea o de punto pegados, que varios visores no pintan. La copia sirve ahora solo la
+parte de la dimensión mayor (`copias.sin_mezcla`), al consultar y al copiar. Medido en la copia de
+producción solo con lectura: el área no cambia, y el recorrido de un visor ya no recibe ninguna
+GeometryCollection. La copia guardada se limpia en el próximo refresco.

@@ -21,6 +21,7 @@ cobertura: {pais: CO}
 datos_personales: ninguno
 estado: publicada
 campos:
+  ":id": {nombre: id_elemento, tipo: str, desc: "identificador de la fila en datos.gov.co (cambia si el INVÍAS republica el conjunto); distingue los puentes gemelos o repetidos"}
   nombre: {nombre: puente, tipo: str, desc: "nombre del puente"}
   via: {nombre: codigo_tramo, tipo: str, desc: "código del tramo de la red vial nacional donde está (el de invias_red_vial_en_zona)"}
   carretera: {nombre: carretera, tipo: str, desc: "carretera (origen - destino)"}

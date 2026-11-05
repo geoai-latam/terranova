@@ -52,7 +52,7 @@ jobs:
           hay() { if grep -qE "$todo|$2" cambios.txt; then echo "$1=true"; else echo "$1=false"; fi >> "$GITHUB_OUTPUT"; }
           hay codigo '^(src|catalogo|tests|scripts|esquemas)/|^Makefile$|^docs/HERRAMIENTAS\.md$'
           hay api '^(src|catalogo|tests_lentos)/'
-          hay postgres '^src/|^catalogo/|^tests/(test_postgres|test_copias|conftest)\.py$'
+          hay postgres '^src/|^catalogo/|^tests/(test_postgres|test_copias|test_copia_agregada|conftest)\.py$'
           hay descubrimiento '^src/terranova/(almacen_descubrimiento|descubrimiento|embeddings[a-z_]*|bd)\.py$|^tests/test_almacen_descubrimiento\.py$'
           hay imagen '^(src|catalogo)/|^Dockerfile$|^\.dockerignore$'
           hay deps '^$'
@@ -151,7 +151,7 @@ jobs:
       - name: Pruebas contra Postgres
         env:
           TERRANOVA_PG_PRUEBAS: postgresql://postgres:pruebas@localhost:5432/terranova
-        run: uv run --extra postgres --extra datasets pytest tests/test_postgres.py tests/test_copias.py -q -rs
+        run: uv run --extra postgres --extra datasets pytest tests/test_postgres.py tests/test_copias.py tests/test_copia_agregada.py -q -rs
 
   descubrimiento:
     name: descubrimiento (catálogo con pgvector)

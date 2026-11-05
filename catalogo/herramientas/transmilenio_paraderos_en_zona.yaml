@@ -1,5 +1,5 @@
 id: transmilenio_paraderos_en_zona
-version: 1
+version: 2
 familia: territorio
 fuente: transmilenio.paraderos_zonales
 pregunta: "¿Qué paraderos del SITP hay en esta zona de Bogotá?"
@@ -22,7 +22,7 @@ consulta:
     select: [cenefa, nombre, direccion_bandera, via, localidad, zona_sitp, zonas_nuevas, consecutivo_zona, modulo, tipo_m_s, estado_multiple, cantidad_mm, panel, audio]
     geometria: completa
     order: [cenefa]
-    limite: 2000
+    limite: 1000
   campos: [cenefa, nombre, direccion_bandera, via, localidad, zona_sitp, zonas_nuevas, consecutivo_zona, modulo, tipo_m_s, estado_multiple, cantidad_mm, panel, audio]
 salida: TransmilenioParaderosEnZona
 derivados:

@@ -44,3 +44,11 @@ La atribución de la ficha es esa cita.
 - Validaciones y salidas por estación: el bucket `validaciones_tmsa` responde 403 (2026-11-04).
 - Posición de los buses en tiempo real: el GTFS-RT `gis.transmilenio.gov.co/gtfs/` responde
   HTTP 500 (2026-11-04).
+
+## Geometrías mixtas (2026-11-05)
+
+Al reparar los polígonos inválidos, ST_MakeValid dejó 1 tramo (Calle 26) como GeometryCollection: la forma con
+restos de línea o de punto pegados, que varios visores no pintan. La copia sirve ahora solo la
+parte de la dimensión mayor (`copias.sin_mezcla`), al consultar y al copiar. Medido en la copia de
+producción solo con lectura: el área no cambia, y el recorrido de un visor ya no recibe ninguna
+GeometryCollection. La copia guardada se limpia en el próximo refresco.

@@ -1,15 +1,16 @@
 # Terrnova
 
-**Respuestas verificables sobre un lugar de Colombia, desde las fuentes oficiales abiertas, por MCP y
-REST, con la fuente y la licencia en cada respuesta.**
+**Respuestas verificables sobre un lugar de Colombia, desde fuentes abiertas, gubernamentales y no
+gubernamentales, por MCP y REST, con la fuente y la licencia en cada respuesta.**
 
 > Estado: **diseño (F0)**. Aún no hay código. Lo que existe son las decisiones, las especificaciones
 > y la hoja de ruta. Ver [docs/ESTADO.md](docs/ESTADO.md).
 
 ## Qué es
 
-Una puerta única (una llave, una cuota, un contrato de respuesta) sobre fuentes oficiales: IGAC,
-datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus, USGS, NASA y más.
+Una puerta única (una llave, una cuota, un contrato de respuesta) sobre fuentes gubernamentales (IGAC,
+datos.gov.co/SECOP, DANE, PNN, SIC, Supersociedades, cortes, BanRep, Copernicus, USGS, NASA y más) y
+no gubernamentales (Confecámaras, Global Forest Watch).
 
 - **MCP** para agentes de IA (Claude, ChatGPT, Cursor, cualquier cliente MCP).
 - **REST `/v1` con OpenAPI 3.1** para sistemas, scripts y SIG.

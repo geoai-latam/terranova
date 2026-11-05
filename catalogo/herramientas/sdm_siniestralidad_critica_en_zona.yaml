@@ -1,0 +1,59 @@
+id: sdm_siniestralidad_critica_en_zona
+version: 1
+familia: territorio
+fuente: sdm.siniestralidad_critica
+pregunta: "¿Qué tan peligrosa es esta zona de Bogotá para peatones, ciclistas y motociclistas, según los sitios críticos de siniestralidad?"
+descripcion: >
+  Puntos, tramos y zonas críticas de siniestralidad vial 2022-2025 que la Secretaría Distrital de
+  Movilidad de Bogotá identificó para cada actor vial (peatones, ciclistas, motociclistas y
+  vulnerables, que junta a los tres), en la red arterial y en la no arterial, que se cruzan con un
+  rectángulo (bbox en EPSG:4326). Cada sitio trae su `tipo` (elemento, actor vial y red), código de
+  la SDM, dirección, localidad (solo la red no arterial), fallecidos y lesionados del actor vial en
+  esos cuatro años y, en las zonas, el área. Arriba van el total, cuántos sitios hay por tipo y por
+  actor vial, y los fallecidos y lesionados de los puntos críticos por actor vial. Sirve para «¿qué
+  tan peligrosa es esta zona y para quién?» o para pintar los sitios críticos en un visor. Son
+  totales por sitio: no trae siniestros uno por uno ni datos de las víctimas. Solo cubre Bogotá
+  D.C. Sale de la copia de Terrnova. (Fuente: Oficina de Seguridad Vial, Secretaría Distrital de
+  Movilidad de Bogotá; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: sdm_siniestralidad_critica
+    bbox: "{bbox}"
+    select: [id_elemento, categoria, ID_CRITICO, DIRECCION, LOCALIDAD, FALLECIDOS, LESIONADOS, AREA_HA]
+    geometria: completa
+    order: [categoria, id_elemento]
+    limite: 1000
+  campos: [id_elemento, categoria, ID_CRITICO, DIRECCION, LOCALIDAD, FALLECIDOS, LESIONADOS, AREA_HA]
+salida: SdmSiniestralidadCriticaEnZona
+derivados:
+  elemento: {de: columna, campo: categoria, patron: '^(punto|tramo|zona) crític'}
+  actor_vial: {de: columna, campo: categoria, patron: '· (peatones|ciclistas|motociclistas|vulnerables) ·'}
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+  sitios_por_actor_vial: {de: conteo_por, campo: actor_vial}
+  fallecidos_en_puntos_por_actor_vial: {de: suma_por, campo: actor_vial, sumar: fallecidos, tipo: int, solo_si: {campo: elemento, valores: [punto]}}
+  lesionados_en_puntos_por_actor_vial: {de: suma_por, campo: actor_vial, sumar: lesionados, tipo: int, solo_si: {campo: elemento, valores: [punto]}}
+avisos:
+- cuando: vacio
+  texto: >
+    En ese rectángulo no hay puntos, tramos ni zonas críticas de siniestralidad 2022-2025 de la
+    SDM. Eso no quiere decir que no haya siniestros: la SDM solo marca los sitios donde más se
+    concentran, y solo en Bogotá D.C.
+- cuando: encontrado
+  texto: >
+    Es el análisis 2022-2025 que la SDM publicó en octubre de 2026, no un conteo al día. Los
+    fallecidos y lesionados son de cada sitio y no se suman entre sitios: un punto puede quedar
+    dentro de un tramo o una zona del mismo actor, y «vulnerables» junta a peatones, ciclistas y
+    motociclistas. Por eso las sumas por actor vial son solo de los puntos.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la descarga de las veinte capas de la SDM (373 sitios), cruzando cada
+  # geometría con el rectángulo: en [-74.16, 4.60, -74.12, 4.64] (Kennedy y Puente Aranda) hay 49
+  # sitios críticos: 17 de vulnerables, 14 de motociclistas, 10 de peatones y 8 de ciclistas.
+  entrada: {bbox: [-74.16, 4.6, -74.12, 4.64]}
+  minimos: {total: 49}
+  campos: [actor_vial, area_ha, codigo_sdm, direccion, elemento, fallecidos, fallecidos_en_puntos_por_actor_vial, id_elemento, lesionados, lesionados_en_puntos_por_actor_vial, localidad_en_la_fuente, por_tipo, sitios_por_actor_vial, tipo, total]
+  latencia_max_ms: 8000

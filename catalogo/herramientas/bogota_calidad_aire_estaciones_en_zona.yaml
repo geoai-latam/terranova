@@ -1,0 +1,47 @@
+id: bogota_calidad_aire_estaciones_en_zona
+version: 1
+familia: ambiente
+fuente: bogota.calidad_aire_estaciones
+pregunta: "¿Qué estaciones de la red de calidad del aire de Bogotá (RMCAB) hay en esta zona?"
+descripcion: >
+  Estaciones de la Red de Monitoreo de Calidad del Aire de Bogotá (RMCAB), que opera la
+  Secretaría Distrital de Ambiente, dentro de un rectángulo (bbox en EPSG:4326), con su punto,
+  nombre, código, dirección, sede, altitud y altura de la toma sobre el suelo. La red tiene 20
+  estaciones, dos de ellas móviles. Sirve para preguntas como «¿cuál es la estación de calidad del
+  aire más cercana a este predio?» o para pintar la red en un visor. No trae mediciones: la SDA no
+  las publica con licencia abierta. Solo cubre Bogotá. Sale de la copia de Terrnova.
+  (Fuente: Secretaría Distrital de Ambiente, Alcaldía Mayor de Bogotá; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: bogota_calidad_aire_estaciones
+    bbox: "{bbox}"
+    select: [objectid, estacion, cod_estac, dir_estac, entidad_colab, altura, alt_suelo]
+    geometria: completa
+    order: [cod_estac, objectid]
+    limite: 1000
+  campos: [objectid, estacion, cod_estac, dir_estac, entidad_colab, altura, alt_suelo]
+salida: BogotaCalidadAireEstacionesEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay estaciones de la RMCAB en ese rectángulo. Solo se cubre Bogotá D.C., y la red tiene 20
+    estaciones: pruebe con un rectángulo más grande.
+- cuando: encontrado
+  texto: >
+    Es la ubicación de las estaciones, sin sus mediciones: la SDA no publica las mediciones con
+    licencia abierta en el portal de datos abiertos. Las dos estaciones móviles (MOV y MOV2) salen
+    donde las publica la capa. Las siete estaciones más nuevas no traen altitud, y en la sede
+    repiten la dirección.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la capa de la SDA (intersección con el rectángulo): 5 estaciones en el
+  # centro de Bogotá (CDAR, JAZ, MAM, MOV y PTE).
+  entrada: {bbox: [-74.12, 4.6, -74.06, 4.67]}
+  minimos: {total: 5}
+  campos: [altitud_m, altura_sobre_suelo_m, codigo_estacion, direccion, id_elemento, nombre, sede, total]
+  latencia_max_ms: 8000

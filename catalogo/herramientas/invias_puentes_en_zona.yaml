@@ -1,5 +1,5 @@
 id: invias_puentes_en_zona
-version: 2
+version: 3
 familia: territorio
 fuente: invias.puentes
 pregunta: "¿Qué puentes de la red vial nacional hay en esta zona?"
@@ -19,12 +19,12 @@ consulta:
     id: nsdj-ep2p
     portal: datos.gov.co
     # spec 07: el año de construcción viene dividido por mil (1.926 = 1926)
-    select: "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
+    select: ":id, nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
     columna_geo: point
     bbox: "{bbox}"
-    order: "via, poste_de_referencia, distancia, nombre"
+    order: "via, poste_de_referencia, distancia, nombre, :id"
     max_filas: 3000
-  campos: [nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n, fecha_de_inspecci_n]
+  campos: [":id", nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n, fecha_de_inspecci_n]
 # Dominios codificados de la capa de puentes del INVÍAS (MapaCarreteras/Puente/FeatureServer/1?f=json),
 # medidos el 2026-10-28; un código fuera del dominio sale sin nombre.
 derivados:
@@ -56,5 +56,5 @@ canario:
     anio_construccion: 1926
     longitud_m: 40.2
     numero_registros: 1
-  campos: [administrador, ancho_tablero_m, anio_construccion, carretera, codigo_tramo, fecha_inspeccion, longitud_m, luces, luz_maxima_m, material, material_nombre, numero_registros, pr, pr_m, puente, seccion_transversal, seccion_transversal_nombre, sistema_longitudinal, sistema_longitudinal_nombre]
+  campos: [administrador, ancho_tablero_m, anio_construccion, carretera, codigo_tramo, fecha_inspeccion, id_elemento, longitud_m, luces, luz_maxima_m, material, material_nombre, numero_registros, pr, pr_m, puente, seccion_transversal, seccion_transversal_nombre, sistema_longitudinal, sistema_longitudinal_nombre]
   latencia_max_ms: 8000

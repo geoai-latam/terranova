@@ -1,27 +1,27 @@
 {
  "capas": {
-  "fuentes": 194,
-  "herramientas": 243,
+  "fuentes": 201,
+  "herramientas": 259,
   "familias": [
    [
     "Territorio",
-    66
+    70
    ],
    [
     "Estadísticas",
-    47
+    48
    ],
    [
     "Contratación",
     45
    ],
    [
-    "Justicia",
-    28
+    "Ambiente",
+    36
    ],
    [
-    "Ambiente",
-    25
+    "Justicia",
+    28
    ],
    [
     "Empresas",
@@ -75,7 +75,7 @@
     "pregunta": "¿Qué áreas protegidas del RUNAP contienen este punto?",
     "entidad": "Parques Nacionales",
     "licencia": "CC BY-SA 4.0",
-    "servido": "una copia del archivo oficial",
+    "servido": "una copia del archivo de la fuente",
     "corta": "¿Área protegida aquí?",
     "fuentes": 1
    }
@@ -93,6 +93,7 @@
    4,
    4,
    4,
+   4,
    3,
    3,
    3,
@@ -107,6 +108,8 @@
    2,
    2,
    2,
+   2,
+   1,
    1,
    1,
    1,

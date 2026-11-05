@@ -1,0 +1,49 @@
+id: ant_consejos_comunitarios_municipio
+version: 1
+familia: ambiente
+fuente: ant.consejos_comunitarios
+pregunta: "¿Qué consejos comunitarios titulados anota la ANT en este municipio?"
+descripcion: >
+  Consejos comunitarios titulados (territorios colectivos de comunidades negras) que la ANT anota en
+  un municipio (código DIVIPOLA de 5 dígitos): nombre, último acto administrativo y área según los
+  actos. Arriba, el total y la suma de sus áreas. La ANT anota un solo municipio por territorio: uno
+  que cruza varios sale solo en el anotado. Para todo lo que toca el municipio, use
+  ant_consejos_comunitarios_en_zona o ant_consejos_comunitarios_en_poligono. Con `geometria`, los
+  polígonos salen simplificados a unos 55 m (enteros, por punto o por polígono). Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_consejos_comunitarios
+    filtros: {MUNICIPIO: "{municipio_divipola}"}
+    select: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    order: ["-AREA_TOTAL_ACTOS_ADMIN", NOMBRE]
+    limite: 1000
+  campos: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ConsejosComunitariosMunicipio
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha_actos_total: {de: suma, campo: area_ha_actos, tipo: float, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    La ANT no anota ningún consejo comunitario titulado con ese código de municipio. No quiere decir
+    que no haya: anota un solo municipio por territorio y no trae las solicitudes en trámite. Para
+    ver lo que toca el municipio, use ant_consejos_comunitarios_en_zona con su rectángulo.
+- cuando: encontrado
+  texto: >
+    Son los consejos que la ANT anota en este municipio, uno por territorio: los que lo cruzan pero
+    están anotados en otro no salen. La suma de áreas es la de los actos de cada territorio, aunque
+    una parte quede en otro municipio.
+cobro: agregado
+canario:
+  # Buenaventura (Valle); medido el 2026-11-05 en la capa 0 (MUNICIPIO = 76109, returnCountOnly):
+  # 41 consejos, el más grande según los actos el del Río Cajambre (75 710 ha).
+  entrada: {municipio_divipola: "76109"}
+  verdad: {total: 41, nombre: "Consejo Comunitario del Río Cajambre"}
+  campos: [area_ha_actos, area_ha_actos_total, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, tipo_acto, total]
+  latencia_max_ms: 8000

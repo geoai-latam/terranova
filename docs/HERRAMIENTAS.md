@@ -6,9 +6,18 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `ant_consejos_comunitarios_en_poligono` | ¿Este lote cae en un territorio colectivo de comunidades negras (consejo comunitario titulado)? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_consejos_comunitarios_en_punto` | ¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_consejos_comunitarios_en_zona` | ¿Qué territorios colectivos de comunidades negras (consejos comunitarios titulados) hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `ant_consejos_comunitarios_municipio` | ¿Qué consejos comunitarios titulados anota la ANT en este municipio? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 5 |
+| `ant_resguardos_en_poligono` | ¿Este lote cae en un resguardo indígena formalizado? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_resguardos_en_punto` | ¿En qué resguardo indígena formalizado cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_resguardos_en_zona` | ¿Qué resguardos indígenas formalizados hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `ant_resguardos_municipio` | ¿Qué resguardos indígenas formalizados anota la ANT en este municipio? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 5 |
+| `ant_zonas_reserva_campesina_en_poligono` | ¿Este lote cae en una zona de reserva campesina constituida? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_zonas_reserva_campesina_en_zona` | ¿Qué zonas de reserva campesina constituidas hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `bogota_calidad_aire_estaciones_en_zona` | ¿Qué estaciones de la red de calidad del aire de Bogotá (RMCAB) hay en esta zona? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
 | `car_pomca_en_poligono` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_sumapaz_en_poligono` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 20 |
@@ -16,6 +25,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `car_ronda_hidrica_en_poligono` | ¿Este lote toca una ronda hídrica delimitada por la CAR Cundinamarca, y cuánta área de ella tiene? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_ronda_hidrica_en_punto` | ¿Este punto está en una ronda hídrica delimitada por la CAR Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `esa_cobertura_suelo_en_punto` | ¿Qué cobertura del suelo hay alrededor de este punto? | European Space Agency (consorcio WorldCover) | CC-BY-4.0 | 20 |
+| `gfw_alertas_deforestacion_en_poligono` | ¿Cuántas alertas de deforestación hubo en este polígono (un lote, una finca) en este periodo? | Global Forest Watch (WRI) | CC-BY-4.0 | 20 |
+| `gfw_alertas_deforestacion_en_zona` | ¿Cuántas alertas de deforestación hubo en esta zona en este periodo, y con qué confianza? | Global Forest Watch (WRI) | CC-BY-4.0 | 20 |
 | `ideam_alertas_deslizamiento_municipio` | ¿Hay alerta por deslizamiento en este municipio? ¿Cuáles fueron sus alertas recientes? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 2 |
 | `ideam_alertas_incendios_municipio` | ¿Hay alerta por incendio forestal en este municipio? ¿Cuáles fueron sus alertas recientes? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 2 |
 | `ideam_calidad_aire_municipio` | ¿Cómo estuvo la calidad del aire en este municipio en un año? (PM2.5, PM10, ozono…) | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
@@ -126,6 +137,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `crc_estaciones_base_municipio` | ¿Cuántas antenas o estaciones base de celular hay en este municipio, de qué operador y con qué tecnología (2G, 3G, 4G, 5G)? | Comisión de Regulación de Comunicaciones (CRC) | LicenseRef-postdata-terminos | 5 |
 | `dane_ipc_indice_anio` | ¿Cuál fue la inflación (IPC) en Colombia en un año, mes a mes? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
@@ -229,6 +241,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `anm_titulos_municipio` | ¿Qué minerales tienen explotador autorizado en el RUCOM en este municipio, y cuántos títulos? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
 | `ant_uaf_en_punto` | ¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `bogota_emergencias_en_zona` | ¿Qué estaciones de bomberos, de policía, CAI y hospitales públicos hay en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-SA-4.0 | 20 |
+| `bogota_parques_en_zona` | ¿Qué parques públicos hay en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
+| `bogota_vacunacion_en_zona` | ¿Dónde puedo vacunarme en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `dane_sedes_educativas_buscar` | ¿Dónde queda este colegio y cuál es su código DANE? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 5 |
 | `dane_sedes_educativas_en_zona` | ¿Qué colegios y sedes educativas hay en esta zona? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 20 |
@@ -266,6 +280,8 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `minsalud_sedes_salud_en_zona` | ¿Qué hospitales, clínicas e IPS hay en esta zona? | Ministerio de Salud y Protección Social | por verificar | 20 |
 | `minsalud_sedes_salud_municipio` | ¿Qué hospitales, clínicas e IPS hay en este municipio y dónde quedan? | Ministerio de Salud y Protección Social | por verificar | 2 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
+| `sdm_movilidad_en_zona` | ¿Qué semáforos, cámaras salvavidas y cicloparqueaderos hay en esta zona de Bogotá? | Secretaría Distrital de Movilidad de Bogotá | CC-BY-4.0 | 20 |
+| `sdm_siniestralidad_critica_en_zona` | ¿Qué tan peligrosa es esta zona de Bogotá para peatones, ciclistas y motociclistas, según los sitios críticos de siniestralidad? | Secretaría Distrital de Movilidad de Bogotá | CC-BY-4.0 | 20 |
 | `sdp_amenaza_movimiento_masa_en_punto` | ¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_area_actividad_en_poligono` | ¿Qué áreas de actividad del POT tocan este polígono en Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 20 |
 | `sdp_area_actividad_en_punto` | ¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |

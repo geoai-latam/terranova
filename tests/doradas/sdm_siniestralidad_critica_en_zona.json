@@ -1,0 +1,1045 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:48:42+00:00",
+ "herramienta": "sdm_siniestralidad_critica_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.16,
+     4.6,
+     -74.12,
+     4.64
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "categoria",
+     "id_elemento"
+    ],
+    "select": [
+     "id_elemento",
+     "categoria",
+     "ID_CRITICO",
+     "DIRECCION",
+     "LOCALIDAD",
+     "FALLECIDOS",
+     "LESIONADOS",
+     "AREA_HA"
+    ],
+    "tabla": "sdm_siniestralidad_critica"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.158119,
+           4.613211
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "K78 X Cl42 sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_K78",
+          "LESIONADOS": 7,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "punto crítico · motociclistas · vía no arterial",
+          "id_elemento": 6000007
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.146672,
+           4.608887
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl39B sur X K72J",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_Cl39B",
+          "LESIONADOS": 9,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "punto crítico · motociclistas · vía no arterial",
+          "id_elemento": 6000009
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.121954,
+           4.620361
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl2C X K60",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "PA_Cl2C",
+          "LESIONADOS": 20,
+          "LOCALIDAD": "PUENTE ARANDA",
+          "categoria": "punto crítico · motociclistas · vía no arterial",
+          "id_elemento": 6000010
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15011,
+           4.627626
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl26 sur X K78K",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_Cl26",
+          "LESIONADOS": 9,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "punto crítico · motociclistas · vía no arterial",
+          "id_elemento": 6000029
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15454,
+           4.631763
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 80 x Av. Américas",
+          "FALLECIDOS": 2,
+          "ID_CRITICO": "G",
+          "LESIONADOS": 35,
+          "LOCALIDAD": null,
+          "categoria": "punto crítico · peatones · vía arterial",
+          "id_elemento": 1000007
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.128434,
+           4.629615
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas x Carrera 69B",
+          "FALLECIDOS": 4,
+          "ID_CRITICO": "H",
+          "LESIONADOS": 13,
+          "LOCALIDAD": null,
+          "categoria": "punto crítico · peatones · vía arterial",
+          "id_elemento": 1000008
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.153379,
+           4.624059
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78K x Calle 37 sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "MM",
+          "LESIONADOS": 6,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · peatones · vía no arterial",
+          "id_elemento": 2000011
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.121952,
+           4.620365
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 60 x Calle 2C",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "P7",
+          "LESIONADOS": 21,
+          "LOCALIDAD": "Puente Aranda",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000015
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.152985,
+           4.63622
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Calle 6 x Transversal 80G",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "P10",
+          "LESIONADOS": 18,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000019
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.150139,
+           4.627562
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78K x Calle 26 sur",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "P44",
+          "LESIONADOS": 12,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000020
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.153353,
+           4.624039
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78K x Calle 37 sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "P35",
+          "LESIONADOS": 14,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000021
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.150808,
+           4.613959
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 73 x Calle 40 sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "P27",
+          "LESIONADOS": 15,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000022
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.146659,
+           4.608863
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 72J x Calle 39B sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "P45",
+          "LESIONADOS": 13,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "punto crítico · vulnerables · vía no arterial",
+          "id_elemento": 8000023
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.155241,
+           4.633018
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, Cr. 71A bis y Cr. 80",
+          "FALLECIDOS": 4,
+          "ID_CRITICO": "AME_W",
+          "LESIONADOS": 132,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · ciclistas · vía arterial",
+          "id_elemento": 11000001
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.159869,
+           4.638917
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Ciudad de Cali, Cl. 5A sur y Cl. 8",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "CALI_C",
+          "LESIONADOS": 45,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · ciclistas · vía arterial",
+          "id_elemento": 11000002
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.123468,
+           4.630269
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, Cl. 6 y Cr. 68",
+          "FALLECIDOS": 3,
+          "ID_CRITICO": "AME_E",
+          "LESIONADOS": 84,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · ciclistas · vía arterial",
+          "id_elemento": 11000011
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.156518,
+           4.624487
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 79, Cl. 38C sur y Cl. 42C sur",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "CR79",
+          "LESIONADOS": 17,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · ciclistas · vía no arterial",
+          "id_elemento": 12000003
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.153443,
+           4.623904
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78K, Cl. 37 sur y Cl. 26 sur",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "CR78K",
+          "LESIONADOS": 12,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · ciclistas · vía no arterial",
+          "id_elemento": 12000009
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.146579,
+           4.624273
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Calle 26 sur, Cr. 73 y Cr. 77",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "CL26S",
+          "LESIONADOS": 9,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · ciclistas · vía no arterial",
+          "id_elemento": 12000010
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.122708,
+           4.630638
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, Carrera 68 y Carrera 50 ",
+          "FALLECIDOS": 15,
+          "ID_CRITICO": "AMERICAS_E",
+          "LESIONADOS": 543,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · motociclistas · vía arterial",
+          "id_elemento": 13000001
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14785,
+           4.630367
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, Tv. 78C y Carrera 71D ",
+          "FALLECIDOS": 6,
+          "ID_CRITICO": "AMERICAS_O",
+          "LESIONADOS": 267,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · motociclistas · vía arterial",
+          "id_elemento": 13000002
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.138952,
+           4.634472
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Boyacá, Carrera 69C y Calle 7A bis A",
+          "FALLECIDOS": 16,
+          "ID_CRITICO": "BOYACA_N",
+          "LESIONADOS": 388,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · motociclistas · vía arterial",
+          "id_elemento": 13000012
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.164059,
+           4.618296
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "K79 entre Cl46G bis sur y Cl38C sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_K79",
+          "LESIONADOS": 100,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "tramo crítico · motociclistas · vía no arterial",
+          "id_elemento": 14000002
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.153033,
+           4.636229
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl6 entre Tv80G y Tv79",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_Cl6",
+          "LESIONADOS": 40,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "tramo crítico · motociclistas · vía no arterial",
+          "id_elemento": 14000009
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.133028,
+           4.614656
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl24 sur entre K70 y K69A",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_Cl24",
+          "LESIONADOS": 24,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "tramo crítico · motociclistas · vía no arterial",
+          "id_elemento": 14000019
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.139917,
+           4.611793
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Cl37B sur entre K69 y K69B",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "K_Cl37B",
+          "LESIONADOS": 22,
+          "LOCALIDAD": "KENNEDY",
+          "categoria": "tramo crítico · motociclistas · vía no arterial",
+          "id_elemento": 14000020
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.123725,
+           4.63002
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, Cr. 68 y Cl. 6",
+          "FALLECIDOS": 4,
+          "ID_CRITICO": "AMERICAS",
+          "LESIONADOS": 101,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · peatones · vía arterial",
+          "id_elemento": 9000005
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.172564,
+           4.628472
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Ciudad de Cali, Cl.45bis sur y Cl. 6C",
+          "FALLECIDOS": 6,
+          "ID_CRITICO": "CCALI",
+          "LESIONADOS": 98,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · peatones · vía arterial",
+          "id_elemento": 9000008
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.146565,
+           4.590264
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Boyacá, Cl. 39F sur y Dg. 51A sur",
+          "FALLECIDOS": 7,
+          "ID_CRITICO": "BOYACA",
+          "LESIONADOS": 64,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · peatones · vía arterial",
+          "id_elemento": 9000013
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.158067,
+           4.636212
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 82, Cl. 5C sur y Cl. 2A",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "CR82",
+          "LESIONADOS": 13,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · peatones · vía no arterial",
+          "id_elemento": 10000005
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.162121,
+           4.624942
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 80, entre Calle 40C sur y Av. Américas",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "CR80_N",
+          "LESIONADOS": 113,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · vulnerables · vía arterial",
+          "id_elemento": 15000004
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.155519,
+           4.633391
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, entre Carrera 80 y Av. Boyacá",
+          "FALLECIDOS": 24,
+          "ID_CRITICO": "AME_W",
+          "LESIONADOS": 566,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · vulnerables · vía arterial",
+          "id_elemento": 15000005
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.133588,
+           4.631153
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Américas, entre Carrera 50 y Carrera 71A",
+          "FALLECIDOS": 34,
+          "ID_CRITICO": "AME_E",
+          "LESIONADOS": 898,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · vulnerables · vía arterial",
+          "id_elemento": 15000006
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.140707,
+           4.620185
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. 1ro Mayo, entre Av. Boyacá y Carrera 69",
+          "FALLECIDOS": 14,
+          "ID_CRITICO": "1MAYO_N",
+          "LESIONADOS": 201,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · vulnerables · vía arterial",
+          "id_elemento": 15000007
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.153428,
+           4.644312
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Av. Ciudad de Cali, entre Diagonal 3 y Calle 6D",
+          "FALLECIDOS": 7,
+          "ID_CRITICO": "CALI_C",
+          "LESIONADOS": 159,
+          "LOCALIDAD": null,
+          "categoria": "tramo crítico · vulnerables · vía arterial",
+          "id_elemento": 15000022
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.163386,
+           4.618677
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 79, Calle 38C sur y Calle 42F sur",
+          "FALLECIDOS": 3,
+          "ID_CRITICO": "CR79",
+          "LESIONADOS": 142,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · vulnerables · vía no arterial",
+          "id_elemento": 16000001
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.152206,
+           4.620482
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78B, Calle 38c sur y Calle 26 sur",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "CR78B",
+          "LESIONADOS": 82,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · vulnerables · vía no arterial",
+          "id_elemento": 16000003
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.144945,
+           4.634517
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 78, Calle 6C y Calle 9",
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "CR78",
+          "LESIONADOS": 73,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · vulnerables · vía no arterial",
+          "id_elemento": 16000006
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.156111,
+           4.63751
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": null,
+          "DIRECCION": "Carrera 82, Calle 2A y Calle 5C sur",
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "CR82_N",
+          "LESIONADOS": 37,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "tramo crítico · vulnerables · vía no arterial",
+          "id_elemento": 16000030
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16243,
+           4.61527
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 89.19689156,
+          "DIRECCION": null,
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "Zona H",
+          "LESIONADOS": 42,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · ciclistas · vía no arterial",
+          "id_elemento": 18000008
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.162788,
+           4.634808
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 47.73280736,
+          "DIRECCION": null,
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "Zona I",
+          "LESIONADOS": 20,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · ciclistas · vía no arterial",
+          "id_elemento": 18000009
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.159323,
+           4.65284
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 142.83668489,
+          "DIRECCION": null,
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "Zona N",
+          "LESIONADOS": 232,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · motociclistas · vía no arterial",
+          "id_elemento": 19000014
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.149387,
+           4.626859
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 274.32556882,
+          "DIRECCION": null,
+          "FALLECIDOS": 1,
+          "ID_CRITICO": "Zona O",
+          "LESIONADOS": 379,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · motociclistas · vía no arterial",
+          "id_elemento": 19000015
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.130816,
+           4.610344
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 72.3367669,
+          "DIRECCION": null,
+          "FALLECIDOS": 0,
+          "ID_CRITICO": "Zona P",
+          "LESIONADOS": 81,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · motociclistas · vía no arterial",
+          "id_elemento": 19000016
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.162536,
+           4.629545
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 94.09567711,
+          "DIRECCION": null,
+          "FALLECIDOS": 3,
+          "ID_CRITICO": "Zona Q",
+          "LESIONADOS": 41,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · peatones · vía no arterial",
+          "id_elemento": 17000017
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16243,
+           4.61527
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 201.31148493,
+          "DIRECCION": null,
+          "FALLECIDOS": 4,
+          "ID_CRITICO": "Zona R",
+          "LESIONADOS": 92,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · peatones · vía no arterial",
+          "id_elemento": 17000018
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.156978,
+           4.641715
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 87.75496502,
+          "DIRECCION": null,
+          "FALLECIDOS": 2,
+          "ID_CRITICO": "Zona S",
+          "LESIONADOS": 58,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · peatones · vía no arterial",
+          "id_elemento": 17000019
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.145476,
+           4.623206
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 197.8683288,
+          "DIRECCION": null,
+          "FALLECIDOS": 6,
+          "ID_CRITICO": "Z4",
+          "LESIONADOS": 531,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · vulnerables · vía no arterial",
+          "id_elemento": 20000014
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.159323,
+           4.65284
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_HA": 122.39649901,
+          "DIRECCION": null,
+          "FALLECIDOS": 3,
+          "ID_CRITICO": "Z3",
+          "LESIONADOS": 346,
+          "LOCALIDAD": "Kennedy",
+          "categoria": "zona crítica · vulnerables · vía no arterial",
+          "id_elemento": 20000015
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 49,
+      "truncado": false,
+      "vistos": 49
+     },
+     "consultado_en": "2026-11-05T17:06:23.895314+00:00",
+     "copia": {
+      "filas": 373,
+      "huella": "sha256:922507d38ae840c8d03d226d23cf4cae08a812429d436509152b707e9046f49b",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105170623895314"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

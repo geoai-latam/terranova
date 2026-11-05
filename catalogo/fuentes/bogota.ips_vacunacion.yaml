@@ -1,0 +1,63 @@
+id: bogota.ips_vacunacion
+titulo: "Bogotá: instituciones prestadoras de salud (IPS) con servicio de vacunación, con su ubicación (copia)"
+entidad: Alcaldía Mayor de Bogotá
+competencia: la Secretaría Distrital de Salud (SDS) coordina el Programa Ampliado de Inmunizaciones en Bogotá y publica las IPS con servicio de vacunación en la IDE de Bogotá
+acto: null
+# Paquete «instituciones-prestadoras-de-salud-con-servicio-de-vacunacion» del portal
+# datosabiertos.bogota.gov.co (SDS), que apunta a esta capa: CC-BY-4.0, verificada el 2026-11-05.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=instituciones-prestadoras-de-salud-con-servicio-de-vacunacion
+  cita: "license_id: CC-BY-4.0, license_title: Creative Commons Attribution 4.0 (recurso ESRI REST: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/salud/puntosdevacunacion/MapServer/1)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Secretaría Distrital de Salud (SDS), Alcaldía Mayor de Bogotá. Portal de datos abiertos de Bogotá"
+protocolo: arcgis_rest
+# Servidor de la IDE de Bogotá (Catastro). La VPS no llega a los servidores del Distrito: la copia
+# se baja a mano desde Colombia.
+conector: copia
+url: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/salud/puntosdevacunacion/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 1
+  tabla: bogota_ips_vacunacion
+  clave: OBJECTID
+  por_pagina: 500
+  indices: [TIPO_DE_PR, CODIGO_LOC]
+# El paquete se tocó el 2025-07-29. Se rehace a mano cada tres meses.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P120D}
+cobertura: {pais: CO, rectangulo: [-74.21, 4.17, -74.01, 4.77], excluye: ["todo lo que no es Bogotá D.C.", "las demás sedes de salud, sin vacunación (minsalud_sedes_salud_*)", "los puntos de vacunación de jornadas y brigadas, que no son sedes de IPS"]}
+# El correo de contacto no se copia: 14 de las 308 sedes traen uno de gmail.
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador de la sede en la capa (cambia si la SDS republica)"}
+  CÓDIGO_DE: {nombre: codigo_sede, tipo: int, desc: "código de la sede en el REPS (código de habilitación del prestador y número de sede), el mismo de minsalud_sedes_salud_*"}
+  NOMBRE_DE_: {nombre: nombre_sede, tipo: str, desc: "nombre de la sede"}
+  NOMBRE_DEL: {nombre: prestador, tipo: str, desc: "nombre del prestador (la IPS o la subred), como lo publica la SDS"}
+  DIRECCIÓN: {nombre: direccion, tipo: str, desc: "dirección de la sede"}
+  TIPO_DE_PR: {nombre: naturaleza, tipo: str, desc: "naturaleza del prestador: Pública o Privada"}
+  CODIGO_LOC:
+    nombre: localidad
+    tipo: int
+    desc: "localidad de Bogotá"
+    codigos: {"1": "Usaquén", "2": "Chapinero", "3": "Santa Fe", "4": "San Cristóbal", "5": "Usme", "6": "Tunjuelito", "7": "Bosa", "8": "Kennedy", "9": "Fontibón", "10": "Engativá", "11": "Suba", "12": "Barrios Unidos", "13": "Teusaquillo", "14": "Los Mártires", "15": "Antonio Nariño", "16": "Puente Aranda", "17": "La Candelaria", "18": "Rafael Uribe Uribe", "19": "Ciudad Bolívar", "20": "Sumapaz"}
+    codigos_norma: "dominio «locasalud» de CODIGO_LOC en la capa 1 del servicio salud/puntosdevacunacion de la IDE de Bogotá"
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: Alcaldía Mayor de Bogotá, theme: salud}
+perfil:
+  medido: '2026-11-05'
+  fila: "una sede de IPS con servicio de vacunación: 308 (231 privadas y 77 públicas)"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "la capa está en EPSG:3857; la copia pide EPSG:4326"
+  - "el código de sede del REPS es único en las 308 sedes; IDENTIFICA, no (40 valores repetidos): no se copia"
+  - "CLASE_DE_P es la misma en todas («Instituciones Prestadoras de Servicios de Salud - IPS»): no se copia"
+  - "el correo trae 14 cuentas de gmail: no se copia"
+  - "todas las sedes traen punto"
+  - "algunos nombres traen la «í» rota en la fuente (p. ej. «José Mar�a Carbonell»)"
+  decision: "copia espacial de las 308 sedes; por zona"

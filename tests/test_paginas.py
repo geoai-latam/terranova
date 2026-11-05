@@ -142,3 +142,55 @@ async def test_pagina_solo_en_las_herramientas_de_lista() -> None:
     assert PAGINA not in esquemas[PREDIO]["properties"]  # forma «uno»
     assert cero.status_code == 400 and sobra.status_code == 400
     assert media.status_code == 400 and texto.status_code == 400
+
+
+@pytest.mark.anyio
+async def test_elementos_identicos_no_repiten_rasgos_entre_paginas() -> None:
+    """P0.5: FIRMS trae focos con todos los atributos iguales. Elegir los rasgos de una página por
+    sus atributos metía en cada página los de todos los gemelos: 1 246 focos salían como 1 252
+    puntos. Cada rasgo es de un elemento, en orden, y sale una sola vez en todo el recorrido."""
+    lista = await _lista(120)
+    elementos = [dict(e) for e in lista.datos["elementos"]]
+    gemelo = {"nombre": "gemelo", "area_ha": 0}
+    for i in (10, 49, 50, 51, 110):  # repartidos entre las tres páginas
+        elementos[i] = dict(gemelo)
+    rasgos = [
+        {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [-74.0 + i / 1000, 4.8]},
+            "properties": e,
+        }
+        for i, e in enumerate(elementos)
+    ]
+    assert lista.geo_result is not None
+    arte = lista.geo_result.artifacts[0]
+    geo = lista.geo_result.model_copy(
+        update={"artifacts": [arte.model_copy(update={"data": {**arte.data, "features": rasgos}})]}
+    )
+    datos = {**lista.datos, "elementos": elementos}
+    lista = lista.model_copy(update={"datos": datos, "huella": huella(datos), "geo_result": geo})
+    vistos = []
+    for p in (1, 2, 3):
+        pagina = paginar(lista, p)
+        propios = _rasgos(pagina)
+        assert len(propios) == len(pagina.datos["elementos"])
+        vistos += [r["geometry"]["coordinates"][0] for r in propios]
+    assert len(vistos) == 120 and len(set(vistos)) == 120
+
+
+@pytest.mark.anyio
+async def test_resumir_da_a_cada_gemelo_su_propia_posicion() -> None:
+    lista = await _lista(4)
+    elementos = [{"n": 1}, {"n": 1}, {"n": 2}, {"n": 1}]
+    rasgos = [
+        {"type": "Feature", "geometry": {"type": "Point", "coordinates": [0, i]}, "properties": e}
+        for i, e in enumerate(elementos)
+    ]
+    assert lista.geo_result is not None
+    arte = lista.geo_result.artifacts[0]
+    geo = lista.geo_result.model_copy(
+        update={"artifacts": [arte.model_copy(update={"data": {**arte.data, "features": rasgos}})]}
+    )
+    datos = {"total": 4, "elementos": elementos}
+    lista = lista.model_copy(update={"datos": datos, "huella": huella(datos), "geo_result": geo})
+    assert [r["properties"]["elemento"] for r in _rasgos(resumir_geometria(lista))] == [0, 1, 2, 3]

@@ -474,3 +474,94 @@ def test_ninguna_dorada_guarda_un_correo() -> None:
     for archivo in sorted(DORADAS.glob("*.json")):
         hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
         assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
+
+
+@pytest.mark.anyio
+async def test_parques_de_bogota_por_escala() -> None:
+    """Parques del IDRD medidos en la capa y en la copia el 2026-11-05: 66 en el centro de Bogotá,
+    con el polígono completo."""
+    h = CATALOGO.herramientas["bogota_parques_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 66
+    assert datos["por_tipo"] == {
+        "PARQUE VECINAL": 44,
+        "PARQUE DE BOLSILLO": 15,
+        "PARQUE METROPOLITANO": 5,
+        "ESCENARIO DEPORTIVO": 1,
+        "PARQUE METROPOLITANO PROPUESTO": 1,
+    }
+    assert "Tercer Milenio" in {e["nombre"] for e in datos["elementos"]}
+
+
+@pytest.mark.anyio
+async def test_estaciones_de_calidad_del_aire_de_bogota() -> None:
+    """Estaciones de la RMCAB medidas en la capa de la SDA y en la copia el 2026-11-05: 5 en el
+    centro de Bogotá."""
+    h = CATALOGO.herramientas["bogota_calidad_aire_estaciones_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 5
+    codigos = {e["codigo_estacion"] for e in datos["elementos"]}
+    assert codigos == {"CDAR", "JAZ", "MAM", "MOV", "PTE"}
+
+
+@pytest.mark.anyio
+async def test_vacunacion_de_bogota_por_naturaleza() -> None:
+    """IPS con servicio de vacunación medidas en la capa de la SDS y en la copia el 2026-11-05: 14
+    en el centro de Bogotá. La localidad sale del dominio «locasalud» de la capa."""
+    h = CATALOGO.herramientas["bogota_vacunacion_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 14
+    assert datos["por_naturaleza"] == {"Privada": 13, "Pública": 1}
+    calle_42 = next(e for e in datos["elementos"] if e["codigo_sede"] == 110010733504)
+    assert calle_42["localidad_significado"] == "Chapinero"
+
+
+@pytest.mark.anyio
+async def test_siniestralidad_critica_de_bogota_por_actor_vial() -> None:
+    """Sitios críticos 2022-2025 de la SDM, medidos el 2026-11-05 en la descarga de sus veinte
+    capas: en Kennedy y Puente Aranda hay 49. Las sumas por actor vial son solo de los puntos."""
+    h = CATALOGO.herramientas["sdm_siniestralidad_critica_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 49
+    assert datos["sitios_por_actor_vial"] == {
+        "vulnerables": 17,
+        "motociclistas": 14,
+        "peatones": 10,
+        "ciclistas": 8,
+    }
+    assert datos["fallecidos_en_puntos_por_actor_vial"] == {
+        "peatones": 6,
+        "vulnerables": 2,
+        "motociclistas": 0,
+    }
+    assert datos["lesionados_en_puntos_por_actor_vial"] == {
+        "vulnerables": 93,
+        "peatones": 54,
+        "motociclistas": 45,
+    }
+    assert {e["elemento"] for e in datos["elementos"]} == {"punto", "tramo", "zona"}
+
+
+@pytest.mark.anyio
+async def test_movilidad_de_bogota_por_tipo() -> None:
+    """Semáforos, cámaras salvavidas y cicloparqueaderos de la SDM, medidos el 2026-11-05 en la
+    descarga de sus tres capas: 164 en Chapinero y Teusaquillo. La localidad de la cámara llega
+    como código del dominio y sale con su nombre."""
+    h = CATALOGO.herramientas["sdm_movilidad_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 164
+    assert datos["por_tipo"] == {"semáforo": 97, "cicloparqueadero": 62, "cámara salvavidas": 5}
+    assert datos["camaras_por_estado"] == {"Desmontada - novedad": 3, "Instalada": 2}
+    assert datos["cupos_cicloparqueaderos"] == 1712
+    camaras = [e for e in datos["elementos"] if e["tipo"] == "cámara salvavidas"]
+    assert {e["localidad_significado"] for e in camaras} <= {"Chapinero", "Teusaquillo"}

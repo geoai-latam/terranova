@@ -667,8 +667,9 @@ async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
 
 
 INSTRUCCIONES = (
-    "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
-    "(contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la licencia. "
+    "Fuentes gubernamentales y no gubernamentales, colombianas y globales, con procedencia y "
+    "licencia en cada respuesta (contrato rt/1). Una herramienta por pregunta; cada descripción "
+    "dice la fuente y la licencia. "
     "Antes de responder sobre años, cobertura, unidades o códigos, `fuente_describir` "
     "da la ficha técnica de la fuente de una herramienta."
 )
@@ -850,7 +851,8 @@ def crear_servidor_catalogo(*, con_ciclo: bool = True) -> FastMCP:
 
 
 INSTRUCCIONES_CATALOGO = (
-    "Fuentes oficiales colombianas con procedencia y licencia en cada respuesta (contrato rt/1). "
+    "Fuentes gubernamentales y no gubernamentales, colombianas y globales, con procedencia y "
+    "licencia en cada respuesta (contrato rt/1). "
     "Para responder: 1) `buscar_herramienta` con la pregunta; 2) `consultar` con el id y la "
     "entrada que trae el resultado. Si el resultado no sirve, busque otra vez con otras palabras. "
     "Para pasar un nombre de municipio a su código DIVIPOLA use `dane_divipola_buscar`; para el "

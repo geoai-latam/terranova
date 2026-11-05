@@ -1,0 +1,13 @@
+# Ficha técnica escrita a mano (spec 08): el CSV no publica metadatos legibles; la página de Postdata
+# y el federado de datos.gov.co (pyy9-82ts) solo describen el conjunto.
+fuente: crc.estaciones_base
+metodo: manual
+cosechado: '2026-11-05'
+origen: https://www.postdata.gov.co/sites/default/files/F3_RES175_2.csv
+pagina: https://www.postdata.gov.co/dataset/infraestructura-y-cobertura-de-redes-de-acceso-movil
+titulo: Infraestructura de redes de acceso móvil
+idioma: Español
+filas: 144414
+descripcion: Un CSV separado por punto y coma con el número de sitios con estaciones base por
+  operador, municipio, trimestre, tipo de sitio (propio o coubicación) y tecnologías (2G, 3G, 4G,
+  5G), reportados con el formato 3 de la Resolución MinTIC 175 de 2021. Del 2021-2T al 2026-2T.

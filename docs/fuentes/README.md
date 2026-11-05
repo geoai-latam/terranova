@@ -55,6 +55,7 @@ Reglas:
 | MinEducación, educación básica y media (municipio, departamento y ETC) | [men.educacion.md](men.educacion.md) |
 | DANE, pobreza multidimensional municipal y sus privaciones (censo 2018, copia) | [dane.ipm_municipal_2018.md](dane.ipm_municipal_2018.md) |
 | MinTIC, accesos a internet fijo (`hwrp-3su3` y la serie vieja `n48w-gutb`) | [mintic.internet_fijo.md](mintic.internet_fijo.md) |
+| CRC, Postdata: sitios de estaciones base por municipio (`F3_RES175_2.csv`, copia) | [crc.estaciones_base.md](crc.estaciones_base.md) |
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
 | Función Pública, Gestor Normativo (EVA) | [funcionpublica.gestor_normativo.md](funcionpublica.gestor_normativo.md) |
@@ -87,6 +88,7 @@ Reglas:
 | IGAC, catastro: terreno, registro, perímetro, vías, manzana y sector | [igac.catastro.md](igac.catastro.md) |
 | IGAC, capacidad de uso de las tierras | [igac.agrologia.capacidad_uso.md](igac.agrologia.capacidad_uso.md) |
 | ANT, resguardos indígenas formalizados | [ant.resguardos_indigenas.md](ant.resguardos_indigenas.md) |
+| ANT, consejos comunitarios titulados | [ant.consejos_comunitarios.md](ant.consejos_comunitarios.md) |
 | SINCHI, cambio del bosque en la Amazonia 2022-2024 | [sinchi.perdida_bosque.md](sinchi.perdida_bosque.md) |
 | ESA WorldCover 2021 | [esa.worldcover.md](esa.worldcover.md) |
 | SECOP I y II, multas y sanciones (`4n4q-k399`, `it5q-hg94`) | [cce.multas.md](cce.multas.md) |
@@ -102,8 +104,12 @@ Reglas:
 | SECOP I, origen de los recursos (`3xwx-53wt`) | [cce.secop1.origen_recursos.md](cce.secop1.origen_recursos.md) |
 | ANI: puertos, aeropuertos y corredores férreos | [ani.modos.md](ani.modos.md) |
 | ANI: recaudo mensual de los peajes | [ani.recaudo_peajes.md](ani.recaudo_peajes.md) |
+| Bogotá: IPS con servicio de vacunación | [bogota.ips_vacunacion.md](bogota.ips_vacunacion.md) |
 | ANI: tráfico mensual de los peajes | [ani.trafico_peajes.md](ani.trafico_peajes.md) |
 | Bogotá: equipamientos de emergencia | [bogota.equipamientos_emergencia.md](bogota.equipamientos_emergencia.md) |
+| Bogotá: parques del IDRD | [bogota.parques.md](bogota.parques.md) |
+| Bogotá: puntos, tramos y zonas críticas de siniestralidad vial (SDM) | [sdm.siniestralidad_critica.md](sdm.siniestralidad_critica.md) |
+| Bogotá: red semafórica, cámaras salvavidas y cicloparqueaderos (SDM) | [sdm.infraestructura_movilidad.md](sdm.infraestructura_movilidad.md) |
 | SECOP Integrado, SECOP I y II (`cce.secop.integrado`) | [cce.secop.integrado.md](cce.secop.integrado.md) |
 | SECOP I: adiciones de las adjudicaciones | [cce.secop1.adiciones.md](cce.secop1.adiciones.md) |
 | SECOP I: multas y sanciones a contratistas | [cce.secop1.multas.md](cce.secop1.multas.md) |
@@ -113,6 +119,7 @@ Reglas:
 | SECOP II, procesos de contratación (`cce.secop2.procesos`) | [cce.secop2.procesos.md](cce.secop2.procesos.md) |
 | DANE: sedes educativas (SISE) | [dane.sedes_educativas.md](dane.sedes_educativas.md) |
 | DNP: proyectos del Sistema General de Regalías | [dnp.proyectos_sgr.md](dnp.proyectos_sgr.md) |
+| Global Forest Watch: alertas integradas de deforestación | [gfw.alertas_integradas.md](gfw.alertas_integradas.md) |
 | IDEAM (SIRH): puntos de captación de agua concesionados | [ideam.captaciones.md](ideam.captaciones.md) |
 | IGAC: conflictos de uso de las tierras (2012) | [igac.agrologia.conflictos_uso.md](igac.agrologia.conflictos_uso.md) |
 | IGAC: infraestructura de la cartografía básica 1:100 000 | [igac.infraestructura_100k.md](igac.infraestructura_100k.md) |
@@ -129,3 +136,4 @@ Reglas:
 | USGS: catálogo mundial de sismos | [usgs.sismos.md](usgs.sismos.md) |
 | Supertransporte, tráfico portuario (`5r3g-zv5z`) y contenedores (`7tvr-cx9w`) | [supertransporte.puertos.md](supertransporte.puertos.md) |
 | UARIV, Registro Único de Víctimas por municipio, por hecho y desplazamiento por año (`ykxr-xynr`, `9qih-4vkc`, `krnc-8azs`) | [uariv.ruv.md](uariv.ruv.md) |
+| Bogotá: estaciones de calidad del aire (RMCAB) | [bogota.calidad_aire_estaciones.md](bogota.calidad_aire_estaciones.md) |

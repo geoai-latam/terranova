@@ -251,8 +251,9 @@ def crear_api() -> FastAPI:
         title="Terrnova",
         version="1",
         description=(
-            "Puerta única sobre fuentes oficiales colombianas y globales. Cada respuesta es un "
-            "sobre rt/1 con procedencia, licencia, completitud y `servido_desde`."
+            "Puerta única sobre fuentes gubernamentales y no gubernamentales, colombianas y "
+            "globales. Cada respuesta es un sobre rt/1 con procedencia, licencia, completitud y "
+            "`servido_desde`."
         ),
         lifespan=None,
     )

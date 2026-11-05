@@ -1,0 +1,159 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T16:56:43+00:00",
+ "herramienta": "bogota_calidad_aire_estaciones_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.12,
+     4.6,
+     -74.06,
+     4.67
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "cod_estac",
+     "objectid"
+    ],
+    "select": [
+     "objectid",
+     "estacion",
+     "cod_estac",
+     "dir_estac",
+     "entidad_colab",
+     "altura",
+     "alt_suelo"
+    ],
+    "tabla": "bogota_calidad_aire_estaciones"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.083967,
+           4.658479
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "alt_suelo": 0.0,
+          "altura": 2577.0,
+          "cod_estac": "CDAR",
+          "dir_estac": "Calle 63 No. 59A - 06",
+          "entidad_colab": "Centro de Alto Rendimiento",
+          "estacion": "Centro de Alto Rendimiento",
+          "objectid": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.114944,
+           4.6085
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "alt_suelo": null,
+          "altura": null,
+          "cod_estac": "JAZ",
+          "dir_estac": "Calle 1 G # 41 A 39",
+          "entidad_colab": "Calle 1 G # 41 A 39",
+          "estacion": "Jazmín",
+          "objectid": 17
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066867,
+           4.625562
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "alt_suelo": 15.0,
+          "altura": 2621.0,
+          "cod_estac": "MAM",
+          "dir_estac": "Calle 37 No. 8-40",
+          "entidad_colab": "Ministerio de Ambiente y Desarrollo Sostenible",
+          "estacion": "MinAmbiente",
+          "objectid": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061556,
+           4.645194
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "alt_suelo": null,
+          "altura": null,
+          "cod_estac": "MOV",
+          "dir_estac": "Carrera 7 con calle 60",
+          "entidad_colab": "Carrera 7 con calle 60",
+          "estacion": "Móvil 7ma",
+          "objectid": 15
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.117483,
+           4.631779
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "alt_suelo": 10.0,
+          "altura": 2590.0,
+          "cod_estac": "PTE",
+          "dir_estac": "Calle 10 No. 65-28",
+          "entidad_colab": "Merk S.A.",
+          "estacion": "Puente Aranda",
+          "objectid": 8
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 5,
+      "truncado": false,
+      "vistos": 5
+     },
+     "consultado_en": "2026-11-05T16:56:02.964322+00:00",
+     "copia": {
+      "filas": 20,
+      "huella": "sha256:725b58d6a63c0d4c9effd18537c010b07bc1df1d61c8f441f171891b6fb800fc",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105165602964322"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

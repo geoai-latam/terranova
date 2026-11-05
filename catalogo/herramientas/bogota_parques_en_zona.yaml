@@ -1,0 +1,48 @@
+id: bogota_parques_en_zona
+version: 1
+familia: territorio
+fuente: bogota.parques
+pregunta: "¿Qué parques públicos hay en esta zona de Bogotá?"
+descripcion: >
+  Parques del Sistema Distrital de Parques de Bogotá D.C. (el inventario del IDRD) dentro de un
+  rectángulo (bbox en EPSG:4326), con su polígono, código del parque, nombre, escala (de bolsillo,
+  vecinal, zonal, metropolitano, regional o escenario deportivo), localidad, UPL, estrato del
+  entorno y fecha de incorporación. Arriba van el total y cuántos hay por escala. Sirve para
+  preguntas como «¿qué parques hay cerca de este predio?» o para pintar los parques en un visor;
+  las listas largas siguen por páginas. Solo cubre Bogotá. Sale de la copia de Terrnova.
+  (Fuente: IDRD, Alcaldía Mayor de Bogotá; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: bogota_parques
+    bbox: "{bbox}"
+    select: [OBJECTID, ID_PARQUE, NOMBRE_PARQ, TIPOPARQUE, LOCNOMBRE, ID_UPL, ESTRATO, FECHAINCORPORACION]
+    geometria: completa
+    order: [ID_PARQUE, OBJECTID]
+    limite: 1000
+  campos: [OBJECTID, ID_PARQUE, NOMBRE_PARQ, TIPOPARQUE, LOCNOMBRE, ID_UPL, ESTRATO, FECHAINCORPORACION]
+salida: BogotaParquesEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo_parque, vacio: sin dato}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay parques del inventario del IDRD en ese rectángulo. Solo se cubre Bogotá D.C.; fuera de
+    ella no hay una capa pública de parques en Terrnova.
+- cuando: encontrado
+  texto: >
+    Es el inventario del IDRD. Un parque que toca el rectángulo sale entero, aunque casi todo
+    quede afuera. 3 066 de los 5 309 parques traen la misma fecha de incorporación, el 2004-01-01:
+    esa fecha no sirve para saber cuándo entró ese parque.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la capa del IDRD (intersección con el rectángulo) y en la copia: 66
+  # parques en el centro de Bogotá (44 vecinales, 15 de bolsillo, 5 metropolitanos, 1 escenario
+  # deportivo y 1 metropolitano propuesto).
+  entrada: {bbox: [-74.09, 4.6, -74.06, 4.63]}
+  minimos: {total: 66}
+  campos: [codigo_parque, estrato, fecha_incorporacion, id_elemento, localidad, nombre, por_tipo, tipo_parque, total, upl]
+  latencia_max_ms: 8000

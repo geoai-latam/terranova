@@ -1,0 +1,45 @@
+id: ant_resguardos_en_zona
+version: 1
+familia: ambiente
+fuente: ant.resguardos_indigenas
+pregunta: "¿Qué resguardos indígenas formalizados hay en esta zona?"
+descripcion: >
+  Resguardos indígenas formalizados por la ANT que se cruzan con un rectángulo (bbox en EPSG:4326):
+  nombre, pueblo, departamento y municipio (código DIVIPOLA y su nombre en `*_significado`), último
+  acto administrativo y área según los actos. Van del más grande al más pequeño; arriba, el total y
+  cuántos hay de cada pueblo. Sirve para pintar la capa: las listas largas siguen por páginas y,
+  con `geometria`, los polígonos salen simplificados a unos 55 m (enteros, por punto o por polígono). Para un lote, mejor
+  ant_resguardos_en_poligono. Solo los 989 resguardos que publica la ANT.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_resguardos_indigenas
+    bbox: "{bbox}"
+    select: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    order: ["-AREA_TOTAL_ACTOS_ADMIN", NOMBRE]
+    limite: 1000
+  campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ResguardosEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_pueblo: {de: conteo_por, campo: pueblo}
+avisos:
+- cuando: vacio
+  texto: >
+    El rectángulo no toca ninguno de los resguardos que publica la ANT, pero la capa no los tiene
+    todos: faltan, por ejemplo, Toribío, Tacueyó y San Francisco, los resguardos nasa de origen
+    colonial de Toribío (Cauca). Tampoco trae solicitudes en trámite ni otros territorios étnicos.
+    Esto no descarta un territorio indígena.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la capa 0 (envelope, intersects, returnCountOnly): 61 resguardos entre
+  # Putumayo, Nariño y Cauca; el de más área según los actos es Jai Ziaya Bain (55 008 ha).
+  entrada: {bbox: [-77, 1, -76, 2]}
+  verdad: {total: 61, nombre: "Resguardo Indígena Jai Ziaya Bain"}
+  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, por_pueblo, pueblo, tipo_acto, total]
+  latencia_max_ms: 8000

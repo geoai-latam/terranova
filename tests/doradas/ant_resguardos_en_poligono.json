@@ -1,0 +1,175 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:49:38+00:00",
+ "herramienta": "ant_resguardos_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "simplificada",
+    "limite": 20,
+    "order": [
+     "-_area_ha",
+     "NOMBRE"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -76.45,
+        2.55
+       ],
+       [
+        -76.25,
+        2.75
+       ],
+       [
+        -76.24,
+        2.74
+       ],
+       [
+        -76.44,
+        2.54
+       ],
+       [
+        -76.45,
+        2.55
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "NOMBRE",
+     "PUEBLO",
+     "DEPARTAMENTO",
+     "MUNICIPIO",
+     "ULTIMO_TIPO_ACTO_ADMIN",
+     "ULTIMO_NUMERO_ACTO_ADMIN",
+     "ULTIMA_FECHA_ACTO_ADMIN",
+     "AREA_TOTAL_ACTOS_ADMIN"
+    ],
+    "tabla": "ant_resguardos_indigenas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -76.22998,
+           2.61105
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 19157.8487,
+          "DEPARTAMENTO": "19",
+          "MUNICIPIO": "19256",
+          "NOMBRE": "Resguardo Indígena de Guambia",
+          "OBJECTID": 712,
+          "PUEBLO": "GUAMBIANO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2002-09-17",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "7",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 1497.3681
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.32005,
+           2.56189
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 3406.4526,
+          "DEPARTAMENTO": "19",
+          "MUNICIPIO": "20621",
+          "NOMBRE": "Resguardo Indígena de Totoro",
+          "OBJECTID": 666,
+          "PUEBLO": "PAEZ TOTORO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1991-01-28",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "4",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 70.2787
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.38186,
+           2.59727
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 2716.0022,
+          "DEPARTAMENTO": "19",
+          "MUNICIPIO": "19743",
+          "NOMBRE": "Resguardo Indígena de Ambalo",
+          "OBJECTID": 756,
+          "PUEBLO": "PAEZ GUAMBIA",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1991-11-12",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0029",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 40.5296
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -76.37033,
+           2.67309
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 4282.785,
+          "DEPARTAMENTO": "19",
+          "MUNICIPIO": "19743",
+          "NOMBRE": "Resguardo Indígena Quizgo (Kizgo)",
+          "OBJECTID": 119,
+          "PUEBLO": "PAEZ",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2020-08-27",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "129",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION",
+          "_area_ha": 40.4428
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "consultado_en": "2026-11-05T15:58:49.656002+00:00",
+     "copia": {
+      "filas": 989,
+      "huella": "sha256:53866d4040adb349781b140d951490b9b559c8ebf22a2ede2e8d5fce24768eb8",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105155849656002"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

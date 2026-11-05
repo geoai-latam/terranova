@@ -627,9 +627,9 @@ RELACIONADO = {
         "/servicios",
         "Revisiones de predios, empresas y contratos.",
     ),
-    "tablero": ("Servicios", "/servicios", "Tableros e informes sobre fuentes oficiales."),
+    "tablero": ("Servicios", "/servicios", "Tableros e informes sobre las fuentes del catálogo."),
     "vigilancia": ("Servicios", "/servicios", "Alertas cuando cambia una fuente."),
-    "asistente": ("Servicios", "/servicios", "Asistentes sobre fuentes oficiales."),
+    "asistente": ("Servicios", "/servicios", "Asistentes sobre las fuentes del catálogo."),
     "soporte": ("Guía de conexión", "/desarrolladores", "Errores, perfiles MCP y API REST."),
 }
 _RELACIONADO_PLANES = ("Planes y créditos", "/precios", "Qué trae cada plan.")

@@ -68,3 +68,11 @@ Todo el país, con las áreas inscritas. Un área declarada que no esté inscrit
     Cloudflare desde la VPS y desde esta red, y no se pasan captchas.
   - Se mide en la copia cuando se rehaga desde Colombia, o con la herramienta ya desplegada, y
     entonces se graba la dorada.
+
+## Geometrías mixtas (2026-11-05)
+
+Al reparar los polígonos inválidos, ST_MakeValid dejó 57 áreas protegidas como GeometryCollection: la forma con
+restos de línea o de punto pegados, que varios visores no pintan. La copia sirve ahora solo la
+parte de la dimensión mayor (`copias.sin_mezcla`), al consultar y al copiar. Medido en la copia de
+producción solo con lectura: el área no cambia, y el recorrido de un visor ya no recibe ninguna
+GeometryCollection. La copia guardada se limpia en el próximo refresco.

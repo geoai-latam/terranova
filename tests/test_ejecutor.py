@@ -647,7 +647,7 @@ async def test_vacio_con_total_no_es_no_encontrado() -> None:
 
     ej = Ejecutor(CATALOGO, {"arcgis-mcp": _ContoPeroNoEntrego()})
     with pytest.raises(ErrorEjecucion) as exc:
-        await ej.ejecutar("ant_resguardos_en_punto", {"lon": -70.5, "lat": 0.8})
+        await ej.ejecutar("igac_vereda_en_punto", {"lon": -75.3, "lat": 3.1})
     assert exc.value.codigo == "fuente_respuesta_invalida"
     assert "no entregó ninguno" in str(exc.value)
 

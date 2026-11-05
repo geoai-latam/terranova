@@ -13,11 +13,23 @@ uso_comercial: si
 clase_acceso: api
 atribucion: "Fuente: Agencia Nacional de Tierras, Dirección de Asuntos Étnicos"
 protocolo: arcgis_rest
-conector: arcgis-mcp
+conector: copia
 # Ítem del dueño `Datos_Abiertos_ANT`; su url es el proxy público de ArcGIS Online hacia el servidor
 # de la ANT. Capa 0: polígonos de los resguardos.
 url: https://utility.arcgis.com/usrsvcs/servers/8944116ccfd34a7189c4bc44b8e19186/rest/services/DatosAbiertos/Resguardo_Indigena_Formalizado/FeatureServer
-modo: en_vivo
+modo: copia
+# ADR-0024: copia en PostGIS desde 2026-11-05, con los polígonos completos (son límites legales,
+# sin `tolerancia`): en vivo, la forma completa de un territorio grande tardaba más de 90 s y solo
+# se servía simplificada. Copiada, el cruce con un lote o un rectángulo usa la forma fiel y la
+# respuesta la trae completa si se pide `geometria`. La ANT la publica en el proxy de ArcGIS
+# Online, que responde al servidor: se refresca allí.
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: ant_resguardos_indigenas
+  clave: OBJECTID
+  por_pagina: 25
+  indices: [MUNICIPIO]
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
 cobertura:
   pais: CO
@@ -25,6 +37,7 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  OBJECTID: {nombre: id_poligono, tipo: int, desc: "identificador del polígono en el servicio (cambia si la ANT republica la capa)"}
   NOMBRE: {nombre: nombre, tipo: str, desc: "nombre del resguardo"}
   PUEBLO: {nombre: pueblo, tipo: str, desc: "pueblo o pueblos indígenas del resguardo"}
   DEPARTAMENTO: {nombre: departamento_divipola, tipo: str, codigos_lista: divipola_departamentos, desc: "código DIVIPOLA del departamento; su nombre sale al lado"}
@@ -33,7 +46,8 @@ campos:
   ULTIMO_NUMERO_ACTO_ADMIN: {nombre: numero_acto, tipo: str, desc: "número del último acto administrativo"}
   ULTIMA_FECHA_ACTO_ADMIN: {nombre: fecha_acto, tipo: date, desc: "fecha del último acto administrativo"}
   AREA_TOTAL_ACTOS_ADMIN: {nombre: area_ha_actos, tipo: float, desc: "área total en hectáreas según los actos administrativos"}
-comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+capas_servicio: [0]  # la ficha técnica cosecha la capa aunque se sirva por copia
 dcat: {publisher: ANT, theme: territorios_etnicos}
 # Spec 07: medido en la fuente, no en Terrnova.
 perfil:
@@ -49,4 +63,4 @@ perfil:
     agrupar: 0.2
   hallazgos:
   - el punto de prueba toca un solo elemento
-  decision: en vivo por punto
+  decision: "copia con los polígonos completos; por punto, por lote, por rectángulo y por municipio"

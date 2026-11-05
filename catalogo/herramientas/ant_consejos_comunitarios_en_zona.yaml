@@ -1,0 +1,43 @@
+id: ant_consejos_comunitarios_en_zona
+version: 1
+familia: ambiente
+fuente: ant.consejos_comunitarios
+pregunta: "¿Qué territorios colectivos de comunidades negras (consejos comunitarios titulados) hay en esta zona?"
+descripcion: >
+  Consejos comunitarios titulados por la ANT (territorios colectivos de comunidades negras, Ley 70
+  de 1993) que se cruzan con un rectángulo (bbox en EPSG:4326): nombre, departamento y municipio
+  (código DIVIPOLA y su nombre en `*_significado`), último acto administrativo y área según los
+  actos. Van del más grande al más pequeño; arriba, el total. Sirve para pintar la capa: las listas
+  largas siguen por páginas y, con `geometria`, los polígonos salen simplificados a unos 55 m
+  (enteros, por punto o por polígono). Para un lote, mejor ant_consejos_comunitarios_en_poligono. Solo títulos formalizados.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_consejos_comunitarios
+    bbox: "{bbox}"
+    select: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    order: ["-AREA_TOTAL_ACTOS_ADMIN", NOMBRE]
+    limite: 1000
+  campos: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ConsejosComunitariosEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El rectángulo no toca ninguno de los consejos comunitarios titulados que publica la ANT. La
+    capa solo trae títulos colectivos formalizados: las solicitudes en trámite no están, así que
+    esto no descarta un territorio de comunidades negras.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la capa 0 (envelope, intersects, returnCountOnly): 33 consejos en el
+  # Chocó central; el de más área según los actos es el Mayor del Medio Atrato (ACIA).
+  entrada: {bbox: [-77.5, 5, -76.5, 6]}
+  verdad: {total: 33, nombre: "Consejo Comunitario Mayor del Medio Atrato - ACIA"}
+  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, tipo_acto, total]
+  latencia_max_ms: 8000

@@ -1,0 +1,13 @@
+# Ficha técnica escrita a mano (spec 08) con los metadatos del dataset en la Data API de GFW.
+fuente: gfw.alertas_integradas
+metodo: manual
+cosechado: '2026-11-05'
+origen: https://data-api.globalforestwatch.org/dataset/gfw_integrated_alerts
+titulo: Integrated Deforestation Alerts (GLAD-L, GLAD-S2 y RADD)
+descripcion: Alertas de perturbación del bosque de tres sistemas satelitales integradas en una capa de 10 m; cada píxel guarda la primera fecha de detección y una confianza (nominal, high, highest).
+frecuencia_declarada: Diaria
+idioma: Inglés
+geografia:
+  geometria: raster
+  crs: EPSG:4326
+  resolucion_m: 10.0
