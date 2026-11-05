@@ -72,3 +72,9 @@ Las regalías de Puerto Gaitán en 2026 llegan a marzo.
     en un complemento sobre todo el campo, así que un mes en 0 no se lee como un mes que falta.
   - Si todo el año está en 0, el vacío lo dice.
   - El aviso de meses que faltan suma la causa medida: el campo empezó o dejó de producir ese año.
+
+## Avisos de vacío (2026-11-05)
+
+Bogotá en crudo y «Zzqx» como campo daban «no encontrado» sin decir por qué. Ahora las seis
+herramientas dicen qué pudo pasar: que el lugar o el campo no produzca (o no liquide) ese año, o
+que el nombre no coincida con la grafía de la ANH, y desde qué año van los datos.

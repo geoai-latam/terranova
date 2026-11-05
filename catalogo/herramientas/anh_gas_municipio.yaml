@@ -40,6 +40,11 @@ avisos:
     el último). Puede ser que la fuente aún no los publique, que falten o que el campo empezara o dejara de producir ese año (el gas de Borbón empieza en julio de 2025): noviembre de 2025 trae 106
     filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
     de 2025 (medido el 2026-11-02). El total no es el de un año entero.
+- cuando: vacio
+  texto: >
+    La producción fiscalizada de la ANH no trae gas para ese código DIVIPOLA y año: no hay campos de
+    gas reportados en ese municipio. Los datos van desde 2014, y el año en curso llega hasta el
+    último mes publicado.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en 5dux-bfvx: Tauramena (85410) 2024, 12 meses; enero 2 367 045 kpc de

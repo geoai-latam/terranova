@@ -51,6 +51,12 @@ avisos:
     el último). Puede ser que la fuente aún no los publique, que falten o que el campo empezara o dejara de producir ese año (el gas de Borbón empieza en julio de 2025): noviembre de 2025 trae 106
     filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
     de 2025 (medido el 2026-11-02). El total no es el de un año entero.
+- cuando: vacio
+  texto: >
+    La ANH no trae regalías liquidadas para ese municipio y año. Puede que no haya campos que
+    liquiden regalías en él o que el nombre no coincida: municipio y departamento se comparan
+    completos, sin tildes ni espacios, como los escribe la ANH (PUERTO GAITAN, META). Las
+    liquidaciones van desde 2010, y el año en curso llega hasta el último mes liquidado.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en j7js-yk74: Puerto Gaitán (Meta) 2024, 29 filas (campo e hidrocarburo);
