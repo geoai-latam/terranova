@@ -1,0 +1,33 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.aeropuertos
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer?f=json
+filas: 19
+geografia:
+  geometria: multipunto
+  crs: EPSG:4686
+  capas:
+    '1': Areopuertos
+campos:
+  cod_pr_ire:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: COD_PR_IRE
+  proyecto:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: PROYECTO
+  contrato:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CONTRATO
+  lista_aero:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: LISTA_AERO
+  ccnario:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CCNARIO
+  estado:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ESTADO
+  link:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: LINK

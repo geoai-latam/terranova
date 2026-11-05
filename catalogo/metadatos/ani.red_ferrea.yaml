@@ -1,0 +1,39 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.red_ferrea
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer?f=json
+filas: 4
+geografia:
+  geometria: linea
+  crs: EPSG:4686
+  capas:
+    '2': Férreo
+campos:
+  admin:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ADMIN
+  concesion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CONCESION
+  tipo_contr:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: TIPO_CONTR
+  contrato:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CONTRATO
+  ccnario:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CCNARIO
+  cod_pr_ire:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: COD_PR_IRE
+  video_proy:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: VIDEO_PROY
+  alc_proy_1:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ALC_PROY_1
+  url_ficha:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: URL_FICHA

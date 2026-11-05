@@ -1,0 +1,39 @@
+id: ani_puertos_en_zona
+version: 1
+familia: territorio
+fuente: ani.puertos
+pregunta: "¿Qué puertos concesionados hay en esta zona?"
+descripcion: >
+  Puertos y terminales concesionados por la ANI dentro de un rectángulo (bbox en EPSG:4326), con
+  su punto: sociedad portuaria, zona portuaria, municipio, si es de servicio público o privado,
+  qué carga mueve, acto de la concesión, fecha en que termina, prórroga, concesionario y ficha de
+  la ANI. Solo los 63 puertos concesionados por la ANI (Cartagena, Buenaventura, Santa Marta,
+  Barranquilla, Urabá…); los muelles no concesionados no están. El tráfico de carga está en
+  supertransporte_trafico_portuario. (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [0]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: completa
+    out_fields: [nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
+    max_features: 200
+  campos: [nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: AniPuertosEnZona
+avisos:
+- cuando: vacio
+  texto: >
+    No hay puertos concesionados por la ANI en ese rectángulo. La capa solo trae los 63 puertos con concesión de la ANI, en las costas; pruebe con un rectángulo más grande.
+cobro: zona
+canario:
+  # Bahía de Cartagena; medido el 2026-11-05 en la capa 0 (returnCountOnly): 23 puertos. En el
+  # país, 63.
+  entrada: {bbox: [-75.6, 10.3, -75.45, 10.45]}
+  minimos: {numero_registros: 23}
+  campos: [acto_administrativo, anios_prorroga, codigo_proyecto, concesionario, departamento, fecha_fin_concesion, ficha, municipio, numero_registros, prorroga, sociedad_portuaria, tipo_carga, tipo_servicio, video, zona_portuaria]
+  latencia_max_ms: 8000

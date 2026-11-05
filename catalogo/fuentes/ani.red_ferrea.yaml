@@ -1,0 +1,50 @@
+id: ani.red_ferrea
+titulo: "Corredores férreos de la ANI (concesiones y obras, con su trazado)"
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+# La ANI declara CC BY-SA 4.0 en su página de datos abiertos para «Concesiones ANI», que son los
+# mismos datos de las capas de `Hosted/ModosANI` (como ani.peajes y ani.concesiones_viales).
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.ani.gov.co/datos-abiertos/
+  cita: "Concesiones ANI … Licencia: Atribución/Reconocimiento-Compartir Igual 4.0 Internacional"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Capa 2 «Férreo» del servicio `Hosted/ModosANI`. Las columnas de auditoría no entran a la lista
+# blanca.
+url: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, excluye: ["vías férreas sin contrato de la ANI", "estaciones"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  concesion: {nombre: corredor, tipo: str, desc: "corredor o contrato férreo (p. ej. «Red férrea del Atlántico»)"}
+  tipo_contr: {nombre: tipo_contrato, tipo: str, desc: "«Concesión», «Obra pública» o «Estructuración»"}
+  admin: {nombre: administracion, tipo: str, desc: "cómo lo administra la ANI (p. ej. «ANI - Gestión»)"}
+  contrato: {nombre: contrato, tipo: str, desc: "número del contrato"}
+  ccnario: {nombre: concesionario, tipo: str, desc: "concesionario o contratista, como lo publica la ANI"}
+  cod_pr_ire: {nombre: codigo_proyecto, tipo: str, desc: "código del proyecto en el aniscopio de la ANI (p. ej. «F-01»)"}
+  alc_proy_1: {nombre: alcance, tipo: str, desc: "alcance del proyecto (p. ej. «Rehabilitación: 245 km, Construcción: 191 km»)"}
+  url_ficha: {nombre: ficha, tipo: str, desc: "enlace a la ficha del corredor en el aniscopio de la ANI"}
+  video_proy: {nombre: video, tipo: str, desc: "enlace a un video del proyecto, cuando lo hay"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [2]
+dcat: {publisher: ANI, theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-05
+  fila: "un corredor férreo con contrato de la ANI; 4 en el país"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4}
+  hallazgos:
+  - "4 corredores: Atlántico, Pacífico, Bogotá - Belencito - La Dorada - Chiriguaná y uno en estructuración"
+  - "empleos generados y población beneficiada vienen vacíos: no se publican"
+  - "la capa no se edita desde el 2023-09-27"
+  decision: "en vivo por zona (bbox)"
