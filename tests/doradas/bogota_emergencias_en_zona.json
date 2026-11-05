@@ -1,0 +1,419 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T08:56:05+00:00",
+ "herramienta": "bogota_emergencias_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.09,
+     4.6,
+     -74.06,
+     4.63
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "categoria",
+     "id_elemento"
+    ],
+    "select": [
+     "id_elemento",
+     "categoria",
+     "NOMBRE",
+     "DIRECCION",
+     "TELEFONOS",
+     "ESTACION",
+     "EPOHORARIO",
+     "EPOIULOCAL",
+     "NOMBRE_DE_",
+     "TIPO_DE_PR"
+    ],
+    "tabla": "bogota_equipamientos_emergencia"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.071365,
+           4.623619
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 16 AC 34",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "13",
+          "ESTACION": null,
+          "NOMBRE": "CAI Teusaquillo",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3173744038",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3002885
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.078511,
+           4.618433
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "CL 24 KR 19B",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "14",
+          "ESTACION": null,
+          "NOMBRE": "CAI Samper Mendoza",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3233631147",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3002957
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.086497,
+           4.612975
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 25 15 97",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "14",
+          "ESTACION": null,
+          "NOMBRE": "CAI Paloquemao",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3132224889",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3002958
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069831,
+           4.612024
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 7 AC 26",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI San Diego",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3115308363",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003017
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069319,
+           4.618521
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "CL 32 KR 13 41",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI Telecom",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3125182544",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003018
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.074446,
+           4.605459
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 10 17 54",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI Colseguros",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3214134308",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003019
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066765,
+           4.606159
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 3 22 55",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI Torres Blancas",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3008546787",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003020
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061927,
+           4.604057
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "AV CIRCUNVALAR CL 20",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI Monserrate",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3138991429",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003021
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.071428,
+           4.600519
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "AV JIMENEZ KR 5",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "17",
+          "ESTACION": null,
+          "NOMBRE": "CAI Rosario",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3138116186",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003022
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.081207,
+           4.601433
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "AV CARACAS CL 10",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "CAI San Victorino",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3508395780",
+          "TIPO_DE_PR": null,
+          "categoria": "CAI",
+          "id_elemento": 3003023
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.087844,
+           4.606803
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "Calle 11 No. 20A - 10",
+          "EPOHORARIO": null,
+          "EPOIULOCAL": null,
+          "ESTACION": "B-2",
+          "NOMBRE": "Estación de Bomberos Central - Carlos Julio Rico Cuellar",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "60 1 3602845",
+          "TIPO_DE_PR": null,
+          "categoria": "estación de bomberos",
+          "id_elemento": 1000021
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.088626,
+           4.608928
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 24 12 32",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "14",
+          "ESTACION": null,
+          "NOMBRE": "Estación de Policía Los Mártires",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3103469776",
+          "TIPO_DE_PR": null,
+          "categoria": "estación de policía",
+          "id_elemento": 2002284
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066644,
+           4.627501
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 13 40A 26",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "02",
+          "ESTACION": null,
+          "NOMBRE": "Estación de Policía Teusaquillo",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3203051839",
+          "TIPO_DE_PR": null,
+          "categoria": "estación de policía",
+          "id_elemento": 2002287
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066364,
+           4.615283
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "KR 5 29 40",
+          "EPOHORARIO": "24 horas - lunes a domingo",
+          "EPOIULOCAL": "03",
+          "ESTACION": null,
+          "NOMBRE": "Estación de Policía Santa Fe",
+          "NOMBRE_DE_": null,
+          "TELEFONOS": "3203021449",
+          "TIPO_DE_PR": null,
+          "categoria": "estación de policía",
+          "id_elemento": 2002297
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06551,
+           4.619987
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "CARRERA 5 NUMERO 33 A-45",
+          "EPOHORARIO": null,
+          "EPOIULOCAL": null,
+          "ESTACION": null,
+          "NOMBRE": "UNIDAD DE SERVICIOS DE SALUD PERSEVERANCIA",
+          "NOMBRE_DE_": "SUBRED INTEGRADA DE SERVICIOS DE SALUD CENTRO ORIENTE E.S.E",
+          "TELEFONOS": "3282828 ETX 25181,25191",
+          "TIPO_DE_PR": "Pública",
+          "categoria": "sede de la red pública de salud",
+          "id_elemento": 4000010
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08161,
+           4.616763
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "DIRECCION": "CARRERA 22 NUMERO 22 A -26",
+          "EPOHORARIO": null,
+          "EPOIULOCAL": null,
+          "ESTACION": null,
+          "NOMBRE": "UNIDAD DE SERVICIOS DE SALUD SAMPER MENDOZA",
+          "NOMBRE_DE_": "SUBRED INTEGRADA DE SERVICIOS DE SALUD CENTRO ORIENTE E.S.E",
+          "TELEFONOS": "3282828 EXT 19191,19181,19611",
+          "TIPO_DE_PR": "Pública",
+          "categoria": "sede de la red pública de salud",
+          "id_elemento": 4000011
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 16,
+      "truncado": false,
+      "vistos": 16
+     },
+     "consultado_en": "2026-11-05T08:53:53.467054+00:00",
+     "copia": {
+      "filas": 315,
+      "huella": "sha256:e14bc3d143ccbd5da6a3a922f12331f9088323def00272c121b1c9648a46b602",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105085353467054"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

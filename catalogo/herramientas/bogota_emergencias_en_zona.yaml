@@ -1,0 +1,49 @@
+id: bogota_emergencias_en_zona
+version: 1
+familia: territorio
+fuente: bogota.equipamientos_emergencia
+pregunta: "¿Qué estaciones de bomberos, de policía, CAI y hospitales públicos hay en esta zona de Bogotá?"
+descripcion: >
+  Estaciones de bomberos (UAECOB), estaciones de policía y CAI (Secretaría de Seguridad) y sedes
+  de la red pública de salud (las subredes de la Secretaría de Salud) de Bogotá D.C. dentro de un
+  rectángulo (bbox en EPSG:4326), con su punto, tipo, nombre, dirección y teléfono institucional;
+  en la policía, el horario y la localidad, y en salud, la subred. Arriba van el total y cuántos
+  hay por tipo. Sirve para preguntas como «¿qué estación de bomberos o CAI queda más cerca de este
+  predio?» o para pintar la red de emergencias en un visor; las listas largas siguen por páginas.
+  Solo cubre Bogotá: no hay una capa pública nacional de bomberos ni de policía (los hospitales
+  del país están en minsalud_sedes_salud_en_zona). Sale de la copia de Terrnova.
+  (Fuente: Alcaldía Mayor de Bogotá, IDE de Bogotá; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: bogota_equipamientos_emergencia
+    bbox: "{bbox}"
+    select: [id_elemento, categoria, NOMBRE, DIRECCION, TELEFONOS, ESTACION, EPOHORARIO, EPOIULOCAL, NOMBRE_DE_, TIPO_DE_PR]
+    geometria: completa
+    order: [categoria, id_elemento]
+    limite: 1000
+  campos: [id_elemento, categoria, NOMBRE, DIRECCION, TELEFONOS, ESTACION, EPOHORARIO, EPOIULOCAL, NOMBRE_DE_, TIPO_DE_PR]
+salida: BogotaEmergenciasEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay estaciones de bomberos, de policía, CAI ni sedes de la red pública de salud de Bogotá
+    en ese rectángulo. Solo se cubre Bogotá D.C.: fuera de ella no hay capa pública de bomberos ni
+    de policía; para hospitales, use minsalud_sedes_salud_en_zona.
+- cuando: encontrado
+  texto: >
+    Son las capas que publica el Distrito en su IDE: no traen comandos, URI ni casas de justicia,
+    y las IPS privadas están en minsalud_sedes_salud_en_zona.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la copia (315 sedes): en el centro de Bogotá hay 10 CAI, 3 estaciones
+  # de policía, 2 sedes de la red pública de salud y la Estación de Bomberos Central.
+  entrada: {bbox: [-74.09, 4.6, -74.06, 4.63]}
+  minimos: {total: 16}
+  campos: [codigo_estacion, direccion, horario, id_elemento, localidad_codigo, naturaleza, nombre, por_tipo, prestador, telefono, tipo, total]
+  latencia_max_ms: 8000

@@ -120,6 +120,7 @@ NOMBRE_CORTO = {
     "URT": "Unidad de Restitución de Tierras",
     "consorcio WorldCover": "ESA WorldCover",
     "LANCE/FIRMS": "NASA FIRMS",
+    "Alcaldía Mayor de Bogotá": "Alcaldía de Bogotá",
 }
 GLOBALES = ("USGS", "ESA WorldCover", "NASA FIRMS")
 
@@ -453,6 +454,7 @@ SISTEMAS = {
     "MinHacienda": ["Regalías"],
     "MinJusticia": ["SUIN-Juriscol"],
     "MinSalud": ["REPS", "sedes de prestadores de salud"],
+    "Alcaldía de Bogotá": ["estaciones de bomberos, estaciones de policía, CAI"],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],

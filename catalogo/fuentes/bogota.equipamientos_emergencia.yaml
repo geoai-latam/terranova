@@ -1,0 +1,74 @@
+id: bogota.equipamientos_emergencia
+titulo: "Bogotá: estaciones de bomberos, estaciones de policía, CAI y sedes de la red pública de salud, con su ubicación (copia)"
+entidad: Alcaldía Mayor de Bogotá
+competencia: UAECOB (bomberos), Secretaría de Seguridad (policía y CAI) y Secretaría de Salud (red adscrita); cada entidad del Distrito publica sus equipamientos en la Infraestructura de Datos Espaciales de Bogotá (IDECA)
+acto: null
+# Cuatro capas de tres entidades del Distrito, juntas en una copia espacial con una columna `tipo`
+# (como igac.infraestructura_100k). Licencias del portal datosabiertos.bogota.gov.co, una por
+# paquete, verificadas el 2026-11-05:
+#   estacion-de-bomberos-para-bogota (UAECOB): CC-BY-4.0
+#   red-adscrita-de-salud-para-bogota (SDS): CC-BY-4.0
+#   estacion-de-policia-para-bogota-d-c (SDSCJ): CC-BY-SA-4.0
+#   centro-de-atencion-accion-para-bogota-d-c (SDSCJ, apunta a la capa 22 de los CAI): CC-BY-SA-4.0
+# La copia junta las cuatro: manda la más restrictiva, BY-SA.
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-05
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=estacion-de-policia-para-bogota-d-c
+  cita: "license_id: CC-BY-SA-4.0 (policía y CAI); CC-BY-4.0 (bomberos y red adscrita de salud)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Alcaldía Mayor de Bogotá: UAECOB (estaciones de bomberos), Secretaría Distrital de Seguridad, Convivencia y Justicia (estaciones de policía y CAI) y Secretaría Distrital de Salud (red adscrita). Portal de datos abiertos de Bogotá"
+protocolo: arcgis_rest
+# La VPS no llega a los servidores del Distrito (sin respuesta desde el datacenter, 2026-11-05):
+# la copia se baja a mano desde Colombia, como la del SISPRO. La policía vive en otro servidor
+# (oaiee.scj.gov.co): su ruta va completa.
+conector: copia
+url: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    emergencias/bomberos/MapServer/0: estación de bomberos
+    https://oaiee.scj.gov.co/agc/rest/services/Tematicos_NR/EquipamientoPMSDSCJ/MapServer/23: estación de policía
+    https://oaiee.scj.gov.co/agc/rest/services/Tematicos_NR/EquipamientoPMSDSCJ/MapServer/22: CAI
+    salud/instituciones/MapServer/1: sede de la red pública de salud
+  columna_servicio: categoria
+  opcionales: [ESTACION, EPOHORARIO, EPOIULOCAL, NOMBRE_DE_, TIPO_DE_PR]
+  tabla: bogota_equipamientos_emergencia
+  clave: id_elemento
+  por_pagina: 500
+  indices: [categoria]
+# Los servicios no publican la fecha de edición; los paquetes del portal se tocaron entre 2025-06 y
+# 2026-10. Se rehace a mano cada tres meses.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P120D}
+cobertura: {pais: CO, excluye: ["todo lo que no es Bogotá D.C.: no hay capa pública nacional de bomberos ni de policía; los hospitales del país están en minsalud_sedes_salud_*", "IPS privadas de Bogotá (minsalud_sedes_salud_*)", "comandos, URI, cárceles y casas de justicia"]}
+# Teléfonos y horarios son los institucionales de cada sede (la policía publica un celular por CAI).
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su id en la capa (cambia si el Distrito republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "estación de bomberos, estación de policía, CAI o sede de la red pública de salud"}
+  NOMBRE: {nombre: nombre, tipo: str, desc: "nombre de la sede, como lo publica cada entidad", alias: [EPODESCRIP, CAINOMBRE, NOMBRE_DEL]}
+  DIRECCION: {nombre: direccion, tipo: str, desc: "dirección", alias: [EPODIR_SITIO, CAIDIR_SIT]}
+  TELEFONOS: {nombre: telefono, tipo: str, desc: "teléfono institucional de la sede", alias: [EPOTELEFON, CAITELEFON, TELEFONO]}
+  ESTACION: {nombre: codigo_estacion, tipo: str, desc: "bomberos: código de la estación (B-1, B-2…)"}
+  EPOHORARIO: {nombre: horario, tipo: str, desc: "policía y CAI: horario de atención", alias: [CAIHORARIO]}
+  EPOIULOCAL: {nombre: localidad_codigo, tipo: str, desc: "policía y CAI: código de la localidad (01 Usaquén … 20 Sumapaz)", alias: [CAIIULOCAL]}
+  NOMBRE_DE_: {nombre: prestador, tipo: str, desc: "salud: subred integrada de servicios de salud (ESE) a la que pertenece la sede"}
+  TIPO_DE_PR: {nombre: naturaleza, tipo: str, desc: "salud: naturaleza del prestador («Pública»)"}
+comportamiento: {max_por_pagina: 500, orden_coordenadas: lon_lat}
+dcat: {publisher: Alcaldía Mayor de Bogotá, theme: seguridad}
+perfil:
+  medido: '2026-11-05'
+  fila: "una sede de emergencia o de salud pública: 19 estaciones de bomberos, 21 estaciones de policía, 158 CAI y 117 sedes de la red adscrita"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "EPONOMBRE de la policía trae la «í» rota en la fuente; EPODESCRIP trae el mismo nombre bien escrito: se usa ese"
+  - "los CAI no traen descripción (CAIDESCRIP vacío): el nombre es CAINOMBRE"
+  - "bomberos en EPSG:3857, policía en EPSG:4686; la copia pide EPSG:4326"
+  - "el correo de los CAI es el de la estación (mebog.eN@policia.gov.co) y el de salud el de la subred: no se copian"
+  - "la VPS no llega a los servidores del Distrito: la copia se baja desde Colombia"
+  decision: "copia espacial de las cuatro capas en una tabla con `tipo`; nacional no hay: se dice"
