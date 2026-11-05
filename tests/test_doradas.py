@@ -466,3 +466,11 @@ async def test_emergencias_de_bogota_por_tipo() -> None:
     nombres = {e["nombre"] for e in datos["elementos"]}
     assert "Estación de Policía Teusaquillo" in nombres
     assert "Estación de Bomberos Central - Carlos Julio Rico Cuellar" in nombres
+
+
+def test_ninguna_dorada_guarda_un_correo() -> None:
+    """Un correo es un dato personal y las doradas se versionan: grabar_doradas los enmascara."""
+    correo = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+    for archivo in sorted(DORADAS.glob("*.json")):
+        hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
+        assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
