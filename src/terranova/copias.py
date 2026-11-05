@@ -1261,7 +1261,9 @@ def _convertir(valor: Any, tipo: str) -> Any:
         if tipo == "bool":
             return str(valor).strip().lower() in ("true", "1", "si", "sí")
         if tipo in ("date", "datetime") and isinstance(valor, int | float):  # epoch ms de ArcGIS
-            momento = datetime.fromtimestamp(valor / 1000, UTC).isoformat()
+            # desde la época y no con `fromtimestamp`, que en Windows falla con una fecha anterior
+            # a 1970 (resguardos constituidos en los sesenta)
+            momento = (datetime(1970, 1, 1, tzinfo=UTC) + timedelta(milliseconds=valor)).isoformat()
             return momento[:10] if tipo == "date" else momento
         if tipo in ("date", "datetime"):
             texto = str(valor)

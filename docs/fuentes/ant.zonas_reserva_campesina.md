@@ -48,6 +48,8 @@ Cumanday). Las que están en trámite no están.
 | Herramienta | Valor | Estado |
 |---|---|---|
 | `ant_zonas_reserva_campesina_en_punto` | medio | v3: sobre la copia, con aviso de vacío y área con dos decimales |
+| `ant_zonas_reserva_campesina_en_poligono` | alto | v1: «¿este lote cae en una ZRC?», con las hectáreas dentro del lote |
+| `ant_zonas_reserva_campesina_en_zona` | medio | v1: por rectángulo; para pintar la capa |
 
 ## Decisiones
 
@@ -80,3 +82,8 @@ Cumanday). Las que están en trámite no están.
     - Bogotá: «no encontrado», con el aviso, en 10 ms.
   - **Reintentos:** la prueba de `reintentos_si_vacio` pasó a los resguardos, que siguen en vivo
     por el mismo proxy.
+- **2026-11-05, por polígono y por zona:** dos herramientas sobre la misma copia, sin reingerirla.
+  No hay herramienta por municipio: `MUNICIPIOS` trae nombres sueltos, no códigos DIVIPOLA. Medido
+  en la fuente (returnCountOnly): 2 en la franja Cabrera-Sumapaz y 4 en [-75, 3, -73, 5]. La prueba
+  de `reintentos_si_vacio` pasó a la UAF (`ant_uaf_en_punto`), la única de la ANT que sigue en vivo
+  por ese proxy.

@@ -432,6 +432,8 @@ def test_fecha_de_arcgis_en_epoch_ms() -> None:
     from terranova.copias import _convertir
 
     assert _convertir(1309410000000, "date") == "2011-06-30"  # 2011-06-30T05:00Z
+    # antes de 1970 (resguardos de los cincuenta): en Windows `fromtimestamp` fallaba
+    assert _convertir(-416707200000, "date") == "1956-10-18"
     assert _convertir("2011-06-30T00:00:00.000", "date") == "2011-06-30"
 
 

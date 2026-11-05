@@ -1,0 +1,125 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:49:42+00:00",
+ "herramienta": "ant_zonas_reserva_campesina_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "area_en_poligono": true,
+    "geometria": "simplificada",
+    "limite": 20,
+    "order": [
+     "-_area_ha",
+     "NOMBRE_ZON"
+    ],
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.5,
+        3.7
+       ],
+       [
+        -74.3,
+        3.9
+       ],
+       [
+        -74.29,
+        3.89
+       ],
+       [
+        -74.49,
+        3.69
+       ],
+       [
+        -74.5,
+        3.7
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    },
+    "select": [
+     "NOMBRE_ZON",
+     "DEPARTAMENTO",
+     "MUNICIPIOS",
+     "ACTO_ADMIN",
+     "FECHA_CONSTITUCION",
+     "Area_HA"
+    ],
+    "tabla": "ant_zonas_reserva_campesina"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.32147,
+           4.12642
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMIN": "Acuerdo 252 de 2022",
+          "Area_HA": 22765.3444866,
+          "DEPARTAMENTO": "Cundinamarca",
+          "FECHA_CONSTITUCION": "30/12/2022",
+          "MUNICIPIOS": "Bogotá, D.C.",
+          "NOMBRE_ZON": "Sumapaz",
+          "OBJECTID_1": 8,
+          "_area_ha": 734.2137
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.37982,
+           4.03552
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ACTO_ADMIN": "Resolución 046 de 2000",
+          "Area_HA": 42574.1278899,
+          "DEPARTAMENTO": "Cundinamarca",
+          "FECHA_CONSTITUCION": "7/11/2000",
+          "MUNICIPIOS": "Cabrera",
+          "NOMBRE_ZON": "Cabrera",
+          "OBJECTID_1": 3,
+          "_area_ha": 147.1682
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "consultado_en": "2026-11-03T13:42:28.663266+00:00",
+     "copia": {
+      "filas": 30,
+      "huella": "sha256:ba5ff48b7c02b2b1c8b4d7cd0d21a0d1e28a6975bbdd5e1f0100ed517974bed1",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261103134228663266"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

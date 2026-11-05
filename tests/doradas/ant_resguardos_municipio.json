@@ -1,0 +1,776 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T17:49:41+00:00",
+ "herramienta": "ant_resguardos_municipio",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "MUNICIPIO": "73217"
+    },
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "-AREA_TOTAL_ACTOS_ADMIN",
+     "NOMBRE"
+    ],
+    "select": [
+     "NOMBRE",
+     "PUEBLO",
+     "DEPARTAMENTO",
+     "MUNICIPIO",
+     "ULTIMO_TIPO_ACTO_ADMIN",
+     "ULTIMO_NUMERO_ACTO_ADMIN",
+     "ULTIMA_FECHA_ACTO_ADMIN",
+     "AREA_TOTAL_ACTOS_ADMIN"
+    ],
+    "tabla": "ant_resguardos_indigenas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -75.06748,
+           3.66024
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 634.97,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao El Tambo",
+          "OBJECTID": 217,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-10-03",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0023",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.14604,
+           3.8244
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 558.8865,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Potrerito Doyare",
+          "OBJECTID": 322,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-04-14",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0006",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1405,
+           3.71525
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 473.0309,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Lomas de Hilarco",
+          "OBJECTID": 645,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2011-10-11",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "259",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.26292,
+           3.7045
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 463.4074,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Chenche Amayarco",
+          "OBJECTID": 600,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2010-10-26",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "227",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.11075,
+           3.70374
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 414.6591,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Nueva Esperanza",
+          "OBJECTID": 47,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-12-10",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0050",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.07347,
+           3.81438
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 412.462,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Castilla Angosturas",
+          "OBJECTID": 641,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-09-16",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0067",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.10357,
+           3.80499
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 349.3785,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Chenche Socorro Los Guayabos",
+          "OBJECTID": 20,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1996-05-24",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0005",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.10738,
+           3.85868
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 292.0886,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Santa Marta Diamante",
+          "OBJECTID": 846,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-12-10",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0037",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.16642,
+           3.75027
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 260.8422,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Chenche Balsillas",
+          "OBJECTID": 122,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2010-06-01",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "211",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.17531,
+           3.67524
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 246.0099,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena de Totarco Niple",
+          "OBJECTID": 597,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-04-14",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0004",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.15498,
+           3.68008
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 238.8681,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Zanja Honda",
+          "OBJECTID": 325,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2010-03-10",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0208",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.11987,
+           3.79176
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 208.7893,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Chenche Buenos Aires Tradicional",
+          "OBJECTID": 844,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-06-23",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0012",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.11154,
+           3.80084
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 208.7694,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena de Chenche Buenos Aires",
+          "OBJECTID": 798,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-05-05",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0016",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1152,
+           3.78984
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 200.0365,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Chenche Media Luna",
+          "OBJECTID": 676,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-05-31",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0040",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.11586,
+           3.73731
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 193.3489,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Chenche Tunarco del Pueblo Pijao",
+          "OBJECTID": 416,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2026-02-25",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "572",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.24557,
+           3.71172
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 187.891,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Chenche Buenavista",
+          "OBJECTID": 636,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2013-04-17",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0301",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1804,
+           3.7023
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 185.4592,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Totarco Tamarindo",
+          "OBJECTID": 661,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1996-08-14",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0028",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.20149,
+           3.72333
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 183.9925,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena de Totarco Dinde Independiente",
+          "OBJECTID": 344,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-04-14",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0003",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.11545,
+           3.78927
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 183.3604,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao San Miguel",
+          "OBJECTID": 262,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-06-23",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0011",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.10697,
+           3.87351
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 178.0938,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Santa Marta Inspeccion",
+          "OBJECTID": 271,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-05-05",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "23\r\n",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1061,
+           3.69996
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 148.4905,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Lomas De Guaguarco",
+          "OBJECTID": 817,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2014-12-16",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "346",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.22975,
+           3.71986
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 128.1048,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Buena Vista Meche",
+          "OBJECTID": 512,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2024-09-26",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "395",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.25105,
+           3.75743
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 126.06,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Meche San Cayetano",
+          "OBJECTID": 612,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2013-04-17",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0302",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.07347,
+           3.7022
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 111.919,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Floral Tradicional",
+          "OBJECTID": 840,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2007-02-15",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0100",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.09651,
+           3.72643
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 105.4358,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Hilarquito",
+          "OBJECTID": 13,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1999-05-05",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0018",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.23292,
+           3.64482
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 101.6835,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Tres Esquinas",
+          "OBJECTID": 870,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-10-03",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0027",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.12979,
+           3.77235
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 98.5386,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Zaragoza Tamarindo",
+          "OBJECTID": 46,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2000-12-18",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0053",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1487,
+           3.86794
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 98.3743,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao Santa Marta - Palmar",
+          "OBJECTID": 436,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1996-05-24",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0016",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.1669,
+           3.7837
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 65.754,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Chenche Zaragoza",
+          "OBJECTID": 607,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2018-03-05",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "53",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.98903,
+           3.73605
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 50.2573,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Mesas De San Juan",
+          "OBJECTID": 84,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2021-12-20",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "209",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.10352,
+           3.72999
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 48.64,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena El Floral del pueblo Pijao",
+          "OBJECTID": 727,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2025-04-30",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "472",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.16586,
+           3.72602
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 47.0456,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Chenche Agua Fria",
+          "OBJECTID": 706,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2021-11-30",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "199",
+          "ULTIMO_TIPO_ACTO_ADMIN": "ACUERDO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.19814,
+           3.72017
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 42.0029,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Pijao de Totarco Dinde Tradicional",
+          "OBJECTID": 437,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "1997-12-10",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "0038",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.05544,
+           3.71747
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "AREA_TOTAL_ACTOS_ADMIN": 41.0496,
+          "DEPARTAMENTO": "73",
+          "MUNICIPIO": "73217",
+          "NOMBRE": "Resguardo Indígena Chenche Angostura",
+          "OBJECTID": 61,
+          "PUEBLO": "PIJAO",
+          "ULTIMA_FECHA_ACTO_ADMIN": "2018-03-05",
+          "ULTIMO_NUMERO_ACTO_ADMIN": "49",
+          "ULTIMO_TIPO_ACTO_ADMIN": "RESOLUCION"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 34,
+      "truncado": false,
+      "vistos": 34
+     },
+     "consultado_en": "2026-11-05T15:58:49.656002+00:00",
+     "copia": {
+      "filas": 989,
+      "huella": "sha256:53866d4040adb349781b140d951490b9b559c8ebf22a2ede2e8d5fce24768eb8",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105155849656002"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

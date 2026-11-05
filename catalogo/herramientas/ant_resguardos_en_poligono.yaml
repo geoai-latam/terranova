@@ -1,0 +1,58 @@
+id: ant_resguardos_en_poligono
+version: 1
+familia: ambiente
+fuente: ant.resguardos_indigenas
+pregunta: "¿Este lote cae en un resguardo indígena formalizado?"
+descripcion: >
+  Resguardos indígenas formalizados por la ANT que tocan un polígono (GeoJSON Polygon en EPSG:4326,
+  hasta 500 vértices y 1 grado de lado), como un lote o una finca: nombre, pueblo, departamento y
+  municipio (código DIVIPOLA y su nombre en `*_significado`), último acto administrativo, área
+  según los actos y las hectáreas del resguardo que caen dentro del polígono (area_ha_en_poligono),
+  del que más cubre al que menos. Tocar es compartir aunque sea un borde. El cruce usa el polígono
+  completo del resguardo, como lo publica la ANT, y con `geometria` sale entero; van de a 20 por
+  página. Solo los 989 resguardos que publica la ANT: un «no encontrado» no descarta un territorio indígena.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_resguardos_indigenas
+    poligono: "{poligono}"
+    select: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    area_en_poligono: true
+    order: ["-_area_ha", NOMBRE]
+    limite: 20
+  campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ResguardosEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha_en_poligono: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_en_poligono_total: {de: suma, campo: area_ha_en_poligono, tipo: float, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca ninguno de los resguardos que publica la ANT, pero la capa no los tiene
+    todos: faltan, por ejemplo, Toribío, Tacueyó y San Francisco, los resguardos nasa de origen
+    colonial de Toribío (Cauca). Tampoco trae solicitudes en trámite ni otros territorios étnicos.
+    Esto no descarta un territorio indígena: para una consulta previa, confirme con el Ministerio
+    del Interior.
+- cuando: encontrado
+  texto: >
+    Tocar no es quedar adentro: area_ha_en_poligono dice cuántas hectáreas del resguardo caen en el
+    polígono, medidas sobre la forma que publica la ANT. Un resguardo grande trae un solo municipio
+    aunque cruce varios.
+cobro: zona
+canario:
+  # Franja en diagonal por Silvia y Totoró (Cauca); medido el 2026-11-05 en la capa 0 con el mismo
+  # anillo (esriGeometryPolygon, intersects, returnCountOnly): 4, y 7 con su rectángulo. Así el
+  # canario se pone rojo si el cruce deja de ser por polígono. El que más cubre es Guambia.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-76.45, 2.55], [-76.25, 2.75], [-76.24, 2.74], [-76.44, 2.54], [-76.45, 2.55]]]
+  verdad: {total: 4, nombre: "Resguardo Indígena de Guambia"}
+  campos: [area_ha_actos, area_ha_en_poligono, area_ha_en_poligono_total, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, pueblo, tipo_acto, total]
+  latencia_max_ms: 8000

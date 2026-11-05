@@ -1,0 +1,57 @@
+id: ant_consejos_comunitarios_en_poligono
+version: 1
+familia: ambiente
+fuente: ant.consejos_comunitarios
+pregunta: "¿Este lote cae en un territorio colectivo de comunidades negras (consejo comunitario titulado)?"
+descripcion: >
+  Consejos comunitarios titulados por la ANT (territorios colectivos de comunidades negras, Ley 70
+  de 1993) que tocan un polígono (GeoJSON Polygon en EPSG:4326, hasta 500 vértices y 1 grado de
+  lado), como un lote o una finca: nombre, departamento y municipio (código DIVIPOLA y su nombre en
+  `*_significado`), último acto administrativo, área según los actos y las hectáreas del territorio
+  que caen dentro del polígono (area_ha_en_poligono), del que más cubre al que menos. Tocar es
+  compartir aunque sea un borde. El cruce usa el polígono completo, como lo publica la ANT, y con
+  `geometria` sale entero; van de a 20 por página. Solo títulos formalizados; las solicitudes en trámite no están.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_consejos_comunitarios
+    poligono: "{poligono}"
+    select: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    area_en_poligono: true
+    order: ["-_area_ha", NOMBRE]
+    limite: 20
+  campos: [NOMBRE, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+salida: ConsejosComunitariosEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha_en_poligono: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_en_poligono_total: {de: suma, campo: area_ha_en_poligono, tipo: float, decimales: 2}
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca ninguno de los consejos comunitarios titulados que publica la ANT. La capa
+    solo trae títulos colectivos formalizados: las solicitudes en trámite no están, así que esto no
+    descarta un territorio de comunidades negras. Para una consulta previa, confirme con el
+    Ministerio del Interior.
+- cuando: encontrado
+  texto: >
+    Tocar no es quedar adentro: area_ha_en_poligono dice cuántas hectáreas del territorio caen en el
+    polígono, medidas sobre la forma que publica la ANT. Un territorio grande trae un solo municipio
+    aunque cruce varios.
+cobro: zona
+canario:
+  # Franja en diagonal por Buenaventura (Valle); medido el 2026-11-05 en la capa 0 con el mismo
+  # anillo (esriGeometryPolygon, intersects, returnCountOnly): 7, y 14 con su rectángulo. El que
+  # más cubre es el del Río Raposo.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-77.2, 3.6], [-77.0, 3.8], [-76.99, 3.79], [-77.19, 3.59], [-77.2, 3.6]]]
+  verdad: {total: 7, nombre: "Consejo Comunitario del Río Raposo"}
+  campos: [area_ha_actos, area_ha_en_poligono, area_ha_en_poligono_total, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, tipo_acto, total]
+  latencia_max_ms: 8000

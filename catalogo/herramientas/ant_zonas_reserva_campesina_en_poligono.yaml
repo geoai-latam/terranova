@@ -1,0 +1,60 @@
+id: ant_zonas_reserva_campesina_en_poligono
+version: 1
+familia: ambiente
+fuente: ant.zonas_reserva_campesina
+pregunta: "¿Este lote cae en una zona de reserva campesina constituida?"
+descripcion: >
+  Zonas de reserva campesina constituidas que tocan un polígono (GeoJSON Polygon en EPSG:4326, hasta
+  500 vértices y 1 grado de lado), como un lote o una finca: nombre, departamento, municipios, acto
+  y fecha de constitución, área de la zona y las hectáreas de la zona que caen dentro del polígono
+  (area_ha_en_poligono), de la que más cubre a la que menos. Tocar es compartir aunque sea un borde.
+  El cruce usa el polígono completo, como lo publica la ANT, y con `geometria` sale entero; van de a
+  20 por página.
+  Solo las 30 zonas ya constituidas; las que están en trámite no están.
+  Sale de la copia de Terrnova: la procedencia dice de cuándo es.
+  (Fuente: ANT; licencia: CC BY-SA 4.0.)
+entrada: {poligono: poligono}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ant_zonas_reserva_campesina
+    poligono: "{poligono}"
+    select: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
+    geometria: simplificada
+    area_en_poligono: true
+    order: ["-_area_ha", NOMBRE_ZON]
+    limite: 20
+  campos: [NOMBRE_ZON, DEPARTAMENTO, MUNICIPIOS, ACTO_ADMIN, FECHA_CONSTITUCION, Area_HA]
+salida: ZonasReservaCampesinaEnPoligono
+derivados:
+  total: {de: completitud_total, tipo: int}
+  area_ha_en_poligono: {de: columna, campo: _area_ha, tipo: float, decimales: 4}
+  area_ha_en_poligono_total: {de: suma, campo: area_ha_en_poligono, tipo: float, decimales: 2}
+  fecha_modificacion:
+    de: columna
+    campo: FECHA_CONSTITUCION
+    patron: 'modificaci[oó]n:\s*(\d{1,2}/\d{1,2}/\d{4})'
+    orden_fecha: dma
+    tipo: date
+avisos:
+- cuando: vacio
+  texto: >
+    El polígono no toca ninguna de las zonas de reserva campesina constituidas que publica la ANT.
+    Las zonas en trámite no están en esta fuente, así que esto no descarta que se esté
+    constituyendo una.
+- cuando: encontrado
+  texto: >
+    Tocar no es quedar adentro: area_ha_en_poligono dice cuántas hectáreas de la zona caen en el
+    polígono, medidas sobre la forma que publica la ANT.
+cobro: zona
+canario:
+  # Franja en diagonal por Cabrera y Sumapaz; medido el 2026-11-05 en la capa 0 con el mismo anillo
+  # (esriGeometryPolygon, intersects, returnCountOnly): 2. La que más cubre es Sumapaz.
+  entrada:
+    poligono:
+      type: Polygon
+      coordinates: [[[-74.5, 3.7], [-74.3, 3.9], [-74.29, 3.89], [-74.49, 3.69], [-74.5, 3.7]]]
+  verdad: {total: 2, nombre: Sumapaz}
+  campos: [acto_administrativo, area_ha, area_ha_en_poligono, area_ha_en_poligono_total, departamento, fecha_constitucion, fecha_modificacion, id_poligono, municipios, nombre, total]
+  latencia_max_ms: 8000

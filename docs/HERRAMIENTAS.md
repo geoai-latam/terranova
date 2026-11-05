@@ -6,9 +6,17 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `ant_consejos_comunitarios_en_poligono` | ¿Este lote cae en un territorio colectivo de comunidades negras (consejo comunitario titulado)? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_consejos_comunitarios_en_punto` | ¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_consejos_comunitarios_en_zona` | ¿Qué territorios colectivos de comunidades negras (consejos comunitarios titulados) hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `ant_consejos_comunitarios_municipio` | ¿Qué consejos comunitarios titulados anota la ANT en este municipio? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 5 |
+| `ant_resguardos_en_poligono` | ¿Este lote cae en un resguardo indígena formalizado? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_resguardos_en_punto` | ¿En qué resguardo indígena formalizado cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_resguardos_en_zona` | ¿Qué resguardos indígenas formalizados hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `ant_resguardos_municipio` | ¿Qué resguardos indígenas formalizados anota la ANT en este municipio? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 5 |
+| `ant_zonas_reserva_campesina_en_poligono` | ¿Este lote cae en una zona de reserva campesina constituida? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `ant_zonas_reserva_campesina_en_zona` | ¿Qué zonas de reserva campesina constituidas hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `car_pomca_en_poligono` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_sumapaz_en_poligono` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 20 |

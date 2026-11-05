@@ -87,6 +87,7 @@ Reglas:
 | IGAC, catastro: terreno, registro, perímetro, vías, manzana y sector | [igac.catastro.md](igac.catastro.md) |
 | IGAC, capacidad de uso de las tierras | [igac.agrologia.capacidad_uso.md](igac.agrologia.capacidad_uso.md) |
 | ANT, resguardos indígenas formalizados | [ant.resguardos_indigenas.md](ant.resguardos_indigenas.md) |
+| ANT, consejos comunitarios titulados | [ant.consejos_comunitarios.md](ant.consejos_comunitarios.md) |
 | SINCHI, cambio del bosque en la Amazonia 2022-2024 | [sinchi.perdida_bosque.md](sinchi.perdida_bosque.md) |
 | ESA WorldCover 2021 | [esa.worldcover.md](esa.worldcover.md) |
 | SECOP I y II, multas y sanciones (`4n4q-k399`, `it5q-hg94`) | [cce.multas.md](cce.multas.md) |
