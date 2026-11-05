@@ -22,6 +22,12 @@ consulta:
 salida: CregResolucionBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  si: {campo: apariciones, valores: ["0"]}
+  texto: >
+    La resolución está, pero no tiene lo buscado. La búsqueda no distingue mayúsculas ni tildes y pide la
+    frase entera: pruebe con menos palabras o con otra forma de decirlo.
 cobro: agregado
 canario:
   # Medido el 2026-10-22: la Resolución CREG 101-131 de 2026 tiene 4 apariciones de «ARTÍCULO 1».

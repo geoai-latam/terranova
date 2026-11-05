@@ -23,16 +23,22 @@ salida: TextoSentenciaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
 avisos:
+- cuando: encontrado
+  si: {campo: apariciones, valores: ["0"]}
+  texto: >
+    La sentencia está, pero no tiene lo buscado. La búsqueda no distingue mayúsculas ni tildes y pide la
+    frase entera: pruebe con menos palabras o con otra forma de decirlo.
 - cuando: vacio
   texto: >
-    No salió ningún fragmento: o la sentencia no tiene lo buscado (la búsqueda es literal, sin
-    distinguir mayúsculas), o la relatoría no tiene esa sentencia en ese año (revise el número, con
+    No salió ningún fragmento: o la sentencia no tiene lo buscado (la búsqueda no distingue
+    mayúsculas ni tildes), o la relatoría no tiene esa sentencia en ese año (revise el número, con
     guiones: T-760-08; corte_constitucional_sentencia dice si existe).
 cobro: agregado
 canario:
-  # Medido el 2026-10-22: T-760/08 tiene 32 apariciones de «derecho fundamental a la salud».
+  # Medido el 2026-11-05: T-760/08 tiene 51 apariciones de «derecho fundamental a la salud». Eran
+  # 32 cuando la búsqueda no veía las que el texto parte en dos líneas.
   entrada: {anio: 2008, sentencia: T-760-08, buscar: derecho fundamental a la salud}
-  verdad: {apariciones: 32}
+  verdad: {apariciones: 51}
   minimos: {numero_registros: 20}
   campos: [apariciones, caracteres, n, numero_registros, posicion, texto, veces_en_fragmento]
   latencia_max_ms: 30000

@@ -113,11 +113,28 @@ def decodificar(contenido: bytes, tipo: str) -> str:
     return contenido.decode("utf-8", errors="replace")
 
 
+_VOCALES = {"a": "aáàâä", "e": "eéèêë", "i": "iíìîï", "o": "oóòôö", "u": "uúùûü"}
+_VOCAL_BASE = {c: base for base, todas in _VOCALES.items() for c in todas}
+
+
+def patron_de_busqueda(buscar: str) -> re.Pattern[str]:
+    """`buscar` como lo escribe la gente: sin distinguir mayúsculas ni tildes, y con cualquier espacio
+    o salto de línea donde hay un espacio. «informacion publica» no encontraba nada en la Ley 1712 de
+    2014, que la nombra 30 veces con tilde, y la T-760/08 corta «DERECHO A LA SALUD» en dos
+    líneas. La eñe no se toca: «ano» no es «año»."""
+    partes = []
+    for palabra in buscar.split():
+        partes.append("".join(f"[{_VOCALES[_VOCAL_BASE[c.lower()]]}]" if c.lower() in _VOCAL_BASE
+                              else re.escape(c) for c in palabra))
+    return re.compile(r"\s+".join(partes), re.IGNORECASE)
+
+
 def fragmentos(texto: str, buscar: str, contexto: int = CONTEXTO) -> tuple[list[dict], int]:
-    """Los pasajes alrededor de cada aparición de `buscar` (sin distinguir mayúsculas), y cuántas hay."""
+    """Los pasajes alrededor de cada aparición de `buscar` (sin distinguir mayúsculas ni tildes), y
+    cuántas hay."""
     if not buscar.strip():  # un patrón vacío casa en cada posición del texto
         return [], 0
-    patron = re.compile(re.escape(buscar.strip()), re.IGNORECASE)
+    patron = patron_de_busqueda(buscar)
     apariciones = list(patron.finditer(texto))
     # dos apariciones cercanas darían casi el mismo pasaje dos veces: los que se tocan se funden en
     # uno, que dice cuántas apariciones lleva (`veces`; `n` es el número de la primera)
