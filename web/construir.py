@@ -475,6 +475,7 @@ SISTEMAS = {
     ],
     "Unidad de Restitución de Tierras": ["Restitución de tierras"],
     "USGS": ["Sismos"],
+    "NASA FIRMS": ["Focos de calor"],
 }
 
 

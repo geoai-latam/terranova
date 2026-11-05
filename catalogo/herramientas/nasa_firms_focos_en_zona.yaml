@@ -35,7 +35,10 @@ avisos:
 cobro: zona
 canario:
   # Medido el 2026-11-05 en la API por área (VIIRS_SNPP_SP, producto estándar, que no cambia):
-  # 2 498 focos del 2024-02-01 al 2024-02-05 en el rectángulo de Colombia y sus vecinos.
-  entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-02-01", hasta: "2024-02-06"}
-  verdad: {total: 2498}
+  # 182 focos el 2024-02-01 en la Orinoquía (Arauca, Casanare, Vichada y el borde venezolano);
+  # confianza n 177, l 5. En todo el rectángulo de Colombia y sus vecinos, del 1 al 5 de febrero,
+  # 2 498.
+  entrada: {bbox: [-72.0, 3.0, -67.5, 7.0], desde: "2024-02-01", hasta: "2024-02-02"}
+  verdad: {total: 182}
+  campos: [confianza, confianza_significado, dia_noche, dia_noche_significado, fecha, hora_utc, por_fecha, potencia_maxima_mw, potencia_radiativa_mw, producto, tipo_fuente, total]
   latencia_max_ms: 30000

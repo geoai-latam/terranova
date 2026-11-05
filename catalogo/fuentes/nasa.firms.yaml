@@ -26,7 +26,7 @@ datos_personales: ninguno
 estado: publicada
 campos:
   fecha: {nombre: fecha, tipo: date, desc: "fecha de la detección, UTC (acq_date)"}
-  hora_utc: {nombre: hora_utc, tipo: str, desc: "hora de la detección, HHMM UTC (acq_time)"}
+  hora_utc: {nombre: hora_utc, tipo: str, desc: "hora de la detección en UTC como la publica FIRMS (acq_time), HHMM sin ceros a la izquierda: «623» es 06:23 UTC (01:23 en Colombia)"}
   confianza:
     nombre: confianza
     tipo: str
