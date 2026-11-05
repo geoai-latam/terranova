@@ -7,7 +7,7 @@
    "argumentos": {
     "group": "anio, nombre_entidad",
     "id": "jbjy-vk9h",
-    "max_filas": 100,
+    "max_filas": 1000,
     "order": "anio DESC NULL LAST, contratos DESC",
     "portal": "datos.gov.co",
     "select": "date_extract_y(fecha_de_firma) AS anio, nombre_entidad AS entidad, max(fecha_de_firma) AS ultima_firma, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
@@ -191,7 +191,7 @@
      "consulta": {
       "conjunto": "jbjy-vk9h",
       "group": "anio, nombre_entidad",
-      "max_filas": 100,
+      "max_filas": 1000,
       "portal": "datos.gov.co",
       "select": "date_extract_y(fecha_de_firma) AS anio, nombre_entidad AS entidad, max(fecha_de_firma) AS ultima_firma, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(nit_entidad = '891180077')"

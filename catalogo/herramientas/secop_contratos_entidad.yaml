@@ -1,5 +1,5 @@
 id: secop_contratos_entidad
-version: 3
+version: 4
 familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto?"
@@ -30,7 +30,9 @@ consulta:
     where: "nit_entidad = '{nit_entidad}'"
     group: "anio, nombre_entidad"
     order: "anio DESC NULL LAST, contratos DESC"
-    max_filas: 100
+    # Bogotá (899999061) da 369 grupos: 34 entidades por 11 años más los sin fecha (2026-11-04).
+    # Con 100, perdía todo antes de 2026. El tope no aligera la consulta: la fuente agrupa igual.
+    max_filas: 1000
   campos: [nit_entidad, nombre_entidad, fecha_de_firma, valor_del_contrato]
 salida: ContratosEntidad
 derivados:

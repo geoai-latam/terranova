@@ -156,3 +156,25 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 - Verdad del canario, medida en la fuente con `like '%MANTENIMIENTO%VÍAS%'` (con y sin tilde)
   desde 2023: 27. La búsqueda pide las palabras en cualquier orden y encuentra 31.
 - La dorada solo guarda las filas de empresas (SAS); el total de la copia queda en 31.
+
+## Revisión de valor: contratos por NIT sin tope (2026-11-04)
+
+- `secop_contratos_entidad` agrupaba por año y entidad con `max_filas: 100`. Pitalito da 19 grupos
+  y sale entero.
+- El NIT de Bogotá (899999061) cubre 34 entidades: secretarías, alcaldías locales y otras. Con
+  los 11 años y los contratos sin fecha da 369 grupos (medido en la fuente, 10 s). Con el tope de
+  100, la respuesta se quedaba en parte de 2026 y avisaba que no se sabía si vino todo.
+- El tope sube a 1000. La consulta agrupa todo igual, así que no se vuelve más pesada; la puerta
+  pagina la lista de 50 en 50.
+- `secop_contratos_entidad_anio` tenía el mismo problema con `max_filas: 200`. Bogotá en 2025 da
+  554 grupos (entidad, tipo y modalidad) y 26 304 contratos. La herramienta decía 25 640, porque
+  `total_contratos` y `valor_total_anio` se suman sobre lo que vino. El tope sube a 2000.
+- `secop_contratos_municipio` (2026-11-04):
+  - Cada respuesta decía «no se sabe si vino todo»: con `max_filas: 1`, la única fila del conteo
+    llegaba al tope. Pasa a 2, como en `dnp_proyecto_sgr_por_bpin`.
+  - «Chia» sin tilde y «Narnia» daban `encontrado` con 0 contratos, igual que un municipio que
+    no contrata. Ahora un 0 sale con un aviso: revise el nombre con `secop_entidades_municipio`.
+  - Mayúsculas: «CHÍA» y «Chía» dan lo mismo (12 168 contratos, 1,5 a 1,9 s).
+  - Bogotá tarda 48 s en vivo (1 124 681 contratos, 11 atípicos), sobre el tope de 10 s de
+    los canarios (que es Chía). Queda abierto: la copia solo tiene lo firmado desde 2023 y esta
+    herramienta cuenta todos los años.

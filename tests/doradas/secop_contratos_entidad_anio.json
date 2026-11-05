@@ -7,7 +7,7 @@
    "argumentos": {
     "group": "nombre_entidad, tipo_de_contrato, modalidad_de_contratacion",
     "id": "jbjy-vk9h",
-    "max_filas": 200,
+    "max_filas": 2000,
     "order": "contratos DESC",
     "portal": "datos.gov.co",
     "select": "nombre_entidad AS entidad, tipo_de_contrato, modalidad_de_contratacion, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
@@ -313,7 +313,7 @@
      "consulta": {
       "conjunto": "jbjy-vk9h",
       "group": "nombre_entidad, tipo_de_contrato, modalidad_de_contratacion",
-      "max_filas": 200,
+      "max_filas": 2000,
       "portal": "datos.gov.co",
       "select": "nombre_entidad AS entidad, tipo_de_contrato, modalidad_de_contratacion, count(*) AS contratos, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_total, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(nit_entidad = '899999172' AND date_extract_y(fecha_de_firma) = 2023)"
