@@ -1,8 +1,67 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T18:12:22+00:00",
+ "grabado": "2026-11-05T13:25:21+00:00",
  "herramienta": "policia_homicidios_transito_municipio",
  "llamadas": [
+  {
+   "argumentos": {
+    "group": "descripci_n_conducta, genero",
+    "id": "ha6j-pa2r",
+    "max_filas": 200,
+    "order": "descripci_n_conducta, genero",
+    "portal": "datos.gov.co",
+    "select": "descripci_n_conducta, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
+    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "casos",
+       "descripci_n_conducta",
+       "genero"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "casos": "5",
+        "descripci_n_conducta": "ARTÍCULO 109. HOMICIDIO CULPOSO ( EN ACCIDENTE DE TRÁNSITO)",
+        "genero": "FEMENINO"
+       },
+       {
+        "casos": "8",
+        "descripci_n_conducta": "ARTÍCULO 109. HOMICIDIO CULPOSO ( EN ACCIDENTE DE TRÁNSITO)",
+        "genero": "MASCULINO"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "completo": true,
+     "conjunto": "ha6j-pa2r",
+     "consulta": {
+      "conjunto": "ha6j-pa2r",
+      "group": "descripci_n_conducta, genero",
+      "max_filas": 200,
+      "portal": "datos.gov.co",
+      "select": "descripci_n_conducta, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
+      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
+     },
+     "filas": 2,
+     "filas_que_resume": 13,
+     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "id": "ha6j-pa2r",
@@ -45,65 +104,6 @@
      "filas": 1,
      "filas_que_resume": 7126,
      "filtro_soql": "(fecha_hecho like '%/2024')",
-     "portal": "datos.gov.co"
-    },
-    "geo_result": "1"
-   },
-   "tool": "datos_consultar"
-  },
-  {
-   "argumentos": {
-    "group": "descripci_n_conducta, genero",
-    "id": "ha6j-pa2r",
-    "max_filas": 200,
-    "order": "descripci_n_conducta, genero",
-    "portal": "datos.gov.co",
-    "select": "descripci_n_conducta, genero, sum(cantidad::number) AS casos",
-    "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
-   },
-   "conector": "datos-abiertos-mcp",
-   "respuesta": {
-    "artifacts": [
-     {
-      "columns": [
-       "casos",
-       "descripci_n_conducta",
-       "genero"
-      ],
-      "kind": "table",
-      "rows": [
-       {
-        "casos": "5",
-        "descripci_n_conducta": "ARTÍCULO 109. HOMICIDIO CULPOSO ( EN ACCIDENTE DE TRÁNSITO)",
-        "genero": "FEMENINO"
-       },
-       {
-        "casos": "8",
-        "descripci_n_conducta": "ARTÍCULO 109. HOMICIDIO CULPOSO ( EN ACCIDENTE DE TRÁNSITO)",
-        "genero": "MASCULINO"
-       }
-      ]
-     }
-    ],
-    "facts": {
-     "completitud": {
-      "total": 2,
-      "truncado": false,
-      "vistos": 2
-     },
-     "completo": true,
-     "conjunto": "ha6j-pa2r",
-     "consulta": {
-      "conjunto": "ha6j-pa2r",
-      "group": "descripci_n_conducta, genero",
-      "max_filas": 200,
-      "portal": "datos.gov.co",
-      "select": "descripci_n_conducta, genero, sum(cantidad::number) AS casos",
-      "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
-     },
-     "filas": 2,
-     "filas_que_resume": 13,
-     "filtro_soql": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

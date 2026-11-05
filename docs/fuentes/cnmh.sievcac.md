@@ -38,8 +38,21 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
 
 ## Cobertura
 
-- Todo el país, hasta 2026 en la mayoría de los conjuntos (el primer año, sin medir; Granada tiene
-  casos desde 1965). Ataques a poblados llega a 2023.
+- Todo el país (el primer año, sin medir; Granada tiene casos desde 1965). El hecho más reciente
+  de cada conjunto, en todo el país (medido el 2026-11-05):
+
+  | Conjunto | Hasta |
+  |---|---|
+  | asesinatos selectivos | febrero de 2026 |
+  | acciones bélicas, masacres, minas, secuestro | enero de 2026 |
+  | daño a bienes, reclutamiento | diciembre de 2025 |
+  | atentados | noviembre de 2025 |
+  | desaparición forzada | septiembre de 2025 |
+  | violencia sexual | julio de 2025 |
+  | ataques a poblados | agosto de 2023 |
+
+  Asesinatos selectivos se actualizó en julio de 2026 (`rowsUpdatedAt`) y trae 5 víctimas en 2026
+  en todo el país, frente a 345 en 2025 y 452 en 2024.
 - El CNMH revisa casos viejos con cada corte: las cifras pasadas pueden cambiar. Los canarios usan
   mínimos, no igualdades, para los totales.
 
@@ -67,6 +80,9 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
    todo el país son 466 filas, 466 personas y 224 casos, y ninguna fila sin persona (medido el
    2026-11-03 en `a2ga-ur2i`). Un daño a bienes sin víctimas no está: Toribío sale con 1 caso, de
    2014.
+
+6. **El último año está casi vacío.** El corte llega a 2026 solo por uno o dos meses (tabla de
+   arriba). Un municipio sin filas en 2026 no quiere decir que no hubo víctimas ese año.
 
 ## Herramientas que la usan
 
@@ -119,7 +135,20 @@ persona y de caso. Terrnova solo sirve conteos por municipio y año: víctimas d
   - Medido en producción: masacres en Bojayá (11, 2010) y Chía (vacío con la remisión); daño a
     bienes en Granada (2, 2003) y Toribío (1, 2014); la ficha de Toribío da el aviso de daño a
     bienes una vez, con su nombre.
+- **2026-11-05, revisión de valor (v3 de las once):**
+  - Cada una pregunta, en una consulta aparte (`complemento`), el año y el mes del hecho más
+    reciente del conjunto en todo el país: `fuente_hasta_anio` y `fuente_hasta_mes`. Si el mes no
+    es diciembre, un aviso dice que ese año puede estar incompleto. No se dice «el corte llega a»,
+    porque en una modalidad rara (ataques a poblados) el último hecho puede ser anterior al corte.
+  - La consulta usa `max(a_o * 100 + mes) - max(a_o) * 100` para tener el mes del último año en
+    una sola fila, con `a_o >= 2020`: sin ese filtro recorre toda la tabla (4,4 s en ataques a
+    poblados, frente a 0,4 s).
+  - Suman `total_casos`, además de `total_victimas`: «¿cuántas masacres hubo en Granada?» se
+    contesta con los casos (13), no con las víctimas (74). Medido en `cj8q-zu3u`: el conteo de
+    casos distintos de todo el municipio da lo mismo que la suma por año.
+  - Un código que no existe (99999) ya sale con el aviso de la puerta de que no figura en la lista
+    de municipios.
 - **Pendiente:**
-  - Un código que no existe (99999) da «no encontrado» en las once y en la ficha, como cualquier
-    municipio sin víctimas. La puerta no comprueba que el código DIVIPOLA exista.
   - Civiles frente a combatientes por modalidad: pide una consulta más por conjunto.
+  - En `cnmh_conflicto_municipio`, el aviso del último año sale una vez, sin decir de qué
+    modalidades es.

@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T07:27:06+00:00",
+ "grabado": "2026-11-05T13:27:55+00:00",
  "herramienta": "cnmh_secuestro_municipio",
  "llamadas": [
   {
@@ -106,6 +106,54 @@
      "filas": 12,
      "filas_que_resume": 87,
      "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "id": "sg55-sszm",
+    "portal": "datos.gov.co",
+    "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+    "where": "a_o >= 2020"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_anio",
+       "hasta_mes"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_anio": "2026",
+        "hasta_mes": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "sg55-sszm",
+     "consulta": {
+      "conjunto": "sg55-sszm",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+      "where": "(a_o >= 2020)"
+     },
+     "filas": 1,
+     "filas_que_resume": 981,
+     "filtro_soql": "(a_o >= 2020)",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

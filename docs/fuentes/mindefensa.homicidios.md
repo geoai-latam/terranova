@@ -36,7 +36,9 @@ de 2026. Se actualizó el 21 de octubre de 2026.
 
 - Cali 2025: 1 068 víctimas, 999 hombres y 69 mujeres; 745 por sicariato y 879 con arma de fuego.
 - Medellín 2025: 333 víctimas, 8 feminicidios.
-- Sopó: ninguna en 2024 ni en 2025, y 2 en 2026.
+- Sopó (25758): 1 en 2023 (9 de julio), 1 en 2024 (8 de mayo) y ninguna en 2025 ni en lo publicado
+  de 2026 (corregido el 2026-11-05 en la fuente: antes decía «ninguna en 2024 ni en 2025, y 2 en
+  2026»).
 - País 2025: 14 038 víctimas; 11 089 con arma de fuego.
 
 ## Trampas medidas
@@ -45,7 +47,7 @@ de 2026. Se actualizó el 21 de octubre de 2026.
 2. **Feminicidio no es lo mismo que víctima mujer.** Cali 2025 tiene 69 mujeres y 5 feminicidios:
    la caracterización la da la Fiscalía, y la mayoría de las mujeres muertas están en sicariato y
    riñas.
-3. **Un municipio sin filas no es un error.** Sopó 2024 no tiene homicidios en la fuente. La
+3. **Un municipio sin filas no es un error.** Sopó 2025 no tiene homicidios en la fuente. La
    respuesta es `no_encontrado` con aviso, y un año fuera de 2003-2026 es `fuera_de_cobertura`.
 
 ## Herramientas que la usan
@@ -63,4 +65,8 @@ de 2026. Se actualizó el 21 de octubre de 2026.
     publica la fuente en todo el país, con aviso si el año está incompleto.
   - Se agrupa por modalidad presunta, de la que tiene más víctimas a la que menos.
   - El tope del canario es de 20 s: se midió de 5 a 12 s.
+- **2026-11-05, revisión de valor:** se midieron en producción Cali 2025 (canario, 1 068), Medellín
+  2026 (183 hasta septiembre, con el aviso de año incompleto), Sopó 2024 (1) y 2025 (vacío con
+  aviso), 99999 (aviso de código que no figura), 2002 y 2027 (`fuera_de_cobertura`). Sin cambios en
+  la ficha.
 - **Pendiente:** «MASACRES» (`u8eq-92tb`), del mismo ministerio, para contrastar con el CNMH.

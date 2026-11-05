@@ -1,5 +1,5 @@
 id: policia_lesiones_municipio
-version: 2
+version: 3
 familia: justicia
 fuente: policia.lesiones
 pregunta: "¿Cuántas lesiones personales (y en accidentes de tránsito) hubo en este municipio en el año?"
@@ -16,7 +16,7 @@ consulta:
   argumentos:
     id: 72sg-cybi
     portal: datos.gov.co
-    select: "descripci_n_conducta, genero, sum(cantidad::number) AS casos"
+    select: "descripci_n_conducta, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos"
     where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
     group: "descripci_n_conducta, genero"
     order: "descripci_n_conducta, genero"
@@ -46,6 +46,11 @@ avisos:
   texto: >
     El año está incompleto: la fuente todavía no lo publica entero, en todo el país (fuente_hasta_mes
     es el último mes publicado). No lo compare con un año entero: compare los mismos meses.
+- cuando: vacio
+  texto: >
+    La Policía no registra denuncias de lesiones personales para ese municipio y año. Son denuncias:
+    cero denuncias no prueba que no haya habido delitos. Si es el año en curso, la fuente aún no lo
+    publica entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en 72sg-cybi: Chía 2024 suma 459 casos; el primer grupo tiene 94.
