@@ -668,7 +668,8 @@ async def _ciclo(_servidor: FastMCP) -> AsyncIterator[None]:
 
 INSTRUCCIONES = (
     "Fuentes gubernamentales y no gubernamentales, colombianas y globales, con procedencia y "
-    "licencia en cada respuesta (contrato rt/1). Una herramienta por pregunta; cada descripción dice la fuente y la licencia. "
+    "licencia en cada respuesta (contrato rt/1). Una herramienta por pregunta; cada descripción "
+    "dice la fuente y la licencia. "
     "Antes de responder sobre años, cobertura, unidades o códigos, `fuente_describir` "
     "da la ficha técnica de la fuente de una herramienta."
 )
