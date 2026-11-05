@@ -43,6 +43,9 @@ esa no es la licencia de este servicio. Pedir la licencia al Ministerio es decis
   - 3 763 no traen el dato.
 
   Las herramientas sacan el método para que un visor no tome un centroide por una sede.
+- **`Ese` vacío:** la mitad de las sedes no traen si son ESE (en Leticia, 12 de 15). `por_ese` y
+  `por_naturaleza` las cuentan como «sin dato» para que la suma dé el total (validado en
+  producción el 2026-11-05).
 - **`ClaseDePrestador`:** solo trae IPS (1) o vacío. La capa 3, de profesionales independientes, es
   de personas y no se toca.
 - **Códigos:** sus significados salen de los dominios del propio servicio (`codigos_norma` los

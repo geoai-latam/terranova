@@ -393,7 +393,7 @@ async def test_sedes_de_salud_del_sispro_con_punto_naturaleza_y_ese() -> None:
     zona = await correr("minsalud_sedes_salud_en_zona")
     assert zona["total"] == 183
     municipio = await correr("minsalud_sedes_salud_municipio")
-    assert municipio["total"] == 2 and municipio["por_ese"] == {"sí": 1}
+    assert municipio["total"] == 2 and municipio["por_ese"] == {"sí": 1, "sin dato": 1}
     ese = next(e for e in municipio["elementos"] if e["es_ese"] == "1")  # type: ignore[attr-defined]
     assert ese["prestador"] == "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL DE CUBARRAL"
     assert ese["naturaleza_juridica_significado"] == "pública"

@@ -27,8 +27,8 @@ consulta:
 salida: MinsaludSedesSaludEnZona
 derivados:
   total: {de: completitud_total, tipo: int}
-  por_naturaleza: {de: conteo_por, campo: naturaleza_juridica_significado}
-  por_ese: {de: conteo_por, campo: es_ese_significado}
+  por_naturaleza: {de: conteo_por, campo: naturaleza_juridica_significado, vacio: sin dato}
+  por_ese: {de: conteo_por, campo: es_ese_significado, vacio: sin dato}
 avisos:
 - cuando: vacio
   texto: >
