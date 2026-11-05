@@ -1,0 +1,143 @@
+{
+  "geometria_reducida": true,
+  "grabado": "2026-11-05T08:16:11+00:00",
+  "herramienta": "minsalud_sedes_salud_municipio",
+  "llamadas": [
+    {
+      "argumentos": {
+        "filtros": {
+          "CodigoMunicipio": "50223"
+        },
+        "geometria": "completa",
+        "limite": 1000,
+        "order": [
+          "CodigoHabilitacion"
+        ],
+        "select": [
+          "OBJECTID",
+          "CodigoHabilitacion",
+          "CodigoPrestador",
+          "NombrePrestador",
+          "Nombre",
+          "TipoSede",
+          "ClaseDePrestador",
+          "NaturalezaJuridica",
+          "TipoPersona",
+          "Ese",
+          "NivelAtencion",
+          "CaracterTerritorial",
+          "TipoZona",
+          "Direccion",
+          "CentroPoblado",
+          "CodigoDepartamento",
+          "NOM_DPTO",
+          "CodigoMunicipio",
+          "NOM_MPIO",
+          "URL",
+          "FechaREPS",
+          "MetodoUbicacion"
+        ],
+        "tabla": "minsalud_sedes_prestadores"
+      },
+      "conector": "copia",
+      "respuesta": {
+        "artifacts": [
+          {
+            "crs": "EPSG:4326",
+            "data": {
+              "features": [
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.487139,
+                      4.271695
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "50",
+                    "CodigoHabilitacion": "502230087301",
+                    "CodigoMunicipio": "50223",
+                    "CodigoPrestador": "5022300873",
+                    "Direccion": "CALLE 10 No. 19-18",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Meta",
+                    "NOM_MPIO": "CUBARRAL",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL DE CUBARRAL",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL DE CUBARRAL",
+                    "OBJECTID": 75794,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.837276,
+                      3.795673
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "50",
+                    "CodigoHabilitacion": "502230199702",
+                    "CodigoMunicipio": "50223",
+                    "CodigoPrestador": "5031801997",
+                    "Direccion": "CALLE 10A No. 5a-54",
+                    "Ese": null,
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Meta",
+                    "NOM_MPIO": "CUBARRAL",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "IPS VIDA ACTIVA CUBARRAL",
+                    "NombrePrestador": "IPS VIDA ACTIVA SAS",
+                    "OBJECTID": 75792,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                }
+              ],
+              "type": "FeatureCollection"
+            },
+            "kind": "feature_collection"
+          }
+        ],
+        "facts": {
+          "completitud": {
+            "total": 2,
+            "truncado": false,
+            "vistos": 2
+          },
+          "consultado_en": "2026-11-05T08:09:42.505653+00:00",
+          "copia": {
+            "filas": 19911,
+            "huella": "sha256:1be30993cfb61be4ddd6cd1334f220682cce900e2c24a0ba0d44b6b191e04a21",
+            "repetidas_en_la_fuente": 0,
+            "ventana_desde": null,
+            "version": "20261105080942505653"
+          },
+          "servido_desde": "copia"
+        }
+      },
+      "tool": "consultar_copia"
+    }
+  ]
+}

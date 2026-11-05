@@ -379,6 +379,30 @@ async def test_sedes_educativas_del_dane_con_punto_zona_y_sector() -> None:
 
 
 @pytest.mark.anyio
+async def test_sedes_de_salud_del_sispro_con_punto_naturaleza_y_ese() -> None:
+    """Capa 2 del visor de Protección Social del SISPRO, medida en la copia el 2026-11-05: 183
+    sedes en el rectángulo del canario (centro de Bogotá), 2 en Cubarral (50223, una de ellas la ESE
+    del hospital local) y 68 con «Hospital San Vicente»."""
+
+    async def correr(herramienta: str) -> dict[str, object]:
+        h = CATALOGO.herramientas[herramienta]
+        grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+        sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+        return dict(sobre.model_dump(mode="json")["datos"])
+
+    zona = await correr("minsalud_sedes_salud_en_zona")
+    assert zona["total"] == 183
+    municipio = await correr("minsalud_sedes_salud_municipio")
+    assert municipio["total"] == 2 and municipio["por_ese"] == {"sí": 1, "sin dato": 1}
+    ese = next(e for e in municipio["elementos"] if e["es_ese"] == "1")  # type: ignore[attr-defined]
+    assert ese["prestador"] == "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL DE CUBARRAL"
+    assert ese["naturaleza_juridica_significado"] == "pública"
+    buscar = await correr("minsalud_sedes_salud_buscar")
+    assert buscar["total"] == 68
+    assert all(e["tipo_persona"] != "1" for e in buscar["elementos"])  # type: ignore[attr-defined]
+
+
+@pytest.mark.anyio
 async def test_infraestructura_igac_100k_por_tipo() -> None:
     """Cartografía 1:100 000 del IGAC: 4 embalses en el oriente antioqueño (El Peñol en dos
     polígonos), medidos en la copia el 2026-11-05."""

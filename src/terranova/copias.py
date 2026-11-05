@@ -674,7 +674,9 @@ def descargar_arcgis(
                     f"la capa no pagina por {copia.clave}: llegó {clave!r} después de {ultima!r}"
                 )
             ultima = clave
-            vistos += len(rasgos)
+            vistos += len(rasgos)  # el conteo de la capa incluye las filas excluidas
+            if copia.excluir:
+                pagina = [f for f in pagina if not _excluida(f, copia.excluir)]
             yield pagina
         if esperado is not None and vistos != esperado:
             raise ErrorCopia(
@@ -693,6 +695,13 @@ def _url_servicio(base: str, ruta: str) -> str:
 
 
 _OID = "esriFieldTypeOID"
+
+
+def _excluida(fila: dict[str, Any], excluir: dict[str, list[str]]) -> bool:
+    """¿La fila tiene en alguna columna uno de los valores que la ficha deja fuera?"""
+    return any(str(fila.get(c)) in valores for c, valores in excluir.items())
+
+
 POR_SERVICIO = 1_000_000  # la clave de la copia: posición del servicio por esto + el id en su capa
 
 

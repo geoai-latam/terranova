@@ -453,7 +453,7 @@ SISTEMAS = {
     "MinDefensa": ["Homicidios"],
     "MinHacienda": ["Regalías"],
     "MinJusticia": ["SUIN-Juriscol"],
-    "MinSalud": ["REPS"],
+    "MinSalud": ["REPS", "sedes de prestadores de salud"],
     "Alcaldía de Bogotá": ["estaciones de bomberos, estaciones de policía, CAI"],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],

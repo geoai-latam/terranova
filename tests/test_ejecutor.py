@@ -1615,3 +1615,24 @@ def test_los_planes_de_secop1_no_cuentan_copias_como_versiones() -> None:
         h = CATALOGO.herramientas[tid]
         avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
         assert len(avisos) == 1 and remite in avisos[0], tid
+
+
+def test_conteo_por_con_vacio_cuenta_los_que_no_traen_el_dato() -> None:
+    """El SISPRO no dice si es ESE en la mitad de las sedes: en Leticia «por_ese» sumaba 3 de 15
+    (medido en producción el 2026-11-05). Con `vacio`, los que faltan salen con su etiqueta."""
+    import pytest
+    from pydantic import ValidationError
+
+    from terranova.catalogo import Derivado
+    from terranova.ejecutor import derivar_resultado
+
+    elementos: list[dict[str, Any]] = [{"ese": "sí"}, {"ese": None}, {"ese": None}, {"ese": "no"}]
+    assert derivar_resultado(Derivado(de="conteo_por", campo="ese"), elementos, None) == {
+        "sí": 1,
+        "no": 1,
+    }
+    con = Derivado(de="conteo_por", campo="ese", vacio="sin dato")
+    assert derivar_resultado(con, elementos, None) == {"sin dato": 2, "sí": 1, "no": 1}
+    assert derivar_resultado(con, [{"ese": "sí"}], None) == {"sí": 1}  # sin vacíos, no sale
+    with pytest.raises(ValidationError, match="`vacio` va solo"):
+        Derivado(de="suma", campo="ese", vacio="sin dato")

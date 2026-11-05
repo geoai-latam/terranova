@@ -259,6 +259,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `invias_peaje_tarifas` | ¿Cuánto cuesta este peaje del INVÍAS por categoría de vehículo? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 1 |
 | `invias_puentes_en_zona` | ¿Qué puentes de la red vial nacional hay en esta zona? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 20 |
 | `invias_red_vial_en_zona` | ¿Qué vía nacional pasa por esta zona, quién la administra y está pavimentada? | Instituto Nacional de Vías (INVÍAS) | CC-BY-SA-4.0 | 20 |
+| `minsalud_sedes_salud_buscar` | ¿Dónde queda este hospital o esta IPS? | Ministerio de Salud y Protección Social | por verificar | 5 |
+| `minsalud_sedes_salud_en_zona` | ¿Qué hospitales, clínicas e IPS hay en esta zona? | Ministerio de Salud y Protección Social | por verificar | 20 |
+| `minsalud_sedes_salud_municipio` | ¿Qué hospitales, clínicas e IPS hay en este municipio y dónde quedan? | Ministerio de Salud y Protección Social | por verificar | 2 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
 | `sdp_amenaza_movimiento_masa_en_punto` | ¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_area_actividad_en_poligono` | ¿Qué áreas de actividad del POT tocan este polígono en Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 20 |
