@@ -1,0 +1,57 @@
+id: gfw_alertas_deforestacion_en_zona
+version: 1
+familia: ambiente
+fuente: gfw.alertas_integradas
+pregunta: "¿Cuántas alertas de deforestación hubo en esta zona en este periodo, y con qué confianza?"
+descripcion: >
+  Alertas integradas de deforestación de Global Forest Watch (GLAD-L, GLAD-S2 y RADD, de UMD/GLAD
+  y WUR; píxel de 10 m; trópicos de 30° N a 30° S) dentro de un rectángulo de hasta 20° de lado y
+  un periodo de hasta 366 días, desde 2019 (GLAD-L, desde 2021): una fila por fecha y confianza (nominal, alta o
+  máxima) con los píxeles de alerta y sus hectáreas. Arriba van el total de píxeles, las
+  hectáreas y el reparto por confianza. Un píxel no es un evento (un claro de 1 ha son unos 80) y
+  una alerta es una perturbación del bosque, no siempre deforestación. Sin alertas no quiere
+  decir sin deforestación: las nubes tapan a los satélites ópticos. `hasta` es exclusivo. Para un
+  lote o una finca, gfw_alertas_deforestacion_en_poligono. (Fuente: Global Forest Watch, UMD/GLAD
+  y WUR; licencia: CC BY 4.0.)
+entrada: {bbox: bbox, desde: fecha, hasta: fecha}
+consulta:
+  operacion: en_zona
+  tool: amenazas_deforestacion
+  argumentos:
+    bbox: "{bbox}"
+    desde: "{desde}"
+    hasta: "{hasta}"
+  campos: [fecha, confianza, alertas, area_ha]
+salida: AlertasDeforestacionEnZona
+derivados:
+  pixeles_alerta_total: {de: suma, campo: pixeles_alerta, tipo: int}
+  area_ha_total: {de: suma, campo: area_ha, tipo: float, decimales: 2}
+  pixeles_por_confianza: {de: suma_por, campo: confianza, sumar: pixeles_alerta, tipo: int}
+  area_ha_por_confianza: {de: suma_por, campo: confianza, sumar: area_ha, decimales: 2}
+  dias_con_alertas: {de: distintos, campo: fecha, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna alerta integrada de deforestación en esa zona y periodo. Eso no quiere decir que no
+    hubo deforestación: los satélites ópticos (GLAD-L, GLAD-S2) no ven bajo las nubes, y cada
+    sistema solo vigila su máscara de bosque (cobertura arbórea del 2000 o bosque primario húmedo,
+    sin lo que ya se había talado antes) dentro de los trópicos, de 30° N a 30° S. En 2019 y 2020
+    no hay GLAD-L (en esta colección empieza en 2021) y RADD empieza en 2020 en Suramérica.
+    Pruebe con otro periodo o una zona más grande.
+- cuando: encontrado
+  texto: >
+    Cada fila cuenta píxeles de 10 m, no eventos (un píxel de 30 m de GLAD-L se vuelve varios de 10 m).
+    GFW advierte que estas alertas marcan perturbaciones del bosque, sin distinguir la tala de
+    otras causas, y que no sirven para estimar áreas ni tendencias: para eso está la pérdida anual
+    de cobertura arbórea. Las alertas recientes son sobre todo de confianza nominal: pueden subir
+    de confianza o borrarse (GLAD a los 180 días, RADD a los 90).
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la Data API (versión v20261105), enero de 2024 entre Caquetá, Meta y
+  # Guaviare: en el rectángulo, high 13 583 y highest 30 024 píxeles (536,52 ha); en la
+  # franja en diagonal, 4 412. Lo de 2024 no cambió entre v20260701 y v20261105: pasó la ventana de
+  # 180 días en que una alerta sube de confianza o se borra.
+  entrada: {bbox: [-74.5, 1.5, -74.0, 2.0], desde: "2024-01-01", hasta: "2024-02-01"}
+  verdad: {pixeles_alerta_total: 43607}
+  campos: [area_ha, area_ha_por_confianza, area_ha_total, confianza, confianza_significado, dias_con_alertas, fecha, pixeles_alerta, pixeles_alerta_total, pixeles_por_confianza, version_gfw]
+  latencia_max_ms: 15000

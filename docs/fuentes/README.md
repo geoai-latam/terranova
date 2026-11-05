@@ -119,6 +119,7 @@ Reglas:
 | SECOP II, procesos de contratación (`cce.secop2.procesos`) | [cce.secop2.procesos.md](cce.secop2.procesos.md) |
 | DANE: sedes educativas (SISE) | [dane.sedes_educativas.md](dane.sedes_educativas.md) |
 | DNP: proyectos del Sistema General de Regalías | [dnp.proyectos_sgr.md](dnp.proyectos_sgr.md) |
+| Global Forest Watch: alertas integradas de deforestación | [gfw.alertas_integradas.md](gfw.alertas_integradas.md) |
 | IDEAM (SIRH): puntos de captación de agua concesionados | [ideam.captaciones.md](ideam.captaciones.md) |
 | IGAC: conflictos de uso de las tierras (2012) | [igac.agrologia.conflictos_uso.md](igac.agrologia.conflictos_uso.md) |
 | IGAC: infraestructura de la cartografía básica 1:100 000 | [igac.infraestructura_100k.md](igac.infraestructura_100k.md) |

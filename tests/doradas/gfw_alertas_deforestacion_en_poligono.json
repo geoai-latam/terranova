@@ -1,0 +1,198 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T18:05:07+00:00",
+ "herramienta": "gfw_alertas_deforestacion_en_poligono",
+ "llamadas": [
+  {
+   "argumentos": {
+    "desde": "2024-01-01",
+    "hasta": "2024-02-01",
+    "poligono": {
+     "coordinates": [
+      [
+       [
+        -74.5,
+        1.5
+       ],
+       [
+        -74.0,
+        2.0
+       ],
+       [
+        -74.05,
+        2.0
+       ],
+       [
+        -74.5,
+        1.55
+       ],
+       [
+        -74.5,
+        1.5
+       ]
+      ]
+     ],
+     "type": "Polygon"
+    }
+   },
+   "conector": "amenazas-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "fecha",
+       "confianza",
+       "alertas",
+       "area_ha"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "alertas": 67,
+        "area_ha": 0.8243,
+        "confianza": "high",
+        "fecha": "2024-01-03"
+       },
+       {
+        "alertas": 505,
+        "area_ha": 6.2133,
+        "confianza": "highest",
+        "fecha": "2024-01-03"
+       },
+       {
+        "alertas": 7,
+        "area_ha": 0.0861,
+        "confianza": "high",
+        "fecha": "2024-01-10"
+       },
+       {
+        "alertas": 2,
+        "area_ha": 0.0246,
+        "confianza": "highest",
+        "fecha": "2024-01-10"
+       },
+       {
+        "alertas": 215,
+        "area_ha": 2.6452,
+        "confianza": "high",
+        "fecha": "2024-01-13"
+       },
+       {
+        "alertas": 733,
+        "area_ha": 9.0184,
+        "confianza": "highest",
+        "fecha": "2024-01-13"
+       },
+       {
+        "alertas": 19,
+        "area_ha": 0.2338,
+        "confianza": "high",
+        "fecha": "2024-01-14"
+       },
+       {
+        "alertas": 28,
+        "area_ha": 0.3445,
+        "confianza": "highest",
+        "fecha": "2024-01-14"
+       },
+       {
+        "alertas": 160,
+        "area_ha": 1.9686,
+        "confianza": "high",
+        "fecha": "2024-01-15"
+       },
+       {
+        "alertas": 136,
+        "area_ha": 1.6733,
+        "confianza": "highest",
+        "fecha": "2024-01-15"
+       },
+       {
+        "alertas": 9,
+        "area_ha": 0.1107,
+        "confianza": "high",
+        "fecha": "2024-01-22"
+       },
+       {
+        "alertas": 41,
+        "area_ha": 0.5044,
+        "confianza": "highest",
+        "fecha": "2024-01-22"
+       },
+       {
+        "alertas": 663,
+        "area_ha": 8.1572,
+        "confianza": "high",
+        "fecha": "2024-01-23"
+       },
+       {
+        "alertas": 1223,
+        "area_ha": 15.0472,
+        "confianza": "highest",
+        "fecha": "2024-01-23"
+       },
+       {
+        "alertas": 116,
+        "area_ha": 1.4272,
+        "confianza": "high",
+        "fecha": "2024-01-25"
+       },
+       {
+        "alertas": 41,
+        "area_ha": 0.5044,
+        "confianza": "highest",
+        "fecha": "2024-01-25"
+       },
+       {
+        "alertas": 76,
+        "area_ha": 0.9351,
+        "confianza": "high",
+        "fecha": "2024-01-27"
+       },
+       {
+        "alertas": 156,
+        "area_ha": 1.9193,
+        "confianza": "highest",
+        "fecha": "2024-01-27"
+       },
+       {
+        "alertas": 109,
+        "area_ha": 1.3411,
+        "confianza": "high",
+        "fecha": "2024-01-29"
+       },
+       {
+        "alertas": 106,
+        "area_ha": 1.3042,
+        "confianza": "highest",
+        "fecha": "2024-01-29"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 20,
+      "truncado": false,
+      "vistos": 20
+     },
+     "fuente": "Global Forest Watch, alertas integradas (UMD/GLAD y WUR)",
+     "periodo": [
+      "2024-01-01",
+      "2024-02-01"
+     ],
+     "por_poligono": true,
+     "version_gfw": "v20261105",
+     "zona_consultada_bbox": [
+      -74.5,
+      1.5,
+      -74.0,
+      2.0
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "amenazas_deforestacion"
+  }
+ ]
+}
