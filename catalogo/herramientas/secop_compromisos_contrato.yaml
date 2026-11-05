@@ -1,11 +1,12 @@
 id: secop_compromisos_contrato
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.compromisos
 pregunta: "¿Qué compromisos presupuestales respaldan este contrato de SECOP II?"
 descripcion: >
-  Compromisos presupuestales (RP, registros en SIIF) que RESPALDAN un contrato de SECOP II: tipo,
-  ítem, valor, fecha, estado de la integración, balance y valor a liberar. Es el respaldo
+  Compromisos presupuestales (RP, registros en SIIF) que RESPALDAN un contrato de SECOP II: tipo
+  (ingresos o vigencias futuras), ítem, valor, fecha, estado del compromiso (Generado, Con
+  Obligación, Cancelado…), resultado de la consulta al SIIF, saldos y valor a liberar. Es el respaldo
   presupuestal del contrato; para el proyecto de inversión que lo financia (código BPIN) usa
   secop_bpin_proceso, y para el certificado de disponibilidad (CDP) usa secop_cdp_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
@@ -17,11 +18,11 @@ consulta:
   argumentos:
     id: skc9-met7
     portal: datos.gov.co
-    select: "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar"
+    select: "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n_item, estado_integraci_n, balance_compromiso, balance_vigencia_futura, valor_a_liberar"
     where: "id_contrato = '{id_contrato}'"
     order: "fecha_registro_item, identificador_nico, c_digo_item"
     max_filas: 1000
-  campos: [id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar]
+  campos: [id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n_item, estado_integraci_n, balance_compromiso, balance_vigencia_futura, valor_a_liberar]
 salida: SecopCompromisosContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
@@ -32,5 +33,5 @@ canario:
   entrada: {id_contrato: "CO1.PCCNTR.100201"}
   verdad: {id_contrato: "CO1.PCCNTR.100201", id_compromiso: "CO1.SIIFC.100004"}
   minimos: {numero_registros: 1}
-  campos: [balance, codigo_item, estado_integracion, fecha_registro, id_compromiso, id_contrato, numero_registros, tipo, valor_a_liberar, valor_item]
+  campos: [balance, balance_vigencias_futuras, codigo_item, estado_compromiso, estado_integracion, fecha_registro, id_compromiso, id_contrato, numero_registros, tipo, tipo_significado, valor_a_liberar, valor_item]
   latencia_max_ms: 10000

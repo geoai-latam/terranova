@@ -17,13 +17,23 @@ valor del ítem, balance, vigencia futura y estado de integración. Son 5,9 M fi
 
 ## Trampas medidas
 
-1. **El vacío no es «no tiene compromiso».** El CDP puede estar en `secop_cdp_contrato`.
+1. **El vacío no es «no tiene compromiso».** El CDP puede estar en `secop_cdp_contrato`. Un
+   contrato del SENA (CO1.PCCNTR.6893653) tiene su CDP «Con compromiso», pero aquí sale vacío
+   (2026-11-04).
+2. **El tipo es un código.** La fuente usa 0 para «ingresos» y 1 para «vigencias futuras»; lo
+   dice el diccionario del conjunto (`skc9-met7`). El código del ítem es interno de la
+   integración con el SIIF y no tiene tabla publicada.
+3. **Dos estados distintos.** `estado_integraci_n` es el resultado de la última consulta al
+   SIIF (Exito, Fallido…). `estado_integraci_n_item` es el estado del compromiso (Generado, Con
+   Obligación, Cancelado…), y es el que dice si el contrato está respaldado.
+4. **Lento.** El canario (CO1.PCCNTR.100201) tardó 13,3 s el 2026-11-04, por encima del tope de
+   10 s. No se relaja el tope; si se repite, es candidato a copia.
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `secop_compromisos_contrato` | medio | contesta cuando hay datos. Desde el 2026-11-02, el vacío lleva el aviso de cobertura (`cobertura.aviso_vacio`) |
+| `secop_compromisos_contrato` | medio | v2: estado del compromiso, saldo de vigencias futuras y significado del tipo |
 
 ## Decisiones
 
@@ -31,3 +41,6 @@ valor del ítem, balance, vigencia futura y estado de integración. Son 5,9 M fi
   encontrado» de la fuente (patrón A de la revisión de valor).
 - **2026-11-03, revisión de valor:** verificado en producción con el PAE de Chía
   (CO1.PCCNTR.7180851): el vacío sale con el aviso de cobertura. Sin más cambios.
+- **2026-11-04, revisión de valor (v2):** la herramienta no pedía el estado del compromiso, que
+  es lo que contesta la pregunta. Ahora lo pide, junto con el saldo de vigencias futuras y el
+  significado del tipo, tomado del diccionario del conjunto.

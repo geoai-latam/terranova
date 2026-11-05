@@ -1163,3 +1163,33 @@ def test_una_copia_junta_varias_capas_con_sus_nombres_y_una_clave_unica() -> Non
     assert seco["CUENCA"] == "río Seco y otros directos al Magdalena"
     assert (seco["CAT_ORD"], seco["NOMENCLAT"]) == ("CONSERVACIÓN", "AP")  # por los alias
     assert seco["_geom"]["type"] == "Polygon" and set(seco) == {*fuente.campos, "_geom"}
+
+
+class _ServiciosSinSigla(_ServiciosFalsos):
+    """La capa del río Seco sin sigla: como una central de generación de la UPME, que no trae la
+    tensión que sí traen las subestaciones."""
+
+    CAPAS: ClassVar[dict[str, tuple[str, dict[str, str]]]] = {
+        **_ServiciosFalsos.CAPAS,
+        "Zonificacion_POMCA_Seco/FeatureServer/0": (
+            "OBJECTID",
+            {"CATEGORIA": "CONSERVACIÓN", "ZONA": "Z2", "SUBZONA": "S2"},
+        ),
+    }
+
+
+def test_una_columna_opcional_sale_vacia_en_la_capa_que_no_la_tiene() -> None:
+    from terranova.copias import descargar_arcgis
+
+    fuente = CATALOGO.fuentes["car.pomca_zonificacion_copia"]
+    copia = fuente.copia
+    assert copia is not None
+    dos = {r: copia.servicios[r] for r in _ServiciosFalsos.CAPAS}
+    sin = fuente.model_copy(update={"copia": copia.model_copy(update={"servicios": dos})})
+    with pytest.raises(ErrorCopia, match="no tiene «NOMENCLAT»"):
+        list(descargar_arcgis(sin, cliente=_ServiciosSinSigla(), pausa_s=0))
+    nueva = copia.model_copy(update={"servicios": dos, "opcionales": ["NOMENCLAT"]})
+    con = fuente.model_copy(update={"copia": nueva})
+    filas = [f for p in descargar_arcgis(con, cliente=_ServiciosSinSigla(), pausa_s=0) for f in p]
+    assert [f["NOMENCLAT"] for f in filas] == ["ZU"] * 3 + [None] * 3
+    assert all(set(f) == {*fuente.campos, "_geom"} for f in filas)
