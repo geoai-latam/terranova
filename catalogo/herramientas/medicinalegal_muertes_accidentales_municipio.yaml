@@ -1,5 +1,5 @@
 id: medicinalegal_muertes_accidentales_municipio
-version: 1
+version: 2
 familia: justicia
 fuente: medicinalegal.muertes_accidentales
 pregunta: "¿Cuántas muertes accidentales (ahogamientos, caídas, electrocuciones…) hubo en este municipio en el año?"
@@ -26,6 +26,11 @@ salida: MedicinalegalMuertesAccidentalesMunicipio
 derivados:
   casos: {de: columna, campo: casos, tipo: int}
   total_casos: {de: suma, campo: casos, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Medicina Legal no registra muertes accidentales en ese municipio y año. Cuenta las víctimas por el
+    municipio donde ocurrió el hecho; muy pocas salen sin municipio (2 de 4 181 en 2024).
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en irg9-q5fx: Chía 2024, 15 víctimas; el primer grupo tiene 9.
