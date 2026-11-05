@@ -17,6 +17,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_zonas_reserva_campesina_en_poligono` | ¿Este lote cae en una zona de reserva campesina constituida? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_zonas_reserva_campesina_en_zona` | ¿Qué zonas de reserva campesina constituidas hay en esta zona? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 20 |
+| `bogota_calidad_aire_estaciones_en_zona` | ¿Qué estaciones de la red de calidad del aire de Bogotá (RMCAB) hay en esta zona? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
 | `car_pomca_en_poligono` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_sumapaz_en_poligono` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 20 |
@@ -241,6 +242,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_uaf_en_punto` | ¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `bogota_emergencias_en_zona` | ¿Qué estaciones de bomberos, de policía, CAI y hospitales públicos hay en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-SA-4.0 | 20 |
 | `bogota_parques_en_zona` | ¿Qué parques públicos hay en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
+| `bogota_vacunacion_en_zona` | ¿Dónde puedo vacunarme en esta zona de Bogotá? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
 | `dane_sedes_educativas_buscar` | ¿Dónde queda este colegio y cuál es su código DANE? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 5 |
 | `dane_sedes_educativas_en_zona` | ¿Qué colegios y sedes educativas hay en esta zona? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 20 |
@@ -278,6 +280,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `minsalud_sedes_salud_en_zona` | ¿Qué hospitales, clínicas e IPS hay en esta zona? | Ministerio de Salud y Protección Social | por verificar | 20 |
 | `minsalud_sedes_salud_municipio` | ¿Qué hospitales, clínicas e IPS hay en este municipio y dónde quedan? | Ministerio de Salud y Protección Social | por verificar | 2 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
+| `sdm_movilidad_en_zona` | ¿Qué semáforos, cámaras salvavidas y cicloparqueaderos hay en esta zona de Bogotá? | Secretaría Distrital de Movilidad de Bogotá | CC-BY-4.0 | 20 |
 | `sdm_siniestralidad_critica_en_zona` | ¿Qué tan peligrosa es esta zona de Bogotá para peatones, ciclistas y motociclistas, según los sitios críticos de siniestralidad? | Secretaría Distrital de Movilidad de Bogotá | CC-BY-4.0 | 20 |
 | `sdp_amenaza_movimiento_masa_en_punto` | ¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_area_actividad_en_poligono` | ¿Qué áreas de actividad del POT tocan este polígono en Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 20 |
