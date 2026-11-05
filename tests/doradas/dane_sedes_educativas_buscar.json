@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-05T06:09:59+00:00",
+ "grabado": "2026-11-05T07:22:08+00:00",
  "herramienta": "dane_sedes_educativas_buscar",
  "llamadas": [
   {
@@ -59,6 +59,7 @@
           "DEPARTAMEN": "META",
           "DIRECCION": "VDA ARRAYANES",
           "ESTADO": "ACTIVA",
+          "FID": 30002,
           "ID_DEPARTA": "50",
           "ID_MUNICIP": "50223",
           "JORNADA": "MAÑANA",

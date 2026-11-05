@@ -42,5 +42,5 @@ canario:
   # (INSTITUCION EDUC DIVINO NIÑO, Cubarral, Meta), la misma del servicio del DANE.
   entrada: {texto: "Divino Niño Cubarral"}
   minimos: {total: 1}
-  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, sector, sede_principal, telefono, tipo_telefono, total, zona]
+  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, id_elemento, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, sector, sede_principal, telefono, tipo_telefono, total, zona]
   latencia_max_ms: 8000

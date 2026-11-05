@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-05T06:30:53+00:00",
+ "grabado": "2026-11-05T07:21:26+00:00",
  "herramienta": "ani_aeropuertos_en_zona",
  "llamadas": [
   {
@@ -14,6 +14,7 @@
     "geometria": "completa",
     "max_features": 200,
     "out_fields": [
+     "objectid",
      "lista_aero",
      "proyecto",
      "contrato",
@@ -46,6 +47,7 @@
           "estado": "Operación",
           "link": "https://aniscopio.ani.gov.co/aeropuertos-public/ficha-proyecto-drupal",
           "lista_aero": "El Dorado (Bogotá)",
+          "objectid": 5,
           "proyecto": "CODAD (Segunda pista aeropuerto El Dorado); OPAIN"
          },
          "type": "Feature"
@@ -80,6 +82,7 @@
       ],
       "max_features": 200,
       "out_fields": [
+       "objectid",
        "lista_aero",
        "proyecto",
        "contrato",

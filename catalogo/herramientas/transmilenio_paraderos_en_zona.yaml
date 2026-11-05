@@ -41,5 +41,5 @@ canario:
   # 7 610.
   entrada: {bbox: [-74.065, 4.65, -74.05, 4.665]}
   minimos: {total: 87}
-  campos: [audio, cantidad_mm, cenefa, consecutivo_zona, direccion, estado_multiple, localidad, modulo, nombre, panel, por_localidad, tipo_m_s, total, via, zona_nueva, zona_sitp]
+  campos: [audio, cantidad_mm, cenefa, consecutivo_zona, direccion, estado_multiple, id_paradero, localidad, modulo, nombre, panel, por_localidad, tipo_m_s, total, via, zona_nueva, zona_sitp]
   latencia_max_ms: 8000

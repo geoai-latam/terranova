@@ -165,6 +165,11 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         raise ErrorCopia("con agregados no sale geometría")
     if not columnas and not agregados and fuente.copia.espacial:
         columnas = [_columna(c, permitidas) for c in fuente.campos]  # `*` traería `_geom` cruda
+    if columnas and not agregados and not group and fuente.copia.clave in permitidas:
+        # P0.6 (visores): cada elemento sale con su id estable, la clave de la copia, para que quien
+        # pinta o une capas distinga dos tramos con los mismos atributos (UPME trae 24 así)
+        if (clave_copia := _columna(fuente.copia.clave, permitidas)) not in columnas:
+            columnas.append(clave_copia)
     con_geometria = geometria != "ninguna"
     salida: list[str] = []
     parametros_seleccion: list[Any] = []

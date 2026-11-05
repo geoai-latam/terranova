@@ -17,9 +17,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: completa
-    out_fields: [nombre, estado, proyecto, codvia, municipio, departamento]
+    out_fields: [objectid, nombre, estado, proyecto, codvia, municipio, departamento]
     max_features: 200
-  campos: [nombre, estado, proyecto, codvia, municipio, departamento]
+  campos: [objectid, nombre, estado, proyecto, codvia, municipio, departamento]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: PeajesEnZona
@@ -29,5 +29,5 @@ canario:
   # y SOPÓ).
   entrada: {bbox: [-74.10, 4.80, -73.90, 5.05]}
   minimos: {numero_registros: 5}
-  campos: [codigo_via, departamento, estado_peaje, municipio, numero_registros, peaje, proyecto_peaje]
+  campos: [codigo_via, departamento, estado_peaje, id_elemento, municipio, numero_registros, peaje, proyecto_peaje]
   latencia_max_ms: 8000

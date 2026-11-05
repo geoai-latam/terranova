@@ -596,7 +596,11 @@ def test_copia_espacial_en_postgis() -> None:
         return almacen.consultar(plan_de_consulta(RUNAP, argumentos))
 
     filas, total = consultar({"punto": [-73.5, 4.5], "select": ["ap_nombre", "fecha_inscrita"]})
-    assert filas == [{"ap_nombre": "Área 1", "fecha_inscrita": date(2011, 6, 30)}] and total == 1
+    # la clave de la copia sale siempre, aunque el select no la pida
+    assert (
+        filas == [{"ap_nombre": "Área 1", "fecha_inscrita": date(2011, 6, 30), "objectid": 1}]
+        and total == 1
+    )
     assert consultar({"punto": [-80.0, 0.0]}) == ([], 0)
     # el moño se reparó al cargar: el cruce no falla y lo encuentra
     filas, total = consultar({"bbox": [-76.0, 3.0, -72.0, 8.0], "order": ["objectid"]})
@@ -658,7 +662,9 @@ def test_copia_espacial_en_postgis() -> None:
     filas, _ = almacen.consultar(
         plan_de_consulta(zrc, {"punto": [-73.5, 4.5], "select": ["FECHA_CONSTITUCION"]})
     )
-    assert filas == [{"FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024"}]
+    assert filas == [
+        {"FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024", "OBJECTID_1": 7}
+    ]
 
 
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
@@ -1091,7 +1097,7 @@ def test_geojson_en_la_cartesiana_de_bogota_se_reproyecta() -> None:
     filas, total = almacen.consultar(
         plan_de_consulta(fuente, {"punto": [-74.14659167, 4.680486111], "select": ["CATEGORIZA"]})
     )
-    assert filas == [{"CATEGORIZA": "2"}] and total == 1
+    assert filas == [{"CATEGORIZA": "2", "_fila": 1}] and total == 1
     assert almacen.consultar(plan_de_consulta(fuente, {"punto": [-74.1500, 4.680486111]}))[1] == 0
 
 
@@ -1229,3 +1235,17 @@ def test_desde_sigue_la_copia_con_offset_y_orden_estable() -> None:
     assert "OFFSET" not in sin_desde.sql and sin_desde.parametros[-1] == 10
     with pytest.raises(ErrorCopia):
         plan_de_consulta(upme, {"select": ["categoria"], "desde": -1})
+
+
+def test_cada_elemento_sale_con_la_clave_de_la_copia() -> None:
+    """P0.6 (visores): la clave de la copia va en el select aunque la ficha no la pida, para que
+    dos elementos con los mismos atributos se distingan; con agregados no, porque no es una fila."""
+    upme = cargar().fuentes["upme.infraestructura_energetica"]
+    plan = plan_de_consulta(upme, {"select": ["categoria", "nombre"], "limite": 10})
+    assert plan.sql.startswith('SELECT "categoria", "nombre", "id_elemento"')
+    ya = plan_de_consulta(upme, {"select": ["id_elemento", "categoria"], "limite": 10})
+    assert ya.sql.count('"id_elemento"') == 2  # en el select una vez, y en el orden
+    agregado = plan_de_consulta(
+        upme, {"group": ["categoria"], "agregados": {"n": "count"}, "limite": 10}
+    )
+    assert '"id_elemento"' not in agregado.sql
