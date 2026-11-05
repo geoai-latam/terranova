@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T18:13:34+00:00",
+ "grabado": "2026-11-05T13:25:30+00:00",
  "herramienta": "policia_hurto_vehiculos_municipio",
  "llamadas": [
   {
@@ -10,7 +10,7 @@
     "max_filas": 200,
     "order": "tipo_de_hurto, genero",
     "portal": "datos.gov.co",
-    "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+    "select": "tipo_de_hurto, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
     "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
    },
    "conector": "datos-abiertos-mcp",
@@ -60,7 +60,7 @@
       "group": "tipo_de_hurto, genero",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "tipo_de_hurto, genero, sum(cantidad::number) AS casos",
+      "select": "tipo_de_hurto, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
       "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
      },
      "filas": 4,

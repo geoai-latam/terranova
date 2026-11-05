@@ -1,5 +1,5 @@
 id: policia_delitos_sexuales_municipio
-version: 2
+version: 3
 familia: justicia
 fuente: policia.delitos_sexuales
 pregunta: "¿Cuántos delitos sexuales se denunciaron en este municipio en el año?"
@@ -16,7 +16,7 @@ consulta:
   argumentos:
     id: fpe5-yrmw
     portal: datos.gov.co
-    select: "delito, genero, sum(cantidad::number) AS casos"
+    select: "delito, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos"
     where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
     group: "delito, genero"
     order: "delito, genero"
@@ -46,6 +46,11 @@ avisos:
   texto: >
     El año está incompleto: la fuente todavía no lo publica entero, en todo el país (fuente_hasta_mes
     es el último mes publicado). No lo compare con un año entero: compare los mismos meses.
+- cuando: vacio
+  texto: >
+    La Policía no registra denuncias de delitos sexuales para ese municipio y año. Son denuncias:
+    cero denuncias no prueba que no haya habido delitos. Si es el año en curso, la fuente aún no lo
+    publica entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en fpe5-yrmw: Chía 2024 suma 63 casos; el primer grupo tiene 8.

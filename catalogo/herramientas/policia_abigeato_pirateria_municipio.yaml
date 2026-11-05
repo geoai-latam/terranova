@@ -1,5 +1,5 @@
 id: policia_abigeato_pirateria_municipio
-version: 4
+version: 5
 familia: justicia
 fuente: policia.abigeato_pirateria
 pregunta: "¿Cuántos robos de ganado, de carga o a bancos hubo en este municipio en el año?"
@@ -20,7 +20,7 @@ consulta:
   argumentos:
     id: d4fr-sbn2
     portal: datos.gov.co
-    select: "tipo_de_hurto, genero, sum(cantidad::number) AS casos"
+    select: "tipo_de_hurto, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos"
     where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
     group: "tipo_de_hurto, genero"
     order: "tipo_de_hurto, genero"
@@ -51,6 +51,11 @@ avisos:
   texto: >
     El año está incompleto: la fuente todavía no lo publica entero, en todo el país (fuente_hasta_mes
     es el último mes publicado). No lo compare con un año entero: compare los mismos meses.
+- cuando: vacio
+  texto: >
+    La Policía no registra denuncias de abigeato, piratería terrestre ni hurto a entidades financieras para ese municipio y año. Son denuncias:
+    cero denuncias no prueba que no haya habido delitos. Si es el año en curso, la fuente aún no lo
+    publica entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en d4fr-sbn2: Chía 2024 suma 3 casos; el primer grupo tiene 3.

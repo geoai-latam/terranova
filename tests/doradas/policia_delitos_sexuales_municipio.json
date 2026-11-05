@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T18:11:50+00:00",
+ "grabado": "2026-11-05T13:25:14+00:00",
  "herramienta": "policia_delitos_sexuales_municipio",
  "llamadas": [
   {
@@ -10,7 +10,7 @@
     "max_filas": 200,
     "order": "delito, genero",
     "portal": "datos.gov.co",
-    "select": "delito, genero, sum(cantidad::number) AS casos",
+    "select": "delito, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
     "where": "codigo_dane = '25175000' AND fecha_hecho like '%/2024'"
    },
    "conector": "datos-abiertos-mcp",
@@ -105,7 +105,7 @@
       "group": "delito, genero",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "delito, genero, sum(cantidad::number) AS casos",
+      "select": "delito, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos",
       "where": "(codigo_dane = '25175000' AND fecha_hecho like '%/2024')"
      },
      "filas": 13,
