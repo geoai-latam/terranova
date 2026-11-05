@@ -39,7 +39,8 @@ La atribución de la ficha es esa cita.
 
 ## Lo que no trae (y dónde está)
 
-- Rutas troncales y zonales con horarios (capa 15) y paraderos zonales (7 610): siguiente tarea.
+- Rutas troncales y zonales con horarios (capa 15): `transmilenio.rutas_sitp`. Paraderos zonales
+  (7 610): `transmilenio.paraderos_zonales`.
 - Validaciones y salidas por estación: el bucket `validaciones_tmsa` responde 403 (2026-11-04).
 - Posición de los buses en tiempo real: el GTFS-RT `gis.transmilenio.gov.co/gtfs/` responde
   HTTP 500 (2026-11-04).

@@ -72,7 +72,7 @@ campos:
   le_troncal: {nombre: letra_troncal, tipo: str, desc: "trazado: letra de la troncal en el mapa del sistema"}
   ori_traz: {nombre: origen, tipo: str, desc: "trazado: dónde empieza"}
   fin_traz: {nombre: fin, tipo: str, desc: "trazado: dónde termina"}
-  long_traz: {nombre: longitud_m, tipo: float, desc: "trazado: longitud según TransMilenio"}
+  long_traz: {nombre: longitud_km, tipo: float, desc: "trazado: longitud en kilómetros según TransMilenio (medido 2026-11-04: Caracas A da 8,31 y su línea mide 8 283 m)"}
 comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
 dcat: {publisher: TransMilenio S.A., theme: transporte}
 # Spec 07: medido en la fuente, no en Terrnova.

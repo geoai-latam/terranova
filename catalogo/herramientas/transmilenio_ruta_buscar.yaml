@@ -1,0 +1,41 @@
+id: transmilenio_ruta_buscar
+version: 1
+familia: territorio
+fuente: transmilenio.rutas_sitp
+pregunta: "¿Por dónde va esta ruta de TransMilenio o del SITP y en qué horario opera?"
+descripcion: >
+  Busca servicios del SITP por código de ruta o de línea (p. ej. «GA503» o «A503»), origen,
+  destino u operador, y devuelve cada sentido con su trazado, origen, destino, localidades,
+  operador, horario de lunes a viernes, sábado y festivo y longitud. Para las rutas que pasan por
+  un lugar, transmilenio_rutas_en_zona. Sale de la copia de Terrnova (se rehace cada mes): la
+  procedencia dice de cuándo es. (Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co; licencia:
+  CC BY 4.0.)
+entrada: {texto: str}  # va como parámetro de plainto_tsquery, nunca dentro del SQL
+consulta:
+  operacion: buscar
+  tool: consultar_copia
+  argumentos:
+    tabla: transmilenio_rutas_sitp
+    texto: "{texto}"
+    select: [cod_ruta, cod_linea, nom_ruta, abrevia, orig_ruta, dest_ruta, loc_orig, loc_dest, zon_orig, zon_dest, oper_ruta, fec_impl, hor_habil, hor_sab, hor_fest, long_ruta, tipo_ruta, est_ruta, tip_bus, tip_serv, dias_oper, tip_hor, comp_sitp, ruta_rural]
+    geometria: simplificada
+    order: [cod_ruta]
+    limite: 100
+  campos: [cod_ruta, cod_linea, nom_ruta, abrevia, orig_ruta, dest_ruta, loc_orig, loc_dest, zon_orig, zon_dest, oper_ruta, fec_impl, hor_habil, hor_sab, hor_fest, long_ruta, tipo_ruta, est_ruta, tip_bus, tip_serv, dias_oper, tip_hor, comp_sitp, ruta_rural]
+salida: TransmilenioRutaBuscar
+derivados:
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna ruta del SITP con ese código, origen, destino u operador. Los códigos van como los
+    escribe TransMilenio («GA503», «A503-1»); pruebe con el código de la línea o con el nombre
+    del origen o el destino.
+cobro: agregado
+canario:
+  # Medido el 2026-11-04 en el servicio de TransMilenio: la línea GA503 tiene dos sentidos,
+  # A503-1 (San Bernardino → Est. Calle 100) y G503-2 (el regreso).
+  entrada: {texto: GA503}
+  minimos: {total: 2}
+  campos: [abreviatura, codigo_linea, codigo_ruta, componente_sitp, destino, dias_operacion, estado_ruta, fecha_implementacion, horario_festivo, horario_habil, horario_sabado, localidad_destino, localidad_destino_significado, localidad_origen, localidad_origen_significado, longitud_km, nombre_ruta, operador, origen, ruta_rural, tipo_bus, tipo_horario, tipo_ruta, tipo_servicio, total, zona_destino, zona_origen]
+  latencia_max_ms: 8000

@@ -166,7 +166,9 @@ async def test_las_herramientas_de_terrnova_van_antes_que_los_datasets() -> None
     r = await con.llamar("buscar_catalogo", {"consulta": "buses de TransMilenio"})
     filas = r["artifacts"][0]["rows"]
     assert [f["id"] for f in filas if f["protocolo"] == "terrnova"] == [
-        "transmilenio_troncal_en_zona"
+        "transmilenio_paraderos_en_zona",
+        "transmilenio_rutas_en_zona",
+        "transmilenio_troncal_en_zona",
     ]
     # «infraestructura crítica» remite a la capa de la UPME (pregunta real de una reunión,
     # 2026-11-04), y TransMilenio ya no cae en «transmisión» por sus 6 primeras letras

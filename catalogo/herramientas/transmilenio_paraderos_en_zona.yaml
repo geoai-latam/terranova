@@ -1,0 +1,45 @@
+id: transmilenio_paraderos_en_zona
+version: 1
+familia: territorio
+fuente: transmilenio.paraderos_zonales
+pregunta: "¿Qué paraderos del SITP hay en esta zona de Bogotá?"
+descripcion: >
+  Paraderos zonales del SITP (buses azules, alimentadores, complementarios y especiales) dentro
+  de un rectángulo (bbox en EPSG:4326): cenefa (el código que va en el paradero), nombre,
+  dirección, vía, localidad, zona SITP, módulo, si es múltiple y el texto que anuncia el bus.
+  Arriba van el total y cuántos hay por localidad. Sirve para «¿dónde queda el paradero más
+  cercano a este predio?». Las estaciones troncales están en transmilenio_troncal_en_zona y las
+  rutas en transmilenio_rutas_en_zona; no dice qué rutas paran en cada paradero. Sale de la copia
+  de Terrnova (se rehace cada mes): la procedencia dice de cuándo es. (Fuente: TRANSMILENIO S.A:
+  www.transmilenio.gov.co; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: transmilenio_paraderos_zonales
+    bbox: "{bbox}"
+    select: [cenefa, nombre, direccion_bandera, via, localidad, zona_sitp, zonas_nuevas, consecutivo_zona, modulo, tipo_m_s, estado_multiple, cantidad_mm, panel, audio]
+    geometria: completa
+    order: [cenefa]
+    limite: 2000
+  campos: [cenefa, nombre, direccion_bandera, via, localidad, zona_sitp, zonas_nuevas, consecutivo_zona, modulo, tipo_m_s, estado_multiple, cantidad_mm, panel, audio]
+salida: TransmilenioParaderosEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_localidad: {de: conteo_por, campo: localidad}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay paraderos zonales del SITP en ese rectángulo según TransMilenio. La capa cubre Bogotá y
+    Soacha y no trae las estaciones troncales (transmilenio_troncal_en_zona). Pruebe con un
+    rectángulo más grande.
+cobro: zona
+canario:
+  # Medido el 2026-11-04 en el servicio de TransMilenio (returnCountOnly con el sobre en EPSG:4326):
+  # 87 paraderos en [-74.065, 4.65, -74.05, 4.665] (Chapinero, calles 72 a 85). En toda la capa,
+  # 7 610.
+  entrada: {bbox: [-74.065, 4.65, -74.05, 4.665]}
+  minimos: {total: 87}
+  campos: [audio, cantidad_mm, cenefa, consecutivo_zona, direccion, estado_multiple, localidad, modulo, nombre, panel, por_localidad, tipo_m_s, total, via, zona_nueva, zona_sitp]
+  latencia_max_ms: 8000
