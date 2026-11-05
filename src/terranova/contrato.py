@@ -467,6 +467,11 @@ def paginar(
             f"cuentan los primeros {len(elementos)} (lo que trae una consulta); el total de la "
             "fuente es el de arriba"
         )
+        if any(a.startswith("Estos resúmenes cuentan la lista completa") for a in avisos):
+            cuentan = (
+                "del aviso «Estos resúmenes» cuentan la lista completa; los demás, los primeros "
+                f"{len(elementos)}, y el total de la fuente es el de arriba"
+            )
         # las páginas siguen en la fuente (ADR-0040): «vinieron N de total, acote» ya no aplica
         avisos = [a for a in avisos if not a.startswith("Vinieron ")]
     elif any(p.completitud.truncado for p in sobre.procedencia):
