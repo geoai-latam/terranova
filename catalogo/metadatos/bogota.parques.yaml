@@ -1,0 +1,7 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: bogota.parques
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://visorsrv.idrd.gov.co/srv/rest/services/ParquesIDRD/Parques/MapServer?f=json
+titulo: Parques
+descripcion: Este conjunto de datos reúne información sobre los parques en Bogotá D.C.

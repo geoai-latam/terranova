@@ -1,0 +1,59 @@
+id: bogota.parques
+titulo: "Bogotá: Sistema Distrital de Parques y Escenarios Públicos Deportivos del IDRD, con su polígono (copia)"
+entidad: Alcaldía Mayor de Bogotá
+competencia: el Instituto Distrital de Recreación y Deporte (IDRD) lleva el inventario geográfico del Sistema Distrital de Parques y lo publica en el portal de datos abiertos de Bogotá
+acto: null
+# Paquete «sistema-distrital-de-parques-y-escenarios-publicos-deportivos» del portal
+# datosabiertos.bogota.gov.co (IDRD), que apunta a esta capa: CC-BY-4.0, verificada el 2026-11-05.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=sistema-distrital-de-parques-y-escenarios-publicos-deportivos
+  cita: "license_id: CC-BY-4.0, license_title: Creative Commons Attribution 4.0 (recurso Esri REST: https://visorsrv.idrd.gov.co/srv/rest/services/ParquesIDRD/Parques/MapServer/0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Instituto Distrital de Recreación y Deporte (IDRD), Alcaldía Mayor de Bogotá. Portal de datos abiertos de Bogotá"
+protocolo: arcgis_rest
+# Servidor propio del IDRD (visorsrv.idrd.gov.co), no el de Catastro. Como los demás servidores del
+# Distrito, la copia se baja a mano desde Colombia.
+conector: copia
+url: https://visorsrv.idrd.gov.co/srv/rest/services/ParquesIDRD/Parques/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: bogota_parques
+  clave: OBJECTID
+  por_pagina: 500
+  indices: [TIPOPARQUE, ID_PARQUE]
+# El paquete se tocó el 2026-09-10 y la última incorporación de un parque es de 2026-10. Se rehace a
+# mano cada tres meses.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P120D}
+cobertura: {pais: CO, rectangulo: [-74.33, 4.02, -73.99, 4.84], excluye: ["todo lo que no es Bogotá D.C.", "la capa «parque» del POT (Secretaría de Planeación), que es otra", "canchas, gimnasios y demás dotación de cada parque (otras capas del IDRD)"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador del polígono en la capa (cambia si el IDRD republica)"}
+  ID_PARQUE: {nombre: codigo_parque, tipo: str, desc: "código del parque en el IDRD: número de localidad y consecutivo (p. ej. 07-260); solo el 03-035 sale en dos polígonos"}
+  NOMBRE_PARQ: {nombre: nombre, tipo: str, desc: "nombre del parque"}
+  TIPOPARQUE: {nombre: tipo_parque, tipo: str, desc: "escala del parque como la publica el IDRD: parque de bolsillo, vecinal, zonal, metropolitano o regional, escenario deportivo, o zonal y metropolitano «propuesto»"}
+  LOCNOMBRE: {nombre: localidad, tipo: str, desc: "localidad de Bogotá"}
+  ID_UPL: {nombre: upl, tipo: str, desc: "Unidad de Planeamiento Local del POT (Decreto 555 de 2021)"}
+  ESTRATO: {nombre: estrato, tipo: str, desc: "estrato del entorno del parque, como lo publica el IDRD"}
+  FECHAINCORPORACION: {nombre: fecha_incorporacion, tipo: date, desc: "fecha de incorporación del parque al inventario del IDRD"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: Alcaldía Mayor de Bogotá, theme: territorio}
+perfil:
+  medido: '2026-11-05'
+  fila: "un polígono de parque: 5 309 (3 512 vecinales, 1 649 de bolsillo, 95 zonales, 34 metropolitanos, 10 escenarios deportivos, 4 regionales y propuestos, 5 sin tipo)"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "la capa está en EPSG:4686; la copia pide EPSG:4326"
+  - "TIPOLOGIA, NIVEL y RULEID son códigos sin tabla publicada: no se copian"
+  - "ADMINISTRA solo viene en 138 de 5 309 polígonos: no se copia"
+  - "5 polígonos sin tipo de parque"
+  - "3 066 de 5 309 traen la fecha de incorporación 2004-01-01, la mínima de la capa; 3 vienen sin fecha"
+  - "el código del parque es único salvo el 03-035, que sale en dos polígonos"
+  decision: "copia espacial de la capa con su polígono; por zona"

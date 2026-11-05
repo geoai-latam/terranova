@@ -1,0 +1,1385 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T16:03:30+00:00",
+ "herramienta": "bogota_parques_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.09,
+     4.6,
+     -74.06,
+     4.63
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "ID_PARQUE",
+     "OBJECTID"
+    ],
+    "select": [
+     "OBJECTID",
+     "ID_PARQUE",
+     "NOMBRE_PARQ",
+     "TIPOPARQUE",
+     "LOCNOMBRE",
+     "ID_UPL",
+     "ESTRATO",
+     "FECHAINCORPORACION"
+    ],
+    "tabla": "bogota_parques"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060082,
+           4.626903
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "02-002",
+          "ID_UPL": "UPL24",
+          "LOCNOMBRE": "CHAPINERO",
+          "NOMBRE_PARQ": "El Paraiso",
+          "OBJECTID": 29569,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.065456,
+           4.629714
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "02-012",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "CHAPINERO",
+          "NOMBRE_PARQ": "Sucre 1",
+          "OBJECTID": 29287,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06033,
+           4.627875
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "1",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "02-165",
+          "ID_UPL": "UPL24",
+          "LOCNOMBRE": "CHAPINERO",
+          "NOMBRE_PARQ": "El Paraiso",
+          "OBJECTID": 28628,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059391,
+           4.629521
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "1",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "02-168",
+          "ID_UPL": "UPL24",
+          "LOCNOMBRE": "CHAPINERO",
+          "NOMBRE_PARQ": "Desarrollos  San Martin De Porres y Mariscal Sucre",
+          "OBJECTID": 28630,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060469,
+           4.629554
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "5",
+          "FECHAINCORPORACION": "2022-06-30",
+          "ID_PARQUE": "02-236",
+          "ID_UPL": "UPL24",
+          "LOCNOMBRE": "CHAPINERO",
+          "NOMBRE_PARQ": "Belvedere",
+          "OBJECTID": 28653,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06611,
+           4.61049
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-004",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "San Diego (Bosque Izquierdo)",
+          "OBJECTID": 33976,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066154,
+           4.606976
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-013",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "La Paz",
+          "OBJECTID": 36970,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060505,
+           4.616685
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2026-05-12",
+          "ID_PARQUE": "03-018",
+          "ID_UPL": "UPL06",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "La Perseverancia",
+          "OBJECTID": 41395,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064186,
+           4.617019
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-019",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Principal - Perseverancia",
+          "OBJECTID": 36952,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.056407,
+           4.62353
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2023-05-25",
+          "ID_PARQUE": "03-035",
+          "ID_UPL": "UPL06",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Nacional  Enrique Olaya Herrera ",
+          "OBJECTID": 997,
+          "TIPOPARQUE": "PARQUE METROPOLITANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060919,
+           4.625595
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2023-05-25",
+          "ID_PARQUE": "03-035",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Nacional  Enrique Olaya Herrera ",
+          "OBJECTID": 1001,
+          "TIPOPARQUE": "PARQUE METROPOLITANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.072697,
+           4.602338
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-037",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Santander",
+          "OBJECTID": 33955,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068362,
+           4.612075
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2023-03-24",
+          "ID_PARQUE": "03-039",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Independencia-Bicentenario",
+          "OBJECTID": 1059,
+          "TIPOPARQUE": "PARQUE METROPOLITANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.070499,
+           4.617623
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-043",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Bavaria",
+          "OBJECTID": 32113,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066569,
+           4.60747
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-045",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Bosque Izquierdo (J. Tadeo Lozano)",
+          "OBJECTID": 33963,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.065634,
+           4.606981
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-048",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Desarrollo La Paz Central",
+          "OBJECTID": 33964,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069365,
+           4.601577
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-060",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Los Andes Las Aguas (Periodistas)",
+          "OBJECTID": 33956,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064823,
+           4.605286
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-064",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Las Aguas",
+          "OBJECTID": 32642,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.082034,
+           4.595757
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2023-05-25",
+          "ID_PARQUE": "03-085",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Tercer Milenio",
+          "OBJECTID": 984,
+          "TIPOPARQUE": "PARQUE METROPOLITANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068086,
+           4.612317
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2023-03-24",
+          "ID_PARQUE": "03-093",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Plaza De Toros",
+          "OBJECTID": 1060,
+          "TIPOPARQUE": "ESCENARIO DEPORTIVO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06507,
+           4.606213
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "1",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "03-133",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Desarrollo La Paz Central",
+          "OBJECTID": 33969,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.065063,
+           4.6068
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "1",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "03-135",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Desarrollo La Paz Central",
+          "OBJECTID": 33970,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069587,
+           4.618413
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-153",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Central Bavaria",
+          "OBJECTID": 33957,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069634,
+           4.618833
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "03-154",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Central Bavaria",
+          "OBJECTID": 33958,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.070919,
+           4.61866
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "03-155",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Cental Bavaria",
+          "OBJECTID": 32641,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06912,
+           4.619672
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "03-156",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Residencial Baviera",
+          "OBJECTID": 33974,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068949,
+           4.619979
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "03-157",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Parque Residencial Baviera",
+          "OBJECTID": 32664,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.066628,
+           4.624995
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "03-158",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Urbanización Sagrado Corazon",
+          "OBJECTID": 33977,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067489,
+           4.625188
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "03-160",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Urbanización Sagrado Corazon",
+          "OBJECTID": 33978,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067229,
+           4.611035
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2012-12-31",
+          "ID_PARQUE": "03-162",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "San Diego ( Bosque Izquierdo)",
+          "OBJECTID": 33979,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063535,
+           4.615325
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2022-02-18",
+          "ID_PARQUE": "03-166",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "La Macarena",
+          "OBJECTID": 33994,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068842,
+           4.614828
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2016-12-31",
+          "ID_PARQUE": "03-167",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "SANTAFE",
+          "NOMBRE_PARQ": "Urbanización Hotel Ibis Cta 2",
+          "OBJECTID": 32643,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.079294,
+           4.627088
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-011",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización Las Americas y Los Arrayanes",
+          "OBJECTID": 23943,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069398,
+           4.627639
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-022",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "La Magdalena",
+          "OBJECTID": 20980,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.071314,
+           4.623523
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-029",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Teusaquillo",
+          "OBJECTID": 29644,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.071335,
+           4.627115
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-034",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización La Magdalena",
+          "OBJECTID": 28037,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.072115,
+           4.618612
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-048",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Barrio Armenia",
+          "OBJECTID": 20979,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.073392,
+           4.617116
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-050",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización Armenia",
+          "OBJECTID": 21149,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.080358,
+           4.627848
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-063",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización Las Americas Los Arrayanes",
+          "OBJECTID": 21184,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068291,
+           4.629918
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-066",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Santa Teresita 2",
+          "OBJECTID": 21588,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.085495,
+           4.627461
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "13-146",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Conjunto Residencial El Parque Tacay",
+          "OBJECTID": 21186,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.083743,
+           4.628524
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "13-149",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Futura",
+          "OBJECTID": 28333,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.086028,
+           4.62663
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2016-12-31",
+          "ID_PARQUE": "13-179",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización Parque Tacay",
+          "OBJECTID": 21188,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.084182,
+           4.628258
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2016-12-31",
+          "ID_PARQUE": "13-180",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Futura",
+          "OBJECTID": 28002,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.078211,
+           4.624615
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "13-185",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "La Estrella",
+          "OBJECTID": 20984,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.074291,
+           4.625346
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "4",
+          "FECHAINCORPORACION": "2025-09-22",
+          "ID_PARQUE": "13-194",
+          "ID_UPL": "UPL32",
+          "LOCNOMBRE": "TEUSAQUILLO",
+          "NOMBRE_PARQ": "Urbanización La Soledad (Parkway)",
+          "OBJECTID": 37286,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.084156,
+           4.610693
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "14-001",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización El Listón",
+          "OBJECTID": 26409,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.079252,
+           4.619333
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-003",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Barrio Santa Fe",
+          "OBJECTID": 25704,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.085069,
+           4.604244
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-006",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "España",
+          "OBJECTID": 26358,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.088923,
+           4.602529
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-007",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización La Estanzuela",
+          "OBJECTID": 25644,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.087435,
+           4.600405
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-011",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "La Estanzuela",
+          "OBJECTID": 27570,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.077507,
+           4.612767
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-012",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Barrio Santa Fe",
+          "OBJECTID": 27571,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.079951,
+           4.617171
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-014",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Barrio Santa Fe",
+          "OBJECTID": 25645,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.078094,
+           4.614206
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-016",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización Santa Fe III Sector",
+          "OBJECTID": 26722,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.082313,
+           4.60166
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-018",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Voto Nacional",
+          "OBJECTID": 27573,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.078709,
+           4.61885
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-034",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización Santa Fe III Sector",
+          "OBJECTID": 25647,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08018,
+           4.618568
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "14-035",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Barrio Samper Mendoza",
+          "OBJECTID": 27575,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.076652,
+           4.620491
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2023-03-24",
+          "ID_PARQUE": "14-036",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Calle 26 ( El Renacimiento - Parque Cementerio Central - Dam",
+          "OBJECTID": 1063,
+          "TIPOPARQUE": "PARQUE METROPOLITANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.075875,
+           4.619201
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2023-03-24",
+          "ID_PARQUE": "14-037",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Reconciliación",
+          "OBJECTID": 1062,
+          "TIPOPARQUE": "PARQUE METROPOLITANO PROPUESTO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.082737,
+           4.613936
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "14-069",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Ciudadela Residencial San Facón",
+          "OBJECTID": 33447,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.086367,
+           4.60713
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "14-070",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Estación De La Sabana",
+          "OBJECTID": 25649,
+          "TIPOPARQUE": "PARQUE DE BOLSILLO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.086839,
+           4.619063
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "14-072",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización La 14",
+          "OBJECTID": 26464,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.087726,
+           4.618509
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2017-12-31",
+          "ID_PARQUE": "14-073",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "MARTIRES",
+          "NOMBRE_PARQ": "Urbanización  La 14",
+          "OBJECTID": 25705,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.089102,
+           4.618559
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2006-05-20",
+          "ID_PARQUE": "16-327",
+          "ID_UPL": "UPL31",
+          "LOCNOMBRE": "PUENTE ARANDA",
+          "NOMBRE_PARQ": "Carrerfour Carrera 30",
+          "OBJECTID": 23938,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.065931,
+           4.603041
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "3",
+          "FECHAINCORPORACION": "2004-01-01",
+          "ID_PARQUE": "17-004",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "CANDELARIA",
+          "NOMBRE_PARQ": "Las Aguas ( Germania )",
+          "OBJECTID": 32644,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069523,
+           4.599963
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ESTRATO": "2",
+          "FECHAINCORPORACION": "2019-05-28",
+          "ID_PARQUE": "17-028",
+          "ID_UPL": "UPL23",
+          "LOCNOMBRE": "CANDELARIA",
+          "NOMBRE_PARQ": "La Catedral",
+          "OBJECTID": 32646,
+          "TIPOPARQUE": "PARQUE VECINAL"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 66,
+      "truncado": false,
+      "vistos": 66
+     },
+     "consultado_en": "2026-11-05T16:02:04.369328+00:00",
+     "copia": {
+      "filas": 5309,
+      "huella": "sha256:83d43842f45479f02b02b35bde237ea04346ea49392355bb666598e4ab3afd07",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105160204369328"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
