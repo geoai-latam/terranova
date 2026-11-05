@@ -1120,6 +1120,10 @@ class Derivado(_Ficha):
     n: int | None = Field(default=None, ge=1)
     valores: dict[str, str] | None = None
     valor: str | int | float | None = None
+    # solo con `conteo_por`: la etiqueta con que se cuentan los elementos sin valor en `campo`;
+    # sin ella no se cuentan (el SISPRO no dice si es ESE en la mitad de las sedes, y «por_ese»
+    # sumaba 3 de 15 en Leticia sin decirlo)
+    vacio: str | None = None
     # solo con `suma_por`: el campo rt/1 que se suma en cada grupo de `campo`
     sumar: str | None = None
     # solo con `igual`: el otro campo de `datos` con el que se compara `campo`
@@ -1168,6 +1172,8 @@ class Derivado(_Ficha):
             raise ValueError("un derivado «igual» lleva `campo` e `igual_a`, y solo él")
         if (self.de == "suma_por") != (self.sumar is not None):
             raise ValueError("`sumar` va solo, y siempre, en un derivado «suma_por»")
+        if self.vacio is not None and self.de != "conteo_por":
+            raise ValueError("`vacio` va solo en un derivado «conteo_por»")
         if (self.de == "fijo") != (self.valor is not None):
             raise ValueError("`valor` va solo, y siempre, en un derivado «fijo»")
         if self.solo_si is not None and self.de in DE_ELEMENTO | {"completitud_total"}:
