@@ -102,6 +102,10 @@ async def test_un_agente_sigue_de_50_en_50_mas_alla_del_tope() -> None:
     primera = await _pagina(copia)
     assert len(primera.datos["elementos"]) == 50 and primera.datos["total"] == TOTAL
     assert "`pagina: 2`" in _aviso(primera, "1-50 de 2192 (página 1 de 44)")
+    assert not any(a.startswith("Vinieron ") for a in primera.avisos)  # ya no es «acote»
+    visor = await _pagina(copia, pagina=1, por_pagina=1000)
+    assert "`pagina: 2`" in _aviso(visor, "1-1000 de 2192 (página 1 de 3)")
+    assert not any(a.startswith("Vinieron ") for a in visor.avisos)
     # la página 21 (1001-1050) ya no está en lo que trae una consulta: va a la copia
     sobre = await _pagina(copia, pagina=21)
     assert sobre.datos["elementos"][0]["nombre"] == "Elemento 1000"
