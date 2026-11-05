@@ -9,10 +9,12 @@ descripcion: >
   dice su estado y si está vigente (las canceladas, rechazadas o en trámite no cuentan),
   `valor_contrato_tras_cambio` (el valor TOTAL del contrato después de ese cambio, no lo añadido),
   `cambio_valor` (cuánto subió o bajó frente a la modificación vigente anterior) y
-  `dias_extendidos`. La fuente NO publica el valor con que se firmó el contrato: lo que cambió la
+  `dias_extendidos`, con `fecha_fin_tras_cambio` (el fin del contrato que deja ese cambio) y
+  `liquidacion`. La fuente NO publica el valor con que se firmó el contrato: lo que cambió la
   primera modificación no se puede saber aquí. Por eso arriba van, solo con las vigentes,
   `valor_tras_primera`, `valor_actual`, `cambio_valor_desde_primera` (la diferencia entre los dos:
-  lo añadido después de la primera, no todo lo añadido) y `dias_extendidos_total`.
+  lo añadido después de la primera, no todo lo añadido), `dias_extendidos_total` y `fin_actual`
+  (la fecha de fin vigente).
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -25,11 +27,11 @@ consulta:
     # Spec 07: la fuente traía copias exactas (33 filas, 21 distintas en CO1.PCCNTR.3712964); el
     # 2026-10-28 se republicó sin ellas (16 filas). El distinct se queda por si vuelven.
     # Por fecha de creación: la de aprobación falta en las que no se aprobaron.
-    select: "distinct id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion"
+    select: "distinct id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion, fecha_inicio_contrato, fecha_fin_contrato, liquidacion"
     where: "id_contrato = '{id_contrato}'"
     order: "fecha_creacion, identificador_modificacion"
     max_filas: 1000
-  campos: [id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion]
+  campos: [id_contrato, identificador_modificacion, fecha_creacion, proposito_modificacion, estado_modificacion, valor_modificacion, dias_extendidos, fecha_de_aprobacion, fecha_inicio_contrato, fecha_fin_contrato, liquidacion]
 salida: SecopModificacionesContrato
 derivados:
   # medido el 2026-11-02 (u8cx-r425, todo el conjunto): Publicado 7,4 M, Cancelado 654 043, En
@@ -66,15 +68,20 @@ derivados:
     campo: dias_extendidos
     tipo: int
     solo_si: {campo: vigente, valores: ["sí"]}
+  fin_actual:
+    de: ultimo
+    campo: fecha_fin_tras_cambio
+    tipo: date
+    solo_si: {campo: vigente, valores: ["sí"]}
 cobro: registro
 canario:
   # Medido el 2026-11-02 en u8cx-r425: el contrato de Pitalito (consultoría, terminado en 2023) tiene
   # 16 modificaciones, 8 vigentes (publicadas); el valor no cambió (1 173 577 000) y las prórrogas vigentes suman
   # 178 + 92 + 94 = 364 días. Es un contrato cerrado: no debe cambiar.
   entrada: {id_contrato: CO1.PCCNTR.3712964}
-  verdad: {id_contrato: CO1.PCCNTR.3712964, modificaciones_vigentes: 8, valor_actual: 1173577000.0, valor_tras_primera: 1173577000.0, cambio_valor_desde_primera: 0.0, dias_extendidos_total: 364}
+  verdad: {id_contrato: CO1.PCCNTR.3712964, fin_actual: '2023-09-03', modificaciones_vigentes: 8, valor_actual: 1173577000.0, valor_tras_primera: 1173577000.0, cambio_valor_desde_primera: 0.0, dias_extendidos_total: 364}
   minimos: {numero_registros: 16}
-  campos: [cambio_valor, cambio_valor_desde_primera, dias_extendidos, dias_extendidos_total, estado, fecha_aprobacion, fecha_creacion, id_contrato, id_modificacion, modificaciones_vigentes, numero_registros, proposito, valor_actual, valor_contrato_tras_cambio, valor_tras_primera, vigente]
+  campos: [cambio_valor, cambio_valor_desde_primera, dias_extendidos, dias_extendidos_total, estado, fecha_aprobacion, fecha_creacion, fecha_fin_tras_cambio, fecha_inicio_contrato, fin_actual, id_contrato, id_modificacion, liquidacion, modificaciones_vigentes, numero_registros, proposito, valor_actual, valor_contrato_tras_cambio, valor_tras_primera, vigente]
   latencia_max_ms: 10000
 avisos:
   - cuando: encontrado

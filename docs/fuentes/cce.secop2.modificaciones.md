@@ -37,6 +37,10 @@ dirección y BPIN.
 
 - `dias_extendidos`: los días de prórroga de esa modificación. Es por modificación, no
   acumulado. En el contrato de Pitalito, las prórrogas vigentes suman 178, 92 y 94 días.
+- `fecha_fin_contrato`: el fin del contrato en la versión que deja la modificación. Sale como
+  `fecha_fin_tras_cambio`. En Pitalito (medido el 2026-11-05) va 2022-09-03, +178 días →
+  2023-02-28, +92 → 2023-06-01, +94 → 2023-09-03. Con las vigentes, la última es `fin_actual`.
+- `liquidacion`: «Sí» o «No», como lo dice la fuente.
 - `fecha_de_aprobacion`: falta en las que no se aprobaron. Para ordenar se usa `fecha_creacion`.
 - `descripcion`: es el objeto del contrato repetido en cada fila, no la descripción del cambio.
   Lo que explica el cambio va en `proposito_modificacion`.
@@ -85,7 +89,7 @@ dirección y BPIN.
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `secop_modificaciones_contrato` (v2) | alto | todas las modificaciones, cada una con `vigente`. Da `valor_contrato_tras_cambio` y `cambio_valor` (la diferencia con la vigente anterior). Arriba van `valor_tras_primera`, `valor_actual`, `cambio_valor_desde_primera` y `dias_extendidos_total`, solo con las vigentes |
+| `secop_modificaciones_contrato` (v2) | alto | todas las modificaciones, cada una con `vigente`. Da `valor_contrato_tras_cambio`, `cambio_valor` (la diferencia con la vigente anterior), `fecha_fin_tras_cambio` y `liquidacion`. Arriba van `valor_tras_primera`, `valor_actual`, `cambio_valor_desde_primera`, `dias_extendidos_total` y `fin_actual`, solo con las vigentes |
 | ~~`secop_adiciones_contrato`~~ | retirada | daba los mismos eventos que la de modificaciones, con un `tipo` que engaña |
 
 ## Decisiones
@@ -95,6 +99,9 @@ dirección y BPIN.
   - El motor suma `diferencia_anterior`, `ultimo` y `solo_si`, para calcular lo añadido solo
     entre las vigentes.
   - Se retiró `secop_adiciones_contrato` y `cce.secop2.adiciones` pasó a borrador.
+- **2026-11-05:** salen `fecha_inicio_contrato`, `fecha_fin_tras_cambio` y `liquidacion`, y
+  arriba va `fin_actual` (la fecha de fin vigente), para responder «¿cuánto le añadieron en
+  plazo?» sin sumar días.
 - **Pendiente:**
   - ~~El aviso de la primera modificación dentro de la respuesta~~: hecho con el patrón A (cada
     respuesta con datos lo dice).
