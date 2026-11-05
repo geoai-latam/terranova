@@ -1,0 +1,103 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: dane.sedes_educativas
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://services.arcgis.com/ioNRSZMYYlx0PUaB/arcgis/rest/services/SedesEducativasSISE/FeatureServer?f=json
+pagina: https://www.arcgis.com/home/item.html?id=eaeee68220a74ce88c65e91320ab0116
+titulo: Sistema de Identificación de Sedes Educativas SISE
+descripcion: Corresponde al servicio que representa los niveles de información de Sistema de Identificación
+  de Sedes Educativas SISE integrada a la información del Marco Geoestadístico Nacional (MGN), versión
+  2024.
+publicado: '2024-11-14'
+datos_actualizados: '2024-11-14'
+etiquetas:
+- Educación
+- Sedes
+- Educativas
+- SISE
+- DANE
+- '2024'
+filas: 56650
+geografia:
+  geometria: punto
+  crs: EPSG:4686
+  extension:
+  - -81.72222199984537
+  - -4.221408157521559
+  - -67.01999999960026
+  - 13.376944443905481
+  capas:
+    '0': SISE
+campos:
+  FID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: FID
+  COD_DANE:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: COD_DANE
+  NOMBRE_INS:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NOMBRE_INS
+  CORREO_INS:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CORREO_INS
+  DIRECCION:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: DIRECCION
+  SEDE_PRINC:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: SEDE_PRINC
+  COD_SEDE_P:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: COD_SEDE_P
+  ESTADO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ESTADO
+  ID_DEPARTA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ID_DEPARTA
+  DEPARTAMEN:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: DEPARTAMEN
+  ID_MUNICIP:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ID_MUNICIP
+  MUNICIPIO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: MUNICIPIO
+  CALENDARIO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CALENDARIO
+  NATURALEZA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NATURALEZA
+  SECTOR:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: SECTOR
+  ZONA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ZONA
+  JORNADA:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: JORNADA
+  NIVEL:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NIVEL
+  TELEFONO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: TELEFONO
+  TIPO_TELEF:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: TIPO_TELEF
+  LONGITUD:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: LONGITUD
+    minimo: '-81.722222'
+    maximo: '-67.02'
+    comparacion: numero
+  LATITUD:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: LATITUD
+    minimo: '-4.22140815833'
+    maximo: '13.3769444444'
+    comparacion: numero

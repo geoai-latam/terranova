@@ -1,0 +1,46 @@
+id: dane_sedes_educativas_municipio
+version: 1
+familia: territorio
+fuente: dane.sedes_educativas
+pregunta: "¿Cuántos colegios y sedes educativas hay en este municipio y dónde quedan?"
+descripcion: >
+  Todas las sedes educativas activas de un municipio (código DIVIPOLA de 5 dígitos), con su
+  punto, código DANE (12 dígitos, el mismo de Saber 11), nombre, sede principal, dirección, zona
+  urbana o rural, naturaleza, sector, calendario, jornada, nivel educativo y el contacto que
+  publica el DANE. Arriba van el total y cuántas hay por zona (urbano o rural) y por sector (oficial o no); las listas largas
+  (Bogotá, Cali, Medellín) siguen por páginas. Sale de la copia de Terrnova del SISE del DANE
+  (corte 2024-11). (Fuente: DANE, SISE; licencia: CC BY 4.0.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_sedes_educativas
+    filtros: {ID_MUNICIP: "{municipio_divipola}"}
+    select: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+    geometria: completa
+    order: [COD_DANE]
+    limite: 1000
+  campos: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+salida: DaneSedesEducativasMunicipio
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_zona: {de: conteo_por, campo: zona}
+  por_sector: {de: conteo_por, campo: sector}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una de cada cuatro sedes comparte su punto con otra (481 de Uribia están en el mismo punto):
+    en lo rural el DANE a veces pone la sede en la cabecera o en la sede principal. Para distancias
+    finas, revise si el punto se repite. El corte del SISE es de 2024-11.
+- cuando: vacio
+  texto: >
+    El SISE del DANE (corte 2024-11) no trae sedes educativas activas con ese código de municipio.
+    Revise el código DIVIPOLA (5 dígitos, p. ej. «50223» para Cubarral).
+cobro: registro
+canario:
+  # Medido el 2026-11-05 en la copia del SISE: Cubarral (50223) tiene 7 sedes activas.
+  entrada: {municipio_divipola: "50223"}
+  minimos: {total: 7}
+  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, por_sector, por_zona, sector, sede_principal, telefono, tipo_telefono, total, zona]
+  latencia_max_ms: 8000

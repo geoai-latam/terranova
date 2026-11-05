@@ -1,0 +1,74 @@
+id: dane.sedes_educativas
+titulo: "DANE: sedes educativas con su ubicación (SISE, Sistema de Identificación de Sedes Educativas), copia"
+entidad: Departamento Administrativo Nacional de Estadística (DANE)
+competencia: autoridad estadística nacional; administra el código DANE de cada sede educativa (SISE)
+acto: null
+# Licencia del Geoportal del DANE (ADR-0039), la misma de dane.cnpv2018.municipio: la información
+# georreferenciada que produce el DANE va bajo CC BY 4.0. El ítem del hub cdge.dane.gov.co
+# (eaeee68220a74ce88c65e91320ab0116) no repite la licencia: se hereda del geoportal.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://geoportal.dane.gov.co/acerca-del-geoportal/licencia-y-condiciones-de-uso/
+  cita: "El DANE ofrece la descarga y uso de información georreferenciada producida por la entidad bajo una licencia Creative Commons, reservando el derecho de autor sobre la obra"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Departamento Administrativo Nacional de Estadística - DANE: www.dane.gov.co. Sistema de Identificación de Sedes Educativas (SISE)"
+protocolo: arcgis_rest
+conector: copia
+url: https://services.arcgis.com/ioNRSZMYYlx0PUaB/arcgis/rest/services/SedesEducativasSISE/FeatureServer
+modo: copia
+capas_servicio: [0]
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: dane_sedes_educativas
+  clave: FID
+  por_pagina: 2000
+  texto: [COD_DANE, NOMBRE_INS, DIRECCION, MUNICIPIO, DEPARTAMEN]
+# El servicio se editó por última vez el 2024-11-14 (integrado al MGN 2024).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P365D}
+cobertura: {pais: CO, excluye: ["matrícula y docentes (MEN)", "resultados de las pruebas (icfes_saber11)", "sedes cerradas: el servicio solo trae las activas"]}
+# Teléfono y correo son los de contacto de la sede, como los publica el DANE (datos abiertos como
+# los publica la fuente). No se busca por ellos: la búsqueda va por código, nombre y dirección.
+datos_personales: ninguno
+estado: publicada
+campos:
+  FID: {nombre: id_elemento, tipo: int, desc: "identificador de la fila en la capa del DANE (cambia si el DANE republica)"}
+  COD_DANE: {nombre: codigo_dane, tipo: str, desc: "código DANE de la sede (12 dígitos): el mismo de las pruebas Saber 11 y de los registros del MEN"}
+  NOMBRE_INS: {nombre: nombre, tipo: str, desc: "nombre de la sede"}
+  SEDE_PRINC: {nombre: sede_principal, tipo: str, desc: "«S» si es la sede principal del establecimiento, «N» si no"}
+  COD_SEDE_P: {nombre: codigo_sede_principal, tipo: str, desc: "código DANE de la sede principal del establecimiento al que pertenece"}
+  ESTADO: {nombre: estado, tipo: str, desc: "estado de la sede (el servicio solo trae «ACTIVA»)"}
+  DIRECCION: {nombre: direccion, tipo: str, desc: "dirección como la registra el DANE (en lo rural, la vereda)"}
+  ID_DEPARTA: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento"}
+  DEPARTAMEN: {nombre: departamento, tipo: str, desc: "departamento"}
+  ID_MUNICIP: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  MUNICIPIO: {nombre: municipio, tipo: str, desc: "municipio"}
+  CALENDARIO: {nombre: calendario, tipo: str, desc: "calendario académico («A», «B»…)"}
+  NATURALEZA: {nombre: naturaleza, tipo: str, desc: "naturaleza jurídica de quien presta el servicio: «OFICIAL», «ORGANIZACIÓN CON FINES DE LUCRO», «ORGANIZACIÓN SOLIDARIA SIN FINES DE LUCRO», «PERSONA NATURAL», «COMUNIDAD RELIGIOSA» o «RÉGIMEN ESPECIAL»"}
+  SECTOR: {nombre: sector, tipo: str, desc: "«OFICIAL» o «NO OFICIAL»"}
+  ZONA: {nombre: zona, tipo: str, desc: "«URBANO» o «RURAL»"}
+  JORNADA: {nombre: jornada, tipo: str, desc: "jornada (p. ej. «MAÑANA», «ÚNICA»)"}
+  NIVEL: {nombre: nivel, tipo: str, desc: "nivel o niveles que registra el DANE para la sede (p. ej. «EDUCACIÓN BÁSICA PRIMARIA»; a veces varios separados por comas)"}
+  TELEFONO: {nombre: telefono, tipo: str, desc: "teléfono de contacto de la sede, como lo publica el DANE"}
+  TIPO_TELEF: {nombre: tipo_telefono, tipo: str, desc: "«FIJO» o «CELULAR»"}
+  CORREO_INS: {nombre: correo, tipo: str, desc: "correo de la sede, como lo publica el DANE (casi siempre vacío)"}
+  LONGITUD: {nombre: longitud, tipo: float, desc: "longitud que publica el DANE (la geometría usa la misma)"}
+  LATITUD: {nombre: latitud, tipo: float, desc: "latitud que publica el DANE"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: DANE, theme: educacion}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-05'
+  fila: "una sede educativa activa"
+  clave: {columna: FID, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "56 650 sedes, todas ACTIVA; puntos en EPSG:4686 (MAGNA-SIRGAS), la copia pide EPSG:4326"
+  - "14 658 sedes (26 %) comparten su punto con otra; 481 de Uribia están en un mismo punto: en lo rural el punto puede ser el de la cabecera o el de la sede principal"
+  - "rural 37 379, urbano 19 271; oficiales 44 360, no oficiales 12 290; Bogotá 2 595 sedes, Cali 1 046, Medellín 847"
+  - "teléfono y correo: 6 514 sedes con correo y 6 112 con celular, como los publica el DANE"
+  - "el MEN publica un corte más nuevo (DANE_SISE_Pt, 2025-12) sin licencia de reutilización: no se usa"
+  decision: "copia espacial con búsqueda por código DANE, nombre, dirección, municipio y departamento"
