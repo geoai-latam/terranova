@@ -1,5 +1,5 @@
 id: reps_sedes_municipio
-version: 1
+version: 2
 familia: territorio
 fuente: minsalud.reps
 pregunta: "¿Qué IPS y sedes de servicios de salud hay en este municipio?"
@@ -24,6 +24,21 @@ consulta:
 salida: RepsSedesMunicipio
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  # Chía: 138 sedes, 137 privadas y 1 pública, que es la única ESE (medido el 2026-11-05)
+  por_clase: {de: conteo_por, campo: clase, vacio: sin dato}
+  por_naturaleza: {de: conteo_por, campo: naturaleza, vacio: sin dato}
+  por_ese: {de: conteo_por, campo: ese, vacio: sin dato}
+avisos:
+- cuando: encontrado
+  texto: >
+    Es el REPS de datos.gov.co, con la fecha de corte que dice `corte` (marzo de 2026 en la
+    consulta del 2026-11-05). Trae solo las sedes de prestadores con NIT: los profesionales
+    independientes no salen. No trae el punto de cada sede: para el mapa, minsalud_sedes_salud_municipio
+    (SISPRO, corte de 2023).
+- cuando: vacio
+  texto: >
+    El REPS no tiene sedes de instituciones prestadoras habilitadas en ese municipio. Puede tener
+    solo profesionales independientes, que aquí no se listan.
 cobro: registro
 canario:
   # Medido el 2026-10-23 en c36g-9fc2: Chía tiene 138 sedes de instituciones; la primera en orden es
@@ -31,5 +46,5 @@ canario:
   entrada: {municipio_divipola: "25175"}
   verdad: {prestador: ACCIONAR SALUD IPS SAS, codigo_sede: "251750250401"}
   minimos: {numero_registros: 120}
-  campos: [clase, codigo_prestador, codigo_sede, corte, direccion, ese, municipio_divipola, naturaleza, numero_registros, prestador, sede]
+  campos: [clase, codigo_prestador, codigo_sede, corte, direccion, ese, municipio_divipola, naturaleza, numero_registros, por_clase, por_ese, por_naturaleza, prestador, sede]
   latencia_max_ms: 10000

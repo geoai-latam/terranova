@@ -42,6 +42,7 @@ Reglas:
 | UPRA, precio comercial de la tierra rural (capa nacional y datos.gov.co) | [upra.precio_tierra.md](upra.precio_tierra.md) |
 | IGAC, registro de transacciones inmobiliarias 2015–2023 (`7y2j-43cv`) | [igac.transacciones_inmobiliarias.md](igac.transacciones_inmobiliarias.md) |
 | IGAC, gestores catastrales de Colombia (`bhcx-bx97`) | [igac.gestores_catastrales.md](igac.gestores_catastrales.md) |
+| Ministerio de Salud, REPS en datos.gov.co (`c36g-9fc2`) | [minsalud.reps.md](minsalud.reps.md) |
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
 | Función Pública, servidores públicos del SIGEP (`2jzx-383z`) | [funcionpublica.sigep.md](funcionpublica.sigep.md) |
