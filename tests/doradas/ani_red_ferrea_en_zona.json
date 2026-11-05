@@ -1,0 +1,111 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:30:55+00:00",
+ "herramienta": "ani_red_ferrea_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.3,
+     10.9,
+     -74.0,
+     11.3
+    ],
+    "geometria": "completa",
+    "max_features": 200,
+    "out_fields": [
+     "concesion",
+     "tipo_contr",
+     "admin",
+     "contrato",
+     "ccnario",
+     "cod_pr_ire",
+     "alc_proy_1",
+     "url_ficha",
+     "video_proy"
+    ],
+    "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/2"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.5643062,
+           9.3635154
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "admin": "ANI - Gestión",
+          "alc_proy_1": "Rehabilitación: 245 km, Construcción: 191 km",
+          "ccnario": "​Concesionario: Ferrocarriles del Norte de Colombia - Fenoco S.A.",
+          "cod_pr_ire": "F-01",
+          "concesion": "Red férrea del Atlántico",
+          "contrato": "O-ATLA-00-99 de 1999",
+          "tipo_contr": "Concesión",
+          "url_ficha": "https://aniscopio.ani.gov.co/ferrocarriles-public/ficha-proyecto-drupal",
+          "video_proy": "https://youtu.be/zaeHpbWIFU8"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Férreo"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.3,
+      10.9,
+      -74.0,
+      11.3
+     ],
+     "capa": "Férreo",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.3,
+       10.9,
+       -74.0,
+       11.3
+      ],
+      "max_features": 200,
+      "out_fields": [
+       "concesion",
+       "tipo_contr",
+       "admin",
+       "contrato",
+       "ccnario",
+       "cod_pr_ire",
+       "alc_proy_1",
+       "url_ficha",
+       "video_proy"
+      ],
+      "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/2",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Polyline",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/2"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

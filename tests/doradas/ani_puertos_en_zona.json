@@ -1,0 +1,698 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:30:54+00:00",
+ "herramienta": "ani_puertos_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -75.6,
+     10.3,
+     -75.45,
+     10.45
+    ],
+    "geometria": "completa",
+    "max_features": 200,
+    "out_fields": [
+     "nombre",
+     "zona_port",
+     "municipio",
+     "departam",
+     "tipo_serv",
+     "tipo_carga",
+     "acto_admin",
+     "fecha_fin",
+     "prorroga",
+     "tiempo_prorr",
+     "ccnario",
+     "cod_pr_ire",
+     "url_ficha",
+     "video_proy"
+    ],
+    "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/0"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5026621,
+           10.306628
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.003 del 30 de septiembre de 2011",
+          "ccnario": "Sociedad Portuaria DEXTON S.A.",
+          "cod_pr_ire": "P-26",
+          "departam": "Bolívar",
+          "fecha_fin": 1948406400000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria DEXTON S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Graneles líquidos, estireno, Gas licuado de petróleo, aceite de palma",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/326",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.505578,
+           10.3151968
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.010 del 19 de noviembre de 2010 Otrosí No. 01 de 2015",
+          "ccnario": "Sociedad Ecopetrol S.A.",
+          "cod_pr_ire": "P-23",
+          "departam": "Bolívar",
+          "fecha_fin": 2081980800000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Ecopetrol S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Ecopetrol cargue y descargue de Hidrocarburos",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/323",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5067398,
+           10.344781
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.088 del 22 de diciembre de 2004",
+          "ccnario": "Sociedad Portuaria Puerto de Mamonal S.A. - Muelle Adicional 135 mts ",
+          "cod_pr_ire": "P-19",
+          "departam": "Bolívar",
+          "fecha_fin": 2050272000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Puerto de Mamonal S.A. - Muelle Adicional 135 mts",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Carbón, coque, Carga General Suelta y contenedorizadora, graneles solidos y líquidos.  ",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/319",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5080549,
+           10.322666
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.025 del 29 de mayo de 2003",
+          "ccnario": "Sociedad Portuaria de la Zona Atlántica – Cartagena ",
+          "cod_pr_ire": "P-22",
+          "departam": "Bolívar",
+          "fecha_fin": 1685232000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria de la Zona Atlántica – Cartagena ",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Combustibles, bases lubricantes y aditivos",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/322",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.534849,
+           10.404153
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.007 del 8 de julio 1993",
+          "ccnario": "Sociedad Portuaria Regional de Cartagena S.A.",
+          "cod_pr_ire": "P-11",
+          "departam": "Bolívar",
+          "fecha_fin": 2018044800000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Regional de Cartagena S.A.",
+          "prorroga": "SI",
+          "tiempo_prorr": 40,
+          "tipo_carga": "Carga general y contenedores",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/311",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.527334,
+           10.398666
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.001 del 8 de julio de 1992",
+          "ccnario": "Compañía Puertos Asociados S.A. – COMPAS S.A. (antes Sociedad Marítimo Muelles El Bosque S.A.)",
+          "cod_pr_ire": "P-14",
+          "departam": "Bolívar",
+          "fecha_fin": 1984348800000,
+          "municipio": "Cartagena",
+          "nombre": "Compañía Puertos Asociados S.A. – COMPAS S.A. (antes Sociedad Marítimo Muelles El Bosque S.A.)",
+          "prorroga": "SI",
+          "tiempo_prorr": 40,
+          "tipo_carga": "Carga general, carga de proyectos, cargas a granel, coque, vehículos y manejo de contenedores",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/314",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.510886,
+           10.355623
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.006 del 30 de julio de 2010",
+          "ccnario": "Sociedad Portuaria Central Cartagena S.A.",
+          "cod_pr_ire": "P-18",
+          "departam": "Bolívar",
+          "fecha_fin": 1911513600000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Central Cartagena S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Hidrocarburos",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/318",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.511292,
+           10.33805
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.003 del 8 de marzo de 2010",
+          "ccnario": "Sociedad Zona Franca ARGOS  S.A.S.  (Cementos Argos)",
+          "cod_pr_ire": "P-20",
+          "departam": "Bolívar",
+          "fecha_fin": 1899072000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Zona Franca ARGOS S.A.S. (Cementos Argos)",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Graneles de cemento y Clinker",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/320",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5263418,
+           10.405735
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.010 del 21 de abril de 1994",
+          "ccnario": "Sociedad Portuaria Algranel S.A.",
+          "cod_pr_ire": "P-13",
+          "departam": "Bolívar",
+          "fecha_fin": 2029104000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Algranel S.A.",
+          "prorroga": "SI",
+          "tiempo_prorr": 20,
+          "tipo_carga": "Químicos y líquidos a granel",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/313",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.537805,
+           10.405803
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.004 del 8 de junio de 2010",
+          "ccnario": "Sociedad Portuaria Regional de Cartagena S.A. – Muelle No.9",
+          "cod_pr_ire": "P-12",
+          "departam": "Bolívar",
+          "fecha_fin": 1907020800000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Regional de Cartagena S.A. - Muelle No.9",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Carga general y contenedores",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/312",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.503138,
+           10.311081
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.010 del 19 de noviembre de 2010 Otrosí No. 02 de 2015",
+          "ccnario": "Refinería de Cartagena S.A. REFICAR -",
+          "cod_pr_ire": "P-24",
+          "departam": "Bolívar",
+          "fecha_fin": 1921190400000,
+          "municipio": "Cartagena",
+          "nombre": "Refinería de Cartagena S.A. REFICAR",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Muelle coque: manejo a granel de cargue de coque de petróleo, movilización de carga ultra pesada para la ampliación de la refinería ",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/324",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5014831,
+           10.303571
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.020 del 30 de septiembre de 1997",
+          "ccnario": "Sociedad Portuaria Buenavista (antes Sociedad Portuaria Mamonal – Abonos Colombianos  S.A. ABOCOL)",
+          "cod_pr_ire": "P-27",
+          "departam": "Bolívar",
+          "fecha_fin": 2137795200000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Buenavista (antes Sociedad Portuaria Mamonal – Abonos Colombianos S.A. ABOCOL)",
+          "prorroga": "SI",
+          "tiempo_prorr": 20,
+          "tipo_carga": "Carga general y Gráneles sólidos",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/327",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.508592,
+           10.369655
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.001 del 16 de agosto de 2006",
+          "ccnario": "Sociedad Portuaria Transportes Marítima San Andrés y Providencia S.A.",
+          "cod_pr_ire": "P-17",
+          "departam": "Bolívar",
+          "fecha_fin": 1786752000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Transportes Marítima San Andrés y Providencia S.A. - TRANSMARSYP",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Embarcaciones de cabotaje de carga general y contenedores ",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/317",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5092321,
+           10.376093
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.003 del 31 de diciembre de  2008",
+          "ccnario": "Sociedad Portuaria Terminal de Contenedores de Cartagena CONTECAR",
+          "cod_pr_ire": "P-16",
+          "departam": "Bolívar",
+          "fecha_fin": 2177193600000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Terminal de Contenedores de Cartagena CONTECAR",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Carga general, contenedores y gráneles secos",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/316",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5108744,
+           10.3289822
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.003 del 21 de marzo de 2007",
+          "ccnario": "Sociedad Portuaria Olefinas y Derivados S.A.",
+          "cod_pr_ire": "P-21",
+          "departam": "Bolívar",
+          "fecha_fin": 1805500800000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Olefinas y Derivados S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Gases licuados",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/321",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5226439,
+           10.38624
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.001 del 7 de febrero de 2012",
+          "ccnario": "Sociedad Transpetrol Ltda.",
+          "cod_pr_ire": "P-15",
+          "departam": "Bolívar",
+          "fecha_fin": 1959638400000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Transpetrol Ltda.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Aprovisionamiento y mantenimiento de buques propios de carga general suelta",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/315",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5150108,
+           10.383618
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.002 del 20 de agosto de 2015",
+          "ccnario": "Grupo COREMAR SHOREBASE S.A. (Retramar)",
+          "cod_pr_ire": "P-37",
+          "departam": "Bolívar",
+          "fecha_fin": 2098396800000,
+          "municipio": "Cartagena",
+          "nombre": "Grupo COREMAR SHOREBASE S.A. (Retramar)",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Carga General, Carga de proyectos, carga propia al sector petro-minero (Apoyo logístico para actividades de SHORE BASE)",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/337",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5039095,
+           10.3008059
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.001 del 10 de mayo de 2014",
+          "ccnario": "Sociedad Terminal de IFO'S",
+          "cod_pr_ire": "P-33",
+          "departam": "Bolívar",
+          "fecha_fin": 2031264000000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Terminal de IFOS",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Cargue, descargue y almacenamiento de carga líquida al granel, combustibles líquidos derivados del petróleo, petróleo crudo y/o sus mezclas",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/333",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5040725,
+           10.3419774
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.002 del 24 de diciembre de 2014",
+          "ccnario": "Sociedad ATUNAMAR Limitada",
+          "cod_pr_ire": "P-34",
+          "departam": "Bolívar",
+          "fecha_fin": 2055715200000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad ATUNAMAR Limitada",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Pesquero",
+          "tipo_serv": "Privado",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/334",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.537962,
+           10.4082782
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": "No.003 del 26 de diciembre de 2014",
+          "ccnario": "Sociedad Portuaria Operadora Internacional cesión por la Sociedad Portuaria Regional de Cartagena",
+          "cod_pr_ire": "P-35",
+          "departam": "Bolívar",
+          "fecha_fin": 2055801600000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Operadora Internacional cesión por la Sociedad Portuaria Regional de Cartagena (Edurbe)",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Atraque, permanencia y zarpe de naves mayores turísticas, en algunos casos naves de guerra, de gobierno privadas",
+          "tipo_serv": "Público",
+          "url_ficha": "https://pinesani.azurewebsites.net/PinesApi/PptProyecto/335",
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.509489,
+           10.3636554
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": null,
+          "ccnario": null,
+          "cod_pr_ire": null,
+          "departam": "Bolívar",
+          "fecha_fin": 1606003200000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria Océanos S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Camarón ",
+          "tipo_serv": "Privado",
+          "url_ficha": null,
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5060839,
+           10.3091689
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": null,
+          "ccnario": null,
+          "cod_pr_ire": null,
+          "departam": "Bolívar",
+          "fecha_fin": 2133475200000,
+          "municipio": "Cartagena",
+          "nombre": "Sociedad Portuaria del Caribe S.A.",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": "Líquidos a granel de tipo hidrocarburos",
+          "tipo_serv": "Privado",
+          "url_ficha": null,
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.5101352,
+           10.3639127
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acto_admin": null,
+          "ccnario": null,
+          "cod_pr_ire": null,
+          "departam": "Bolívar",
+          "fecha_fin": 2255644800000,
+          "municipio": "Cartagena",
+          "nombre": "SOCIEDAD PORTUARIA BITA RM S.A",
+          "prorroga": "NO",
+          "tiempo_prorr": null,
+          "tipo_carga": null,
+          "tipo_serv": "Público",
+          "url_ficha": null,
+          "video_proy": null,
+          "zona_port": "ZONA PORTUARIA DE CARTAGENA"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Portuarias"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -75.6,
+      10.3,
+      -75.45,
+      10.45
+     ],
+     "capa": "Portuarias",
+     "completitud": {
+      "total": 23,
+      "truncado": false,
+      "vistos": 23
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -75.6,
+       10.3,
+       -75.45,
+       10.45
+      ],
+      "max_features": 200,
+      "out_fields": [
+       "nombre",
+       "zona_port",
+       "municipio",
+       "departam",
+       "tipo_serv",
+       "tipo_carga",
+       "acto_admin",
+       "fecha_fin",
+       "prorroga",
+       "tiempo_prorr",
+       "ccnario",
+       "cod_pr_ire",
+       "url_ficha",
+       "video_proy"
+      ],
+      "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/0",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Point",
+     "total_en_servicio": 23,
+     "traidos": 23,
+     "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/0"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

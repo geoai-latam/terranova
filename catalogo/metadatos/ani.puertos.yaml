@@ -1,0 +1,60 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ani.puertos
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer?f=json
+filas: 63
+geografia:
+  geometria: punto
+  crs: EPSG:4686
+  capas:
+    '0': Portuarias
+campos:
+  nombre:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NOMBRE
+  zona_port:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ZONA_PORT
+  municipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: MUNICIPIO
+  departam:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: DEPARTAM
+  acto_admin:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: ACTO_ADMIN
+  cod_pr_ire:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: COD_PR_IRE
+  video_proy:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: VIDEO_PROY
+  ccnario:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CCNARIO
+  url_ficha:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: URL_FICHA
+  tipo_serv:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: TIPO_SERV
+  fecha_fin:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: FECHA_FIN
+    minimo: '2020-11-22'
+    maximo: '2051-09-06'
+    comparacion: fecha
+  prorroga:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: PRORROGA
+  tiempo_prorr:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: TIEMPO_PRORR
+    minimo: '2'
+    maximo: '40'
+    comparacion: numero
+  tipo_carga:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: TIPO_CARGA

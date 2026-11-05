@@ -1,0 +1,37 @@
+id: ani_aeropuertos_en_zona
+version: 1
+familia: territorio
+fuente: ani.aeropuertos
+pregunta: "¿Qué aeropuertos concesionados hay en esta zona?"
+descripcion: >
+  Aeropuertos concesionados por la ANI dentro de un rectángulo (bbox en EPSG:4326), con su punto:
+  aeropuerto y ciudad, proyecto de concesión, contrato, estado (operación o estructuración),
+  concesionario y ficha de la ANI. Solo los 19 aeropuertos con concesión de la ANI (El Dorado,
+  Rafael Núñez, Alfonso Bonilla Aragón…); los demás aeródromos del país no están. Las operaciones
+  y los pasajeros están en aerocivil_operaciones. (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [1]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: completa
+    out_fields: [lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
+    max_features: 200
+  campos: [lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: AniAeropuertosEnZona
+avisos:
+- cuando: vacio
+  texto: >
+    No hay aeropuertos concesionados por la ANI en ese rectángulo. La capa solo trae los 19 aeropuertos con concesión de la ANI; los demás aeródromos no están.
+cobro: zona
+canario:
+  # Bogotá; medido el 2026-11-05 en la capa 1: un aeropuerto, El Dorado. En el país, 19.
+  entrada: {bbox: [-74.3, 4.5, -73.9, 4.9]}
+  minimos: {numero_registros: 1}
+  campos: [aeropuerto, codigo_proyecto, concesionario, contrato, estado, ficha, numero_registros, proyecto]
+  latencia_max_ms: 8000

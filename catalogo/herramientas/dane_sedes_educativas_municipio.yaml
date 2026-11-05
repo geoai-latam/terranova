@@ -13,6 +13,7 @@ descripcion: >
 entrada: {municipio_divipola: divipola}
 consulta:
   operacion: por_codigo
+  resultado: lista
   tool: consultar_copia
   argumentos:
     tabla: dane_sedes_educativas

@@ -1,0 +1,48 @@
+id: ani.aeropuertos
+titulo: "Aeropuertos concesionados por la ANI (con su ubicación)"
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+# La ANI declara CC BY-SA 4.0 en su página de datos abiertos para «Concesiones ANI», que son los
+# mismos datos de las capas de `Hosted/ModosANI` (como ani.peajes y ani.concesiones_viales).
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.ani.gov.co/datos-abiertos/
+  cita: "Concesiones ANI … Licencia: Atribución/Reconocimiento-Compartir Igual 4.0 Internacional"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Capa 1 «Areopuertos» (así, con la errata) del servicio `Hosted/ModosANI`: un aeropuerto por
+# fila, como multipunto. Las columnas de auditoría no entran a la lista blanca.
+url: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, excluye: ["aeródromos no concesionados (unos 2 000 en el país)", "operaciones y pasajeros (Aerocivil)"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  lista_aero: {nombre: aeropuerto, tipo: str, desc: "aeropuerto y su ciudad (p. ej. «El Dorado (Bogotá)»)"}
+  proyecto: {nombre: proyecto, tipo: str, desc: "proyecto de concesión al que pertenece (p. ej. «Nororiente», «Centro Norte»)"}
+  contrato: {nombre: contrato, tipo: str, desc: "número del contrato de concesión"}
+  estado: {nombre: estado, tipo: str, desc: "«Operación» o «Estructuración»"}
+  ccnario: {nombre: concesionario, tipo: str, desc: "concesionario"}
+  cod_pr_ire: {nombre: codigo_proyecto, tipo: str, desc: "código del proyecto en el aniscopio de la ANI (p. ej. «A-03»)"}
+  link: {nombre: ficha, tipo: str, desc: "enlace a la ficha del aeropuerto en el aniscopio de la ANI"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [1]
+dcat: {publisher: ANI, theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-05
+  fila: "un aeropuerto concesionado por la ANI; 19 en el país, El Dorado en Bogotá"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4}
+  hallazgos:
+  - "solo los 19 aeropuertos concesionados: 16 en operación y 3 en estructuración"
+  - "la geometría es un multipunto de un solo punto"
+  - "la capa no se edita desde el 2023-09-27"
+  decision: "en vivo por zona (bbox)"

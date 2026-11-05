@@ -1,0 +1,56 @@
+id: ani.puertos
+titulo: "Puertos y zonas portuarias concesionados por la ANI (con su ubicación)"
+entidad: Agencia Nacional de Infraestructura (ANI)
+competencia: estructura, contrata y supervisa las concesiones de infraestructura de transporte (Decreto 4165 de 2011)
+acto: null
+# La ANI declara CC BY-SA 4.0 en su página de datos abiertos para «Concesiones ANI», que son los
+# mismos datos de las capas de `Hosted/ModosANI` (como ani.peajes y ani.concesiones_viales).
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.ani.gov.co/datos-abiertos/
+  cita: "Concesiones ANI … Licencia: Atribución/Reconocimiento-Compartir Igual 4.0 Internacional"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Agencia Nacional de Infraestructura (ANI)"
+protocolo: arcgis_rest
+conector: arcgis-mcp
+# Capa 0 «Portuarias» del servicio `Hosted/ModosANI`. Las columnas de auditoría (creator, editor)
+# no entran a la lista blanca.
+url: https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer
+modo: en_vivo
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
+cobertura: {pais: CO, excluye: ["muelles y embarcaderos no concesionados (UPIT, INVÍAS)", "tráfico de carga (Supertransporte)"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  nombre: {nombre: sociedad_portuaria, tipo: str, desc: "sociedad o empresa titular de la concesión portuaria"}
+  zona_port: {nombre: zona_portuaria, tipo: str, desc: "zona portuaria (p. ej. «ZONA PORTUARIA DE CARTAGENA»)"}
+  municipio: {nombre: municipio, tipo: str, desc: "municipio, como lo escribe la ANI (a veces la región, p. ej. «Urabá»)"}
+  departam: {nombre: departamento, tipo: str, desc: "departamento"}
+  tipo_serv: {nombre: tipo_servicio, tipo: str, desc: "«Público» o «Privado»"}
+  tipo_carga: {nombre: tipo_carga, tipo: str, desc: "carga que mueve (p. ej. «Carbón mineral», «Carga general y contenedores»)"}
+  acto_admin: {nombre: acto_administrativo, tipo: str, desc: "resolución o contrato de la concesión, como lo escribe la ANI"}
+  fecha_fin: {nombre: fecha_fin_concesion, tipo: date, desc: "fecha en que termina la concesión"}
+  prorroga: {nombre: prorroga, tipo: str, desc: "«SI» si la concesión tiene prórroga"}
+  tiempo_prorr: {nombre: anios_prorroga, tipo: float, desc: "años de la prórroga, cuando la hay"}
+  ccnario: {nombre: concesionario, tipo: str, desc: "concesionario, como lo publica la ANI"}
+  cod_pr_ire: {nombre: codigo_proyecto, tipo: str, desc: "código del proyecto en el aniscopio de la ANI (p. ej. «P-03»)"}
+  url_ficha: {nombre: ficha, tipo: str, desc: "enlace a la ficha del proyecto en la ANI"}
+  video_proy: {nombre: video, tipo: str, desc: "enlace a un video del proyecto, cuando lo hay"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+capas_servicio: [0]
+dcat: {publisher: ANI, theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-05
+  fila: "una concesión portuaria de la ANI; 63 en el país, 23 en la bahía de Cartagena"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.4}
+  hallazgos:
+  - "solo los puertos concesionados por la ANI: muelles y embarcaderos no concesionados no están"
+  - "Cartagena 30, Buenaventura 11, Santa Marta y Ciénaga 5; públicos 43, privados 20"
+  - "la capa no se edita desde el 2023-09-27 (editdate de todas las filas)"
+  - "num e id_join repiten el objectid; url_video y url_imag vienen vacíos: no se publican"
+  decision: "en vivo por zona (bbox)"

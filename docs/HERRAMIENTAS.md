@@ -218,9 +218,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 
 | Herramienta | Pregunta | Fuente | Licencia | Créditos |
 |---|---|---|---|---|
+| `ani_aeropuertos_en_zona` | ¿Qué aeropuertos concesionados hay en esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
 | `ani_concesiones_viales_en_zona` | ¿Qué concesiones viales de la ANI pasan por esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
 | `ani_peajes_en_zona` | ¿Qué peajes de la ANI hay en esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
+| `ani_puertos_en_zona` | ¿Qué puertos concesionados hay en esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
 | `ani_recaudo_peaje_mensual` | ¿Cuánto dinero recaudó este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
+| `ani_red_ferrea_en_zona` | ¿Qué corredores férreos pasan por esta zona? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 20 |
 | `ani_trafico_peaje_mensual` | ¿Cuántos vehículos pasaron por este peaje de la ANI cada mes de un año? | Agencia Nacional de Infraestructura (ANI) | CC-BY-SA-4.0 | 5 |
 | `anm_titulo_por_expediente` | ¿Qué minerales ampara y dónde está el título minero con este expediente? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 2 |
 | `anm_titulos_municipio` | ¿Qué minerales tienen explotador autorizado en el RUCOM en este municipio, y cuántos títulos? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
