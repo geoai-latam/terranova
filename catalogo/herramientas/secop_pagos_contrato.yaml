@@ -6,8 +6,8 @@ pregunta: "¿Qué pagos tiene registrados este contrato de SECOP II?"
 descripcion: >
   Pagos de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), del más reciente al más
   viejo: cada uno con su factura, fecha de emisión, valor, estado y la fecha REAL en que se pagó.
-  Arriba, lo facturado, lo pagado y lo pendiente, el último pago y el valor del contrato para
-  comparar. Es la misma lista de facturas que publica Colombia Compra.
+  Arriba, lo facturado, lo pagado, lo rechazado, cuántas hay por estado, el último pago y el
+  valor del contrato para comparar. Es la misma lista de facturas que publica Colombia Compra.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -41,6 +41,20 @@ derivados:
   valor_pagado_total: {de: suma, campo: valor_a_pagar, tipo: float, solo_si: {campo: estado, valores: [Pagado]}}
   pagos_hechos: {de: conteo, tipo: int, solo_si: {campo: estado, valores: [Pagado]}}
   ultima_fecha_pago: {de: primero, campo: fecha_pago, tipo: date, solo_si: {campo: estado, valores: [Pagado]}}
+  # medido el 2026-11-05: CO1.PCCNTR.2064143 (INVIAS, 52 371 millones) tiene 3 facturas, las 3
+  # «Rechazado» (770 millones), y ningún pago.
+  valor_rechazado_total: {de: suma, campo: valor_a_pagar, tipo: float, solo_si: {campo: estado, valores: [Rechazado]}}
+  por_estado: {de: conteo_por, campo: estado}
+avisos:
+- cuando: encontrado
+  si: {campo: pagos_hechos, valores: ["0"]}
+  texto: >
+    Ninguna factura de este contrato figura como «Pagado» en SECOP II. Solo salen los pagos que la
+    entidad tramitó por la plataforma: que no haya aquí no quiere decir que no se haya pagado.
+- cuando: encontrado
+  texto: >
+    valor_facturado_total suma todas las facturas publicadas, también las rechazadas (esas van
+    aparte en valor_rechazado_total); por_estado dice cuántas hay en cada estado.
 cobro: registro
 canario:
   # Medido el 2026-11-03: contrato de Pitalito terminado en 2023, pagado completo en 3 pagos; el
@@ -48,5 +62,5 @@ canario:
   entrada: {id_contrato: CO1.PCCNTR.3712964}
   verdad: {id_contrato: CO1.PCCNTR.3712964, valor_contrato: 1173577000.0, valor_pagado_total: 1173577000.0, pagos_hechos: 3, ultima_fecha_pago: "2023-09-27"}
   minimos: {numero_registros: 3}
-  campos: [entidad, estado, fecha_emision, fecha_pago, id_contrato, id_pago, nit_entidad, numero_factura, numero_registros, pagos_hechos, ultima_fecha_pago, valor_a_pagar, valor_contrato, valor_factura, valor_facturado_total, valor_pagado_total]
+  campos: [entidad, estado, fecha_emision, fecha_pago, id_contrato, id_pago, nit_entidad, numero_factura, numero_registros, pagos_hechos, por_estado, ultima_fecha_pago, valor_a_pagar, valor_contrato, valor_factura, valor_facturado_total, valor_pagado_total]
   latencia_max_ms: 10000
