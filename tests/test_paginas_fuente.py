@@ -33,9 +33,12 @@ class CopiaFalsa:
 
     def __init__(self) -> None:
         self.llamadas: list[dict[str, Any]] = []
+        self.resumenes: list[dict[str, Any]] = []
 
     async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
         assert herramienta == "consultar_copia"
+        if "agregados" in argumentos:
+            return self._resumen(argumentos)
         self.llamadas.append(argumentos)
         desde, limite = int(argumentos.get("desde") or 0), int(argumentos["limite"])
         rasgos = [
@@ -62,6 +65,29 @@ class CopiaFalsa:
             "facts": hechos,
         }
 
+    def _resumen(self, argumentos: dict[str, Any]) -> dict[str, Any]:
+        """El `group by` o el agregado de la lista entera (P0.7), como lo da la copia."""
+        self.resumenes.append(argumentos)
+        if argumentos.get("group"):
+            filas = [
+                {"categoria": "subestación", "n": TOTAL // 2},
+                {"categoria": "línea de transmisión", "n": TOTAL - TOTAL // 2},
+            ]
+        else:
+            filas = [{"v": float(TOTAL)}]
+        rasgos = [{"type": "Feature", "geometry": None, "properties": f} for f in filas]
+        fc = {"type": "FeatureCollection", "features": rasgos}
+        hechos = {
+            "servido_desde": "copia",
+            "consultado_en": "2026-11-05T00:00:00+00:00",
+            "copia": {"version": "v1", "huella": "x", "filas": TOTAL},
+            "completitud": {"vistos": len(filas), "total": len(filas), "truncado": False},
+        }
+        return {
+            "artifacts": [{"kind": "feature_collection", "crs": "EPSG:4326", "data": fc}],
+            "facts": hechos,
+        }
+
 
 def _aviso(sobre: Sobre, texto: str) -> str:
     return next(a for a in sobre.avisos if texto in a)
@@ -82,6 +108,9 @@ async def test_un_visor_recorre_la_capa_entera_de_1000_en_1000() -> None:
     for pagina in (1, 2, 3):
         sobre = await _pagina(copia, pagina=pagina, por_pagina=1000)
         assert sobre.datos["total"] == TOTAL  # el total de la fuente, en todas las páginas
+        # P0.7: los resúmenes son de la lista entera, iguales en todas las páginas
+        assert sum(sobre.datos["por_tipo"].values()) == TOTAL
+        assert sobre.datos["capacidad_mw_total"] == TOTAL
         nombres += [e["nombre"] for e in sobre.datos["elementos"]]
         assert sobre.entrada[PAGINA] == pagina
     assert len(nombres) == TOTAL and len(set(nombres)) == TOTAL

@@ -1636,3 +1636,49 @@ def test_conteo_por_con_vacio_cuenta_los_que_no_traen_el_dato() -> None:
     assert derivar_resultado(con, [{"ese": "sí"}], None) == {"sí": 1}  # sin vacíos, no sale
     with pytest.raises(ValidationError, match="`vacio` va solo"):
         Derivado(de="suma", campo="ese", vacio="sin dato")
+
+
+@pytest.mark.anyio
+async def test_los_conteos_por_grupo_cuentan_la_lista_entera_de_la_copia() -> None:
+    """P0.7: el SISPRO en Bogotá tiene 2 877 sedes y una consulta trae 1 000; `por_naturaleza`
+    sumaba 1 000 (medido el 2026-11-05). Ahora se pide un `group by` por derivado, con los mismos
+    filtros, y los códigos se traducen como en cada fila."""
+    from datetime import UTC, datetime
+
+    from terranova.catalogo import cargar
+    from terranova.copias import ConectorCopia, Version
+    from terranova.ejecutor import Ejecutor
+
+    class Almacen:
+        def __init__(self) -> None:
+            self.sql: list[str] = []
+
+        def vigente(self, tabla: str) -> Version:
+            return Version("f", tabla, "v1", 5, "h", None, datetime.now(UTC))
+
+        def rota(self) -> bool:
+            return False
+
+        def consultar(self, plan: Any) -> tuple[list[dict[str, Any]], int | None]:
+            self.sql.append(plan.sql)
+            if "GROUP BY" in plan.sql and '"Ese"' in plan.sql:
+                return [{"Ese": "1", "n": 2}, {"Ese": None, "n": 3}], None
+            if "GROUP BY" in plan.sql:
+                return [
+                    {"NaturalezaJuridica": "2", "n": 4},
+                    {"NaturalezaJuridica": "1", "n": 1},
+                ], None
+            fila = {"OBJECTID": 1, "NaturalezaJuridica": "2", "Ese": None, "_geojson": None}
+            return [fila, {**fila, "OBJECTID": 2}], 5
+
+    catalogo = cargar()
+    almacen = Almacen()
+    ej = Ejecutor(catalogo, {"copia": ConectorCopia(catalogo, almacen)})  # type: ignore[arg-type]
+    sobre = await ej.ejecutar("minsalud_sedes_salud_municipio", {"municipio_divipola": "11001"})
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 5
+    assert datos["por_naturaleza"] == {"privada": 4, "pública": 1}
+    assert datos["por_ese"] == {"sin dato": 3, "sí": 2}
+    assert any(a.startswith("Estos resúmenes cuentan la lista completa") for a in sobre.avisos)
+    agrupadas = [s for s in almacen.sql if "GROUP BY" in s]
+    assert len(agrupadas) == 2 and all("11001" not in s for s in agrupadas)  # parámetro, no SQL
