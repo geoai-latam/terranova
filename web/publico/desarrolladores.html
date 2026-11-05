@@ -46,7 +46,7 @@
 <h2 id="inicio" style="margin-top:0">Inicio rápido</h2>
 <div class="instruccion">
 <p class="et">Dale esta instrucción a tu agente y se configura solo.</p>
-<p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
+<p id="instruccion">Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo para responder con datos de fuentes de Colombia y globales: predios, estadísticas, contratación pública, ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en «procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: https://terrnova.com/llms.txt</p>
 <button class="boton s chico" type="button" data-copiar="#instruccion">Copiar instrucción</button>
 </div>
 <ol><li><b>Pide tu llave de prueba</b> (<a href="/precios#empezar">300 créditos por 15 días</a>). Guárdala como secreto, nunca en el código.</li>
@@ -196,7 +196,7 @@ Accept: application/json, text/event-stream
 <tr><td class="n">403</td><td><code>sin_permiso</code>, <code>licencia_no_habilitada</code></td><td>La llave no cubre esa familia o esa fuente</td></tr>
 <tr><td class="n">404</td><td><code>no_existe</code></td><td>La herramienta o la fuente no existe; la ficha de fuente sugiere ids parecidos</td></tr>
 <tr><td class="n">429</td><td><code>limite_tasa</code></td><td>Espera lo que dice <code>Retry-After</code></td></tr>
-<tr><td class="n">502</td><td><code>fuente_no_disponible</code>, <code>fuente_respuesta_invalida</code></td><td><b>No se pudo:</b> la fuente oficial falló o respondió algo que no se puede leer; reintenta más tarde</td></tr>
+<tr><td class="n">502</td><td><code>fuente_no_disponible</code>, <code>fuente_respuesta_invalida</code></td><td><b>No se pudo:</b> la fuente falló o respondió algo que no se puede leer; reintenta más tarde</td></tr>
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
@@ -213,7 +213,7 @@ Accept: application/json, text/event-stream
 <footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/"><svg class="" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#F3EFE4" stroke-width="4"><path d="M6 58V30a26 26 0 0 1 52 0v28"/><path d="M15 58V30a17 17 0 0 1 34 0v28"/></g><path d="M24 58V30a8 8 0 0 1 16 0v28z" fill="#F3EFE4"/><circle cx="32" cy="46" r="3.5" fill="#E0A13A"/></svg>Terrnova</a>
-<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
+<p class="desc">Datos de Colombia y globales, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:soporte@terrnova.com">soporte@terrnova.com</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>

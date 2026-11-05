@@ -159,7 +159,31 @@ N_ENTIDADES = len(ENTIDADES)
 # Las fuentes globales (USGS, ESA, NASA) también cuentan: «de Colombia» a secas no sería verdad.
 N_GLOBALES = sum(1 for f in PUBLICADAS if nombre_entidad(f.entidad) in GLOBALES)
 assert 0 < N_GLOBALES < N_FUENTES
-FUENTES_DE = f"{N_FUENTES} fuentes oficiales, de Colombia y globales"
+# Gubernamentales y no gubernamentales: el catálogo no es solo del Estado. Confecámaras es una
+# entidad privada que lleva el RUES por delegación; Global Forest Watch es del WRI, una ONG, con
+# datos de dos universidades; el índice de metadatos es de Terrnova. Todo lo demás lo publica una
+# entidad pública, colombiana o extranjera (USGS, NASA, ESA).
+NO_GUBERNAMENTALES = {
+    "Confecámaras": "entidad privada que lleva el RUES por delegación del Estado",
+    "Global Forest Watch": "proyecto del WRI, una ONG, con datos de UMD y WUR",
+}
+
+
+def es_gubernamental(f) -> bool:
+    return not f.entidad.startswith("Terrnova") and (
+        nombre_entidad(f.entidad) not in NO_GUBERNAMENTALES
+    )
+
+
+N_GUB = sum(1 for f in PUBLICADAS if es_gubernamental(f))
+N_NOGUB = N_FUENTES - N_GUB
+assert 0 < N_NOGUB < N_GUB
+# «oficiales» a secas ya no es verdad: se dice cuántas son de cada clase.
+FUENTES_TXT = f"{N_FUENTES} fuentes ({N_GUB} gubernamentales y {N_NOGUB} no gubernamentales)"
+FUENTES_DE = (
+    f"{N_FUENTES} fuentes de Colombia y globales, {N_GUB} gubernamentales y "
+    f"{N_NOGUB} no gubernamentales"
+)
 POR_FAMILIA = Counter(h.familia for h in HERR)
 MODOS = Counter(f.modo for f in PUBLICADAS)
 LICENCIAS = Counter(f.licencia.spdx or "dato público, sin SPDX" for f in PUBLICADAS)
@@ -268,7 +292,7 @@ def encabezado(ruta: str) -> str:
 PIE = f"""<footer class="pie-sitio"><div class="envoltura">
 <div class="arr">
 <div><a class="marca" href="/">{simbolo("#F3EFE4", "#F3EFE4", "#E0A13A")}Terrnova</a>
-<p class="desc">Datos oficiales de Colombia, con su fuente, su licencia y su fecha.</p></div>
+<p class="desc">Datos de Colombia y globales, con su fuente, su licencia y su fecha.</p></div>
 <div><h2>Producto</h2><ul><li><a href="/fuentes">Fuentes y herramientas</a></li><li><a href="/precios">Precios</a></li><li><a href="/estado">Estado del servicio</a></li><li><a href="/servicios">Servicios</a></li></ul></div>
 <div><h2>Desarrolladores</h2><ul><li><a href="/desarrolladores">Guía de conexión</a></li><li><a href="/docs">API REST (OpenAPI)</a></li><li><a href="/llms.txt">llms.txt</a></li><li><a href="/desarrolladores#contrato">Contrato rt/1</a></li></ul></div>
 <div><h2>Empresa</h2><ul><li><a href="/aliados">Aliados</a></li><li><a href="/contacto">Contacto</a></li><li><a href="mailto:{CORREO}">{CORREO}</a></li><li><a href="/terminos">Términos</a> · <a href="/privacidad">Privacidad</a></li></ul></div>
@@ -523,11 +547,14 @@ def indice_fuentes() -> str:
     out = []
     for nom, n in sorted(ENTIDADES.items(), key=lambda x: (-x[1], x[0])):
         clase = ' class="glob"' if nom in GLOBALES else ""
+        clase_de = (
+            f"No gubernamental: {NO_GUBERNAMENTALES[nom]}. " if nom in NO_GUBERNAMENTALES else ""
+        )
         fuentes = "fuente" if n == 1 else "fuentes"
         out.append(
             f'<li{clase} style="--t:{17 + 4.2 * n**0.5:.1f}px"><h3>{escape(nom)}'
             f'<span class="sr">, </span><sup>{n}<span class="sr"> {fuentes}</span></sup></h3>'
-            f"<p>{escape(miles_en_texto(y_lista(sis[nom])))}</p></li>"
+            f"<p>{escape(clase_de + miles_en_texto(y_lista(sis[nom])))}</p></li>"
         )
     return '<ul class="indice">' + "".join(out) + "</ul>"
 
@@ -536,7 +563,7 @@ def indice_fuentes() -> str:
 INSTRUCCION = (
     "Conéctate al servidor MCP de Terrnova en https://terrnova.com/mcp/catalogo (transporte HTTP) con la "
     "cabecera «Authorization: Bearer» y mi llave, que está en la variable TERRNOVA_LLAVE. Úsalo "
-    "para responder con datos oficiales de Colombia: predios, estadísticas, contratación pública, "
+    "para responder con datos de fuentes de Colombia y globales: predios, estadísticas, contratación pública, "
     "ambiente, justicia, empresas y normas. Cita la entidad y la licencia que vienen en "
     "«procedencia» y no confundas «no_encontrado» con un error de la fuente. Guía para agentes: "
     "https://terrnova.com/llms.txt"
@@ -790,7 +817,7 @@ SERVICIOS = [
     {
         "id": "revision",
         "titulo": "Debida diligencia",
-        "texto": "Revisamos tu lista de predios, empresas o contratos contra las fuentes oficiales. Recibes un expediente por ítem.",
+        "texto": "Revisamos tu lista de predios, empresas o contratos contra las fuentes del catálogo. Recibes un expediente por ítem.",
         "recibes": [
             "Un expediente por ítem: cada hallazgo con su entidad, su fecha y la huella de la respuesta",
             "Los casos dudosos, aparte, para que los revise una persona",
@@ -829,7 +856,7 @@ SERVICIOS = [
     {
         "id": "asistente",
         "titulo": "Asistentes a la medida",
-        "texto": "Un asistente que responde con datos oficiales dentro de tu sistema y cita la fuente.",
+        "texto": "Un asistente que responde con datos de las fuentes del catálogo dentro de tu sistema y las cita.",
         "recibes": [
             "El asistente en tu entorno",
             "Conectado a las fuentes de tu equipo",
@@ -1011,7 +1038,7 @@ RUTA_CORTA = {
     "secop_contratos_entidad": "¿Cuánto contrata?",
     "pnn_areas_protegidas_en_punto": "¿Área protegida aquí?",
 }
-SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo oficial"}
+SERVIDO = {"en_vivo": "la fuente, en vivo", "copia": "una copia del archivo de la fuente"}
 # Herramientas cuyo canario no está en verde en producción (01-11-2026): siguen en el catálogo, pero
 # ninguna página ni figura las usa de ejemplo. Si una vuelve a verde, se puede sacar de aquí.
 SIN_CANARIO_VERDE = {
@@ -1314,7 +1341,7 @@ CAPAS_PRUEBA = [
     ("dato", "predio 47001…0308, habitacional", "Santa Marta, zona urbana · encontrado"),
     ("procedencia", "IGAC, SINIC", "la entidad que publica el dato"),
     ("licencia", "CC BY-SA 4.0, uso comercial sí", "verificada para esta fuente"),
-    ("servido_desde", "copia del 28-10-2026", "la copia oficial, con su fecha"),
+    ("servido_desde", "copia del 28-10-2026", "la copia de la fuente, con su fecha"),
     ("huella", "sha256:7a2cc965…", "para comprobar que no cambió"),
 ]
 assert EJEMPLO["herramienta"] == "predio_en_punto" and EJEMPLO["estado"] == "encontrado"
@@ -1330,7 +1357,7 @@ NOTAS_PRUEBA = [
         "Licencia",
         f"Revisada por fuente: {N_VERIFICADAS} verificadas, {N_FUENTES - N_VERIFICADAS} con aviso.",
     ),
-    ("De dónde salió", "En vivo o de una copia oficial, con su fecha."),
+    ("De dónde salió", "En vivo o de una copia de la fuente, con su fecha."),
     ("Huella", "Para comprobar en una auditoría que no cambió."),
 ]
 
@@ -1428,12 +1455,12 @@ def preguntas_frecuentes() -> list[tuple[str, str]]:
         (
             "¿Qué tan actualizado está?",
             f"{MODOS['en_vivo']} fuentes se consultan en vivo y {MODOS['copia']} desde una copia "
-            "oficial con su fecha de corte. Cada respuesta dice de dónde salió y un dato viejo "
+            "de la fuente con su fecha de corte. Cada respuesta dice de dónde salió y un dato viejo "
             'llega con aviso. Cada fuente se prueba a diario: <a class="enlace" href="/estado">'
             "estado</a>.",
         ),
         (
-            "¿Y si la fuente oficial se cae?",
+            "¿Y si la fuente se cae?",
             "Te decimos «no se pudo», con el motivo; nunca lo disfrazamos de «no encontrado». Si "
             f"hay una respuesta de los últimos {RETENCION_DIAS} días, llega marcada como vieja y "
             "con su fecha.",
@@ -2003,7 +2030,7 @@ def inicio() -> str:
 </div>
 <div class="envoltura h-texto"><div class="izq">
 <h1 class="t0"><span class="l">El dato oficial de Colombia,</span> <span class="l">con su prueba,</span> <span class="l">y la solución encima</span></h1>
-<p class="entrada">Una capa de {N_FUENTES} fuentes oficiales, de empresas y contratos a normas, estadísticas y territorio, y un equipo que construye encima la analítica, el desarrollo y la automatización que tu organización necesita. Cada respuesta dice quién publica el dato, su licencia y su fecha.</p>
+<p class="entrada">Una capa de {FUENTES_TXT}, de empresas y contratos a normas, estadísticas y territorio, y un equipo que construye encima la analítica, el desarrollo y la automatización que tu organización necesita. Cada respuesta dice quién publica el dato, su licencia y su fecha.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis {DIAS_PRUEBA} días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 <p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
 </div></div>
@@ -2108,7 +2135,7 @@ def servicios() -> str:
 <section class="sv-heroe"><div class="envoltura">
 <div class="txt">
 <h1 class="t1">Te entregamos el trabajo hecho</h1>
-<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {N_FUENTES} fuentes oficiales, con la fuente de cada dato. Empieza con un piloto de dos semanas a precio fijo.</p>
+<p class="entrada">Revisiones, tableros, alertas y asistentes sobre {FUENTES_TXT}, con la fuente de cada dato. Empieza con un piloto de dos semanas a precio fijo.</p>
 <div class="botones"><a class="boton p" href="/contacto?asunto=proyecto">Cuéntanos tu proyecto</a><a class="boton s inv-b" href="#piloto">Ver el piloto</a></div>
 </div>
 <nav class="sv-indice" aria-label="Servicios">{indice}<a href="#piloto">Piloto</a></nav>
@@ -2116,7 +2143,7 @@ def servicios() -> str:
 <section class="seccion" id="capa"><div class="envoltura">
 <div class="con-fig">
 <div class="cab"><h2 class="t2">Una capa de datos y, encima, tu solución</h2>
-<p class="entrada">Terrnova es la capa: {N_FUENTES} fuentes oficiales con una sola forma de preguntar. Encima montamos la analítica, la automatización o el agente que necesitas, y cada dato llega con su fuente.</p></div>
+<p class="entrada">Terrnova es la capa: {FUENTES_TXT} con una sola forma de preguntar. Encima montamos la analítica, la automatización o el agente que necesitas, y cada dato llega con su fuente.</p></div>
 {figura_capas()}
 </div>
 </div></section>
@@ -2150,7 +2177,7 @@ def servicios() -> str:
     return pagina(
         "/servicios",
         "Servicios",
-        "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes oficiales de Colombia, con la fuente de cada dato. Piloto de dos semanas a precio fijo.",
+        "Revisiones de predios, empresas y contratos, tableros, alertas y asistentes sobre fuentes gubernamentales y no gubernamentales de Colombia, con la fuente de cada dato. Piloto de dos semanas a precio fijo.",
         c,
         ("figuras.js",),
     )
@@ -2180,7 +2207,7 @@ def fuentes() -> str:
     c = (
         portada(
             "",
-            f"{N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales",
+            f"{N_HERR} herramientas sobre {FUENTES_TXT}",
             "Cada herramienta responde una pregunta concreta. Busca por tema, entidad o nombre.",
             lado=lado_familias(),
         )
@@ -2197,9 +2224,9 @@ def fuentes() -> str:
 
 <section class="seccion sup" id="entidades"><div class="envoltura">
 <div class="cab"><h2 class="t2">Quién publica los datos</h2>
-<p class="entrada">{N_ENTIDADES} entidades. {MODOS["en_vivo"]} fuentes en vivo y {MODOS["copia"]} desde una copia oficial, con su fecha de corte.</p></div>
+<p class="entrada">{N_ENTIDADES} entidades. {MODOS["en_vivo"]} fuentes en vivo y {MODOS["copia"]} desde una copia de la fuente, con su fecha de corte.</p></div>
 {indice_fuentes()}
-<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las globales.</p>
+<p class="pie-muro">El número es cuántas fuentes publica cada entidad. En gris, las globales. Las no gubernamentales lo dicen bajo su nombre.</p>
 </div></section>
 
 <section class="seccion"><div class="envoltura">
@@ -2237,7 +2264,7 @@ def fuentes() -> str:
     return pagina(
         "/fuentes",
         "Fuentes y herramientas",
-        f"Busca entre {N_HERR} herramientas sobre {N_FUENTES} fuentes oficiales: territorio, contratación, estadísticas, justicia, ambiente, empresas y normativa.",
+        f"Busca entre {N_HERR} herramientas sobre {FUENTES_TXT}: territorio, contratación, estadísticas, justicia, ambiente, empresas y normativa.",
         c,
         ("figuras.js",),
     )
@@ -2496,7 +2523,7 @@ curl -s -X POST https://terrnova.com/v1/co/territorio/dane_divipola_buscar \\
 <tr><td class="n">403</td><td><code>sin_permiso</code>, <code>licencia_no_habilitada</code></td><td>La llave no cubre esa familia o esa fuente</td></tr>
 <tr><td class="n">404</td><td><code>no_existe</code></td><td>La herramienta o la fuente no existe; la ficha de fuente sugiere ids parecidos</td></tr>
 <tr><td class="n">429</td><td><code>limite_tasa</code></td><td>Espera lo que dice <code>Retry-After</code></td></tr>
-<tr><td class="n">502</td><td><code>fuente_no_disponible</code>, <code>fuente_respuesta_invalida</code></td><td><b>No se pudo:</b> la fuente oficial falló o respondió algo que no se puede leer; reintenta más tarde</td></tr>
+<tr><td class="n">502</td><td><code>fuente_no_disponible</code>, <code>fuente_respuesta_invalida</code></td><td><b>No se pudo:</b> la fuente falló o respondió algo que no se puede leer; reintenta más tarde</td></tr>
 <tr><td class="n">504</td><td><code>fuente_lenta</code></td><td><b>No se pudo:</b> la fuente no respondió a tiempo</td></tr>
 <tr><td class="n">500</td><td><code>error_interno</code></td><td>Falla nuestra; escríbenos con el <code>solicitud_id</code></td></tr>
 </tbody></table></div>
@@ -2618,7 +2645,7 @@ def paginas() -> dict[str, str]:
             "Términos de servicio",
             "Las condiciones de uso de Terrnova.",
             [
-                "Los datos vienen de fuentes oficiales con su licencia; al reutilizarlos, citas la atribución que trae cada respuesta.",
+                "Los datos vienen de fuentes gubernamentales y no gubernamentales, cada una con su licencia; al reutilizarlos, citas la atribución que trae cada respuesta.",
                 "Las llaves de producción no ven fuentes con licencia por verificar; cada respuesta dice su licencia.",
                 "Los créditos se renuevan el día 1 de cada mes y no se acumulan.",
                 "Los errores, la caché y lo que está fuera de cobertura no descuentan créditos.",

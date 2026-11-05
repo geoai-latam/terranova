@@ -208,7 +208,7 @@ histórico de disponibilidad, así que aquí no hay porcentajes.</p>
 puerta está en línea.</p></div>
 </section>
 
-<h2>Fuentes oficiales</h2>
+<h2>Fuentes</h2>
 <p class="e-nota">Cada fuente se prueba a diario con un canario: una consulta con una respuesta
 conocida, medida en la fuente. Última verificación: {verificacion}.</p>
 <p class="e-nota">Las fuentes son de terceros (entidades públicas). Si una falla, la puerta responde

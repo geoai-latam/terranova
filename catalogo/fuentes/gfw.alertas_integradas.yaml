@@ -11,7 +11,7 @@ licencia:
   cita: '"license":"[CC by 4.0](https://creativecommons.org/licenses/by/4.0/) " y "citation":"Source: \"Integrated Deforestation Alerts\". UMD/GLAD and WUR, accessed through Global Nature Watch on [date]" (metadatos del dataset en la Data API, leídos el 2026-11-05). Términos de GFW (https://www.globalforestwatch.org/terms/): «each dataset carries its own license and restrictions. You should review the dataset''s metadata»; «If You use Our APIs in Your own products, please credit Us. You agree to attribute our APIs in line with our Attribution Requirements». No hay cláusula no comercial.'
 uso_comercial: si
 clase_acceso: api
-atribucion: "Fuente: «Integrated Deforestation Alerts», UMD/GLAD y WUR, consultado por la Data API de Global Forest Watch / Global Nature Watch (WRI)"
+atribucion: "Fuente: «Integrated Deforestation Alerts», UMD/GLAD y WUR, consultado por la Data API de Global Forest Watch / Global Nature Watch (WRI). Powered by Resource Watch (https://resourcewatch.org)"
 protocolo: api_propia
 conector: amenazas-mcp
 # Data API de GFW con llave (gratis; va en el entorno de amenazas-mcp como GFW_API_KEY, en la
