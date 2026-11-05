@@ -493,6 +493,24 @@ def test_descargar_arcgis_pagina_por_la_clave_hasta_vaciar() -> None:
     assert len(set(vistas)) == 60  # ni repetidas ni perdidas pese a los huecos
 
 
+def test_descargar_arcgis_deja_fuera_las_filas_de_excluir() -> None:
+    """`excluir` filtra al copiar, no con un `where` (el WAF de SISPRO rechaza los compuestos); el
+    conteo de la capa sigue cuadrando porque cuenta lo que llegó, no lo que se guardó."""
+    from terranova.copias import descargar_arcgis
+
+    assert RUNAP.copia is not None
+    fuera = RUNAP.model_copy(
+        update={
+            "copia": RUNAP.copia.model_copy(
+                update={"excluir": {"ap_nombre": ["Área 4", "Área 70"]}}
+            )
+        }
+    )
+    paginas = list(descargar_arcgis(fuera, cliente=ArcgisFalso(30, {"count": 30}), pausa_s=0))
+    nombres = [f["ap_nombre"] for p in paginas for f in p]
+    assert len(nombres) == 28 and not {"Área 4", "Área 70"} & set(nombres)
+
+
 def test_descargar_arcgis_simplifica_si_la_ficha_lo_declara() -> None:
     from terranova.copias import descargar_arcgis
 

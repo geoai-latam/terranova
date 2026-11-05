@@ -1,0 +1,2385 @@
+{
+  "geometria_reducida": true,
+  "grabado": "2026-11-05T08:16:09+00:00",
+  "herramienta": "minsalud_sedes_salud_buscar",
+  "llamadas": [
+    {
+      "argumentos": {
+        "geometria": "completa",
+        "limite": 100,
+        "order": [
+          "CodigoHabilitacion"
+        ],
+        "select": [
+          "OBJECTID",
+          "CodigoHabilitacion",
+          "CodigoPrestador",
+          "NombrePrestador",
+          "Nombre",
+          "TipoSede",
+          "ClaseDePrestador",
+          "NaturalezaJuridica",
+          "TipoPersona",
+          "Ese",
+          "NivelAtencion",
+          "CaracterTerritorial",
+          "TipoZona",
+          "Direccion",
+          "CentroPoblado",
+          "CodigoDepartamento",
+          "NOM_DPTO",
+          "CodigoMunicipio",
+          "NOM_MPIO",
+          "URL",
+          "FechaREPS",
+          "MetodoUbicacion"
+        ],
+        "tabla": "minsalud_sedes_prestadores",
+        "texto": "Hospital San Vicente"
+      },
+      "conector": "copia",
+      "respuesta": {
+        "artifacts": [
+          {
+            "crs": "EPSG:4326",
+            "data": {
+              "features": [
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.566611,
+                      6.261883
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "050010593501",
+                    "CodigoMunicipio": "05001",
+                    "CodigoPrestador": "0500105935",
+                    "Direccion": "CL 64 # 51 D 70 BLOQUE 3 Y 6",
+                    "Ese": "2",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "MEDELLÍN",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "FRESENIUS MEDICAL CARE CARE COLOMBIA S.A. UNIDAD RENAL HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "FRESENIUS MEDICAL CARE COLOMBIA S.A.",
+                    "OBJECTID": 65001,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.333015,
+                      6.436571
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "BARBOSA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "050790407701",
+                    "CodigoMunicipio": "05079",
+                    "CodigoPrestador": "0507904077",
+                    "Direccion": "KR 17 # 10 - 34 SECTOR LA BOMBA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "BARBOSA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 64240,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.634276,
+                      6.087167
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "CALDAS",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "051290214601",
+                    "CodigoMunicipio": "05129",
+                    "CodigoPrestador": "0512902146",
+                    "Direccion": "KR 48 # 135S-41",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "CALDAS",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "E.S.E HOSPITAL SAN VICENTE DE PAÚL DE CALDAS",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAÚL",
+                    "OBJECTID": 64340,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.63397,
+                      6.084406
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "051290214602",
+                    "CodigoMunicipio": "05129",
+                    "CodigoPrestador": "0512902146",
+                    "Direccion": "KR 48 # 138 B SUR 32",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "CALDAS",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAÚL",
+                    "OBJECTID": 64341,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.838728,
+                      5.79339
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "055760592901",
+                    "CodigoMunicipio": "05576",
+                    "CodigoPrestador": "0557605929",
+                    "Direccion": "CL 32 # 26A-38",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "PUEBLORRICO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E HOSPITAL SAN VICENTE DE PAÚL DE PUEBLO RICO",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 65680,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.69379,
+                      7.02835
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "REMEDIOS",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056040550901",
+                    "CodigoMunicipio": "05604",
+                    "CodigoPrestador": "0560405509",
+                    "Direccion": "CL LAS PLAMAS 12 - 120",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "4",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "REMEDIOS",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 65700,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.435737,
+                      6.153003
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056150030202",
+                    "CodigoMunicipio": "05615",
+                    "CodigoPrestador": "0500100302",
+                    "Direccion": "Hospital San Vicente de Paul Zona franca- Vereda La Convención, Vía Aeropuerto Llano grande Km 2.3",
+                    "Ese": "2",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "2",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "RIONEGRO",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "EMPRESA DE MEDICINA INTEGRAL EMI S.A.S. SERVICIO DE AMBULANCIA PREPAGADA SIGLA GRUPO EMI S.A.S.",
+                    "NombrePrestador": "EMPRESA DE MEDICINA INTEGRAL EMI S.A.S. SERVICIO DE AMBULANCIA PREPAGADA",
+                    "OBJECTID": 65712,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.43955,
+                      6.16194
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056151204401",
+                    "CodigoMunicipio": "05615",
+                    "CodigoPrestador": "0561512044",
+                    "Direccion": "VEREDA LA CONVENCION VIA AEROPUERTO LLANO GRANDE KM 2",
+                    "Ese": null,
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "RIONEGRO",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "FUNDACIÓN HOSPITAL SAN VICENTE DE PAUL RIONEGRO",
+                    "NombrePrestador": "FUNDACION HOSPITAL SAN VICENTE DE PAUL RIONEGRO",
+                    "OBJECTID": 65786,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.996026,
+                      6.187438
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056490398301",
+                    "CodigoMunicipio": "05649",
+                    "CodigoPrestador": "0564903983",
+                    "Direccion": "CL 21 # 24-58",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "SAN CARLOS",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E HOSPITAL SAN VICENTE DE PAÚL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 65839,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.99315,
+                      6.18789
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056490398302",
+                    "CodigoMunicipio": "05649",
+                    "CodigoPrestador": "0564903983",
+                    "Direccion": "MONTEALBÁN",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "SAN CARLOS",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Centro de Salud \"María Auxiliadora\"",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 65842,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.33385,
+                      6.28535
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "056740479201",
+                    "CodigoMunicipio": "05674",
+                    "CodigoPrestador": "0567404792",
+                    "Direccion": "AV CARVAJAL # 31-36",
+                    "Ese": "2",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "4",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "SAN VICENTE",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "HOSPITAL DEL MUNICIPIO DE SAN VICENTE ANTIOQUIA",
+                    "NombrePrestador": "HOSPITAL DEL MUNICIPIO DE SAN VICENTE ANTIOQUIA",
+                    "OBJECTID": 65870,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.45556,
+                      8.23111
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "05",
+                    "CodigoHabilitacion": "058370228708",
+                    "CodigoMunicipio": "05837",
+                    "CodigoPrestador": "0583702287",
+                    "Direccion": "CORREGIMIENTO SAN VICENTE DE CONGO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "4",
+                    "NOM_DPTO": "Antioquia",
+                    "NOM_MPIO": "TURBO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "PUESTO DE SALUD DE SAN VICENTE DEL CONGO",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL FRANCISCO VALDERRAMA",
+                    "OBJECTID": 65922,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.498876,
+                      10.401494
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "2",
+                    "CentroPoblado": "DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDI",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "13",
+                    "CodigoHabilitacion": "130010087117",
+                    "CodigoMunicipio": "13001",
+                    "CodigoPrestador": "1300100871",
+                    "Direccion": "CRA 53 N 30 D -06",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cartagena",
+                    "NOM_MPIO": "CARTAGENA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL LOCAL CARTAGENA DE INDIAS",
+                    "OBJECTID": 71755,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.120997,
+                      5.779861
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "PAIPA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "15",
+                    "CodigoHabilitacion": "155160073201",
+                    "CodigoMunicipio": "15516",
+                    "CodigoPrestador": "1551600732",
+                    "Direccion": "CARRERA 20 # 21-37",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Boyacá",
+                    "NOM_MPIO": "PAIPA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E. HOSPITAL SAN VICENTE DE PAÚL",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE PAIPA",
+                    "OBJECTID": 70025,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.1924,
+                      5.89774
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "PALERMO",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "15",
+                    "CodigoHabilitacion": "155160073202",
+                    "CodigoMunicipio": "15516",
+                    "CodigoPrestador": "1551600732",
+                    "Direccion": "CORREGIMIENTO DE PALERMO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "4",
+                    "NOM_DPTO": "Boyacá",
+                    "NOM_MPIO": "PAIPA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "CENTRO DE SALUD DE PALERMO",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE PAIPA",
+                    "OBJECTID": 70028,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.338545,
+                      5.399721
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "RAMIRIQUÍ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "15",
+                    "CodigoHabilitacion": "155990071201",
+                    "CodigoMunicipio": "15599",
+                    "CodigoPrestador": "1559900712",
+                    "Direccion": "KR 3 # 7-21",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Boyacá",
+                    "NOM_MPIO": "RAMIRIQUÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE RAMIRIQUÍ",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE RAMIRIQUI",
+                    "OBJECTID": 70060,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.78576,
+                      5.236478
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "17",
+                    "CodigoHabilitacion": "170420060801",
+                    "CodigoMunicipio": "17042",
+                    "CodigoPrestador": "1704200608",
+                    "Direccion": "CALLE 1 SUR NUMERO 4-03/107 BARRIO PABLO SEXTO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Caldas",
+                    "NOM_MPIO": "ANSERMA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 70405,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.489274,
+                      5.270216
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "17",
+                    "CodigoHabilitacion": "170500069101",
+                    "CodigoMunicipio": "17050",
+                    "CodigoPrestador": "1705000691",
+                    "Direccion": "CARRERA 2 # 4-12",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Caldas",
+                    "NOM_MPIO": "ARANZAZU",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL DEPARTAMENTAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 70406,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.779779,
+                      2.11577
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "SAN VICENTE DEL CAGUÁN",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "18",
+                    "CodigoHabilitacion": "187530001601",
+                    "CodigoMunicipio": "18753",
+                    "CodigoPrestador": "1875300016",
+                    "Direccion": "CALLE 15 No.14 - 38",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Caquetá",
+                    "NOM_MPIO": "SAN VICENTE DEL CAGUÁN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN RAFAEL",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN RAFAEL",
+                    "OBJECTID": 71673,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.815474,
+                      9.2496
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "23",
+                    "CodigoHabilitacion": "234170075001",
+                    "CodigoMunicipio": "23417",
+                    "CodigoPrestador": "2341700750",
+                    "Direccion": "kr26#17-124",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Córdoba",
+                    "NOM_MPIO": "LORICA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE LORICA",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE LORICA",
+                    "OBJECTID": 73564,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.813066,
+                      9.238292
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": "SANTA CRUZ DE LORICA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "23",
+                    "CodigoHabilitacion": "234170109901",
+                    "CodigoMunicipio": "23417",
+                    "CodigoPrestador": "2341701099",
+                    "Direccion": "KR 26 #17-124 HOSPITAL SAN VICENTE DE PAUL DE LORICA",
+                    "Ese": "2",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Córdoba",
+                    "NOM_MPIO": "LORICA",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "CUIDADOS INTENSIVOS NEONATAL DEL BAJO SINU LIMITADA",
+                    "NombrePrestador": "UNIDAD DE CUIDADOS INTENSIVOS NEONATAL DEL BAJO SINU",
+                    "OBJECTID": 73569,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.811396,
+                      9.247672
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": null,
+                    "CentroPoblado": "SANTA CRUZ DE LORICA",
+                    "ClaseDePrestador": "1",
+                    "CodigoDepartamento": "23",
+                    "CodigoHabilitacion": "234170162403",
+                    "CodigoMunicipio": "23417",
+                    "CodigoPrestador": "2341701624",
+                    "Direccion": "Calle 26 # 17 - 124 Hospital san Vicente de Paul",
+                    "Ese": null,
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "2",
+                    "NOM_DPTO": "Córdoba",
+                    "NOM_MPIO": "LORICA",
+                    "NaturalezaJuridica": "2",
+                    "NivelAtencion": null,
+                    "Nombre": "Laboratorio Clínico Renal Care S.A.S Sede Lorica",
+                    "NombrePrestador": "Laboratorio Clínico Renal Care S.A.S.",
+                    "OBJECTID": 54231,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.74078,
+                      4.79959
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "250860006103",
+                    "CodigoMunicipio": "25086",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "BELTRÁN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD BELTRAN - (250860006103)",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74163,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.74078,
+                      4.79959
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "PAQUILÓ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "250860006109",
+                    "CodigoMunicipio": "25086",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "BELTRÁN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD PAQUILO",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74165,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.53937,
+                      4.87226
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "BITUIMA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "250950006107",
+                    "CodigoMunicipio": "25095",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "BITUIMA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD BITUIMA - (250950006107)",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74166,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.91851,
+                      4.5606
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "CHOACHÍ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "251810005502",
+                    "CodigoMunicipio": "25181",
+                    "CodigoPrestador": "2527900055",
+                    "Direccion": "Cra 6A N°5-00 Zona Urbana Municipio Choachi",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "CHOACHÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "CENTRO DE SALUD DE CHOACHI",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE FOMEQUE",
+                    "OBJECTID": 74301,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.892565,
+                      4.48533
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "FOMEQUE",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "252790005501",
+                    "CodigoMunicipio": "25279",
+                    "CodigoPrestador": "2527900055",
+                    "Direccion": "CALLE 4 No. 5-00",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "FOMEQUE",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E. HOSPITAL SAN VICENTE DE PAUL FOMEQUE",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE FOMEQUE",
+                    "OBJECTID": 74357,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.874396,
+                      5.071258
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "NEMOCÓN",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "254860003701",
+                    "CodigoMunicipio": "25486",
+                    "CodigoPrestador": "2548600037",
+                    "Direccion": "KR 6 No.9-40 SUR",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "NEMOCÓN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL DE NEMOCON",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL DE NEMOCON",
+                    "OBJECTID": 74570,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.21848,
+                      4.58392
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "PALESTINA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "255800006102",
+                    "CodigoMunicipio": "25580",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "PULÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD PALESTINA",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74591,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.21848,
+                      4.58392
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "255800006104",
+                    "CodigoMunicipio": "25580",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "PULÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD VALPARAISO",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74593,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.21848,
+                      4.58392
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "PULÍ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "255800006105",
+                    "CodigoMunicipio": "25580",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "PULÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD PULI - (255800006105)",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74592,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.62196,
+                      4.84713
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "SAN JUAN DE RÍO SECO",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "256620006101",
+                    "CodigoMunicipio": "25662",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CALLE 4A NO. 1 - 52",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "SAN JUAN DE RÍO SECO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74615,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.62196,
+                      4.84713
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "CAMBAO",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "256620006106",
+                    "CodigoMunicipio": "25662",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "SAN JUAN DE RÍO SECO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD CAMBAO - (256620006106)",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74610,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.62196,
+                      4.84713
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "SAN NICOLÁS",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "256620006108",
+                    "CodigoMunicipio": "25662",
+                    "CodigoPrestador": "2566200061",
+                    "Direccion": "CENTRO",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "SAN JUAN DE RÍO SECO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD SAN NICOLAS - (256620006108)",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 74611,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.93402,
+                      4.48404
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "UBAQUE",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "25",
+                    "CodigoHabilitacion": "258410005503",
+                    "CodigoMunicipio": "25841",
+                    "CodigoPrestador": "2527900055",
+                    "Direccion": "C 4 2 - 17 Zona Urbana Municipio Ubaque",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Cundinamarca",
+                    "NOM_MPIO": "UBAQUE",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "CENTRO DE SALUD UBAQUE",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL DE FOMEQUE",
+                    "OBJECTID": 74725,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.62021,
+                      5.7099
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "27",
+                    "CodigoHabilitacion": "270010002604",
+                    "CodigoMunicipio": "27001",
+                    "CodigoPrestador": "2700100026",
+                    "Direccion": "SAN VICENTE",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Chocó",
+                    "NOM_MPIO": "QUIBDÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "CENTO DE SALUD SAN VICENTE",
+                    "NombrePrestador": "ESE HOSPITAL LOCAL ISMAEL ROLDAN VALENCIA",
+                    "OBJECTID": 73307,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.63263,
+                      2.20036
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "41",
+                    "CodigoHabilitacion": "412980041901",
+                    "CodigoMunicipio": "41298",
+                    "CodigoPrestador": "4129800419",
+                    "Direccion": "CALLE 7 # 14-25 Y CALLE 7 # 14-69",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Huila",
+                    "NOM_MPIO": "GARZÓN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "E.S.E. SAN VICENTE DE PAUL DE GARZON",
+                    "NombrePrestador": "E.S.E. HOSPITAL DEPARTAMENTAL SAN VICENTE DE PAUL DE GARZON",
+                    "OBJECTID": 74857,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.623622,
+                      2.191855
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "GARZÓN",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "41",
+                    "CodigoHabilitacion": "412980041902",
+                    "CodigoMunicipio": "41298",
+                    "CodigoPrestador": "4129800419",
+                    "Direccion": "CALLE 2 D No. 4-22",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Huila",
+                    "NOM_MPIO": "GARZÓN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "SEDE AMBULATORIA CONSULTA EXTERNA",
+                    "NombrePrestador": "E.S.E. HOSPITAL DEPARTAMENTAL SAN VICENTE DE PAUL DE GARZON",
+                    "OBJECTID": 74858,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.631043,
+                      2.199971
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "GARZÓN",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "41",
+                    "CodigoHabilitacion": "412980041903",
+                    "CodigoMunicipio": "41298",
+                    "CodigoPrestador": "4129800419",
+                    "Direccion": "CALLE 7 No. 13-46",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Huila",
+                    "NOM_MPIO": "GARZÓN",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "SEDE CENTRO INTEGRAL DE TERAPIAS",
+                    "NombrePrestador": "E.S.E. HOSPITAL DEPARTAMENTAL SAN VICENTE DE PAUL DE GARZON",
+                    "OBJECTID": 74859,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.36791,
+                      8.64351
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "GRAMALOTE",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "54",
+                    "CodigoHabilitacion": "543130102115",
+                    "CodigoMunicipio": "54313",
+                    "CodigoPrestador": "5431301021",
+                    "Direccion": "KDX HOSPITAL SAN VICENTE DE PAUL (PLANTA) VDA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Norte de Santander",
+                    "NOM_MPIO": "GRAMALOTE",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "E.S.E. HOSPITAL REGIONAL CENTRO",
+                    "OBJECTID": 77132,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.637303,
+                      4.619397
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "63",
+                    "CodigoHabilitacion": "631900052201",
+                    "CodigoMunicipio": "63190",
+                    "CodigoPrestador": "6319000522",
+                    "Direccion": "CALLE 10 Nº 12-57",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Quindío",
+                    "NOM_MPIO": "CIRCASIA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 77565,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.661175,
+                      4.672412
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "63",
+                    "CodigoHabilitacion": "632720049101",
+                    "CodigoMunicipio": "63272",
+                    "CodigoPrestador": "6327200491",
+                    "Direccion": "CRA 5 # 1-43",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Quindío",
+                    "NOM_MPIO": "FILANDIA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL FILANDIA",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 77567,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.789773,
+                      4.206627
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "63",
+                    "CodigoHabilitacion": "633020043001",
+                    "CodigoMunicipio": "63302",
+                    "CodigoPrestador": "6330200430",
+                    "Direccion": "CARRERA 12 CALLE 17 ESQUINA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Quindío",
+                    "NOM_MPIO": "GÉNOVA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 77569,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.570135,
+                      4.636524
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "SALENTO",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "63",
+                    "CodigoHabilitacion": "636900050201",
+                    "CodigoMunicipio": "63690",
+                    "CodigoPrestador": "6369000502",
+                    "Direccion": "CRA 7 # 6-60",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Quindío",
+                    "NOM_MPIO": "SALENTO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL SAN VICENTE DE PAUL DE SALENTO",
+                    "NombrePrestador": "ESE HOSPITALSAN VICENTE DE PAUL",
+                    "OBJECTID": 77580,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.942913,
+                      5.105258
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "APÍA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "660450080601",
+                    "CodigoMunicipio": "66045",
+                    "CodigoPrestador": "6604500806",
+                    "Direccion": "CRA 7 # 7-13",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "APÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "E.S.E HOSPITAL SAN VICENTE DE PAUL APIA",
+                    "OBJECTID": 77581,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.944342,
+                      5.105908
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "APÍA",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "660450080602",
+                    "CodigoMunicipio": "66045",
+                    "CodigoPrestador": "6604500806",
+                    "Direccion": "CALLE 9 # 6-57",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "APÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL APIA",
+                    "NombrePrestador": "E.S.E HOSPITAL SAN VICENTE DE PAUL APIA",
+                    "OBJECTID": 77582,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.883284,
+                      5.298128
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "MISTRATÓ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028801",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "CRA 5 # 8-36",
+                    "Ese": "1",
+                    "FechaREPS": "2023-07-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL DE MISTRATO RISARALDA",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 83272,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.90379,
+                      5.41612
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "SAN ANTONIO DE CHAMI",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028802",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "Parque Corregimiento San Antonio del Chami",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Puesto de Salud San Antonio",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 77622,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.8646,
+                      5.27199
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028803",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "Vereda Rio Chami",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Puesto de Salud Arkakay",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 77624,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.98584,
+                      5.4047
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028804",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "Vereda Rio Mistrato",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Puesto de Salud Rio Mistrato",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 77623,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.89525,
+                      5.28104
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028805",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "Vereda la Josefina",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Puesto de Salud Purembara",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 77629,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.88291,
+                      5.29709
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "PUERTO DE ORO",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "664560028806",
+                    "CodigoMunicipio": "66456",
+                    "CodigoPrestador": "6645600288",
+                    "Direccion": "Parque Corregimiento Puerto de oro",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "MISTRATÓ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "Puesto de Salud Puerto de Oro",
+                    "NombrePrestador": "ESE Hospital San Vicente de Paul.",
+                    "OBJECTID": 77627,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.617891,
+                      4.861473
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "666820069601",
+                    "CodigoMunicipio": "66682",
+                    "CodigoPrestador": "6668200696",
+                    "Direccion": "CRA 14 CALLES 29 Y 30",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "SANTA ROSA DE CABAL",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL SANTA ROSA DE CABAL",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 77881,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.962297,
+                      5.071127
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "66",
+                    "CodigoHabilitacion": "666870080801",
+                    "CodigoMunicipio": "66687",
+                    "CodigoPrestador": "6668700808",
+                    "Direccion": "CALLE 4 # 6-17",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Risaralda",
+                    "NOM_MPIO": "SANTUARIO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "E.S.E. HOSPITAL SAN VICENTE D PAUL",
+                    "OBJECTID": 77885,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -72.815107,
+                      6.34779
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "68",
+                    "CodigoHabilitacion": "685020072901",
+                    "CodigoMunicipio": "68502",
+                    "CodigoPrestador": "6850200729",
+                    "Direccion": "CR 1 No. 1-51",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Santander",
+                    "NOM_MPIO": "ONZAGA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "ESE HOSPITAL INTEGRADO SAN VICENTE DE PAUL",
+                    "NombrePrestador": "E.S.E. HOSPITAL INTEGRADO SAN VICENTE DE PAUL",
+                    "OBJECTID": 78979,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.410237,
+                      6.881583
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "SAN VICENTE DE CHUCURÍ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "68",
+                    "CodigoHabilitacion": "686897074501",
+                    "CodigoMunicipio": "68689",
+                    "CodigoPrestador": "6868970745",
+                    "Direccion": "CALLE 8 # 11-34",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Santander",
+                    "NOM_MPIO": "SAN VICENTE DE CHUCURÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE CHUCURI",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE CHUCURI",
+                    "OBJECTID": 79080,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -73.41357,
+                      6.87835
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": "SAN VICENTE DE CHUCURÍ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "68",
+                    "CodigoHabilitacion": "686897074502",
+                    "CodigoMunicipio": "68689",
+                    "CodigoPrestador": "6868970745",
+                    "Direccion": "Carrera 12 # 7-15",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Santander",
+                    "NOM_MPIO": "SAN VICENTE DE CHUCURÍ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE CHUCURI - SERVICIO DE URGENCIAS",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE CHUCURI",
+                    "OBJECTID": 79086,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.034463,
+                      5.150857
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "73",
+                    "CodigoHabilitacion": "732830104001",
+                    "CodigoMunicipio": "73283",
+                    "CodigoPrestador": "7328301040",
+                    "Direccion": "CRA 9 #2-42",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Tolima",
+                    "NOM_MPIO": "FRESNO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL SAN VICENTE DE PAUL - (732830104001)",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE DE PAUL EMPRESA SOCIAL DEL ESTADO",
+                    "OBJECTID": 79656,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -74.924589,
+                      3.751571
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "73",
+                    "CodigoHabilitacion": "735630039101",
+                    "CodigoMunicipio": "73563",
+                    "CodigoPrestador": "7356300391",
+                    "Direccion": "CALLE 13 #3A-78",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Tolima",
+                    "NOM_MPIO": "PRADO",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "HOSPITAL SAN VICIENTE DE PAUL EMPRESA SOCIAL DEL ESTADO",
+                    "OBJECTID": 80004,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.241685,
+                      4.242238
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "73",
+                    "CodigoHabilitacion": "736240081501",
+                    "CodigoMunicipio": "73624",
+                    "CodigoPrestador": "7362400815",
+                    "Direccion": "CRA 7 CALLE 4 ESQUINA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Tolima",
+                    "NOM_MPIO": "ROVIRA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL SAN VICENTE - (736240081501)",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE E.S.E",
+                    "OBJECTID": 80020,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -75.78263,
+                      4.67502
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": "ALCALÁ",
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760200165701",
+                    "CodigoMunicipio": "76020",
+                    "CodigoPrestador": "7602001657",
+                    "Direccion": "SEDE BARRIO VILLA FERNANDA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ALCALÁ",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E. HOSPITAL SAN VICENTE DE PAUL",
+                    "NombrePrestador": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL",
+                    "OBJECTID": 80037,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.166194,
+                      4.169924
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760360170701",
+                    "CodigoMunicipio": "76036",
+                    "CodigoPrestador": "7603601707",
+                    "Direccion": "CRA 4 # 13-31",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ANDALUCÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "E.S.E. HOSPITAL SAN VICENTE FERRER",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE FERRER ESE",
+                    "OBJECTID": 80034,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.16476,
+                      4.17359
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760360170702",
+                    "CodigoMunicipio": "76036",
+                    "CodigoPrestador": "7603601707",
+                    "Direccion": null,
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ANDALUCÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUDCAMPOALEGRE",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE FERRER ESE",
+                    "OBJECTID": 80033,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.16476,
+                      4.17359
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760360170703",
+                    "CodigoMunicipio": "76036",
+                    "CodigoPrestador": "7603601707",
+                    "Direccion": null,
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ANDALUCÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUSTO DESALUD ZABALETAS",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE FERRER ESE",
+                    "OBJECTID": 80036,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.16476,
+                      4.17359
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760360170704",
+                    "CodigoMunicipio": "76036",
+                    "CodigoPrestador": "7603601707",
+                    "Direccion": null,
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ANDALUCÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD SAN JOSE DE PIEDRAS",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE FERRER ESE",
+                    "OBJECTID": 80038,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.16476,
+                      4.17359
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "760360170705",
+                    "CodigoMunicipio": "76036",
+                    "CodigoPrestador": "7603601707",
+                    "Direccion": null,
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": null,
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "ANDALUCÍA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "PUESTO DE SALUD EL SALTO",
+                    "NombrePrestador": "HOSPITAL SAN VICENTE FERRER ESE",
+                    "OBJECTID": 80039,
+                    "TipoPersona": "2",
+                    "TipoSede": "2",
+                    "TipoZona": "2",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -76.298365,
+                      3.53621
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "4",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "76",
+                    "CodigoHabilitacion": "765200302949",
+                    "CodigoMunicipio": "76520",
+                    "CodigoPrestador": "7652003029",
+                    "Direccion": "CARRERA 29 No. 39-51",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Valle del cauca",
+                    "NOM_MPIO": "PALMIRA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "1",
+                    "Nombre": "HOSPITAL RAUL OREJUELA BUENO E.S.E - SEDE SAN VICENTE",
+                    "NombrePrestador": "E.S.E. HOSPITAL RAUL OREJUELA BUENO",
+                    "OBJECTID": 80374,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                },
+                {
+                  "geometry": {
+                    "coordinates": [
+                      -70.749627,
+                      7.081516
+                    ],
+                    "type": "Point"
+                  },
+                  "properties": {
+                    "CaracterTerritorial": "1",
+                    "CentroPoblado": null,
+                    "ClaseDePrestador": null,
+                    "CodigoDepartamento": "81",
+                    "CodigoHabilitacion": "810010007701",
+                    "CodigoMunicipio": "81001",
+                    "CodigoPrestador": "8100100077",
+                    "Direccion": "CALLE 15 CRA 16 ESQUINA",
+                    "Ese": "1",
+                    "FechaREPS": "2023-03-31",
+                    "MetodoUbicacion": "1",
+                    "NOM_DPTO": "Arauca",
+                    "NOM_MPIO": "ARAUCA",
+                    "NaturalezaJuridica": "1",
+                    "NivelAtencion": "2",
+                    "Nombre": "HOSPITAL SAN VICENTE ESE",
+                    "NombrePrestador": "ESE HOSPITAL SAN VICENTE DE ARAUCA",
+                    "OBJECTID": 65972,
+                    "TipoPersona": "2",
+                    "TipoSede": "1",
+                    "TipoZona": "1",
+                    "URL": "(no se versiona en la dorada)"
+                  },
+                  "type": "Feature"
+                }
+              ],
+              "type": "FeatureCollection"
+            },
+            "kind": "feature_collection"
+          }
+        ],
+        "facts": {
+          "completitud": {
+            "total": 68,
+            "truncado": false,
+            "vistos": 68
+          },
+          "consultado_en": "2026-11-05T08:09:42.505653+00:00",
+          "copia": {
+            "filas": 19911,
+            "huella": "sha256:1be30993cfb61be4ddd6cd1334f220682cce900e2c24a0ba0d44b6b191e04a21",
+            "repetidas_en_la_fuente": 0,
+            "ventana_desde": null,
+            "version": "20261105080942505653"
+          },
+          "servido_desde": "copia"
+        }
+      },
+      "tool": "consultar_copia"
+    }
+  ]
+}
