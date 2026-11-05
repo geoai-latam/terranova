@@ -1,0 +1,70 @@
+id: cce.secop2.paa_entidades_copia
+titulo: "SECOP II, plan anual de adquisiciones: resumen por entidad, año y versión (copia)"
+entidad: Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE)
+competencia: administra el Sistema Electrónico de Contratación Pública (Decreto 4170 de 2011)
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-10-22
+  evidencia: https://www.datos.gov.co/api/views/9sue-ezhx.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Colombia Compra Eficiente, SECOP II, plan anual de adquisiciones (detalle). Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+# Copia ya agregada (ADR-0024) del detalle 9sue-ezhx (19,6 M filas, medido el 2026-11-04): por NIT,
+# el resumen en vivo tardaba de 37 a más de 100 s (tope del canario: 30 s). La copia baja la fuente
+# año por año y guarda un grupo por entidad, NIT, año y versión, con cuántos ítems tiene y la suma de
+# su valor. Cada ítem (`id`) cuenta una vez: la fuente lo repite por categoría UNSPSC con el mismo
+# valor, y guarda solo la última versión de cada plan, así que un ítem no aparece en dos versiones.
+# No guarda el contacto del responsable ni el texto de los ítems (eso sigue en vivo, por código).
+conector: copia
+url: https://www.datos.gov.co/resource/9sue-ezhx.json
+modo: copia
+copia:
+  origen: socrata_agregado
+  conjunto: 9sue-ezhx
+  tabla: secop2_paa_entidades
+  clave: _fila
+  preagregado:
+    particion: annio
+    unico: id
+    grupo: [annio, nit_entidad, codigo_entidad, version_del_paa]
+    medidas: [valor_total_esperado]
+    nombre: nombre_entidad
+    cuenta: items
+    # Agrupar 19,6 M filas por año pasó de 180 s (2026-11-04); una página de un año, 13 s. Los años
+    # van escritos: hay planes de 2016 a 2026; 2015 tiene una sola fila, sin ítem, y 145 filas dicen año -1: no se copian. Un año nuevo
+    # se agrega aquí (y en `cobertura`).
+    tandas: ["2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026"]
+  indices: [nit_entidad, codigo_entidad]
+  orden_fisico: nit_entidad
+# datos.gov.co la actualiza a diario, pero son 19,6 M filas: se rehace cada mes, desde Colombia
+# (~400 páginas de 50 000 filas, una a la vez).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
+cobertura: {pais: CO, columna_tiempo: annio, desde_anio: 2016, hasta_anio: 2026}
+datos_personales: ninguno
+estado: publicada
+campos:
+  annio: {nombre: anio, tipo: int, desc: "año del plan"}
+  nit_entidad: {nombre: nit_entidad, tipo: str, desc: "NIT de la entidad (un NIT puede tener varias)"}
+  codigo_entidad: {nombre: codigo_entidad, tipo: str, desc: "código de la entidad en SECOP II: sirve para secop2_paa_items"}
+  version_del_paa: {nombre: version, tipo: int, desc: "versión del plan publicada (la fuente guarda solo la última)"}
+  nombre_entidad: {nombre: entidad, tipo: str, desc: "entidad que publicó el plan (si cambia de escritura, sale la mayor)"}
+  items: {nombre: items, tipo: int, desc: "ítems del plan, cada uno una vez aunque la fuente lo repita por categoría UNSPSC"}
+  suma_valor_total_esperado: {nombre: valor_total, tipo: float, desc: "suma del valor estimado de los ítems, en pesos"}
+  n_valor_total_esperado: {nombre: items_con_valor, tipo: int, desc: "ítems con valor estimado"}
+  _fila: {nombre: fila, tipo: int, desc: "número del grupo en la copia (la copia lo numera)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: weekly}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-04'
+  fila: "un grupo: una entidad, su NIT, un año y la versión de su plan"
+  clave: {columna: _fila, unica: true}
+  operaciones: {filtrar: 0.1}
+  hallazgos:
+  - "la fuente tiene 19,6 M filas (2026-11-04); un ítem se repite por categoría UNSPSC"
+  - "por NIT, el resumen en vivo con etapa previa tardó 37, 74 y más de 100 s (2026-11-03)"
+  decision: "copia preagregada por año: un ítem cuenta una vez y la consulta por NIT va al índice"

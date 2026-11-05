@@ -476,6 +476,11 @@ class Preagregado(_Ficha):
     cuenta: str = Field(
         default="personas", pattern=IDENTIFICADOR_SQL, description="columna con las personas"
     )
+    tandas: list[str] = Field(
+        default_factory=list,
+        description="valores de la partición que se bajan, si la fuente no responde al agrupar "
+        "para descubrirlos (el PAA de SECOP II, 19,6 M filas, pasó de 180 s)",
+    )
 
     @property
     def columnas_fuente(self) -> list[str]:

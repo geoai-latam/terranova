@@ -78,5 +78,18 @@ SECOP I llega a 2024.
 - **`secop2_paa_items`:**
   - El canario está bien: 582 ítems, 482 por contratación directa y 35 490 millones.
   - Tardó 32,6 s.
-- **Pendiente:** pasar el PAA de SECOP II a copia (o agregar por año en la ingesta). El agrupado en
-  vivo de `9sue-ezhx` pasa del tope. El tope no se relaja.
+- **2026-11-04, copia del resumen por entidad (`cce.secop2.paa_entidades_copia`):**
+  - `secop2_paa_entidad` tardaba de 37 a más de 100 s en vivo, sobre un tope de 30 s. Pasa a una
+    copia ya agregada: un grupo por entidad, NIT, año y versión, con los ítems contados una vez
+    (la fuente los repite por categoría UNSPSC) y la suma de su valor.
+  - La fuente tiene 19,6 M filas. Agruparla por año para descubrir los años pasó de 180 s
+    (ReadTimeout). Una página de 50 000 filas de un año tarda 13 s. Por eso los años van escritos
+    en la ficha (`tandas`, de 2016 a 2026). No se copian
+    ni 2015, que tiene una sola fila y sin ítem, ni las 145 filas con año -1.
+  - El caché de metadatos del conjunto está viejo: dice 13 filas para 2026, y solo Chía tiene
+    1 814 ítems ese año. No sirve para saber los años.
+  - Se rehace cada mes desde Colombia: unas 400 páginas, una a la vez. La primera dio 51 103
+    grupos en 34 min (2026-11-04).
+  - Las páginas se bajan enteras antes de escribir: con la COPY abierta 3,5 h, Postgres cortaba
+    la conexión.
+  - `secop2_paa_items`, por código, sigue en vivo: respondió en 2 a 4 s y una vez en 32,6 s.

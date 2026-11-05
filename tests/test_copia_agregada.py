@@ -244,3 +244,64 @@ def test_promedio_y_minimo_en_postgis() -> None:
     assert todo["promedio"] == pytest.approx((sum(range(200, 212)) + 3 * 400) / 15)
     # por estrato, el de 3 estudiantes no sale
     assert [f["fami_estratovivienda"] for f in consultar("fami_estratovivienda")] == ["Estrato 1"]
+
+
+def test_el_plan_de_secop2_cuenta_cada_item_una_vez() -> None:
+    """El PAA de SECOP II repite un ítem por cada categoría UNSPSC, con el mismo valor: sumar filas
+    inflaba el plan 2025 de Pitalito de $54 008 millones a $91 410 millones. La copia cuenta el
+    ítem una vez, con su valor una vez."""
+    paa = CATALOGO.fuentes["cce.secop2.paa_entidades_copia"]
+    assert paa.copia is not None and paa.copia.preagregado is not None
+    pre = paa.copia.preagregado
+
+    def item(id_: str, valor: str, codigo: str = "702330010") -> dict[str, Any]:
+        return {
+            "annio": "2025",
+            "id": id_,
+            "nit_entidad": "891180077",
+            "codigo_entidad": codigo,
+            "version_del_paa": "40",
+            "valor_total_esperado": valor,
+            "nombre_entidad": "MUNICIPIO DE PITALITO",
+        }
+
+    filas = [item("1", "100"), item("1", "100"), item("1", "100"), item("2", "50")]
+    filas.append(item("3", "7", codigo="724816145"))
+    grupos = {g["codigo_entidad"]: g for g in agregar_tanda(iter(filas), pre)}
+    assert grupos["702330010"]["items"] == 2
+    assert grupos["702330010"]["suma_valor_total_esperado"] == 150.0
+    assert grupos["724816145"]["items"] == 1
+    assert "id" not in grupos["702330010"]
+
+
+def test_con_tandas_escritas_no_se_agrupa_la_fuente(monkeypatch: pytest.MonkeyPatch) -> None:
+    """El PAA de SECOP II no responde en 180 s al agrupar 19,6 M filas por año: la ficha escribe
+    los años y la copia los baja sin preguntar."""
+    import terranova.copias as copias
+
+    monkeypatch.setattr(copias, "PAGINA", 2)
+    assert ICFES.copia is not None and ICFES.copia.preagregado is not None
+    pre = ICFES.copia.preagregado.model_copy(update={"tandas": ["20224"]})
+    fuente = ICFES.model_copy(update={"copia": ICFES.copia.model_copy(update={"preagregado": pre})})
+    por_periodo = {"20224": [_estudiante("B1"), _estudiante("B2")], "20101": [_estudiante("A")]}
+    http = SocrataFalso(por_periodo, pagina=2)
+    paginas = list(descargar_socrata_agregado(fuente, None, cliente=http))
+    assert not any("$group" in p for p in http.pedidos)
+    assert [g["periodo"] for p in paginas for g in p] == ["20224"]
+
+
+def test_lo_agregado_se_baja_entero_antes_de_escribir() -> None:
+    """Con el COPY abierto mientras se bajaban los años del PAA (horas), la conexión a Postgres
+    se perdía: la descarga agregada termina antes de rendir la primera página."""
+    from terranova.cli import _primero_todo
+
+    bajadas: list[int] = []
+
+    def descargar(fuente: Any, desde: Any) -> Any:
+        for i in range(3):
+            bajadas.append(i)
+            yield [{"i": i}]
+
+    paginas = _primero_todo(descargar)(ICFES, None)
+    assert bajadas == [0, 1, 2]  # ya bajó todo, antes de pedir la primera página
+    assert [p[0]["i"] for p in paginas] == [0, 1, 2]
