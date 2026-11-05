@@ -28,6 +28,14 @@ campos:
   fecha_de_apertura_de_ofertas: {nombre: fecha_apertura_ofertas, tipo: date, desc: "apertura de ofertas"}
   fecha_audiencia_de_adjudicaci: {nombre: fecha_adjudicacion, tipo: date, desc: "audiencia de adjudicación"}
   fecha_entrega_garant_a: {nombre: fecha_entrega_garantia, tipo: date, desc: "entrega de la garantía"}
+  fecha_de_publicaci_n: {nombre: fecha_publicacion, tipo: date, desc: "publicación del proceso en SECOP II"}
+  presentaci_n_de_ofertas: {nombre: presentacion_ofertas, tipo: date, desc: "presentación de ofertas (columna de otras plantillas; la fuente tiene varias para el mismo paso)"}
+  fecha_aprobaci_n_garant_as: {nombre: fecha_aprobacion_garantias, tipo: date, desc: "aprobación de las garantías"}
+  fecha_aprobaci_n_garant_as_1: {nombre: fecha_aprobacion_garantias_b, tipo: date, desc: "aprobación de las garantías, en la columna que usan otras plantillas"}
+  fecha_entrega_garant_a_o: {nombre: fecha_entrega_garantia_b, tipo: date, desc: "entrega de la garantía, en la columna que usan otras plantillas"}
+  fecha_de_firma_del_contrato: {nombre: fecha_firma_contrato, tipo: date, desc: "firma del contrato prevista en el cronograma"}
+  fecha_de_inicio_de_ejecuci: {nombre: fecha_inicio_ejecucion, tipo: date, desc: "inicio de la ejecución"}
+  plazo_de_ejecuci_n_del: {nombre: fin_plazo_ejecucion, tipo: date, desc: "fecha en que vence el plazo de ejecución"}
   fecha_de_creaci_n: {nombre: fecha_creacion, tipo: date, desc: "creación del cronograma"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

@@ -279,3 +279,16 @@ async def test_buscar_en_una_entidad_trae_todo_sin_tope() -> None:
     assert sobre.datos["coincidencias"] == 31
     assert {e["nit_entidad"] for e in sobre.datos["elementos"]} == {"891180077"}
     assert not any(a.startswith("Vinieron") for a in sobre.avisos)
+
+
+@pytest.mark.anyio
+async def test_el_cronograma_trae_las_fechas_que_la_fuente_si_llena() -> None:
+    """Revisión de valor: el concurso de méritos del canario salía con una fecha; la fuente trae
+    también presentación de ofertas y la entrega y aprobación de garantías, en columnas de otra
+    plantilla (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_cronograma_proceso"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    primera = sobre.model_dump(mode="json")["datos"]["elementos"][0]
+    assert primera["fecha_entrega_garantia_b"] == "2022-05-09"
+    assert primera["fecha_aprobacion_garantias_b"] == "2022-05-10"
