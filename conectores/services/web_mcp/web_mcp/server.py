@@ -101,7 +101,7 @@ MAX_TEXTO = 200_000
 
 @mcp.tool(
     description=("Lee una página HTML pública (`url` https de un dominio permitido): su título y su texto limpio, "
-                 "sin menús ni scripts. Para una norma o una sentencia larga, `buscar` (p. ej. «ARTÍCULO 5») "
+                 "sin menús ni scripts. Para una norma o una sentencia larga, `buscar` (p. ej. «ARTÍCULO 5»; sin distinguir mayúsculas ni tildes) "
                  "devuelve solo los fragmentos alrededor de cada aparición (los que se tocan, en uno); "
                  "`desde` (expresión regular) da el texto desde la primera línea que la cumple, como la parte "
                  "resolutiva de una sentencia (`R\\s*E\\s*S\\s*U\\s*E\\s*L\\s*V\\s*E`); `enlaces_con` "

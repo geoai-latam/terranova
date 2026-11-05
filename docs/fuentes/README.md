@@ -56,6 +56,7 @@ Reglas:
 | MinTIC, accesos a internet fijo (`hwrp-3su3` y la serie vieja `n48w-gutb`) | [mintic.internet_fijo.md](mintic.internet_fijo.md) |
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
+| Función Pública, Gestor Normativo (EVA) | [funcionpublica.gestor_normativo.md](funcionpublica.gestor_normativo.md) |
 | CAR Cundinamarca, POMCA (diez cuencas) | [car.pomca.md](car.pomca.md) |
 | DANE, crecimiento del PIB trimestral (anexo de producción, copia) | [dane.pib_crecimiento_trimestral.md](dane.pib_crecimiento_trimestral.md) |
 | IDEAM, temperatura del aire de las estaciones (`sbwg-7ju4`) | [ideam.temperatura.md](ideam.temperatura.md) |

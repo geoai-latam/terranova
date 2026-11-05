@@ -21,6 +21,11 @@ consulta:
 salida: NormasFuncionPublicaBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El Gestor Normativo no dio resultados con ese texto. Pruebe con el tipo, el número y el año
+    («ley 1712 de 2014») o con menos palabras.
 cobro: agregado
 canario:
   # Medido el 2026-10-22: «ley 1712 de 2014» da 10 resultados; el primero es la ley (i=56882).

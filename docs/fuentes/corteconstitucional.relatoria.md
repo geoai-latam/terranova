@@ -39,7 +39,10 @@ enlace.
    que sea solo «RESUELVE», con dos puntos o sin ellos.
 6. **Una sentencia puede tener dos «RESUELVE».** La T-760/08 trae otro en la posición 933 305, en
    el auto anexo. Cuenta el primero.
-7. **Fragmentos repetidos.** Dos apariciones cercanas daban casi el mismo párrafo dos veces: n 1 y
+7. **Frases partidas en dos líneas.** La T-760/08 escribe «DERECHO A LA» y, en la línea siguiente,
+   «SALUD-…». Buscar «derecho fundamental a la salud» daba 32 apariciones; con los saltos de línea,
+   son 51 (medido el 2026-11-05). El canario pasó de 32 a 51: es la nueva verdad medida.
+8. **Fragmentos repetidos.** Dos apariciones cercanas daban casi el mismo párrafo dos veces: n 1 y
    n 2 de «dignidad humana» en la C-355/06.
 
 ## Herramientas que la usan
@@ -47,7 +50,7 @@ enlace.
 | Herramienta | Valor | Estado |
 |---|---|---|
 | `corte_constitucional_texto_inicio` | medio | v3: sin el título basura; aviso de vacío; acepta SU-214-16 |
-| `corte_constitucional_texto_buscar` | alto | v3: los fragmentos que se tocan van en uno (`veces_en_fragmento`); el tope cuenta las apariciones cubiertas |
+| `corte_constitucional_texto_buscar` | alto | v3: los fragmentos que se tocan van en uno (`veces_en_fragmento`); el tope cuenta las apariciones cubiertas; sin tildes ni saltos de línea que corten la frase |
 | `corte_constitucional_resuelve` | alto | v1: la parte resolutiva, hasta 15 000 caracteres |
 
 ## Decisiones
@@ -75,3 +78,16 @@ enlace.
   `c-155a-93` daba 400 en la API aunque esta ficha decía que la minúscula valía: la mayúscula se
   ponía en la puerta, pero el esquema la rechazaba antes. Ver
   [corteconstitucional.sentencias.md](corteconstitucional.sentencias.md).
+- **2026-11-05, búsqueda sin tildes (revisión de valor):**
+  - **El conector web** busca sin distinguir mayúsculas ni tildes, y un espacio de lo buscado vale
+    por cualquier espacio o salto de línea del texto (`paginas.patron_de_busqueda`). La eñe no se
+    toca: «ano» no es «año».
+  - **Medido el 2026-11-05, antes y después, con el extractor del conector:**
+    - Ley 1712 de 2014 (Función Pública, i=56882): «informacion publica», 0 → 32; «información
+      pública», 30 → 32 (dos estaban partidas en dos líneas).
+    - Resolución CREG 101-131 de 2026: «energia», 0 → 19.
+    - T-760/08 (Corte): «proteccion», 1 → 500; «derecho fundamental a la salud», 32 → 51.
+    - Los canarios de la CREG («ARTÍCULO 1», 4), la DIAN («ARTÍCULO 1o. ALCANCE», 1) y la Función
+      Pública («ARTÍCULO 5», 2) no cambian.
+  - **Cero apariciones.** El documento existe, pero no tiene lo buscado: antes salía «encontrado»
+    con una lista vacía y sin aviso. Ahora un aviso lo dice y sugiere menos palabras.
