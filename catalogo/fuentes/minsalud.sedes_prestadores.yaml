@@ -1,0 +1,127 @@
+id: minsalud.sedes_prestadores
+titulo: "MinSalud (SISPRO): sedes de prestadores de salud (IPS, hospitales públicos) con su ubicación, copia"
+entidad: Ministerio de Salud y Protección Social
+competencia: administra el Registro Especial de Prestadores de Servicios de Salud (REPS) y el SISPRO
+acto: null
+# Capa 2 «Prestadores Salud - IPS - Sede» del visor de Protección Social del SISPRO. El servicio
+# dice «Propietario: Ministerio de Salud y Protección Social, Publicador: SISPRO» y no declara
+# licencia. El mismo registro (REPS) está en datos.gov.co (c36g-9fc2) en CC BY-SA 4.0, pero eso no
+# es la licencia de este servicio: es dato público de una entidad pública, ámbar (ADR-0019,
+# enmienda), con aviso.
+licencia:
+  spdx: null
+  url: https://sig.sispro.gov.co/arcgis_msp/rest/services/Visor/MPS_Proteccion_Social/FeatureServer
+  verificada: null
+  evidencia: https://sig.sispro.gov.co/arcgis_msp/rest/services/Visor/MPS_Proteccion_Social/FeatureServer/2?f=json
+  cita: "sin licencia declarada en el servicio (copyrightText vacío)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Ministerio de Salud y Protección Social, SISPRO (REPS georreferenciado)"
+protocolo: arcgis_rest
+conector: copia
+# La VPS no llega al SISPRO (sin respuesta desde el datacenter, 2026-11-05): la copia se baja desde
+# Colombia. El WAF del SISPRO rechaza los `where` compuestos (paréntesis, OR, IS NULL juntos), así
+# que las personas naturales se dejan fuera al copiar con `excluir`, no con un `filtro`.
+url: https://sig.sispro.gov.co/arcgis_msp/rest/services/Visor/MPS_Proteccion_Social/FeatureServer
+modo: copia
+capas_servicio: [2]
+copia:
+  origen: arcgis
+  capa: 2
+  tabla: minsalud_sedes_prestadores
+  clave: OBJECTID
+  por_pagina: 2000
+  texto: [CodigoHabilitacion, NombrePrestador, Nombre, Direccion, NOM_MPIO, NOM_DPTO]
+  excluir: {TipoPersona: ["1"]}
+# El corte del REPS georreferenciado es de 2023-08 (FechaREPS).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P365D}
+cobertura: {pais: CO, excluye: ["profesionales independientes (personas, capa 3: no se copia)", "prestadores que son personas naturales (2 sedes)", "servicios habilitados y capacidad instalada (camas)"]}
+# Sin las 2 sedes de personas naturales (excluir) y sin NIT, tipo de identificación ni teléfono.
+datos_personales: filtrados
+estado: publicada
+clasificacion_licencia: ambar
+campos:
+  OBJECTID: {nombre: id_elemento, tipo: int, desc: "identificador de la sede en la capa del SISPRO (cambia si republica)"}
+  CodigoHabilitacion: {nombre: codigo_habilitacion, tipo: str, desc: "código de habilitación de la sede en el REPS (el del prestador más el número de sede)"}
+  CodigoPrestador: {nombre: codigo_prestador, tipo: str, desc: "código del prestador en el REPS"}
+  NombrePrestador: {nombre: prestador, tipo: str, desc: "nombre del prestador (la IPS o la ESE)"}
+  Nombre: {nombre: sede, tipo: str, desc: "nombre de la sede"}
+  TipoSede:
+    nombre: tipo_sede
+    tipo: str
+    desc: "sede principal o sede"
+    codigos: {"1": "principal", "2": "sede"}
+    codigos_norma: "dominio «tsede» del campo TipoSede en la capa 2 del SISPRO"
+  ClaseDePrestador:
+    nombre: clase_prestador
+    tipo: str
+    desc: "clase de prestador"
+    codigos: {"1": "IPS", "2": "profesional independiente", "3": "transporte especial de pacientes", "4": "institución con objeto social diferente"}
+    codigos_norma: "dominio «cprestador» del campo ClaseDePrestador en la capa 2 del SISPRO"
+  NaturalezaJuridica:
+    nombre: naturaleza_juridica
+    tipo: str
+    desc: "naturaleza jurídica del prestador"
+    codigos: {"1": "pública", "2": "privada", "3": "mixta"}
+    codigos_norma: "dominio «njuridica» del campo NaturalezaJuridica en la capa 2 del SISPRO"
+  TipoPersona:
+    nombre: tipo_persona
+    tipo: str
+    desc: "tipo de persona del prestador (las personas naturales no se copian)"
+    codigos: {"1": "natural", "2": "jurídica", "3": "mixta"}
+    codigos_norma: "dominio «tpersona» del campo TipoPersona en la capa 2 del SISPRO"
+  Ese:
+    nombre: es_ese
+    tipo: str
+    desc: "si es una Empresa Social del Estado (hospital público)"
+    codigos: {"1": "sí", "2": "no"}
+    codigos_norma: "dominio «tese» del campo Ese en la capa 2 del SISPRO"
+  NivelAtencion:
+    nombre: nivel_atencion
+    tipo: str
+    desc: "nivel de atención"
+    codigos: {"1": "nivel I", "2": "nivel II", "3": "nivel III"}
+    codigos_norma: "dominio «natencion» del campo NivelAtencion en la capa 2 del SISPRO"
+  CaracterTerritorial:
+    nombre: caracter_territorial
+    tipo: str
+    desc: "carácter territorial (en las públicas)"
+    codigos: {"1": "departamental", "2": "distrital", "3": "indígena", "4": "municipal", "5": "nacional"}
+    codigos_norma: "dominio «cterritorial» del campo CaracterTerritorial en la capa 2 del SISPRO"
+  TipoZona:
+    nombre: zona
+    tipo: str
+    desc: "zona urbana o rural"
+    codigos: {"1": "urbano", "2": "rural"}
+    codigos_norma: "dominio «tzona» del campo TipoZona en la capa 2 del SISPRO"
+  Direccion: {nombre: direccion, tipo: str, desc: "dirección de la sede, como la registra el REPS"}
+  CentroPoblado: {nombre: centro_poblado, tipo: str, desc: "centro poblado"}
+  CodigoDepartamento: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento"}
+  NOM_DPTO: {nombre: departamento, tipo: str, desc: "departamento"}
+  CodigoMunicipio: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio"}
+  NOM_MPIO: {nombre: municipio, tipo: str, desc: "municipio"}
+  URL: {nombre: contacto, tipo: str, desc: "lo que el REPS registra en el campo URL: casi siempre un correo del prestador, a veces un sitio web"}
+  FechaREPS: {nombre: fecha_reps, tipo: date, desc: "fecha del corte del REPS de la que sale la fila (de 2023-03-31 a 2023-08-31)"}
+  MetodoUbicacion:
+    nombre: metodo_ubicacion
+    tipo: str
+    desc: "cómo se ubicó el punto: «centroide del municipio» no es la sede"
+    codigos: {"1": "geocodificación automática de la dirección", "2": "geocodificación manual de la dirección", "3": "relativa a sitios de interés", "4": "centroide del municipio"}
+    codigos_norma: "dominio «MetodoGeo» del campo MetodoUbicacion en la capa 2 del SISPRO"
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: Ministerio de Salud y Protección Social, theme: salud}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-05'
+  fila: "una sede de un prestador de salud: 19 913 en la capa, 3 422 de ellas de ESE (hospitales públicos)"
+  clave: {columna: OBJECTID, unica: true}
+  operaciones: {filtrar: 0.3}
+  hallazgos:
+  - "la capa 4 (ESE, 3 422) está dentro de la capa 2 (Ese = 1, 3 422): se copia solo la 2"
+  - "TipoPersona: 19 652 jurídicas, 2 naturales y 259 sin dato; las 2 naturales no se copian"
+  - "MetodoUbicacion: 14 624 geocodificadas por dirección, 718 a mano, 188 por sitio de interés, 620 en el centroide del municipio y 3 763 sin dato"
+  - "FechaREPS va de 2023-03-31 a 2023-08-31: el corte tiene unos 26 meses"
+  - "ClaseDePrestador solo trae IPS (1) o vacío; la capa 3 de profesionales independientes es de personas y no se toca"
+  - "el campo URL trae casi siempre un correo (muchos de gmail): sale como lo publica el REPS, tapado en las doradas"
+  - "la VPS no llega al servicio y el WAF rechaza los where compuestos"
+  decision: "copia espacial de la capa 2, sin personas naturales, NIT, identificación ni teléfono"

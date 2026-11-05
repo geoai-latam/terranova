@@ -577,6 +577,14 @@ class Copia(_Ficha):
         description="`where` de la capa (origen arcgis): copia solo una parte, p. ej. los "
         "municipios que el catastro del IGAC no cubre",
     )
+    # Filas que no se copian, por valor de una columna (origen arcgis), filtradas aquí y no con un
+    # `where`: el WAF de SISPRO rechaza cualquier `where` compuesto. Para dejar fuera a personas
+    # naturales de una capa de prestadores (ADR-0014).
+    excluir: dict[str, list[str]] = Field(
+        default_factory=dict,
+        description="{columna: [valores]}: las filas con uno de esos valores no se copian (origen "
+        "arcgis); la columna va en `campos`",
+    )
     geometria: bool = Field(
         default=True,
         description="copiar la geometría (origen arcgis); sin ella, solo los atributos: p. ej. los "
@@ -705,6 +713,7 @@ class Copia(_Ficha):
             extra |= set(self.preagregado.columnas_copia)
         if self.columna_servicio is not None:
             extra.add(self.columna_servicio)
+        extra |= set(self.excluir)
         return {self.clave, *ventana, *self.indices, *self.indices_contiene, *self.texto, *extra}
 
 

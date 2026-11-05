@@ -1,0 +1,51 @@
+id: minsalud_sedes_salud_municipio
+version: 1
+familia: territorio
+fuente: minsalud.sedes_prestadores
+pregunta: "¿Qué hospitales, clínicas e IPS hay en este municipio y dónde quedan?"
+descripcion: >
+  Todas las sedes de prestadores de salud de un municipio (código DIVIPOLA de 5 dígitos), con su
+  punto: código de habilitación del REPS, prestador, sede, si es principal, naturaleza jurídica,
+  si es ESE (hospital público), nivel de atención, carácter territorial, zona, dirección, fecha
+  del corte y cómo se ubicó el punto. Arriba van el total, cuántas hay por naturaleza jurídica y
+  cuántas son ESE; las listas largas siguen por páginas. Sale de la copia de Terrnova del SISPRO
+  (corte del REPS de 2023). (Fuente: Ministerio de Salud y Protección Social, SISPRO; licencia:
+  dato público reutilizable.)
+entrada: {municipio_divipola: divipola}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: minsalud_sedes_prestadores
+    filtros: {CodigoMunicipio: "{municipio_divipola}"}
+    select: [OBJECTID, CodigoHabilitacion, CodigoPrestador, NombrePrestador, Nombre, TipoSede, ClaseDePrestador, NaturalezaJuridica, TipoPersona, Ese, NivelAtencion, CaracterTerritorial, TipoZona, Direccion, CentroPoblado, CodigoDepartamento, NOM_DPTO, CodigoMunicipio, NOM_MPIO, URL, FechaREPS, MetodoUbicacion]
+    geometria: completa
+    order: [CodigoHabilitacion]
+    limite: 1000
+  campos: [OBJECTID, CodigoHabilitacion, CodigoPrestador, NombrePrestador, Nombre, TipoSede, ClaseDePrestador, NaturalezaJuridica, TipoPersona, Ese, NivelAtencion, CaracterTerritorial, TipoZona, Direccion, CentroPoblado, CodigoDepartamento, NOM_DPTO, CodigoMunicipio, NOM_MPIO, URL, FechaREPS, MetodoUbicacion]
+salida: MinsaludSedesSaludMunicipio
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_naturaleza: {de: conteo_por, campo: naturaleza_juridica_significado}
+  por_ese: {de: conteo_por, campo: es_ese_significado}
+avisos:
+- cuando: vacio
+  texto: >
+    El REPS georreferenciado del SISPRO (corte de 2023) no trae sedes de prestadores de salud
+    para esa consulta. Pruebe con un rectángulo más grande, otro código DIVIPOLA o una parte del
+    nombre.
+- cuando: encontrado
+  texto: >
+    Es el REPS georreferenciado del SISPRO con corte de 2023 (fecha_reps): sedes abiertas o
+    cerradas después no se reflejan. Mire metodo_ubicacion: 620 sedes están en el centroide del
+    municipio, no donde queda la sede. El servicio no declara licencia: es dato público del
+    Ministerio de Salud, que se usa con la atribución.
+cobro: registro
+canario:
+  # Medido el 2026-11-05 en la copia: Cubarral (50223) tiene 2 sedes, una de ellas la ESE
+  # Hospital Local de Cubarral.
+  entrada: {municipio_divipola: "50223"}
+  minimos: {total: 2}
+  campos: [caracter_territorial, caracter_territorial_significado, centro_poblado, clase_prestador, clase_prestador_significado, codigo_habilitacion, codigo_prestador, contacto, departamento, departamento_divipola, direccion, es_ese, es_ese_significado, fecha_reps, id_elemento, metodo_ubicacion, metodo_ubicacion_significado, municipio, municipio_divipola, naturaleza_juridica, naturaleza_juridica_significado, nivel_atencion, nivel_atencion_significado, por_ese, por_naturaleza, prestador, sede, tipo_persona, tipo_persona_significado, tipo_sede, tipo_sede_significado, total, zona, zona_significado]
+  latencia_max_ms: 8000

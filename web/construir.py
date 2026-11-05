@@ -452,7 +452,7 @@ SISTEMAS = {
     "MinDefensa": ["Homicidios"],
     "MinHacienda": ["Regalías"],
     "MinJusticia": ["SUIN-Juriscol"],
-    "MinSalud": ["REPS"],
+    "MinSalud": ["REPS", "sedes de prestadores de salud"],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],

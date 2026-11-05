@@ -1,0 +1,154 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: minsalud.sedes_prestadores
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://sig.sispro.gov.co/arcgis_msp/rest/services/Visor/MPS_Proteccion_Social/FeatureServer?f=json
+descripcion: MPS Proteccion Social
+filas: 19913
+geografia:
+  geometria: punto
+  crs: EPSG:3857
+  extension:
+  - -83.91949
+  - -4.220626
+  - -67.06769
+  - 13.38102
+  capas:
+    '2': Prestadores Salud - IPS - Sede
+campos:
+  OBJECTID:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  CodigoHabilitacion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CodigoHabilitacion
+  ClaseDePrestador:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: ClaseDePrestador
+    valores:
+      '1': 3799
+    codigos:
+      '1': IPS
+      '2': PROFESIONAL INDEPENDIENTE
+      '3': TRANSPORTE ESPECIAL DE PACIENTES
+      '4': INSTITUCIONES CON OBJETO SOCIAL DIFERENTE
+  NaturalezaJuridica:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: NaturalezaJuridica
+    valores:
+      '2': 15989
+      '1': 3605
+      '3': 60
+    codigos:
+      '1': PUBLICA
+      '2': PRIVADA
+      '3': MIXTA
+  TipoPersona:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: TipoPersona
+    valores:
+      '2': 19652
+      '1': 2
+    codigos:
+      '1': NATURAL
+      '2': JURIDICA
+      '3': MIXTA
+  NivelAtencion:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: NivelAtencion
+    valores:
+      '1': 2939
+      '2': 481
+      '3': 159
+    codigos:
+      '1': NIVEL I
+      '2': NIVEL II
+      '3': NIVEL III
+  TipoSede:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: TipoSede
+    valores:
+      '1': 11108
+      '2': 8546
+    codigos:
+      '1': PRINCIPAL
+      '2': SEDE
+  CaracterTerritorial:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: CaracterTerritorial
+    valores:
+      '4': 2311
+      '1': 928
+      '2': 189
+      '3': 166
+      '5': 9
+    codigos:
+      '1': DEPARTAMENTAL
+      '2': DISTRITAL
+      '3': INDIGENA
+      '4': MUNICIPAL
+      '5': NACIONAL
+  Nombre:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre
+  CodigoDepartamento:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CodigoDepartamento
+  CodigoMunicipio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CodigoMunicipio
+  Direccion:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Direccion
+  URL:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: URL
+  CodigoPrestador:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CodigoPrestador
+  NombrePrestador:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: NombrePrestador
+  TipoZona:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: TipoZona
+    valores:
+      '1': 17665
+      '2': 1923
+    codigos:
+      '1': URBANO
+      '2': RURAL
+  Ese:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: Ese
+    valores:
+      '2': 5336
+      '1': 3422
+    codigos:
+      '1': SI
+      '2': 'NO'
+  FechaREPS:
+    tipo_fuente: esriFieldTypeDate
+    etiqueta: FechaREPS
+  CentroPoblado:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: CentroPoblado
+  NOM_DPTO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Departamento
+  NOM_MPIO:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Municipio
+  MetodoUbicacion:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: MetodoUbicacion
+    valores:
+      '1': 14624
+      '2': 718
+      '4': 620
+      '3': 188
+    codigos:
+      '3': Relativa - Sitios de Interés
+      '4': Centroide - Centro del Municipio
+      '1': Geocodificación auto - Dirección
+      '2': Geocodificación manual - Dirección
