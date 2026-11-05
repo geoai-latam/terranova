@@ -53,7 +53,7 @@ avisos:
 - cuando: encontrado
   si: {campo: fuente_hasta_mes, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
   texto: >
-    En todo el país, el hecho más reciente de esta fuente es del mes fuente_hasta_mes de fuente_hasta_anio: ese año puede estar incompleto, y lo posterior no está en el corte vigente. No compare ese año con uno entero. El CNMH revisa casos con cada corte: las cifras pueden cambiar.
+    En todo el país, el hecho más reciente de esta fuente es del mes y el año que dicen fuente_hasta_mes y fuente_hasta_anio: ese año puede estar incompleto, y lo posterior no está en el corte vigente. No compare ese año con uno entero. El CNMH revisa casos con cada corte: las cifras pueden cambiar.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en chb6-bfmq: GRANADA (05313), 174 víctimas en todos los años.
