@@ -1,0 +1,57 @@
+id: bogota.calidad_aire_estaciones
+titulo: "Bogotá: estaciones de la Red de Monitoreo de Calidad del Aire (RMCAB), con su ubicación (copia)"
+entidad: Alcaldía Mayor de Bogotá
+competencia: la Secretaría Distrital de Ambiente (SDA) opera la Red de Monitoreo de Calidad del Aire de Bogotá (RMCAB) y publica la ubicación de sus estaciones en su servidor de mapas
+acto: null
+# Paquete «estaciones-calidad-del-aire-bogota-d-c» del portal datosabiertos.bogota.gov.co (SDA),
+# que apunta a esta capa: CC-BY-4.0, verificada el 2026-11-05.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://datosabiertos.bogota.gov.co/api/3/action/package_show?id=estaciones-calidad-del-aire-bogota-d-c
+  cita: "license_id: CC-BY-4.0, license_title: Creative Commons Attribution 4.0 (recurso ESRI REST: https://mapas.ambientebogota.gov.co/server/rest/services/Calidad_aire/Estacion_calidad_aire/MapServer/0)"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Secretaría Distrital de Ambiente (SDA), Red de Monitoreo de Calidad del Aire de Bogotá (RMCAB). Portal de datos abiertos de Bogotá"
+protocolo: arcgis_rest
+# Servidor de mapas de la SDA. Como los demás servidores del Distrito, la copia se baja a mano
+# desde Colombia.
+conector: copia
+url: https://mapas.ambientebogota.gov.co/server/rest/services/Calidad_aire/Estacion_calidad_aire/MapServer
+modo: copia
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: bogota_calidad_aire_estaciones
+  clave: objectid
+  por_pagina: 500
+  indices: [cod_estac]
+# El paquete se tocó el 2025-06-05. Se rehace a mano cada tres meses.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P120D}
+cobertura: {pais: CO, rectangulo: [-74.17, 4.53, -74.03, 4.79], excluye: ["todo lo que no es Bogotá D.C.", "las mediciones de cada estación: la SDA no las publica con licencia en el portal de datos abiertos", "las estaciones de calidad del aire del resto del país (SISAIRE del IDEAM)"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador de la estación en la capa (cambia si la SDA republica)"}
+  estacion: {nombre: nombre, tipo: str, desc: "nombre de la estación"}
+  cod_estac: {nombre: codigo_estacion, tipo: str, desc: "código de la estación en la RMCAB (p. ej. KEN, TUN, CDAR); dos vienen con un espacio delante"}
+  dir_estac: {nombre: direccion, tipo: str, desc: "dirección de la estación"}
+  entidad_colab: {nombre: sede, tipo: str, desc: "entidad o lugar que aloja la estación; en las siete estaciones más nuevas repite la dirección"}
+  altura: {nombre: altitud_m, tipo: float, desc: "altitud de la estación, en metros"}
+  alt_suelo: {nombre: altura_sobre_suelo_m, tipo: float, desc: "altura de la toma sobre el suelo, en metros"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: Alcaldía Mayor de Bogotá, theme: ambiente}
+perfil:
+  medido: '2026-11-05'
+  fila: "una estación de la RMCAB: 20, de ellas dos móviles (Móvil 7ma y Móvil Fontibón)"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "la capa está en EPSG:4686; la copia pide EPSG:4326"
+  - "proposito, administrador, sect_loc y activo son códigos sin tabla publicada: no se copian"
+  - "url apunta a fichas PDF en una IP del servidor viejo (190.27.245.107): no se copia"
+  - "las siete estaciones más nuevas (Colina, Usme, Ciudad Bolívar, Jazmín, Fontibón y las dos móviles) no traen altitud ni altura sobre el suelo, y en la sede repiten la dirección"
+  - "«Ciudad Bolívar», «Jazmín» y la sede de Guaymaral traen la «í» rota en la fuente"
+  - "COL y USM vienen con un espacio delante del código"
+  decision: "copia espacial de las 20 estaciones; las mediciones no tienen licencia publicada y no se suman"

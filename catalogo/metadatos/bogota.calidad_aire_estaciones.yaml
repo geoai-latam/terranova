@@ -1,0 +1,18 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: bogota.calidad_aire_estaciones
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://mapas.ambientebogota.gov.co/server/rest/services/Calidad_aire/Estacion_calidad_aire/MapServer?f=json
+titulo: Estacion calidad del aire
+descripcion: El objeto geográfico almacena la ubicación de las estaciones de la Red de Monitoreo de Calidad
+  del Aire de Bogotá (RMCAB) para el área urbana del Distrito Capital , localizado mediante coordenadas
+  planas cartesianas en el sistema de referencia Magna-Sirgas.Temáticamente da cuenta del nombre de la
+  estación de monitoreo que identifica el lugar donde se encuentra instalada, codificación, dirección,
+  nombre de la entidad que permite la instalación de los equipos, altura de la estación snmm y altura
+  de la estación con referencia al suelo, propósito de medición de la estación (Tráfico, fondo de la ciudad,
+  de frontera, industrial) y si la estación está activa o inactiva. Cada estación es integrada por una
+  cabina que se instrumenta con un conjunto de equipos de medición de contaminantes atmosféricos primarios
+  y secundarios, y de equipos de medición meteorológica manuales o automáticos situados en posición estratégica.
+  La capa fue construida a partir del posicionamiento de las estaciones en campo, de la cual se obtuvo
+  las coordenadas geográficas correspondientes, que luego se integraron a los datos de la estación definidos
+  en el Catálogo de Objetos Geográficos Ambientales de la Secretaría D…

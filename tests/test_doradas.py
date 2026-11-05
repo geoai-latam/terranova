@@ -474,3 +474,16 @@ def test_ninguna_dorada_guarda_un_correo() -> None:
     for archivo in sorted(DORADAS.glob("*.json")):
         hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
         assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
+
+
+@pytest.mark.anyio
+async def test_estaciones_de_calidad_del_aire_de_bogota() -> None:
+    """Estaciones de la RMCAB medidas en la capa de la SDA y en la copia el 2026-11-05: 5 en el
+    centro de Bogotá."""
+    h = CATALOGO.herramientas["bogota_calidad_aire_estaciones_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 5
+    codigos = {e["codigo_estacion"] for e in datos["elementos"]}
+    assert codigos == {"CDAR", "JAZ", "MAM", "MOV", "PTE"}

@@ -9,6 +9,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ant_consejos_comunitarios_en_punto` | ¿En qué territorio colectivo de comunidades negras (consejo comunitario titulado) cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_resguardos_en_punto` | ¿En qué resguardo indígena formalizado cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `ant_zonas_reserva_campesina_en_punto` | ¿En qué zona de reserva campesina constituida cae este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
+| `bogota_calidad_aire_estaciones_en_zona` | ¿Qué estaciones de la red de calidad del aire de Bogotá (RMCAB) hay en esta zona? | Alcaldía Mayor de Bogotá | CC-BY-4.0 | 20 |
 | `car_pomca_en_poligono` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 20 |
 | `car_pomca_en_punto` | ¿Qué zonificación ambiental del POMCA de la CAR tiene este punto de Cundinamarca? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-4.0 | 10 |
 | `car_pomca_rio_sumapaz_en_poligono` | ¿Qué zonificación ambiental del POMCA del río Sumapaz tiene este lote, y cuántas hectáreas de cada zona? | Corporación Autónoma Regional de Cundinamarca (CAR) | CC-BY-SA-4.0 | 20 |
