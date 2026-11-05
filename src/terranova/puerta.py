@@ -439,6 +439,16 @@ async def ejecutar(
                 if ventana is not None
                 else None
             )
+            if (
+                total is not None
+                and h is not None
+                and h.consulta.juntar
+                and not any(p.completitud.truncado for p in sobre.procedencia)
+            ):
+                # `juntar` (2026-11-05): la fuente cuenta filas, no elementos. Buscapina (expediente
+                # 36344) trae 28 filas, una por vía, que son 14 elementos; el aviso decía «1-14 de
+                # 28 (página 1 de 1)». Con la lista entera, el total es el de los elementos.
+                total = None
             # la caché y la idempotencia guardan la lista entera
             sobre = paginar(sobre, pagina, por_pagina, total)
     except ValidationError as exc:

@@ -24,6 +24,13 @@ consulta:
     max_filas: 200
   campos: [expediente, registro_sanitario, estado_registro, fecha_vencimiento, grupo, prodcuto, marca, nivel_riesgo, usos, titular, pais_titular, modalidad]
 salida: DispositivoPorExpediente
+avisos:
+- cuando: vacio
+  texto: >
+    El INVIMA no publica un dispositivo médico con ese número de expediente en su conjunto de
+    registros de dispositivos. Revise el número (va sin ceros a la izquierda ni letras); los
+    medicamentos están en invima_medicamento_por_expediente y los alimentos, cosméticos y otros
+    productos, en invima_registro_sanitario_por_expediente.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en y4qt-w6tk: el expediente 217 es cera para huesos.

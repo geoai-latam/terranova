@@ -57,3 +57,14 @@ se adivina el nombre por los ejemplos.
   - El motor suma la opción `vacios`: textos que la fuente pone en lugar de un dato (también sirve
     para el patrón I).
 - **Pendiente:** separar NIT y dígito como en el RUES, y buscar también por NIT sin dígito.
+
+## Revisión de valor, 2026-11-05
+
+- **La tilde está en el dato.** La razón social se escribe con tildes («BANCO DE BOGOTÁ S.A.»), y
+  quien busca suele escribir sin ellas: «BOGOTA» daba «no encontrado» y «BOGOTÁ», 7. La búsqueda
+  usa ahora `{nombre:vocales}`, que pone el comodín `_` en cada vocal de las palabras de 5 letras
+  o más. «BANCO DE BOGOTA» da 5, «CORPORACION FINANCIERA» 8 y «FIDUCIARIA» las mismas 26.
+- En palabras cortas el comodín casa con casi todo (`_` también es un espacio): «SURA» como `S_R_`
+  daba 95, con «usar el» entre ellas. Por eso solo va en las de 5 letras o más.
+- Un NIT que no es de una entidad vigilada (Ecopetrol) daba «no encontrado» sin aviso: el aviso
+  manda a `rues_empresa_por_nit`.

@@ -25,6 +25,11 @@ Medido el 2026-11-03: 485 557 filas de suspensión y 422 796 de reanudación, de
    («SUSPENSIoN»), y con punto y coma donde iban comas.
 3. **Hay más suspensiones que reanudaciones** (62 761 de diferencia). Sin medir cuántas son
    contratos todavía suspendidos y cuántas reanudaciones no registradas.
+4. **No trae el estado.** Salen también las canceladas y rechazadas, y no hay identificador de la
+   modificación para cruzarlas con `u8cx-r425`. Medido el 2026-11-05 en CO1.PCCNTR.3712964: salen
+   10, y en `secop_modificaciones_contrato` las del 2023-05-08 (3) y del 2023-08-17 están
+   canceladas y la del 2023-08-18, rechazada. La respuesta lo avisa y manda a modificaciones, que
+   dice cuál está vigente.
 
 ## Herramientas que la usan
 
@@ -37,3 +42,5 @@ Medido el 2026-11-03: 485 557 filas de suspensión y 422 796 de reanudación, de
 - **2026-11-03, revisión de valor:** sin cambios. Medido en producción con el PAE de Chía
   (CO1.PCCNTR.7180851): 3 filas, dos suspensiones por el receso escolar y una reanudación. El texto
   sale como lo publica la fuente.
+- **2026-11-05, revisión de valor:** aviso de que la lista no trae el estado (con el caso medido)
+  y aviso de «no encontrado».

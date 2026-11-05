@@ -10,6 +10,7 @@ Uso: `TERRANOVA_CONECTOR_LLAVE=… uv run scripts/grabar_doradas.py [herramienta
 
 import asyncio
 import json
+import re
 import sys
 import time
 from datetime import UTC, datetime
@@ -41,6 +42,23 @@ def _numero(valor: Any) -> float:
     raise TypeError(f"no se puede grabar {type(valor).__name__}")
 
 
+# Un correo en una dorada es un dato personal versionado: la carátula de la Supersociedades trae el
+# «E-mail de la sociedad», que suele ser el de una persona (medido el 2026-11-05). Se graba
+# enmascarado; la prueba dorada valida el mapeo, no el correo.
+CORREO = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
+ENMASCARADO = "correo@enmascarado.invalid"
+
+
+def _sin_correos(valor: Any) -> Any:
+    if isinstance(valor, str):
+        return CORREO.sub(ENMASCARADO, valor)
+    if isinstance(valor, list):
+        return [_sin_correos(v) for v in valor]
+    if isinstance(valor, dict):
+        return {k: _sin_correos(v) for k, v in valor.items()}
+    return valor
+
+
 def _ligera(respuesta: dict[str, Any]) -> dict[str, Any]:
     # La copia (Postgres) suma en `numeric` y el conector en proceso devuelve Decimal; el MCP lo
     # entrega como número, y así se graba.
@@ -48,7 +66,8 @@ def _ligera(respuesta: dict[str, Any]) -> dict[str, Any]:
     for art in copia.get("artifacts") or []:
         for rasgo in (art.get("data") or {}).get("features") or []:
             rasgo["geometry"] = _reducir(rasgo.get("geometry"))
-    return copia
+    enmascarada: dict[str, Any] = _sin_correos(copia)
+    return enmascarada
 
 
 class Grabador:

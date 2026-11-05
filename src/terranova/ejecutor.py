@@ -299,12 +299,17 @@ def _numero(x: Any) -> bool:
 
 
 _TILDES = str.maketrans(dict.fromkeys("ÁÉÍÓÚÜáéíóúü", "_"))
+_VOCALES = str.maketrans(dict.fromkeys("AEIOUaeiouÁÉÍÓÚÜáéíóúü", "_"))
 
 
 def _marcador(m: re.Match[str], valores: dict[str, Any]) -> Any:
     valor = valores[m.group(1)]
     if m.group(0).endswith(":sin_tildes}"):
         return str(valor).translate(_TILDES)
+    if m.group(0).endswith(":vocales}"):
+        # solo en palabras de 5 letras o más: en una corta el comodín casa con casi todo
+        # («SURA» como S_R_ casaba con «usar el», porque `_` también es un espacio)
+        return re.sub(r"\w{5,}", lambda p: p.group(0).translate(_VOCALES), str(valor))
     if m.group(0).endswith(":ascii}"):
         return unicodedata.normalize("NFKD", str(valor)).encode("ascii", "ignore").decode()
     return valor
@@ -313,7 +318,9 @@ def _marcador(m: re.Match[str], valores: dict[str, Any]) -> Any:
 def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
     """Reemplaza `{marcador}`: si el texto es solo el marcador, el valor conserva su tipo.
     `{marcador:sin_tildes}` cambia cada vocal con tilde por `_`, el comodín de LIKE;
-    `{marcador:ascii}` quita tildes y eñes («daño» → «dano»)."""
+    `{marcador:vocales}` cambia toda vocal, con tilde o sin ella, por `_` en las palabras de 5
+    letras o más: «BOGOTA» encuentra «BOGOTÁ» (la tilde está en el dato, no en lo que se
+    escribe); `{marcador:ascii}` quita tildes y eñes («daño» → «dano»)."""
     if isinstance(plantilla, str):
         entero = MARCADOR.fullmatch(plantilla)
         if entero:

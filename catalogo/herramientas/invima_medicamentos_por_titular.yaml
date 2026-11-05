@@ -33,6 +33,14 @@ derivados:
   principio_activo: {de: columna, campo: principio_activo_1, tipo: str}
   principios_activos: {de: columna, campo: principios_activos, tipo: int}
   presentaciones_activas: {de: columna, campo: presentaciones, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    El INVIMA no tiene medicamentos vigentes de un titular con ese nombre. Se busca una parte del
+    nombre como lo registra el INVIMA, sin tildes (LAFRANCOL, GENFAR), y solo entre los registros
+    vigentes: para uno vencido o en otro estado, invima_medicamento_estado_por_expediente. Un mismo
+    laboratorio puede salir con varios nombres (LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S. y
+    LAFRANCOL INTERNACIONAL S.A.S).
 cobro: agregado
 canario:
   # Medido el 2026-11-03 en i7cb-raxc: «LAFRANCOL» tiene 176 expedientes con CUM activos (193 filas

@@ -148,3 +148,14 @@ ninguno de los otros tres.
     ahora 14.
   - Motrin (31330, vigente) sigue con una fila por presentación y rol: el fabricante y el
     importador son filas distintas, y eso es dato.
+
+## Revisión de valor, 2026-11-05
+
+- `invima_medicamentos_por_titular`: LAFRANCOL da 176 vigentes en 4 páginas, con dos nombres de
+  titular (LABORATORIO FRANCO COLOMBIANO - LAFRANCOL S.A.S. y LAFRANCOL INTERNACIONAL S.A.S).
+  GENFAR da 270. Un nombre que no existe daba «no encontrado» sin aviso: ahora lo explica.
+- Los cuatro por expediente concuerdan: 36344 (Buscapina) está en renovación y no sale en
+  vencidos ni en otros estados; 2203 está vencido; 3277 está desistido (otros estados).
+- `invima_medicamento_en_renovacion_por_expediente`: la fuente trae 28 filas, una por vía, que
+  `juntar` deja en 14. El aviso de página decía «1-14 de 28 (página 1 de 1)»: se arregla en la
+  puerta.

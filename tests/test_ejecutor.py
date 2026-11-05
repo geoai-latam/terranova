@@ -167,6 +167,16 @@ def test_un_marcador_sin_tildes_busca_con_y_sin_tilde() -> None:
     assert renderizar("{p:sin_tildes}", {"p": "Bogotá"}) == "Bogot_"
 
 
+def test_un_marcador_vocales_encuentra_la_tilde_que_esta_en_el_dato() -> None:
+    """La Superfinanciera escribe «BANCO DE BOGOTÁ»; quien busca escribe «BOGOTA» y con
+    `sin_tildes` no salía nada (medido el 2026-11-05: «BOGOTA» 0, «BOGOTÁ» 7)."""
+    assert renderizar("like '%{p:vocales}%'", {"p": "BOGOTA"}) == "like '%B_G_T_%'"
+    assert renderizar("{p:vocales}", {"p": "Bogotá"}) == "B_g_t_"
+    assert renderizar("{p:vocales}", {"p": "Ñ 1"}) == "Ñ 1"
+    # en una palabra corta, el comodín casa con casi todo: «SURA» dio 95 con S_R_
+    assert renderizar("{p:vocales}", {"p": "SURA inversión"}) == "SURA _nv_rs__n"
+
+
 def test_un_marcador_ascii_quita_tildes_y_enes() -> None:
     """La relatoría de Colombia Compra devuelve sus 7 761 conceptos si la búsqueda trae una letra
     fuera de ASCII (medido el 2026-11-03: «daño antijurídico», 7 761; «dano antijuridico», 8)."""
