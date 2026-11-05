@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T20:55:24+00:00",
+ "grabado": "2026-11-05T12:12:52+00:00",
  "herramienta": "superfinanciera_vigiladas_buscar",
  "llamadas": [
   {
@@ -10,7 +10,7 @@
     "order": "tipo_entidad, length(razon_social), razon_social",
     "portal": "datos.gov.co",
     "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
-    "where": "upper(razon_social) like upper('%BANCOLOMBIA%')"
+    "where": "upper(razon_social) like upper('%B_NC_L_MB__%')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -106,11 +106,11 @@
       "max_filas": 50,
       "portal": "datos.gov.co",
       "select": "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb",
-      "where": "(upper(razon_social) like upper('%BANCOLOMBIA%'))"
+      "where": "(upper(razon_social) like upper('%B_NC_L_MB__%'))"
      },
      "cumplen_en_el_portal": 7,
      "filas": 7,
-     "filtro_soql": "(upper(razon_social) like upper('%BANCOLOMBIA%'))",
+     "filtro_soql": "(upper(razon_social) like upper('%B_NC_L_MB__%'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

@@ -25,6 +25,12 @@ consulta:
 salida: VigiladaSuperfinancieraPorNit
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ese NIT no es de una entidad vigilada por la Superintendencia Financiera. Solo están los bancos,
+    fiduciarias, aseguradoras, comisionistas y demás entidades que vigila; para cualquier otra
+    empresa, rues_empresa_por_nit (Ecopetrol, por ejemplo, no está aquí).
 cobro: registro
 canario:
   # Medido el 2026-10-23 en sr9n-792w: Bancolombia (890903938) es la entidad 7 del tipo 1, en Medellín.
