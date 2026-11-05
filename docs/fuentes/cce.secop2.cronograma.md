@@ -50,3 +50,24 @@ Una fila por fase de un proceso, con:
   - Medido en producción: el canario (concurso de méritos, 2 fases, 2,1 s) y el PAE de Chía
     (licitación: apertura el 18 y 19 de diciembre de 2024, adjudicación el 27 y 28, garantía el 30;
     1,6 s).
+
+## Revisión de valor (2026-11-04)
+
+- `f3ev-294c` tiene unas 60 columnas de fechas, una variante por plantilla de modalidad, y cada
+  fase llena unas pocas. La herramienta pedía cinco, y una de ellas, la audiencia de
+  adjudicación, venía llena en 3 de 2 000 fases.
+- Muestra de las 2 000 fases más recientes (`$order=:id DESC`, una petición):
+  - publicación: 66 %;
+  - firma del contrato: 65 %;
+  - inicio y fin del plazo de ejecución: 62 %;
+  - presentación de ofertas: 8 %;
+  - apertura de ofertas: 6,5 %;
+  - entrega de garantía: 5 %;
+  - aprobación de garantías: 4,6 %.
+- El canario, un concurso de méritos, salía con una sola fecha. La fuente llena también la
+  presentación de ofertas y la entrega y aprobación de garantías, en las columnas `_o` y `_1`
+  de otra plantilla.
+- La herramienta suma ocho columnas: publicación, firma, inicio, fin del plazo, presentación de
+  ofertas, aprobación de garantías y las dos variantes de garantías del canario.
+- El aviso decía que en contratación directa el cronograma viene vacío. Es falso: ahí van
+  publicación, firma e inicio. Se reescribió con lo medido.

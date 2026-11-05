@@ -282,6 +282,19 @@ async def test_buscar_en_una_entidad_trae_todo_sin_tope() -> None:
 
 
 @pytest.mark.anyio
+async def test_el_cronograma_trae_las_fechas_que_la_fuente_si_llena() -> None:
+    """Revisión de valor: el concurso de méritos del canario salía con una fecha; la fuente trae
+    también presentación de ofertas y la entrega y aprobación de garantías, en columnas de otra
+    plantilla (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_cronograma_proceso"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    primera = sobre.model_dump(mode="json")["datos"]["elementos"][0]
+    assert primera["fecha_entrega_garantia_b"] == "2022-05-09"
+    assert primera["fecha_aprobacion_garantias_b"] == "2022-05-10"
+
+
+@pytest.mark.anyio
 async def test_transmilenio_dice_tipo_y_etapa_de_cada_estacion() -> None:
     """Estaciones troncales y trazados en una capa. Los códigos de tipo y etapa salen con su
     significado (diccionario del ítem). Calle 45 y Calle 63 estaban cerradas por obras en la
