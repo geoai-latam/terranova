@@ -32,8 +32,10 @@
      | `datos_consultar` (Socrata) | `$offset` | `:id` o el orden de la ficha |
      | `arcgis_query_features` | `resultOffset` | OBJECTID; sin él no se sigue |
 
-     No pagina en la fuente una herramienta con varias capas, consulta previa, complemento,
-     agregados o un tope que sale de la entrada. Esa conserva la ADR-0033.
+     No pagina en la fuente una herramienta con varias capas, consulta previa, agregados o un tope
+     que sale de la entrada. Esa conserva la ADR-0033. Los agregados quedan para después: paginar
+     grupos exige un orden único por grupo, y su total no se conoce sin otra consulta. El
+     complemento sí pagina: corre aparte y no entra en el total.
   3. **El total es el de la fuente en todas las páginas.** Sale del conteo, no del largo de la
      lista. Recorrer las páginas da exactamente el total, sin repetidos ni faltantes.
   4. **Los conteos y sumas de `datos` dicen sobre qué van.**

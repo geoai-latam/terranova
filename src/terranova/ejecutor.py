@@ -86,10 +86,11 @@ TOPE_PAGINABLE: dict[str, str] = {
 
 def ventana_de(h: Herramienta) -> int | None:
     """Cuántas filas trae la consulta de la ficha si se puede seguir en la fuente (ADR-0040); None
-    si la herramienta no pagina en la fuente (varias capas, consulta previa o complemento, un tope
-    que sale de la entrada o una consulta que no admite `desde`)."""
+    si la herramienta no pagina en la fuente (varias capas, consulta previa, agregados, un tope que
+    sale de la entrada o una consulta que no admite `desde`). El complemento corre aparte y no
+    cuenta en el total: no estorba."""
     nombre = TOPE_PAGINABLE.get(h.consulta.tool)
-    if nombre is None or len(h.consulta.capas) > 1 or h.consulta.previa or h.consulta.complemento:
+    if nombre is None or len(h.consulta.capas) > 1 or h.consulta.previa:
         return None
     if h.consulta.argumentos.get("agregados") or h.consulta.argumentos.get("group"):
         return None
