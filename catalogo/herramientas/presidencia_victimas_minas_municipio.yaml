@@ -32,6 +32,13 @@ derivados:
   total_muertos: {de: suma, campo: victimas, tipo: int, solo_si: {campo: resultado, valores: [Muerto]}}
   total_civiles: {de: suma, campo: victimas, tipo: int, solo_si: {campo: condicion, valores: [Civil]}}
   ultimo_anio: {de: primero, campo: anio, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Descontamina Colombia no registra víctimas de minas antipersonal ni de munición sin explosionar
+    en ese municipio entre 1990 y 2023. Es la falta de registro en esta fuente, no la prueba de que
+    no hubo minas: el CNMH lleva su propio registro (cnmh_minas_municipio) y la fuente no trae nada
+    posterior a 2023.
 cobro: agregado
 canario:
   # Medido el 2026-11-03 en yhxn-eqqw (no cambia desde 2024-01-19): Granada, Antioquia (05313; prueba
