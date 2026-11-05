@@ -6,6 +6,7 @@ rompe el CI (`scripts/check.py`).
 
 from __future__ import annotations
 
+import copy
 import difflib
 import functools
 import json
@@ -1291,11 +1292,27 @@ class ErrorDeLista(ValueError):
     """Un campo pide una lista de códigos que no está en `catalogo/codigos/`."""
 
 
+_CARGADOR = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+
+def _leer_yaml(ruta: Path) -> Any:
+    """Lee una ficha con el analizador en C de libyaml si está (unas diez veces más rápido que el
+    de Python puro, que se llevaba el 97 % de `cargar`), con las mismas reglas de `safe_load`."""
+    return yaml.load(ruta.read_text(encoding="utf-8"), Loader=_CARGADOR)
+
+
+@functools.lru_cache(maxsize=64)
+def _lista_leida(ruta: str, _marca: int) -> Any:
+    """El texto de una lista de códigos, una vez por versión del archivo: la CIIU y las unidades
+    del comercio exterior se leían una vez por cada ficha que las pide."""
+    return _leer_yaml(Path(ruta))
+
+
 def _lista_de_codigos(lista: str, raiz: Path) -> dict[str, Any]:
     ruta = raiz / "codigos" / f"{lista}.yaml"
     if not re.fullmatch(r"[a-z0-9_]+", lista) or not ruta.is_file():
         raise ErrorDeLista(f"no existe la lista de códigos catalogo/codigos/{lista}.yaml")
-    datos: dict[str, Any] = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+    datos: dict[str, Any] = copy.deepcopy(_lista_leida(str(ruta), ruta.stat().st_mtime_ns))
     return datos
 
 
@@ -1337,7 +1354,7 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
         for ruta in sorted((raiz / carpeta).glob("*.yaml")):
             nombre = ruta.relative_to(raiz).as_posix()
             try:
-                crudo = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+                crudo = _leer_yaml(ruta)
                 _con_listas_de_codigos(crudo, raiz)
                 ficha = modelo.model_validate(crudo)
             except ErrorDeLista as exc:
@@ -1356,7 +1373,7 @@ def cargar(raiz: Path = RAIZ) -> Catalogo:
     for ruta in sorted((raiz / "metadatos").glob("*.yaml")):
         nombre = ruta.relative_to(raiz).as_posix()
         try:
-            m = Metadatos.model_validate(yaml.safe_load(ruta.read_text(encoding="utf-8")))
+            m = Metadatos.model_validate(_leer_yaml(ruta))
         except (ValidationError, yaml.YAMLError) as exc:
             errores.append(f"{nombre}: {exc}")
             continue
