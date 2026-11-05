@@ -256,9 +256,23 @@ async def test_un_compromiso_de_secop2_dice_su_estado_y_que_es_su_tipo() -> None
 
 
 @pytest.mark.anyio
+async def test_un_contrato_de_secop2_dice_cuanto_falta_por_pagar_y_de_que_bolsa_sale() -> None:
+    """Revisión de valor: el predio de Chía salía con `valor_pagado: 0` y nada más. La fuente dice
+    que nada se facturó, que falta pagarlo entero y que lo pone la alcaldía (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_contrato_por_id"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["valor_pendiente_pago"] == datos["valor"] == 2602628368
+    assert datos["recursos_propios_territoriales"] == datos["valor"]
+    assert (datos["destino_gasto"], datos["dias_adicionados"]) == ("Inversión", 0)
+
+
+@pytest.mark.anyio
 async def test_buscar_en_una_entidad_trae_todo_sin_tope() -> None:
-    """Revisión de valor: en todo el país, «mantenimiento vías» da 1 308 contratos, 50 se ven y el
-    aviso pide acotar sin dar cómo. En Pitalito son 31 y vienen todos (2026-11-04)."""
+    """Revisión de valor: en todo el país, «mantenimiento de vías terciarias» da 1 308, se ven 50
+    y el aviso pide acotar sin dar cómo. En Pitalito, «mantenimiento vías» da 31, todos
+    (2026-11-04)."""
     h = CATALOGO.herramientas["secop_contratos_buscar_entidad"]
     grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
     sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)

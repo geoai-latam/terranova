@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T22:43:43+00:00",
+ "grabado": "2026-11-05T02:30:00+00:00",
  "herramienta": "secop_contrato_por_id",
  "llamadas": [
   {
@@ -8,7 +8,7 @@
     "id": "jbjy-vk9h",
     "max_filas": 2,
     "portal": "datos.gov.co",
-    "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
+    "select": "id_contrato, referencia_del_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, tipodocproveedor, documento_proveedor, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, valor_pagado, valor_facturado, valor_pendiente_de_pago, valor_pendiente_de_ejecucion, valor_de_pago_adelantado, dias_adicionados, duraci_n_del_contrato, destino_gasto, origen_de_los_recursos, sector, orden, codigo_de_categoria_principal, presupuesto_general_de_la_nacion_pgn, sistema_general_de_participaciones, sistema_general_de_regal_as, recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_, recursos_de_credito, recursos_propios, fecha_de_firma, fecha_de_inicio_del_contrato, fecha_de_fin_del_contrato, ultima_actualizacion, urlproceso",
     "where": "id_contrato = 'CO1.PCCNTR.5141215'"
    },
    "conector": "datos-abiertos-mcp",
@@ -17,8 +17,12 @@
      {
       "columns": [
        "ciudad",
+       "codigo_de_categoria_principal",
        "departamento",
+       "destino_gasto",
+       "dias_adicionados",
        "documento_proveedor",
+       "duraci_n_del_contrato",
        "estado_contrato",
        "fecha_de_fin_del_contrato",
        "fecha_de_firma",
@@ -28,42 +32,72 @@
        "nit_entidad",
        "nombre_entidad",
        "objeto_del_contrato",
+       "orden",
+       "origen_de_los_recursos",
+       "presupuesto_general_de_la_nacion_pgn",
        "proceso_de_compra",
        "proveedor_adjudicado",
+       "recursos_de_credito",
+       "recursos_propios",
+       "recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_",
        "referencia_del_contrato",
+       "sector",
+       "sistema_general_de_participaciones",
+       "sistema_general_de_regal_as",
        "tipo_de_contrato",
        "tipodocproveedor",
        "ultima_actualizacion",
        "urlproceso",
+       "valor_de_pago_adelantado",
        "valor_del_contrato",
-       "valor_pagado"
+       "valor_facturado",
+       "valor_pagado",
+       "valor_pendiente_de_ejecucion",
+       "valor_pendiente_de_pago"
       ],
       "kind": "table",
       "rows": [
        {
         "ciudad": "Chía",
+        "codigo_de_categoria_principal": "V1.95101500",
         "departamento": "Cundinamarca",
+        "destino_gasto": "Inversión",
+        "dias_adicionados": "0",
         "documento_proveedor": "832008895",
+        "duraci_n_del_contrato": "15 Dia(s)",
         "estado_contrato": "Cerrado",
-        "fecha_de_fin_del_contrato": "2023-07-14T00:00:00.000",
-        "fecha_de_firma": "2023-06-26T00:00:00.000",
-        "fecha_de_inicio_del_contrato": "2023-06-26T00:00:00.000",
+        "fecha_de_fin_del_contrato": "2023-07-14T23:00:00.000",
+        "fecha_de_firma": "2023-06-26T18:15:18.040",
+        "fecha_de_inicio_del_contrato": "2023-06-26T18:20:00.000",
         "id_contrato": "CO1.PCCNTR.5141215",
         "modalidad_de_contratacion": "Contratación directa",
         "nit_entidad": "900806301",
         "nombre_entidad": "IDUVI",
         "objeto_del_contrato": "dquisición del predio denominado El Carmen con un área de dos mil noventa y cinco metros cuadrados (2.095 m2) e identificado con folio de matrícula inmobiliaria No. 50N-20856396 y cedula catastral 010100110075000; ubicado en el municipio de Chía; inlcuyendo terreno; construcciones; mejoras; inventario de cultivos y especies. Proceso de compra en virtud a los Decretos municipales No. 108 de 2023",
+        "orden": "Territorial",
+        "origen_de_los_recursos": "Distribuido",
+        "presupuesto_general_de_la_nacion_pgn": "0",
         "proceso_de_compra": "CO1.BDOS.4632571",
         "proveedor_adjudicado": "DAVAN SAS",
+        "recursos_de_credito": "0",
+        "recursos_propios": "0",
+        "recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_": "2602628368",
         "referencia_del_contrato": "CD 51 DE 2023",
+        "sector": "Vivienda, Ciudad y Territorio",
+        "sistema_general_de_participaciones": "0",
+        "sistema_general_de_regal_as": "0",
         "tipo_de_contrato": "Otro",
         "tipodocproveedor": "NIT",
-        "ultima_actualizacion": "2024-02-29T00:00:00.000",
+        "ultima_actualizacion": "2024-02-29T15:03:43.219",
         "urlproceso": {
          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.4639330&isFromPublicArea=True&isModal=true&asPopupView=true"
         },
+        "valor_de_pago_adelantado": "0",
         "valor_del_contrato": "2602628368",
-        "valor_pagado": "0"
+        "valor_facturado": "0",
+        "valor_pagado": "0",
+        "valor_pendiente_de_ejecucion": "2602628368",
+        "valor_pendiente_de_pago": "2602628368"
        }
       ]
      }

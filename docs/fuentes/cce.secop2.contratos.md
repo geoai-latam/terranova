@@ -127,6 +127,24 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 
   Pitalito tardó más la segunda vez: el tiempo varía con la carga del servidor.
 
+## Revisión de valor: pagos y origen del dinero (2026-11-04)
+
+- `secop_contrato_por_id` daba `valor_pagado: 0` en el canario, un predio de 2 602 millones
+  cerrado en 2023, sin decir nada más. La fuente sí dice más, y se pidió con una sola consulta:
+  - `valor_facturado` 0 y `valor_pendiente_de_pago` 2 602 628 368: en SECOP II no se registró
+    factura ni pago. Leer solo `valor_pagado` sugería que no se pagó nada.
+  - El dinero sale todo de `recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_`;
+    el gasto es de inversión y no se sumaron días al plazo.
+- Se sumaron a la ficha, con nombre corto: lo facturado, lo pendiente de pago y de ejecución, el
+  pago adelantado, los días adicionados, la duración, el destino del gasto, el origen de los
+  recursos, el sector, el orden, la categoría UNSPSC y lo que pone cada bolsa (PGN, SGP, SGR,
+  recursos propios territoriales, crédito y otros recursos propios). Ninguno es dato personal.
+- Siguen fuera el representante legal, el ordenador del gasto, el supervisor, el ordenador de
+  pago y la cuenta bancaria.
+- Las fechas de la fuente ahora traen hora (`2023-06-26T18:15:18.040`); la ficha las da como
+  fecha, igual que antes.
+- Un id que no existe (`CO1.PCCNTR.1`) da `no_encontrado` en 4,9 s.
+
 ## Revisión de valor: buscar en el texto de una entidad (2026-11-04)
 
 - `secop_contratos_buscar` busca en todo el país. «mantenimiento de vías terciarias» da 1 308
