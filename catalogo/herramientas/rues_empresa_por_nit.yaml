@@ -23,6 +23,19 @@ consulta:
     max_filas: 200
   campos: [nit, digito_verificacion, razon_social, sigla, camara_comercio, matricula, organizacion_juridica, tipo_sociedad, categoria_matricula, estado_matricula, fecha_matricula, ultimo_ano_renovado, fecha_cancelacion, cod_ciiu_act_econ_pri, cod_ciiu_act_econ_sec]
 salida: EmpresaPorNit
+avisos:
+- cuando: encontrado
+  texto: >
+    Una matrícula «ACTIVA» no quiere decir que la empresa opere: mire ultimo_ano_renovado. La
+    matrícula se renueva cada año, y las sociedades que no la renuevan en cinco años quedan
+    disueltas y en liquidación (Ley 1727 de 2014, art. 31). Hay razones sociales que dicen
+    «EN LIQUIDACION» con la matrícula activa (PEHER CONSTRUIR LTDA, sin renovar desde 2013; medido
+    el 2026-11-05).
+- cuando: encontrado
+  texto: >
+    Un NIT puede salir en varias matrículas, una por cámara. A veces son entidades distintas con el
+    mismo NIT, como lo registran las cámaras: el 900000000 tiene una en Facatativá y otra en el
+    Huila (medido el 2026-11-05).
 cobro: registro
 canario:
   # Medido el 2026-10-22 en c82u-588k: Ecopetrol, matrícula 1291197 de Bogotá.
