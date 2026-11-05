@@ -41,6 +41,7 @@ Reglas:
 | MinDefensa, homicidios en víctimas (`m8fd-ahd9`) | [mindefensa.homicidios.md](mindefensa.homicidios.md) |
 | UPRA, precio comercial de la tierra rural (capa nacional y datos.gov.co) | [upra.precio_tierra.md](upra.precio_tierra.md) |
 | IGAC, registro de transacciones inmobiliarias 2015–2023 (`7y2j-43cv`) | [igac.transacciones_inmobiliarias.md](igac.transacciones_inmobiliarias.md) |
+| IGAC, gestores catastrales de Colombia (`bhcx-bx97`) | [igac.gestores_catastrales.md](igac.gestores_catastrales.md) |
 | Ministerio de Salud, REPS en datos.gov.co (`c36g-9fc2`) | [minsalud.reps.md](minsalud.reps.md) |
 | Superfinanciera, entidades vigiladas (`sr9n-792w`) | [superfinanciera.vigiladas.md](superfinanciera.vigiladas.md) |
 | RUES, empresas y establecimientos (Confecámaras) | [confecamaras.rues.md](confecamaras.rues.md) |
@@ -56,6 +57,7 @@ Reglas:
 | MinTIC, accesos a internet fijo (`hwrp-3su3` y la serie vieja `n48w-gutb`) | [mintic.internet_fijo.md](mintic.internet_fijo.md) |
 | Colombia Compra, planes anuales de adquisiciones (SECOP I y II) | [cce.paa.md](cce.paa.md) |
 | Función Pública, SUIT: trámites inscritos (`dd24-8p6w`) | [funcionpublica.suit.md](funcionpublica.suit.md) |
+| Función Pública, Gestor Normativo (EVA) | [funcionpublica.gestor_normativo.md](funcionpublica.gestor_normativo.md) |
 | CAR Cundinamarca, POMCA (diez cuencas) | [car.pomca.md](car.pomca.md) |
 | DANE, crecimiento del PIB trimestral (anexo de producción, copia) | [dane.pib_crecimiento_trimestral.md](dane.pib_crecimiento_trimestral.md) |
 | IDEAM, temperatura del aire de las estaciones (`sbwg-7ju4`) | [ideam.temperatura.md](ideam.temperatura.md) |
@@ -126,3 +128,4 @@ Reglas:
 | UPME: infraestructura energética | [upme.infraestructura_energetica.md](upme.infraestructura_energetica.md) |
 | USGS: catálogo mundial de sismos | [usgs.sismos.md](usgs.sismos.md) |
 | Supertransporte, tráfico portuario (`5r3g-zv5z`) y contenedores (`7tvr-cx9w`) | [supertransporte.puertos.md](supertransporte.puertos.md) |
+| UARIV, Registro Único de Víctimas por municipio, por hecho y desplazamiento por año (`ykxr-xynr`, `9qih-4vkc`, `krnc-8azs`) | [uariv.ruv.md](uariv.ruv.md) |

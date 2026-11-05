@@ -8,8 +8,8 @@ descripcion: >
   fragmentos alrededor de cada aparición, con cuántas hay. Solo fragmentos del texto oficial. El
   nombre es tipo_número_año (decreto_1165_2019, el estatuto aduanero; ley_2277_2022;
   decreto_1625_2016, el decreto único tributario), salvo el Estatuto Tributario, que es
-  estatuto_tributario. La búsqueda no distingue mayúsculas pero sí tildes: busque el artículo
-  como lo escribe la DIAN, «ARTÍCULO 240.» (sin la tilde salen solo textos antiguos).
+  estatuto_tributario. La búsqueda no distingue mayúsculas ni tildes: «ARTICULO 240.» encuentra
+  también «ARTÍCULO 240.». Con el punto, no salen el 2400 ni el 240-1.
   (Fuente: DIAN, Normograma; licencia: Ley 23 de 1982, art. 41.)
 entrada: {documento: documento_normativo, buscar: str}
 consulta:
@@ -23,6 +23,12 @@ consulta:
 salida: NormogramaDianBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  si: {campo: apariciones, valores: ["0"]}
+  texto: >
+    La norma está, pero no tiene lo buscado. La búsqueda no distingue mayúsculas ni tildes y pide la
+    frase entera: pruebe con menos palabras o con otra forma de decirlo.
 cobro: agregado
 canario:
   # Medido el 2026-11-01 con el extractor del conector: «ARTÍCULO 1o. ALCANCE» aparece 1 vez, el

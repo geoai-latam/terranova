@@ -58,6 +58,19 @@ Entre 2023 y 2025 no se encontró la forma, y no se adivinó.
 - **Motor.** Un documento que la fuente dice que no existe (`documento_ausente`) cuenta 0 de 0 y
   trae el aviso «la fuente respondió que ese documento no existe: revise cómo se escribe su
   nombre». Vale igual para la DIAN y la Función Pública.
+- **2026-11-05, búsqueda sin tildes (revisión de valor):**
+  - **El conector web** busca sin distinguir mayúsculas ni tildes, y un espacio de lo buscado vale
+    por cualquier espacio o salto de línea del texto (`paginas.patron_de_busqueda`). La eñe no se
+    toca: «ano» no es «año».
+  - **Medido el 2026-11-05, antes y después, con el extractor del conector:**
+    - Ley 1712 de 2014 (Función Pública, i=56882): «informacion publica», 0 → 32; «información
+      pública», 30 → 32 (dos estaban partidas en dos líneas).
+    - Resolución CREG 101-131 de 2026: «energia», 0 → 19.
+    - T-760/08 (Corte): «proteccion», 1 → 500; «derecho fundamental a la salud», 32 → 51.
+    - Los canarios de la CREG («ARTÍCULO 1», 4), la DIAN («ARTÍCULO 1o. ALCANCE», 1) y la Función
+      Pública («ARTÍCULO 5», 2) no cambian.
+  - **Cero apariciones.** El documento existe, pero no tiene lo buscado: antes salía «encontrado»
+    con una lista vacía y sin aviso. Ahora un aviso lo dice y sugiere menos palabras.
 - **Pendiente:**
   - si el DNS vuelve a fallar, fijar resolvedores públicos para el contenedor web en
     `docker/compose.yml` (cambio de infraestructura, con el dueño);
