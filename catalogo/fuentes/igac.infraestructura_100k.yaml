@@ -1,0 +1,61 @@
+id: igac.infraestructura_100k
+titulo: "IGAC: aeródromos, puertos, muelles, vías férreas y embalses de la cartografía básica 1:100 000, copia"
+entidad: Instituto Geográfico Agustín Codazzi (IGAC)
+competencia: autoridad nacional de cartografía básica
+acto: Resolución 616 de 2020
+# Cinco capas de la cartografía básica 1:100 000 de 2019 (carto100000colombia2019), juntas en una
+# copia espacial (ADR-0024) con una columna `tipo`, como upme.infraestructura_energetica. La
+# cartografía básica está en el art. 3 de la Res. 616 de 2020, que la pone en CC BY 4.0 (art. 7).
+# Ver catalogo/licencias/m1.yaml, entrada igac.res616.datos_abiertos.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.igac.gov.co/sites/default/files/transparencia/normograma/resolucion_616_de_2020.pdf
+  cita: "ARTÍCULO 7º. LICENCIA CREATIVE COMMONS CC-BY 4.0. Se adopta la Licencia Creative Commons CC-BY 4.0"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IGAC, cartografía básica de Colombia escala 1:100 000 (2019)"
+protocolo: arcgis_rest
+conector: copia
+url: https://mapas2.igac.gov.co/server/rest/services/carto
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    carto100000colombia2019/MapServer/9: aeródromo
+    carto100000colombia2019/MapServer/10: puerto
+    carto100000colombia2019/MapServer/22: embarcadero o muelle
+    carto100000colombia2019/MapServer/16: vía férrea
+    carto100000colombia2019/MapServer/42: embalse
+  columna_servicio: categoria
+  opcionales: [TIPO_VIA_FERREA]
+  tabla: igac_infraestructura_100k
+  clave: id_elemento
+  por_pagina: 500
+  indices: [categoria]
+# Es la cartografía de 2019: no cambia hasta que el IGAC publique otra.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P365D}
+cobertura: {pais: CO, excluye: ["embalses posteriores a la cartografía de 2019 (Hidroituango, El Quimbo, Sogamoso)", "operación y concesión: ani_*, aerocivil_*"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su id en la capa (cambia si el IGAC republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "aeródromo, puerto, embarcadero o muelle, vía férrea o embalse (una capa de la cartografía 1:100 000 cada uno)"}
+  NOMBRE_GEOGRAFICO: {nombre: nombre, tipo: str, desc: "nombre geográfico, como lo escribe el IGAC (vacío en muchos aeródromos y en algunos tramos férreos y embalses)"}
+  TIPO_VIA_FERREA: {nombre: tipo_via_ferrea, tipo: int, desc: "vía férrea: código del IGAC (1480, 1481 o 1482), que el servicio no acompaña de un dominio ni de su significado"}
+comportamiento: {max_por_pagina: 500, orden_coordenadas: lon_lat}
+dcat: {publisher: IGAC, theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-05'
+  fila: "un elemento de la cartografía: 399 aeródromos (puntos), 33 puertos, 4 embarcaderos o muelles, 49 tramos de vía férrea y 72 embalses (polígonos)"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "238 de los 399 aeródromos no traen nombre; los demás traen el del aeropuerto o el lugar"
+  - "TIPO_VIA_FERREA vale 1480 (45 tramos), 1481 (2) o 1482 (2), sin dominio en el servicio: sale tal cual"
+  - "embalses: Guavio, Chivor, El Peñol, Urrá, Betania, Prado, Salvajina…; no están Hidroituango, El Quimbo ni Sogamoso, posteriores a la cartografía"
+  - "FECHA viene vacía en todas las filas de estas capas: no se copia"
+  - "el servicio está en EPSG:9377; la copia pide EPSG:4326"
+  decision: "copia espacial de las cinco capas en una tabla con `tipo`"

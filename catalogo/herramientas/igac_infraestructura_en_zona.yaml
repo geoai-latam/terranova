@@ -1,0 +1,48 @@
+id: igac_infraestructura_en_zona
+version: 1
+familia: territorio
+fuente: igac.infraestructura_100k
+pregunta: "¿Qué aeródromos, puertos, muelles, vías férreas y embalses hay en esta zona según la cartografía del IGAC?"
+descripcion: >
+  Aeródromos (pistas y aeropuertos, como puntos), puertos, embarcaderos o muelles, tramos de vía
+  férrea (líneas) y embalses (polígonos) de la cartografía básica 1:100 000 del IGAC (2019)
+  dentro de un rectángulo (bbox en EPSG:4326), con su tipo y su nombre geográfico. Arriba van el
+  total y cuántos hay por tipo. Cubre todo el país, también lo que no está concesionado (los
+  aeropuertos, puertos y corredores de la ANI, con contrato y concesionario, están en
+  ani_aeropuertos_en_zona, ani_puertos_en_zona y ani_red_ferrea_en_zona). Sirve para pintar esa
+  infraestructura en un visor; las listas largas siguen por páginas. Es la cartografía de 2019:
+  no trae Hidroituango, El Quimbo ni Sogamoso. Sale de la copia de Terrnova.
+  (Fuente: IGAC, cartografía básica 1:100 000; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: igac_infraestructura_100k
+    bbox: "{bbox}"
+    select: [id_elemento, categoria, NOMBRE_GEOGRAFICO, TIPO_VIA_FERREA]
+    geometria: simplificada
+    order: [categoria, id_elemento]
+    limite: 1000
+  campos: [id_elemento, categoria, NOMBRE_GEOGRAFICO, TIPO_VIA_FERREA]
+salida: IgacInfraestructuraEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay aeródromos, puertos, muelles, vías férreas ni embalses de la cartografía 1:100 000 del
+    IGAC (2019) en ese rectángulo. Pruebe con un rectángulo más grande.
+- cuando: encontrado
+  texto: >
+    Es la cartografía básica de 2019 a escala 1:100 000: los embalses posteriores (Hidroituango,
+    El Quimbo, Sogamoso) no están, y 238 de los 399 aeródromos no traen nombre.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la copia (557 filas, las mismas de las cinco capas): en el oriente
+  # antioqueño hay 4 embalses (San Lorenzo, Las Playas y El Peñol en dos polígonos).
+  entrada: {bbox: [-75.3, 6.1, -75.0, 6.4]}
+  minimos: {total: 4}
+  campos: [id_elemento, nombre, por_tipo, tipo, tipo_via_ferrea, total]
+  latencia_max_ms: 8000

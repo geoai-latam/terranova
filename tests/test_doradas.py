@@ -358,6 +358,18 @@ async def test_sedes_educativas_del_dane_con_punto_zona_y_sector() -> None:
 
 
 @pytest.mark.anyio
+async def test_infraestructura_igac_100k_por_tipo() -> None:
+    """Cartografía 1:100 000 del IGAC: 4 embalses en el oriente antioqueño (El Peñol en dos
+    polígonos), medidos en la copia el 2026-11-05."""
+    h = CATALOGO.herramientas["igac_infraestructura_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 4 and datos["por_tipo"] == {"embalse": 4}
+    assert "Embalse El Peñol (Guatape)" in {e["nombre"] for e in datos["elementos"]}
+
+
+@pytest.mark.anyio
 async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> None:
     """NASA FIRMS por periodo (API por área con MAP_KEY): 182 focos de VIIRS S-NPP en la Orinoquía
     el 2024-02-01, del producto estándar, que no cambia (medido el 2026-11-05)."""

@@ -1,0 +1,125 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:57:51+00:00",
+ "herramienta": "igac_infraestructura_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -75.3,
+     6.1,
+     -75.0,
+     6.4
+    ],
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "categoria",
+     "id_elemento"
+    ],
+    "select": [
+     "id_elemento",
+     "categoria",
+     "NOMBRE_GEOGRAFICO",
+     "TIPO_VIA_FERREA"
+    ],
+    "tabla": "igac_infraestructura_100k"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -75.0447,
+           6.43274
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "NOMBRE_GEOGRAFICO": "Embalse San Lorenzo",
+          "TIPO_VIA_FERREA": null,
+          "categoria": "embalse",
+          "id_elemento": 5000010
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.22769,
+           6.21521
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "NOMBRE_GEOGRAFICO": "Embalse El Peñol (Guatape)",
+          "TIPO_VIA_FERREA": null,
+          "categoria": "embalse",
+          "id_elemento": 5000036
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -75.21601,
+           6.23528
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "NOMBRE_GEOGRAFICO": "Embalse El Peñol (Guatape)",
+          "TIPO_VIA_FERREA": null,
+          "categoria": "embalse",
+          "id_elemento": 5000037
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.98334,
+           6.35341
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "NOMBRE_GEOGRAFICO": "Embalse Las Playas",
+          "TIPO_VIA_FERREA": null,
+          "categoria": "embalse",
+          "id_elemento": 5000067
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 4,
+      "truncado": false,
+      "vistos": 4
+     },
+     "consultado_en": "2026-11-05T06:54:51.460615+00:00",
+     "copia": {
+      "filas": 557,
+      "huella": "sha256:1b2de098683da491d3283c054c43227ac41f8cf5a8147a6d404c3d7f8821c3d1",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105065451460615"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

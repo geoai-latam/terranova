@@ -1,11 +1,11 @@
 {
  "capas": {
-  "fuentes": 187,
-  "herramientas": 232,
+  "fuentes": 188,
+  "herramientas": 233,
   "familias": [
    [
     "Territorio",
-    55
+    56
    ],
    [
     "Estadísticas",
@@ -59,7 +59,7 @@
     "licencia": "CC BY-SA 4.0",
     "servido": "la fuente, en vivo",
     "corta": "¿Qué predio hay aquí?",
-    "fuentes": 19
+    "fuentes": 20
    },
    {
     "herramienta": "secop_contratos_entidad",

@@ -237,6 +237,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `igac_construcciones_en_predio` | ¿Qué construcciones tiene registradas este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
 | `igac_estadisticas_catastrales_municipio` | ¿Cuántos predios tiene este municipio y cuánto vale su avalúo catastral, año por año? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 2 |
 | `igac_gestor_catastral_municipio` | ¿Quién hace el catastro de este municipio? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
+| `igac_infraestructura_en_zona` | ¿Qué aeródromos, puertos, muelles, vías férreas y embalses hay en esta zona según la cartografía del IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 20 |
 | `igac_manzana_en_punto` | ¿En qué manzana urbana del catastro IGAC está este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_perimetro_urbano_en_punto` | ¿Este punto está dentro de un perímetro urbano del catastro IGAC? ¿Cuál? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
 | `igac_placas_predio` | ¿Qué dirección (placa) tiene este predio según el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |
