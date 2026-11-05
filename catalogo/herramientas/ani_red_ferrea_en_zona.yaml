@@ -19,9 +19,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: completa
-    out_fields: [concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
+    out_fields: [objectid, concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
     max_features: 200
-  campos: [concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
+  campos: [objectid, concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: AniRedFerreaEnZona
@@ -34,5 +34,5 @@ canario:
   # Santa Marta y Ciénaga; medido el 2026-11-05 en la capa 2: pasa la Red férrea del Atlántico.
   entrada: {bbox: [-74.3, 10.9, -74.0, 11.3]}
   minimos: {numero_registros: 1}
-  campos: [administracion, alcance, codigo_proyecto, concesionario, contrato, corredor, ficha, numero_registros, tipo_contrato, video]
+  campos: [administracion, alcance, codigo_proyecto, concesionario, contrato, corredor, ficha, id_elemento, numero_registros, tipo_contrato, video]
   latencia_max_ms: 8000

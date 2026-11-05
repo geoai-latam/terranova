@@ -19,9 +19,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: completa
-    out_fields: [nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
+    out_fields: [objectid, nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
     max_features: 200
-  campos: [nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
+  campos: [objectid, nombre, zona_port, municipio, departam, tipo_serv, tipo_carga, acto_admin, fecha_fin, prorroga, tiempo_prorr, ccnario, cod_pr_ire, url_ficha, video_proy]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: AniPuertosEnZona
@@ -35,5 +35,5 @@ canario:
   # país, 63.
   entrada: {bbox: [-75.6, 10.3, -75.45, 10.45]}
   minimos: {numero_registros: 23}
-  campos: [acto_administrativo, anios_prorroga, codigo_proyecto, concesionario, departamento, fecha_fin_concesion, ficha, municipio, numero_registros, prorroga, sociedad_portuaria, tipo_carga, tipo_servicio, video, zona_portuaria]
+  campos: [acto_administrativo, anios_prorroga, codigo_proyecto, concesionario, departamento, fecha_fin_concesion, ficha, id_elemento, municipio, numero_registros, prorroga, sociedad_portuaria, tipo_carga, tipo_servicio, video, zona_portuaria]
   latencia_max_ms: 8000

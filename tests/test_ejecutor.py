@@ -211,13 +211,17 @@ def test_el_tema_sale_del_html_sin_etiquetas_ni_entidades() -> None:
     assert vacio["tema"] is None
 
 
-@pytest.mark.parametrize("sucio", ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07"])
+@pytest.mark.parametrize(
+    "sucio",
+    ["a\u202eb", "a\x00b", "x\u2066y\u2069", "\x1b[31mrojo\x07", "S\u00e1nchez\r\n", "a\rb"],
+)
 def test_sanear_quita_control_y_bidi(sucio: str) -> None:
     assert texto_es_limpio(sanear(sucio))
 
 
 def test_sanear_conserva_saltos_y_corta_lo_largo() -> None:
     assert sanear("línea\ncon\ttab") == "línea\ncon\ttab"
+    assert sanear("Jaramillo Sánchez\r\n") == "Jaramillo Sánchez\n"  # IGAC 1:100 000
     largo = sanear("a" * (MAX_TEXTO + 50))
     assert len(largo) == MAX_TEXTO and largo.endswith("…")
 
@@ -1185,7 +1189,8 @@ def test_la_ronda_separa_el_cuerpo_de_agua_del_componente() -> None:
     for nombre, (cuerpo, componente) in casos.items():
         fila = mapear_fila(h, fuente, {"Fuente": nombre}, None)
         assert (fila["cuerpo_de_agua"], fila["componente"]) == (cuerpo, componente), nombre
-        assert fila["nombre_en_la_fuente"] == (nombre or None)  # tal como lo escribe la CAR
+        # tal como lo escribe la CAR, salvo el retorno de carro, que `rt/1` no admite
+        assert fila["nombre_en_la_fuente"] == (nombre.replace("\r\n", "\n") or None)
 
 
 def test_patron_y_orden_fecha_solo_en_un_derivado_columna() -> None:

@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T20:53:57+00:00",
+ "grabado": "2026-11-05T07:21:27+00:00",
  "herramienta": "ani_concesiones_viales_en_zona",
  "llamadas": [
   {
@@ -14,6 +14,7 @@
     "geometria": "simplificada",
     "max_features": 100,
     "out_fields": [
+     "objectid",
      "nombrepr",
      "generacion",
      "etp",
@@ -52,6 +53,7 @@
           "generacion": "4G",
           "lngcnc": 152240,
           "nombrepr": "Perimetral de Oriente de Cundinamarca",
+          "objectid": 16,
           "prcavn": 0.432205,
           "vlrcnt": 1647776111169.0,
           "vlrcntix": 2352065810959.0
@@ -75,6 +77,7 @@
           "generacion": "3G",
           "lngcnc": 206000,
           "nombrepr": "Briceño - Tunja - Sogamoso",
+          "objectid": 28,
           "prcavn": 1,
           "vlrcnt": 238853000000,
           "vlrcntix": 582255000000
@@ -98,6 +101,7 @@
           "generacion": "4G",
           "lngcnc": 62000,
           "nombrepr": "IP - Accesos Norte a Bogotá",
+          "objectid": 44,
           "prcavn": 0.725744,
           "vlrcnt": 1225686247240.0,
           "vlrcntix": 1655798530435.0
@@ -121,6 +125,7 @@
           "generacion": "5G",
           "lngcnc": 17960,
           "nombrepr": "Accesos Norte Fase II",
+          "objectid": 718667,
           "prcavn": null,
           "vlrcnt": 1797269095995.0,
           "vlrcntix": null
@@ -157,6 +162,7 @@
       ],
       "max_features": 100,
       "out_fields": [
+       "objectid",
        "nombrepr",
        "generacion",
        "etp",

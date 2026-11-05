@@ -20,9 +20,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: simplificada  # el corredor entero (no solo el tramo dentro del rectángulo); canario 323 KB, el país 1,6 MB (medido 2026-11-03)
-    out_fields: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
+    out_fields: [objectid, nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
     max_features: 100
-  campos: [nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
+  campos: [objectid, nombrepr, generacion, etp, concesionario, lngcnc, prcavn, fecrep, vlrcnt, fecref, vlrcntix, fecindx]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: ConcesionesVialesEnZona
@@ -40,5 +40,5 @@ canario:
   # Accesos Norte Fase II, Perimetral de Oriente y Briceño-Tunja-Sogamoso).
   entrada: {bbox: [-74.10, 4.80, -73.90, 5.05]}
   minimos: {numero_registros: 4}
-  campos: [avance_obra, avance_reportado_el, concesionario, etapa, generacion, longitud_concesionada_m, numero_registros, proyecto, valor_contrato, valor_contrato_indexado, valor_contrato_pesos_de, valor_indexado_a]
+  campos: [avance_obra, avance_reportado_el, concesionario, etapa, generacion, id_elemento, longitud_concesionada_m, numero_registros, proyecto, valor_contrato, valor_contrato_indexado, valor_contrato_pesos_de, valor_indexado_a]
   latencia_max_ms: 8000

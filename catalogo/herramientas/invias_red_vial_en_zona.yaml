@@ -22,9 +22,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: simplificada
-    out_fields: [codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
+    out_fields: [objectid, codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
     max_features: 500
-  campos: [codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
+  campos: [objectid, codigotramo, ruta, nombreruta, sector, administrador, territorial, categoria, superficie, calzada, postereferenciainicial, distanciainicial, postereferenciafinal, distanciafinal, Shape__Length, revisionestado, last_edited_date]
 # Dominios codificados de la capa 1 del servicio (MapaCarreteras/RedVial/FeatureServer/1?f=json),
 # medidos el 2026-10-28. Algunas filas traen el texto en vez del código: también se traduce.
 derivados:
@@ -74,5 +74,5 @@ canario:
     calzada_nombre: Sencilla
     pr_inicial: 10
     numero_registros: 1
-  campos: [administrador, administrador_nombre, calzada, calzada_nombre, categoria, categoria_nombre, codigo_tramo, fecha_ultima_edicion, longitud_m, nombre_ruta, numero_registros, pr_final, pr_final_m, pr_inicial, pr_inicial_m, revision, revision_nombre, ruta, sector, superficie, superficie_nombre, territorial, territorial_nombre]
+  campos: [administrador, administrador_nombre, calzada, calzada_nombre, categoria, categoria_nombre, codigo_tramo, fecha_ultima_edicion, id_elemento, longitud_m, nombre_ruta, numero_registros, pr_final, pr_final_m, pr_inicial, pr_inicial_m, revision, revision_nombre, ruta, sector, superficie, superficie_nombre, territorial, territorial_nombre]
   latencia_max_ms: 8000

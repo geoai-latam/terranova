@@ -43,5 +43,5 @@ canario:
   # Medido el 2026-11-05 en la copia del SISE: Cubarral (50223) tiene 7 sedes activas.
   entrada: {municipio_divipola: "50223"}
   minimos: {total: 7}
-  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, por_sector, por_zona, sector, sede_principal, telefono, tipo_telefono, total, zona]
+  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, id_elemento, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, por_sector, por_zona, sector, sede_principal, telefono, tipo_telefono, total, zona]
   latencia_max_ms: 8000

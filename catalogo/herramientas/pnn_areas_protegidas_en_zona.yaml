@@ -36,5 +36,5 @@ canario:
   # Medido el 2026-11-02 en la copia: la más grande es Sumapaz (210 739 ha), y 110 de las 169 son
   # reservas naturales de la sociedad civil.
   verdad: {total: 169, nombre: Sumapaz}
-  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, nombre, por_categoria, total]
+  campos: [area_ha_resolucion, autoridad_ambiental, categoria, fecha_inscripcion, id_poligono, nombre, por_categoria, total]
   latencia_max_ms: 8000

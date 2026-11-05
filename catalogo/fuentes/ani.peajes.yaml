@@ -27,6 +27,7 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa de la ANI (cambia si la entidad republica la capa)"}
   nombre: {nombre: peaje, tipo: str, desc: "nombre del peaje"}
   estado: {nombre: estado_peaje, tipo: str, desc: "estado del peaje (en funcionamiento…)"}
   proyecto: {nombre: proyecto_peaje, tipo: str, desc: "proyecto de concesión al que pertenece el peaje"}

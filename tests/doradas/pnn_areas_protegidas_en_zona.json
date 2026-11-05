@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T04:45:34+00:00",
+ "grabado": "2026-11-05T07:22:12+00:00",
  "herramienta": "pnn_areas_protegidas_en_zona",
  "llamadas": [
   {
@@ -46,6 +46,7 @@
           "ap_nombre": "Sumapaz",
           "area_ha_total_resolucion": 210738.764,
           "fecha_inscrita": "2011-07-07",
+          "objectid": 136725,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -63,6 +64,7 @@
           "ap_nombre": "Chingaza",
           "area_ha_total_resolucion": 77289.97,
           "fecha_inscrita": "2011-06-30",
+          "objectid": 136673,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -80,6 +82,7 @@
           "ap_nombre": "Bosque de Los Guayupes",
           "area_ha_total_resolucion": 18218.63,
           "fecha_inscrita": "2018-12-27",
+          "objectid": 137653,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -97,6 +100,7 @@
           "ap_nombre": "Macizo El Tablazo",
           "area_ha_total_resolucion": 16477.61,
           "fecha_inscrita": "2022-08-03",
+          "objectid": 138021,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2024,6 +2028,7 @@
           "ap_nombre": "Vista Hermosa de Monquentiva",
           "area_ha_total_resolucion": 13437.0,
           "fecha_inscrita": "2017-10-12",
+          "objectid": 137536,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2041,6 +2046,7 @@
           "ap_nombre": "Bosque Oriental de Bogotá",
           "area_ha_total_resolucion": 13123.44,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137046,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2058,6 +2064,7 @@
           "ap_nombre": "Ríos Blanco y Negro",
           "area_ha_total_resolucion": 12386.9,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137041,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2075,6 +2082,7 @@
           "ap_nombre": "Sector Salto del Tequendama y Cerro Manjuí",
           "area_ha_total_resolucion": 10422.0,
           "fecha_inscrita": "2011-10-19",
+          "objectid": 136995,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2092,6 +2100,7 @@
           "ap_nombre": "Cuchilla San Cayetano",
           "area_ha_total_resolucion": 8993.6,
           "fecha_inscrita": "2017-08-03",
+          "objectid": 137501,
           "organizacion": "Corporación Autónoma Regional de Chivor"
          },
          "type": "Feature"
@@ -2109,6 +2118,7 @@
           "ap_nombre": "Cuchilla de Peñas Blancas y del Subia",
           "area_ha_total_resolucion": 5985.7098,
           "fecha_inscrita": "2014-09-10",
+          "objectid": 137133,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2126,6 +2136,7 @@
           "ap_nombre": "Quebrada Honda",
           "area_ha_total_resolucion": 4885.24,
           "fecha_inscrita": "2018-06-22",
+          "objectid": 137347,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -2143,6 +2154,7 @@
           "ap_nombre": "Ríos Chorrera y Concepción",
           "area_ha_total_resolucion": 4450.0,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137050,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2160,6 +2172,7 @@
           "ap_nombre": "Rio Subachoque y Pantano de Arce",
           "area_ha_total_resolucion": 4205.397,
           "fecha_inscrita": "2011-09-23",
+          "objectid": 136989,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2177,6 +2190,7 @@
           "ap_nombre": "Páramo Grande",
           "area_ha_total_resolucion": 4000.0,
           "fecha_inscrita": "2012-05-31",
+          "objectid": 137062,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2194,6 +2208,7 @@
           "ap_nombre": "Páramo El Atravesado",
           "area_ha_total_resolucion": 2928.58,
           "fecha_inscrita": "2011-11-21",
+          "objectid": 136951,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2211,6 +2226,7 @@
           "ap_nombre": "Cuenca Alta de Los Ríos Salinero y Moquentiva",
           "area_ha_total_resolucion": 2922.0,
           "fecha_inscrita": "2011-09-26",
+          "objectid": 136985,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -2228,6 +2244,7 @@
           "ap_nombre": "La Bolsa",
           "area_ha_total_resolucion": 2700.0,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137049,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2245,6 +2262,7 @@
           "ap_nombre": "Cuchilla el Chuscal",
           "area_ha_total_resolucion": 2246.85,
           "fecha_inscrita": "2011-10-19",
+          "objectid": 136991,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -2262,6 +2280,7 @@
           "ap_nombre": "Cuenca Alta del Río Zaque",
           "area_ha_total_resolucion": 1869.0,
           "fecha_inscrita": "2011-09-26",
+          "objectid": 136986,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -2279,6 +2298,7 @@
           "ap_nombre": "Chinchorro",
           "area_ha_total_resolucion": 1800.3,
           "fecha_inscrita": "2016-09-05",
+          "objectid": 137423,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -2296,6 +2316,7 @@
           "ap_nombre": "Cerro Quinini",
           "area_ha_total_resolucion": 1800.0,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137054,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -2313,6 +2334,7 @@
           "ap_nombre": "Río Rucio",
           "area_ha_total_resolucion": 1360.0,
           "fecha_inscrita": "2011-09-23",
+          "objectid": 136938,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -3244,6 +3266,7 @@
           "ap_nombre": "Quebrada Honda y Caños Parrado y Buque",
           "area_ha_total_resolucion": 1206.83,
           "fecha_inscrita": "2012-03-23",
+          "objectid": 137058,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -3261,6 +3284,7 @@
           "ap_nombre": "Humedales de Gualí Tres Esquinas y Lagunas del Funzhé",
           "area_ha_total_resolucion": 1188.286,
           "fecha_inscrita": "2014-09-10",
+          "objectid": 137168,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3278,6 +3302,7 @@
           "ap_nombre": "Peñas del Aserradero",
           "area_ha_total_resolucion": 991.77,
           "fecha_inscrita": "2025-12-18",
+          "objectid": 138484,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3295,6 +3320,7 @@
           "ap_nombre": "Cerro de Juaica",
           "area_ha_total_resolucion": 882.12,
           "fecha_inscrita": "2011-09-23",
+          "objectid": 136965,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3312,6 +3338,7 @@
           "ap_nombre": "Pionono",
           "area_ha_total_resolucion": 721.156,
           "fecha_inscrita": "2014-09-10",
+          "objectid": 136999,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3329,6 +3356,7 @@
           "ap_nombre": "La Siberia",
           "area_ha_total_resolucion": 668.0,
           "fecha_inscrita": "2011-09-27",
+          "objectid": 137076,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3346,6 +3374,7 @@
           "ap_nombre": "Laguna del Cacique Guatavita y Cuchilla de Peña Blanca",
           "area_ha_total_resolucion": 661.55,
           "fecha_inscrita": "2022-08-01",
+          "objectid": 137881,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3363,6 +3392,7 @@
           "ap_nombre": "Cerros Pionono y las Águilas",
           "area_ha_total_resolucion": 611.0,
           "fecha_inscrita": "2011-09-26",
+          "objectid": 136984,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3380,6 +3410,7 @@
           "ap_nombre": "Tibaitatá",
           "area_ha_total_resolucion": 564.0,
           "fecha_inscrita": "2011-10-19",
+          "objectid": 137012,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3397,6 +3428,7 @@
           "ap_nombre": "Carpatos",
           "area_ha_total_resolucion": 563.0,
           "fecha_inscrita": "2011-09-27",
+          "objectid": 137081,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3414,6 +3446,7 @@
           "ap_nombre": "Cuenca Alta del Caño Vanguardia",
           "area_ha_total_resolucion": 520.0,
           "fecha_inscrita": "2012-03-23",
+          "objectid": 137057,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -3431,6 +3464,7 @@
           "ap_nombre": "Jerico, Libano y Sebastopol",
           "area_ha_total_resolucion": 467.6686,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137096,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3448,6 +3482,7 @@
           "ap_nombre": "Bosque Renace",
           "area_ha_total_resolucion": 361.57,
           "fecha_inscrita": "2026-03-05",
+          "objectid": 138482,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -3465,6 +3500,7 @@
           "ap_nombre": "Kirpas Pinilla la Cuerera",
           "area_ha_total_resolucion": 307.07,
           "fecha_inscrita": "2011-09-20",
+          "objectid": 136924,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -3482,6 +3518,7 @@
           "ap_nombre": "Colombia",
           "area_ha_total_resolucion": 277.0,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137091,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3499,6 +3536,7 @@
           "ap_nombre": "Quebrada Paramillo y Queceros",
           "area_ha_total_resolucion": 249.2266,
           "fecha_inscrita": "2011-10-18",
+          "objectid": 137009,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -3516,6 +3554,7 @@
           "ap_nombre": "La Reserva",
           "area_ha_total_resolucion": 245.0,
           "fecha_inscrita": "2011-07-26",
+          "objectid": 136884,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -3533,6 +3572,7 @@
           "ap_nombre": "Palosqui",
           "area_ha_total_resolucion": 226.0,
           "fecha_inscrita": "2014-02-11",
+          "objectid": 137079,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3550,6 +3590,7 @@
           "ap_nombre": "El Espino Corcovado",
           "area_ha_total_resolucion": 215.0,
           "fecha_inscrita": "2014-02-11",
+          "objectid": 137082,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3567,6 +3608,7 @@
           "ap_nombre": "Pozo Azul",
           "area_ha_total_resolucion": 211.69,
           "fecha_inscrita": "2011-09-28",
+          "objectid": 137077,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -3584,6 +3626,7 @@
           "ap_nombre": "Reserva Moravia",
           "area_ha_total_resolucion": 207.9124,
           "fecha_inscrita": "2025-07-10",
+          "objectid": 138433,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -3601,6 +3644,7 @@
           "ap_nombre": "Cerro Vanguardia",
           "area_ha_total_resolucion": 200.0,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137056,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -5044,6 +5088,7 @@
           "ap_nombre": "Chicaque",
           "area_ha_total_resolucion": 194.8028,
           "fecha_inscrita": "2011-07-21",
+          "objectid": 136652,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5061,6 +5106,7 @@
           "ap_nombre": "EL Encenillo",
           "area_ha_total_resolucion": 184.7985,
           "fecha_inscrita": "2016-01-08",
+          "objectid": 137324,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5078,6 +5124,7 @@
           "ap_nombre": "Reserva Hídrica El Soche - San Rafael",
           "area_ha_total_resolucion": 176.344,
           "fecha_inscrita": "2012-03-07",
+          "objectid": 136803,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5095,6 +5142,7 @@
           "ap_nombre": "Bosques De Chipaque",
           "area_ha_total_resolucion": 169.2967,
           "fecha_inscrita": "2011-07-26",
+          "objectid": 136666,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5112,6 +5160,7 @@
           "ap_nombre": "Bosques y Montes de Soche",
           "area_ha_total_resolucion": 167.0745,
           "fecha_inscrita": "2016-09-12",
+          "objectid": 136796,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5129,6 +5178,7 @@
           "ap_nombre": "Concepción",
           "area_ha_total_resolucion": 160.0,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137094,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5146,6 +5196,7 @@
           "ap_nombre": "Futuras Generaciones de Sibaté I y II",
           "area_ha_total_resolucion": 160.0,
           "fecha_inscrita": "2011-10-19",
+          "objectid": 137010,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -5287,6 +5338,7 @@
           "ap_nombre": "Hacienda Sabaneta",
           "area_ha_total_resolucion": 137.4489,
           "fecha_inscrita": "2015-11-12",
+          "objectid": 137122,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5304,6 +5356,7 @@
           "ap_nombre": "Hoya Hernando",
           "area_ha_total_resolucion": 133.0,
           "fecha_inscrita": "2011-09-27",
+          "objectid": 137075,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5321,6 +5374,7 @@
           "ap_nombre": "Hacienda La Laja",
           "area_ha_total_resolucion": 126.36,
           "fecha_inscrita": "2017-06-08",
+          "objectid": 137358,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5338,6 +5392,7 @@
           "ap_nombre": "Laguna de Tenasuca Pedro Palo",
           "area_ha_total_resolucion": 124.35,
           "fecha_inscrita": "2026-02-09",
+          "objectid": 138488,
           "organizacion": "Corporación Autónoma Regional de Cundinamarca"
          },
          "type": "Feature"
@@ -5355,6 +5410,7 @@
           "ap_nombre": "Jikuri",
           "area_ha_total_resolucion": 123.654,
           "fecha_inscrita": "2016-01-04",
+          "objectid": 137215,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5372,6 +5428,7 @@
           "ap_nombre": "La Vitilia la Palma",
           "area_ha_total_resolucion": 119.74,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137090,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5389,6 +5446,7 @@
           "ap_nombre": "La Sabana de las Delicias",
           "area_ha_total_resolucion": 117.0,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137095,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5406,6 +5464,7 @@
           "ap_nombre": "La Esperanza",
           "area_ha_total_resolucion": 101.5512,
           "fecha_inscrita": "2011-07-26",
+          "objectid": 136669,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5423,6 +5482,7 @@
           "ap_nombre": "Mistela",
           "area_ha_total_resolucion": 98.23,
           "fecha_inscrita": "2012-01-02",
+          "objectid": 137068,
           "organizacion": "Ministerio de Ambiente y Desarrollo Sostenible"
          },
          "type": "Feature"
@@ -5440,6 +5500,7 @@
           "ap_nombre": "Montebello",
           "area_ha_total_resolucion": 95.0,
           "fecha_inscrita": "2014-02-11",
+          "objectid": 137084,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5457,6 +5518,7 @@
           "ap_nombre": "Marruecos",
           "area_ha_total_resolucion": 94.0,
           "fecha_inscrita": "2011-09-28",
+          "objectid": 137085,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5474,6 +5536,7 @@
           "ap_nombre": "Santa Maria de las Lagunas",
           "area_ha_total_resolucion": 74.36,
           "fecha_inscrita": "2011-09-28",
+          "objectid": 137083,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5491,6 +5554,7 @@
           "ap_nombre": "Parque Ecologico Humedal Zuria",
           "area_ha_total_resolucion": 67.88,
           "fecha_inscrita": "2011-09-20",
+          "objectid": 136929,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -5508,6 +5572,7 @@
           "ap_nombre": "Bosques y Montes del Soche II",
           "area_ha_total_resolucion": 67.3487,
           "fecha_inscrita": "2012-03-06",
+          "objectid": 136773,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5525,6 +5590,7 @@
           "ap_nombre": "Bioparque Wakatá",
           "area_ha_total_resolucion": 59.4251,
           "fecha_inscrita": "2014-02-20",
+          "objectid": 137121,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5542,6 +5608,7 @@
           "ap_nombre": "El Páramo",
           "area_ha_total_resolucion": 54.3418,
           "fecha_inscrita": "2018-09-27",
+          "objectid": 137580,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5559,6 +5626,7 @@
           "ap_nombre": "El Desierto - El Patio Bonito",
           "area_ha_total_resolucion": 54.0,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137092,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -5576,6 +5644,7 @@
           "ap_nombre": "Piedra Petaca",
           "area_ha_total_resolucion": 53.1293,
           "fecha_inscrita": "2020-02-07",
+          "objectid": 137664,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5593,6 +5662,7 @@
           "ap_nombre": "La Aldea",
           "area_ha_total_resolucion": 51.9384,
           "fecha_inscrita": "2018-01-09",
+          "objectid": 137553,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5610,6 +5680,7 @@
           "ap_nombre": "Ecoparque Sabana",
           "area_ha_total_resolucion": 47.113,
           "fecha_inscrita": "2017-09-12",
+          "objectid": 137506,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5627,6 +5698,7 @@
           "ap_nombre": "Reserva El Portete",
           "area_ha_total_resolucion": 42.6,
           "fecha_inscrita": "2024-05-29",
+          "objectid": 138302,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5644,6 +5716,7 @@
           "ap_nombre": "Travesías",
           "area_ha_total_resolucion": 38.4,
           "fecha_inscrita": "2017-06-13",
+          "objectid": 137373,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5661,6 +5734,7 @@
           "ap_nombre": "Tenasucá De Pedro Palo",
           "area_ha_total_resolucion": 38.1229,
           "fecha_inscrita": "2015-11-13",
+          "objectid": 136771,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5678,6 +5752,7 @@
           "ap_nombre": "Villa Paz",
           "area_ha_total_resolucion": 36.4178,
           "fecha_inscrita": "2016-08-11",
+          "objectid": 136647,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5695,6 +5770,7 @@
           "ap_nombre": "Mox",
           "area_ha_total_resolucion": 34.4616,
           "fecha_inscrita": "2025-05-15",
+          "objectid": 138402,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5712,6 +5788,7 @@
           "ap_nombre": "Parque Ecologico Humedal Caracoli",
           "area_ha_total_resolucion": 33.22,
           "fecha_inscrita": "2011-09-20",
+          "objectid": 136928,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -5729,6 +5806,7 @@
           "ap_nombre": "La Ramada",
           "area_ha_total_resolucion": 31.7555,
           "fecha_inscrita": "2023-12-07",
+          "objectid": 138251,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5746,6 +5824,7 @@
           "ap_nombre": "Parque Ecologico Humedal Coroncoro",
           "area_ha_total_resolucion": 30.32,
           "fecha_inscrita": "2012-05-24",
+          "objectid": 136925,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -5763,6 +5842,7 @@
           "ap_nombre": "El Limonal y San Pedro",
           "area_ha_total_resolucion": 26.8207,
           "fecha_inscrita": "2021-12-09",
+          "objectid": 137948,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5780,6 +5860,7 @@
           "ap_nombre": "Gualamana  y Gualamana II",
           "area_ha_total_resolucion": 24.1066,
           "fecha_inscrita": "2021-06-16",
+          "objectid": 137886,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5797,6 +5878,7 @@
           "ap_nombre": "Carrisal",
           "area_ha_total_resolucion": 22.3033,
           "fecha_inscrita": "2017-12-12",
+          "objectid": 137142,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5814,6 +5896,7 @@
           "ap_nombre": "Muquiche",
           "area_ha_total_resolucion": 20.9208,
           "fecha_inscrita": "2023-06-14",
+          "objectid": 138186,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5831,6 +5914,7 @@
           "ap_nombre": "Refugio Del Tororoi",
           "area_ha_total_resolucion": 20.0,
           "fecha_inscrita": "2024-08-23",
+          "objectid": 138322,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5848,6 +5932,7 @@
           "ap_nombre": "El Horadado De San Alejo",
           "area_ha_total_resolucion": 19.2,
           "fecha_inscrita": "2011-07-26",
+          "objectid": 136841,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5865,6 +5950,7 @@
           "ap_nombre": "El Colibrí",
           "area_ha_total_resolucion": 19.1747,
           "fecha_inscrita": "2017-12-29",
+          "objectid": 137543,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5882,6 +5968,7 @@
           "ap_nombre": "El Frailejón",
           "area_ha_total_resolucion": 18.3472,
           "fecha_inscrita": "2018-12-11",
+          "objectid": 137612,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5899,6 +5986,7 @@
           "ap_nombre": "Tejanu",
           "area_ha_total_resolucion": 18.2359,
           "fecha_inscrita": "2025-09-11",
+          "objectid": 138326,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5916,6 +6004,7 @@
           "ap_nombre": "VillaLuz",
           "area_ha_total_resolucion": 18.0,
           "fecha_inscrita": "2011-07-26",
+          "objectid": 136883,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5933,6 +6022,7 @@
           "ap_nombre": "Serrezuela",
           "area_ha_total_resolucion": 17.6252,
           "fecha_inscrita": "2020-02-26",
+          "objectid": 137677,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5950,6 +6040,7 @@
           "ap_nombre": "Conjunto De Reservas Naturales De Sumicol Sas",
           "area_ha_total_resolucion": 16.631,
           "fecha_inscrita": "2022-10-16",
+          "objectid": 138035,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5967,6 +6058,7 @@
           "ap_nombre": "Renasie",
           "area_ha_total_resolucion": 16.2358,
           "fecha_inscrita": "2024-08-29",
+          "objectid": 138332,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -5984,6 +6076,7 @@
           "ap_nombre": "Betania",
           "area_ha_total_resolucion": 15.3273,
           "fecha_inscrita": "2018-09-18",
+          "objectid": 137579,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6001,6 +6094,7 @@
           "ap_nombre": "La Loma De Dos Quebradas",
           "area_ha_total_resolucion": 13.8083,
           "fecha_inscrita": "2022-03-29",
+          "objectid": 137995,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6018,6 +6112,7 @@
           "ap_nombre": "Gachaquín",
           "area_ha_total_resolucion": 12.0533,
           "fecha_inscrita": "2017-11-22",
+          "objectid": 137533,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6035,6 +6130,7 @@
           "ap_nombre": "Huisyzuca",
           "area_ha_total_resolucion": 11.1378,
           "fecha_inscrita": "2022-12-20",
+          "objectid": 138080,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6052,6 +6148,7 @@
           "ap_nombre": "Parque Ecologico Humedal Charco  Oasis",
           "area_ha_total_resolucion": 10.74,
           "fecha_inscrita": "2011-09-20",
+          "objectid": 136926,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -6069,6 +6166,7 @@
           "ap_nombre": "Palacea",
           "area_ha_total_resolucion": 10.4892,
           "fecha_inscrita": "2024-08-23",
+          "objectid": 138325,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6086,6 +6184,7 @@
           "ap_nombre": "Reserva Natural Rodamonte",
           "area_ha_total_resolucion": 10.3763,
           "fecha_inscrita": "2021-12-10",
+          "objectid": 137946,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6103,6 +6202,7 @@
           "ap_nombre": "Halcón Colorado Lote 1",
           "area_ha_total_resolucion": 10.0,
           "fecha_inscrita": "2016-11-04",
+          "objectid": 137228,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6120,6 +6220,7 @@
           "ap_nombre": "Lan",
           "area_ha_total_resolucion": 9.8452,
           "fecha_inscrita": "2025-07-03",
+          "objectid": 138410,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6137,6 +6238,7 @@
           "ap_nombre": "El Páramo",
           "area_ha_total_resolucion": 9.7472,
           "fecha_inscrita": "2017-11-22",
+          "objectid": 137530,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6154,6 +6256,7 @@
           "ap_nombre": "La Baita",
           "area_ha_total_resolucion": 9.6756,
           "fecha_inscrita": "2022-06-14",
+          "objectid": 138008,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6171,6 +6274,7 @@
           "ap_nombre": "El Descanso del Río Negro",
           "area_ha_total_resolucion": 9.5141,
           "fecha_inscrita": "2018-11-21",
+          "objectid": 137604,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6188,6 +6292,7 @@
           "ap_nombre": "Medialuna",
           "area_ha_total_resolucion": 9.3049,
           "fecha_inscrita": "2020-02-07",
+          "objectid": 137703,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6205,6 +6310,7 @@
           "ap_nombre": "Célula Verde",
           "area_ha_total_resolucion": 8.93,
           "fecha_inscrita": "2012-03-06",
+          "objectid": 136805,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6222,6 +6328,7 @@
           "ap_nombre": "La Finca De Pedro Palo",
           "area_ha_total_resolucion": 8.33,
           "fecha_inscrita": "2015-11-13",
+          "objectid": 136755,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6239,6 +6346,7 @@
           "ap_nombre": "La Cabaña",
           "area_ha_total_resolucion": 8.0032,
           "fecha_inscrita": "2018-01-05",
+          "objectid": 137548,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6256,6 +6364,7 @@
           "ap_nombre": "Humedal Aguas Claras",
           "area_ha_total_resolucion": 7.98,
           "fecha_inscrita": "2023-11-29",
+          "objectid": 138238,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -6273,6 +6382,7 @@
           "ap_nombre": "El Paraíso",
           "area_ha_total_resolucion": 7.68,
           "fecha_inscrita": "2017-11-23",
+          "objectid": 137531,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6290,6 +6400,7 @@
           "ap_nombre": "Lote 5",
           "area_ha_total_resolucion": 7.3533,
           "fecha_inscrita": "2012-03-06",
+          "objectid": 136829,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6307,6 +6418,7 @@
           "ap_nombre": "Los Sauces",
           "area_ha_total_resolucion": 7.1928,
           "fecha_inscrita": "2019-07-28",
+          "objectid": 137573,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6324,6 +6436,7 @@
           "ap_nombre": "Altos De Pedro Palo",
           "area_ha_total_resolucion": 7.1301,
           "fecha_inscrita": "2016-01-07",
+          "objectid": 136742,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6341,6 +6454,7 @@
           "ap_nombre": "Aves del Tequendama",
           "area_ha_total_resolucion": 7.0924,
           "fecha_inscrita": "2017-02-22",
+          "objectid": 137282,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6358,6 +6472,7 @@
           "ap_nombre": "Parque Ecologico Humedal Calatrava",
           "area_ha_total_resolucion": 7.08,
           "fecha_inscrita": "2011-09-20",
+          "objectid": 136927,
           "organizacion": "Corporación para el Desarrollo Sostenible del Area de Manejo Especial La Macarena"
          },
          "type": "Feature"
@@ -6375,6 +6490,7 @@
           "ap_nombre": "La Constancia",
           "area_ha_total_resolucion": 6.9943,
           "fecha_inscrita": "2024-02-19",
+          "objectid": 138269,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6392,6 +6508,7 @@
           "ap_nombre": "Sol y Luna",
           "area_ha_total_resolucion": 6.933,
           "fecha_inscrita": "2017-12-29",
+          "objectid": 137544,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6409,6 +6526,7 @@
           "ap_nombre": "Buenos Aires",
           "area_ha_total_resolucion": 6.4864,
           "fecha_inscrita": "2025-06-05",
+          "objectid": 138225,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6426,6 +6544,7 @@
           "ap_nombre": "El Chochal de Siecha",
           "area_ha_total_resolucion": 6.4,
           "fecha_inscrita": "2018-04-30",
+          "objectid": 137572,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6443,6 +6562,7 @@
           "ap_nombre": "La Granja De Pedro Palo",
           "area_ha_total_resolucion": 6.4,
           "fecha_inscrita": "2016-01-06",
+          "objectid": 136750,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6460,6 +6580,7 @@
           "ap_nombre": "Poza Mansa De Pedro Palo",
           "area_ha_total_resolucion": 4.6598,
           "fecha_inscrita": "2015-11-13",
+          "objectid": 136744,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6477,6 +6598,7 @@
           "ap_nombre": "Ganesh",
           "area_ha_total_resolucion": 4.5209,
           "fecha_inscrita": "2018-09-27",
+          "objectid": 137595,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6494,6 +6616,7 @@
           "ap_nombre": "La Comarca",
           "area_ha_total_resolucion": 4.5,
           "fecha_inscrita": "2022-05-23",
+          "objectid": 137916,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6511,6 +6634,7 @@
           "ap_nombre": "Bosque de Niebla",
           "area_ha_total_resolucion": 4.4718,
           "fecha_inscrita": "2019-07-28",
+          "objectid": 137631,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6528,6 +6652,7 @@
           "ap_nombre": "África",
           "area_ha_total_resolucion": 4.3099,
           "fecha_inscrita": "2018-04-25",
+          "objectid": 137569,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6645,6 +6770,7 @@
           "ap_nombre": "Hostal De Pedro Palo",
           "area_ha_total_resolucion": 3.972,
           "fecha_inscrita": "2015-11-13",
+          "objectid": 136760,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6662,6 +6788,7 @@
           "ap_nombre": "Los Alisos",
           "area_ha_total_resolucion": 3.8673,
           "fecha_inscrita": "2018-09-18",
+          "objectid": 137588,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6679,6 +6806,7 @@
           "ap_nombre": "El Cerrito",
           "area_ha_total_resolucion": 3.7364,
           "fecha_inscrita": "2017-11-22",
+          "objectid": 137532,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6696,6 +6824,7 @@
           "ap_nombre": "Kilimanjaro De Pedro Palo",
           "area_ha_total_resolucion": 3.3084,
           "fecha_inscrita": "2016-01-07",
+          "objectid": 136776,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6713,6 +6842,7 @@
           "ap_nombre": "El Charquito",
           "area_ha_total_resolucion": 3.2111,
           "fecha_inscrita": "2025-09-19",
+          "objectid": 138308,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6730,6 +6860,7 @@
           "ap_nombre": "La Cabaña de Pedro Palo",
           "area_ha_total_resolucion": 3.1987,
           "fecha_inscrita": "2018-01-16",
+          "objectid": 136758,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6747,6 +6878,7 @@
           "ap_nombre": "Umbral Cultural Horizontes",
           "area_ha_total_resolucion": 3.1329,
           "fecha_inscrita": "2022-02-24",
+          "objectid": 137331,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6764,6 +6896,7 @@
           "ap_nombre": "El Porvenir  el Guadual",
           "area_ha_total_resolucion": 3.0,
           "fecha_inscrita": "2011-10-03",
+          "objectid": 137088,
           "organizacion": "Corporación Autónoma Regional del Guavio"
          },
          "type": "Feature"
@@ -6781,6 +6914,7 @@
           "ap_nombre": "Refugio De Las Aves",
           "area_ha_total_resolucion": 2.9432,
           "fecha_inscrita": "2022-08-01",
+          "objectid": 138012,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6798,6 +6932,7 @@
           "ap_nombre": "Sion",
           "area_ha_total_resolucion": 2.917,
           "fecha_inscrita": "2020-04-15",
+          "objectid": 137795,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6815,6 +6950,7 @@
           "ap_nombre": "El Presente",
           "area_ha_total_resolucion": 2.5866,
           "fecha_inscrita": "2021-09-30",
+          "objectid": 137915,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6832,6 +6968,7 @@
           "ap_nombre": "Bochica",
           "area_ha_total_resolucion": 2.556,
           "fecha_inscrita": "2020-02-07",
+          "objectid": 137695,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6849,6 +6986,7 @@
           "ap_nombre": "El Silencio",
           "area_ha_total_resolucion": 2.4771,
           "fecha_inscrita": "2025-09-11",
+          "objectid": 138330,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6866,6 +7004,7 @@
           "ap_nombre": "Ananda",
           "area_ha_total_resolucion": 2.25,
           "fecha_inscrita": "2025-07-25",
+          "objectid": 138441,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6883,6 +7022,7 @@
           "ap_nombre": "Nakua",
           "area_ha_total_resolucion": 2.2406,
           "fecha_inscrita": "2022-05-23",
+          "objectid": 137914,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6900,6 +7040,7 @@
           "ap_nombre": "Bagüe",
           "area_ha_total_resolucion": 2.2264,
           "fecha_inscrita": "2025-09-11",
+          "objectid": 138327,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6917,6 +7058,7 @@
           "ap_nombre": "Providencia",
           "area_ha_total_resolucion": 2.2,
           "fecha_inscrita": "2018-09-19",
+          "objectid": 137577,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6934,6 +7076,7 @@
           "ap_nombre": "Cubarral",
           "area_ha_total_resolucion": 2.1363,
           "fecha_inscrita": "2019-12-10",
+          "objectid": 137739,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6951,6 +7094,7 @@
           "ap_nombre": "Las Dos Lunas",
           "area_ha_total_resolucion": 2.0554,
           "fecha_inscrita": "2024-12-27",
+          "objectid": 138369,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6968,6 +7112,7 @@
           "ap_nombre": "La Cumbre",
           "area_ha_total_resolucion": 2.0494,
           "fecha_inscrita": "2018-01-05",
+          "objectid": 137547,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -6985,6 +7130,7 @@
           "ap_nombre": "Romero B y Cia",
           "area_ha_total_resolucion": 1.9171,
           "fecha_inscrita": "2022-08-01",
+          "objectid": 138018,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7002,6 +7148,7 @@
           "ap_nombre": "Ariel Campestre Juisingueka",
           "area_ha_total_resolucion": 1.9102,
           "fecha_inscrita": "2022-02-23",
+          "objectid": 137977,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7019,6 +7166,7 @@
           "ap_nombre": "Ecoshezuá",
           "area_ha_total_resolucion": 1.7391,
           "fecha_inscrita": "2019-08-22",
+          "objectid": 137726,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7036,6 +7184,7 @@
           "ap_nombre": "Rancho Camaná",
           "area_ha_total_resolucion": 1.7209,
           "fecha_inscrita": "2016-01-05",
+          "objectid": 137219,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7053,6 +7202,7 @@
           "ap_nombre": "Los Ángeles de Quisquiza",
           "area_ha_total_resolucion": 1.5963,
           "fecha_inscrita": "2017-12-28",
+          "objectid": 137540,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7070,6 +7220,7 @@
           "ap_nombre": "Cuchavira",
           "area_ha_total_resolucion": 1.3877,
           "fecha_inscrita": "2022-08-01",
+          "objectid": 138020,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7087,6 +7238,7 @@
           "ap_nombre": "Jardín Colibrí una Escuela de Vida",
           "area_ha_total_resolucion": 1.28,
           "fecha_inscrita": "2020-03-30",
+          "objectid": 137688,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7104,6 +7256,7 @@
           "ap_nombre": "Yataro",
           "area_ha_total_resolucion": 1.2713,
           "fecha_inscrita": "2024-05-23",
+          "objectid": 138301,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7121,6 +7274,7 @@
           "ap_nombre": "El Encuentro",
           "area_ha_total_resolucion": 1.2102,
           "fecha_inscrita": "2019-12-05",
+          "objectid": 137680,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7138,6 +7292,7 @@
           "ap_nombre": "Los Laureles",
           "area_ha_total_resolucion": 1.1725,
           "fecha_inscrita": "2019-07-28",
+          "objectid": 137622,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7155,6 +7310,7 @@
           "ap_nombre": "Nuestra Señora de Fátima",
           "area_ha_total_resolucion": 1.1481,
           "fecha_inscrita": "2019-07-27",
+          "objectid": 137671,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7172,6 +7328,7 @@
           "ap_nombre": "Naser",
           "area_ha_total_resolucion": 1.1437,
           "fecha_inscrita": "2019-06-03",
+          "objectid": 137667,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7189,6 +7346,7 @@
           "ap_nombre": "Cha Ma Chia",
           "area_ha_total_resolucion": 1.0,
           "fecha_inscrita": "2022-08-18",
+          "objectid": 138025,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7206,6 +7364,7 @@
           "ap_nombre": "Reserva Covarachía",
           "area_ha_total_resolucion": 0.8493,
           "fecha_inscrita": "2025-12-12",
+          "objectid": 138479,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7223,6 +7382,7 @@
           "ap_nombre": "El Nacedero",
           "area_ha_total_resolucion": 0.8118,
           "fecha_inscrita": "2021-10-30",
+          "objectid": 137924,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7240,6 +7400,7 @@
           "ap_nombre": "La Esperanza",
           "area_ha_total_resolucion": 0.7353,
           "fecha_inscrita": "2021-06-16",
+          "objectid": 137887,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7257,6 +7418,7 @@
           "ap_nombre": "El Retiro",
           "area_ha_total_resolucion": 0.6672,
           "fecha_inscrita": "2024-06-18",
+          "objectid": 138305,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7274,6 +7436,7 @@
           "ap_nombre": "El Zoque",
           "area_ha_total_resolucion": 0.6399,
           "fecha_inscrita": "2022-12-20",
+          "objectid": 138026,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7291,6 +7454,7 @@
           "ap_nombre": "El Monte",
           "area_ha_total_resolucion": 0.6025,
           "fecha_inscrita": "2021-05-01",
+          "objectid": 137870,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7308,6 +7472,7 @@
           "ap_nombre": "El Sauce",
           "area_ha_total_resolucion": 0.5577,
           "fecha_inscrita": "2018-12-11",
+          "objectid": 137616,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7325,6 +7490,7 @@
           "ap_nombre": "La Reserva",
           "area_ha_total_resolucion": 0.462,
           "fecha_inscrita": "2021-06-16",
+          "objectid": 137884,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7342,6 +7508,7 @@
           "ap_nombre": "El Porvenir",
           "area_ha_total_resolucion": 0.3814,
           "fecha_inscrita": "2023-05-24",
+          "objectid": 138087,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7359,6 +7526,7 @@
           "ap_nombre": "El Refugio",
           "area_ha_total_resolucion": 0.381,
           "fecha_inscrita": "2018-07-26",
+          "objectid": 137600,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"
@@ -7376,6 +7544,7 @@
           "ap_nombre": "El Monte",
           "area_ha_total_resolucion": 0.2983,
           "fecha_inscrita": "2021-06-16",
+          "objectid": 137869,
           "organizacion": "Parques Nacionales Naturales de Colombia"
          },
          "type": "Feature"

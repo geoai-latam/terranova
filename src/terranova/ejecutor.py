@@ -323,7 +323,7 @@ def renderizar(plantilla: Any, valores: dict[str, Any]) -> Any:
 # --- salida ----------------------------------------------------------------------------------
 
 _BIDI_Y_CONTROL = re.compile(
-    "[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]|[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]"
+    "[\u061c\u200e\u200f\u202a-\u202e\u2066-\u2069]|[\x00-\x08\x0b-\x1f\x7f-\x9f]"
 )
 
 
@@ -335,7 +335,10 @@ _I_PARTIDA = "\ufffd\u00ad"
 
 def sanear(texto: str) -> str:
     """Texto de la fuente sin control ni bidi y con el largo máximo de `rt/1` (regla 9)."""
-    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto.replace(_I_PARTIDA, "í")))
+    # el retorno de carro (0x0D) tampoco cabe en `rt/1`: «\r\n» queda en «\n» (el IGAC escribe
+    # «Aeropuerto Alberto Jaramillo Sánchez\r\n» en la cartografía 1:100 000)
+    texto = texto.replace("\r\n", "\n").replace(_I_PARTIDA, "í")
+    limpio = _BIDI_Y_CONTROL.sub("", unicodedata.normalize("NFC", texto))
     return limpio if len(limpio) <= MAX_TEXTO else limpio[: MAX_TEXTO - 1] + "…"
 
 
