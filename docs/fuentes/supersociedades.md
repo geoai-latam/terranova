@@ -85,3 +85,16 @@ en XBRL. El sexto es el reporte de las 10 000 empresas más grandes.
   - Por defecto, solo el último corte y el periodo actual.
   - Arreglar las tildes de los conceptos.
   - Una ficha corta de la carátula.
+
+## Revisión de valor, 2026-11-05
+
+- Alpina (860025900) da las cinco partes de los estados del corte 2025. Por ejemplo, 487 filas de
+  situación financiera y 179 de carátula, en páginas.
+- **El «no encontrado» no decía nada.** Ecopetrol no está en los estados NIIF, y en el reporte de
+  las 10 000 más grandes figura con supervisor SUPERFINANCIERA. Alpina figura así en 2021 y 2022 y
+  con SUPERSOCIEDADES desde 2023. Las cinco herramientas NIIF llevan ahora un aviso de vacío que lo
+  explica.
+- SECOLINSA (830010665, el canario) no está entre las 10 000 más grandes. La herramienta de las
+  grandes dice ahora a dónde ir.
+- La carátula trae el «E-mail de la sociedad», que suele ser el de una persona. Sale como se
+  publica, pero la dorada lo guarda enmascarado (rama `fix/doradas-sin-correos`).
