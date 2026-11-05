@@ -292,3 +292,20 @@ async def test_el_cronograma_trae_las_fechas_que_la_fuente_si_llena() -> None:
     primera = sobre.model_dump(mode="json")["datos"]["elementos"][0]
     assert primera["fecha_entrega_garantia_b"] == "2022-05-09"
     assert primera["fecha_aprobacion_garantias_b"] == "2022-05-10"
+
+
+@pytest.mark.anyio
+async def test_transmilenio_dice_tipo_y_etapa_de_cada_estacion() -> None:
+    """Estaciones troncales y trazados en una capa. Los códigos de tipo y etapa salen con su
+    significado (diccionario del ítem). Calle 45 y Calle 63 estaban cerradas por obras en la
+    medición del 2026-11-04."""
+    h = CATALOGO.herramientas["transmilenio_troncal_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 40
+    assert datos["por_tipo"] == {"estación troncal": 32, "trazado troncal": 8}
+    por_nombre = {e["nombre"]: e for e in datos["elementos"]}
+    assert por_nombre["Calle 63"]["etapa_operacion_significado"] == "cierre temporal por obras"
+    assert por_nombre["CAN"]["tipo_estacion_significado"] == "sencilla"
+    assert por_nombre["Suba"]["letra_troncal"] == "C"

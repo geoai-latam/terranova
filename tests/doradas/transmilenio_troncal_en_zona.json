@@ -1,0 +1,1440 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T03:49:07+00:00",
+ "herramienta": "transmilenio_troncal_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.1,
+     4.62,
+     -74.04,
+     4.68
+    ],
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "categoria",
+     "nom_est"
+    ],
+    "select": [
+     "categoria",
+     "num_est",
+     "nom_est",
+     "ub_est",
+     "id_trazado",
+     "tipo_esta",
+     "eta_oper",
+     "esta_oper",
+     "num_vag",
+     "num_acc",
+     "acc_esp",
+     "acc_depr",
+     "acc_puent",
+     "link_trans",
+     "nom_tronc",
+     "le_troncal",
+     "ori_traz",
+     "fin_traz",
+     "long_traz"
+    ],
+    "tabla": "transmilenio_infraestructura_troncal"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07769,
+           4.6573
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "7 de Agosto",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "07104",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 63"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07458,
+           4.66635
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 2,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "AV. Chile",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "07103",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 72"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07996,
+           4.63012
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "AV. ElDorado",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "07108",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 AV 28"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08418,
+           4.62342
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 2,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "CAD",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "07109",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 26"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06788,
+           4.63145
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "3",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 45 - American School Way",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09117",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 45 - CL 42A"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06487,
+           4.6484
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "3",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 63",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09120",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 63 - CL 60"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06207,
+           4.65824
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 72 - Areandina",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09122",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 72 - CL 70A"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0713,
+           4.67015
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 75 - Zona M",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "07102",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 75A"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06126,
+           4.66303
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 76 - San Felipe",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09123",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 76 - CL 74"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05964,
+           4.67231
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ002",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Calle 85",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "02303",
+          "num_vag": 4,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 85"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07871,
+           4.6454
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 2,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Campín - UAN",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "07106",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 53"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09905,
+           4.64688
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "CAN",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "06103",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 60"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07326,
+           4.67776
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 1,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ005",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Carrera 47",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "04106",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 46"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07632,
+           4.62046
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Centro Memoria",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "06109",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 20"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08353,
+           4.63088
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 1,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Ciudad Universitaria - Lotería de Bogotá",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "06107",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 34"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08029,
+           4.62599
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 1,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Concejo de Bogotá",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "06108",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 38"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08994,
+           4.6344
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 1,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Corferias",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "06106",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 43"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0698,
+           4.67554
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ005",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Escuela Militar",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "04107",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 40"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09665,
+           4.64301
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Gobernación",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "06104",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 54"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06031,
+           4.66814
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ002",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Héroes - Colmena Seguros",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "02304",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 80"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06444,
+           4.67561
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "La Castellana",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "07101",
+          "num_vag": 4,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 KR 24"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07838,
+           4.64984
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Movistar Arena",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "07105",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 57"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06434,
+           4.67016
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ005",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Polo - FINCOMERCIO",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "04108",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "TV 27"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09313,
+           4.6375
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ016",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Quinta Paredes",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "06105",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 47"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06718,
+           4.67639
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 1,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ003",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "San Martín",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "03014",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "AV Suba - CL 81"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06876,
+           4.62654
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Temporal AV. 39",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09116",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "AV 39 - AV Calle"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06545,
+           4.64501
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Temporal Calle 57",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09119",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 57 - CL 54"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064,
+           4.65276
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Temporal Flores – Areandina",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09121",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 69 - CL 67"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06702,
+           4.63627
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ001",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Temporal Marly",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "09118",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 51 - CL 49"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07933,
+           4.63712
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 2,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ008",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Universidad Nacional",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "07107",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "KR 30 - CL 45"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05902,
+           4.676
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 0,
+          "acc_puent": 1,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ002",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Virrey",
+          "nom_tronc": null,
+          "num_acc": 1,
+          "num_est": "02302",
+          "num_vag": 3,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 90"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09869,
+           4.62032
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": 0,
+          "acc_esp": 2,
+          "acc_puent": 0,
+          "categoria": "estación troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": null,
+          "id_trazado": "TZ009",
+          "le_troncal": null,
+          "link_trans": null,
+          "long_traz": null,
+          "nom_est": "Zona Industrial",
+          "nom_tronc": null,
+          "num_acc": 2,
+          "num_est": "12007",
+          "num_vag": 2,
+          "ori_traz": null,
+          "tipo_esta": "4",
+          "ub_est": "CL 13 - KR 38"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.1469,
+           4.63139
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Portal Americas",
+          "id_trazado": "TZ009",
+          "le_troncal": "F",
+          "link_trans": null,
+          "long_traz": 13.092557569999999,
+          "nom_est": "Americas",
+          "nom_tronc": "Americas",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Avenida Caracas",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0605,
+           4.66703
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Terminal",
+          "id_trazado": "TZ002",
+          "le_troncal": "B",
+          "link_trans": null,
+          "long_traz": 11.821399300000001,
+          "nom_est": "Autopista Norte",
+          "nom_tronc": "Autopista Norte",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Avenida Calle 80",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "geometries": [
+           {
+            "coordinates": [
+             -74.07345,
+             4.61434
+            ],
+            "type": "Point"
+           },
+           {
+            "coordinates": [
+             [
+              [
+               -74.0723,
+               4.61348
+              ],
+              [
+               -74.07181,
+               4.61388
+              ]
+             ],
+             [
+              [
+               -74.07255,
+               4.61387
+              ],
+              [
+               -74.07196,
+               4.61421
+              ]
+             ],
+             [
+              [
+               -74.07345,
+               4.61434
+              ],
+              [
+               -74.07386,
+               4.61335
+              ]
+             ],
+             [
+              [
+               -74.07345,
+               4.61434
+              ],
+              [
+               -74.0723,
+               4.61348
+              ]
+             ],
+             [
+              [
+               -74.0723,
+               4.61348
+              ],
+              [
+               -74.07345,
+               4.61434
+              ]
+             ],
+             [
+              [
+               -74.07345,
+               4.61434
+              ],
+              [
+               -74.07295,
+               4.6151
+              ]
+             ],
+             [
+              [
+               -74.12469,
+               4.68483
+              ],
+              [
+               -74.12021,
+               4.67991
+              ],
+              [
+               -74.09213,
+               4.636
+              ],
+              [
+               -74.08452,
+               4.63219
+              ],
+              [
+               -74.07237,
+               4.61485
+              ],
+              [
+               -74.07196,
+               4.61421
+              ],
+              [
+               -74.07185,
+               4.61396
+              ],
+              [
+               -74.07181,
+               4.61388
+              ],
+              [
+               -74.07137,
+               4.61281
+              ],
+              [
+               -74.07106,
+               4.6124
+              ],
+              [
+               -74.06634,
+               4.60874
+              ],
+              [
+               -74.06646,
+               4.60629
+              ],
+              [
+               -74.06806,
+               4.6031
+              ]
+             ]
+            ],
+            "type": "MultiLineString"
+           }
+          ],
+          "type": "GeometryCollection"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Portal ElDorado",
+          "id_trazado": "TZ016",
+          "le_troncal": "K",
+          "link_trans": null,
+          "long_traz": 12.25248872,
+          "nom_est": "Calle 26",
+          "nom_tronc": "Calle 26",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Carrera 3",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11053,
+           4.70834
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Portal 80",
+          "id_trazado": "TZ005",
+          "le_troncal": "D",
+          "link_trans": null,
+          "long_traz": 7.3802452,
+          "nom_est": "Calle 80",
+          "nom_tronc": "Calle 80",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Autopista Norte",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06077,
+           4.66551
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Avenida Calle 6",
+          "id_trazado": "TZ001",
+          "le_troncal": "A",
+          "link_trans": null,
+          "long_traz": 8.310871520000001,
+          "nom_est": "Caracas Centro",
+          "nom_tronc": "Caracas",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Avenida Calle 80",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0686,
+           4.61748
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Avenida Calle 134",
+          "id_trazado": "TZ020",
+          "le_troncal": "M",
+          "link_trans": null,
+          "long_traz": 11.65402973,
+          "nom_est": "Carrera 7",
+          "nom_tronc": "Carrera 7",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Museo Nacional",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0978,
+           4.60679
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Avenida Calle 6",
+          "id_trazado": "TZ008",
+          "le_troncal": "E",
+          "link_trans": null,
+          "long_traz": 9.95684642,
+          "nom_est": "NQS Central",
+          "nom_tronc": "NQS Central",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Autopista Norte",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06879,
+           4.67377
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "acc_depr": null,
+          "acc_esp": null,
+          "acc_puent": null,
+          "categoria": "trazado troncal",
+          "esta_oper": "1",
+          "eta_oper": "1",
+          "fin_traz": "Portal Suba",
+          "id_trazado": "TZ003",
+          "le_troncal": "C",
+          "link_trans": null,
+          "long_traz": 11.48905023,
+          "nom_est": "Suba",
+          "nom_tronc": "Suba",
+          "num_acc": null,
+          "num_est": null,
+          "num_vag": null,
+          "ori_traz": "Avenida Calle 80",
+          "tipo_esta": null,
+          "ub_est": null
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 40,
+      "truncado": false,
+      "vistos": 40
+     },
+     "consultado_en": "2026-11-05T03:47:26.503095+00:00",
+     "copia": {
+      "filas": 179,
+      "huella": "sha256:8fe4ef5303ec25c2e4a9f6853e3f3aac0cf3e3b1771908b574eb4cc186143936",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105034726503095"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

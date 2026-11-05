@@ -1,0 +1,86 @@
+# Cosechado de 9sue-ezhx (spec 08), el mismo conjunto de cce.secop2.paa, con solo los campos de la copia.
+fuente: cce.secop2.paa_entidades_copia
+metodo: cosechado
+cosechado: '2026-10-22'
+origen: https://www.datos.gov.co/api/views/9sue-ezhx.json
+pagina: https://www.datos.gov.co/d/9sue-ezhx
+titulo: SECOPII - Plan Anual De Adquisiciones Detalle
+descripcion: Informacion detallada de las compras que realizará la entidad durante el año definido en
+  el plan anual de aquisiciones
+publicado: '2024-10-21'
+datos_actualizados: '2026-09-23'
+frecuencia_declarada: Diaria
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Estadísticas Nacionales
+etiquetas:
+- paa
+filas: 19603851
+campos:
+  codigo_entidad:
+    tipo_fuente: text
+    etiqueta: Codigo Entidad
+    descripcion: Codigo de la entidad en la plataforma SECOPII
+    nulos: 0
+    minimo: '700000011'
+    maximo: SA
+    comparacion: texto
+  nombre_entidad:
+    tipo_fuente: text
+    etiqueta: Nombre Entidad
+    descripcion: Nombre de la entidad que publicó el proceso en el SECOPII
+  nit_entidad:
+    tipo_fuente: text
+    etiqueta: NIT Entidad
+    descripcion: NIT de la Entidad que publicó el PAA en el SECOPII
+  annio:
+    tipo_fuente: number
+    etiqueta: Annio
+    descripcion: Año del PAA
+    nulos: 0
+    minimo: '-1'
+    maximo: '2026'
+    comparacion: numero
+    valores:
+      '2024': 3913112
+      '2022': 3123072
+      '2023': 2944588
+      '2019': 2563902
+      '2016': 2434159
+      '2021': 1501884
+      '2020': 1159145
+      '2018': 1089262
+      '2017': 842996
+      '2025': 24692
+      '-1': 145
+      '2026': 13
+      '2015': 1
+  version_del_paa:
+    tipo_fuente: number
+    etiqueta: Version del PAA
+    descripcion: Versión del PAA
+    nulos: 0
+    minimo: '1'
+    maximo: '46'
+    comparacion: numero
+    valores:
+      '1': 19475387
+      '2': 109198
+      '3': 9744
+      '4': 1826
+      '5': 527
+      '6': 174
+      '7': 48
+      '9': 25
+      '8': 18
+      '10': 6
+      '13': 5
+      '16': 2
+      '20': 2
+      '14': 2
+      '17': 2
+      '46': 1
+      '11': 1
+      '12': 1
+      '21': 1
+      '32': 1
