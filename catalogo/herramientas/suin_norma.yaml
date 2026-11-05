@@ -8,8 +8,8 @@ descripcion: >
   SUIN-Juriscol (Ministerio de Justicia): subtipo (ley estatutaria, decreto único…), vigencia
   (Vigente, Derogado o Compilado; vacía si SUIN aún no la estudia, sobre todo en las normas
   recientes, lo que no quiere decir que no esté vigente), entidad que la expidió, sector, materias
-  y número de artículos. El tipo va sin tildes: LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO,
-  CIRCULAR… Puede salir más de una norma si varias entidades usaron el mismo número. No trae el
+  y número de artículos. El tipo es el de SUIN: LEY, DECRETO, RESOLUCION, ACTO LEGISLATIVO,
+  CIRCULAR EXTERNA… (con tilde o sin ella, en mayúscula o minúscula). Puede salir más de una norma si varias entidades usaron el mismo número. No trae el
   texto: SUIN carga solo una parte de los decretos y las resoluciones, así que no encontrar una no
   quiere decir que no exista.
   (Fuente: MinJusticia, SUIN-Juriscol; licencia: CC BY-SA 4.0.)
@@ -21,7 +21,9 @@ consulta:
   argumentos:
     id: fiev-nid6
     portal: datos.gov.co
-    where: "upper(tipo) = upper('{tipo}') AND n_mero = '{numero}' AND a_o = '{anio}'"
+    # SUIN escribe el tipo sin tildes (RESOLUCION, CONSTITUCION POLITICA; medido el 2026-11-05):
+    # «Resolución» no encontraba nada
+    where: "upper(tipo) = upper('{tipo:ascii}') AND n_mero = '{numero}' AND a_o = '{anio}'"
     max_filas: 20
   campos: [tipo, n_mero, a_o, subtipo, vigencia, entidad, sector, materia, art_culos]
 salida: NormaSuin
@@ -31,8 +33,8 @@ avisos:
 - cuando: vacio
   texto: >
     SUIN-Juriscol no tiene cargada esa norma. SUIN carga solo una parte de los decretos y las
-    resoluciones, así que esto no quiere decir que no exista. Revise el tipo (sin tildes: LEY,
-    DECRETO, RESOLUCION), el número y el año.
+    resoluciones, así que esto no quiere decir que no exista. Revise el tipo como lo nombra SUIN
+    (LEY, DECRETO, RESOLUCION, CIRCULAR EXTERNA, ACTO LEGISLATIVO), el número y el año.
 cobro: registro
 canario:
   # Medido el 2026-10-23 en fiev-nid6: Ley 1581 de 2012 (protección de datos personales).
