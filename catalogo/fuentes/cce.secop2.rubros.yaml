@@ -28,7 +28,8 @@ campos:
   codigo: {nombre: codigo_rubro, tipo: str, desc: "código del rubro"}
   nombre: {nombre: rubro, tipo: str, desc: "nombre del rubro"}
   valor_actual: {nombre: valor, tipo: float, desc: "valor actual, en pesos"}
-  anno: {nombre: vigencia, tipo: int, desc: "vigencia (año)"}
+  # medido el 2026-11-05: anno es 0 también en los rubros definidos (SENA, ICBF); 0 no es un año
+  anno: {nombre: vigencia, tipo: int, vacios: ["0"], desc: "vigencia (año); vacía cuando la fuente dice 0"}
   identificador_compromiso: {nombre: id_compromiso, tipo: str, desc: "compromiso al que pertenece"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}

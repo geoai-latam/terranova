@@ -18,12 +18,18 @@ filas (medido el 2026-11-02).
 
 1. **El vacío no es «no tiene rubro».**
 2. **La fuente está quieta** desde el 2026-10-09.
+3. **«No Definido» no es un rubro.** Cuando la entidad no registró el rubro, la fuente publica una
+   fila con código «No Definido», nombre «NO DEFINIDO», valor 0 y año 0. Medido el 2026-11-05: son
+   así las 7 del contrato de Pitalito (CO1.PCCNTR.3712964) y las de uno de INVIAS
+   (CO1.PCCNTR.2064143). El SENA y el ICBF sí registran código y nombre
+   (C-3603-1300-14-0-3603025-02 en CO1.PCCNTR.1322739).
+4. **El año viene en 0**, también en los rubros definidos. Sale vacío (`vacios: ["0"]`).
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `secop_rubros_contrato` | medio | contesta cuando hay datos. Desde el 2026-11-02, el vacío lleva el aviso de cobertura (`cobertura.aviso_vacio`) |
+| `secop_rubros_contrato` | medio | contesta cuando hay datos. El vacío lleva el aviso de cobertura; arriba va `rubros_sin_definir`, con un aviso de qué es «No Definido» |
 
 ## Decisiones
 
@@ -32,3 +38,5 @@ filas (medido el 2026-11-02).
 - **2026-11-03, revisión de valor:** verificado en producción con el PAE de Chía
   (CO1.PCCNTR.7180851): el vacío sale con el aviso de cobertura. Sin más cambios.
   La fuente está atrasada de verdad: datos.gov.co la actualizó por última vez el 2026-10-09.
+- **2026-11-05, revisión de valor:** `rubros_sin_definir` y un aviso de que «No Definido» con
+  valor 0 no es un rubro. La vigencia 0 sale vacía.
