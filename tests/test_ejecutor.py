@@ -1716,3 +1716,31 @@ async def test_los_conteos_por_grupo_cuentan_la_lista_entera_de_la_copia() -> No
     assert any(a.startswith("Estos resúmenes cuentan la lista completa") for a in sobre.avisos)
     agrupadas = [s for s in almacen.sql if "GROUP BY" in s]
     assert len(agrupadas) == 2 and all("11001" not in s for s in agrupadas)  # parámetro, no SQL
+
+
+def test_reparar_codificacion_deshace_el_utf8_leido_como_latin1() -> None:
+    """La Supersolidaria trae parte de los periodos con «BOGOTÃ, D.C.» (2026-11-05)."""
+    from terranova.ejecutor import reparar_codificacion
+
+    assert reparar_codificacion("BOGOTÃ\u0081, D.C.") == "BOGOTÁ, D.C."
+    assert reparar_codificacion("MEDELLÃ\u008dN") == "MEDELLÍN"  # 0x8D no está en cp1252
+    assert reparar_codificacion("SAN JOSÃ‰ DE CÃšCUTA") == "SAN JOSÉ DE CÚCUTA"
+    assert reparar_codificacion("BOGOTÁ, D.C.") == "BOGOTÁ, D.C."  # bien escrito, queda igual
+    assert reparar_codificacion("PRECIO Â") == "PRECIO Â"  # no es UTF-8: queda igual
+
+
+def test_unico_por_deja_la_fila_del_ultimo_reporte() -> None:
+    """800-102-813-1 era Multiactiva en 2025 y Fondo de empleados en 2026: queda la de 2026, en el
+    lugar de la primera que llegó."""
+    from terranova.ejecutor import unico_por
+
+    filas = [
+        {"nit": "1", "tipo": "Multiactiva", "ultimo": "2025"},
+        {"nit": "2", "tipo": "Fondo", "ultimo": "2024"},
+        {"nit": "1", "tipo": "Fondo de empleados", "ultimo": "2026"},
+        {"nit": "2", "tipo": "Fondo", "ultimo": "2024"},
+    ]
+    assert unico_por(filas, "nit", "ultimo") == [
+        {"nit": "1", "tipo": "Fondo de empleados", "ultimo": "2026"},
+        {"nit": "2", "tipo": "Fondo", "ultimo": "2024"},
+    ]

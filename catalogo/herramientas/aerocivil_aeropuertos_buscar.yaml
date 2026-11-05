@@ -8,7 +8,8 @@ descripcion: >
   de transporte aéreo de la Aerocivil y da su sigla IATA (la que pide aerocivil_trafico_aeropuerto),
   el nombre con que lo reporta la fuente, la ciudad y el país, los años con vuelos comerciales y los
   pasajeros que salieron de él desde 2020. «Medellín» trae también el José María Córdova (MDE, en
-  Rionegro) y «Apartadó», el de Carepa (APO). Un mismo aeropuerto puede salir con dos grafías.
+  Rionegro) y «Apartadó», el de Carepa (APO). Un mismo aeropuerto puede salir con dos grafías. Encuentra el nombre con tildes o sin ellas
+  (Cúcuta y Cucuta dan lo mismo).
   (Fuente: Aerocivil; licencia: CC BY-SA 4.0.)
 entrada: {nombre: nombre}
 consulta:
@@ -22,7 +23,7 @@ consulta:
     # Alias de ciudad a aeropuerto, medidos el 2026-11-02: el aeropuerto de Medellín (MDE) está en
     # Rionegro y el de Apartadó (APO), en Carepa; la fuente los registra con esa ciudad. Las demás
     # ciudades grandes se registran con su nombre (Cali, Barranquilla, Bucaramanga, Armenia).
-    where: "upper(ciudad_origen) like upper('%{nombre}%') OR upper(nombre_origen) like upper('%{nombre}%') OR (upper('{nombre}') like '%MEDELL%' AND origen = 'MDE') OR (upper('{nombre}') like '%APARTAD%' AND origen = 'APO')"
+    where: "replace(replace(replace(replace(replace(upper(ciudad_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%{nombre:sin_tildes}%') OR replace(replace(replace(replace(replace(upper(nombre_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%{nombre:sin_tildes}%') OR (upper('{nombre}') like '%MEDELL%' AND origen = 'MDE') OR (upper('{nombre}') like '%APARTAD%' AND origen = 'APO')"
     group: "origen, nombre_origen, ciudad_origen, pais_origen"
     order: "pasajeros_salen DESC, origen"
     max_filas: 30
@@ -32,6 +33,12 @@ derivados:
   hasta: {de: columna, campo: hasta, tipo: int}
   pasajeros_salen: {de: columna, campo: pasajeros_salen, tipo: int}
 salida: AeropuertosAerocivil
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún aeropuerto de las estadísticas de la Aerocivil desde 2020 tiene ese nombre o esa ciudad.
+    Pruebe con una parte del nombre (Cartagena, Rafael Núñez) o con la ciudad donde queda el
+    aeropuerto, que no siempre es la que sirve (el de Medellín está en Rionegro).
 cobro: codigo
 canario:
   # Medido el 2026-10-28 en gb6w-ynu4: «Pasto» da 3 filas; la primera, PSO «PASTO - ANTONIO NARIÑO»
