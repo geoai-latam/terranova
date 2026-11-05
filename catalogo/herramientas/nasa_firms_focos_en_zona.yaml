@@ -1,0 +1,41 @@
+id: nasa_firms_focos_en_zona
+version: 1
+familia: ambiente
+fuente: nasa.firms
+pregunta: "¿Qué focos de calor (posibles incendios) detectaron los satélites en esta zona en este periodo?"
+descripcion: >
+  Focos de calor de NASA FIRMS (satélite VIIRS S-NPP, 375 m) dentro de un rectángulo y un periodo
+  de hasta 31 días, desde 2012: fecha, hora UTC, confianza (baja, nominal o alta), potencia
+  radiativa (MW), día o noche y el producto del que salió (estándar, definitivo; o casi en tiempo
+  real para los últimos ~3 meses). Arriba van el total, cuántos por día y la potencia máxima. Un
+  incendio grande da muchos focos: contar focos no es contar incendios, y no todo foco es un
+  incendio (también hay quemas agrícolas y fuentes industriales). `hasta` es exclusivo. Para
+  alertas oficiales del IDEAM, ideam_alertas_incendios_municipio. (Fuente: NASA FIRMS; licencia:
+  CC0 1.0.)
+entrada: {bbox: bbox, desde: fecha, hasta: fecha}
+consulta:
+  operacion: en_zona
+  tool: amenazas_incendios_periodo
+  argumentos:
+    bbox: "{bbox}"
+    desde: "{desde}"
+    hasta: "{hasta}"
+  campos: [fecha, hora_utc, confianza, frp_mw, dia_noche, tipo, producto]
+salida: FocosDeCalorEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_fecha: {de: conteo_por, campo: fecha}
+  potencia_maxima_mw: {de: maximo, campo: potencia_radiativa_mw, tipo: float}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún foco de calor de VIIRS S-NPP en ese rectángulo y periodo. El satélite pasa dos veces al
+    día y no ve bajo nubes densas: «sin focos» no garantiza que no hubo fuego. Pruebe con otro
+    periodo o un rectángulo más grande.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la API por área (VIIRS_SNPP_SP, producto estándar, que no cambia):
+  # 2 498 focos del 2024-02-01 al 2024-02-05 en el rectángulo de Colombia y sus vecinos.
+  entrada: {bbox: [-79.1, -4.3, -66.8, 13.5], desde: "2024-02-01", hasta: "2024-02-06"}
+  verdad: {total: 2498}
+  latencia_max_ms: 30000

@@ -42,7 +42,8 @@ logger = logging.getLogger("amenazas_mcp")
 SCOPES = {"amenazas_sismos": "amenazas:read", "amenazas_incendios": "amenazas:read",
           "amenazas_caudal": "amenazas:read", "clima_serie": "amenazas:read"}
 runner = ToolRunner(timeout_s=170, service="amenazas-mcp",
-                    expected_errors=(ErrorRed, UrlNoPermitida, resumen.ErrorAmenazas, areas.AreaInvalida))
+                    expected_errors=(ErrorRed, UrlNoPermitida, resumen.ErrorAmenazas, areas.AreaInvalida,
+                                     fuentes.ErrorFirms))
 mcp = FastMCP(
     "amenazas-mcp",
     instructions=("Sismos (USGS), incendios activos (NASA FIRMS), caudales de ríos (GloFAS) y clima (ERA5, NASA "
@@ -116,6 +117,34 @@ def amenazas_incendios(area: dict | None = None, bbox: list[float] | None = None
         hechos = {**resumen.incendios(fc, periodo, sensor), "zona_consultada_bbox": caja, **filtro}
         hechos["completitud"] = completitud(len(fc["features"]), len(fc["features"]))  # el CSV viene entero
         return geo_result([feature_collection(f"Focos de calor ({periodo})", fc, crs="EPSG:4326")], facts=hechos)
+
+    return compact_result(runner.run(buscar))
+
+
+@mcp.tool(
+    description=("Focos de calor (posibles incendios) de NASA FIRMS en una zona (`area` o `bbox`) en un PERIODO "
+                 f"(`desde`/`hasta` AAAA-MM-DD, `hasta` exclusivo, hasta {fuentes.FIRMS_MAX_DIAS} días), desde 2012: "
+                 "capa de puntos con fecha, hora, confianza, potencia (FRP), día o noche, tipo de fuente y producto "
+                 "(estándar o casi en tiempo real). `satelite`: VIIRS_SNPP (por defecto), VIIRS_NOAA20, MODIS. "
+                 f"{_ZONA_TXT}"),
+    annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
+    meta=geo_meta(inputs=ZONA, outputs=["feature_collection"], cost="low"),
+)
+def amenazas_incendios_periodo(desde: str, hasta: str, area: dict | None = None, bbox: list[float] | None = None,
+                               satelite: str = "VIIRS_SNPP") -> CallToolResult:
+    def buscar() -> dict:
+        if satelite not in ("VIIRS_SNPP", "VIIRS_NOAA20", "MODIS"):
+            raise resumen.ErrorAmenazas("satelite: VIIRS_SNPP, VIIRS_NOAA20 o MODIS")
+        caja, geom = resumen.zona(area, bbox)
+        filas, tramos = fuentes.incendios_archivo(caja, desde, hasta, satelite)
+        fc = resumen.focos(filas)
+        filtro = _recortar(fc, geom)
+        hechos = {**resumen.incendios(fc, f"{desde}/{hasta}", satelite), "zona_consultada_bbox": caja,
+                  "periodo": [desde, hasta], "tramos": tramos, **filtro}
+        # la API por área entrega el CSV entero de cada tramo: lo que vino es todo
+        hechos["completitud"] = completitud(len(fc["features"]), len(fc["features"]))
+        return geo_result([feature_collection(f"Focos de calor {desde} a {hasta}", fc, crs="EPSG:4326")],
+                          facts=hechos)
 
     return compact_result(runner.run(buscar))
 

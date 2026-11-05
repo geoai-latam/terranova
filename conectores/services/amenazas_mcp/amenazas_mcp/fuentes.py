@@ -13,6 +13,9 @@ from __future__ import annotations
 
 import csv
 import io
+import os
+import time
+from datetime import date, timedelta
 from typing import Any
 
 from geo_mcp_kit import red
@@ -22,6 +25,12 @@ FIRMS = "https://firms.modaps.eosdis.nasa.gov/data/active_fire"
 FIRMS_SENSORES = {"viirs_snpp": ("suomi-npp-viirs-c2", "SUOMI_VIIRS_C2"),
                   "viirs_noaa20": ("noaa-20-viirs-c2", "J1_VIIRS_C2"), "modis": ("modis-c6.1", "MODIS_C6_1")}
 FIRMS_PERIODOS = ("24h", "48h", "7d")
+# Terrnova (2026-11-05): la API por área, con MAP_KEY (gratis), da el archivo desde 2012 por fecha. El
+# producto estándar (SP) llega hasta unos 3 meses atrás; lo más reciente es casi en tiempo real (NRT).
+FIRMS_API = "https://firms.modaps.eosdis.nasa.gov/api"
+FIRMS_DIAS_POR_PETICION = 5  # el máximo que acepta la API por área
+FIRMS_MAX_DIAS = 31
+_disponible: dict[str, Any] = {"en": 0.0, "rangos": {}}
 GLOFAS = "https://flood-api.open-meteo.com/v1/flood"
 OPEN_METEO = {"archivo": "https://archive-api.open-meteo.com/v1/archive",
               "pronostico": "https://api.open-meteo.com/v1/forecast"}
@@ -55,6 +64,66 @@ def incendios(bbox: list[float], periodo: str, sensor: str) -> list[dict[str, An
         if bbox[0] <= x <= bbox[2] and bbox[1] <= y <= bbox[3]:
             salida.append({**fila, "longitude": x, "latitude": y})
     return salida
+
+
+class ErrorFirms(Exception):
+    """Un fallo de FIRMS sin la llave en el texto (la URL de la API la lleva)."""
+
+
+def _firms(ruta: str) -> str:
+    llave = os.environ.get("FIRMS_MAP_KEY", "")
+    if not llave:
+        raise ErrorFirms("falta FIRMS_MAP_KEY: la API por área de NASA FIRMS pide una llave (gratis)")
+    try:
+        texto = _get(f"{FIRMS_API}/{ruta.format(llave=llave)}", timeout=120).text
+    except Exception as exc:  # el mensaje puede traer la URL, y la URL la llave
+        raise ErrorFirms(f"NASA FIRMS no respondió: {type(exc).__name__}") from None
+    if texto.lstrip().lower().startswith(("invalid", "error")):
+        raise ErrorFirms("NASA FIRMS rechazó la consulta (llave o parámetros)")
+    return texto
+
+
+def _rangos_firms() -> dict[str, tuple[str, str]]:
+    """Desde y hasta qué fecha hay cada producto (se pregunta una vez por hora)."""
+    if time.monotonic() - _disponible["en"] > 3600 or not _disponible["rangos"]:
+        filas = csv.DictReader(io.StringIO(_firms("data_availability/csv/{llave}/ALL")))
+        _disponible["rangos"] = {f["data_id"]: (f["min_date"], f["max_date"]) for f in filas}
+        _disponible["en"] = time.monotonic()
+    return _disponible["rangos"]
+
+
+def incendios_archivo(bbox: list[float], desde: str, hasta: str, satelite: str = "VIIRS_SNPP"
+                      ) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    """Focos de calor de un periodo (`hasta` exclusivo, hasta 31 días) por la API por área.
+
+    Cada tramo de hasta 5 días va al producto estándar (SP) si su fecha ya está en él, o al casi en
+    tiempo real (NRT) si no. Devuelve los focos y los tramos pedidos (producto y fechas)."""
+    inicio, fin = date.fromisoformat(desde), date.fromisoformat(hasta)
+    dias = (fin - inicio).days
+    if not 1 <= dias <= FIRMS_MAX_DIAS:
+        raise ErrorFirms(f"el periodo va de 1 a {FIRMS_MAX_DIAS} días (`hasta` es exclusivo)")
+    rangos = _rangos_firms()
+    sp_hasta = rangos.get(f"{satelite}_SP", ("", ""))[1]
+    caja = ",".join(f"{v:g}" for v in bbox)
+    focos: list[dict[str, Any]] = []
+    tramos: list[dict[str, str]] = []
+    dia = inicio
+    while dia < fin:
+        n = min(FIRMS_DIAS_POR_PETICION, (fin - dia).days)
+        if sp_hasta and dia.isoformat() <= sp_hasta:  # un tramo no cruza del SP al NRT
+            n = min(n, (date.fromisoformat(sp_hasta) - dia).days + 1)
+        ultimo = dia + timedelta(days=n - 1)
+        producto = f"{satelite}_SP" if sp_hasta and ultimo.isoformat() <= sp_hasta else f"{satelite}_NRT"
+        texto = _firms(f"area/csv/{{llave}}/{producto}/{caja}/{n}/{dia.isoformat()}")
+        for fila in csv.DictReader(io.StringIO(texto)):
+            try:
+                x, y = float(fila["longitude"]), float(fila["latitude"])
+            except (KeyError, ValueError):
+                continue
+            focos.append({**fila, "longitude": x, "latitude": y, "producto": producto})
+        tramos.append({"producto": producto, "desde": dia.isoformat(), "hasta": ultimo.isoformat()})
+        dia += timedelta(days=n)
+    return focos, tramos
 
 
 def caudal(lon: float, lat: float, dias_pasados: int, dias_pronostico: int, radio_celdas: int) -> list[dict]:
