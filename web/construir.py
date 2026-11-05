@@ -121,6 +121,7 @@ NOMBRE_CORTO = {
     "consorcio WorldCover": "ESA WorldCover",
     "LANCE/FIRMS": "NASA FIRMS",
     "Alcaldía Mayor de Bogotá": "Alcaldía de Bogotá",
+    "Secretaría Distrital de Movilidad de Bogotá": "Movilidad de Bogotá",
 }
 GLOBALES = ("USGS", "ESA WorldCover", "NASA FIRMS")
 
@@ -455,6 +456,7 @@ SISTEMAS = {
     "MinJusticia": ["SUIN-Juriscol"],
     "MinSalud": ["REPS", "sedes de prestadores de salud"],
     "Alcaldía de Bogotá": ["estaciones de bomberos, estaciones de policía, CAI"],
+    "Movilidad de Bogotá": ["Puntos, tramos y zonas críticas de siniestralidad vial"],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],

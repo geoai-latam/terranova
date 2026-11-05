@@ -474,3 +474,31 @@ def test_ninguna_dorada_guarda_un_correo() -> None:
     for archivo in sorted(DORADAS.glob("*.json")):
         hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
         assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
+
+
+@pytest.mark.anyio
+async def test_siniestralidad_critica_de_bogota_por_actor_vial() -> None:
+    """Sitios críticos 2022-2025 de la SDM, medidos el 2026-11-05 en la descarga de sus veinte
+    capas: en Kennedy y Puente Aranda hay 49. Las sumas por actor vial son solo de los puntos."""
+    h = CATALOGO.herramientas["sdm_siniestralidad_critica_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 49
+    assert datos["sitios_por_actor_vial"] == {
+        "vulnerables": 17,
+        "motociclistas": 14,
+        "peatones": 10,
+        "ciclistas": 8,
+    }
+    assert datos["fallecidos_en_puntos_por_actor_vial"] == {
+        "peatones": 6,
+        "vulnerables": 2,
+        "motociclistas": 0,
+    }
+    assert datos["lesionados_en_puntos_por_actor_vial"] == {
+        "vulnerables": 93,
+        "peatones": 54,
+        "motociclistas": 45,
+    }
+    assert {e["elemento"] for e in datos["elementos"]} == {"punto", "tramo", "zona"}
