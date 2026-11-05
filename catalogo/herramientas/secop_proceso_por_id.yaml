@@ -24,6 +24,12 @@ consulta:
 salida: ProcesoPorId
 derivados:
   numero_fases: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP II no tiene un proceso con ese identificador. Se busca por el del proceso de compra
+    (CO1.BDOS.…) o el de una fase (CO1.REQ.…). El de un contrato (CO1.PCCNTR.…) no sirve aquí:
+    secop_contrato_por_id da su id_proceso. Los procesos de SECOP I no están en este conjunto.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en p6dx-8zbt: el proceso de compra del contrato CO1.PCCNTR.3712964

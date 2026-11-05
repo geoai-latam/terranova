@@ -4,7 +4,9 @@ familia: contratacion
 fuente: cce.secop2.rubros
 pregunta: "¿De qué rubros presupuestales sale la plata de este contrato de SECOP II?"
 descripcion: >
-  Rubros presupuestales de un contrato de SECOP II: código, nombre, valor y vigencia.
+  Rubros presupuestales de un contrato de SECOP II: código, nombre, valor y vigencia. Muchas
+  entidades no registran el rubro y la fuente publica «No Definido» con valor 0;
+  `rubros_sin_definir` dice cuántos son así.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -22,6 +24,14 @@ consulta:
 salida: SecopRubrosContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  rubros_sin_definir: {de: conteo, tipo: int, solo_si: {campo: codigo_rubro, valores: ["No Definido"]}}
+avisos:
+- cuando: encontrado
+  texto: >
+    «No Definido», con valor 0, es la fila que publica SECOP II cuando la entidad no registró el
+    rubro del compromiso: no es un rubro. rubros_sin_definir dice cuántas hay. En el contrato de
+    Pitalito CO1.PCCNTR.3712964 y en uno de INVIAS son todas así (medido el 2026-11-05); el SENA y
+    el ICBF sí registran el código y el nombre.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en cwhv-7fnp (id_contrato = CO1.PCCNTR.2514090): 1
@@ -29,5 +39,5 @@ canario:
   entrada: {id_contrato: "CO1.PCCNTR.2514090"}
   verdad: {id_contrato: "CO1.PCCNTR.2514090", codigo_rubro: "No Definido"}
   minimos: {numero_registros: 1}
-  campos: [codigo_rubro, id_compromiso, id_contrato, numero_registros, rubro, valor, vigencia]
+  campos: [codigo_rubro, id_compromiso, id_contrato, numero_registros, rubro, rubros_sin_definir, valor, vigencia]
   latencia_max_ms: 10000
