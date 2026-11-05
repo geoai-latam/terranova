@@ -309,3 +309,28 @@ async def test_transmilenio_dice_tipo_y_etapa_de_cada_estacion() -> None:
     assert por_nombre["Calle 63"]["etapa_operacion_significado"] == "cierre temporal por obras"
     assert por_nombre["CAN"]["tipo_estacion_significado"] == "sencilla"
     assert por_nombre["Suba"]["letra_troncal"] == "C"
+
+
+@pytest.mark.anyio
+async def test_transmilenio_rutas_y_paraderos_con_horario_y_localidad() -> None:
+    """Rutas del SITP por zona y por código, y paraderos zonales. Conteos medidos en el servicio de
+    TransMilenio el 2026-11-04: 95 servicios y 87 paraderos en el rectángulo del canario; la línea
+    GA503 tiene dos sentidos."""
+
+    async def correr(herramienta: str) -> dict[str, object]:
+        h = CATALOGO.herramientas[herramienta]
+        grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+        sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+        return dict(sobre.model_dump(mode="json")["datos"])
+
+    rutas = await correr("transmilenio_rutas_en_zona")
+    assert rutas["total"] == 95
+    ruta = await correr("transmilenio_ruta_buscar")
+    sentidos = {e["codigo_ruta"]: e for e in ruta["elementos"]}  # type: ignore[attr-defined]
+    assert set(sentidos) == {"A503-1", "G503-2"}
+    assert sentidos["A503-1"]["origen"] == "San Bernardino"
+    assert sentidos["A503-1"]["localidad_origen_significado"] == "Bosa"
+    assert sentidos["A503-1"]["horario_habil"].startswith("3:00")
+    paraderos = await correr("transmilenio_paraderos_en_zona")
+    assert paraderos["total"] == 87
+    assert paraderos["por_localidad"] == {"Chapinero": 76, "Barrios Unidos": 11}

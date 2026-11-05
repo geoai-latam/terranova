@@ -1,0 +1,86 @@
+id: transmilenio.rutas_sitp
+titulo: "TransMilenio: servicios (rutas troncales y zonales) del SITP con su trazado y horarios, copia"
+entidad: TransMilenio S.A.
+competencia: ente gestor del Sistema Integrado de Transporte Público de Bogotá (Acuerdo 4 de 1999 del Concejo de Bogotá)
+acto: null
+# Capa «Servicios» del servicio de planificación del SITP (Subgerencia de Planificación). El ítem
+# «Servicios de rutas SITP» del portal de datos abiertos de TransMilenio autoriza el uso con la cita
+# textual; el portal la marca CC BY 4.0.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-04
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/5dbc76af14a940939727c45aac1ae8de?f=json
+  cita: "Se autoriza el uso, aprovechamiento y construcción de análisis con la información contenida, siempre y cuando se haga la siguiente cita textual: «Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co"
+protocolo: arcgis_rest
+conector: copia
+url: https://gis.transmilenio.gov.co/arcgis/rest/services/ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer
+modo: copia
+capas_servicio: [15]
+copia:
+  origen: arcgis
+  capa: 15
+  tabla: transmilenio_rutas_sitp
+  clave: objectid
+  por_pagina: 1000
+  texto: [cod_ruta, cod_linea, nom_ruta, orig_ruta, dest_ruta, oper_ruta]
+# TransMilenio la actualiza «conforme a los cambios presentados a la operación» (ítem modificado el
+# 2026-07).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
+cobertura: {pais: CO, excluye: ["paraderos (otra capa)", "frecuencias y tiempos de recorrido", "validaciones y afluencia", "posición de los buses en tiempo real"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  objectid: {nombre: id_servicio, tipo: int, desc: "identificador del servicio en la capa de TransMilenio (cambia si TransMilenio republica)"}
+  cod_ruta: {nombre: codigo_ruta, tipo: str, desc: "código del servicio en el Sistema de Control de Flota, con su sentido (p. ej. «A503-1»)"}
+  cod_linea: {nombre: codigo_linea, tipo: str, desc: "identificador del trazado de la ruta en el Sistema de Control de Flota (p. ej. «GA503»)"}
+  nom_ruta: {nombre: nombre_ruta, tipo: str, desc: "nombre de la ruta como lo publica TransMilenio: en las zonales, «origen - destino» (p. ej. «Metrovivienda - Porciúncula»); en otras, el código de la línea"}
+  abrevia: {nombre: abreviatura, tipo: str, desc: "abreviatura de la ruta en el Sistema de Control de Flota (p. ej. «ALI», «AAA»; «NA» si no aplica)"}
+  orig_ruta: {nombre: origen, tipo: str, desc: "origen del servicio"}
+  dest_ruta: {nombre: destino, tipo: str, desc: "destino del servicio"}
+  loc_orig:
+    nombre: localidad_origen
+    tipo: str
+    desc: "localidad de origen (número)"
+    codigos: {"0": "Soacha", "1": "Usaquén", "2": "Chapinero", "3": "Santa Fe", "4": "San Cristóbal", "5": "Usme", "6": "Tunjuelito", "7": "Bosa", "8": "Kennedy", "9": "Puente Aranda", "10": "La Candelaria", "11": "Fontibón", "12": "Engativá", "13": "Suba", "14": "Barrios Unidos", "15": "Teusaquillo", "16": "Antonio Nariño", "17": "Los Mártires", "18": "Rafael Uribe Uribe", "19": "Ciudad Bolívar", "20": "Sumapaz"}
+    codigos_norma: "dominio «servicio_localidad» del campo loc_orig en el servicio de TransMilenio (Consulta_Planificacion_SITP/FeatureServer/15)"
+  loc_dest:
+    nombre: localidad_destino
+    tipo: str
+    desc: "localidad de destino (número)"
+    codigos: {"0": "Soacha", "1": "Usaquén", "2": "Chapinero", "3": "Santa Fe", "4": "San Cristóbal", "5": "Usme", "6": "Tunjuelito", "7": "Bosa", "8": "Kennedy", "9": "Puente Aranda", "10": "La Candelaria", "11": "Fontibón", "12": "Engativá", "13": "Suba", "14": "Barrios Unidos", "15": "Teusaquillo", "16": "Antonio Nariño", "17": "Los Mártires", "18": "Rafael Uribe Uribe", "19": "Ciudad Bolívar", "20": "Sumapaz"}
+    codigos_norma: "dominio «servicio_localidad» del campo loc_dest en el servicio de TransMilenio (Consulta_Planificacion_SITP/FeatureServer/15)"
+  zon_orig: {nombre: zona_origen, tipo: int, desc: "número de la zona SITP de origen"}
+  zon_dest: {nombre: zona_destino, tipo: int, desc: "número de la zona SITP de destino"}
+  oper_ruta: {nombre: operador, tipo: str, desc: "concesión que opera la ruta («No Aplica» en las que no tienen una sola)"}
+  fec_impl: {nombre: fecha_implementacion, tipo: str, desc: "fecha en que entró a operar, como la escribe TransMilenio (DD/MM/AAAA; a veces vacía)"}
+  hor_habil: {nombre: horario_habil, tipo: str, desc: "horario de lunes a viernes"}
+  hor_sab: {nombre: horario_sabado, tipo: str, desc: "horario del sábado"}
+  hor_fest: {nombre: horario_festivo, tipo: str, desc: "horario de domingos y festivos"}
+  long_ruta: {nombre: longitud_km, tipo: float, desc: "longitud del recorrido, km"}
+  tipo_ruta: {nombre: tipo_ruta, tipo: int, desc: "tipología de la ruta: código de TransMilenio, que no publica su significado"}
+  est_ruta: {nombre: estado_ruta, tipo: int, desc: "estado de operación: código de TransMilenio, que no publica su significado"}
+  tip_bus: {nombre: tipo_bus, tipo: int, desc: "tipo de bus: código de TransMilenio, que no publica su significado"}
+  tip_serv: {nombre: tipo_servicio, tipo: int, desc: "tipo de servicio: código de TransMilenio, que no publica su significado"}
+  dias_oper: {nombre: dias_operacion, tipo: int, desc: "días en que opera: código de TransMilenio, que no publica su significado (los horarios sí dicen qué días hay servicio)"}
+  tip_hor: {nombre: tipo_horario, tipo: int, desc: "tipo de horario: código de TransMilenio, que no publica su significado"}
+  comp_sitp: {nombre: componente_sitp, tipo: int, desc: "componente del SITP (troncal o zonal): código de TransMilenio, que no publica su significado"}
+  ruta_rural: {nombre: ruta_rural, tipo: int, desc: "cobertura rural: código de TransMilenio, que no publica su significado"}
+comportamiento: {max_por_pagina: 2000, orden_coordenadas: lon_lat}
+dcat: {publisher: TransMilenio S.A., theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-04'
+  fila: "un servicio del SITP en un sentido (ida o regreso), con su trazado"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "693 servicios; el servicio está en EPSG:3116 (MAGNA-SIRGAS Bogotá) y la copia pide EPSG:4326"
+  - "cada sentido es una fila: «A503-1» y «G503-2» son la ida y el regreso de la línea GA503"
+  - "tipo de ruta, estado, tipo de bus, de servicio, días, tipo de horario, componente y ruta rural son códigos sin dominio ni diccionario de valores: salen tal cual"
+  - "el diccionario del ítem dice que nom_ruta es el sitio de finalización; en los datos es «origen - destino» en las zonales y el código de la línea en otras"
+  - "created_user y last_edited_user (usuarios internos) no se copian"
+  decision: "copia espacial de la capa 15 con búsqueda en código, origen, destino y operador"

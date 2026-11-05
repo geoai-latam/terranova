@@ -1,0 +1,147 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T04:47:20+00:00",
+ "herramienta": "transmilenio_ruta_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "simplificada",
+    "limite": 100,
+    "order": [
+     "cod_ruta"
+    ],
+    "select": [
+     "cod_ruta",
+     "cod_linea",
+     "nom_ruta",
+     "abrevia",
+     "orig_ruta",
+     "dest_ruta",
+     "loc_orig",
+     "loc_dest",
+     "zon_orig",
+     "zon_dest",
+     "oper_ruta",
+     "fec_impl",
+     "hor_habil",
+     "hor_sab",
+     "hor_fest",
+     "long_ruta",
+     "tipo_ruta",
+     "est_ruta",
+     "tip_bus",
+     "tip_serv",
+     "dias_oper",
+     "tip_hor",
+     "comp_sitp",
+     "ruta_rural"
+    ],
+    "tabla": "transmilenio_rutas_sitp",
+    "texto": "GA503"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20728,
+           4.62195
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "GA503",
+          "cod_ruta": "A503-1",
+          "comp_sitp": 2,
+          "dest_ruta": "Est. Calle 100",
+          "dias_oper": 3,
+          "est_ruta": 2,
+          "fec_impl": "13/07/2020",
+          "hor_fest": "5:00 a. m. - 9:15 p. m.",
+          "hor_habil": "3:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:45 p. m.",
+          "loc_dest": "12",
+          "loc_orig": "7",
+          "long_ruta": 33.533571359999996,
+          "nom_ruta": "GA503",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "San Bernardino",
+          "ruta_rural": 3,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06436,
+           4.68126
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "GA503",
+          "cod_ruta": "G503-2",
+          "comp_sitp": 2,
+          "dest_ruta": "San Bernardino",
+          "dias_oper": 3,
+          "est_ruta": 2,
+          "fec_impl": "13/07/2020",
+          "hor_fest": "5:00 a. m. - 9:15 p. m.",
+          "hor_habil": "3:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:45 p. m.",
+          "loc_dest": "12",
+          "loc_orig": "7",
+          "long_ruta": 28.483907,
+          "nom_ruta": "GA503",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Est. Calle 100",
+          "ruta_rural": 3,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 9,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 2,
+      "truncado": false,
+      "vistos": 2
+     },
+     "consultado_en": "2026-11-05T04:46:09.507376+00:00",
+     "copia": {
+      "filas": 693,
+      "huella": "sha256:e4bae17677074545e1a43607c2a403fa3b65ba691cde68090d0f2df2188a16c4",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105044609507376"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

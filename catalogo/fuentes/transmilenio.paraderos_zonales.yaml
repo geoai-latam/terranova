@@ -1,0 +1,62 @@
+id: transmilenio.paraderos_zonales
+titulo: "TransMilenio: paraderos zonales del SITP (buses azules, alimentadores, complementarios y especiales), copia"
+entidad: TransMilenio S.A.
+competencia: ente gestor del Sistema Integrado de Transporte Público de Bogotá (Acuerdo 4 de 1999 del Concejo de Bogotá)
+acto: null
+# Ítem «Paraderos Zonales del SITP» del portal de datos abiertos de TransMilenio: autoriza el uso con
+# la cita textual; el portal la marca CC BY 4.0.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-04
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/70b111e96b514bdfb36a7eb532d0eb4f?f=json
+  cita: "Se autoriza el uso, aprovechamiento y construcción de análisis con la información contenida, siempre y cuando se haga la siguiente cita textual: «Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co"
+protocolo: arcgis_rest
+conector: copia
+url: https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos/FeatureServer
+modo: copia
+capas_servicio: [0]
+copia:
+  origen: arcgis
+  capa: 0
+  tabla: transmilenio_paraderos_zonales
+  clave: objectid
+  por_pagina: 2000
+  texto: [cenefa, nombre, direccion_bandera, via]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
+cobertura: {pais: CO, excluye: ["estaciones troncales (otra capa)", "qué rutas paran en cada paradero"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  objectid: {nombre: id_paradero, tipo: int, desc: "identificador del paradero en la capa de TransMilenio (cambia si TransMilenio republica)"}
+  cenefa: {nombre: cenefa, tipo: str, desc: "código del paradero que va en la cenefa (p. ej. «005A13»)"}
+  nombre: {nombre: nombre, tipo: str, desc: "hito que da nombre al paradero (p. ej. «Instituto Nacional de Cancerología»)"}
+  via: {nombre: via, tipo: str, desc: "vía sobre la que está"}
+  direccion_bandera: {nombre: direccion, tipo: str, desc: "dirección del paradero (p. ej. «AC 1 - KR 9»)"}
+  localidad: {nombre: localidad, tipo: str, desc: "localidad"}
+  zona_sitp: {nombre: zona_sitp, tipo: int, desc: "número de la zona SITP"}
+  zonas_nuevas: {nombre: zona_nueva, tipo: str, desc: "letra de la zona en la zonificación nueva del SITP"}
+  consecutivo_zona: {nombre: consecutivo_zona, tipo: int, desc: "consecutivo del paradero en su zona"}
+  modulo: {nombre: modulo, tipo: str, desc: "módulo del paradero: diferencia las rutas que paran en cada parte de un paradero"}
+  tipo_m_s: {nombre: tipo_m_s, tipo: str, desc: "«S» o «M», como lo publica TransMilenio, que no da su significado (los «M» son los que tienen estado de paradero múltiple)"}
+  estado_multiple: {nombre: estado_multiple, tipo: str, desc: "estado del paradero múltiple: «Implementado», «Proyectado» o «No Aplica»"}
+  cantidad_mm: {nombre: cantidad_mm, tipo: int, desc: "cantidad que publica TransMilenio en cantidad_mm, sin diccionario"}
+  panel: {nombre: panel, tipo: str, desc: "texto que muestra el panel dentro del bus para anunciar la parada"}
+  audio: {nombre: audio, tipo: str, desc: "texto que se anuncia por audio dentro del bus"}
+comportamiento: {max_por_pagina: 10000, orden_coordenadas: lon_lat}
+dcat: {publisher: TransMilenio S.A., theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-04'
+  fila: "un paradero zonal del SITP"
+  clave: {columna: objectid, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "7 610 paraderos; el servicio está en EPSG:3116 y la copia pide EPSG:4326"
+  - "trae latitud y longitud como atributos; se usa la geometría"
+  - "tipo_m_s y cantidad_mm no tienen diccionario: salen tal cual"
+  - "la consola repite la dirección con la cenefa: no se copia"
+  decision: "copia espacial con búsqueda por cenefa, nombre, dirección y vía"

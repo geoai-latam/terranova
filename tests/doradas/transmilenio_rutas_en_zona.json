@@ -1,0 +1,3500 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T04:46:55+00:00",
+ "herramienta": "transmilenio_rutas_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.065,
+     4.65,
+     -74.05,
+     4.665
+    ],
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "cod_ruta"
+    ],
+    "select": [
+     "cod_ruta",
+     "cod_linea",
+     "nom_ruta",
+     "abrevia",
+     "orig_ruta",
+     "dest_ruta",
+     "loc_orig",
+     "loc_dest",
+     "zon_orig",
+     "zon_dest",
+     "oper_ruta",
+     "fec_impl",
+     "hor_habil",
+     "hor_sab",
+     "hor_fest",
+     "long_ruta",
+     "tipo_ruta",
+     "est_ruta",
+     "tip_bus",
+     "tip_serv",
+     "dias_oper",
+     "tip_hor",
+     "comp_sitp",
+     "ruta_rural"
+    ],
+    "tabla": "transmilenio_rutas_sitp"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.15676,
+           4.68624
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "12",
+          "cod_ruta": "12-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "13/04/2013",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:00 a. m. - 9:00 p. m.",
+          "loc_dest": "9",
+          "loc_orig": "9",
+          "long_ruta": 43.04352658,
+          "nom_ruta": "Fontibón S Pablo - Porciúncula",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "San Pablo",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 6,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20643,
+           4.62958
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "166",
+          "cod_ruta": "166-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "27/08/2014",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 9:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "7",
+          "loc_orig": "7",
+          "long_ruta": 58.75071725,
+          "nom_ruta": "Metrovivienda - Porciúncula",
+          "oper_ruta": "MASIVO CAPITAL KE",
+          "orig_ruta": "Metrovivienda",
+          "ruta_rural": 2,
+          "tip_bus": 5,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 8,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06756,
+           4.60395
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "COM",
+          "cod_linea": "18-3",
+          "cod_ruta": "18-3c",
+          "comp_sitp": 2,
+          "dest_ruta": "Germania",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "26/10/2013",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "3",
+          "loc_orig": "3",
+          "long_ruta": 47.07038431,
+          "nom_ruta": "Autonorte Est. Terminal - Germania",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Autonorte Est. Terminal",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17017,
+           4.60456
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "PER",
+          "cod_linea": "192",
+          "cod_ruta": "192-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Catalina",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "15/03/2014",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "8",
+          "long_ruta": 54.84293119,
+          "nom_ruta": "Unicentro - Catalina",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Unicentro",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.10283,
+           4.7179
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CEN",
+          "cod_linea": "193B",
+          "cod_ruta": "193B-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Marly",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "20/07/2013",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "10",
+          "long_ruta": 35.85781786,
+          "nom_ruta": "Bachué - Marly",
+          "oper_ruta": "ESTE ES MI BUS CALLE 80 CO01",
+          "orig_ruta": "Bachué",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07147,
+           4.61072
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "FER",
+          "cod_linea": "359",
+          "cod_ruta": "359-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Zn. In Alamos",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "26/10/2013",
+          "hor_fest": "6:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:45 a. m. - 9:00 p. m.",
+          "hor_sab": "5:30 a. m. - 9:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "3",
+          "long_ruta": 38.08138234,
+          "nom_ruta": "Zona Industrial Álamos - Germania",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "Germania",
+          "ruta_rural": 2,
+          "tip_bus": 5,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 5,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04569,
+           4.68361
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "ENG",
+          "cod_linea": "466",
+          "cod_ruta": "466-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Sabana Del Dorado",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "11/09/2013",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "5:00 a. m. - 10:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "2",
+          "long_ruta": 38.30561359,
+          "nom_ruta": "Sabana Del Dorado - Chicó Norte",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "Chico Norte",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 5,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14657,
+           4.59214
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "56A",
+          "cod_ruta": "56A-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "30/11/2013",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "6",
+          "loc_orig": "6",
+          "long_ruta": 46.05861507,
+          "nom_ruta": "Isla Del Sol - Porciúncula",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Isla Del Sol",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 10,
+          "zon_orig": 10
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20643,
+           4.62958
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "593",
+          "cod_ruta": "593-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Chico",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "8/11/2014",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "7",
+          "loc_orig": "7",
+          "long_ruta": 48.36794444,
+          "nom_ruta": "Metrovivienda - Chicó",
+          "oper_ruta": "MASIVO CAPITAL KE",
+          "orig_ruta": "Metrovivienda",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 8,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12199,
+           4.61329
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "ENG",
+          "cod_linea": "669",
+          "cod_ruta": "669-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Gran Granada",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "22/06/2013",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "16",
+          "long_ruta": 50.32210618,
+          "nom_ruta": "Gran Granada - Galán",
+          "oper_ruta": "ESTE ES MI BUS CALLE 80 CO01",
+          "orig_ruta": "Galan",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 5,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11086,
+           4.70952
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "6",
+          "cod_ruta": "6 C",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 80",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 11:00 p. m.",
+          "hor_sab": "4:30 a. m. - 11:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "12",
+          "long_ruta": 7.861802379999999,
+          "nom_ruta": "6",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Calle 76",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06111,
+           4.66371
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "6",
+          "cod_ruta": "6 P",
+          "comp_sitp": 1,
+          "dest_ruta": "Calle 76",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 11:00 p. m.",
+          "hor_sab": "4:30 a. m. - 11:00 p. m.",
+          "loc_dest": "12",
+          "loc_orig": "2",
+          "long_ruta": 7.91478752,
+          "nom_ruta": "6",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 80",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04375,
+           4.76884
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "8",
+          "cod_ruta": "8 G",
+          "comp_sitp": 1,
+          "dest_ruta": "Terminal",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 11:00 p. m.",
+          "hor_sab": "4:30 a. m. - 11:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "14",
+          "long_ruta": 21.09049212,
+          "nom_ruta": "8",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Guatoque - Veraguas",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09495,
+           4.60404
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "8",
+          "cod_ruta": "8 T",
+          "comp_sitp": 1,
+          "dest_ruta": "Guatoque - Veraguas",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 11:00 p. m.",
+          "hor_sab": "4:30 a. m. - 11:00 p. m.",
+          "loc_dest": "14",
+          "loc_orig": "11",
+          "long_ruta": 21.144428870000002,
+          "nom_ruta": "8",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Terminal",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.21388,
+           4.61433
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "91",
+          "cod_ruta": "91-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "31/01/2013",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:30 p. m.",
+          "loc_dest": "7",
+          "loc_orig": "7",
+          "long_ruta": 61.53625954,
+          "nom_ruta": "Bosa San José - Porciúncula",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Bosa San José",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 9,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11349,
+           4.74116
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CA134",
+          "cod_ruta": "A134-1",
+          "comp_sitp": 2,
+          "dest_ruta": "Parque Central Bavaria",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "4/09/2021",
+          "hor_fest": null,
+          "hor_habil": "4:00 a. m. - 9:30 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "13",
+          "loc_orig": "11",
+          "long_ruta": 24.2041809,
+          "nom_ruta": "Tibabuyes - Parque Central Bavaria",
+          "oper_ruta": "EMASIVO 16 SF",
+          "orig_ruta": "Tibabuyes",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16887,
+           4.59758
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AG52",
+          "cod_ruta": "A52",
+          "comp_sitp": 1,
+          "dest_ruta": "Flores - Areandina",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 8:30 a. m.",
+          "hor_sab": " ",
+          "loc_dest": "12",
+          "loc_orig": "7",
+          "long_ruta": 20.554036089999997,
+          "nom_ruta": "AG52",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Sur - Jfk Coop. F",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 3,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17271,
+           4.62912
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AF60",
+          "cod_ruta": "A60",
+          "comp_sitp": 1,
+          "dest_ruta": "Calle 76 - San Felipe",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 9:30 p. m.",
+          "hor_sab": "4:30 a. m. - 9:30 p. m.",
+          "loc_dest": "12",
+          "loc_orig": "8",
+          "long_ruta": 20.15083193,
+          "nom_ruta": "AF60",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Américas",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 4,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.2054,
+           4.60702
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AZ61",
+          "cod_ruta": "A61",
+          "comp_sitp": 1,
+          "dest_ruta": "Polo",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "4:30 a. m. - 9:00 a. m.",
+          "hor_sab": " ",
+          "loc_dest": "12",
+          "loc_orig": "7",
+          "long_ruta": 24.97009219,
+          "nom_ruta": "AZ61",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Tibanica - Primavera",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 3,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07588,
+           4.64952
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "AA002",
+          "cod_ruta": "AA002-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Est. Movistar Arena",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "5/09/2022",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "3:30 a. m. - 11:30 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "13",
+          "loc_orig": "13",
+          "long_ruta": 26.05896208,
+          "nom_ruta": "San Luis - Est. Movistar Arena",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "San Luis",
+          "ruta_rural": 1,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13946,
+           4.56791
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH13",
+          "cod_ruta": "B13",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Norte-Unicervantes",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:30 a. m. - 9:30 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "6",
+          "long_ruta": 27.34039897,
+          "nom_ruta": "BH13",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Tunal",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 11
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0975,
+           4.56551
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BL18",
+          "cod_ruta": "B18",
+          "comp_sitp": 1,
+          "dest_ruta": "Terminal",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "4",
+          "long_ruta": 25.30662043,
+          "nom_ruta": "BL18",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 20 De Julio",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12181,
+           4.6824
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BK23",
+          "cod_ruta": "B23",
+          "comp_sitp": 1,
+          "dest_ruta": "Alcalá – Colegio S. To",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:30 a. m. - 10:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 23.03208693,
+          "nom_ruta": "BK23",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal ElDorado – C.C.",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13932,
+           4.56834
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH27",
+          "cod_ruta": "B27",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Norte-Unicervantes",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 9:00 a. m. _ 4:00 p. m. - 8:00 p. m.",
+          "hor_sab": " ",
+          "loc_dest": "11",
+          "loc_orig": "6",
+          "long_ruta": 27.29078356,
+          "nom_ruta": "BH27",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Tunal",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 2,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 11
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.1687,
+           4.68048
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "KB303",
+          "cod_ruta": "B303-1",
+          "comp_sitp": 2,
+          "dest_ruta": "Unicentro",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "9/01/2021",
+          "hor_fest": "5:00 a. m. - 10:30 p. m.",
+          "hor_habil": "4:00 a. m. - 11:30 p. m.",
+          "hor_sab": "4:00 a. m. - 11:30 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 30.744041,
+          "nom_ruta": "Hb-Fontibón-Unicentro",
+          "oper_ruta": "E-SOMOS FONTIBON II",
+          "orig_ruta": "Hb-Fontibón",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 7
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06697,
+           4.60517
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BJ74",
+          "cod_ruta": "B74",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Norte-Unicervantes",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "6:00 a. m. - 10:30 p. m.",
+          "hor_sab": "7:00 a. m. - 8:30 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "3",
+          "long_ruta": 17.13116312,
+          "nom_ruta": "BJ74",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Universidades – CityU",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11938,
+           4.53129
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH75",
+          "cod_ruta": "B75",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Norte-Unicervantes",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "5",
+          "long_ruta": 29.22728891,
+          "nom_ruta": "BH75",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Usme",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 12
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12844,
+           4.46801
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "BH907",
+          "cod_ruta": "B907-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Terminal Norte",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "12/04/2021",
+          "hor_fest": "4:30 a. m. - 8:00 p. m.",
+          "hor_habil": "3:30 a. m. - 9:00 p. m.",
+          "hor_sab": "3:30 a. m. - 9:00 p. m.",
+          "loc_dest": "5",
+          "loc_orig": "11",
+          "long_ruta": 42.9088917,
+          "nom_ruta": "Terminal Norte - Usme Centro",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Usme Centro",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 2,
+          "zon_orig": 12
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08405,
+           4.5346
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "BL919",
+          "cod_ruta": "B919-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Terminal Norte",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "8/11/2021",
+          "hor_fest": "4:30 a. m. - 5:00 p. m.",
+          "hor_habil": "3:30 a. m. - 10:00 p. m.",
+          "hor_sab": "3:30 a. m. - 10:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "4",
+          "long_ruta": 36.683456979999995,
+          "nom_ruta": "Terminal Norte - Gaviotas",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Gaviotas",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 2,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04402,
+           4.76798
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "BL919",
+          "cod_ruta": "B919-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Terminal Norte",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "8/11/2021",
+          "hor_fest": "4:30 a. m. - 5:00 p. m.",
+          "hor_habil": "3:30 a. m. - 10:00 p. m.",
+          "hor_sab": "3:30 a. m. - 10:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "4",
+          "long_ruta": 38.04564844,
+          "nom_ruta": "Terminal Norte - Gaviotas",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Gaviotas",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 2,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03834,
+           4.74529
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "BA915",
+          "cod_ruta": "BA915-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": "28/06/2021",
+          "hor_fest": null,
+          "hor_habil": "3:13 a. m. - 11:45 p. m.",
+          "hor_sab": "3:13 a. m. - 11:45 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "1",
+          "long_ruta": 29.22730629,
+          "nom_ruta": "Toberín - Porciúncula",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Toberín",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06928,
+           4.64096
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "BD906",
+          "cod_ruta": "BD906-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Toberín",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": "15/02/2021",
+          "hor_fest": null,
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "10",
+          "long_ruta": 61.97150152,
+          "nom_ruta": "Villa Gladys - Toberín",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Villa Gladys",
+          "ruta_rural": 2,
+          "tip_bus": 5,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 5
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07252,
+           4.62173
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CA134",
+          "cod_ruta": "C134-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Tibabuyes",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "4/09/2021",
+          "hor_fest": null,
+          "hor_habil": "5:30 a. m. - 10:50 p. m.",
+          "hor_sab": "5:30 a. m. - 11:00 p. m.",
+          "loc_dest": "13",
+          "loc_orig": "11",
+          "long_ruta": 22.84186943,
+          "nom_ruta": "Tibabuyes - Parque Central Bavaria",
+          "oper_ruta": "EMASIVO 16 SF",
+          "orig_ruta": "Parque Central Bavaria",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13961,
+           4.57147
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CH15",
+          "cod_ruta": "C15",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Suba",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "6",
+          "long_ruta": 28.62559349,
+          "nom_ruta": "CH15",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Tunal",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 11
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17267,
+           4.62914
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CF19",
+          "cod_ruta": "C19",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Suba",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:30 a. m. - 10:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "8",
+          "long_ruta": 32.47242074,
+          "nom_ruta": "CF19",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Banderas",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 7
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0583,
+           4.65787
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CM84",
+          "cod_ruta": "C84",
+          "comp_sitp": 1,
+          "dest_ruta": "Etb Tibabuyes",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "6:00 a. m. - 10:00 p. m.",
+          "hor_habil": "6:00 a. m. - 11:00 p. m.",
+          "hor_sab": "6:00 a. m. - 11:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "2",
+          "long_ruta": 15.67439446,
+          "nom_ruta": "CM84",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Calle 72",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06797,
+           4.6741
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "CA103",
+          "cod_ruta": "CA103-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Chapinero",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "26/10/2020",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 9:30 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "11",
+          "long_ruta": 42.58137212,
+          "nom_ruta": "Portales Del Norte - Chapinero",
+          "oper_ruta": "MASIVO CAPITAL SO",
+          "orig_ruta": "Portales Del Norte",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04801,
+           4.68446
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "CA117",
+          "cod_ruta": "CA117-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Chapinero",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "23/03/2021",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "11",
+          "long_ruta": 39.91815634,
+          "nom_ruta": "Villa Cindy - Chapinero",
+          "oper_ruta": "MASIVO CAPITAL SO",
+          "orig_ruta": "Villa Cindy",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07147,
+           4.61072
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "CA124",
+          "cod_ruta": "CA124-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "7/08/2021",
+          "hor_fest": "5:00 a. m. - 9:30 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "3",
+          "loc_orig": "11",
+          "long_ruta": 50.45856876,
+          "nom_ruta": "Centro - Bilbao",
+          "oper_ruta": "EMASIVO 10 ST",
+          "orig_ruta": "Bilbao",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07167,
+           4.61085
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CCC",
+          "cod_linea": "CA151",
+          "cod_ruta": "CA151-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Tibabuyes",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "18/09/2021",
+          "hor_fest": "6:00 a. m. - 7:00 p. m.",
+          "hor_habil": "4:30 a. m. - 9:30 p. m.",
+          "hor_sab": "4:30 a. m. - 8:30 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "3",
+          "long_ruta": 49.2087853,
+          "nom_ruta": "Tibabuyes - Centro",
+          "oper_ruta": "EMASIVO 16 SF",
+          "orig_ruta": "Centro",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11531,
+           4.74155
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "AC164",
+          "cod_ruta": "CA164-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciúncula",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": "18/11/2025",
+          "hor_fest": null,
+          "hor_habil": "4:00 a. m. - 8:30 a. m. _ 1:00 p. m. - 7:00 p. m.",
+          "hor_sab": null,
+          "loc_dest": "13",
+          "loc_orig": "11",
+          "long_ruta": 36.58143612,
+          "nom_ruta": "Suba Tibabuyes - Porciúncula",
+          "oper_ruta": "EMASIVO 16 SF",
+          "orig_ruta": "Suba Tibabuyes",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 2,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.1197,
+           4.532
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DH20",
+          "cod_ruta": "D20",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 80",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 10:00 p. m.",
+          "hor_sab": "6:00 a. m. - 8:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "5",
+          "long_ruta": 26.54493496,
+          "nom_ruta": "DH20",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Usme",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 12
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06697,
+           4.60517
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DJ24",
+          "cod_ruta": "D24",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 80",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "6:00 a. m. - 11:00 p. m.",
+          "hor_sab": "6:00 a. m. - 9:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "3",
+          "long_ruta": 14.913693270000001,
+          "nom_ruta": "DJ24",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Universidades – CityU",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09792,
+           4.56513
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DL81",
+          "cod_ruta": "D81",
+          "comp_sitp": 1,
+          "dest_ruta": "Puente De Guadua",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:30 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "4",
+          "long_ruta": 23.51420124,
+          "nom_ruta": "DL81",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 20 De Julio",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09792,
+           4.56513
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DL81",
+          "cod_ruta": "D81CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Puente De Guadua",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "10",
+          "loc_orig": "4",
+          "long_ruta": 25.0048199,
+          "nom_ruta": "DL81",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 20 De Julio",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 4,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07569,
+           4.74013
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "E61",
+          "cod_ruta": "E61-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "24/08/2013",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "11",
+          "loc_orig": "11",
+          "long_ruta": 27.06942931,
+          "nom_ruta": "Casablanca - Porciúncula",
+          "oper_ruta": "MASIVO CAPITAL SO",
+          "orig_ruta": "Casablanca",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 3,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09484,
+           4.74757
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CF19",
+          "cod_ruta": "F19",
+          "comp_sitp": 1,
+          "dest_ruta": "Banderas",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "4:30 a. m. - 10:00 p. m.",
+          "hor_sab": "4:30 a. m. - 10:00 p. m.",
+          "loc_dest": "8",
+          "loc_orig": "11",
+          "long_ruta": 31.583320060000002,
+          "nom_ruta": "CF19",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Suba",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 8,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06146,
+           4.66223
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AF60",
+          "cod_ruta": "F60",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Américas",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "5:00 a. m. - 10:30 p. m.",
+          "hor_sab": "5:00 a. m. - 10:00 p. m.",
+          "loc_dest": "8",
+          "loc_orig": "12",
+          "long_ruta": 19.59152531,
+          "nom_ruta": "AF60",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Calle 76 - San Felipe",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 8,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05059,
+           4.6794
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "FFF",
+          "cod_linea": "FA410",
+          "cod_ruta": "FA410-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Chico Norte",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "26/04/2021",
+          "hor_fest": "4:30 a. m. - 9:30 p. m.",
+          "hor_habil": "3:30 a. m. - 10:30 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "8",
+          "long_ruta": 49.13633954,
+          "nom_ruta": "Tierra Buena - Chicó Norte",
+          "oper_ruta": "MASIVO CAPITAL KE",
+          "orig_ruta": "Tierra Buena",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14531,
+           4.644
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "FFF",
+          "cod_linea": "FA427",
+          "cod_ruta": "FA427-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro Andino",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "19/08/2025",
+          "hor_fest": "5:00 a. m. - 10:20 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "8",
+          "long_ruta": 46.26596354,
+          "nom_ruta": "Calandaima - Centro Andino",
+          "oper_ruta": "ESTE ES MI BUS TINTAL TZ",
+          "orig_ruta": "Calandaima",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06304,
+           4.65473
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AG52",
+          "cod_ruta": "G52",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Sur - Jfk Coop. F",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "4:00 p. m. - 8:00 p. m.",
+          "hor_sab": " ",
+          "loc_dest": "7",
+          "loc_orig": "12",
+          "long_ruta": 20.10867131,
+          "nom_ruta": "AG52",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Flores - Areandina",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 4,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 9,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17476,
+           4.61456
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "GA507",
+          "cod_ruta": "GA507-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Chapinero",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "28/09/2020",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "7",
+          "long_ruta": 41.628732480000004,
+          "nom_ruta": "Metrovivienda - Chapinero",
+          "oper_ruta": "MASIVO CAPITAL KE",
+          "orig_ruta": "Metrovivienda",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 8
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20441,
+           4.62219
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "GA518",
+          "cod_ruta": "GA518-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Potreritos",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "10/05/2021",
+          "hor_fest": "5:00 a. m. - 9:30 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "13",
+          "loc_orig": "7",
+          "long_ruta": 52.190295889999994,
+          "nom_ruta": "Potreritos - Est. Héroes",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Chapinero",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.18341,
+           4.60709
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "GA538",
+          "cod_ruta": "GA538-3",
+          "comp_sitp": 2,
+          "dest_ruta": "El Retiro",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "18/03/2024",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "7",
+          "long_ruta": 51.36092135,
+          "nom_ruta": "Boíta - El Retiro",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Boíta",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.20714,
+           4.62302
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BOS",
+          "cod_linea": "GA567",
+          "cod_ruta": "GA567-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "12/02/2014",
+          "hor_fest": "5:00 a. m. - 9:30 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "7",
+          "loc_orig": "7",
+          "long_ruta": 58.37067252000001,
+          "nom_ruta": "Parques De Bogotá - Porciúncula",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Parque De Bogotá",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 9,
+          "zon_orig": 9
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04639,
+           4.75385
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH13",
+          "cod_ruta": "H13",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Tunal",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:30 a. m. - 10:00 p. m.",
+          "hor_sab": "6:30 a. m. - 10:00 p. m.",
+          "loc_dest": "6",
+          "loc_orig": "11",
+          "long_ruta": 25.75017016,
+          "nom_ruta": "BH13",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Norte-Unicervantes",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09439,
+           4.7457
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CH15",
+          "cod_ruta": "H15",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Tunal",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:30 a. m. - 11:00 p. m.",
+          "hor_sab": "5:30 a. m. - 11:00 p. m.",
+          "loc_dest": "6",
+          "loc_orig": "11",
+          "long_ruta": 27.65260939,
+          "nom_ruta": "CH15",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Suba",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11032,
+           4.71011
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DH20",
+          "cod_ruta": "H20",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Usme",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "4:30 a. m. - 10:00 p. m.",
+          "hor_sab": "5:00 a. m. - 8:00 p. m.",
+          "loc_dest": "5",
+          "loc_orig": "10",
+          "long_ruta": 26.07626281,
+          "nom_ruta": "DH20",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 80",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 12,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04639,
+           4.75385
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH27",
+          "cod_ruta": "H27",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Tunal",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "6:00 a. m. - 9:00 a. m. _ 3:00 p. m. - 8:00 p. m.",
+          "hor_sab": " ",
+          "loc_dest": "6",
+          "loc_orig": "11",
+          "long_ruta": 25.79978557,
+          "nom_ruta": "BH27",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Norte-Unicervantes",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 2,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.047,
+           4.7481
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "H73",
+          "cod_ruta": "H73",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Tunal",
+          "dias_oper": 1,
+          "est_ruta": 2,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "6",
+          "loc_orig": "11",
+          "long_ruta": 25.37011997,
+          "nom_ruta": "H73",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Toberin - Foundever",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 2,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04633,
+           4.75415
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BH75",
+          "cod_ruta": "H75",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal Usme",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "5:00 a. m. - 11:00 p. m.",
+          "hor_sab": "5:00 a. m. - 11:00 p. m.",
+          "loc_dest": "5",
+          "loc_orig": "11",
+          "long_ruta": 28.334733640000003,
+          "nom_ruta": "BH75",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Norte-Unicervantes",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 12,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04402,
+           4.76798
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "HHH",
+          "cod_linea": "BH907",
+          "cod_ruta": "H907-1",
+          "comp_sitp": 2,
+          "dest_ruta": "Usme Centro",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "12/04/2021",
+          "hor_fest": "4:20 a. m. - 8:00 p. m.",
+          "hor_habil": "3:00 a. m. - 9:00 p. m.",
+          "hor_sab": "3:00 a. m. - 9:00 p. m.",
+          "loc_dest": "5",
+          "loc_orig": "11",
+          "long_ruta": 42.14468179,
+          "nom_ruta": "Terminal Norte - Usme Centro",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Terminal Norte",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 12,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09803,
+           4.57213
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "HHH",
+          "cod_linea": "HA600",
+          "cod_ruta": "HA600-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Jerusalén",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "31/10/2020",
+          "hor_fest": "5:00 a. m. - 8:30 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "19",
+          "loc_orig": "12",
+          "long_ruta": 43.97909749,
+          "nom_ruta": "Jerusalén- Chapinero",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Chapinero",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16892,
+           4.58721
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "HHH",
+          "cod_linea": "HA601",
+          "cod_ruta": "HA601-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Perdomo",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "24/09/2022",
+          "hor_fest": "5:30 a. m. - 7:00 p. m.",
+          "hor_habil": "4:00 a. m. - 8:00 p. m.",
+          "hor_sab": "4:00 a. m. - 8:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "19",
+          "long_ruta": 45.675697150000005,
+          "nom_ruta": "Perdomo - Chapinero",
+          "oper_ruta": "ODT LA ROLITA",
+          "orig_ruta": "Chapinero",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 10,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14828,
+           4.59183
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "HA642",
+          "cod_ruta": "HA642-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "2/05/2023",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "6",
+          "loc_orig": "6",
+          "long_ruta": 41.92707018,
+          "nom_ruta": "Rincón De Venecia - Porciúncula",
+          "oper_ruta": "ETIB BO",
+          "orig_ruta": "Rincon De Venecia",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 10,
+          "zon_orig": 10
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.11054,
+           4.71007
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DJ24",
+          "cod_ruta": "J24",
+          "comp_sitp": 1,
+          "dest_ruta": "Universidades – CityU",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:30 a. m. - 10:00 p. m.",
+          "hor_sab": "5:30 a. m. - 8:30 p. m.",
+          "loc_dest": "3",
+          "loc_orig": "10",
+          "long_ruta": 15.25444306,
+          "nom_ruta": "DJ24",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 80",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04597,
+           4.75412
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BJ74",
+          "cod_ruta": "J74",
+          "comp_sitp": 1,
+          "dest_ruta": "Universidades – CityU",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:30 a. m. - 9:30 p. m.",
+          "hor_sab": "6:30 a. m. - 8:30 p. m.",
+          "loc_dest": "3",
+          "loc_orig": "1",
+          "long_ruta": 17.97328439,
+          "nom_ruta": "BJ74",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal Norte-Unicervantes",
+          "ruta_rural": 3,
+          "tip_bus": 1,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05155,
+           4.72111
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BK23",
+          "cod_ruta": "K23",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal ElDorado – C.C.",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "5:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:30 a. m. - 10:00 p. m.",
+          "loc_dest": "9",
+          "loc_orig": "1",
+          "long_ruta": 21.871958460000002,
+          "nom_ruta": "BK23",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Alcalá – Colegio S. To",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 6,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04245,
+           4.70878
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "KKK",
+          "cod_linea": "KB303",
+          "cod_ruta": "K303-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Hb-Fontibón",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "9/01/2021",
+          "hor_fest": "5:00 a. m. - 10:30 p. m.",
+          "hor_habil": "4:00 a. m. - 11:30 p. m.",
+          "hor_sab": "4:00 a. m. - 11:30 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 26.56199247,
+          "nom_ruta": "Hb-Fontibón-Unicentro",
+          "oper_ruta": "E-SOMOS FONTIBON II",
+          "orig_ruta": "Unicentro",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 7,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03239,
+           4.69543
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "MK86",
+          "cod_ruta": "K86",
+          "comp_sitp": 1,
+          "dest_ruta": "Aeropuerto El Dorado",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "5:30 a. m. - 10:00 p. m.",
+          "hor_habil": "5:30 a. m. - 11:00 p. m.",
+          "hor_sab": "5:30 a. m. - 11:00 p. m.",
+          "loc_dest": "9",
+          "loc_orig": "1",
+          "long_ruta": 26.002096299999998,
+          "nom_ruta": "MK86",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Hacienda Santa Barbara",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 3,
+          "zon_dest": 6,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.03239,
+           4.69543
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "MK86",
+          "cod_ruta": "K86CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Aeropuerto El Dorado",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "9",
+          "loc_orig": "1",
+          "long_ruta": 29.41783454,
+          "nom_ruta": "MK86",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Hacienda Santa Barbara",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 3,
+          "tip_serv": 2,
+          "tipo_ruta": 3,
+          "zon_dest": 6,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.10648,
+           4.64935
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "KA306",
+          "cod_ruta": "KA306-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro Andino",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "12/02/2022",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 9:30 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "9",
+          "long_ruta": 40.553969359999996,
+          "nom_ruta": "Zona Franca - Centro Andino",
+          "oper_ruta": "MUEVE FONTIBON",
+          "orig_ruta": "Zona Franca",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 7
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16198,
+           4.70069
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "KA319",
+          "cod_ruta": "KA319-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro Andino",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "12/02/2022",
+          "hor_fest": null,
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "9",
+          "long_ruta": 43.68094001,
+          "nom_ruta": "Fontibón Brisas - Centro Andino",
+          "oper_ruta": "MUEVE FONTIBON",
+          "orig_ruta": "Fontibón Brisas",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08672,
+           4.62765
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "KA332",
+          "cod_ruta": "KA332-3",
+          "comp_sitp": 2,
+          "dest_ruta": "La Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "2/04/2022",
+          "hor_fest": "5:30 a. m. - 8:00 p. m.",
+          "hor_habil": "4:30 a. m. - 10:00 p. m.",
+          "hor_sab": "4:30 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "9",
+          "long_ruta": 41.286574849999994,
+          "nom_ruta": "El Recodo - Porciuncula",
+          "oper_ruta": "ZMO FONTIBON V",
+          "orig_ruta": "El Recodo",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 7
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058,
+           4.65833
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "KA334",
+          "cod_ruta": "KA334-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro Financiero",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "11/07/2022",
+          "hor_fest": "5:00 a. m. - 9:00 p. m.",
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "4:00 a. m. - 10:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "9",
+          "long_ruta": 41.996935459999996,
+          "nom_ruta": "Fontibón Versalles - Centro Financiero",
+          "oper_ruta": "E-SOMOS FONTIBON II",
+          "orig_ruta": "Fontibón Versalles",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.07003,
+           4.64002
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "BBB",
+          "cod_linea": "KB309",
+          "cod_ruta": "KB309-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Lijaca",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "21/06/2021",
+          "hor_fest": "5:00 a. m. - 8:00 p. m.",
+          "hor_habil": "4:00 a. m. - 9:00 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 71.51025614,
+          "nom_ruta": "San Pablo - Lijacá",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "San Pablo",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04378,
+           4.76866
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "BL18",
+          "cod_ruta": "L18",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 20 De Julio",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "5:00 a. m. - 11:00 p. m.",
+          "hor_sab": "5:30 a. m. - 9:30 p. m.",
+          "loc_dest": "4",
+          "loc_orig": "11",
+          "long_ruta": 25.731021440000003,
+          "nom_ruta": "BL18",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Terminal",
+          "ruta_rural": 3,
+          "tip_bus": 2,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12518,
+           4.72635
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DL81",
+          "cod_ruta": "L81",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 20 De Julio",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "5:00 a. m. - 11:00 p. m.",
+          "hor_sab": "5:00 a. m. - 10:30 p. m.",
+          "loc_dest": "4",
+          "loc_orig": "10",
+          "long_ruta": 25.35921146,
+          "nom_ruta": "DL81",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Puente De Guadua",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12518,
+           4.72635
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "DL81",
+          "cod_ruta": "L81CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 20 De Julio",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "4",
+          "loc_orig": "10",
+          "long_ruta": 25.445548499999997,
+          "nom_ruta": "DL81",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Puente De Guadua",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 3,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 4
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0289,
+           4.71017
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "ML82",
+          "cod_ruta": "L82",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 20 De Julio",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "5:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "4",
+          "long_ruta": 19.060058259999998,
+          "nom_ruta": "ML82",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Clinica El Bosque",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.0289,
+           4.71017
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "ML82",
+          "cod_ruta": "L82CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Portal 20 De Julio",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "1",
+          "loc_orig": "4",
+          "long_ruta": 20.049165419999998,
+          "nom_ruta": "ML82",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Clinica El Bosque",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 3,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08655,
+           4.55705
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "AAA",
+          "cod_linea": "LA814",
+          "cod_ruta": "LA814-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "31/01/2022",
+          "hor_fest": "5:30 a. m. - 6:00 p. m.",
+          "hor_habil": "4:30 a. m. - 7:00 p. m.",
+          "hor_sab": "4:30 a. m. - 7:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "4",
+          "long_ruta": 28.63248081,
+          "nom_ruta": "Porciúncula - Horacio Orjuela",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Horacio Orjuela",
+          "ruta_rural": 2,
+          "tip_bus": 5,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 13
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09715,
+           4.56581
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "ML82",
+          "cod_ruta": "M82",
+          "comp_sitp": 1,
+          "dest_ruta": "Clinica El Bosque",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "4",
+          "loc_orig": "1",
+          "long_ruta": 19.35041813,
+          "nom_ruta": "ML82",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 20 De Julio",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 1,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.09715,
+           4.56581
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "ML82",
+          "cod_ruta": "M82CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Clinica El Bosque",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "4",
+          "loc_orig": "1",
+          "long_ruta": 20.00893273,
+          "nom_ruta": "ML82",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Portal 20 De Julio",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 3,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 1
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.10364,
+           4.75045
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "CM84",
+          "cod_ruta": "M84",
+          "comp_sitp": 1,
+          "dest_ruta": "Calle 72",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "5:00 a. m. - 11:00 p. m.",
+          "hor_sab": "5:00 a. m. - 11:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "11",
+          "long_ruta": 15.38960227,
+          "nom_ruta": "CM84",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Etb Tibabuyes",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12102,
+           4.68077
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "MK86",
+          "cod_ruta": "M86",
+          "comp_sitp": 1,
+          "dest_ruta": "Hacienda Santa Barbara",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "4:30 a. m. - 9:00 p. m.",
+          "hor_habil": "4:30 a. m. - 10:00 p. m.",
+          "hor_sab": "4:30 a. m. - 10:00 p. m.",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 20.445757139999998,
+          "nom_ruta": "MK86",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Aeropuerto El Dorado",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 3,
+          "zon_dest": 0,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.12102,
+           4.68077
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "MK86",
+          "cod_ruta": "M86CV",
+          "comp_sitp": 1,
+          "dest_ruta": "Hacienda Santa Barbara",
+          "dias_oper": 4,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": "7:00 a. m. - 2:00 p. m.",
+          "hor_habil": " ",
+          "hor_sab": " ",
+          "loc_dest": "1",
+          "loc_orig": "9",
+          "long_ruta": 20.88102678,
+          "nom_ruta": "MK86",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Aeropuerto El Dorado",
+          "ruta_rural": 3,
+          "tip_bus": 3,
+          "tip_hor": 3,
+          "tip_serv": 2,
+          "tipo_ruta": 3,
+          "zon_dest": 0,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.13562,
+           4.69262
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "P500",
+          "cod_ruta": "P500-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Centro Andino",
+          "dias_oper": 2,
+          "est_ruta": 1,
+          "fec_impl": "29/09/2012",
+          "hor_fest": null,
+          "hor_habil": "4:00 a. m. - 10:00 p. m.",
+          "hor_sab": "5:00 a. m. - 9:30 p. m.",
+          "loc_dest": "9",
+          "loc_orig": "9",
+          "long_ruta": 33.16178378,
+          "nom_ruta": "Aeropuerto - Centro Andino",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "Aeropuerto",
+          "ruta_rural": 2,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 6,
+          "zon_orig": 6
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14018,
+           4.71482
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CEN",
+          "cod_linea": "SE10",
+          "cod_ruta": "SE10-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Germania",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "17/11/2012",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "10",
+          "loc_orig": "10",
+          "long_ruta": 39.86860866,
+          "nom_ruta": "Engativá Centro - Germania",
+          "oper_ruta": "GMOVIL ENGATIVA E",
+          "orig_ruta": "Engativá Centro",
+          "ruta_rural": 2,
+          "tip_bus": 5,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 5,
+          "zon_orig": 5
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058,
+           4.65833
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "T06",
+          "cod_ruta": "T06-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Porciuncula",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "23/02/2014",
+          "hor_fest": "5:00 a. m. - 10:00 p. m.",
+          "hor_habil": "4:00 a. m. - 11:00 p. m.",
+          "hor_sab": "4:00 a. m. - 11:00 p. m.",
+          "loc_dest": "2",
+          "loc_orig": "2",
+          "long_ruta": 16.68923457,
+          "nom_ruta": "La Sureña - Porciúncula",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "La Surena",
+          "ruta_rural": 1,
+          "tip_bus": 4,
+          "tip_hor": 1,
+          "tip_serv": 2,
+          "tipo_ruta": 1,
+          "zon_dest": 0,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.14182,
+           4.53378
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CHA",
+          "cod_linea": "T12",
+          "cod_ruta": "T12-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Calle 100",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "9/02/2015",
+          "hor_fest": "5:00 a. m. - 8:00 p. m.",
+          "hor_habil": "4:00 a. m. - 9:30 p. m.",
+          "hor_sab": "4:00 a. m. - 9:00 p. m.",
+          "loc_dest": "19",
+          "loc_orig": "19",
+          "long_ruta": 52.31993375,
+          "nom_ruta": "San Joaquín - Calle 100",
+          "oper_ruta": "SUMA CIUDAD BOLIVAR BC",
+          "orig_ruta": "San Joaquin",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 11
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.08556,
+           4.56953
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "SCR",
+          "cod_linea": "T13",
+          "cod_ruta": "T13-3",
+          "comp_sitp": 2,
+          "dest_ruta": "Hospital San Blas",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "16/03/2015",
+          "hor_fest": "4:30 a. m. - 9:30 p. m.",
+          "hor_habil": "3:00 a. m. - 10:00 p. m.",
+          "hor_sab": "3:00 a. m. - 10:00 p. m.",
+          "loc_dest": "4",
+          "loc_orig": "11",
+          "long_ruta": 65.43379863,
+          "nom_ruta": "Villa Cindy - Hospital San Blas",
+          "oper_ruta": "CONSORCIO EXPRESS SAN CRISTOBALD",
+          "orig_ruta": "Villa Cindy",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 13,
+          "zon_orig": 3
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.16648,
+           4.56717
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "CBO",
+          "cod_linea": "T25",
+          "cod_ruta": "T25-1",
+          "comp_sitp": 2,
+          "dest_ruta": "Terminal Norte",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "2/06/2015",
+          "hor_fest": "4:00 a. m. - 9:00 p. m.",
+          "hor_habil": "3:00 a. m. - 10:00 p. m.",
+          "hor_sab": "3:00 a. m. - 10:00 p. m.",
+          "loc_dest": "19",
+          "loc_orig": "11",
+          "long_ruta": 39.89852552,
+          "nom_ruta": "Potosí - Terminal Norte",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Potosí",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 2,
+          "zon_orig": 11
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.04402,
+           4.76798
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NOR",
+          "cod_linea": "T25",
+          "cod_ruta": "T25-2",
+          "comp_sitp": 2,
+          "dest_ruta": "Potosí",
+          "dias_oper": 3,
+          "est_ruta": 1,
+          "fec_impl": "2/06/2015",
+          "hor_fest": "4:00 a. m. - 9:00 p. m.",
+          "hor_habil": "3:00 a. m. - 10:00 p. m.",
+          "hor_sab": "3:00 a. m. - 10:00 p. m.",
+          "loc_dest": "19",
+          "loc_orig": "11",
+          "long_ruta": 42.9921926,
+          "nom_ruta": "Potosí - Terminal Norte",
+          "oper_ruta": "CONSORCIO EXPRESS USAQUEN N",
+          "orig_ruta": "Terminal Norte",
+          "ruta_rural": 2,
+          "tip_bus": 3,
+          "tip_hor": 1,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 11,
+          "zon_orig": 2
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.06434,
+           4.67009
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "abrevia": "NA",
+          "cod_linea": "AZ61",
+          "cod_ruta": "Z61",
+          "comp_sitp": 1,
+          "dest_ruta": "Tibanica - Primavera",
+          "dias_oper": 1,
+          "est_ruta": 1,
+          "fec_impl": " ",
+          "hor_fest": " ",
+          "hor_habil": "3:00 p. m. - 8:00 p. m.",
+          "hor_sab": " ",
+          "loc_dest": "7",
+          "loc_orig": "12",
+          "long_ruta": 24.96626478,
+          "nom_ruta": "AZ61",
+          "oper_ruta": "No Aplica",
+          "orig_ruta": "Polo",
+          "ruta_rural": 2,
+          "tip_bus": 2,
+          "tip_hor": 4,
+          "tip_serv": 1,
+          "tipo_ruta": 1,
+          "zon_dest": 9,
+          "zon_orig": 0
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 95,
+      "truncado": false,
+      "vistos": 95
+     },
+     "consultado_en": "2026-11-05T04:46:09.507376+00:00",
+     "copia": {
+      "filas": 693,
+      "huella": "sha256:e4bae17677074545e1a43607c2a403fa3b65ba691cde68090d0f2df2188a16c4",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105044609507376"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

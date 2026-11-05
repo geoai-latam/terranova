@@ -1,0 +1,2332 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T04:46:54+00:00",
+ "herramienta": "transmilenio_paraderos_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.065,
+     4.65,
+     -74.05,
+     4.665
+    ],
+    "geometria": "completa",
+    "limite": 2000,
+    "order": [
+     "cenefa"
+    ],
+    "select": [
+     "cenefa",
+     "nombre",
+     "direccion_bandera",
+     "via",
+     "localidad",
+     "zona_sitp",
+     "zonas_nuevas",
+     "consecutivo_zona",
+     "modulo",
+     "tipo_m_s",
+     "estado_multiple",
+     "cantidad_mm",
+     "panel",
+     "audio"
+    ],
+    "tabla": "transmilenio_paraderos_zonales"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062045,
+           4.651562
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 65",
+          "cantidad_mm": 1,
+          "cenefa": "047A00",
+          "consecutivo_zona": 47,
+          "direccion_bandera": "AK 11 - CL 65",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Clínica del niño",
+          "panel": "AK 11 - CL 65",
+          "tipo_m_s": "S",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054798,
+           4.655937
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 72 Bis",
+          "cantidad_mm": 1,
+          "cenefa": "049A00",
+          "consecutivo_zona": 49,
+          "direccion_bandera": "AK 7 - CL 72 Bis",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Bellavista ",
+          "panel": "AK 7 - CL 72 Bis",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063639,
+           4.651043
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 64 Avenida Caracas",
+          "cantidad_mm": null,
+          "cenefa": "052A00",
+          "consecutivo_zona": 52,
+          "direccion_bandera": "CL 64 - AV. Caracas",
+          "estado_multiple": null,
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Chapinero Norte",
+          "panel": "CL 64 - AV. Caracas",
+          "tipo_m_s": null,
+          "via": "Cl 64",
+          "zona_sitp": 0,
+          "zonas_nuevas": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062452,
+           4.661508
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 20 A Calle 74",
+          "cantidad_mm": 1,
+          "cenefa": "099A00",
+          "consecutivo_zona": 99,
+          "direccion_bandera": "KR 20A - CL 74",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. San Felipe",
+          "panel": "KR 20A - CL 74",
+          "tipo_m_s": "S",
+          "via": "KR 20A",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063754,
+           4.659399
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 17 Avenida Calle 72",
+          "cantidad_mm": 1,
+          "cenefa": "100A00",
+          "consecutivo_zona": 100,
+          "direccion_bandera": "KR 17 - AC 72",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. Concepción Norte",
+          "panel": "KR 17 - AC 72",
+          "tipo_m_s": "M",
+          "via": "KR 17",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063448,
+           4.659881
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 17 Calle 71",
+          "cantidad_mm": 1,
+          "cenefa": "100B00",
+          "consecutivo_zona": 100,
+          "direccion_bandera": "KR 17 - CL 71",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "B",
+          "nombre": "Br. Concepción Norte",
+          "panel": "KR 17 - CL 71",
+          "tipo_m_s": "M",
+          "via": "KR 17",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.055968,
+           4.657332
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 73",
+          "cantidad_mm": 1,
+          "cenefa": "105A00",
+          "consecutivo_zona": 105,
+          "direccion_bandera": "KR 9 - CL 73",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "KR 9",
+          "panel": "KR 9 - CL 73",
+          "tipo_m_s": "S",
+          "via": "KR 9 ",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054005,
+           4.660298
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 76",
+          "cantidad_mm": 1,
+          "cenefa": "106A00",
+          "consecutivo_zona": 106,
+          "direccion_bandera": "KR 9 - CL 76",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Gimnasio Moderno",
+          "panel": "KR 9 - CL 76",
+          "tipo_m_s": "S",
+          "via": "KR 9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05273,
+           4.662252
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 79",
+          "cantidad_mm": 1,
+          "cenefa": "107A00",
+          "consecutivo_zona": 107,
+          "direccion_bandera": "KR 9 - CL 79",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. El Nogal",
+          "panel": "KR 9 - CL 79",
+          "tipo_m_s": "S",
+          "via": "KR 9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054747,
+           4.663124
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 78",
+          "cantidad_mm": 2,
+          "cenefa": "224A00",
+          "consecutivo_zona": 224,
+          "direccion_bandera": "AK 11 - CL 78",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Espartillal",
+          "panel": "AK 11 - CL 78",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054149,
+           4.664043
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 79",
+          "cantidad_mm": 2,
+          "cenefa": "224B00",
+          "consecutivo_zona": 224,
+          "direccion_bandera": "AK 11 - CL 79",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Br. Espartillal",
+          "panel": "AK 11 - CL 79",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057177,
+           4.659555
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 74",
+          "cantidad_mm": 2,
+          "cenefa": "225A00",
+          "consecutivo_zona": 225,
+          "direccion_bandera": "AK 11 - CL 74",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Porciúncula",
+          "panel": "AK 11 - CL 74",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05658,
+           4.660478
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 75",
+          "cantidad_mm": 1,
+          "cenefa": "225B00",
+          "consecutivo_zona": 225,
+          "direccion_bandera": "AK 11 - CL 75",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Br. Porciúncula",
+          "panel": "AK 11 - CL 75",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058375,
+           4.657874
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Avenida Calle 72",
+          "cantidad_mm": 1,
+          "cenefa": "226A00",
+          "consecutivo_zona": 226,
+          "direccion_bandera": "AK 11 - AC 72",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "U. Pedagógica Nacional",
+          "panel": "AK 11 - AC 72",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05829,
+           4.657964
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Avenida Calle 72",
+          "cantidad_mm": 1,
+          "cenefa": "226B00",
+          "consecutivo_zona": 226,
+          "direccion_bandera": "AK 11 - AC 72",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "U. Pedagógica Nacional",
+          "panel": "AK 11 - AC 72",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059659,
+           4.656
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 70A",
+          "cantidad_mm": 1,
+          "cenefa": "227A00",
+          "consecutivo_zona": 227,
+          "direccion_bandera": "AK 11 - CL 70A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Clínica de Traumatología y Ortopedia",
+          "panel": "AK 11 - CL 70A",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059362,
+           4.656432
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 71",
+          "cantidad_mm": 1,
+          "cenefa": "227B00",
+          "consecutivo_zona": 227,
+          "direccion_bandera": "AK 11 - CL 71",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Clínica de Traumatología y Ortopedia",
+          "panel": "AK 11 - CL 71",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060723,
+           4.654376
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 69",
+          "cantidad_mm": 1,
+          "cenefa": "228A00",
+          "consecutivo_zona": 228,
+          "direccion_bandera": "AK 11 - CL 69",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Quinta Camacho",
+          "panel": "AK 11 - CL 69",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060544,
+           4.654701
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 69",
+          "cantidad_mm": 1,
+          "cenefa": "228B00",
+          "consecutivo_zona": 228,
+          "direccion_bandera": "AK 11 - CL 69",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Br. Quinta Camacho",
+          "panel": "AK 11 - CL 69",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061353,
+           4.653047
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 67",
+          "cantidad_mm": 1,
+          "cenefa": "229A00",
+          "consecutivo_zona": 229,
+          "direccion_bandera": "AK 11 - CL 67",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Clínica del Niño",
+          "panel": "AK 11 - CL 67",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061257,
+           4.653284
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 11 Calle 67",
+          "cantidad_mm": 1,
+          "cenefa": "229B00",
+          "consecutivo_zona": 229,
+          "direccion_bandera": "AK 11 - CL 67",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Clínica del Niño",
+          "panel": "AK 11 - CL 67",
+          "tipo_m_s": "M",
+          "via": "AK 11",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063301,
+           4.651241
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 13 Calle 64",
+          "cantidad_mm": 1,
+          "cenefa": "230A00",
+          "consecutivo_zona": 230,
+          "direccion_bandera": "AK 13 - CL 64",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Centro Cosmos 64",
+          "panel": "AK 13 - CL 64",
+          "tipo_m_s": "M",
+          "via": "AK 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063259,
+           4.651485
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 13 Calle 64",
+          "cantidad_mm": 1,
+          "cenefa": "230B00",
+          "consecutivo_zona": 230,
+          "direccion_bandera": "AK 13 - CL 64",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Centro Cosmos 64",
+          "panel": "AK 13 - CL 64",
+          "tipo_m_s": "M",
+          "via": "AK 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063513,
+           4.650049
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 13 Calle 63 A",
+          "cantidad_mm": 1,
+          "cenefa": "231A00",
+          "consecutivo_zona": 231,
+          "direccion_bandera": "AK 13 - CL 63A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Pq. Lourdes",
+          "panel": "AK 13 - CL 63A",
+          "tipo_m_s": "M",
+          "via": "AK 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063477,
+           4.650247
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 13 Calle 63 A",
+          "cantidad_mm": 1,
+          "cenefa": "231B00",
+          "consecutivo_zona": 231,
+          "direccion_bandera": "AK 13 - CL 63A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "Pq. Lourdes",
+          "panel": "AK 13 - CL 63A",
+          "tipo_m_s": "M",
+          "via": "AK 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059506,
+           4.651995
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 67",
+          "cantidad_mm": 1,
+          "cenefa": "279A00",
+          "consecutivo_zona": 279,
+          "direccion_bandera": "KR 9 - CL 67",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Cl 67",
+          "panel": "KR 9 - CL 67",
+          "tipo_m_s": "S",
+          "via": "KR  9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058043,
+           4.654319
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 70",
+          "cantidad_mm": 1,
+          "cenefa": "280A00",
+          "consecutivo_zona": 280,
+          "direccion_bandera": "KR 9 - CL 70",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Quinta Camacho",
+          "panel": "KR 9 - CL 70",
+          "tipo_m_s": "S",
+          "via": "KR  9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.055834,
+           4.660831
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 76 Carrera Décima",
+          "cantidad_mm": 1,
+          "cenefa": "297A00",
+          "consecutivo_zona": 297,
+          "direccion_bandera": "CL 76 - KR 10",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Embajada de Inglaterra",
+          "panel": "CL 76 - KR 10",
+          "tipo_m_s": "S",
+          "via": "Cl 76",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058739,
+           4.662635
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 76 Carrera 12",
+          "cantidad_mm": 2,
+          "cenefa": "298A00",
+          "consecutivo_zona": 298,
+          "direccion_bandera": "CL 76 - KR 12",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Embajada de Paz de Colombia",
+          "panel": "CL 76 - KR 12",
+          "tipo_m_s": "S",
+          "via": "Cl 76",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061109,
+           4.659806
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 15 Calle 72",
+          "cantidad_mm": 2,
+          "cenefa": "299A00",
+          "consecutivo_zona": 299,
+          "direccion_bandera": "AK 15 - 72",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Porciúncula",
+          "panel": "AK 15 - 72",
+          "tipo_m_s": "S",
+          "via": "AK 15",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059933,
+           4.661516
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 15 Calle 75",
+          "cantidad_mm": 2,
+          "cenefa": "300A00",
+          "consecutivo_zona": 300,
+          "direccion_bandera": "AK 15 - CL 75",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "U. Sergio Arboleda",
+          "panel": "AK 15 - CL 75",
+          "tipo_m_s": "S",
+          "via": "AK 15",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059317,
+           4.662441
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 15 Calle 76",
+          "cantidad_mm": 2,
+          "cenefa": "301A00",
+          "consecutivo_zona": 301,
+          "direccion_bandera": "AK 15 - CL 76",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Porciúncula",
+          "panel": "AK 15 - CL 76",
+          "tipo_m_s": "S",
+          "via": "AK 15",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058005,
+           4.664694
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 15 Calle 79",
+          "cantidad_mm": 2,
+          "cenefa": "302A00",
+          "consecutivo_zona": 302,
+          "direccion_bandera": "AK 15 - CL 79",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "C.C. Unilago",
+          "panel": "AK 15 - CL 79",
+          "tipo_m_s": "M",
+          "via": "AK 15",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058138,
+           4.664494
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 15 Calle 77",
+          "cantidad_mm": 2,
+          "cenefa": "302B00",
+          "consecutivo_zona": 302,
+          "direccion_bandera": "AK 15 - CL 77",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "B",
+          "nombre": "C.C. Unilago",
+          "panel": "AK 15 - CL 77",
+          "tipo_m_s": "M",
+          "via": "AK 15",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062805,
+           4.660169
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera 17",
+          "cantidad_mm": 1,
+          "cenefa": "313A00",
+          "consecutivo_zona": 313,
+          "direccion_bandera": "AC 72 - KR 17",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. San Felipe",
+          "panel": "AC 72 - KR 17",
+          "tipo_m_s": "S",
+          "via": "AC 72",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059128,
+           4.657621
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Avenida Carrera 11",
+          "cantidad_mm": 1,
+          "cenefa": "314A00",
+          "consecutivo_zona": 314,
+          "direccion_bandera": "AC 72 - AK 11",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Universidad Pedagógica Nacional",
+          "panel": "AC 72 - AK 11",
+          "tipo_m_s": "S",
+          "via": "AC 72",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058146,
+           4.656979
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera Décima",
+          "cantidad_mm": 1,
+          "cenefa": "315A00",
+          "consecutivo_zona": 315,
+          "direccion_bandera": "AC 72 - KR 10",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Centro Comercial Av Chile",
+          "panel": "AC 72 - KR 10",
+          "tipo_m_s": "S",
+          "via": "AC 72",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.056366,
+           4.655752
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera Octava",
+          "cantidad_mm": null,
+          "cenefa": "316A00",
+          "consecutivo_zona": 316,
+          "direccion_bandera": "AC 72 - KR 8",
+          "estado_multiple": null,
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Kr 8",
+          "panel": "AC 72 - KR 8",
+          "tipo_m_s": null,
+          "via": "AC 72",
+          "zona_sitp": 0,
+          "zonas_nuevas": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063625,
+           4.660472
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera 17",
+          "cantidad_mm": 1,
+          "cenefa": "317A00",
+          "consecutivo_zona": 317,
+          "direccion_bandera": "AC 72 - KR 17",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. Colombia ",
+          "panel": "AC 72 - KR 17",
+          "tipo_m_s": "S",
+          "via": "Av. Chile",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.051859,
+           4.663539
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 81",
+          "cantidad_mm": 1,
+          "cenefa": "318A00",
+          "consecutivo_zona": 318,
+          "direccion_bandera": "KR 9 - CL 81",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. El Nogal",
+          "panel": "KR 9 - CL 81",
+          "tipo_m_s": "S",
+          "via": "KR 9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059535,
+           4.657523
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Avenida Carrera 11",
+          "cantidad_mm": 1,
+          "cenefa": "319A00",
+          "consecutivo_zona": 319,
+          "direccion_bandera": "AC 72 - AK 11",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "U Pedagógica Nacional",
+          "panel": "AC 72 - AK 11",
+          "tipo_m_s": "S",
+          "via": "Av. Chile",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057953,
+           4.656442
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera Décima",
+          "cantidad_mm": 1,
+          "cenefa": "320A00",
+          "consecutivo_zona": 320,
+          "direccion_bandera": "AC 72 - KR 10",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "C.C. Avenida Chile",
+          "panel": "AC 72 - KR 10",
+          "tipo_m_s": "S",
+          "via": "Av. Chile",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064067,
+           4.655442
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 68 Carrera 14 A",
+          "cantidad_mm": 1,
+          "cenefa": "326A00",
+          "consecutivo_zona": 326,
+          "direccion_bandera": "AC 68 - KR 14A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Av. Caracas ",
+          "panel": "AC 68 - KR 14A",
+          "tipo_m_s": "S",
+          "via": "AC 68",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.051816,
+           4.660008
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 77",
+          "cantidad_mm": 2,
+          "cenefa": "365A00",
+          "consecutivo_zona": 365,
+          "direccion_bandera": "AK 7 - CL 77",
+          "estado_multiple": "(en blanco)",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Embajada de Italia",
+          "panel": "AK 7 - CL 77",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "F"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.052399,
+           4.659121
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 76",
+          "cantidad_mm": 2,
+          "cenefa": "366A00",
+          "consecutivo_zona": 366,
+          "direccion_bandera": "AK 7 - CL 76",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Pq. el Nogal ",
+          "panel": "AK 7 - CL 76",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "F"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054716,
+           4.656385
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 74",
+          "cantidad_mm": 2,
+          "cenefa": "367A00",
+          "consecutivo_zona": 367,
+          "direccion_bandera": "AK 7 - CL 74",
+          "estado_multiple": "(en blanco)",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Calle 74 ",
+          "panel": "AK 7 - CL 74",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "F"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.053842,
+           4.65725
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 74",
+          "cantidad_mm": 1,
+          "cenefa": "368A00",
+          "consecutivo_zona": 368,
+          "direccion_bandera": "AK 7 - CL 74",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Bellavista ",
+          "panel": "AK 7 - CL 74",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "F"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057301,
+           4.651764
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 69",
+          "cantidad_mm": 1,
+          "cenefa": "371A00",
+          "consecutivo_zona": 371,
+          "direccion_bandera": "AK 7 - CL 69",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Academia Nacional de Medicina",
+          "panel": "AK 7 - CL 69",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "F"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057168,
+           4.655617
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera Novena Calle 71",
+          "cantidad_mm": 1,
+          "cenefa": "394A00",
+          "consecutivo_zona": 394,
+          "direccion_bandera": "KR 9 - CL 71",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Universidad EAN",
+          "panel": "KR 9 - CL 71",
+          "tipo_m_s": "S",
+          "via": "KR  9",
+          "zona_sitp": 0,
+          "zonas_nuevas": "G"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061061,
+           4.658567
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera 13",
+          "cantidad_mm": 1,
+          "cenefa": "395A00",
+          "consecutivo_zona": 395,
+          "direccion_bandera": "AC 72 - KR 13",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Estación Calle 72",
+          "panel": "AC 72 - KR 13",
+          "tipo_m_s": "S",
+          "via": "Av. Chile",
+          "zona_sitp": 0,
+          "zonas_nuevas": "G"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060835,
+           4.658786
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera 13",
+          "cantidad_mm": 2,
+          "cenefa": "398A00",
+          "consecutivo_zona": 398,
+          "direccion_bandera": "AC 72 - KR 13",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Porciúncula",
+          "panel": "AC 72 - KR 13",
+          "tipo_m_s": "S",
+          "via": "AC 72",
+          "zona_sitp": 0,
+          "zonas_nuevas": "G"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059387,
+           4.651504
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 67 Carrera Octava",
+          "cantidad_mm": 1,
+          "cenefa": "584A00",
+          "consecutivo_zona": 584,
+          "direccion_bandera": "CL 67 - KR 8",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Cámara de Comercio Cl 67",
+          "panel": "CL 67 - KR 8",
+          "tipo_m_s": "S",
+          "via": "Cl 67",
+          "zona_sitp": 0,
+          "zonas_nuevas": "C"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060061,
+           4.66071
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 74 Carrera 13",
+          "cantidad_mm": 1,
+          "cenefa": "623A00",
+          "consecutivo_zona": 623,
+          "direccion_bandera": "CL 74 - KR 13",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Universidad Sergio Arboleda",
+          "panel": "CL 74 - KR 13",
+          "tipo_m_s": "S",
+          "via": "CL 74",
+          "zona_sitp": 0,
+          "zonas_nuevas": "C"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062214,
+           4.663801
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 20 Be Calle 75",
+          "cantidad_mm": 1,
+          "cenefa": "627A00",
+          "consecutivo_zona": 627,
+          "direccion_bandera": "KR 20 B - CL 75",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. San Felipe",
+          "panel": "KR 20 B - CL 75",
+          "tipo_m_s": "S",
+          "via": "KR 20B",
+          "zona_sitp": 0,
+          "zonas_nuevas": "C"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062249,
+           4.65216
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 66 Avenida Carrera 11",
+          "cantidad_mm": 1,
+          "cenefa": "650A00",
+          "consecutivo_zona": 650,
+          "direccion_bandera": "CL 66 - AK 11",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "SENA",
+          "panel": "CL 66 - AK 11",
+          "tipo_m_s": "S",
+          "via": "Cl 66",
+          "zona_sitp": 0,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064273,
+           4.660449
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 19 Avenida Calle 72",
+          "cantidad_mm": 1,
+          "cenefa": "678A00",
+          "consecutivo_zona": 678,
+          "direccion_bandera": "KR 19 - AC 72",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. Colombia",
+          "panel": "KR 19 - AC 72",
+          "tipo_m_s": "S",
+          "via": "KR 19",
+          "zona_sitp": 0,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061299,
+           4.663794
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Caracas Calle 75",
+          "cantidad_mm": null,
+          "cenefa": "680A00",
+          "consecutivo_zona": 680,
+          "direccion_bandera": "AV. Caracas - CL 75",
+          "estado_multiple": null,
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Estación Calle 76",
+          "panel": "AV. Caracas - CL 75",
+          "tipo_m_s": null,
+          "via": "Av. Caracas",
+          "zona_sitp": 0,
+          "zonas_nuevas": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.064388,
+           4.650122
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Caracas Calle 63",
+          "cantidad_mm": null,
+          "cenefa": "702A00",
+          "consecutivo_zona": 702,
+          "direccion_bandera": "AV. Caracas - CL 63",
+          "estado_multiple": null,
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Chapinero Norte",
+          "panel": "AV. Caracas - CL 63",
+          "tipo_m_s": null,
+          "via": "Av. Caracas",
+          "zona_sitp": 0,
+          "zonas_nuevas": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05735,
+           4.657924
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 73 Carrera Novena",
+          "cantidad_mm": 4,
+          "cenefa": "711A00",
+          "consecutivo_zona": 711,
+          "direccion_bandera": "CL 73 - KR 9",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Porciúncula",
+          "panel": "CL 73 - KR 9",
+          "tipo_m_s": "S",
+          "via": "Cl 73",
+          "zona_sitp": 0,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.060069,
+           4.659011
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 13 Avenida Calle 72",
+          "cantidad_mm": 2,
+          "cenefa": "762A00",
+          "consecutivo_zona": 762,
+          "direccion_bandera": "KR 13 - AC 72",
+          "estado_multiple": "Implementado",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. La Porciúncula",
+          "panel": "KR 13 - AC 72",
+          "tipo_m_s": "S",
+          "via": "KR 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "A"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.051253,
+           4.663638
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 81 Carrera Octava",
+          "cantidad_mm": 2,
+          "cenefa": "817A00",
+          "consecutivo_zona": 817,
+          "direccion_bandera": "CL 81 - KR 8",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. El Retiro",
+          "panel": "CL 81 - KR 8",
+          "tipo_m_s": "S",
+          "via": "CL 81",
+          "zona_sitp": 0,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.055893,
+           4.6541
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 70 A",
+          "cantidad_mm": 1,
+          "cenefa": "818A00",
+          "consecutivo_zona": 818,
+          "direccion_bandera": "AK 7 - CL 70A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Embajada de Japón",
+          "panel": "AK 7 - CL 70A",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057258,
+           4.651471
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 68",
+          "cantidad_mm": 1,
+          "cenefa": "826A00",
+          "consecutivo_zona": 826,
+          "direccion_bandera": "AK 7 - CL 68",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Clínica La Inmaculada",
+          "panel": "AK 7 - CL 68",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.056205,
+           4.653028
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 70",
+          "cantidad_mm": 1,
+          "cenefa": "827A00",
+          "consecutivo_zona": 827,
+          "direccion_bandera": "AK 7 - CL 70",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Emaús",
+          "panel": "AK 7 - CL 70",
+          "tipo_m_s": "S",
+          "via": "AK 7",
+          "zona_sitp": 0,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062597,
+           4.655077
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 13 Diagonal 68",
+          "cantidad_mm": 1,
+          "cenefa": "897A00",
+          "consecutivo_zona": 897,
+          "direccion_bandera": "KR 13 - DG 68",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Est. Flores",
+          "panel": "KR 13 - DG 68",
+          "tipo_m_s": "S",
+          "via": "KR 13",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059866,
+           4.659665
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 73 Carrera 13",
+          "cantidad_mm": 1,
+          "cenefa": "902A00",
+          "consecutivo_zona": 902,
+          "direccion_bandera": "CL 73 - KR 13",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "U. Pedagogica",
+          "panel": "CL 73 - KR 13",
+          "tipo_m_s": "S",
+          "via": "CL 73",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063012,
+           4.661783
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 73 Carrera 20 Be",
+          "cantidad_mm": 1,
+          "cenefa": "903A00",
+          "consecutivo_zona": 903,
+          "direccion_bandera": "CL 73 - KR 20B",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Unitec",
+          "panel": "CL 73 - KR 20B",
+          "tipo_m_s": "S",
+          "via": "CL 73",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062538,
+           4.662466
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 74 Carrera 15",
+          "cantidad_mm": 1,
+          "cenefa": "913A00",
+          "consecutivo_zona": 913,
+          "direccion_bandera": "CL 74 - KR 15",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Antiguo Country",
+          "panel": "CL 74 - KR 15",
+          "tipo_m_s": "S",
+          "via": "CL 74",
+          "zona_sitp": 0,
+          "zonas_nuevas": "L"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.059837,
+           4.6634
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 76 Carrera 15",
+          "cantidad_mm": 1,
+          "cenefa": "914A00",
+          "consecutivo_zona": 914,
+          "direccion_bandera": "CL 76 - KR 15",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Br. Antiguo Country",
+          "panel": "CL 76 - KR 15",
+          "tipo_m_s": "S",
+          "via": "CL 76",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.062229,
+           4.653322
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 67 Carrera 12",
+          "cantidad_mm": 1,
+          "cenefa": "915A00",
+          "consecutivo_zona": 915,
+          "direccion_bandera": "CL 67 - KR 12",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "A",
+          "nombre": "Teatro Astor Plaza",
+          "panel": "CL 67 - KR 12",
+          "tipo_m_s": "S",
+          "via": "CL 67",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.061954,
+           4.664716
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 73 Carrera 20 Be",
+          "cantidad_mm": 1,
+          "cenefa": "918A00",
+          "consecutivo_zona": 918,
+          "direccion_bandera": "CL 76 - KR 20B",
+          "estado_multiple": "No Aplica",
+          "localidad": "Barrios Unidos",
+          "modulo": "A",
+          "nombre": "Br. Juan XXIII",
+          "panel": "CL 76 - KR 20B",
+          "tipo_m_s": "S",
+          "via": "CL 76",
+          "zona_sitp": 0,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058394,
+           4.650253
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 66",
+          "cantidad_mm": 1,
+          "cenefa": "BD-015A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 66",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Calle 67",
+          "panel": "AK 7 – CL 66",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "C"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05859,
+           4.6504
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 66",
+          "cantidad_mm": 1,
+          "cenefa": "BD-016A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 66",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Br. Chapinero Norte ",
+          "panel": "AK 7 – CL 66",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058537,
+           4.650484
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 66",
+          "cantidad_mm": 1,
+          "cenefa": "BD-016B",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 - CL 66",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Chapinero Norte",
+          "panel": "AK 7 - CL 66",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05568,
+           4.653971
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 70 A",
+          "cantidad_mm": 1,
+          "cenefa": "BD-017A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 70A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Av. Chile",
+          "panel": "AK 7 – CL 70A",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.055776,
+           4.653792
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 70 A",
+          "cantidad_mm": 1,
+          "cenefa": "BD-017B",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 70A",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Av. Chile",
+          "panel": "AK 7 – CL 70A",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.056456,
+           4.653166
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 71",
+          "cantidad_mm": 1,
+          "cenefa": "BD-018A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 71",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Avenida Chile",
+          "panel": "AK 7 – CL 71",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.056007,
+           4.653827
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 71",
+          "cantidad_mm": 1,
+          "cenefa": "BD-018B",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 - CL 71",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Avenida Chile",
+          "panel": "AK 7 - CL 71",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.063007,
+           4.653042
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera 13 Calle 66",
+          "cantidad_mm": 1,
+          "cenefa": "BD-022A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 13 - CL 66",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Chapinero Norte",
+          "panel": "AK 13 - CL 66",
+          "tipo_m_s": "M",
+          "via": "AK 13",
+          "zona_sitp": null,
+          "zonas_nuevas": "D"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.05433,
+           4.657035
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 75",
+          "cantidad_mm": 1,
+          "cenefa": "BD-029A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 75",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Br. Porciúncula ",
+          "panel": "AK 7 – CL 75",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054058,
+           4.657406
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 75",
+          "cantidad_mm": 1,
+          "cenefa": "BD-029B",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 – CL 75",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Br. Porciúncula ",
+          "panel": "AK 7 – CL 75",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.051257,
+           4.660549
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 79",
+          "cantidad_mm": 1,
+          "cenefa": "BD-030A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 - CL 79",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "El Nogal",
+          "panel": "AK 7 - CL 79",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.051381,
+           4.660083
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Carrera Séptima Calle 78",
+          "cantidad_mm": 1,
+          "cenefa": "BD-031A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AK 7 - CL 78",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Los Rosales",
+          "panel": "AK 7 - CL 78",
+          "tipo_m_s": "M",
+          "via": "AK 7",
+          "zona_sitp": null,
+          "zonas_nuevas": "H"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.058471,
+           4.656817
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Avenida Calle 72 Carrera Décima",
+          "cantidad_mm": 1,
+          "cenefa": "BD-050A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "AC 72 - Kr 10",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "U. Pedagógica",
+          "panel": "AC 72 - Kr 10",
+          "tipo_m_s": "M",
+          "via": "AC 72",
+          "zona_sitp": null,
+          "zonas_nuevas": "A"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057488,
+           4.661848
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 76 Avenida Carrera 11",
+          "cantidad_mm": 1,
+          "cenefa": "BD-051A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "CL 76 - AK 11",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "AK 11",
+          "panel": "CL 76 - AK 11",
+          "tipo_m_s": "M",
+          "via": "CL 76",
+          "zona_sitp": null,
+          "zonas_nuevas": "K"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.057576,
+           4.661882
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Calle 76 Avenida Carrera 11",
+          "cantidad_mm": 1,
+          "cenefa": "BD-051B",
+          "consecutivo_zona": null,
+          "direccion_bandera": "CL 76 - AK 11",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "AK 11",
+          "panel": "CL 76 - AK 11",
+          "tipo_m_s": "M",
+          "via": "CL 76 ",
+          "zona_sitp": null,
+          "zonas_nuevas": "G"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.054759,
+           4.663139
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "audio": "Carrera 11 Calle 78",
+          "cantidad_mm": 1,
+          "cenefa": "BD-067A",
+          "consecutivo_zona": null,
+          "direccion_bandera": "KR 11 - CL 78",
+          "estado_multiple": "No Aplica",
+          "localidad": "Chapinero",
+          "modulo": "0",
+          "nombre": "Br. Espartillal",
+          "panel": "KR 11 - CL 78",
+          "tipo_m_s": "M",
+          "via": "KR 11",
+          "zona_sitp": null,
+          "zonas_nuevas": "C"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 87,
+      "truncado": false,
+      "vistos": 87
+     },
+     "consultado_en": "2026-11-05T04:46:28.002905+00:00",
+     "copia": {
+      "filas": 7610,
+      "huella": "sha256:4b674008250ca8f4a573ce1dc3d996d26687a7ba7979a169069d7e698b77b11d",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105044628002905"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

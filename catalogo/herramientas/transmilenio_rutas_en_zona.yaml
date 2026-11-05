@@ -1,0 +1,43 @@
+id: transmilenio_rutas_en_zona
+version: 1
+familia: territorio
+fuente: transmilenio.rutas_sitp
+pregunta: "¿Qué rutas de TransMilenio y del SITP pasan por esta zona de Bogotá, y en qué horario?"
+descripcion: >
+  Servicios del SITP (rutas troncales, zonales, alimentadoras y complementarias) cuyo recorrido se
+  cruza con un rectángulo (bbox en EPSG:4326): código de la ruta, origen, destino, localidades,
+  operador, horario de lunes a viernes, sábado y festivo, longitud y el trazado. Cada sentido es
+  una fila (ida y regreso). Arriba va el total. Sirve para «¿qué buses pasan cerca de este
+  predio?» o «¿qué rutas conectan esta zona?». Los paraderos están en
+  transmilenio_paraderos_en_zona; no trae frecuencias ni la posición de los buses. Sale de la
+  copia de Terrnova (se rehace cada mes): la procedencia dice de cuándo es. (Fuente: TRANSMILENIO
+  S.A: www.transmilenio.gov.co; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: transmilenio_rutas_sitp
+    bbox: "{bbox}"
+    select: [cod_ruta, cod_linea, nom_ruta, abrevia, orig_ruta, dest_ruta, loc_orig, loc_dest, zon_orig, zon_dest, oper_ruta, fec_impl, hor_habil, hor_sab, hor_fest, long_ruta, tipo_ruta, est_ruta, tip_bus, tip_serv, dias_oper, tip_hor, comp_sitp, ruta_rural]
+    geometria: simplificada
+    order: [cod_ruta]
+    limite: 1000
+  campos: [cod_ruta, cod_linea, nom_ruta, abrevia, orig_ruta, dest_ruta, loc_orig, loc_dest, zon_orig, zon_dest, oper_ruta, fec_impl, hor_habil, hor_sab, hor_fest, long_ruta, tipo_ruta, est_ruta, tip_bus, tip_serv, dias_oper, tip_hor, comp_sitp, ruta_rural]
+salida: TransmilenioRutasEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ninguna ruta del SITP pasa por ese rectángulo según TransMilenio. La capa cubre Bogotá y
+    Soacha; fuera de ellas no hay rutas del SITP. Pruebe con un rectángulo más grande.
+cobro: zona
+canario:
+  # Medido el 2026-11-04 en el servicio de TransMilenio (returnCountOnly con el sobre en EPSG:4326):
+  # 95 servicios cruzan [-74.065, 4.65, -74.05, 4.665] (Chapinero, calles 72 a 85). En toda la
+  # capa, 693.
+  entrada: {bbox: [-74.065, 4.65, -74.05, 4.665]}
+  minimos: {total: 95}
+  campos: [abreviatura, codigo_linea, codigo_ruta, componente_sitp, destino, dias_operacion, estado_ruta, fecha_implementacion, horario_festivo, horario_habil, horario_sabado, localidad_destino, localidad_destino_significado, localidad_origen, localidad_origen_significado, longitud_km, nombre_ruta, operador, origen, ruta_rural, tipo_bus, tipo_horario, tipo_ruta, tipo_servicio, total, zona_destino, zona_origen]
+  latencia_max_ms: 8000

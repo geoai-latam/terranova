@@ -1,0 +1,67 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: transmilenio.paraderos_zonales
+metodo: cosechado
+cosechado: '2026-11-04'
+origen: https://gis.transmilenio.gov.co/arcgis/rest/services/Zonal/consulta_paraderos/FeatureServer?f=json
+titulo: Map1
+filas: 7610
+geografia:
+  geometria: punto
+  crs: EPSG:3116
+  capas:
+    '0': paradero_zonal
+campos:
+  objectid:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: objectid
+  cenefa:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: cenefa
+  zona_sitp:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: zona_sitp
+    minimo: '0'
+    maximo: '13'
+    comparacion: numero
+  nombre:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: nombre
+  via:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: via
+  direccion_bandera:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: direccion_bandera
+  localidad:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: localidad
+  consecutivo_zona:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: consecutivo_zona
+    minimo: '1'
+    maximo: '990'
+    comparacion: numero
+  tipo_m_s:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: tipo_m_s
+  panel:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: panel
+  audio:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: audio
+  zonas_nuevas:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: zonas_nuevas
+  modulo:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: modulo
+  cantidad_mm:
+    tipo_fuente: esriFieldTypeInteger
+    etiqueta: cantidad_mm
+    minimo: '1'
+    maximo: '78'
+    comparacion: numero
+  estado_multiple:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: estado_multiple

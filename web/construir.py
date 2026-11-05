@@ -459,7 +459,13 @@ SISTEMAS = {
     "Superfinanciera": ["Entidades vigiladas"],
     "Supersolidaria": ["Sector solidario"],
     "Catastro de Bogotá": ["Valor de referencia del m²"],
-    "TransMilenio S.A.": ["Estaciones troncales", "Estaciones de TransMiCable", "Troncales"],
+    "TransMilenio S.A.": [
+        "Estaciones troncales",
+        "Estaciones de TransMiCable",
+        "Troncales",
+        "Rutas troncales y zonales",
+        "Paraderos zonales del SITP",
+    ],
     "UNGRD": ["Emergencias"],
     "UPME": [
         "Subestaciones",

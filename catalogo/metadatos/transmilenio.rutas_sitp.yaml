@@ -1,0 +1,177 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: transmilenio.rutas_sitp
+metodo: cosechado
+cosechado: '2026-11-04'
+origen: https://gis.transmilenio.gov.co/arcgis/rest/services/ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer?f=json
+titulo: transmisig
+descripcion: La base de datos geográfica del Sistema integrado de transporte SITP de Bogotá D.C. , elaborada
+  en el año 2024 por Transmilenio S.A. (TMSA) , es un producto generado a partir de la consolidación de
+  la operación del SITP por parte de la SPS, cubre parcialmente al área del Distrito capital . Este geoservicio
+  esta constituido por información de infraestructura, servicios operacionales, aforos con vigencia 2023
+  en adelante y fuentes externas como metro de Bogotá D.C.
+filas: 693
+geografia:
+  geometria: linea
+  crs: EPSG:3116
+  capas:
+    '15': Servicios
+campos:
+  tipo_ruta:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Tipo de ruta
+  objectid:
+    tipo_fuente: esriFieldTypeOID
+    etiqueta: OBJECTID
+  abrevia:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Abreviatura
+  cod_linea:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código de linea
+  nom_ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Nombre de ruta
+  orig_ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Origen ruta
+  dest_ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Destino ruta
+  fec_impl:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Fecha implementación
+  loc_orig:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Localidad origen
+    valores:
+      '11': 112
+      '7': 81
+      '8': 65
+      '1': 59
+      '9': 58
+      '10': 55
+      '4': 54
+      '5': 51
+      '19': 30
+      '3': 28
+      '6': 27
+      '18': 22
+      '2': 11
+      '16': 11
+      '13': 9
+      '12': 9
+      '0': 5
+      '14': 4
+      '15': 2
+    codigos:
+      '1': USAQUÉN
+      '2': CHAPINERO
+      '3': SANTA FE
+      '4': SAN CRISTÓBAL
+      '5': USME
+      '6': TUNJUELITO
+      '7': BOSA
+      '8': KENNEDY
+      '9': PUENTE ARANDA
+      '10': LA CANDELARIA
+      '11': FONTIBÓN
+      '12': ENGATIVÁ
+      '13': SUBA
+      '14': BARRIOS UNIDOS
+      '15': TEUSAQUILLO
+      '16': ANTONIO NARIÑO
+      '17': LOS MÁRTIRES
+      '18': RAFAEL URIBE URIBE
+      '19': CIUDAD BOLÍVAR
+      '20': SUMAPAZ
+      '0': SOACHA
+  loc_dest:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Localidad destino
+    valores:
+      '11': 88
+      '7': 65
+      '10': 60
+      '1': 57
+      '5': 56
+      '9': 52
+      '4': 52
+      '8': 50
+      '3': 42
+      '19': 36
+      '6': 27
+      '18': 24
+      '2': 23
+      '13': 18
+      '12': 18
+      '15': 7
+      '16': 7
+      '0': 7
+      '14': 4
+    codigos:
+      '1': USAQUÉN
+      '2': CHAPINERO
+      '3': SANTA FE
+      '4': SAN CRISTÓBAL
+      '5': USME
+      '6': TUNJUELITO
+      '7': BOSA
+      '8': KENNEDY
+      '9': PUENTE ARANDA
+      '10': LA CANDELARIA
+      '11': FONTIBÓN
+      '12': ENGATIVÁ
+      '13': SUBA
+      '14': BARRIOS UNIDOS
+      '15': TEUSAQUILLO
+      '16': ANTONIO NARIÑO
+      '17': LOS MÁRTIRES
+      '18': RAFAEL URIBE URIBE
+      '19': CIUDAD BOLÍVAR
+      '20': SUMAPAZ
+      '0': SOACHA
+  long_ruta:
+    tipo_fuente: esriFieldTypeDouble
+    etiqueta: Longitud ruta
+  oper_ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Operador ruta
+  cod_ruta:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Código de ruta
+  zon_dest:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Zona destino
+  zon_orig:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Zona origen
+  hor_habil:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Horario hábil
+  hor_sab:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Horario sábado
+  hor_fest:
+    tipo_fuente: esriFieldTypeString
+    etiqueta: Horario festivo
+  est_ruta:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Estado ruta
+  tip_bus:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Tipo de bus
+  tip_serv:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Tipo de servicio
+  dias_oper:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Días operación
+  tip_hor:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Tipo de horario
+  comp_sitp:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Componente SITP
+  ruta_rural:
+    tipo_fuente: esriFieldTypeSmallInteger
+    etiqueta: Ruta rural
