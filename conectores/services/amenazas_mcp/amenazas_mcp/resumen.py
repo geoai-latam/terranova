@@ -56,7 +56,9 @@ def sismos(fc: dict, total: int) -> dict[str, Any]:
 def focos(filas: list[dict]) -> dict:
     feats = [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [f["longitude"], f["latitude"]]},
               "properties": {"fecha": f.get("acq_date"), "hora_utc": f.get("acq_time"), "confianza": f.get("confidence"),
-                             "frp_mw": float(f["frp"]) if f.get("frp") else None, "dia_noche": f.get("daynight")}}
+                             "frp_mw": float(f["frp"]) if f.get("frp") else None, "dia_noche": f.get("daynight"),
+                             **({"tipo": f["type"]} if f.get("type") not in (None, "") else {}),
+                             **({"producto": f["producto"]} if f.get("producto") else {})}}
              for f in filas]
     return {"type": "FeatureCollection", "features": feats}
 

@@ -1,5 +1,5 @@
 id: nasa.firms
-titulo: Focos de calor activos de NASA FIRMS (VIIRS y MODIS), últimos 7 días
+titulo: Focos de calor de NASA FIRMS (VIIRS y MODIS) por periodo, desde 2012
 entidad: NASA (LANCE/FIRMS)
 competencia: null
 acto: null
@@ -10,34 +10,50 @@ licencia:
   evidencia: https://www.earthdata.nasa.gov/engage/open-data-services-software-policies/data-use-guidance
   cita: "Creative Commons Zero (CC0)"
 uso_comercial: si
-clase_acceso: bulk
+clase_acceso: api
 atribucion: "NASA FIRMS"
-protocolo: archivo
+protocolo: api_propia
 conector: amenazas-mcp
-# CSV regionales sin clave (South_America, 24h/48h/7d) que amenazas-mcp filtra por la zona. Solo hay
-# los últimos 7 días: no hay una verdad fija para un canario exacto, así que la herramienta aún no
-# entra al catálogo (falta un canario de rango o de estructura).
-url: https://firms.modaps.eosdis.nasa.gov/data/active_fire
+# API por área de FIRMS con MAP_KEY (gratis; va en el entorno de amenazas-mcp, nunca en el catálogo):
+# el archivo desde 2012 por fecha, en tramos de hasta 5 días. El producto estándar (SP) llega hasta
+# ~3 meses atrás y no cambia: da una verdad fija para el canario. Lo reciente sale del casi en tiempo
+# real (NRT). Los CSV regionales sin llave (últimos 7 días) siguen en `amenazas_incendios`.
+url: https://firms.modaps.eosdis.nasa.gov/api/area
 modo: en_vivo
 frescura: {ttl_cache_s: 1800, sla_actualizacion: PT3H}
-cobertura: {pais: GLOBAL, periodo: "los últimos 7 días"}
+cobertura: {pais: GLOBAL, periodo: "desde 2012-01-20 (VIIRS S-NPP), 2000-11 (MODIS)"}
 datos_personales: ninguno
-estado: borrador
+estado: publicada
 campos:
-  fecha: {nombre: fecha, tipo: date, desc: "fecha de la detección (acq_date)"}
-  hora_utc: {nombre: hora_utc, tipo: str, desc: "hora de la detección, HHMM UTC (acq_time)"}
-  confianza: {nombre: confianza, tipo: str, desc: "confianza de la detección (VIIRS: l, n, h; MODIS: 0-100)"}
+  fecha: {nombre: fecha, tipo: date, desc: "fecha de la detección, UTC (acq_date)"}
+  hora_utc: {nombre: hora_utc, tipo: str, desc: "hora de la detección en UTC como la publica FIRMS (acq_time), HHMM sin ceros a la izquierda: «623» es 06:23 UTC (01:23 en Colombia)"}
+  confianza:
+    nombre: confianza
+    tipo: str
+    desc: "confianza de la detección: VIIRS l, n, h; MODIS de 0 a 100"
+    codigos: {"l": "baja", "n": "nominal", "h": "alta"}
+    codigos_norma: "atributos de VIIRS 375 m de FIRMS: «Confidence values are set to low, nominal and high» (https://www.earthdata.nasa.gov/data/tools/firms/active-fire-data-attributes-modis-viirs); la API entrega la inicial (l, n, h), medido el 2026-11-05"
   frp_mw: {nombre: potencia_radiativa_mw, tipo: float, desc: "potencia radiativa del fuego (FRP), MW"}
+  dia_noche:
+    nombre: dia_noche
+    tipo: str
+    desc: "si la detección fue de día o de noche"
+    codigos: {"D": "día", "N": "noche"}
+    codigos_norma: "atributo DayNight de FIRMS: «D= Daytime fire, N= Nighttime fire» (https://www.earthdata.nasa.gov/data/tools/firms/active-fire-data-attributes-modis-viirs)"
+  tipo: {nombre: tipo_fuente, tipo: str, desc: "tipo de fuente de calor del producto estándar, como lo publica FIRMS. Para MODIS, FIRMS documenta 0 presunto incendio de vegetación, 1 volcán activo, 2 otra fuente fija en tierra y 3 en el mar (https://www.earthdata.nasa.gov/data/tools/firms/active-fire-data-attributes-modis-viirs); para VIIRS no documenta los valores, así que salen sin significado"}
+  producto: {nombre: producto, tipo: str, desc: "producto de FIRMS del que salió: _SP estándar (definitivo) o _NRT casi en tiempo real"}
   focos: {nombre: focos, tipo: int, desc: "focos de calor en la zona y el periodo"}
 comportamiento: {orden_coordenadas: lon_lat}
 dcat: {publisher: NASA, theme: amenazas, accrualPeriodicity: continuous}
 # Spec 07: medido en la fuente, no en Terrnova.
 perfil:
-  medido: '2026-10-22'
+  medido: '2026-11-05'
   fila: una detección satelital de fuego (VIIRS o MODIS) en un paso del satélite
   operaciones: {}
   hallazgos:
   - 'un mismo incendio da varias detecciones (píxeles y pasos): contar filas no es contar incendios'
-  - 'solo hay los últimos 7 días: no hay verdad fija para un canario'
-  decision: sin herramienta propia hasta tener un canario de estructura; dentro de amenazas-mcp se resume
-    por zona
+  - 'la API por área acepta hasta 5 días por petición; un periodo de 31 días son 7 peticiones'
+  - 'VIIRS_SNPP_SP llega hasta 2026-07-31 y VIIRS_SNPP_NRT empieza el 2026-08-01 (data_availability, 2026-11-05)'
+  - 'del 2024-02-01 al 2024-02-05, en [-79.1, -4.3, -66.8, 13.5], VIIRS_SNPP_SP da 2 498 focos (1 246 el primer día; confianza n 2 363, l 76, h 59)'
+  - 'el producto estándar trae una columna type; FIRMS documenta sus valores solo para MODIS'
+  decision: herramienta por zona y periodo con la API por área; el canario va en una ventana del producto estándar, que no cambia
