@@ -40,6 +40,12 @@ avisos:
     el último). Puede ser que la fuente aún no los publique, que falten o que el campo empezara o dejara de producir ese año (el gas de Borbón empieza en julio de 2025): noviembre de 2025 trae 106
     filas en todo el país frente a unas 330 los demás meses, y Castilla no tiene octubre ni noviembre
     de 2025 (medido el 2026-11-02). El total no es el de un año entero.
+- cuando: vacio
+  texto: >
+    La producción fiscalizada de la ANH no trae crudo para ese campo y año. Puede que el campo no
+    produzca crudo (es solo de gas: pruebe anh_gas_campo) o que el nombre no coincida: se compara
+    completo, sin tildes ni espacios, como lo escribe la ANH (CASTILLA, RUBIALES). Los datos van
+    desde 2014, y el año en curso llega hasta el último mes publicado.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en fdvb-hsrf: Rubiales 2024, Puerto Gaitán (Meta), Ecopetrol, 12 meses;
