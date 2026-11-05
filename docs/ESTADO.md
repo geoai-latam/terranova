@@ -48,7 +48,7 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
 
-## Revisión de valor en loop (2026-11-05, #402 a #426)
+## Revisión de valor en loop (2026-11-05, #402 a #446)
 
 Herramienta por herramienta en producción, con casos a mano: otro lugar real, un borde y un lugar
 sin datos.
@@ -71,13 +71,27 @@ sin datos.
   - MinHacienda regalías: totales aprobados (#425).
 - **Patrón más común:** «no encontrado» sin aviso. Se añadió el aviso de vacío en unas 25
   herramientas.
-- **Queda en la cola:** 71 ítems de `interno/REVISION_VALOR_LOOP.md`. Siguen SIGEP, Supertransporte,
-  UPRA y la familia justicia (CNMH, Corte Constitucional, Medicina Legal, Policía), más P0.5, IC4
-  y T3-T14.
+- **Lote en paralelo (#430-#446):** se revisaron las 60 herramientas restantes de la cola.
+  - **Policía:** cobertura desde 2010, y el género sin dato ya no se esconde.
+  - **Medicina Legal, minas y UARIV:** explican el vacío.
+  - **CNMH:** dice hasta dónde llega cada conjunto y da `total_casos`.
+  - **SIGEP y puertos:** encuentran Ñ y tildes.
+  - **Catastro IGAC:** trae todas las zonas y unidades de cada línea. Antes faltaba más de la mitad
+    del área construida.
+  - **Transacciones, gestor y REPS:** salen los campos que faltaban, los conteos y el corte.
+  - **Corte Constitucional:** las sentencias se piden como se citan.
+  - **Búsqueda en el texto** de normas y sentencias: sin tildes ni saltos de línea (web-mcp).
+  - **SUIN y SUIT:** el tipo con tilde, y los trámites suman el total.
+- **CI (#428):** una herramienta nueva no entra sin su aviso de vacío. Las que aún no lo tienen
+  están en `tests/sin_aviso_vacio.txt`, y la lista solo baja.
+- **Queda en la cola:** solo los 11 ítems de infraestructura nueva: P0.5, IC4 y T3-T14.
 - **Pendiente técnico:**
-  - Aerocivil: la búsqueda con `vocales`, cuando entre #417 («Cucuta» pierde 2022-2026);
   - ninguna fuente viva de datos.gov.co lleva la fecha de actualización en la procedencia;
-  - la tabla de códigos SDMX del BanRep está tras un antibots.
+  - la tabla de códigos SDMX del BanRep está tras un antibots;
+  - `corte_constitucional_texto_buscar`: `numero_registros` cuenta apariciones y la lista trae
+    fragmentos;
+  - `suin_norma`: algunos números no son enteros («CP», «3-1766»);
+  - `anm_titulos_municipio`: con 99999 da el título 583 «POR DEFINIR», sin aviso.
 
 ## Licencias del DANE y del IGAC (2026-11-04, ADR-0039)
 
