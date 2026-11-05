@@ -46,6 +46,16 @@ Medido el 2026-11-02 sobre 9 429 647 filas de `c82u-588k`:
    existiendo. 7110 no está en ninguna de las tres (el DANE lo partió antes) y queda sin nombre.
 3. **Los establecimientos de Ecopetrol** salen con CIIU 4719 (comercio al por menor): así los
    registra la cámara.
+4. **«ACTIVA» no es «opera».** Medido el 2026-11-05:
+   - PEHER CONSTRUIR LTDA EN LIQUIDACION (NIT 900000000, Facatativá) sale «ACTIVA» y sin
+     renovar desde 2013;
+   - LA PANADERIA LTDA. (Cartagena) sale «ACTIVA», sin renovar desde 1999 y sin NIT.
+
+   Las sociedades que no renuevan en cinco años quedan disueltas y en liquidación (Ley 1727 de
+   2014, art. 31). La respuesta lo avisa y manda a `ultimo_ano_renovado`.
+5. **Un NIT, varias entidades.** El 900000000 (dígito 5) está en dos matrículas de entidades
+   distintas, una de Facatativá y otra del Huila. Sale como lo registran las cámaras.
+6. **Hay estados fuera de ACTIVA y CANCELADA**, como «SIN ESTADO» (RECOPETROL CARTAGENA LTDA).
 
 ## Herramientas que la usan
 
@@ -69,3 +79,5 @@ Medido el 2026-11-02 sobre 9 429 647 filas de `c82u-588k`:
     categoría «PERSONA NATURAL» en una sociedad. La categoría se deja como la publica la fuente.
 - **Cuando el RUES pase a la Rev. 5:** volver a medir qué códigos trae y cambiar de lista. No se
   mezclan las dos.
+- **2026-11-05, revisión de valor:** aviso de que «ACTIVA» no es «opera» (renovación y Ley 1727 de
+  2014) en `rues_empresa_por_nit` y `rues_empresas_buscar`, y aviso de un NIT en varias matrículas.

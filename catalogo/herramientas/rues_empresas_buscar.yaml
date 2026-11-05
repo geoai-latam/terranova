@@ -28,6 +28,14 @@ consulta:
 salida: RuesEmpresasBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una matrícula «ACTIVA» no quiere decir que la empresa opere: mire ultimo_ano_renovado. La
+    matrícula se renueva cada año, y las sociedades que no la renuevan en cinco años quedan
+    disueltas y en liquidación (Ley 1727 de 2014, art. 31). Hay razones sociales que dicen
+    «EN LIQUIDACION» con la matrícula activa (PEHER CONSTRUIR LTDA, sin renovar desde 2013; medido
+    el 2026-11-05).
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en c82u-588k: «ECOPETROL» da 50 personas jurídicas o entidades (asociaciones,
