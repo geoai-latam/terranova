@@ -69,6 +69,32 @@ def normalizar_nit(texto: str) -> str:
     return base
 
 
+# Una sentencia de la Corte Constitucional como la escribe la gente: t-760-08, T-760/08, T-25/04,
+# T-025 de 2004, SU214/16, C-155A/93. Sin `\s` (un salto de línea no es parte de un número) y sin
+# banderas en línea: el patrón va también al esquema JSON del MCP.
+PATRON_SENTENCIA = (
+    r"^ *([CcTt]|[Ss][Uu]) *-? *([0-9]{1,4}) *([A-Za-z]?) *(/|-| +[Dd][Ee] +) *"
+    r"([0-9]{2}|(19|20)[0-9]{2}) *$"
+)
+
+
+def normalizar_sentencia(texto: str, relatoria: bool = False) -> str:
+    """La sentencia en la forma de la Corte: T-760/08 en el índice, T-760-08 en la relatoría (y
+    SU214-16, sin el primer guion: SU-214-16.htm es una página vacía con estado 200). El número va
+    en tres cifras como mínimo, como lo guarda el índice: T-25/04 no existe ahí y T-025/04 sí
+    (medido el 2026-11-05 en v2k4-2t8s: T-001/92, C-005/93, T-025/04, T-1025/02). El año, en dos
+    cifras. Espera un texto que ya cumple `PATRON_SENTENCIA`."""
+    m = re.fullmatch(PATRON_SENTENCIA, texto)
+    if m is None:
+        raise ValueError("no tiene la forma de una sentencia (T-760/08)")
+    tipo, numero, letra, _, anio, _ = m.groups()
+    tipo, letra, anio = tipo.upper(), letra.upper(), anio[-2:]
+    numero = numero.lstrip("0").zfill(3)
+    if relatoria:
+        return f"SU{numero}{letra}-{anio}" if tipo == "SU" else f"{tipo}-{numero}{letra}-{anio}"
+    return f"{tipo}-{numero}{letra}/{anio}"
+
+
 PATRONES_ENTRADA: dict[str, str] = {
     "codigo_predial": r"^[0-9]{30}$",
     # el código, o el nombre del municipio (con «, departamento» si hace falta): la puerta lo
@@ -78,11 +104,14 @@ PATRONES_ENTRADA: dict[str, str] = {
     "constancia_secop": r"^[0-9]{2}-[0-9]{1,2}-[0-9]+$",  # SECOP I: 19-12-10176235
     "contrato_secop": r"^(CO1\.[A-Z]+\.[0-9]+|[0-9]{2}-[0-9]{1,2}-[0-9]+)$",  # SECOP II o I
     "fecha": r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
-    # Corte Constitucional: T-760/08; en 1993-1995, algunas con letra (C-155A/93)
-    "sentencia_cc": r"^(C|T|SU)-[0-9]{1,4}[A-Z]?/[0-9]{2}$",
+    # Corte Constitucional: T-760/08; en 1993-1995, algunas con letra (C-155A/93). Se acepta como la
+    # escribe un abogado (t-760-08, T-25/04, T-025 de 2004, SU214/16) y `normalizar_sentencia` la
+    # deja en la forma del índice (T-760/08, T-025/04: el número va en tres cifras como mínimo)
+    "sentencia_cc": PATRON_SENTENCIA,
     # en la URL de la relatoría: T-760-08 (sin «/»: nada de rutas). Las de unificación van sin el
-    # primer guion (SU214-16); la puerta acepta las dos formas y deja la de la relatoría
-    "sentencia_relatoria": r"^(C-|T-|SU-?)[0-9]{1,4}[A-Z]?-[0-9]{2}$",
+    # primer guion (SU214-16). Se acepta lo mismo que en `sentencia_cc` y `normalizar_sentencia`
+    # deja la forma de la relatoría
+    "sentencia_relatoria": PATRON_SENTENCIA,
     # documento de un gestor normativo (decreto_1165_2019): sin «/» ni «.», nada de rutas. El año va
     # casi siempre, pero no en todos: el Estatuto Tributario es `estatuto_tributario` en la DIAN
     "documento_normativo": r"^[a-z][a-z0-9_-]{2,60}$",
@@ -131,8 +160,14 @@ FORMAS_ENTRADA: dict[str, tuple[str, str]] = {
     "constancia_secop": ("número de constancia de SECOP I", "19-12-10176235"),
     "contrato_secop": ("identificador de SECOP II o constancia de SECOP I", "CO1.PCCNTR.5141215"),
     "fecha": ("fecha AAAA-MM-DD", "2026-10-23"),
-    "sentencia_cc": ("sentencia de la Corte Constitucional, tipo-número/año", "T-760/08"),
-    "sentencia_relatoria": ("sentencia con guiones en vez de barra", "T-760-08"),
+    "sentencia_cc": (
+        "sentencia de la Corte Constitucional, tipo-número/año (también T-25/04 o T-025 de 2004)",
+        "T-760/08",
+    ),
+    "sentencia_relatoria": (
+        "sentencia de la Corte Constitucional, tipo-número-año (también T-760/08 o T-760 de 2008)",
+        "T-760-08",
+    ),
     "documento_normativo": (
         "documento del gestor normativo, tipo_número_año (o su nombre, como estatuto_tributario)",
         "decreto_1165_2019",

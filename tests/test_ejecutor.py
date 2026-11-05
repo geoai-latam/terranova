@@ -93,6 +93,13 @@ def test_entrada_valida_se_normaliza() -> None:
         ("SU-214-16", "SU214-16"),
         ("SU214-16", "SU214-16"),
         (" su-095-18 ", "SU095-18"),
+        # como la escribe un abogado: con barra, sin el cero, con el año entero
+        ("T-760/08", "T-760-08"),
+        ("T-25-04", "T-025-04"),
+        ("T-025 de 2004", "T-025-04"),
+        ("su-214/2016", "SU214-16"),
+        ("c-155a-93", "C-155A-93"),
+        ("T760-08", "T-760-08"),
     ],
 )
 def test_la_sentencia_queda_como_la_guarda_la_relatoria(escrita: str, en_la_relatoria: str) -> None:
@@ -101,9 +108,26 @@ def test_la_sentencia_queda_como_la_guarda_la_relatoria(escrita: str, en_la_rela
     assert entrada["sentencia"] == en_la_relatoria
 
 
+@pytest.mark.parametrize(
+    ("escrita", "en_el_indice"),
+    [
+        ("T-760/08", "T-760/08"),
+        ("t-760-08", "T-760/08"),
+        # el índice guarda el número en tres cifras: T-25/04 no está, T-025/04 sí (2026-11-05)
+        ("T-25/04", "T-025/04"),
+        ("T-1025/02", "T-1025/02"),
+        ("SU214-16", "SU-214/16"),
+        ("C-155A de 1993", "C-155A/93"),
+    ],
+)
+def test_la_sentencia_queda_como_la_guarda_el_indice(escrita: str, en_el_indice: str) -> None:
+    h = CATALOGO.herramientas["corte_constitucional_sentencia"]
+    assert validar_entrada(h, {"sentencia": escrita})["sentencia"] == en_el_indice
+
+
 def test_la_sentencia_no_acepta_rutas() -> None:
     h = CATALOGO.herramientas["corte_constitucional_resuelve"]
-    for mala in ("T-760/08", "../T-760-08", "X-1-08", "T760-08"):
+    for mala in ("../T-760-08", "X-1-08", "T-760/08/x", "T-760-008", "T-760\n-08", "T-760-1891"):
         with pytest.raises(ErrorEntrada):
             validar_entrada(h, {"anio": 2008, "sentencia": mala})
 
