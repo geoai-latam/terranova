@@ -454,7 +454,10 @@ SISTEMAS = {
     "MinHacienda": ["Regalías"],
     "MinJusticia": ["SUIN-Juriscol"],
     "MinSalud": ["REPS", "sedes de prestadores de salud"],
-    "Alcaldía de Bogotá": ["estaciones de bomberos, estaciones de policía, CAI"],
+    "Alcaldía de Bogotá": [
+        "estaciones de bomberos, estaciones de policía, CAI",
+        "Sistema Distrital de Parques",
+    ],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],

@@ -474,3 +474,22 @@ def test_ninguna_dorada_guarda_un_correo() -> None:
     for archivo in sorted(DORADAS.glob("*.json")):
         hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
         assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
+
+
+@pytest.mark.anyio
+async def test_parques_de_bogota_por_escala() -> None:
+    """Parques del IDRD medidos en la capa y en la copia el 2026-11-05: 66 en el centro de Bogotá,
+    con el polígono completo."""
+    h = CATALOGO.herramientas["bogota_parques_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 66
+    assert datos["por_tipo"] == {
+        "PARQUE VECINAL": 44,
+        "PARQUE DE BOLSILLO": 15,
+        "PARQUE METROPOLITANO": 5,
+        "ESCENARIO DEPORTIVO": 1,
+        "PARQUE METROPOLITANO PROPUESTO": 1,
+    }
+    assert "Tercer Milenio" in {e["nombre"] for e in datos["elementos"]}
