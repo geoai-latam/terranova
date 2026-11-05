@@ -298,6 +298,37 @@ def _valor_socrata(valor: Any) -> Any:
     return valor
 
 
+# Colombia con San Andrés y Leticia: un punto fuera de aquí está mal escrito en la fuente.
+_COLOMBIA = (-82.0, -4.3, -66.8, 13.5)
+
+
+def punto_gms(fila: dict[str, Any], regla: Any) -> dict[str, Any] | None:
+    """El punto GeoJSON de grados, minutos y segundos, o None si no se puede saber dónde queda
+    (ver `PuntoGms`)."""
+
+    def tres(columnas: list[str]) -> tuple[float, float, float] | None:
+        valores = [_numero(fila.get(c)) for c in columnas]
+        if any(v is None for v in valores):
+            return None
+        g, m, s = (float(v) for v in valores)  # type: ignore[arg-type]
+        return g, m, s
+
+    lat, lon = tres(regla.lat), tres(regla.lon)
+    if lat is None or lon is None or lat[0] == 0 or [*lat, *lon] in regla.relleno:
+        return None
+
+    def decimal(g: float, m: float, s: float) -> float:
+        return g + (m / 60 + s / 3600) * (1 if g > 0 else -1)
+
+    y, x = decimal(*lat), decimal(*lon)
+    oeste, sur, este, norte = _COLOMBIA
+    if not (oeste <= x <= este and sur <= y <= norte):
+        return None
+    if y < 0 and regla.sur and not any(str(fila.get(c)) in v for c, v in regla.sur.items()):
+        return None
+    return {"type": "Point", "coordinates": [round(x, 7), round(y, 7)]}
+
+
 def descargar_socrata(
     fuente: Fuente, desde: date | None = None, *, cliente: Any = None
 ) -> Iterator[list[dict[str, Any]]]:
@@ -320,7 +351,11 @@ def descargar_socrata(
             pagina = _pedir(http, url, {**params, "$limit": PAGINA, "$offset": desplazamiento})
             if not pagina:
                 return
-            yield [{c: _valor_socrata(f.get(c)) for c in columnas} for f in pagina]
+            filas = [{c: _valor_socrata(f.get(c)) for c in columnas} for f in pagina]
+            if copia.punto_gms is not None:
+                for fila in filas:
+                    fila[GEOMETRIA] = punto_gms(fila, copia.punto_gms)
+            yield filas
             if len(pagina) < PAGINA:
                 return
             desplazamiento += len(pagina)

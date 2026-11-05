@@ -1,0 +1,95 @@
+id: ideam.captaciones
+titulo: "IDEAM (SIRH): puntos de captación de agua superficial concesionados, con su ubicación (copia)"
+entidad: Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM)
+competencia: coordina el Sistema de Información del Recurso Hídrico (SIRH); las autoridades ambientales registran las concesiones de agua
+acto: null
+licencia:
+  spdx: CC-BY-SA-4.0
+  url: https://creativecommons.org/licenses/by-sa/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.datos.gov.co/api/views/4q6d-6s7b.json
+  cita: "Creative Commons Attribution | Share Alike 4.0 International"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: IDEAM, Sistema de Información del Recurso Hídrico (SIRH), puntos de captación concesionados de aguas superficiales. Fuente: Portal de Datos Abiertos www.datos.gov.co"
+protocolo: socrata
+# Copia (ADR-0024) del conjunto 4q6d-6s7b para cruzarlo por zona: la fuente publica la ubicación
+# en grados, minutos y segundos, no como punto. `punto_gms` arma el punto al copiar y deja sin
+# punto lo que no se puede ubicar: 0 grados de latitud (no se sabe el hemisferio), el relleno
+# 5°5'5" N 75°5'5" O (984 filas), lo que cae fuera de Colombia y la latitud sur fuera de los
+# departamentos del sur. Esas filas siguen saliendo por municipio.
+conector: copia
+url: https://www.datos.gov.co/resource/4q6d-6s7b.json
+modo: copia
+copia:
+  origen: socrata
+  conjunto: 4q6d-6s7b
+  tabla: ideam_captaciones
+  clave: idcaptacion
+  punto_gms:
+    lat: [grados_lat, minutos_lat, segundos_lat]
+    lon: [grados_long, minutos_long, segundos_long]
+    relleno: [[5, 5, 5, -75, 5, 5]]
+    # Amazonas, Putumayo, Caquetá y Vaupés llegan al sur del ecuador.
+    sur: {divipoladpto_cap: ["91", "86", "18", "97"]}
+  indices: [divipolamun_cap, autoridad]
+  texto: [nombrefuente, nombretramo, num_expediente, nommunicipio_cap]
+# datos.gov.co dice actualización mensual; el corte medido es del 2026-10-27 (fechaproceso).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P60D}
+cobertura: {pais: CO, excluye: ["aguas subterráneas", "usos de cada concesión (dq2g-rw28)", "vertimientos (7peu-q4hn)", "concesiones que la autoridad ambiental no ha cargado al SIRH"]}
+# No trae al titular de la concesión. `descripcion_acceso` es texto libre de la autoridad (cómo se
+# llega al predio): sale como se publica y no se busca por él.
+datos_personales: ninguno
+estado: publicada
+campos:
+  idcaptacion: {nombre: id_captacion, tipo: int, desc: "identificador único del punto de captación en el SIRH"}
+  idconcesion: {nombre: id_concesion, tipo: int, desc: "identificador de la concesión (una concesión puede tener varias captaciones)"}
+  autoridad: {nombre: autoridad, tipo: str, desc: "autoridad ambiental que otorgó la concesión (p. ej. CAR, CORANTIOQUIA)"}
+  num_expediente: {nombre: expediente, tipo: str, desc: "número del expediente en la autoridad ambiental"}
+  num_res_caudal: {nombre: resolucion_caudal, tipo: str, desc: "acto administrativo que asigna el caudal"}
+  divipoladpto_cap: {nombre: departamento_divipola, tipo: str, desc: "código DIVIPOLA del departamento de la captación"}
+  nomdepartamento_cap: {nombre: departamento, tipo: str, desc: "departamento de la captación"}
+  divipolamun_cap: {nombre: municipio_divipola, tipo: str, desc: "código DIVIPOLA del municipio de la captación"}
+  nommunicipio_cap: {nombre: municipio, tipo: str, desc: "municipio de la captación"}
+  divipolamun: {nombre: municipio_predio_divipola, tipo: str, desc: "código DIVIPOLA del municipio del predio que se beneficia (puede no ser el de la captación)"}
+  nommunicipiopredio: {nombre: municipio_predio, tipo: str, desc: "municipio del predio que se beneficia"}
+  nombrefuente: {nombre: fuente_hidrica, tipo: str, desc: "nombre de la fuente de agua que asigna la autoridad (río, quebrada…)"}
+  tipofuente: {nombre: tipo_fuente_hidrica, tipo: str, desc: "clase de cuerpo de agua: Río, Quebrada, Nacimiento, Caño, Ciénaga, Embalse, Lago o laguna…"}
+  codigofuente: {nombre: codigo_fuente_hidrica, tipo: str, desc: "código de la fuente en la autoridad ambiental («No codificada» si no tiene)"}
+  nombretramo: {nombre: tramo, tipo: str, desc: "tramo de la fuente donde se capta"}
+  area: {nombre: area_hidrografica, tipo: str, desc: "área hidrográfica: Amazonas, Caribe, Magdalena-Cauca, Orinoco o Pacífico"}
+  zona: {nombre: zona_hidrografica, tipo: str, desc: "zona hidrográfica"}
+  subzona: {nombre: subzona_hidrografica, tipo: str, desc: "subzona hidrográfica"}
+  tipocaptacion: {nombre: tipo_captacion, tipo: str, desc: "estructura de captación: Toma lateral, Toma sumergida, Presa de derivacion, Toma de rejilla…; «No registra» si no hay dato"}
+  estado_captacion: {nombre: estado, tipo: str, desc: "estado de la estructura: Bueno, Regular, Malo o «No registra»"}
+  continuidad: {nombre: continuidad, tipo: str, desc: "«Si» o «No»: si hay continuidad del servicio"}
+  caudal_concesionado: {nombre: caudal_concesionado_l_s, tipo: float, desc: "caudal autorizado, en litros por segundo (-1 = sin dato)"}
+  caudal_x_usos: {nombre: caudal_por_usos_l_s, tipo: float, desc: "suma de los caudales de cada uso autorizado, en l/s (-1 = sin dato)"}
+  caudaldiseno: {nombre: caudal_diseno_l_s, tipo: float, desc: "caudal de diseño de la captación, en l/s"}
+  oferta_hidrica_total: {nombre: oferta_hidrica_total_m3_s, tipo: float, desc: "oferta hídrica total de la fuente, en m³/s (-1 = sin dato)"}
+  oferta_disponible: {nombre: oferta_disponible_m3_s, tipo: float, desc: "oferta disponible tras el caudal ambiental, en m³/s (-1 = sin dato)"}
+  grados_lat: {nombre: latitud_grados, tipo: float, desc: "grados de la latitud, como los publica el IDEAM (el signo va aquí)"}
+  minutos_lat: {nombre: latitud_minutos, tipo: float, desc: "minutos de la latitud"}
+  segundos_lat: {nombre: latitud_segundos, tipo: float, desc: "segundos de la latitud"}
+  grados_long: {nombre: longitud_grados, tipo: float, desc: "grados de la longitud (negativos: oeste)"}
+  minutos_long: {nombre: longitud_minutos, tipo: float, desc: "minutos de la longitud"}
+  segundos_long: {nombre: longitud_segundos, tipo: float, desc: "segundos de la longitud"}
+  sistemareferencia: {nombre: sistema_referencia, tipo: str, desc: "datum de la coordenada: WGS 84, MAGNA-SIRGAS o «Bogota» (el datum antiguo: 301 puntos, que pueden quedar corridos)"}
+  altitud: {nombre: altitud, tipo: float, desc: "altitud del punto de captación, como la registra la autoridad"}
+  descripcion_acceso: {nombre: acceso, tipo: str, desc: "cómo se llega al predio, en texto libre de la autoridad («Sin descripcion» si no hay)"}
+  tiene_servidumbre: {nombre: tiene_servidumbre, tipo: str, desc: "si el usuario tiene permiso en el predio donde están los componentes del sistema"}
+  fechaproceso: {nombre: fecha_corte, tipo: date, desc: "fecha en que el IDEAM generó el conjunto"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: IDEAM, theme: ambiente}
+perfil:
+  medido: '2026-11-05'
+  fila: "un punto de captación de agua superficial de una concesión"
+  clave: {columna: idcaptacion, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "81 731 captaciones de 73 083 concesiones, todas de fuente superficial; corte del 2026-10-27"
+  - "80 245 con punto y 1 486 sin él: 985 en el relleno 5°5'5\" N 75°5'5\" O, 443 con 0 grados de latitud (no dicen el hemisferio; casi todas de CORPOAMAZONIA), 14 con latitud sur fuera de los departamentos del sur (CVC, CARDIQUE) y 44 más fuera de Colombia o sin grados"
+  - "los puntos se repiten: 61 244 distintos para 80 245 captaciones (una concesión con varias captaciones en el mismo sitio)"
+  - "datum: 44 703 WGS 84, 36 727 MAGNA-SIRGAS (prácticamente iguales) y 301 en el datum Bogotá"
+  - "caudales y ofertas usan -1 para «sin dato»; estado «No registra» en 14 528, tipo de captación «No registra» en 24 727"
+  decision: "copia con el punto armado desde grados, minutos y segundos; por zona, municipio y fuente hídrica"

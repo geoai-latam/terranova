@@ -1,0 +1,98 @@
+id: ideam_captaciones_en_zona
+version: 1
+familia: territorio
+fuente: ideam.captaciones
+pregunta: ¿Quién capta agua de los ríos y quebradas en esta zona, y cuánta?
+descripcion: 'Puntos de captación de agua superficial concesionados (bocatomas de acueductos, riego, industria…)
+  dentro de un rectángulo (bbox en EPSG:4326), con su punto, autoridad ambiental, expediente, fuente de
+  agua y tramo, subzona hidrográfica, tipo y estado de la estructura y caudal concesionado en l/s. Arriba
+  van el total y cuántas hay por autoridad y por estado. No trae al titular de la concesión. Sirve para
+  ver la presión sobre una cuenca o pintar las bocatomas en un visor; las listas largas siguen por páginas.
+  Sale de la copia de Terrnova del SIRH (datos.gov.co 4q6d-6s7b). (Fuente: IDEAM, Sistema de Información
+  del Recurso Hídrico; licencia: CC BY-SA 4.0.)'
+entrada:
+  bbox: bbox
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: ideam_captaciones
+    bbox: '{bbox}'
+    select: &id001
+    - idcaptacion
+    - idconcesion
+    - autoridad
+    - num_expediente
+    - num_res_caudal
+    - divipoladpto_cap
+    - nomdepartamento_cap
+    - divipolamun_cap
+    - nommunicipio_cap
+    - divipolamun
+    - nommunicipiopredio
+    - nombrefuente
+    - tipofuente
+    - codigofuente
+    - nombretramo
+    - area
+    - zona
+    - subzona
+    - tipocaptacion
+    - estado_captacion
+    - continuidad
+    - caudal_concesionado
+    - caudal_x_usos
+    - caudaldiseno
+    - oferta_hidrica_total
+    - oferta_disponible
+    - grados_lat
+    - minutos_lat
+    - segundos_lat
+    - grados_long
+    - minutos_long
+    - segundos_long
+    - sistemareferencia
+    - altitud
+    - descripcion_acceso
+    - tiene_servidumbre
+    - fechaproceso
+    geometria: completa
+    order:
+    - idcaptacion
+    limite: 1000
+  campos: *id001
+salida: IdeamCaptacionesEnZona
+derivados:
+  total:
+    de: completitud_total
+    tipo: int
+  por_autoridad:
+    de: conteo_por
+    campo: autoridad
+  por_estado:
+    de: conteo_por
+    campo: estado
+    vacio: sin dato
+avisos:
+- cuando: vacio
+  texto: El SIRH del IDEAM no trae captaciones de agua superficial concesionadas para esa consulta. Puede
+    que la autoridad ambiental no las haya cargado; pruebe con un rectángulo más grande, otro código DIVIPOLA
+    o otro nombre de la fuente de agua.
+- cuando: encontrado
+  texto: 'Son las captaciones de agua superficial que las autoridades ambientales cargaron al SIRH: una
+    concesión que no está cargada no aparece. El punto se arma desde grados, minutos y segundos; las que
+    no se pueden ubicar (0 grados de latitud, el relleno 5°5''5" N 75°5''5" O, fuera de Colombia) no salen
+    en una zona, pero sí por municipio. Caudales y ofertas en -1 quieren decir «sin dato».'
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la copia (81 731 captaciones, 80 245 con punto): 12 de la CAR en Chía.
+  entrada:
+    bbox:
+    - -74.1
+    - 4.85
+    - -74.0
+    - 4.9
+  minimos:
+    total: 12
+  campos: [acceso, altitud, area_hidrografica, autoridad, caudal_concesionado_l_s, caudal_diseno_l_s, caudal_por_usos_l_s, codigo_fuente_hidrica, continuidad, departamento, departamento_divipola, estado, expediente, fecha_corte, fuente_hidrica, id_captacion, id_concesion, latitud_grados, latitud_minutos, latitud_segundos, longitud_grados, longitud_minutos, longitud_segundos, municipio, municipio_divipola, municipio_predio, municipio_predio_divipola, oferta_disponible_m3_s, oferta_hidrica_total_m3_s, por_autoridad, por_estado, resolucion_caudal, sistema_referencia, subzona_hidrografica, tiene_servidumbre, tipo_captacion, tipo_fuente_hidrica, total, tramo, zona_hidrografica]
+  latencia_max_ms: 8000

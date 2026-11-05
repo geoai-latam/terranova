@@ -11,7 +11,7 @@ from typing import Any, ClassVar
 
 import pytest
 
-from terranova.catalogo import cargar
+from terranova.catalogo import PuntoGms, cargar
 from terranova.conector import ErrorConector
 from terranova.copias import (
     AlmacenCopias,
@@ -27,6 +27,7 @@ from terranova.copias import (
     fusionar_mes,
     num_europeo,
     plan_de_consulta,
+    punto_gms,
 )
 
 CATALOGO = cargar()
@@ -1249,6 +1250,34 @@ def test_cada_elemento_sale_con_la_clave_de_la_copia() -> None:
         upme, {"group": ["categoria"], "agregados": {"n": "count"}, "limite": 10}
     )
     assert '"id_elemento"' not in agregado.sql
+
+
+def test_punto_gms_deja_sin_punto_lo_que_no_se_puede_ubicar() -> None:
+    """Captaciones del IDEAM (4q6d-6s7b): el signo va en los grados; 984 traen el relleno
+    5°5'5" N 75°5'5" O; las de latitud sur fuera de los departamentos del sur están mal escritas."""
+    regla = PuntoGms(
+        lat=["gl", "ml", "sl"],
+        lon=["go", "mo", "so"],
+        relleno=[[5, 5, 5, -75, 5, 5]],
+        sur={"dpto": ["91", "86"]},
+    )
+
+    def punto(gl: str, ml: str, sl: str, go: str, mo: str, so: str, dpto: str = "25") -> Any:
+        fila = {"gl": gl, "ml": ml, "sl": sl, "go": go, "mo": mo, "so": so, "dpto": dpto}
+        return punto_gms(fila, regla)
+
+    assert punto("4", "36", "0", "-74", "4", "48") == {
+        "type": "Point",
+        "coordinates": [-74.08, 4.6],
+    }
+    leticia = punto("-4", "12", "36", "-69", "56", "24", dpto="91")
+    assert leticia == {"type": "Point", "coordinates": [-69.94, -4.21]}
+    assert punto("-4", "12", "36", "-76", "30", "0", dpto="76") is None  # el Valle no es del sur
+    assert punto("0", "30", "0", "-76", "30", "0", dpto="86") is None  # sin hemisferio
+    assert punto("5", "5", "5", "-75", "5", "5") is None  # relleno
+    assert punto("5", "5", "5", "-74", "0", "0") is not None  # solo la latitud no es relleno
+    assert punto("4", "36", "0", "74", "4", "48") is None  # longitud al este: fuera de Colombia
+    assert punto("4", None, "0", "-74", "4", "48") is None  # type: ignore[arg-type]
 
 
 class _EmergenciasFalsas:

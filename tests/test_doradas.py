@@ -428,6 +428,26 @@ async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> 
 
 
 @pytest.mark.anyio
+async def test_captaciones_del_ideam_con_el_punto_de_grados_minutos_y_segundos() -> None:
+    """SIRH del IDEAM (4q6d-6s7b), medido en la copia el 2026-11-05: 12 captaciones de la CAR en
+    el rectángulo de Chía, 2 de CORMACARENA en Cubarral (50223) y 1 en el caño Arenas Blancas.
+    El punto sale de grados, minutos y segundos (4°52'58" N, 74°0'40" O)."""
+
+    async def correr(herramienta: str) -> dict[str, object]:
+        h = CATALOGO.herramientas[herramienta]
+        grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+        sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+        return dict(sobre.model_dump(mode="json")["datos"])
+
+    zona = await correr("ideam_captaciones_en_zona")
+    assert zona["total"] == 12 and zona["por_autoridad"] == {"CAR": 12}
+    municipio = await correr("ideam_captaciones_municipio")
+    assert municipio["total"] == 2 and municipio["por_autoridad"] == {"CORMACARENA": 2}
+    arenas = await correr("ideam_captaciones_buscar")
+    assert [e["fuente_hidrica"] for e in arenas["elementos"]] == ["ARENAS BLANCAS"]  # type: ignore[attr-defined]
+
+
+@pytest.mark.anyio
 async def test_emergencias_de_bogota_por_tipo() -> None:
     """Bomberos, policía, CAI y red pública de salud de Bogotá, medidos en la copia el 2026-11-05:
     16 sedes en el centro (10 CAI, 3 estaciones de policía, 2 de salud y la de bomberos Central).

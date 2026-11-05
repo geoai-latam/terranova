@@ -500,6 +500,30 @@ class Preagregado(_Ficha):
         return [self.particion, *grupo, *nombre, self.cuenta, *sumas]
 
 
+class PuntoGms(_Ficha):
+    """Un punto armado desde grados, minutos y segundos (origen socrata), como publica el IDEAM sus
+    captaciones. El signo va en los grados, así que con 0 grados de latitud no se sabe el
+    hemisferio: esa fila queda sin punto. Tampoco lleva punto la que cae fuera de Colombia, la que
+    trae una coordenada de relleno ni la que tiene latitud sur en un departamento que no llega al
+    sur del ecuador. La fila se copia igual: sale por código, pero no en una zona."""
+
+    lat: list[str] = Field(min_length=3, max_length=3, description="[grados, minutos, segundos]")
+    lon: list[str] = Field(min_length=3, max_length=3, description="[grados, minutos, segundos]")
+    relleno: list[list[float]] = Field(
+        default_factory=list,
+        description="coordenadas de relleno, [g, m, s de latitud, g, m, s de longitud]: sin punto",
+    )
+    sur: dict[str, list[str]] = Field(
+        default_factory=dict,
+        description="{columna: [valores]}: solo esas filas (p. ej. los departamentos al sur del "
+        "ecuador) pueden tener latitud sur",
+    )
+
+    @property
+    def columnas(self) -> set[str]:
+        return {*self.lat, *self.lon, *self.sur}
+
+
 class Copia(_Ficha):
     """Cómo se copia una fuente a PostGIS (G3, ADR-0024): solo las columnas de `campos`."""
 
@@ -585,6 +609,9 @@ class Copia(_Ficha):
         description="{columna: [valores]}: las filas con uno de esos valores no se copian (origen "
         "arcgis); la columna va en `campos`",
     )
+    punto_gms: PuntoGms | None = Field(
+        default=None, description="punto desde grados, minutos y segundos (origen socrata)"
+    )
     geometria: bool = Field(
         default=True,
         description="copiar la geometría (origen arcgis); sin ella, solo los atributos: p. ej. los "
@@ -664,6 +691,8 @@ class Copia(_Ficha):
             raise ValueError("ADR-0024: `servicios` y `columna_servicio` van juntos")
         if self.tolerancia is not None and not (self.origen == "arcgis" and self.geometria):
             raise ValueError("ADR-0024: `tolerancia` solo aplica a una capa ArcGIS con geometría")
+        if self.punto_gms is not None and self.origen != "socrata":
+            raise ValueError("ADR-0024: `punto_gms` solo aplica al origen `socrata`")
         if self.filtro is not None and self.origen != "arcgis":
             raise ValueError("ADR-0024: `filtro` solo aplica a una capa ArcGIS")
         if not self.geometria and self.origen != "arcgis":
@@ -703,7 +732,9 @@ class Copia(_Ficha):
     @property
     def espacial(self) -> bool:
         """Lleva geometría (`_geom`): se puede cruzar con un punto o un bbox."""
-        return self.origen in ("arcgis", "geojson") and self.geometria
+        return (
+            self.origen in ("arcgis", "geojson") and self.geometria
+        ) or self.punto_gms is not None
 
     @property
     def columnas_usadas(self) -> set[str]:
@@ -714,6 +745,8 @@ class Copia(_Ficha):
         if self.columna_servicio is not None:
             extra.add(self.columna_servicio)
         extra |= set(self.excluir)
+        if self.punto_gms is not None:
+            extra |= self.punto_gms.columnas
         return {self.clave, *ventana, *self.indices, *self.indices_contiene, *self.texto, *extra}
 
 
