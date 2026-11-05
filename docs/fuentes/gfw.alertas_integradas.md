@@ -43,6 +43,25 @@ Las dos piden un periodo de hasta 366 días, desde 2019, con `hasta` exclusivo.
   aviso.
 - Un píxel mide unas 0,012 ha (536,52 ha / 43 607 píxeles).
 
+## Atribución (leída el 2026-11-05)
+
+- **Del dato (CC BY 4.0):** la cita del dataset en la Data API: «Source: "Integrated Deforestation
+  Alerts". UMD/GLAD and WUR, accessed through Global Nature Watch on [date]». Va en `atribucion` de
+  cada respuesta, con la fecha de la consulta en `procedencia`.
+- **De la API:** los términos (https://globalnaturewatch.org/terms/, 2.5) piden «If You use Our APIs
+  in Your own products, please credit Us» y remiten a los requisitos de Resource Watch
+  (https://resourcewatch.org/api-attribution-requirements): en las páginas web que usan la API, el
+  logo «powered by Resource Watch» con enlace a http://resourcewatch.org; en un gráfico incrustado
+  sin ese logo en la página, el texto «powered by Resource Watch» con el enlace. El logo no se puede
+  usar de otra forma sin permiso escrito.
+- **Qué hace Terrnova:** la `atribucion` de cada respuesta termina en «Powered by Resource Watch
+  (https://resourcewatch.org)», así que el crédito viaja con el dato a cualquier cliente. Un visor o
+  una página que pinte estas alertas debe mostrar el logo con su enlace; si no lo muestra, el texto
+  con el enlace. El sitio de Terrnova no llama a la API (solo lista la fuente), así que no lleva el
+  logo.
+- Los términos no dicen nada de servir el dato a través de otra API; la licencia del dataset (CC BY
+  4.0) sí lo permite con atribución.
+
 ## Cuidado al leerlo
 
 - Cada fila cuenta píxeles de 10 m, no eventos. Un píxel de 30 m de GLAD-L se vuelve varios de
