@@ -23,6 +23,13 @@ consulta:
 salida: PlacasPredio
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    La base catastral pública del IGAC no tiene placa domiciliaria para ese predio. Es común en lo
+    rural: el predio 251750000000000050067000000000 de Chía no tiene placa y su registro lo nombra
+    «KASTILO» (medido el 2026-11-05). La dirección o el nombre del registro catastral están en
+    igac_registro_predio.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en la capa 1: el predio urbano de Chía 251750100000001800901900000000 tiene

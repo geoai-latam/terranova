@@ -1,5 +1,5 @@
 id: igac_construcciones_en_predio
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.construccion
 pregunta: "¿Qué construcciones tiene registradas este predio en el catastro IGAC?"
@@ -30,6 +30,21 @@ salida: ConstruccionesEnPredio
 derivados:
   zona: {de: capa, valores: {"12": rural, "3": urbana}}
   numero_construcciones: {de: conteo, tipo: int}
+  # las unidades: un polígono por pedazo, y la misma unidad viene en varios (el predio
+  # 25175…050067 tiene 21 polígonos de 6 unidades, A a F, las mismas 6 del registro 2; 2026-11-05)
+  unidades: {de: distintos, campo: identificador_construccion}
+avisos:
+- cuando: encontrado
+  texto: >
+    numero_construcciones cuenta polígonos, no construcciones: una misma unidad viene en varios
+    pedazos con el mismo identificador. unidades cuenta las distintas. En el predio
+    251750000000000050067000000000 son 21 polígonos de 6 unidades (A a F), las mismas seis del
+    registro 2 (medido el 2026-11-05).
+- cuando: vacio
+  texto: >
+    La base catastral pública del IGAC no tiene construcciones dibujadas para ese predio. Puede ser
+    un lote sin construir, un predio de un municipio que no gestiona el IGAC (Bogotá, Medellín, Cali
+    y otros) o un número mal escrito: compruébelo con igac_predio_por_codigo.
 cobro: registro
 canario:
   # Predio urbano de Chía (el de -74.0587, 4.8633): dos unidades, ambas «A», convencionales, 3 pisos.
@@ -38,7 +53,8 @@ canario:
     codigo_predial: "251750100000000430026000000000"
     zona: urbana
     numero_construcciones: 2
+    unidades: 1
     tipo_construccion: CONVENCIONAL
     numero_pisos: 3
-  campos: [codigo_predial, identificador_construccion, numero_construcciones, numero_mezanines, numero_pisos, numero_semisotanos, numero_sotanos, tipo_construccion, zona]
+  campos: [codigo_predial, identificador_construccion, numero_construcciones, numero_mezanines, numero_pisos, numero_semisotanos, numero_sotanos, tipo_construccion, unidades, zona]
   latencia_max_ms: 5000

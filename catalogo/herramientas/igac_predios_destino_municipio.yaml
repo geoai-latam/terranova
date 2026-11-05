@@ -1,5 +1,5 @@
 id: igac_predios_destino_municipio
-version: 2
+version: 3
 familia: territorio
 fuente: igac.catastro.registro1
 pregunta: "¿Cuántos predios hay en este municipio por destino económico (habitacional, comercial, agropecuario…)?"
@@ -31,12 +31,22 @@ derivados:
   predios: {de: columna, campo: predios, tipo: int}
   area_terreno: {de: columna, campo: area_terreno, tipo: float}
   area_construida: {de: columna, campo: area_construida, tipo: float}
+  # Chía: 66 936 predios en 19 destinos, los mismos del registro 1 (medido el 2026-11-05)
+  predios_total: {de: suma, campo: predios, tipo: int}
+  area_terreno_total: {de: suma, campo: area_terreno, tipo: float}
+  area_construida_total: {de: suma, campo: area_construida, tipo: float}
+avisos:
+- cuando: vacio
+  texto: >
+    La base catastral pública del IGAC no tiene predios registrados en este municipio. Suele ser
+    porque su catastro lo hace otro gestor (Bogotá, Medellín, Cali y otros): Yopal (85001) no tiene
+    ninguno en el registro (medido el 2026-11-05). igac_gestor_catastral_municipio dice quién lo hace.
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en la capa 17 (corte 06_2026): Chía, destino A (habitacional), 52 961 predios.
   # Cambia con cada corte: mínimo.
   entrada: {municipio_divipola: "25175"}
   verdad: {destino_economico: A}
-  minimos: {predios: 50000}
-  campos: [area_construida, area_terreno, destino_economico, destino_economico_significado, predios]
+  minimos: {predios: 50000, predios_total: 66000}
+  campos: [area_construida, area_construida_total, area_terreno, area_terreno_total, destino_economico, destino_economico_significado, predios, predios_total]
   latencia_max_ms: 20000
