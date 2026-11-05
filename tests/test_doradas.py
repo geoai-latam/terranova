@@ -231,6 +231,18 @@ async def test_el_bpin_de_un_proceso_sale_resumido_arriba() -> None:
 
 
 @pytest.mark.anyio
+async def test_un_cdp_con_dos_bpin_cuenta_un_cdp_y_avisa_no_sumar() -> None:
+    """Revisión de valor: el CDP de Támesis sale en dos filas (una por BPIN) con el mismo saldo;
+    sumarlas lo doblaba."""
+    h = CATALOGO.herramientas["secop_cdp_contrato"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert (datos["numero_registros"], datos["cdps"]) == (2, 1)
+    assert any("no se" in a and "suman" in a for a in sobre.avisos)
+
+
+@pytest.mark.anyio
 async def test_un_compromiso_de_secop2_dice_su_estado_y_que_es_su_tipo() -> None:
     """Revisión de valor: el compromiso salía con «tipo: 0» y sin su estado (Generado, Con
     Obligación…), que es lo que dice si el contrato está respaldado."""

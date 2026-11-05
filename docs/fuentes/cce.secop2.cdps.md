@@ -60,3 +60,12 @@ Una fila por CDP y por proyecto de inversión (BPIN) que financia, con:
   - Los campos salen como los publica la fuente: no se recalcula ningún saldo.
   - Medido en producción: el canario (Támesis, 2 filas, 7,3 s en frío), el PAE de Chía (1 fila,
     1,1 s) y un contrato que no existe (vacío con aviso).
+- **2026-11-04, revisión de valor (v3):**
+  - El CDP de Támesis (CO1.PCCNTR.5588480) sale en dos filas, una por BPIN, ambas con 242 025 092
+    de saldo. Se agregaron `cdps` (cuántos certificados distintos hay) y un aviso de que esos
+    saldos no se suman.
+  - La fuente define `saldo_cdp` como el «CDP generado para el contrato electrónico». En el
+    contrato del SENA en Buga (CO1.PCCNTR.6893653), con estado «Con compromiso», el saldo del CDP
+    es 1 111 805 062 y el valor utilizado 4 676 667. Ese `id_siif` no está en otro contrato, así
+    que no se afirma que el CDP se comparta: se publica como viene.
+  - El canario tardó 9,2 s, cerca del tope de 10 s.
