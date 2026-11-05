@@ -1,0 +1,5 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: igac.infraestructura_100k
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://mapas2.igac.gov.co/server/rest/services/carto?f=json

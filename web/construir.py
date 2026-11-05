@@ -403,6 +403,7 @@ SISTEMAS = {
         "Valor del suelo",
         "Uso de las tierras",
         "Transacciones inmobiliarias",
+        "cartografía básica 1:100 000",
     ],
     "DANE": [
         "Censo Nacional de Población y Vivienda 2018",
