@@ -124,17 +124,18 @@ def arcgis_describe_service(url: str) -> CallToolResult:
                  "`bbox` [minx,miny,maxx,maxy] EPSG:4326 y `out_fields`. Hasta `max_features` (máx. "
                  f"{rest.MAX_ELEMENTOS}); si piden la capa entera, no lo bajes: lo grande viaja como archivo. "
                  "Los hechos dicen cuántos hay en el servicio y si vino todo. `geometria`: completa, "
-                 "simplificada (~55 m, para áreas grandes) o ninguna (solo atributos)."),
+                 "simplificada (~55 m, para áreas grandes) o ninguna (solo atributos). `desde` empieza en ese "
+                 "elemento del orden por OBJECTID (para seguir una capa larga)."),
     annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
     meta=geo_meta(inputs={"bbox": ["bbox", "layer_ref"]}, outputs=["feature_collection", "feature_ref"],
                   cost="medium"),
 )
 def arcgis_query_features(url: str, where: str | None = None, bbox: list[float] | None = None,
                           out_fields: list[str] | None = None, max_features: int = 2000,
-                          geometria: str = "completa") -> CallToolResult:
+                          geometria: str = "completa", desde: int = 0) -> CallToolResult:
     def _consultar() -> dict:
         fc, hechos = rest.consultar(_url_permitida(url), where=where, bbox=bbox, out_fields=out_fields,
-                                    max_features=max_features, geometria=geometria)
+                                    max_features=max_features, geometria=geometria, desde=desde)
         nombre = str(hechos.get("capa") or "ArcGIS")
         # pocos elementos pero PESADOS (rama arcgis-busqueda, V5: 1882 polígonos del RUNAP = 110 MB) no
         # caben en la respuesta MCP: el cliente se cansaba de esperar. Lo grande, por número o por peso,

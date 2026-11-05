@@ -1,0 +1,131 @@
+"""ADR-0040: las páginas siguen en la fuente más allá del tope de la consulta.
+
+Un visor que pide la capa entera de la UPME (2 192 elementos, tope de 1 000 por consulta) la tiene
+que poder recorrer completa, sin repetidos ni faltantes, y saber el total desde la primera página.
+"""
+
+from typing import Any
+
+import pytest
+
+from terranova import puerta
+from terranova.app import modelo_entrada
+from terranova.contrato import PAGINA, TAM_PAGINA
+from terranova.errores import ErrorEntrada
+
+UPME = "upme_infraestructura_energetica_en_zona"
+ZONA = {"bbox": [-79.0, -4.3, -66.8, 12.5]}
+TOTAL = 2192
+
+
+@pytest.fixture
+def anyio_backend() -> str:
+    return "asyncio"
+
+
+@pytest.fixture(autouse=True)
+def plan_evaluacion(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("TERRANOVA_PLAN", "evaluacion")
+
+
+class CopiaFalsa:
+    """`consultar_copia` sobre 2 192 elementos ordenados, con `limite` y `desde` como la copia."""
+
+    def __init__(self) -> None:
+        self.llamadas: list[dict[str, Any]] = []
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        assert herramienta == "consultar_copia"
+        self.llamadas.append(argumentos)
+        desde, limite = int(argumentos.get("desde") or 0), int(argumentos["limite"])
+        rasgos = [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [-74.0 + i / 10000, 4.6]},
+                "properties": {
+                    "categoria": "subestación" if i % 2 else "línea de transmisión",
+                    "nombre": f"Elemento {i:04d}",
+                    "capacidad_mw": 1.0,
+                },
+            }
+            for i in range(desde, min(desde + limite, TOTAL))
+        ]
+        hechos = {
+            "servido_desde": "copia",
+            "consultado_en": "2026-11-05T00:00:00+00:00",
+            "copia": {"version": "v1", "huella": "x", "filas": TOTAL},
+            "completitud": {"vistos": len(rasgos), "total": TOTAL, "truncado": len(rasgos) < TOTAL},
+        }
+        fc = {"type": "FeatureCollection", "features": rasgos}
+        return {
+            "artifacts": [{"kind": "feature_collection", "crs": "EPSG:4326", "data": fc}],
+            "facts": hechos,
+        }
+
+
+def _aviso(sobre: Any, texto: str) -> str:
+    return next(a for a in sobre.avisos if texto in a)
+
+
+async def _pagina(copia: CopiaFalsa, **extra: int) -> Any:
+    puerta.usar_conectores({"copia": copia})
+    try:
+        return await puerta.ejecutar(UPME, {**ZONA, **extra})
+    finally:
+        puerta.usar_conectores(None)
+
+
+@pytest.mark.anyio
+async def test_un_visor_recorre_la_capa_entera_de_1000_en_1000() -> None:
+    copia = CopiaFalsa()
+    nombres: list[str] = []
+    for pagina in (1, 2, 3):
+        sobre = await _pagina(copia, pagina=pagina, por_pagina=1000)
+        assert sobre.datos["total"] == TOTAL  # el total de la fuente, en todas las páginas
+        nombres += [e["nombre"] for e in sobre.datos["elementos"]]
+        assert sobre.entrada[PAGINA] == pagina
+    assert len(nombres) == TOTAL and len(set(nombres)) == TOTAL
+    assert nombres[0] == "Elemento 0000" and nombres[-1] == "Elemento 2191"
+    # la primera página sale de la consulta de siempre; las otras siguen en la copia con `desde`
+    assert [(a.get("desde", 0), a["limite"]) for a in copia.llamadas] == [
+        (0, 1000),
+        (1000, 1000),
+        (2000, 1000),
+    ]
+    assert _aviso(sobre, "Van los elementos 2001-2192 de 2192 (página 3 de 3)")
+    assert not any(a.startswith("Vinieron ") for a in sobre.avisos)
+
+
+@pytest.mark.anyio
+async def test_un_agente_sigue_de_50_en_50_mas_alla_del_tope() -> None:
+    copia = CopiaFalsa()
+    primera = await _pagina(copia)
+    assert len(primera.datos["elementos"]) == 50 and primera.datos["total"] == TOTAL
+    assert "`pagina: 2`" in _aviso(primera, "1-50 de 2192 (página 1 de 44)")
+    # la página 21 (1001-1050) ya no está en lo que trae una consulta: va a la copia
+    sobre = await _pagina(copia, pagina=21)
+    assert sobre.datos["elementos"][0]["nombre"] == "Elemento 1000"
+    assert copia.llamadas[-1]["desde"] == 1000 and copia.llamadas[-1]["limite"] == 50
+    assert sobre.geo_result is not None
+    assert len(sobre.geo_result.artifacts[0].data["features"]) == 50
+    ultima = await _pagina(copia, pagina=44)
+    assert len(ultima.datos["elementos"]) == 42
+    assert "Pida" not in _aviso(ultima, "2151-2192 de 2192 (página 44 de 44)")
+    fuera = await _pagina(copia, pagina=45)
+    assert fuera.estado == "encontrado" and fuera.datos["elementos"] == []
+    assert _aviso(fuera, "La página 45 no existe: hay 2192 elementos en 44 página(s)")
+    assert not any("no hay subestaciones" in a for a in fuera.avisos)
+
+
+@pytest.mark.anyio
+async def test_por_pagina_fuera_de_rango_es_error_de_entrada() -> None:
+    with pytest.raises(ErrorEntrada):
+        await _pagina(CopiaFalsa(), por_pagina=1001)
+    with pytest.raises(ErrorEntrada):
+        await _pagina(CopiaFalsa(), por_pagina=0)
+
+
+def test_mcp_y_rest_publican_por_pagina() -> None:
+    h = puerta.CATALOGO.herramientas[UPME]
+    assert puerta.esquema_entrada(h)["properties"][TAM_PAGINA]["maximum"] == 1000
+    assert TAM_PAGINA in modelo_entrada(h).model_fields

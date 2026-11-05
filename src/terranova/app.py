@@ -46,9 +46,12 @@ from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
     ESQUEMA_POLIGONO,
+    ESQUEMA_POR_PAGINA,
     GEOMETRIA,
+    MAX_POR_PAGINA,
     PAGINA,
     PATRON_TEXTO_LIMPIO,
+    TAM_PAGINA,
     Problema,
     Sobre,
     nueva_solicitud_id,
@@ -129,6 +132,11 @@ _CAMPO_PAGINA: Any = (
     Annotated[int, Field(ge=1), BeforeValidator(_entero_exacto)] | SkipJsonSchema[None],  # type: ignore[misc]
     Field(default=None, description=ESQUEMA_PAGINA["description"]),
 )
+_POR_PAGINA = Annotated[int, Field(ge=1, le=MAX_POR_PAGINA), BeforeValidator(_entero_exacto)]
+_CAMPO_POR_PAGINA: Any = (
+    _POR_PAGINA | SkipJsonSchema[None],  # type: ignore[misc]
+    Field(default=None, description=ESQUEMA_POR_PAGINA["description"]),
+)
 
 
 class _EntradaRest(BaseModel):
@@ -150,6 +158,7 @@ def modelo_entrada(h: Herramienta) -> type[BaseModel]:
         campos[GEOMETRIA] = _CAMPO_GEOMETRIA
     if puerta.pagina_lista(h.id):
         campos[PAGINA] = _CAMPO_PAGINA  # ausente es la primera (ADR-0033)
+        campos[TAM_PAGINA] = _CAMPO_POR_PAGINA  # ADR-0040
     nombre = "".join(p.capitalize() for p in h.id.split("_")) + "Entrada"
     return create_model(nombre, __base__=_EntradaRest, **campos)
 

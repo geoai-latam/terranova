@@ -134,8 +134,11 @@ def filtro_bbox(bbox: list[float], columna_geo: str | None, lat: str | None, lon
 def consultar(dominio: str, ident: str, *, select: str | None, where: str | None, order: str | None,
               maximo: int, geojson: bool, group: str | None = None,
               having: str | None = None, previo_select: str | None = None,
-              previo_group: str | None = None) -> tuple[list[dict], int | None]:
+              previo_group: str | None = None, desde: int = 0) -> tuple[list[dict], int | None]:
     """(filas o features, total que cumple el filtro). Paginado; SoQL lo ejecuta el portal.
+
+    `desde` (Terrnova, ADR-0040): empieza en esa fila del resultado ordenado, para seguir una lista
+    más allá del tope de una consulta. El total sigue siendo el de todo el filtro.
 
     `group`/`having` (Terrnova F5, G1): agrupar exige un `select` con agregados; sin `order`, se
     ordena por las columnas del grupo para que las páginas sean estables.
@@ -145,6 +148,9 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
     primero por estudiante y luego se cuenta y promedia sobre esos grupos (`… |> SELECT …`).
     """
     ident = _id_valido(ident)
+    desde = max(0, int(desde))
+    if desde and (previo_select or previo_group):
+        raise ErrorSocrata("`desde` no va con la etapa previa")
     if previo_select or previo_group:
         return _consultar_en_dos_etapas(dominio, ident, select=select, where=where, order=order,
                                         maximo=maximo, group=group, having=having,
@@ -157,7 +163,8 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
     extension = "geojson" if geojson else "json"
     salida: list[dict] = []
     while len(salida) < maximo:
-        params: dict[str, Any] = {"$limit": min(PAGINA, maximo - len(salida)), "$offset": len(salida)}
+        params: dict[str, Any] = {"$limit": min(PAGINA, maximo - len(salida)),
+                                  "$offset": desde + len(salida)}
         # sin orden, las páginas de SODA no son estables (filas repetidas o saltadas): `:id` por defecto.
         # Con agregados no: `:id` no está en el group by y SODA responde 400 (Terrnova, canario SECOP).
         orden = order or group or (None if filas.es_agregado(select) else ":id")

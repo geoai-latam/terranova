@@ -81,12 +81,24 @@ AVISO_ELEMENTO = (
 #: Parámetro común de las herramientas que devuelven una lista (ADR-0033).
 PAGINA = "pagina"
 POR_PAGINA: Final = 50
+#: Tamaño de página que pide quien arma un visor o una app (ADR-0040): hasta 1 000 por llamada.
+TAM_PAGINA = "por_pagina"
+MAX_POR_PAGINA: Final = 1000
 ESQUEMA_PAGINA: Final[dict[str, Any]] = {
     "type": "integer",
     "minimum": 1,
     "default": 1,
-    "description": f"Página de `datos.elementos`, de {POR_PAGINA} en {POR_PAGINA}. Los totales y "
-    "agregados de `datos` cuentan la lista completa.",
+    "description": f"Página de `datos.elementos` (de {POR_PAGINA} en {POR_PAGINA}, o de "
+    "`por_pagina`). Si la lista pasa de lo que trae una consulta, las páginas siguen en la fuente "
+    "hasta el total: recorriéndolas sale la capa entera, sin repetidos.",
+}
+ESQUEMA_POR_PAGINA: Final[dict[str, Any]] = {
+    "type": "integer",
+    "minimum": 1,
+    "maximum": MAX_POR_PAGINA,
+    "default": POR_PAGINA,
+    "description": f"Elementos por página, hasta {MAX_POR_PAGINA}: para bajar una capa entera "
+    "(un visor, una app) en pocas llamadas.",
 }
 CRS_PERMITIDOS = ("EPSG:4326", "EPSG:9377")
 
@@ -405,45 +417,69 @@ def _coordenadas_lon_lat(fc: Any) -> None:
         recorrer(geometria.get("coordinates"))
 
 
-def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
-    """Una página de `datos.elementos` (y de sus rasgos en `geo_result`) cuando la lista pasa de
-    `POR_PAGINA`. Los totales y agregados de `datos` se calcularon con la lista completa y no
-    cambian; la huella pasa a ser la de lo servido (regla 7). Una lista de 169 áreas protegidas
-    pesaba 57 000 caracteres y Claude Code no se la pasaba al modelo (ADR-0033)."""
-    elementos = sobre.datos.get("elementos")
-    if not isinstance(elementos, list) or (len(elementos) <= POR_PAGINA and pagina == 1):
-        return sobre
-    paginas = max(1, -(-len(elementos) // POR_PAGINA))
-    ini = (pagina - 1) * POR_PAGINA
-    tramo = elementos[ini : ini + POR_PAGINA]
-    datos = {**sobre.datos, "elementos": tramo}
+def _rasgos_de(sobre: Sobre, tramo: list[Any]) -> GeoResult | None:
+    """El geo_result con solo los rasgos de los elementos de `tramo`."""
     geo = sobre.geo_result
-    if geo is not None:
-        propios = {_canonico(e) for e in tramo}
-        artefactos = []
-        for art in geo.artifacts:
-            fc = art.data
-            if art.kind == "feature_collection" and isinstance(fc, dict):
-                rasgos = [
-                    r for r in fc.get("features", []) if _canonico(r.get("properties")) in propios
-                ]
-                fc = {**fc, "features": rasgos}
-            artefactos.append(art.model_copy(update={"data": fc}))
-        geo = geo.model_copy(update={"artifacts": artefactos})
+    if geo is None:
+        return None
+    propios = {_canonico(e) for e in tramo}
+    artefactos = []
+    for art in geo.artifacts:
+        fc = art.data
+        if art.kind == "feature_collection" and isinstance(fc, dict):
+            rasgos = [
+                r for r in fc.get("features", []) if _canonico(r.get("properties")) in propios
+            ]
+            fc = {**fc, "features": rasgos}
+        artefactos.append(art.model_copy(update={"data": fc}))
+    return geo.model_copy(update={"artifacts": artefactos})
+
+
+def paginar(
+    sobre: Sobre,
+    pagina: int = 1,
+    por_pagina: int = POR_PAGINA,
+    total_fuente: int | None = None,
+) -> Sobre:
+    """Una página de `datos.elementos` (y de sus rasgos en `geo_result`) cuando la lista pasa de
+    `por_pagina`. Los totales y agregados de `datos` se calcularon con la lista que vino y no
+    cambian; la huella pasa a ser la de lo servido (regla 7). Una lista de 169 áreas protegidas
+    pesaba 57 000 caracteres y Claude Code no se la pasaba al modelo (ADR-0033).
+
+    `total_fuente` (ADR-0040): si la herramienta sigue en la fuente más allá de su tope, cuántos
+    hay en la fuente; las páginas se cuentan sobre ese total y las que pasan del tope las sirve
+    `pagina_de_fuente`."""
+    elementos = sobre.datos.get("elementos")
+    if not isinstance(elementos, list):
+        return sobre
+    total = total_fuente if total_fuente is not None and total_fuente > len(elementos) else None
+    if len(elementos) <= por_pagina and pagina == 1 and total is None:
+        return sobre
+    n = total if total is not None else len(elementos)
+    paginas = max(1, -(-n // por_pagina))
+    ini = (pagina - 1) * por_pagina
+    tramo = elementos[ini : ini + por_pagina]
+    datos = {**sobre.datos, "elementos": tramo}
     siguiente = f" Pida `pagina: {pagina + 1}` para los siguientes." if pagina < paginas else ""
-    # si la consulta llegó a su tope, «la lista completa» es la que vino, no la de la fuente
-    cuentan = (
-        "cuentan los elementos que vinieron (no todos los de la fuente: ver el aviso del tope)"
-        if any(p.completitud.truncado for p in sobre.procedencia)
-        else "cuentan la lista completa"
-    )
+    if total is not None:
+        cuentan = (
+            f"cuentan los primeros {len(elementos)} (lo que trae una consulta); el total de la "
+            "fuente es el de arriba"
+        )
+    elif any(p.completitud.truncado for p in sobre.procedencia):
+        # la consulta llegó a su tope: «la lista completa» es la que vino, no la de la fuente
+        cuentan = (
+            "cuentan los elementos que vinieron (no todos los de la fuente: ver el aviso del tope)"
+        )
+    else:
+        cuentan = "cuentan la lista completa"
     aviso = (
-        f"Lista larga: van los elementos {ini + 1}-{ini + len(tramo)} de {len(elementos)} (página "
+        f"Lista larga: van los elementos {ini + 1}-{ini + len(tramo)} de {n} (página "
         f"{pagina} de {paginas}).{siguiente} Los totales de `datos` {cuentan}."
     )
     if not tramo:  # una página que no existe no es un error: vacía, y se dice cuántas hay
         aviso = (
-            f"La página {pagina} no existe: la lista tiene {len(elementos)} elementos en {paginas} "
+            f"La página {pagina} no existe: la lista tiene {n} elementos en {paginas} "
             f"página(s). Los totales de `datos` {cuentan}."
         )
     return sobre.model_copy(
@@ -451,10 +487,54 @@ def paginar(sobre: Sobre, pagina: int = 1) -> Sobre:
             "entrada": {**sobre.entrada, PAGINA: pagina},
             "datos": datos,
             "huella": huella(datos),
-            "geo_result": geo,
+            "geo_result": _rasgos_de(sobre, tramo),
             "avisos": [*sobre.avisos, aviso],
         }
     )
+
+
+def pagina_de_fuente(sobre: Sobre, pagina: int, por_pagina: int, desde: int) -> Sobre:
+    """Rotula una página que la fuente sirvió desde la fila `desde` (ADR-0040): sus elementos ya
+    son los de la página. Los conteos y sumas de `datos` van solo sobre ella; el total, el de la
+    fuente. El aviso «vinieron N de total» de una consulta con tope no aplica a una página."""
+    elementos = sobre.datos.get("elementos")
+    n = len(elementos) if isinstance(elementos, list) else 0
+    total = next(
+        (p.completitud.total for p in sobre.procedencia if p.completitud.total is not None), None
+    )
+    avisos = [a for a in sobre.avisos if not a.startswith("Vinieron ")]
+    if total is None:
+        aviso = (
+            f"Página {pagina}: van los elementos {desde + 1}-{desde + n}. La fuente no dijo "
+            "cuántos hay en total. Los conteos y sumas de `datos` cuentan solo esta página."
+        )
+        if n == por_pagina:
+            aviso += f" Pida `pagina: {pagina + 1}` para los siguientes."
+    else:
+        paginas = max(1, -(-total // por_pagina))
+        if n == 0:
+            aviso = (
+                f"La página {pagina} no existe: hay {total} elementos en {paginas} página(s) de "
+                f"{por_pagina}."
+            )
+        else:
+            siguiente = (
+                f" Pida `pagina: {pagina + 1}` para los siguientes." if pagina < paginas else ""
+            )
+            aviso = (
+                f"Van los elementos {desde + 1}-{desde + n} de {total} (página {pagina} de "
+                f"{paginas}).{siguiente} Los conteos y sumas de `datos` cuentan solo esta página; "
+                "el total es el de la fuente."
+            )
+    cambios: dict[str, Any] = {
+        "entrada": {**sobre.entrada, PAGINA: pagina, TAM_PAGINA: por_pagina},
+        "avisos": [*avisos, aviso],
+    }
+    if n == 0 and total:
+        # la capa existe y tiene `total` elementos: la página vacía no es «no encontrado»
+        datos = {**sobre.datos, "elementos": []}
+        cambios |= {"estado": "encontrado", "datos": datos, "huella": huella(datos)}
+    return sobre.model_copy(update=cambios)
 
 
 def resumir_geometria(sobre: Sobre) -> Sobre:

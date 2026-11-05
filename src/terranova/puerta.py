@@ -47,12 +47,17 @@ from terranova.contrato import (
     ESQUEMA_GEOMETRIA,
     ESQUEMA_PAGINA,
     ESQUEMA_POLIGONO,
+    ESQUEMA_POR_PAGINA,
     GEOMETRIA,
+    MAX_POR_PAGINA,
     PAGINA,
     PATRON_TEXTO_LIMPIO,
+    POR_PAGINA,
+    TAM_PAGINA,
     Sobre,
     huella,
     nueva_solicitud_id,
+    pagina_de_fuente,
     paginar,
     problema_de,
     resumen_geo,
@@ -60,7 +65,7 @@ from terranova.contrato import (
 )
 from terranova.cuota import Cuota, cuota_desde_entorno, reinicio, segundos_hasta_el_mes_siguiente
 from terranova.curado import Restricciones, restricciones_desde_entorno
-from terranova.ejecutor import Ejecutor, Plan
+from terranova.ejecutor import Ejecutor, Plan, ventana_de
 from terranova.errores import ErrorEjecucion, ErrorEntrada
 from terranova.ficha_tecnica import ficha_tecnica
 from terranova.identidad import Principal, Registro, registro_desde_entorno
@@ -214,6 +219,7 @@ def esquema_entrada(h: Herramienta) -> dict[str, Any]:
         propiedades[GEOMETRIA] = ESQUEMA_GEOMETRIA
     if pagina_lista(h.id):
         propiedades[PAGINA] = ESQUEMA_PAGINA
+        propiedades[TAM_PAGINA] = ESQUEMA_POR_PAGINA
     return {
         "type": "object",
         "properties": propiedades,
@@ -383,7 +389,7 @@ async def ejecutar(
     """
     etiqueta = ficha if ficha in CATALOGO.herramientas or ficha in COMPUESTAS else "otra"
     inicio = time.monotonic()
-    completa, pagina = False, 1
+    completa, pagina, por_pagina = False, 1, POR_PAGINA
     try:
         if GEOMETRIA in entrada and admite_geometria(ficha):
             entrada = dict(entrada)
@@ -397,8 +403,44 @@ async def ejecutar(
                 pagina = int(pagina)  # 3.0 es un entero en JSON Schema
             if not isinstance(pagina, int) or isinstance(pagina, bool) or pagina < 1:
                 raise ErrorEntrada(PAGINA, "debe ser un entero desde 1")
-        sobre = await _ejecutar(ficha, entrada, principal, completa)
-        sobre = paginar(sobre, pagina)  # la caché y la idempotencia guardan la lista entera
+        if TAM_PAGINA in entrada and pagina_lista(ficha):
+            entrada = dict(entrada)
+            por_pagina = entrada.pop(TAM_PAGINA)
+            if isinstance(por_pagina, float) and por_pagina.is_integer():
+                por_pagina = int(por_pagina)
+            if (
+                not isinstance(por_pagina, int)
+                or isinstance(por_pagina, bool)
+                or not 1 <= por_pagina <= MAX_POR_PAGINA
+            ):
+                raise ErrorEntrada(TAM_PAGINA, f"debe ser un entero de 1 a {MAX_POR_PAGINA}")
+        h = CATALOGO.herramientas.get(ficha)
+        ventana = ventana_de(h) if h is not None and pagina_lista(ficha) else None
+        if ventana is not None:
+            # una página no pasa de lo que trae una consulta: con un tope de 10, de 10 en 10
+            por_pagina = min(por_pagina, ventana)
+        desde = (pagina - 1) * por_pagina
+        if ventana is not None and desde + por_pagina > ventana:
+            # ADR-0040: la página pasa de lo que trae una consulta: sigue en la fuente
+            sobre = await _ejecutar(ficha, entrada, principal, completa, desde, por_pagina)
+            if not sobre.datos.get("elementos") and h is not None:
+                # una página que pasa del final no es «no hay nada en la zona»
+                vacios = {" ".join(a.texto.split()) for a in h.avisos if a.cuando == "vacio"}
+                otros = [a for a in sobre.avisos if " ".join(a.split()) not in vacios]
+                sobre = sobre.model_copy(update={"avisos": otros})
+            sobre = pagina_de_fuente(sobre, pagina, por_pagina, desde)
+        else:
+            sobre = await _ejecutar(ficha, entrada, principal, completa)
+            total = (
+                next(
+                    (p.completitud.total for p in sobre.procedencia if p.completitud.total),
+                    None,
+                )
+                if ventana is not None
+                else None
+            )
+            # la caché y la idempotencia guardan la lista entera
+            sobre = paginar(sobre, pagina, por_pagina, total)
     except ValidationError as exc:
         # datos de la fuente que no cumplen el contrato rt/1 (p. ej. vistos>total, CRS mal
         # rotulado): es la fuente la que respondió algo inválido, no un error nuestro ni «no hay».
@@ -484,7 +526,12 @@ async def ejecutar_idempotente(
 
 
 async def _ejecutar(
-    ficha: str, entrada: dict[str, Any], principal: Principal | None, completa: bool = False
+    ficha: str,
+    entrada: dict[str, Any],
+    principal: Principal | None,
+    completa: bool = False,
+    desde: int = 0,
+    tope: int | None = None,
 ) -> Sobre:
     if ESTADO.conectores is None:
         raise ErrorEjecucion("error_interno", "la puerta no tiene conectores")
@@ -510,6 +557,10 @@ async def _ejecutar(
                 puede=puede,
                 curado=ESTADO.curado,
                 geometria_completa=completa,
+            )
+        if desde or tope is not None:  # una página que sigue en la fuente (ADR-0040)
+            return await ejecutor.ejecutar(
+                ficha, entrada, plan=plan, geometria_completa=completa, desde=desde, tope=tope
             )
         return await ejecutor.ejecutar(ficha, entrada, plan=plan, geometria_completa=completa)
 

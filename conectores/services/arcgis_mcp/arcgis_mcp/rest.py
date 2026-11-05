@@ -326,7 +326,7 @@ def _oid(meta: dict) -> str | None:
 
 
 def _paginas_en_paralelo(http: httpx.Client, capa: str, base: dict, objetivo: int,
-                         por_pagina: int) -> tuple[list[dict], bool]:
+                         por_pagina: int, desde: int = 0) -> tuple[list[dict], bool]:
     """Los `objetivo` primeros elementos (orden estable por OBJECTID), pidiendo varias páginas a la vez.
 
     Cada tramo [inicio, inicio+n) se completa: si el servicio devuelve menos (límite de transferencia
@@ -350,7 +350,7 @@ def _paginas_en_paralelo(http: httpx.Client, capa: str, base: dict, objetivo: in
     # al menos tantos tramos como se piden a la vez: el RUNAP (1882 polígonos = 110 MB) cabía en UNA
     # página de 2000, no se paralelizaba nada y esa página enorme no llegaba a tiempo (139 s)
     por_pagina = max(PAGINA_MINIMA, min(por_pagina, -(-objetivo // PAGINAS_EN_PARALELO)))
-    tramos = [(i, min(por_pagina, objetivo - i)) for i in range(0, objetivo, por_pagina)]
+    tramos = [(desde + i, min(por_pagina, objetivo - i)) for i in range(0, objetivo, por_pagina)]
     cortado = len(tramos) > MAX_PAGINAS
     tramos = tramos[:MAX_PAGINAS]
     with ThreadPoolExecutor(max_workers=PAGINAS_EN_PARALELO, thread_name_prefix="arcgis-pagina") as pool:
@@ -360,8 +360,11 @@ def _paginas_en_paralelo(http: httpx.Client, capa: str, base: dict, objetivo: in
 
 def consultar(url: str, *, where: str | None = None, bbox: list[float] | None = None,  # noqa: C901, PLR0912
               out_fields: list[str] | None = None, max_features: int = 2000,
-              geometria: str = "completa") -> tuple[dict, dict]:
-    """(FeatureCollection EPSG:4326, hechos). Los hechos dicen cuántos hay y cuántos vinieron."""
+              geometria: str = "completa", desde: int = 0) -> tuple[dict, dict]:
+    """(FeatureCollection EPSG:4326, hechos). Los hechos dicen cuántos hay y cuántos vinieron.
+
+    `desde` (Terrnova, ADR-0040): empieza en ese elemento del orden por OBJECTID, para seguir una
+    capa más allá del tope de una consulta; `total` sigue siendo el de todo el filtro."""
     if tipo_de_url(url) == "ImageServer":
         raise ErrorArcGIS("un ImageServer es imagen: no tiene elementos que consultar (descríbelo)",
                           "parametro_invalido")
@@ -371,6 +374,7 @@ def consultar(url: str, *, where: str | None = None, bbox: list[float] | None = 
         raise ErrorArcGIS(f"geometria debe ser una de {sorted(GEOMETRIA)}", "parametro_invalido")
     capa = url_de_capa(url)
     tope = max(1, min(int(max_features), MAX_ELEMENTOS))
+    desde = max(0, int(desde))
     filtro = (where or "").strip() or "1=1"
     with cliente(capa, timeout=TIMEOUT_CONSULTA_S) as http:
         meta = _json(http, capa)
@@ -391,21 +395,26 @@ def consultar(url: str, *, where: str | None = None, bbox: list[float] | None = 
                 **GEOMETRIA[geometria], **_filtro_bbox(bbox)}
         # orden estable: sin él ArcGIS no garantiza el mismo orden entre páginas (duplicados y huecos)
         oid = _oid(meta)
-        if oid and (total is None or total > por_pagina):
+        if oid and (total is None or total > por_pagina or desde):
             base["orderByFields"] = oid
+        if desde and not oid:
+            raise ErrorArcGIS("esta capa no tiene un id para un orden estable: no se puede seguir "
+                              "desde un elemento", "parametro_invalido")
         crudos: list[dict] = []
         cortado_por_paginas = False
         if total is not None and oid:
             # se sabe cuántos hay y el orden es estable: las páginas se piden a la vez (mismo resultado,
             # exacto, sin generalizar geometrías: los vectores enteros, que es con lo que trabaja Python)
-            crudos, cortado_por_paginas = _paginas_en_paralelo(http, capa, base, min(total, tope), por_pagina)
+            objetivo = min(max(0, total - desde), tope)
+            crudos, cortado_por_paginas = (
+                _paginas_en_paralelo(http, capa, base, objetivo, por_pagina, desde) if objetivo else ([], False))
         else:  # sin total o sin orden estable: una tras otra, siguiendo exceededTransferLimit
             for _ in range(MAX_PAGINAS):
                 # Rama arcgis-busqueda (V5): los polígonos del RUNAP no cabían en 20 s por página de 1000 y la
                 # carga fallaba entera («ReadTimeout»). Si una página no llega a tiempo, la misma, a la mitad.
                 while True:
                     try:
-                        datos = _json(http, f"{capa}/query", {**base, "resultOffset": len(crudos),
+                        datos = _json(http, f"{capa}/query", {**base, "resultOffset": desde + len(crudos),
                                                               "resultRecordCount": min(por_pagina, tope - len(crudos))})
                         break
                     except TiempoAgotado:

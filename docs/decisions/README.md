@@ -67,3 +67,4 @@ Formato [MADR 4.0](https://adr.github.io/madr/) corto. Una decisión por archivo
 - [ADR-0037 · OAuth 2.1 en la propia puerta para los conectores remotos](0037-oauth-en-la-puerta.md)
 - [ADR-0038 · Exportar capas completas desde las copias, fuera del MCP](0038-exportar-capas-desde-las-copias.md) (propuesta)
 - [ADR-0039 · Las licencias del DANE: tres regímenes, no uno](0039-licencias-del-dane.md)
+- [ADR-0040 · Las páginas siguen en la fuente hasta el total](0040-paginas-hasta-la-fuente.md)

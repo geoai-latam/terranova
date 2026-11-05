@@ -238,6 +238,15 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
             expr = _columna(nombre, permitidas)
         orden.append(f"{expr} {'DESC' if desc else 'ASC'} NULLS LAST")
     limite = max(1, min(int(argumentos.get("limite") or MAX_LIMITE), MAX_LIMITE))
+    # `desde` (ADR-0040): las páginas que pasan del tope de la ficha van a la copia con OFFSET. Para
+    # que dos páginas no se crucen, el orden termina siempre en la clave (única en la copia).
+    desde = int(argumentos.get("desde") or 0)
+    if desde < 0:
+        raise ErrorCopia("`desde` va desde 0")
+    if not agregados and not group and fuente.copia.clave in permitidas:
+        clave = _columna(fuente.copia.clave, permitidas)
+        if not any(o.startswith(f"{clave} ") for o in orden):
+            orden.append(f"{clave} ASC")
 
     # `minimo` ({agregado: n}): solo los grupos en que el agregado llega a n, p. ej. 10 personas
     # (ADR-0014: un grupo chico de personas no sale)
@@ -256,10 +265,18 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
     if orden:
         sql += f" ORDER BY {', '.join(orden)}"
     sql += " LIMIT %s"
+    if desde:
+        sql += " OFFSET %s"
     sql_total = None if agregados else f"SELECT count(*) FROM {vista}{donde}"
     return Plan(
         sql,
-        (*parametros_seleccion, *parametros, *parametros_minimo, limite),
+        (
+            *parametros_seleccion,
+            *parametros,
+            *parametros_minimo,
+            limite,
+            *([desde] if desde else []),
+        ),
         sql_total,
         tuple(parametros),
         limite,
