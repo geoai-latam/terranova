@@ -1,5 +1,5 @@
 id: ant_resguardos_en_punto
-version: 3
+version: 4
 familia: ambiente
 fuente: ant.resguardos_indigenas
 pregunta: "¿En qué resguardo indígena formalizado cae este punto?"
@@ -11,18 +11,20 @@ descripcion: >
   otros territorios étnicos. Un «no encontrado» no descarta un territorio indígena. Un resguardo
   grande da un solo municipio aunque cruce varios, y en 46 de los 989 la ANT escribe el nombre del
   municipio en vez del código DIVIPOLA (entonces no sale nombre al lado).
+  Para un lote, ant_resguardos_en_poligono. Con `geometria` sale el polígono completo. Sale de la copia de Terrnova: la
+  procedencia dice de cuándo es.
   (Fuente: ANT; licencia: CC BY-SA 4.0.)
 entrada: {lon: float, lat: float}
 consulta:
   operacion: en_punto
-  tool: arcgis_query_features
-  capas: [0]
+  tool: consultar_copia
   argumentos:
-    geometria: simplificada  # áreas grandes: el polígono completo tardaba > 90 s
-    url: "{url_capa}"
-    bbox: ["{lon}", "{lat}", "{lon}", "{lat}"]
-    out_fields: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
-    max_features: 5
+    tabla: ant_resguardos_indigenas
+    punto: ["{lon}", "{lat}"]
+    select: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
+    geometria: simplificada
+    order: [NOMBRE]
+    limite: 5
   campos: [NOMBRE, PUEBLO, DEPARTAMENTO, MUNICIPIO, ULTIMO_TIPO_ACTO_ADMIN, ULTIMO_NUMERO_ACTO_ADMIN, ULTIMA_FECHA_ACTO_ADMIN, AREA_TOTAL_ACTOS_ADMIN]
 salida: ResguardoEnPunto
 avisos:
@@ -37,5 +39,5 @@ canario:
   # Gran resguardo del Vaupés, Mitú; medido el 2026-10-21 en la capa 0 (punto), 1,0 s.
   entrada: {lon: -70.5, lat: 0.8}
   verdad: {nombre: "Resguardo Indígena Vaupes", municipio_divipola: "97001", numero_acto: "378"}
-  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, pueblo, tipo_acto]
+  campos: [area_ha_actos, departamento_divipola, departamento_divipola_significado, fecha_acto, id_poligono, municipio_divipola, municipio_divipola_significado, nombre, numero_acto, pueblo, tipo_acto]
   latencia_max_ms: 5000
