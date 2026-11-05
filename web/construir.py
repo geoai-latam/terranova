@@ -446,6 +446,7 @@ SISTEMAS = {
     "Supertransporte": ["Tráfico portuario", "Contenedores"],
     "ANM": ["RUCOM"],
     "CREG": ["Alejandría"],
+    "CRC": ["Postdata", "Estaciones base"],
     "DNP": ["Sistema General de Regalías"],
     "ESA WorldCover": ["WorldCover"],
     "ICFES": ["Saber 11"],
@@ -840,6 +841,7 @@ def licencia_corta(spdx: str | None) -> str:
         "LicenseRef-banrep-aviso-legal": "aviso legal del Banco",
         "LicenseRef-dane-terminos": "términos del DANE",
         "LicenseRef-datosgovco-terminos": "términos de datos.gov.co",
+        "LicenseRef-postdata-terminos": "términos de Postdata",
     }.get(spdx, "licencia propia de la entidad")
 
 

@@ -1,0 +1,71 @@
+id: crc.estaciones_base
+titulo: "Sitios de estaciones base de telefonía móvil por municipio, operador y tecnología (CRC, Postdata)"
+entidad: Comisión de Regulación de Comunicaciones (CRC)
+competencia: regulador de las comunicaciones; publica en Postdata la información que reportan los proveedores (Ley 1341 de 2009, art. 22; Resolución MinTIC 175 de 2021, formato 3)
+acto: null
+# El recurso «Infraestructura de redes de acceso móvil» de Postdata dice «Licencia no especificada»,
+# y el federado de datos.gov.co (pyy9-82ts) no trae licencia. Rigen los términos de uso de Postdata
+# (sección «Licencia de uso»): uso, redistribución, modificación y adaptación libres, con la cita
+# «Datos recuperados de Postdata» y la fecha de la última actualización del conjunto. Sin límite de
+# uso comercial. Leído el 2026-11-05.
+licencia:
+  spdx: LicenseRef-postdata-terminos
+  url: https://www.postdata.gov.co/terminos-y-condiciones-de-uso-de-postdata
+  verificada: 2026-11-05
+  evidencia: https://www.postdata.gov.co/terminos-y-condiciones-de-uso-de-postdata
+  cita: "los Usuarios podrán usarlos, aprovecharlos o transformarlos (es decir, las actividades de redistribución, compilación, extracción, copia, difusión, modificación y adaptación) de forma libre y sin restricciones […] deberá ir acompañado de la respectiva cita, identificando como fuente de la información a la plataforma Postdata de la CRC, así: Datos recuperados de Postdata y mencionar la fecha de la última actualización del conjunto de datos"
+uso_comercial: si
+clase_acceso: bulk
+atribucion: "Datos recuperados de Postdata (CRC), Infraestructura de redes de acceso móvil; última actualización del archivo: 2026-09-16"
+protocolo: archivo
+# Copia (ADR-0024, origen csv): un CSV de 11,5 MB que la CRC reemplaza cada trimestre, sin API.
+conector: copia
+url: https://www.postdata.gov.co/dataset/infraestructura-y-cobertura-de-redes-de-acceso-movil
+modo: copia
+copia:
+  origen: csv
+  descargas: [https://www.postdata.gov.co/sites/default/files/F3_RES175_2.csv]
+  separador: ";"
+  ceros: {CODIGO_DANE_MUNICIPIO: 5}
+  tabla: crc_estaciones_base
+  clave: _fila
+  indices: [CODIGO_DANE_MUNICIPIO]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P3M}
+cobertura: {pais: CO, columna_tiempo: ANNO}
+datos_personales: ninguno
+estado: publicada
+campos:
+  ANNO: {nombre: anio, tipo: int, desc: "año del reporte"}
+  TRIMESTRE: {nombre: trimestre, tipo: int, desc: "trimestre del reporte (1 a 4)"}
+  ID_EMPRESA: {nombre: operador_nit, tipo: str, desc: "NIT del operador móvil, sin dígito de verificación"}
+  DESC_EMPRESA: {nombre: operador, tipo: str, desc: "operador móvil, con la razón social que publica la CRC (COMUNICACION CELULAR S A COMCEL S A es Claro; COLOMBIA TELECOMUNICACIONES, Movistar; COLOMBIA MOVIL, Tigo; PARTNERS TELECOM COLOMBIA, WOM)"}
+  CODIGO_DANE_MUNICIPIO: {nombre: municipio_divipola, tipo: str, ancho: 5, desc: "municipio, DIVIPOLA de 5 dígitos (la CRC lo publica sin el cero inicial; la copia lo rellena)"}
+  DESC_MUNICIPIO: {nombre: municipio, tipo: str, desc: "municipio"}
+  SITIO_PROPIO_COUBICACION:
+    nombre: tipo_sitio
+    tipo: str
+    desc: "si los sitios son del operador o están en coubicación (infraestructura de otro propietario)"
+    codigos: {"1": "propio", "2": "coubicación"}
+    codigos_norma: "Resolución MinTIC 175 de 2021, formato 3, variable 10 «Sitio Propio o Coubicación»: «1=Propio, 2= Coubicación» (https://normograma.mintic.gov.co/mintic/compilacion/docs/resolucion_mintic_0175_2021.htm)"
+  TECNOLOGIA_ESTACION_BASE_2G: {nombre: tiene_2g, tipo: str, desc: "1 si los sitios de la fila tienen estación base 2G; 0 si no"}
+  TECNOLOGIA_ESTACION_BASE_3G: {nombre: tiene_3g, tipo: str, desc: "1 si los sitios de la fila tienen estación base 3G; 0 si no"}
+  TECNOLOGIA_ESTACION_BASE_4G: {nombre: tiene_4g, tipo: str, desc: "1 si los sitios de la fila tienen estación base 4G; 0 si no"}
+  TECNOLOGIA_ESTACION_BASE_5G: {nombre: tiene_5g, tipo: str, desc: "1 si los sitios de la fila tienen estación base 5G; 0 si no"}
+  SITIOS: {nombre: sitios, tipo: int, desc: "número de sitios (ubicaciones físicas con estaciones base) del operador con esa combinación de tecnologías"}
+  _fila: {nombre: fila, tipo: int, desc: "orden de la fila en el archivo (la copia la numera)"}
+comportamiento: {orden_coordenadas: lon_lat}
+dcat: {publisher: Comisión de Regulación de Comunicaciones (CRC), theme: tic, accrualPeriodicity: quarterly}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: 2026-11-05
+  fila: "los sitios de un operador en un municipio y un trimestre, con una combinación de tecnologías (2G, 3G, 4G, 5G) y un tipo de sitio (propio o coubicación); 144 414 filas"
+  clave: {columna: "ANNO + TRIMESTRE + ID_EMPRESA + CODIGO_DANE_MUNICIPIO + SITIO_PROPIO_COUBICACION + las cuatro tecnologías", unica: true}
+  operaciones: {filtrar: 1.0}
+  hallazgos:
+  - "va del segundo trimestre de 2021 al segundo de 2026 (archivo del 2026-09-16); el 2026-2T suma 35 675 sitios en 1 100 municipios"
+  - "cada sitio sale una sola vez por operador, en la fila de su combinación de tecnologías: la suma de SITIOS no repite sitios de un operador; los sitios con 4G son la suma de las filas con 4G = 1"
+  - "no trae coordenadas: el formato 3 de la Resolución 175 pide latitud y longitud de cada sitio, pero la CRC solo publica el conteo por municipio"
+  - "la Resolución 175 codifica cada tecnología como 1 = sí, 2 = no; el CSV publica 1 y 0"
+  - "203 filas no tienen ninguna de las cuatro tecnologías (otra tecnología, sin medir cuál)"
+  - "el DIVIPOLA viene sin el cero inicial (5001 para Medellín)"
+  decision: "por copia trimestral del CSV de Postdata; se consulta por municipio, año y trimestre"
