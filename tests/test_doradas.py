@@ -445,3 +445,24 @@ async def test_captaciones_del_ideam_con_el_punto_de_grados_minutos_y_segundos()
     assert municipio["total"] == 2 and municipio["por_autoridad"] == {"CORMACARENA": 2}
     arenas = await correr("ideam_captaciones_buscar")
     assert [e["fuente_hidrica"] for e in arenas["elementos"]] == ["ARENAS BLANCAS"]  # type: ignore[attr-defined]
+
+
+@pytest.mark.anyio
+async def test_emergencias_de_bogota_por_tipo() -> None:
+    """Bomberos, policía, CAI y red pública de salud de Bogotá, medidos en la copia el 2026-11-05:
+    16 sedes en el centro (10 CAI, 3 estaciones de policía, 2 de salud y la de bomberos Central).
+    El nombre de la policía sale de EPODESCRIP, sin la «í» rota de EPONOMBRE."""
+    h = CATALOGO.herramientas["bogota_emergencias_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 16
+    assert datos["por_tipo"] == {
+        "CAI": 10,
+        "estación de policía": 3,
+        "sede de la red pública de salud": 2,
+        "estación de bomberos": 1,
+    }
+    nombres = {e["nombre"] for e in datos["elementos"]}
+    assert "Estación de Policía Teusaquillo" in nombres
+    assert "Estación de Bomberos Central - Carlos Julio Rico Cuellar" in nombres
