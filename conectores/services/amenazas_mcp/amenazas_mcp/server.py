@@ -3,7 +3,8 @@
 «¿Qué sismos fuertes hubo cerca de Cali este año?», «¿hay incendios activos en el Vichada?», «¿cómo viene el
 caudal del Magdalena en Honda?», «¿cuánto llovió en Yopal en 2023?». Cuatro herramientas:
 
-- `amenazas_sismos` (USGS), `amenazas_incendios` (NASA FIRMS, últimos 7 días),
+- `amenazas_sismos` (USGS), `amenazas_incendios` (NASA FIRMS, últimos 7 días), `amenazas_incendios_periodo`
+  (NASA FIRMS por fecha desde 2012, con MAP_KEY),
 - `amenazas_caudal` (GloFAS: la celda del punto Y sus vecinas, porque el río puede pasar por la de al lado),
 - `clima_serie` (ERA5 por Open-Meteo —también pronóstico— o NASA POWER, con la elevación que usa cada modelo).
 
@@ -40,6 +41,7 @@ from amenazas_mcp import clima, fuentes, resumen
 
 logger = logging.getLogger("amenazas_mcp")
 SCOPES = {"amenazas_sismos": "amenazas:read", "amenazas_incendios": "amenazas:read",
+          "amenazas_incendios_periodo": "amenazas:read",
           "amenazas_caudal": "amenazas:read", "clima_serie": "amenazas:read"}
 runner = ToolRunner(timeout_s=170, service="amenazas-mcp",
                     expected_errors=(ErrorRed, UrlNoPermitida, resumen.ErrorAmenazas, areas.AreaInvalida,
