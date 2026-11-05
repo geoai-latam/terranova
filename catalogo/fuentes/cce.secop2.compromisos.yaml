@@ -26,12 +26,19 @@ estado: publicada
 campos:
   id_contrato: {nombre: id_contrato, tipo: str, desc: "identificador del contrato"}
   identificador_nico: {nombre: id_compromiso, tipo: str, desc: "identificador del compromiso"}
-  tipo_de_compromiso: {nombre: tipo, tipo: str, desc: "tipo de compromiso"}
-  c_digo_item: {nombre: codigo_item, tipo: str, desc: "código del ítem presupuestal"}
-  valor_item: {nombre: valor_item, tipo: float, desc: "valor del ítem, en pesos"}
+  tipo_de_compromiso:
+    nombre: tipo
+    tipo: str
+    desc: "tipo de compromiso: 0 o 1, con su significado en `tipo_significado`"
+    codigos: {"0": "ingresos", "1": "vigencias futuras"}
+    codigos_norma: "diccionario del conjunto skc9-met7 en datos.gov.co: «ID del tipo de compromiso, donde el valor 0 es de ingresos, el valor 1 corresponde a vigencias futuras» (https://www.datos.gov.co/api/views/skc9-met7.json)"
+  c_digo_item: {nombre: codigo_item, tipo: str, desc: "código del ítem en la solicitud al SIIF (interno de la integración; la fuente no publica su tabla)"}
+  valor_item: {nombre: valor_item, tipo: float, desc: "saldo total comprometido, en pesos (la fuente: suma de los ítems del proceso)"}
   fecha_registro_item: {nombre: fecha_registro, tipo: date, desc: "fecha de registro del ítem"}
-  estado_integraci_n: {nombre: estado_integracion, tipo: str, desc: "estado de la integración con SIIF"}
-  balance_compromiso: {nombre: balance, tipo: float, desc: "balance del compromiso, en pesos"}
+  estado_integraci_n: {nombre: estado_integracion, tipo: str, desc: "resultado de la última consulta al SIIF: Exito, Fallido, Error, Generated o No Definido"}
+  estado_integraci_n_item: {nombre: estado_compromiso, tipo: str, desc: "estado del compromiso: No Iniciado, Generado, Con Obligación, Cancelado o No definido"}
+  balance_compromiso: {nombre: balance, tipo: float, desc: "saldo comprometido en el CDP, en pesos (así lo nombra la fuente: «Saldo de compromisos CDP»)"}
+  balance_vigencia_futura: {nombre: balance_vigencias_futuras, tipo: float, desc: "saldo, a la fecha, de las vigencias futuras, en pesos"}
   valor_a_liberar: {nombre: valor_a_liberar, tipo: float, desc: "valor a liberar, en pesos"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
