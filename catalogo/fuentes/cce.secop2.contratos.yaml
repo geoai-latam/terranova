@@ -44,6 +44,23 @@ campos:
   estado_contrato: {nombre: estado, tipo: str, desc: "estado del contrato en SECOP II"}
   valor_del_contrato: {nombre: valor, tipo: float, desc: "valor del contrato, en pesos colombianos"}
   valor_pagado: {nombre: valor_pagado, tipo: float, desc: "valor pagado que reporta la entidad, en pesos"}
+  valor_facturado: {nombre: valor_facturado, tipo: float, desc: "valor facturado por el contratista y registrado en SECOP II, en pesos"}
+  valor_pendiente_de_pago: {nombre: valor_pendiente_pago, tipo: float, desc: "valor que la entidad registra como pendiente de pago, en pesos"}
+  valor_pendiente_de_ejecucion: {nombre: valor_pendiente_ejecucion, tipo: float, desc: "valor que la entidad registra como pendiente de ejecución, en pesos"}
+  valor_de_pago_adelantado: {nombre: valor_pago_adelantado, tipo: float, desc: "pago adelantado o anticipo pactado, en pesos"}
+  dias_adicionados: {nombre: dias_adicionados, tipo: int, desc: "días que se le sumaron al plazo"}
+  duraci_n_del_contrato: {nombre: duracion, tipo: str, desc: "duración pactada, como la escribe la fuente (p. ej. «15 Dia(s)»)"}
+  destino_gasto: {nombre: destino_gasto, tipo: str, desc: "Funcionamiento o Inversión"}
+  origen_de_los_recursos: {nombre: origen_recursos, tipo: str, desc: "origen de los recursos según SECOP II (p. ej. Distribuido, Recursos propios)"}
+  sector: {nombre: sector, tipo: str, desc: "sector administrativo de la entidad"}
+  orden: {nombre: orden, tipo: str, desc: "Nacional o Territorial"}
+  codigo_de_categoria_principal: {nombre: codigo_unspsc, tipo: str, desc: "categoría principal UNSPSC del contrato (V1.<código>)"}
+  presupuesto_general_de_la_nacion_pgn: {nombre: recursos_pgn, tipo: float, desc: "parte del valor pagada con el Presupuesto General de la Nación, en pesos"}
+  sistema_general_de_participaciones: {nombre: recursos_sgp, tipo: float, desc: "parte del valor pagada con el Sistema General de Participaciones, en pesos"}
+  sistema_general_de_regal_as: {nombre: recursos_sgr, tipo: float, desc: "parte del valor pagada con el Sistema General de Regalías, en pesos"}
+  recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_: {nombre: recursos_propios_territoriales, tipo: float, desc: "parte del valor pagada con recursos propios de alcaldías, gobernaciones y resguardos indígenas, en pesos"}
+  recursos_de_credito: {nombre: recursos_credito, tipo: float, desc: "parte del valor pagada con crédito, en pesos"}
+  recursos_propios: {nombre: recursos_propios, tipo: float, desc: "parte del valor pagada con otros recursos propios de la entidad, en pesos"}
   fecha_de_firma: {nombre: fecha_firma, tipo: date, desc: "fecha de firma"}
   fecha_de_inicio_del_contrato: {nombre: fecha_inicio, tipo: date, desc: "fecha de inicio"}
   fecha_de_fin_del_contrato: {nombre: fecha_fin, tipo: date, desc: "fecha de terminación"}
