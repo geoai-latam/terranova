@@ -1,8 +1,56 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T07:26:51+00:00",
+ "grabado": "2026-11-05T13:26:52+00:00",
  "herramienta": "cnmh_acciones_belicas_municipio",
  "llamadas": [
+  {
+   "argumentos": {
+    "id": "chb6-bfmq",
+    "portal": "datos.gov.co",
+    "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+    "where": "a_o >= 2020"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_anio",
+       "hasta_mes"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_anio": "2026",
+        "hasta_mes": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "chb6-bfmq",
+     "consulta": {
+      "conjunto": "chb6-bfmq",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+      "where": "(a_o >= 2020)"
+     },
+     "filas": 1,
+     "filas_que_resume": 1699,
+     "filtro_soql": "(a_o >= 2020)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "group": "a_o",

@@ -25,7 +25,9 @@ tiene 656 635 filas en el país (2026-10-23).
   `substring(fecha_hecho, 4, 2)`.
 - `codigo_dane`: el DIVIPOLA con tres ceros al final (25175000).
 - `cantidad`: texto en algunos reportes, así que se suma con `cantidad::number`.
-- `genero`: algunos registros no lo traen, y la fila sale sin la clave.
+- `genero`: algunos registros no lo traen (en lesiones, 2 117 filas sin género y 120 «NO REPORTA»
+  en todo el país, 2026-11-05). Terrnova lo da como «sin dato» (`coalesce`), distinto del «NO
+  REPORTA» que escribe la fuente.
 
 ## Cobertura
 
@@ -63,6 +65,17 @@ tiene 656 635 filas en el país (2026-10-23).
 6. **Lentas:** la consulta del municipio tarda 6-7 s en la fuente (Chía 2024, hurto de vehículos,
    2026-11-02; Medellín 2025, abigeato, 14,7 s el 2026-11-03). La del corte del país tarda
    0,6-1,1 s.
+7. **La serie tiene saltos que no son del delito** (todo el país, casos sumados, 2026-11-05):
+   - hurto a comercios: 23 060 en 2016 y 60 311 en 2017;
+   - hurto a residencias: solo desde 2024 (29 661 ese año); antes el conjunto trae solo comercios;
+   - lesiones: de 2010 a 2016 trae 3 a 5 conductas y desde 2017, 11 o 12 (art. 112 a 116, 119,
+     126…);
+   - delitos sexuales: 12 789 en 2014 y 21 929 en 2015;
+   - violencia intrafamiliar: 48 442 en 2014, 75 702 en 2015 y 97 143 en 2016.
+   La ficha no explica esos saltos. Compare años cercanos, no 2010 con 2025.
+8. **Un vacío no era claro.** Un municipio sin denuncias (Providencia 2024, abigeato) y un año antes
+   de 2010 salían «no encontrado» sin explicación. Los siete conjuntos empiezan en 2010 (primer año
+   medido en cada uno, 2026-11-05).
 
 ## Herramientas que la usan
 
@@ -70,7 +83,7 @@ tiene 656 635 filas en el país (2026-10-23).
 |---|---|---|
 | `policia_hurto_vehiculos_municipio` | alto | dice hasta qué mes publica la fuente |
 | `policia_hurto_comercio_residencias_municipio` | alto | igual |
-| `policia_homicidios_transito_municipio` | alto | igual; las cifras de Medellín (505 en 2025) están por contrastar |
+| `policia_homicidios_transito_municipio` | alto | igual; las cifras de Medellín (505 en 2025) están por contrastar con Medicina Legal |
 | `policia_lesiones_municipio` | alto | igual |
 | `policia_delitos_sexuales_municipio` | alto | igual |
 | `policia_violencia_intrafamiliar_municipio` | alto | igual |
@@ -91,6 +104,12 @@ tiene 656 635 filas en el país (2026-10-23).
   - La descripción dice que `total_casos` suma los tres y no es la cifra de ninguno.
   - El derivado `suma_por` con `tipo: int` da enteros (21, no 21.0).
   - No se partió en tres herramientas: la fuente los publica juntos, y una consulta da los tres.
+- **2026-11-05, revisión de valor:**
+  - Las siete dan `genero: "sin dato"` cuando la fuente no lo trae: antes la fila salía sin la
+    clave («casos: 4» sin decir de quién).
+  - Las fuentes declaran `desde_anio: 2010`: un año anterior sale «fuera de cobertura» («Esta
+    fuente cubre desde 2010»), y uno futuro, «todavía no ha llegado».
+  - Cada herramienta dice por qué un vacío: la Policía no registra denuncias de ese delito en ese
+    municipio y año, y cero denuncias no prueba que no hubo delitos.
 - **Pendiente:**
-  - `genero: "sin dato"` cuando la fuente no lo trae.
   - Homicidios dolosos: MinDefensa `m8fd-ahd9` (error 12).

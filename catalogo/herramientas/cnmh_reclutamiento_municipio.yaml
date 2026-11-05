@@ -1,5 +1,5 @@
 id: cnmh_reclutamiento_municipio
-version: 3
+version: 4
 familia: justicia
 fuente: cnmh.sievcac_reclutamiento
 pregunta: "¿Cuántos niños, niñas y adolescentes fueron reclutados por grupos armados en este municipio?"
@@ -7,6 +7,7 @@ descripcion: >
   Víctimas de reclutamiento y utilización de menores del conflicto armado en un municipio (DIVIPOLA), según el Observatorio de Memoria y
   Conflicto del CNMH: personas y casos por año.
   El año 0 es «sin información». Las modalidades son excluyentes: un hecho cuenta en una sola herramienta cnmh_*.
+  Con los totales de víctimas y de casos, y hasta qué año y mes llega el corte vigente de la fuente.
   Solo conteos, nunca el registro de una persona.
   (Fuente: Centro Nacional de Memoria Histórica; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola}
@@ -23,11 +24,28 @@ consulta:
     order: "a_o"
     max_filas: 1000
   campos: [c_digo_dane_de_municipio, a_o, id_caso, id_persona]
+  # Hasta dónde llega el corte vigente en todo el país: un municipio sin hechos en el último
+  # año no lo dice. Medido el 2026-11-05: masacres llega a enero de 2026.
+  complemento:
+    fuente: cnmh.sievcac_reclutamiento
+    tool: datos_consultar
+    argumentos:
+      id: fc55-h9nc
+      portal: datos.gov.co
+      # el mes del último año en una sola fila, sin agrupar: max(año·100 + mes) − año·100
+      select: "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes"
+      # sin filtro recorre toda la tabla (4,4 s en ataques a poblados); con él, 0,4 s
+      where: "a_o >= 2020"
+    hechos:
+      hasta_anio: {nombre: fuente_hasta_anio, tipo: int, desc: "último año con hechos en la fuente, en todo el país"}
+      hasta_mes: {nombre: fuente_hasta_mes, tipo: int, desc: "último mes con hechos de ese año, en todo el país"}
+    que_dice: "hasta qué año y mes llega el corte vigente del CNMH"
 salida: CnmhReclutamientoMunicipio
 derivados:
   victimas: {de: columna, campo: victimas, tipo: int}
   casos: {de: columna, campo: casos, tipo: int}
   total_victimas: {de: suma, campo: victimas, tipo: int}
+  total_casos: {de: suma, campo: casos, tipo: int}
   victimas_sin_anio: {de: suma, campo: victimas, tipo: int, solo_si: {campo: anio, valores: ["0"]}}
 avisos:
 - cuando: encontrado
@@ -36,6 +54,10 @@ avisos:
 - cuando: encontrado
   texto: >
     La mayoría de las víctimas de reclutamiento no tiene año (año 0, «sin información»): en todo el país son 11 484 sin año frente a 6 903 con año (medido el 2026-11-02). La serie por año se queda corta; victimas_sin_anio dice cuántas faltan en este municipio.
+- cuando: encontrado
+  si: {campo: fuente_hasta_mes, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    En todo el país, el hecho más reciente de esta fuente es del mes fuente_hasta_mes de fuente_hasta_anio: ese año puede estar incompleto, y lo posterior no está en el corte vigente. No compare ese año con uno entero. El CNMH revisa casos con cada corte: las cifras pueden cambiar.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en fc55-h9nc: GRANADA (05313), 43 víctimas en todos los años.
@@ -43,5 +65,5 @@ canario:
   entrada: {municipio_divipola: "05313"}
   verdad: {anio: 0, victimas: 29, casos: 29}
   minimos: {total_victimas: 43, victimas_sin_anio: 29}
-  campos: [anio, casos, total_victimas, victimas, victimas_sin_anio]
+  campos: [anio, casos, fuente_hasta_anio, fuente_hasta_mes, total_casos, total_victimas, victimas, victimas_sin_anio]
   latencia_max_ms: 10000

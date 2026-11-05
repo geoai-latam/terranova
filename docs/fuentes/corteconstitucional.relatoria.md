@@ -73,6 +73,11 @@ enlace.
   - **Prueba en producción.** El conector web de la rama corrió en un contenedor aparte,
     `web_mcp_prueba`, y la puerta lo usó solo para estas pruebas. El conector desplegado no se
     tocó: el cambio sale con el despliegue.
+- **2026-11-05, entrada (revisión de valor):** las tres herramientas aceptan también la forma del
+  índice (T-760/08), la minúscula, el número sin ceros (T-25-04) y «T-025 de 2004». Antes,
+  `c-155a-93` daba 400 en la API aunque esta ficha decía que la minúscula valía: la mayúscula se
+  ponía en la puerta, pero el esquema la rechazaba antes. Ver
+  [corteconstitucional.sentencias.md](corteconstitucional.sentencias.md).
 - **2026-11-05, búsqueda sin tildes (revisión de valor):**
   - **El conector web** busca sin distinguir mayúsculas ni tildes, y un espacio de lo buscado vale
     por cualquier espacio o salto de línea del texto (`paginas.patron_de_busqueda`). La eñe no se

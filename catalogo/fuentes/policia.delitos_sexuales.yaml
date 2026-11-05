@@ -17,7 +17,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/fpe5-yrmw.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P1M}
-cobertura: {pais: CO}
+cobertura: {pais: CO, desde_anio: 2010}
 datos_personales: ninguno
 estado: publicada
 campos:
@@ -25,7 +25,7 @@ campos:
   municipio: {nombre: municipio, tipo: str, desc: "municipio (como lo escribe la Policía)"}
   fecha_hecho: {nombre: fecha, tipo: str, desc: "fecha del hecho, dd/mm/aaaa (texto de la fuente)"}
   delito: {nombre: tipo, tipo: str, desc: "tipo de delito o conducta (artículo del Código Penal)"}
-  genero: {nombre: genero, tipo: str, desc: "género de la víctima"}
+  genero: {nombre: genero, tipo: str, desc: "género de la víctima («sin dato» si la fuente no lo trae)"}
   grupo_etario: {nombre: grupo_etario, tipo: str, desc: "grupo de edad de la víctima"}
   armas_medios: {nombre: arma_medio, tipo: str, desc: "arma o medio empleado"}
   cantidad: {nombre: cantidad, tipo: str, desc: "casos de la fila (texto en algunos reportes)"}

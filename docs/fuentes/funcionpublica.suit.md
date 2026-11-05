@@ -45,13 +45,20 @@ Medido el 2026-11-02:
    «Actualización en la base…» y «Actualización información en la base…». Sin juntarlas son 115
    filas, y quien suma cuenta el triple. Juntadas son 105 trámites.
 5. **El orden de texto de las solicitudes.** Ordenado como texto, 99 queda antes de 965.
+6. **El total no sumaba** (medido el 2026-11-05). La columna `tr_mites_inscritos`, sin más, es
+   «TRÁMITES INSCRITOS: PARCIALMENTE EN LÍNEA» en la ficha de datos.gov.co, y la herramienta no la
+   traía. La Universidad de Antioquia, en diciembre de 2020, salía con 3 presenciales y 6 en línea
+   de 21: faltaban los 12 parciales.
+7. **No todas las entidades están en la oferta.** La Universidad de Antioquia (890980040) tiene 21
+   trámites en el histórico y ninguna fila en `k7xp-z2d2`, en ningún año. Su «no encontrado» salía
+   solo con el aviso de datos no recientes (medido el 2026-11-05).
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `suit_tramites_entidad` | bajo → medio | v2: lo más reciente primero; la última cifra del NIT, sumando sus entidades; aviso de que la serie paró en 2020 |
-| `suit_oferta_tramites_entidad` | medio → alto | v2: un trámite por fila, del más pedido al menos, con el total del año |
+| `suit_tramites_entidad` | bajo → medio | v2: lo más reciente primero; la última cifra del NIT, sumando sus entidades; aviso de que la serie paró en 2020; con los parcialmente en línea |
+| `suit_oferta_tramites_entidad` | medio → alto | v2: un trámite por fila, del más pedido al menos, con el total del año; aviso de vacío |
 
 ## Decisiones
 
@@ -71,3 +78,9 @@ Medido el 2026-11-02:
     - Chía 2021: 107 737 solicitudes; la más pedida es el predial, con 32 858.
     - NIT de Bogotá 2023: 164 trámites y 972 038 solicitudes; el más pedido es el traspaso de
       vehículo, con 148 404.
+- **2026-11-05, revisión de valor:**
+  - `suit_tramites_entidad` trae `tramites_parcialmente_en_linea` (`tr_mites_inscritos`): ahora
+    presenciales, parciales y en línea suman el total (3 + 12 + 6 = 21 en la Universidad de
+    Antioquia, diciembre de 2020).
+  - `suit_oferta_tramites_entidad` lleva aviso de vacío: revise el NIT, y no todas las entidades
+    reportan en la oferta.

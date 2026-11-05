@@ -227,7 +227,7 @@ def test_los_patrones_de_entrada_rechazan_lo_que_inyectaria() -> None:
     # la Corte numeró algunas con letra en 1993-1995 (C-155A/93: 200 en la relatoría)
     assert re.fullmatch(PATRONES_ENTRADA["sentencia_cc"], "C-155A/93")
     assert re.fullmatch(PATRONES_ENTRADA["sentencia_relatoria"], "C-155A-93")
-    for malo in ("C-155AB/93", "C-155a/93", "C-155A/93/x"):
+    for malo in ("C-155AB/93", "C-155A/93/x", "C-155A/93' --", "T-760/\n08"):
         assert re.fullmatch(PATRONES_ENTRADA["sentencia_cc"], malo) is None, malo
 
 

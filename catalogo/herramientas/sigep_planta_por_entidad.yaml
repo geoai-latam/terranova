@@ -30,6 +30,13 @@ derivados:
   entidad: {de: columna, campo: entidad}
   nombre_entidad: {de: primero, campo: entidad}
   total_servidores: {de: suma, campo: servidores, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún servidor activo del SIGEP tiene ese código de entidad. El código va completo, con los
+    ceros a la izquierda, como lo da sigep_entidades_buscar («0346» es la Alcaldía de Chía; «346»
+    no da nada). El SIGEP no trae a todo el Estado: no están la Rama Judicial ni empresas como
+    Ecopetrol.
 cobro: agregado
 canario:
   # Medido el 2026-10-26 en 2jzx-383z: la Fiscalía (codigosigep 6194) tiene 22 435 servidores;

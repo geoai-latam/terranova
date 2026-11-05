@@ -52,12 +52,19 @@ una parte. SUIN sigue cargando, así que los conteos de un año crecen.
    de vigencia, y solo 313 dicen «Vigente».
 2. **El conteo no explicaba nada.** Iba en orden alfabético por tipo, sin decir cuántas siguen
    vigentes.
+3. **El tipo va sin tildes** (medido el 2026-11-05). Ninguno de los 21 valores de `tipo` lleva
+   tilde: RESOLUCION (8 491), CONSTITUCION POLITICA, INSTRUCCION ADMINISTRATIVA CONJUNTA… Quien
+   pedía «Resolución» 142 de 1991 recibía «no encontrado», aunque SUIN la tiene (Superintendencia
+   de Industria y Comercio, 14 artículos).
+4. **El número es texto y no siempre es un número** (2026-11-05). La Constitución de 1991 tiene
+   `n_mero` «CP», y hay resoluciones de 1991 con «3-1766» y «mar-20». `suin_norma` pide el número
+   como entero: esas no se pueden pedir. Sin medir cuántas son.
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `suin_norma` | alto | v2: `articulos` como número, los «NULL» vacíos y aviso de vacío |
+| `suin_norma` | alto | v2: `articulos` como número, los «NULL» vacíos y aviso de vacío; el tipo con tilde o sin ella |
 | `suin_normas_anio` | bajo → medio | v2: del tipo con más normas al de menos, con `vigentes` y `sin_dato_vigencia` por tipo y en total |
 
 ## Decisiones
@@ -76,3 +83,7 @@ una parte. SUIN sigue cargando, así que los conteos de un año crecen.
   - **Aviso:** el vacío avisa que SUIN carga solo una parte de los decretos y las resoluciones.
   - **Latencia:** la fuente respondía en menos de 1 s en frío. En producción, la herramienta tardó
     de 1,5 a 2,5 s con cinco normas, no los 6-14 s de la revisión.
+- **2026-11-05, el tipo con tilde (revisión de valor):** la consulta compara con `{tipo:ascii}`:
+  «Resolución» llega a la fuente como «Resolucion» y la comparación ya no distingue mayúsculas.
+  Medido con el conector desplegado: «Resolución» 142 de 1991 da la de la SIC; antes, «no
+  encontrado». La descripción y el aviso de vacío ya no piden escribir sin tildes.
