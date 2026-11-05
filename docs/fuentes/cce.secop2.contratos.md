@@ -154,3 +154,6 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
   100, la respuesta se quedaba en parte de 2026 y avisaba que no se sabía si vino todo.
 - El tope sube a 1000. La consulta agrupa todo igual, así que no se vuelve más pesada; la puerta
   pagina la lista de 50 en 50.
+- `secop_contratos_entidad_anio` tenía el mismo problema con `max_filas: 200`. Bogotá en 2025 da
+  554 grupos (entidad, tipo y modalidad) y 26 304 contratos. La herramienta decía 25 640, porque
+  `total_contratos` y `valor_total_anio` se suman sobre lo que vino. El tope sube a 2000.
