@@ -46,6 +46,12 @@ _PALABRAS_VACIAS = frozenset(
 )
 
 
+# Palabras que van enteras porque sus 6 letras chocan con otro tema: «transmilenio» caía en
+# «transm», como «transmisión», y «buses de TransMilenio» remitía a las líneas de transmisión
+# eléctrica (2026-11-04).
+_ENTERAS = frozenset({"transmilenio"})
+
+
 def _normalizar(texto: str) -> list[str]:
     """Minúsculas, sin tildes, partido en palabras y recortado a 6 letras: «contratos» y
     «contratación» caen en «contra», «municipio» y «municipal» en «munici». Burdo pero estable.
@@ -54,7 +60,11 @@ def _normalizar(texto: str) -> list[str]:
     plano = unicodedata.normalize("NFKD", texto.lower())
     plano = "".join(c for c in plano if not unicodedata.combining(c))
     palabras = re.findall(r"[a-z0-9]+", plano.replace("_", " "))
-    return [p[:6] for p in palabras if p not in _PALABRAS_VACIAS and len(p) > 1 and not p.isdigit()]
+    return [
+        p if p in _ENTERAS else p[:6]
+        for p in palabras
+        if p not in _PALABRAS_VACIAS and len(p) > 1 and not p.isdigit()
+    ]
 
 
 @dataclass(frozen=True)
