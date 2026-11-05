@@ -4,6 +4,8 @@ Un visor que pide la capa entera de la UPME (2 192 elementos, tope de 1 000 por 
 que poder recorrer completa, sin repetidos ni faltantes, y saber el total desde la primera página.
 """
 
+import json
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -162,3 +164,33 @@ def test_mcp_y_rest_publican_por_pagina() -> None:
     h = puerta.CATALOGO.herramientas[UPME]
     assert puerta.esquema_entrada(h)["properties"][TAM_PAGINA]["maximum"] == 1000
     assert TAM_PAGINA in modelo_entrada(h).model_fields
+
+
+class Grabado:
+    """Responde lo grabado en una dorada, para la misma llamada."""
+
+    def __init__(self, llamadas: list[dict[str, Any]]) -> None:
+        self.llamadas = llamadas
+
+    async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
+        for ll in self.llamadas:
+            if ll["tool"] == herramienta and ll["argumentos"] == argumentos:
+                respuesta: dict[str, Any] = json.loads(json.dumps(ll["respuesta"]))
+                return respuesta
+        raise AssertionError(f"llamada no grabada: {herramienta} {argumentos}")
+
+
+@pytest.mark.anyio
+async def test_juntar_no_deja_el_total_de_filas_en_el_aviso_de_pagina() -> None:
+    """Buscapina (36344): la fuente trae 28 filas, una por vía, que `juntar` deja en 14. El aviso
+    decía «van los elementos 1-14 de 28 (página 1 de 1)»."""
+    herramienta = "invima_medicamento_en_renovacion_por_expediente"
+    dorada = Path(__file__).parent / "doradas" / f"{herramienta}.json"
+    llamadas = json.loads(dorada.read_text(encoding="utf-8"))["llamadas"]
+    puerta.usar_conectores({"datos-abiertos-mcp": Grabado(llamadas)})
+    try:
+        sobre = await puerta.ejecutar(herramienta, {"expediente": 36344})
+    finally:
+        puerta.usar_conectores(None)
+    assert len(sobre.datos["elementos"]) == 14
+    assert not [a for a in sobre.avisos if "de 28" in a]
