@@ -84,6 +84,12 @@ TOPE_PAGINABLE: dict[str, str] = {
 }
 
 
+# P0.7: el aviso con que se dice que los conteos por grupo son de la lista entera; la página lo
+# reconoce para no decir que esos cuentan solo la primera consulta
+CONTEOS_COMPLETOS = "Estos resúmenes cuentan la lista completa de la fuente, no solo una consulta: "
+_SIN_DATO = object()  # un agregado completo que no se pudo pedir: queda el de la ventana
+
+
 def ventana_de(h: Herramienta) -> int | None:
     """Cuántas filas trae la consulta de la ficha si se puede seguir en la fuente (ADR-0040); None
     si la herramienta no pagina en la fuente (varias capas, consulta previa, agregados, un tope que
@@ -1132,6 +1138,13 @@ class Ejecutor:
             for nombre, d in h.derivados.items()
             if not d.por_elemento and not d.al_final
         }
+        avisos_conteo: list[str] = []
+        if total is not None and total != filas_recibidas and len(respuestas) == 1:
+            # P0.7: la lista sigue en la fuente; los conteos por grupo se piden enteros
+            completos = await self._conteos_completos(h, fuente, respuestas[0])
+            agregados.update(completos)
+            if completos:
+                avisos_conteo = [CONTEOS_COMPLETOS + ", ".join(sorted(completos)) + "."]
 
         if es_relleno(h, elementos, hechos):
             elementos, hechos = [], {}
@@ -1156,6 +1169,7 @@ class Ejecutor:
         datos = {k: v for k, v in datos.items() if v is not None} if hay_algo else {}
 
         avisos: list[str] = [aviso_complemento] if aviso_complemento and hay_algo else []
+        avisos += avisos_conteo if hay_algo else []
         estado: Estado = "encontrado" if hay_algo else "no_encontrado"
         # honestidad: una fila cuyos campos de lista blanca mapean todos a None deja `datos` vacío
         # (forma «uno»); «encontrado» con datos vacío es indistinguible de un bug → «no encontrado»
@@ -1335,6 +1349,100 @@ class Ejecutor:
                     hechos[f"{hecho.nombre}{SUFIJO_SIGNIFICADO}"] = significado
         procedencia = self._procedencia(h, fuente, r, consultado_en, [hechos] if hechos else [])
         return hechos, procedencia
+
+    async def _conteos_completos(
+        self, h: Herramienta, fuente: Fuente, r: Respuesta
+    ) -> dict[str, dict[str, int]]:
+        """P0.7: los `conteo_por` sobre la lista entera, cuando no cupo en una consulta. Solo en
+        copias (un `group by` por derivado, con los mismos filtros) y solo si el `campo` es una
+        columna de la fuente o su significado; los grupos se traducen con `mapear_fila`, como
+        cada fila. Con 1 000 grupos o más, o si la consulta falla, queda el conteo de la ventana."""
+        if h.consulta.tool != "consultar_copia":
+            return {}
+        quitar = {"select", "order", "limite", "desde", "geometria", "group", "agregados"}
+        base = {k: v for k, v in r.argumentos.items() if k not in quitar}
+        salida: dict[str, dict[str, int]] = {}
+        for nombre, d in h.derivados.items():
+            if d.solo_si is not None or d.por_elemento:
+                continue
+            if d.de in ("suma", "maximo"):
+                total_col = await self._agregado_completo(h, fuente, r, base, d)
+                if total_col is not _SIN_DATO:
+                    salida[nombre] = total_col
+                continue
+            if d.de != "conteo_por":
+                continue
+            columna = next(
+                (
+                    k
+                    for k, c in fuente.campos.items()
+                    if c.origen == "fila"
+                    and (
+                        c.nombre == d.campo
+                        or (c.codigos is not None and f"{c.nombre}{SUFIJO_SIGNIFICADO}" == d.campo)
+                    )
+                ),
+                None,
+            )
+            if columna is None:
+                continue
+            argumentos = {
+                **base,
+                "select": [columna],
+                "group": [columna],
+                "agregados": {"n": "count"},
+                "geometria": "ninguna",
+                "limite": 1000,
+            }
+            try:
+                grupos = await self._una(h, fuente.conector, r.capa, argumentos)
+            except Exception:  # noqa: BLE001 — queda el conteo de la ventana, que el aviso explica
+                continue
+            if len(grupos.filas) >= 1000:
+                continue
+            cuenta: Counter[str] = Counter()
+            for g in grupos.filas:
+                valor = mapear_fila(h, fuente, {columna: g.get(columna)}, r.capa).get(d.campo or "")
+                if valor is None:
+                    if d.vacio is None:
+                        continue
+                    clave = d.vacio
+                else:
+                    clave = " ".join(str(valor).split())
+                cuenta[clave] += int(g.get("n") or 0)
+            salida[nombre] = dict(cuenta.most_common())
+        return salida
+
+    async def _agregado_completo(
+        self, h: Herramienta, fuente: Fuente, r: Respuesta, base: dict[str, Any], d: Derivado
+    ) -> Any:
+        """`suma` o `maximo` de una columna numérica sobre la lista entera. Solo si la columna sale
+        tal cual (sin `vacios`, coma decimal ni moneda que la fila corrija al mapearla)."""
+        campo = next(
+            (
+                (k, c)
+                for k, c in fuente.campos.items()
+                if c.origen == "fila" and c.nombre == d.campo
+            ),
+            None,
+        )
+        if campo is None or campo[1].vacios or campo[1].coma_decimal or campo[1].moneda:
+            return _SIN_DATO
+        funcion = "sum" if d.de == "suma" else "max"
+        argumentos = {
+            **base,
+            "agregados": {"v": f"{funcion}:{campo[0]}"},
+            "geometria": "ninguna",
+            "limite": 1,
+        }
+        try:
+            resultado = await self._una(h, fuente.conector, r.capa, argumentos)
+        except Exception:  # noqa: BLE001 — queda el de la ventana (p. ej. una columna de texto)
+            return _SIN_DATO
+        if len(resultado.filas) != 1 or not _numero(resultado.filas[0].get("v")):
+            return _SIN_DATO
+        valor = convertir(round(float(resultado.filas[0]["v"]), 6), d.tipo)
+        return redondear(valor, d.decimales)
 
     async def _una(
         self, h: Herramienta, conector: str, capa: str | None, argumentos: dict[str, Any]
