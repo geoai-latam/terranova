@@ -23,11 +23,11 @@ datos_personales: filtrados
 estado: publicada
 campos:
   nit: {nombre: nit, tipo: str, desc: "NIT con guiones y dígito de verificación (800-112-808-7)"}
-  nombreentidad: {nombre: entidad, tipo: str, desc: "razón social"}
-  sigla: {nombre: sigla, tipo: str, desc: "sigla; muchas entidades se conocen por ella (COOMEVA), no por la razón social"}
-  nombretipo: {nombre: tipo, tipo: str, desc: "tipo de entidad (fondo de empleados, cooperativa multiactiva…)"}
-  municipio: {nombre: municipio, tipo: str, desc: "municipio del domicilio"}
-  nombreactividad: {nombre: actividad, tipo: str, desc: "actividad"}
+  nombreentidad: {reparar_codificacion: true, nombre: entidad, tipo: str, desc: "razón social"}
+  sigla: {reparar_codificacion: true, nombre: sigla, tipo: str, desc: "sigla; muchas entidades se conocen por ella (COOMEVA), no por la razón social"}
+  nombretipo: {reparar_codificacion: true, nombre: tipo, tipo: str, desc: "tipo de entidad (fondo de empleados, cooperativa multiactiva…)"}
+  municipio: {reparar_codificacion: true, nombre: municipio, tipo: str, desc: "municipio del domicilio"}
+  nombreactividad: {reparar_codificacion: true, nombre: actividad, tipo: str, desc: "actividad"}
   supervision: {nombre: nivel_supervision, tipo: str, desc: "nivel de supervisión, 1, 2 o 3: las más grandes están en 1 (Coomeva y Comedal; 397 entidades en 2026, frente a 508 en 2 y 1 309 en 3)"}
   a_o: {nombre: anio, tipo: str, desc: "año del reporte"}
 comportamiento: {max_por_pagina: 50000}
@@ -42,4 +42,8 @@ perfil:
   - "cada entidad se repite por periodo de reporte: se agrupa por entidad con su último año"
   - "el NIT trae guiones y dígito de verificación: se busca por nombre"
   - "una entidad que dejó de reportar sigue en el listado con su último año (CONFIARCOOP: 2017)"
-  decision: "en vivo por nombre, agrupado por entidad con su último reporte"
+  - "parte de los periodos trae el texto UTF-8 leído como Latin-1 (BOGOTÃ, MEDELLÃN): el group by
+    partía la entidad en dos (2026-11-05)"
+  - "una entidad cambia de tipo o actividad entre periodos (800-102-813-1: Multiactiva en 2025,
+    Fondos de empleados en 2026): con todo en el group by salía una fila por versión"
+  decision: "en vivo por nombre; una fila por NIT, la de su último reporte (unico_por), con la codificación reparada"

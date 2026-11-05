@@ -1,13 +1,13 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T17:41:14+00:00",
+ "grabado": "2026-11-05T12:25:47+00:00",
  "herramienta": "supersolidaria_entidades_buscar",
  "llamadas": [
   {
    "argumentos": {
     "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
     "id": "kg2d-yfyg",
-    "max_filas": 50,
+    "max_filas": 200,
     "order": "case(upper(sigla) = upper('COOMEVA'), 0, true, 1), length(nombreentidad), nombreentidad",
     "portal": "datos.gov.co",
     "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
@@ -73,7 +73,7 @@
      "consulta": {
       "conjunto": "kg2d-yfyg",
       "group": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision",
-      "max_filas": 50,
+      "max_filas": 200,
       "portal": "datos.gov.co",
       "select": "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, max(a_o) AS ultimo_reporte",
       "where": "(upper(nombreentidad) like upper('%COOMEVA%') OR upper(sigla) like upper('%COOMEVA%'))"

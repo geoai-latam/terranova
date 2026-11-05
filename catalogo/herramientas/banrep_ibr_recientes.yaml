@@ -19,6 +19,15 @@ consulta:
 salida: IbrRecientes
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Cada fecha trae ocho filas: cuatro series (IRIBRM00, IRIBRM01, IRIBRM03 e IRIBRM06) por dos
+    unidades (ER y NR), y `ultimas` cuenta por cada una, así que 3 da 24 filas. El BanRep publica
+    la IBR a los plazos overnight, 1, 3 y 6 meses, en tasa nominal y efectiva (ficha metodológica
+    de la IBR). La tabla oficial de códigos no se pudo leer en el servicio SDMX: el mismo día, ER
+    sale más alta que NR (12,252 frente a 11,401 en IRIBRM00 el 2026-11-04), como una tasa efectiva
+    frente a una nominal.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en DF_IBR_DAILY_HIST con lastNObservations: 8 serie(s), unidad y frecuencia como

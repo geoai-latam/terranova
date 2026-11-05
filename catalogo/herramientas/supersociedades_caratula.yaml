@@ -28,6 +28,13 @@ consulta:
 salida: SupersociedadesCaratula
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    La Supersociedades no tiene estados financieros de ese NIT. Solo reportan aquí las sociedades
+    que ella supervisa: las que vigila la Superfinanciera no están (Ecopetrol, que en el reporte de
+    las 10 000 empresas más grandes figura con supervisor SUPERFINANCIERA; medido el 2026-11-05).
+    supersociedades_empresa_grande_por_nit dice el supervisor de cada año.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en 6hqw-m3dm (nit = 830010665): 77
