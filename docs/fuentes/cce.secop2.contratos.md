@@ -178,3 +178,6 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
   - Bogotá tarda 48 s en vivo (1 124 681 contratos, 11 atípicos), sobre el tope de 10 s de
     los canarios (que es Chía). Queda abierto: la copia solo tiene lo firmado desde 2023 y esta
     herramienta cuenta todos los años.
+- `secop_entidades_municipio` (2026-11-04): Bogotá tiene 319 entidades y el tope era 200; sube a
+  1000. «Chia» sin tilde daba `no_encontrado` sin aviso; ahora remite a revisar el nombre. Bogotá
+  tarda 14 a 18 s (el canario es Chía, con tope de 15 s).
