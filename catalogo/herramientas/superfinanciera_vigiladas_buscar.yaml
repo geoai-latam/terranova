@@ -17,7 +17,7 @@ consulta:
     id: sr9n-792w
     portal: datos.gov.co
     select: "tipo_entidad, cod_entidad, razon_social, ciudad, direccion, numeroidentificacion, uripaginaweb"
-    where: "upper(razon_social) like upper('%{nombre}%')"
+    where: "upper(razon_social) like upper('%{nombre:vocales}%')"
     # Primero por tipo (1 son los bancos; las filiales del exterior tienen tipos de tres cifras) y
     # dentro de él la razón social más corta: antes, por longitud, el banco Bancolombia salía de
     # último porque su razón social trae la cláusula legal entera.
@@ -27,6 +27,12 @@ consulta:
 salida: VigiladasSuperfinancieraBuscar
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    La Superintendencia Financiera no tiene una entidad vigilada con ese nombre. Se busca una parte
+    de la razón social como la registra la Superfinanciera (BANCOLOMBIA, FIDUCIARIA BOGOTÁ), con o
+    sin tildes. Una empresa que no es financiera no está aquí: para esas, rues_empresas_buscar.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en sr9n-792w: «BANCOLOMBIA» da 7 entidades vigiladas. Puede cambiar: mínimo.

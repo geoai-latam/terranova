@@ -936,7 +936,9 @@ class Fuente(_Ficha):
 # como `_`, el comodín de una letra de LIKE, y «acetaminofén» encuentra «ACETAMINOFEN» (patrón H).
 # Con `ascii`, sin tildes ni eñes («daño» → «dano»): la búsqueda de la relatoría de Colombia
 # Compra devuelve todo si el texto trae una letra fuera de ASCII (medido el 2026-11-03).
-MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::(?:sin_tildes|ascii))?\}")
+# Con `vocales`, toda vocal va como `_`: «BOGOTA» encuentra «BOGOTÁ», que `sin_tildes` no
+# alcanza porque la tilde está en el dato (Superfinanciera, medido el 2026-11-05).
+MARCADOR = re.compile(r"\{([a-z_][a-z0-9_]*)(?::(?:sin_tildes|vocales|ascii))?\}")
 MARCADORES_DE_LA_PUERTA = frozenset({"url_capa", "url_fuente", "capa"})
 MARCADOR_PREVIA = "previa"
 
