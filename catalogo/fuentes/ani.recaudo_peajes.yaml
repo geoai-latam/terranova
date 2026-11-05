@@ -17,7 +17,8 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/qac6-9mkr.json
 modo: en_vivo
 frescura: {ttl_cache_s: 86400, sla_actualizacion: P6M}
-cobertura: {pais: CO, columna_tiempo: desde}
+# la serie empieza en 2014 (medido el 2026-10-28): un año anterior es «fuera de cobertura», no un vacío
+cobertura: {pais: CO, columna_tiempo: desde, desde_anio: 2014}
 datos_personales: ninguno
 estado: publicada
 campos:

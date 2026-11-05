@@ -1,5 +1,5 @@
 id: igac_conflictos_uso_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.agrologia.conflictos_uso
 pregunta: "¿Hay conflicto de uso de la tierra en este punto?"
@@ -20,6 +20,13 @@ consulta:
     order: [OBJECTID_1]
     limite: 5
   campos: [UCConfli, T_Conflicto]
+avisos:
+- cuando: encontrado
+  si: {campo: unidad_conflicto, valores: ["AAP_ND", "PRD_ND"]}
+  texto: >
+    Aquí el IGAC no midió el conflicto: AAP_ND y PRD_ND son «demanda no disponible» (la imagen
+    tenía nubes, dice el tipo de conflicto). No es un uso adecuado ni un conflicto: es un dato que
+    falta en la capa de 2012.
 salida: ConflictosUsoEnPunto
 cobro: punto
 canario:

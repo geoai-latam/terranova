@@ -1,5 +1,5 @@
 id: sinic_predio_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: igac.sinic_terreno
 pregunta: "¿Qué predio hay en este punto de un municipio con gestor catastral propio (Bogotá, Medellín, Cali, Barranquilla…)?"
@@ -31,6 +31,14 @@ salida: PredioSinicEnPunto
 # Fuera del MCP: predio_en_punto elige la base sola y el agente confundía las dos (#15). Sigue
 # en REST y dentro de predio_en_punto, ficha_lugar y ficha_lote.
 en_mcp: false
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún terreno del SINIC contiene el punto. Puede caer en una vía, un andén o una plaza, que
+    no son terreno de ningún predio: si es una dirección, mueva el punto hacia dentro del lote.
+    O el municipio no tiene gestor catastral propio y su predio está en la base del IGAC
+    (igac_predio_en_punto; predio_en_punto busca en las dos). Que no haya terreno aquí no quiere
+    decir que el lugar no tenga dueño.
 cobro: punto
 canario:
   # Chapinero (Bogotá); medido el 2026-10-28 en la capa 3: número predial 110010182020400210003900000000,

@@ -458,3 +458,15 @@ def test_juntar_un_campo_que_no_sale_de_la_fuente_es_un_error() -> None:
     roto = cat.model_copy(update={"herramientas": {**cat.herramientas, h.id: mala}})
     assert any("`juntar` usa «via»" in e for e in validar(roto))
     assert not any("juntar" in e for e in validar(cat))
+
+
+def test_el_catalogo_de_descubrimiento_sale_con_los_terminos_de_datos_gov_co() -> None:
+    """La licencia del índice se verificó el 2026-11-04 (términos de datos.gov.co, uso comercial
+    sí). Antes era borrador y `catalogo_buscar` daba 403 a toda llave de producción."""
+    from terranova.catalogo import _licencia_legible
+
+    fuente = cargar().fuentes["descubrimiento.catalogo_dcat"]
+    assert fuente.estado == "publicada"
+    assert fuente.uso_comercial == "si"
+    assert fuente.licencia.verificada is not None
+    assert _licencia_legible(fuente) == "términos de uso de datos.gov.co"

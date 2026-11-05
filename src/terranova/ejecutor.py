@@ -543,9 +543,12 @@ def _validar(campo: Campo, valor: Any) -> Any:
 
 
 def fecha_en_orden(texto: str, orden: str) -> str:
-    """«06/15/2016» (mda) o «15/06/2016» (dma) a ISO. Lo que no tiene esa forma pasa igual: el
-    mismo conjunto puede traer fechas ISO en otras filas. Si detrás de la fecha viene más texto
-    («18/12/1997 Fecha de modificación: 26/09/2024»), cuenta la primera."""
+    """«06/15/2016» (mda), «15/06/2016» (dma) o «2016.06.15» (amd) a ISO. Lo que no tiene esa
+    forma pasa igual: el mismo conjunto puede traer fechas ISO en otras filas. Si detrás de la
+    fecha viene más texto («18/12/1997 Fecha de modificación: 26/09/2024»), cuenta la primera."""
+    if orden == "amd":  # «2012.07.07» (los puentes del INVÍAS)
+        iso = re.match(r"\s*(\d{4})[./](\d{1,2})[./](\d{1,2})(?!\d)", texto)
+        return f"{iso[1]}-{int(iso[2]):02d}-{int(iso[3]):02d}" if iso else texto
     m = re.match(r"\s*(\d{1,2})/(\d{1,2})/(\d{4})(?!\d)", texto)
     if not m:
         return texto

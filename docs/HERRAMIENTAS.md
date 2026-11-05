@@ -28,7 +28,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
 | `sinchi_perdida_bosque_en_punto` | ¿Este punto de la Amazonia perdió bosque entre 2022 y 2024? | Instituto Amazónico de Investigaciones Científicas (SINCHI) | CC-BY-4.0 | 10 |
-| `ungrd_emergencias_municipio` | ¿Qué emergencias tuvo este municipio desde 2025 y qué afectaciones dejaron? | Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD) | CC-BY-4.0 | 1 |
+| `ungrd_emergencias_municipio` | ¿Qué emergencias tuvo este municipio en 2025 y qué afectaciones dejaron? | Unidad Nacional para la Gestión del Riesgo de Desastres (UNGRD) | CC-BY-4.0 | 1 |
 | `usgs_sismos_en_zona` | ¿Qué sismos hubo en esta zona en este periodo? | U.S. Geological Survey (USGS) | LicenseRef-dominio-publico-EEUU | 20 |
 
 ## contratacion
@@ -188,6 +188,12 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `uariv_desplazamiento_municipio` | ¿Cuántas personas fueron desplazadas de este municipio cada año? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 | `uariv_victimas_hecho_municipio` | ¿Cuántas víctimas registradas hay en este municipio por cada hecho victimizante (desplazamiento, homicidio, amenaza…)? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
 | `uariv_victimas_municipio` | ¿Cuántas víctimas del conflicto armado registradas hay en este municipio? | Unidad para la Atención y Reparación Integral a las Víctimas (UARIV) | CC-BY-SA-4.0 | 5 |
+
+## meta
+
+| Herramienta | Pregunta | Fuente | Licencia | Créditos |
+|---|---|---|---|---|
+| `catalogo_buscar` | ¿Qué fuente oficial responde esta pregunta sobre un lugar, y con qué licencia? | Terrnova (índice de metadatos sobre fuentes oficiales) | LicenseRef-datosgovco-terminos | 1 |
 
 ## normativa
 

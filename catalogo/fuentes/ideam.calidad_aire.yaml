@@ -19,7 +19,7 @@ conector: datos-abiertos-mcp
 url: https://www.datos.gov.co/resource/g4t8-zkc3.json
 modo: en_vivo
 frescura: {ttl_cache_s: 604800, sla_actualizacion: P1Y}
-cobertura: {pais: CO, periodo: "2020 a 2025"}
+cobertura: {pais: CO, desde_anio: 2020, periodo: "2020 a 2025"}
 datos_personales: ninguno
 estado: publicada
 campos:

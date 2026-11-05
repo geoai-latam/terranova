@@ -10,7 +10,7 @@
     "max_filas": 200,
     "order": "anno_paa, identificador_paa",
     "portal": "datos.gov.co",
-    "select": "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia, count(*) AS versiones",
+    "select": "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia",
     "where": "nit_entidad = '892099232' OR starts_with(nit_entidad, '892099232-')"
    },
    "conector": "datos-abiertos-mcp",
@@ -22,8 +22,7 @@
        "identificador_paa",
        "limite_menor_cuantia",
        "limite_minima_cuantia",
-       "ppto_total",
-       "versiones"
+       "ppto_total"
       ],
       "kind": "table",
       "rows": [
@@ -32,32 +31,28 @@
         "identificador_paa": "244479",
         "limite_menor_cuantia": "245784840",
         "limite_minima_cuantia": "24578484",
-        "ppto_total": "1557290000",
-        "versiones": "11"
+        "ppto_total": "1557290000"
        },
        {
         "anno_paa": "2021",
         "identificador_paa": "283204",
         "limite_menor_cuantia": "254387280",
         "limite_minima_cuantia": "25438728",
-        "ppto_total": "8521035070",
-        "versiones": "11"
+        "ppto_total": "8521035070"
        },
        {
         "anno_paa": "2022",
         "identificador_paa": "323348",
         "limite_menor_cuantia": "280000000",
         "limite_minima_cuantia": "28000000",
-        "ppto_total": "389026067",
-        "versiones": "11"
+        "ppto_total": "389026067"
        },
        {
         "anno_paa": "2023",
         "identificador_paa": "339335",
         "limite_menor_cuantia": "324800000",
         "limite_minima_cuantia": "32480000",
-        "ppto_total": "83318540",
-        "versiones": "11"
+        "ppto_total": "83318540"
        }
       ]
      }
@@ -75,7 +70,7 @@
       "group": "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia",
       "max_filas": 200,
       "portal": "datos.gov.co",
-      "select": "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia, count(*) AS versiones",
+      "select": "anno_paa, identificador_paa, ppto_total, limite_menor_cuantia, limite_minima_cuantia",
       "where": "(nit_entidad = '892099232' OR starts_with(nit_entidad, '892099232-'))"
      },
      "filas": 4,

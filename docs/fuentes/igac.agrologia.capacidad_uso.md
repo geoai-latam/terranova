@@ -47,3 +47,18 @@ De la copia de Terrnova en PostGIS (ADR-0024), simplificada a ~11 m. En vivo, un
   - `area_ha_por_unidad` las suma por unidad, y `area_ha_total` da el total.
   - El porcentaje sale de esos dos. No se calcula en la puerta porque no hay un derivado de
     porcentaje; los de las SDP siguieron el mismo camino.
+
+## Revisión de valor (2026-11-04)
+
+- Probado en producción:
+  - Chía (canario): 2c, «Capacidad alta para agricultura».
+  - Bogotá urbano: ZU, con su significado y su nota.
+  - Quindío (-75.6, 4.5): 7ec, «Capacidad agrícola, ganadera y agroforestal».
+  - La franja de Chía en polígono: 392,65 ha. 2c tiene 264,6, 6p 87,2, CA 26,5 y ZU 14,4.
+- Hallazgos:
+  - **Las letras de la subclase no se explicaban.** Un agente no sabía que en «7ec» el
+    limitante es la erosión y el clima. Ahora la descripción dice qué es la clase (1 a 8) y qué
+    significa cada letra (c, e, h, p, s), según la metodología del IGAC.
+  - La descripción de la fuente agrupa clases. 6p y 7ec dicen las dos «agrícola, ganadera y
+    agroforestal». Se deja como la publica el IGAC.
+  - Una consulta agrupada a la capa del IGAC dio 503 por tiempo de espera. No se reintentó.

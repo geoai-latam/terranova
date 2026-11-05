@@ -1,5 +1,5 @@
 id: ancp_providencias_por_tema
-version: 1
+version: 2
 familia: contratacion
 fuente: ancp.providencias
 pregunta: "¿Qué providencias de Colombia Compra Eficiente tratan este tema?"
@@ -8,8 +8,8 @@ descripcion: >
   de la relatoría cuyo nombre contiene el texto (p. ej. «contratación directa», «supervisión»,
   «liquidación del contrato»), y luego las 20 más recientes con alguno de ellos, cada
   una con su tema, título, fecha y enlace, y cuántos hay en total. Es más preciso que
-  ancp_providencias_buscar, que busca las palabras en todo el texto: «contratación directa» da 134 por
-  tema y 2 034 por texto en los conceptos. Pero solo encuentra lo que la relatoría etiquetó: si da
+  ancp_providencias_buscar, que busca las palabras en todo el texto: «contratación directa» da 11 por
+  tema y 135 por texto en las providencias (2026-11-04). Pero solo encuentra lo que la relatoría etiquetó: si da
   poco o nada, use ancp_providencias_buscar.
   (Fuente: Colombia Compra Eficiente; licencia: dato público reutilizable.)
 entrada: {texto: str}  # va a un parámetro de la URL (search), no a una consulta SQL

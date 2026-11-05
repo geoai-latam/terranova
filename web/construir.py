@@ -827,6 +827,7 @@ def licencia_corta(spdx: str | None) -> str:
     return {
         "LicenseRef-banrep-aviso-legal": "aviso legal del Banco",
         "LicenseRef-dane-terminos": "términos del DANE",
+        "LicenseRef-datosgovco-terminos": "términos de datos.gov.co",
     }.get(spdx, "licencia propia de la entidad")
 
 

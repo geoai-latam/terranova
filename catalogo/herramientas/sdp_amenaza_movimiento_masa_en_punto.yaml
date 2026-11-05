@@ -1,5 +1,5 @@
 id: sdp_amenaza_movimiento_masa_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: sdp.pot555_amenaza_movimiento_masa
 pregunta: "¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT?"
@@ -29,6 +29,14 @@ derivados:
     campo: categoria_amenaza
     valores: {"1": baja, "2": media, "3": alta}
 salida: AmenazaMovimientoMasaEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ningún área zonificable del POT de Bogotá para amenaza por movimiento en
+    masa. Puede estar fuera de Bogotá o en un área que el POT no zonifica para esta amenaza. No
+    quiere decir que la amenaza sea baja ni que no exista. El rectángulo de cobertura incluye
+    municipios vecinos (Soacha, Mosquera, La Calera…), que no tienen POT de Bogotá: confirme que
+    el punto o la zona está dentro del Distrito.
 cobro: punto
 canario:
   # San Cristóbal (ladera); medido el 2026-10-28 en el GeoJSON de la SDP: CATEGORIZA 3, ÁREA

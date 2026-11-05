@@ -1,5 +1,5 @@
 id: secop1_proponentes_proceso
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop1.proponentes
 pregunta: "¿Quiénes se presentaron a este proceso de SECOP I y quién ganó?"
@@ -30,6 +30,11 @@ derivados:
   adjudicado_a: {de: primero, campo: proponente, solo_si: {campo: adjudicado, valores: ["Si"]}}
   contrato_adjudicado: {de: primero, campo: numero_contrato, solo_si: {campo: adjudicado, valores: ["Si"]}}
 avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no registra proponentes para ese proceso. En una contratación directa no hay
+    proponentes que listar: el 19-12-10176235 de Mongua, directo y celebrado, no trae ninguno.
+    Para saber si el proceso existe y quién lo ganó, use secop1_proceso_por_constancia.
 - cuando: encontrado
   texto: >
     La fuente repite al mismo proponente en varias filas, y a veces escribe su nombre de dos formas: en el proceso 21-11-11918076 son tres filas de un solo proponente, con el nombre en dos órdenes, y solo la adjudicada trae documento y contrato. El número de filas no es el número de proponentes. La calificación va como la publica SECOP I («100000», «9800», «000»), sin escala documentada: no la compare entre procesos.
