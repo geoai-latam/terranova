@@ -23,8 +23,13 @@ consulta:
     group: "nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision"
     # la sigla exacta primero; luego la razón social más corta
     order: "case(upper(sigla) = upper('{nombre}'), 0, true, 1), length(nombreentidad), nombreentidad"
-    max_filas: 50
+    # 200 grupos: con una fila por NIT quedan menos (14 NIT repetidos en 50 filas para
+    # «COOPERATIVA», medido el 2026-11-05)
+    max_filas: 200
   campos: [nit, nombreentidad, sigla, nombretipo, municipio, nombreactividad, supervision, a_o]
+  # una fila por NIT: la del último reporte (el grupo se parte con cada cambio de un atributo)
+  unico_por: nit
+  unico_mayor: ultimo_reporte
 salida: SupersolidariaEntidadesBuscar
 derivados:
   ultimo_reporte: {de: columna, campo: ultimo_reporte, tipo: str}

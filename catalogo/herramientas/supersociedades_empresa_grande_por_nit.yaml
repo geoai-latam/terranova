@@ -24,6 +24,11 @@ consulta:
   campos: [nit, raz_n_social, supervisor, departamento_domicilio, ciudad_domicilio, ciiu, macrosector, ingresos_operacionales, ganancia_p_rdida, total_activos, total_pasivos, total_patrimonio, a_o_de_corte]
 salida: EmpresaGrandePorNit
 avisos:
+- cuando: vacio
+  texto: >
+    Ese NIT no está en el reporte de las 10 000 empresas más grandes de la Supersociedades. Una
+    sociedad más pequeña no sale aquí; sus estados financieros pueden estar en
+    supersociedades_situacion_financiera, y su matrícula en rues_empresa_por_nit.
 - cuando: encontrado
   texto: >
     Las cifras están en billones de pesos y la fuente las redondea a centésimas: ±0,005 billones, unos
