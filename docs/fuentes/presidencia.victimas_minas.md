@@ -54,9 +54,13 @@ Medido el 2026-11-03:
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `presidencia_victimas_minas_municipio` | medio → alto | v2: del año más reciente al más viejo, con `total_muertos`, `total_civiles` y `ultimo_anio`; nombra la del CNMH y explica por qué no cuadran |
+| `presidencia_victimas_minas_municipio` | medio → alto | v2: del año más reciente al más viejo, con `total_muertos`, `total_civiles` y `ultimo_anio`; nombra la del CNMH y explica por qué no cuadran; el vacío dice qué significa |
 
 ## Decisiones
 
 - **2026-11-03, patrón F de la revisión de valor:** las dos fuentes se quedan, porque miden
   distinto. Cada descripción nombra la otra. La del CNMH ya lo hacía (`cnmh.sievcac.md`).
+- **2026-11-05, revisión de valor:** un municipio sin víctimas en la fuente (San Andrés, 88001)
+  salía «no encontrado» sin explicación. Ahora un aviso dice que es la falta de registro de
+  Descontamina Colombia entre 1990 y 2023, no la prueba de que no hubo minas, y nombra el registro
+  del CNMH.
