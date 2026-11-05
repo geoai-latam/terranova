@@ -1,0 +1,46 @@
+id: dane_sedes_educativas_buscar
+version: 1
+familia: territorio
+fuente: dane.sedes_educativas
+pregunta: "¿Dónde queda este colegio y cuál es su código DANE?"
+descripcion: >
+  Busca sedes educativas activas por código DANE (12 dígitos), nombre, dirección, municipio o
+  departamento, y devuelve cada una con su punto, su sede principal, zona, naturaleza, sector,
+  calendario, jornada, nivel educativo y el contacto que publica el DANE. Con el código DANE se
+  cruza con los resultados de icfes_saber11. Para las sedes de un lugar, dane_sedes_educativas_en_zona.
+  Sale de la copia de Terrnova del SISE del DANE (corte 2024-11). (Fuente: DANE, SISE; licencia:
+  CC BY 4.0.)
+entrada: {texto: str}  # va como parámetro de plainto_tsquery, nunca dentro del SQL
+consulta:
+  operacion: buscar
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_sedes_educativas
+    texto: "{texto}"
+    select: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+    geometria: completa
+    order: [COD_DANE]
+    limite: 100
+  campos: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+salida: DaneSedesEducativasBuscar
+derivados:
+  total: {de: completitud_total, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una de cada cuatro sedes comparte su punto con otra (481 de Uribia están en el mismo punto):
+    en lo rural el DANE a veces pone la sede en la cabecera o en la sede principal. Para distancias
+    finas, revise si el punto se repite. El corte del SISE es de 2024-11.
+- cuando: vacio
+  texto: >
+    Ninguna sede educativa activa con ese código, nombre, dirección o municipio en el SISE del DANE
+    (corte 2024-11). El código DANE de la sede tiene 12 dígitos; pruebe con una parte del nombre
+    y el municipio (p. ej. «Divino Niño Cubarral»).
+cobro: agregado
+canario:
+  # Medido el 2026-11-05 en la copia: «Divino Niño Cubarral» da la sede 250223000114
+  # (INSTITUCION EDUC DIVINO NIÑO, Cubarral, Meta), la misma del servicio del DANE.
+  entrada: {texto: "Divino Niño Cubarral"}
+  minimos: {total: 1}
+  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, sector, sede_principal, telefono, tipo_telefono, total, zona]
+  latencia_max_ms: 8000

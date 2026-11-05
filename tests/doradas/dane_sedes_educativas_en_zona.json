@@ -1,0 +1,275 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:09:59+00:00",
+ "herramienta": "dane_sedes_educativas_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.07,
+     4.6,
+     -74.06,
+     4.61
+    ],
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "COD_DANE"
+    ],
+    "select": [
+     "COD_DANE",
+     "NOMBRE_INS",
+     "SEDE_PRINC",
+     "COD_SEDE_P",
+     "ESTADO",
+     "DIRECCION",
+     "ID_DEPARTA",
+     "DEPARTAMEN",
+     "ID_MUNICIP",
+     "MUNICIPIO",
+     "CALENDARIO",
+     "NATURALEZA",
+     "SECTOR",
+     "ZONA",
+     "JORNADA",
+     "NIVEL",
+     "TELEFONO",
+     "TIPO_TELEF",
+     "CORREO_INS",
+     "LONGITUD",
+     "LATITUD"
+    ],
+    "tabla": "dane_sedes_educativas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.069303,
+           4.600487
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "111001013323",
+          "COD_SEDE_P": "111001013323",
+          "CORREO_INS": "(no se versiona en la dorada)",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CL 12 C # 1 A - 24",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "MAÑANA",
+          "LATITUD": 4.6004872006,
+          "LONGITUD": -74.06930309,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "OFICIAL",
+          "NIVEL": "EDUCACIÓN MEDIA",
+          "NOMBRE_INS": "LA CONCORDIA",
+          "SECTOR": "OFICIAL",
+          "SEDE_PRINC": "S",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "FIJO",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067283,
+           4.600764
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "111001013340",
+          "COD_SEDE_P": "111001102148",
+          "CORREO_INS": " ",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CR. 2 NO. 17-55",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "FIN DE SEMANA",
+          "LATITUD": 4.6007642815,
+          "LONGITUD": -74.06728274,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "OFICIAL",
+          "NIVEL": "EDUCACIÓN BÁSICA SECUNDARIA",
+          "NOMBRE_INS": "CENTRO EDUCATIVO DIST LA INMACULADA",
+          "SECTOR": "OFICIAL",
+          "SEDE_PRINC": "N",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "FIJO",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.068845,
+           4.604419
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "111001015326",
+          "COD_SEDE_P": "111001009831",
+          "CORREO_INS": "(no se versiona en la dorada)",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CLL. 20 NO. 4-68",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "FIN DE SEMANA",
+          "LATITUD": 4.6044191719,
+          "LONGITUD": -74.06884499,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "OFICIAL",
+          "NIVEL": "EDUCACIÓN BÁSICA PRIMARIA",
+          "NOMBRE_INS": "CENTRO EDUCATIVO REP DE ARGENTINA",
+          "SECTOR": "OFICIAL",
+          "SEDE_PRINC": "N",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "FIJO",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067734,
+           4.601838
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "311001091269",
+          "COD_SEDE_P": "311001091269",
+          "CORREO_INS": "(no se versiona en la dorada)",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CLL. 18 NO.2-65",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "FIN DE SEMANA",
+          "LATITUD": 4.601837564,
+          "LONGITUD": -74.06773357,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "ORGANIZACIÓN CON FINES DE LUCRO",
+          "NIVEL": "PREESCOLAR",
+          "NOMBRE_INS": "JARDIN INFANTIL UNIANDES",
+          "SECTOR": "NO OFICIAL",
+          "SEDE_PRINC": "S",
+          "TELEFONO": " ",
+          "TIPO_TELEF": " ",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067559,
+           4.600099
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "311001091561",
+          "COD_SEDE_P": "311001091561",
+          "CORREO_INS": " ",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CR. 2 NO.16-72",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "FIN DE SEMANA",
+          "LATITUD": 4.600099165,
+          "LONGITUD": -74.06755865,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "ORGANIZACIÓN CON FINES DE LUCRO",
+          "NIVEL": "PREESCOLAR",
+          "NOMBRE_INS": "JARDIN INFANTIL TORRECITAS DEL SABER",
+          "SECTOR": "NO OFICIAL",
+          "SEDE_PRINC": "S",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "FIJO",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.067883,
+           4.60494
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "311001095779",
+          "COD_SEDE_P": "311001095779",
+          "CORREO_INS": " ",
+          "DEPARTAMEN": "BOGOTÁ, D.C.",
+          "DIRECCION": "CLL. 21 NO. 3-60",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "11",
+          "ID_MUNICIP": "11001",
+          "JORNADA": "FIN DE SEMANA",
+          "LATITUD": 4.604940106,
+          "LONGITUD": -74.06788302,
+          "MUNICIPIO": "BOGOTÁ, D.C.",
+          "NATURALEZA": "ORGANIZACIÓN CON FINES DE LUCRO",
+          "NIVEL": "PREESCOLAR",
+          "NOMBRE_INS": "JARDIN INFANTIL UNIVERSIDAD CENTRAL",
+          "SECTOR": "NO OFICIAL",
+          "SEDE_PRINC": "S",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "FIJO",
+          "ZONA": "URBANO"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 6,
+      "truncado": false,
+      "vistos": 6
+     },
+     "consultado_en": "2026-11-05T06:07:30.974379+00:00",
+     "copia": {
+      "filas": 56650,
+      "huella": "sha256:867f7aac009c7d02ced7e399dbfa8f288568a4eff18695ffbca4c679e449c69a",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105060730974379"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

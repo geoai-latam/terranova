@@ -412,6 +412,7 @@ SISTEMAS = {
         "Pobreza multidimensional",
         "PIB",
         "Exportaciones",
+        "Sistema de Identificación de Sedes Educativas",
     ],
     "Centro Nacional de Memoria Histórica": ["SIEVCAC"],
     "IDEAM": ["Alertas", "SISAIRE", "Estaciones", "Normales climatológicas"],
