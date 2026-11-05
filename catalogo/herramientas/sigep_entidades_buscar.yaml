@@ -20,7 +20,10 @@ consulta:
     select: "codigosigep, nombreentidad, orden, count(*) AS servidores"
     # La fuente escribe los nombres en mayúsculas y sin tildes («FISCALIA GENERAL DE LA NACION»):
     # se le quitan las tildes a lo que escribe la persona. Medido el 2026-11-02: «Fiscalía» da 6194.
-    where: "upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%{nombre}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U')"
+    # La Ñ va de las dos formas («GOBERNACION DE NARIÑO», «CORPORACION AUTONOMA REGIONAL DE NARINO»):
+    # se compara con la Ñ cambiada por N a los dos lados. Medido el 2026-11-05: «Nariño» daba 46 y
+    # «Narino» 1; ahora las dos dan 47.
+    where: "replace(upper(nombreentidad), 'Ñ', 'N') like replace(replace(replace(replace(replace(replace(replace(upper('%{nombre}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N')"
     group: "codigosigep, nombreentidad, orden"
     order: "length(nombreentidad), nombreentidad"
     max_filas: 50
@@ -35,6 +38,12 @@ avisos:
     Ninguna entidad del SIGEP tiene ese texto en el nombre. El SIGEP no trae a todo el Estado: no
     están la Rama Judicial ni empresas como Ecopetrol. Los nombres van completos y sin tildes
     («ALCALDIA DE CHIA»): pruebe con una parte más corta, p. ej. «Chía».
+- cuando: encontrado
+  si: {campo: numero_registros, valores: ["50"]}
+  texto: >
+    Salieron 50 entidades, el tope de esta búsqueda: puede haber más con ese texto en el nombre, y
+    las que falten son las de nombre más largo. Escriba una parte más larga del nombre (p. ej. «Alcaldía de
+    Chía» en lugar de «Alcaldía»).
 cobro: agregado
 canario:
   # Medido el 2026-11-02 en 2jzx-383z: «Fiscalía» da una sola entidad, la 6194, con 22 435 servidores.

@@ -18,10 +18,12 @@ Terrnova solo saca agregados por entidad. Las columnas de persona no están en l
 
 ## Campos que importan
 
-- `codigosigep`: texto de 4 dígitos con ceros a la izquierda («0346»). Medido el 2026-11-02: cada
-  código tiene un solo nombre.
+- `codigosigep`: texto con ceros a la izquierda («0346»). Medido el 2026-11-02: cada código tiene
+  un solo nombre. Medido el 2026-11-05: 3 857 códigos de 4 dígitos y 27 de 5; «346» no da nada.
 - `nombreentidad`: **en mayúsculas y sin tildes** («FISCALIA GENERAL DE LA NACION», «ALCALDIA DE
-  CHIA»). La búsqueda le quita las tildes a lo que escribe la persona.
+  CHIA»). La búsqueda le quita las tildes a lo que escribe la persona. La Ñ sí se conserva, pero
+  no siempre: «GOBERNACION DE NARIÑO» y «CORPORACION AUTONOMA REGIONAL DE NARINO» (medido el
+  2026-11-05).
 - `niveljerarquicoempleo`: 27 valores, con tildes. Los más comunes son PROFESIONAL (85 272),
   ASISTENCIAL (75 006) y TÉCNICO (48 253). También hay niveles propios de la aviación civil o la
   docencia.
@@ -41,15 +43,19 @@ activa, sin historia.
    - el Ejército (8013, «EJERCITO NACIONAL DE COLOMBIA 1») sale con 4 308 servidores, solo los
      civiles;
    - **la descripción no se cumple del todo:** hay 12 962 filas DOCENTE y 10 220 TRABAJADOR OFICIAL.
-3. **Nombres con un número al final.** «EJERCITO NACIONAL DE COLOMBIA 1» y «DIRECCION GENERAL DE LA
+3. **La Ñ va de dos formas.** Medido el 2026-11-05: «Nariño» daba 46 entidades (sin
+   CORPONARIÑO, escrita «NARINO») y «Narino» daba solo esa.
+4. **Tope de 50.** «Alcaldía» llena las 50 filas: las que faltan quedan sin decir.
+5. **Código sin el cero.** «346» en la planta salía «no encontrado» sin explicación.
+6. **Nombres con un número al final.** «EJERCITO NACIONAL DE COLOMBIA 1» y «DIRECCION GENERAL DE LA
    POLICIA NACIONAL 1» vienen así de la fuente.
 
 ## Herramientas que la usan
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `sigep_entidades_buscar` | alto | nueva: nombre → código, sin importar tildes, con aviso si no encuentra |
-| `sigep_planta_por_entidad` | alto | v2: con el nombre de la entidad y el total |
+| `sigep_entidades_buscar` | alto | nombre → código, sin importar tildes ni la Ñ, con aviso si no encuentra o llega al tope |
+| `sigep_planta_por_entidad` | alto | v2: con el nombre de la entidad y el total; el vacío explica el cero a la izquierda |
 
 ## Decisiones
 
@@ -60,3 +66,8 @@ activa, sin historia.
     de Chía).
   - Si no encuentra, el aviso dice que el SIGEP no trae a todo el Estado. Así un «no encontrado» no
     se lee como «la entidad no existe».
+- **2026-11-05, revisión de valor:**
+  - La búsqueda cambia la Ñ por N a los dos lados: «Nariño» y «Narino» dan las mismas 47.
+  - Con 50 resultados, un aviso dice que es el tope y que puede haber más.
+  - El vacío de la planta dice que el código va con los ceros a la izquierda, como lo da la
+    búsqueda.
