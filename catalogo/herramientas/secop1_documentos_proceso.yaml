@@ -1,12 +1,15 @@
 id: secop1_documentos_proceso
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop1.archivos
 pregunta: "¿Qué documentos publicó la entidad en este proceso de SECOP I?"
 descripcion: >
-  Documentos de un proceso de SECOP I por su constancia: nombre, título, descripción, tipo,
+  Documentos de un proceso de SECOP I por su constancia: nombre del archivo, descripción (qué es:
+  estudios previos, evaluación, contrato…), título, tipo,
   extensión, fecha y enlace de descarga, del más antiguo al más reciente. El enlace es una IP sin
   dominio y sin cifrado (http://20.96.127.85/descarga/…), como lo publica la fuente.
+  El título es la etiqueta del almacenamiento de SECOP I («Nuevo Sistema de Almacenamiento de
+  Archivos PUC NO.20»), igual en casi todos: lo que dice qué es el documento es la descripción.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {constancia: constancia_secop}
 consulta:
@@ -25,6 +28,10 @@ salida: Secop1DocumentosProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
 avisos:
+- cuando: vacio
+  texto: >
+    SECOP I no tiene documentos para esa constancia. Revise el número (año-tipo-consecutivo, p.
+    ej. 26-21-55446). Los procesos de SECOP II no están aquí.
 - cuando: encontrado
   texto: >
     Los enlaces de descarga van a http://20.96.127.85/descarga/…, una IP sin dominio y sin cifrado, como los publica SECOP I; por HTTPS no responde (medido el 2026-11-03). Algunos navegadores y clientes bloquean las descargas por HTTP. El archivo llega con su nombre, pero con un tipo genérico (application/octet-stream): la extensión es la del campo extension.

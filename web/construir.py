@@ -460,6 +460,12 @@ SISTEMAS = {
     "Supersolidaria": ["Sector solidario"],
     "Catastro de Bogotá": ["Valor de referencia del m²"],
     "UNGRD": ["Emergencias"],
+    "UPME": [
+        "Subestaciones",
+        "Líneas de transmisión",
+        "Centrales de generación",
+        "Ductos de hidrocarburos",
+    ],
     "Unidad de Restitución de Tierras": ["Restitución de tierras"],
     "USGS": ["Sismos"],
 }
@@ -821,6 +827,7 @@ def licencia_corta(spdx: str | None) -> str:
     return {
         "LicenseRef-banrep-aviso-legal": "aviso legal del Banco",
         "LicenseRef-dane-terminos": "términos del DANE",
+        "LicenseRef-datosgovco-terminos": "términos de datos.gov.co",
     }.get(spdx, "licencia propia de la entidad")
 
 

@@ -1,11 +1,11 @@
 id: secop_bpin_proceso
-version: 1
+version: 2
 familia: contratacion
 fuente: cce.secop2.bpin
 pregunta: "¿Con qué proyecto de inversión (BPIN) se financia este proceso o contrato de SECOP II?"
 descripcion: >
   Proyecto de inversión (código BPIN y año) con el que se FINANCIA un proceso (CO1.REQ.…), su proceso
-  de compra (CO1.BDOS.…) o un contrato (CO1.PCCNTR.…) de SECOP II, con su validación. Es el proyecto
+  de compra (CO1.BDOS.…) o un contrato (CO1.PCCNTR.…) de SECOP II, con su validación. Una fila por contrato; arriba, cuántas filas trae cada BPIN (contratos_por_bpin). Es el proyecto
   de inversión, NO el respaldo presupuestal del contrato; para los compromisos presupuestales (RP) usa
   secop_compromisos_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
@@ -25,6 +25,15 @@ consulta:
 salida: SecopBpinProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  # el CO1.REQ.11194762 trae 41 filas, una por contrato, todas del mismo BPIN: la respuesta
+  # es «con qué proyecto(s)», y así sale arriba sin leer las 41
+  contratos_por_bpin: {de: conteo_por, campo: codigo_bpin}
+avisos:
+- cuando: vacio
+  texto: >
+    SECOP II no registra un proyecto de inversión (BPIN) para ese id. Solo los procesos que se
+    pagan con inversión llevan BPIN: los de funcionamiento no lo tienen. Revise también que el
+    id sea de SECOP II (CO1.REQ., CO1.BDOS. o CO1.PCCNTR.).
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en d9na-abhe (id_proceso = CO1.REQ.11194762): 41
@@ -32,5 +41,5 @@ canario:
   entrada: {id_secop: "CO1.REQ.11194762"}
   verdad: {codigo_bpin: "2024080010085", id_contrato: "CO1.PCCNTR.10069291"}
   minimos: {numero_registros: 41}
-  campos: [anio_bpin, codigo_bpin, id_contrato, id_fase, id_proceso, numero_registros, validacion]
+  campos: [anio_bpin, codigo_bpin, contratos_por_bpin, id_contrato, id_fase, id_proceso, numero_registros, validacion]
   latencia_max_ms: 10000

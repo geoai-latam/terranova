@@ -25,8 +25,8 @@ campos:
   numero_de_constancia: {nombre: constancia, tipo: str, desc: "constancia del proceso"}
   identificador: {nombre: id_documento, tipo: str, desc: "identificador del documento"}
   nombrearchivo: {nombre: archivo, tipo: str, desc: "nombre del archivo"}
-  titulo: {nombre: titulo, tipo: str, desc: "título"}
-  descripcion: {nombre: descripcion, tipo: str, desc: "descripción"}
+  titulo: {nombre: titulo, tipo: str, desc: "etiqueta del almacenamiento de SECOP I («Nuevo Sistema de Almacenamiento de Archivos PUC NO.20»), no el nombre del documento"}
+  descripcion: {nombre: descripcion, tipo: str, desc: "qué es el documento (estudios previos, evaluación, contrato…), como lo escribió la entidad"}
   tipo: {nombre: tipo, tipo: str, desc: "tipo de documento"}
   extension: {nombre: extension, tipo: str, desc: "extensión"}
   fecha_creacion: {nombre: fecha_creacion, tipo: date, desc: "fecha de creación"}

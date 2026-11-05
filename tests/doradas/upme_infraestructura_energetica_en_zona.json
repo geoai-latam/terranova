@@ -1,0 +1,434 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-04T21:23:00+00:00",
+ "herramienta": "upme_infraestructura_energetica_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.5,
+     4.0,
+     -73.5,
+     5.0
+    ],
+    "geometria": "simplificada",
+    "limite": 1000,
+    "order": [
+     "categoria",
+     "-tension_kv",
+     "-capacidad_mw",
+     "nombre"
+    ],
+    "select": [
+     "categoria",
+     "nombre",
+     "subtipo",
+     "operador",
+     "sistema",
+     "nombre_sistema",
+     "tension_kv",
+     "capacidad_mw",
+     "capacidad_transporte",
+     "unidad_capacidad",
+     "longitud_km",
+     "estado",
+     "municipio",
+     "cod_mpio",
+     "departamento"
+    ],
+    "tabla": "upme_infraestructura_energetica"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.47322,
+           4.65077
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": 600.0,
+          "capacidad_transporte": null,
+          "categoria": "central de generación eléctrica",
+          "cod_mpio": "25386",
+          "departamento": "CUNDINAMARCA",
+          "estado": "OPERACIÓN",
+          "longitud_km": null,
+          "municipio": "LA MESA",
+          "nombre": "PAGUA",
+          "nombre_sistema": null,
+          "operador": "ENEL COLOMBIA SA ESP",
+          "sistema": null,
+          "subtipo": "HIDRAULICA",
+          "tension_kv": null,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.47322,
+           4.65077
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": 150.0,
+          "capacidad_transporte": null,
+          "categoria": "central de generación eléctrica",
+          "cod_mpio": "25386",
+          "departamento": "CUNDINAMARCA",
+          "estado": "OPERACIÓN",
+          "longitud_km": null,
+          "municipio": "LA MESA",
+          "nombre": "DARIO VALENCIA SAMPER",
+          "nombre_sistema": null,
+          "operador": "ENEL COLOMBIA SA ESP",
+          "sistema": null,
+          "subtipo": "HIDRAULICA",
+          "tension_kv": null,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -73.92887,
+           4.96885
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": 64.0,
+          "capacidad_transporte": null,
+          "categoria": "central de generación eléctrica",
+          "cod_mpio": "25817",
+          "departamento": "CUNDINAMARCA",
+          "estado": "OPERACIÓN",
+          "longitud_km": null,
+          "municipio": "TOCANCIPÁ",
+          "nombre": "ZIPAEMG 4",
+          "nombre_sistema": null,
+          "operador": "ENEL COLOMBIA SA ESP",
+          "sistema": null,
+          "subtipo": "TERMICA",
+          "tension_kv": null,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -74.45073,
+            4.8925
+           ],
+           [
+            -74.42304,
+            4.85926
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": 0.0,
+          "categoria": "ducto de hidrocarburos",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 15.48059575,
+          "municipio": null,
+          "nombre": "Alban - Mansilla",
+          "nombre_sistema": "Salgar - Vista Hermosa",
+          "operador": "Sin información",
+          "sistema": null,
+          "subtipo": "Propanoducto",
+          "tension_kv": null,
+          "unidad_capacidad": "KBLS"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -74.4507,
+            4.89257
+           ],
+           [
+            -74.4482,
+            4.887
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": 144.0,
+          "categoria": "ducto de hidrocarburos",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 11.76244137,
+          "municipio": null,
+          "nombre": "Alban - Mansilla",
+          "nombre_sistema": "Salgar - Mansilla",
+          "operador": "Sin información",
+          "sistema": null,
+          "subtipo": "Poliducto",
+          "tension_kv": null,
+          "unidad_capacidad": "KBLS"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -73.79724,
+            4.16816
+           ],
+           [
+            -73.71327,
+            4.13243
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": -999.0,
+          "categoria": "ducto de hidrocarburos",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 49.83964097,
+          "municipio": null,
+          "nombre": "Apiay - Bogotá (Usme)",
+          "nombre_sistema": "Piedemonte Llanero y Bogotá",
+          "operador": "CONSORCIO TGC",
+          "sistema": null,
+          "subtipo": "Gasoducto",
+          "tension_kv": null,
+          "unidad_capacidad": "Sin información"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -74.17928,
+            4.79812
+           ],
+           [
+            -74.17771,
+            4.79491
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "línea de transmisión eléctrica",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 5.5097683,
+          "municipio": null,
+          "nombre": "BACATÁ - NOROESTE 230 KV",
+          "nombre_sistema": null,
+          "operador": "INTERCONEXIÓN ELECTRICA S.A. E.S.P.",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "Aéreo",
+          "tension_kv": 500.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -74.17836,
+            4.79938
+           ],
+           [
+            -74.17868,
+            4.80032
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "línea de transmisión eléctrica",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 3.15533,
+          "municipio": null,
+          "nombre": "BACATA - NUEVA ESPERANZA",
+          "nombre_sistema": null,
+          "operador": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "Aéreo",
+          "tension_kv": 500.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           [
+            -74.17843,
+            4.7989
+           ],
+           [
+            -74.17868,
+            4.80032
+           ]
+          ],
+          "type": "LineString"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "línea de transmisión eléctrica",
+          "cod_mpio": null,
+          "departamento": null,
+          "estado": null,
+          "longitud_km": 45.90009983,
+          "municipio": null,
+          "nombre": "BACATÁ - NUEVA ESPERANZA 500 KV",
+          "nombre_sistema": null,
+          "operador": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "Aéreo",
+          "tension_kv": 500.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17843,
+           4.7989
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "subestación eléctrica",
+          "cod_mpio": "25799",
+          "departamento": "Cundinamarca",
+          "estado": null,
+          "longitud_km": null,
+          "municipio": "Tenjo",
+          "nombre": "Bacatá 500 kV",
+          "nombre_sistema": null,
+          "operador": "ISA-INTERCOLOMBIA S.A  E.S.P",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "AIS",
+          "tension_kv": 500.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.28308,
+           4.57308
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "subestación eléctrica",
+          "cod_mpio": "25754",
+          "departamento": "Cundinamarca",
+          "estado": null,
+          "longitud_km": null,
+          "municipio": "Soacha",
+          "nombre": "Nueva Esperanza 500 kV",
+          "nombre_sistema": null,
+          "operador": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "AIS",
+          "tension_kv": 500.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -74.17928,
+           4.79812
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "capacidad_mw": null,
+          "capacidad_transporte": null,
+          "categoria": "subestación eléctrica",
+          "cod_mpio": "25799",
+          "departamento": "Cundinamarca",
+          "estado": null,
+          "longitud_km": null,
+          "municipio": "Tenjo",
+          "nombre": "Bacatá 230 kV",
+          "nombre_sistema": null,
+          "operador": "ISA-INTERCOLOMBIA S.A  E.S.P",
+          "sistema": "STN - Sistema de transmisión nacional",
+          "subtipo": "Sin información",
+          "tension_kv": 230.0,
+          "unidad_capacidad": null
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 256,
+      "truncado": false,
+      "vistos": 256
+     },
+     "consultado_en": "2026-11-04T21:20:01.211860+00:00",
+     "copia": {
+      "filas": 2192,
+      "huella": "sha256:7ea84d677ffc5d63c0697f44cc7334912e5358c0d8f805ba49206da13e754ab9",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261104212001211860"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

@@ -1,5 +1,5 @@
 id: sdp_area_actividad_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: sdp.pot555_area_actividad
 pregunta: "¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT?"
@@ -23,6 +23,13 @@ consulta:
     limite: 5
   campos: [CODIGO_AREA_ACTIVIDAD, NOMBRE_AREA_ACTIVIDAD, ACTO_ADMINISTRATIVO, NUMERO_ACTO_ADMINISTRATIVO, FECHA_ACTO_ADMINISTRATIVO]
 salida: AreaActividadEnPunto
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ningún área de actividad del POT de Bogotá. Puede estar fuera de Bogotá,
+    o en suelo que el POT no reparte en áreas de actividad, como el suelo rural. El rectángulo
+    de cobertura incluye municipios vecinos (Soacha, Mosquera, La Calera…), que no tienen POT de
+    Bogotá: confirme que el punto o la zona está dentro del Distrito.
 cobro: punto
 canario:
   # Chapinero; medido el 2026-10-28 en la capa 9: Área de Actividad de Proximidad - AAP- Generadora

@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-22T22:59:20+00:00",
+ "grabado": "2026-11-05T02:30:00+00:00",
  "herramienta": "secop_compromisos_contrato",
  "llamadas": [
   {
@@ -9,7 +9,7 @@
     "max_filas": 1000,
     "order": "fecha_registro_item, identificador_nico, c_digo_item",
     "portal": "datos.gov.co",
-    "select": "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar",
+    "select": "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n_item, estado_integraci_n, balance_compromiso, balance_vigencia_futura, valor_a_liberar",
     "where": "id_contrato = 'CO1.PCCNTR.100201'"
    },
    "conector": "datos-abiertos-mcp",
@@ -18,8 +18,10 @@
      {
       "columns": [
        "balance_compromiso",
+       "balance_vigencia_futura",
        "c_digo_item",
        "estado_integraci_n",
+       "estado_integraci_n_item",
        "fecha_registro_item",
        "id_contrato",
        "identificador_nico",
@@ -31,8 +33,10 @@
       "rows": [
        {
         "balance_compromiso": "143169404",
+        "balance_vigencia_futura": "0",
         "c_digo_item": "717",
         "estado_integraci_n": "Exito",
+        "estado_integraci_n_item": "Con Obligación",
         "fecha_registro_item": "2017-01-05 00:00:00.0000000 -05:00",
         "id_contrato": "CO1.PCCNTR.100201",
         "identificador_nico": "CO1.SIIFC.100004",
@@ -55,7 +59,7 @@
       "conjunto": "skc9-met7",
       "max_filas": 1000,
       "portal": "datos.gov.co",
-      "select": "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n, balance_compromiso, valor_a_liberar",
+      "select": "id_contrato, identificador_nico, tipo_de_compromiso, c_digo_item, valor_item, fecha_registro_item, estado_integraci_n_item, estado_integraci_n, balance_compromiso, balance_vigencia_futura, valor_a_liberar",
       "where": "(id_contrato = 'CO1.PCCNTR.100201')"
      },
      "cumplen_en_el_portal": 1,

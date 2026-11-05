@@ -1,5 +1,5 @@
 id: igac_zona_fisica_en_punto
-version: 2
+version: 3
 familia: territorio
 fuente: igac.catastro.zona_fisica
 pregunta: "¿Qué características físicas tiene la zona homogénea del IGAC en este punto?"
@@ -30,6 +30,8 @@ salida: ZonaFisicaEnPunto
 derivados:
   zona: {de: capa, valores: {"15": rural, "16": urbano}}
   municipio_divipola: {de: prefijo, campo: codigo_municipio_zona, n: 5}
+  # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
+  municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}  # predio rural de Chía; su REGISTRO_2 dice zona física 035
@@ -42,5 +44,5 @@ canario:
     uso_actual_suelo_significado: Tierras de labor no irrigadas
     zona: rural
     municipio_divipola: "25175"
-  campos: [area_homogenea_tierra, codigo_municipio_zona, codigo_zona_fisica, disponibilidad_agua, disponibilidad_agua_significado, influencia_vial, influencia_vial_significado, municipio_divipola, norma_uso_suelo, uso_actual_suelo, uso_actual_suelo_significado, vigencia, zona]
+  campos: [area_homogenea_tierra, codigo_municipio_zona, codigo_zona_fisica, disponibilidad_agua, disponibilidad_agua_significado, influencia_vial, influencia_vial_significado, municipio, municipio_divipola, norma_uso_suelo, uso_actual_suelo, uso_actual_suelo_significado, vigencia, zona]
   latencia_max_ms: 5000

@@ -38,8 +38,10 @@ def test_lo_vendible_es_publicado_y_con_uso_comercial() -> None:
         assert f.estado == "publicada" and f.uso_comercial == "si", h.id
     for hid in NO_VENDIBLES:
         assert not vendible(CATALOGO.fuentes[CATALOGO.herramientas[hid].fuente]), hid
-    # los dos casos que encontró la auditoría del sitio (2026-11-01)
-    assert {"dian_usuario_aduanero_por_nit", "catalogo_buscar"} <= NO_VENDIBLES
+    # los dos casos que encontró la auditoría del sitio (2026-11-01); catalogo_buscar se vende
+    # desde que se verificó la licencia del índice (términos de datos.gov.co, 2026-11-04)
+    assert "dian_usuario_aduanero_por_nit" in NO_VENDIBLES
+    assert "catalogo_buscar" in puerta.VENDIBLE.herramientas
 
 
 def test_el_sitio_cuenta_lo_mismo_que_anuncia_la_puerta() -> None:

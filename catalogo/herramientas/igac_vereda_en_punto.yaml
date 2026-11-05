@@ -1,5 +1,5 @@
 id: igac_vereda_en_punto
-version: 1
+version: 2
 familia: territorio
 fuente: igac.catastro.vereda
 pregunta: "¿En qué vereda del catastro IGAC está este punto?"
@@ -23,9 +23,11 @@ salida: VeredaEnPunto
 # `municipio_divipola`, de los 5 primeros dígitos del código de la vereda.
 derivados:
   municipio_divipola: {de: prefijo, campo: codigo_vereda, n: 5}
+  # el nombre, de la tabla DIVIPOLA del DANE: «25175» solo no dice que es Chía
+  municipio: {de: codigo, campo: municipio_divipola, valores_lista: divipola_municipios}
 cobro: punto
 canario:
   entrada: {lon: -74.0262, lat: 4.8619}
   verdad: {codigo_vereda: "25175000000000005", nombre_vereda: YERBABUENA, municipio_divipola: "25175"}
-  campos: [codigo_vereda, codigo_vereda_anterior, municipio_divipola, nombre_vereda]
+  campos: [codigo_vereda, codigo_vereda_anterior, municipio, municipio_divipola, nombre_vereda]
   latencia_max_ms: 5000

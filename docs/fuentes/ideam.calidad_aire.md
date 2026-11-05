@@ -89,3 +89,14 @@ La Tabla 2 fija metas más bajas a partir de 2030; la herramienta no las usa.
   - Chía 2024: PM10 de 19,5 y PM2.5 de 10,9, sin superar la norma.
 - **Pendiente:** pasarla a copia por año (era lenta: el canario tardó 40 s el 2026-11-02 y 8 s el
   2026-11-03) y calcular los límites de 24 horas con promedios diarios.
+
+## Revisión de valor (2026-11-04)
+
+- **Probado en producción:**
+  - Bogotá 2025: 104 series de 21 estaciones, 2 sobre la norma anual, en 32,8 s. Pasa el tope de
+    20 s del canario, que es Medellín. Por eso sigue pendiente la copia.
+  - Chía 2025: una estación con unas 2 216 horas, que da «pocas horas», bien.
+  - Cali 2019: vacío, sin aviso.
+- **Arreglo:**
+  - `cobertura.desde_anio: 2020`: 2019 da `fuera_de_cobertura` y lo dice.
+  - Un aviso en el vacío para el municipio sin estaciones.

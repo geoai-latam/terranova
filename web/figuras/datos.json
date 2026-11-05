@@ -1,14 +1,14 @@
 {
  "capas": {
-  "fuentes": 179,
-  "herramientas": 221,
+  "fuentes": 182,
+  "herramientas": 223,
   "familias": [
    [
-    "Estadísticas",
-    47
+    "Territorio",
+    48
    ],
    [
-    "Territorio",
+    "Estadísticas",
     47
    ],
    [
@@ -68,7 +68,7 @@
     "licencia": "CC BY-SA 4.0",
     "servido": "la fuente, en vivo",
     "corta": "¿Cuánto contrata?",
-    "fuentes": 32
+    "fuentes": 33
    },
    {
     "herramienta": "pnn_areas_protegidas_en_punto",
@@ -105,6 +105,7 @@
    2,
    2,
    2,
+   1,
    1,
    1,
    1,

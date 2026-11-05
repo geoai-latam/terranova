@@ -1,5 +1,5 @@
 id: ani_recaudo_peaje_mensual
-version: 1
+version: 2
 familia: territorio
 fuente: ani.recaudo_peajes
 pregunta: "¿Cuánto dinero recaudó este peaje de la ANI cada mes de un año?"
@@ -31,6 +31,14 @@ consulta:
 derivados:
   numero_registros: {de: conteo, tipo: int}
   total_recaudo: {de: suma, campo: recaudo, tipo: int}
+  ultimo_mes: {de: ultimo, campo: mes, tipo: date}
+avisos:
+- cuando: encontrado
+  si: {campo: numero_registros, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año no trae los doce meses: van los que dice numero_registros, hasta ultimo_mes, y
+    total_recaudo suma solo esos. No es el recaudo del año completo. Puede ser el año en curso (la
+    ANI publica con meses de atraso) o un peaje que empezó o dejó de operar ese año.
 salida: RecaudoPeajeMensual
 cobro: agregado
 canario:
@@ -39,5 +47,5 @@ canario:
   # viene dos veces).
   entrada: {nombre: Siberia, anio: "2021"}
   verdad: {peaje: SIBERIA, id_peaje: 15, mes: "2021-01-01", recaudo: 6742170600, numero_registros: 12, total_recaudo: 90167509500}
-  campos: [id_peaje, mes, numero_registros, peaje, recaudo, recaudo_fsv, recaudo_sobrante, total_recaudo]
+  campos: [id_peaje, mes, numero_registros, peaje, recaudo, recaudo_fsv, recaudo_sobrante, total_recaudo, ultimo_mes]
   latencia_max_ms: 20000

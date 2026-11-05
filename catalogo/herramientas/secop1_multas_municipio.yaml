@@ -1,5 +1,5 @@
 id: secop1_multas_municipio
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop1.multas
 pregunta: "¿Qué multas y sanciones a contratistas se impusieron en este municipio (SECOP I)?"
@@ -20,7 +20,8 @@ consulta:
     portal: datos.gov.co
     select: "nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso"
     # Spec 07: 94 filas son de una «Z ENTIDAD DE PRUEBA».
-    where: "upper(municipio) = upper('{municipio}') AND nombre_entidad not like '%PRUEBA%'"
+    # la fuente escribe «Bogotá D.C.»: con «Bogotá» salía vacío y había 632 multas (2026-11-04)
+    where: "upper(municipio) in (upper('{municipio}'), upper('{municipio} D.C.')) AND nombre_entidad not like '%PRUEBA%'"
     order: "fecha_de_firmeza DESC, numero_de_resolucion"
     max_filas: 500
   campos: [nombre_entidad, nit_entidad, municipio, numero_de_resolucion, numero_de_contrato, documento_contratista, nombre_contratista, valor_sancion, fecha_de_firmeza, fecha_de_publicacion, ruta_de_proceso]

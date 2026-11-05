@@ -1,5 +1,5 @@
 id: pnn_areas_protegidas_en_punto
-version: 1
+version: 2
 familia: ambiente
 fuente: pnn.runap
 pregunta: "¿Qué áreas protegidas del RUNAP contienen este punto?"
@@ -22,6 +22,12 @@ consulta:
     order: [ap_nombre]
     limite: 20
   campos: [ap_nombre, ap_categoria, organizacion, area_ha_total_resolucion, fecha_inscrita]
+avisos:
+- cuando: vacio
+  texto: >
+    El punto no cae en ningún área protegida inscrita en el RUNAP. Un área declarada que aún no
+    esté inscrita no sale, ni los suelos de protección de un POT o de un POMCA (en la jurisdicción
+    de la CAR, car_pomca_en_punto).
 salida: AreasProtegidasEnPunto
 cobro: punto
 canario:
