@@ -1,8 +1,56 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T07:27:03+00:00",
+ "grabado": "2026-11-05T13:27:32+00:00",
  "herramienta": "cnmh_minas_municipio",
  "llamadas": [
+  {
+   "argumentos": {
+    "id": "52eu-ic7d",
+    "portal": "datos.gov.co",
+    "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+    "where": "a_o >= 2020"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_anio",
+       "hasta_mes"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_anio": "2026",
+        "hasta_mes": "1"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "52eu-ic7d",
+     "consulta": {
+      "conjunto": "52eu-ic7d",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+      "where": "(a_o >= 2020)"
+     },
+     "filas": 1,
+     "filas_que_resume": 597,
+     "filtro_soql": "(a_o >= 2020)",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
   {
    "argumentos": {
     "group": "a_o",

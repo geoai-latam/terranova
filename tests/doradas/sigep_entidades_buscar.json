@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T22:48:40+00:00",
+ "grabado": "2026-11-05T13:23:56+00:00",
  "herramienta": "sigep_entidades_buscar",
  "llamadas": [
   {
@@ -11,7 +11,7 @@
     "order": "length(nombreentidad), nombreentidad",
     "portal": "datos.gov.co",
     "select": "codigosigep, nombreentidad, orden, count(*) AS servidores",
-    "where": "upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U')"
+    "where": "replace(upper(nombreentidad), 'Ñ', 'N') like replace(replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -48,11 +48,11 @@
       "max_filas": 50,
       "portal": "datos.gov.co",
       "select": "codigosigep, nombreentidad, orden, count(*) AS servidores",
-      "where": "(upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'))"
+      "where": "(replace(upper(nombreentidad), 'Ñ', 'N') like replace(replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'))"
      },
      "filas": 1,
      "filas_que_resume": 22435,
-     "filtro_soql": "(upper(nombreentidad) like replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'))",
+     "filtro_soql": "(replace(upper(nombreentidad), 'Ñ', 'N') like replace(replace(replace(replace(replace(replace(replace(upper('%Fiscalía%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

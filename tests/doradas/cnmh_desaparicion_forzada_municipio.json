@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T07:27:00+00:00",
+ "grabado": "2026-11-05T13:27:16+00:00",
  "herramienta": "cnmh_desaparicion_forzada_municipio",
  "llamadas": [
   {
@@ -156,6 +156,54 @@
      "filas": 22,
      "filas_que_resume": 270,
      "filtro_soql": "(c_digo_dane_de_municipio = '05313')",
+     "portal": "datos.gov.co"
+    },
+    "geo_result": "1"
+   },
+   "tool": "datos_consultar"
+  },
+  {
+   "argumentos": {
+    "id": "c59y-p4sz",
+    "portal": "datos.gov.co",
+    "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+    "where": "a_o >= 2020"
+   },
+   "conector": "datos-abiertos-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "hasta_anio",
+       "hasta_mes"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "hasta_anio": "2025",
+        "hasta_mes": "9"
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "conjunto": "c59y-p4sz",
+     "consulta": {
+      "conjunto": "c59y-p4sz",
+      "max_filas": 5000,
+      "portal": "datos.gov.co",
+      "select": "max(a_o) AS hasta_anio, max(a_o * 100 + mes) - max(a_o) * 100 AS hasta_mes",
+      "where": "(a_o >= 2020)"
+     },
+     "filas": 1,
+     "filas_que_resume": 242,
+     "filtro_soql": "(a_o >= 2020)",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

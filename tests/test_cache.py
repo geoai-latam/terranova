@@ -150,7 +150,9 @@ async def test_el_aviso_de_homonimos_sale_tambien_desde_cache() -> None:
     class Grabada(Fuente):
         async def llamar(self, herramienta: str, argumentos: dict[str, Any]) -> dict[str, Any]:
             self.llamadas += 1
-            copia: dict[str, Any] = json.loads(json.dumps(grabado["llamadas"][0]["respuesta"]))
+            # la principal o el complemento (hasta dónde llega el corte), según los argumentos
+            (grabada,) = [ll for ll in grabado["llamadas"] if ll["argumentos"] == argumentos]
+            copia: dict[str, Any] = json.loads(json.dumps(grabada["respuesta"]))
             return copia
 
     fuente, reloj, almacen = Grabada(), Reloj(), AlmacenMemoria()
@@ -158,7 +160,8 @@ async def test_el_aviso_de_homonimos_sale_tambien_desde_cache() -> None:
     ej = Ejecutor(CATALOGO, {"datos-abiertos-mcp": fuente}, almacen, reloj)
     primero = await ej.ejecutar(h.id, {"municipio_divipola": "05313"})
     segundo = await ej.ejecutar(h.id, {"municipio_divipola": "05313"})
-    assert fuente.llamadas == 1 and segundo.procedencia[0].servido_desde == "cache"
+    # la primera, la principal y el complemento; la segunda sale toda de la caché
+    assert fuente.llamadas == 2 and segundo.procedencia[0].servido_desde == "cache"
     for sobre in (primero, segundo):
         homonimos = [a for a in sobre.avisos if a.startswith("Se consultó 05313 = GRANADA")]
         assert len(homonimos) == 1 and "50313 GRANADA (META)" in homonimos[0]

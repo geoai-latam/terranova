@@ -1,11 +1,11 @@
 id: policia_hurto_comercio_residencias_municipio
-version: 3
+version: 4
 familia: justicia
 fuente: policia.hurto_comercio_residencias
 pregunta: "¿Cuántos robos a comercios y viviendas hubo en este municipio en el año?"
 descripcion: >
   Hurtos a comercios y residencias reportados por la Policía Nacional en un municipio (DIVIPOLA) y un año: casos
-  por tipo y género de la víctima (vacío si la víctima es un negocio). La fuente solo trae residencias desde 2024: antes, solo comercios. Son denuncias: no todos los delitos se denuncian. El año en curso está incompleto:
+  por tipo y género de la víctima («sin dato» si la víctima es un negocio). La fuente solo trae residencias desde 2024: antes, solo comercios. Son denuncias: no todos los delitos se denuncian. El año en curso está incompleto:
   fuente_hasta_mes dice hasta qué mes lo publica la fuente.
   (Fuente: Policía Nacional; licencia: CC BY-SA 4.0.)
 entrada: {municipio_divipola: divipola, anio: int}
@@ -16,7 +16,7 @@ consulta:
   argumentos:
     id: 6sqw-8cg5
     portal: datos.gov.co
-    select: "tipo_de_hurto, genero, sum(cantidad::number) AS casos"
+    select: "tipo_de_hurto, coalesce(genero, 'sin dato') AS genero, sum(cantidad::number) AS casos"
     where: "codigo_dane = '{municipio_divipola}000' AND fecha_hecho like '%/{anio}'"
     group: "tipo_de_hurto, genero"
     order: "tipo_de_hurto, genero"
@@ -46,6 +46,11 @@ avisos:
   texto: >
     El año está incompleto: la fuente todavía no lo publica entero, en todo el país (fuente_hasta_mes
     es el último mes publicado). No lo compare con un año entero: compare los mismos meses.
+- cuando: vacio
+  texto: >
+    La Policía no registra denuncias de hurto a comercios o residencias para ese municipio y año. La fuente solo trae hurto a residencias desde 2024. Son denuncias:
+    cero denuncias no prueba que no haya habido delitos. Si es el año en curso, la fuente aún no lo
+    publica entero.
 cobro: agregado
 canario:
   # Medido el 2026-10-23 en 6sqw-8cg5: Chía 2024 suma 361 casos; el primer grupo (entidades comerciales, sin género: la víctima es un negocio) tiene 220.
