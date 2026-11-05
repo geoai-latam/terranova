@@ -1,5 +1,5 @@
 id: secop_cdp_contrato
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop2.cdps
 pregunta: "¿Qué certificados de disponibilidad presupuestal (CDP) tiene este contrato de SECOP II?"
@@ -29,10 +29,16 @@ consulta:
 salida: SecopCdpContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
+  cdps: {de: distintos, campo: id_cdp, tipo: int}
 avisos:
 - cuando: encontrado
   texto: >
     El estado y los saldos son los de la integración del contrato con el SIIF Nación, el sistema de presupuesto de las entidades nacionales. Las entidades territoriales no lo usan: el 76 % de las filas de la fuente está «No iniciado» (7,9 millones de 10,5 millones; medido el 2026-11-03), sobre todo gobernaciones, distritos y municipios, y sus saldos no siguen la ejecución del contrato. «Con compromiso» y «Generado» salen sobre todo en entidades nacionales (ANT, ICA, INVIAS). La fecha de consulta al SIIF viene vacía en el 84 % de las filas. Lo pagado está en secop_pagos_contrato.
+- cuando: encontrado
+  texto: >
+    Si el CDP financia varios proyectos (BPIN), sale una fila por BPIN con los mismos saldos: no se
+    suman (el contrato CO1.PCCNTR.5588480 de Támesis trae un CDP de 242 025 092 en dos filas, una
+    por cada BPIN; sumarlas lo dobla).
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en a86w-fh92 (id_contrato = CO1.PCCNTR.5588480): 4 filas, 2
@@ -40,5 +46,5 @@ canario:
   entrada: {id_contrato: "CO1.PCCNTR.5588480"}
   verdad: {id_contrato: "CO1.PCCNTR.5588480", id_cdp: "CO1.SIIFITEM.122238973", bpin: "2020057890049"}
   minimos: {numero_registros: 2}
-  campos: [bpin, contratista, destino_gasto, documento_contratista, entidad, estado, id_cdp, id_contrato, nit_entidad, numero_registros, saldo_cdp, saldo_por_comprometer, saldo_vigencias_futuras, valor_utilizado]
+  campos: [bpin, cdps, contratista, destino_gasto, documento_contratista, entidad, estado, id_cdp, id_contrato, nit_entidad, numero_registros, saldo_cdp, saldo_por_comprometer, saldo_vigencias_futuras, valor_utilizado]
   latencia_max_ms: 10000
