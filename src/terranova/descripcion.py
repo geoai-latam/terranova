@@ -43,7 +43,7 @@ def llms_txt(c: Catalogo) -> str:
     lineas = [
         "# Terrnova",
         "",
-        "> Puerta única sobre fuentes oficiales colombianas y globales, con una llave de prueba "
+        "> Puerta única sobre fuentes gubernamentales y no gubernamentales, colombianas y globales, con una llave de prueba "
         "y planes de pago por créditos (ADR-0029). Cada respuesta es un sobre rt/1 con "
         "procedencia, licencia, completitud y `servido_desde`.",
         "",
@@ -158,7 +158,8 @@ def tarjeta_mcp(c: Catalogo) -> dict[str, Any]:
         "title": "Terrnova",
         "version": __version__,
         "description": (
-            "Fuentes oficiales colombianas y globales con procedencia y licencia en cada respuesta "
+            "Fuentes gubernamentales y no gubernamentales, colombianas y globales, con procedencia y "
+            "licencia en cada respuesta "
             "(contrato rt/1)."
         ),
         "transport": {"type": "streamable-http", "endpoint": "/mcp"},
