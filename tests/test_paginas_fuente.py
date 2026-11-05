@@ -10,7 +10,7 @@ import pytest
 
 from terranova import puerta
 from terranova.app import modelo_entrada
-from terranova.contrato import PAGINA, TAM_PAGINA
+from terranova.contrato import PAGINA, TAM_PAGINA, Sobre
 from terranova.errores import ErrorEntrada
 
 UPME = "upme_infraestructura_energetica_en_zona"
@@ -63,11 +63,11 @@ class CopiaFalsa:
         }
 
 
-def _aviso(sobre: Any, texto: str) -> str:
+def _aviso(sobre: Sobre, texto: str) -> str:
     return next(a for a in sobre.avisos if texto in a)
 
 
-async def _pagina(copia: CopiaFalsa, **extra: int) -> Any:
+async def _pagina(copia: CopiaFalsa, **extra: int) -> Sobre:
     puerta.usar_conectores({"copia": copia})
     try:
         return await puerta.ejecutar(UPME, {**ZONA, **extra})
