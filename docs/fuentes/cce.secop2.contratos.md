@@ -144,3 +144,15 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 - Las fechas de la fuente ahora traen hora (`2023-06-26T18:15:18.040`); la ficha las da como
   fecha, igual que antes.
 - Un id que no existe (`CO1.PCCNTR.1`) da `no_encontrado` en 4,9 s.
+
+## Revisión de valor: buscar en el texto de una entidad (2026-11-04)
+
+- `secop_contratos_buscar` busca en todo el país. «mantenimiento de vías terciarias» da 1 308
+  contratos; salen los 50 más recientes y el aviso pide acotar «por zona, periodo o filtro», pero
+  la herramienta solo recibe el texto.
+- Nueva `secop_contratos_buscar_entidad` (NIT + texto) sobre la misma copia, que está ordenada por
+  `nit_entidad`. Pitalito (891180077) con «mantenimiento vías» da 31 contratos, todos del tema
+  (volquetas, material de cantera, maquinaria, apoyo a la meta de vías), sin tope.
+- Verdad del canario, medida en la fuente con `like '%MANTENIMIENTO%VÍAS%'` (con y sin tilde)
+  desde 2023: 27. La búsqueda pide las palabras en cualquier orden y encuentra 31.
+- La dorada solo guarda las filas de empresas (SAS); el total de la copia queda en 31.

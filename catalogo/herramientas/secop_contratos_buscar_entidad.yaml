@@ -1,0 +1,40 @@
+id: secop_contratos_buscar_entidad
+version: 1
+familia: contratacion
+fuente: cce.secop2.contratos_copia
+pregunta: "¿Qué contratos de esta entidad hablan de esto en su objeto?"
+descripcion: >
+  Busca, entre los contratos de SECOP II de UNA entidad (por su NIT), los que tienen en su objeto
+  todas las palabras pedidas, en español y sin importar mayúsculas (no siempre une singular y
+  plural). Da los 50 más recientes, con contratista, valor, fecha y enlace, y cuántos hay en total.
+  Sirve para «¿qué contratos de vías firmó la alcaldía de Pitalito?». El NIT sale de
+  secop_entidades_buscar o secop_entidades_municipio; un NIT puede cubrir varias entidades
+  (alcaldía, personería, concejo) y todas entran. Para buscar en todo el país usa
+  secop_contratos_buscar. Sale de la copia de Terrnova, actualizada a diario: cubre lo firmado desde
+  la ventana de la copia (la procedencia lo dice).
+  (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
+entrada: {nit_entidad: nit_entidad, texto: nombre}
+consulta:
+  operacion: buscar
+  tool: consultar_copia
+  argumentos:
+    tabla: secop_contratos
+    texto: "{texto}"
+    filtros: {nit_entidad: "{nit_entidad}"}
+    select: [id_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, fecha_de_firma, urlproceso]
+    order: ["-fecha_de_firma", id_contrato]
+    limite: 50
+  campos: [id_contrato, proceso_de_compra, nombre_entidad, nit_entidad, departamento, ciudad, proveedor_adjudicado, objeto_del_contrato, tipo_de_contrato, modalidad_de_contratacion, estado_contrato, valor_del_contrato, fecha_de_firma, urlproceso]
+salida: ContratosBuscar
+derivados:
+  coincidencias: {de: completitud_total, tipo: int}
+cobro: agregado
+canario:
+  # Medido el 2026-11-04 en https://www.datos.gov.co/resource/jbjy-vk9h.json con
+  # nit_entidad='891180077' AND fecha_de_firma>='2023-01-01' AND (upper(objeto) like
+  # '%MANTENIMIENTO%VÍAS%' OR like '%MANTENIMIENTO%VIAS%') (0,6 s): 27 contratos. La búsqueda pide
+  # las dos palabras en cualquier orden, así que encuentra al menos esos. Crece con cada contrato.
+  entrada: {nit_entidad: "891180077", texto: mantenimiento vías}
+  minimos: {coincidencias: 27}
+  campos: [coincidencias, contratista, departamento, entidad, estado, fecha_firma, id_contrato, id_proceso, modalidad, municipio, nit_entidad, objeto, tipo_contrato, url_proceso, valor]
+  latencia_max_ms: 3000

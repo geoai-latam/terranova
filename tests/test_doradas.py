@@ -266,3 +266,16 @@ async def test_un_contrato_de_secop2_dice_cuanto_falta_por_pagar_y_de_que_bolsa_
     assert datos["valor_pendiente_pago"] == datos["valor"] == 2602628368
     assert datos["recursos_propios_territoriales"] == datos["valor"]
     assert (datos["destino_gasto"], datos["dias_adicionados"]) == ("Inversión", 0)
+
+
+@pytest.mark.anyio
+async def test_buscar_en_una_entidad_trae_todo_sin_tope() -> None:
+    """Revisión de valor: en todo el país, «mantenimiento de vías terciarias» da 1 308, se ven 50
+    y el aviso pide acotar sin dar cómo. En Pitalito, «mantenimiento vías» da 31, todos
+    (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_contratos_buscar_entidad"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    assert sobre.datos["coincidencias"] == 31
+    assert {e["nit_entidad"] for e in sobre.datos["elementos"]} == {"891180077"}
+    assert not any(a.startswith("Vinieron") for a in sobre.avisos)

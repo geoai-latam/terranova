@@ -59,6 +59,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `secop_compromisos_contrato` | ¿Qué compromisos presupuestales respaldan este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_contrato_por_id` | ¿Qué dice este contrato de SECOP II? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 2 |
 | `secop_contratos_buscar` | ¿Qué contratos de SECOP II hablan de esto en su objeto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
+| `secop_contratos_buscar_entidad` | ¿Qué contratos de esta entidad hablan de esto en su objeto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_entidad` | ¿Cuántos contratos firmó esta entidad estatal en SECOP II cada año y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_entidad_anio` | ¿Qué contratos firmó esta entidad en el año, de qué tipo y por qué modalidad? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
 | `secop_contratos_municipio` | ¿Cuántos contratos ha firmado el Estado en este municipio y por cuánto? | Agencia Nacional de Contratación Pública, Colombia Compra Eficiente (ANCP-CCE) | CC-BY-SA-4.0 | 5 |
