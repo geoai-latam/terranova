@@ -653,7 +653,16 @@ def descargar_arcgis(
                 propiedades = rasgo.get("properties") or {}
                 fila = {c: propiedades.get(c) for c in columnas}
                 if copia.espacial:
-                    fila[GEOMETRIA] = rasgo.get("geometry")
+                    geometria = rasgo.get("geometry")
+                    if geometria is not None and not geometria.get("coordinates"):
+                        # un punto sin coordenadas en la fuente (red adscrita de Bogotá,
+                        # «Dindalito»): la fila se copia sin geometría, no tumba la copia
+                        print(
+                            f"aviso {fuente.id}: {fila.get(copia.clave)} sin coordenadas",
+                            file=sys.stderr,
+                        )
+                        geometria = None
+                    fila[GEOMETRIA] = geometria
                 pagina.append(fila)
             clave = pagina[-1].get(copia.clave)
             if (
@@ -676,6 +685,14 @@ def descargar_arcgis(
             http.close()
 
 
+def _url_servicio(base: str, ruta: str) -> str:
+    """La URL de una capa de `copia.servicios`: relativa a la de la fuente o, si la capa vive en
+    otro servidor (p. ej. los bomberos en Catastro y la policía en la Secretaría de Seguridad),
+    completa."""
+    return ruta if ruta.startswith("https://") else f"{base}/{ruta}"
+
+
+_OID = "esriFieldTypeOID"
 POR_SERVICIO = 1_000_000  # la clave de la copia: posición del servicio por esto + el id en su capa
 
 
@@ -700,10 +717,13 @@ def descargar_arcgis_servicios(
     http = cliente or httpx.Client(timeout=600, headers={"User-Agent": "terranova-copias/1"})
     try:
         for posicion, (ruta, valor) in enumerate(copia.servicios.items(), start=1):
-            servicio, _, capa = ruta.rpartition("/")
-            meta = _pedir_arcgis(http, f"{fuente.url}/{ruta}", {"f": "json"})
+            servicio, _, capa = _url_servicio(fuente.url, ruta).rpartition("/")
+            meta = _pedir_arcgis(http, f"{servicio}/{capa}", {"f": "json"})
             nombres = {str(c.get("name")) for c in meta.get("fields") or []}
-            id_capa = str(meta.get("objectIdField") or "OBJECTID")
+            # un MapServer no siempre dice `objectIdField` (los bomberos de Bogotá: OBJECTID_1);
+            # el campo de tipo OID sí lo dice
+            oid = [c.get("name") for c in meta.get("fields") or [] if c.get("type") == _OID]
+            id_capa = str(meta.get("objectIdField") or next(iter(oid), None) or "OBJECTID")
             origen = {}  # columna de la copia → nombre en esta capa
             for columna, campo in fuente.campos.items():
                 if columna in propias:
@@ -718,7 +738,7 @@ def descargar_arcgis_servicios(
             campos[id_capa] = fuente.campos[copia.clave]
             una = fuente.model_copy(
                 update={
-                    "url": f"{fuente.url}/{servicio}",
+                    "url": servicio,
                     "campos": campos,
                     "copia": copia.model_copy(
                         update={

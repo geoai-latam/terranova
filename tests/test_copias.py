@@ -1231,3 +1231,57 @@ def test_cada_elemento_sale_con_la_clave_de_la_copia() -> None:
         upme, {"group": ["categoria"], "agregados": {"n": "count"}, "limite": 10}
     )
     assert '"id_elemento"' not in agregado.sql
+
+
+class _EmergenciasFalsas:
+    """Bomberos (sin `objectIdField`: su id es OBJECTID_1, de tipo OID) y CAI en otro servidor,
+    como en la IDE de Bogotá; el CAI 9 trae un punto vacío."""
+
+    def __init__(self) -> None:
+        self.pedidos: list[str] = []
+
+    def get(self, url: str, params: dict[str, Any]) -> _Respuesta:
+        self.pedidos.append(url)
+        bomberos = "bomberos" in url
+        id_capa = "OBJECTID_1" if bomberos else "OBJECTID"
+        nombre, direccion, telefono = (
+            ("NOMBRE", "DIRECCION", "TELEFONOS")
+            if bomberos
+            else ("CAINOMBRE", "CAIDIR_SIT", "CAITELEFON")
+        )
+        if not url.endswith("/query"):
+            campos = [{"name": id_capa, "type": "esriFieldTypeOID"}]
+            return _Respuesta(
+                {"fields": [*campos, *({"name": n} for n in (nombre, direccion, telefono))]}
+            )
+        if params.get("returnCountOnly"):
+            return _Respuesta({"count": 2})
+        if not params["where"].endswith("IS NOT NULL"):
+            return _Respuesta({"type": "FeatureCollection", "features": []})
+        rasgos = [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [] if c == 9 else [-74.07, 4.61]},
+                "properties": {id_capa: c, nombre: f"sede {c}", direccion: "KR 1", telefono: "1"},
+            }
+            for c in (8, 9)
+        ]
+        return _Respuesta({"type": "FeatureCollection", "features": rasgos})
+
+
+def test_varias_capas_en_otro_servidor_sin_objectidfield_y_con_un_punto_vacio() -> None:
+    from terranova.copias import descargar_arcgis
+
+    fuente = CATALOGO.fuentes["bogota.equipamientos_emergencia"]
+    copia = fuente.copia
+    assert copia is not None
+    cai = next(r for r in copia.servicios if r.startswith("https://") and r.endswith("/22"))
+    dos = {"emergencias/bomberos/MapServer/0": "estación de bomberos", cai: "CAI"}
+    fuente = fuente.model_copy(update={"copia": copia.model_copy(update={"servicios": dos})})
+    http = _EmergenciasFalsas()
+    filas = [f for p in descargar_arcgis(fuente, cliente=http, pausa_s=0) for f in p]
+    assert [f["id_elemento"] for f in filas] == [1_000_008, 1_000_009, 2_000_008, 2_000_009]
+    assert http.pedidos[0] == f"{fuente.url}/emergencias/bomberos/MapServer/0"
+    assert any(u == f"{cai}/query" for u in http.pedidos)  # la ruta completa, sin la base
+    assert [f["NOMBRE"] for f in filas[2:]] == ["sede 8", "sede 9"]  # por el alias CAINOMBRE
+    assert filas[0]["_geom"]["type"] == "Point" and filas[1]["_geom"] is None

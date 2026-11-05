@@ -1,0 +1,5 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: bogota.equipamientos_emergencia
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services?f=json

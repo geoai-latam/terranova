@@ -401,3 +401,24 @@ async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> 
     assert datos["total"] == 182 and datos["por_fecha"] == {"2024-02-01": 182}
     assert {e["producto"] for e in datos["elementos"]} == {"VIIRS_SNPP_SP"}
     assert {e["confianza_significado"] for e in datos["elementos"]} <= {"baja", "nominal", "alta"}
+
+
+@pytest.mark.anyio
+async def test_emergencias_de_bogota_por_tipo() -> None:
+    """Bomberos, policía, CAI y red pública de salud de Bogotá, medidos en la copia el 2026-11-05:
+    16 sedes en el centro (10 CAI, 3 estaciones de policía, 2 de salud y la de bomberos Central).
+    El nombre de la policía sale de EPODESCRIP, sin la «í» rota de EPONOMBRE."""
+    h = CATALOGO.herramientas["bogota_emergencias_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 16
+    assert datos["por_tipo"] == {
+        "CAI": 10,
+        "estación de policía": 3,
+        "sede de la red pública de salud": 2,
+        "estación de bomberos": 1,
+    }
+    nombres = {e["nombre"] for e in datos["elementos"]}
+    assert "Estación de Policía Teusaquillo" in nombres
+    assert "Estación de Bomberos Central - Carlos Julio Rico Cuellar" in nombres
