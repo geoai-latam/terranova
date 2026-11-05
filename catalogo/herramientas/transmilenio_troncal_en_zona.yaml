@@ -42,5 +42,5 @@ canario:
   # cable y 8 trazados: 40. En todo el servicio, 153 estaciones, 4 de cable y 22 trazados.
   entrada: {bbox: [-74.10, 4.62, -74.04, 4.68]}
   minimos: {total: 40}
-  campos: [accesos, accesos_deprimido, accesos_espacio_publico, accesos_puente, enlace, estado_operacion, estado_operacion_significado, etapa_operacion, etapa_operacion_significado, fin, id_trazado, letra_troncal, longitud_km, nombre, numero_estacion, origen, por_tipo, tipo, tipo_estacion, tipo_estacion_significado, total, troncal, ubicacion, vagones]
+  campos: [accesos, accesos_deprimido, accesos_espacio_publico, accesos_puente, enlace, estado_operacion, estado_operacion_significado, etapa_operacion, etapa_operacion_significado, fin, id_elemento, id_trazado, letra_troncal, longitud_km, nombre, numero_estacion, origen, por_tipo, tipo, tipo_estacion, tipo_estacion_significado, total, troncal, ubicacion, vagones]
   latencia_max_ms: 8000

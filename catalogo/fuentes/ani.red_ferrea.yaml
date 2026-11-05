@@ -25,6 +25,7 @@ cobertura: {pais: CO, excluye: ["vías férreas sin contrato de la ANI", "estaci
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa de la ANI (cambia si la entidad republica la capa)"}
   concesion: {nombre: corredor, tipo: str, desc: "corredor o contrato férreo (p. ej. «Red férrea del Atlántico»)"}
   tipo_contr: {nombre: tipo_contrato, tipo: str, desc: "«Concesión», «Obra pública» o «Estructuración»"}
   admin: {nombre: administracion, tipo: str, desc: "cómo lo administra la ANI (p. ej. «ANI - Gestión»)"}

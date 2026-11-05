@@ -1211,3 +1211,17 @@ def test_desde_sigue_la_copia_con_offset_y_orden_estable() -> None:
     assert "OFFSET" not in sin_desde.sql and sin_desde.parametros[-1] == 10
     with pytest.raises(ErrorCopia):
         plan_de_consulta(upme, {"select": ["categoria"], "desde": -1})
+
+
+def test_cada_elemento_sale_con_la_clave_de_la_copia() -> None:
+    """P0.6 (visores): la clave de la copia va en el select aunque la ficha no la pida, para que
+    dos elementos con los mismos atributos se distingan; con agregados no, porque no es una fila."""
+    upme = cargar().fuentes["upme.infraestructura_energetica"]
+    plan = plan_de_consulta(upme, {"select": ["categoria", "nombre"], "limite": 10})
+    assert plan.sql.startswith('SELECT "categoria", "nombre", "id_elemento"')
+    ya = plan_de_consulta(upme, {"select": ["id_elemento", "categoria"], "limite": 10})
+    assert ya.sql.count('"id_elemento"') == 2  # en el select una vez, y en el orden
+    agregado = plan_de_consulta(
+        upme, {"group": ["categoria"], "agregados": {"n": "count"}, "limite": 10}
+    )
+    assert '"id_elemento"' not in agregado.sql

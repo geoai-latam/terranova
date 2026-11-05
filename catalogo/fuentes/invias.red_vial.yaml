@@ -32,6 +32,7 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa del INVÍAS (cambia si la entidad republica la capa)"}
   codigotramo: {nombre: codigo_tramo, tipo: str, desc: "código del tramo de la red vial nacional (p. ej. 50CN03); es el que usan los puentes (`via`)"}
   ruta: {nombre: ruta, tipo: str, desc: "número de la ruta nacional (45, 50, 55…)"}
   nombreruta: {nombre: nombre_ruta, tipo: str, desc: "nombre de la ruta (Troncal Central, Troncal Central del Norte…)"}

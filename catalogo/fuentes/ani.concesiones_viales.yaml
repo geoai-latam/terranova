@@ -28,6 +28,7 @@ cobertura:
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa de la ANI (cambia si la entidad republica la capa)"}
   nombrepr: {nombre: proyecto, tipo: str, desc: "nombre del proyecto de concesión vial"}
   generacion: {nombre: generacion, tipo: str, desc: "generación de concesiones (1G a 5G)"}
   etp: {nombre: etapa, tipo: str, desc: "etapa del proyecto (preconstrucción, construcción, operación…)"}

@@ -25,6 +25,7 @@ cobertura: {pais: CO, excluye: ["aeródromos no concesionados (unos 2 000 en el 
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa de la ANI (cambia si la entidad republica la capa)"}
   lista_aero: {nombre: aeropuerto, tipo: str, desc: "aeropuerto y su ciudad (p. ej. «El Dorado (Bogotá)»)"}
   proyecto: {nombre: proyecto, tipo: str, desc: "proyecto de concesión al que pertenece (p. ej. «Nororiente», «Centro Norte»)"}
   contrato: {nombre: contrato, tipo: str, desc: "número del contrato de concesión"}

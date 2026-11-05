@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T06:38:37+00:00",
+ "grabado": "2026-11-05T07:21:28+00:00",
  "herramienta": "ani_peajes_en_zona",
  "llamadas": [
   {
@@ -14,6 +14,7 @@
     "geometria": "completa",
     "max_features": 200,
     "out_fields": [
+     "objectid",
      "nombre",
      "estado",
      "proyecto",
@@ -44,6 +45,7 @@
           "estado": "Funcionamiento",
           "municipio": "Chía",
           "nombre": "FUSCA",
+          "objectid": 11438,
           "proyecto": "IP - Accesos Norte a Bogotá"
          },
          "type": "Feature"
@@ -62,6 +64,7 @@
           "estado": "Funcionamiento",
           "municipio": "Chía",
           "nombre": "ANDES",
+          "objectid": 11439,
           "proyecto": "IP - Accesos Norte a Bogotá"
          },
          "type": "Feature"
@@ -80,6 +83,7 @@
           "estado": "Funcionamiento",
           "municipio": "Chía",
           "nombre": "UNISABANA",
+          "objectid": 11440,
           "proyecto": "IP - Accesos Norte a Bogotá"
          },
          "type": "Feature"
@@ -98,6 +102,7 @@
           "estado": "Funcionamiento",
           "municipio": "Guasca",
           "nombre": "LA CABAÑA",
+          "objectid": 11488,
           "proyecto": "Perimetral de Oriente de Cundinamarca"
          },
          "type": "Feature"
@@ -116,6 +121,7 @@
           "estado": "Funcionamiento",
           "municipio": "Sopó",
           "nombre": "SOPÓ",
+          "objectid": 11489,
           "proyecto": "Perimetral de Oriente de Cundinamarca"
          },
          "type": "Feature"
@@ -150,6 +156,7 @@
       ],
       "max_features": 200,
       "out_fields": [
+       "objectid",
        "nombre",
        "estado",
        "proyecto",

@@ -25,6 +25,7 @@ cobertura: {pais: CO, excluye: ["muelles y embarcaderos no concesionados (UPIT, 
 datos_personales: ninguno
 estado: publicada
 campos:
+  objectid: {nombre: id_elemento, tipo: int, desc: "identificador del elemento en la capa de la ANI (cambia si la entidad republica la capa)"}
   nombre: {nombre: sociedad_portuaria, tipo: str, desc: "sociedad o empresa titular de la concesión portuaria"}
   zona_port: {nombre: zona_portuaria, tipo: str, desc: "zona portuaria (p. ej. «ZONA PORTUARIA DE CARTAGENA»)"}
   municipio: {nombre: municipio, tipo: str, desc: "municipio, como lo escribe la ANI (a veces la región, p. ej. «Urabá»)"}

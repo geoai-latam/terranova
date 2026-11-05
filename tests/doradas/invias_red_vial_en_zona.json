@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T19:38:46+00:00",
+ "grabado": "2026-11-05T07:21:31+00:00",
  "herramienta": "invias_red_vial_en_zona",
  "llamadas": [
   {
@@ -14,6 +14,7 @@
     "geometria": "simplificada",
     "max_features": 500,
     "out_fields": [
+     "objectid",
      "codigotramo",
      "ruta",
      "nombreruta",
@@ -58,6 +59,7 @@
           "distanciainicial": 505.0,
           "last_edited_date": 1762911824000,
           "nombreruta": "Conexión Transversal Buenaventura - Puerto Carreño y Troncal Central del Norte",
+          "objectid": 264,
           "postereferenciafinal": 14,
           "postereferenciainicial": 10,
           "revisionestado": "1",
@@ -98,6 +100,7 @@
       ],
       "max_features": 500,
       "out_fields": [
+       "objectid",
        "codigotramo",
        "ruta",
        "nombreruta",

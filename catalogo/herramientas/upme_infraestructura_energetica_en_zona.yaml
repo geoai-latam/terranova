@@ -42,5 +42,5 @@ canario:
   # Bbox de Bogotá y alrededores, como el del RUNAP. Se mide en la copia al construirla.
   entrada: {bbox: [-74.5, 4.0, -73.5, 5.0]}
   minimos: {total: 20}
-  campos: [capacidad_mw, capacidad_mw_total, capacidad_transporte, departamento, estado, longitud_km, municipio, municipio_divipola, nombre, operador, por_tipo, sistema, sistema_ductos, subtipo, tension_kv, tipo, total, unidad_capacidad]
+  campos: [capacidad_mw, capacidad_mw_total, capacidad_transporte, departamento, estado, id_elemento, longitud_km, municipio, municipio_divipola, nombre, operador, por_tipo, sistema, sistema_ductos, subtipo, tension_kv, tipo, total, unidad_capacidad]
   latencia_max_ms: 8000

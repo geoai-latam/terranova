@@ -18,9 +18,9 @@ consulta:
     url: "{url_capa}"
     bbox: "{bbox}"
     geometria: completa
-    out_fields: [lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
+    out_fields: [objectid, lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
     max_features: 200
-  campos: [lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
+  campos: [objectid, lista_aero, proyecto, contrato, estado, ccnario, cod_pr_ire, link]
 derivados:
   numero_registros: {de: conteo, tipo: int}
 salida: AniAeropuertosEnZona
@@ -33,5 +33,5 @@ canario:
   # Bogotá; medido el 2026-11-05 en la capa 1: un aeropuerto, El Dorado. En el país, 19.
   entrada: {bbox: [-74.3, 4.5, -73.9, 4.9]}
   minimos: {numero_registros: 1}
-  campos: [aeropuerto, codigo_proyecto, concesionario, contrato, estado, ficha, numero_registros, proyecto]
+  campos: [aeropuerto, codigo_proyecto, concesionario, contrato, estado, ficha, id_elemento, numero_registros, proyecto]
   latencia_max_ms: 8000
