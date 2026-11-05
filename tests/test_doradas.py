@@ -228,3 +228,16 @@ async def test_el_bpin_de_un_proceso_sale_resumido_arriba() -> None:
     sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
     por_bpin = sobre.datos["contratos_por_bpin"]
     assert list(por_bpin) == ["2024080010085"] and por_bpin["2024080010085"] >= 41
+
+
+@pytest.mark.anyio
+async def test_un_compromiso_de_secop2_dice_su_estado_y_que_es_su_tipo() -> None:
+    """Revisión de valor: el compromiso salía con «tipo: 0» y sin su estado (Generado, Con
+    Obligación…), que es lo que dice si el contrato está respaldado."""
+    h = CATALOGO.herramientas["secop_compromisos_contrato"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    (fila,) = sobre.model_dump(mode="json")["datos"]["elementos"]
+    assert (fila["tipo"], fila["tipo_significado"]) == ("0", "ingresos")
+    assert fila["estado_compromiso"] == "Con Obligación"
+    assert fila["balance_vigencias_futuras"] == 0.0
