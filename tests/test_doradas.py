@@ -253,3 +253,15 @@ async def test_un_compromiso_de_secop2_dice_su_estado_y_que_es_su_tipo() -> None
     assert (fila["tipo"], fila["tipo_significado"]) == ("0", "ingresos")
     assert fila["estado_compromiso"] == "Con Obligación"
     assert fila["balance_vigencias_futuras"] == 0.0
+
+
+@pytest.mark.anyio
+async def test_buscar_en_una_entidad_trae_todo_sin_tope() -> None:
+    """Revisión de valor: en todo el país, «mantenimiento vías» da 1 308 contratos, 50 se ven y el
+    aviso pide acotar sin dar cómo. En Pitalito son 31 y vienen todos (2026-11-04)."""
+    h = CATALOGO.herramientas["secop_contratos_buscar_entidad"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    assert sobre.datos["coincidencias"] == 31
+    assert {e["nit_entidad"] for e in sobre.datos["elementos"]} == {"891180077"}
+    assert not any(a.startswith("Vinieron") for a in sobre.avisos)
