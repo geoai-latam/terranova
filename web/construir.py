@@ -460,7 +460,12 @@ SISTEMAS = {
         "estaciones de bomberos, estaciones de policía, CAI",
         "Sistema Distrital de Parques",
     ],
-    "Movilidad de Bogotá": ["Puntos, tramos y zonas críticas de siniestralidad vial"],
+    "Movilidad de Bogotá": [
+        "Puntos, tramos y zonas críticas de siniestralidad vial",
+        "Red semafórica",
+        "cámaras salvavidas",
+        "cicloparqueaderos",
+    ],
     "MinTIC": ["Internet fijo"],
     "Parques Nacionales": ["RUNAP"],
     "Presidencia": ["Descontamina Colombia"],
