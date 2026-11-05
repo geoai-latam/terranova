@@ -19,6 +19,13 @@ consulta:
 salida: UvrRecientes
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Cada fecha trae dos filas con la misma serie (RVU); la unidad dice cuál es. CRVU es el valor de
+    la UVR en pesos (421,2214 el 2026-11-15) y APC, su variación en porcentaje (6,3 ese día). La
+    de APC puede salir primero: para «cuánto vale la UVR», tome la fila CRVU de la fecha de hoy.
+    Las fechas futuras son el valor ya calculado hasta el 15 del mes siguiente.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en DF_UVR_DAILY_HIST con lastNObservations: 2 serie(s), unidad y frecuencia como

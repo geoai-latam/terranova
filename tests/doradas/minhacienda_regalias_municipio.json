@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-23T06:52:36+00:00",
+ "grabado": "2026-11-05T13:00:47+00:00",
  "herramienta": "minhacienda_regalias_municipio",
  "llamadas": [
   {
@@ -27,16 +27,16 @@
       "rows": [
        {
         "nombrefondo": "ASIGNACIONES DIRECTAS",
-        "presupuesto": "106027949.00",
+        "presupuesto": "106027949.0",
         "proyectos_aprobados": "0",
-        "recursos_aprobados": "0.00",
+        "recursos_aprobados": "0.0",
         "vigencia": "Vigencia 2025 - 2026"
        },
        {
         "nombrefondo": "ASIGNACIONES DIRECTAS ANTICIPADAS",
-        "presupuesto": "8416026.00",
+        "presupuesto": "8416026.0",
         "proyectos_aprobados": "0",
-        "recursos_aprobados": "0.00",
+        "recursos_aprobados": "0.0",
         "vigencia": "Vigencia 2025 - 2026"
        }
       ]
