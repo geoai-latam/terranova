@@ -1,5 +1,5 @@
 id: secop_cronograma_proceso
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop2.cronograma
 pregunta: "¿Cuál es el cronograma de este proceso de SECOP II?"
@@ -15,21 +15,23 @@ consulta:
   argumentos:
     id: f3ev-294c
     portal: datos.gov.co
-    select: "id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n"
+    select: "id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_publicaci_n, presentaci_n_de_ofertas, fecha_aprobaci_n_garant_as, fecha_aprobaci_n_garant_as_1, fecha_entrega_garant_a_o, fecha_de_firma_del_contrato, fecha_de_inicio_de_ejecuci, plazo_de_ejecuci_n_del, fecha_de_creaci_n"
     where: "id_del_proceso = '{id_proceso}' OR proceso_de_compra = '{id_proceso}'"
     order: "id_del_proceso"
     max_filas: 1000
-  campos: [id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_creaci_n]
+  campos: [id_del_proceso, proceso_de_compra, modalidad_de_contratacion, fecha_de_aceptaci_n_de_ofertas, fecha_de_apertura_de_ofertas, fecha_audiencia_de_adjudicaci, fecha_entrega_garant_a, fecha_de_publicaci_n, presentaci_n_de_ofertas, fecha_aprobaci_n_garant_as, fecha_aprobaci_n_garant_as_1, fecha_entrega_garant_a_o, fecha_de_firma_del_contrato, fecha_de_inicio_de_ejecuci, plazo_de_ejecuci_n_del, fecha_de_creaci_n]
 salida: SecopCronogramaProceso
 derivados:
   numero_registros: {de: conteo, tipo: int}
 avisos:
 - cuando: encontrado
   texto: >
-    Una fecha vacía no quiere decir que el paso no ocurrió: SECOP II solo llena el cronograma en
-    las modalidades con ofertas. En contratación directa y régimen especial (8 de los 9,2 millones
-    de fases) la apertura de ofertas viene vacía siempre, y en mínima cuantía en 385 207 de 387 803
-    (medido el 2026-11-03). La fecha de firma y el estado salen con secop_contrato_por_id.
+    Cada fase llena solo las fechas de la plantilla de su modalidad: la fuente tiene unas 60
+    columnas de fechas y una fecha vacía no quiere decir que el paso no ocurrió. En una muestra
+    de 2 000 fases recientes (2026-11-04), dos de cada tres traen publicación, firma, inicio y fin
+    del plazo de ejecución; las de ofertas y garantías vienen en menos del 10 %, casi siempre en
+    modalidades con ofertas, y la audiencia de adjudicación en 3. El estado y el valor del
+    contrato salen con secop_contrato_por_id.
 cobro: registro
 canario:
   # Medido el 2026-10-22 directamente en f3ev-294c (id_del_proceso = CO1.BDOS.2898382): 2
@@ -37,5 +39,5 @@ canario:
   entrada: {id_proceso: "CO1.BDOS.2898382"}
   verdad: {id_fase: "CO1.REQ.2978420", id_proceso: "CO1.BDOS.2898382"}
   minimos: {numero_registros: 2}
-  campos: [fecha_apertura_ofertas, id_fase, id_proceso, modalidad, numero_registros]
+  campos: [fecha_apertura_ofertas, fecha_aprobacion_garantias_b, fecha_entrega_garantia_b, id_fase, id_proceso, modalidad, numero_registros, presentacion_ofertas]
   latencia_max_ms: 10000
