@@ -58,11 +58,27 @@ class Plan:
     geometria: bool = False  # cada fila trae `_geojson`: sale como feature_collection
 
 
+def sin_mezcla(expr: str, dimension_de: str | None = None) -> str:
+    """`expr` con una sola clase de geometría: ST_MakeValid y ST_Intersection pueden dejar pegados
+    a un polígono restos de línea o de punto (una GeometryCollection), y varios visores no la pintan
+    (P0.5: 57 áreas del RUNAP, 14 elementos de la UPME y 1 tramo troncal). Se queda la parte de
+    la dimensión de `dimension_de` (la de `expr` si no se dice); si no queda nada, `expr` como
+    venía. `expr` se repite: si lleva `%s`, su parámetro va tantas veces como aparezca."""
+    dim = f"ST_Dimension({dimension_de or expr}) + 1"
+    return (
+        f"(CASE WHEN GeometryType({expr}) <> 'GEOMETRYCOLLECTION' "
+        f"OR ST_IsEmpty(ST_CollectionExtract({expr}, {dim})) THEN {expr} "
+        f"ELSE ST_CollectionExtract({expr}, {dim}) END)"
+    )
+
+
 # Cómo sale la geometría de una copia espacial: la misma idea que el conector ArcGIS («simplificada»
 # ≈ 55 m basta para pintar un parque y evita mandar polígonos de decenas de MB).
 _GEOMETRIA = {
-    "completa": "ST_AsGeoJSON(_geom, 7)",
-    "simplificada": "ST_AsGeoJSON(ST_SimplifyPreserveTopology(_geom, 0.0005), 5)",
+    "completa": f"ST_AsGeoJSON({sin_mezcla('_geom')}, 7)",
+    "simplificada": (
+        f"ST_AsGeoJSON(ST_SimplifyPreserveTopology({sin_mezcla('_geom')}, 0.0005), 5)"
+    ),
 }
 
 
@@ -178,8 +194,9 @@ def plan_de_consulta(fuente: Fuente, argumentos: dict[str, Any]) -> Plan:
         # que no se puede construir, no los 40 km del río
         if argumentos.get("poligono") is None:
             raise ErrorCopia("la geometría «recortada» va con `poligono`")
-        salida.append(f"ST_AsGeoJSON(ST_Intersection(_geom, {_POLIGONO}), 7) AS _geojson")
-        parametros_seleccion.append(json.dumps(argumentos["poligono"]))
+        recorte = sin_mezcla(f"ST_Intersection(_geom, {_POLIGONO})", "_geom")
+        salida.append(f"ST_AsGeoJSON({recorte}, 7) AS _geojson")
+        parametros_seleccion.extend([json.dumps(argumentos["poligono"])] * recorte.count("%s"))
     elif con_geometria:
         salida.append(f"{_GEOMETRIA[geometria]} AS _geojson")
     if argumentos.get("area_en_poligono"):
@@ -1438,6 +1455,11 @@ class AlmacenCopias:
                 f" AND ST_NPoints({g}) <= %s AND NOT ST_IsValid({g})",
                 (inicio, inicio + REPARAR_POR_TANDA, REPARAR_HASTA_VERTICES),
             )
+        # lo reparado puede quedar con restos de otra dimensión: se deja una sola clase (sin_mezcla)
+        self._c.execute(
+            f"UPDATE {fisica} SET {g} = {sin_mezcla(g)}"
+            f" WHERE GeometryType({g}) = 'GEOMETRYCOLLECTION'"
+        )
         quedan = self._c.execute(
             f"SELECT count(*) FROM {fisica} WHERE ST_NPoints({g}) > %s AND NOT ST_IsValid({g})",
             (REPARAR_HASTA_VERTICES,),

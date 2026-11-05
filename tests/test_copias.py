@@ -28,6 +28,7 @@ from terranova.copias import (
     num_europeo,
     plan_de_consulta,
     punto_gms,
+    sin_mezcla,
 )
 
 CATALOGO = cargar()
@@ -372,7 +373,7 @@ def test_plan_espacial_por_punto_y_por_zona() -> None:
     )
     assert "ST_Intersects(_geom, ST_SetSRID(ST_MakePoint(%s, %s), 4326))" in plan.sql
     assert plan.parametros[:2] == (-73.75, 4.55) and plan.geometria
-    assert "ST_SimplifyPreserveTopology(_geom, 0.0005)" in plan.sql
+    assert "ST_SimplifyPreserveTopology(" in plan.sql and ", 0.0005), 5)" in plan.sql
     zona = plan_de_consulta(RUNAP, {"bbox": [-74.5, 4.0, -73.5, 5.0]})
     assert "ST_MakeEnvelope(%s, %s, %s, %s, 4326)" in zona.sql and not zona.geometria
     assert '"_geom"' not in zona.sql and "*" not in zona.sql  # sin select: la lista blanca
@@ -393,8 +394,43 @@ def test_plan_espacial_por_punto_y_por_zona() -> None:
     recorte = plan_de_consulta(
         RUNAP, {"poligono": lote, "geometria": "recortada", "area_en_poligono": True}
     )
-    assert "ST_AsGeoJSON(ST_Intersection(_geom" in recorte.sql and recorte.geometria
-    assert recorte.parametros[:3] == (json.dumps(lote),) * 3
+    assert "ST_Intersection(_geom" in recorte.sql and recorte.geometria
+    # el recorte sale sin mezcla de clases (sin_mezcla repite la expresión): cada `%s` lleva el lote
+    assert "ST_CollectionExtract(ST_Intersection(_geom" in recorte.sql
+    # el último `%s` es el LIMIT
+    assert recorte.parametros[:-1] == (json.dumps(lote),) * (recorte.sql.count("%s") - 1)
+    assert len(recorte.parametros) == recorte.sql.count("%s")
+
+
+def test_la_geometria_de_una_copia_sale_sin_mezcla_de_clases() -> None:
+    """P0.5: ST_MakeValid dejó GeometryCollection en 57 áreas del RUNAP, 14 elementos de la UPME y
+    un tramo troncal, y varios visores no las pintan. Se sirve la parte de la dimensión mayor."""
+    for geometria in ("completa", "simplificada"):
+        plan = plan_de_consulta(RUNAP, {"punto": [-73.5, 4.5], "geometria": geometria})
+        assert "ST_CollectionExtract(_geom, ST_Dimension(_geom) + 1)" in plan.sql
+    assert sin_mezcla("g") == (
+        "(CASE WHEN GeometryType(g) <> 'GEOMETRYCOLLECTION' "
+        "OR ST_IsEmpty(ST_CollectionExtract(g, ST_Dimension(g) + 1)) THEN g "
+        "ELSE ST_CollectionExtract(g, ST_Dimension(g) + 1) END)"
+    )
+
+
+@pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
+def test_sin_mezcla_en_postgis() -> None:
+    psycopg = pytest.importorskip("psycopg")
+    mezcla = (
+        "ST_GeomFromText('GEOMETRYCOLLECTION(POLYGON((0 0,1 0,1 1,0 0)),"
+        "LINESTRING(2 2,3 3),POINT(5 5))', 4326)"
+    )
+    linea = "ST_GeomFromText('LINESTRING(0 0,1 1)', 4326)"
+    with psycopg.connect(URL_PG, autocommit=True) as c:
+        c.execute("CREATE EXTENSION IF NOT EXISTS postgis")
+        fila = c.execute(
+            f"SELECT GeometryType({sin_mezcla(mezcla)}), ST_Area({sin_mezcla(mezcla)}),"
+            f" GeometryType({sin_mezcla(linea)})"
+        ).fetchone()
+    assert fila is not None
+    assert fila[0] == "MULTIPOLYGON" and fila[1] == 0.5 and fila[2] == "LINESTRING"
 
 
 def test_plan_espacial_rechaza_lo_que_no_es() -> None:
