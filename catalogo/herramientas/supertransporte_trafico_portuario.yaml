@@ -22,7 +22,10 @@ consulta:
     id: 5r3g-zv5z
     portal: datos.gov.co
     select: "zona_portuaria, sociedad_portuaria, tipo_carga, sum(exportacion) AS t_exportacion, sum(importacion) AS t_importacion, sum(transbordo) AS t_transbordo, sum(transito_internacional) AS t_transito_internacional, sum(cabotaje) AS t_cabotaje, sum(fluvial) AS t_fluvial, sum(movilizaciones_a_bordo) AS t_movilizaciones_a_bordo, sum(transitoria) AS t_transitoria, sum(exportacion + importacion + transbordo + transito_internacional + cabotaje + fluvial + movilizaciones_a_bordo + transitoria) AS t_total, count(distinct mes_vigencia) AS meses_con_datos, max(mes_vigencia) AS hasta_mes"
-    where: "(upper(zona_portuaria) like upper('%{zona_o_sociedad}%') OR upper(sociedad_portuaria) like upper('%{zona_o_sociedad}%')) AND anno_vigencia = {anio}"
+    # La fuente escribe sin tildes y con la Ñ («COMPAÑIA»; en el tráfico, rota: «COMPA�IA»), y
+    # la persona, «Compañía». A lo que escribe se le quitan las tildes, y la Ñ (sana o rota) se
+    # compara como N a los dos lados. Medido el 2026-11-05: «Compañía de Puertos» no daba nada.
+    where: "(replace(replace(upper(zona_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%{zona_o_sociedad}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N') OR replace(replace(upper(sociedad_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%{zona_o_sociedad}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N')) AND anno_vigencia = {anio}"
     group: "zona_portuaria, sociedad_portuaria, tipo_carga"
     order: "zona_portuaria, sociedad_portuaria, tipo_carga"
     max_filas: 500
@@ -39,9 +42,25 @@ derivados:
   toneladas: {de: columna, campo: t_total, tipo: float}
   meses_con_datos: {de: columna, campo: meses_con_datos, tipo: int}
   hasta_mes: {de: columna, campo: hasta_mes, tipo: int}
+  # El último mes con datos de todo lo que salió: si no llega a diciembre, el año va incompleto.
+  hasta_mes_anio: {de: maximo, campo: hasta_mes, tipo: int}
   total_toneladas_anio: {de: suma, campo: toneladas, tipo: float}
   numero_registros: {de: conteo, tipo: int}
 salida: TraficoPortuario
+avisos:
+- cuando: encontrado
+  si: {campo: hasta_mes_anio, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año no llega a diciembre: ninguna sociedad de la respuesta tiene datos después de
+    hasta_mes_anio. Puede ser un año en curso que la Supertransporte aún no publica entero, y cada
+    sociedad puede llegar a un mes distinto (hasta_mes y meses_con_datos de cada fila; en Buenaventura
+    2026, una llega a julio y otra a septiembre, medido el 2026-11-05). El total no es el de un año
+    completo.
+- cuando: vacio
+  texto: >
+    Ninguna zona portuaria ni sociedad portuaria con ese texto en el nombre reportó carga ese año.
+    Hay datos desde 2018. Pruebe con una parte del nombre de la zona (CARTAGENA, BUENAVENTURA,
+    SANTA MARTA…) o de la sociedad.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en 5r3g-zv5z: la zona de Cartagena movió 51 461 527 toneladas en 2025, en
@@ -49,5 +68,5 @@ canario:
   entrada: {zona_o_sociedad: "Cartagena", anio: "2025"}
   verdad: {sociedad_portuaria: "ALGRANEL S.A.", tipo_carga: "GRANEL LIQUIDO", toneladas: 222993, total_toneladas_anio: 51461527}
   minimos: {numero_registros: 39}
-  campos: [hasta_mes, meses_con_datos, numero_registros, sociedad_portuaria, tipo_carga, toneladas, toneladas_cabotaje, toneladas_exportacion, toneladas_fluvial, toneladas_importacion, toneladas_movilizaciones_a_bordo, toneladas_transbordo, toneladas_transito_internacional, toneladas_transitoria, total_toneladas_anio, zona_portuaria]
+  campos: [hasta_mes, hasta_mes_anio, meses_con_datos, numero_registros, sociedad_portuaria, tipo_carga, toneladas, toneladas_cabotaje, toneladas_exportacion, toneladas_fluvial, toneladas_importacion, toneladas_movilizaciones_a_bordo, toneladas_transbordo, toneladas_transito_internacional, toneladas_transitoria, total_toneladas_anio, zona_portuaria]
   latencia_max_ms: 10000

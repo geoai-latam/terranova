@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T19:27:44+00:00",
+ "grabado": "2026-11-05T13:31:12+00:00",
  "herramienta": "supertransporte_trafico_portuario",
  "llamadas": [
   {
@@ -11,7 +11,7 @@
     "order": "zona_portuaria, sociedad_portuaria, tipo_carga",
     "portal": "datos.gov.co",
     "select": "zona_portuaria, sociedad_portuaria, tipo_carga, sum(exportacion) AS t_exportacion, sum(importacion) AS t_importacion, sum(transbordo) AS t_transbordo, sum(transito_internacional) AS t_transito_internacional, sum(cabotaje) AS t_cabotaje, sum(fluvial) AS t_fluvial, sum(movilizaciones_a_bordo) AS t_movilizaciones_a_bordo, sum(transitoria) AS t_transitoria, sum(exportacion + importacion + transbordo + transito_internacional + cabotaje + fluvial + movilizaciones_a_bordo + transitoria) AS t_total, count(distinct mes_vigencia) AS meses_con_datos, max(mes_vigencia) AS hasta_mes",
-    "where": "(upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND anno_vigencia = 2025"
+    "where": "(replace(replace(upper(zona_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N') OR replace(replace(upper(sociedad_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N')) AND anno_vigencia = 2025"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -676,11 +676,11 @@
       "max_filas": 500,
       "portal": "datos.gov.co",
       "select": "zona_portuaria, sociedad_portuaria, tipo_carga, sum(exportacion) AS t_exportacion, sum(importacion) AS t_importacion, sum(transbordo) AS t_transbordo, sum(transito_internacional) AS t_transito_internacional, sum(cabotaje) AS t_cabotaje, sum(fluvial) AS t_fluvial, sum(movilizaciones_a_bordo) AS t_movilizaciones_a_bordo, sum(transitoria) AS t_transitoria, sum(exportacion + importacion + transbordo + transito_internacional + cabotaje + fluvial + movilizaciones_a_bordo + transitoria) AS t_total, count(distinct mes_vigencia) AS meses_con_datos, max(mes_vigencia) AS hasta_mes",
-      "where": "((upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND anno_vigencia = 2025)"
+      "where": "((replace(replace(upper(zona_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N') OR replace(replace(upper(sociedad_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N')) AND anno_vigencia = 2025)"
      },
      "filas": 39,
      "filas_que_resume": 405,
-     "filtro_soql": "((upper(zona_portuaria) like upper('%Cartagena%') OR upper(sociedad_portuaria) like upper('%Cartagena%')) AND anno_vigencia = 2025)",
+     "filtro_soql": "((replace(replace(upper(zona_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N') OR replace(replace(upper(sociedad_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%Cartagena%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N')) AND anno_vigencia = 2025)",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"

@@ -19,7 +19,10 @@ consulta:
     id: 7tvr-cx9w
     portal: datos.gov.co
     select: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje, sum(exportacion) AS teu_exportacion, sum(importacion) AS teu_importacion, sum(transbordo) AS teu_transbordo, sum(transito_internacional) AS teu_transito_internacional, sum(cabotaje) AS teu_cabotaje, sum(fluvial) AS teu_fluvial, sum(coalesce(exportacion, 0) + coalesce(importacion, 0) + coalesce(transbordo, 0) + coalesce(transito_internacional, 0) + coalesce(cabotaje, 0) + coalesce(fluvial, 0)) AS teu_total, count(distinct vigencia_mes) AS meses_con_datos, max(vigencia_mes) AS hasta_mes"
-    where: "(upper(zona_portuaria) like upper('%{zona_o_sociedad}%') OR upper(sociedad_portuaria) like upper('%{zona_o_sociedad}%')) AND vigencia_anno = {anio}"
+    # La fuente escribe sin tildes y con la Ñ («COMPAÑIA»; en el tráfico, rota: «COMPA�IA»), y
+    # la persona, «Compañía». A lo que escribe se le quitan las tildes, y la Ñ (sana o rota) se
+    # compara como N a los dos lados. Medido el 2026-11-05: «Compañía de Puertos» no daba nada.
+    where: "(replace(replace(upper(zona_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%{zona_o_sociedad}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N') OR replace(replace(upper(sociedad_portuaria), 'Ñ', 'N'), '�', 'N') like replace(replace(replace(replace(replace(replace(replace(replace(upper('%{zona_o_sociedad}%'), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U'), 'Ü', 'U'), 'Ñ', 'N'), '�', 'N')) AND vigencia_anno = {anio}"
     group: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje"
     order: "zona_portuaria, sociedad_portuaria, tipo_de_embalaje"
     max_filas: 300
@@ -34,13 +37,29 @@ derivados:
   teu: {de: columna, campo: teu_total, tipo: int}
   meses_con_datos: {de: columna, campo: meses_con_datos, tipo: int}
   hasta_mes: {de: columna, campo: hasta_mes, tipo: int}
+  # El último mes con datos de todo lo que salió: si no llega a diciembre, el año va incompleto.
+  hasta_mes_anio: {de: maximo, campo: hasta_mes, tipo: int}
   total_teu_anio: {de: suma, campo: teu, tipo: int}
 salida: ContenedoresPuerto
+avisos:
+- cuando: encontrado
+  si: {campo: hasta_mes_anio, valores: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]}
+  texto: >
+    El año no llega a diciembre: ninguna sociedad de la respuesta tiene datos después de
+    hasta_mes_anio. Puede ser un año en curso que la Supertransporte aún no publica entero, y cada
+    sociedad puede llegar a un mes distinto (hasta_mes y meses_con_datos de cada fila; en Buenaventura
+    2026, una llega a julio y otra a septiembre, medido el 2026-11-05). El total no es el de un año
+    completo.
+- cuando: vacio
+  texto: >
+    Ninguna zona portuaria ni sociedad portuaria con ese texto en el nombre reportó contenedores ese año.
+    Hay datos desde 2018. Pruebe con una parte del nombre de la zona (CARTAGENA, BUENAVENTURA,
+    SANTA MARTA…) o de la sociedad.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en 7tvr-cx9w: la zona de Cartagena movió 4 041 736 TEU en 2025 (11 grupos);
   # el primero, Compañía de Puertos Asociados (Compas), TEU llenos: 84 498.
   entrada: {zona_o_sociedad: "Cartagena", anio: "2025"}
   verdad: {sociedad_portuaria: "COMPAÑIA DE PUERTOS ASOCIADOS S.A.", embalaje: "TEUS llenos", teu: 84498, total_teu_anio: 4041736}
-  campos: [embalaje, hasta_mes, meses_con_datos, sociedad_portuaria, teu, teu_cabotaje, teu_exportacion, teu_fluvial, teu_importacion, teu_transbordo, teu_transito_internacional, total_teu_anio, zona_portuaria]
+  campos: [embalaje, hasta_mes, hasta_mes_anio, meses_con_datos, sociedad_portuaria, teu, teu_cabotaje, teu_exportacion, teu_fluvial, teu_importacion, teu_transbordo, teu_transito_internacional, total_teu_anio, zona_portuaria]
   latencia_max_ms: 10000

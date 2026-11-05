@@ -94,3 +94,4 @@ Reglas:
 | SECOP I, modificaciones a procesos (`36vw-pbq2`) | [cce.secop1.modificaciones_procesos.md](cce.secop1.modificaciones_procesos.md) |
 | SECOP I, modificaciones a adjudicaciones (`u5b4-ae3s`) | [cce.secop1.modificaciones_adjudicaciones.md](cce.secop1.modificaciones_adjudicaciones.md) |
 | SECOP I, origen de los recursos (`3xwx-53wt`) | [cce.secop1.origen_recursos.md](cce.secop1.origen_recursos.md) |
+| Supertransporte, tráfico portuario (`5r3g-zv5z`) y contenedores (`7tvr-cx9w`) | [supertransporte.puertos.md](supertransporte.puertos.md) |
