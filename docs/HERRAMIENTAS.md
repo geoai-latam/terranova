@@ -24,6 +24,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `ideam_nivel_rio_diario_estacion` | ¿Cómo estuvo el nivel del río cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_normales_climatologicas_estacion` | ¿Cuál es el clima normal (mes a mes) en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `ideam_temperatura_diaria_estacion` | ¿Qué temperatura hizo cada día en esta estación del IDEAM? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
+| `nasa_firms_focos_en_zona` | ¿Qué focos de calor (posibles incendios) detectaron los satélites en esta zona en este periodo? | NASA (LANCE/FIRMS) | CC0-1.0 | 20 |
 | `pnn_areas_protegidas_en_poligono` | ¿Qué áreas protegidas del RUNAP tocan este polígono? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |
 | `pnn_areas_protegidas_en_punto` | ¿Qué áreas protegidas del RUNAP contienen este punto? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 10 |
 | `pnn_areas_protegidas_en_zona` | ¿Qué áreas protegidas del RUNAP tocan esta zona? | Parques Nacionales Naturales de Colombia (PNN) | CC-BY-SA-4.0 | 20 |

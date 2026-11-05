@@ -334,3 +334,16 @@ async def test_transmilenio_rutas_y_paraderos_con_horario_y_localidad() -> None:
     paraderos = await correr("transmilenio_paraderos_en_zona")
     assert paraderos["total"] == 87
     assert paraderos["por_localidad"] == {"Chapinero": 76, "Barrios Unidos": 11}
+
+
+@pytest.mark.anyio
+async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> None:
+    """NASA FIRMS por periodo (API por área con MAP_KEY): 182 focos de VIIRS S-NPP en la Orinoquía
+    el 2024-02-01, del producto estándar, que no cambia (medido el 2026-11-05)."""
+    h = CATALOGO.herramientas["nasa_firms_focos_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 182 and datos["por_fecha"] == {"2024-02-01": 182}
+    assert {e["producto"] for e in datos["elementos"]} == {"VIIRS_SNPP_SP"}
+    assert {e["confianza_significado"] for e in datos["elementos"]} <= {"baja", "nominal", "alta"}

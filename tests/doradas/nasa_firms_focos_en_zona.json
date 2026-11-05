@@ -1,0 +1,3529 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T05:36:55+00:00",
+ "herramienta": "nasa_firms_focos_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -72.0,
+     3.0,
+     -67.5,
+     7.0
+    ],
+    "desde": "2024-02-01",
+    "hasta": "2024-02-02"
+   },
+   "conector": "amenazas-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -71.36384,
+           4.71514
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.68,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.55901,
+           4.71642
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.02,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.56329,
+           4.7171
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.97,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.36327,
+           4.71866
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.11,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.55842,
+           4.72008
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.64,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.97466,
+           4.74262
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.28,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.98283,
+           4.74394
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.68,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.97409,
+           4.7462
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.28,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.98225,
+           4.74752
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.68,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.98169,
+           4.75111
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.15,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.90051,
+           4.75176
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 14.04,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.89996,
+           4.7552
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.72,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.97977,
+           4.87337
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.87,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.9791,
+           4.87738
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.87,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.30983,
+           4.90796
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.23,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.30922,
+           4.91166
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 14.56,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.31039,
+           4.91345
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.54,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.69904,
+           4.95711
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.7,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.69849,
+           4.96057
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.36,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.70227,
+           4.96118
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.66,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.69794,
+           4.96404
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.36,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.70172,
+           4.96465
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.66,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.70117,
+           4.96811
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.34,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20373,
+           5.01316
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.8,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20761,
+           5.01382
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.8,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20692,
+           5.01803
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.84,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.30032,
+           5.36693
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.3,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29584,
+           5.37045
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.3,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29134,
+           5.37398
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.16,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29513,
+           5.37461
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.95,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29063,
+           5.37814
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.16,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29441,
+           5.37878
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.95,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.28993,
+           5.38231
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.81,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.67133,
+           6.42451
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.35,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.67449,
+           6.42853
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.28,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.2185,
+           6.46404
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.32,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20271,
+           6.99337
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.66,
+          "hora_utc": "623",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.17776,
+           3.35769
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.6,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.81927,
+           3.68396
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.19,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.8231,
+           3.68458
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.19,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.81873,
+           3.68745
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.52,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82256,
+           3.68807
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.52,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.8264,
+           3.68868
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.37,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82201,
+           3.69156
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.52,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82586,
+           3.69217
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.37,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82531,
+           3.69566
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.28,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82092,
+           3.69853
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.73,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82477,
+           3.69915
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.28,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82422,
+           3.70264
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.58,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82805,
+           3.70325
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.58,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.82368,
+           3.70613
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.58,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.38699,
+           4.02927
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.64,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.24619,
+           4.45053
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.31,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.24905,
+           4.48376
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.24,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.11649,
+           4.4881
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.6,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.11591,
+           4.49167
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.91,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.49689,
+           4.50193
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.48,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.49634,
+           4.50544
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.48,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.67046,
+           4.63489
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.81,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.83789,
+           4.7327
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "N",
+          "fecha": "2024-02-01",
+          "frp_mw": 0.47,
+          "hora_utc": "624",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.80119,
+           4.32395
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.83,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.66001,
+           4.35816
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.43,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.50599,
+           4.42592
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.04,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.50508,
+           4.42818
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.34,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.86114,
+           4.45469
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.12,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.87316,
+           4.45774
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 13.28,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.86198,
+           4.45961
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 14.99,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.62122,
+           4.58686
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.84,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.57619,
+           4.73724
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.17,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.98433,
+           4.73891
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.69,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.98522,
+           4.74457
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.26,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.46237,
+           4.78539
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 40.79,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.59286,
+           4.7898
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.81,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.58927,
+           4.79039
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "l",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.13,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.54314,
+           4.79677
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.25,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.54057,
+           4.79709
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.1,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.01614,
+           4.87758
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.78,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.68231,
+           4.93401
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.65,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.85119,
+           4.95427
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.98,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.84803,
+           4.95481
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.98,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.85207,
+           4.95949
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.42,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.8489,
+           4.96002
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "l",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.42,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.84574,
+           4.96055
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.69,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.59261,
+           4.98898
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.29,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26532,
+           5.05197
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.44,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20512,
+           5.05216
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.45,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.20028,
+           5.05294
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.64,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.2536,
+           5.08518
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 17.54,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.73939,
+           5.11089
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.5,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.91955,
+           5.12189
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.88,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.90579,
+           5.13399
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.07,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.90192,
+           5.13932
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.29,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.83889,
+           5.18884
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 18.41,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.83353,
+           5.1897
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 55.91,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.73855,
+           5.19893
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.35,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26847,
+           5.28107
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.59,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26361,
+           5.28185
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.82,
+          "hora_utc": "1726",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.28024,
+           4.86632
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "l",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.54,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.28122,
+           4.87206
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.24,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.01411,
+           4.88198
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.05,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.55835,
+           4.9552
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.0,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.5593,
+           4.96105
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "l",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.0,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.83969,
+           5.18703
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 22.96,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.83434,
+           5.18794
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 22.96,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.83512,
+           5.19279
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 22.96,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.3486,
+           5.27729
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.43,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.34521,
+           5.27787
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.76,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26978,
+           5.2789
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.49,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26494,
+           5.27972
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.49,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26566,
+           5.28438
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.15,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29636,
+           5.28878
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.09,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.32388,
+           5.3657
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.06,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.32726,
+           5.36705
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.44,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.32467,
+           5.37037
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.49,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.32804,
+           5.37171
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.73,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.32545,
+           5.37503
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.49,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.99966,
+           5.59502
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.32,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.90279,
+           5.59924
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.23,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.90862,
+           5.73411
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.53,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.65952,
+           5.88886
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.51,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -71.65954,
+           5.8895
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.49,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.84055,
+           5.91819
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.89,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.84139,
+           5.92332
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.89,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.85501,
+           6.03777
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.11,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.85058,
+           6.0385
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.93,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.84615,
+           6.03924
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.93,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.04994,
+           6.16133
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "l",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.93,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -70.04682,
+           6.16186
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.46,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.01228,
+           6.20122
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.44,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.56934,
+           6.3086
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.74,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.56767,
+           6.31134
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.37,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.57013,
+           6.31327
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.74,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29539,
+           6.36263
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.35,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.30084,
+           6.36642
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.47,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29616,
+           6.36721
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.47,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.29227,
+           6.37258
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 31.87,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.2876,
+           6.37337
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 31.87,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26087,
+           6.41546
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.93,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26627,
+           6.41926
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.64,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.2616,
+           6.42003
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 20.45,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.26702,
+           6.42382
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.64,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.75225,
+           6.43959
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.82,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.08605,
+           6.58914
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 18.31,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.08959,
+           6.5904
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.17,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.72233,
+           6.62532
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.9,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.31296,
+           6.6441
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.98,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.30751,
+           6.64504
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.98,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.55854,
+           6.67541
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 22.03,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.55439,
+           6.67609
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 14.13,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.55926,
+           6.67974
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 9.86,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.54269,
+           6.68244
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 6.54,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.61173,
+           6.70847
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.12,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.60686,
+           6.70928
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.87,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.602,
+           6.71009
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.87,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.50291,
+           6.72624
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 24.77,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.04127,
+           6.7294
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.77,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.03683,
+           6.73016
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 5.57,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.69657,
+           6.73413
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.1,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.03757,
+           6.73463
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.67,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.03386,
+           6.73986
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.67,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.02941,
+           6.74061
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.84,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.0346,
+           6.74433
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 11.93,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.03017,
+           6.74508
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.85,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.02203,
+           6.75105
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.15,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.05486,
+           6.78594
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.37,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.54856,
+           6.78902
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.34,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.01174,
+           6.79864
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 12.14,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.0125,
+           6.80309
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.31,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.98382,
+           6.82155
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.97,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.98321,
+           6.82472
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.43,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.98455,
+           6.826
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 1.36,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -67.51419,
+           6.85419
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 9.56,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.07951,
+           6.8849
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.59,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.07431,
+           6.88579
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 16.03,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.07512,
+           6.89058
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 10.19,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -68.09479,
+           6.92702
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 2.23,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.03332,
+           6.92725
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 4.19,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.02815,
+           6.92813
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.69,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.02896,
+           6.9329
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 3.69,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.02975,
+           6.93767
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 7.96,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.60725,
+           6.96717
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.91,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        },
+        {
+         "geometry": {
+          "coordinates": [
+           -69.6016,
+           6.96812
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "confianza": "n",
+          "dia_noche": "D",
+          "fecha": "2024-02-01",
+          "frp_mw": 8.91,
+          "hora_utc": "1727",
+          "producto": "VIIRS_SNPP_SP",
+          "tipo": "0"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Focos de calor 2024-02-01 a 2024-02-02"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 182,
+      "truncado": false,
+      "vistos": 182
+     },
+     "focos": 182,
+     "frp_max_mw": 55.91,
+     "fuente": "NASA FIRMS (focos de calor activos casi en tiempo real; no todo foco es un incendio)",
+     "periodo": [
+      "2024-02-01",
+      "2024-02-02"
+     ],
+     "por_confianza": {
+      "l": 5,
+      "n": 177
+     },
+     "por_fecha": {
+      "2024-02-01": 182
+     },
+     "sensor": "VIIRS_SNPP",
+     "tramos": [
+      {
+       "desde": "2024-02-01",
+       "hasta": "2024-02-01",
+       "producto": "VIIRS_SNPP_SP"
+      }
+     ],
+     "zona_consultada_bbox": [
+      -72.0,
+      3.0,
+      -67.5,
+      7.0
+     ]
+    },
+    "geo_result": "1"
+   },
+   "tool": "amenazas_incendios_periodo"
+  }
+ ]
+}
