@@ -37,6 +37,12 @@ derivados:
   personas_sujetos_atencion: {de: columna, campo: personas_sujetos_atencion, tipo: int}
   eventos: {de: columna, campo: n_eventos, tipo: int}
 salida: VictimasRuvMunicipio
+avisos:
+- cuando: vacio
+  texto: >
+    El municipio no tiene filas en los cuatro últimos cortes mensuales del RUV. Puede que no tenga
+    víctimas registradas, o que la UARIV lleve cuatro meses sin publicar un corte: en ese caso
+    el vacío no quiere decir «cero».
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en ykxr-xynr, corte 30/09/2026 de Medellín: 245 549 por ocurrencia,

@@ -35,6 +35,16 @@ derivados:
   total_personas_expulsadas: {de: suma, campo: personas_expulsadas, tipo: int}
   numero_registros: {de: conteo, tipo: int}
 salida: DesplazamientoRuvMunicipio
+avisos:
+- cuando: encontrado
+  texto: >
+    El último año solo cuenta hasta fecha_corte: si el corte no es un 31 de diciembre, ese año va
+    incompleto (2026, con el corte del 30 de septiembre, medido el 2026-11-05).
+- cuando: vacio
+  texto: >
+    El municipio no tiene filas en los cuatro últimos cortes mensuales del RUV. Puede que no tenga
+    personas desplazadas registradas, o que la UARIV lleve cuatro meses sin publicar un corte: en ese caso
+    el vacío no quiere decir «cero».
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en krnc-8azs, corte 30/09/2026 de Turbo (05837): 42 años (1985 a 2026);
