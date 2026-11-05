@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:09:59+00:00",
+ "herramienta": "dane_sedes_educativas_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "completa",
+    "limite": 100,
+    "order": [
+     "COD_DANE"
+    ],
+    "select": [
+     "COD_DANE",
+     "NOMBRE_INS",
+     "SEDE_PRINC",
+     "COD_SEDE_P",
+     "ESTADO",
+     "DIRECCION",
+     "ID_DEPARTA",
+     "DEPARTAMEN",
+     "ID_MUNICIP",
+     "MUNICIPIO",
+     "CALENDARIO",
+     "NATURALEZA",
+     "SECTOR",
+     "ZONA",
+     "JORNADA",
+     "NIVEL",
+     "TELEFONO",
+     "TIPO_TELEF",
+     "CORREO_INS",
+     "LONGITUD",
+     "LATITUD"
+    ],
+    "tabla": "dane_sedes_educativas",
+    "texto": "Divino Niño Cubarral"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.922778,
+           3.769167
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "CALENDARIO": "A",
+          "COD_DANE": "250223000114",
+          "COD_SEDE_P": "250223000068",
+          "CORREO_INS": " ",
+          "DEPARTAMEN": "META",
+          "DIRECCION": "VDA ARRAYANES",
+          "ESTADO": "ACTIVA",
+          "ID_DEPARTA": "50",
+          "ID_MUNICIP": "50223",
+          "JORNADA": "MAÑANA",
+          "LATITUD": 3.76916666667,
+          "LONGITUD": -73.9227777778,
+          "MUNICIPIO": "CUBARRAL",
+          "NATURALEZA": "OFICIAL",
+          "NIVEL": "EDUCACIÓN BÁSICA PRIMARIA",
+          "NOMBRE_INS": "INSTITUCION EDUC DIVINO NIÑO",
+          "SECTOR": "OFICIAL",
+          "SEDE_PRINC": "N",
+          "TELEFONO": "(no se versiona en la dorada)",
+          "TIPO_TELEF": "CELULAR",
+          "ZONA": "RURAL"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-11-05T06:07:30.974379+00:00",
+     "copia": {
+      "filas": 56650,
+      "huella": "sha256:867f7aac009c7d02ced7e399dbfa8f288568a4eff18695ffbca4c679e449c69a",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105060730974379"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

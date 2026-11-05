@@ -1,0 +1,50 @@
+id: dane_sedes_educativas_en_zona
+version: 1
+familia: territorio
+fuente: dane.sedes_educativas
+pregunta: "¿Qué colegios y sedes educativas hay en esta zona?"
+descripcion: >
+  Sedes educativas activas (colegios, escuelas y sedes de instituciones educativas, oficiales y
+  no oficiales) dentro de un rectángulo (bbox en EPSG:4326), con su punto: código DANE de la sede
+  (12 dígitos, el mismo de Saber 11), nombre, sede principal, dirección, municipio, zona urbana o
+  rural, naturaleza, sector, calendario, jornada, nivel educativo y el contacto que publica el
+  DANE. Arriba van el total y cuántas hay por zona (urbano o rural) y por sector (oficial o no). Sirve para «¿qué colegios
+  quedan a menos de un kilómetro de este predio?» o para pintar las sedes en un visor; las listas
+  largas siguen por páginas. Los resultados de las pruebas están en icfes_saber11. Sale de la
+  copia de Terrnova del SISE del DANE (corte 2024-11): la procedencia dice de cuándo es.
+  (Fuente: DANE, SISE; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: dane_sedes_educativas
+    bbox: "{bbox}"
+    select: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+    geometria: completa
+    order: [COD_DANE]
+    limite: 1000
+  campos: [COD_DANE, NOMBRE_INS, SEDE_PRINC, COD_SEDE_P, ESTADO, DIRECCION, ID_DEPARTA, DEPARTAMEN, ID_MUNICIP, MUNICIPIO, CALENDARIO, NATURALEZA, SECTOR, ZONA, JORNADA, NIVEL, TELEFONO, TIPO_TELEF, CORREO_INS, LONGITUD, LATITUD]
+salida: DaneSedesEducativasEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_zona: {de: conteo_por, campo: zona}
+  por_sector: {de: conteo_por, campo: sector}
+avisos:
+- cuando: encontrado
+  texto: >
+    Una de cada cuatro sedes comparte su punto con otra (481 de Uribia están en el mismo punto):
+    en lo rural el DANE a veces pone la sede en la cabecera o en la sede principal. Para distancias
+    finas, revise si el punto se repite. El corte del SISE es de 2024-11.
+- cuando: vacio
+  texto: >
+    No hay sedes educativas activas en ese rectángulo según el SISE del DANE (corte 2024-11).
+    Pruebe con un rectángulo más grande o busque la sede por nombre con dane_sedes_educativas_buscar.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en el servicio del DANE (returnCountOnly con el sobre en EPSG:4326): 6
+  # sedes en [-74.07, 4.6, -74.06, 4.61] (centro de Bogotá). En la copia, las mismas 6.
+  entrada: {bbox: [-74.07, 4.6, -74.06, 4.61]}
+  minimos: {total: 6}
+  campos: [calendario, codigo_dane, codigo_sede_principal, correo, departamento, departamento_divipola, direccion, estado, jornada, latitud, longitud, municipio, municipio_divipola, naturaleza, nivel, nombre, por_sector, por_zona, sector, sede_principal, telefono, tipo_telefono, total, zona]
+  latencia_max_ms: 8000

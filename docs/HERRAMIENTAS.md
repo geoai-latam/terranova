@@ -229,6 +229,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `anm_titulos_municipio` | ¿Qué minerales tienen explotador autorizado en el RUCOM en este municipio, y cuántos títulos? | Agencia Nacional de Minería (ANM) | CC-BY-SA-4.0 | 5 |
 | `ant_uaf_en_punto` | ¿Cuál es la Unidad Agrícola Familiar (UAF) en este punto? | Agencia Nacional de Tierras (ANT) | CC-BY-SA-4.0 | 10 |
 | `dane_divipola_buscar` | ¿Cuál es el código DIVIPOLA de este municipio? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-SA-4.0 | 1 |
+| `dane_sedes_educativas_buscar` | ¿Dónde queda este colegio y cuál es su código DANE? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 5 |
+| `dane_sedes_educativas_en_zona` | ¿Qué colegios y sedes educativas hay en esta zona? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 20 |
+| `dane_sedes_educativas_municipio` | ¿Cuántos colegios y sedes educativas hay en este municipio y dónde quedan? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 2 |
 | `igac_capacidad_uso_en_poligono` | ¿Qué capacidad de uso tiene el suelo de este polígono? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 20 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |

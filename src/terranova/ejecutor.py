@@ -603,12 +603,22 @@ def derivar_secuencia(h: Herramienta, elementos: list[dict[str, Any]]) -> None:
                 anterior = numero
 
 
-def derivar_resultado(d: Derivado, elementos: list[dict[str, Any]], total: int | None) -> Any:
+def derivar_resultado(
+    d: Derivado,
+    elementos: list[dict[str, Any]],
+    total: int | None,
+    total_filas: int | None = None,
+) -> Any:
+    """`total_filas`: cuántas filas hay en la fuente, si se sabe y una fila es un elemento (sin
+    `juntar`). Un `conteo` sin condición da ese total y no lo que vino: con páginas que siguen en
+    la fuente (ADR-0040), la red vial decía «500 registros» de 659."""
     if d.solo_si:
         elementos = [e for e in elementos if d.solo_si.cumple(e)]
     valores = [e.get(d.campo or "") for e in elementos]
     numeros = [float(v) for v in valores if v is not None and _numero(v)]
     if d.de == "conteo":
+        if not d.solo_si and total_filas is not None and total_filas > len(elementos):
+            return total_filas
         return len(elementos)
     if d.de == "conteo_por":
         # sin espacios de más: el IGAC escribe «CARRERA 11 » y «CALLE  3» en unos tramos y
@@ -1111,7 +1121,10 @@ class Ejecutor:
                 )
         derivar_secuencia(h, elementos)
         agregados = {
-            nombre: redondear(derivar_resultado(d, elementos, total), d.decimales)
+            nombre: redondear(
+                derivar_resultado(d, elementos, total, None if h.consulta.juntar else total),
+                d.decimales,
+            )
             for nombre, d in h.derivados.items()
             if not d.por_elemento and not d.al_final
         }

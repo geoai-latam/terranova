@@ -20,6 +20,11 @@ def es_agregado(select: str | None) -> bool:
     return bool(select and (_AGREGADO.search(select) or _DISTINTAS.search(select)))
 
 
+def es_distinto(select: str | None) -> bool:
+    """`select distinct` sin funciones de agregado: filas distintas que se pueden contar y paginar."""
+    return bool(select and _DISTINTAS.search(select) and not _AGREGADO.search(select))
+
+
 class ErrorColumnas(ValueError):
     """Las columnas pedidas no están en los datos (el mensaje lista las que hay)."""
 
@@ -76,7 +81,7 @@ def hechos(ident: str, portal: dict, datos: list, total: int | None, maximo: int
                      **({"where": filtro} if filtro else {}), **({"group": group} if group else {}),
                      **({"having": having} if having else {}),
                      **({"previo_group": previo_group} if previo_group else {}), "max_filas": maximo}
-    if es_agregado(select):
+    if es_agregado(select) and not (es_distinto(select) and not group):
         # un agregado (count, sum…) resume TODAS las filas que cumplen: no es una muestra aunque
         # devuelva 1 fila de 12 149 (antes decía «no es el conjunto completo»). Con group by,
         # solo está cortado si llegó al tope.

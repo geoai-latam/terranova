@@ -358,6 +358,27 @@ async def test_ani_puertos_aeropuertos_y_red_ferrea_con_su_ubicacion() -> None:
 
 
 @pytest.mark.anyio
+async def test_sedes_educativas_del_dane_con_punto_zona_y_sector() -> None:
+    """SISE del DANE: 6 sedes en el rectángulo del canario (centro de Bogotá) y 7 en Cubarral
+    (50223), medidas en el servicio y en la copia el 2026-11-05; «Divino Niño Cubarral» da la sede
+    250223000114."""
+
+    async def correr(herramienta: str) -> dict[str, object]:
+        h = CATALOGO.herramientas[herramienta]
+        grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+        sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+        return dict(sobre.model_dump(mode="json")["datos"])
+
+    zona = await correr("dane_sedes_educativas_en_zona")
+    assert zona["total"] == 6
+    municipio = await correr("dane_sedes_educativas_municipio")
+    assert municipio["total"] == 7
+    assert sum(municipio["por_sector"].values()) == 7  # type: ignore[attr-defined]
+    sede = await correr("dane_sedes_educativas_buscar")
+    assert [e["codigo_dane"] for e in sede["elementos"]] == ["250223000114"]  # type: ignore[attr-defined]
+
+
+@pytest.mark.anyio
 async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> None:
     """NASA FIRMS por periodo (API por área con MAP_KEY): 182 focos de VIIRS S-NPP en la Orinoquía
     el 2024-02-01, del producto estándar, que no cambia (medido el 2026-11-05)."""

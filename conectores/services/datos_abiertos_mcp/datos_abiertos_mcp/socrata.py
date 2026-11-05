@@ -110,13 +110,17 @@ def valores_de_texto(dominio: str, ident: str, columnas: list[tuple[str, str]]) 
     return {c: v for c, v in hallados.items() if v}
 
 
-def _contar(dominio: str, ident: str, where: str | None) -> int | None:
-    params = {"$select": "count(*)"}
+def _contar(dominio: str, ident: str, where: str | None, select: str | None = None) -> int | None:
+    """Filas que cumplen `where`; con un `select distinct`, las filas distintas (Terrnova, ADR-0040:
+    IDEAM repite cada estación, 19 790 filas para 9 895 distintas, y el total es el de la lista)."""
+    params: dict[str, str] = {"$select": "count(*)"}
     if where:
         params["$where"] = where
+    if filas.es_distinto(select):
+        params = {"$query": f"SELECT {select}" + (f" WHERE {where}" if where else "") + " |> SELECT count(*)"}
     try:
-        filas = _get(f"https://{dominio}/resource/{ident}.json", params).json()
-        return int(filas[0][next(iter(filas[0]))])
+        cuenta = _get(f"https://{dominio}/resource/{ident}.json", params).json()
+        return int(cuenta[0][next(iter(cuenta[0]))])
     except (red.ErrorRed, ValueError, KeyError, IndexError, StopIteration, TypeError):
         return None  # contar es un hecho de cortesía; sin él, «vinieron N» sigue siendo cierto
 
@@ -168,6 +172,8 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
         # sin orden, las páginas de SODA no son estables (filas repetidas o saltadas): `:id` por defecto.
         # Con agregados no: `:id` no está en el group by y SODA responde 400 (Terrnova, canario SECOP).
         orden = order or group or (None if filas.es_agregado(select) else ":id")
+        if orden and filas.es_distinto(select):
+            orden = _orden_total(orden, select or "")
         params.update({k: v for k, v in (("$select", select), ("$where", where), ("$group", group),
                                          ("$having", having), ("$order", orden)) if v})
         datos = _get(f"https://{dominio}/resource/{ident}.{extension}", params).json()
@@ -175,7 +181,16 @@ def consultar(dominio: str, ident: str, *, select: str | None, where: str | None
         salida += pagina
         if len(pagina) < params["$limit"]:
             break
-    return salida[:maximo], _contar(dominio, ident, where)
+    return salida[:maximo], _contar(dominio, ident, where, select)
+
+
+def _orden_total(orden: str, select: str) -> str:
+    """Con `distinct`, dos filas pueden compartir la columna del orden (dos registros de una estación):
+    se desempata por las demás columnas del `select` para que las páginas no repitan ni salten filas."""
+    usadas = {c.strip().split()[0].lower() for c in orden.split(",") if c.strip()}
+    resto = [c.split()[-1] for c in re.sub(r"^\s*distinct\s+", "", select, flags=re.IGNORECASE).split(",")
+             if c.strip()]  # «col AS alias» se ordena por el alias
+    return ", ".join([orden, *(c for c in resto if c.lower() not in usadas)])
 
 
 def _consultar_en_dos_etapas(dominio: str, ident: str, *, select: str | None, where: str | None,
