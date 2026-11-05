@@ -1,14 +1,16 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-03T04:35:48+00:00",
+ "grabado": "2026-11-05T12:50:15+00:00",
  "herramienta": "dian_comex_importaciones_por_subpartida",
  "llamadas": [
   {
    "argumentos": {
     "agregados": {
      "cantidad": "sum:cantidad",
+     "hasta_mes": "max:mes",
      "lineas": "sum:lineas",
      "peso_neto_kg": "sum:peso_neto_kg",
+     "primer_mes": "min:mes",
      "subpartida": "max:subpartida",
      "valor_cif_pesos": "sum:valor_cif_pesos",
      "valor_cif_usd": "sum:valor_cif_usd",
@@ -27,8 +29,10 @@
      {
       "columns": [
        "cantidad",
+       "hasta_mes",
        "lineas",
        "peso_neto_kg",
+       "primer_mes",
        "subpartida",
        "valor_cif_pesos",
        "valor_cif_usd",
@@ -38,8 +42,10 @@
       "rows": [
        {
         "cantidad": 13269012.0,
+        "hasta_mes": 12,
         "lineas": 16789.0,
         "peso_neto_kg": 5277783.409999998,
+        "primer_mes": 1,
         "subpartida": "8517130000",
         "valor_cif_pesos": 7530958435144.0,
         "valor_cif_usd": 1858806879.1799994,

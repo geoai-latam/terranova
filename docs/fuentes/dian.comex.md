@@ -64,3 +64,11 @@ importaciones de 2025 vienen en dos semestres.
   - Los valores en dólares y pesos, el peso neto y la cantidad salen con dos decimales
     (`decimales: 2`).
   - La suma en la copia dejaba ruido de coma flotante: 9930919822.169998 ahora es 9930919822.17.
+- **2026-11-05, revisión de valor:**
+  - La descripción decía que la procedencia da la ventana de meses, y no la daba. El café de 2026
+    sumaba US$3 235 M sin decir que llega a agosto.
+  - Ahora salen `primer_mes` y `hasta_mes` (mín. y máx. del mes en la copia para esa subpartida y
+    año), con un aviso si el año no llega a diciembre.
+  - Un aviso de vacío dice qué pudo pasar: que no hubo comercio, que el año no está en la copia o
+    que el código no es una subpartida.
+  - Medido en la copia del 2026-10-27: 2026 llega a agosto en expo e impo.
