@@ -37,6 +37,11 @@ avisos:
     Faltan meses: la fuente no trae los doce de este año (meses_con_datos dice cuántos hay y hasta_mes,
     el último). El total del año no es el de un año entero: compare los mismos meses. Medido el
     2026-11-02: las operaciones llegan a julio de 2026.
+- cuando: vacio
+  texto: >
+    La Aerocivil no trae datos de ese aeropuerto en ese año. Revise el código OACI (SKBO, SKRG):
+    aerocivil_aeropuertos_buscar lo da a partir del nombre de la ciudad. El año en curso llega
+    hasta el último mes publicado.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en jh8x-n6h6: El Dorado (SKBO) 2025 da 48 filas y 390 331 operaciones; la

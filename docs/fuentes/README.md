@@ -34,6 +34,7 @@ Reglas:
 | Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |
 | ANH: producción de crudo y gas, y regalías liquidadas | [anh.md](anh.md) |
 | ADRES, afiliados de la BDUA por municipio y EPS (dos regímenes) | [adres.bdua.md](adres.bdua.md) |
+| Banco de la República: TRM, tasa de política, IBR, DTF y UVR (SDMX) | [banrep.md](banrep.md) |
 | Aerocivil: tráfico origen-destino y operaciones | [aerocivil.md](aerocivil.md) |
 | SIC, sanciones en firme de protección al consumidor (`73dx-n59j`) | [sic.sanciones.md](sic.sanciones.md) |
 | MinDefensa, homicidios en víctimas (`m8fd-ahd9`) | [mindefensa.homicidios.md](mindefensa.homicidios.md) |
@@ -95,3 +96,30 @@ Reglas:
 | SECOP I, modificaciones a procesos (`36vw-pbq2`) | [cce.secop1.modificaciones_procesos.md](cce.secop1.modificaciones_procesos.md) |
 | SECOP I, modificaciones a adjudicaciones (`u5b4-ae3s`) | [cce.secop1.modificaciones_adjudicaciones.md](cce.secop1.modificaciones_adjudicaciones.md) |
 | SECOP I, origen de los recursos (`3xwx-53wt`) | [cce.secop1.origen_recursos.md](cce.secop1.origen_recursos.md) |
+| ANI: puertos, aeropuertos y corredores férreos | [ani.modos.md](ani.modos.md) |
+| ANI: recaudo mensual de los peajes | [ani.recaudo_peajes.md](ani.recaudo_peajes.md) |
+| ANI: tráfico mensual de los peajes | [ani.trafico_peajes.md](ani.trafico_peajes.md) |
+| Bogotá: equipamientos de emergencia | [bogota.equipamientos_emergencia.md](bogota.equipamientos_emergencia.md) |
+| SECOP Integrado, SECOP I y II (`cce.secop.integrado`) | [cce.secop.integrado.md](cce.secop.integrado.md) |
+| SECOP I: adiciones de las adjudicaciones | [cce.secop1.adiciones.md](cce.secop1.adiciones.md) |
+| SECOP I: multas y sanciones a contratistas | [cce.secop1.multas.md](cce.secop1.multas.md) |
+| SECOP I: planes anuales de adquisiciones | [cce.secop1.paa.md](cce.secop1.paa.md) |
+| SECOP I: procesos, vigentes e históricos | [cce.secop1.procesos.md](cce.secop1.procesos.md) |
+| SECOP II: el proyecto de inversión (BPIN) de un proceso | [cce.secop2.bpin.md](cce.secop2.bpin.md) |
+| SECOP II, procesos de contratación (`cce.secop2.procesos`) | [cce.secop2.procesos.md](cce.secop2.procesos.md) |
+| DANE: sedes educativas (SISE) | [dane.sedes_educativas.md](dane.sedes_educativas.md) |
+| DNP: proyectos del Sistema General de Regalías | [dnp.proyectos_sgr.md](dnp.proyectos_sgr.md) |
+| IDEAM (SIRH): puntos de captación de agua concesionados | [ideam.captaciones.md](ideam.captaciones.md) |
+| IGAC: conflictos de uso de las tierras (2012) | [igac.agrologia.conflictos_uso.md](igac.agrologia.conflictos_uso.md) |
+| IGAC: infraestructura de la cartografía básica 1:100 000 | [igac.infraestructura_100k.md](igac.infraestructura_100k.md) |
+| INVÍAS: tarifas de los peajes | [invias.peajes.md](invias.peajes.md) |
+| INVÍAS: puentes de la red vial nacional | [invias.puentes.md](invias.puentes.md) |
+| INVÍAS: red vial nacional | [invias.red_vial.md](invias.red_vial.md) |
+| MinSalud (SISPRO): sedes de prestadores de salud | [minsalud.sedes_prestadores.md](minsalud.sedes_prestadores.md) |
+| NASA FIRMS: focos de calor por periodo | [nasa.firms.md](nasa.firms.md) |
+| TransMilenio: estaciones troncales, TransMiCable y trazados troncales | [transmilenio.infraestructura_troncal.md](transmilenio.infraestructura_troncal.md) |
+| TransMilenio: paraderos zonales del SITP | [transmilenio.paraderos_zonales.md](transmilenio.paraderos_zonales.md) |
+| TransMilenio: servicios (rutas) del SITP | [transmilenio.rutas_sitp.md](transmilenio.rutas_sitp.md) |
+| UNGRD: emergencias por municipio | [ungrd.emergencias.md](ungrd.emergencias.md) |
+| UPME: infraestructura energética | [upme.infraestructura_energetica.md](upme.infraestructura_energetica.md) |
+| USGS: catálogo mundial de sismos | [usgs.sismos.md](usgs.sismos.md) |
