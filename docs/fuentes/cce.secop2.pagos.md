@@ -26,6 +26,9 @@ El de facturas trae lo mismo con `valor_neto`, `pago_confirmado` y la fecha **es
 
 - «Pagado»: tiene fecha real de pago.
 - «Bajo Aprobación» y «Aprobado»: sin fecha de pago.
+- «Rechazado»: la entidad no aprobó la factura; no es un pago. En CO1.PCCNTR.2064143 (INVIAS,
+  52 371 millones, medido el 2026-11-05) las 3 facturas, por 770 millones, están rechazadas y no
+  hay ningún pago.
 - En el conjunto de facturas, el mismo pago que aquí sale «Bajo Aprobación» sale como «En Gestión».
 
 ## Trampas medidas
@@ -36,6 +39,9 @@ El de facturas trae lo mismo con `valor_neto`, `pago_confirmado` y la fecha **es
 2. **Lo más viejo primero.** Con el orden por emisión ascendente, el pago pendiente de octubre de
    2026 quedaba al final de la lista.
 3. **No hay total.** Para saber cuánto se ha pagado de un contrato había que sumar a mano.
+4. **Sin pagos no es sin pagar.** Solo salen los pagos que la entidad tramitó por SECOP II. El
+   contrato de INVIAS no tiene ninguno aquí; eso no dice si se pagó por fuera.
+5. **Lo facturado incluye lo rechazado.** `valor_facturado_total` suma todas las facturas.
 
 Medido el 2026-11-03:
 
@@ -50,7 +56,7 @@ En el PAE, las dos facturas de agosto y octubre siguen «Bajo Aprobación».
 
 | Herramienta | Valor | Estado |
 |---|---|---|
-| `secop_pagos_contrato` | alto | v2: del más reciente al más viejo; arriba lo facturado, lo pagado, los pagos hechos, el último pago y el valor del contrato |
+| `secop_pagos_contrato` | alto | v2: del más reciente al más viejo; arriba lo facturado, lo pagado, lo rechazado, `por_estado`, los pagos hechos, el último pago y el valor del contrato |
 | `secop_facturas_contrato` | — | retirada el 2026-11-03 |
 
 ## Decisiones
@@ -60,3 +66,5 @@ En el PAE, las dos facturas de agosto y octubre siguen «Bajo Aprobación».
     pasa a borrador.
   - Los totales usan `solo_si` sobre `estado = Pagado`.
   - El valor del contrato sale de `jbjy-vk9h` con un complemento.
+- **2026-11-05:** salen `valor_rechazado_total` y `por_estado`, con un aviso cuando ninguna
+  factura está pagada y otro de que lo facturado incluye lo rechazado.
