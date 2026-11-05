@@ -288,6 +288,11 @@ class Campo(_Ficha):
         default=None,
         description="por encima de esto la fuente trae un dato dañado: sale vacío, no inventado",
     )
+    reparar_codificacion: bool = Field(
+        default=False,
+        description="la fuente trae texto UTF-8 leído como Latin-1 («BOGOTÃ, D.C.» por «BOGOTÁ, "
+        "D.C.»): se deshace. Es un error de codificación, no un dato distinto",
+    )
     coma_decimal: bool = Field(
         default=False,
         description="la fuente escribe el decimal con coma (-74,05): se declara por campo, porque "
@@ -1069,6 +1074,15 @@ class Consulta(_Ficha):
         default=None,
         description="campo rt/1 que se junta en una lista: las filas iguales en todo lo demás "
         "salen como una (una presentación del INVIMA repetida por cada vía de administración)",
+    )
+    unico_por: str | None = Field(
+        default=None,
+        description="campo rt/1 que identifica un elemento: de las filas con el mismo valor queda "
+        "una, la de mayor `unico_mayor` (la Supersolidaria repite la entidad por periodo y por "
+        "cada cambio de un atributo)",
+    )
+    unico_mayor: str | None = Field(
+        default=None, description="campo rt/1 que decide cuál fila queda con `unico_por`"
     )
 
     @property

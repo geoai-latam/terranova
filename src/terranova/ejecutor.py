@@ -443,6 +443,8 @@ def mapear_fila(
         presente = next((c for c in (clave, *campo.alias) if c in fila), None)
         if presente is not None:
             valor = fila[presente]
+            if campo.reparar_codificacion and isinstance(valor, str):
+                valor = reparar_codificacion(valor)
             if campo.coma_decimal and isinstance(valor, str):
                 valor = valor.replace(",", ".")
             if campo.orden_fecha and isinstance(valor, str):
@@ -537,6 +539,46 @@ def avisos_de_la_ficha(h: Herramienta, fuente: Fuente, sobre: Sobre) -> list[str
         if a.cuando == "encontrado"
         and (a.si is None or (a.si.campo not in sin_complemento and a.si.cumple(sobre.datos)))
     ]
+
+
+def reparar_codificacion(texto: str) -> str:
+    """Deshace el UTF-8 leído como Latin-1: «BOGOTÃ, D.C.» → «BOGOTÁ, D.C.», «MEDELLÃN» →
+    «MEDELLÍN», «SAN JOSÃ‰ DE CÃšCUTA» → «SAN JOSÉ DE CÚCUTA» (Supersolidaria, medido el
+    2026-11-05). Si no es eso, el texto queda como vino."""
+    if "Ã" not in texto and "Â" not in texto:
+        return texto
+    try:
+        # cada letra como su byte de Windows-1252 («‰» es 0x89, de la É de «JOSÃ‰») o, si no está
+        # en esa tabla, de Latin-1 («» es 0x8D, de la Í de «MEDELLÃN»)
+        crudo = b"".join(_byte_original(c) for c in texto)
+        return crudo.decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return texto
+
+
+def _byte_original(letra: str) -> bytes:
+    try:
+        return letra.encode("cp1252")
+    except UnicodeEncodeError:
+        return letra.encode("latin-1")
+
+
+def unico_por(
+    elementos: list[dict[str, Any]], campo: str, mayor: str | None
+) -> list[dict[str, Any]]:
+    """Una fila por valor de `campo`: la de mayor `mayor` (la primera que llegó si empatan), en el
+    lugar de la primera que llegó. La Supersolidaria daba 14 NIT repetidos en 50 filas para
+    «COOPERATIVA», porque su grupo se partía con cada cambio de un atributo (2026-11-05)."""
+    elegidos: dict[str, dict[str, Any]] = {}
+    for e in elementos:
+        clave = json.dumps(e.get(campo), default=str)
+        actual = elegidos.get(clave)
+        if actual is None or (
+            mayor is not None and str(e.get(mayor) or "") > str(actual.get(mayor) or "")
+        ):
+            elegidos[clave] = e
+    orden = list(dict.fromkeys(json.dumps(e.get(campo), default=str) for e in elementos))
+    return [elegidos[c] for c in orden]
 
 
 def juntar_filas(elementos: list[dict[str, Any]], campo: str) -> list[dict[str, Any]]:
@@ -1101,6 +1143,8 @@ class Ejecutor:
         filas_recibidas = len(elementos)
         if h.consulta.juntar:
             elementos = juntar_filas(elementos, h.consulta.juntar)
+        if h.consulta.unico_por:
+            elementos = unico_por(elementos, h.consulta.unico_por, h.consulta.unico_mayor)
         total = None
         principales = procedencia[len(previas) :]  # la previa no cuenta en el total
         if len(principales) == 1:
@@ -1132,7 +1176,12 @@ class Ejecutor:
         derivar_secuencia(h, elementos)
         agregados = {
             nombre: redondear(
-                derivar_resultado(d, elementos, total, None if h.consulta.juntar else total),
+                derivar_resultado(
+                    d,
+                    elementos,
+                    total,
+                    None if h.consulta.juntar or h.consulta.unico_por else total,
+                ),
                 d.decimales,
             )
             for nombre, d in h.derivados.items()
