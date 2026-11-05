@@ -19,6 +19,36 @@ def test_el_catalogo_versionado_es_valido() -> None:
     assert "igac_predio_en_punto" in catalogo.herramientas
 
 
+def test_ninguna_herramienta_de_copia_pide_mas_de_lo_que_sirve_la_copia() -> None:
+    """P0.5: los paraderos de TransMilenio pedían `limite: 2000`, la copia servía 1000 y el visor
+    perdía 1000 paraderos al pasar de página. Ninguna ficha puede pedir más que MAX_LIMITE."""
+    from terranova.copias import MAX_LIMITE
+
+    altas = {
+        h.id: h.consulta.argumentos["limite"]
+        for h in cargar().herramientas.values()
+        if h.consulta.tool == "consultar_copia"
+        and isinstance(h.consulta.argumentos.get("limite"), int)
+        and h.consulta.argumentos["limite"] > MAX_LIMITE
+    }
+    assert not altas, altas
+
+
+def test_la_ventana_de_una_copia_no_pasa_de_lo_que_sirve_la_copia() -> None:
+    from terranova.copias import MAX_LIMITE
+    from terranova.ejecutor import ventana_de
+
+    h = cargar().herramientas["transmilenio_paraderos_en_zona"]
+    h2 = h.model_copy(
+        update={
+            "consulta": h.consulta.model_copy(
+                update={"argumentos": {**h.consulta.argumentos, "limite": 5000}}
+            )
+        }
+    )
+    assert ventana_de(h2) == MAX_LIMITE
+
+
 def _catalogo_con(tmp_path: Path, ruta: str, cambio: Callable[[dict[str, Any]], None]) -> Path:
     raiz = tmp_path / "catalogo"
     for carpeta in ("fuentes", "herramientas", "cobertura", "codigos"):

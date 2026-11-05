@@ -48,6 +48,7 @@ from terranova.catalogo import (
     vendible,
 )
 from terranova.conector import Conector, ErrorConector
+from terranova.copias import MAX_LIMITE as MAX_LIMITE_COPIA
 from terranova.contrato import (
     MAX_TEXTO,
     Cache,
@@ -102,7 +103,11 @@ def ventana_de(h: Herramienta) -> int | None:
     if h.consulta.argumentos.get("agregados") or h.consulta.argumentos.get("group"):
         return None
     tope = h.consulta.argumentos.get(nombre)
-    return tope if isinstance(tope, int) and not isinstance(tope, bool) else None
+    if not isinstance(tope, int) or isinstance(tope, bool):
+        return None
+    # La copia nunca sirve más de MAX_LIMITE filas por consulta: una ventana mayor haría saltar filas
+    # entre páginas (P0.5: los paraderos pedían 2000 y llegaban 1000; 1000 no se veían nunca).
+    return min(tope, MAX_LIMITE_COPIA) if h.consulta.tool == "consultar_copia" else tope
 
 
 METROS_POR_GRADO = 111_320
