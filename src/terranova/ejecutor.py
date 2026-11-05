@@ -74,6 +74,30 @@ MAX_LADO_POLIGONO_GRADOS = 1.0
 # ADR-0032: `geometria: true` da la forma guardada si la lista es corta. Una zona puede traer
 # cientos de polígonos completos, decenas de MB: esas siguen simplificadas y lo avisan.
 MAX_ELEMENTOS_GEOMETRIA_FIEL = 20
+
+# ADR-0040: las consultas que pueden seguir en la fuente desde una fila (`desde`) y el argumento
+# que en cada una pone el tope. Una página que pasa del tope de la ficha va a la fuente con estos.
+TOPE_PAGINABLE: dict[str, str] = {
+    "consultar_copia": "limite",
+    "datos_consultar": "max_filas",
+    "arcgis_query_features": "max_features",
+}
+
+
+def ventana_de(h: Herramienta) -> int | None:
+    """Cuántas filas trae la consulta de la ficha si se puede seguir en la fuente (ADR-0040); None
+    si la herramienta no pagina en la fuente (varias capas, consulta previa, agregados, un tope que
+    sale de la entrada o una consulta que no admite `desde`). El complemento corre aparte y no
+    cuenta en el total: no estorba."""
+    nombre = TOPE_PAGINABLE.get(h.consulta.tool)
+    if nombre is None or len(h.consulta.capas) > 1 or h.consulta.previa:
+        return None
+    if h.consulta.argumentos.get("agregados") or h.consulta.argumentos.get("group"):
+        return None
+    tope = h.consulta.argumentos.get(nombre)
+    return tope if isinstance(tope, int) and not isinstance(tope, bool) else None
+
+
 METROS_POR_GRADO = 111_320
 Plan = Literal["evaluacion", "normal"]
 
@@ -872,7 +896,11 @@ class Ejecutor:
         plan: Plan = "normal",
         frescura: Frescura = "normal",
         geometria_completa: bool = False,
+        desde: int = 0,
+        tope: int | None = None,
     ) -> Sobre:
+        """`desde` y `tope` (ADR-0040): una página que sigue en la fuente desde la fila `desde`, de
+        `tope` filas. Solo para herramientas con `ventana_de`; los pone la puerta, no la entrada."""
         h = self.catalogo.herramientas.get(herramienta)
         if h is None:
             raise ErrorEjecucion("no_existe", f"no hay herramienta {herramienta}")
@@ -891,7 +919,17 @@ class Ejecutor:
         simplificada = h.consulta.argumentos.get("geometria") == "simplificada"
         fiel = geometria_completa and simplificada and _lista_corta(h)
         aviso = AVISO_SIMPLIFICADA if geometria_completa and simplificada and not fiel else None
-        k = clave_cache(h.id, h.version, valores | ({"_geometria": "completa"} if fiel else {}))
+        if desde or tope is not None:
+            if ventana_de(h) is None:
+                raise ErrorEjecucion("error_interno", f"{h.id} no pagina en la fuente")
+            fiel = False  # una página larga no lleva la forma completa
+            aviso = None
+        pagina_fuente = {"_desde": desde, "_tope": tope} if desde or tope is not None else {}
+        k = clave_cache(
+            h.id,
+            h.version,
+            valores | ({"_geometria": "completa"} if fiel else {}) | pagina_fuente,
+        )
         guardado = None
         vigente = huella_cache(h.model_dump_json(), fuente.model_dump_json())
         if self.almacen is not None and frescura == "normal":
@@ -904,7 +942,7 @@ class Ejecutor:
                 metricas.CACHE_ACIERTOS.inc()
                 return self._servir(self._desde_cache(guardado, "cache"), h, valores, aviso)
         try:
-            sobre = await self._desde_fuente(h, fuente, valores, fiel)
+            sobre = await self._desde_fuente(h, fuente, valores, fiel, desde, tope)
         except ErrorEjecucion as exc:
             if guardado and exc.codigo in CODIGOS_DE_CAIDA:
                 obsoleto = self._desde_cache(guardado, "obsoleto", exc.codigo)
@@ -965,7 +1003,13 @@ class Ejecutor:
         )
 
     async def _desde_fuente(
-        self, h: Herramienta, fuente: Fuente, valores: dict[str, Any], fiel: bool = False
+        self,
+        h: Herramienta,
+        fuente: Fuente,
+        valores: dict[str, Any],
+        fiel: bool = False,
+        desde: int = 0,
+        tope: int | None = None,
     ) -> Sobre:
         consultado_en = ahora()
         previas: list[Procedencia] = []
@@ -993,6 +1037,10 @@ class Ejecutor:
             )
             if fiel:
                 argumentos["geometria"] = "completa"
+            if desde or tope is not None:
+                argumentos["desde"] = desde
+                if tope is not None:
+                    argumentos[TOPE_PAGINABLE[h.consulta.tool]] = tope
             llamadas.append(self._una(h, fuente.conector, capa, argumentos))
         respuestas, fallos = await _reunir_capas(llamadas)
         if not respuestas:
@@ -1042,7 +1090,8 @@ class Ejecutor:
         # honestidad: la fuente dijo que hay `total` y no entregó ninguno (una página que llegó
         # vacía, un corte): eso es «no se pudo», nunca «no encontrado». Con SINCHI, el conector
         # contó 1 polígono y su página vino vacía; el sobre decía «no encontrado» (2026-10-28).
-        if not elementos and not capas_incompletas and total and total > 0:
+        # (con `desde`, una página que pasa del total llega vacía y es correcta: ADR-0040)
+        if not elementos and not capas_incompletas and total and total > desde:
             raise ErrorEjecucion(
                 "fuente_respuesta_invalida",
                 f"la fuente dice que hay {total} y no entregó ninguno: no se pudo leer la "

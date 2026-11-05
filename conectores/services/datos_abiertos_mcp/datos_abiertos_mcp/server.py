@@ -140,7 +140,8 @@ def datos_describir(id: str, portal: str = "datos.gov.co") -> CallToolResult:
                  "`lat` + `lon` (columnas de latitud y longitud, aunque sean texto); si no, como TABLA. Por "
                  "zona: `bbox` [minx,miny,maxx,maxy] o `area` (una capa de la sesión: solo lo que la "
                  "interseca). Hasta `max_filas` (máx. 50000). Los hechos dicen cuántas cumplen el filtro en el "
-                 "portal y si vino todo: no afirmes un total si no vino completo."),
+                 "portal y si vino todo: no afirmes un total si no vino completo. `desde` empieza en esa fila "
+                 "del resultado ordenado (para seguir una lista larga)."),
     annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
     meta=geo_meta(inputs={"bbox": ["bbox", "layer_ref"], "area": ["geometry", "layer_ref"]},
                   outputs=["feature_collection", "feature_ref", "table"], cost="medium"),
@@ -150,7 +151,7 @@ def datos_consultar(id: str, portal: str = "datos.gov.co", select: str | None = 
                     lat: str | None = None, lon: str | None = None, bbox: list[float] | None = None,
                     area: dict | None = None, max_filas: int = 5000, group: str | None = None,
                     having: str | None = None, previo_select: str | None = None,
-                    previo_group: str | None = None) -> CallToolResult:
+                    previo_group: str | None = None, desde: int = 0) -> CallToolResult:
     def consultar() -> dict:
         p = _portal(portal, "socrata")
         geom = areas.geometria(area) if area else None
@@ -159,7 +160,8 @@ def datos_consultar(id: str, portal: str = "datos.gov.co", select: str | None = 
             zona, columna_geo, lat, lon)) if w) or None
         datos, total = socrata.consultar(p["dominio"], id, select=select, where=filtro, order=order,
                                          maximo=max_filas, geojson=bool(columna_geo), group=group, having=having,
-                                         previo_select=previo_select, previo_group=previo_group)
+                                         previo_select=previo_select, previo_group=previo_group,
+                                         desde=desde)
         hechos = filas.hechos(id, p, datos, total, max_filas, filtro, select=select, group=group, having=having,
                               previo_group=previo_group)
         if not (columna_geo or (lat and lon)):

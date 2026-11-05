@@ -1193,3 +1193,21 @@ def test_una_columna_opcional_sale_vacia_en_la_capa_que_no_la_tiene() -> None:
     filas = [f for p in descargar_arcgis(con, cliente=_ServiciosSinSigla(), pausa_s=0) for f in p]
     assert [f["NOMENCLAT"] for f in filas] == ["ZU"] * 3 + [None] * 3
     assert all(set(f) == {*fuente.campos, "_geom"} for f in filas)
+
+
+def test_desde_sigue_la_copia_con_offset_y_orden_estable() -> None:
+    """ADR-0040: una página que pasa del tope va con OFFSET, y el orden termina en la clave para
+    que dos páginas no se crucen (la UPME ordena por categoría y tensión, que se repiten)."""
+    upme = cargar().fuentes["upme.infraestructura_energetica"]
+    plan = plan_de_consulta(
+        upme, {"select": ["categoria"], "order": ["categoria"], "limite": 1000, "desde": 2000}
+    )
+    assert plan.sql.endswith(
+        'ORDER BY "categoria" ASC NULLS LAST, "id_elemento" ASC LIMIT %s OFFSET %s'
+    )
+    assert plan.parametros[-2:] == (1000, 2000)
+    assert plan.sql_total is not None and "OFFSET" not in plan.sql_total
+    sin_desde = plan_de_consulta(upme, {"select": ["categoria"], "limite": 10})
+    assert "OFFSET" not in sin_desde.sql and sin_desde.parametros[-1] == 10
+    with pytest.raises(ErrorCopia):
+        plan_de_consulta(upme, {"select": ["categoria"], "desde": -1})
