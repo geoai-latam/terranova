@@ -21,6 +21,13 @@ consulta:
     max_filas: 200
   campos: [expediente, producto, rsynso, estadoregistro, fechavencimiento, grupo, nivelriesgo, titular, modalidad]
 salida: RegistroSanitarioPorExpediente
+avisos:
+- cuando: vacio
+  texto: >
+    El INVIMA no publica un registro sanitario, permiso o notificación con ese número de expediente
+    en su conjunto de alimentos, cosméticos y otros productos. Revise el número; los medicamentos
+    están en invima_medicamento_por_expediente y los dispositivos médicos, en
+    invima_dispositivo_por_expediente.
 cobro: registro
 canario:
   # Medido el 2026-10-22 en ui32-p9f2: el expediente 2 son galletas (registro vencido).
