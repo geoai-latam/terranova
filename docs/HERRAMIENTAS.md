@@ -266,6 +266,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `minsalud_sedes_salud_en_zona` | ¿Qué hospitales, clínicas e IPS hay en esta zona? | Ministerio de Salud y Protección Social | por verificar | 20 |
 | `minsalud_sedes_salud_municipio` | ¿Qué hospitales, clínicas e IPS hay en este municipio y dónde quedan? | Ministerio de Salud y Protección Social | por verificar | 2 |
 | `reps_sedes_municipio` | ¿Qué IPS y sedes de servicios de salud hay en este municipio? | Ministerio de Salud y Protección Social | CC-BY-SA-4.0 | 2 |
+| `sdm_movilidad_en_zona` | ¿Qué semáforos, cámaras salvavidas y cicloparqueaderos hay en esta zona de Bogotá? | Secretaría Distrital de Movilidad de Bogotá | CC-BY-4.0 | 20 |
 | `sdp_amenaza_movimiento_masa_en_punto` | ¿Qué amenaza por movimiento en masa (deslizamientos) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sdp_area_actividad_en_poligono` | ¿Qué áreas de actividad del POT tocan este polígono en Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 20 |
 | `sdp_area_actividad_en_punto` | ¿Qué área de actividad (usos del suelo) tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |

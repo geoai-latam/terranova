@@ -1,0 +1,46 @@
+# Ficha técnica escrita a mano (spec 08): tres capas del folder DatosAbiertos del SIG de la SDM en
+# una copia; `direccion` y `fecha_instalacion` toman el nombre de cada capa por alias, y
+# `id_elemento` y `categoria` los arma la copia.
+fuente: sdm.infraestructura_movilidad
+metodo: manual
+cosechado: '2026-11-05'
+origen: https://sig.simur.gov.co/arcgis/rest/services/DatosAbiertos?f=json
+pagina: https://www.arcgis.com/home/item.html?id=fccbfaa242374764a1fb8f746573cfad
+titulo: Red semafórica, cámaras salvavidas y cicloparqueaderos (SDM)
+descripcion: Tres capas de puntos del servidor ArcGIS de la Secretaría Distrital de Movilidad, en
+  EPSG:4686 y con maxRecordCount 2000. Son la red semafórica (1 747), las cámaras salvavidas (128)
+  y los cicloparqueaderos (2 203), medidas el 2026-11-05.
+idioma: Español
+filas: 4078
+campos:
+  id_elemento: {tipo_fuente: esriFieldTypeOID, etiqueta: OBJECTID de la capa (con la posición de la capa)}
+  categoria: {tipo_fuente: esriFieldTypeString, etiqueta: capa de la SDM}
+  DIRECCION: {tipo_fuente: esriFieldTypeString, etiqueta: Dirección / Dirección punto de fotodetección / Nomenclatura}
+  LOCALIDAD: {tipo_fuente: esriFieldTypeString, etiqueta: Localidad}
+  FECHA_INSTALACION: {tipo_fuente: esriFieldTypeDate, etiqueta: Fecha instalación semáforo / FECHA_INSTALACION}
+  EQUIPO: {tipo_fuente: esriFieldTypeString, etiqueta: Equipo semafórico}
+  UBICACIONEQUIPO: {tipo_fuente: esriFieldTypeString, etiqueta: Ubicación equipo}
+  OPERACIONACTUAL: {tipo_fuente: esriFieldTypeString, etiqueta: Operación actual semáforo}
+  FUNCIONAMIENTO: {tipo_fuente: esriFieldTypeString, etiqueta: Funcionamiento semáforo}
+  IMPLEMENTACION: {tipo_fuente: esriFieldTypeString, etiqueta: Implementación semáforo}
+  TIPOINTERSECCION: {tipo_fuente: esriFieldTypeString, etiqueta: Tipo intersección semafórica}
+  NUMEROFASES: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Cantidad fases}
+  GRUPOSPEATONALES: {tipo_fuente: esriFieldTypeString, etiqueta: Grupos peatonales}
+  GRUPOSSONOROS: {tipo_fuente: esriFieldTypeString, etiqueta: Grupos sonoros}
+  GRUPOSCICLISTAS: {tipo_fuente: esriFieldTypeString, etiqueta: Grupos ciclistas}
+  CORREDOR: {tipo_fuente: esriFieldTypeString, etiqueta: Corredor}
+  TIPO_FOTODETECCION: {tipo_fuente: esriFieldTypeString, etiqueta: Tipo punto de fotodetección}
+  TIPO_CAMARA: {tipo_fuente: esriFieldTypeString, etiqueta: Tipo de cámara}
+  ESTADO_PUNTO: {tipo_fuente: esriFieldTypeString, etiqueta: Estado Cámara}
+  VELOCIDAD_FISCALIZACION: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Velocidad de fiscalización}
+  INFRACCIONES: {tipo_fuente: esriFieldTypeString, etiqueta: Infracciones}
+  AUTORIZACION_OPERACION: {tipo_fuente: esriFieldTypeString, etiqueta: Autorización de operación}
+  ULTIMA_CALIBRACION: {tipo_fuente: esriFieldTypeDate, etiqueta: Última Calibración}
+  FECHA_DESMONTE: {tipo_fuente: esriFieldTypeDate, etiqueta: FECHA_DESMONTE}
+  NOMBRECICLOP: {tipo_fuente: esriFieldTypeString, etiqueta: Nombre}
+  SECTOR: {tipo_fuente: esriFieldTypeString, etiqueta: Tipo de sector}
+  TIPOUSUARIO: {tipo_fuente: esriFieldTypeString, etiqueta: Tipo de usuario}
+  HORARIOCICLOP: {tipo_fuente: esriFieldTypeString, etiqueta: Horario de servicio}
+  TIPOLOGIACICLOP: {tipo_fuente: esriFieldTypeString, etiqueta: Referencia de tipo cicloparqueadero}
+  CUPOCICLOP: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Cantidad de cupos}
+  SELLOCICLOP: {tipo_fuente: esriFieldTypeString, etiqueta: Sello de calidad}

@@ -104,6 +104,7 @@ Reglas:
 | ANI: recaudo mensual de los peajes | [ani.recaudo_peajes.md](ani.recaudo_peajes.md) |
 | ANI: tráfico mensual de los peajes | [ani.trafico_peajes.md](ani.trafico_peajes.md) |
 | Bogotá: equipamientos de emergencia | [bogota.equipamientos_emergencia.md](bogota.equipamientos_emergencia.md) |
+| Bogotá: red semafórica, cámaras salvavidas y cicloparqueaderos (SDM) | [sdm.infraestructura_movilidad.md](sdm.infraestructura_movilidad.md) |
 | SECOP Integrado, SECOP I y II (`cce.secop.integrado`) | [cce.secop.integrado.md](cce.secop.integrado.md) |
 | SECOP I: adiciones de las adjudicaciones | [cce.secop1.adiciones.md](cce.secop1.adiciones.md) |
 | SECOP I: multas y sanciones a contratistas | [cce.secop1.multas.md](cce.secop1.multas.md) |

@@ -1,0 +1,56 @@
+id: sdm_movilidad_en_zona
+version: 1
+familia: territorio
+fuente: sdm.infraestructura_movilidad
+pregunta: "¿Qué semáforos, cámaras salvavidas y cicloparqueaderos hay en esta zona de Bogotá?"
+descripcion: >
+  Semáforos (red semafórica), cámaras salvavidas (fotodetección de infracciones) y
+  cicloparqueaderos de la Secretaría Distrital de Movilidad de Bogotá dentro de un rectángulo (bbox
+  en EPSG:4326), con su punto, `tipo`, dirección y localidad. Del semáforo trae el equipo, la
+  operación actual, la implementación, el tipo de intersección, las fases y los grupos peatonales,
+  sonoros y de ciclistas; de la cámara, el corredor, si es fija o móvil, si está instalada o
+  desmontada, la velocidad que fiscaliza, los códigos de infracción y las fechas de instalación,
+  calibración y desmonte; del cicloparqueadero, el nombre, si es público o privado, el horario,
+  los cupos, la tipología y el sello de calidad. Arriba van el total, cuántos hay por tipo, las
+  cámaras por estado y los cupos de los cicloparqueaderos. Sirve para «¿hay cámaras salvavidas en
+  esta vía?», «¿dónde dejo la bicicleta cerca de aquí?» o para pintar la red en un visor; las
+  listas largas siguen por páginas. Solo cubre Bogotá D.C. Sale de la copia de Terrnova.
+  (Fuente: Secretaría Distrital de Movilidad de Bogotá; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: sdm_infraestructura_movilidad
+    bbox: "{bbox}"
+    select: [id_elemento, categoria, DIRECCION, LOCALIDAD, FECHA_INSTALACION, EQUIPO, UBICACIONEQUIPO, OPERACIONACTUAL, FUNCIONAMIENTO, IMPLEMENTACION, TIPOINTERSECCION, NUMEROFASES, GRUPOSPEATONALES, GRUPOSSONOROS, GRUPOSCICLISTAS, CORREDOR, TIPO_FOTODETECCION, TIPO_CAMARA, ESTADO_PUNTO, VELOCIDAD_FISCALIZACION, INFRACCIONES, AUTORIZACION_OPERACION, ULTIMA_CALIBRACION, FECHA_DESMONTE, NOMBRECICLOP, SECTOR, TIPOUSUARIO, HORARIOCICLOP, TIPOLOGIACICLOP, CUPOCICLOP, SELLOCICLOP]
+    geometria: completa
+    order: [categoria, id_elemento]
+    limite: 1000
+  campos: [id_elemento, categoria, DIRECCION, LOCALIDAD, FECHA_INSTALACION, EQUIPO, UBICACIONEQUIPO, OPERACIONACTUAL, FUNCIONAMIENTO, IMPLEMENTACION, TIPOINTERSECCION, NUMEROFASES, GRUPOSPEATONALES, GRUPOSSONOROS, GRUPOSCICLISTAS, CORREDOR, TIPO_FOTODETECCION, TIPO_CAMARA, ESTADO_PUNTO, VELOCIDAD_FISCALIZACION, INFRACCIONES, AUTORIZACION_OPERACION, ULTIMA_CALIBRACION, FECHA_DESMONTE, NOMBRECICLOP, SECTOR, TIPOUSUARIO, HORARIOCICLOP, TIPOLOGIACICLOP, CUPOCICLOP, SELLOCICLOP]
+salida: SdmMovilidadEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+  camaras_por_estado: {de: conteo_por, campo: estado_camara}
+  cupos_cicloparqueaderos: {de: suma, campo: cupos, tipo: int}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay semáforos, cámaras salvavidas ni cicloparqueaderos de la SDM en ese rectángulo. Solo se
+    cubre Bogotá D.C.
+- cuando: encontrado
+  texto: >
+    La capa de cámaras trae también las que ya no operan: mire `estado_camara` antes de decir que
+    una vía tiene cámara (el 2026-11-05, 53 de 128 decían «Desmontada - novedad»). El
+    funcionamiento del semáforo y los códigos de infracción de la cámara salen como los escribe la SDM, sin
+    significado publicado.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la descarga de las tres capas de la SDM (4 078 puntos), cruzando cada
+  # punto con el rectángulo: en [-74.07, 4.64, -74.05, 4.66] (Chapinero y Teusaquillo) hay 97
+  # semáforos, 62 cicloparqueaderos con 1 712 cupos y 5 cámaras (3 desmontadas y 2 instaladas).
+  entrada: {bbox: [-74.07, 4.64, -74.05, 4.66]}
+  minimos: {total: 164}
+  campos: [autorizacion_operacion, camaras_por_estado, corredor, cupos, cupos_cicloparqueaderos, direccion, equipo_semaforico, estado_camara, fases, fecha_desmonte, fecha_instalacion, funcionamiento, grupos_ciclistas, grupos_peatonales, grupos_sonoros, horario, id_elemento, implementacion, infracciones, localidad, localidad_significado, nombre, operacion_actual, por_tipo, sector, sector_significado, sello_calidad, sello_calidad_significado, tipo, tipo_camara, tipo_fotodeteccion, tipo_interseccion, tipo_usuario, tipo_usuario_significado, tipologia, tipologia_significado, total, ubicacion_equipo, ultima_calibracion, velocidad_fiscalizacion]
+  latencia_max_ms: 8000

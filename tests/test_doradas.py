@@ -474,3 +474,20 @@ def test_ninguna_dorada_guarda_un_correo() -> None:
     for archivo in sorted(DORADAS.glob("*.json")):
         hallados = set(correo.findall(archivo.read_text(encoding="utf-8")))
         assert hallados <= {"correo@enmascarado.invalid"}, f"{archivo.name}: {sorted(hallados)}"
+
+
+@pytest.mark.anyio
+async def test_movilidad_de_bogota_por_tipo() -> None:
+    """Semáforos, cámaras salvavidas y cicloparqueaderos de la SDM, medidos el 2026-11-05 en la
+    descarga de sus tres capas: 164 en Chapinero y Teusaquillo. La localidad de la cámara llega
+    como código del dominio y sale con su nombre."""
+    h = CATALOGO.herramientas["sdm_movilidad_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 164
+    assert datos["por_tipo"] == {"semáforo": 97, "cicloparqueadero": 62, "cámara salvavidas": 5}
+    assert datos["camaras_por_estado"] == {"Desmontada - novedad": 3, "Instalada": 2}
+    assert datos["cupos_cicloparqueaderos"] == 1712
+    camaras = [e for e in datos["elementos"] if e["tipo"] == "cámara salvavidas"]
+    assert {e["localidad_significado"] for e in camaras} <= {"Chapinero", "Teusaquillo"}

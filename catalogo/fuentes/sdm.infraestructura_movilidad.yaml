@@ -1,0 +1,114 @@
+id: sdm.infraestructura_movilidad
+titulo: "Bogotá: red semafórica, cámaras salvavidas y cicloparqueaderos (SDM, copia)"
+entidad: Secretaría Distrital de Movilidad de Bogotá
+competencia: autoridad de tránsito y transporte de Bogotá D.C.; opera la red semafórica y los sistemas de detección de infracciones (SAST) del Distrito
+acto: null
+# Tres capas del folder DatosAbiertos del SIG de la SDM (sig.simur.gov.co), juntas en una copia
+# espacial con una columna `tipo`. Cada capa tiene su ítem en ArcGIS Online, del usuario
+# SecretariaMovilidad, con licencia CC BY 4.0; verificado el 2026-11-05 en los tres ítems.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/fccbfaa242374764a1fb8f746573cfad?f=json
+  cita: "licenseInfo de los ítems fccbfaa242374764a1fb8f746573cfad (Red Semafórica) y f717f1f43b0c4f37bf5ab519f24fdb85 (Cámaras Salvavidas): «Creative Commons Attribution 4.0» (enlace a https://creativecommons.org/licenses/by/4.0/); 11168d50f8d54939a8a4a36402cb5277 (Cicloparqueadero): «C.C. BY 4.0»; accessInformation: «Secretaría Distrital de Movilidad»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Secretaría Distrital de Movilidad de Bogotá (red semafórica, cámaras salvavidas y cicloparqueaderos)"
+protocolo: arcgis_rest
+# La VPS no llega a sig.simur.gov.co (sin respuesta desde el datacenter, 2026-11-05): la copia se
+# baja a mano desde Colombia, como la de los sitios críticos de siniestralidad.
+conector: copia
+url: https://sig.simur.gov.co/arcgis/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    DatosAbiertos/RedSemaforica/FeatureServer/0: semáforo
+    DatosAbiertos/CamarasSalvavidas/FeatureServer/0: cámara salvavidas
+    DatosAbiertos/Cicloparqueadero/FeatureServer/0: cicloparqueadero
+  columna_servicio: categoria
+  opcionales: [FECHA_INSTALACION, EQUIPO, UBICACIONEQUIPO, OPERACIONACTUAL, FUNCIONAMIENTO, IMPLEMENTACION, TIPOINTERSECCION, NUMEROFASES, GRUPOSPEATONALES, GRUPOSSONOROS, GRUPOSCICLISTAS, CORREDOR, TIPO_FOTODETECCION, TIPO_CAMARA, ESTADO_PUNTO, VELOCIDAD_FISCALIZACION, INFRACCIONES, AUTORIZACION_OPERACION, ULTIMA_CALIBRACION, FECHA_DESMONTE, NOMBRECICLOP, SECTOR, TIPOUSUARIO, HORARIOCICLOP, TIPOLOGIACICLOP, CUPOCICLOP, SELLOCICLOP]
+  tabla: sdm_infraestructura_movilidad
+  clave: id_elemento
+  por_pagina: 1000
+  indices: [categoria]
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P90D}
+cobertura: {pais: CO, excluye: ["todo lo que no es Bogotá D.C.", "los comparendos y las infracciones registradas por cada cámara", "el estado de cada semáforo en tiempo real"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su OBJECTID (cambia si la SDM republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "semáforo, cámara salvavidas o cicloparqueadero (una capa de la SDM cada uno)"}
+  DIRECCION:
+    nombre: direccion
+    tipo: str
+    desc: "dirección: la intersección del semáforo, el punto de fotodetección o la nomenclatura del cicloparqueadero"
+    alias: [DIRECCION_FOTODETECCION, DIRECCIONCICLOP]
+  LOCALIDAD:
+    nombre: localidad
+    tipo: str
+    desc: "localidad: nombre en los semáforos; código del dominio de la capa en las cámaras y los cicloparqueaderos (su significado sale al lado)"
+    codigos: {"00": "No Aplica", "01": "Usaquén", "02": "Chapinero", "03": "Santa Fe", "04": "San Cristóbal", "05": "Usme", "06": "Tunjuelito", "07": "Bosa", "08": "Kennedy", "09": "Fontibón", "1": "Usaquén", "2": "Chapinero", "3": "Santa Fe", "4": "San Cristóbal", "5": "Usme", "6": "Tunjuelito", "7": "Bosa", "8": "Kennedy", "9": "Fontibón", "10": "Engativá", "11": "Suba", "12": "Barrios Unidos", "13": "Teusaquillo", "14": "Los Mártires", "15": "Antonio Nariño", "16": "Puente Aranda", "17": "La Candelaria", "18": "Rafael Uribe Uribe", "19": "Ciudad Bolívar", "20": "Sumapáz"}
+    codigos_norma: "dominio de LOCALIDAD en las capas CamarasSalvavidas/FeatureServer/0 (códigos 00 a 20) y Cicloparqueadero/FeatureServer/0 (códigos 1 a 20 y 00) del folder DatosAbiertos de sig.simur.gov.co, leído el 2026-11-05"
+  FECHA_INSTALACION: {nombre: fecha_instalacion, tipo: date, desc: "semáforo y cámara: fecha de instalación", alias: [FECHAINSTALACION]}
+  EQUIPO: {nombre: equipo_semaforico, tipo: str, desc: "semáforo: equipo semafórico, como lo escribe la SDM (C900, ACTROS, sX, NO)"}
+  UBICACIONEQUIPO: {nombre: ubicacion_equipo, tipo: str, desc: "semáforo: ubicación del equipo, como la escribe la SDM (SI o NO)"}
+  OPERACIONACTUAL: {nombre: operacion_actual, tipo: str, desc: "semáforo: operación actual (NORMAL, PMT o «Desvío - PMT»)"}
+  FUNCIONAMIENTO: {nombre: funcionamiento, tipo: str, desc: "semáforo: funcionamiento, en el código de la SDM (BT-TF, CA-TA, RP-TF…); el servicio no publica su significado"}
+  IMPLEMENTACION: {nombre: implementacion, tipo: str, desc: "semáforo: implementación (DEFINITIVA o PROVISIONAL_PMT)"}
+  TIPOINTERSECCION: {nombre: tipo_interseccion, tipo: str, desc: "semáforo: tipo de intersección semafórica (VEHICULAR, PEATONAL; EXCLUSIVA PEATONAL…)"}
+  NUMEROFASES: {nombre: fases, tipo: int, desc: "semáforo: cantidad de fases"}
+  GRUPOSPEATONALES: {nombre: grupos_peatonales, tipo: str, desc: "semáforo: números de los grupos de señales peatonales, como los escribe la SDM («21,23»; N/A)"}
+  GRUPOSSONOROS: {nombre: grupos_sonoros, tipo: str, desc: "semáforo: números de los grupos sonoros, como los escribe la SDM («722»; N/A si no tiene)"}
+  GRUPOSCICLISTAS: {nombre: grupos_ciclistas, tipo: str, desc: "semáforo: números de los grupos para ciclistas, como los escribe la SDM («41,42»; NO si no tiene)"}
+  CORREDOR: {nombre: corredor, tipo: str, desc: "cámara: corredor vial"}
+  TIPO_FOTODETECCION: {nombre: tipo_fotodeteccion, tipo: str, desc: "cámara: Fijo o Movil (dominio de la capa)"}
+  TIPO_CAMARA: {nombre: tipo_camara, tipo: str, desc: "cámara: Automática o Semi-automática (dominio de la capa)"}
+  ESTADO_PUNTO: {nombre: estado_camara, tipo: str, desc: "cámara: Instalada o «Desmontada - novedad» (dominio de la capa)"}
+  VELOCIDAD_FISCALIZACION: {nombre: velocidad_fiscalizacion, tipo: int, desc: "cámara: velocidad de fiscalización, como la pone la SDM (50 o 30)"}
+  INFRACCIONES: {nombre: infracciones, tipo: str, desc: "cámara: códigos de las infracciones que detecta, como los escribe la SDM (C14, C29, C35, D02…); el servicio no publica su significado"}
+  AUTORIZACION_OPERACION: {nombre: autorizacion_operacion, tipo: str, desc: "cámara: autorización de operación, como la escribe la SDM"}
+  ULTIMA_CALIBRACION: {nombre: ultima_calibracion, tipo: date, desc: "cámara: fecha de la última calibración"}
+  FECHA_DESMONTE: {nombre: fecha_desmonte, tipo: date, desc: "cámara: fecha de desmonte, si se desmontó"}
+  NOMBRECICLOP: {nombre: nombre, tipo: str, desc: "cicloparqueadero: nombre"}
+  SECTOR:
+    nombre: sector
+    tipo: str
+    desc: "cicloparqueadero: tipo de sector (PR o PU)"
+    codigos: {"PR": "Privado", "PU": "Publico"}
+    codigos_norma: "dominio de SECTOR en la capa Cicloparqueadero/FeatureServer/0 del folder DatosAbiertos de sig.simur.gov.co, leído el 2026-11-05"
+  TIPOUSUARIO:
+    nombre: tipo_usuario
+    tipo: str
+    desc: "cicloparqueadero: tipo de usuario (PR o PU)"
+    codigos: {"PR": "Privado", "PU": "Publico"}
+    codigos_norma: "dominio de TIPOUSUARIO en la capa Cicloparqueadero/FeatureServer/0 del folder DatosAbiertos de sig.simur.gov.co, leído el 2026-11-05"
+  HORARIOCICLOP: {nombre: horario, tipo: str, desc: "cicloparqueadero: horario de servicio"}
+  TIPOLOGIACICLOP:
+    nombre: tipologia
+    tipo: str
+    desc: "cicloparqueadero: código de la referencia de tipo de cicloparqueadero"
+    codigos: {"1": "Sujeción de rueda vertical", "2": "Variada", "3": "Gancho", "4": "U invertida", "5": "M100", "6": "M101", "7": "M23-A", "8": "Sin definir"}
+    codigos_norma: "dominio de TIPOLOGIACICLOP en la capa Cicloparqueadero/FeatureServer/0 del folder DatosAbiertos de sig.simur.gov.co, leído el 2026-11-05"
+  CUPOCICLOP: {nombre: cupos, tipo: int, desc: "cicloparqueadero: cantidad de cupos"}
+  SELLOCICLOP:
+    nombre: sello_calidad
+    tipo: str
+    desc: "cicloparqueadero: código del sello de calidad"
+    codigos: {"1": "Oro", "2": "Plata", "3": "No presenta"}
+    codigos_norma: "dominio de SELLOCICLOP en la capa Cicloparqueadero/FeatureServer/0 del folder DatosAbiertos de sig.simur.gov.co, leído el 2026-11-05"
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: Secretaría Distrital de Movilidad de Bogotá, theme: transporte}
+perfil:
+  medido: '2026-11-05'
+  fila: "un semáforo, una cámara salvavidas o un cicloparqueadero de Bogotá: 1 747 semáforos, 128 cámaras y 2 203 cicloparqueaderos (4 078)"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "las tres capas están en EPSG:4686 con maxRecordCount 2000; la copia pide EPSG:4326"
+  - "53 de las 128 cámaras dicen «Desmontada - novedad», 67 «Instalada» y 8 no dicen: la capa trae también las cámaras que ya no operan"
+  - "la localidad viene como nombre en mayúsculas sin tilde en los semáforos (KENNEDY) y como código del dominio en las cámaras (01…20) y los cicloparqueaderos (1…20, sin el cero)"
+  - "FUNCIONAMIENTO (BT-TF, CA-TA…) e INFRACCIONES (C14, C29…) no traen dominio ni significado en el servicio: salen tal cual"
+  - "49 cicloparqueaderos tienen la dirección en blanco"
+  decision: "copia espacial de las tres capas en una tabla con `tipo`"
