@@ -1,0 +1,74 @@
+id: upme.infraestructura_energetica
+titulo: "Infraestructura energética de Colombia (UPME): subestaciones, líneas de transmisión, centrales de generación y ductos de hidrocarburos, copia"
+entidad: Unidad de Planeación Minero Energética (UPME)
+competencia: planea el desarrollo minero-energético y administra el sistema de información del sector (Decreto 1258 de 2013)
+acto: null
+# Cuatro capas nacionales del geoportal de la UPME (geo.upme.gov.co/server), juntas en una copia
+# espacial (ADR-0024) con una columna `tipo`: lo que pide quien busca «una capa limpia de
+# infraestructura crítica» de energía, en una sola consulta. La UPME no declara licencia en el
+# servicio (copyrightText vacío, 2026-11-04) y es una entidad pública sin datos personales ni
+# reserva: dato público reutilizable (ADR-0019 enmienda, ámbar: sirve con aviso).
+licencia:
+  spdx: null
+  url: https://geo.upme.gov.co/server/rest/services
+  verificada: null
+  evidencia: https://geo.upme.gov.co/server/rest/services/Capas_EnergiaElectrica/sistema_transmision_subestaciones_construidas/FeatureServer/18?f=json
+  cita: "sin licencia declarada en el servicio"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Unidad de Planeación Minero Energética (UPME), geoportal (sistema de transmisión, generación XM e hidrocarburos)"
+protocolo: arcgis_rest
+conector: copia
+url: https://geo.upme.gov.co/server/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    Capas_EnergiaElectrica/sistema_transmision_subestaciones_construidas/FeatureServer/18: subestación eléctrica
+    Capas_EnergiaElectrica/Sistema_transmision_lineas_construidas/FeatureServer/17: línea de transmisión eléctrica
+    Capas_EnergiaElectrica/proyectos_generacion_xm/FeatureServer/24: central de generación eléctrica
+    Capas_Hidrocarburos/ductos_hidrocarburos/FeatureServer/3: ducto de hidrocarburos
+  columna_servicio: categoria
+  opcionales: [sistema, nombre_sistema, tension_kv, capacidad_mw, capacidad_transporte, unidad_capacidad, longitud_km, estado, municipio, cod_mpio, departamento]
+  tabla: upme_infraestructura_energetica
+  clave: id_elemento
+  por_pagina: 1000
+  indices: [categoria]
+# La UPME las actualiza sin calendario fijo (generación XM: «fecha» de 2026-11).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
+cobertura: {pais: CO}
+datos_personales: ninguno
+estado: publicada
+clasificacion_licencia: ambar
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su id en la capa (cambia si la UPME republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "subestación eléctrica, línea de transmisión eléctrica, central de generación eléctrica o ducto de hidrocarburos (una capa de la UPME cada uno)"}
+  nombre: {nombre: nombre, tipo: str, desc: "nombre de la subestación, del circuito de la línea, de la central (recurso de XM) o del tramo del ducto", alias: [nombre_subestacion, nombre_circuito, nombre_recurso, nombre_tramo]}
+  subtipo: {nombre: subtipo, tipo: str, desc: "subestación: AIS o GIS; línea: aéreo o subterráneo; central: hidráulica, térmica, solar, eólica…; ducto: oleoducto, gasoducto o poliducto", alias: [tipo_subestacion, tipo_circuito, tipo_generacion, tipo]}
+  operador: {nombre: operador, tipo: str, desc: "propietario (subestación, línea), agente que la representa ante XM (central) u operador (ducto); el ducto a veces dice «Sin información»", alias: [nombre_propietario, agente_representante]}
+  sistema: {nombre: sistema, tipo: str, desc: "subestación y línea: STN (transmisión nacional, 220 kV o más) o STR (regional)"}
+  nombre_sistema: {nombre: sistema_ductos, tipo: str, desc: "ducto: sistema de transporte al que pertenece el tramo"}
+  tension_kv: {nombre: tension_kv, tipo: float, desc: "subestación y línea: tensión nominal en kV", alias: [tension]}
+  capacidad_mw: {nombre: capacidad_mw, tipo: float, desc: "central: capacidad efectiva neta en MW", alias: [capacidad_efectiva_neta_mw]}
+  capacidad_transporte: {nombre: capacidad_transporte, tipo: float, desc: "ducto: capacidad de transporte, en la unidad de `unidad_capacidad`; -999 es «sin información» (así lo escribe la UPME), no un valor"}
+  unidad_capacidad: {nombre: unidad_capacidad, tipo: str, desc: "ducto: unidad de la capacidad como la escribe la UPME (p. ej. KBLS, miles de barriles)"}
+  longitud_km: {nombre: longitud_km, tipo: float, desc: "línea y ducto: longitud del tramo en km, según la UPME", alias: [longitud_tramo_km]}
+  estado: {nombre: estado, tipo: str, desc: "central: estado ante XM (operación, …)", alias: [estado_recurso]}
+  municipio: {nombre: municipio, tipo: str, desc: "subestación y central: municipio donde queda, como lo escribe la UPME", alias: [municipio_oficial]}
+  cod_mpio: {nombre: municipio_divipola, tipo: str, desc: "subestación y central: código DIVIPOLA del municipio"}
+  departamento: {nombre: departamento, tipo: str, desc: "subestación y central: departamento", alias: [departamento_oficial]}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: UPME, theme: energia}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-04'
+  fila: "un elemento de infraestructura: 514 subestaciones, 798 tramos de líneas de transmisión, 687 centrales y 193 tramos de ductos"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "cada capa tiene su esquema: la tensión solo en subestaciones y líneas, la capacidad en MW solo en centrales, la de transporte solo en ductos"
+  - "la fecha de entrada en operación viene como texto d/m/aaaa en subestaciones y líneas y como milisegundos en centrales: no se copia para no mezclar formatos"
+  - "el servicio está en EPSG:9377; la copia pide EPSG:4326"
+  - "los ductos traen «Sin información» en el operador, y -999 en la capacidad y en el número de líneas cuando no la saben"
+  - "la tensión del campo no siempre coincide con el nombre: «BACATÁ - NOROESTE 230 KV» dice 500 kV (se publica como viene)"
+  decision: "copia espacial de las cuatro capas en una tabla con `tipo`; las columnas que una capa no tiene salen vacías"

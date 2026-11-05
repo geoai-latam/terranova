@@ -1,0 +1,46 @@
+id: upme_infraestructura_energetica_en_zona
+version: 1
+familia: territorio
+fuente: upme.infraestructura_energetica
+pregunta: "¿Qué infraestructura energética crítica (subestaciones, líneas de transmisión, centrales, ductos de hidrocarburos) hay en esta zona?"
+descripcion: >
+  Infraestructura energética que se cruza con un rectángulo (bbox en EPSG:4326), en una sola capa
+  limpia: subestaciones eléctricas, líneas de transmisión, centrales de generación y ductos de
+  hidrocarburos (oleoductos, gasoductos y poliductos) de la UPME, con `tipo`, nombre, subtipo,
+  operador, sistema (STN o STR), tensión en kV, capacidad (MW de la central; transporte del ducto,
+  con su unidad), longitud en km y municipio. Una columna que no aplica a un tipo sale vacía (la
+  tensión de un ducto). Arriba van el total y cuántos hay de cada tipo. Una línea o un ducto que
+  pasa por la zona trae su trazado entero. Cubre todo el país; no trae redes de distribución,
+  pozos ni estaciones de servicio. Una capacidad de -999 es «sin información» en la fuente.
+  Sale de la copia de Terrnova (se rehace cada mes): la procedencia dice de cuándo es.
+  (Fuente: UPME; licencia: dato público reutilizable.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: upme_infraestructura_energetica
+    bbox: "{bbox}"
+    select: [categoria, nombre, subtipo, operador, sistema, nombre_sistema, tension_kv, capacidad_mw, capacidad_transporte, unidad_capacidad, longitud_km, estado, municipio, cod_mpio, departamento]
+    geometria: simplificada
+    order: [categoria, "-tension_kv", "-capacidad_mw", nombre]
+    limite: 1000
+  campos: [categoria, nombre, subtipo, operador, sistema, nombre_sistema, tension_kv, capacidad_mw, capacidad_transporte, unidad_capacidad, longitud_km, estado, municipio, cod_mpio, departamento]
+salida: InfraestructuraEnergeticaEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+  capacidad_mw_total: {de: suma, campo: capacidad_mw, tipo: float}
+avisos:
+- cuando: vacio
+  texto: >
+    En ese rectángulo no hay subestaciones, líneas de transmisión, centrales ni ductos de la UPME.
+    No cubre redes de distribución (media y baja tensión), pozos ni estaciones de servicio: que no
+    haya nada aquí no quiere decir que no haya red eléctrica. Pruebe con un rectángulo más grande.
+cobro: zona
+canario:
+  # Bbox de Bogotá y alrededores, como el del RUNAP. Se mide en la copia al construirla.
+  entrada: {bbox: [-74.5, 4.0, -73.5, 5.0]}
+  minimos: {total: 20}
+  campos: [capacidad_mw, capacidad_mw_total, capacidad_transporte, departamento, estado, longitud_km, municipio, municipio_divipola, nombre, operador, por_tipo, sistema, sistema_ductos, subtipo, tension_kv, tipo, total, unidad_capacidad]
+  latencia_max_ms: 8000

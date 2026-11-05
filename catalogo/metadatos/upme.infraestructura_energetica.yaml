@@ -1,0 +1,30 @@
+# Ficha técnica escrita a mano (spec 08): cuatro servicios de la UPME en una copia; las columnas de
+# la copia toman el nombre de cada capa por sus alias, y `id_elemento` y `categoria` los arma la copia.
+fuente: upme.infraestructura_energetica
+metodo: manual
+cosechado: '2026-11-04'
+origen: https://geo.upme.gov.co/server/rest/services?f=json
+pagina: https://geo.upme.gov.co/server/rest/services
+titulo: Geoportal de la UPME (sistema de transmisión, generación XM e hidrocarburos)
+descripcion: Cuatro capas nacionales del servidor ArcGIS de la UPME, en EPSG:9377 y con
+  maxRecordCount 2000. Son las subestaciones construidas (capa 18), las líneas de transmisión
+  construidas (17), los proyectos de generación de XM (24) y los ductos de hidrocarburos (3).
+idioma: Español
+filas: 2192
+campos:
+  id_elemento: {tipo_fuente: esriFieldTypeOID, etiqueta: OBJECTID / id}
+  categoria: {tipo_fuente: esriFieldTypeString, etiqueta: capa de la UPME}
+  nombre: {tipo_fuente: esriFieldTypeString, etiqueta: nombre_subestacion / nombre_circuito / nombre_recurso / nombre_tramo}
+  subtipo: {tipo_fuente: esriFieldTypeString, etiqueta: tipo_subestacion / tipo_circuito / tipo_generacion / tipo}
+  operador: {tipo_fuente: esriFieldTypeString, etiqueta: nombre_propietario / agente_representante / operador}
+  sistema: {tipo_fuente: esriFieldTypeString, etiqueta: sistema}
+  nombre_sistema: {tipo_fuente: esriFieldTypeString, etiqueta: nombre_sistema}
+  tension_kv: {tipo_fuente: esriFieldTypeDouble, etiqueta: tension}
+  capacidad_mw: {tipo_fuente: esriFieldTypeDouble, etiqueta: capacidad_efectiva_neta_mw}
+  capacidad_transporte: {tipo_fuente: esriFieldTypeDouble, etiqueta: capacidad_transporte}
+  unidad_capacidad: {tipo_fuente: esriFieldTypeString, etiqueta: unidad_capacidad}
+  longitud_km: {tipo_fuente: esriFieldTypeDouble, etiqueta: longitud_tramo_km / longitud_km}
+  estado: {tipo_fuente: esriFieldTypeString, etiqueta: estado_recurso}
+  municipio: {tipo_fuente: esriFieldTypeString, etiqueta: municipio / municipio_oficial}
+  cod_mpio: {tipo_fuente: esriFieldTypeString, etiqueta: cod_mpio}
+  departamento: {tipo_fuente: esriFieldTypeString, etiqueta: departamento / departamento_oficial}

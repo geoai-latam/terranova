@@ -165,6 +165,10 @@ async def test_las_herramientas_de_terrnova_van_antes_que_los_datasets() -> None
     # una pregunta sin herramienta clara no remite a ninguna (TransMilenio no es un peaje)
     r = await con.llamar("buscar_catalogo", {"consulta": "buses de TransMilenio"})
     assert [f["protocolo"] for f in r["artifacts"][0]["rows"]] == ["icde"]
+    # «infraestructura crítica» remite a la capa de la UPME (pregunta real de una reunión,
+    # 2026-11-04), y TransMilenio ya no cae en «transmisión» por sus 6 primeras letras
+    r = await con.llamar("buscar_catalogo", {"consulta": "infraestructura crítica"})
+    assert r["artifacts"][0]["rows"][0]["id"] == "upme_infraestructura_energetica_en_zona"
 
 
 @pytest.mark.anyio

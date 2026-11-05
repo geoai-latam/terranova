@@ -178,6 +178,26 @@ async def test_el_inicio_de_un_texto_largo_no_lleva_el_aviso_del_tope() -> None:
 
 
 @pytest.mark.anyio
+async def test_la_infraestructura_energetica_sale_en_una_capa_con_su_tipo() -> None:
+    """Cuatro capas de la UPME en una: cada elemento dice su tipo, lo que no aplica sale vacío (la
+    tensión de una central) y arriba van el total y cuántos hay de cada tipo."""
+    h = CATALOGO.herramientas["upme_infraestructura_energetica_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 256
+    assert set(datos["por_tipo"]) == {
+        "subestación eléctrica",
+        "línea de transmisión eléctrica",
+        "central de generación eléctrica",
+        "ducto de hidrocarburos",
+    }
+    centrales = [e for e in datos["elementos"] if e["tipo"].startswith("central")]
+    assert centrales and all(e["tension_kv"] is None for e in centrales)
+    assert datos["capacidad_mw_total"] == sum(e["capacidad_mw"] for e in centrales)
+
+
+@pytest.mark.anyio
 async def test_un_proyecto_sgr_por_bpin_no_dice_que_falte_algo() -> None:
     """Con `max_filas: 1`, el grupo único del BPIN llegaba al tope y cada proyecto decía «no se
     sabe si vino todo» (revisión de valor, 2026-11-04)."""
