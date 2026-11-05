@@ -1,0 +1,46 @@
+id: transmilenio_troncal_en_zona
+version: 1
+familia: territorio
+fuente: transmilenio.infraestructura_troncal
+pregunta: "¿Qué estaciones de TransMilenio y de TransMiCable, y qué troncales, hay en esta zona de Bogotá?"
+descripcion: >
+  Estaciones troncales de TransMilenio, estaciones de TransMiCable y trazados de las troncales que
+  se cruzan con un rectángulo (bbox en EPSG:4326), con `tipo`, nombre, número de estación, tipo de
+  estación (portal, intermedia, intercambio o sencilla), etapa de operación (operativa, con obras o
+  cerrada temporalmente), vagones, accesos (por espacio público, deprimido o puente) y, para el
+  trazado, la troncal, su letra, origen y fin. Arriba van el total y cuántos hay de cada tipo. Sirve
+  para «¿qué estación de TransMilenio queda cerca de este predio?» o «¿por qué troncal pasa esta
+  zona?». No trae rutas, paraderos zonales del SITP ni la posición de los buses. Cubre Bogotá y
+  Soacha. Sale de la copia de Terrnova (se rehace cada mes): la procedencia dice de cuándo es.
+  (Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: transmilenio_infraestructura_troncal
+    bbox: "{bbox}"
+    select: [categoria, num_est, nom_est, ub_est, id_trazado, tipo_esta, eta_oper, esta_oper, num_vag, num_acc, acc_esp, acc_depr, acc_puent, link_trans, nom_tronc, le_troncal, ori_traz, fin_traz, long_traz]
+    geometria: simplificada
+    order: [categoria, nom_est]
+    limite: 1000
+  campos: [categoria, num_est, nom_est, ub_est, id_trazado, tipo_esta, eta_oper, esta_oper, num_vag, num_acc, acc_esp, acc_depr, acc_puent, link_trans, nom_tronc, le_troncal, ori_traz, fin_traz, long_traz]
+salida: TransmilenioTroncalEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_tipo: {de: conteo_por, campo: tipo}
+avisos:
+- cuando: vacio
+  texto: >
+    En ese rectángulo no hay estaciones troncales, de TransMiCable ni troncales de TransMilenio.
+    Esta capa no trae los paraderos zonales del SITP ni las rutas: que no haya troncal no quiere
+    decir que no pase transporte público. Pruebe con un rectángulo más grande.
+cobro: zona
+canario:
+  # Medido el 2026-11-04 en el servicio de TransMilenio (returnCountOnly con el sobre en EPSG:4326):
+  # en [-74.10, 4.62, -74.04, 4.68] (Teusaquillo y Chapinero) hay 32 estaciones troncales, 0 de
+  # cable y 8 trazados: 40. En todo el servicio, 153 estaciones, 4 de cable y 22 trazados.
+  entrada: {bbox: [-74.10, 4.62, -74.04, 4.68]}
+  minimos: {total: 40}
+  campos: [accesos, accesos_deprimido, accesos_espacio_publico, accesos_puente, enlace, estado_operacion, estado_operacion_significado, etapa_operacion, etapa_operacion_significado, fin, id_trazado, letra_troncal, longitud_m, nombre, numero_estacion, origen, por_tipo, tipo, tipo_estacion, tipo_estacion_significado, total, troncal, ubicacion, vagones]
+  latencia_max_ms: 8000

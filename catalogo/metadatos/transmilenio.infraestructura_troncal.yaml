@@ -1,0 +1,34 @@
+# Ficha técnica escrita a mano (spec 08): tres capas del servicio de planificación del SITP en una
+# copia; `nombre` toma nom_est o nom_traz por alias, y `id_elemento` y `categoria` los arma la copia.
+fuente: transmilenio.infraestructura_troncal
+metodo: manual
+cosechado: '2026-11-04'
+origen: https://gis.transmilenio.gov.co/arcgis/rest/services/ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer?f=json
+pagina: https://datosabiertos-transmilenio.hub.arcgis.com
+titulo: Consulta de planificación del SITP (TransMilenio)
+descripcion: Tres capas del servidor ArcGIS de TransMilenio, en EPSG:3116 y con maxRecordCount
+  2000. Son las estaciones troncales (capa 2, 153), las estaciones de TransMiCable (11, 4) y los
+  trazados troncales (5, 22), medidas el 2026-11-04.
+idioma: Español
+filas: 179
+campos:
+  id_elemento: {tipo_fuente: esriFieldTypeOID, etiqueta: OBJECTID}
+  categoria: {tipo_fuente: esriFieldTypeString, etiqueta: capa de TransMilenio}
+  num_est: {tipo_fuente: esriFieldTypeString, etiqueta: Número estación troncal}
+  nom_est: {tipo_fuente: esriFieldTypeString, etiqueta: Nombre de la estación / Nombre del trazado}
+  ub_est: {tipo_fuente: esriFieldTypeString, etiqueta: Ubicación estación}
+  id_trazado: {tipo_fuente: esriFieldTypeString, etiqueta: Id trazado}
+  tipo_esta: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Tipo de estación}
+  eta_oper: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Etapa de operación}
+  esta_oper: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Estado de operación}
+  num_vag: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Número de vagones}
+  num_acc: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Número de accesos}
+  acc_esp: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Accesos espacio público}
+  acc_depr: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Accesos deprimido}
+  acc_puent: {tipo_fuente: esriFieldTypeSmallInteger, etiqueta: Accesos puente}
+  link_trans: {tipo_fuente: esriFieldTypeString, etiqueta: Link transmicable}
+  nom_tronc: {tipo_fuente: esriFieldTypeString, etiqueta: Nombre de la troncal}
+  le_troncal: {tipo_fuente: esriFieldTypeString, etiqueta: Letra de la troncal}
+  ori_traz: {tipo_fuente: esriFieldTypeString, etiqueta: Origen del trazado}
+  fin_traz: {tipo_fuente: esriFieldTypeString, etiqueta: Fin del trazado}
+  long_traz: {tipo_fuente: esriFieldTypeDouble, etiqueta: Longitud del trazado}
