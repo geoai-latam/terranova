@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-10-28T19:38:45+00:00",
+ "grabado": "2026-11-05T16:01:28+00:00",
  "herramienta": "invias_puentes_en_zona",
  "llamadas": [
   {
@@ -14,9 +14,9 @@
     "columna_geo": "point",
     "id": "nsdj-ep2p",
     "max_filas": 3000,
-    "order": "via, poste_de_referencia, distancia, nombre",
+    "order": "via, poste_de_referencia, distancia, nombre, :id",
     "portal": "datos.gov.co",
-    "select": "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
+    "select": ":id, nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -34,6 +34,7 @@
           "type": "Point"
          },
          "properties": {
+          ":id": "row-8y69_zcrm_cz9k",
           "administrador": "Conc. Depart.",
           "carretera": "Briceño - Zipaquirá - Te de Nemocón",
           "distancia": "480",
@@ -71,7 +72,7 @@
       "conjunto": "nsdj-ep2p",
       "max_filas": 3000,
       "portal": "datos.gov.co",
-      "select": "nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point",
+      "select": ":id, nombre, via, carretera, poste_de_referencia, distancia, administrador, luces, luz_maxima, luz_total, tablero, material, secci_n_longitudinal, secci_n_transversal, fecha_de_construcci_n * 1000 AS fecha_de_construcci_n, fecha_de_inspecci_n, point",
       "where": "(within_box(point, 4.995, -73.975, 4.99, -73.965))"
      },
      "cumplen_en_el_portal": 1,
