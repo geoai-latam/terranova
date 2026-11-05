@@ -33,6 +33,7 @@ Reglas:
 | Supersociedades: estados financieros NIIF (cinco conjuntos) y las 10 000 empresas | [supersociedades.md](supersociedades.md) |
 | Policía Nacional, delitos denunciados (SIEDCO): siete conjuntos con la misma forma | [policia.siedco.md](policia.siedco.md) |
 | ANH: producción de crudo y gas, y regalías liquidadas | [anh.md](anh.md) |
+| ADRES, afiliados de la BDUA por municipio y EPS (dos regímenes) | [adres.bdua.md](adres.bdua.md) |
 | Aerocivil: tráfico origen-destino y operaciones | [aerocivil.md](aerocivil.md) |
 | SIC, sanciones en firme de protección al consumidor (`73dx-n59j`) | [sic.sanciones.md](sic.sanciones.md) |
 | MinDefensa, homicidios en víctimas (`m8fd-ahd9`) | [mindefensa.homicidios.md](mindefensa.homicidios.md) |

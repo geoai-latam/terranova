@@ -35,6 +35,19 @@ derivados:
   total_afiliados: {de: suma, campo: afiliados, tipo: int}
   numero_registros: {de: conteo, tipo: int}
 salida: AfiliadosContributivoMunicipio
+avisos:
+- cuando: vacio
+  texto: >
+    La BDUA de la ADRES no trae afiliados del régimen contributivo para ese municipio y departamento con
+    ese nombre. La fuente no usa código DIVIPOLA y escribe los nombres a su modo: pruebe con el
+    nombre corto del municipio (San Pedro para San Pedro de los Milagros) o el del departamento
+    como lo escribe la ADRES (VALLE, NARINO, BOGOTA D.C.).
+- cuando: encontrado
+  texto: >
+    Es el corte mensual vigente de la BDUA: la ADRES reemplaza la tabla cada mes, así que la cifra
+    es la del último corte publicado, no un histórico, y puede subir o bajar de un mes a otro. Las
+    filas no traen la fecha del corte. Cuenta afiliados activos del régimen contributivo; los del
+    subsidiado están en adres_afiliados_subsidiado_municipio.
 cobro: agregado
 canario:
   # Medido el 2026-10-28 en tq4m-hmg2: Cali (Valle del Cauca) es SANTIAGO DE CALI en VALLE, 17 EPS
