@@ -1,6 +1,6 @@
 # Estado
 
-*Actualizado: 2026-11-04.*
+*Actualizado: 2026-11-05.*
 
 ## Estado consolidado del producto (2026-10-28, `main` en #182)
 
@@ -47,6 +47,37 @@ Esta sección es la foto vigente; las de abajo son el registro de cómo se lleg�
   - El estado de los puentes no se publica (lo último es de 2015).
   - Las fuentes ámbar que esperan un derecho de petición: SIAC, el Atlas de la UNGRD, TerriData, XM y
     el visualizador del IDEAM.
+
+## Revisión de valor en loop (2026-11-05, #402 a #426)
+
+Herramienta por herramienta en producción, con casos a mano: otro lugar real, un borde y un lugar
+sin datos.
+
+- **Motor:**
+  - los conteos y sumas de arriba cuentan la lista completa de la copia, no solo los primeros
+    1000 (#407);
+  - con `juntar`, el aviso de página ya no cuenta filas de la fuente (#416);
+  - el marcador `{x:vocales}` busca con o sin tildes (#417);
+  - `reparar_codificacion` arregla el texto mal codificado y `unico_por` deja una fila por clave
+    (#418);
+  - las doradas enmascaran correos (#413).
+- **Fuentes:**
+  - IDEAM, captaciones de agua: copia nueva (#406);
+  - SECOP: integrado, modificaciones, pagos, proceso, rubros y suspensiones (#408 a #412, #414);
+  - RUES: «ACTIVA» no es «opera» (#415);
+  - Superfinanciera, Supersociedades y Supersolidaria (#417 a #419);
+  - INVIMA (#420, #426); ADRES (#421); ANH (#422); BanRep (#423);
+  - DIAN comex: `primer_mes` y `hasta_mes` (#424);
+  - MinHacienda regalías: totales aprobados (#425).
+- **Patrón más común:** «no encontrado» sin aviso. Se añadió el aviso de vacío en unas 25
+  herramientas.
+- **Queda en la cola:** 71 ítems de `interno/REVISION_VALOR_LOOP.md`. Siguen SIGEP, Supertransporte,
+  UPRA y la familia justicia (CNMH, Corte Constitucional, Medicina Legal, Policía), más P0.5, IC4
+  y T3-T14.
+- **Pendiente técnico:**
+  - Aerocivil: la búsqueda con `vocales`, cuando entre #417 («Cucuta» pierde 2022-2026);
+  - ninguna fuente viva de datos.gov.co lleva la fecha de actualización en la procedencia;
+  - la tabla de códigos SDMX del BanRep está tras un antibots.
 
 ## Licencias del DANE y del IGAC (2026-11-04, ADR-0039)
 
