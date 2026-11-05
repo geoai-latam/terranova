@@ -125,3 +125,4 @@ Reglas:
 | UPME: infraestructura energética | [upme.infraestructura_energetica.md](upme.infraestructura_energetica.md) |
 | USGS: catálogo mundial de sismos | [usgs.sismos.md](usgs.sismos.md) |
 | Supertransporte, tráfico portuario (`5r3g-zv5z`) y contenedores (`7tvr-cx9w`) | [supertransporte.puertos.md](supertransporte.puertos.md) |
+| UARIV, Registro Único de Víctimas por municipio, por hecho y desplazamiento por año (`ykxr-xynr`, `9qih-4vkc`, `krnc-8azs`) | [uariv.ruv.md](uariv.ruv.md) |
