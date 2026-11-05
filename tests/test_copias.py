@@ -644,7 +644,9 @@ def test_copia_espacial_en_postgis() -> None:
     filas, _ = almacen.consultar(
         plan_de_consulta(zrc, {"punto": [-73.5, 4.5], "select": ["FECHA_CONSTITUCION"]})
     )
-    assert filas == [{"FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024"}]
+    assert filas == [
+        {"FECHA_CONSTITUCION": "18/12/1997 Fecha de modificación: 26/09/2024", "OBJECTID_1": 7}
+    ]
 
 
 @pytest.mark.skipif(not URL_PG, reason="sin TERRANOVA_PG_PRUEBAS")
