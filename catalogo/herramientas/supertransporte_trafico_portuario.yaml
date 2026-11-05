@@ -5,7 +5,7 @@ fuente: supertransporte.trafico_portuario
 pregunta: "¿Cuántas toneladas movió esta zona portuaria (o sociedad portuaria) en un año?"
 descripcion: >
   Toneladas movidas en un año por las sociedades portuarias de una zona portuaria, o por una
-  sociedad portuaria, buscada por su nombre o parte de él SIN TILDES, como lo escribe la fuente (zonas:
+  sociedad portuaria, buscada por su nombre o parte de él, sin importar tildes ni la Ñ (zonas:
   CARTAGENA, BARRANQUILLA, BUENAVENTURA, SANTA MARTA, CIENAGA, MORROSQUILLO, GUAJIRA, TURBO, TUMACO,
   SAN ANDRES, BARRANCABERMEJA, RIO MAGDALENA): por sociedad y tipo de carga (contenedores, carbón, granel líquido, granel sólido,
   general), con exportación, importación, transbordo, tránsito internacional, cabotaje, fluvial,

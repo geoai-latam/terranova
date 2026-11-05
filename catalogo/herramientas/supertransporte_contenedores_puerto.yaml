@@ -6,7 +6,7 @@ pregunta: "¿Cuántos contenedores (TEU) movió esta zona portuaria (o sociedad 
 descripcion: >
   Contenedores movidos en un año, en TEU (unidades de 20 pies), por las sociedades portuarias de una
   zona portuaria (CARTAGENA, BUENAVENTURA, BARRANQUILLA, SANTA MARTA…) o por una sociedad portuaria,
-  buscada por su nombre o parte de él SIN TILDES, como lo escribe la fuente: por sociedad y embalaje (TEU llenos o vacíos), con
+  buscada por su nombre o parte de él, sin importar tildes ni la Ñ: por sociedad y embalaje (TEU llenos o vacíos), con
   exportación, importación, transbordo, tránsito internacional, cabotaje y fluvial, su suma y el
   total del año. Trae hasta qué mes hay datos (un año en curso está incompleto). Desde 2018.
   (Fuente: Superintendencia de Transporte; licencia: CC BY-SA 4.0.)
