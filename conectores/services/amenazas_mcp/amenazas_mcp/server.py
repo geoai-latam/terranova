@@ -6,7 +6,8 @@ caudal del Magdalena en Honda?», «¿cuánto llovió en Yopal en 2023?». Cuatr
 - `amenazas_sismos` (USGS), `amenazas_incendios` (NASA FIRMS, últimos 7 días), `amenazas_incendios_periodo`
   (NASA FIRMS por fecha desde 2012, con MAP_KEY),
 - `amenazas_caudal` (GloFAS: la celda del punto Y sus vecinas, porque el río puede pasar por la de al lado),
-- `clima_serie` (ERA5 por Open-Meteo —también pronóstico— o NASA POWER, con la elevación que usa cada modelo).
+- `clima_serie` (ERA5 por Open-Meteo —también pronóstico— o NASA POWER, con la elevación que usa cada modelo),
+- `amenazas_deforestacion` (alertas integradas de Global Forest Watch por zona y periodo, con GFW_API_KEY).
 
 Las capas de amenaza OFICIALES de Colombia (SGC: sísmica, volcánica, movimientos en masa) están en ogc-mcp.
 """
@@ -37,15 +38,15 @@ from mcp.server.fastmcp import FastMCP
 from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import CallToolResult, ToolAnnotations
 
-from amenazas_mcp import clima, fuentes, resumen
+from amenazas_mcp import clima, fuentes, gfw, resumen
 
 logger = logging.getLogger("amenazas_mcp")
 SCOPES = {"amenazas_sismos": "amenazas:read", "amenazas_incendios": "amenazas:read",
-          "amenazas_incendios_periodo": "amenazas:read",
+          "amenazas_incendios_periodo": "amenazas:read", "amenazas_deforestacion": "amenazas:read",
           "amenazas_caudal": "amenazas:read", "clima_serie": "amenazas:read"}
 runner = ToolRunner(timeout_s=170, service="amenazas-mcp",
                     expected_errors=(ErrorRed, UrlNoPermitida, resumen.ErrorAmenazas, areas.AreaInvalida,
-                                     fuentes.ErrorFirms))
+                                     fuentes.ErrorFirms, gfw.ErrorGfw))
 mcp = FastMCP(
     "amenazas-mcp",
     instructions=("Sismos (USGS), incendios activos (NASA FIRMS), caudales de ríos (GloFAS) y clima (ERA5, NASA "
@@ -190,6 +191,45 @@ def clima_serie(desde: str, hasta: str, punto: dict | None = None, lon: float | 
         hechos["completitud"] = completitud(len(filas), len(filas))
         columnas = ["fecha", "t_media_c", "t_max_c", "t_min_c", "precipitacion_mm"]
         return geo_result([table(columnas, filas)], facts=hechos)
+
+    return compact_result(runner.run(consultar))
+
+
+@mcp.tool(
+    description=("Alertas integradas de deforestación de Global Forest Watch (GLAD-L, GLAD-S2 y RADD; UMD/GLAD y "
+                 "WUR; píxel de 10 m; trópicos) en una zona (`area` = una capa de la sesión, `poligono` = un GeoJSON "
+                 "Polygon, o `bbox`) y un PERIODO (`desde`/`hasta` AAAA-MM-DD, `hasta` exclusivo, hasta "
+                 f"{gfw.MAX_DIAS} días, desde 2019): tabla por fecha y confianza (nominal, high, highest) con los "
+                 "píxeles de alerta y sus hectáreas. Un píxel no es un evento. Sin alertas no quiere decir sin "
+                 f"deforestación (nubes, cobertura de cada sistema). {_ZONA_TXT}"),
+    annotations=ToolAnnotations(readOnlyHint=True, openWorldHint=True),
+    meta=geo_meta(inputs={**ZONA, "poligono": ["geometry"]}, outputs=["table"], cost="low"),
+)
+def amenazas_deforestacion(desde: str, hasta: str, area: dict | None = None, poligono: dict | None = None,
+                           bbox: list[float] | None = None) -> CallToolResult:
+    def consultar() -> dict:
+        if poligono:
+            from shapely.geometry import shape
+
+            if not isinstance(poligono, dict) or poligono.get("type") not in ("Polygon", "MultiPolygon"):
+                raise resumen.ErrorAmenazas("`poligono` es un GeoJSON Polygon o MultiPolygon en EPSG:4326")
+            caja, geometria = list(shape(poligono).bounds), poligono
+        else:
+            caja, geom = resumen.zona(area, bbox)
+            geometria = None
+            if geom is not None:
+                from shapely.geometry import mapping
+
+                geometria = mapping(geom)
+        filas, version = gfw.alertas(geometria, caja, desde, hasta)
+        hechos = {"zona_consultada_bbox": [round(v, 6) for v in caja], "periodo": [desde, hasta],
+                  "por_poligono": geometria is not None,
+                  "fuente": "Global Forest Watch, alertas integradas (UMD/GLAD y WUR)",
+                  # GFW da los conteos enteros de la zona y el periodo en una respuesta
+                  "completitud": completitud(len(filas), len(filas))}
+        if filas:  # la versión es un hecho de la puerta: sin filas haría «encontrado» una zona sin alertas
+            hechos["version_gfw"] = version
+        return geo_result([table(["fecha", "confianza", "alertas", "area_ha"], filas)], facts=hechos)
 
     return compact_result(runner.run(consultar))
 

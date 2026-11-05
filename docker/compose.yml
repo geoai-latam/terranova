@@ -264,6 +264,8 @@ services:
       AMENAZAS_MCP_KEYS: '[{"name":"terranova","key":"${TERRANOVA_CONECTOR_LLAVE}","scopes":["amenazas:read"],"rate_limit_per_min":600}]'
       # API por área de NASA FIRMS (gratis; va en el .env de la VPS, nunca en el repo)
       FIRMS_MAP_KEY: "${FIRMS_MAP_KEY:-}"
+      # Data API de Global Forest Watch (gratis; va en el .env de la VPS, nunca en el repo)
+      GFW_API_KEY: "${GFW_API_KEY:-}"
     tmpfs: ["/tmp:size=32m,uid=10012"]
     read_only: true
     cap_drop: [ALL]
