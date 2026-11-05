@@ -1,0 +1,160 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T03:11:51+00:00",
+ "herramienta": "secop_contratos_buscar_entidad",
+ "llamadas": [
+  {
+   "argumentos": {
+    "filtros": {
+     "nit_entidad": "891180077"
+    },
+    "limite": 50,
+    "order": [
+     "-fecha_de_firma",
+     "id_contrato"
+    ],
+    "select": [
+     "id_contrato",
+     "proceso_de_compra",
+     "nombre_entidad",
+     "nit_entidad",
+     "departamento",
+     "ciudad",
+     "proveedor_adjudicado",
+     "objeto_del_contrato",
+     "tipo_de_contrato",
+     "modalidad_de_contratacion",
+     "estado_contrato",
+     "valor_del_contrato",
+     "fecha_de_firma",
+     "urlproceso"
+    ],
+    "tabla": "secop_contratos",
+    "texto": "mantenimiento vías"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "columns": [
+       "ciudad",
+       "departamento",
+       "estado_contrato",
+       "fecha_de_firma",
+       "id_contrato",
+       "modalidad_de_contratacion",
+       "nit_entidad",
+       "nombre_entidad",
+       "objeto_del_contrato",
+       "proceso_de_compra",
+       "proveedor_adjudicado",
+       "tipo_de_contrato",
+       "urlproceso",
+       "valor_del_contrato"
+      ],
+      "kind": "table",
+      "rows": [
+       {
+        "ciudad": "Pitalito",
+        "departamento": "Huila",
+        "estado_contrato": "Modificado",
+        "fecha_de_firma": "2026-07-10",
+        "id_contrato": "CO1.PCCNTR.9612716",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "nit_entidad": "891180077",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "objeto_del_contrato": "SUMINISTRO DE REPUESTOS Y ACCESORIOS PARA EL MANTENIMIENTO PREVENTIVO; PREDICTIVO Y CORRECTIVO INCLUIDO MANO DE OBRA PARA LA MAQUINARIA PESADA Y VEHÍCULOS AL SERVICIO DE LA SECRETARÍA DE INFRAESTRUCTURA EN EL CUMPLIMIENTO DE LA META MANTENIMIENTO DE VIAS URBANAS Y RURALES ENMARCADAS EN EL PROGRAMA DENOMINADO INFRAESTRUCTURA RED VIAL REGIONAL DEL MUNICIPIO DE PITALITO HUILA",
+        "proceso_de_compra": "CO1.BDOS.10279984",
+        "proveedor_adjudicado": "IGM COLOMBIA SAS",
+        "tipo_de_contrato": "Suministros",
+        "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10375953&isFromPublicArea=True&isModal=true&asPopupView=true",
+        "valor_del_contrato": 484193374.8
+       },
+       {
+        "ciudad": "Pitalito",
+        "departamento": "Huila",
+        "estado_contrato": "En ejecución",
+        "fecha_de_firma": "2026-05-14",
+        "id_contrato": "CO1.PCCNTR.9508681",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "nit_entidad": "891180077",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "objeto_del_contrato": "TRANSPORTE DE MATERIAL EN VOLQUETAS EN EL CUMPLIMIENTO DE LA META MANTENIMIENTO DE VÍAS URBANAS Y RURALES ENMARCADAS EN EL PROGRAMA DENOMINADO INFRAESTRUCTURA RED VIAL REGIONAL DEL MUNICIPIO DE PITALITO HUILA",
+        "proceso_de_compra": "CO1.BDOS.10191898",
+        "proveedor_adjudicado": "BTM TRANSPORTES SAS",
+        "tipo_de_contrato": "Prestación de servicios",
+        "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10247747&isFromPublicArea=True&isModal=true&asPopupView=true",
+        "valor_del_contrato": 731229850.0
+       },
+       {
+        "ciudad": "Pitalito",
+        "departamento": "Huila",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2025-07-16",
+        "id_contrato": "CO1.PCCNTR.8062434",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "nit_entidad": "891180077",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "objeto_del_contrato": "TRANSPORTE DE MATERIAL EN VOLQUETAS PARA MANTENIMIENTO DE VÍAS URBANAS Y RURALES DEL MUNICIPIO DE PITALITO HUILA.",
+        "proceso_de_compra": "CO1.BDOS.8272239",
+        "proveedor_adjudicado": "BTM TRANSPORTES SAS",
+        "tipo_de_contrato": "Prestación de servicios",
+        "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8339451&isFromPublicArea=True&isModal=true&asPopupView=true",
+        "valor_del_contrato": 449977680.0
+       },
+       {
+        "ciudad": "Pitalito",
+        "departamento": "Huila",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2023-06-01",
+        "id_contrato": "CO1.PCCNTR.5010060",
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+        "nit_entidad": "891180077",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "objeto_del_contrato": "TRANSPORTE DE MATERIAL EN VOLQUETAS PARA MANTENIMIENTO DE VIAS URBANAS Y RURALES DEL MUNICIPIO DE PITALITO HUILA",
+        "proceso_de_compra": "CO1.BDOS.4343861",
+        "proveedor_adjudicado": "BTM TRANSPORTES SAS",
+        "tipo_de_contrato": "Prestación de servicios",
+        "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.4385212&isFromPublicArea=True&isModal=true&asPopupView=true",
+        "valor_del_contrato": 374534823.0
+       },
+       {
+        "ciudad": "Pitalito",
+        "departamento": "Huila",
+        "estado_contrato": "terminado",
+        "fecha_de_firma": "2023-02-22",
+        "id_contrato": "CO1.PCCNTR.4650891",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "nit_entidad": "891180077",
+        "nombre_entidad": "MUNICIPIO DE PITALITO",
+        "objeto_del_contrato": "TRANSPORTE DE MATERIAL EN VOLQUETAS PARA MANTENIMIENTO DE VÍAS URBANAS Y RURALES DEL MUNICIPIO DE PITALITO HUILA",
+        "proceso_de_compra": "CO1.BDOS.3965536",
+        "proveedor_adjudicado": "BTM TRANSPORTES SAS",
+        "tipo_de_contrato": "Prestación de servicios",
+        "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.3968781&isFromPublicArea=True&isModal=true&asPopupView=true",
+        "valor_del_contrato": 49984340.0
+       }
+      ]
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 31,
+      "truncado": false,
+      "vistos": 31
+     },
+     "consultado_en": "2026-11-04T04:01:38.286840+00:00",
+     "copia": {
+      "filas": 3679244,
+      "huella": "sha256:9f7405dbd8046ee7feef081f39b2b2270b69bab8cfde0db5fae70353a977985c",
+      "repetidas_en_la_fuente": 263,
+      "ventana_desde": "2023-01-01",
+      "version": "20261104040138286840"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}
