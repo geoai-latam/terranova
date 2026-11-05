@@ -120,9 +120,10 @@ NOMBRE_CORTO = {
     "URT": "Unidad de Restitución de Tierras",
     "consorcio WorldCover": "ESA WorldCover",
     "LANCE/FIRMS": "NASA FIRMS",
+    "WRI": "Global Forest Watch",
     "Alcaldía Mayor de Bogotá": "Alcaldía de Bogotá",
 }
-GLOBALES = ("USGS", "ESA WorldCover", "NASA FIRMS")
+GLOBALES = ("USGS", "ESA WorldCover", "NASA FIRMS", "Global Forest Watch")
 
 
 def nombre_entidad(entidad: str) -> str:
@@ -480,6 +481,7 @@ SISTEMAS = {
     "Unidad de Restitución de Tierras": ["Restitución de tierras"],
     "USGS": ["Sismos"],
     "NASA FIRMS": ["Focos de calor"],
+    "Global Forest Watch": ["Alertas integradas de deforestación"],
 }
 
 
