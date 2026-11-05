@@ -36,6 +36,12 @@ derivados:
   contratos: {de: columna, campo: contratos, tipo: int}
   valor_total: {de: columna, campo: valor_total, tipo: float}
   contratos_valor_atipico: {de: columna, campo: contratos_valor_atipico, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Las filas con `anio` vacío no son contratos firmados: son los registros sin fecha de firma
+    (procesos en borrador, cancelados, en aprobación o enviados al proveedor). En la Gobernación
+    del Huila, el 2026-11-05, eran 539 de SECOP II por $5,7 billones. No los sume con los años.
 cobro: agregado
 canario:
   # Medido el 2026-10-22 en rpmr-utcd: Municipio de Pitalito, 2018 en SECOP I → 1 contrato, $9 995 000.

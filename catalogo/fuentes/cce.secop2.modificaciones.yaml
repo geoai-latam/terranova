@@ -34,6 +34,11 @@ campos:
   dias_extendidos: {nombre: dias_extendidos, tipo: int, desc: "días de prórroga"}
   fecha_de_aprobacion: {nombre: fecha_aprobacion, tipo: date, desc: "fecha de aprobación (vacía en las que no se aprobaron)"}
   fecha_creacion: {nombre: fecha_creacion, tipo: date, desc: "fecha en que se registró la modificación"}
+  # medido el 2026-11-05 en CO1.PCCNTR.3712964: 2022-09-03, +178 días → 2023-02-28, +92 → 2023-06-01,
+  # +94 → 2023-09-03. Es el fin en la versión que deja la modificación.
+  fecha_inicio_contrato: {nombre: fecha_inicio_contrato, tipo: date, desc: "fecha de inicio del contrato"}
+  fecha_fin_contrato: {nombre: fecha_fin_tras_cambio, tipo: date, desc: "fecha de fin del contrato en la versión que deja esta modificación"}
+  liquidacion: {nombre: liquidacion, tipo: str, desc: "si el contrato se liquidó (Sí o No), según la fuente"}
 comportamiento: {max_por_pagina: 50000}
 dcat: {publisher: Colombia Compra Eficiente, theme: contratacion, accrualPeriodicity: daily}
 # Spec 07: medido en la fuente, no en Terrnova.
