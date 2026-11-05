@@ -1,0 +1,112 @@
+id: sdm.siniestralidad_critica
+titulo: "Bogotá: puntos, tramos y zonas críticas de siniestralidad vial 2022-2025, por actor vial (SDM, copia)"
+entidad: Secretaría Distrital de Movilidad de Bogotá
+competencia: autoridad de tránsito y transporte de Bogotá D.C.; la Oficina de Seguridad Vial identifica los sitios críticos a partir del SIGAT (Acuerdo 257 de 2006 del Concejo de Bogotá)
+acto: null
+# Veinte capas del folder DatosAbiertos del SIG de la SDM (sig.simur.gov.co), juntas en una copia
+# espacial con una columna `tipo` que dice el elemento (punto, tramo o zona), el actor vial
+# (peatones, ciclistas, motociclistas o vulnerables) y la red (arterial o no arterial). Cada capa
+# tiene su ítem en ArcGIS Online, del usuario SecretariaMovilidad, con la misma licencia; verificado
+# el 2026-11-05 en los veinte ítems (búsqueda owner:SecretariaMovilidad).
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-05
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/432677bf93c74af6a1e040570c2b940f?f=json
+  cita: "licenseInfo: «Creative Commons Attribution 4.0» (enlace a https://creativecommons.org/licenses/by/4.0/); accessInformation: «Oficina de Seguridad Vial - Secretaría Distrital de Movilidad»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: Oficina de Seguridad Vial, Secretaría Distrital de Movilidad de Bogotá (puntos, tramos y zonas críticas de siniestralidad 2022-2025)"
+protocolo: arcgis_rest
+# La VPS no llega a sig.simur.gov.co (sin respuesta desde el datacenter, 2026-11-05): la copia se
+# baja a mano desde Colombia, como la de los equipamientos de emergencia de Bogotá.
+conector: copia
+url: https://sig.simur.gov.co/arcgis/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    DatosAbiertos/PuntosCriticosPeatones_ViaArterial_2225/FeatureServer/1: punto crítico · peatones · vía arterial
+    DatosAbiertos/PuntosCriticosPeatones_Local_2225/FeatureServer/1: punto crítico · peatones · vía no arterial
+    DatosAbiertos/PuntosCriticosBicicleta_ViaArterial_2225/FeatureServer/1: punto crítico · ciclistas · vía arterial
+    DatosAbiertos/PuntosCriticosBicicleta_Local_2225/FeatureServer/1: punto crítico · ciclistas · vía no arterial
+    DatosAbiertos/PuntosCriticosMoto_ViaArterial_2225/FeatureServer/1: punto crítico · motociclistas · vía arterial
+    DatosAbiertos/PuntosCriticosMoto_Local_2225/FeatureServer/1: punto crítico · motociclistas · vía no arterial
+    DatosAbiertos/PuntosCriticosVulnerables_ViaArterial_2225/FeatureServer/1: punto crítico · vulnerables · vía arterial
+    DatosAbiertos/PuntosCriticosVulnerables_Local_2225/FeatureServer/1: punto crítico · vulnerables · vía no arterial
+    DatosAbiertos/TramosCriticosPeatones_ViaArterial_2225/FeatureServer/1: tramo crítico · peatones · vía arterial
+    DatosAbiertos/TramosCriticosPeatones_local_2225/FeatureServer/1: tramo crítico · peatones · vía no arterial
+    DatosAbiertos/TramosCriticosBicicleta_ViaArterial_2225/FeatureServer/1: tramo crítico · ciclistas · vía arterial
+    DatosAbiertos/TramosCriticosBicicleta_Local_2225/FeatureServer/1: tramo crítico · ciclistas · vía no arterial
+    DatosAbiertos/TramosCriticosMoto_ViaArterial_2225/FeatureServer/1: tramo crítico · motociclistas · vía arterial
+    DatosAbiertos/TramosCriticosMoto_Local_2225/FeatureServer/1: tramo crítico · motociclistas · vía no arterial
+    DatosAbiertos/TramosCriticosVulnerables_ViaArterial_2225/FeatureServer/1: tramo crítico · vulnerables · vía arterial
+    DatosAbiertos/TramosCriticosVulnerables_Local_2225/FeatureServer/1: tramo crítico · vulnerables · vía no arterial
+    DatosAbiertos/ZonasCriticasPeatones_Local_2225/FeatureServer/1: zona crítica · peatones · vía no arterial
+    DatosAbiertos/ZonasCriticasBicicleta_Local_2225/FeatureServer/1: zona crítica · ciclistas · vía no arterial
+    DatosAbiertos/ZonasCriticasMoto_Local_2225/FeatureServer/1: zona crítica · motociclistas · vía no arterial
+    DatosAbiertos/ZonasCriticasVulnerables_Local_2225/FeatureServer/1: zona crítica · vulnerables · vía no arterial
+  columna_servicio: categoria
+  opcionales: [DIRECCION, LOCALIDAD, AREA_HA]
+  tabla: sdm_siniestralidad_critica
+  clave: id_elemento
+  por_pagina: 500
+  indices: [categoria]
+# Es un análisis de cuatro años (2022-2025) que la SDM publicó en octubre de 2026 (ítems
+# modificados entre el 2026-10-02 y el 2026-10-14); no se actualiza cada mes.
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P365D}
+cobertura: {pais: CO, excluye: ["todo lo que no es Bogotá D.C.", "los siniestros uno por uno (SIGAT, sin licencia declarada y con datos de las personas)", "los sitios que no llegaron a críticos: que un lugar no salga no quiere decir que no tenga siniestros", "otros actores viales por separado (ocupantes de carro, de bus o de camión)"]}
+# Solo totales por sitio: ni víctimas ni siniestros uno por uno (ADR-0014).
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su id en la capa (cambia si la SDM republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "elemento, actor vial y red, como «punto crítico · motociclistas · vía arterial» (una capa de la SDM cada uno)"}
+  ID_CRITICO:
+    nombre: codigo_sdm
+    tipo: str
+    desc: "código del sitio en su capa, como lo pone la SDM (PM_1, CL17, Zona H…); se repite entre capas"
+    alias: [ID_PUNTO_PC_PEAT_ART, ID_PUNTO_PC_PEAT_LOC, ID_PUNTOID_PC_BICI_ART, ID_PUNTO_PC_BICI_LOC, ID_PUNTO_PC_MOTO_ART, ID_PUNTO_PC_MOTO_LOC, ID_PUNTO_PC_ART, ID_PUNTO_PC_LOC, ID_TRAMO_TC_PEAT_ART, ID_TRAMO_TC_PEAT_LOC, ID_TRAMO_TC_BICI_ART, ID_TRAMO_TC_BICI_LOC, ID_TRAMO_TC_MOTO_ART, ID_TRAMO_TC_MOTO_LOC, ID_TRAMO_TC_ART, ID_TRAMO_TC_LOC, ID, ID_ZC_BICI_LOC, ID_ZC_MOTO_LOC, ID_ZONA_ZC_LOC]
+  DIRECCION:
+    nombre: direccion
+    tipo: str
+    desc: "punto: la intersección; tramo: la vía y entre qué calles o carreras va (las zonas no la traen)"
+    alias: [DIRECCION_PC_PEAT_ART, DIRECCION_PC_PEAT_LOC, DIRECCION_PC_BICI_ART, DIRECCION_PC_BICI_LOC, DIRECCION_PC_MOTO_ART, DIRECCION_PC_MOTO_LOC, DIRECCION_PC_ART, DIRECCION_PC_LOC, DIRECCION_TC_PEAT_ART, DIRECCION_TC_PEAT_LOC, DIRECCION_TC_BICI_ART, DIRECCION_TC_BICI_LOC, DIRECCION_TC_MOTO_ART, DIRECCION_TC_MOTO_LOC, DIRECCION_TC_ART, DIRECCION_TC_LOC]
+  LOCALIDAD:
+    nombre: localidad_en_la_fuente
+    tipo: str
+    desc: "localidad como la escribe cada capa (BOSA, Bosa, San Cristobal…); solo la red no arterial la trae"
+    alias: [LOCALIDAD_PC_BICI_LOC, LOCNOMBRE_PC_MOTO_LOC, LOCALIDAD_TC_BICI_LOC, LOCNOMBRE_TC_MOTO_LOC, LOCALIDAD_TC_LOC, LOCALIDAD_ZC_BICI_LOC]
+  FALLECIDOS:
+    nombre: fallecidos
+    tipo: int
+    desc: "fallecidos en siniestros viales en el sitio entre 2022 y 2025, del actor vial de la capa; en las capas de vulnerables, la SDM los llama «Fallecidos totales»"
+    alias: [FALLECIDOS_PC_PEAT_ART, FALLECIDOS_PC_PEAT_LOC, FALLECIDO_PC_BICI_ART, FALLECIDOS_PC_BICI_LOC, FALLECIDOS_MOTO_PC_MOTO_ART_PC_MOTO_ART, FALLECIDOS_PC_MOTO_LOC, FALLECIDOS_PC_ART, FALLECIDO_PC_LOC, FALLECIDOS_TC_PEAT_ART, FALLECIDOS_TC_PEAT_LOC, FALL_BICI_TC_BICI_ART, FALLECIDO_TC_BICI_LOC, FALLECIDOS_TC_MOTO_ART, FALLECIDOS_TC_MOTO_LOC, FALLECIDOS_TC_ART, FALLECIDOS_TC_LOC, FALLECIDOS__ZC_PEAT_LOC, FALLECIDO_ZC_BICI_LOC, FALLECIDO_ZC_MOTO_LOC, FALLECIDOS_ZC_LOC]
+  LESIONADOS:
+    nombre: lesionados
+    tipo: int
+    desc: "lesionados en siniestros viales en el sitio entre 2022 y 2025, del actor vial de la capa (en las de vulnerables: peatones, ciclistas y motociclistas)"
+    alias: [LESIONADOS_PC_PEAT_ART, LESIONADOS_PC_PEAT_LOC, LESIONADO_PC_BICI_ART, LESIONADOS_PC_BICI_LOC, LESIONADOS_MOTO_PC_MOTO_ART, LESIONADOS_PC_MOTO_LOC, LESIONADO_VU_PC_ART, LESIONADO_VU_PC_LOC, LESIONADOS_TC_PEAT_ART, LESIONADOS_TC_PEAT_LOC, LES_BICI_TC_BICI_ART, LESIONADO_TC_BICI_LOC, LESIONADOS_TC_MOTO_ART, LESIONADOS_TC_MOTO_LOC, LESIONADO_VU_TC_ART, LESIONADO_VU_TC_LOC, LESIONADOS_ZC_PEAT_LOC, LESIONADO_ZC_BICI_LOC, LESIONADO_ZC_MOTO_LOC, LESIONADOS_VU_ZC_LOC]
+  AREA_HA:
+    nombre: area_ha
+    tipo: float
+    desc: "zona: área en hectáreas según la SDM"
+    alias: [AREA_HA_ZC_PEAT_LOC, AREA_HA_ZC_BICI_LOC, AREA_HA_ZC_MOTO_LOC, AREA_HA_ZC_LOC]
+comportamiento: {max_por_pagina: 500, orden_coordenadas: lon_lat}
+dcat: {publisher: Secretaría Distrital de Movilidad de Bogotá, theme: transporte}
+perfil:
+  medido: '2026-11-05'
+  fila: "un sitio crítico de siniestralidad 2022-2025 para un actor vial: 156 puntos, 151 tramos y 66 zonas en 20 capas (373)"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "cada capa nombra a su manera los mismos campos (FALLECIDO_PC_BICI_ART, FALL_BICI_TC_BICI_ART, FALLECIDOS__ZC_PEAT_LOC…): la copia los junta por sus alias"
+  - "los tramos de la red arterial son polígonos (la vía con su ancho); los de la red no arterial, líneas"
+  - "la longitud de los tramos viene en metros en unas capas y en kilómetros en otras, y el alias de LONG_KM_TC_PEAT_LOC dice «(m)»: no se copia; tampoco las tasas por km, por 100 m o por hectárea que salen de ella"
+  - "las capas de vulnerables juntan peatones, ciclistas y motociclistas; su fallecidos es «Fallecidos totales» y su lesionados, «Lesionados vulnerables»"
+  - "la localidad viene escrita de varias formas (BOSA, Bosa; San Cristobal, San Cristóbal; «Rafel Uribe Uribe») y algunas zonas dicen dos (Bosa - Kennedy)"
+  - "los códigos (AA, P1, Zona H) se repiten entre capas: la clave es id_elemento"
+  - "el servicio está en el wkid 11116; la copia pide EPSG:4326"
+  - "el ítem 31f6c497df90474ca4f7cfbf823077a6 dice «Puntos Críticos … Vías Locales» pero apunta a ZonasCriticasVulnerables_Local_2225; la capa de puntos de vulnerables no arteriales sí existe y se copia de su servicio"
+  - "la VPS no llega a sig.simur.gov.co: la copia se baja desde Colombia"
+  decision: "copia espacial de las veinte capas en una tabla con `tipo`; sin longitudes ni tasas por la mezcla de unidades"

@@ -1,0 +1,23 @@
+# Ficha técnica escrita a mano (spec 08): veinte capas del folder DatosAbiertos del SIG de la SDM en
+# una copia; cada columna toma el nombre de cada capa por alias, y `id_elemento` y `categoria` los
+# arma la copia.
+fuente: sdm.siniestralidad_critica
+metodo: manual
+cosechado: '2026-11-05'
+origen: https://sig.simur.gov.co/arcgis/rest/services/DatosAbiertos?f=json
+pagina: https://www.arcgis.com/home/item.html?id=432677bf93c74af6a1e040570c2b940f
+titulo: Puntos, tramos y zonas críticas de siniestralidad 2022-2025 (SDM)
+descripcion: Veinte capas del servidor ArcGIS de la Secretaría Distrital de Movilidad, una por
+  elemento (punto, tramo o zona), actor vial (peatones, ciclistas, motociclistas o vulnerables) y
+  red (arterial o no arterial). Son 156 puntos, 151 tramos y 66 zonas, medidos el 2026-11-05.
+idioma: Español
+filas: 373
+campos:
+  id_elemento: {tipo_fuente: esriFieldTypeOID, etiqueta: OBJECTID de la capa (con la posición de la capa)}
+  categoria: {tipo_fuente: esriFieldTypeString, etiqueta: capa de la SDM}
+  ID_CRITICO: {tipo_fuente: esriFieldTypeString, etiqueta: "Id del punto, tramo o zona crítica"}
+  DIRECCION: {tipo_fuente: esriFieldTypeString, etiqueta: Dirección}
+  LOCALIDAD: {tipo_fuente: esriFieldTypeString, etiqueta: Localidad}
+  FALLECIDOS: {tipo_fuente: esriFieldTypeInteger, etiqueta: Fallecidos}
+  LESIONADOS: {tipo_fuente: esriFieldTypeInteger, etiqueta: Lesionados}
+  AREA_HA: {tipo_fuente: esriFieldTypeDouble, etiqueta: Área (ha)}

@@ -108,6 +108,7 @@ Reglas:
 | ANI: tráfico mensual de los peajes | [ani.trafico_peajes.md](ani.trafico_peajes.md) |
 | Bogotá: equipamientos de emergencia | [bogota.equipamientos_emergencia.md](bogota.equipamientos_emergencia.md) |
 | Bogotá: parques del IDRD | [bogota.parques.md](bogota.parques.md) |
+| Bogotá: puntos, tramos y zonas críticas de siniestralidad vial (SDM) | [sdm.siniestralidad_critica.md](sdm.siniestralidad_critica.md) |
 | SECOP Integrado, SECOP I y II (`cce.secop.integrado`) | [cce.secop.integrado.md](cce.secop.integrado.md) |
 | SECOP I: adiciones de las adjudicaciones | [cce.secop1.adiciones.md](cce.secop1.adiciones.md) |
 | SECOP I: multas y sanciones a contratistas | [cce.secop1.multas.md](cce.secop1.multas.md) |
