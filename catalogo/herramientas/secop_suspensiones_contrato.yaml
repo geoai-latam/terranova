@@ -5,6 +5,8 @@ fuente: cce.secop2.suspensiones
 pregunta: "¿Este contrato de SECOP II estuvo suspendido? ¿Cuándo y por qué?"
 descripcion: >
   Suspensiones y reanudaciones de un contrato de SECOP II por su identificador (CO1.PCCNTR.…), uno por elemento.
+  La fuente no dice si cada una se canceló: salen también las canceladas y rechazadas. Para saber
+  cuáles quedaron vigentes, secop_modificaciones_contrato.
   (Fuente: Colombia Compra Eficiente; licencia: CC BY-SA 4.0.)
 entrada: {id_contrato: id_secop}
 consulta:
@@ -23,6 +25,17 @@ consulta:
 salida: SecopSuspensionesContrato
 derivados:
   numero_registros: {de: conteo, tipo: int}
+avisos:
+- cuando: encontrado
+  texto: >
+    Esta lista no trae el estado: salen también las suspensiones y reanudaciones que se cancelaron
+    o rechazaron. En el contrato de Pitalito CO1.PCCNTR.3712964 salen 10; en
+    secop_modificaciones_contrato, las del 2023-05-08 y las del 2023-08-17 y 18 están canceladas o
+    rechazadas (medido el 2026-11-05). Allí cada una dice si está vigente.
+- cuando: vacio
+  texto: >
+    SECOP II no tiene suspensiones ni reanudaciones publicadas para ese contrato (o el
+    identificador no es de un contrato de SECOP II, CO1.PCCNTR.…).
 cobro: registro
 canario:
   # Medido el 2026-10-22: contrato de Pitalito terminado en 2023; los registros solo crecen.
