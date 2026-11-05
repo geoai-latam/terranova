@@ -50,3 +50,20 @@ año.
     no publica.
 - **Pendiente (patrón H):** el NIT sin guiones, con el dígito de verificación aparte, como en el
   resto de Terrnova.
+
+## Revisión de valor, 2026-11-05
+
+- **Una entidad salía varias veces.** La búsqueda agrupaba por todos los atributos y se quedaba
+  con el año mayor, y el grupo se partía cada vez que un atributo cambiaba entre periodos. Con
+  «COOPERATIVA», de 50 filas había 14 NIT repetidos. Las causas medidas:
+  - **Codificación.** Parte de los periodos trae el texto UTF-8 leído como Latin-1 o Windows-1252
+    (BOGOTÃ, MEDELLÃN, SAN JOSÃ‰ DE CÃšCUTA).
+  - **Cambio de tipo.** El 800-102-813-1 era Multiactiva en 2025 y Fondo de empleados en 2026.
+  - Diferencias que no se ven: la Cooperativa AVP tenía una fila de 2025 y otra de 2026, con los
+    mismos valores a la vista.
+- **Arreglo:**
+  - El texto se repara con `reparar_codificacion`, que deshace el error y no inventa nada.
+  - Queda una fila por NIT, la de su último reporte (`unico_por: nit`, `unico_mayor:
+    ultimo_reporte`). Se piden 200 grupos para que alcancen después de juntar.
+  - Resultado: «COOPERATIVA» da 141 entidades, sin NIT repetidos ni texto roto.
+- La fuente no da el total, y la respuesta lo avisa.
