@@ -2029,7 +2029,7 @@ def inicio() -> str:
 <div class="mueble" aria-hidden="true"><div class="escala"><i style="width:80px"></i><span>100 m</span></div><div class="norte"><svg width="18" height="22" viewBox="-9 -11 18 22"><path d="M0 -10 L6 8 L0 4 L-6 8 Z" fill="currentColor"/></svg><span>N</span></div></div>
 </div>
 <div class="envoltura h-texto"><div class="izq">
-<h1 class="t0"><span class="l">El dato oficial de Colombia,</span> <span class="l">con su prueba,</span> <span class="l">y la solución encima</span></h1>
+<h1 class="t0"><span class="l">Datos de Colombia,</span> <span class="l">con fuentes verificables</span></h1>
 <p class="entrada">Una capa de {FUENTES_TXT}, de empresas y contratos a normas, estadísticas y territorio, y un equipo que construye encima la analítica, el desarrollo y la automatización que tu organización necesita. Cada respuesta dice quién publica el dato, su licencia y su fecha.</p>
 <div class="botones"><a class="boton p" href="/precios#empezar">Prueba gratis {DIAS_PRUEBA} días</a><a class="boton s" href="/contacto?asunto=proyecto">Cuéntanos qué quieres resolver</a></div>
 <p class="h-api">¿Programas? <a class="enlace" href="/desarrolladores">Ver la API</a></p>
@@ -2096,7 +2096,7 @@ def inicio() -> str:
 """
     return pagina(
         "/",
-        "Terrnova · El dato oficial de Colombia, con su prueba, y la solución encima",
+        "Terrnova · Datos de Colombia, con fuentes verificables",
         f"Empresas, contratos, normas, estadísticas y territorio de {FUENTES_DE}, cada respuesta con quién publica el dato, su licencia y su fecha. Encima, la analítica, el desarrollo y la automatización que tu organización necesita.",
         c,
         ("escena-predios.js", "figuras3d.js", "portada-tipo.js"),
