@@ -316,6 +316,7 @@ async def test_transmilenio_rutas_y_paraderos_con_horario_y_localidad() -> None:
     """Rutas del SITP por zona y por código, y paraderos zonales. Conteos medidos en el servicio de
     TransMilenio el 2026-11-04: 95 servicios y 87 paraderos en el rectángulo del canario; la línea
     GA503 tiene dos sentidos."""
+
     async def correr(herramienta: str) -> dict[str, object]:
         h = CATALOGO.herramientas[herramienta]
         grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
