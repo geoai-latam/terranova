@@ -461,11 +461,14 @@ def paginar(
     tramo = elementos[ini : ini + por_pagina]
     datos = {**sobre.datos, "elementos": tramo}
     siguiente = f" Pida `pagina: {pagina + 1}` para los siguientes." if pagina < paginas else ""
+    avisos = list(sobre.avisos)
     if total is not None:
         cuentan = (
             f"cuentan los primeros {len(elementos)} (lo que trae una consulta); el total de la "
             "fuente es el de arriba"
         )
+        # las páginas siguen en la fuente (ADR-0040): «vinieron N de total, acote» ya no aplica
+        avisos = [a for a in avisos if not a.startswith("Vinieron ")]
     elif any(p.completitud.truncado for p in sobre.procedencia):
         # la consulta llegó a su tope: «la lista completa» es la que vino, no la de la fuente
         cuentan = (
@@ -488,7 +491,7 @@ def paginar(
             "datos": datos,
             "huella": huella(datos),
             "geo_result": _rasgos_de(sobre, tramo),
-            "avisos": [*sobre.avisos, aviso],
+            "avisos": [*avisos, aviso],
         }
     )
 
