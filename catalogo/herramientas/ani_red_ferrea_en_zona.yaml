@@ -1,0 +1,38 @@
+id: ani_red_ferrea_en_zona
+version: 1
+familia: territorio
+fuente: ani.red_ferrea
+pregunta: "¿Qué corredores férreos pasan por esta zona?"
+descripcion: >
+  Corredores férreos con contrato de la ANI (concesiones, obra pública y en estructuración) que
+  pasan por un rectángulo (bbox en EPSG:4326), con su trazado: corredor, tipo de contrato,
+  contrato, concesionario o contratista, alcance (kilómetros de rehabilitación y construcción) y
+  ficha de la ANI. Son 4 corredores: Atlántico, Pacífico, Bogotá - Belencito - La Dorada -
+  Chiriguaná y uno en estructuración; las vías férreas sin contrato de la ANI no están.
+  (Fuente: ANI; licencia: CC BY-SA 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: arcgis_query_features
+  capas: [2]
+  argumentos:
+    url: "{url_capa}"
+    bbox: "{bbox}"
+    geometria: completa
+    out_fields: [concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
+    max_features: 200
+  campos: [concesion, tipo_contr, admin, contrato, ccnario, cod_pr_ire, alc_proy_1, url_ficha, video_proy]
+derivados:
+  numero_registros: {de: conteo, tipo: int}
+salida: AniRedFerreaEnZona
+avisos:
+- cuando: vacio
+  texto: >
+    Ningún corredor férreo con contrato de la ANI pasa por ese rectángulo. Son solo 4 corredores (Atlántico, Pacífico, Bogotá - Belencito - La Dorada - Chiriguaná y uno en estructuración).
+cobro: zona
+canario:
+  # Santa Marta y Ciénaga; medido el 2026-11-05 en la capa 2: pasa la Red férrea del Atlántico.
+  entrada: {bbox: [-74.3, 10.9, -74.0, 11.3]}
+  minimos: {numero_registros: 1}
+  campos: [administracion, alcance, codigo_proyecto, concesionario, contrato, corredor, ficha, numero_registros, tipo_contrato, video]
+  latencia_max_ms: 8000

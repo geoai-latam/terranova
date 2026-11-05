@@ -1,0 +1,105 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T06:30:53+00:00",
+ "herramienta": "ani_aeropuertos_en_zona",
+ "llamadas": [
+  {
+   "argumentos": {
+    "bbox": [
+     -74.3,
+     4.5,
+     -73.9,
+     4.9
+    ],
+    "geometria": "completa",
+    "max_features": 200,
+    "out_fields": [
+     "lista_aero",
+     "proyecto",
+     "contrato",
+     "estado",
+     "ccnario",
+     "cod_pr_ire",
+     "link"
+    ],
+    "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/1"
+   },
+   "conector": "arcgis-mcp",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -74.1492087,
+           4.6962281
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "ccnario": "Compañía de Desarrollo Aeropuerto Eldorado S.A. – CODAD S.A.; OPAIN S. A.",
+          "cod_pr_ire": "A-05",
+          "contrato": "0110-O.P.-1995; 6000169 O.K del 12 de 2006",
+          "estado": "Operación",
+          "link": "https://aniscopio.ani.gov.co/aeropuertos-public/ficha-proyecto-drupal",
+          "lista_aero": "El Dorado (Bogotá)",
+          "proyecto": "CODAD (Segunda pista aeropuerto El Dorado); OPAIN"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection",
+      "name": "Areopuertos"
+     }
+    ],
+    "facts": {
+     "bbox": [
+      -74.3,
+      4.5,
+      -73.9,
+      4.9
+     ],
+     "capa": "Areopuertos",
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "completo": true,
+     "consulta": {
+      "bbox": [
+       -74.3,
+       4.5,
+       -73.9,
+       4.9
+      ],
+      "max_features": 200,
+      "out_fields": [
+       "lista_aero",
+       "proyecto",
+       "contrato",
+       "estado",
+       "ccnario",
+       "cod_pr_ire",
+       "link"
+      ],
+      "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/1",
+      "where": "1=1"
+     },
+     "filtro": "1=1",
+     "tipo_geometria": "Multipoint",
+     "total_en_servicio": 1,
+     "traidos": 1,
+     "url": "https://aniscopiosig-server.ani.gov.co/arcgisserver/rest/services/Hosted/ModosANI/FeatureServer/1"
+    },
+    "geo_result": "1"
+   },
+   "tool": "arcgis_query_features"
+  }
+ ]
+}

@@ -337,6 +337,27 @@ async def test_transmilenio_rutas_y_paraderos_con_horario_y_localidad() -> None:
 
 
 @pytest.mark.anyio
+async def test_ani_puertos_aeropuertos_y_red_ferrea_con_su_ubicacion() -> None:
+    """Capas 0, 1 y 2 de ModosANI, medidas el 2026-11-05: 23 puertos en la bahía de Cartagena,
+    El Dorado en Bogotá y la Red férrea del Atlántico por Santa Marta."""
+
+    async def correr(herramienta: str) -> dict[str, object]:
+        h = CATALOGO.herramientas[herramienta]
+        grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+        sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+        return dict(sobre.model_dump(mode="json")["datos"])
+
+    puertos = await correr("ani_puertos_en_zona")
+    assert puertos["numero_registros"] == 23
+    dexton = next(e for e in puertos["elementos"] if "DEXTON" in e["sociedad_portuaria"])  # type: ignore[attr-defined]
+    assert dexton["fecha_fin_concesion"] == "2031-09-29"
+    aeropuertos = await correr("ani_aeropuertos_en_zona")
+    assert [e["aeropuerto"] for e in aeropuertos["elementos"]] == ["El Dorado (Bogotá)"]  # type: ignore[attr-defined]
+    ferreo = await correr("ani_red_ferrea_en_zona")
+    assert [e["corredor"] for e in ferreo["elementos"]] == ["Red férrea del Atlántico"]  # type: ignore[attr-defined]
+
+
+@pytest.mark.anyio
 async def test_firms_da_los_focos_del_producto_estandar_con_su_significado() -> None:
     """NASA FIRMS por periodo (API por área con MAP_KEY): 182 focos de VIIRS S-NPP en la Orinoquía
     el 2024-02-01, del producto estándar, que no cambia (medido el 2026-11-05)."""
