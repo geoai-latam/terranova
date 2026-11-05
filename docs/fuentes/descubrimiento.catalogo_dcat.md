@@ -60,3 +60,18 @@ actualización, vistas, descargas, URL y protocolo (`socrata` o `icde`). Medido 
 - **Pendiente:**
   - filtrar o avisar por lugar cuando la pregunta nombra uno;
   - un umbral por coseno, medido con el índice vectorizado de la puerta.
+
+## Licencia del índice
+
+Verificada el 2026-11-04 (`LicenseRef-datosgovco-terminos`, uso comercial sí, fuente publicada):
+
+- Los [términos de datos.gov.co](https://herramientas.datos.gov.co/terminos) permiten usar,
+  redistribuir, compilar, extraer, copiar y difundir los datos y sus metadatos «para cualquier
+  tipo de actividad comercial o no comercial» (Ley 1712 de 2014). Piden citar «Fuente: Portal de
+  Datos Abiertos www.datos.gov.co» con la fecha de la última actualización y no alterar los
+  metadatos de fecha ni las condiciones de uso.
+- Los términos de la ICDE (v1.0, 2024, § 2.2.1) remiten a esos mismos términos para su plataforma
+  de datos abiertos y declaran abierto el acceso y uso del Catálogo Nacional de Metadatos. § 2.2.2
+  deja los datos de cada capa bajo la licencia de su entidad.
+- Esto cubre el índice (títulos, descripciones, entidades, fechas y enlaces), no los datos de cada
+  candidato: su licencia va en su fila y se verifica al promoverlo (ADR-0019).

@@ -309,6 +309,8 @@ def test_cifras_de_la_portada_salen_del_catalogo_y_de_los_datos() -> None:
     assert f"{construir.N_VERIFICADAS} verificadas" in texto
     assert f"{construir.N_HERR} herramientas" in texto
     for k, n in construir.POR_FAMILIA.items():
+        if k == "meta":  # catalogo_buscar no es una familia de datos: la portada no la lista
+            continue
         assert f"{construir.FAMILIAS[k]} {n}" in html, f"la familia {k} no dice {n}"
     K = datos["criba"]
     sm = json.loads((PUBLICO / "datos" / "sm.json").read_text(encoding="utf-8"))
