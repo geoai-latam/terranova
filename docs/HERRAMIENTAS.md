@@ -134,6 +134,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `banrep_tasa_politica_recientes` | ¿Cuál es la tasa de política monetaria del Banco de la República? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_trm_recientes` | ¿Cuál ha sido la TRM (dólar en pesos) de los últimos días? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
 | `banrep_uvr_recientes` | ¿Cuánto vale y cómo varía la UVR? | Banco de la República | LicenseRef-banrep-aviso-legal | 2 |
+| `crc_estaciones_base_municipio` | ¿Cuántas antenas o estaciones base de celular hay en este municipio, de qué operador y con qué tecnología (2G, 3G, 4G, 5G)? | Comisión de Regulación de Comunicaciones (CRC) | LicenseRef-postdata-terminos | 5 |
 | `dane_ipc_indice_anio` | ¿Cuál fue la inflación (IPC) en Colombia en un año, mes a mes? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_departamento` | ¿Qué porcentaje de la población de este departamento está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |
 | `dane_ipm_municipio` | ¿Qué porcentaje de la población de este municipio está en pobreza multidimensional? | Departamento Administrativo Nacional de Estadística (DANE) | LicenseRef-dane-terminos | 2 |

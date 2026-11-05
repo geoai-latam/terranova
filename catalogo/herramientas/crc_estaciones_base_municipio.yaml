@@ -1,0 +1,57 @@
+id: crc_estaciones_base_municipio
+version: 1
+familia: estadisticas
+fuente: crc.estaciones_base
+pregunta: "¿Cuántas antenas o estaciones base de celular hay en este municipio, de qué operador y con qué tecnología (2G, 3G, 4G, 5G)?"
+descripcion: >
+  Sitios con estaciones base de telefonía móvil (las antenas de celular) de un municipio (DIVIPOLA)
+  en un trimestre, como los reportan los operadores a la CRC: por operador, tipo de sitio (propio
+  o en coubicación) y combinación de tecnologías. Arriba, el total de sitios, cuántos tienen 2G,
+  3G, 4G y 5G, cuántos están en coubicación y los sitios de cada operador. Va del segundo
+  trimestre de 2021 al último publicado (hoy, el segundo de 2026). Es un conteo por municipio: la
+  ubicación de cada antena no es pública.
+  Sale de la copia de Terrnova del archivo de Postdata.
+  (Fuente: CRC, Postdata; licencia: términos de uso de Postdata de la CRC, con cita.)
+entrada: {municipio_divipola: divipola, anio: int, trimestre: int}
+consulta:
+  operacion: por_codigo
+  resultado: lista
+  tool: consultar_copia
+  argumentos:
+    tabla: crc_estaciones_base
+    filtros: {CODIGO_DANE_MUNICIPIO: "{municipio_divipola}", ANNO: "{anio}", TRIMESTRE: "{trimestre}"}
+    select: [ANNO, TRIMESTRE, CODIGO_DANE_MUNICIPIO, DESC_MUNICIPIO, ID_EMPRESA, DESC_EMPRESA, SITIO_PROPIO_COUBICACION, TECNOLOGIA_ESTACION_BASE_2G, TECNOLOGIA_ESTACION_BASE_3G, TECNOLOGIA_ESTACION_BASE_4G, TECNOLOGIA_ESTACION_BASE_5G, SITIOS]
+    order: [DESC_EMPRESA, -SITIOS]
+    limite: 200
+  campos: [ANNO, TRIMESTRE, CODIGO_DANE_MUNICIPIO, DESC_MUNICIPIO, ID_EMPRESA, DESC_EMPRESA, SITIO_PROPIO_COUBICACION, TECNOLOGIA_ESTACION_BASE_2G, TECNOLOGIA_ESTACION_BASE_3G, TECNOLOGIA_ESTACION_BASE_4G, TECNOLOGIA_ESTACION_BASE_5G, SITIOS, _fila]
+salida: EstacionesBaseMunicipio
+derivados:
+  sitios_total: {de: suma, campo: sitios, tipo: int}
+  sitios_con_2g: {de: suma, campo: sitios, solo_si: {campo: tiene_2g, valores: ["1"]}, tipo: int}
+  sitios_con_3g: {de: suma, campo: sitios, solo_si: {campo: tiene_3g, valores: ["1"]}, tipo: int}
+  sitios_con_4g: {de: suma, campo: sitios, solo_si: {campo: tiene_4g, valores: ["1"]}, tipo: int}
+  sitios_con_5g: {de: suma, campo: sitios, solo_si: {campo: tiene_5g, valores: ["1"]}, tipo: int}
+  sitios_en_coubicacion: {de: suma, campo: sitios, solo_si: {campo: tipo_sitio, valores: ["2"]}, tipo: int}
+  sitios_por_operador: {de: suma_por, campo: operador, sumar: sitios}
+avisos:
+- cuando: encontrado
+  texto: >
+    Es un conteo de sitios por municipio: la CRC no publica dónde está cada antena (los operadores
+    reportan las coordenadas, pero solo sale el agregado), así que no hay puntos para un mapa.
+    Cada operador cuenta sus propios sitios; un sitio en coubicación es infraestructura de otro
+    propietario, así que una misma torre puede contar para varios operadores y el total no es el
+    número de torres.
+- cuando: vacio
+  texto: >
+    No hay sitios reportados para ese municipio en ese año y trimestre. La serie va del segundo
+    trimestre de 2021 al segundo de 2026 (archivo de Postdata del 2026-09-16). Revise el código
+    DIVIPOLA y el trimestre; un municipio sin filas puede no tener estaciones base reportadas.
+cobro: agregado
+canario:
+  # Medido el 2026-11-05 en F3_RES175_2.csv (Postdata, 2026-09-16): Chía 2026-2T, 145 sitios en 18
+  # filas; 16 con 2G, 99 con 3G, 145 con 4G y 23 con 5G; 102 en coubicación; el primer operador
+  # en orden alfabético es COLOMBIA MOVIL  S.A ESP.
+  entrada: {municipio_divipola: "25175", anio: 2026, trimestre: 2}
+  verdad: {sitios_total: 145, sitios_con_2g: 16, sitios_con_3g: 99, sitios_con_4g: 145, sitios_con_5g: 23, sitios_en_coubicacion: 102}
+  campos: [anio, fila, municipio, municipio_divipola, operador, operador_nit, sitios, sitios_con_2g, sitios_con_3g, sitios_con_4g, sitios_con_5g, sitios_en_coubicacion, sitios_por_operador, sitios_total, tiene_2g, tiene_3g, tiene_4g, tiene_5g, tipo_sitio, tipo_sitio_significado, trimestre]
+  latencia_max_ms: 5000
