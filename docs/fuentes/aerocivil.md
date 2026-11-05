@@ -58,3 +58,15 @@ Medido el 2026-11-02:
     general: solo hacía falta para esos dos aeropuertos.
   - Tráfico y operaciones dan `meses_con_datos` (derivado `distintos`) y `hasta_mes`, y avisan
     cuando el año no trae los doce meses.
+
+## Tildes en la búsqueda (2026-11-05)
+
+Desde 2022 la fuente escribe la ciudad con tilde (SAN JOSÉ DE CÚCUTA, IBAGUÉ, BOGOTÁ, D.C.) y antes,
+sin ella. «Cucuta» solo encontraba CUC 2020-2021 (698 534 pasajeros) y perdía los 3,5 M de
+2022-2026; «Cúcuta» perdía 2020-2021.
+
+- Decisión: se quitan las tildes de las dos columnas en la consulta y del nombre pedido. Las dos
+  grafías dan lo mismo, en 2 a 8 s.
+- Se descartó `{x:vocales}`, porque el comodín traía ruido: «Pasto» encontraba Pistarini (Ezeiza)
+  y Compostela.
+- Avisos de vacío en las tres herramientas.

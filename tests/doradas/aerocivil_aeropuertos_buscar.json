@@ -1,6 +1,6 @@
 {
  "geometria_reducida": true,
- "grabado": "2026-11-02T18:44:11+00:00",
+ "grabado": "2026-11-05T13:21:59+00:00",
  "herramienta": "aerocivil_aeropuertos_buscar",
  "llamadas": [
   {
@@ -11,7 +11,7 @@
     "order": "pasajeros_salen DESC, origen",
     "portal": "datos.gov.co",
     "select": "origen, nombre_origen, ciudad_origen, pais_origen, min(a_o) AS desde, max(a_o) AS hasta, sum(pasajeros) AS pasajeros_salen",
-    "where": "upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO')"
+    "where": "replace(replace(replace(replace(replace(upper(ciudad_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR replace(replace(replace(replace(replace(upper(nombre_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO')"
    },
    "conector": "datos-abiertos-mcp",
    "respuesta": {
@@ -72,11 +72,11 @@
       "max_filas": 30,
       "portal": "datos.gov.co",
       "select": "origen, nombre_origen, ciudad_origen, pais_origen, min(a_o) AS desde, max(a_o) AS hasta, sum(pasajeros) AS pasajeros_salen",
-      "where": "(upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO'))"
+      "where": "(replace(replace(replace(replace(replace(upper(ciudad_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR replace(replace(replace(replace(replace(upper(nombre_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO'))"
      },
      "filas": 3,
      "filas_que_resume": 4367,
-     "filtro_soql": "(upper(ciudad_origen) like upper('%Pasto%') OR upper(nombre_origen) like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO'))",
+     "filtro_soql": "(replace(replace(replace(replace(replace(upper(ciudad_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR replace(replace(replace(replace(replace(upper(nombre_origen), 'Á', 'A'), 'É', 'E'), 'Í', 'I'), 'Ó', 'O'), 'Ú', 'U') like upper('%Pasto%') OR (upper('Pasto') like '%MEDELL%' AND origen = 'MDE') OR (upper('Pasto') like '%APARTAD%' AND origen = 'APO'))",
      "portal": "datos.gov.co"
     },
     "geo_result": "1"
