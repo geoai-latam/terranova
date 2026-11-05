@@ -144,3 +144,13 @@ No trae SECOP I ni la Tienda Virtual del Estado: esos están en otros conjuntos.
 - Las fechas de la fuente ahora traen hora (`2023-06-26T18:15:18.040`); la ficha las da como
   fecha, igual que antes.
 - Un id que no existe (`CO1.PCCNTR.1`) da `no_encontrado` en 4,9 s.
+
+## Revisión de valor: contratos por NIT sin tope (2026-11-04)
+
+- `secop_contratos_entidad` agrupaba por año y entidad con `max_filas: 100`. Pitalito da 19 grupos
+  y sale entero.
+- El NIT de Bogotá (899999061) cubre 34 entidades: secretarías, alcaldías locales y otras. Con
+  los 11 años y los contratos sin fecha da 369 grupos (medido en la fuente, 10 s). Con el tope de
+  100, la respuesta se quedaba en parte de 2026 y avisaba que no se sabía si vino todo.
+- El tope sube a 1000. La consulta agrupa todo igual, así que no se vuelve más pesada; la puerta
+  pagina la lista de 50 en 50.
