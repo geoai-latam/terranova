@@ -1,0 +1,48 @@
+id: bogota_vacunacion_en_zona
+version: 1
+familia: territorio
+fuente: bogota.ips_vacunacion
+pregunta: "¿Dónde puedo vacunarme en esta zona de Bogotá?"
+descripcion: >
+  Sedes de instituciones prestadoras de salud (IPS) con servicio de vacunación en Bogotá D.C.,
+  como las publica la Secretaría Distrital de Salud, dentro de un rectángulo (bbox en EPSG:4326),
+  con su punto, código de sede del REPS, nombre de la sede, prestador, dirección, naturaleza
+  (pública o privada) y localidad. Arriba van el total y cuántas hay públicas y privadas. Sirve
+  para preguntas como «¿dónde me vacuno cerca de este barrio?» o para pintar los puntos en un
+  visor. Solo cubre Bogotá; las demás sedes de salud del país están en minsalud_sedes_salud_en_zona.
+  Sale de la copia de Terrnova.
+  (Fuente: Secretaría Distrital de Salud, Alcaldía Mayor de Bogotá; licencia: CC BY 4.0.)
+entrada: {bbox: bbox}
+consulta:
+  operacion: en_zona
+  tool: consultar_copia
+  argumentos:
+    tabla: bogota_ips_vacunacion
+    bbox: "{bbox}"
+    select: [OBJECTID, CÓDIGO_DE, NOMBRE_DE_, NOMBRE_DEL, DIRECCIÓN, TIPO_DE_PR, CODIGO_LOC]
+    geometria: completa
+    order: [CODIGO_LOC, OBJECTID]
+    limite: 1000
+  campos: [OBJECTID, CÓDIGO_DE, NOMBRE_DE_, NOMBRE_DEL, DIRECCIÓN, TIPO_DE_PR, CODIGO_LOC]
+salida: BogotaVacunacionEnZona
+derivados:
+  total: {de: completitud_total, tipo: int}
+  por_naturaleza: {de: conteo_por, campo: naturaleza, vacio: sin dato}
+avisos:
+- cuando: vacio
+  texto: >
+    No hay sedes de IPS con servicio de vacunación en ese rectángulo. Solo se cubre Bogotá D.C.;
+    para otras sedes de salud, use minsalud_sedes_salud_en_zona.
+- cuando: encontrado
+  texto: >
+    Es la lista de la Secretaría Distrital de Salud, actualizada por última vez en julio de 2025:
+    confirme con la sede los horarios y las vacunas que aplica. No trae las jornadas ni las
+    brigadas de vacunación.
+cobro: zona
+canario:
+  # Medido el 2026-11-05 en la capa de la SDS (intersección con el rectángulo): 14 sedes en el
+  # centro de Bogotá (13 privadas y 1 pública).
+  entrada: {bbox: [-74.09, 4.6, -74.06, 4.63]}
+  minimos: {total: 14}
+  campos: [codigo_sede, direccion, id_elemento, localidad, localidad_significado, naturaleza, nombre_sede, por_naturaleza, prestador, total]
+  latencia_max_ms: 8000

@@ -1,0 +1,8 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: bogota.ips_vacunacion
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://serviciosgis.catastrobogota.gov.co/arcgis/rest/services/salud/puntosdevacunacion/MapServer?f=json
+titulo: Puntos de vacunación
+descripcion: Este servicio muestra los Puntos de vacunación tanto las IPS con servicio de vacunación como
+  los de fiebre amarilla en Bogotá.

@@ -506,3 +506,17 @@ async def test_estaciones_de_calidad_del_aire_de_bogota() -> None:
     assert datos["total"] == 5
     codigos = {e["codigo_estacion"] for e in datos["elementos"]}
     assert codigos == {"CDAR", "JAZ", "MAM", "MOV", "PTE"}
+
+
+@pytest.mark.anyio
+async def test_vacunacion_de_bogota_por_naturaleza() -> None:
+    """IPS con servicio de vacunación medidas en la capa de la SDS y en la copia el 2026-11-05: 14
+    en el centro de Bogotá. La localidad sale del dominio «locasalud» de la capa."""
+    h = CATALOGO.herramientas["bogota_vacunacion_en_zona"]
+    grabado = json.loads((DORADAS / f"{h.id}.json").read_text(encoding="utf-8"))
+    sobre = await _ejecutor(grabado["llamadas"]).ejecutar(h.id, h.canario.entrada)
+    datos = sobre.model_dump(mode="json")["datos"]
+    assert datos["total"] == 14
+    assert datos["por_naturaleza"] == {"Privada": 13, "Pública": 1}
+    calle_42 = next(e for e in datos["elementos"] if e["codigo_sede"] == 110010733504)
+    assert calle_42["localidad_significado"] == "Chapinero"

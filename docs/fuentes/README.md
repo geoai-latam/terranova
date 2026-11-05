@@ -104,6 +104,7 @@ Reglas:
 | SECOP I, origen de los recursos (`3xwx-53wt`) | [cce.secop1.origen_recursos.md](cce.secop1.origen_recursos.md) |
 | ANI: puertos, aeropuertos y corredores férreos | [ani.modos.md](ani.modos.md) |
 | ANI: recaudo mensual de los peajes | [ani.recaudo_peajes.md](ani.recaudo_peajes.md) |
+| Bogotá: IPS con servicio de vacunación | [bogota.ips_vacunacion.md](bogota.ips_vacunacion.md) |
 | ANI: tráfico mensual de los peajes | [ani.trafico_peajes.md](ani.trafico_peajes.md) |
 | Bogotá: equipamientos de emergencia | [bogota.equipamientos_emergencia.md](bogota.equipamientos_emergencia.md) |
 | Bogotá: parques del IDRD | [bogota.parques.md](bogota.parques.md) |
