@@ -36,3 +36,13 @@ Herramienta: `nasa_firms_focos_en_zona`, por rectángulo y periodo de hasta 31 d
 - El satélite pasa dos veces al día y no ve bajo nubes densas. «Sin focos» no garantiza que no
   hubo fuego, y el aviso de vacío lo dice.
 - Los últimos 7 días sin llave (CSV regional) siguen en `amenazas_incendios`, dentro del conector.
+
+## Focos con los mismos atributos y paginación (2026-11-05)
+
+En `datos` un foco no lleva coordenadas (van en `geo_result`), así que varios focos del mismo día
+salen con todos sus atributos iguales: 348 de los 1 259 focos de Colombia del 2024-02-01. Son focos
+distintos, en puntos distintos. La puerta elegía los puntos de cada página comparando atributos y
+metía en cada página los de todos los gemelos: un visor contaba 1 252 puntos para 1 246 focos.
+Ahora cada punto es de un elemento, en orden. Recorrido medido con la puerta, de a 1000: 2 páginas,
+1 259 focos y 1 259 puntos. El día tenía 1 246 focos en la medición anterior de la misma fecha; FIRMS
+reprocesa sus archivos.

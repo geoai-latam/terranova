@@ -417,18 +417,39 @@ def _coordenadas_lon_lat(fc: Any) -> None:
         recorrer(geometria.get("coordinates"))
 
 
-def _rasgos_de(sobre: Sobre, tramo: list[Any]) -> GeoResult | None:
-    """El geo_result con solo los rasgos de los elementos de `tramo`."""
+def _duenos(elementos: list[Any], rasgos: list[Any]) -> list[int | None]:
+    """La posición en `elementos` de cada rasgo, en orden. Dos elementos con los mismos atributos
+    (346 focos de FIRMS idénticos un mismo día) no son el mismo: el primer rasgo con esos atributos
+    es del primer elemento, el segundo del segundo. Comparar solo por atributos repetía rasgos entre
+    páginas (P0.5: 1 246 focos salían como 1 252 puntos)."""
+    cola: dict[str, list[int]] = {}
+    for i, e in enumerate(elementos):
+        cola.setdefault(_canonico(e), []).append(i)
+    usados: dict[str, int] = {}
+    duenos: list[int | None] = []
+    for r in rasgos:
+        clave = _canonico(r.get("properties") if isinstance(r, dict) else None)
+        k = usados.get(clave, 0)
+        posiciones = cola.get(clave, [])
+        duenos.append(posiciones[k] if k < len(posiciones) else None)
+        usados[clave] = k + 1
+    return duenos
+
+
+def _rasgos_de(sobre: Sobre, elementos: list[Any], ini: int, fin: int) -> GeoResult | None:
+    """El geo_result con solo los rasgos de los elementos `ini`..`fin` (sin incluir) de la lista."""
     geo = sobre.geo_result
     if geo is None:
         return None
-    propios = {_canonico(e) for e in tramo}
     artefactos = []
     for art in geo.artifacts:
         fc = art.data
         if art.kind == "feature_collection" and isinstance(fc, dict):
+            todos = fc.get("features", [])
             rasgos = [
-                r for r in fc.get("features", []) if _canonico(r.get("properties")) in propios
+                r
+                for r, d in zip(todos, _duenos(elementos, todos), strict=True)
+                if d is not None and ini <= d < fin
             ]
             fc = {**fc, "features": rasgos}
         artefactos.append(art.model_copy(update={"data": fc}))
@@ -495,7 +516,7 @@ def paginar(
             "entrada": {**sobre.entrada, PAGINA: pagina},
             "datos": datos,
             "huella": huella(datos),
-            "geo_result": _rasgos_de(sobre, tramo),
+            "geo_result": _rasgos_de(sobre, elementos, ini, ini + len(tramo)),
             "avisos": [*avisos, aviso],
         }
     )
@@ -556,9 +577,6 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
         return sobre
     elementos = sobre.datos.get("elementos")
     lista = elementos if isinstance(elementos, list) else [sobre.datos]
-    posiciones: dict[str, int] = {}
-    for i, e in enumerate(lista):
-        posiciones.setdefault(_canonico(e), i)
     artefactos, envolventes, referidos = [], False, False
     for art in sobre.geo_result.artifacts:
         datos = art.data
@@ -571,13 +589,13 @@ def resumir_geometria(sobre: Sobre) -> Sobre:
                     if isinstance(g := r.get("geometry"), dict) and g.get("type")
                 }
             )
-            for rasgo in datos.get("features", []):
+            todos = datos.get("features", [])
+            for rasgo, posicion in zip(todos, _duenos(lista, todos), strict=True):
                 g = rasgo.get("geometry")
                 if isinstance(g, dict) and g.get("type") not in ("Point", "MultiPoint"):
                     caja = _envolvente(g.get("coordinates"))
                     rasgo = {**rasgo, "geometry": None} | ({"bbox": caja} if caja else {})
                     envolventes = True
-                posicion = posiciones.get(_canonico(rasgo.get("properties")))
                 if posicion is not None:
                     rasgo = {**rasgo, "properties": {"elemento": posicion}}
                     referidos = True
