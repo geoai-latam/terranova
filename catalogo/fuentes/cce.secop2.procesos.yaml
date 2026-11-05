@@ -52,5 +52,8 @@ perfil:
     contar: 0.2
     ordenar: 0.2
     agrupar: 0.2
-  hallazgos: []
+  hallazgos:
+  - 'un proceso de compra (CO1.BDOS.2898382, Pitalito) tiene dos fases: CO1.REQ.2978420 (observaciones)
+    y CO1.REQ.3004001 (oferta)'
+  - 'con el identificador de un contrato (CO1.PCCNTR.3712964) no hay nada: medido el 2026-11-05'
   decision: en vivo, como está
