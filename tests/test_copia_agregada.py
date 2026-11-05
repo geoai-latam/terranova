@@ -288,3 +288,20 @@ def test_con_tandas_escritas_no_se_agrupa_la_fuente(monkeypatch: pytest.MonkeyPa
     paginas = list(descargar_socrata_agregado(fuente, None, cliente=http))
     assert not any("$group" in p for p in http.pedidos)
     assert [g["periodo"] for p in paginas for g in p] == ["20224"]
+
+
+def test_lo_agregado_se_baja_entero_antes_de_escribir() -> None:
+    """Con el COPY abierto mientras se bajaban los años del PAA (horas), la conexión a Postgres
+    se perdía: la descarga agregada termina antes de rendir la primera página."""
+    from terranova.cli import _primero_todo
+
+    bajadas: list[int] = []
+
+    def descargar(fuente: Any, desde: Any) -> Any:
+        for i in range(3):
+            bajadas.append(i)
+            yield [{"i": i}]
+
+    paginas = _primero_todo(descargar)(ICFES, None)
+    assert bajadas == [0, 1, 2]  # ya bajó todo, antes de pedir la primera página
+    assert [p[0]["i"] for p in paginas] == [0, 1, 2]

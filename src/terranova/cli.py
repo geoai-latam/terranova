@@ -34,7 +34,10 @@ from terranova.identidad import registro_desde_entorno
 
 if TYPE_CHECKING:
     import pathlib
+    from collections.abc import Iterator
+    from typing import Any
 
+    from terranova.catalogo import Fuente
     from terranova.descubrimiento import DatasetDescubrible
     from terranova.identidad import Registro
 
@@ -281,14 +284,24 @@ def avisos(argumentos: list[str]) -> int:
     return repetir(una_vez, a.a_las, a.cada_horas)
 
 
+def _primero_todo(
+    descargar: Callable[[Fuente, date | None], Iterator[list[dict[str, Any]]]],
+) -> Callable[[Fuente, date | None], Iterator[list[dict[str, Any]]]]:
+    """La misma descarga, pero entera antes de rendir la primera página: así la escritura en
+    Postgres no queda abierta mientras la fuente tarda (ver `copias`)."""
+
+    def todo(fuente: Fuente, desde: date | None) -> Iterator[list[dict[str, Any]]]:
+        return iter(list(descargar(fuente, desde)))
+
+    return todo
+
+
 def copias(argumentos: list[str]) -> int:
     """Construye una versión nueva de cada copia (ADR-0024); sale 1 si alguna falló."""
     import os
     import traceback
-    from collections.abc import Iterator
-    from typing import Any
 
-    from terranova.catalogo import Fuente, cargar
+    from terranova.catalogo import cargar
     from terranova.copias import (
         AlmacenCopias,
         descargar_arcgis,
@@ -343,6 +356,11 @@ def copias(argumentos: list[str]) -> int:
                 else ventana
             )
             descargar = descargas[fuente.copia.origen]
+            if fuente.copia.origen == "socrata_agregado":
+                # Lo agregado cabe en memoria, y bajarlo toma horas (el PAA de SECOP II: 19,6 M
+                # filas): con el COPY abierto todo ese tiempo, la conexión a Postgres se perdía
+                # entre tanda y tanda (2026-11-04). Se baja todo y luego se escribe de un tirón.
+                descargar = _primero_todo(descargar)
             inicio = time.monotonic()
             try:
                 if a.solo_vencidas and not toca_actualizar(
