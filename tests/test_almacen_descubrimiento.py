@@ -162,9 +162,12 @@ async def test_las_herramientas_de_terrnova_van_antes_que_los_datasets() -> None
     assert filas[0]["licencia"] == "CC-BY-SA-4.0"
     assert filas[3]["id"] == "censo" and filas[3]["licencia"].startswith("no declarada")
     assert r["facts"]["completitud"] == {"vistos": 4, "total": 4, "truncado": False}
-    # una pregunta sin herramienta clara no remite a ninguna (TransMilenio no es un peaje)
+    # TransMilenio remite a su capa troncal, no a un peaje ni a la UPME («transmisión»)
     r = await con.llamar("buscar_catalogo", {"consulta": "buses de TransMilenio"})
-    assert [f["protocolo"] for f in r["artifacts"][0]["rows"]] == ["icde"]
+    filas = r["artifacts"][0]["rows"]
+    assert [f["id"] for f in filas if f["protocolo"] == "terrnova"] == [
+        "transmilenio_troncal_en_zona"
+    ]
     # «infraestructura crítica» remite a la capa de la UPME (pregunta real de una reunión,
     # 2026-11-04), y TransMilenio ya no cae en «transmisión» por sus 6 primeras letras
     r = await con.llamar("buscar_catalogo", {"consulta": "infraestructura crítica"})

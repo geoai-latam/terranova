@@ -9,16 +9,16 @@ const tramo = (a, b, P) => k.segment(a, b, P);
 
 export function ruta(DATOS, huella) {
   const { turnos, otras } = DATOS.ruta;
-  const BANCO = { x: -14, y: -144, w: 296, d: 166, r: 4 };
-  const TAB = { x: 104, y: -130, w: 168, d: 124, r: 2 };
+  const BANCO = { x: -14, y: -163.5, w: 296, d: 185.5, r: 4 }; // una fila más de tablero: 49 entidades
+  const TAB = { x: 104, y: -149.5, w: 168, d: 143.5, r: 2 };
   const PASO = 19.5, LADO = 13, X0 = 111, Y0 = -20; // columna (fila 0, col 0): x X0..X0+LADO, y Y0..Y0+LADO
-  const COLS = 8, FILAS = 6;
+  const COLS = 8, FILAS = 7;
   const ZT = 4; // cara del tablero
   const alto = (n) => 6 + 1.9 * n;
   const EJE = [89, -13.5, 26.2]; // eje de la barrera (gira en el plano x = 89)
   const LARGO = 30.1;
   const { P, ancho, alto: altoV } = encuadre(
-    [...k.boxCorners(BANCO, -16, 0), [X0, Y0 - 5 * PASO, ZT + alto(34)], [EJE[0], EJE[1], EJE[2] + LARGO + 4], [0, -24, 42]],
+    [...k.boxCorners(BANCO, -16, 0), [X0, Y0 - (FILAS - 1) * PASO, ZT + alto(34)], [EJE[0], EJE[1], EJE[2] + LARGO + 4], [0, -24, 42]],
     { azimuth: 45 },
   );
   const at = (p) => k.iso(p, P);

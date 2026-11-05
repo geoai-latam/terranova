@@ -1,0 +1,88 @@
+id: transmilenio.infraestructura_troncal
+titulo: "TransMilenio: estaciones troncales, estaciones de TransMiCable y trazados troncales, copia"
+entidad: TransMilenio S.A.
+competencia: ente gestor del Sistema Integrado de Transporte Público de Bogotá (Acuerdo 4 de 1999 del Concejo de Bogotá)
+acto: null
+# Tres capas del servicio de planificación del SITP (Subgerencia de Planificación), juntas en una
+# copia espacial (ADR-0024) con una columna `tipo`. El ítem de cada capa en el portal de datos
+# abiertos de TransMilenio autoriza el uso con la cita textual; el portal la marca CC BY 4.0.
+licencia:
+  spdx: CC-BY-4.0
+  url: https://creativecommons.org/licenses/by/4.0/
+  verificada: 2026-11-04
+  evidencia: https://www.arcgis.com/sharing/rest/content/items/5365d814bbdd4062a59234eea7d70db7?f=json
+  cita: "Se autoriza el uso, aprovechamiento y construcción de análisis con la información contenida, siempre y cuando se haga la siguiente cita textual: «Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co»"
+uso_comercial: si
+clase_acceso: api
+atribucion: "Fuente: TRANSMILENIO S.A: www.transmilenio.gov.co"
+protocolo: arcgis_rest
+conector: copia
+url: https://gis.transmilenio.gov.co/arcgis/rest/services
+modo: copia
+copia:
+  origen: arcgis
+  servicios:
+    ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer/2: estación troncal
+    ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer/11: estación de TransMiCable
+    ConsultaSubgerenciaPlanificacionSITP/Consulta_Planificacion_SITP/FeatureServer/5: trazado troncal
+  columna_servicio: categoria
+  opcionales: [num_est, nom_est, ub_est, id_trazado, tipo_esta, num_vag, num_acc, acc_esp, acc_depr, acc_puent, link_trans, nom_tronc, le_troncal, ori_traz, fin_traz, long_traz]
+  tabla: transmilenio_infraestructura_troncal
+  clave: id_elemento
+  por_pagina: 1000
+  indices: [categoria]
+# TransMilenio las actualiza «conforme a los cambios presentados a la operación» (ítems
+# modificados el 2026-07).
+frescura: {ttl_cache_s: 86400, sla_actualizacion: P30D}
+cobertura: {pais: CO, excluye: ["rutas, paraderos zonales y alimentadores (otra capa)", "validaciones y afluencia", "posición de los buses en tiempo real"]}
+datos_personales: ninguno
+estado: publicada
+campos:
+  id_elemento: {nombre: id_elemento, tipo: int, desc: "identificador en la copia: posición de la capa × 1 000 000 + su id en la capa (cambia si TransMilenio republica)"}
+  categoria: {nombre: tipo, tipo: str, desc: "estación troncal, estación de TransMiCable o trazado troncal (una capa de TransMilenio cada uno)"}
+  num_est: {nombre: numero_estacion, tipo: str, desc: "estación: número único que le asigna TransMilenio (p. ej. 07103)"}
+  nom_est: {nombre: nombre, tipo: str, desc: "estación: nombre completo", alias: [nom_traz]}
+  ub_est: {nombre: ubicacion, tipo: str, desc: "estación troncal: referencia a las vías donde queda (p. ej. «AV Suba - CL 127»)"}
+  id_trazado: {nombre: id_trazado, tipo: str, desc: "estación troncal y trazado: identificador del trazado (TZ…), que une la estación con su troncal"}
+  tipo_esta:
+    nombre: tipo_estacion
+    tipo: str
+    desc: "estación troncal: tipo según TransMilenio"
+    codigos: {"1": "portal", "2": "intermedia", "3": "intercambio", "4": "sencilla", "5": "por definir"}
+    codigos_norma: "diccionario de datos del ítem «Estaciones Troncales de TRANSMILENIO» en el portal de datos abiertos de TransMilenio: «tipo_esta: … 1. Portal; 2. Intermedia; 3. Intercambio; 4. Sencilla; 5. Por definir» (https://datosabiertos-transmilenio.hub.arcgis.com, ítem 5365d814bbdd4062a59234eea7d70db7)"
+  eta_oper:
+    nombre: etapa_operacion
+    tipo: str
+    desc: "etapa actual de la operación"
+    codigos: {"1": "operativa", "2": "operativa con obras", "3": "cierre temporal por obras", "4": "cierre temporal por otras causas"}
+    codigos_norma: "diccionario de datos del ítem «Estaciones Troncales de TRANSMILENIO»: «eta_oper: … 1. Operativa; 2. Operativa con obras; 3. Cierre temporal Obras; 4. Cierre temporal - Otros» (ítem 5365d814bbdd4062a59234eea7d70db7)"
+  esta_oper:
+    nombre: estado_operacion
+    tipo: str
+    desc: "si la infraestructura existe o está proyectada"
+    codigos: {"1": "existente"}
+    codigos_norma: "diccionario de datos del ítem «Estaciones Troncales de TRANSMILENIO»: «esta_oper: … Permite distinguir entre la infraestructura existente y la proyectada, donde: 1: Exisitente» (ítem 5365d814bbdd4062a59234eea7d70db7)"
+  num_vag: {nombre: vagones, tipo: int, desc: "estación troncal: número de vagones"}
+  num_acc: {nombre: accesos, tipo: int, desc: "estación troncal: número de accesos"}
+  acc_esp: {nombre: accesos_espacio_publico, tipo: int, desc: "estación troncal: accesos desde el espacio público"}
+  acc_depr: {nombre: accesos_deprimido, tipo: int, desc: "estación troncal: accesos por deprimido"}
+  acc_puent: {nombre: accesos_puente, tipo: int, desc: "estación troncal: accesos por puente peatonal"}
+  link_trans: {nombre: enlace, tipo: str, desc: "estación de TransMiCable: enlace que publica TransMilenio"}
+  nom_tronc: {nombre: troncal, tipo: str, desc: "trazado: nombre de la troncal"}
+  le_troncal: {nombre: letra_troncal, tipo: str, desc: "trazado: letra de la troncal en el mapa del sistema"}
+  ori_traz: {nombre: origen, tipo: str, desc: "trazado: dónde empieza"}
+  fin_traz: {nombre: fin, tipo: str, desc: "trazado: dónde termina"}
+  long_traz: {nombre: longitud_m, tipo: float, desc: "trazado: longitud según TransMilenio"}
+comportamiento: {max_por_pagina: 1000, orden_coordenadas: lon_lat}
+dcat: {publisher: TransMilenio S.A., theme: transporte}
+# Spec 07: medido en la fuente, no en Terrnova.
+perfil:
+  medido: '2026-11-04'
+  fila: "un elemento de la infraestructura troncal: una estación troncal, una de TransMiCable o un trazado troncal"
+  clave: {columna: id_elemento, unica: true}
+  operaciones: {filtrar: 0.5}
+  hallazgos:
+  - "el servicio está en EPSG:3116 (MAGNA-SIRGAS Bogotá); la copia pide EPSG:4326"
+  - "los códigos de tipo, etapa y estado no traen dominio en el servicio: su significado sale del diccionario del ítem en el portal"
+  - "las estaciones troncales traen latitud y longitud también como atributos; se usa la geometría"
+  decision: "copia espacial de las tres capas en una tabla con `tipo`; las columnas que una capa no tiene salen vacías"

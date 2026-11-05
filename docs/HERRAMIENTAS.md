@@ -258,6 +258,7 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `sdp_tratamiento_urbanistico_en_poligono` | ¿Qué tratamientos urbanísticos tocan este polígono en Bogotá? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 20 |
 | `sdp_tratamiento_urbanistico_en_punto` | ¿Qué tratamiento urbanístico y qué altura máxima tiene este punto de Bogotá según el POT? | Secretaría Distrital de Planeación de Bogotá (SDP) | CC-BY-4.0 | 10 |
 | `sinic_predio_en_punto` | ¿Qué predio hay en este punto de un municipio con gestor catastral propio (Bogotá, Medellín, Cali, Barranquilla…)? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 10 |
+| `transmilenio_troncal_en_zona` | ¿Qué estaciones de TransMilenio y de TransMiCable, y qué troncales, hay en esta zona de Bogotá? | TransMilenio S.A. | CC-BY-4.0 | 20 |
 | `uaecd_valor_referencia_en_punto` | ¿Cuál es el valor de referencia del m² de terreno en este punto de Bogotá? | Unidad Administrativa Especial de Catastro Distrital (UAECD) | CC-BY-4.0 | 10 |
 | `upme_infraestructura_energetica_en_zona` | ¿Qué infraestructura energética crítica (subestaciones, líneas de transmisión, centrales, ductos de hidrocarburos) hay en esta zona? | Unidad de Planeación Minero Energética (UPME) | por verificar | 20 |
 | `upra_eva_cultivos_municipio` | ¿Qué se cultiva en este municipio, en cuántas hectáreas y cuánto se produce? | Unidad de Planificación Rural Agropecuaria (UPRA) | CC-BY-SA-4.0 | 5 |
