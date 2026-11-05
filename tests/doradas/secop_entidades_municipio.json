@@ -7,7 +7,7 @@
    "argumentos": {
     "group": "nombre_entidad, nit_entidad",
     "id": "jbjy-vk9h",
-    "max_filas": 200,
+    "max_filas": 1000,
     "order": "contratos_todos_los_anios DESC",
     "portal": "datos.gov.co",
     "select": "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_todos_los_anios, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
@@ -87,7 +87,7 @@
      "consulta": {
       "conjunto": "jbjy-vk9h",
       "group": "nombre_entidad, nit_entidad",
-      "max_filas": 200,
+      "max_filas": 1000,
       "portal": "datos.gov.co",
       "select": "nombre_entidad, nit_entidad, count(*) AS contratos_todos_los_anios, sum(case(valor_del_contrato < 20000000000000, valor_del_contrato, true, 0)) AS valor_todos_los_anios, sum(case(valor_del_contrato >= 20000000000000, 1, true, 0)) AS contratos_valor_atipico",
       "where": "(upper(ciudad) = upper('Chía') AND upper(departamento) = upper('Cundinamarca'))"

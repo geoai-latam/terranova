@@ -1,5 +1,5 @@
 id: secop_entidades_municipio
-version: 2
+version: 3
 familia: contratacion
 fuente: cce.secop2.contratos
 pregunta: "¿Qué entidades estatales contratan en este municipio y cuál es su NIT?"
@@ -25,13 +25,21 @@ consulta:
     where: "upper(ciudad) = upper('{municipio}') AND upper(departamento) = upper('{departamento}')"
     group: "nombre_entidad, nit_entidad"
     order: "contratos_todos_los_anios DESC"
-    max_filas: 200
+    # Bogotá tiene 319 entidades (medido el 2026-11-04): con 200 se perdían las que menos
+    # contratan. La fuente agrupa igual.
+    max_filas: 1000
   campos: [nombre_entidad, nit_entidad, ciudad, departamento, valor_del_contrato]
 salida: EntidadesMunicipio
 derivados:
   contratos_todos_los_anios: {de: columna, campo: contratos_todos_los_anios, tipo: int}
   valor_todos_los_anios: {de: columna, campo: valor_todos_los_anios, tipo: float}
   contratos_valor_atipico: {de: columna, campo: contratos_valor_atipico, tipo: int}
+avisos:
+  - cuando: vacio
+    texto: >-
+      Ninguna entidad con ese municipio y departamento. SECOP los escribe con tildes, como DIVIPOLA
+      («Chía», «Cundinamarca»; Bogotá va con «Distrito Capital de Bogotá»): «Chia» sin tilde no
+      encuentra nada aunque Chía tenga ocho entidades. Revise cómo se escribe antes de concluir.
 cobro: codigo
 canario:
   # Medido el 2026-10-23 en jbjy-vk9h: Chía, 8 entidades; la que más contrata es la Alcaldía

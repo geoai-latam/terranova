@@ -37,3 +37,20 @@ def test_cero_contratos_en_un_municipio_avisa_que_revise_el_nombre() -> None:
     assert len(avisos) == 1 and "tilde" in avisos[0]
     doce_mil = Sobre.model_construct(estado="encontrado", datos={"contratos": 12168}, avisos=[])
     assert avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], doce_mil) == []
+
+
+def test_las_entidades_de_bogota_caben() -> None:
+    """Bogotá: 319 entidades con sede ahí (medido en jbjy-vk9h el 2026-11-04)."""
+    assert (
+        CATALOGO.herramientas["secop_entidades_municipio"].consulta.argumentos["max_filas"] >= 319
+    )
+
+
+def test_un_municipio_sin_entidades_avisa_que_revise_el_nombre() -> None:
+    from terranova.contrato import Sobre
+    from terranova.ejecutor import avisos_de_la_ficha
+
+    h = CATALOGO.herramientas["secop_entidades_municipio"]
+    vacio = Sobre.model_construct(estado="no_encontrado", datos={}, avisos=[])
+    avisos = avisos_de_la_ficha(h, CATALOGO.fuentes[h.fuente], vacio)
+    assert len(avisos) == 1 and "tilde" in avisos[0]
