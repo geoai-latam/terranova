@@ -1,11 +1,11 @@
 {
  "capas": {
-  "fuentes": 192,
-  "herramientas": 239,
+  "fuentes": 193,
+  "herramientas": 242,
   "familias": [
    [
     "Territorio",
-    62
+    65
    ],
    [
     "Estadísticas",
@@ -83,7 +83,7 @@
   "otras": [
    13,
    11,
-   8,
+   9,
    7,
    7,
    7,

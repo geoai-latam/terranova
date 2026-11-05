@@ -1,0 +1,137 @@
+{
+ "geometria_reducida": true,
+ "grabado": "2026-11-05T10:45:32+00:00",
+ "herramienta": "ideam_captaciones_buscar",
+ "llamadas": [
+  {
+   "argumentos": {
+    "geometria": "completa",
+    "limite": 1000,
+    "order": [
+     "idcaptacion"
+    ],
+    "select": [
+     "idcaptacion",
+     "idconcesion",
+     "autoridad",
+     "num_expediente",
+     "num_res_caudal",
+     "divipoladpto_cap",
+     "nomdepartamento_cap",
+     "divipolamun_cap",
+     "nommunicipio_cap",
+     "divipolamun",
+     "nommunicipiopredio",
+     "nombrefuente",
+     "tipofuente",
+     "codigofuente",
+     "nombretramo",
+     "area",
+     "zona",
+     "subzona",
+     "tipocaptacion",
+     "estado_captacion",
+     "continuidad",
+     "caudal_concesionado",
+     "caudal_x_usos",
+     "caudaldiseno",
+     "oferta_hidrica_total",
+     "oferta_disponible",
+     "grados_lat",
+     "minutos_lat",
+     "segundos_lat",
+     "grados_long",
+     "minutos_long",
+     "segundos_long",
+     "sistemareferencia",
+     "altitud",
+     "descripcion_acceso",
+     "tiene_servidumbre",
+     "fechaproceso"
+    ],
+    "tabla": "ideam_captaciones",
+    "texto": "Arenas Blancas"
+   },
+   "conector": "copia",
+   "respuesta": {
+    "artifacts": [
+     {
+      "crs": "EPSG:4326",
+      "data": {
+       "features": [
+        {
+         "geometry": {
+          "coordinates": [
+           -73.8408889,
+           3.79115
+          ],
+          "type": "Point"
+         },
+         "properties": {
+          "altitud": 582.0,
+          "area": "Orinoco",
+          "autoridad": "CORMACARENA",
+          "caudal_concesionado": 1.07,
+          "caudal_x_usos": 1.07,
+          "caudaldiseno": 1.07,
+          "codigofuente": "No codificada",
+          "continuidad": "No",
+          "descripcion_acceso": "Municipio de Cubarral",
+          "divipoladpto_cap": "50",
+          "divipolamun": "50226",
+          "divipolamun_cap": "50223",
+          "estado_captacion": "Bueno",
+          "fechaproceso": "2026-10-27",
+          "grados_lat": 3.0,
+          "grados_long": -73.0,
+          "idcaptacion": 16029882,
+          "idconcesion": 16072847,
+          "minutos_lat": 47.0,
+          "minutos_long": 50.0,
+          "nombrefuente": "ARENAS BLANCAS",
+          "nombretramo": "TRAMO 1",
+          "nomdepartamento_cap": "META",
+          "nommunicipio_cap": "SAN LUIS DE CUBARRAL",
+          "nommunicipiopredio": "CUMARAL",
+          "num_expediente": "3.37.2.9.017.004",
+          "num_res_caudal": "PS-GJ.1.2.6.18.0259",
+          "oferta_disponible": 0.9,
+          "oferta_hidrica_total": 1290.0,
+          "segundos_lat": 28.14,
+          "segundos_long": 27.2,
+          "sistemareferencia": "Sistema GRS 1980 Magna Sirgas",
+          "subzona": "Directos Rio Metica entre ríos Guayuriba y Yucao",
+          "tiene_servidumbre": "No",
+          "tipocaptacion": "Otra",
+          "tipofuente": "Caño",
+          "zona": "Meta"
+         },
+         "type": "Feature"
+        }
+       ],
+       "type": "FeatureCollection"
+      },
+      "kind": "feature_collection"
+     }
+    ],
+    "facts": {
+     "completitud": {
+      "total": 1,
+      "truncado": false,
+      "vistos": 1
+     },
+     "consultado_en": "2026-11-05T10:14:49.214874+00:00",
+     "copia": {
+      "filas": 81731,
+      "huella": "sha256:955681331a039a280fedc3237b7f2a7fd64ce2b09ece4426bdf3b2d5a04f8227",
+      "repetidas_en_la_fuente": 0,
+      "ventana_desde": null,
+      "version": "20261105101449214874"
+     },
+     "servido_desde": "copia"
+    }
+   },
+   "tool": "consultar_copia"
+  }
+ ]
+}

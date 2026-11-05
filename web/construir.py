@@ -416,7 +416,7 @@ SISTEMAS = {
         "Sistema de Identificación de Sedes Educativas",
     ],
     "Centro Nacional de Memoria Histórica": ["SIEVCAC"],
-    "IDEAM": ["Alertas", "SISAIRE", "Estaciones", "Normales climatológicas"],
+    "IDEAM": ["Alertas", "SISAIRE", "Estaciones", "Normales climatológicas", "puntos de captación"],
     "Policía Nacional": ["Reporte de delitos"],
     "INVIMA": ["CUM", "Registros sanitarios"],
     "Supersociedades": ["Estados financieros NIIF", "10 000 empresas más grandes"],

@@ -232,6 +232,9 @@ Generado del catálogo con `uv run scripts/descripcion.py`; no se edita a mano.
 | `dane_sedes_educativas_buscar` | ¿Dónde queda este colegio y cuál es su código DANE? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 5 |
 | `dane_sedes_educativas_en_zona` | ¿Qué colegios y sedes educativas hay en esta zona? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 20 |
 | `dane_sedes_educativas_municipio` | ¿Cuántos colegios y sedes educativas hay en este municipio y dónde quedan? | Departamento Administrativo Nacional de Estadística (DANE) | CC-BY-4.0 | 2 |
+| `ideam_captaciones_buscar` | ¿Quién tiene concesión para captar de este río o quebrada? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
+| `ideam_captaciones_en_zona` | ¿Quién capta agua de los ríos y quebradas en esta zona, y cuánta? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 20 |
+| `ideam_captaciones_municipio` | ¿Qué captaciones de agua concesionadas hay en este municipio? | Instituto de Hidrología, Meteorología y Estudios Ambientales (IDEAM) | CC-BY-SA-4.0 | 5 |
 | `igac_capacidad_uso_en_poligono` | ¿Qué capacidad de uso tiene el suelo de este polígono? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 20 |
 | `igac_capacidad_uso_en_punto` | ¿Cuál es la capacidad de uso de la tierra en este punto? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-4.0 | 10 |
 | `igac_caracteristicas_predio` | ¿Qué unidades construidas y zonas homogéneas tiene este predio en el catastro IGAC? | Instituto Geográfico Agustín Codazzi (IGAC) | CC-BY-SA-4.0 | 2 |

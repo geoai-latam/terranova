@@ -1,0 +1,207 @@
+# Generado por scripts/cosechar_metadatos.py (spec 08). No se edita a mano.
+fuente: ideam.captaciones
+metodo: cosechado
+cosechado: '2026-11-05'
+origen: https://www.datos.gov.co/api/views/4q6d-6s7b.json
+pagina: https://www.datos.gov.co/d/4q6d-6s7b
+titulo: Puntos de Captación Concesionados de Aguas Superficiales
+descripcion: Corresponde al inventario de los puntos de captación autorizados en las concesiones de aguas
+  superficiales otorgadas por las diferentes autoridades ambientales del país. Contiene información sobre
+  su ubicación geopolítica, características técnicas del punto de captación, fuente hídrica asociada,
+  caudal otorgado, ubicación hidrológica y coordenadas geográficas. El IDEAM coordina la operación del
+  SIRH. La completitud, coherencia y actualización de la información registrada son responsabilidad de
+  las Autoridades Ambientales; cualquier solicitud deberá dirigirse directamente a la autoridad correspondiente.
+publicado: '2026-10-16'
+datos_actualizados: '2026-10-27'
+frecuencia_declarada: Mensual
+cobertura_declarada: Nacional
+idioma: Español
+categoria: Ambiente y Desarrollo Sostenible
+etiquetas:
+- aguas superficiales
+- puntos de captación
+campos:
+  idconcesion:
+    tipo_fuente: number
+    etiqueta: IDCONCESION
+    descripcion: Identificador único de la concesión
+  idcaptacion:
+    tipo_fuente: number
+    etiqueta: IDCAPTACION
+    descripcion: Identificador único de la concesión
+  autoridad:
+    tipo_fuente: text
+    etiqueta: AUTORIDAD
+    descripcion: Autoridad ambiental que aprobó el permiso de concesión de agua
+  divipolamun:
+    tipo_fuente: text
+    etiqueta: DIVIPOLAMUN
+    descripcion: Código DIVIPOLA del municipio donde se encuentra el predio beneficiado del permiso
+  nommunicipiopredio:
+    tipo_fuente: text
+    etiqueta: NOMMUNICIPIOPREDIO
+    descripcion: Nombre del municipio de localización del predio beneficiado de la concesión de aguas
+      donde se encuentra
+  num_expediente:
+    tipo_fuente: text
+    etiqueta: NUM_EXPEDIENTE
+    descripcion: Código alfanumérico establecido para identificar administrativamente la documentación
+      necesaria para sustentar el permiso ambiental de recurso hídrico. Dicha codificación la establece
+      la autoridad ambiental
+  num_res_caudal:
+    tipo_fuente: text
+    etiqueta: NUM_RES_CAUDAL
+    descripcion: Número del acto administrativo por medio del cual se asigna el caudal de una concesión
+      de aguas asociada al usuario correspondiente
+  oferta_hidrica_total:
+    tipo_fuente: number
+    etiqueta: OFERTA_HIDRICA_TOTAL
+    descripcion: La oferta hídrica es aquella porción de agua que después de haberse precipitado sobre
+      la cuenca y satisfecho las cuotas de evapotranspiración e infiltración, escurre por diferentes corrientes
+      superficiales. (IDEAM, 2004). Este valor se debe expresar en m3/s (metros cúbicos por segundo).
+      En los casos que no se tiene información el valor es -1
+  oferta_disponible:
+    tipo_fuente: number
+    etiqueta: OFERTA_DISPONIBLE
+    descripcion: Cantidad de agua que resulta de sustraer a la oferta hídrica total superficial el volumen
+      de agua que garantizaría el uso para el funcionamiento de los ecosistemas y sistemas fluviales,
+      y en alguna medida un caudal mínimo para usuarios que dependen de las fuentes hídricas asociadas
+      a estos ecosistemas (IDEAM, 2015). Esta cantidad debe expresarse en m3/s (metros cúbicos por segundo).
+      En los casos que no se tiene infomacion el valor es -1
+  estado_captacion:
+    tipo_fuente: text
+    etiqueta: ESTADO_CAPTACION
+    descripcion: 'Calificativo que permite establecer el estado de la captación. Las opciones disponibles
+      son: Bueno, Malo o Regular. Cuando no se registra informacion el valor es ''No registra'''
+  caudaldiseno:
+    tipo_fuente: number
+    etiqueta: CAUDALDISENO
+    descripcion: Establece el valor del caudal de diseño de la captación en l/s (litros por segundo).
+      En los casos que no se tiene infomacion el valor es -1
+  sistemareferencia:
+    tipo_fuente: text
+    etiqueta: SISTEMAREFERENCIA
+    descripcion: 'Es el sistema de referencia usado para el punto de captación, el cual se puede seleccionar
+      entre las siguientes opciones: Sistema GRS 1980 Magna Sirgas, WGS 84'
+  descripcion_acceso:
+    tipo_fuente: text
+    etiqueta: DESCRIPCION_ACCESO
+    descripcion: Forma en que uno puede acceder al predio, ubicación de la entrada. Cuando no se registra
+      informacion el valor es 'Sin descripcion'
+  nombrefuente:
+    tipo_fuente: text
+    etiqueta: NOMBREFUENTE
+    descripcion: Nombre de la fuente asignada por la autoridad ambiental
+  tipofuente:
+    tipo_fuente: text
+    etiqueta: TIPOFUENTE
+    descripcion: 'Clasificación de la fuente hídrica de acuerdo con su naturaleza, características hidrológicas
+      y morfológicas, que permite identificar la clase de cuerpo de agua superficial al que pertenece.
+      Se presentan las siguientes opciones: Arroyo, Canal, Caño, Ciénaga, Embalse, En la captación, Jagüey,
+      Lago o laguna, Mar, Nacimiento, Pantano, Quebrada, Río, Vallado (Acequia)'
+  divipoladpto_cap:
+    tipo_fuente: text
+    etiqueta: DIVIPOLADPTO_CAP
+    descripcion: Código DIVIPOLA del departamento donde se encuentra la captación autorizada
+  nomdepartamento_cap:
+    tipo_fuente: text
+    etiqueta: NOMDEPARTAMENTO_CAP
+    descripcion: Nombre del departamento de localización de la captación autorizada de la concesión de
+      aguas donde se encuentra
+  divipolamun_cap:
+    tipo_fuente: text
+    etiqueta: DIVIPOLAMUN_CAP
+    descripcion: Código DIVIPOLA del municipio donde se encuentra la captación autorizada del permiso
+  nommunicipio_cap:
+    tipo_fuente: text
+    etiqueta: NOMMUNICIPIO_CAP
+    descripcion: Nombre del municipio de localización de la captación autorizada del permiso de concesión
+      de aguas
+  codigofuente:
+    tipo_fuente: text
+    etiqueta: CODIGOFUENTE
+    descripcion: Código alfanumérico asignado por la autoridad ambiental asignado a la fuente de captación.
+      En caso de no registrar informacion el valor es 'No codificada'
+  nombretramo:
+    tipo_fuente: text
+    etiqueta: NOMBRETRAMO
+    descripcion: Nombre del tramo asignado por la autoridad ambiental donde se realiza la captación
+  area:
+    tipo_fuente: text
+    etiqueta: AREA
+    descripcion: 'Es aquella región o territorio natural que agrupa grandes sistemas de drenaje, donde
+      las aguas fluyen directamente hacia el mar, al océano, a un lago o a un río principal (IDEAM, 2010).
+      Se debe registrar el Área Hidrográfica a la que pertenece la fuente que se está registrando, de
+      acuerdo con la lista controlada existente en la plantilla. Las opciones son: Amazonas, Caribe, Magdalena-Cauca,
+      Orinoco, Pacífico'
+  zona:
+    tipo_fuente: text
+    etiqueta: ZONA
+    descripcion: Es la región natural que agrupa varias cuencas en un gran sistema de drenaje y sus aguas
+      tributan a través de un afluente principal hacia un área hidrográfica; se caracteriza por tener
+      un área mayor de 10.000 km² (IDEAM, 2010)
+  subzona:
+    tipo_fuente: text
+    etiqueta: SUBZONA
+    descripcion: Se identifica como un sistema hídrico con características de relieve y drenaje homogéneo
+      natural; está integrado por varias cuencas hidrográficas de menor tamaño (IDEAM, 2010)
+  tipocaptacion:
+    tipo_fuente: text
+    etiqueta: TIPOCAPTACION
+    descripcion: 'Mecanismo o estructura utilizada para captar el recurso hídrico. Se presenta la siguiente
+      lista desplegable: Cámara de toma directa Captación flotante con elevación mecánica Captación mixta
+      Captación móvil con elevación mecánica Muello de toma Otra Presa de derivación Toma de rejilla Toma
+      lateral Toma sumergida en los casos que no se registra información el valor es ''No registra'''
+  continuidad:
+    tipo_fuente: text
+    etiqueta: CONTINUIDAD
+    descripcion: Para efectos de determinar el aprovechamiento del recurso hídrico, se debe establecer
+      si o no existe continuidad del servicio
+  grados_lat:
+    tipo_fuente: number
+    etiqueta: GRADOS_LAT
+    descripcion: Número de los grados de la latitud del punto de captación, que va entre (-4 a 115)
+  minutos_lat:
+    tipo_fuente: number
+    etiqueta: MINUTOS_LAT
+    descripcion: Número de los minutos de la latitud del punto de captación, que va entre (0 a 59)
+  segundos_lat:
+    tipo_fuente: number
+    etiqueta: SEGUNDOS_LAT
+    descripcion: Número de los segundos de la latitud del punto de captación, que va entre (0.0 a 59.99)
+  grados_long:
+    tipo_fuente: number
+    etiqueta: GRADOS_LONG
+    descripcion: Número de los grados de la longitud del punto de captación, que va entre (-4 a 115)
+  minutos_long:
+    tipo_fuente: number
+    etiqueta: MINUTOS_LONG
+    descripcion: Número de los minutos de la longitud del punto de captación, que va entre (0 a 59)
+  segundos_long:
+    tipo_fuente: number
+    etiqueta: SEGUNDOS_LONG
+    descripcion: Número de los segundos de la longitud del punto de captación, que va entre (0.0 a 59.99)
+  altitud:
+    tipo_fuente: number
+    etiqueta: ALTITUD
+    descripcion: Altitud del punto de captación
+  tiene_servidumbre:
+    tipo_fuente: text
+    etiqueta: TIENE_SERVIDUMBRE
+    descripcion: Se refiere a la necesidad de establecer si el usuario tiene o no un permiso en el predio
+      para el aprovechamiento del recurso hídrico y donde se encuentran ubicados los componentes del sistema
+      de abastecimiento
+  fechaproceso:
+    tipo_fuente: calendar_date
+    etiqueta: FECHAPROCESO
+    descripcion: Fecha en la que generó el conjunto de datos
+  caudal_concesionado:
+    tipo_fuente: number
+    etiqueta: CAUDAL_CONCESIONADO
+    descripcion: Caudal de agua autorizado mediante una concesión de aguas para ser captado de una fuente
+      hídrica, expresado en litros por segundo. En caso de que no se registren usos el valor es -1
+  caudal_x_usos:
+    tipo_fuente: number
+    etiqueta: CAUDAL_X_USOS
+    descripcion: Sumatoria de los caudales reportados para cada uno de los usos autorizados del permiso.
+      Valor numérico en litros por segundo. En caso de que no se registren usos el valor es -1

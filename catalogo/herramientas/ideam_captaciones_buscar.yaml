@@ -1,0 +1,88 @@
+id: ideam_captaciones_buscar
+version: 1
+familia: territorio
+fuente: ideam.captaciones
+pregunta: ¿Quién tiene concesión para captar de este río o quebrada?
+descripcion: 'Busca puntos de captación de agua superficial concesionados por el nombre de la fuente de
+  agua o del tramo, el número de expediente o el municipio, y devuelve cada uno con su punto, autoridad
+  ambiental, caudal concesionado en l/s y estado. Para las de un lugar, ideam_captaciones_en_zona. Sale
+  de la copia de Terrnova del SIRH (datos.gov.co 4q6d-6s7b). (Fuente: IDEAM, Sistema de Información del
+  Recurso Hídrico; licencia: CC BY-SA 4.0.)'
+entrada:
+  texto: str
+consulta:
+  operacion: buscar
+  tool: consultar_copia
+  argumentos:
+    tabla: ideam_captaciones
+    texto: '{texto}'
+    select: &id001
+    - idcaptacion
+    - idconcesion
+    - autoridad
+    - num_expediente
+    - num_res_caudal
+    - divipoladpto_cap
+    - nomdepartamento_cap
+    - divipolamun_cap
+    - nommunicipio_cap
+    - divipolamun
+    - nommunicipiopredio
+    - nombrefuente
+    - tipofuente
+    - codigofuente
+    - nombretramo
+    - area
+    - zona
+    - subzona
+    - tipocaptacion
+    - estado_captacion
+    - continuidad
+    - caudal_concesionado
+    - caudal_x_usos
+    - caudaldiseno
+    - oferta_hidrica_total
+    - oferta_disponible
+    - grados_lat
+    - minutos_lat
+    - segundos_lat
+    - grados_long
+    - minutos_long
+    - segundos_long
+    - sistemareferencia
+    - altitud
+    - descripcion_acceso
+    - tiene_servidumbre
+    - fechaproceso
+    geometria: completa
+    order:
+    - idcaptacion
+    limite: 1000
+  campos: *id001
+salida: IdeamCaptacionesBuscar
+derivados:
+  total:
+    de: completitud_total
+    tipo: int
+  por_autoridad:
+    de: conteo_por
+    campo: autoridad
+avisos:
+- cuando: vacio
+  texto: El SIRH del IDEAM no trae captaciones de agua superficial concesionadas para esa consulta. Puede
+    que la autoridad ambiental no las haya cargado; pruebe con un rectángulo más grande, otro código DIVIPOLA
+    o otro nombre de la fuente de agua.
+- cuando: encontrado
+  texto: 'Son las captaciones de agua superficial que las autoridades ambientales cargaron al SIRH: una
+    concesión que no está cargada no aparece. El punto se arma desde grados, minutos y segundos; las que
+    no se pueden ubicar (0 grados de latitud, el relleno 5°5''5" N 75°5''5" O, fuera de Colombia) no salen
+    en una zona, pero sí por municipio. Caudales y ofertas en -1 quieren decir «sin dato».'
+cobro: agregado
+canario:
+  # Medido el 2026-11-05 en la copia: 1 captación en el caño Arenas Blancas (Cubarral).
+  entrada:
+    texto: Arenas Blancas
+  minimos:
+    total: 1
+  campos: [acceso, altitud, area_hidrografica, autoridad, caudal_concesionado_l_s, caudal_diseno_l_s, caudal_por_usos_l_s, codigo_fuente_hidrica, continuidad, departamento, departamento_divipola, estado, expediente, fecha_corte, fuente_hidrica, id_captacion, id_concesion, latitud_grados, latitud_minutos, latitud_segundos, longitud_grados, longitud_minutos, longitud_segundos, municipio, municipio_divipola, municipio_predio, municipio_predio_divipola, oferta_disponible_m3_s, oferta_hidrica_total_m3_s, por_autoridad, resolucion_caudal, sistema_referencia, subzona_hidrografica, tiene_servidumbre, tipo_captacion, tipo_fuente_hidrica, total, tramo, zona_hidrografica]
+  latencia_max_ms: 8000
